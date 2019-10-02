@@ -1,0 +1,7 @@
+*.bak
+*.log
+*.swp
+
+.DS_Store
+
+/.gradle/
