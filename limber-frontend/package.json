@@ -1,19 +1,28 @@
 {
   "name": "limber-frontend",
   "version": "0.0.0",
-  "description": "",
   "author": "Jeff Hudson <jhudson@jhudson.ca>",
   "license": "UNLICENSED",
-  "devDependencies": {
-    "@types/parcel-env": "0.0.0",
-    "parcel-bundler": "^1.12.3",
-    "typescript": "^3.6.3"
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "test": "jest"
   },
   "dependencies": {
-    "react": "^16.10.1",
-    "react-dom": "^16.10.1"
+    "preact": "^10.0.0"
   },
-  "scripts": {
-    "start": "parcel index.html"
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/parcel-env": "0.0.0",
+    "jest": "^24.9.0",
+    "parcel-bundler": "^1.12.3",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  },
+  "resolutions": {
+    "serialize-to-js": ">=2"
   }
 }
