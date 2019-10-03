@@ -1,0 +1,19 @@
+rootProject.name = 'limber'
+
+/**
+ * Backend Application
+ */
+include ':limber-backend-application'
+
+/**
+ * Backend Framework
+ */
+include ':limber-backend-framework'
+include ':limber-backend-framework:core'
+include ':limber-backend-framework:data-conversion'
+include ':limber-backend-framework:errors'
+include ':limber-backend-framework:exception-mapping'
+include ':limber-backend-framework:models'
+include ':limber-backend-framework:mongo'
+include ':limber-backend-framework:object-mapper'
+include ':limber-backend-framework:validation'
