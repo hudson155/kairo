@@ -1,0 +1,71 @@
+buildscript {
+    apply from: "$rootDir/gradle/dependencies.gradle"
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath libs.kotlin_gradle_plugin
+    }
+}
+
+plugins {
+    // https://github.com/arturbosch/detekt/releases
+    id("io.gitlab.arturbosch.detekt").version('1.0.1')
+}
+
+allprojects {
+
+    apply plugin: 'kotlin'
+
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    compileKotlin {
+        kotlinOptions.jvmTarget = '1.8'
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = '1.8'
+    }
+
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    // Running tests via the command line does not log the result of each test.
+    // This adds such logging, so that when tests fail on CI we can know which ones failed.
+    test {
+        afterTest { desc, result ->
+            logger.quiet "Test ${result.resultType}: ${desc.className}::${desc.name}"
+        }
+    }
+
+    // This task downloads all external dependencies.
+    // It's highly useful on CI, especially when it comes to caching.
+    // https://discuss.circleci.com/t/recommended-dependencies-caching-for-a-gradle-setup-is-wrong/20712
+    task downloadDependencies() {
+        description 'Download all dependencies to the Gradle cache'
+        doLast {
+            configurations.findAll { it.canBeResolved }.files
+        }
+    }
+}
+
+subprojects {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        compile libs.kotlin_reflect
+        compile libs.kotlin_stdlib_jdk8
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+detekt {
+    toolVersion = versions.detekt
+    input = files('limber-backend-application', 'limber-backend-framework')
+    filters = '.*/build/.*,.*/out/.*'
+    config = files('.detekt/detekt.yml')
+}

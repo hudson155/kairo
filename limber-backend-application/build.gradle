@@ -1,0 +1,40 @@
+buildscript {
+    apply from: "$rootDir/gradle/dependencies.gradle"
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath libs.shadow
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'application'
+
+group 'io.limberapp.backend'
+version '0.0.0'
+mainClassName = "io.limberapp.backend.ApplicationKt"
+
+sourceSets {
+    main.kotlin.srcDirs = main.java.srcDirs = ['src/main/kotlin']
+    test.kotlin.srcDirs = test.java.srcDirs = ['src/test/kotlin']
+    main.resources.srcDirs = ['src/main/resources']
+    test.resources.srcDirs = ['src/test/resources']
+}
+
+dependencies {
+    compile project(":limber-backend-framework:data-conversion")
+    compile project(":limber-backend-framework:exception-mapping")
+    compile project(":limber-backend-framework:object-mapper")
+    compile libs.guice
+    compile libs.ktor_server_cio
+    compile libs.logback_classic
+    compile libs.mongodb
+}
+
+shadowJar {
+    manifest {
+        attributes 'MainClass': mainClassName
+        archiveName = "limberapp-backend.jar"
+    }
+}

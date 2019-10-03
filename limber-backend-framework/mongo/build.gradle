@@ -1,0 +1,7 @@
+dependencies {
+    compile project(":limber-backend-framework:core")
+    compile project(":limber-backend-framework:models")
+    compile project(":limber-backend-framework:object-mapper")
+    compile libs.jackson_kotlin
+    compile libs.mongodb
+}
