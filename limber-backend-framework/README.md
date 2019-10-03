@@ -9,6 +9,9 @@ Limber is a highly dynamic application framework built on Ktor and Preact.
     Ktor's DataConversion and ContentNegotiation installations.
 * [`errors`](/errors):
     Contains classes for JSON errors intended to be returned to the client.
+* [`exception-mapping`](/exception-mapping):
+    Maps exceptions to JSON responses from the errors module. This should be used in implementation
+    projects as part of Ktor's StatusPages installation.
 * [`models`](/models):
     Contains base classes for application models to inherit from. This module is used by the core
     module, among others, so you don't need to included it explicitly in your project.
