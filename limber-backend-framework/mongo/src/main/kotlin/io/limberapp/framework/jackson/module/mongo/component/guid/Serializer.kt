@@ -7,7 +7,7 @@ import io.limberapp.framework.util.asByteArray
 import java.util.Base64
 import java.util.UUID
 
-class Serializer : StdSerializer<UUID>(UUID::class.java) {
+internal class Serializer : StdSerializer<UUID>(UUID::class.java) {
 
     override fun serialize(value: UUID, gen: JsonGenerator, provider: SerializerProvider) {
         gen.apply {

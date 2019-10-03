@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-class Deserializer : StdDeserializer<LocalDateTime>(LocalDateTime::class.java) {
+internal class Deserializer : StdDeserializer<LocalDateTime>(LocalDateTime::class.java) {
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDateTime {
         val tree = p.readValueAsTree<JsonNode>()

@@ -8,7 +8,7 @@ import io.limberapp.framework.util.UUID
 import java.util.Base64
 import java.util.UUID
 
-class Deserializer : StdDeserializer<UUID>(UUID::class.java) {
+internal class Deserializer : StdDeserializer<UUID>(UUID::class.java) {
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): UUID {
         val tree = p.readValueAsTree<JsonNode>()

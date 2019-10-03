@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-class Serializer : StdSerializer<LocalDateTime>(LocalDateTime::class.java) {
+internal class Serializer : StdSerializer<LocalDateTime>(LocalDateTime::class.java) {
 
     override fun serialize(value: LocalDateTime, gen: JsonGenerator, provider: SerializerProvider) {
         gen.apply {
