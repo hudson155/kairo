@@ -4,6 +4,9 @@ Limber is a highly dynamic application framework built on Ktor and Preact.
 
 * [`core`](/core):
     This is the main module for the Limber framework. All implementation projects will require this.
+* [`data-conversion`](/data-conversion):
+    Responsible for converting data types. This should be used in implementation projects as part of
+    Ktor's DataConversion and ContentNegotiation installations.
 * [`errors`](/errors):
     Contains classes for JSON errors intended to be returned to the client.
 * [`models`](/models):
