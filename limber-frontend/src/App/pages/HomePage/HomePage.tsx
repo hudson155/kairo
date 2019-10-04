@@ -1,11 +1,10 @@
 import { FunctionalComponent, h } from 'preact';
-import Page from '../../components/Page/Page';
+import AppPage from '../../components/AppPage/AppPage';
 
 const HomePage: FunctionalComponent = () => {
-  return <Page header={<p>TODO: Header</p>}
-               footer={<p>TODO: Footer</p>}>
+  return <AppPage>
     <p>Hello, World!</p>
-  </Page>;
+  </AppPage>;
 };
 
 export default HomePage;
