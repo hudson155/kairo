@@ -1,0 +1,20 @@
+import { Fragment, FunctionalComponent, h, VNode } from 'preact';
+import PageHeader from './components/PageHeader/PageHeader';
+import PageMain from './components/PageMain/PageMain';
+import PageFooter from './components/PageFooter/PageFooter';
+
+interface Props {
+  header?: VNode<any>
+  children: VNode<any>
+  footer?: VNode<any>
+}
+
+const Page: FunctionalComponent<Props> = (props: Props) => {
+  return <Fragment>
+    {props.header && <PageHeader>{props.header}</PageHeader>}
+    {props.children && <PageMain>{props.children}</PageMain>}
+    {props.footer && <PageFooter>{props.footer}</PageFooter>}
+  </Fragment>;
+};
+
+export default Page;
