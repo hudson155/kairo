@@ -8,10 +8,7 @@ interface Props {
 }
 
 const AppPage: FunctionalComponent<Props> = (props: Props) => {
-  return <Page header={<AppPageHeader />}
-               footer={<AppPageFooter />}>
-    {props.children}
-  </Page>;
+  return <Page header={<AppPageHeader />} footer={<AppPageFooter />}>{props.children}</Page>;
 };
 
 export default AppPage;
