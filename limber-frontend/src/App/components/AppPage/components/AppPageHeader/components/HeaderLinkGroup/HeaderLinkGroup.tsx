@@ -1,7 +1,7 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import { ComponentChildren, FunctionalComponent, h } from 'preact';
 
 interface Props {
-  children: VNode | VNode[]
+  children: ComponentChildren
 }
 
 const HeaderLinkGroup: FunctionalComponent<Props> = (props: Props) => {

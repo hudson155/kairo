@@ -1,7 +1,7 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import { ComponentChildren, FunctionalComponent, h } from 'preact';
 
 interface Props {
-  children: VNode
+  children: ComponentChildren
 }
 
 const PageFooter: FunctionalComponent<Props> = (props: Props) => {

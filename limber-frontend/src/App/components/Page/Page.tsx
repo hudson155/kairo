@@ -1,12 +1,12 @@
-import { Fragment, FunctionalComponent, h, VNode } from 'preact';
+import { ComponentChildren, Fragment, FunctionalComponent, h } from 'preact';
 import PageHeader from './components/PageHeader/PageHeader';
 import PageMain from './components/PageMain/PageMain';
 import PageFooter from './components/PageFooter/PageFooter';
 
 interface Props {
-  header?: VNode
-  children: VNode
-  footer?: VNode
+  header?: ComponentChildren
+  children: ComponentChildren
+  footer?: ComponentChildren
 }
 
 const Page: FunctionalComponent<Props> = (props: Props) => {

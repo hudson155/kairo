@@ -1,4 +1,4 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import { FunctionalComponent, h } from 'preact';
 import { Link } from 'preact-router';
 
 interface Props {

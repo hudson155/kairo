@@ -1,10 +1,10 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import { ComponentChildren, FunctionalComponent, h } from 'preact';
 import Page from '../../components/Page/Page';
 import AppPageHeader from './components/AppPageHeader/AppPageHeader';
 import AppPageFooter from './components/AppPageFooter/AppPageFooter';
 
 interface Props {
-  children: VNode
+  children: ComponentChildren
 }
 
 const AppPage: FunctionalComponent<Props> = (props: Props) => {
