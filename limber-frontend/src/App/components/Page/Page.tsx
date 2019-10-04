@@ -4,9 +4,9 @@ import PageMain from './components/PageMain/PageMain';
 import PageFooter from './components/PageFooter/PageFooter';
 
 interface Props {
-  header?: VNode<any>
-  children: VNode<any>
-  footer?: VNode<any>
+  header?: VNode
+  children: VNode
+  footer?: VNode
 }
 
 const Page: FunctionalComponent<Props> = (props: Props) => {

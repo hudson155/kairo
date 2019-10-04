@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from 'preact';
 import HeaderLink from './components/HeaderLink/HeaderLink';
+import HeaderLinkGroup from './components/HeaderLinkGroup/HeaderLinkGroup';
 
 const AppPageHeader: FunctionalComponent = () => {
   const style = {
@@ -10,8 +11,12 @@ const AppPageHeader: FunctionalComponent = () => {
   };
 
   return <div style={style}>
-    <HeaderLink to="/">Home</HeaderLink>
-    <HeaderLink to="/events">Events</HeaderLink>
+    <HeaderLinkGroup>
+      <HeaderLink to="/events">Limber</HeaderLink>
+    </HeaderLinkGroup>
+    <HeaderLinkGroup>
+      <HeaderLink to="/events">Events</HeaderLink>
+    </HeaderLinkGroup>
   </div>;
 };
 

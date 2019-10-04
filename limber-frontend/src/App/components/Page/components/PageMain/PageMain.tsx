@@ -1,7 +1,7 @@
 import { FunctionalComponent, h, VNode } from 'preact';
 
 interface Props {
-  children: VNode<any>
+  children: VNode
 }
 
 const PageMain: FunctionalComponent<Props> = (props: Props) => {

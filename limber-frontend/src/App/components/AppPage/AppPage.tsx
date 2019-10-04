@@ -4,7 +4,7 @@ import AppPageHeader from './components/AppPageHeader/AppPageHeader';
 import AppPageFooter from './components/AppPageFooter/AppPageFooter';
 
 interface Props {
-  children: VNode<any>
+  children: VNode
 }
 
 const AppPage: FunctionalComponent<Props> = (props: Props) => {
