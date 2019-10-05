@@ -1,0 +1,240 @@
+################################################################
+# Docker Images                                                #
+################################################################
+
+image_gcloud: &image_gcloud
+  image: google/cloud-sdk:latest
+
+image_java: &image_java
+  image: circleci/openjdk:11-jdk
+
+image_node: &image_node
+  image: circleci/node:12
+
+################################################################
+# CircleCI Caching                                             #
+################################################################
+
+save_backend_wrapper_cache: &save_backend_wrapper_cache
+  save_cache:
+    key: backend-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+    paths:
+      - ~/.gradle/wrapper
+
+restore_backend_wrapper_cache: &restore_backend_wrapper_cache
+  restore_cache:
+    keys:
+      - backend-wrapper-v1-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+
+save_backend_dependencies_cache: &save_backend_dependencies_cache
+  save_cache:
+    key: backend-dependencies-v1-{{ checksum "gradle/dependencies.gradle" }}
+    paths:
+      - ~/.gradle/caches
+
+restore_backend_dependencies_cache: &restore_backend_dependencies_cache
+  restore_cache:
+    keys:
+      - backend-dependencies-v1-{{ checksum "gradle/dependencies.gradle" }}
+
+save_web_dependencies_cache: &save_web_dependencies_cache
+  save_cache:
+    key: web-dependencies-v1-{{ checksum "yarn.lock" }}
+    paths:
+      - node_modules
+
+restore_web_dependencies_cache: &restore_web_dependencies_cache
+  restore_cache:
+    keys:
+      - web-dependencies-v1-{{ checksum "yarn.lock" }}
+      - web-dependencies-v1-
+
+################################################################
+# Version                                                      #
+################################################################
+
+version: 2
+
+################################################################
+# Notifications                                                #
+################################################################
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master
+        - develop
+
+################################################################
+# Workflows                                                    #
+################################################################
+
+workflows:
+
+  version: 2
+
+  feature-branches:
+    jobs:
+      - backend-dependencies:
+          filters:
+            branches:
+              ignore:
+                - master
+                - develop
+      - backend-lint:
+          requires: [backend-dependencies]
+      - backend-test:
+          requires: [backend-dependencies]
+      - backend-build:
+          requires: [backend-dependencies]
+      - web-dependencies:
+          filters:
+            branches:
+              ignore:
+                - master
+                - develop
+      - web-lint:
+          requires: [web-dependencies]
+      - web-test:
+          requires: [web-dependencies]
+      - web-build-staging-dev:
+          requires: [web-dependencies]
+
+  develop:
+    jobs:
+      - backend-dependencies:
+          filters:
+            branches:
+              only:
+                - develop
+      - backend-lint:
+          requires: [backend-dependencies]
+      - backend-test:
+          requires: [backend-dependencies]
+      - backend-build:
+          requires: [backend-dependencies]
+      - web-dependencies:
+          filters:
+            branches:
+              only:
+                - develop
+      - web-lint:
+          requires: [web-dependencies]
+      - web-test:
+          requires: [web-dependencies]
+      - web-build-staging-dev:
+          requires: [web-dependencies]
+
+  master:
+    jobs:
+      - backend-dependencies:
+          filters:
+            branches:
+              only:
+                - master
+      - backend-lint:
+          requires: [backend-dependencies]
+      - backend-test:
+          requires: [backend-dependencies]
+      - backend-build:
+          requires: [backend-dependencies]
+      - web-dependencies:
+          filters:
+            branches:
+              only:
+                - master
+      - web-lint:
+          requires: [web-dependencies]
+      - web-test:
+          requires: [web-dependencies]
+      - web-build-prod:
+          requires: [web-dependencies]
+
+################################################################
+# Jobs                                                         #
+################################################################
+
+checkout: &checkout
+  checkout:
+    path: ~/limber
+
+web_build: &web_build
+  - *checkout
+  - *restore_web_dependencies_cache
+  - run: yarn build
+
+jobs:
+
+  backend-dependencies:
+    docker: [*image_java]
+    working_directory: ~/limber
+    steps:
+      - *checkout
+      - *restore_backend_wrapper_cache
+      - *restore_backend_dependencies_cache
+      - run: ./gradlew --no-daemon downloadDependencies
+      - *save_backend_wrapper_cache
+      - *save_backend_dependencies_cache
+
+  backend-lint:
+    docker: [*image_java]
+    working_directory: ~/limber
+    steps:
+      - *checkout
+      - *restore_backend_wrapper_cache
+      - *restore_backend_dependencies_cache
+      - run: ./gradlew --no-daemon detekt
+
+  backend-test:
+    docker: [*image_java]
+    working_directory: ~/limber
+    steps:
+      - *checkout
+      - *restore_backend_wrapper_cache
+      - *restore_backend_dependencies_cache
+      - run: ./gradlew --no-daemon limber-backend-application:test
+
+  backend-build:
+    docker: [*image_java]
+    working_directory: ~/limber
+    steps:
+      - *checkout
+      - *restore_backend_wrapper_cache
+      - *restore_backend_dependencies_cache
+      - run: ./gradlew --no-daemon limber-backend-application:shadowJar
+
+  web-dependencies:
+    docker: [*image_node]
+    working_directory: ~/limber/limber-web
+    steps:
+      - *checkout
+      - *restore_web_dependencies_cache
+      - run: yarn install
+      - *save_web_dependencies_cache
+
+  web-lint:
+    docker: [*image_node]
+    working_directory: ~/limber/limber-web
+    steps:
+      - *checkout
+      - *restore_web_dependencies_cache
+      - run: yarn lint
+
+  web-test:
+    docker: [*image_node]
+    working_directory: ~/limber/limber-web
+    steps:
+      - *checkout
+      - *restore_web_dependencies_cache
+      - run: yarn test
+
+  web-build-staging-dev:
+    docker: [*image_node]
+    working_directory: ~/limber/limber-web
+    steps: *web_build
+
+  web-build-prod:
+    docker: [*image_node]
+    working_directory: ~/limber/limber-web
+    steps: *web_build
