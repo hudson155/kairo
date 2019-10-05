@@ -162,7 +162,7 @@ checkout: &checkout
 web_build: &web_build
   - *checkout
   - *restore_web_dependencies_cache
-  - run: npm run build
+  - run: yarn build
 
 jobs:
 
@@ -210,7 +210,7 @@ jobs:
     steps:
       - *checkout
       - *restore_web_dependencies_cache
-      - run: npm install
+      - run: yarn install
       - *save_web_dependencies_cache
 
   web-lint:
@@ -219,7 +219,7 @@ jobs:
     steps:
       - *checkout
       - *restore_web_dependencies_cache
-      - run: npm run lint
+      - run: yarn lint
 
   web-test:
     docker: [*image_node]
@@ -227,7 +227,7 @@ jobs:
     steps:
       - *checkout
       - *restore_web_dependencies_cache
-      - run: npm test
+      - run: yarn test
 
   web-build-staging-dev:
     docker: [*image_node]
