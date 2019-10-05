@@ -193,7 +193,7 @@ jobs:
       - *checkout
       - *restore_backend_wrapper_cache
       - *restore_backend_dependencies_cache
-      - run: ./gradlew --no-daemon limber-backend-application:test
+      - run: ./gradlew --no-daemon test
 
   backend-build:
     docker: [*image_java]

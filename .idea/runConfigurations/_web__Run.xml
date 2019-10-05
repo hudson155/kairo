@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="[frontend] Run" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/limber-frontend/package.json" />
+  <configuration default="false" name="[web] Run" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/limber-web/package.json" />
     <command value="start" />
     <node-interpreter value="project" />
     <envs />
