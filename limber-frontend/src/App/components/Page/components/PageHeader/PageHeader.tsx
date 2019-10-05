@@ -1,10 +1,10 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import React, { ReactNode } from 'react';
 
 interface Props {
-  children: VNode
+  children: ReactNode
 }
 
-const PageHeader: FunctionalComponent<Props> = (props: Props) => {
+const PageHeader: React.FC<Props> = (props: Props) => {
   return <header>{props.children}</header>;
 };
 

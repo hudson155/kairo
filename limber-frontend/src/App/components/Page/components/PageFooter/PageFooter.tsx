@@ -1,10 +1,10 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import React, { ReactNode } from 'react';
 
 interface Props {
-  children: VNode
+  children: ReactNode
 }
 
-const PageFooter: FunctionalComponent<Props> = (props: Props) => {
+const PageFooter: React.FC<Props> = (props: Props) => {
   return <footer>{props.children}</footer>;
 };
 

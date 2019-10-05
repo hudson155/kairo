@@ -1,13 +1,13 @@
-import { FunctionalComponent, h, VNode } from 'preact';
-import { Link } from 'preact-router';
+import React, { CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Props {
   to: string;
   children: string
 }
 
-const HeaderLink: FunctionalComponent<Props> = (props: Props) => {
-  const style = {
+const HeaderLink: React.FC<Props> = (props: Props) => {
+  const style: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     marginRight: '16px',
@@ -16,7 +16,7 @@ const HeaderLink: FunctionalComponent<Props> = (props: Props) => {
     textDecoration: 'none',
   };
 
-  return <Link style={style} href={props.to}>{props.children}</Link>;
+  return <Link to={props.to} style={style}>{props.children}</Link>;
 };
 
 export default HeaderLink;

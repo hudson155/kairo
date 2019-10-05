@@ -1,9 +1,10 @@
-import { FunctionalComponent, h } from 'preact';
+import React from 'react';
 import AppPage from '../../components/AppPage/AppPage';
 
-const EventsPage: FunctionalComponent = () => {
+const EventsPage: React.FC = () => {
   return <AppPage>
-    <p>Hello, World!</p>
+    <h1>Events</h1>
+    <p>Here's a list of events.</p>
   </AppPage>;
 };
 

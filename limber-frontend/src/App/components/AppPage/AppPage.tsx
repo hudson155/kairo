@@ -1,14 +1,16 @@
-import { FunctionalComponent, h, VNode } from 'preact';
-import Page from '../../components/Page/Page';
+import React, { ReactNode } from 'react';
+import Page from '../Page/Page';
 import AppPageHeader from './components/AppPageHeader/AppPageHeader';
 import AppPageFooter from './components/AppPageFooter/AppPageFooter';
 
 interface Props {
-  children: VNode
+  children: ReactNode
 }
 
-const AppPage: FunctionalComponent<Props> = (props: Props) => {
-  return <Page header={<AppPageHeader />} footer={<AppPageFooter />}>{props.children}</Page>;
+const AppPage: React.FC<Props> = (props: Props) => {
+  return <Page header={<AppPageHeader />} footer={<AppPageFooter />}>
+    <div>{props.children}</div>
+  </Page>;
 };
 
 export default AppPage;

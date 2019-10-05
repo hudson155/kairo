@@ -1,14 +1,14 @@
-import { FunctionalComponent, h } from 'preact';
+import React, { CSSProperties } from 'react';
 
-const AppPageFooter: FunctionalComponent = () => {
-  const style = {
+const AppPageFooter: React.FC = () => {
+  const style: CSSProperties = {
     display: 'flex',
     height: '32px',
     padding: '32px 16px',
   };
 
   return <div style={style}>
-    <p>Copyright &copy; 2019 Jeff Hudson</p>
+    <p><small>Copyright &copy; 2019 Jeff Hudson</small></p>
   </div>;
 };
 

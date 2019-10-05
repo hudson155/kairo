@@ -1,12 +1,14 @@
-import { FunctionalComponent, h } from 'preact';
-import { Router } from 'preact-router';
-import EventsPage from './pages/EventsPage/EventsPage';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import EventsPage from './pages/EventsPage/EventsPage';
 
-const App: FunctionalComponent = () => {
+const App: React.FC = () => {
   return <Router>
-    <EventsPage path="/events" />
-    <NotFoundPage default />
+    <Switch>
+      <Route path="/events" exact component={EventsPage} />
+      <Route component={NotFoundPage} />
+    </Switch>
   </Router>;
 };
 

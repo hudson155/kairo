@@ -1,12 +1,13 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import React, { CSSProperties, ReactNode } from 'react';
 
 interface Props {
-  children: VNode
+  children: ReactNode
 }
 
-const PageMain: FunctionalComponent<Props> = (props: Props) => {
-  const style = {
+const PageMain: React.FC<Props> = (props: Props) => {
+  const style: CSSProperties = {
     flexGrow: 1,
+    padding: '16px',
   };
 
   return <main style={style}>{props.children}</main>;

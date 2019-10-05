@@ -1,29 +1,44 @@
 {
   "name": "limber-frontend",
   "version": "0.0.0",
-  "author": "Jeff Hudson <jhudson@jhudson.ca>",
-  "license": "UNLICENSED",
-  "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
-    "test": "jest"
-  },
+  "private": true,
   "dependencies": {
-    "preact": "^10.0.0",
-    "preact-router": "^3.0.1"
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.11",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "16.9.1",
+    "@types/react-redux": "^7.1.4",
+    "@types/react-router-dom": "^5.1.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "typescript": "3.6.3"
   },
-  "devDependencies": {
-    "@types/jest": "^24.0.18",
-    "@types/parcel-env": "0.0.0",
-    "jest": "^24.9.0",
-    "parcel-bundler": "^1.12.3",
-    "ts-jest": "^24.1.0",
-    "typescript": "^3.6.3"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "typescript": "tsc",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "eject": "react-scripts eject"
   },
-  "jest": {
-    "preset": "ts-jest"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "resolutions": {
-    "serialize-to-js": ">=2"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

@@ -1,11 +1,11 @@
-import { FunctionalComponent, h, VNode } from 'preact';
+import React, { CSSProperties, ReactNode } from 'react';
 
 interface Props {
-  children: VNode | VNode[]
+  children: ReactNode
 }
 
-const HeaderLinkGroup: FunctionalComponent<Props> = (props: Props) => {
-  const style = {
+const HeaderLinkGroup: React.FC<Props> = (props: Props) => {
+  const style: CSSProperties = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
