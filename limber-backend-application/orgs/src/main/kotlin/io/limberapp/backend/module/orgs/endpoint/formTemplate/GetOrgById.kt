@@ -19,11 +19,11 @@ internal class GetOrgById @Inject constructor(
 
     override suspend fun handler(call: ApplicationCall): Org? {
         return orgService.getById(
-            id = call.parameters.getAsType(UUID::class, "formTemplateId")
+            id = call.parameters.getAsType(UUID::class, "orgId")
         )
     }
 
     companion object {
-        private val config = Config(HttpMethod.Get, "/form-templates/{formTemplateId}")
+        private val config = Config(HttpMethod.Get, "/orgs/{orgId}")
     }
 }
