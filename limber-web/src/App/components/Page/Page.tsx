@@ -4,17 +4,19 @@ import PageHeader from './components/PageHeader/PageHeader';
 import PageMain from './components/PageMain/PageMain';
 
 interface Props {
-  header?: ReactNode
-  children: ReactNode
-  footer?: ReactNode
+  header?: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
 }
 
 const Page: React.FC<Props> = (props: Props) => {
-  return <Fragment>
-    {props.header && <PageHeader>{props.header}</PageHeader>}
-    {props.children && <PageMain>{props.children}</PageMain>}
-    {props.footer && <PageFooter>{props.footer}</PageFooter>}
-  </Fragment>;
+  return (
+    <Fragment>
+      {props.header && <PageHeader>{props.header}</PageHeader>}
+      {props.children && <PageMain>{props.children}</PageMain>}
+      {props.footer && <PageFooter>{props.footer}</PageFooter>}
+    </Fragment>
+  );
 };
 
 export default Page;

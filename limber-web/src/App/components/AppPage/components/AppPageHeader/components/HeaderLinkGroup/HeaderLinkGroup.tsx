@@ -1,7 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 
 interface Props {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const HeaderLinkGroup: React.FC<Props> = (props: Props) => {

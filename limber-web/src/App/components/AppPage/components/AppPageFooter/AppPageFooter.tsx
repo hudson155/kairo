@@ -7,9 +7,13 @@ const AppPageFooter: React.FC = () => {
     padding: '32px 16px',
   };
 
-  return <div style={style}>
-    <p><small>Copyright &copy; 2019 Jeff Hudson</small></p>
-  </div>;
+  return (
+    <div style={style}>
+      <p>
+        <small>Copyright &copy; 2019 Jeff Hudson</small>
+      </p>
+    </div>
+  );
 };
 
 export default AppPageFooter;

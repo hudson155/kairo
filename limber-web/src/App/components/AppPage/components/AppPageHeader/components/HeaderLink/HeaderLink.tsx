@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   to: string;
-  children: string
+  children: string;
 }
 
 const HeaderLink: React.FC<Props> = (props: Props) => {
@@ -16,7 +16,11 @@ const HeaderLink: React.FC<Props> = (props: Props) => {
     textDecoration: 'none',
   };
 
-  return <Link to={props.to} style={style}>{props.children}</Link>;
+  return (
+    <Link to={props.to} style={style}>
+      {props.children}
+    </Link>
+  );
 };
 
 export default HeaderLink;

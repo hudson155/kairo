@@ -9,7 +9,8 @@
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "globals": {
     "process": "readonly"

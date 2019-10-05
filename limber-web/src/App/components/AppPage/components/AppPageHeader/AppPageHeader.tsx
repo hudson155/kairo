@@ -7,7 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 
 interface Props {
-  color: string
+  color: string;
   dispatch: ThunkDispatch<{}, {}, AnyAction>;
 }
 
@@ -19,16 +19,16 @@ const AppPageHeader: React.FC<Props> = (props: Props) => {
     padding: '16px',
   };
 
-  return <div style={style}>
-    <HeaderLinkGroup>
-      <HeaderLink to="/events">Limber</HeaderLink>
-    </HeaderLinkGroup>
-    <HeaderLinkGroup>
-      <HeaderLink to="/events">Events</HeaderLink>
-    </HeaderLinkGroup>
-  </div>;
+  return (
+    <div style={style}>
+      <HeaderLinkGroup>
+        <HeaderLink to="/events">Limber</HeaderLink>
+      </HeaderLinkGroup>
+      <HeaderLinkGroup>
+        <HeaderLink to="/events">Events</HeaderLink>
+      </HeaderLinkGroup>
+    </div>
+  );
 };
 
-export default connect(
-  (state: State) => ({ color: state.theme.navBarColor }),
-)(AppPageHeader);
+export default connect((state: State) => ({ color: state.theme.navBarColor }))(AppPageHeader);

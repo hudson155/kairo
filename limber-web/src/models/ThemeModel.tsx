@@ -1,3 +1,3 @@
 export default interface ThemeModel {
-  navBarColor: string
+  navBarColor: string;
 }
