@@ -1,5 +1,7 @@
 package io.limberapp.framework.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -14,29 +16,40 @@ import java.util.UUID
 abstract class Model<Self : Model<Self>> : PartialModel {
 
     abstract val id: UUID?
+    abstract val created: LocalDateTime?
+    abstract val version: Int?
+
+    val modelState
+        @JsonIgnore get() = when {
+            id == null && created == null && version == null -> ModelState.CREATION
+            id != null && created != null && version != null -> ModelState.COMPLETE
+            else -> error("This model is not in a valid state")
+        }
+
+    enum class ModelState { CREATION, COMPLETE }
 
     /**
      * Returns a new Model instance with id as the ID. Ensures that the ID is null before setting
      * it.
      */
-    fun withId(id: UUID): Self {
-        check(this.id == null)
-        return setId(id)
+    fun complete(id: UUID, created: LocalDateTime): Self {
+        check(modelState == ModelState.CREATION)
+        return setFields(id, created, 0)
     }
 
     /**
      * This method returns a new instance of the model with all creator-unknown properties as null.
      */
-    open fun asCreator() = setId(null)
+    open fun asCreator() = setFields(null, null, null)
 
-    protected abstract fun setId(id: UUID?): Self
+    protected abstract fun setFields(id: UUID?, created: LocalDateTime?, version: Int?): Self
 
     /**
      * This method returns a new instance of the model with all creator-unknown properties as
      * non-null.
      */
     open fun asResult(): Self {
-        check(id != null)
+        check(modelState == ModelState.COMPLETE)
         @Suppress("UNCHECKED_CAST", "UnsafeCast") // This is safe given how Self works.
         return this as Self
     }

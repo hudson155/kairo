@@ -6,6 +6,7 @@ import io.limberapp.framework.model.Model
 import io.limberapp.framework.store.MONGO_ID
 import io.limberapp.framework.validation.validation.util.shortText
 import io.limberapp.framework.validation.validation.validate
+import java.time.LocalDateTime
 import java.util.UUID
 
 /**
@@ -13,6 +14,8 @@ import java.util.UUID
  */
 data class Org(
     @JsonProperty(MONGO_ID) override val id: UUID?,
+    override val created: LocalDateTime?,
+    override val version: Int?,
     val name: String
 ) : Model<Org>() {
 
@@ -21,5 +24,7 @@ data class Org(
     }
 
     @JsonIgnore
-    override fun setId(id: UUID?) = copy(id = id)
+    override fun setFields(id: UUID?, created: LocalDateTime?, version: Int?): Org {
+        return copy(id = id, created = created, version = version)
+    }
 }

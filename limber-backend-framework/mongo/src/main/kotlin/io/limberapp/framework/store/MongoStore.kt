@@ -9,6 +9,7 @@ import io.limberapp.framework.util.asByteArray
 import org.bson.BsonBinarySubType
 import org.bson.Document
 import org.bson.types.Binary
+import java.time.LocalDateTime
 import java.util.UUID
 
 const val MONGO_ID = "_id"
@@ -35,13 +36,13 @@ abstract class MongoStore<M : Model<M>>(
      */
 
     protected fun toJson(model: M): String {
-        check(model.id != null) // Sanity check
+        check(model.modelState == Model.ModelState.COMPLETE) // Sanity check
         return objectMapper.writeValueAsString(model)
     }
 
     protected fun fromJson(json: String, typeRef: TypeReference<M>): M {
         val model = objectMapper.readValue<M>(json, typeRef)
-        check(model.id != null) // Sanity check
+        check(model.modelState == Model.ModelState.COMPLETE) // Sanity check
         return model
     }
 
@@ -62,7 +63,7 @@ abstract class MongoStore<M : Model<M>>(
 
     final override fun create(model: M, typeRef: TypeReference<M>): M {
         val id = UUID.randomUUID()
-        val json = toJson(model.withId(id))
+        val json = toJson(model.complete(id, LocalDateTime.now()))
         collection.insertOne(toDocument(json))
         // It's important to reverse-parse the JSON here because there can be data loss when mapping
         // to JSON. For example, SimpleDateTimes natively have nanosecond precision, but when mapped
