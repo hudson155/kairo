@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.orgs.service.formTemplate
 
 import com.google.inject.Inject
-import io.ktor.features.NotFoundException
 import io.limberapp.backend.module.orgs.model.formTemplate.Org
 import io.limberapp.backend.module.orgs.store.formTemplate.OrgStore
 import io.limberapp.framework.store.create
@@ -17,7 +16,5 @@ internal class OrgServiceImpl @Inject constructor(
 
     override fun getById(id: UUID) = orgStore.getById(id)
 
-    override fun update(id: UUID, updater: Org.Updater): Org {
-        return orgStore.update(id, updater)
-    }
+    override fun update(id: UUID, updater: Org.Updater) = orgStore.update(id, updater)
 }

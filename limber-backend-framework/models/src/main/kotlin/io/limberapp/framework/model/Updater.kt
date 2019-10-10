@@ -1,3 +1,6 @@
 package io.limberapp.framework.model
 
-abstract class Updater<M : Model<M>>
+/**
+ * Updaters are classes that update models. They are used for PATCH request bodies.
+ */
+interface Updater<M : Model<M>>

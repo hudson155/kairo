@@ -13,7 +13,7 @@ import java.util.UUID
  * entity is persisted. By default, this includes only the id property, but could include additional
  * properties as well
  */
-abstract class Model<Self : Model<Self>> : PartialModel() {
+abstract class Model<Self : Model<Self>> : PartialModel {
 
     abstract val id: UUID?
     abstract val created: LocalDateTime?
@@ -26,6 +26,10 @@ abstract class Model<Self : Model<Self>> : PartialModel() {
             else -> error("This model is not in a valid state")
         }
 
+    /**
+     * CREATION models are used for POST request bodies.
+     * COMPLETE models are used for response bodies.
+     */
     enum class ModelState { CREATION, COMPLETE }
 
     /**

@@ -24,11 +24,11 @@ data class Org(
     }
 
     @JsonIgnore
-    override fun setFields(id: UUID?, created: LocalDateTime?, version: Int?): Org {
-        return copy(id = id, created = created, version = version)
-    }
+    override fun setFields(id: UUID?, created: LocalDateTime?, version: Int?) =
+        copy(id = id, created = created, version = version)
 
+    @Suppress("UndocumentedPublicClass")
     data class Updater(
         val name: String?
-    ) : io.limberapp.framework.model.Updater<Org>()
+    ) : io.limberapp.framework.model.Updater<Org>
 }
