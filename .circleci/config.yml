@@ -6,7 +6,7 @@ image_gcloud: &image_gcloud
   image: google/cloud-sdk:latest
 
 image_java: &image_java
-  image: circleci/openjdk:11-jdk
+  image: circleci/openjdk:8-jdk
 
 image_node: &image_node
   image: circleci/node:12
