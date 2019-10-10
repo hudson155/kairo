@@ -10,6 +10,7 @@ import io.ktor.util.pipeline.PipelineContext
 import io.limberapp.framework.error.FrameworkError
 import io.limberapp.framework.error.internal.InternalFrameworkError
 import io.limberapp.framework.model.Model
+import io.limberapp.framework.model.Updater
 import kotlin.reflect.KFunction1
 
 /**
@@ -63,6 +64,7 @@ class CustomJacksonConverter(mapper: ObjectMapper) : ContentConverter {
                 value.validate()
                 converter(value)
             }
+            is Updater<*> -> value
             else -> error("Unknown type: ${value?.let { it::class.qualifiedName }}")
         }
     }

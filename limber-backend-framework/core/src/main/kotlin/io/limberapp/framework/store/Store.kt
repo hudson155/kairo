@@ -3,6 +3,7 @@ package io.limberapp.framework.store
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import io.limberapp.framework.model.Model
+import io.limberapp.framework.model.Updater
 import java.util.UUID
 
 /**
@@ -14,8 +15,15 @@ interface Store<M : Model<M>> {
     fun create(model: M, typeRef: TypeReference<M>): M
 
     fun getById(id: UUID, typeRef: TypeReference<M>): M?
+
+    fun update(id: UUID, updater: Updater<M>, typeRef: TypeReference<M>): M
 }
 
-inline fun <reified M : Model<M>> Store<M>.create(model: M) = create(model, jacksonTypeRef())
+inline fun <reified M : Model<M>> Store<M>.create(model: M) =
+    create(model, jacksonTypeRef())
 
-inline fun <reified M : Model<M>> Store<M>.getById(id: UUID) = getById(id, jacksonTypeRef())
+inline fun <reified M : Model<M>> Store<M>.getById(id: UUID) =
+    getById(id, jacksonTypeRef())
+
+inline fun <reified M : Model<M>> Store<M>.update(id: UUID, updater: Updater<M>) =
+    update(id, updater, jacksonTypeRef())

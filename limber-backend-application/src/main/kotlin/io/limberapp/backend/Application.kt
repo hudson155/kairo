@@ -12,6 +12,7 @@ import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.server.cio.EngineMain
+import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.framework.dataConversion.CustomJacksonConverter
 import io.limberapp.framework.dataConversion.conversionService.GuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
@@ -47,6 +48,7 @@ internal fun Application.main() {
         ExceptionMappingConfigurator().configureExceptionMapping(this)
     }
     Guice.createInjector(
-        MainModule(this)
+        MainModule(this),
+        OrgsModule()
     )
 }

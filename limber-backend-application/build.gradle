@@ -23,6 +23,7 @@ sourceSets {
 }
 
 dependencies {
+    compile project(":limber-backend-application:orgs")
     compile project(":limber-backend-framework:data-conversion")
     compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:object-mapper")
@@ -30,6 +31,15 @@ dependencies {
     compile libs.ktor_server_cio
     compile libs.logback_classic
     compile libs.mongodb
+}
+
+subprojects {
+    dependencies {
+        compile project(":limber-backend-framework:core")
+        compile project(":limber-backend-framework:models")
+        compile project(":limber-backend-framework:mongo")
+        compile project(":limber-backend-framework:validation")
+    }
 }
 
 shadowJar {
