@@ -2,6 +2,7 @@ package io.limberapp.backend.module.orgs
 
 import io.limberapp.backend.module.orgs.endpoint.formTemplate.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.formTemplate.GetOrgById
+import io.limberapp.backend.module.orgs.endpoint.formTemplate.UpdateOrg
 import io.limberapp.backend.module.orgs.service.formTemplate.OrgService
 import io.limberapp.backend.module.orgs.service.formTemplate.OrgServiceImpl
 import io.limberapp.backend.module.orgs.store.formTemplate.MongoOrgStore
@@ -18,7 +19,8 @@ class OrgsModule : Module() {
 
     override val endpoints = listOf(
         CreateOrg::class.java,
-        GetOrgById::class.java
+        GetOrgById::class.java,
+        UpdateOrg::class.java
     )
 
     override fun bindServices() {

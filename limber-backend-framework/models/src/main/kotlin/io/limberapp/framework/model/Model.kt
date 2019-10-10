@@ -13,7 +13,7 @@ import java.util.UUID
  * entity is persisted. By default, this includes only the id property, but could include additional
  * properties as well
  */
-abstract class Model<Self : Model<Self>> : PartialModel {
+abstract class Model<Self : Model<Self>> : PartialModel() {
 
     abstract val id: UUID?
     abstract val created: LocalDateTime?
@@ -40,17 +40,17 @@ abstract class Model<Self : Model<Self>> : PartialModel {
     /**
      * This method returns a new instance of the model with all creator-unknown properties as null.
      */
-    open fun asCreator() = setFields(null, null, null)
-
-    protected abstract fun setFields(id: UUID?, created: LocalDateTime?, version: Int?): Self
+    fun asCreator() = setFields(null, null, null)
 
     /**
      * This method returns a new instance of the model with all creator-unknown properties as
      * non-null.
      */
-    open fun asResult(): Self {
+    fun asResult(): Self {
         check(modelState == ModelState.COMPLETE)
         @Suppress("UNCHECKED_CAST", "UnsafeCast") // This is safe given how Self works.
         return this as Self
     }
+
+    protected abstract fun setFields(id: UUID?, created: LocalDateTime?, version: Int?): Self
 }

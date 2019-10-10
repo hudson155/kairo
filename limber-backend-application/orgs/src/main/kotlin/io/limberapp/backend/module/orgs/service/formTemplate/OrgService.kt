@@ -8,4 +8,6 @@ internal interface OrgService {
     fun create(model: Org): Org
 
     fun getById(id: UUID): Org?
+
+    fun update(id: UUID, updater: Org.Updater): Org
 }
