@@ -2,10 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import EventsPage from './pages/EventsPage/EventsPage';
+import { useAuth0 } from '../react-auth0-wrapper';
 import Loading from './components/Loading/Loading';
 
 const App: React.FC = () => {
-  if (false) return <Loading />;
+  const { loading: loadingAuth0 } = useAuth0();
+  if (loadingAuth0) return <Loading />;
 
   return (
     <Router>
