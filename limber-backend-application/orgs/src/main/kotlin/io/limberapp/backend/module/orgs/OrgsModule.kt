@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.orgs
 
-import io.limberapp.backend.module.orgs.endpoint.formTemplate.CreateOrg
-import io.limberapp.backend.module.orgs.endpoint.formTemplate.GetOrgById
-import io.limberapp.backend.module.orgs.endpoint.formTemplate.UpdateOrg
+import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
+import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
+import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
 import io.limberapp.backend.module.orgs.service.formTemplate.OrgService
 import io.limberapp.backend.module.orgs.service.formTemplate.OrgServiceImpl
 import io.limberapp.backend.module.orgs.store.formTemplate.MongoOrgStore

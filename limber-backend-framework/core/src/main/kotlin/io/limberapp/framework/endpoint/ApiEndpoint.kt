@@ -12,7 +12,7 @@ import io.ktor.http.Parameters
 import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import io.limberapp.framework.model.Model
+import io.limberapp.framework.rep.CompleteRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
@@ -83,23 +83,23 @@ sealed class ApiEndpoint<ReturnType : Any?>(
 /**
  * Returns a single model, never null. This is useful for PATCH/POST/PUT endpoints.
  */
-abstract class ModelApiEndpoint<M : Model<M>>(
+abstract class RepApiEndpoint<R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<M>(application, config)
+) : ApiEndpoint<R>(application, config)
 
 /**
  * Returns a single model or null. This is useful for GET endpoints.
  */
-abstract class NullableModelApiEndpoint<M : Model<M>>(
+abstract class NullableRepApiEndpoint<R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<M?>(application, config)
+) : ApiEndpoint<R?>(application, config)
 
 /**
  * Returns a list of models. This is useful for GET endpoints.
  */
-abstract class ListApiEndpoint<M : Model<M>>(
+abstract class RepListApiEndpoint<R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<List<M>>(application, config)
+) : ApiEndpoint<List<R>>(application, config)

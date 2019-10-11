@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.orgs.service.formTemplate
 
-import io.limberapp.backend.module.orgs.model.formTemplate.Org
+import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.UUID
 
 internal interface OrgService {
 
-    fun create(model: Org): Org
+    fun create(model: OrgModel.Creation): OrgModel.Complete
 
-    fun getById(id: UUID): Org?
+    fun getById(id: UUID): OrgModel.Complete?
 
-    fun update(id: UUID, updater: Org.Updater): Org
+    fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete
 }

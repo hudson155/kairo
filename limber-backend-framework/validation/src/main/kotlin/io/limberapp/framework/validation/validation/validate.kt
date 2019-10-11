@@ -1,16 +1,10 @@
 package io.limberapp.framework.validation.validation
 
-import io.limberapp.framework.model.PartialModel
+import io.limberapp.framework.rep.Rep
 import kotlin.reflect.KProperty1
 
-fun <M : PartialModel, T : PartialModel> M.validate(
-    property: KProperty1<M, List<T>>
-) {
-    validate(property) { subject.forEach { it.validate() } }
-}
-
-fun <M : PartialModel, T : Any?> M.validate(
-    property: KProperty1<M, T>,
+fun <R : Rep, T : Any?> R.validate(
+    property: KProperty1<R, T>,
     validator: Validation<T>.() -> Unit
 ) {
     Validation(property.get(this), property.name).apply(validator)
