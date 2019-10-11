@@ -17,12 +17,7 @@ comments:
     active: true
     endOfSentenceFormat: ([.?!][ \t\n\r\f<])|([.?!:]$)
   UndocumentedPublicClass:
-    active: true
-    excludes: "**/src/test/**"
-    searchInNestedClass: true
-    searchInInnerClass: true
-    searchInInnerObject: true
-    searchInInnerInterface: true
+    active: false
   UndocumentedPublicFunction:
     active: false
 

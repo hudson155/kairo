@@ -4,9 +4,6 @@ import io.limberapp.framework.dataConversion.SimpleConversionService
 import io.limberapp.framework.validation.validator.Validator
 import java.util.UUID
 
-/**
- * Converts UUID instances.
- */
 class GuidConversionService : SimpleConversionService<UUID>(UUID::class) {
     override fun isValid(value: String) = Validator.guid(value)
     override fun fromValue(value: String): UUID = UUID.fromString(value)

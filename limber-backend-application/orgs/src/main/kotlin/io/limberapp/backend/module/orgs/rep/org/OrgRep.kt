@@ -9,9 +9,6 @@ import io.limberapp.framework.validation.validation.validate
 import java.time.LocalDateTime
 import java.util.UUID
 
-/**
- * An org represents a single client/tenant/organization's basic information/metadata.
- */
 object OrgRep {
 
     data class Creation(

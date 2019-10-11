@@ -81,7 +81,7 @@ sealed class ApiEndpoint<ReturnType : Any?>(
 }
 
 /**
- * Returns a single model, never null. This is useful for PATCH/POST/PUT endpoints.
+ * Returns a single rep, never null. This is useful for PATCH/POST/PUT endpoints.
  */
 abstract class RepApiEndpoint<R : CompleteRep>(
     application: Application,
@@ -89,7 +89,7 @@ abstract class RepApiEndpoint<R : CompleteRep>(
 ) : ApiEndpoint<R>(application, config)
 
 /**
- * Returns a single model or null. This is useful for GET endpoints.
+ * Returns a single rep or null. This is useful for GET endpoints.
  */
 abstract class NullableRepApiEndpoint<R : CompleteRep>(
     application: Application,
@@ -97,7 +97,7 @@ abstract class NullableRepApiEndpoint<R : CompleteRep>(
 ) : ApiEndpoint<R?>(application, config)
 
 /**
- * Returns a list of models. This is useful for GET endpoints.
+ * Returns a list of reps. This is useful for GET endpoints.
  */
 abstract class RepListApiEndpoint<R : CompleteRep>(
     application: Application,

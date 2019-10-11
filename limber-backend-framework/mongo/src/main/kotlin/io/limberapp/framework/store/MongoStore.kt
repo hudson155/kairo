@@ -16,6 +16,9 @@ import org.bson.conversions.Bson
 import org.bson.types.Binary
 import java.util.UUID
 
+private const val ID_KEY = "id"
+private const val MONGO_ID_KEY = "_id"
+
 /**
  * MongoStore is an implementation of Store for MongoDB. It implements some default methods.
  *
@@ -33,8 +36,8 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
 
     final override fun create(model: Complete, typeRef: TypeReference<Complete>): Complete {
         val map = objectMapper.convertValue<MutableMap<String, Any?>>(model).apply {
-            put("_id", get("id")!!)
-            remove("id")
+            put(MONGO_ID_KEY, get(ID_KEY)!!)
+            remove(ID_KEY)
         }
         val json = objectMapper.writeValueAsString(map)
         collection.insertOne(Document.parse(json))
@@ -53,8 +56,8 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return getById(id, typeRef)!!
         val json = objectMapper.writeValueAsString(map.toMutableMap().apply {
-            put("id", get("_id")!!)
-            remove("_id")
+            put(ID_KEY, get(MONGO_ID_KEY)!!)
+            remove(MONGO_ID_KEY)
         })
         val filter = Filters.and(idFilter(id))
         val update = Document(
