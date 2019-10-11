@@ -1,0 +1,21 @@
+package io.limberapp.backend.module.orgs.service.org
+
+import com.google.inject.Inject
+import io.limberapp.backend.module.orgs.mapper.OrgMapper
+import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.backend.module.orgs.store.org.OrgStore
+import io.limberapp.framework.store.create
+import io.limberapp.framework.store.getById
+import io.limberapp.framework.store.update
+import java.util.UUID
+
+internal class OrgServiceImpl @Inject constructor(
+    private val orgStore: OrgStore
+) : OrgService {
+
+    override fun create(model: OrgModel.Creation) = orgStore.create(OrgMapper.completeModel(model))
+
+    override fun getById(id: UUID) = orgStore.getById(id)
+
+    override fun update(id: UUID, model: OrgModel.Update) = orgStore.update(id, model)
+}

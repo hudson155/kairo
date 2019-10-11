@@ -11,9 +11,9 @@ import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
+import io.ktor.jackson.JacksonConverter
 import io.ktor.server.cio.EngineMain
 import io.limberapp.backend.module.orgs.OrgsModule
-import io.limberapp.framework.dataConversion.CustomJacksonConverter
 import io.limberapp.framework.dataConversion.conversionService.GuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
@@ -41,7 +41,7 @@ internal fun Application.main() {
     install(ContentNegotiation) {
         register(
             ContentType.Application.Json,
-            CustomJacksonConverter(LimberObjectMapper(prettyPrint = true))
+            JacksonConverter(LimberObjectMapper(prettyPrint = true))
         )
     }
     install(StatusPages) {

@@ -28,6 +28,7 @@ dependencies {
     compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:object-mapper")
     compile libs.guice
+    compile libs.ktor_jackson
     compile libs.ktor_server_cio
     compile libs.logback_classic
     compile libs.mongodb
