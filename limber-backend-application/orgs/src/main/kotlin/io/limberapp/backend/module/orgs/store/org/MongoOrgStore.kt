@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.store.formTemplate
+package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase

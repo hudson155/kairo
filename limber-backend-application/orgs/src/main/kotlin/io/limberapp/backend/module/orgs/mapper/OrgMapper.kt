@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.mapper
 
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.rep.formTemplate.OrgRep
+import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import java.time.LocalDateTime
 import java.util.UUID
 

@@ -1,9 +1,9 @@
-package io.limberapp.backend.module.orgs.service.formTemplate
+package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.mapper.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.store.formTemplate.OrgStore
+import io.limberapp.backend.module.orgs.store.org.OrgStore
 import io.limberapp.framework.store.create
 import io.limberapp.framework.store.getById
 import io.limberapp.framework.store.update

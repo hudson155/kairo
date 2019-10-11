@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.rep.formTemplate
+package io.limberapp.backend.module.orgs.rep.org
 
 import io.limberapp.framework.rep.CompleteRep
 import io.limberapp.framework.rep.CreationRep

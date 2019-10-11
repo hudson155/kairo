@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.service.formTemplate
+package io.limberapp.backend.module.orgs.service.org
 
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.UUID

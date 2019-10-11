@@ -5,8 +5,8 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.mapper.OrgMapper
-import io.limberapp.backend.module.orgs.rep.formTemplate.OrgRep
-import io.limberapp.backend.module.orgs.service.formTemplate.OrgService
+import io.limberapp.backend.module.orgs.rep.org.OrgRep
+import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.framework.endpoint.NullableRepApiEndpoint
 import java.util.UUID
 
