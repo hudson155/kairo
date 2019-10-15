@@ -10,26 +10,32 @@ const App: React.FC = () => {
   const { isAuthenticated, loading: loadingAuth0, loginWithRedirect: signIn, logout: signOut } = useAuth0();
   if (loadingAuth0) return <Loading />;
 
-  const routes: ReactNodeArray = [];
-  if (isAuthenticated) {
-    routes.push(
-      <Route path="/" exact>
-        {() => <Redirect to="/events" />}
-      </Route>,
-      <Route path="/events" exact component={EventsPage} />,
-    );
-  } else {
-    routes.push(<Route path="/" exact component={MarketingSiteHomePage} />);
-  }
-  routes.push(
-    <Route path="/signin" exact>
+  const authenticatedRoutes: ReactNodeArray = [
+    <Route key="/" path="/" exact>
+      {() => <Redirect to="/events" />}
+    </Route>,
+    <Route key="/events" path="/events" exact component={EventsPage} />,
+  ];
+
+  const unauthenticatedRoutes: ReactNodeArray = [<Route key="/" path="/" exact component={MarketingSiteHomePage} />];
+
+  const regardlessRoutes = [
+    <Route key="/signin" path="/signin" exact>
       {() => signIn()}
     </Route>,
-    <Route path="/signout" exact>
+    <Route key="/signout" path="/signout" exact>
       {() => signOut()}
     </Route>,
-    <Route component={NotFoundPage} />,
-  );
+    <Route key="" component={NotFoundPage} />,
+  ];
+
+  const routes: ReactNodeArray = [];
+  if (isAuthenticated) {
+    routes.push(...authenticatedRoutes);
+  } else {
+    routes.push(...unauthenticatedRoutes);
+  }
+  routes.push(...regardlessRoutes);
 
   return (
     <Router>
