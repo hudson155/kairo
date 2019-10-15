@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 
 const Loading: React.FC = () => {
-  const containerStyle: CSSProperties = {
+  const style: CSSProperties = {
     alignSelf: 'center',
     flexGrow: 1,
     display: 'flex',
@@ -9,7 +9,7 @@ const Loading: React.FC = () => {
     justifyContent: 'center',
   };
 
-  return <div style={containerStyle}><p>Loading...</p></div>;
+  return <div style={style}><p>Loading...</p></div>;
 };
 
 export default Loading;
