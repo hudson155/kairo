@@ -7,13 +7,15 @@ import Loading from './components/Loading/Loading';
 import MarketingSiteHomePage from './pages/MarketingSiteHomePage/MarketingSiteHomePage';
 
 const App: React.FC = () => {
-  const { isAuthenticated, loading: loadingAuth0, loginWithRedirect: signIn } = useAuth0();
+  const { isAuthenticated, loading: loadingAuth0, loginWithRedirect: signIn, logout: signOut } = useAuth0();
   if (loadingAuth0) return <Loading />;
 
   const routes: ReactNodeArray = [];
   if (isAuthenticated) {
     routes.push(
-      <Route path="/" exact>{() => <Redirect to="/events" />}</Route>,
+      <Route path="/" exact>
+        {() => <Redirect to="/events" />}
+      </Route>,
       <Route path="/events" exact component={EventsPage} />,
     );
   } else {
@@ -23,10 +25,17 @@ const App: React.FC = () => {
     <Route path="/signin" exact>
       {() => signIn()}
     </Route>,
+    <Route path="/signout" exact>
+      {() => signOut()}
+    </Route>,
     <Route component={NotFoundPage} />,
   );
 
-  return <Router><Switch>{routes}</Switch></Router>;
+  return (
+    <Router>
+      <Switch>{routes}</Switch>
+    </Router>
+  );
 };
 
 export default App;
