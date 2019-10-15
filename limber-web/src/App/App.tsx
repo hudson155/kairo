@@ -4,6 +4,7 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import EventsPage from './pages/EventsPage/EventsPage';
 import { useAuth0 } from '../react-auth0-wrapper';
 import Loading from './components/Loading/Loading';
+import MarketingSiteHomePage from './pages/MarketingSiteHomePage/MarketingSiteHomePage';
 
 const App: React.FC = () => {
   const { loading: loadingAuth0, loginWithRedirect: signIn } = useAuth0();
@@ -12,6 +13,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/" exact component={MarketingSiteHomePage} />
         <Route path="/events" exact component={EventsPage} />
         <Route path="/signin" exact>{() => signIn()}</Route>
         <Route component={NotFoundPage} />
