@@ -5,7 +5,6 @@ import HeaderLink from './components/HeaderLink/HeaderLink';
 import HeaderLinkGroup from './components/HeaderLinkGroup/HeaderLinkGroup';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { useAuth0 } from '../../../../../react-auth0-wrapper';
 
 interface Props {
   color: string;
