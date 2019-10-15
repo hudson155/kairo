@@ -26,6 +26,7 @@ ReactDOM.render(
       domain="limber.auth0.com"
       client_id={process.env['REACT_APP_AUTH0_CLIENT_ID']}
       redirect_uri={window.location.origin}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore-line
       onRedirectCallback={onRedirectCallback}
     >

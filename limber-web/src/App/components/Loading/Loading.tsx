@@ -9,7 +9,11 @@ const Loading: React.FC = () => {
     justifyContent: 'center',
   };
 
-  return <div style={style}><p>Loading...</p></div>;
+  return (
+    <div style={style}>
+      <p>Loading...</p>
+    </div>
+  );
 };
 
 export default Loading;

@@ -14,9 +14,15 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         {!isAuthenticated && <Route path="/" exact component={MarketingSiteHomePage} />}
-        {isAuthenticated && <Route path="/" exact>{() => <Redirect to="/events" />}</Route>}
+        {isAuthenticated && (
+          <Route path="/" exact>
+            {() => <Redirect to="/events" />}
+          </Route>
+        )}
         <Route path="/events" exact component={EventsPage} />
-        <Route path="/signin" exact>{() => signIn()}</Route>
+        <Route path="/signin" exact>
+          {() => signIn()}
+        </Route>
         <Route component={NotFoundPage} />
       </Switch>
     </Router>

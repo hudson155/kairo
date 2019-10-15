@@ -32,8 +32,7 @@ const HomePageFloater: React.FC<Props> = (props: Props) => {
         <h1 style={{ color: 'white', textAlign: 'center' }}>Limber</h1>
         <div style={innerStyle}>
           <p style={{ textAlign: 'center' }}>
-            Welcome to Limber. We don't have a marketing site yet.
-            Click <Link to="/signin">here</Link> to sign in.
+            Welcome to Limber. We don&apos;t have a marketing site yet. Click <Link to="/signin">here</Link> to sign in.
           </p>
         </div>
       </div>
