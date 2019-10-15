@@ -27,6 +27,9 @@ const AppPageHeader: React.FC<Props> = (props: Props) => {
       <HeaderLinkGroup>
         <HeaderLink to="/events">Events</HeaderLink>
       </HeaderLinkGroup>
+      <HeaderLinkGroup>
+        <HeaderLink to="/signout">Sign Out</HeaderLink>
+      </HeaderLinkGroup>
     </div>
   );
 };
