@@ -5,9 +5,11 @@ import EventsPage from './pages/EventsPage/EventsPage';
 import { useAuth0 } from '../react-auth0-wrapper';
 import Loading from './components/Loading/Loading';
 import MarketingSiteHomePage from './pages/MarketingSiteHomePage/MarketingSiteHomePage';
+import SignInPage from './pages/SignInPage/SignInPage';
+import SignOutPage from './pages/SignOutPage/SignOutPage';
 
 const App: React.FC = () => {
-  const { isAuthenticated, loading: loadingAuth0, loginWithRedirect: signIn, logout: signOut } = useAuth0();
+  const { isAuthenticated, loading: loadingAuth0 } = useAuth0();
   if (loadingAuth0) return <Loading />;
 
   const authenticatedRoutes: ReactNodeArray = [
@@ -20,12 +22,8 @@ const App: React.FC = () => {
   const unauthenticatedRoutes: ReactNodeArray = [<Route key="/" path="/" exact component={MarketingSiteHomePage} />];
 
   const regardlessRoutes = [
-    <Route key="/signin" path="/signin" exact>
-      {() => signIn()}
-    </Route>,
-    <Route key="/signout" path="/signout" exact>
-      {() => signOut()}
-    </Route>,
+    <Route key = "/signin" path="/signin" exact component={SignInPage} />,
+    <Route key = "/signout" path="/signout" exact component={SignOutPage} />,
     <Route key="" component={NotFoundPage} />,
   ];
 
