@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNodeArray } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import EventsPage from './pages/EventsPage/EventsPage';
@@ -10,23 +10,23 @@ const App: React.FC = () => {
   const { isAuthenticated, loading: loadingAuth0, loginWithRedirect: signIn } = useAuth0();
   if (loadingAuth0) return <Loading />;
 
-  return (
-    <Router>
-      <Switch>
-        {!isAuthenticated && <Route path="/" exact component={MarketingSiteHomePage} />}
-        {isAuthenticated && (
-          <Route path="/" exact>
-            {() => <Redirect to="/events" />}
-          </Route>
-        )}
-        <Route path="/events" exact component={EventsPage} />
-        <Route path="/signin" exact>
-          {() => signIn()}
-        </Route>
-        <Route component={NotFoundPage} />
-      </Switch>
-    </Router>
+  const routes: ReactNodeArray = [];
+  if (isAuthenticated) {
+    routes.push(
+      <Route path="/" exact>{() => <Redirect to="/events" />}</Route>,
+      <Route path="/events" exact component={EventsPage} />,
+    );
+  } else {
+    routes.push(<Route path="/" exact component={MarketingSiteHomePage} />);
+  }
+  routes.push(
+    <Route path="/signin" exact>
+      {() => signIn()}
+    </Route>,
+    <Route component={NotFoundPage} />,
   );
+
+  return <Router><Switch>{routes}</Switch></Router>;
 };
 
 export default App;
