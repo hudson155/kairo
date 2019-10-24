@@ -9,17 +9,29 @@ import io.limberapp.backend.module.orgs.mapper.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 internal class UpdateOrg @Inject constructor(
     application: Application,
     private val orgService: OrgService
-) : RepApiEndpoint<OrgRep.Complete>(application, config) {
+) : RepApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
 
-    override suspend fun handler(call: ApplicationCall): OrgRep.Complete {
-        val orgId = call.parameters.getAsType(UUID::class, "orgId")
-        val creationModel = OrgMapper.updateModel(call.receive())
-        val completeModel = orgService.update(orgId, creationModel)
+    data class Command(
+        val orgId: UUID,
+        val updateRep: OrgRep.Update
+    ) : AbstractCommand()
+
+    override suspend fun determineCommand(call: ApplicationCall) = Command(
+        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        updateRep = call.receive()
+    )
+
+    override suspend fun handler(command: Command): OrgRep.Complete {
+        val completeModel = orgService.update(
+            id = command.orgId,
+            model = OrgMapper.updateModel(command.updateRep)
+        )
         return OrgMapper.completeRep(completeModel)
     }
 

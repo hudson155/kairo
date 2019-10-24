@@ -12,6 +12,7 @@ import io.ktor.http.Parameters
 import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.rep.CompleteRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
@@ -21,7 +22,7 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint of the API. The handler() is called
  * for each request.
  */
-sealed class ApiEndpoint<ReturnType : Any?>(
+sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     private val application: Application,
     private val config: Config
 ) {
@@ -41,9 +42,14 @@ sealed class ApiEndpoint<ReturnType : Any?>(
     }
 
     /**
-     * Called for each request to the endpoint.
+     * Called for each request to the endpoint, to determine the command.
      */
-    abstract suspend fun handler(call: ApplicationCall): ReturnType
+    abstract suspend fun determineCommand(call: ApplicationCall): Command
+
+    /**
+     * Called for each request to the endpoint, to handle the execution.
+     */
+    abstract suspend fun handler(command: Command): ReturnType
 
     init {
         register()
@@ -57,7 +63,8 @@ sealed class ApiEndpoint<ReturnType : Any?>(
         application.routing {
             route(config.pathTemplate, config.httpMethod) {
                 handle {
-                    val result = handler(call)
+                    val command = determineCommand(call)
+                    val result = handler(command)
                     if (result == null) call.respond(HttpStatusCode.NotFound)
                     else call.respond(result)
                 }
@@ -83,23 +90,23 @@ sealed class ApiEndpoint<ReturnType : Any?>(
 /**
  * Returns a single rep, never null. This is useful for PATCH/POST/PUT endpoints.
  */
-abstract class RepApiEndpoint<R : CompleteRep>(
+abstract class RepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<R>(application, config)
+) : ApiEndpoint<C, R>(application, config)
 
 /**
  * Returns a single rep or null. This is useful for GET endpoints.
  */
-abstract class NullableRepApiEndpoint<R : CompleteRep>(
+abstract class NullableRepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<R?>(application, config)
+) : ApiEndpoint<C, R?>(application, config)
 
 /**
  * Returns a list of reps. This is useful for GET endpoints.
  */
-abstract class RepListApiEndpoint<R : CompleteRep>(
+abstract class RepListApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<List<R>>(application, config)
+) : ApiEndpoint<C, List<R>>(application, config)
