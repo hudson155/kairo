@@ -17,6 +17,7 @@ import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.framework.dataConversion.conversionService.GuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import org.slf4j.event.Level
 import java.util.UUID
 
 /**
@@ -37,7 +38,9 @@ internal fun Application.main() {
     }
     install(DefaultHeaders)
     install(Compression)
-    install(CallLogging)
+    install(CallLogging) {
+        level = Level.INFO
+    }
     install(ContentNegotiation) {
         register(
             ContentType.Application.Json,
