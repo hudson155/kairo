@@ -14,7 +14,7 @@ const App: React.FC = () => {
 
   const authenticatedRoutes: ReactNodeArray = [
     <Route key="/" path="/" exact>
-      {() => <Redirect to="/events" />}
+      <Redirect to="/events" />
     </Route>,
     <Route key="/events" path="/events" exact component={EventsPage} />,
   ];
@@ -22,8 +22,8 @@ const App: React.FC = () => {
   const unauthenticatedRoutes: ReactNodeArray = [<Route key="/" path="/" exact component={MarketingSiteHomePage} />];
 
   const regardlessRoutes = [
-    <Route key = "/signin" path="/signin" exact component={SignInPage} />,
-    <Route key = "/signout" path="/signout" exact component={SignOutPage} />,
+    <Route key="/signin" path="/signin" exact component={SignInPage} />,
+    <Route key="/signout" path="/signout" exact component={SignOutPage} />,
     <Route key="" component={NotFoundPage} />,
   ];
 
