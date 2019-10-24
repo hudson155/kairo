@@ -7,9 +7,14 @@ internal class LimberMongoObjectMapper : LimberObjectMapper(prettyPrint = false)
 
     init {
         registerMongoModule()
+        configurePropertyNaming()
     }
 
     private fun registerMongoModule() {
         registerModule(MongoModule())
+    }
+
+    private fun configurePropertyNaming() {
+        propertyNamingStrategy = LimberMongoPropertyNamingStrategy()
     }
 }
