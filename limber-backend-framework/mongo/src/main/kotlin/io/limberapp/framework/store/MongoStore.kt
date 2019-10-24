@@ -48,7 +48,7 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
     final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return getById(id, typeRef)!!
-        val json = objectMapper.writeValueAsString(map.toMutableMap())
+        val json = objectMapper.writeValueAsString(map)
         val filter = Filters.and(idFilter(id))
         val update = Document(
             mapOf(
