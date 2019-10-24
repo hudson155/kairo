@@ -16,9 +16,6 @@ import org.bson.conversions.Bson
 import org.bson.types.Binary
 import java.util.UUID
 
-private const val ID_KEY = "id"
-private const val MONGO_ID_KEY = "_id"
-
 /**
  * MongoStore is an implementation of Store for MongoDB. It implements some default methods.
  *
@@ -35,11 +32,7 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
     private val objectMapper = LimberMongoObjectMapper()
 
     final override fun create(model: Complete, typeRef: TypeReference<Complete>): Complete {
-        val map = objectMapper.convertValue<MutableMap<String, Any?>>(model).apply {
-            put(MONGO_ID_KEY, get(ID_KEY)!!)
-            remove(ID_KEY)
-        }
-        val json = objectMapper.writeValueAsString(map)
+        val json = objectMapper.writeValueAsString(model)
         collection.insertOne(Document.parse(json))
         // It's important to reverse-parse the JSON here because there can be data loss when mapping
         // to JSON. For example, SimpleDateTimes natively have nanosecond precision, but when mapped
@@ -55,10 +48,7 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
     final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return getById(id, typeRef)!!
-        val json = objectMapper.writeValueAsString(map.toMutableMap().apply {
-            put(ID_KEY, get(MONGO_ID_KEY)!!)
-            remove(MONGO_ID_KEY)
-        })
+        val json = objectMapper.writeValueAsString(map.toMutableMap())
         val filter = Filters.and(idFilter(id))
         val update = Document(
             mapOf(
