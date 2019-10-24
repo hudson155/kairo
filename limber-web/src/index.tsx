@@ -12,7 +12,8 @@ import { Auth0Provider } from './react-auth0-wrapper';
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 // A function that routes the user to the right place after signing in.
-const onRedirectCallback = (appState: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onRedirectCallback = (appState: any): any => {
   window.history.replaceState(
     {},
     document.title,
