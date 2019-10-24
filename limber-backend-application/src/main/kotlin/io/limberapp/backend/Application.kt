@@ -1,6 +1,7 @@
 package io.limberapp.backend
 
 import com.google.inject.Guice
+import com.typesafe.config.ConfigFactory
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CORS
@@ -13,6 +14,8 @@ import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.jackson.JacksonConverter
 import io.ktor.server.cio.EngineMain
+import io.limberapp.backend.config.Config
+import io.limberapp.backend.config.database.DatabaseConfig
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.framework.dataConversion.conversionService.GuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
@@ -29,6 +32,18 @@ internal fun main(args: Array<String>) = EngineMain.main(args)
  * application.
  */
 internal fun Application.main() {
+
+    val config = with(ConfigFactory.load()) {
+        Config(
+            database = DatabaseConfig(
+                host = getString("database.host"),
+                database = getString("database.database"),
+                user = getString("database.user"),
+                password = getString("database.password")
+            )
+        )
+    }
+
     install(CORS) {
         anyHost()
     }
@@ -47,8 +62,9 @@ internal fun Application.main() {
     install(StatusPages) {
         ExceptionMappingConfigurator().configureExceptionMapping(this)
     }
+
     Guice.createInjector(
-        MainModule(this),
+        MainModule(this, config),
         OrgsModule()
     )
 }

@@ -8,33 +8,20 @@ import com.mongodb.MongoClientSettings
 import com.mongodb.WriteConcern
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
-import com.typesafe.config.ConfigFactory
 import io.ktor.application.Application
 import io.limberapp.backend.config.Config
-import io.limberapp.backend.config.database.DatabaseConfig
 
 /**
  * MainModule configures bindings for classes that are not related to a specific application module.
  */
-internal class MainModule(private val application: Application) : AbstractModule() {
+internal class MainModule(
+    private val application: Application,
+    private val config: Config
+) : AbstractModule() {
 
     override fun configure() {
+        bind(Config::class.java).toInstance(config)
         bind(Application::class.java).toInstance(application)
-    }
-
-    @Provides
-    @Singleton
-    fun config(): Config {
-        return with(ConfigFactory.load()) {
-            Config(
-                database = DatabaseConfig(
-                    host = getString("database.host"),
-                    database = getString("database.database"),
-                    user = getString("database.user"),
-                    password = getString("database.password")
-                )
-            )
-        }
     }
 
     @Provides
