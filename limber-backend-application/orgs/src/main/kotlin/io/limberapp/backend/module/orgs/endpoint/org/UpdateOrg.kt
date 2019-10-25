@@ -9,6 +9,7 @@ import io.limberapp.backend.module.orgs.mapper.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.authorization.OrgMember
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
@@ -26,6 +27,8 @@ internal class UpdateOrg @Inject constructor(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         updateRep = call.receive()
     )
+
+    override fun authorization(command: Command) = OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): OrgRep.Complete {
         val completeModel = orgService.update(

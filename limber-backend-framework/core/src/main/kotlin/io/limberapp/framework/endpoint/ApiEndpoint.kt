@@ -3,6 +3,9 @@ package io.limberapp.framework.endpoint
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
+import io.ktor.auth.authenticate
+import io.ktor.auth.authentication
+import io.ktor.auth.jwt.JWTPrincipal
 import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
@@ -12,6 +15,7 @@ import io.ktor.http.Parameters
 import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.rep.CompleteRep
 import kotlin.reflect.KClass
@@ -47,6 +51,11 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     abstract suspend fun determineCommand(call: ApplicationCall): Command
 
     /**
+     * Called for each request to the endpoint, to check authorization.
+     */
+    abstract fun authorization(command: Command): Authorization
+
+    /**
      * Called for each request to the endpoint, to handle the execution.
      */
     abstract suspend fun handler(command: Command): ReturnType
@@ -61,12 +70,19 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
      */
     private fun register() {
         application.routing {
-            route(config.pathTemplate, config.httpMethod) {
-                handle {
-                    val command = determineCommand(call)
-                    val result = handler(command)
-                    if (result == null) call.respond(HttpStatusCode.NotFound)
-                    else call.respond(result)
+            authenticate(optional = true) {
+                route(config.pathTemplate, config.httpMethod) {
+                    handle {
+                        val command = determineCommand(call)
+                        val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
+                        if (!authorization(command).authorize(jwtPayload, command)) {
+                            call.respond(HttpStatusCode.Forbidden)
+                            return@handle
+                        }
+                        val result = handler(command)
+                        if (result == null) call.respond(HttpStatusCode.NotFound)
+                        else call.respond(result)
+                    }
                 }
             }
         }

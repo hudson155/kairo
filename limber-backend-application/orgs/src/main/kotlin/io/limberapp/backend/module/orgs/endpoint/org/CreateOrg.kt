@@ -9,6 +9,7 @@ import io.limberapp.backend.module.orgs.mapper.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.authorization.AnyJwt
 import io.limberapp.framework.endpoint.command.AbstractCommand
 
 internal class CreateOrg @Inject constructor(
@@ -23,6 +24,8 @@ internal class CreateOrg @Inject constructor(
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.receive()
     )
+
+    override fun authorization(command: Command) = AnyJwt
 
     override suspend fun handler(command: Command): OrgRep.Complete {
         val completeModel = orgService.create(OrgMapper.creationModel(command.creationRep))
