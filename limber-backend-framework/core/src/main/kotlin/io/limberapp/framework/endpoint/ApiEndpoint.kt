@@ -16,8 +16,10 @@ import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
+import io.limberapp.framework.endpoint.authorization.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.rep.CompleteRep
+import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
@@ -75,7 +77,8 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
                     handle {
                         val command = determineCommand(call)
                         val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
-                        if (!authorization(command).authorize(jwtPayload, command)) {
+                        val jwt = jwtFromPayload(jwtPayload)
+                        if (!authorization(command).authorize(jwt, command)) {
                             call.respond(HttpStatusCode.Forbidden)
                             return@handle
                         }
@@ -120,9 +123,12 @@ abstract class NullableRepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
 ) : ApiEndpoint<C, R?>(application, config)
 
 /**
- * Returns a list of reps. This is useful for GET endpoints.
+ * Returns a map of reps. This is useful for batch get endpoints implemented as POST endpoints.
+ * Currently, the only valid key is UUID type because I can't think of a case where that's not the
+ * best option. If there's ever a case where the best key type is not UUID, feel free to
+ * parameterize this further.
  */
-abstract class RepListApiEndpoint<C : AbstractCommand, R : CompleteRep>(
+abstract class RepMapApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<C, List<R>>(application, config)
+) : ApiEndpoint<C, Map<UUID, R>>(application, config)

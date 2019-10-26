@@ -8,7 +8,7 @@ import io.limberapp.backend.module.orgs.mapper.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.framework.endpoint.NullableRepApiEndpoint
-import io.limberapp.framework.endpoint.authorization.Public
+import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
@@ -25,7 +25,7 @@ internal class GetOrgById @Inject constructor(
         orgId = call.parameters.getAsType(UUID::class, "orgId")
     )
 
-    override fun authorization(command: Command) = Public
+    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): OrgRep.Complete? {
         val completeModel = orgService.getById(command.orgId)
