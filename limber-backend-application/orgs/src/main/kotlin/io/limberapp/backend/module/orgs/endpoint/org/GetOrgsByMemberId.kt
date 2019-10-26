@@ -17,7 +17,7 @@ internal class GetOrgsByMemberId @Inject constructor(
     private val orgService: OrgService
 ) : RepListApiEndpoint<GetOrgsByMemberId.Command, OrgRep.Complete>(application, config) {
 
-    data class Command(
+    internal data class Command(
         val memberId: UUID
     ) : AbstractCommand()
 
