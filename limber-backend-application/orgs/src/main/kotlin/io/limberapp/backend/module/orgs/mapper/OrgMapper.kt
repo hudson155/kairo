@@ -11,13 +11,12 @@ internal object OrgMapper {
         name = rep.name
     )
 
-    fun completeModel(model: OrgModel.Creation) =
-        OrgModel.Complete(
-            id = UUID.randomUUID(),
-            created = LocalDateTime.now(),
-            version = 0,
-            name = model.name
-        )
+    fun completeModel(model: OrgModel.Creation) = OrgModel.Complete(
+        id = UUID.randomUUID(),
+        created = LocalDateTime.now(),
+        version = 0,
+        name = model.name
+    )
 
     fun updateModel(rep: OrgRep.Update) = OrgModel.Update(
         name = rep.name
