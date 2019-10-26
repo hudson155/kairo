@@ -2,6 +2,7 @@ package io.limberapp.backend.module.orgs
 
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
+import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
@@ -20,6 +21,7 @@ class OrgsModule : Module() {
     override val endpoints = listOf(
         CreateOrg::class.java,
         GetOrgById::class.java,
+        GetOrgsByMemberId::class.java,
         UpdateOrg::class.java
     )
 

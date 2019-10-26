@@ -4,35 +4,35 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.RepListApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
+import java.util.UUID
 
-internal class CreateOrg @Inject constructor(
+internal class GetOrgsByMemberId @Inject constructor(
     application: Application,
     private val orgService: OrgService
-) : RepApiEndpoint<CreateOrg.Command, OrgRep.Complete>(application, config) {
+) : RepListApiEndpoint<GetOrgsByMemberId.Command, OrgRep.Complete>(application, config) {
 
     internal data class Command(
-        val creationRep: OrgRep.Creation
+        val memberId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.receive()
+        memberId = call.parameters.getAsType(UUID::class, "memberId")
     )
 
     override fun authorization(command: Command) = Authorization.Public
 
-    override suspend fun handler(command: Command): OrgRep.Complete {
-        val completeModel = orgService.create(OrgMapper.creationModel(command.creationRep))
-        return OrgMapper.completeRep(completeModel)
+    override suspend fun handler(command: Command): List<OrgRep.Complete> {
+        val completeModels = orgService.getByMemberId(command.memberId)
+        return completeModels.map { OrgMapper.completeRep(it) }
     }
 
     companion object {
-        private val config = Config(HttpMethod.Post, "/orgs")
+        private val config = Config(HttpMethod.Get, "/orgs")
     }
 }

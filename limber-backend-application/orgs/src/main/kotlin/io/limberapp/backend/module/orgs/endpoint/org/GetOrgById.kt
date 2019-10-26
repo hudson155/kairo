@@ -25,7 +25,7 @@ internal class GetOrgById @Inject constructor(
         orgId = call.parameters.getAsType(UUID::class, "orgId")
     )
 
-    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
+    override fun authorization(command: Command) = Authorization.Public
 
     override suspend fun handler(command: Command): OrgRep.Complete? {
         val completeModel = orgService.getById(command.orgId)

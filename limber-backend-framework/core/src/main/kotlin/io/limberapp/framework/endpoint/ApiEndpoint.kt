@@ -123,6 +123,14 @@ abstract class NullableRepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
 ) : ApiEndpoint<C, R?>(application, config)
 
 /**
+ * Returns a list of reps. This is useful for batch get endpoints implemented as POST endpoints.
+ */
+abstract class RepListApiEndpoint<C : AbstractCommand, R : CompleteRep>(
+    application: Application,
+    config: Config
+) : ApiEndpoint<C, List<R>>(application, config)
+
+/**
  * Returns a map of reps. This is useful for batch get endpoints implemented as POST endpoints.
  * Currently, the only valid key is UUID type because I can't think of a case where that's not the
  * best option. If there's ever a case where the best key type is not UUID, feel free to

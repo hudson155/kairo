@@ -9,5 +9,7 @@ internal interface OrgService {
 
     fun getById(id: UUID): OrgModel.Complete?
 
+    fun getByMemberId(memberId: UUID): List<OrgModel.Complete>
+
     fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete
 }
