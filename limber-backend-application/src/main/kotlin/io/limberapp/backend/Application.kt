@@ -22,7 +22,7 @@ import io.limberapp.backend.config.Config
 import io.limberapp.backend.config.database.DatabaseConfig
 import io.limberapp.backend.config.jwt.JwtConfig
 import io.limberapp.backend.module.orgs.OrgsModule
-import io.limberapp.framework.dataConversion.conversionService.GuidConversionService
+import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import java.util.UUID
@@ -62,7 +62,7 @@ internal fun Application.main() {
         anyHost()
     }
     install(DataConversion) {
-        convert(UUID::class, GuidConversionService())
+        convert(UUID::class, UuidConversionService())
     }
     install(DefaultHeaders)
     install(Compression)

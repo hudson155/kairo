@@ -1,4 +1,4 @@
-package io.limberapp.framework.jackson.module.mongo.component.guid
+package io.limberapp.framework.jackson.module.mongo.component.uuid
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
