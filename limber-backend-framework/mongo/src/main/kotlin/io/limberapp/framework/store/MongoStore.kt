@@ -30,7 +30,7 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
     protected val collection: MongoCollection<Document> =
         mongoDatabase.getCollection(collectionName)
 
-    private val objectMapper = LimberMongoObjectMapper()
+    protected val objectMapper = LimberMongoObjectMapper()
 
     final override fun create(model: Complete, typeRef: TypeReference<Complete>): Complete {
         val json = objectMapper.writeValueAsString(model)

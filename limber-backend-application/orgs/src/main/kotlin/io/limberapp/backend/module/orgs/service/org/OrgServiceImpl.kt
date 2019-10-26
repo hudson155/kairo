@@ -17,5 +17,7 @@ internal class OrgServiceImpl @Inject constructor(
 
     override fun getById(id: UUID) = orgStore.getById(id)
 
+    override fun getByMemberId(memberId: UUID) = orgStore.getByMemberId(memberId)
+
     override fun update(id: UUID, model: OrgModel.Update) = orgStore.update(id, model)
 }
