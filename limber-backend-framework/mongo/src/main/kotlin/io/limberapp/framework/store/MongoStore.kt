@@ -27,7 +27,8 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
     collectionName: String
 ) : Store<Complete, Update> {
 
-    private val collection: MongoCollection<Document> = mongoDatabase.getCollection(collectionName)
+    protected val collection: MongoCollection<Document> =
+        mongoDatabase.getCollection(collectionName)
 
     private val objectMapper = LimberMongoObjectMapper()
 
@@ -49,7 +50,6 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return getById(id, typeRef)!!
         val json = objectMapper.writeValueAsString(map)
-        val filter = Filters.and(idFilter(id))
         val update = Document(
             mapOf(
                 "\$set" to Document.parse(json),
@@ -57,7 +57,7 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
             )
         )
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
-        val document = collection.findOneAndUpdate(filter, update, options)!!
+        val document = collection.findOneAndUpdate(idFilter(id), update, options)!!
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
