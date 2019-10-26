@@ -17,7 +17,7 @@ internal class GetOrgById @Inject constructor(
     private val orgService: OrgService
 ) : NullableRepApiEndpoint<GetOrgById.Command, OrgRep.Complete>(application, config) {
 
-    data class Command(
+    internal data class Command(
         val orgId: UUID
     ) : AbstractCommand()
 

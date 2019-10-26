@@ -17,7 +17,7 @@ internal class CreateOrg @Inject constructor(
     private val orgService: OrgService
 ) : RepApiEndpoint<CreateOrg.Command, OrgRep.Complete>(application, config) {
 
-    data class Command(
+    internal data class Command(
         val creationRep: OrgRep.Creation
     ) : AbstractCommand()
 

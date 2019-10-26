@@ -1,5 +1,6 @@
 package io.limberapp.framework.endpoint.authorization
 
+import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.interfaces.Payload
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtOrg
@@ -15,7 +16,7 @@ internal fun jwtFromPayload(jwtPayload: Payload?): Jwt? {
                 .mapValues { JwtOrg(TODO()) },
             user = jwtPayload.getClaim("users").`as`(JwtUser::class.java)
         )
-    } catch (e: Exception) {
+    } catch (_: JWTDecodeException) {
         null
     }
 }
