@@ -1,7 +1,7 @@
-import ThemeApi from './theme/Api';
+import OrgsApi from './orgs/Api';
 
 const Api = {
-  theme: ThemeApi,
+  orgs: OrgsApi,
 };
 
 export default Api;

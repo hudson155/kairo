@@ -3,6 +3,9 @@ package io.limberapp.framework.endpoint
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
+import io.ktor.auth.authenticate
+import io.ktor.auth.authentication
+import io.ktor.auth.jwt.JWTPrincipal
 import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
@@ -12,7 +15,11 @@ import io.ktor.http.Parameters
 import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.limberapp.framework.endpoint.authorization.Authorization
+import io.limberapp.framework.endpoint.authorization.jwtFromPayload
+import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.rep.CompleteRep
+import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
@@ -21,7 +28,7 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint of the API. The handler() is called
  * for each request.
  */
-sealed class ApiEndpoint<ReturnType : Any?>(
+sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     private val application: Application,
     private val config: Config
 ) {
@@ -41,9 +48,19 @@ sealed class ApiEndpoint<ReturnType : Any?>(
     }
 
     /**
-     * Called for each request to the endpoint.
+     * Called for each request to the endpoint, to determine the command.
      */
-    abstract suspend fun handler(call: ApplicationCall): ReturnType
+    abstract suspend fun determineCommand(call: ApplicationCall): Command
+
+    /**
+     * Called for each request to the endpoint, to check authorization.
+     */
+    abstract fun authorization(command: Command): Authorization
+
+    /**
+     * Called for each request to the endpoint, to handle the execution.
+     */
+    abstract suspend fun handler(command: Command): ReturnType
 
     init {
         register()
@@ -55,11 +72,20 @@ sealed class ApiEndpoint<ReturnType : Any?>(
      */
     private fun register() {
         application.routing {
-            route(config.pathTemplate, config.httpMethod) {
-                handle {
-                    val result = handler(call)
-                    if (result == null) call.respond(HttpStatusCode.NotFound)
-                    else call.respond(result)
+            authenticate(optional = true) {
+                route(config.pathTemplate, config.httpMethod) {
+                    handle {
+                        val command = determineCommand(call)
+                        val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
+                        val jwt = jwtFromPayload(jwtPayload)
+                        if (!authorization(command).authorize(jwt, command)) {
+                            call.respond(HttpStatusCode.Forbidden)
+                            return@handle
+                        }
+                        val result = handler(command)
+                        if (result == null) call.respond(HttpStatusCode.NotFound)
+                        else call.respond(result)
+                    }
                 }
             }
         }
@@ -83,23 +109,26 @@ sealed class ApiEndpoint<ReturnType : Any?>(
 /**
  * Returns a single rep, never null. This is useful for PATCH/POST/PUT endpoints.
  */
-abstract class RepApiEndpoint<R : CompleteRep>(
+abstract class RepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<R>(application, config)
+) : ApiEndpoint<C, R>(application, config)
 
 /**
  * Returns a single rep or null. This is useful for GET endpoints.
  */
-abstract class NullableRepApiEndpoint<R : CompleteRep>(
+abstract class NullableRepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<R?>(application, config)
+) : ApiEndpoint<C, R?>(application, config)
 
 /**
- * Returns a list of reps. This is useful for GET endpoints.
+ * Returns a map of reps. This is useful for batch get endpoints implemented as POST endpoints.
+ * Currently, the only valid key is UUID type because I can't think of a case where that's not the
+ * best option. If there's ever a case where the best key type is not UUID, feel free to
+ * parameterize this further.
  */
-abstract class RepListApiEndpoint<R : CompleteRep>(
+abstract class RepMapApiEndpoint<C : AbstractCommand, R : CompleteRep>(
     application: Application,
     config: Config
-) : ApiEndpoint<List<R>>(application, config)
+) : ApiEndpoint<C, Map<UUID, R>>(application, config)
