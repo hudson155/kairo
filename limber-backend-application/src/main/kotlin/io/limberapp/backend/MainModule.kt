@@ -6,6 +6,7 @@ import com.google.inject.Singleton
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.WriteConcern
+import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import io.ktor.application.Application
@@ -26,14 +27,17 @@ internal class MainModule(
 
     @Provides
     @Singleton
-    fun mongoDatabase(config: Config): MongoDatabase {
+    fun mongoClient(config: Config): MongoClient {
         val connectionString = with(config.database) { "mongodb+srv://$user:$password@$host" }
         val clientSettings = MongoClientSettings.builder()
             .applyConnectionString(ConnectionString(connectionString))
-            .retryWrites(true)
             .writeConcern(WriteConcern.MAJORITY)
             .build()
-        val client = MongoClients.create(clientSettings)
-        return client.getDatabase(config.database.database)
+        return MongoClients.create(clientSettings)
     }
+
+    @Provides
+    @Singleton
+    fun mongoDatabase(config: Config, mongoClient: MongoClient): MongoDatabase =
+        mongoClient.getDatabase(config.database.database)
 }
