@@ -10,16 +10,16 @@ internal object OrgModel {
 
     data class Creation(
         val name: String
-    ) : CreationModel()
+    ) : CreationModel
 
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
         override val version: Int,
         val name: String
-    ) : CompleteModel()
+    ) : CompleteModel
 
     data class Update(
         val name: String?
-    ) : UpdateModel()
+    ) : UpdateModel
 }

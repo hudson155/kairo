@@ -13,7 +13,7 @@ object OrgRep {
 
     data class Creation(
         val name: String
-    ) : CreationRep() {
+    ) : CreationRep {
         override fun validate() {
             validate(Creation::name) { shortText(allowEmpty = false) }
         }
@@ -24,11 +24,11 @@ object OrgRep {
         override val created: LocalDateTime,
         override val version: Int,
         val name: String
-    ) : CompleteRep()
+    ) : CompleteRep
 
     data class Update(
         val name: String?
-    ) : UpdateRep() {
+    ) : UpdateRep {
         override fun validate() {
             validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }
         }
