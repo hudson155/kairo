@@ -2,6 +2,7 @@ package io.limberapp.framework.store
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.convertValue
+import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
@@ -23,6 +24,7 @@ import java.util.UUID
  * TODO: stream, JsonNode, or some other intermediary structure?
  */
 abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
+    private val mongoClient: MongoClient,
     mongoDatabase: MongoDatabase,
     collectionName: String
 ) : Store<Complete, Update> {
@@ -32,13 +34,17 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
 
     protected val objectMapper = LimberMongoObjectMapper()
 
+    protected fun <T> inTransaction(function: () -> T): T {
+        val session = mongoClient.startSession()
+        return session.use { it.withTransaction(function) }
+    }
+
     final override fun create(model: Complete, typeRef: TypeReference<Complete>): Complete {
         val json = objectMapper.writeValueAsString(model)
-        collection.insertOne(Document.parse(json))
-        // It's important to reverse-parse the JSON here because there can be data loss when mapping
-        // to JSON. For example, SimpleDateTimes natively have nanosecond precision, but when mapped
-        // to JSON they only have millisecond precision.
-        return objectMapper.readValue(json, typeRef)
+        return inTransaction {
+            collection.insertOne(Document.parse(json))
+            return@inTransaction objectMapper.readValue(json, typeRef)
+        }
     }
 
     final override fun getById(id: UUID, typeRef: TypeReference<Complete>): Complete? {
