@@ -3,14 +3,14 @@ package io.limberapp.framework.model
 import java.time.LocalDateTime
 import java.util.UUID
 
-interface Model
+sealed class Model
 
-interface CreationModel : Model
+abstract class CreationModel : Model()
 
-interface CompleteModel : Model {
-    val id: UUID
-    val created: LocalDateTime
-    val version: Int
+abstract class CompleteModel : Model() {
+    abstract val id: UUID
+    abstract val created: LocalDateTime
+    abstract val version: Int
 }
 
-interface UpdateModel : Model
+abstract class UpdateModel : Model()

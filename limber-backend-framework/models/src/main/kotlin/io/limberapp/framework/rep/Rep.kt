@@ -3,18 +3,18 @@ package io.limberapp.framework.rep
 import java.time.LocalDateTime
 import java.util.UUID
 
-interface Rep
+sealed class Rep
 
-interface ValidatedRep : Rep {
-    fun validate()
+sealed class ValidatedRep : Rep() {
+    abstract fun validate()
 }
 
-interface CreationRep : ValidatedRep
+abstract class CreationRep : ValidatedRep()
 
-interface CompleteRep : Rep {
-    val id: UUID
-    val created: LocalDateTime
-    val version: Int
+abstract class CompleteRep : Rep() {
+    abstract val id: UUID
+    abstract val created: LocalDateTime
+    abstract val version: Int
 }
 
-interface UpdateRep : ValidatedRep
+abstract class UpdateRep : ValidatedRep()
