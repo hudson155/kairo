@@ -16,7 +16,7 @@ import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
-import io.limberapp.framework.endpoint.authorization.jwtFromPayload
+import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.rep.CompleteRep
 import java.util.UUID

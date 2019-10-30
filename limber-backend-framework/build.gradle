@@ -1,4 +1,7 @@
 dependencies {
+    compile project(":limber-backend-framework:core")
+    compile project(":limber-backend-framework:data-conversion")
+    compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:models")
     compile project(":limber-backend-framework:object-mapper")
     compile libs.guice

@@ -1,6 +1,5 @@
 package io.limberapp.backend
 
-import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import com.google.inject.Singleton
 import com.mongodb.ConnectionString
@@ -10,20 +9,13 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
 import io.ktor.application.Application
-import io.limberapp.backend.config.Config
+import io.limberapp.framework.MainModule
+import io.limberapp.framework.config.Config
 
-/**
- * MainModule configures bindings for classes that are not related to a specific application module.
- */
-internal class MainModule(
-    private val application: Application,
-    private val config: Config
-) : AbstractModule() {
-
-    override fun configure() {
-        bind(Config::class.java).toInstance(config)
-        bind(Application::class.java).toInstance(application)
-    }
+internal class MainModuleImpl(
+    application: Application,
+    config: Config
+) : MainModule(application, config) {
 
     @Provides
     @Singleton
