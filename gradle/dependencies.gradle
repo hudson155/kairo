@@ -11,6 +11,9 @@ ext {
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
             kotlin : '1.3.50',
 
+            // https://github.com/junit-team/junit4/releases
+            junit : '4.12',
+
             // https://github.com/ktorio/ktor/releases
             ktor   : '1.2.4',
 
@@ -36,6 +39,7 @@ ext {
             ktor_auth              : "io.ktor:ktor-auth:$versions.ktor",
             ktor_auth_jwt          : "io.ktor:ktor-auth-jwt:$versions.ktor",
             ktor_jackson           : "io.ktor:ktor-jackson:$versions.ktor",
+            ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
             ktor_server_cio        : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core       : "io.ktor:ktor-server-core:$versions.ktor",
             ktor_server_tests      : "io.ktor:ktor-server-tests:$versions.ktor",
@@ -58,5 +62,8 @@ ext {
 
             // Shadow
             shadow                 : "com.github.jengelman.gradle.plugins:shadow:$versions.shadow",
+
+            // JUnit
+            junit                 : "junit:junit:$versions.junit",
     ]
 }

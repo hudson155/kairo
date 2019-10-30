@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.mapper
+package io.limberapp.backend.module.orgs.mapper.org
 
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.rep.org.OrgRep

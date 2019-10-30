@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.mapper.OrgMapper
+import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.store.org.OrgStore
 import io.limberapp.framework.store.create

@@ -24,6 +24,7 @@ sourceSets {
 
 dependencies {
     compile project(":limber-backend-application:orgs")
+    compile project(":limber-backend-framework")
     compile project(":limber-backend-framework:data-conversion")
     compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:object-mapper")
@@ -42,6 +43,9 @@ subprojects {
         compile project(":limber-backend-framework:models")
         compile project(":limber-backend-framework:mongo")
         compile project(":limber-backend-framework:validation")
+        testCompile project(":limber-backend-framework")
+        testCompile libs.junit
+        testCompile libs.ktor_test
     }
 }
 
