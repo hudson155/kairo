@@ -1,11 +1,19 @@
 package io.limberapp.backend.module.orgs
 
+import io.limberapp.backend.module.orgs.endpoint.module.CreateModule
+import io.limberapp.backend.module.orgs.endpoint.module.GetModuleById
+import io.limberapp.backend.module.orgs.endpoint.module.GetModulesByOrgId
+import io.limberapp.backend.module.orgs.endpoint.module.UpdateModule
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
+import io.limberapp.backend.module.orgs.service.module.ModuleService
+import io.limberapp.backend.module.orgs.service.module.ModuleServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
+import io.limberapp.backend.module.orgs.store.module.ModuleStore
+import io.limberapp.backend.module.orgs.store.module.MongoModuleStore
 import io.limberapp.backend.module.orgs.store.org.MongoOrgStore
 import io.limberapp.backend.module.orgs.store.org.OrgStore
 import io.limberapp.framework.module.Module
@@ -19,6 +27,12 @@ import io.limberapp.framework.module.Module
 class OrgsModule : Module() {
 
     override val endpoints = listOf(
+
+        CreateModule::class.java,
+        GetModuleById::class.java,
+        GetModulesByOrgId::class.java,
+        UpdateModule::class.java,
+
         CreateOrg::class.java,
         GetOrgById::class.java,
         GetOrgsByMemberId::class.java,
@@ -26,10 +40,12 @@ class OrgsModule : Module() {
     )
 
     override fun bindServices() {
+        bind(ModuleService::class, ModuleServiceImpl::class)
         bind(OrgService::class, OrgServiceImpl::class)
     }
 
     override fun bindStores() {
+        bind(ModuleStore::class, MongoModuleStore::class)
         bind(OrgStore::class, MongoOrgStore::class)
     }
 }
