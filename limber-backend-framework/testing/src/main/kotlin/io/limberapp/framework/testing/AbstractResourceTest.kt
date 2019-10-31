@@ -27,12 +27,13 @@ private fun withLimberTestApp(limberApp: LimberApp, test: TestApplicationEngine.
     withTestApplication({ limberApp.bindToApplication(this) }, test)
 }
 
-abstract class ResourceTest {
+abstract class AbstractResourceTest {
 
-    protected object LimberTest {
+    protected abstract val limberTest: LimberTest
+
+    protected class LimberTest(private val limberApp: LimberApp) {
 
         fun <T : CreationRep> post(
-            limberApp: LimberApp,
             config: ApiEndpoint.Config,
             pathParams: Map<String, String> = emptyMap(),
             body: T,
