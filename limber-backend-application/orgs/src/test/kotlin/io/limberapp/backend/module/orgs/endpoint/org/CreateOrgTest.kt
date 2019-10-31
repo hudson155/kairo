@@ -3,11 +3,8 @@ package io.limberapp.backend.module.orgs.endpoint.org
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
-import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import org.junit.Test
 import kotlin.test.assertEquals
-
-private val objectMapper = LimberObjectMapper(prettyPrint = false)
 
 class CreateOrgTest : ResourceTest() {
 

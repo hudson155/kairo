@@ -21,8 +21,6 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private val objectMapper = LimberObjectMapper(prettyPrint = false)
-
 private fun withLimberTestApp(limberApp: LimberApp, test: TestApplicationEngine.() -> Unit) {
     withTestApplication({ limberApp.bindToApplication(this) }, test)
 }
@@ -31,7 +29,9 @@ abstract class AbstractResourceTest {
 
     protected abstract val limberTest: LimberTest
 
-    protected class LimberTest(private val limberApp: LimberApp) {
+    protected val objectMapper = LimberObjectMapper(prettyPrint = false)
+
+    protected inner class LimberTest(private val limberApp: LimberApp) {
 
         fun <T : CreationRep> post(
             config: ApiEndpoint.Config,
