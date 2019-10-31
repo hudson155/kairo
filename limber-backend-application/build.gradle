@@ -44,8 +44,7 @@ subprojects {
         compile project(":limber-backend-framework:mongo")
         compile project(":limber-backend-framework:validation")
         testCompile project(":limber-backend-framework")
-        testCompile libs.junit
-        testCompile libs.ktor_test
+        testCompile project(":limber-backend-framework:testing")
     }
 }
 
