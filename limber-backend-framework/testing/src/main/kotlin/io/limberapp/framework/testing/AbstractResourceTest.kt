@@ -35,18 +35,20 @@ abstract class AbstractResourceTest {
         fun get(
             config: ApiEndpoint.Config,
             pathParams: Map<String, String> = emptyMap(),
+            expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
-            createCall(config, pathParams, null).runTest(test)
+            createCall(config, pathParams, null).runTest(expectedStatusCode, test)
         }
 
         fun post(
             config: ApiEndpoint.Config,
             pathParams: Map<String, String> = emptyMap(),
             body: Any,
+            expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
-            createCall(config, pathParams, body).runTest(test)
+            createCall(config, pathParams, body).runTest(expectedStatusCode, test)
         }
 
         private fun TestApplicationEngine.createCall(
@@ -64,9 +66,12 @@ abstract class AbstractResourceTest {
             }
         }
 
-        private fun TestApplicationCall.runTest(test: TestApplicationCall.() -> Unit) {
+        private fun TestApplicationCall.runTest(
+            expectedStatusCode: HttpStatusCode,
+            test: TestApplicationCall.() -> Unit
+        ) {
             assertTrue(requestHandled)
-            assertEquals(HttpStatusCode.OK, response.status())
+            assertEquals(expectedStatusCode, response.status())
             test()
         }
     }

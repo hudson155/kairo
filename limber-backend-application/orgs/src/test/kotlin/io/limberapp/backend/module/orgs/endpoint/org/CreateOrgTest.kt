@@ -11,7 +11,10 @@ internal class CreateOrgTest : ResourceTest() {
     @Test
     fun create() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
-        limberTest.post(CreateOrg.config, body = creationRep) {
+        limberTest.post(
+            config = CreateOrg.config,
+            body = creationRep
+        ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(actual.id, actual.created, 0, "Cranky Pasta")
             assertEquals(expected, actual)
