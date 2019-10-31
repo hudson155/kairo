@@ -33,6 +33,6 @@ internal class GetOrgById @Inject constructor(
     }
 
     companion object {
-        private val config = Config(HttpMethod.Get, "/orgs/{orgId}")
+        val config = Config(HttpMethod.Get, "/orgs/{orgId}")
     }
 }

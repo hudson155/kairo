@@ -16,7 +16,6 @@ import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.endpoint.authorization.jwt.withJwt
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.rep.CreationRep
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -33,25 +32,42 @@ abstract class AbstractResourceTest {
 
     protected inner class LimberTest(private val limberApp: LimberApp) {
 
-        fun <T : CreationRep> post(
+        fun get(
             config: ApiEndpoint.Config,
             pathParams: Map<String, String> = emptyMap(),
-            body: T,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
-            val call = handleRequest(config.httpMethod, config.path(pathParams)) {
+            createCall(config, pathParams, null).runTest(test)
+        }
+
+        fun post(
+            config: ApiEndpoint.Config,
+            pathParams: Map<String, String> = emptyMap(),
+            body: Any,
+            test: TestApplicationCall.() -> Unit
+        ) = withLimberTestApp(limberApp) {
+            createCall(config, pathParams, body).runTest(test)
+        }
+
+        private fun TestApplicationEngine.createCall(
+            config: ApiEndpoint.Config,
+            pathParams: Map<String, String>,
+            body: Any?
+        ): TestApplicationCall {
+            return handleRequest(config.httpMethod, config.path(pathParams)) {
                 addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
                 val jwt = JWT.create().withJwt(
                     Jwt(orgs = emptyMap(), user = JwtUser(UUID.randomUUID()))
                 ).sign(Algorithm.none())
                 addHeader(HttpHeaders.Authorization, "Bearer $jwt")
-                setBody(objectMapper.writeValueAsString(body))
+                body?.let { setBody(objectMapper.writeValueAsString(it)) }
             }
-            with(call) {
-                assertTrue(requestHandled)
-                assertEquals(HttpStatusCode.OK, response.status())
-                test()
-            }
+        }
+
+        private fun TestApplicationCall.runTest(test: TestApplicationCall.() -> Unit) {
+            assertTrue(requestHandled)
+            assertEquals(HttpStatusCode.OK, response.status())
+            test()
         }
     }
 }
