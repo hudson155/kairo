@@ -34,17 +34,10 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
 
     protected val objectMapper = LimberMongoObjectMapper()
 
-    protected fun <T> inTransaction(function: () -> T): T {
-        val session = mongoClient.startSession()
-        return session.use { it.withTransaction(function) }
-    }
-
     final override fun create(model: Complete, typeRef: TypeReference<Complete>): Complete {
         val json = objectMapper.writeValueAsString(model)
-        return inTransaction {
-            collection.insertOne(Document.parse(json))
-            return@inTransaction objectMapper.readValue(json, typeRef)
-        }
+        collection.insertOne(Document.parse(json))
+        return objectMapper.readValue(json, typeRef)
     }
 
     final override fun getById(id: UUID, typeRef: TypeReference<Complete>): Complete? {

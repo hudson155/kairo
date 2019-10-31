@@ -1,4 +1,4 @@
-package io.limberapp.backend
+package io.limberapp.backend.module.orgs.testing
 
 import com.google.inject.Provides
 import com.google.inject.Singleton
@@ -9,7 +9,7 @@ import io.limberapp.framework.MainModule
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.createClient
 
-internal class MainModuleImpl(
+internal class TestMainModule(
     application: Application,
     config: Config
 ) : MainModule(application, config) {

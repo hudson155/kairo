@@ -21,6 +21,7 @@ internal class LimberAppMonolith : LimberApp(loadConfig()) {
 private fun loadConfig() = with(ConfigFactory.load()) {
     Config(
         database = DatabaseConfig(
+            protocol = getEnum(DatabaseConfig.Protocol::class.java, "database.protocol"),
             host = getString("database.host"),
             database = getString("database.database"),
             user = getString("database.user"),

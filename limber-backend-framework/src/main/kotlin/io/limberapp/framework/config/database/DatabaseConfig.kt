@@ -6,8 +6,29 @@ package io.limberapp.framework.config.database
  * be renamed.
  */
 data class DatabaseConfig(
+    val protocol: Protocol,
     val host: String,
     val database: String,
-    val user: String,
-    val password: String
-)
+    val user: String?,
+    val password: String?
+) {
+
+    enum class Protocol(private val text: String) {
+        MONGODB("mongodb"),
+        @Suppress("unused")
+        MONGODB_SRV("mongodb+srv"),
+        ;
+
+        override fun toString() = text
+    }
+
+    companion object {
+        fun local(database: String) = DatabaseConfig(
+            protocol = Protocol.MONGODB,
+            host = "localhost",
+            database = database,
+            user = null,
+            password = null
+        )
+    }
+}
