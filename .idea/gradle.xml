@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/limber-backend-framework/models" />
             <option value="$PROJECT_DIR$/limber-backend-framework/mongo" />
             <option value="$PROJECT_DIR$/limber-backend-framework/object-mapper" />
+            <option value="$PROJECT_DIR$/limber-backend-framework/reps" />
             <option value="$PROJECT_DIR$/limber-backend-framework/testing" />
             <option value="$PROJECT_DIR$/limber-backend-framework/validation" />
           </set>

@@ -5,7 +5,6 @@ import io.limberapp.framework.rep.CreationRep
 import io.limberapp.framework.rep.UpdateRep
 import io.limberapp.framework.validation.validation.util.ifPresent
 import io.limberapp.framework.validation.validation.util.shortText
-import io.limberapp.framework.validation.validation.validate
 import java.time.LocalDateTime
 import java.util.UUID
 
