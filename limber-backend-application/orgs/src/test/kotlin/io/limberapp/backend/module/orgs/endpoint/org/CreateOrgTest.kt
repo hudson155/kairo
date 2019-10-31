@@ -6,15 +6,15 @@ import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class CreateOrgTest : ResourceTest() {
+internal class CreateOrgTest : ResourceTest() {
 
     @Test
-    fun ok() = limberTest.post(
-        config = CreateOrg.config,
-        body = OrgRep.Creation("Cranky Pasta")
-    ) {
-        val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-        val expected = OrgRep.Complete(actual.id, actual.created, 0, "Cranky Pasta")
-        assertEquals(expected, actual)
+    fun createOrg() {
+        val creationRep = OrgRep.Creation("Cranky Pasta")
+        limberTest.post(CreateOrg.config, body = creationRep) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val expected = OrgRep.Complete(actual.id, actual.created, 0, "Cranky Pasta")
+            assertEquals(expected, actual)
+        }
     }
 }
