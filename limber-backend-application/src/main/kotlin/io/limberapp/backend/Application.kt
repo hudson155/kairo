@@ -12,5 +12,5 @@ internal fun main(args: Array<String>) = EngineMain.main(args)
  * Application configuration method, used automatically by Ktor to configure and set up the
  * application.
  */
-@Suppress("Unused")
+@Suppress("unused")
 internal fun Application.main() = LimberAppMonolith().bindToApplication(this)

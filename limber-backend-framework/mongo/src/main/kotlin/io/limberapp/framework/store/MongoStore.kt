@@ -24,7 +24,6 @@ import java.util.UUID
  * TODO: stream, JsonNode, or some other intermediary structure?
  */
 abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
-    private val mongoClient: MongoClient,
     mongoDatabase: MongoDatabase,
     collectionName: String
 ) : Store<Complete, Update> {

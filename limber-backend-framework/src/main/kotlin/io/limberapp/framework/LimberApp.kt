@@ -26,6 +26,7 @@ import io.limberapp.framework.module.Module
 import org.slf4j.event.Level
 import java.util.UUID
 
+@Suppress("TooManyFunctions")
 abstract class LimberApp(
     protected val config: Config
 ) {
@@ -109,6 +110,7 @@ abstract class LimberApp(
         }
     }
 
+    @Suppress("SpreadOperator") // Okay to use here because it's at application startup
     private fun Application.bindModules() {
         Guice.createInjector(listOf(getMainModule(this), *modules.toTypedArray()))
     }

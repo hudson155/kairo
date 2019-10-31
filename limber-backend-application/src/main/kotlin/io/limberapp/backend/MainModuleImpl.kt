@@ -2,7 +2,6 @@ package io.limberapp.backend
 
 import com.google.inject.Provides
 import com.google.inject.Singleton
-import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoDatabase
 import io.ktor.application.Application
 import io.limberapp.framework.MainModule
@@ -16,10 +15,8 @@ internal class MainModuleImpl(
 
     @Provides
     @Singleton
-    fun mongoClient(config: Config) = config.createClient()
-
-    @Provides
-    @Singleton
-    fun mongoDatabase(config: Config, mongoClient: MongoClient): MongoDatabase =
-        mongoClient.getDatabase(config.database.database)
+    fun mongoDatabase(config: Config): MongoDatabase {
+        val mongoClient = config.createClient()
+        return mongoClient.getDatabase(config.database.database)
+    }
 }
