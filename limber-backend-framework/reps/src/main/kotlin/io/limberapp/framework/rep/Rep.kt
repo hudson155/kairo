@@ -21,9 +21,13 @@ sealed class ValidatedRep : Rep() {
 
 abstract class CreationRep : ValidatedRep()
 
-abstract class CompleteRep : Rep() {
-    abstract val id: UUID
+abstract class CompleteRepWithoutId : Rep() {
     abstract val created: LocalDateTime
+}
+
+abstract class CompleteRep : CompleteRepWithoutId() {
+    abstract val id: UUID
+    abstract override val created: LocalDateTime
 }
 
 abstract class UpdateRep : ValidatedRep()

@@ -37,7 +37,7 @@ internal class GetOrgByIdTest : ResourceTest() {
             pathParams = mapOf("orgId" to orgId.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val expected = OrgRep.Complete(actual.id, actual.created, "Cranky Pasta")
+            val expected = OrgRep.Complete(actual.id, actual.created, "Cranky Pasta", emptyList())
             assertEquals(expected, actual)
         }
     }

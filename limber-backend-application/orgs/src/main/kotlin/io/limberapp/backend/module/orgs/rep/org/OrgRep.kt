@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.rep.org
 
+import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.framework.rep.CompleteRep
 import io.limberapp.framework.rep.CreationRep
 import io.limberapp.framework.rep.UpdateRep
@@ -21,7 +22,8 @@ object OrgRep {
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
-        val name: String
+        val name: String,
+        val members: List<MembershipRep.Complete>
     ) : CompleteRep()
 
     data class Update(
