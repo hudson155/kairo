@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.orgs
 
-import io.limberapp.backend.module.orgs.endpoint.module.CreateModule
-import io.limberapp.backend.module.orgs.endpoint.module.GetModuleById
-import io.limberapp.backend.module.orgs.endpoint.module.GetModulesByOrgId
-import io.limberapp.backend.module.orgs.endpoint.module.UpdateModule
+import io.limberapp.backend.module.orgs.endpoint.org.module.CreateModule
+import io.limberapp.backend.module.orgs.endpoint.org.module.GetModuleById
+import io.limberapp.backend.module.orgs.endpoint.org.module.GetModulesByOrgId
+import io.limberapp.backend.module.orgs.endpoint.org.module.UpdateModule
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId

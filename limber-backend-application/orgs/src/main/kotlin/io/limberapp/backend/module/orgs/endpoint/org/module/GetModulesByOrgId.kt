@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.endpoint.module
+package io.limberapp.backend.module.orgs.endpoint.org.module
 
 import com.google.inject.Inject
 import io.ktor.application.Application
