@@ -9,11 +9,13 @@ import java.util.UUID
 
 private object Claims {
     const val orgs = "https://limberapp.io/orgs"
+    const val roles = "https://limberapp.io/roles"
     const val user = "https://limberapp.io/user"
 }
 
 data class Jwt(
     val orgs: Map<UUID, JwtOrg>,
+    val roles: Set<JwtRole>,
     val user: JwtUser
 )
 
@@ -24,6 +26,7 @@ internal fun jwtFromPayload(jwtPayload: Payload?): Jwt? {
     return try {
         Jwt(
             orgs = objectMapper.readValue(jwtPayload.getClaim(Claims.orgs).asString()),
+            roles = objectMapper.readValue(jwtPayload.getClaim(Claims.roles).asString()),
             user = objectMapper.readValue(jwtPayload.getClaim(Claims.user).asString())
         )
     } catch (_: JWTDecodeException) {
@@ -33,6 +36,7 @@ internal fun jwtFromPayload(jwtPayload: Payload?): Jwt? {
 
 fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
     withClaim(Claims.orgs, objectMapper.writeValueAsString(jwt.orgs))
+    withClaim(Claims.roles, objectMapper.writeValueAsString(jwt.roles))
     withClaim(Claims.user, objectMapper.writeValueAsString(jwt.user))
     return this
 }

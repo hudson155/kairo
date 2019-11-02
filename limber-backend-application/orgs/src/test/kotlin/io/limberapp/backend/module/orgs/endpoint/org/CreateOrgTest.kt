@@ -11,7 +11,7 @@ internal class CreateOrgTest : ResourceTest() {
     @Test
     fun create() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
-        limberTest.post(
+        limberTest.test(
             config = CreateOrg.config,
             body = creationRep
         ) {

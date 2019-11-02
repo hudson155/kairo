@@ -13,6 +13,7 @@ import io.ktor.server.testing.withTestApplication
 import io.limberapp.framework.LimberApp
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
+import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.endpoint.authorization.jwt.withJwt
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
@@ -32,19 +33,10 @@ abstract class AbstractResourceTest {
 
     protected inner class LimberTest(private val limberApp: LimberApp) {
 
-        fun get(
+        fun test(
             config: ApiEndpoint.Config,
             pathParams: Map<String, String> = emptyMap(),
-            expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
-            test: TestApplicationCall.() -> Unit
-        ) = withLimberTestApp(limberApp) {
-            createCall(config, pathParams, null).runTest(expectedStatusCode, test)
-        }
-
-        fun post(
-            config: ApiEndpoint.Config,
-            pathParams: Map<String, String> = emptyMap(),
-            body: Any,
+            body: Any? = null,
             expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
@@ -59,7 +51,11 @@ abstract class AbstractResourceTest {
             return handleRequest(config.httpMethod, config.path(pathParams)) {
                 addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
                 val jwt = JWT.create().withJwt(
-                    Jwt(orgs = emptyMap(), user = JwtUser(UUID.randomUUID()))
+                    jwt = Jwt(
+                        orgs = emptyMap(),
+                        roles = setOf(JwtRole.SUPERUSER),
+                        user = JwtUser(UUID.randomUUID())
+                    )
                 ).sign(Algorithm.none())
                 addHeader(HttpHeaders.Authorization, "Bearer $jwt")
                 body?.let { setBody(objectMapper.writeValueAsString(it)) }

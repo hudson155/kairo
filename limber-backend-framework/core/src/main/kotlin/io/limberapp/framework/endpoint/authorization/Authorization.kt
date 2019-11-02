@@ -1,6 +1,7 @@
 package io.limberapp.framework.endpoint.authorization
 
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
+import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
@@ -19,6 +20,7 @@ sealed class Authorization {
     class User(private val userId: UUID) : Authorization() {
         override fun authorize(payload: Jwt?, command: AbstractCommand): Boolean {
             payload ?: return false
+            if (payload.roles.contains(JwtRole.SUPERUSER)) return true
             return payload.user.id == userId
         }
     }
@@ -26,6 +28,7 @@ sealed class Authorization {
     class OrgMember(private val orgId: UUID) : Authorization() {
         override fun authorize(payload: Jwt?, command: AbstractCommand): Boolean {
             payload ?: return false
+            if (payload.roles.contains(JwtRole.SUPERUSER)) return true
             return payload.orgs.containsKey(orgId)
         }
     }
