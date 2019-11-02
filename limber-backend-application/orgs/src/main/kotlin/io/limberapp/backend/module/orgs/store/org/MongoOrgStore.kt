@@ -12,13 +12,17 @@ import java.util.UUID
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
 ) : OrgStore, MongoStore<OrgModel.Complete, OrgModel.Update>(
-    mongoDatabase,
-    "Org"
+    mongoDatabase = mongoDatabase,
+    collectionName = collectionName
 ) {
 
     override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
         val filter = Filters.eq("memberships", Document("userId", memberId))
         val documents = collection.find(filter).toList()
         return documents.map { objectMapper.readValue<OrgModel.Complete>(it.toJson()) }
+    }
+
+    companion object {
+        const val collectionName = "Org"
     }
 }
