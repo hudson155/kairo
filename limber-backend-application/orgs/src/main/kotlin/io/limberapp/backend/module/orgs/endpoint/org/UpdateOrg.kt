@@ -8,7 +8,7 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
@@ -16,7 +16,7 @@ import java.util.UUID
 internal class UpdateOrg @Inject constructor(
     application: Application,
     private val orgService: OrgService
-) : RepApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
+) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
 
     internal data class Command(
         val orgId: UUID,

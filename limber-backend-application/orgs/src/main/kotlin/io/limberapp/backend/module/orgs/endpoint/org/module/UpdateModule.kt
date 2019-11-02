@@ -8,7 +8,7 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.module.ModuleMapper
 import io.limberapp.backend.module.orgs.rep.module.ModuleRep
 import io.limberapp.backend.module.orgs.service.module.ModuleService
-import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
@@ -16,7 +16,7 @@ import java.util.UUID
 internal class UpdateModule @Inject constructor(
     application: Application,
     private val moduleService: ModuleService
-) : RepApiEndpoint<UpdateModule.Command, ModuleRep.Complete>(application, config) {
+) : ApiEndpoint<UpdateModule.Command, ModuleRep.Complete>(application, config) {
 
     internal data class Command(
         val orgId: UUID,

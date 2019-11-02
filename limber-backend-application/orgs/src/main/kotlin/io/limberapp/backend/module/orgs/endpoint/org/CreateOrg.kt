@@ -8,14 +8,14 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 
 internal class CreateOrg @Inject constructor(
     application: Application,
     private val orgService: OrgService
-) : RepApiEndpoint<CreateOrg.Command, OrgRep.Complete>(application, config) {
+) : ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(application, config) {
 
     internal data class Command(
         val creationRep: OrgRep.Creation

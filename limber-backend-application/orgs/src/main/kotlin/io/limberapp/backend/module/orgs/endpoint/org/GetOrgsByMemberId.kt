@@ -7,7 +7,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.endpoint.RepListApiEndpoint
+import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
@@ -15,7 +15,7 @@ import java.util.UUID
 internal class GetOrgsByMemberId @Inject constructor(
     application: Application,
     private val orgService: OrgService
-) : RepListApiEndpoint<GetOrgsByMemberId.Command, OrgRep.Complete>(application, config) {
+) : ApiEndpoint<GetOrgsByMemberId.Command, List<OrgRep.Complete>>(application, config) {
 
     internal data class Command(
         val memberId: UUID

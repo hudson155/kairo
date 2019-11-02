@@ -18,8 +18,6 @@ import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
-import io.limberapp.framework.rep.CompleteRep
-import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
@@ -28,7 +26,7 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint of the API. The handler() is called
  * for each request.
  */
-sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
+abstract class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     private val application: Application,
     private val config: Config
 ) {
@@ -109,38 +107,3 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
         }
     }
 }
-
-/**
- * Returns a single rep, never null. This is useful for PATCH/POST/PUT endpoints.
- */
-abstract class RepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, R>(application, config)
-
-/**
- * Returns a single rep or null. This is useful for GET endpoints.
- */
-abstract class NullableRepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, R?>(application, config)
-
-/**
- * Returns a list of reps. This is useful for batch get endpoints implemented as POST endpoints.
- */
-abstract class RepListApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, List<R>>(application, config)
-
-/**
- * Returns a map of reps. This is useful for batch get endpoints implemented as POST endpoints.
- * Currently, the only valid key is UUID type because I can't think of a case where that's not the
- * best option. If there's ever a case where the best key type is not UUID, feel free to
- * parameterize this further.
- */
-abstract class RepMapApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, Map<UUID, R>>(application, config)
