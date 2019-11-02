@@ -16,7 +16,7 @@ internal class CreateOrgTest : ResourceTest() {
             body = creationRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val expected = OrgRep.Complete(actual.id, actual.created, 0, "Cranky Pasta")
+            val expected = OrgRep.Complete(actual.id, actual.created, "Cranky Pasta")
             assertEquals(expected, actual)
         }
     }

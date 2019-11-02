@@ -26,7 +26,6 @@ object ModuleRep {
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
-        override val version: Int,
         val name: String,
         val type: Type
     ) : CompleteRep()

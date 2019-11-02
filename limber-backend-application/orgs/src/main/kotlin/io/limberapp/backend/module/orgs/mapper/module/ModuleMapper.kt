@@ -29,7 +29,6 @@ internal object ModuleMapper {
     fun completeRep(model: ModuleModel.Complete) = ModuleRep.Complete(
         id = model.id,
         created = model.created,
-        version = model.version,
         name = model.name,
         type = when (model.type) {
             ModuleModel.Type.FORM -> ModuleRep.Type.FORM

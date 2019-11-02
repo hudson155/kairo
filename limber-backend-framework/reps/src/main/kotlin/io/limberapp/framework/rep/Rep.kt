@@ -24,7 +24,6 @@ abstract class CreationRep : ValidatedRep()
 abstract class CompleteRep : Rep() {
     abstract val id: UUID
     abstract val created: LocalDateTime
-    abstract val version: Int
 }
 
 abstract class UpdateRep : ValidatedRep()

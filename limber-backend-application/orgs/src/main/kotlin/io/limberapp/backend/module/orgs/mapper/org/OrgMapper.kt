@@ -25,7 +25,6 @@ internal object OrgMapper {
     fun completeRep(model: OrgModel.Complete) = OrgRep.Complete(
         id = model.id,
         created = model.created,
-        version = model.version,
         name = model.name
     )
 }

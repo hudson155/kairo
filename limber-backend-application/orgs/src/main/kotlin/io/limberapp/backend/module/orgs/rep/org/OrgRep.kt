@@ -21,7 +21,6 @@ object OrgRep {
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
-        override val version: Int,
         val name: String
     ) : CompleteRep()
 
