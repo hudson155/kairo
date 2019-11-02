@@ -39,6 +39,6 @@ internal class UpdateOrg @Inject constructor(
     }
 
     companion object {
-        private val config = Config(HttpMethod.Patch, "/orgs/{orgId}")
+        val config = Config(HttpMethod.Patch, "/orgs/{orgId}")
     }
 }
