@@ -1,13 +1,14 @@
 package io.limberapp.backend.module.orgs
 
-import io.limberapp.backend.module.orgs.endpoint.org.module.CreateModule
-import io.limberapp.backend.module.orgs.endpoint.org.module.GetModuleById
-import io.limberapp.backend.module.orgs.endpoint.org.module.GetModulesByOrgId
-import io.limberapp.backend.module.orgs.endpoint.org.module.UpdateModule
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
+import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
+import io.limberapp.backend.module.orgs.endpoint.org.module.CreateModule
+import io.limberapp.backend.module.orgs.endpoint.org.module.GetModuleById
+import io.limberapp.backend.module.orgs.endpoint.org.module.GetModulesByOrgId
+import io.limberapp.backend.module.orgs.endpoint.org.module.UpdateModule
 import io.limberapp.backend.module.orgs.service.module.ModuleService
 import io.limberapp.backend.module.orgs.service.module.ModuleServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -27,6 +28,8 @@ import io.limberapp.framework.module.Module
 class OrgsModule : Module() {
 
     override val endpoints = listOf(
+
+        CreateMembership::class.java,
 
         CreateModule::class.java,
         GetModuleById::class.java,

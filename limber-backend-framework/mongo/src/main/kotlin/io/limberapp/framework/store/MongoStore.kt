@@ -64,7 +64,7 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
-    private fun idFilter(id: UUID): Bson {
+    protected fun idFilter(id: UUID): Bson {
         val binary = Binary(BsonBinarySubType.UUID_LEGACY, id.asByteArray())
         return Filters.eq(binary)
     }
