@@ -15,7 +15,8 @@ import java.util.UUID
 
 internal class CreateMembership @Inject constructor(
     application: Application,
-    private val orgService: OrgService
+    private val orgService: OrgService,
+    private val membershipMapper: MembershipMapper
 ) : ApiEndpoint<CreateMembership.Command, Unit>(application, config) {
 
     internal data class Command(
@@ -33,7 +34,7 @@ internal class CreateMembership @Inject constructor(
     override suspend fun handler(command: Command) {
         orgService.createMembership(
             id = command.orgId,
-            model = MembershipMapper.creationModel(command.creationRep)
+            model = membershipMapper.creationModel(command.creationRep)
         )
     }
 

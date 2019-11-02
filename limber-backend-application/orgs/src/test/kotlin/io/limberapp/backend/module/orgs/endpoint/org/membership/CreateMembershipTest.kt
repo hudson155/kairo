@@ -7,6 +7,7 @@ import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
+import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -39,7 +40,7 @@ internal class CreateMembershipTest : ResourceTest() {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
                 id = actual.id,
-                created = actual.created,
+                created = LocalDateTime.now(clock),
                 name = "Cranky Pasta",
                 members = listOf(MembershipRep.Complete(actual.members[0].created, userId))
             )

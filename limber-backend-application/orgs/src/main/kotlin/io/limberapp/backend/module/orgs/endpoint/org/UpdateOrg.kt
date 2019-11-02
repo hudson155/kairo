@@ -15,7 +15,8 @@ import java.util.UUID
 
 internal class UpdateOrg @Inject constructor(
     application: Application,
-    private val orgService: OrgService
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper
 ) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
 
     internal data class Command(
@@ -33,9 +34,9 @@ internal class UpdateOrg @Inject constructor(
     override suspend fun handler(command: Command): OrgRep.Complete {
         val completeModel = orgService.update(
             id = command.orgId,
-            model = OrgMapper.updateModel(command.updateRep)
+            model = orgMapper.updateModel(command.updateRep)
         )
-        return OrgMapper.completeRep(completeModel)
+        return orgMapper.completeRep(completeModel)
     }
 
     companion object {

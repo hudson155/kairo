@@ -1,13 +1,17 @@
 package io.limberapp.backend.module.orgs.mapper.membership
 
+import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
+import java.time.Clock
 import java.time.LocalDateTime
 
-internal object MembershipMapper {
+internal class MembershipMapper @Inject constructor(
+    private val clock: Clock
+) {
 
     fun creationModel(rep: MembershipRep.Creation) = MembershipModel.Creation(
-        created = LocalDateTime.now(),
+        created = LocalDateTime.now(clock),
         version = 0,
         userId = rep.userId
     )

@@ -14,7 +14,8 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
 
 internal class CreateOrg @Inject constructor(
     application: Application,
-    private val orgService: OrgService
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper
 ) : ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(application, config) {
 
     internal data class Command(
@@ -28,8 +29,8 @@ internal class CreateOrg @Inject constructor(
     override fun authorization(command: Command) = Authorization.Public
 
     override suspend fun handler(command: Command): OrgRep.Complete {
-        val completeModel = orgService.create(OrgMapper.creationModel(command.creationRep))
-        return OrgMapper.completeRep(completeModel)
+        val completeModel = orgService.create(orgMapper.creationModel(command.creationRep))
+        return orgMapper.completeRep(completeModel)
     }
 
     companion object {

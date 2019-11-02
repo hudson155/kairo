@@ -7,11 +7,13 @@ import io.ktor.application.Application
 import io.limberapp.framework.MainModule
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.createClient
+import java.time.Clock
 
 internal class MainModuleImpl(
     application: Application,
+    clock: Clock,
     config: Config
-) : MainModule(application, config) {
+) : MainModule(application, clock, config) {
 
     @Provides
     @Singleton

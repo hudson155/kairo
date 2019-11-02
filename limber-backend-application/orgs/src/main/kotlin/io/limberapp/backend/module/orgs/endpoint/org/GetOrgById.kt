@@ -14,7 +14,8 @@ import java.util.UUID
 
 internal class GetOrgById @Inject constructor(
     application: Application,
-    private val orgService: OrgService
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper
 ) : ApiEndpoint<GetOrgById.Command, OrgRep.Complete?>(application, config) {
 
     internal data class Command(
@@ -29,7 +30,7 @@ internal class GetOrgById @Inject constructor(
 
     override suspend fun handler(command: Command): OrgRep.Complete? {
         val completeModel = orgService.getById(command.orgId)
-        return completeModel?.let { OrgMapper.completeRep(it) }
+        return completeModel?.let { orgMapper.completeRep(it) }
     }
 
     companion object {

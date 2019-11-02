@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
+import java.time.LocalDateTime
 import kotlin.test.assertEquals
 
 internal class CreateOrgTest : ResourceTest() {
@@ -16,7 +17,12 @@ internal class CreateOrgTest : ResourceTest() {
             body = creationRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val expected = OrgRep.Complete(actual.id, actual.created, "Cranky Pasta", emptyList())
+            val expected = OrgRep.Complete(
+                id = actual.id,
+                created = LocalDateTime.now(clock),
+                name = "Cranky Pasta",
+                members = emptyList()
+            )
             assertEquals(expected, actual)
         }
     }
