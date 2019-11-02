@@ -8,14 +8,10 @@ import java.util.UUID
 internal object OrgMapper {
 
     fun creationModel(rep: OrgRep.Creation) = OrgModel.Creation(
-        name = rep.name
-    )
-
-    fun completeModel(model: OrgModel.Creation) = OrgModel.Complete(
         id = UUID.randomUUID(),
         created = LocalDateTime.now(),
         version = 0,
-        name = model.name
+        name = rep.name
     )
 
     fun updateModel(rep: OrgRep.Update) = OrgModel.Update(

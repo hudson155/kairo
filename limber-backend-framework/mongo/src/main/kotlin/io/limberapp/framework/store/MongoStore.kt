@@ -8,6 +8,7 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.ReturnDocument
 import io.limberapp.framework.model.CompleteModel
+import io.limberapp.framework.model.CreationModel
 import io.limberapp.framework.model.UpdateModel
 import io.limberapp.framework.util.asByteArray
 import org.bson.BsonBinarySubType
@@ -22,17 +23,17 @@ import java.util.UUID
  * TODO: This class uses Jackson to go to String and then to Document. Could we save time by using a
  * TODO: stream, JsonNode, or some other intermediary structure?
  */
-abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
+abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Update : UpdateModel>(
     mongoDatabase: MongoDatabase,
     collectionName: String
-) : Store<Complete, Update> {
+) : Store<Creation, Complete, Update> {
 
     protected val collection: MongoCollection<Document> =
         mongoDatabase.getCollection(collectionName)
 
     protected val objectMapper = LimberMongoObjectMapper()
 
-    final override fun create(model: Complete, typeRef: TypeReference<Complete>): Complete {
+    final override fun create(model: Creation, typeRef: TypeReference<Complete>): Complete {
         val json = objectMapper.writeValueAsString(model)
         collection.insertOne(Document.parse(json))
         return objectMapper.readValue(json, typeRef)

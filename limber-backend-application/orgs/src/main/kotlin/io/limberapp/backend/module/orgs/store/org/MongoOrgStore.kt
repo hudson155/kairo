@@ -11,7 +11,7 @@ import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoStore<OrgModel.Complete, OrgModel.Update>(
+) : OrgStore, MongoStore<OrgModel.Creation, OrgModel.Complete, OrgModel.Update>(
     mongoDatabase = mongoDatabase,
     collectionName = collectionName
 ) {

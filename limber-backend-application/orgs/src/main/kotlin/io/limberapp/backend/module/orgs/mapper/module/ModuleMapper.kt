@@ -8,18 +8,13 @@ import java.util.UUID
 internal object ModuleMapper {
 
     fun creationModel(rep: ModuleRep.Creation) = ModuleModel.Creation(
+        id = UUID.randomUUID(),
+        created = LocalDateTime.now(),
+        version = 0,
         name = rep.name,
         type = when (rep.type) {
             ModuleRep.Type.FORM -> ModuleModel.Type.FORM
         }
-    )
-
-    fun completeModel(model: ModuleModel.Creation) = ModuleModel.Complete(
-        id = UUID.randomUUID(),
-        created = LocalDateTime.now(),
-        version = 0,
-        name = model.name,
-        type = model.type
     )
 
     fun updateModel(rep: ModuleRep.Update) = ModuleModel.Update(

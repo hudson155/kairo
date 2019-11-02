@@ -10,7 +10,7 @@ import java.util.UUID
 
 internal class MongoModuleStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : ModuleStore, MongoStore<ModuleModel.Complete, ModuleModel.Update>(
+) : ModuleStore, MongoStore<ModuleModel.Creation, ModuleModel.Complete, ModuleModel.Update>(
     mongoDatabase = mongoDatabase,
     collectionName = collectionName
 ) {

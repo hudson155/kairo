@@ -14,8 +14,7 @@ internal class ModuleServiceImpl @Inject constructor(
     private val moduleStore: ModuleStore
 ) : ModuleService {
 
-    override fun create(model: ModuleModel.Creation) =
-        moduleStore.create(ModuleMapper.completeModel(model))
+    override fun create(model: ModuleModel.Creation) = moduleStore.create(model)
 
     override fun getById(id: UUID) = moduleStore.getById(id)
 
