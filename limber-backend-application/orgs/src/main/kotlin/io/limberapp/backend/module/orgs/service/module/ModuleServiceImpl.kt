@@ -1,8 +1,6 @@
 package io.limberapp.backend.module.orgs.service.module
 
 import com.google.inject.Inject
-import io.ktor.features.NotFoundException
-import io.limberapp.backend.module.orgs.mapper.module.ModuleMapper
 import io.limberapp.backend.module.orgs.model.module.ModuleModel
 import io.limberapp.backend.module.orgs.store.module.ModuleStore
 import io.limberapp.framework.store.create
@@ -20,7 +18,5 @@ internal class ModuleServiceImpl @Inject constructor(
 
     override fun getByOrgId(orgId: UUID) = moduleStore.getByOrgId(orgId)
 
-    override fun update(id: UUID, model: ModuleModel.Update): ModuleModel.Complete {
-        return moduleStore.update(id, model) ?: throw NotFoundException()
-    }
+    override fun update(id: UUID, model: ModuleModel.Update) = moduleStore.update(id, model)
 }

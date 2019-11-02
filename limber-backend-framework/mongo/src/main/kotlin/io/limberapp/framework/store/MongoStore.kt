@@ -7,6 +7,7 @@ import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.ReturnDocument
+import io.ktor.features.NotFoundException
 import io.limberapp.framework.model.CompleteModel
 import io.limberapp.framework.model.CreationModel
 import io.limberapp.framework.model.UpdateModel
@@ -48,7 +49,7 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
         id: UUID,
         model: Update,
         typeRef: TypeReference<Complete>
-    ): Complete? {
+    ): Complete {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return getById(id, typeRef)!!
         val json = objectMapper.writeValueAsString(map)
@@ -59,7 +60,7 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
             )
         )
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
-        val document = collection.findOneAndUpdate(idFilter(id), update, options) ?: return null
+        val document = collection.findOneAndUpdate(idFilter(id), update, options) ?: throw NotFoundException()
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
