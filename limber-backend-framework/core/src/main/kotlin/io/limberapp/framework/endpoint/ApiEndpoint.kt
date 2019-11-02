@@ -39,11 +39,15 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     data class Config(val httpMethod: HttpMethod, val pathTemplate: String) {
 
         // TODO: Add query params
-        fun path(pathParams: Map<String, String>): String {
-            return pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
+        fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
+            var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
                 val pathParam = it.groupValues[1]
                 return@replace checkNotNull(pathParams[pathParam])
             }
+            if (queryParams.isNotEmpty()) {
+                path = "$path?${queryParams.map { "${it.key}=${it.value}" }.joinToString("&")}"
+            }
+            return path
         }
     }
 
