@@ -16,6 +16,7 @@ internal class MongoModuleStore @Inject constructor(
 ) {
 
     override fun getByOrgId(orgId: UUID): List<ModuleModel.Complete> {
+//        val filter = Filters.eq(ModuleModel.Complete::orgId.name, orgId) // TODO: Use this instead
         val filter = Filters.eq("orgId", orgId)
         val documents = collection.find(filter).toList()
         return documents.map { objectMapper.readValue<ModuleModel.Complete>(it.toJson()) }

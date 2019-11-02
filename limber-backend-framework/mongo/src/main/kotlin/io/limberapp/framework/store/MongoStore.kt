@@ -56,7 +56,7 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
         val update = Document(
             mapOf(
                 "\$set" to Document.parse(json),
-                "\$inc" to Document("version", 1)
+                "\$inc" to Document(CompleteModel::version.name, 1)
             )
         )
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }

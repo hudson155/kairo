@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
+import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.framework.store.MongoStore
 import org.bson.Document
@@ -17,7 +18,10 @@ internal class MongoOrgStore @Inject constructor(
 ) {
 
     override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
-        val filter = Filters.eq("memberships", Document("userId", memberId))
+        val filter = Filters.eq(
+            OrgModel.Complete::members.name,
+            Document(MembershipModel.Complete::userId.name, memberId)
+        )
         val documents = collection.find(filter).toList()
         return documents.map { objectMapper.readValue<OrgModel.Complete>(it.toJson()) }
     }
