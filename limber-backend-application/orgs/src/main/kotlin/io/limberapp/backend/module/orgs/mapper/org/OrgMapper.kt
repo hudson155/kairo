@@ -4,17 +4,18 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.mapper.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
+import io.limberapp.framework.util.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
-import java.util.UUID
 
 internal class OrgMapper @Inject constructor(
     private val clock: Clock,
+    private val uuidGenerator: UuidGenerator,
     private val membershipMapper: MembershipMapper
 ) {
 
     fun creationModel(rep: OrgRep.Creation) = OrgModel.Creation(
-        id = UUID.randomUUID(),
+        id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         version = 0,
         name = rep.name,

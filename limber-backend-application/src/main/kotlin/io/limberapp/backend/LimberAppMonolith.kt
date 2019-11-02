@@ -7,12 +7,11 @@ import io.limberapp.framework.LimberApp
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.config.database.DatabaseConfig
 import io.limberapp.framework.config.jwt.JwtConfig
-import java.time.Clock
 
 internal class LimberAppMonolith : LimberApp(loadConfig()) {
 
     override fun getMainModule(application: Application) =
-        MainModuleImpl(application, Clock.systemUTC(), config)
+        MainModuleImpl.forProduction(application, config)
 
     override val modules = listOf(
         OrgsModule()

@@ -43,7 +43,7 @@ internal class UpdateOrgTest : ResourceTest() {
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
-                id = actual.id,
+                id = uuidGenerator[0],
                 created = LocalDateTime.now(clock),
                 name = "Standing Teeth",
                 members = emptyList()

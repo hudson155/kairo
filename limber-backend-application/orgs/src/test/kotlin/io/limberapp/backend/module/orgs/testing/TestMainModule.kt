@@ -7,13 +7,15 @@ import io.ktor.application.Application
 import io.limberapp.framework.MainModule
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.createClient
+import io.limberapp.framework.util.UuidGenerator
 import java.time.Clock
 
 internal class TestMainModule(
     application: Application,
     clock: Clock,
+    uuidGenerator: UuidGenerator,
     config: Config
-) : MainModule(application, clock, config) {
+) : MainModule(application, clock, uuidGenerator, config) {
 
     @Provides
     @Singleton
