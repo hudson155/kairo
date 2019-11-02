@@ -2,7 +2,6 @@ package io.limberapp.framework.store
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.convertValue
-import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
@@ -44,7 +43,11 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
-    final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
+    final override fun update(
+        id: UUID,
+        model: Update,
+        typeRef: TypeReference<Complete>
+    ): Complete? {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return getById(id, typeRef)!!
         val json = objectMapper.writeValueAsString(map)
@@ -55,7 +58,7 @@ abstract class MongoStore<Complete : CompleteModel, Update : UpdateModel>(
             )
         )
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
-        val document = collection.findOneAndUpdate(idFilter(id), update, options)!!
+        val document = collection.findOneAndUpdate(idFilter(id), update, options) ?: return null
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 

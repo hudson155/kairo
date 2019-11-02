@@ -16,7 +16,7 @@ interface Store<Complete : CompleteModel, Update : UpdateModel> {
 
     fun getById(id: UUID, typeRef: TypeReference<Complete>): Complete?
 
-    fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete
+    fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete?
 }
 
 inline fun <reified Complete : CompleteModel, Update : UpdateModel>
