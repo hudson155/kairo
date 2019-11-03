@@ -50,6 +50,7 @@ allprojects {
 subprojects {
 
     buildscript {
+        apply from: "$rootDir/gradle/dependencies.gradle"
         repositories {
             jcenter()
         }
@@ -63,6 +64,10 @@ subprojects {
         compile libs.kotlin_reflect
         compile libs.kotlin_stdlib_jdk8
     }
+}
+
+repositories {
+    jcenter()
 }
 
 detekt {
