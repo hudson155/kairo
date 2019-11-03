@@ -6,7 +6,9 @@ import io.limberapp.framework.LimberApp
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.config.database.DatabaseConfig
 import io.limberapp.framework.config.jwt.JwtConfig
+import io.limberapp.framework.createClient
 import io.limberapp.framework.testing.AbstractResourceTest
+import org.junit.Before
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
@@ -28,4 +30,10 @@ abstract class ResourceTest : AbstractResourceTest() {
 
         override val modules = listOf(OrgsModule())
     })
+
+    @Before
+    fun before() {
+        val mongoClient = config.createClient()
+        mongoClient.getDatabase(config.database.database).drop()
+    }
 }
