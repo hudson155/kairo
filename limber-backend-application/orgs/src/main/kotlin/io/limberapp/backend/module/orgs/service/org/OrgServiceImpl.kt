@@ -24,4 +24,6 @@ internal class OrgServiceImpl @Inject constructor(
     }
 
     override fun update(id: UUID, model: OrgModel.Update) = orgStore.update(id, model)
+
+    override fun delete(id: UUID) = orgStore.delete(id)
 }

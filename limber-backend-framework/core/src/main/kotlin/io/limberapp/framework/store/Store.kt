@@ -18,6 +18,8 @@ interface Store<Creation : CreationModel, Complete : CompleteModel, Update : Upd
     fun get(id: UUID, typeRef: TypeReference<Complete>): Complete?
 
     fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete
+
+    fun delete(id: UUID)
 }
 
 inline fun <Creation : CreationModel, reified Complete : CompleteModel, Update : UpdateModel>

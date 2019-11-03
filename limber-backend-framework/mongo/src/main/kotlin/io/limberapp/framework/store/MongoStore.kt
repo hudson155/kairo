@@ -60,8 +60,20 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
             )
         )
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
-        val document = collection.findOneAndUpdate(idFilter(id), update, options) ?: throw NotFoundException()
+        val document =
+            collection.findOneAndUpdate(idFilter(id), update, options) ?: throw NotFoundException()
         return objectMapper.readValue(document.toJson(), typeRef)
+    }
+
+    final override fun delete(id: UUID) {
+        val update = Document(
+            mapOf(
+                "\$set" to Document("deleted", true),
+                "\$inc" to Document(CompleteModel::version.name, 1)
+            )
+        )
+        val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
+        collection.findOneAndUpdate(idFilter(id), update, options) ?: throw NotFoundException()
     }
 
     protected fun idFilter(id: UUID): Bson {

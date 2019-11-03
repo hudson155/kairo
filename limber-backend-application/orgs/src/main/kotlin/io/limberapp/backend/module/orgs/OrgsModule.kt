@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.orgs
 
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
+import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
@@ -26,7 +27,8 @@ class OrgsModule : Module() {
         CreateOrg::class.java,
         GetOrg::class.java,
         GetOrgsByMemberId::class.java,
-        UpdateOrg::class.java
+        UpdateOrg::class.java,
+        DeleteOrg::class.java
     )
 
     override fun bindServices() {
