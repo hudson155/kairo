@@ -29,9 +29,8 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
     protected val objectMapper = LimberMongoObjectMapper()
 
     final override fun create(model: Creation, typeRef: TypeReference<Complete>): Complete {
-        val json = objectMapper.writeValueAsString(model)
-        collection.insertOne(json)
-        return objectMapper.readValue(json, typeRef)
+        val document = collection.insertOne(model)
+        return objectMapper.readValue(document.toJson(), typeRef)
     }
 
     final override fun get(id: UUID, typeRef: TypeReference<Complete>): Complete? {
@@ -42,13 +41,12 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
     final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
         if (map.isEmpty()) return get(id, typeRef) ?: throw NotFoundException()
-        val json = objectMapper.writeValueAsString(map)
-        val document = collection.findOneAndUpdate(id, json)
+        val document = collection.findOneAndUpdate(id, Update().apply { setDocument(map) })
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
     final override fun delete(id: UUID) {
-        val update = Update().apply { set(Document("deleted", true)) }
+        val update = Update().apply { set("deleted", true) }
         collection.findOneAndUpdate(id, update)
     }
 

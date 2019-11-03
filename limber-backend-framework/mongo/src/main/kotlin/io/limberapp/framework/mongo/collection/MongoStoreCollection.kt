@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.ReturnDocument
 import io.ktor.features.NotFoundException
+import io.limberapp.framework.store.LimberMongoObjectMapper
 import io.limberapp.framework.store.findOne
 import io.limberapp.framework.util.asByteArray
 import org.bson.BsonBinarySubType
@@ -19,10 +20,14 @@ private const val MONGO_ID_KEY = "_id"
  */
 class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String) {
 
+    private val objectMapper = LimberMongoObjectMapper()
+
     private val delegate: MongoCollection<Document> = mongoDatabase.getCollection(collectionName)
 
-    fun insertOne(json: String) {
-        delegate.insertOne(Document.parse(json))
+    fun insertOne(any: Any): Document {
+        val document = Document.parse(objectMapper.writeValueAsString(any))
+        delegate.insertOne(document)
+        return document
     }
 
     fun findOne(id: UUID): Document? {
@@ -37,10 +42,6 @@ class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String)
     fun findMany(filter: FindFilter): List<Document> {
         val filterBson = filter.asBson()
         return delegate.find(filterBson).toList()
-    }
-
-    fun findOneAndUpdate(id: UUID, updateJson: String): Document {
-        return findOneAndUpdate(id, Update().apply { set(Document.parse(updateJson)) })
     }
 
     fun findOneAndUpdate(id: UUID, update: Update): Document {

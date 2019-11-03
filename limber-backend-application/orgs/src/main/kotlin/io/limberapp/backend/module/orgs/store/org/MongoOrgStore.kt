@@ -30,8 +30,7 @@ internal class MongoOrgStore @Inject constructor(
     }
 
     override fun createMembership(id: UUID, model: MembershipModel.Creation) {
-        val json = objectMapper.writeValueAsString(model)
-        val update = Update().apply { push(OrgModel.Complete::members.name, Document.parse(json)) }
+        val update = Update().apply { pushDocument(OrgModel.Complete::members.name, model) }
         collection.findOneAndUpdate(id, update)
     }
 
