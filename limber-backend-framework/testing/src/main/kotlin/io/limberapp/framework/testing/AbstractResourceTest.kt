@@ -69,8 +69,11 @@ abstract class AbstractResourceTest {
             expectedStatusCode: HttpStatusCode,
             test: TestApplicationCall.() -> Unit
         ) {
-            assertTrue(requestHandled)
-            assertEquals(expectedStatusCode, response.status())
+            assertTrue(
+                actual = requestHandled,
+                message = "The HTTP request was not handled. Is the path wrong or did you forget to register the ApiEndpoint?"
+            )
+            assertEquals(expectedStatusCode, response.status(), "Unexpected HTTP response code.")
             test()
         }
     }
