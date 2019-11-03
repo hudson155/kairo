@@ -8,10 +8,9 @@ import io.limberapp.framework.model.CompleteModel
 import io.limberapp.framework.model.CreationModel
 import io.limberapp.framework.model.UpdateModel
 import io.limberapp.framework.mongo.collection.MongoStoreCollection
-import io.limberapp.framework.mongo.collection.Update
+import io.limberapp.framework.mongo.collection.update.Update
 import io.limberapp.framework.util.asByteArray
 import org.bson.BsonBinarySubType
-import org.bson.Document
 import org.bson.conversions.Bson
 import org.bson.types.Binary
 import java.util.UUID
@@ -39,19 +38,18 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
     }
 
     final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
-        val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
+        val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValuesNotNull()
         if (map.isEmpty()) return get(id, typeRef) ?: throw NotFoundException()
-        val document = collection.findOneAndUpdate(id, Update().apply { setDocument(map) })
+        val document = collection.findOneAndUpdate(id, Update().apply { set += map })
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
     final override fun delete(id: UUID) {
-        val update = Update().apply { set("deleted", true) }
+        val update = Update()
+            .apply { set["deleted"] = true }
         collection.findOneAndUpdate(id, update)
     }
-
-    protected fun idFilter(id: UUID): Bson {
-        val binary = Binary(BsonBinarySubType.UUID_LEGACY, id.asByteArray())
-        return Filters.eq(binary)
-    }
 }
+
+private fun <K, V : Any> Map<K, V?>.filterValuesNotNull(): Map<K, V> =
+    filterValues { it != null }.mapValues { it.value!! }
