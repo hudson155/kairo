@@ -33,6 +33,7 @@ abstract class AbstractResourceTest {
 
     protected inner class LimberTest(private val limberApp: LimberApp) {
 
+        @Suppress("LongParameterList") // For this test method, we're ok with it.
         fun test(
             config: ApiEndpoint.Config,
             pathParams: Map<String, String> = emptyMap(),

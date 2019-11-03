@@ -9,7 +9,7 @@ import io.ktor.util.pipeline.PipelineContext
 import io.limberapp.framework.error.notFound.NotFoundFrameworkError
 import io.limberapp.framework.exceptionMapping.ExceptionMapper
 
-internal class NotFoundException() :
+internal class NotFoundException :
     ExceptionMapper<NotFoundException>() {
 
     override suspend fun PipelineContext<Unit, ApplicationCall>.handle(

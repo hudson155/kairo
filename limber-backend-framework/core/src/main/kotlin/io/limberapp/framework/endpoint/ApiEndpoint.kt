@@ -36,7 +36,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
      */
     data class Config(val httpMethod: HttpMethod, val pathTemplate: String) {
 
-        // TODO: Add query params
+        // TODO: Add query params.
         fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
             var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
                 val pathParam = it.groupValues[1]

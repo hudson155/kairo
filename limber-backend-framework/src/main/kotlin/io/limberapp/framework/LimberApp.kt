@@ -110,7 +110,7 @@ abstract class LimberApp(
         }
     }
 
-    @Suppress("SpreadOperator") // Okay to use here because it's at application startup
+    @Suppress("SpreadOperator") // Okay to use here because it's at application startup.
     private fun Application.bindModules() {
         Guice.createInjector(listOf(getMainModule(this), *modules.toTypedArray()))
     }

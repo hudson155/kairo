@@ -10,5 +10,5 @@ class ValidationFrameworkError(
     override val propetyName: String
 ) : PropertyFrameworkError() {
     override val key = FrameworkError.Key.MALFORMED_PROPERTY
-    override val message = "Malformed value provided for $propetyName"
+    override val message = "Malformed value provided for $propetyName."
 }

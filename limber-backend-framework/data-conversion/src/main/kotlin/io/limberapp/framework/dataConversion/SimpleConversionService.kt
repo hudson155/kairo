@@ -20,11 +20,11 @@ abstract class SimpleConversionService<T : Any>(val clazz: KClass<T>) : Conversi
             1 -> {
                 val value = values.single()
                 if (!isValid(value)) {
-                    throw DataConversionException("Cannot convert - value is malformed")
+                    throw DataConversionException("Cannot convert - value is malformed.")
                 }
                 fromValue(value)
             }
-            else -> throw DataConversionException("Cannot convert - multiple values specified")
+            else -> throw DataConversionException("Cannot convert - multiple values specified.")
         }
     }
 
@@ -35,7 +35,7 @@ abstract class SimpleConversionService<T : Any>(val clazz: KClass<T>) : Conversi
     final override fun toValues(value: Any?): List<String> {
         value ?: return emptyList()
         if (value::class != clazz) {
-            throw DataConversionException("Cannot convert - value is not a ${clazz.simpleName}")
+            throw DataConversionException("Cannot convert - value is not a ${clazz.simpleName}.")
         }
         // Not sure why the function signature is Any?. If this cast ever causes an issue, remove
         // the suppression and fix the issue, but for now we'll leave it.

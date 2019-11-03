@@ -129,7 +129,7 @@ exceptions:
     active: true
   TooGenericExceptionCaught:
     active: true
-    excludes: "**/src/test/**"
+    excludes: "**/src/test/**/*Test.kt"
     exceptionNames:
       - ArrayIndexOutOfBoundsException
       - Error
@@ -308,6 +308,7 @@ potential-bugs:
     active: true
   LateinitUsage:
     active: true
+    excludes: "**/src/test/**/*Test.kt"
   MissingWhenCase:
     active: true
   RedundantElseInWhen:

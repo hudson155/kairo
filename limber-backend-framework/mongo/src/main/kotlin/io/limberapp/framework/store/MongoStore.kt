@@ -22,7 +22,7 @@ import java.util.UUID
  * MongoStore is an implementation of Store for MongoDB. It implements some default methods.
  *
  * TODO: This class uses Jackson to go to String and then to Document. Could we save time by using a
- * TODO: stream, JsonNode, or some other intermediary structure?
+ *  stream, JsonNode, or some other intermediary structure?
  */
 abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Update : UpdateModel>(
     mongoDatabase: MongoDatabase,
