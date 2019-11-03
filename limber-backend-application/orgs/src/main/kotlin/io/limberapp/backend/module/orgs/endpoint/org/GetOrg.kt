@@ -12,11 +12,11 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
-internal class GetOrgById @Inject constructor(
+internal class GetOrg @Inject constructor(
     application: Application,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<GetOrgById.Command, OrgRep.Complete?>(application, config) {
+) : ApiEndpoint<GetOrg.Command, OrgRep.Complete?>(application, config) {
 
     internal data class Command(
         val orgId: UUID
@@ -29,7 +29,7 @@ internal class GetOrgById @Inject constructor(
     override fun authorization(command: Command) = Authorization.Superuser
 
     override suspend fun handler(command: Command): OrgRep.Complete? {
-        val completeModel = orgService.getById(command.orgId)
+        val completeModel = orgService.get(command.orgId)
         return completeModel?.let { orgMapper.completeRep(it) }
     }
 

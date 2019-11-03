@@ -15,7 +15,7 @@ interface Store<Creation : CreationModel, Complete : CompleteModel, Update : Upd
 
     fun create(model: Creation, typeRef: TypeReference<Complete>): Complete
 
-    fun getById(id: UUID, typeRef: TypeReference<Complete>): Complete?
+    fun get(id: UUID, typeRef: TypeReference<Complete>): Complete?
 
     fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete
 }
@@ -25,8 +25,8 @@ inline fun <Creation : CreationModel, reified Complete : CompleteModel, Update :
     create(model, jacksonTypeRef())
 
 inline fun <Creation : CreationModel, reified Complete : CompleteModel, Update : UpdateModel>
-        Store<Creation, Complete, Update>.getById(id: UUID) =
-    getById(id, jacksonTypeRef())
+        Store<Creation, Complete, Update>.get(id: UUID) =
+    get(id, jacksonTypeRef())
 
 inline fun <Creation : CreationModel, reified Complete : CompleteModel, Update : UpdateModel>
         Store<Creation, Complete, Update>.update(id: UUID, updater: Update) =

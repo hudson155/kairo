@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs
 
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
-import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
+import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
@@ -24,7 +24,7 @@ class OrgsModule : Module() {
         CreateMembership::class.java,
 
         CreateOrg::class.java,
-        GetOrgById::class.java,
+        GetOrg::class.java,
         GetOrgsByMemberId::class.java,
         UpdateOrg::class.java
     )

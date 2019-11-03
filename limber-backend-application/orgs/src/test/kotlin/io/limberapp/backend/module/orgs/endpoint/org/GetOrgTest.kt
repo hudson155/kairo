@@ -9,13 +9,13 @@ import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class GetOrgByIdTest : ResourceTest() {
+internal class GetOrgTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
         val orgId = UUID.randomUUID()
         limberTest.test(
-            config = GetOrgById.config,
+            config = GetOrg.config,
             pathParams = mapOf("orgId" to orgId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -34,7 +34,7 @@ internal class GetOrgByIdTest : ResourceTest() {
         }
 
         limberTest.test(
-            config = GetOrgById.config,
+            config = GetOrg.config,
             pathParams = mapOf("orgId" to orgId.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)

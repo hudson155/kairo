@@ -40,7 +40,7 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
         return objectMapper.readValue(json, typeRef)
     }
 
-    final override fun getById(id: UUID, typeRef: TypeReference<Complete>): Complete? {
+    final override fun get(id: UUID, typeRef: TypeReference<Complete>): Complete? {
         val document = collection.findOne(idFilter(id)) ?: return null
         return objectMapper.readValue(document.toJson(), typeRef)
     }
@@ -51,7 +51,7 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
         typeRef: TypeReference<Complete>
     ): Complete {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
-        if (map.isEmpty()) return getById(id, typeRef)!!
+        if (map.isEmpty()) return get(id, typeRef)!!
         val json = objectMapper.writeValueAsString(map)
         val update = Document(
             mapOf(

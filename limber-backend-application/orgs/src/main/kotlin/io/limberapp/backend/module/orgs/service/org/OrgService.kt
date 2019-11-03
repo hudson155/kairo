@@ -8,7 +8,7 @@ internal interface OrgService {
 
     fun create(model: OrgModel.Creation): OrgModel.Complete
 
-    fun getById(id: UUID): OrgModel.Complete?
+    fun get(id: UUID): OrgModel.Complete?
 
     fun getByMemberId(memberId: UUID): List<OrgModel.Complete>
 

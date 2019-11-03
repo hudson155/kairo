@@ -2,7 +2,7 @@ package io.limberapp.backend.module.orgs.endpoint.org.membership
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
-import io.limberapp.backend.module.orgs.endpoint.org.GetOrgById
+import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -34,7 +34,7 @@ internal class CreateMembershipTest : ResourceTest() {
         ) {}
 
         limberTest.test(
-            config = GetOrgById.config,
+            config = GetOrg.config,
             pathParams = mapOf("orgId" to orgId.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
