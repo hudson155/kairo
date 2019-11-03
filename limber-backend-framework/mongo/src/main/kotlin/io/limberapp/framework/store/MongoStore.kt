@@ -2,15 +2,13 @@ package io.limberapp.framework.store
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.convertValue
-import com.mongodb.client.MongoCollection
-import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.Filters
-import com.mongodb.client.model.FindOneAndUpdateOptions
-import com.mongodb.client.model.ReturnDocument
 import io.ktor.features.NotFoundException
 import io.limberapp.framework.model.CompleteModel
 import io.limberapp.framework.model.CreationModel
 import io.limberapp.framework.model.UpdateModel
+import io.limberapp.framework.mongo.collection.MongoStoreCollection
+import io.limberapp.framework.mongo.collection.Update
 import io.limberapp.framework.util.asByteArray
 import org.bson.BsonBinarySubType
 import org.bson.Document
@@ -25,55 +23,33 @@ import java.util.UUID
  *  stream, JsonNode, or some other intermediary structure?
  */
 abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Update : UpdateModel>(
-    mongoDatabase: MongoDatabase,
-    collectionName: String
+    protected val collection: MongoStoreCollection
 ) : Store<Creation, Complete, Update> {
-
-    protected val collection: MongoCollection<Document> =
-        mongoDatabase.getCollection(collectionName)
 
     protected val objectMapper = LimberMongoObjectMapper()
 
     final override fun create(model: Creation, typeRef: TypeReference<Complete>): Complete {
         val json = objectMapper.writeValueAsString(model)
-        collection.insertOne(Document.parse(json))
+        collection.insertOne(json)
         return objectMapper.readValue(json, typeRef)
     }
 
     final override fun get(id: UUID, typeRef: TypeReference<Complete>): Complete? {
-        val document = collection.findOne(idFilter(id)) ?: return null
+        val document = collection.findOne(id) ?: return null
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
-    final override fun update(
-        id: UUID,
-        model: Update,
-        typeRef: TypeReference<Complete>
-    ): Complete {
+    final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
         val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValues { it != null }
-        if (map.isEmpty()) return get(id, typeRef)!!
+        if (map.isEmpty()) return get(id, typeRef) ?: throw NotFoundException()
         val json = objectMapper.writeValueAsString(map)
-        val update = Document(
-            mapOf(
-                "\$set" to Document.parse(json),
-                "\$inc" to Document(CompleteModel::version.name, 1)
-            )
-        )
-        val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
-        val document =
-            collection.findOneAndUpdate(idFilter(id), update, options) ?: throw NotFoundException()
+        val document = collection.findOneAndUpdate(id, json)
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
     final override fun delete(id: UUID) {
-        val update = Document(
-            mapOf(
-                "\$set" to Document("deleted", true),
-                "\$inc" to Document(CompleteModel::version.name, 1)
-            )
-        )
-        val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
-        collection.findOneAndUpdate(idFilter(id), update, options) ?: throw NotFoundException()
+        val update = Update().apply { set(Document("deleted", true)) }
+        collection.findOneAndUpdate(id, update)
     }
 
     protected fun idFilter(id: UUID): Bson {
