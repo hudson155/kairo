@@ -49,6 +49,12 @@ allprojects {
 
 subprojects {
 
+    buildscript {
+        repositories {
+            jcenter()
+        }
+    }
+
     repositories {
         jcenter()
     }
@@ -57,10 +63,6 @@ subprojects {
         compile libs.kotlin_reflect
         compile libs.kotlin_stdlib_jdk8
     }
-}
-
-repositories {
-    jcenter()
 }
 
 detekt {

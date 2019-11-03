@@ -1,8 +1,4 @@
 buildscript {
-    apply from: "$rootDir/gradle/dependencies.gradle"
-    repositories {
-        jcenter()
-    }
     dependencies {
         classpath libs.shadow
     }
