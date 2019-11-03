@@ -14,6 +14,8 @@ internal interface OrgService {
 
     fun createMembership(id: UUID, model: MembershipModel.Creation)
 
+    fun deleteMembership(id: UUID, memberId: UUID)
+
     fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete
 
     fun delete(id: UUID)

@@ -10,6 +10,7 @@ class Update {
 
     private var set: Document = Document()
     private var push = Document()
+    private var pull = Document()
 
     fun setDocument(document: Any) {
         check(set.isEmpty())
@@ -41,11 +42,27 @@ class Update {
         push[key] = value
     }
 
+    fun pullDocument(document: Any) {
+        check(pull.isEmpty())
+        pull = Document.parse(objectMapper.writeValueAsString(document))
+    }
+
+    fun pullDocument(key: String, value: Any) {
+        check(!pull.containsKey(key))
+        pull[key] = Document.parse(objectMapper.writeValueAsString(value))
+    }
+
+    fun pull(key: String, value: Boolean) {
+        check(!pull.containsKey(key))
+        pull[key] = value
+    }
+
     fun asBson(): Bson {
-        check(set.isNotEmpty() || push.isNotEmpty())
+        check(set.isNotEmpty() || push.isNotEmpty() || pull.isNotEmpty())
         return Document().apply {
             if (set.isNotEmpty()) this["\$set"] = set
             if (push.isNotEmpty()) this["\$push"] = push
+            if (pull.isNotEmpty()) this["\$pull"] = pull
         }
     }
 }

@@ -11,4 +11,6 @@ internal interface OrgStore :
     fun getByMemberId(memberId: UUID): List<OrgModel.Complete>
 
     fun createMembership(id: UUID, model: MembershipModel.Creation)
+
+    fun deleteMembership(id: UUID, memberId: UUID)
 }

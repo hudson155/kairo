@@ -34,6 +34,16 @@ internal class MongoOrgStore @Inject constructor(
         collection.findOneAndUpdate(id, update)
     }
 
+    override fun deleteMembership(id: UUID, memberId: UUID) {
+        val update = Update().apply {
+            pullDocument(
+                key = OrgModel.Complete::members.name,
+                value = Document(MembershipModel.Complete::userId.name, memberId)
+            )
+        }
+        collection.findOneAndUpdate(id, update)
+    }
+
     companion object {
         const val collectionName = "Org"
     }
