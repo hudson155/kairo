@@ -26,7 +26,7 @@ internal class CreateOrg @Inject constructor(
         creationRep = call.receive()
     )
 
-    override fun authorization(command: Command) = Authorization.Public
+    override fun authorization(command: Command) = Authorization.Superuser
 
     override suspend fun handler(command: Command): OrgRep.Complete {
         val completeModel = orgService.create(orgMapper.creationModel(command.creationRep))

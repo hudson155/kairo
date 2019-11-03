@@ -23,6 +23,10 @@ sealed class Authorization {
         override fun authorizeInternal(payload: Jwt?) = payload != null
     }
 
+    object Superuser : Authorization() {
+        override fun authorizeInternal(payload: Jwt?) = false
+    }
+
     class User(private val userId: UUID) : Authorization() {
         override fun authorizeInternal(payload: Jwt?): Boolean {
             payload ?: return false
