@@ -12,15 +12,16 @@ internal class CreateOrgTest : ResourceTest() {
     @Test
     fun create() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
+        val id = uuidGenerator[0]
         limberTest.test(
             config = CreateOrg.config,
             body = creationRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
-                id = uuidGenerator[0],
+                id = id,
                 created = LocalDateTime.now(clock),
-                name = "Cranky Pasta",
+                name = creationRep.name,
                 members = emptyList()
             )
             assertEquals(expected, actual)

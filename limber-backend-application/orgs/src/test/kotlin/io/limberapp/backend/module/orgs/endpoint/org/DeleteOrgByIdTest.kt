@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -22,23 +21,21 @@ internal class DeleteOrgByIdTest : ResourceTest() {
     @Test
     fun exists() {
 
-        lateinit var orgId: UUID
         val creationRep = OrgRep.Creation("Cranky Pasta")
+        val id = uuidGenerator[0]
         limberTest.test(
             config = CreateOrg.config,
             body = creationRep
-        ) {
-            orgId = objectMapper.readValue<OrgRep.Complete>(response.content!!).id
-        }
+        ) {}
 
         limberTest.test(
             config = DeleteOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString())
+            pathParams = mapOf("orgId" to id.toString())
         ) {}
 
         limberTest.test(
             config = GetOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf("orgId" to id.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }

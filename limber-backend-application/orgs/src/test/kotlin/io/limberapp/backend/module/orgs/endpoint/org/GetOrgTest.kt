@@ -24,24 +24,22 @@ internal class GetOrgTest : ResourceTest() {
     @Test
     fun exists() {
 
-        lateinit var orgId: UUID
         val creationRep = OrgRep.Creation("Cranky Pasta")
+        val id = uuidGenerator[0]
         limberTest.test(
             config = CreateOrg.config,
             body = creationRep
-        ) {
-            orgId = objectMapper.readValue<OrgRep.Complete>(response.content!!).id
-        }
+        ) {}
 
         limberTest.test(
             config = GetOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString())
+            pathParams = mapOf("orgId" to id.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
-                id = uuidGenerator[0],
+                id = id,
                 created = LocalDateTime.now(clock),
-                name = "Cranky Pasta",
+                name = creationRep.name,
                 members = emptyList()
             )
             assertEquals(expected, actual)
