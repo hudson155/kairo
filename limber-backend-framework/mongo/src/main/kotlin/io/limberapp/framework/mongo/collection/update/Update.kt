@@ -3,11 +3,11 @@ package io.limberapp.framework.mongo.collection.update
 import org.bson.Document
 import org.bson.conversions.Bson
 
-class Update {
-
-    val set = UpdateComponent()
-    val push = UpdateComponent()
-    val pull = UpdateComponent()
+data class Update(
+    val set: UpdateComponent = UpdateComponent(),
+    val push: UpdateComponent = UpdateComponent(),
+    val pull: UpdateComponent = UpdateComponent()
+) {
 
     fun asBson(): Bson {
         check(listOf(set, push, pull).any { it.delegate.isNotEmpty() })

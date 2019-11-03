@@ -4,9 +4,9 @@ import com.mongodb.client.model.Filters
 import org.bson.Document
 import org.bson.conversions.Bson
 
-class FindFilter {
-
-    private val eq = Document()
+data class FindFilter(
+    private val eq: Document = Document()
+) {
 
     fun eq(key: String, value: Any) {
         check(!eq.containsKey(key))

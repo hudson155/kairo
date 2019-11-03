@@ -3,12 +3,9 @@ package io.limberapp.framework.mongo.collection.update
 import io.limberapp.framework.store.LimberMongoObjectMapper
 import org.bson.Document
 
-class UpdateComponent {
+data class UpdateComponent(val delegate: Document = Document()) {
 
     private val objectMapper = LimberMongoObjectMapper()
-
-    var delegate = Document()
-        private set
 
     operator fun plusAssign(map: Map<String, Any>) {
         map.forEach { this[it.key] = it.value }
