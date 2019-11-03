@@ -32,11 +32,11 @@ abstract class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
 ) {
 
     /**
-     * The configuration for the API endpoint. Uniquely represents the HTTP method and path.
+     * The configuration for the API endpoint. Uniquely represents the HTTP method and path
+     * template.
      */
     data class Config(val httpMethod: HttpMethod, val pathTemplate: String) {
 
-        // TODO: Add query params.
         fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
             var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
                 val pathParam = it.groupValues[1]
@@ -80,7 +80,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
                         val command = determineCommand(call)
                         val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
                         val jwt = jwtFromPayload(jwtPayload)
-                        if (!authorization(command).authorize(jwt, command)) {
+                        if (!authorization(command).authorize(jwt)) {
                             call.respond(HttpStatusCode.Forbidden)
                             return@handle
                         }

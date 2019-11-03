@@ -2,33 +2,37 @@ package io.limberapp.framework.endpoint.authorization
 
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
-import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 sealed class Authorization {
 
-    abstract fun authorize(payload: Jwt?, command: AbstractCommand): Boolean
+    fun authorize(payload: Jwt?): Boolean {
+        if (payload?.isSuperuser == true) return true
+        return authorizeInternal(payload)
+    }
+
+    private val Jwt.isSuperuser get() = roles.contains(JwtRole.SUPERUSER)
+
+    protected abstract fun authorizeInternal(payload: Jwt?): Boolean
 
     object Public : Authorization() {
-        override fun authorize(payload: Jwt?, command: AbstractCommand) = true
+        override fun authorizeInternal(payload: Jwt?) = true
     }
 
     object AnyJwt : Authorization() {
-        override fun authorize(payload: Jwt?, command: AbstractCommand) = payload != null
+        override fun authorizeInternal(payload: Jwt?) = payload != null
     }
 
     class User(private val userId: UUID) : Authorization() {
-        override fun authorize(payload: Jwt?, command: AbstractCommand): Boolean {
+        override fun authorizeInternal(payload: Jwt?): Boolean {
             payload ?: return false
-            if (payload.roles.contains(JwtRole.SUPERUSER)) return true
             return payload.user.id == userId
         }
     }
 
     class OrgMember(private val orgId: UUID) : Authorization() {
-        override fun authorize(payload: Jwt?, command: AbstractCommand): Boolean {
+        override fun authorizeInternal(payload: Jwt?): Boolean {
             payload ?: return false
-            if (payload.roles.contains(JwtRole.SUPERUSER)) return true
             return payload.orgs.containsKey(orgId)
         }
     }
