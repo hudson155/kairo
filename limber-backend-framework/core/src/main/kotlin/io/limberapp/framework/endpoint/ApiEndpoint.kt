@@ -26,7 +26,7 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint of the API. The handler() is called
  * for each request.
  */
-abstract class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
+abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
     private val config: Config
 ) {
@@ -62,7 +62,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     /**
      * Called for each request to the endpoint, to handle the execution.
      */
-    abstract suspend fun handler(command: Command): ReturnType
+    abstract suspend fun handler(command: Command): ResponseType
 
     init {
         register()
