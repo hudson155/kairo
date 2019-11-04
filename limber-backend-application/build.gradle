@@ -20,6 +20,7 @@ sourceSets {
 
 dependencies {
     compile project(":limber-backend-application:orgs")
+    compile project(":limber-backend-application:users")
     compile project(":limber-backend-framework")
     compile project(":limber-backend-framework:data-conversion")
     compile project(":limber-backend-framework:exception-mapping")

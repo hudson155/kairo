@@ -3,6 +3,7 @@ package io.limberapp.backend
 import com.typesafe.config.ConfigFactory
 import io.ktor.application.Application
 import io.limberapp.backend.module.orgs.OrgsModule
+import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.framework.LimberApp
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.config.database.DatabaseConfig
@@ -14,7 +15,8 @@ internal class LimberAppMonolith : LimberApp(loadConfig()) {
         MainModuleImpl.forProduction(application, config)
 
     override val modules = listOf(
-        OrgsModule()
+        OrgsModule(),
+        UsersModule()
     )
 }
 
