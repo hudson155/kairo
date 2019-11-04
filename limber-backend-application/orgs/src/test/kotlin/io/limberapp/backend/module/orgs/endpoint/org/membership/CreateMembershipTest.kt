@@ -40,7 +40,7 @@ internal class CreateMembershipTest : ResourceTest() {
                 id = orgId,
                 created = LocalDateTime.now(clock),
                 name = orgCreationRep.name,
-                members = listOf(MembershipRep.Complete(actual.members[0].created, userId))
+                members = listOf(MembershipRep.Complete(LocalDateTime.now(clock), userId))
             )
             assertEquals(expected, actual)
         }

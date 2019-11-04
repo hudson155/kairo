@@ -13,6 +13,9 @@ import io.limberapp.framework.store.MongoStore
 import org.bson.Document
 import java.util.UUID
 
+private val ORG_MEMBER_KEY =
+    "${OrgModel.Complete::members.name}.${MembershipModel.Complete::userId.name}"
+
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
 ) : OrgStore, MongoStore<OrgModel.Creation, OrgModel.Complete, OrgModel.Update>(
@@ -20,10 +23,7 @@ internal class MongoOrgStore @Inject constructor(
 ) {
 
     override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
-        val findFilter = FindFilter().apply {
-            eq[OrgModel.Complete::members.name] =
-                Document(MembershipModel.Complete::userId.name, memberId)
-        }
+        val findFilter = FindFilter().apply { eq[ORG_MEMBER_KEY] = memberId }
         val documents = collection.findMany(findFilter)
         return documents.map { objectMapper.readValue<OrgModel.Complete>(it.toJson()) }
     }
@@ -40,8 +40,7 @@ internal class MongoOrgStore @Inject constructor(
                 Document(MembershipModel.Complete::userId.name, memberId)
         }
         collection.findOneAndUpdate(idFilter(id).apply {
-            val key = "${OrgModel.Complete::members.name}.${MembershipModel.Complete::userId.name}"
-            eq[key] = memberId
+            eq[ORG_MEMBER_KEY] = memberId
         }, update)
     }
 
