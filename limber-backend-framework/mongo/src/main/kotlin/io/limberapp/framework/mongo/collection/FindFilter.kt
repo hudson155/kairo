@@ -1,4 +1,4 @@
-package io.limberapp.framework.mongo.collection.findFilter
+package io.limberapp.framework.mongo.collection
 
 import com.mongodb.client.model.Filters
 import org.bson.Document

@@ -2,17 +2,12 @@ package io.limberapp.framework.store
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.convertValue
-import com.mongodb.client.model.Filters
 import io.ktor.features.NotFoundException
 import io.limberapp.framework.model.CompleteModel
 import io.limberapp.framework.model.CreationModel
 import io.limberapp.framework.model.UpdateModel
 import io.limberapp.framework.mongo.collection.MongoStoreCollection
-import io.limberapp.framework.mongo.collection.update.Update
-import io.limberapp.framework.util.asByteArray
-import org.bson.BsonBinarySubType
-import org.bson.conversions.Bson
-import org.bson.types.Binary
+import io.limberapp.framework.mongo.collection.Update
 import java.util.UUID
 
 /**

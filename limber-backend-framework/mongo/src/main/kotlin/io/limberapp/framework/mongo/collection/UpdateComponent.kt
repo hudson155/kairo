@@ -1,4 +1,4 @@
-package io.limberapp.framework.mongo.collection.update
+package io.limberapp.framework.mongo.collection
 
 import io.limberapp.framework.store.LimberMongoObjectMapper
 import org.bson.Document

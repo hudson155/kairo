@@ -6,8 +6,8 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.framework.mongo.collection.MongoStoreCollection
-import io.limberapp.framework.mongo.collection.findFilter.FindFilter
-import io.limberapp.framework.mongo.collection.update.Update
+import io.limberapp.framework.mongo.collection.FindFilter
+import io.limberapp.framework.mongo.collection.Update
 import io.limberapp.framework.store.MongoStore
 import org.bson.Document
 import java.util.UUID
