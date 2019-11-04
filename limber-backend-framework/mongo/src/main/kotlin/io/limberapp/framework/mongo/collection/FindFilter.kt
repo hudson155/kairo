@@ -14,13 +14,4 @@ data class FindFilter(
         }
         return Filters.and(filters)
     }
-
-    fun applyUpdate(update: Update): FindFilter {
-        return copy().apply {
-            update.pull.forEach {
-                check(!eq.containsKey(it.key))
-//                eq[it.key] = it.value // TODO: First, need to have a map without nested objects
-            }
-        }
-    }
 }

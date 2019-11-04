@@ -8,6 +8,7 @@ import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.framework.mongo.collection.FindFilter
 import io.limberapp.framework.mongo.collection.MongoStoreCollection
 import io.limberapp.framework.mongo.collection.Update
+import io.limberapp.framework.mongo.collection.idFilter
 import io.limberapp.framework.store.MongoStore
 import org.bson.Document
 import java.util.UUID
@@ -22,10 +23,6 @@ internal class MongoOrgStore @Inject constructor(
         val findFilter = FindFilter().apply {
             eq[OrgModel.Complete::members.name] =
                 Document(MembershipModel.Complete::userId.name, memberId)
-//            eq(
-//                key = OrgModel.Complete::members.name,
-//                value = Document(MembershipModel.Complete::userId.name, memberId)
-//            )
         }
         val documents = collection.findMany(findFilter)
         return documents.map { objectMapper.readValue<OrgModel.Complete>(it.toJson()) }
@@ -42,7 +39,10 @@ internal class MongoOrgStore @Inject constructor(
             pull[OrgModel.Complete::members.name] =
                 Document(MembershipModel.Complete::userId.name, memberId)
         }
-        collection.findOneAndUpdate(id, update)
+        collection.findOneAndUpdate(idFilter(id).apply {
+            val key = "${OrgModel.Complete::members.name}.${MembershipModel.Complete::userId.name}"
+            eq[key] = memberId
+        }, update)
     }
 
     companion object {

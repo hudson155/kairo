@@ -12,6 +12,8 @@ import java.util.UUID
 
 private const val MONGO_ID_KEY = "_id"
 
+fun idFilter(id: UUID) = FindFilter().apply { eq[MONGO_ID_KEY] = id }
+
 /**
  * TODO: Get rid of all explicit strings
  */
@@ -46,12 +48,10 @@ class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String)
     }
 
     fun findOneAndUpdate(filter: FindFilter, update: Update): Document {
-        val filterBson = filter.applyUpdate(update).asBson()
+        val filterBson = filter.asBson()
         val updateBson = update.asBson()
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
         return delegate.findOneAndUpdate(filterBson, updateBson, options)
             ?: throw NotFoundException()
     }
-
-    private fun idFilter(id: UUID) = FindFilter().apply { eq[MONGO_ID_KEY] = id }
 }
