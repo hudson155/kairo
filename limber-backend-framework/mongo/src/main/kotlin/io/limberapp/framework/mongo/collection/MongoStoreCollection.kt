@@ -7,10 +7,7 @@ import com.mongodb.client.model.ReturnDocument
 import io.ktor.features.NotFoundException
 import io.limberapp.framework.store.LimberMongoObjectMapper
 import io.limberapp.framework.store.findOne
-import io.limberapp.framework.util.asByteArray
-import org.bson.BsonBinarySubType
 import org.bson.Document
-import org.bson.types.Binary
 import java.util.UUID
 
 private const val MONGO_ID_KEY = "_id"
@@ -56,10 +53,5 @@ class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String)
             ?: throw NotFoundException()
     }
 
-    private fun idFilter(id: UUID): FindFilter {
-        val binary = Binary(BsonBinarySubType.UUID_LEGACY, id.asByteArray())
-        return FindFilter().apply {
-            eq(MONGO_ID_KEY, binary)
-        }
-    }
+    private fun idFilter(id: UUID) = FindFilter().apply { eq[MONGO_ID_KEY] = id }
 }
