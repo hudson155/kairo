@@ -35,8 +35,8 @@ object UserRep {
     ) : CompleteRep()
 
     data class Update(
-        val firstName: String?,
-        val lastName: String?
+        val firstName: String? = null,
+        val lastName: String? = null
     ) : UpdateRep() {
         override fun validate() {
             validate(UserRep.Update::firstName) { ifPresent { shortText(allowEmpty = false) } }

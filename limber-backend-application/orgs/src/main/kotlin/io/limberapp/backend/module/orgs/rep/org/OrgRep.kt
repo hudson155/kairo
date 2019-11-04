@@ -27,7 +27,7 @@ object OrgRep {
     ) : CompleteRep()
 
     data class Update(
-        val name: String?
+        val name: String? = null
     ) : UpdateRep() {
         override fun validate() {
             validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }
