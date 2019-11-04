@@ -46,7 +46,7 @@ class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String)
     }
 
     fun findOneAndUpdate(filter: FindFilter, update: Update): Document {
-        val filterBson = filter.asBson()
+        val filterBson = filter.applyUpdate(update).asBson()
         val updateBson = update.asBson()
         val options = FindOneAndUpdateOptions().apply { returnDocument(ReturnDocument.AFTER) }
         return delegate.findOneAndUpdate(filterBson, updateBson, options)
