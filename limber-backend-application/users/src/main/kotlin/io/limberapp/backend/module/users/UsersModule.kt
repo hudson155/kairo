@@ -1,5 +1,7 @@
 package io.limberapp.backend.module.users
 
+import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.backend.module.users.service.user.UserServiceImpl
 import io.limberapp.backend.module.users.store.user.MongoUserStore
 import io.limberapp.backend.module.users.store.user.UserStore
 import io.limberapp.framework.endpoint.ApiEndpoint
@@ -16,7 +18,9 @@ class UsersModule : Module() {
 
     override val endpoints = emptyList<Class<out ApiEndpoint<out AbstractCommand, out Any?>>>()
 
-    override fun bindServices() = Unit
+    override fun bindServices() {
+        bind(UserService::class, UserServiceImpl::class)
+    }
 
     override fun bindStores() {
         bind(UserStore::class, MongoUserStore::class)
