@@ -5,6 +5,7 @@ rootProject.name = 'limber'
  */
 include ':limber-backend-application'
 include ':limber-backend-application:orgs'
+include ':limber-backend-application:users'
 
 /**
  * Backend Framework
