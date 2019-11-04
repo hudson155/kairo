@@ -6,7 +6,7 @@ import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
 import java.util.UUID
 
-internal class DeleteOrgByIdTest : ResourceTest() {
+internal class DeleteOrgTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
