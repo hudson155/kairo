@@ -1,5 +1,7 @@
 package io.limberapp.backend.module.users
 
+import io.limberapp.backend.module.users.store.user.MongoUserStore
+import io.limberapp.backend.module.users.store.user.UserStore
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.module.Module
@@ -16,5 +18,7 @@ class UsersModule : Module() {
 
     override fun bindServices() = Unit
 
-    override fun bindStores() = Unit
+    override fun bindStores() {
+        bind(UserStore::class, MongoUserStore::class)
+    }
 }
