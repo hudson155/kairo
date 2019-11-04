@@ -12,7 +12,6 @@ internal class MembershipMapper @Inject constructor(
 
     fun creationModel(rep: MembershipRep.Creation) = MembershipModel.Creation(
         created = LocalDateTime.now(clock),
-        version = 0,
         userId = rep.userId
     )
 

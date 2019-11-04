@@ -9,13 +9,11 @@ internal object MembershipModel {
 
     data class Creation(
         override val created: LocalDateTime,
-        override val version: Int,
         val userId: UUID
     ) : CreationModelWithoutId()
 
     data class Complete(
         override val created: LocalDateTime,
-        override val version: Int,
         val userId: UUID
     ) : CompleteModelWithoutId()
 }
