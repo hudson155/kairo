@@ -8,6 +8,9 @@ image_gcloud: &image_gcloud
 image_java: &image_java
   image: circleci/openjdk:8-jdk
 
+image_mongo: &image_mongo
+  image: circleci/mongo:3
+
 image_node: &image_node
   image: circleci/node:12
 
@@ -187,7 +190,7 @@ jobs:
       - run: ./gradlew --no-daemon detekt
 
   backend-test:
-    docker: [*image_java]
+    docker: [*image_java, *image_mongo]
     working_directory: ~/limber
     steps:
       - *checkout

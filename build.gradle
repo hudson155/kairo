@@ -49,6 +49,13 @@ allprojects {
 
 subprojects {
 
+    buildscript {
+        apply from: "$rootDir/gradle/dependencies.gradle"
+        repositories {
+            jcenter()
+        }
+    }
+
     repositories {
         jcenter()
     }

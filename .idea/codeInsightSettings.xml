@@ -3,6 +3,9 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>javax.inject</name>
+      <name>junit.framework</name>
+      <name>kotlin.test.junit.JUnitAsserter</name>
+      <name>org.junit.Assert</name>
     </excluded-names>
   </component>
 </project>

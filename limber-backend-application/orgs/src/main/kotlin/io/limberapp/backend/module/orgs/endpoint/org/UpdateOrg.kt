@@ -5,18 +5,19 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.ktor.request.receive
-import io.limberapp.backend.module.orgs.mapper.OrgMapper
+import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.endpoint.RepApiEndpoint
+import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 internal class UpdateOrg @Inject constructor(
     application: Application,
-    private val orgService: OrgService
-) : RepApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper
+) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
 
     internal data class Command(
         val orgId: UUID,
@@ -24,7 +25,7 @@ internal class UpdateOrg @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgId = call.parameters.getAsType(UUID::class, orgId),
         updateRep = call.receive()
     )
 
@@ -33,12 +34,13 @@ internal class UpdateOrg @Inject constructor(
     override suspend fun handler(command: Command): OrgRep.Complete {
         val completeModel = orgService.update(
             id = command.orgId,
-            model = OrgMapper.updateModel(command.updateRep)
+            model = orgMapper.updateModel(command.updateRep)
         )
-        return OrgMapper.completeRep(completeModel)
+        return orgMapper.completeRep(completeModel)
     }
 
     companion object {
-        private val config = Config(HttpMethod.Patch, "/orgs/{orgId}")
+        const val orgId = "orgId"
+        val config = Config(HttpMethod.Patch, "/orgs/{$orgId}")
     }
 }

@@ -9,14 +9,19 @@ import java.util.UUID
 internal object OrgModel {
 
     data class Creation(
-        val name: String
+        override val id: UUID,
+        override val created: LocalDateTime,
+        override val version: Int,
+        val name: String,
+        val members: List<MembershipModel.Complete>
     ) : CreationModel()
 
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
         override val version: Int,
-        val name: String
+        val name: String,
+        val members: List<MembershipModel.Complete>
     ) : CompleteModel()
 
     data class Update(

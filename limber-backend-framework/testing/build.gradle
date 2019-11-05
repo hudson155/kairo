@@ -1,0 +1,7 @@
+dependencies {
+    compile project(":limber-backend-framework")
+    compile project(":limber-backend-framework:models")
+    compile project(":limber-backend-framework:object-mapper")
+    compile libs.junit
+    compile libs.ktor_test
+}

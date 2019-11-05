@@ -16,10 +16,8 @@ import io.ktor.response.respond
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
-import io.limberapp.framework.endpoint.authorization.jwtFromPayload
+import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
-import io.limberapp.framework.rep.CompleteRep
-import java.util.UUID
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
@@ -28,22 +26,26 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint of the API. The handler() is called
  * for each request.
  */
-sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
+abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
     private val config: Config
 ) {
 
     /**
-     * The configuration for the API endpoint. Uniquely represents the HTTP method and path.
+     * The configuration for the API endpoint. Uniquely represents the HTTP method and path
+     * template.
      */
     data class Config(val httpMethod: HttpMethod, val pathTemplate: String) {
 
-        // TODO: Add query params
-        fun path(pathParams: Map<String, String>): String {
-            return pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
+        fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
+            var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
                 val pathParam = it.groupValues[1]
                 return@replace checkNotNull(pathParams[pathParam])
             }
+            if (queryParams.isNotEmpty()) {
+                path = "$path?${queryParams.map { "${it.key}=${it.value}" }.joinToString("&")}"
+            }
+            return path
         }
     }
 
@@ -60,7 +62,7 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
     /**
      * Called for each request to the endpoint, to handle the execution.
      */
-    abstract suspend fun handler(command: Command): ReturnType
+    abstract suspend fun handler(command: Command): ResponseType
 
     init {
         register()
@@ -78,7 +80,7 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
                         val command = determineCommand(call)
                         val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
                         val jwt = jwtFromPayload(jwtPayload)
-                        if (!authorization(command).authorize(jwt, command)) {
+                        if (!authorization(command).authorize(jwt)) {
                             call.respond(HttpStatusCode.Forbidden)
                             return@handle
                         }
@@ -105,38 +107,3 @@ sealed class ApiEndpoint<Command : AbstractCommand, ReturnType : Any?>(
         }
     }
 }
-
-/**
- * Returns a single rep, never null. This is useful for PATCH/POST/PUT endpoints.
- */
-abstract class RepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, R>(application, config)
-
-/**
- * Returns a single rep or null. This is useful for GET endpoints.
- */
-abstract class NullableRepApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, R?>(application, config)
-
-/**
- * Returns a list of reps. This is useful for batch get endpoints implemented as POST endpoints.
- */
-abstract class RepListApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, List<R>>(application, config)
-
-/**
- * Returns a map of reps. This is useful for batch get endpoints implemented as POST endpoints.
- * Currently, the only valid key is UUID type because I can't think of a case where that's not the
- * best option. If there's ever a case where the best key type is not UUID, feel free to
- * parameterize this further.
- */
-abstract class RepMapApiEndpoint<C : AbstractCommand, R : CompleteRep>(
-    application: Application,
-    config: Config
-) : ApiEndpoint<C, Map<UUID, R>>(application, config)

@@ -1,3 +1,2 @@
 dependencies {
-    compile project(":limber-backend-framework:models")
 }

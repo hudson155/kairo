@@ -1,8 +1,4 @@
 buildscript {
-    apply from: "$rootDir/gradle/dependencies.gradle"
-    repositories {
-        jcenter()
-    }
     dependencies {
         classpath libs.shadow
     }
@@ -24,6 +20,8 @@ sourceSets {
 
 dependencies {
     compile project(":limber-backend-application:orgs")
+    compile project(":limber-backend-application:users")
+    compile project(":limber-backend-framework")
     compile project(":limber-backend-framework:data-conversion")
     compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:object-mapper")
@@ -42,6 +40,8 @@ subprojects {
         compile project(":limber-backend-framework:models")
         compile project(":limber-backend-framework:mongo")
         compile project(":limber-backend-framework:validation")
+        testCompile project(":limber-backend-framework")
+        testCompile project(":limber-backend-framework:testing")
     }
 }
 

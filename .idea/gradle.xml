@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/limber-backend-application" />
             <option value="$PROJECT_DIR$/limber-backend-application/orgs" />
+            <option value="$PROJECT_DIR$/limber-backend-application/users" />
             <option value="$PROJECT_DIR$/limber-backend-framework" />
             <option value="$PROJECT_DIR$/limber-backend-framework/core" />
             <option value="$PROJECT_DIR$/limber-backend-framework/data-conversion" />
@@ -22,6 +23,8 @@
             <option value="$PROJECT_DIR$/limber-backend-framework/models" />
             <option value="$PROJECT_DIR$/limber-backend-framework/mongo" />
             <option value="$PROJECT_DIR$/limber-backend-framework/object-mapper" />
+            <option value="$PROJECT_DIR$/limber-backend-framework/reps" />
+            <option value="$PROJECT_DIR$/limber-backend-framework/testing" />
             <option value="$PROJECT_DIR$/limber-backend-framework/validation" />
           </set>
         </option>

@@ -2,26 +2,49 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
-import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoDatabase
-import com.mongodb.client.model.Filters
+import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.framework.mongo.collection.FindFilter
+import io.limberapp.framework.mongo.collection.MongoStoreCollection
+import io.limberapp.framework.mongo.collection.Update
+import io.limberapp.framework.mongo.collection.idFilter
 import io.limberapp.framework.store.MongoStore
 import org.bson.Document
 import java.util.UUID
 
+private val ORG_MEMBER_KEY =
+    "${OrgModel.Complete::members.name}.${MembershipModel.Complete::userId.name}"
+
 internal class MongoOrgStore @Inject constructor(
-    mongoClient: MongoClient,
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoStore<OrgModel.Complete, OrgModel.Update>(
-    mongoClient,
-    mongoDatabase,
-    "Org"
+) : OrgStore, MongoStore<OrgModel.Creation, OrgModel.Complete, OrgModel.Update>(
+    collection = MongoStoreCollection(mongoDatabase, collectionName)
 ) {
 
     override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
-        val filter = Filters.eq("memberships", Document("userId", memberId))
-        val documents = collection.find(filter).toList()
+        val findFilter = FindFilter().apply { eq[ORG_MEMBER_KEY] = memberId }
+        val documents = collection.findMany(findFilter)
         return documents.map { objectMapper.readValue<OrgModel.Complete>(it.toJson()) }
+    }
+
+    override fun createMembership(id: UUID, model: MembershipModel.Creation) {
+        val update = Update()
+            .apply { push[OrgModel.Complete::members.name] = model }
+        collection.findOneAndUpdate(id, update)
+    }
+
+    override fun deleteMembership(id: UUID, memberId: UUID) {
+        val update = Update().apply {
+            pull[OrgModel.Complete::members.name] =
+                Document(MembershipModel.Complete::userId.name, memberId)
+        }
+        collection.findOneAndUpdate(idFilter(id).apply {
+            eq[ORG_MEMBER_KEY] = memberId
+        }, update)
+    }
+
+    companion object {
+        const val collectionName = "Org"
     }
 }

@@ -35,8 +35,7 @@ abstract class Module : AbstractModule() {
 
     /**
      * The implementation of this method should bind all necessary stores. It's best to bind them as
-     * singletons using
-     * the bind() method provided.
+     * singletons using the bind() method provided.
      */
     protected abstract fun bindStores()
 
