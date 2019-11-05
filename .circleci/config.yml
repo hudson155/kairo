@@ -190,7 +190,7 @@ jobs:
       - run: ./gradlew --no-daemon detekt
 
   backend-test:
-    docker: [*image_java]
+    docker: [*image_java, *image_mongo]
     working_directory: ~/limber
     steps:
       - *checkout
@@ -225,7 +225,7 @@ jobs:
       - run: yarn lint
 
   web-test:
-    docker: [*image_node, *image_mongo]
+    docker: [*image_node]
     working_directory: ~/limber/limber-web
     steps:
       - *checkout
