@@ -23,7 +23,7 @@ internal class GetUser @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        userId = call.parameters.getAsType(UUID::class, "userId")
+        userId = call.parameters.getAsType(UUID::class, userId)
     )
 
     override fun authorization(command: Command) = Authorization.User(command.userId)
@@ -34,6 +34,7 @@ internal class GetUser @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Get, "/users/{userId}")
+        const val userId = "userId"
+        val config = Config(HttpMethod.Get, "/users/{$userId}")
     }
 }

@@ -20,7 +20,7 @@ internal class DeleteOrg @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, "orgId")
+        orgId = call.parameters.getAsType(UUID::class, orgId)
     )
 
     override fun authorization(command: Command) = Authorization.Superuser
@@ -30,6 +30,7 @@ internal class DeleteOrg @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Delete, "/orgs/{orgId}")
+        const val orgId = "orgId"
+        val config = Config(HttpMethod.Delete, "/orgs/{$orgId}")
     }
 }

@@ -17,7 +17,7 @@ internal class UpdateUserTest : ResourceTest() {
         val updateRep = UserRep.Update(firstName = "Gunner")
         limberTest.test(
             config = UpdateUser.config,
-            pathParams = mapOf("userId" to userId.toString()),
+            pathParams = mapOf(UpdateUser.userId to userId.toString()),
             body = updateRep,
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -41,7 +41,7 @@ internal class UpdateUserTest : ResourceTest() {
         val updateRep = UserRep.Update(firstName = "Gunner")
         limberTest.test(
             config = UpdateUser.config,
-            pathParams = mapOf("userId" to id.toString()),
+            pathParams = mapOf(UpdateUser.userId to id.toString()),
             body = updateRep
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)

@@ -15,7 +15,7 @@ private const val MONGO_ID_KEY = "_id"
 fun idFilter(id: UUID) = FindFilter().apply { eq[MONGO_ID_KEY] = id }
 
 /**
- * TODO: Get rid of all explicit strings
+ * TODO: Get rid of all explicit strings.
  */
 class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String) {
 
@@ -29,9 +29,7 @@ class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String)
         return document
     }
 
-    fun findOne(id: UUID): Document? {
-        return findOne(idFilter(id))
-    }
+    fun findOne(id: UUID) = findOne(idFilter(id))
 
     fun findOne(filter: FindFilter): Document? {
         val filterBson = filter.asBson()
@@ -43,9 +41,7 @@ class MongoStoreCollection(mongoDatabase: MongoDatabase, collectionName: String)
         return delegate.find(filterBson).toList()
     }
 
-    fun findOneAndUpdate(id: UUID, update: Update): Document {
-        return findOneAndUpdate(idFilter(id), update)
-    }
+    fun findOneAndUpdate(id: UUID, update: Update) = findOneAndUpdate(idFilter(id), update)
 
     fun findOneAndUpdate(filter: FindFilter, update: Update): Document {
         val filterBson = filter.asBson()

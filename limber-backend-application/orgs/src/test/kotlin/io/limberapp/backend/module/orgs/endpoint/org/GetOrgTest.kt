@@ -16,7 +16,7 @@ internal class GetOrgTest : ResourceTest() {
         val orgId = UUID.randomUUID()
         limberTest.test(
             config = GetOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf(GetOrg.orgId to orgId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
@@ -33,7 +33,7 @@ internal class GetOrgTest : ResourceTest() {
 
         limberTest.test(
             config = GetOrg.config,
-            pathParams = mapOf("orgId" to id.toString())
+            pathParams = mapOf(GetOrg.orgId to id.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(

@@ -25,7 +25,7 @@ internal class UpdateOrg @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgId = call.parameters.getAsType(UUID::class, orgId),
         updateRep = call.receive()
     )
 
@@ -40,6 +40,7 @@ internal class UpdateOrg @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Patch, "/orgs/{orgId}")
+        const val orgId = "orgId"
+        val config = Config(HttpMethod.Patch, "/orgs/{$orgId}")
     }
 }

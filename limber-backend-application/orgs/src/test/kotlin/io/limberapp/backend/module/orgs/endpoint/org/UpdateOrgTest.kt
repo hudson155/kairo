@@ -17,7 +17,7 @@ internal class UpdateOrgTest : ResourceTest() {
         val updateRep = OrgRep.Update("Standing Teeth")
         limberTest.test(
             config = UpdateOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf(UpdateOrg.orgId to orgId.toString()),
             body = updateRep,
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -36,7 +36,7 @@ internal class UpdateOrgTest : ResourceTest() {
         val updateRep = OrgRep.Update("Standing Teeth")
         limberTest.test(
             config = UpdateOrg.config,
-            pathParams = mapOf("orgId" to id.toString()),
+            pathParams = mapOf(UpdateOrg.orgId to id.toString()),
             body = updateRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)

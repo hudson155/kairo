@@ -25,7 +25,7 @@ internal class UpdateUser @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        userId = call.parameters.getAsType(UUID::class, "userId"),
+        userId = call.parameters.getAsType(UUID::class, userId),
         updateRep = call.receive()
     )
 
@@ -40,6 +40,7 @@ internal class UpdateUser @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Patch, "/users/{userId}")
+        const val userId = "userId"
+        val config = Config(HttpMethod.Patch, "/users/{$userId}")
     }
 }

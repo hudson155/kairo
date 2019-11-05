@@ -25,7 +25,7 @@ internal class CreateMembership @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgId = call.parameters.getAsType(UUID::class, orgId),
         creationRep = call.receive()
     )
 
@@ -39,6 +39,7 @@ internal class CreateMembership @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Post, "/orgs/{orgId}/memberships")
+        const val orgId = "orgId"
+        val config = Config(HttpMethod.Post, "/orgs/{$orgId}/memberships")
     }
 }

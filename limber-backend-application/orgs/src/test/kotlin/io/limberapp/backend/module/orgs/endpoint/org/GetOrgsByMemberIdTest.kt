@@ -18,7 +18,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         val userId = UUID.randomUUID()
         limberTest.test(
             config = GetOrgsByMemberId.config,
-            queryParams = mapOf("memberId" to userId.toString())
+            queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -39,13 +39,13 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         val membershipCreationRep = MembershipRep.Creation(userId)
         limberTest.test(
             config = CreateMembership.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
         limberTest.test(
             config = GetOrgsByMemberId.config,
-            queryParams = mapOf("memberId" to userId.toString())
+            queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
             val expected = listOf(

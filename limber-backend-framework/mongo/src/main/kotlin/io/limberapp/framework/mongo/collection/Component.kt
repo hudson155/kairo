@@ -10,7 +10,5 @@ data class Component(
 
     private val objectMapper = LimberMongoObjectMapper()
 
-    fun asBson(): Bson {
-        return Document.parse(objectMapper.writeValueAsString(contents))
-    }
+    fun asBson(): Bson = Document.parse(objectMapper.writeValueAsString(contents))
 }

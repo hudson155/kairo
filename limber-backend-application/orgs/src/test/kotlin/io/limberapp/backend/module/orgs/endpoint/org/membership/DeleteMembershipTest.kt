@@ -19,8 +19,8 @@ internal class DeleteMembershipTest : ResourceTest() {
         limberTest.test(
             config = DeleteMembership.config,
             pathParams = mapOf(
-                "orgId" to UUID.randomUUID().toString(),
-                "memberId" to UUID.randomUUID().toString()
+                DeleteMembership.orgId to UUID.randomUUID().toString(),
+                DeleteMembership.memberId to UUID.randomUUID().toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -39,8 +39,8 @@ internal class DeleteMembershipTest : ResourceTest() {
         limberTest.test(
             config = DeleteMembership.config,
             pathParams = mapOf(
-                "orgId" to orgId.toString(),
-                "memberId" to UUID.randomUUID().toString()
+                DeleteMembership.orgId to orgId.toString(),
+                DeleteMembership.memberId to UUID.randomUUID().toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -60,13 +60,16 @@ internal class DeleteMembershipTest : ResourceTest() {
         val membershipCreationRep = MembershipRep.Creation(userId)
         limberTest.test(
             config = CreateMembership.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
         limberTest.test(
             config = DeleteMembership.config,
-            pathParams = mapOf("orgId" to orgId.toString(), "memberId" to userId.toString())
+            pathParams = mapOf(
+                DeleteMembership.orgId to orgId.toString(),
+                DeleteMembership.memberId to userId.toString()
+            )
         ) {}
 
         limberTest.test(

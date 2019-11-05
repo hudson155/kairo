@@ -27,13 +27,13 @@ internal class CreateMembershipTest : ResourceTest() {
         val membershipCreationRep = MembershipRep.Creation(userId)
         limberTest.test(
             config = CreateMembership.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
         limberTest.test(
             config = GetOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString())
+            pathParams = mapOf(GetOrg.orgId to orgId.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(

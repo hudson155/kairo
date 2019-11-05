@@ -4,6 +4,8 @@ import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import java.util.UUID
 
+// Detekt incorrectly thinks overrides in nested subclasses are method overloads.
+@Suppress("MethodOverloading")
 sealed class Authorization {
 
     fun authorize(payload: Jwt?): Boolean {

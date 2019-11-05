@@ -21,8 +21,8 @@ internal class DeleteMembership @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
-        memberId = call.parameters.getAsType(UUID::class, "memberId")
+        orgId = call.parameters.getAsType(UUID::class, orgId),
+        memberId = call.parameters.getAsType(UUID::class, memberId)
     )
 
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
@@ -35,6 +35,8 @@ internal class DeleteMembership @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Delete, "/orgs/{orgId}/memberships/{memberId}")
+        const val orgId = "orgId"
+        const val memberId = "memberId"
+        val config = Config(HttpMethod.Delete, "/orgs/{$orgId}/memberships/{$memberId}")
     }
 }

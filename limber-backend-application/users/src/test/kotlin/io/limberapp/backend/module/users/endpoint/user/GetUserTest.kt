@@ -16,7 +16,7 @@ internal class GetUserTest : ResourceTest() {
         val userId = UUID.randomUUID()
         limberTest.test(
             config = GetUser.config,
-            pathParams = mapOf("userId" to userId.toString()),
+            pathParams = mapOf(GetUser.userId to userId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
@@ -38,7 +38,7 @@ internal class GetUserTest : ResourceTest() {
 
         limberTest.test(
             config = GetUser.config,
-            pathParams = mapOf("userId" to id.toString())
+            pathParams = mapOf(GetUser.userId to id.toString())
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             val expected = UserRep.Complete(

@@ -13,7 +13,7 @@ internal class DeleteOrgTest : ResourceTest() {
         val orgId = UUID.randomUUID()
         limberTest.test(
             config = DeleteOrg.config,
-            pathParams = mapOf("orgId" to orgId.toString()),
+            pathParams = mapOf(DeleteOrg.orgId to orgId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
@@ -30,12 +30,12 @@ internal class DeleteOrgTest : ResourceTest() {
 
         limberTest.test(
             config = DeleteOrg.config,
-            pathParams = mapOf("orgId" to id.toString())
+            pathParams = mapOf(DeleteOrg.orgId to id.toString())
         ) {}
 
         limberTest.test(
             config = GetOrg.config,
-            pathParams = mapOf("orgId" to id.toString()),
+            pathParams = mapOf(GetOrg.orgId to id.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }

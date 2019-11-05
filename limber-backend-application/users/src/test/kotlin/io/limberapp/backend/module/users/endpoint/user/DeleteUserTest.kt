@@ -13,7 +13,7 @@ internal class DeleteUserTest : ResourceTest() {
         val userId = UUID.randomUUID()
         limberTest.test(
             config = DeleteUser.config,
-            pathParams = mapOf("userId" to userId.toString()),
+            pathParams = mapOf(DeleteUser.userId to userId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
@@ -35,12 +35,12 @@ internal class DeleteUserTest : ResourceTest() {
 
         limberTest.test(
             config = DeleteUser.config,
-            pathParams = mapOf("userId" to id.toString())
+            pathParams = mapOf(DeleteUser.userId to id.toString())
         ) {}
 
         limberTest.test(
             config = GetUser.config,
-            pathParams = mapOf("userId" to id.toString()),
+            pathParams = mapOf(GetUser.userId to id.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }

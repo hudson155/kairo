@@ -23,7 +23,7 @@ internal class GetOrgsByMemberId @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        memberId = call.parameters.getAsType(UUID::class, "memberId")
+        memberId = call.parameters.getAsType(UUID::class, memberId)
     )
 
     override fun authorization(command: Command) = Authorization.User(command.memberId)
@@ -34,6 +34,7 @@ internal class GetOrgsByMemberId @Inject constructor(
     }
 
     companion object {
+        const val memberId = "memberId"
         val config = Config(HttpMethod.Get, "/orgs")
     }
 }
