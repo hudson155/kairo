@@ -8,6 +8,9 @@ image_gcloud: &image_gcloud
 image_java: &image_java
   image: circleci/openjdk:8-jdk
 
+image_mongo: &image_mongo
+  image: circleci/mongo:3
+
 image_node: &image_node
   image: circleci/node:12
 
@@ -222,7 +225,7 @@ jobs:
       - run: yarn lint
 
   web-test:
-    docker: [*image_node]
+    docker: [*image_node, *image_mongo]
     working_directory: ~/limber/limber-web
     steps:
       - *checkout
