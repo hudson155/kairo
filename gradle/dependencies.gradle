@@ -45,10 +45,11 @@ ext {
             ktor_auth              : "io.ktor:ktor-auth:$versions.ktor",
             ktor_auth_jwt          : "io.ktor:ktor-auth-jwt:$versions.ktor",
             ktor_jackson           : "io.ktor:ktor-jackson:$versions.ktor",
-            ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
             ktor_server_cio        : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core       : "io.ktor:ktor-server-core:$versions.ktor",
+            ktor_server_servlet    : "io.ktor:ktor-server-servlet:$versions.ktor",
             ktor_server_tests      : "io.ktor:ktor-server-tests:$versions.ktor",
+            ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
 
             // Jackson
             jackson                : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
