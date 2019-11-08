@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="[backend] Run" type="JetRunConfigurationType" factoryName="Kotlin">
+  <configuration default="false" name="[backend] Run (dev)" type="JetRunConfigurationType" factoryName="Kotlin">
     <module name="limber.limber-backend-application.main" />
     <option name="VM_PARAMETERS" value="" />
     <option name="PROGRAM_PARAMETERS" value="" />
