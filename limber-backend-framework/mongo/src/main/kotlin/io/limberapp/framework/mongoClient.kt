@@ -9,7 +9,9 @@ import io.limberapp.framework.config.Config
 
 fun Config.createClient(): MongoClient {
     val connectionString = with(database) {
-        val credentials = user?.let { listOfNotNull(it, password).joinToString(":") }
+        val credentials = user?.let {
+            listOfNotNull(it, password?.decryptedValue).joinToString(":")
+        }
         return@with "$protocol://${listOfNotNull(credentials, host).joinToString("@")}"
     }
     val clientSettings = MongoClientSettings.builder()

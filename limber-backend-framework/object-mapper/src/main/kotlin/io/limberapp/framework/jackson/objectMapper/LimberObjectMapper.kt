@@ -1,5 +1,6 @@
 package io.limberapp.framework.jackson.objectMapper
 
+import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.util.DefaultIndenter
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -12,7 +13,10 @@ import io.limberapp.framework.jackson.module.conversionService.ConversionService
 /**
  * Custom ObjectMapper configured for Kotlin, pretty printing, custom datatype conversion, etc.
  */
-open class LimberObjectMapper(prettyPrint: Boolean) : ObjectMapper() {
+open class LimberObjectMapper(
+    jsonFactory: JsonFactory? = null,
+    prettyPrint: Boolean
+) : ObjectMapper(jsonFactory) {
 
     init {
         registerKotlinModule()

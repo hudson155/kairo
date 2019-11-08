@@ -1,0 +1,11 @@
+database:
+  protocol: MONGODB_SRV
+  host: cluster0-pct9z.gcp.mongodb.net
+  database: limberapp
+  user: limberapp
+  password:
+    encrypted: true
+    value: CiQA7T1W21IXFqOLMV68APV+i1Dhy91LmxE8rYaY8HZckqmPpW8SNgCfEO6jkCVnxt6Tw/Clp7fEPgycEMmBcbzJXJF1pq4pRiyu5/1q9IqfXShCddU2Um0TvUHC8w==
+
+jwt:
+  domain: limber.auth0.com
