@@ -201,7 +201,7 @@ jobs:
             - build
 
   deploy:
-    docker: [*image_java]
+    docker: [*image_gcloud]
     working_directory: ~/limber
     steps:
       - *checkout
