@@ -15,7 +15,7 @@ internal class GetUserTest : ResourceTest() {
     fun doesNotExist() {
         val userId = UUID.randomUUID()
         limberTest.test(
-            config = GetUser.config,
+            endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -32,12 +32,12 @@ internal class GetUserTest : ResourceTest() {
         )
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateUser.config,
+            endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
         limberTest.test(
-            config = GetUser.config,
+            endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to id.toString())
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)

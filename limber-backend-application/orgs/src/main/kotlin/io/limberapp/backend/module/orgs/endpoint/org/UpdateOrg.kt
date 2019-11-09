@@ -8,6 +8,7 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -15,9 +16,13 @@ import java.util.UUID
 
 internal class UpdateOrg @Inject constructor(
     application: Application,
+    config: Config,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application, config) {
+) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val orgId: UUID,
@@ -41,6 +46,6 @@ internal class UpdateOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val config = Config(HttpMethod.Patch, "/orgs/{$orgId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Patch, "/orgs/{$orgId}")
     }
 }

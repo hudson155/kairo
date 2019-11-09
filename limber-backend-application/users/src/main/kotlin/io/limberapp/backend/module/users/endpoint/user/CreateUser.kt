@@ -8,15 +8,21 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.users.mapper.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 
 internal class CreateUser @Inject constructor(
     application: Application,
+    config: Config,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<CreateUser.Command, UserRep.Complete>(application, config) {
+) : ApiEndpoint<CreateUser.Command, UserRep.Complete>(
+    application = application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val creationRep: UserRep.Creation
@@ -34,6 +40,6 @@ internal class CreateUser @Inject constructor(
     }
 
     companion object {
-        val config = Config(HttpMethod.Post, "/users")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/users")
     }
 }

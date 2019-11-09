@@ -17,7 +17,7 @@ internal class DeleteMembershipTest : ResourceTest() {
     @Test
     fun orgDoesNotExist() {
         limberTest.test(
-            config = DeleteMembership.config,
+            endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
                 DeleteMembership.orgId to UUID.randomUUID().toString(),
                 DeleteMembership.memberId to UUID.randomUUID().toString()
@@ -32,12 +32,12 @@ internal class DeleteMembershipTest : ResourceTest() {
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = uuidGenerator[0]
         limberTest.test(
-            config = CreateOrg.config,
+            endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
         limberTest.test(
-            config = DeleteMembership.config,
+            endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
                 DeleteMembership.orgId to orgId.toString(),
                 DeleteMembership.memberId to UUID.randomUUID().toString()
@@ -52,20 +52,20 @@ internal class DeleteMembershipTest : ResourceTest() {
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = uuidGenerator[0]
         limberTest.test(
-            config = CreateOrg.config,
+            endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
         val userId = UUID.randomUUID()
         val membershipCreationRep = MembershipRep.Creation(userId)
         limberTest.test(
-            config = CreateMembership.config,
+            endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
         limberTest.test(
-            config = DeleteMembership.config,
+            endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
                 DeleteMembership.orgId to orgId.toString(),
                 DeleteMembership.memberId to userId.toString()
@@ -73,7 +73,7 @@ internal class DeleteMembershipTest : ResourceTest() {
         ) {}
 
         limberTest.test(
-            config = GetOrg.config,
+            endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgId.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)

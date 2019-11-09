@@ -28,14 +28,15 @@ import kotlin.reflect.jvm.jvmName
  */
 abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
-    private val config: Config
+    private val pathPrefix: String,
+    private val endpointConfig: EndpointConfig
 ) {
 
     /**
      * The configuration for the API endpoint. Uniquely represents the HTTP method and path
      * template.
      */
-    data class Config(val httpMethod: HttpMethod, val pathTemplate: String) {
+    data class EndpointConfig(val httpMethod: HttpMethod, val pathTemplate: String) {
 
         fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
             var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
@@ -75,18 +76,20 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private fun register() {
         application.routing {
             authenticate(optional = true) {
-                route(config.pathTemplate, config.httpMethod) {
-                    handle {
-                        val command = determineCommand(call)
-                        val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
-                        val jwt = jwtFromPayload(jwtPayload)
-                        if (!authorization(command).authorize(jwt)) {
-                            call.respond(HttpStatusCode.Forbidden)
-                            return@handle
+                route(pathPrefix) {
+                    route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
+                        handle {
+                            val command = determineCommand(call)
+                            val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
+                            val jwt = jwtFromPayload(jwtPayload)
+                            if (!authorization(command).authorize(jwt)) {
+                                call.respond(HttpStatusCode.Forbidden)
+                                return@handle
+                            }
+                            val result = handler(command)
+                            if (result == null) call.respond(HttpStatusCode.NotFound)
+                            else call.respond(result)
                         }
-                        val result = handler(command)
-                        if (result == null) call.respond(HttpStatusCode.NotFound)
-                        else call.respond(result)
                     }
                 }
             }

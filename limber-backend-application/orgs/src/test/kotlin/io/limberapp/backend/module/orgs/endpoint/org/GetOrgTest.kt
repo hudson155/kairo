@@ -15,7 +15,7 @@ internal class GetOrgTest : ResourceTest() {
     fun doesNotExist() {
         val orgId = UUID.randomUUID()
         limberTest.test(
-            config = GetOrg.config,
+            endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -27,12 +27,12 @@ internal class GetOrgTest : ResourceTest() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateOrg.config,
+            endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
         ) {}
 
         limberTest.test(
-            config = GetOrg.config,
+            endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to id.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)

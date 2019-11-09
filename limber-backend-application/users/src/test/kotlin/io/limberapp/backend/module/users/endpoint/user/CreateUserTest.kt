@@ -19,7 +19,7 @@ internal class CreateUserTest : ResourceTest() {
         )
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateUser.config,
+            endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)

@@ -9,3 +9,5 @@ database:
 
 jwt:
   domain: limber.auth0.com
+
+pathPrefix: /api

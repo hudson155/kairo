@@ -22,6 +22,7 @@ abstract class ResourceTest : AbstractResourceTest() {
     protected val uuidGenerator = DeterministicUuidGenerator()
 
     private val config = Config(
+        pathPrefix = "/",
         database = DatabaseConfig.local("limberapptest"),
         jwt = JwtConfig(requireSignature = false)
     )

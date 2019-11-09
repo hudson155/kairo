@@ -9,5 +9,6 @@ import io.limberapp.framework.config.jwt.JwtConfig
  */
 data class Config(
     val database: DatabaseConfig,
-    val jwt: JwtConfig
+    val jwt: JwtConfig,
+    val pathPrefix: String
 )
