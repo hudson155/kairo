@@ -5,4 +5,12 @@
     <system-properties>
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     </system-properties>
+    <static-files>
+        <include path="/static/**"/>
+        <include path="/asset-manifest.json"/>
+        <include path="/index.html"/>
+        <include path="/precache-manifest.*.js"/>
+        <include path="/robots.txt"/>
+        <include path="/service-worker.js"/>
+    </static-files>
 </appengine-web-app>
