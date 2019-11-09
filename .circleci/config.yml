@@ -190,6 +190,8 @@ jobs:
 
   web-build:
     docker: [*image_node]
+    environment:
+      REACT_APP_API_URL: https://limberapp.appspot.com/api
     working_directory: ~/limber/limber-web
     steps:
       - *checkout
