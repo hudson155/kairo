@@ -67,7 +67,6 @@ experimental:
     branches:
       only:
         - master
-        - develop
 
 ################################################################
 # Workflows                                                    #
@@ -84,49 +83,18 @@ workflows:
             branches:
               ignore:
                 - master
-                - develop
       - backend-lint:
           requires: [backend-dependencies]
       - backend-test:
-          requires: [backend-dependencies]
-      - backend-build:
           requires: [backend-dependencies]
       - web-dependencies:
           filters:
             branches:
               ignore:
                 - master
-                - develop
       - web-lint:
           requires: [web-dependencies]
       - web-test:
-          requires: [web-dependencies]
-      - web-build-staging-dev:
-          requires: [web-dependencies]
-
-  develop:
-    jobs:
-      - backend-dependencies:
-          filters:
-            branches:
-              only:
-                - develop
-      - backend-lint:
-          requires: [backend-dependencies]
-      - backend-test:
-          requires: [backend-dependencies]
-      - backend-build:
-          requires: [backend-dependencies]
-      - web-dependencies:
-          filters:
-            branches:
-              only:
-                - develop
-      - web-lint:
-          requires: [web-dependencies]
-      - web-test:
-          requires: [web-dependencies]
-      - web-build-staging-dev:
           requires: [web-dependencies]
 
   master:
@@ -140,8 +108,6 @@ workflows:
           requires: [backend-dependencies]
       - backend-test:
           requires: [backend-dependencies]
-      - backend-build:
-          requires: [backend-dependencies]
       - web-dependencies:
           filters:
             branches:
@@ -151,8 +117,12 @@ workflows:
           requires: [web-dependencies]
       - web-test:
           requires: [web-dependencies]
-      - web-build-prod:
-          requires: [web-dependencies]
+      - web-build:
+          requires: [web-test]
+      - deploy:
+          requires:
+            - backend-test
+            - web-build
 
 ################################################################
 # Jobs                                                         #
@@ -161,11 +131,6 @@ workflows:
 checkout: &checkout
   checkout:
     path: ~/limber
-
-web_build: &web_build
-  - *checkout
-  - *restore_web_dependencies_cache
-  - run: yarn build
 
 jobs:
 
@@ -198,15 +163,6 @@ jobs:
       - *restore_backend_dependencies_cache
       - run: ./gradlew --no-daemon test
 
-  backend-build:
-    docker: [*image_java]
-    working_directory: ~/limber
-    steps:
-      - *checkout
-      - *restore_backend_wrapper_cache
-      - *restore_backend_dependencies_cache
-      - run: ./gradlew --no-daemon limber-backend-application:shadowJar
-
   web-dependencies:
     docker: [*image_node]
     working_directory: ~/limber/limber-web
@@ -232,12 +188,24 @@ jobs:
       - *restore_web_dependencies_cache
       - run: yarn test
 
-  web-build-staging-dev:
+  web-build:
     docker: [*image_node]
     working_directory: ~/limber/limber-web
-    steps: *web_build
+    steps:
+      - *checkout
+      - *restore_web_dependencies_cache
+      - run: yarn build
+      - persist_to_workspace:
+          root: build
+          path: '**/*'
 
-  web-build-prod:
-    docker: [*image_node]
-    working_directory: ~/limber/limber-web
-    steps: *web_build
+  deploy:
+    docker: [*image_java]
+    working_directory: ~/limber
+    steps:
+      - *checkout
+      - attach_workspace:
+          root: .
+          path: limber-backend-application/src/main/webapp
+      - run: ./gradlew limber-backend-application:appengineDeploy
+
