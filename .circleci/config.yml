@@ -196,8 +196,8 @@ jobs:
       - *restore_web_dependencies_cache
       - run: yarn build
       - persist_to_workspace:
-          root: build
-          path: '**/*'
+          root: .
+          path: build
 
   deploy:
     docker: [*image_java]
@@ -206,6 +206,7 @@ jobs:
       - *checkout
       - attach_workspace:
           root: .
-          path: limber-backend-application/src/main/webapp
+          path: limber-web
+      - run: cp limber-web/build/* limber-backend-application/src/main/webapp
       - run: ./gradlew limber-backend-application:appengineDeploy
 
