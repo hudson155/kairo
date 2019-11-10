@@ -5,6 +5,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -12,8 +13,12 @@ import java.util.UUID
 
 internal class DeleteUser @Inject constructor(
     application: Application,
+    config: Config,
     private val userService: UserService
-) : ApiEndpoint<DeleteUser.Command, Unit>(application, config) {
+) : ApiEndpoint<DeleteUser.Command, Unit>(application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val userId: UUID
@@ -31,6 +36,6 @@ internal class DeleteUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val config = Config(HttpMethod.Delete, "/users/{$userId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/users/{$userId}")
     }
 }

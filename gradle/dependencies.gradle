@@ -2,29 +2,35 @@ ext {
 
     versions = [
 
+            // https://mvnrepository.com/artifact/com.google.cloud.tools/appengine-gradle-plugin
+            appengine_gradle_plugin: '2.2.0',
+
+            // https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-kms
+            gcloud_kms             : '1.34.0',
+
             // https://github.com/google/guice/releases
-            guice  : '4.2.2',
+            guice                  : '4.2.2',
 
             // https://github.com/FasterXML/jackson-core/releases
-            jackson: '2.9.9',
+            jackson                : '2.9.9',
 
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
-            kotlin : '1.3.50',
+            kotlin                 : '1.3.50',
 
             // https://github.com/junit-team/junit4/releases
-            junit : '4.12',
+            junit                  : '4.12',
 
             // https://github.com/ktorio/ktor/releases
-            ktor   : '1.2.4',
+            ktor                   : '1.2.4',
 
             // https://github.com/qos-ch/logback/releases
-            logback: '1.2.3',
+            logback                : '1.2.3',
 
             // https://mongodb.github.io/mongo-java-driver/
-            mongodb: '3.11.0',
+            mongodb                : '3.11.0',
 
             // https://github.com/johnrengelman/shadow/releases
-            shadow : '5.1.0',
+            shadow                 : '5.1.0',
     ]
 
     libs = [
@@ -39,14 +45,16 @@ ext {
             ktor_auth              : "io.ktor:ktor-auth:$versions.ktor",
             ktor_auth_jwt          : "io.ktor:ktor-auth-jwt:$versions.ktor",
             ktor_jackson           : "io.ktor:ktor-jackson:$versions.ktor",
-            ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
             ktor_server_cio        : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core       : "io.ktor:ktor-server-core:$versions.ktor",
+            ktor_server_servlet    : "io.ktor:ktor-server-servlet:$versions.ktor",
             ktor_server_tests      : "io.ktor:ktor-server-tests:$versions.ktor",
+            ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
 
             // Jackson
             jackson                : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
             jackson_annotations    : "com.fasterxml.jackson.core:jackson-annotations:$versions.jackson",
+            jackson_dataformat_yaml: "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$versions.jackson",
             jackson_datatype_jsr310: "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versions.jackson",
             jackson_kotlin         : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jackson",
 
@@ -60,10 +68,13 @@ ext {
             bson                   : "org.mongodb:bson:$versions.mongodb",
             mongodb                : "org.mongodb:mongodb-driver-sync:$versions.mongodb",
 
-            // Shadow
-            shadow                 : "com.github.jengelman.gradle.plugins:shadow:$versions.shadow",
+            // Google Cloud
+            gcloud_kms             : "com.google.cloud:google-cloud-kms:$versions.gcloud_kms",
+
+            // App Engine
+            appengine_gradle_plugin: "com.google.cloud.tools:appengine-gradle-plugin:$versions.appengine_gradle_plugin",
 
             // JUnit
-            junit                 : "junit:junit:$versions.junit",
+            junit                  : "junit:junit:$versions.junit",
     ]
 }

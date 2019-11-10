@@ -8,6 +8,7 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.users.mapper.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -15,9 +16,13 @@ import java.util.UUID
 
 internal class UpdateUser @Inject constructor(
     application: Application,
+    config: Config,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(application, config) {
+) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val userId: UUID,
@@ -41,6 +46,6 @@ internal class UpdateUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val config = Config(HttpMethod.Patch, "/users/{$userId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Patch, "/users/{$userId}")
     }
 }

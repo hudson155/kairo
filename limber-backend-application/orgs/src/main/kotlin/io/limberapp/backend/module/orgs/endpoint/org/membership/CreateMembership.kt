@@ -8,6 +8,7 @@ import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -15,9 +16,14 @@ import java.util.UUID
 
 internal class CreateMembership @Inject constructor(
     application: Application,
+    config: Config,
     private val orgService: OrgService,
     private val membershipMapper: MembershipMapper
-) : ApiEndpoint<CreateMembership.Command, Unit>(application, config) {
+) : ApiEndpoint<CreateMembership.Command, Unit>(
+    application = application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val orgId: UUID,
@@ -40,6 +46,6 @@ internal class CreateMembership @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val config = Config(HttpMethod.Post, "/orgs/{$orgId}/memberships")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/memberships")
     }
 }

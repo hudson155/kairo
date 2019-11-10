@@ -7,6 +7,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.users.mapper.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -14,9 +15,14 @@ import java.util.UUID
 
 internal class GetUser @Inject constructor(
     application: Application,
+    config: Config,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<GetUser.Command, UserRep.Complete?>(application, config) {
+) : ApiEndpoint<GetUser.Command, UserRep.Complete?>(
+    application = application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val userId: UUID
@@ -35,6 +41,6 @@ internal class GetUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val config = Config(HttpMethod.Get, "/users/{$userId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Get, "/users/{$userId}")
     }
 }

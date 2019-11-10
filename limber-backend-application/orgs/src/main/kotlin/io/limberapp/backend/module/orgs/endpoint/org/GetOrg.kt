@@ -7,6 +7,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -14,9 +15,13 @@ import java.util.UUID
 
 internal class GetOrg @Inject constructor(
     application: Application,
+    config: Config,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<GetOrg.Command, OrgRep.Complete?>(application, config) {
+) : ApiEndpoint<GetOrg.Command, OrgRep.Complete?>(application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val orgId: UUID
@@ -35,6 +40,6 @@ internal class GetOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val config = Config(HttpMethod.Get, "/orgs/{$orgId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Get, "/orgs/{$orgId}")
     }
 }

@@ -14,7 +14,7 @@ internal class CreateOrgTest : ResourceTest() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateOrg.config,
+            endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)

@@ -35,23 +35,23 @@ abstract class AbstractResourceTest {
 
         @Suppress("LongParameterList") // For this test method, we're ok with it.
         fun test(
-            config: ApiEndpoint.Config,
+            endpointConfig: ApiEndpoint.EndpointConfig,
             pathParams: Map<String, String> = emptyMap(),
             queryParams: Map<String, String> = emptyMap(),
             body: Any? = null,
             expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
-            createCall(config, pathParams, queryParams, body).runTest(expectedStatusCode, test)
+            createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
         }
 
         private fun TestApplicationEngine.createCall(
-            config: ApiEndpoint.Config,
+            endpointConfig: ApiEndpoint.EndpointConfig,
             pathParams: Map<String, String>,
             queryParams: Map<String, String>,
             body: Any?
         ): TestApplicationCall {
-            return handleRequest(config.httpMethod, config.path(pathParams, queryParams)) {
+            return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
                 addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
                 val jwt = JWT.create().withJwt(
                     jwt = Jwt(

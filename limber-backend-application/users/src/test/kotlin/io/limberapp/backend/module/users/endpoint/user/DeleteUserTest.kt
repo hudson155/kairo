@@ -12,7 +12,7 @@ internal class DeleteUserTest : ResourceTest() {
     fun doesNotExist() {
         val userId = UUID.randomUUID()
         limberTest.test(
-            config = DeleteUser.config,
+            endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to userId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -29,17 +29,17 @@ internal class DeleteUserTest : ResourceTest() {
         )
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateUser.config,
+            endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
         limberTest.test(
-            config = DeleteUser.config,
+            endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to id.toString())
         ) {}
 
         limberTest.test(
-            config = GetUser.config,
+            endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to id.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}

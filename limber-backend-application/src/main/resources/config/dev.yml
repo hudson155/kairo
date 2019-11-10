@@ -1,0 +1,9 @@
+database:
+  protocol: MONGODB
+  host: localhost
+  database: limberapp
+
+jwt:
+  domain: limber.auth0.com
+
+pathPrefix: /

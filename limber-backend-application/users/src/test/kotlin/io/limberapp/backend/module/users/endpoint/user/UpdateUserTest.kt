@@ -16,7 +16,7 @@ internal class UpdateUserTest : ResourceTest() {
         val userId = UUID.randomUUID()
         val updateRep = UserRep.Update(firstName = "Gunner")
         limberTest.test(
-            config = UpdateUser.config,
+            endpointConfig = UpdateUser.endpointConfig,
             pathParams = mapOf(UpdateUser.userId to userId.toString()),
             body = updateRep,
             expectedStatusCode = HttpStatusCode.NotFound
@@ -34,13 +34,13 @@ internal class UpdateUserTest : ResourceTest() {
         )
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateUser.config,
+            endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
         val updateRep = UserRep.Update(firstName = "Gunner")
         limberTest.test(
-            config = UpdateUser.config,
+            endpointConfig = UpdateUser.endpointConfig,
             pathParams = mapOf(UpdateUser.userId to id.toString()),
             body = updateRep
         ) {

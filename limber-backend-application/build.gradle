@@ -1,15 +1,11 @@
 buildscript {
     dependencies {
-        classpath libs.shadow
+        classpath libs.appengine_gradle_plugin
     }
 }
 
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'application'
-
-group 'io.limberapp.backend'
-version '0.0.0'
-mainClassName = "io.limberapp.backend.ApplicationKt"
+apply plugin: 'war'
+apply plugin: 'com.google.cloud.tools.appengine'
 
 sourceSets {
     main.kotlin.srcDirs = main.java.srcDirs = ['src/main/kotlin']
@@ -25,11 +21,14 @@ dependencies {
     compile project(":limber-backend-framework:data-conversion")
     compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:object-mapper")
+    compile libs.gcloud_kms
     compile libs.guice
+    compile libs.jackson_dataformat_yaml
     compile libs.ktor_auth
     compile libs.ktor_auth_jwt
     compile libs.ktor_jackson
     compile libs.ktor_server_cio
+    compile libs.ktor_server_servlet
     compile libs.logback_classic
     compile libs.mongodb
 }
@@ -45,9 +44,9 @@ subprojects {
     }
 }
 
-shadowJar {
-    manifest {
-        attributes 'MainClass': mainClassName
-        archiveName = "limberapp-backend.jar"
+appengine {
+    deploy {
+        projectId = 'limberapp'
+        version = 'GCLOUD_CONFIG'
     }
 }

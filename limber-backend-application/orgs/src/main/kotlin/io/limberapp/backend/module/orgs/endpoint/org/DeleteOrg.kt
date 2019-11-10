@@ -5,6 +5,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.framework.config.Config
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
@@ -12,8 +13,13 @@ import java.util.UUID
 
 internal class DeleteOrg @Inject constructor(
     application: Application,
+    config: Config,
     private val orgService: OrgService
-) : ApiEndpoint<DeleteOrg.Command, Unit>(application, config) {
+) : ApiEndpoint<DeleteOrg.Command, Unit>(
+    application = application,
+    pathPrefix = config.pathPrefix,
+    endpointConfig = endpointConfig
+) {
 
     internal data class Command(
         val orgId: UUID
@@ -31,6 +37,6 @@ internal class DeleteOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val config = Config(HttpMethod.Delete, "/orgs/{$orgId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}")
     }
 }

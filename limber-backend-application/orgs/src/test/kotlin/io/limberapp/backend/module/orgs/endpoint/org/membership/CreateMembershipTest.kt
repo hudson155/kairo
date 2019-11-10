@@ -19,20 +19,20 @@ internal class CreateMembershipTest : ResourceTest() {
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = uuidGenerator[0]
         limberTest.test(
-            config = CreateOrg.config,
+            endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
         val userId = UUID.randomUUID()
         val membershipCreationRep = MembershipRep.Creation(userId)
         limberTest.test(
-            config = CreateMembership.config,
+            endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
         limberTest.test(
-            config = GetOrg.config,
+            endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)

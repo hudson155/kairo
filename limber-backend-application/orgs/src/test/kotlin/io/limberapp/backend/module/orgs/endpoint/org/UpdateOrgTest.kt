@@ -16,7 +16,7 @@ internal class UpdateOrgTest : ResourceTest() {
         val orgId = UUID.randomUUID()
         val updateRep = OrgRep.Update("Standing Teeth")
         limberTest.test(
-            config = UpdateOrg.config,
+            endpointConfig = UpdateOrg.endpointConfig,
             pathParams = mapOf(UpdateOrg.orgId to orgId.toString()),
             body = updateRep,
             expectedStatusCode = HttpStatusCode.NotFound
@@ -29,13 +29,13 @@ internal class UpdateOrgTest : ResourceTest() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
         val id = uuidGenerator[0]
         limberTest.test(
-            config = CreateOrg.config,
+            endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
         ) {}
 
         val updateRep = OrgRep.Update("Standing Teeth")
         limberTest.test(
-            config = UpdateOrg.config,
+            endpointConfig = UpdateOrg.endpointConfig,
             pathParams = mapOf(UpdateOrg.orgId to id.toString()),
             body = updateRep
         ) {
