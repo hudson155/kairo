@@ -1,7 +1,11 @@
 import React from 'react';
 
-const Loading: React.FC = () => {
-  return <p>Loading...</p>;
+interface Props {
+  children: string;
+}
+
+const Loading: React.FC<Props> = (props: Props) => {
+  return <p>Loading... {props.children}</p>;
 };
 
 export default Loading;

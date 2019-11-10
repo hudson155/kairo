@@ -20,7 +20,7 @@ interface Props {
 
 const App: React.FC<Props> = (props: Props) => {
   const auth0 = useAuth0();
-  if (auth0.loading) return <Loading />;
+  if (auth0.loading) return <Loading>Identifying you.</Loading>;
 
   const authenticatedRoutes: ReactNodeArray = [
     <Route key="/" path="/" exact>
@@ -42,7 +42,7 @@ const App: React.FC<Props> = (props: Props) => {
     if (props.state.orgs.loadingStatus === 'NOT_LOADED_OR_LOADING') {
       // This should be auth.loadingStatus
       auth0.getTokenSilently().then((jwt: string) => props.dispatch(AuthActions.setJwt(jwt)));
-      return <Loading />;
+      return <Loading>Loading your organizations.</Loading>;
     } else {
       routes.push(...authenticatedRoutes);
     }
