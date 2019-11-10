@@ -9,7 +9,7 @@ const MarketingSiteNavbar: React.FC = () => {
     <Navbar
       left={<>
         <HeaderLinkGroup>
-          <HeaderLink to="/events">Limber</HeaderLink>
+          <HeaderLink to="/">Limber</HeaderLink>
         </HeaderLinkGroup>
       </>}
       right={<>
