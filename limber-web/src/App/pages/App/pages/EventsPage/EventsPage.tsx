@@ -1,5 +1,5 @@
 import React from 'react';
-import AppPage from '../../components/AppPage/AppPage';
+import AppPage from '../../../../components/AppPage/AppPage';
 
 const EventsPage: React.FC = () => {
   return (

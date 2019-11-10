@@ -1,10 +1,11 @@
 import React, { ReactNodeArray } from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import EventsPage from './pages/EventsPage/EventsPage';
+import EventsPage from './pages/App/pages/EventsPage/EventsPage';
 import { useAuth0 } from '../react-auth0-wrapper';
 import Loading from './components/Loading/Loading';
-import MarketingSiteHomePage from './pages/MarketingSiteHomePage/MarketingSiteHomePage';
+import MarketingSiteHomePage
+  from './pages/MarketingSite/pages/MarketingSiteHomePage/MarketingSiteHomePage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import SignOutPage from './pages/SignOutPage/SignOutPage';
 import { ThunkDispatch } from 'redux-thunk';
@@ -20,7 +21,7 @@ interface Props {
 
 const App: React.FC<Props> = (props: Props) => {
   const auth0 = useAuth0();
-  if (auth0.loading) return <Loading>Identifying you.</Loading>;
+  if (auth0.loading) return null;
 
   const authenticatedRoutes: ReactNodeArray = [
     <Route key="/" path="/" exact>
