@@ -30,7 +30,7 @@ const AppPageHeader: React.FC<Props> = (props: Props) => {
         <HeaderLink to="/events">Events</HeaderLink>
       </HeaderLinkGroup>
       <HeaderLinkGroup>
-        {props.name && <HeaderText>props.name</HeaderText>}
+        {props.name && <HeaderText>{props.name}</HeaderText>}
         <HeaderLink to="/signout">Sign Out</HeaderLink>
       </HeaderLinkGroup>
     </div>
