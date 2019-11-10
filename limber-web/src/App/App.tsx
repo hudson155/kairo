@@ -13,9 +13,9 @@ const App: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route key="/signin" path="/signin" exact component={SignInRedirector} />
-        <Route key="/signout" path="/signout" exact component={SignOutRedirector} />
-        <Route key="" component={auth0.isAuthenticated ? MainApp : MarketingSite} />
+        <Route path="/signin" exact component={SignInRedirector} />
+        <Route path="/signout" exact component={SignOutRedirector} />
+        <Route component={auth0.isAuthenticated ? MainApp : MarketingSite} />
       </Switch>
     </Router>
   );
