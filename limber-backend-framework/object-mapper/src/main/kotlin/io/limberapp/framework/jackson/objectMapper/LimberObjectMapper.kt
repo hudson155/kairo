@@ -3,6 +3,7 @@ package io.limberapp.framework.jackson.objectMapper
 import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.util.DefaultIndenter
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -21,6 +22,7 @@ open class LimberObjectMapper(
     init {
         registerKotlinModule()
         if (prettyPrint) configurePrettyPrinting()
+        ignoreUnknownProperties()
         registerDefaultModules()
     }
 
@@ -33,6 +35,10 @@ open class LimberObjectMapper(
             indentArraysWith(DefaultPrettyPrinter.FixedSpaceIndenter.instance)
             indentObjectsWith(DefaultIndenter("  ", "\n"))
         })
+    }
+
+    private fun ignoreUnknownProperties() {
+        this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
     }
 
     private fun registerDefaultModules() {
