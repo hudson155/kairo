@@ -8,6 +8,9 @@ import State from '../../../state';
 import Loading from '../../components/Loading/Loading';
 import AuthActions from '../../../redux/auth/AuthActions';
 import EventsPage from './pages/EventsPage/EventsPage';
+import Page from '../../components/Page/Page';
+import AppPageHeader from './components/AppPageHeader/AppPageHeader';
+import AppPageFooter from './components/AppPageFooter/AppPageFooter';
 
 interface Props {
   state: State;
@@ -24,12 +27,14 @@ const MainApp: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <Switch>
-      <Route key="/" path="/" exact>
-        <Redirect to="/events" />
-      </Route>,
-      <Route key="/events" path="/events" exact component={EventsPage} />,
-    </Switch>
+    <Page header={<AppPageHeader />} footer={<AppPageFooter />}>
+      <Switch>
+        <Route key="/" path="/" exact>
+          <Redirect to="/events" />
+        </Route>,
+        <Route key="/events" path="/events" exact component={EventsPage} />,
+      </Switch>
+    </Page>
   );
 };
 
