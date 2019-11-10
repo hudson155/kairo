@@ -17,6 +17,7 @@ import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.jackson.JacksonConverter
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
@@ -64,7 +65,11 @@ abstract class LimberApp(
 
     protected open fun Application.cors() {
         install(CORS) {
+            this.allowSameOrigin = false
             this.anyHost()
+            this.header(HttpHeaders.Authorization)
+//            this.allowCredentials = false
+//            this.allowNonSimpleContentTypes = true
         }
     }
 

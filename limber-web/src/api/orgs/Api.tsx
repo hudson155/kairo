@@ -1,7 +1,7 @@
-import getOrg from './getOrg';
+import getOrgsByMemberId from './getOrgsByMemberId';
 
 const OrgsApi = {
-  getOrg,
+  getOrgsByMemberId,
 };
 
 export default OrgsApi;
