@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import State from '../../../state';
 import HeaderLink from './components/HeaderLink/HeaderLink';
 import HeaderLinkGroup from './components/HeaderLinkGroup/HeaderLinkGroup';
-import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import HeaderText from './components/HeaderText/HeaderText';
 import Navbar from '../Navbar/Navbar';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
   name?: string;
-  dispatch: ThunkDispatch<{}, {}, AnyAction>;
+  dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
 const AppPageHeader: React.FC<Props> = (props: Props) => {
