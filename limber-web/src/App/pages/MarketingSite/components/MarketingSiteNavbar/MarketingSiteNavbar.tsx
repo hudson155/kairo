@@ -6,14 +6,17 @@ import HeaderLink from '../../../../components/AppPageHeader/components/HeaderLi
 
 const MarketingSiteNavbar: React.FC = () => {
   return (
-    <Navbar>
-      <HeaderLinkGroup>
-        <HeaderLink to="/events">Limber</HeaderLink>
-      </HeaderLinkGroup>
-      <HeaderLinkGroup>
-        <HeaderLink to="/signin">Sign In / Sign Up</HeaderLink>
-      </HeaderLinkGroup>
-    </Navbar>
+    <Navbar
+      left={<>
+        <HeaderLinkGroup>
+          <HeaderLink to="/events">Limber</HeaderLink>
+        </HeaderLinkGroup>
+      </>}
+      right={<>
+        <HeaderLinkGroup>
+          <HeaderLink to="/signin">Sign In / Sign Up</HeaderLink>
+        </HeaderLinkGroup>
+      </>} />
   );
 };
 

@@ -15,18 +15,23 @@ interface Props {
 
 const AppPageHeader: React.FC<Props> = (props: Props) => {
   return (
-    <Navbar>
-      <HeaderLinkGroup>
-        <HeaderLink to="/events">Limber</HeaderLink>
-      </HeaderLinkGroup>
-      <HeaderLinkGroup>
-        <HeaderLink to="/events">Events</HeaderLink>
-      </HeaderLinkGroup>
-      <HeaderLinkGroup>
-        {props.name && <HeaderText>{props.name}</HeaderText>}
-        <HeaderLink to="/signout">Sign Out</HeaderLink>
-      </HeaderLinkGroup>
-    </Navbar>
+    <Navbar
+      left={<>
+        <HeaderLinkGroup>
+          <HeaderLink to="/events">Limber</HeaderLink>
+        </HeaderLinkGroup>
+        <HeaderLinkGroup>
+          <HeaderLink to="/events">Events</HeaderLink>
+        </HeaderLinkGroup>
+      </>}
+      right={
+        <>
+          <HeaderLinkGroup>
+            {props.name && <HeaderText>{props.name}</HeaderText>}
+            <HeaderLink to="/signout">Sign Out</HeaderLink>
+          </HeaderLinkGroup>
+        </>
+      } />
   );
 };
 

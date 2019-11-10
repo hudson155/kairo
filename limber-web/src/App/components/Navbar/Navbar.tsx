@@ -6,19 +6,28 @@ import { AnyAction } from 'redux';
 
 interface Props {
   color: string;
-  children: ReactNode;
+  left?: ReactNode;
+  right?: ReactNode;
   dispatch: ThunkDispatch<{}, {}, AnyAction>;
 }
 
 const AppPageHeader: React.FC<Props> = (props: Props) => {
   const style: CSSProperties = {
     display: 'flex',
+    justifyContent: 'space-between',
     height: '32px',
     backgroundColor: props.color,
-    padding: '16px',
+    padding: '16px 0',
   };
 
-  return <div style={style}>{props.children}</div>;
+  const portionStyle: CSSProperties = {
+    display: 'flex',
+  };
+
+  return <div style={style}>
+    <div style={portionStyle}>{props.left}</div>
+    <div style={portionStyle}>{props.right}</div>
+  </div>;
 };
 
 export default connect((state: State) => ({
