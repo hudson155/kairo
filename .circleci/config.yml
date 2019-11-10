@@ -82,7 +82,7 @@ workflows:
           filters:
             branches:
               ignore:
-                - feature/46-app-engine
+                - master
       - backend-lint:
           requires: [backend-dependencies]
       - backend-test:
@@ -91,19 +91,19 @@ workflows:
           filters:
             branches:
               ignore:
-                - feature/46-app-engine
+                - master
       - web-lint:
           requires: [web-dependencies]
       - web-test:
           requires: [web-dependencies]
 
-  feature/46-app-engine:
+  master:
     jobs:
       - backend-dependencies:
           filters:
             branches:
               only:
-                - feature/46-app-engine
+                - master
       - backend-lint:
           requires: [backend-dependencies]
       - backend-test:
@@ -112,7 +112,7 @@ workflows:
           filters:
             branches:
               only:
-                - feature/46-app-engine
+                - master
       - web-lint:
           requires: [web-dependencies]
       - web-test:
