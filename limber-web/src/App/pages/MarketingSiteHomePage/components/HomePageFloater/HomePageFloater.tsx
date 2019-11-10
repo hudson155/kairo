@@ -40,4 +40,4 @@ const HomePageFloater: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default connect((state: State) => ({ color: state.theme.navBarColor }))(HomePageFloater);
+export default connect((state: State) => ({ color: state.theme.theme.navBarColor }))(HomePageFloater);
