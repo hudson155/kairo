@@ -9,7 +9,7 @@ function applyJwt() {
   return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     try {
       const jwtAsString = await useAuth0().getTokenSilently();
-      const jwt = jsonwebtoken.decode(jwtAsString);
+      const jwt = jsonwebtoken.decode(jwtAsString) as { [key: string]: any };
       const user = JSON.parse(jwt['https://limberapp.io/user']);
       // TODO: After parsing JSON, ensure types are correct.
       dispatch(set(user));
