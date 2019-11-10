@@ -10,7 +10,6 @@ function applyJwt() {
     try {
       const jwtAsString = await useAuth0().getTokenSilently();
       const jwt = jsonwebtoken.decode(jwtAsString);
-      // @ts-ignore // TODO: Don't ts-ignore
       const user = JSON.parse(jwt['https://limberapp.io/user']);
       // TODO: After parsing JSON, ensure types are correct.
       dispatch(set(user));

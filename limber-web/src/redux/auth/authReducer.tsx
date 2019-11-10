@@ -5,9 +5,10 @@ const defaultState: AuthState = {};
 
 const authReducer = (state: AuthState = defaultState, abstractAction: AuthAction): AuthState => {
   switch (abstractAction.type) {
-    case 'AuthSetJwt':
+    case 'AuthSetJwt': {
       const action = abstractAction as AuthSetJwtAction;
       return { ...state, jwt: action.jwt };
+    }
     default:
       return state;
   }

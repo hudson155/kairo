@@ -29,8 +29,7 @@ const App: React.FC<Props> = (props: Props) => {
     <Route key="/events" path="/events" exact component={EventsPage} />,
   ];
 
-  const unauthenticatedRoutes: ReactNodeArray = [<Route key="/" path="/" exact
-                                                        component={MarketingSiteHomePage} />];
+  const unauthenticatedRoutes: ReactNodeArray = [<Route key="/" path="/" exact component={MarketingSiteHomePage} />];
 
   const regardlessRoutes = [
     <Route key="/signin" path="/signin" exact component={SignInPage} />,
@@ -40,7 +39,8 @@ const App: React.FC<Props> = (props: Props) => {
 
   const routes: ReactNodeArray = [];
   if (auth0.isAuthenticated) {
-    if (props.state.orgs.loadingStatus === 'NOT_LOADED_OR_LOADING') { // This should be auth.loadingStatus
+    if (props.state.orgs.loadingStatus === 'NOT_LOADED_OR_LOADING') {
+      // This should be auth.loadingStatus
       auth0.getTokenSilently().then((jwt: string) => props.dispatch(AuthActions.setJwt(jwt)));
       return <Loading />;
     } else {
@@ -58,6 +58,4 @@ const App: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default connect(
-  (state: State) => ({ state }),
-)(App);
+export default connect((state: State) => ({ state }))(App);

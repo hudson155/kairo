@@ -12,11 +12,7 @@ const HeaderText: React.FC<Props> = (props: Props) => {
     color: 'white',
   };
 
-  return (
-    <div style={style}>
-      {props.children}
-    </div>
-  );
+  return <div style={style}>{props.children}</div>;
 };
 
 export default HeaderText;
