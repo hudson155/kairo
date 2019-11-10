@@ -10,15 +10,17 @@ import SignOutPage from './pages/SignOutPage/SignOutPage';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
-import UserActions from '../redux/user/UserActions';
+import AuthActions from '../redux/auth/AuthActions';
+import State from '../state';
 
 interface Props {
+  state: State;
   dispatch: ThunkDispatch<{}, {}, AnyAction>;
 }
 
 const App: React.FC<Props> = (props: Props) => {
-  const { getTokenSilently: getJwt, isAuthenticated, loading: loadingAuth0 } = useAuth0();
-  if (loadingAuth0) return <Loading />;
+  const auth0 = useAuth0();
+  if (auth0.loading) return <Loading />;
 
   const authenticatedRoutes: ReactNodeArray = [
     <Route key="/" path="/" exact>
@@ -37,9 +39,13 @@ const App: React.FC<Props> = (props: Props) => {
   ];
 
   const routes: ReactNodeArray = [];
-  if (isAuthenticated) {
-    props.dispatch(UserActions.applyJwt());
-    routes.push(...authenticatedRoutes);
+  if (auth0.isAuthenticated) {
+    if (props.state.orgs.loadingStatus === 'NOT_LOADED_OR_LOADING') { // This should be auth.loadingStatus
+      auth0.getTokenSilently().then((jwt: string) => props.dispatch(AuthActions.setJwt(jwt)));
+      return <Loading />;
+    } else {
+      routes.push(...authenticatedRoutes);
+    }
   } else {
     routes.push(...unauthenticatedRoutes);
   }
@@ -52,4 +58,6 @@ const App: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default connect()(App);
+export default connect(
+  (state: State) => ({ state }),
+)(App);

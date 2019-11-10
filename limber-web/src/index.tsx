@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import thunk from 'redux-thunk';
 import { Auth0Provider } from './react-auth0-wrapper';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 // A function that routes the user to the right place after signing in.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
