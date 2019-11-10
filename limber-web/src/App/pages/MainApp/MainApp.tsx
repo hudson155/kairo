@@ -9,7 +9,7 @@ import Loading from '../../components/Loading/Loading';
 import AuthActions from '../../../redux/auth/AuthActions';
 import EventsPage from './pages/EventsPage/EventsPage';
 import Page from '../../components/Page/Page';
-import AppPageHeader from './components/AppPageHeader/AppPageHeader';
+import AppPageHeader from '../../components/AppPageHeader/AppPageHeader';
 import AppPageFooter from './components/AppPageFooter/AppPageFooter';
 
 interface Props {
