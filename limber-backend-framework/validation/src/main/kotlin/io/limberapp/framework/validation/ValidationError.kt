@@ -1,4 +1,4 @@
-package io.limberapp.framework.validation.validation
+package io.limberapp.framework.validation
 
 /**
  * ValidationError should be thrown when a property fails validation. It should be handled in the

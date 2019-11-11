@@ -1,7 +1,7 @@
-package io.limberapp.framework.validation.validation.util
+package io.limberapp.framework.validation.util
 
-import io.limberapp.framework.validation.validation.Validation
-import io.limberapp.framework.validation.validation.ValidationError
+import io.limberapp.framework.validation.Validation
+import io.limberapp.framework.validation.ValidationError
 
 private const val MIN_CHARS = 3
 private const val SHORT_TEXT_MAX_CHARS = 100

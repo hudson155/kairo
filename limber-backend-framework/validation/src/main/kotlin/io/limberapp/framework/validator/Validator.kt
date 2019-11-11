@@ -1,4 +1,4 @@
-package io.limberapp.framework.validation.validator
+package io.limberapp.framework.validator
 
 /**
  * This object contains methods to validate primitive inputs.

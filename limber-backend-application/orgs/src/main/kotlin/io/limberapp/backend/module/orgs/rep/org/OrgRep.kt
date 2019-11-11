@@ -4,8 +4,8 @@ import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.framework.rep.CompleteRep
 import io.limberapp.framework.rep.CreationRep
 import io.limberapp.framework.rep.UpdateRep
-import io.limberapp.framework.validation.validation.util.ifPresent
-import io.limberapp.framework.validation.validation.util.shortText
+import io.limberapp.framework.validation.util.ifPresent
+import io.limberapp.framework.validation.util.shortText
 import java.time.LocalDateTime
 import java.util.UUID
 

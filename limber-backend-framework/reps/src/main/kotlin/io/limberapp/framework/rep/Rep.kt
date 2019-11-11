@@ -1,6 +1,6 @@
 package io.limberapp.framework.rep
 
-import io.limberapp.framework.validation.validation.Validation
+import io.limberapp.framework.validation.Validation
 import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.reflect.KProperty1

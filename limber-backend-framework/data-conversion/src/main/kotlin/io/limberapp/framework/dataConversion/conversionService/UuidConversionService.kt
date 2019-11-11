@@ -1,7 +1,7 @@
 package io.limberapp.framework.dataConversion.conversionService
 
 import io.limberapp.framework.dataConversion.SimpleConversionService
-import io.limberapp.framework.validation.validator.Validator
+import io.limberapp.framework.validator.Validator
 import java.util.UUID
 
 class UuidConversionService : SimpleConversionService<UUID>(UUID::class) {

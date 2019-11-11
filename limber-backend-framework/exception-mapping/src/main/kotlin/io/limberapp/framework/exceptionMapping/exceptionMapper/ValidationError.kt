@@ -7,7 +7,7 @@ import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 import io.limberapp.framework.error.property.validation.ValidationFrameworkError
 import io.limberapp.framework.exceptionMapping.ExceptionMapper
-import io.limberapp.framework.validation.validation.ValidationError
+import io.limberapp.framework.validation.ValidationError
 
 internal class ValidationError :
     ExceptionMapper<ValidationError>() {
