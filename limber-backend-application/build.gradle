@@ -15,12 +15,12 @@ sourceSets {
 }
 
 dependencies {
+
+    compile project(":limber-backend-framework")
+
     compile project(":limber-backend-application:orgs")
     compile project(":limber-backend-application:users")
-    compile project(":limber-backend-framework")
-    compile project(":limber-backend-framework:data-conversion")
-    compile project(":limber-backend-framework:exception-mapping")
-    compile project(":limber-backend-framework:object-mapper")
+
     compile libs.gcloud_kms
     compile libs.guice
     compile libs.jackson_dataformat_yaml
@@ -35,11 +35,7 @@ dependencies {
 
 subprojects {
     dependencies {
-        compile project(":limber-backend-framework:core")
-        compile project(":limber-backend-framework:models")
-        compile project(":limber-backend-framework:mongo")
-        compile project(":limber-backend-framework:validation")
-        testCompile project(":limber-backend-framework")
+        compile project(":limber-backend-framework:module")
         testCompile project(":limber-backend-framework:testing")
     }
 }

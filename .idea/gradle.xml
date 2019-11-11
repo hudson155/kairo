@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/limber-backend-framework/errors" />
             <option value="$PROJECT_DIR$/limber-backend-framework/exception-mapping" />
             <option value="$PROJECT_DIR$/limber-backend-framework/models" />
+            <option value="$PROJECT_DIR$/limber-backend-framework/module" />
             <option value="$PROJECT_DIR$/limber-backend-framework/mongo" />
             <option value="$PROJECT_DIR$/limber-backend-framework/object-mapper" />
             <option value="$PROJECT_DIR$/limber-backend-framework/reps" />

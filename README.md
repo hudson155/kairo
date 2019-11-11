@@ -1,6 +1,6 @@
 # Limber
 
-Limber is a highly dynamic application framework built on Ktor and Preact.
+Limber is a highly dynamic application framework built on Ktor and React.
 
 * [`limber-backend-application`](/limber-backend-application):
     Limber's back end implementation.
