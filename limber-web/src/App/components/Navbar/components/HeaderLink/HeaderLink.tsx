@@ -16,11 +16,7 @@ const HeaderLink: React.FC<Props> = (props: Props) => {
     textDecoration: 'none',
   };
 
-  return (
-    <Link to={props.to} style={style}>
-      {props.children}
-    </Link>
-  );
+  return <Link to={props.to} style={style}>{props.children}</Link>;
 };
 
 export default HeaderLink;

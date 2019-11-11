@@ -10,15 +10,13 @@ const App: React.FC = () => {
   const auth0 = useAuth0();
   if (auth0.loading) return null;
 
-  return (
-    <Router>
-      <Switch>
-        <Route path="/signin" exact component={SignInRedirector} />
-        <Route path="/signout" exact component={SignOutRedirector} />
-        <Route component={auth0.isAuthenticated ? MainApp : MarketingSite} />
-      </Switch>
-    </Router>
-  );
+  return <Router>
+    <Switch>
+      <Route path="/signin" exact component={SignInRedirector} />
+      <Route path="/signout" exact component={SignOutRedirector} />
+      <Route component={auth0.isAuthenticated ? MainApp : MarketingSite} />
+    </Switch>
+  </Router>;
 };
 
 export default App;

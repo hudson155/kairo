@@ -7,8 +7,8 @@ import State from '../../../state';
 import AuthActions from '../../../redux/auth/AuthActions';
 import EventsPage from './pages/EventsPage/EventsPage';
 import Page from '../../components/Page/Page';
-import AppPageHeader from '../../components/AppPageHeader/AppPageHeader';
-import AppPageFooter from './components/AppPageFooter/AppPageFooter';
+import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
+import Footer from '../../components/Footer/Footer';
 import { ThunkDispatch } from 'redux-thunk';
 import { LoadingStatus } from '../../../redux/util/LoadingStatus';
 
@@ -32,16 +32,14 @@ const MainApp: React.FC<Props> = (props: Props) => {
     return null;
   }
 
-  return (
-    <Page header={<AppPageHeader />} footer={<AppPageFooter />}>
-      <Switch>
-        <Route key="/" path="/" exact>
-          <Redirect to="/events" />
-        </Route>,
-        <Route key="/events" path="/events" exact component={EventsPage} />,
-      </Switch>
-    </Page>
-  );
+  return <Page header={<MainAppNavbar />} footer={<Footer />}>
+    <Switch>
+      <Route path="/" exact>
+        <Redirect to="/events" />
+      </Route>,
+      <Route path="/events" exact component={EventsPage} />,
+    </Switch>
+  </Page>;
 };
 
 export default connect(

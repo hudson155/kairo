@@ -10,13 +10,11 @@ interface Props {
 }
 
 const Page: React.FC<Props> = (props: Props) => {
-  return (
-    <>
-      {props.header && <PageHeader>{props.header}</PageHeader>}
-      {props.children && <PageMain>{props.children}</PageMain>}
-      {props.footer && <PageFooter>{props.footer}</PageFooter>}
-    </>
-  );
+  return <>
+    {props.header && <PageHeader>{props.header}</PageHeader>}
+    {props.children && <PageMain>{props.children}</PageMain>}
+    {props.footer && <PageFooter>{props.footer}</PageFooter>}
+  </>;
 };
 
 export default Page;

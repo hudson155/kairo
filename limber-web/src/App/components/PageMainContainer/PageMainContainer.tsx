@@ -11,11 +11,7 @@ const PageMainContainer: React.FC<Props> = (props: Props) => {
     alignSelf: 'center',
   };
 
-  return (
-    <div style={style}>
-      {props.children}
-    </div>
-  );
+  return <div style={style}>{props.children}</div>;
 };
 
 export default PageMainContainer;
