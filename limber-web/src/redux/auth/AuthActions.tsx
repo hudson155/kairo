@@ -1,23 +1,19 @@
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
 import { AuthSetJwtAction } from './AuthAction';
-import OrgsActions from '../orgs/OrgsActions';
-import jsonwebtoken from 'jsonwebtoken';
+import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import State from '../../state';
 
-function setJwt(jwt: string) {
-  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
-    const decoded = jsonwebtoken.decode(jwt);
-    const orgsClaim = JSON.parse(decoded['https://limberapp.io/orgs']);
-    const rolesClaim = JSON.parse(decoded['https://limberapp.io/roles']);
-    const userClaim = JSON.parse(decoded['https://limberapp.io/user']);
-    const authSetJwtAction: AuthSetJwtAction = { type: 'AuthSetJwt', jwt };
-    dispatch(authSetJwtAction);
-
-    dispatch(OrgsActions.setAllByMemberId(userClaim.id));
-  };
+function setJwt(jwt: string): AuthSetJwtAction {
+  return { type: 'AuthSetJwt', jwt };
 }
 
 const AuthActions = {
-  setJwt,
+  ensureSetJwt(getJwt: () => Promise<string>): ThunkAction<void, State, null, AnyAction> {
+    return async (dispatch, getState): Promise<void> => {
+      if (getState().auth.loadingStatus === 'NOT_LOADED_OR_LOADING') {
+        getJwt().then((jwt: string) => dispatch(setJwt(jwt)));
+      }
+    };
+  },
 };
 export default AuthActions;

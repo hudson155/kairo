@@ -9,7 +9,7 @@ const HeaderLinkGroup: React.FC<Props> = (props: Props) => {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: '32px',
+    margin: '0 16px',
   };
 
   return <div style={style}>{props.children}</div>;
