@@ -10,4 +10,8 @@ database:
 jwt:
   domain: limber.auth0.com
 
-pathPrefix: /api
+serving:
+  apiPathPrefix: /api
+  staticFiles:
+    serve: true
+    rootPath: .

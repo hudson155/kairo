@@ -1,0 +1,28 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[backend] Run (prod-local)" type="JetRunConfigurationType" factoryName="Kotlin">
+    <module name="limber.limber-backend-application.main" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <option name="MAIN_CLASS_NAME" value="io.limberapp.backend.ApplicationKt" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <envs>
+      <env name="LIMBERAPP_ENV" value="prod-local" />
+      <env name="GOOGLE_APPLICATION_CREDENTIALS" value="$PROJECT_DIR$/../../secure/superuser@limberapp.iam.gserviceaccount.com" />
+    </envs>
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="NpmBeforeRunTask" enabled="true">
+        <package-json value="$PROJECT_DIR$/limber-web/package.json" />
+        <command value="run" />
+        <scripts>
+          <script value="buildlocal" />
+        </scripts>
+        <node-interpreter value="project" />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>

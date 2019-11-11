@@ -21,7 +21,7 @@ internal class CreateMembership @Inject constructor(
     private val membershipMapper: MembershipMapper
 ) : ApiEndpoint<CreateMembership.Command, Unit>(
     application = application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

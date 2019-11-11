@@ -20,7 +20,7 @@ internal class CreateOrg @Inject constructor(
     private val orgMapper: OrgMapper
 ) : ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
     application = application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
