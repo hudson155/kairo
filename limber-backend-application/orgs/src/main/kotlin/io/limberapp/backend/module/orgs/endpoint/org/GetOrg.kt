@@ -19,7 +19,7 @@ internal class GetOrg @Inject constructor(
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : ApiEndpoint<GetOrg.Command, OrgRep.Complete?>(application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

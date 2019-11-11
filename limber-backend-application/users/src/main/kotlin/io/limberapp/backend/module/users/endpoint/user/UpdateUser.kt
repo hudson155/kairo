@@ -20,7 +20,7 @@ internal class UpdateUser @Inject constructor(
     private val userService: UserService,
     private val userMapper: UserMapper
 ) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

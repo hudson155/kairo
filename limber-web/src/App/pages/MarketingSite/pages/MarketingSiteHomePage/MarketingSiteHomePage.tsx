@@ -7,7 +7,7 @@ const MarketingSiteHomePage: React.FC = () => {
     <h1>Limber</h1>
     <p>
       Welcome to Limber. We don&apos;t have a marketing site yet.&nbsp;
-      <Link to="/signin">Click here to sign in</Link>
+      <Link to="/signin">Click here to sign in</Link>.
     </p>
   </PageMainContainer>;
 };

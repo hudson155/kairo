@@ -17,7 +17,7 @@ internal class DeleteOrg @Inject constructor(
     private val orgService: OrgService
 ) : ApiEndpoint<DeleteOrg.Command, Unit>(
     application = application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

@@ -35,6 +35,9 @@ abstract class LimberApp(
     fun bindToApplication(application: Application) = with(application) {
         configure()
         bindModules()
+        if (config.serving.staticFiles.serve) {
+            serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
+        }
     }
 
     private fun Application.configure() {

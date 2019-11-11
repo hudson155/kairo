@@ -20,7 +20,7 @@ internal class GetOrgsByMemberId @Inject constructor(
     private val orgMapper: OrgMapper
 ) : ApiEndpoint<GetOrgsByMemberId.Command, List<OrgRep.Complete>>(
     application = application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

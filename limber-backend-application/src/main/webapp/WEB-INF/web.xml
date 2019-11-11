@@ -4,7 +4,6 @@
         <display-name>KtorServlet</display-name>
         <servlet-name>KtorServlet</servlet-name>
         <servlet-class>io.ktor.server.servlet.ServletApplicationEngine</servlet-class>
-        <!-- path to application.conf file, required -->
         <init-param>
             <param-name>io.ktor.config</param-name>
             <param-value>application.conf</param-value>
@@ -12,6 +11,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>KtorServlet</servlet-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>

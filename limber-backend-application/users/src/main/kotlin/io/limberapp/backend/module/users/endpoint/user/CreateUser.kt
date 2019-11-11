@@ -20,7 +20,7 @@ internal class CreateUser @Inject constructor(
     private val userMapper: UserMapper
 ) : ApiEndpoint<CreateUser.Command, UserRep.Complete>(
     application = application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

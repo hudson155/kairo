@@ -20,7 +20,7 @@ internal class GetUser @Inject constructor(
     private val userMapper: UserMapper
 ) : ApiEndpoint<GetUser.Command, UserRep.Complete?>(
     application = application,
-    pathPrefix = config.pathPrefix,
+    pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
