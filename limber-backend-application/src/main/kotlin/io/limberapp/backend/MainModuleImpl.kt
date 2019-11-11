@@ -33,17 +33,5 @@ internal class MainModuleImpl private constructor(
             clock = Clock.systemUTC(),
             uuidGenerator = RandomUuidGenerator()
         )
-
-        fun forTesting(
-            application: Application,
-            config: Config,
-            clock: Clock,
-            uuidGenerator: UuidGenerator
-        ) = MainModuleImpl(
-            application = application,
-            config = config,
-            clock = clock,
-            uuidGenerator = uuidGenerator
-        )
     }
 }
