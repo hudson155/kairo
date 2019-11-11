@@ -28,16 +28,12 @@ ext {
 
             // https://mongodb.github.io/mongo-java-driver/
             mongodb                : '3.11.0',
-
-            // https://github.com/johnrengelman/shadow/releases
-            shadow                 : '5.1.0',
     ]
 
     libs = [
 
             // Kotlin
             kotlin_gradle_plugin   : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
-            kotlin_test_junit      : "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin",
             kotlin_reflect         : "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
             kotlin_stdlib_jdk8     : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
 
@@ -48,12 +44,10 @@ ext {
             ktor_server_cio        : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core       : "io.ktor:ktor-server-core:$versions.ktor",
             ktor_server_servlet    : "io.ktor:ktor-server-servlet:$versions.ktor",
-            ktor_server_tests      : "io.ktor:ktor-server-tests:$versions.ktor",
             ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
 
             // Jackson
             jackson                : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
-            jackson_annotations    : "com.fasterxml.jackson.core:jackson-annotations:$versions.jackson",
             jackson_dataformat_yaml: "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$versions.jackson",
             jackson_datatype_jsr310: "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versions.jackson",
             jackson_kotlin         : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jackson",
@@ -65,7 +59,6 @@ ext {
             logback_classic        : "ch.qos.logback:logback-classic:$versions.logback",
 
             // MongoDB
-            bson                   : "org.mongodb:bson:$versions.mongodb",
             mongodb                : "org.mongodb:mongodb-driver-sync:$versions.mongodb",
 
             // Google Cloud
