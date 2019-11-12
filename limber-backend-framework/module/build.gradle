@@ -1,6 +1,0 @@
-dependencies {
-    compile project(":limber-backend-framework:core")
-    compile project(":limber-backend-framework:models")
-    compile project(":limber-backend-framework:mongo")
-    compile project(":limber-backend-framework:validation")
-}

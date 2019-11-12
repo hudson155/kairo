@@ -35,7 +35,7 @@ dependencies {
 
 subprojects {
     dependencies {
-        compile project(":limber-backend-framework:module")
+        compile project(":limber-backend-framework:core")
         testCompile project(":limber-backend-framework:testing")
     }
 }
