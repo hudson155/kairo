@@ -60,6 +60,7 @@ the whole picture.
 ├── io.limberapp.framework
 ├── dataConversion   # Type conversion
 │   └─ conversionService # Individual type converters
+├── error            # Response body error objects
 ├── jackson          # Code related to Jackson serialization
 │   └─ module        # Custom modules
 │   └─ objectMapper  # Custom object mapper
