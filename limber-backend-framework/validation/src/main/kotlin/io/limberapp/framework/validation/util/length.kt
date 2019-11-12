@@ -1,7 +1,7 @@
 package io.limberapp.framework.validation.util
 
 import io.limberapp.framework.validation.Validation
-import io.limberapp.framework.validation.ValidationError
+import io.limberapp.framework.validation.ValidationException
 
 private const val MIN_CHARS = 3
 private const val SHORT_TEXT_MAX_CHARS = 100
@@ -29,9 +29,9 @@ fun Validation<String>.emailAddress() {
 }
 
 private fun Validation<String>.length(range: IntRange) {
-    if (subject.length !in range) throw ValidationError(name)
+    if (subject.length !in range) throw ValidationException(name)
 }
 
 private fun Validation<String>.regex(regex: Regex) {
-    if (!subject.matches(regex)) throw ValidationError(name)
+    if (!subject.matches(regex)) throw ValidationException(name)
 }
