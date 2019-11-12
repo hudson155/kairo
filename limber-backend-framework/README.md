@@ -48,9 +48,11 @@ the whole picture.
 ```
 .
 ├── io.limberapp.framework
-├── model      # Model-related boilerplate
-├── rep        # Rep-related boilerplate
-├── validation # Used to validate models
-│   └─ util        # individual validators
-└── validator  # Validator for ad-hoc validation
+├── dataConversion   # Type conversion
+│   └─ conversionService # Individual type converters
+├── model            # Model-related boilerplate
+├── rep              # Rep-related boilerplate
+├── validation       # Used to validate models
+│   └─ util              # Individual validators
+└── validator        # Validator for ad-hoc validation
 ```
