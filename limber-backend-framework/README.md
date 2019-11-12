@@ -43,8 +43,9 @@ they are and see if you need them too.
         Reps are used in the API layer.
         Models should never be used in the application/database layer.
 * [`testing`](/reps):
-    Contains testing utilities.
-    Include this in implementation projects as a test dependency (assuming you write tests).
+    * Contains testing utilities.
+    * Include this in implementation project modules as a test dependency
+        (assuming you write tests).
 * [`validation`](/validation):
     * Provides a Validator class for ad-hoc validation,
         as well as the Validation class which is used to validate reps.
@@ -72,6 +73,7 @@ the whole picture.
 ├── module            # Code for Limber modules
 ├── mongo             # MongoDB ORM
 ├── rep               # Rep-related boilerplate
+├── testing           # Testing code
 ├── store             # Code for Limber stores
 ├── util              # Util
 │   └─ uuidGenerator  # Generates UUIDs
