@@ -21,7 +21,6 @@ dependencies {
     compile project(":limber-backend-application:orgs")
     compile project(":limber-backend-application:users")
 
-    compile libs.gcloud_kms
     compile libs.guice
     compile libs.jackson_dataformat_yaml
     compile libs.ktor_auth
