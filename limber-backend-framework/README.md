@@ -18,12 +18,10 @@ they are and see if you need them too.
         (for serializing and deserializing arbitrary objects as well as request/response bodies)
         and by registering with Ktor DataConversion
         (for serializing and deserializing request/response parameters).
-    * It's used by the root module, so implementation projects need not require it.
 * [`errors`](/errors):
     * Contains classes for JSON errors intended to be returned to the client.
         Every time something goes wrong (whether it's a 4xx error or a 5xx error),
         an error from this package should be returned.
-    * It's used by the root module, so implementation projects need not require it.
 * [`exception-mapping`](/exception-mapping):
     Maps exceptions to JSON responses from the errors module.
     It's used by the root module, so implementation projects need not require it.
@@ -31,7 +29,6 @@ they are and see if you need them too.
     * Contains base classes for application models to inherit from.
         Models are used in the application/database layer.
         Models should never be used in the API layer.
-    * It's used by the root module, so implementation projects need not require it.
 * [`mongo`](/mongo):
     Driver to interact with MongoDB, including automatic model/document mapping.
     Include this in implementation projects if they use MongoDB.
@@ -41,19 +38,16 @@ they are and see if you need them too.
         default settings (e.g. ability to ignore unknown properties),
         and uses the `data-conversion` module for serialization/deserialization.
         It should be used across Limber.
-    * It's used by the root module, so implementation projects need not require it.
 * [`reps`](/reps):
     * Contains base classes for application reps to inherit from.
         Reps are used in the API layer.
         Models should never be used in the application/database layer.
-    * It's used by the root module, so implementation projects need not require it.
 * [`testing`](/reps):
     Contains testing utilities.
     Include this in implementation projects as a test dependency (assuming you write tests).
 * [`validation`](/validation):
     * Provides a Validator class for ad-hoc validation,
         as well as the Validation class which is used to validate reps.
-    * It's used by the root module, so implementation projects need not require it.
 
 ## Package Structure
 
