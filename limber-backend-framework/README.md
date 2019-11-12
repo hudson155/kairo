@@ -37,8 +37,10 @@ they are and see if you need them too.
     Jackson object mapper implementation configured to use the data conversion module.
     It's used by the root module, so implementation projects need not require it.
 * [`reps`](/reps):
-    Contains base classes for application reps to inherit from.
-    It's used by the root module, so implementation projects need not require it.
+    * Contains base classes for application reps to inherit from.
+        Reps are used in the API layer.
+        Models should never be used in the application/database layer.
+    * It's used by the root module, so implementation projects need not require it.
 * [`testing`](/reps):
     Contains testing utilities.
     Include this in implementation projects as a test dependency (assuming you write tests).
