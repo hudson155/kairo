@@ -12,8 +12,13 @@ they are and see if you need them too.
     This is the nucleus of the Limber framework.
     It's used by the root module, so implementation projects need not require it.
 * [`data-conversion`](/data-conversion):
-    Responsible for converting data types.
-    It's used by the root module, so implementation projects need not require it.
+    * Responsible for converting data types.
+        This is used for serialization and deserialization,
+        both by registering with Jackson
+        (for serializing and deserializing arbitrary objects as well as request/response bodies)
+        and by registering with Ktor DataConversion
+        (for serializing and deserializing request/response parameters).
+    * It's used by the root module, so implementation projects need not require it.
 * [`errors`](/errors):
     Contains classes for JSON errors intended to be returned to the client.
     It's used by the root module, so implementation projects need not require it.
