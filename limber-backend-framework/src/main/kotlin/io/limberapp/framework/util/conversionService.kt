@@ -1,4 +1,4 @@
-package io.limberapp.framework
+package io.limberapp.framework.util
 
 import io.ktor.util.ConversionService
 import io.ktor.util.DataConversionException

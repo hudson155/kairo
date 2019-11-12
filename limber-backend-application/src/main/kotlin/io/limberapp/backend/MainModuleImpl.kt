@@ -7,8 +7,8 @@ import io.ktor.application.Application
 import io.limberapp.framework.MainModule
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.createClient
-import io.limberapp.framework.util.RandomUuidGenerator
-import io.limberapp.framework.util.UuidGenerator
+import io.limberapp.framework.util.uuidGenerator.RandomUuidGenerator
+import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
 
 internal class MainModuleImpl private constructor(

@@ -10,7 +10,7 @@ import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.createClient
 import io.limberapp.framework.testing.AbstractResourceTest
-import io.limberapp.framework.util.DeterministicUuidGenerator
+import io.limberapp.framework.util.uuidGenerator.DeterministicUuidGenerator
 import org.junit.Before
 import java.time.Clock
 import java.time.Instant

@@ -1,4 +1,4 @@
-package io.limberapp.framework
+package io.limberapp.framework.util
 
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -27,4 +27,3 @@ internal fun Application.serveStaticFiles(rootPath: String, defaultFilePath: Str
         }
     }
 }
-

@@ -24,9 +24,14 @@ import io.limberapp.framework.dataConversion.conversionService.UuidConversionSer
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import io.limberapp.framework.module.Module
+import io.limberapp.framework.util.conversionService
+import io.limberapp.framework.util.serveStaticFiles
 import org.slf4j.event.Level
 import java.util.UUID
 
+/**
+ * This class has a lot of functions, but it's clearer this way.
+ */
 @Suppress("TooManyFunctions")
 abstract class LimberApp(
     protected val config: Config

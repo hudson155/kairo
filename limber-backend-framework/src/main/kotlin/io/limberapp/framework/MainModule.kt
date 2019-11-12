@@ -3,7 +3,7 @@ package io.limberapp.framework
 import com.google.inject.AbstractModule
 import io.ktor.application.Application
 import io.limberapp.framework.config.Config
-import io.limberapp.framework.util.UuidGenerator
+import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
 
 /**

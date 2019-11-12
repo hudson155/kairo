@@ -15,12 +15,11 @@ data class EncryptedValue(
         if (!encrypted) return@run value
         val decoded = Base64.getDecoder().decode(value)
         // Create the KeyManagementServiceClient using try-with-resources to manage client cleanup.
-        val decrypted = KeyManagementServiceClient.create().use { client ->
+        return@run KeyManagementServiceClient.create().use { client ->
             return@use client.decrypt(
                 CryptoKeyName.of("limberapp", "global", "limberapp", "secrets"),
                 ByteString.copyFrom(decoded)
             ).plaintext.toString(Charset.defaultCharset())
         }
-        return@run decrypted
     }
 }

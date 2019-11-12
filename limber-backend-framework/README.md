@@ -57,6 +57,7 @@ the whole picture.
 ```
 .
 ├── io.limberapp.framework
+├── config            # Limber framework configuration
 ├── dataConversion    # Type conversion
 │   └── conversionService # Individual type converters
 ├── endpoint          # Code for API endpoints
@@ -72,6 +73,8 @@ the whole picture.
 ├── mongo             # MongoDB ORM
 ├── rep               # Rep-related boilerplate
 ├── store             # Code for Limber stores
+├── util              # Util
+│   └─ uuidGenerator  # Generates UUIDs
 ├── validation        # Used to validate models
 │   └─ util               # Individual validators
 └── validator         # Validator for ad-hoc validation
