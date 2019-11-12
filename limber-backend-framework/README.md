@@ -24,8 +24,7 @@ they are and see if you need them too.
         Every time something goes wrong (whether it's a 4xx error or a 5xx error),
         an error from this package should be returned.
 * [`exception-mapping`](/exception-mapping):
-    Maps exceptions to JSON responses from the errors module.
-    It's used by the root module, so implementation projects need not require it.
+    * Maps exceptions to JSON responses from the errors module.
 * [`models`](/models):
     * Contains base classes for application models to inherit from.
         Models are used in the application/database layer.
@@ -62,6 +61,7 @@ the whole picture.
 │   └─ conversionService # Individual type converters
 ├── endpoint         # Code for API endpoints
 ├── error            # Response body error objects
+├── exceptionMapping # Mapping exceptions to errors
 ├── jackson          # Code related to Jackson serialization
 │   └─ module        # Custom modules
 │   └─ objectMapper  # Custom object mapper
