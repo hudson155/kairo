@@ -56,8 +56,12 @@ abstract class LimberApp(
             jwt {
                 with(config.jwt) {
                     when {
-                        requireSignature && domain != null -> verifier(UrlJwkProvider(config.jwt.domain))
-                        !requireSignature && domain == null -> verifier(JWT.require(Algorithm.none()).build())
+                        requireSignature && domain != null && secret == null ->
+                            verifier(UrlJwkProvider(config.jwt.domain))
+                        requireSignature && domain == null && secret != null ->
+                            verifier(JWT.require(Algorithm.HMAC256(secret)).build())
+                        !requireSignature && domain == null && secret == null ->
+                            verifier(JWT.require(Algorithm.none()).build())
                         else -> error("Invalid JWT config")
                     }
                 }
