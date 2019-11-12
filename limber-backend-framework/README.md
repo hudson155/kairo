@@ -50,6 +50,9 @@ the whole picture.
 ├── io.limberapp.framework
 ├── dataConversion   # Type conversion
 │   └─ conversionService # Individual type converters
+├── jackson          # Code related to Jackson serialization
+│   └─ module        # Custom modules
+│   └─ objectMapper  # Custom object mapper
 ├── model            # Model-related boilerplate
 ├── rep              # Rep-related boilerplate
 ├── validation       # Used to validate models
