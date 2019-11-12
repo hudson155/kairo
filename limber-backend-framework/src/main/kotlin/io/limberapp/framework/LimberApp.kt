@@ -82,10 +82,7 @@ abstract class LimberApp(
 
     protected open fun Application.dataConversion() {
         install(DataConversion) {
-            this.convert(
-                UUID::class,
-                UuidConversionService()
-            )
+            convert(UUID::class, conversionService(UuidConversionService()))
         }
     }
 
