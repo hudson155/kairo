@@ -9,7 +9,7 @@ import io.limberapp.framework.LimberApp
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 
-private val yamlObjectMapper = LimberObjectMapper(YAMLFactory(), prettyPrint = false)
+private val yamlObjectMapper = LimberObjectMapper(YAMLFactory())
 
 internal class LimberAppMonolith : LimberApp(loadConfig()) {
 

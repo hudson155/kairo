@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import io.limberapp.framework.dataConversion.DataConversionService
 
 /**
- * This module configures Jackson conversion for the given Ktor conversion service.
+ * This module configures Jackson conversion for the given conversion service.
  */
 class ConversionServiceModule<T : Any>(
     conversionService: DataConversionService<T>
@@ -30,8 +30,7 @@ class ConversionServiceModule<T : Any>(
 
     private fun deserializer(conversionService: DataConversionService<T>) =
         object : StdDeserializer<T>(conversionService.clazz.java) {
-            override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T {
-                return conversionService.fromString(p.valueAsString)
-            }
+            override fun deserialize(p: JsonParser, ctxt: DeserializationContext) =
+                conversionService.fromString(p.valueAsString)
         }
 }

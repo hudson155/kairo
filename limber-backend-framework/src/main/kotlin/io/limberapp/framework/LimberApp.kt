@@ -103,12 +103,8 @@ abstract class LimberApp(
     protected open fun Application.contentNegotiation() {
         install(ContentNegotiation) {
             this.register(
-                ContentType.Application.Json,
-                JacksonConverter(
-                    LimberObjectMapper(
-                        prettyPrint = true
-                    )
-                )
+                contentType = ContentType.Application.Json,
+                converter = JacksonConverter(LimberObjectMapper(prettyPrint = true))
             )
         }
     }

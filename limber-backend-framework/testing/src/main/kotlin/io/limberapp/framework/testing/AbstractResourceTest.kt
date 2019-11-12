@@ -29,7 +29,7 @@ abstract class AbstractResourceTest {
 
     protected abstract val limberTest: LimberTest
 
-    protected val objectMapper = LimberObjectMapper(prettyPrint = false)
+    protected val objectMapper = LimberObjectMapper()
 
     protected inner class LimberTest(private val limberApp: LimberApp) {
 
