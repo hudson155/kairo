@@ -6,6 +6,8 @@ When creating a new Limber project (an implementation project), your backend app
 include, the root module as a dependency. Read through the other modules below to understand what
 they are and see if you need them too.
 
+## Modules
+
 * [`core`](/core):
     This is the nucleus of the Limber framework.
     It's used by the root module, so implementation projects need not require it.
@@ -37,3 +39,15 @@ they are and see if you need them too.
     Provides a Validator class for ad-hoc validation, as well as the Validation class which is used
     to validate models.
     It's used by the root module, so implementation projects need not require it.
+
+## Package Structure
+
+Because the package structure is divided between modules, it's sometimes difficult to get an idea of
+the whole picture.
+
+```
+.
+├── io.limberapp.framework
+├── validation # Used to validate models
+└── validator  # Validator for ad-hoc validation
+```
