@@ -23,11 +23,8 @@ dependencies {
 
     compile libs.guice
     compile libs.jackson_dataformat_yaml
-    compile libs.ktor_auth
-    compile libs.ktor_auth_jwt
-    compile libs.ktor_jackson
-    compile libs.ktor_server_cio
-    compile libs.ktor_server_servlet
+    compile libs.ktor_server_cio // Local
+    compile libs.ktor_server_servlet // Google App Engine
     compile libs.logback_classic
     compile libs.mongodb
 }
