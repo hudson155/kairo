@@ -60,12 +60,15 @@ the whole picture.
 ├── io.limberapp.framework
 ├── dataConversion   # Type conversion
 │   └─ conversionService # Individual type converters
+├── endpoint         # Code for API endpoints
 ├── error            # Response body error objects
 ├── jackson          # Code related to Jackson serialization
 │   └─ module        # Custom modules
 │   └─ objectMapper  # Custom object mapper
 ├── model            # Model-related boilerplate
+├── module           # Code for Limber modules.
 ├── rep              # Rep-related boilerplate
+├── store            # Code for Limber stores.
 ├── validation       # Used to validate models
 │   └─ util              # Individual validators
 └── validator        # Validator for ad-hoc validation
