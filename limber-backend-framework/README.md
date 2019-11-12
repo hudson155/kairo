@@ -30,8 +30,8 @@ they are and see if you need them too.
         Models are used in the application/database layer.
         Models should never be used in the API layer.
 * [`mongo`](/mongo):
-    Driver to interact with MongoDB, including automatic model/document mapping.
-    Include this in implementation projects if they use MongoDB.
+    * Driver to interact with MongoDB, including automatic model/document mapping.
+    * Include this in implementation project modules if they use MongoDB.
 * [`object-mapper`](/object-mapper):
     * Custom Jackson object mapper implementation.
         It's configured with some default modules (e.g. Kotlin),
@@ -57,19 +57,22 @@ the whole picture.
 ```
 .
 ├── io.limberapp.framework
-├── dataConversion   # Type conversion
-│   └─ conversionService # Individual type converters
-├── endpoint         # Code for API endpoints
-├── error            # Response body error objects
-├── exceptionMapping # Mapping exceptions to errors
-├── jackson          # Code related to Jackson serialization
-│   └─ module        # Custom modules
-│   └─ objectMapper  # Custom object mapper
-├── model            # Model-related boilerplate
-├── module           # Code for Limber modules.
-├── rep              # Rep-related boilerplate
-├── store            # Code for Limber stores.
-├── validation       # Used to validate models
-│   └─ util              # Individual validators
-└── validator        # Validator for ad-hoc validation
+├── dataConversion    # Type conversion
+│   └── conversionService # Individual type converters
+├── endpoint          # Code for API endpoints
+├── error             # Response body error objects
+├── exceptionMapping  # Mapping exceptions to errors
+├── jackson           # Code related to Jackson serialization
+│   └── module            # Custom modules
+│       └── conversionService # Data conversion module
+│       └── mongo             # MongoDB module
+│   └── objectMapper      # Custom object mapper
+├── model             # Model-related boilerplate
+├── module            # Code for Limber modules
+├── mongo             # MongoDB ORM
+├── rep               # Rep-related boilerplate
+├── store             # Code for Limber stores
+├── validation        # Used to validate models
+│   └─ util               # Individual validators
+└── validator         # Validator for ad-hoc validation
 ```
