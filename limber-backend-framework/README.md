@@ -49,9 +49,9 @@ they are and see if you need them too.
     Contains testing utilities.
     Include this in implementation projects as a test dependency (assuming you write tests).
 * [`validation`](/validation):
-    Provides a Validator class for ad-hoc validation, as well as the Validation class which is used
-    to validate models.
-    It's used by the root module, so implementation projects need not require it.
+    * Provides a Validator class for ad-hoc validation,
+        as well as the Validation class which is used to validate reps.
+    * It's used by the root module, so implementation projects need not require it.
 
 ## Package Structure
 
