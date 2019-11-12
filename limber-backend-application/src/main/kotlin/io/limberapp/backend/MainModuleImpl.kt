@@ -30,8 +30,8 @@ internal class MainModuleImpl private constructor(
         fun forProduction(application: Application, config: Config) = MainModuleImpl(
             application = application,
             config = config,
-            clock = Clock.systemUTC(),
-            uuidGenerator = RandomUuidGenerator()
+            clock = Clock.systemUTC(), // For prod, use a real UTC clock.
+            uuidGenerator = RandomUuidGenerator() // For prod, use a real/random UUID generator.
         )
     }
 }
