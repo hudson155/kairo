@@ -48,6 +48,7 @@ the whole picture.
 ```
 .
 ├── io.limberapp.framework
+├── model      # Model-related boilerplate
 ├── validation # Used to validate models
 └── validator  # Validator for ad-hoc validation
 ```
