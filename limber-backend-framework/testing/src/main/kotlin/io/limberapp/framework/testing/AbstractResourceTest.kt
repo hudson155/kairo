@@ -11,7 +11,6 @@ import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
 import io.limberapp.framework.LimberApp
-import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
@@ -43,7 +42,8 @@ abstract class AbstractResourceTest {
             expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
-            createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
+            createCall(endpointConfig, pathParams, queryParams, body)
+                .runTest(expectedStatusCode, test)
         }
 
         private fun TestApplicationEngine.createCall(
@@ -52,7 +52,10 @@ abstract class AbstractResourceTest {
             queryParams: Map<String, String>,
             body: Any?
         ): TestApplicationCall {
-            return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
+            return handleRequest(
+                method = endpointConfig.httpMethod,
+                uri = endpointConfig.path(pathParams, queryParams)
+            ) {
                 addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
                 val jwt = JWT.create().withJwt(
                     jwt = Jwt(
