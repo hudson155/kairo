@@ -75,8 +75,6 @@ abstract class LimberApp(
             this.allowSameOrigin = false
             this.anyHost()
             this.header(HttpHeaders.Authorization)
-//            this.allowCredentials = false
-//            this.allowNonSimpleContentTypes = true
         }
     }
 
@@ -96,13 +94,13 @@ abstract class LimberApp(
 
     protected open fun Application.callLogging() {
         install(CallLogging) {
-            this.level = Level.INFO
+            level = Level.INFO
         }
     }
 
     protected open fun Application.contentNegotiation() {
         install(ContentNegotiation) {
-            this.register(
+            register(
                 contentType = ContentType.Application.Json,
                 converter = JacksonConverter(LimberObjectMapper(prettyPrint = true))
             )
