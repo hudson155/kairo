@@ -26,8 +26,10 @@ they are and see if you need them too.
     Maps exceptions to JSON responses from the errors module.
     It's used by the root module, so implementation projects need not require it.
 * [`models`](/models):
-    Contains base classes for application models to inherit from.
-    It's used by the root module, so implementation projects need not require it.
+    * Contains base classes for application models to inherit from.
+        Models are used in the application/database layer.
+        Models should never be used in the API layer.
+    * It's used by the root module, so implementation projects need not require it.
 * [`mongo`](/mongo):
     Driver to interact with MongoDB, including automatic model/document mapping.
     Include this in implementation projects if they use MongoDB.
