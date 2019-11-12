@@ -9,8 +9,9 @@ they are and see if you need them too.
 ## Modules
 
 * [`core`](/core):
-    This is the nucleus of the Limber framework.
-    It's used by the root module, so implementation projects need not require it.
+    * This is the nucleus of the Limber framework.
+    * Implementation project modules should always require the `core` module,
+        but the implementation project application need not require the `core` module.
 * [`data-conversion`](/data-conversion):
     * Responsible for converting data types.
         This is used for serialization and deserialization,
