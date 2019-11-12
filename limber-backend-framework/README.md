@@ -51,5 +51,6 @@ the whole picture.
 ├── model      # Model-related boilerplate
 ├── rep        # Rep-related boilerplate
 ├── validation # Used to validate models
+│   └─ util        # individual validators
 └── validator  # Validator for ad-hoc validation
 ```
