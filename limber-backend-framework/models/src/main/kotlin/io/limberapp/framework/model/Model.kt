@@ -3,26 +3,26 @@ package io.limberapp.framework.model
 import java.time.LocalDateTime
 import java.util.UUID
 
-sealed class Model
-
-abstract class CreationModelWithoutId : Model() {
+abstract class CreationSubmodel {
     abstract val created: LocalDateTime
 }
 
-abstract class CreationModel : CreationModelWithoutId() {
+abstract class CreationModel {
     abstract val id: UUID
-    abstract override val created: LocalDateTime
+    abstract val created: LocalDateTime
     abstract val version: Int
 }
 
-abstract class CompleteModelWithoutId : Model() {
+abstract class CompleteSubmodel {
     abstract val created: LocalDateTime
 }
 
-abstract class CompleteModel : CompleteModelWithoutId() {
+abstract class CompleteModel {
     abstract val id: UUID
-    abstract override val created: LocalDateTime
+    abstract val created: LocalDateTime
     abstract val version: Int
 }
 
-abstract class UpdateModel : Model()
+abstract class UpdateSubmodel
+
+abstract class UpdateModel
