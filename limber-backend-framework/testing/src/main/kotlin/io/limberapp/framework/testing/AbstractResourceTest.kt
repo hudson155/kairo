@@ -12,6 +12,7 @@ import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
 import io.limberapp.framework.LimberApp
 import io.limberapp.framework.endpoint.ApiEndpoint
+import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
@@ -35,7 +36,7 @@ abstract class AbstractResourceTest {
 
         @Suppress("LongParameterList") // For this test method, we're ok with it.
         fun test(
-            endpointConfig: ApiEndpoint.EndpointConfig,
+            endpointConfig: EndpointConfig,
             pathParams: Map<String, String> = emptyMap(),
             queryParams: Map<String, String> = emptyMap(),
             body: Any? = null,
@@ -46,7 +47,7 @@ abstract class AbstractResourceTest {
         }
 
         private fun TestApplicationEngine.createCall(
-            endpointConfig: ApiEndpoint.EndpointConfig,
+            endpointConfig: EndpointConfig,
             pathParams: Map<String, String>,
             queryParams: Map<String, String>,
             body: Any?
