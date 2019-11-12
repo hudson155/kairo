@@ -20,8 +20,10 @@ they are and see if you need them too.
         (for serializing and deserializing request/response parameters).
     * It's used by the root module, so implementation projects need not require it.
 * [`errors`](/errors):
-    Contains classes for JSON errors intended to be returned to the client.
-    It's used by the root module, so implementation projects need not require it.
+    * Contains classes for JSON errors intended to be returned to the client.
+        Every time something goes wrong (whether it's a 4xx error or a 5xx error),
+        an error from this package should be returned.
+    * It's used by the root module, so implementation projects need not require it.
 * [`exception-mapping`](/exception-mapping):
     Maps exceptions to JSON responses from the errors module.
     It's used by the root module, so implementation projects need not require it.
