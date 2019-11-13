@@ -1,3 +1,5 @@
+@file:Suppress("UnnecessaryAbstractClass")
+
 package io.limberapp.framework.rep
 
 import io.limberapp.framework.validation.Validation

@@ -1,3 +1,5 @@
+@file:Suppress("UnnecessaryAbstractClass")
+
 package io.limberapp.framework.model
 
 import java.time.LocalDateTime

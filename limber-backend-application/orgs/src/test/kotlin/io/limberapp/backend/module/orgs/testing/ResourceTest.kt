@@ -10,7 +10,6 @@ import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.createClient
 import io.limberapp.framework.testing.AbstractResourceTest
-import org.junit.Before
 
 abstract class ResourceTest : AbstractResourceTest() {
 
