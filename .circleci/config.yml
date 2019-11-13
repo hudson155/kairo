@@ -103,6 +103,8 @@ workflows:
           requires:
             - backend-test
             - web-build
+          filters:
+            branches: { only: [master] }
 
 ################################################################
 # Jobs                                                         #
