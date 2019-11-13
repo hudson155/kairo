@@ -22,11 +22,6 @@ internal class UserMapper @Inject constructor(
         profilePhotoUrl = rep.profilePhotoUrl
     )
 
-    fun updateModel(rep: UserRep.Update) = UserModel.Update(
-        firstName = rep.firstName,
-        lastName = rep.lastName
-    )
-
     fun completeRep(model: UserModel.Complete) = UserRep.Complete(
         id = model.id,
         created = model.created,
@@ -34,5 +29,10 @@ internal class UserMapper @Inject constructor(
         lastName = model.lastName,
         emailAddress = model.emailAddress,
         profilePhotoUrl = model.profilePhotoUrl
+    )
+
+    fun updateModel(rep: UserRep.Update) = UserModel.Update(
+        firstName = rep.firstName,
+        lastName = rep.lastName
     )
 }

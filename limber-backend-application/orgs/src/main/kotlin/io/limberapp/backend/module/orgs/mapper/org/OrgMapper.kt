@@ -22,14 +22,14 @@ internal class OrgMapper @Inject constructor(
         members = emptyList()
     )
 
-    fun updateModel(rep: OrgRep.Update) = OrgModel.Update(
-        name = rep.name
-    )
-
     fun completeRep(model: OrgModel.Complete) = OrgRep.Complete(
         id = model.id,
         created = model.created,
         name = model.name,
         members = model.members.map { membershipMapper.completeRep(it) }
+    )
+
+    fun updateModel(rep: OrgRep.Update) = OrgModel.Update(
+        name = rep.name
     )
 }
