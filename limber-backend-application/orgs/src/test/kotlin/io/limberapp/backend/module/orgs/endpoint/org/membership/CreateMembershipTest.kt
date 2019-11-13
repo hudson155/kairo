@@ -17,7 +17,7 @@ internal class CreateMembershipTest : ResourceTest() {
     fun create() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = uuidGenerator[0]
+        val orgId = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
@@ -38,9 +38,9 @@ internal class CreateMembershipTest : ResourceTest() {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
                 id = orgId,
-                created = LocalDateTime.now(clock),
+                created = LocalDateTime.now(fixedClock),
                 name = orgCreationRep.name,
-                members = listOf(MembershipRep.Complete(LocalDateTime.now(clock), userId))
+                members = listOf(MembershipRep.Complete(LocalDateTime.now(fixedClock), userId))
             )
             assertEquals(expected, actual)
         }

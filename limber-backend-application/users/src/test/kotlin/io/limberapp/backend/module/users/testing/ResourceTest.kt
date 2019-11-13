@@ -10,18 +10,9 @@ import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.createClient
 import io.limberapp.framework.testing.AbstractResourceTest
-import io.limberapp.framework.util.uuidGenerator.DeterministicUuidGenerator
 import org.junit.Before
-import java.time.Clock
-import java.time.Instant
-import java.time.ZoneId
 
 abstract class ResourceTest : AbstractResourceTest() {
-
-    protected val clock: Clock =
-        Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
-
-    protected val uuidGenerator = DeterministicUuidGenerator()
 
     private val config = Config(
         serving = ServingConfig(
@@ -35,15 +26,14 @@ abstract class ResourceTest : AbstractResourceTest() {
     override val limberTest = LimberTest(object : LimberApp(config) {
 
         override fun getMainModule(application: Application) =
-            TestMainModule(application, clock, uuidGenerator, config)
+            TestMainModule(application, fixedClock, deterministicUuidGenerator, config)
 
         override val modules = listOf(UsersModule())
     })
 
-    @Before
-    fun before() {
+    override fun before() {
+        super.before()
         val mongoClient = config.createClient()
         mongoClient.getDatabase(config.database.database).drop()
-        uuidGenerator.reset()
     }
 }

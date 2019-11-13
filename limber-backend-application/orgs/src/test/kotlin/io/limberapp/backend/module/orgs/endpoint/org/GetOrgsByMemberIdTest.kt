@@ -29,7 +29,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
     fun multipleOrgs() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = uuidGenerator[0]
+        val orgId = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
@@ -51,9 +51,9 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
             val expected = listOf(
                 OrgRep.Complete(
                     id = orgId,
-                    created = LocalDateTime.now(clock),
+                    created = LocalDateTime.now(fixedClock),
                     name = orgCreationRep.name,
-                    members = listOf(MembershipRep.Complete(LocalDateTime.now(clock), userId))
+                    members = listOf(MembershipRep.Complete(LocalDateTime.now(fixedClock), userId))
                 )
             )
             assertEquals(expected, actual)

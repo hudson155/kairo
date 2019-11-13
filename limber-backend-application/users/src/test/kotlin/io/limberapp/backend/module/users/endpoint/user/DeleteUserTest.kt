@@ -27,7 +27,7 @@ internal class DeleteUserTest : ResourceTest() {
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = uuidGenerator[0]
+        val id = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep

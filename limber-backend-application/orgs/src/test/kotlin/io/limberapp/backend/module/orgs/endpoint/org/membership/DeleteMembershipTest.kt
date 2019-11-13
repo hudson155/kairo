@@ -30,7 +30,7 @@ internal class DeleteMembershipTest : ResourceTest() {
     fun membershipDoesNotExist() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = uuidGenerator[0]
+        val orgId = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
@@ -50,7 +50,7 @@ internal class DeleteMembershipTest : ResourceTest() {
     fun exists() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = uuidGenerator[0]
+        val orgId = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
@@ -79,7 +79,7 @@ internal class DeleteMembershipTest : ResourceTest() {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
                 id = orgId,
-                created = LocalDateTime.now(clock),
+                created = LocalDateTime.now(fixedClock),
                 name = orgCreationRep.name,
                 members = emptyList()
             )

@@ -17,6 +17,11 @@ import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.endpoint.authorization.jwt.withJwt
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import io.limberapp.framework.util.uuidGenerator.DeterministicUuidGenerator
+import org.junit.Before
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -30,6 +35,11 @@ abstract class AbstractResourceTest {
     protected abstract val limberTest: LimberTest
 
     protected val objectMapper = LimberObjectMapper()
+
+    protected val fixedClock: Clock =
+        Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
+
+    protected val deterministicUuidGenerator = DeterministicUuidGenerator()
 
     protected inner class LimberTest(private val limberApp: LimberApp) {
 
@@ -81,6 +91,11 @@ abstract class AbstractResourceTest {
             assertEquals(expectedStatusCode, response.status(), "Unexpected HTTP response code.")
             test()
         }
+    }
+
+    @Before
+    open fun before() {
+        deterministicUuidGenerator.reset()
     }
 }
 

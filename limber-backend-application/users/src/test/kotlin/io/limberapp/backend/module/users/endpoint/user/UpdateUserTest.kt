@@ -32,7 +32,7 @@ internal class UpdateUserTest : ResourceTest() {
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = uuidGenerator[0]
+        val id = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
@@ -47,7 +47,7 @@ internal class UpdateUserTest : ResourceTest() {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             val expected = UserRep.Complete(
                 id = id,
-                created = LocalDateTime.now(clock),
+                created = LocalDateTime.now(fixedClock),
                 firstName = updateRep.firstName!!,
                 lastName = creationRep.lastName,
                 emailAddress = creationRep.emailAddress,
