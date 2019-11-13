@@ -1,8 +1,7 @@
 package io.limberapp.framework.error
 
 /**
- * This class is the superclass for all JSON errors that are returned. Each key should have a unique
- * meaning.
+ * This class is the superclass for all JSON errors that are returned.
  */
 interface FrameworkError {
 
@@ -10,8 +9,8 @@ interface FrameworkError {
     val message: String
 
     /**
-     * Each Key should have a unique meaning. Keys represent a parameterized version of what went
-     * wrong.
+     * Keys represent a parameterized version of what went wrong; their generic meaning should be
+     * unique.
      */
     enum class Key {
         INTERNAL,

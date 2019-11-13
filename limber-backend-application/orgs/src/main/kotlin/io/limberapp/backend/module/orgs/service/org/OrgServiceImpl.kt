@@ -19,6 +19,8 @@ internal class OrgServiceImpl @Inject constructor(
 
     override fun getByMemberId(memberId: UUID) = orgStore.getByMemberId(memberId)
 
+    override fun update(id: UUID, model: OrgModel.Update) = orgStore.update(id, model)
+
     override fun createMembership(id: UUID, model: MembershipModel.Creation) {
         orgStore.createMembership(id, model)
     }
@@ -26,8 +28,6 @@ internal class OrgServiceImpl @Inject constructor(
     override fun deleteMembership(id: UUID, memberId: UUID) {
         orgStore.deleteMembership(id, memberId)
     }
-
-    override fun update(id: UUID, model: OrgModel.Update) = orgStore.update(id, model)
 
     override fun delete(id: UUID) = orgStore.delete(id)
 }

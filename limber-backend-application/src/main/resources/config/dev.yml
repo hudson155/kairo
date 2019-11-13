@@ -4,7 +4,7 @@ database:
   database: limberapp
 
 jwt:
-  domain: limber.auth0.com
+  secret: limberapp
 
 serving:
   apiPathPrefix: /

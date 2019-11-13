@@ -9,10 +9,10 @@ import io.ktor.auth.jwt.JWTPrincipal
 import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
-import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.response.respond
+import io.ktor.routing.Route
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
@@ -23,8 +23,8 @@ import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
 
 /**
- * Each ApiEndpoint class handles requests to a single endpoint of the API. The handler() is called
- * for each request.
+ * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the
+ * API. The handler() is called for each request.
  */
 abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
@@ -33,35 +33,24 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
 ) {
 
     /**
-     * The configuration for the API endpoint. Uniquely represents the HTTP method and path
-     * template.
-     */
-    data class EndpointConfig(val httpMethod: HttpMethod, val pathTemplate: String) {
-
-        fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
-            var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
-                val pathParam = it.groupValues[1]
-                return@replace checkNotNull(pathParams[pathParam])
-            }
-            if (queryParams.isNotEmpty()) {
-                path = "$path?${queryParams.map { "${it.key}=${it.value}" }.joinToString("&")}"
-            }
-            return path
-        }
-    }
-
-    /**
-     * Called for each request to the endpoint, to determine the command.
+     * Called for each request to the endpoint, to determine the command. The implementation should
+     * get all request parameters (if appropriate) and receive the body (if appropriate). This is
+     * the only time in the ApiEndpoint lifecycle that a method will be given access to the Ktor
+     * ApplicationCall.
      */
     abstract suspend fun determineCommand(call: ApplicationCall): Command
 
     /**
-     * Called for each request to the endpoint, to check authorization.
+     * Called for each request to the endpoint, to specify the authorization check to be used.
      */
     abstract fun authorization(command: Command): Authorization
 
     /**
-     * Called for each request to the endpoint, to handle the execution.
+     * Called for each request to the endpoint, to handle the execution. This method is the meat and
+     * potatoes of the ApiEndpoint instance. By this point, the command has been determined and the
+     * user has been authorized. All that's left is for the "actual work" to be done. However, even
+     * though this is the meat and potatoes, in a good architecture this method probably has very
+     * simple implementation and delegates most of the work to the service layer.
      */
     abstract suspend fun handler(command: Command): ResponseType
 
@@ -76,22 +65,24 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private fun register() {
         application.routing {
             authenticate(optional = true) {
-                route(pathPrefix) {
-                    route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
-                        handle {
-                            val command = determineCommand(call)
-                            val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
-                            val jwt = jwtFromPayload(jwtPayload)
-                            if (!authorization(command).authorize(jwt)) {
-                                call.respond(HttpStatusCode.Forbidden)
-                                return@handle
-                            }
-                            val result = handler(command)
-                            if (result == null) call.respond(HttpStatusCode.NotFound)
-                            else call.respond(result)
-                        }
-                    }
+                route(pathPrefix) { routeEndpoint(this@ApiEndpoint) }
+            }
+        }
+    }
+
+    private fun Route.routeEndpoint(apiEndpoint: ApiEndpoint<Command, ResponseType>) {
+        route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
+            handle {
+                val command = apiEndpoint.determineCommand(call)
+                val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
+                val jwt = jwtFromPayload(jwtPayload)
+                if (!authorization(command).authorize(jwt)) {
+                    call.respond(HttpStatusCode.Forbidden)
+                    return@handle
                 }
+                val result = apiEndpoint.handler(command)
+                if (result == null) call.respond(HttpStatusCode.NotFound)
+                else call.respond(result)
             }
         }
     }

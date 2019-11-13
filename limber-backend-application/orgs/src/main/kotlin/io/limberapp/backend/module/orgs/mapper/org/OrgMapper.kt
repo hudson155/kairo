@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.mapper.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.framework.util.UuidGenerator
+import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 
@@ -22,14 +22,14 @@ internal class OrgMapper @Inject constructor(
         members = emptyList()
     )
 
-    fun updateModel(rep: OrgRep.Update) = OrgModel.Update(
-        name = rep.name
-    )
-
     fun completeRep(model: OrgModel.Complete) = OrgRep.Complete(
         id = model.id,
         created = model.created,
         name = model.name,
         members = model.members.map { membershipMapper.completeRep(it) }
+    )
+
+    fun updateModel(rep: OrgRep.Update) = OrgModel.Update(
+        name = rep.name
     )
 }

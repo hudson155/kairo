@@ -11,12 +11,17 @@ import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
 import io.limberapp.framework.LimberApp
-import io.limberapp.framework.endpoint.ApiEndpoint
+import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.endpoint.authorization.jwt.withJwt
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import io.limberapp.framework.util.uuidGenerator.DeterministicUuidGenerator
+import org.junit.Before
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -29,29 +34,38 @@ abstract class AbstractResourceTest {
 
     protected abstract val limberTest: LimberTest
 
-    protected val objectMapper = LimberObjectMapper(prettyPrint = false)
+    protected val objectMapper = LimberObjectMapper()
+
+    protected val fixedClock: Clock =
+        Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
+
+    protected val deterministicUuidGenerator = DeterministicUuidGenerator()
 
     protected inner class LimberTest(private val limberApp: LimberApp) {
 
         @Suppress("LongParameterList") // For this test method, we're ok with it.
         fun test(
-            endpointConfig: ApiEndpoint.EndpointConfig,
+            endpointConfig: EndpointConfig,
             pathParams: Map<String, String> = emptyMap(),
             queryParams: Map<String, String> = emptyMap(),
             body: Any? = null,
             expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
             test: TestApplicationCall.() -> Unit
         ) = withLimberTestApp(limberApp) {
-            createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
+            createCall(endpointConfig, pathParams, queryParams, body)
+                .runTest(expectedStatusCode, test)
         }
 
         private fun TestApplicationEngine.createCall(
-            endpointConfig: ApiEndpoint.EndpointConfig,
+            endpointConfig: EndpointConfig,
             pathParams: Map<String, String>,
             queryParams: Map<String, String>,
             body: Any?
         ): TestApplicationCall {
-            return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
+            return handleRequest(
+                method = endpointConfig.httpMethod,
+                uri = endpointConfig.path(pathParams, queryParams)
+            ) {
                 addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
                 val jwt = JWT.create().withJwt(
                     jwt = Jwt(
@@ -77,6 +91,11 @@ abstract class AbstractResourceTest {
             assertEquals(expectedStatusCode, response.status(), "Unexpected HTTP response code.")
             test()
         }
+    }
+
+    @Before
+    open fun before() {
+        deterministicUuidGenerator.reset()
     }
 }
 

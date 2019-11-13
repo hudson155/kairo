@@ -19,7 +19,7 @@ data class Jwt(
     val user: JwtUser
 )
 
-private val objectMapper = LimberObjectMapper(prettyPrint = false)
+private val objectMapper = LimberObjectMapper()
 
 internal fun jwtFromPayload(jwtPayload: Payload?): Jwt? {
     jwtPayload ?: return null

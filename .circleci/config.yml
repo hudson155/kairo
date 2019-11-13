@@ -76,53 +76,35 @@ workflows:
 
   version: 2
 
-  feature-branches:
+  main:
+
     jobs:
-      - backend-dependencies:
-          filters:
-            branches:
-              ignore:
-                - master
+
+      # Backend checks
+      - backend-dependencies
       - backend-lint:
           requires: [backend-dependencies]
       - backend-test:
           requires: [backend-dependencies]
-      - web-dependencies:
-          filters:
-            branches:
-              ignore:
-                - master
+
+      # Web checks
+      - web-dependencies
       - web-lint:
           requires: [web-dependencies]
       - web-test:
           requires: [web-dependencies]
 
-  master:
-    jobs:
-      - backend-dependencies:
-          filters:
-            branches:
-              only:
-                - master
-      - backend-lint:
-          requires: [backend-dependencies]
-      - backend-test:
-          requires: [backend-dependencies]
-      - web-dependencies:
-          filters:
-            branches:
-              only:
-                - master
-      - web-lint:
-          requires: [web-dependencies]
-      - web-test:
-          requires: [web-dependencies]
+      # Deployment
       - web-build:
           requires: [web-test]
+          filters:
+            branches: { only: [master] }
       - deploy:
           requires:
             - backend-test
             - web-build
+          filters:
+            branches: { only: [master] }
 
 ################################################################
 # Jobs                                                         #
@@ -209,8 +191,8 @@ jobs:
           at: limber-web
       - run: cp -r limber-web/build/* limber-backend-application/src/main/webapp
       - run: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run: ./gradlew limber-backend-application:appengineDeploy
 

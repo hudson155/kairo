@@ -1,13 +1,13 @@
+@file:Suppress("UnnecessaryAbstractClass")
+
 package io.limberapp.framework.rep
 
-import io.limberapp.framework.validation.validation.Validation
+import io.limberapp.framework.validation.Validation
 import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.reflect.KProperty1
 
-sealed class Rep
-
-sealed class ValidatedRep : Rep() {
+sealed class ValidatedRep {
 
     abstract fun validate()
 
@@ -19,15 +19,19 @@ sealed class ValidatedRep : Rep() {
     }
 }
 
+abstract class CreationSubrep : ValidatedRep()
+
 abstract class CreationRep : ValidatedRep()
 
-abstract class CompleteRepWithoutId : Rep() {
+abstract class CompleteSubrep {
     abstract val created: LocalDateTime
 }
 
-abstract class CompleteRep : CompleteRepWithoutId() {
+abstract class CompleteRep {
     abstract val id: UUID
-    abstract override val created: LocalDateTime
+    abstract val created: LocalDateTime
 }
+
+abstract class UpdateSubrep : ValidatedRep()
 
 abstract class UpdateRep : ValidatedRep()

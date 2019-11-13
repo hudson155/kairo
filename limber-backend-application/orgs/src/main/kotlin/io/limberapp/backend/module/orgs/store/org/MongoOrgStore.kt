@@ -39,9 +39,7 @@ internal class MongoOrgStore @Inject constructor(
             pull[OrgModel.Complete::members.name] =
                 Document(MembershipModel.Complete::userId.name, memberId)
         }
-        collection.findOneAndUpdate(idFilter(id).apply {
-            eq[ORG_MEMBER_KEY] = memberId
-        }, update)
+        collection.findOneAndUpdate(idFilter(id).apply { eq[ORG_MEMBER_KEY] = memberId }, update)
     }
 
     companion object {

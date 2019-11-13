@@ -12,11 +12,11 @@ internal interface OrgService {
 
     fun getByMemberId(memberId: UUID): List<OrgModel.Complete>
 
+    fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete
+
     fun createMembership(id: UUID, model: MembershipModel.Creation)
 
     fun deleteMembership(id: UUID, memberId: UUID)
-
-    fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete
 
     fun delete(id: UUID)
 }

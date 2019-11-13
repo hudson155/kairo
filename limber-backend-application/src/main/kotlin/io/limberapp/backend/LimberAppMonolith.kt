@@ -9,8 +9,6 @@ import io.limberapp.framework.LimberApp
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 
-private val yamlObjectMapper = LimberObjectMapper(YAMLFactory(), prettyPrint = false)
-
 internal class LimberAppMonolith : LimberApp(loadConfig()) {
 
     override fun getMainModule(application: Application) =
@@ -21,6 +19,8 @@ internal class LimberAppMonolith : LimberApp(loadConfig()) {
         UsersModule()
     )
 }
+
+private val yamlObjectMapper = LimberObjectMapper(YAMLFactory())
 
 private fun loadConfig(): Config {
     val envString = System.getenv("LIMBERAPP_ENV") ?: "prod"

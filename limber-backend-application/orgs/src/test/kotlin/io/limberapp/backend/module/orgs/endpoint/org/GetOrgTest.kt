@@ -25,7 +25,7 @@ internal class GetOrgTest : ResourceTest() {
     fun exists() {
 
         val creationRep = OrgRep.Creation("Cranky Pasta")
-        val id = uuidGenerator[0]
+        val id = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
@@ -38,7 +38,7 @@ internal class GetOrgTest : ResourceTest() {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val expected = OrgRep.Complete(
                 id = id,
-                created = LocalDateTime.now(clock),
+                created = LocalDateTime.now(fixedClock),
                 name = creationRep.name,
                 members = emptyList()
             )

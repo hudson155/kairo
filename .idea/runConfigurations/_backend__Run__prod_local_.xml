@@ -18,7 +18,7 @@
         <package-json value="$PROJECT_DIR$/limber-web/package.json" />
         <command value="run" />
         <scripts>
-          <script value="buildlocal" />
+          <script value="build-local" />
         </scripts>
         <node-interpreter value="project" />
         <envs />

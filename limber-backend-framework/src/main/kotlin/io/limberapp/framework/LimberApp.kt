@@ -24,9 +24,14 @@ import io.limberapp.framework.dataConversion.conversionService.UuidConversionSer
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import io.limberapp.framework.module.Module
+import io.limberapp.framework.util.conversionService
+import io.limberapp.framework.util.serveStaticFiles
 import org.slf4j.event.Level
 import java.util.UUID
 
+/**
+ * This class has a lot of functions, but it's clearer this way.
+ */
 @Suppress("TooManyFunctions")
 abstract class LimberApp(
     protected val config: Config
@@ -56,8 +61,12 @@ abstract class LimberApp(
             jwt {
                 with(config.jwt) {
                     when {
-                        requireSignature && domain != null -> verifier(UrlJwkProvider(config.jwt.domain))
-                        !requireSignature && domain == null -> verifier(JWT.require(Algorithm.none()).build())
+                        requireSignature && domain != null && secret == null ->
+                            verifier(UrlJwkProvider(config.jwt.domain))
+                        requireSignature && domain == null && secret != null ->
+                            verifier(JWT.require(Algorithm.HMAC256(secret)).build())
+                        !requireSignature && domain == null && secret == null ->
+                            verifier(JWT.require(Algorithm.none()).build())
                         else -> error("Invalid JWT config")
                     }
                 }
@@ -71,17 +80,12 @@ abstract class LimberApp(
             this.allowSameOrigin = false
             this.anyHost()
             this.header(HttpHeaders.Authorization)
-//            this.allowCredentials = false
-//            this.allowNonSimpleContentTypes = true
         }
     }
 
     protected open fun Application.dataConversion() {
         install(DataConversion) {
-            this.convert(
-                UUID::class,
-                UuidConversionService()
-            )
+            convert(UUID::class, conversionService(UuidConversionService()))
         }
     }
 
@@ -95,19 +99,15 @@ abstract class LimberApp(
 
     protected open fun Application.callLogging() {
         install(CallLogging) {
-            this.level = Level.INFO
+            level = Level.INFO
         }
     }
 
     protected open fun Application.contentNegotiation() {
         install(ContentNegotiation) {
-            this.register(
-                ContentType.Application.Json,
-                JacksonConverter(
-                    LimberObjectMapper(
-                        prettyPrint = true
-                    )
-                )
+            register(
+                contentType = ContentType.Application.Json,
+                converter = JacksonConverter(LimberObjectMapper(prettyPrint = true))
             )
         }
     }

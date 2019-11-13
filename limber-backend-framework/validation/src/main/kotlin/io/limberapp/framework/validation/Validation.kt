@@ -1,4 +1,4 @@
-package io.limberapp.framework.validation.validation
+package io.limberapp.framework.validation
 
 /**
  * The Validation class provides utilities for parameter validation. They're all stored outside of

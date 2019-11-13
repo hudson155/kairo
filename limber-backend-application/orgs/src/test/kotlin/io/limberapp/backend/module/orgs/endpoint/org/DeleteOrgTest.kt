@@ -22,7 +22,7 @@ internal class DeleteOrgTest : ResourceTest() {
     fun exists() {
 
         val creationRep = OrgRep.Creation("Cranky Pasta")
-        val id = uuidGenerator[0]
+        val id = deterministicUuidGenerator[0]
         limberTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = creationRep

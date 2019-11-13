@@ -7,8 +7,8 @@ import io.ktor.application.Application
 import io.limberapp.framework.MainModule
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.createClient
-import io.limberapp.framework.util.RandomUuidGenerator
-import io.limberapp.framework.util.UuidGenerator
+import io.limberapp.framework.util.uuidGenerator.RandomUuidGenerator
+import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
 
 internal class MainModuleImpl private constructor(
@@ -30,8 +30,8 @@ internal class MainModuleImpl private constructor(
         fun forProduction(application: Application, config: Config) = MainModuleImpl(
             application = application,
             config = config,
-            clock = Clock.systemUTC(),
-            uuidGenerator = RandomUuidGenerator()
+            clock = Clock.systemUTC(), // For prod, use a real UTC clock.
+            uuidGenerator = RandomUuidGenerator() // For prod, use a real/random UUID generator.
         )
     }
 }

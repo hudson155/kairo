@@ -5,5 +5,6 @@ package io.limberapp.framework.config.jwt
  */
 data class JwtConfig(
     val domain: String? = null,
+    val secret: String? = null,
     val requireSignature: Boolean = true
 )
