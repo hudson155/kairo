@@ -14,6 +14,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Returns a single org.
+ */
 internal class GetOrg @Inject constructor(
     application: Application,
     config: Config,

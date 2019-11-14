@@ -12,6 +12,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Deletes an existing org.
+ */
 internal class DeleteOrg @Inject constructor(
     application: Application,
     config: Config,
