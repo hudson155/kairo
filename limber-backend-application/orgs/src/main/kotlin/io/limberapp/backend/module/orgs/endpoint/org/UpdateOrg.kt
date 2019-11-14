@@ -15,6 +15,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Updates an org's information.
+ */
 internal class UpdateOrg @Inject constructor(
     application: Application,
     config: Config,

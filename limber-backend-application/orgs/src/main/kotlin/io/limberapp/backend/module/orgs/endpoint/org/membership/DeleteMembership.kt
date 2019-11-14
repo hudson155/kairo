@@ -12,6 +12,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Creates a user's membership from an org.
+ */
 internal class DeleteMembership @Inject constructor(
     application: Application,
     config: Config,

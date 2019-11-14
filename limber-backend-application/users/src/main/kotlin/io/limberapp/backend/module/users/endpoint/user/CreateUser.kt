@@ -14,6 +14,9 @@ import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 
+/**
+ * Creates a new user.
+ */
 internal class CreateUser @Inject constructor(
     application: Application,
     config: Config,
