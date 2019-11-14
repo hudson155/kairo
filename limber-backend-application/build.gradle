@@ -33,7 +33,6 @@ subprojects {
     if (project.path.matches(':limber-backend-application:[a-z\\-]+:api')) {
         dependencies {
             compile project(":limber-backend-framework:models")
-            compile project(":limber-backend-framework:reps")
         }
     } else if (project.path.matches(':limber-backend-application:[a-z\\-]+:app')) {
         dependencies {
