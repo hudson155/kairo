@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.mapper.user
+package io.limberapp.backend.module.users.mapper.api.user
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.users.model.user.UserModel

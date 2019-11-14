@@ -19,6 +19,11 @@ they are and see if you need them too.
         (for serializing and deserializing arbitrary objects as well as request/response bodies)
         and by registering with Ktor DataConversion
         (for serializing and deserializing request/response parameters).
+* [`entities`](/entities):
+    * Contains base classes for application entities to inherit from.
+        Entities are used in the database layer.
+        Entities should never be used in the API layer.
+        Entities should only used in the application layer to interact with the database layer.
 * [`errors`](/errors):
     * Contains classes for JSON errors intended to be returned to the client.
         Every time something goes wrong (whether it's a 4xx error or a 5xx error),
@@ -27,10 +32,11 @@ they are and see if you need them too.
     * Maps exceptions to JSON responses from the errors module.
 * [`models`](/models):
     * Contains base classes for application models to inherit from.
-        Models are used in the application/database layer.
-        Models should never be used in the API layer.
+        Models are used in the application layer.
+        Models should only be used in the API layer to interact with the application layer.
+        Models should never be used in the database layer.
 * [`mongo`](/mongo):
-    * Driver to interact with MongoDB, including automatic model/document mapping.
+    * Driver to interact with MongoDB, including automatic entity/document mapping.
     * Include this in implementation project modules if they use MongoDB.
 * [`object-mapper`](/object-mapper):
     * Custom Jackson object mapper implementation.
@@ -41,7 +47,8 @@ they are and see if you need them too.
 * [`reps`](/reps):
     * Contains base classes for application reps to inherit from.
         Reps are used in the API layer.
-        Models should never be used in the application/database layer.
+        Reps should never be used in the application layer.
+        Reps should never be used in the database layer.
 * [`testing`](/reps):
     * Contains testing utilities.
     * Include this in implementation project modules as a test dependency
@@ -62,6 +69,7 @@ the whole picture.
 ├── dataConversion    # Type conversion
 │   └── conversionService # Individual type converters
 ├── endpoint          # Code for API endpoints
+├── entity            # Entity-related boilerplate (database layer)
 ├── error             # Response body error objects
 ├── exceptionMapping  # Mapping exceptions to errors
 ├── jackson           # Code related to Jackson serialization
@@ -69,15 +77,15 @@ the whole picture.
 │       └── conversionService # Data conversion module
 │       └── mongo             # MongoDB module
 │   └── objectMapper      # Custom object mapper
-├── model             # Model-related boilerplate
+├── model             # Model-related boilerplate (application layer)
 ├── module            # Code for Limber modules
 ├── mongo             # MongoDB ORM
-├── rep               # Rep-related boilerplate
+├── rep               # Rep-related boilerplate (API layer)
 ├── testing           # Testing code
 ├── store             # Code for Limber stores
 ├── util              # Util
 │   └─ uuidGenerator  # Generates UUIDs
-├── validation        # Used to validate models
+├── validation        # Used to validate reps
 │   └─ util               # Individual validators
 └── validator         # Validator for ad-hoc validation
 ```

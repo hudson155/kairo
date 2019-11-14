@@ -5,7 +5,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.ktor.request.receive
-import io.limberapp.backend.module.users.mapper.user.UserMapper
+import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.framework.config.Config
@@ -23,7 +23,8 @@ internal class UpdateUser @Inject constructor(
     config: Config,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(application,
+) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(
+    application,
     pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

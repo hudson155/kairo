@@ -3,8 +3,8 @@ package io.limberapp.backend.module.orgs.store.org
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
-import io.limberapp.backend.module.orgs.model.org.MembershipModel
-import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
+import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.framework.mongo.collection.FindFilter
 import io.limberapp.framework.mongo.collection.MongoStoreCollection
 import io.limberapp.framework.mongo.collection.Update
@@ -14,30 +14,30 @@ import org.bson.Document
 import java.util.UUID
 
 private val ORG_MEMBER_KEY =
-    "${OrgModel.Complete::members.name}.${MembershipModel.Complete::userId.name}"
+    "${OrgEntity.Complete::members.name}.${MembershipEntity.Complete::userId.name}"
 
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoStore<OrgModel.Creation, OrgModel.Complete, OrgModel.Update>(
+) : OrgStore, MongoStore<OrgEntity.Creation, OrgEntity.Complete, OrgEntity.Update>(
     collection = MongoStoreCollection(mongoDatabase, collectionName)
 ) {
 
-    override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
+    override fun getByMemberId(memberId: UUID): List<OrgEntity.Complete> {
         val findFilter = FindFilter().apply { eq[ORG_MEMBER_KEY] = memberId }
         val documents = collection.findMany(findFilter)
-        return documents.map { objectMapper.readValue<OrgModel.Complete>(it.toJson()) }
+        return documents.map { objectMapper.readValue<OrgEntity.Complete>(it.toJson()) }
     }
 
-    override fun createMembership(id: UUID, model: MembershipModel.Creation) {
+    override fun createMembership(id: UUID, entity: MembershipEntity.Creation) {
         val update = Update()
-            .apply { push[OrgModel.Complete::members.name] = model }
+            .apply { push[OrgEntity.Complete::members.name] = entity }
         collection.findOneAndUpdate(id, update)
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID) {
         val update = Update().apply {
-            pull[OrgModel.Complete::members.name] =
-                Document(MembershipModel.Complete::userId.name, memberId)
+            pull[OrgEntity.Complete::members.name] =
+                Document(MembershipEntity.Complete::userId.name, memberId)
         }
         collection.findOneAndUpdate(idFilter(id).apply { eq[ORG_MEMBER_KEY] = memberId }, update)
     }
