@@ -13,7 +13,7 @@ object OrgEntity {
         override val created: LocalDateTime,
         override val version: Int,
         val name: String,
-        val members: List<MembershipEntity.Complete>
+        val members: List<MembershipEntity.Creation>
     ) : CreationEntity()
 
     data class Complete(

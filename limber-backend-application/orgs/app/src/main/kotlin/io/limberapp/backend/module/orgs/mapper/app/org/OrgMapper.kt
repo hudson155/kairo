@@ -14,7 +14,7 @@ internal class OrgMapper @Inject constructor(
         created = model.created,
         version = model.version,
         name = model.name,
-        members = emptyList()
+        members = model.members.map { membershipMapper.creationEntity(it) }
     )
 
     fun completeModel(entity: OrgEntity.Complete) = OrgModel.Complete(

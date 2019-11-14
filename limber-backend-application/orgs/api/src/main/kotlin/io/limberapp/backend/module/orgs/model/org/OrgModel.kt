@@ -13,7 +13,7 @@ object OrgModel {
         override val created: LocalDateTime,
         override val version: Int,
         val name: String,
-        val members: List<MembershipModel.Complete>
+        val members: List<MembershipModel.Creation>
     ) : CreationModel()
 
     data class Complete(
