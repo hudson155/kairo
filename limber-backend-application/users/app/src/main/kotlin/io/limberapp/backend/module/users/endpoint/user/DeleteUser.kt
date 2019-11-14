@@ -19,7 +19,8 @@ internal class DeleteUser @Inject constructor(
     application: Application,
     config: Config,
     private val userService: UserService
-) : ApiEndpoint<DeleteUser.Command, Unit>(application,
+) : ApiEndpoint<DeleteUser.Command, Unit>(
+    application,
     pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

@@ -44,7 +44,7 @@ internal class UpdateOrg @Inject constructor(
     override suspend fun handler(command: Command): OrgRep.Complete {
         val completeEntity = orgService.update(
             id = command.orgId,
-            entity = orgMapper.updateEntity(command.updateRep)
+            model = orgMapper.updateModel(command.updateRep)
         )
         return orgMapper.completeRep(completeEntity)
     }

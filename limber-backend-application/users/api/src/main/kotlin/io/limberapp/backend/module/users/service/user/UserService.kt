@@ -1,15 +1,15 @@
 package io.limberapp.backend.module.users.service.user
 
-import io.limberapp.backend.module.users.entity.user.UserEntity
+import io.limberapp.backend.module.users.model.user.UserModel
 import java.util.UUID
 
 interface UserService {
 
-    fun create(entity: UserEntity.Creation): UserEntity.Complete
+    fun create(model: UserModel.Creation): UserModel.Complete
 
-    fun get(id: UUID): UserEntity.Complete?
+    fun get(id: UUID): UserModel.Complete?
 
-    fun update(id: UUID, entity: UserEntity.Update): UserEntity.Complete
+    fun update(id: UUID, model: UserModel.Update): UserModel.Complete
 
     fun delete(id: UUID)
 }

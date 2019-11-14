@@ -19,7 +19,8 @@ internal class DeleteMembership @Inject constructor(
     application: Application,
     config: Config,
     private val orgService: OrgService
-) : ApiEndpoint<DeleteMembership.Command, Unit>(application,
+) : ApiEndpoint<DeleteMembership.Command, Unit>(
+    application,
     pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

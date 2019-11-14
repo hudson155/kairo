@@ -1,20 +1,20 @@
 package io.limberapp.backend.module.orgs.service.org
 
-import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
-import io.limberapp.backend.module.orgs.entity.org.OrgEntity
+import io.limberapp.backend.module.orgs.model.org.MembershipModel
+import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.UUID
 
 interface OrgService {
 
-    fun create(entity: OrgEntity.Creation): OrgEntity.Complete
+    fun create(model: OrgModel.Creation): OrgModel.Complete
 
-    fun get(id: UUID): OrgEntity.Complete?
+    fun get(id: UUID): OrgModel.Complete?
 
-    fun getByMemberId(memberId: UUID): List<OrgEntity.Complete>
+    fun getByMemberId(memberId: UUID): List<OrgModel.Complete>
 
-    fun update(id: UUID, entity: OrgEntity.Update): OrgEntity.Complete
+    fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete
 
-    fun createMembership(id: UUID, entity: MembershipEntity.Creation)
+    fun createMembership(id: UUID, model: MembershipModel.Creation)
 
     fun deleteMembership(id: UUID, memberId: UUID)
 

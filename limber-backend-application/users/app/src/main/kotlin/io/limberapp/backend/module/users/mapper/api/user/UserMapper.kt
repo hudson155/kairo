@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.mapper.api.user
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.users.entity.user.UserEntity
+import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
@@ -12,7 +12,7 @@ internal class UserMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) {
 
-    fun creationEntity(rep: UserRep.Creation) = UserEntity.Creation(
+    fun creationModel(rep: UserRep.Creation) = UserModel.Creation(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         version = 0,
@@ -22,16 +22,16 @@ internal class UserMapper @Inject constructor(
         profilePhotoUrl = rep.profilePhotoUrl
     )
 
-    fun completeRep(entity: UserEntity.Complete) = UserRep.Complete(
-        id = entity.id,
-        created = entity.created,
-        firstName = entity.firstName,
-        lastName = entity.lastName,
-        emailAddress = entity.emailAddress,
-        profilePhotoUrl = entity.profilePhotoUrl
+    fun completeRep(model: UserModel.Complete) = UserRep.Complete(
+        id = model.id,
+        created = model.created,
+        firstName = model.firstName,
+        lastName = model.lastName,
+        emailAddress = model.emailAddress,
+        profilePhotoUrl = model.profilePhotoUrl
     )
 
-    fun updateEntity(rep: UserRep.Update) = UserEntity.Update(
+    fun updateModel(rep: UserRep.Update) = UserModel.Update(
         firstName = rep.firstName,
         lastName = rep.lastName
     )

@@ -23,7 +23,8 @@ internal class UpdateUser @Inject constructor(
     config: Config,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(application,
+) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(
+    application,
     pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
@@ -43,7 +44,7 @@ internal class UpdateUser @Inject constructor(
     override suspend fun handler(command: Command): UserRep.Complete {
         val completeEntity = userService.update(
             id = command.userId,
-            entity = userMapper.updateEntity(command.updateRep)
+            model = userMapper.updateModel(command.updateRep)
         )
         return userMapper.completeRep(completeEntity)
     }
