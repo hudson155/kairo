@@ -3,13 +3,19 @@ rootProject.name = 'limber'
 /**
  * Backend Application
  */
+
 include ':limber-backend-application'
+
 include ':limber-backend-application:orgs'
+include ':limber-backend-application:orgs:app'
+
 include ':limber-backend-application:users'
+include ':limber-backend-application:users:app'
 
 /**
  * Backend Framework
  */
+
 include ':limber-backend-framework'
 include ':limber-backend-framework:core'
 include ':limber-backend-framework:data-conversion'

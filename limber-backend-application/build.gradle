@@ -18,8 +18,8 @@ dependencies {
 
     compile project(":limber-backend-framework")
 
-    compile project(":limber-backend-application:orgs")
-    compile project(":limber-backend-application:users")
+    compile project(":limber-backend-application:orgs:app")
+    compile project(":limber-backend-application:users:app")
 
     compile libs.guice
     compile libs.jackson_dataformat_yaml
