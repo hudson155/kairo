@@ -1,8 +1,8 @@
-package io.limberapp.backend.module.orgs.mapper.org
+package io.limberapp.backend.module.orgs.mapper.api.org
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
-import io.limberapp.backend.module.orgs.mapper.membership.MembershipMapper
+import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock

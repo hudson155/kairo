@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.mapper.membership
+package io.limberapp.backend.module.orgs.mapper.api.membership
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
