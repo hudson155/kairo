@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/limber-backend-framework" />
             <option value="$PROJECT_DIR$/limber-backend-framework/core" />
             <option value="$PROJECT_DIR$/limber-backend-framework/data-conversion" />
+            <option value="$PROJECT_DIR$/limber-backend-framework/entities" />
             <option value="$PROJECT_DIR$/limber-backend-framework/errors" />
             <option value="$PROJECT_DIR$/limber-backend-framework/exception-mapping" />
             <option value="$PROJECT_DIR$/limber-backend-framework/models" />
