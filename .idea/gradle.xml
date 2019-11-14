@@ -14,7 +14,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/limber-backend-application" />
             <option value="$PROJECT_DIR$/limber-backend-application/orgs" />
+            <option value="$PROJECT_DIR$/limber-backend-application/orgs/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/orgs/app" />
             <option value="$PROJECT_DIR$/limber-backend-application/users" />
+            <option value="$PROJECT_DIR$/limber-backend-application/users/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/users/app" />
             <option value="$PROJECT_DIR$/limber-backend-framework" />
             <option value="$PROJECT_DIR$/limber-backend-framework/core" />
             <option value="$PROJECT_DIR$/limber-backend-framework/data-conversion" />
