@@ -42,11 +42,11 @@ internal class UpdateOrg @Inject constructor(
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): OrgRep.Complete {
-        val completeEntity = orgService.update(
+        val completeModel = orgService.update(
             id = command.orgId,
             model = orgMapper.updateModel(command.updateRep)
         )
-        return orgMapper.completeRep(completeEntity)
+        return orgMapper.completeRep(completeModel)
     }
 
     companion object {

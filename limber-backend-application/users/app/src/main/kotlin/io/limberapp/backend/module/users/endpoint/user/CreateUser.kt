@@ -39,8 +39,8 @@ internal class CreateUser @Inject constructor(
     override fun authorization(command: Command) = Authorization.Superuser
 
     override suspend fun handler(command: Command): UserRep.Complete {
-        val completeEntity = userService.create(userMapper.creationModel(command.creationRep))
-        return userMapper.completeRep(completeEntity)
+        val completeModel = userService.create(userMapper.creationModel(command.creationRep))
+        return userMapper.completeRep(completeModel)
     }
 
     companion object {
