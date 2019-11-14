@@ -1,12 +1,12 @@
-package io.limberapp.backend.module.users.model.user
+package io.limberapp.backend.module.users.entity.user
 
-import io.limberapp.framework.model.CompleteModel
-import io.limberapp.framework.model.CreationModel
-import io.limberapp.framework.model.UpdateModel
+import io.limberapp.framework.entity.CompleteEntity
+import io.limberapp.framework.entity.CreationEntity
+import io.limberapp.framework.entity.UpdateEntity
 import java.time.LocalDateTime
 import java.util.UUID
 
-object UserModel {
+object UserEntity {
 
     data class Creation(
         override val id: UUID,
@@ -16,7 +16,7 @@ object UserModel {
         val lastName: String?,
         val emailAddress: String,
         val profilePhotoUrl: String?
-    ) : CreationModel()
+    ) : CreationEntity()
 
     data class Complete(
         override val id: UUID,
@@ -26,10 +26,10 @@ object UserModel {
         val lastName: String?,
         val emailAddress: String,
         val profilePhotoUrl: String?
-    ) : CompleteModel()
+    ) : CompleteEntity()
 
     data class Update(
         val firstName: String?,
         val lastName: String?
-    ) : UpdateModel()
+    ) : UpdateEntity()
 }

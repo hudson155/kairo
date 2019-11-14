@@ -1,19 +1,19 @@
-package io.limberapp.backend.module.orgs.model.org
+package io.limberapp.backend.module.orgs.entity.org
 
-import io.limberapp.framework.model.CompleteSubmodel
-import io.limberapp.framework.model.CreationSubmodel
+import io.limberapp.framework.entity.CompleteSubentity
+import io.limberapp.framework.entity.CreationSubentity
 import java.time.LocalDateTime
 import java.util.UUID
 
-object MembershipModel {
+object MembershipEntity {
 
     data class Creation(
         override val created: LocalDateTime,
         val userId: UUID
-    ) : CreationSubmodel()
+    ) : CreationSubentity()
 
     data class Complete(
         override val created: LocalDateTime,
         val userId: UUID
-    ) : CompleteSubmodel()
+    ) : CompleteSubentity()
 }

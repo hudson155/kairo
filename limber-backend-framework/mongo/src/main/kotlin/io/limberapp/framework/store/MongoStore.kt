@@ -3,9 +3,9 @@ package io.limberapp.framework.store
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.convertValue
 import io.ktor.features.NotFoundException
-import io.limberapp.framework.model.CompleteModel
-import io.limberapp.framework.model.CreationModel
-import io.limberapp.framework.model.UpdateModel
+import io.limberapp.framework.entity.CompleteEntity
+import io.limberapp.framework.entity.CreationEntity
+import io.limberapp.framework.entity.UpdateEntity
 import io.limberapp.framework.mongo.collection.MongoStoreCollection
 import io.limberapp.framework.mongo.collection.Update
 import java.util.UUID
@@ -16,14 +16,14 @@ import java.util.UUID
  * TODO: This class uses Jackson to go to String and then to Document. Could we save time by using a
  *  stream, JsonNode, or some other intermediary structure?
  */
-abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Update : UpdateModel>(
+abstract class MongoStore<Creation : CreationEntity, Complete : CompleteEntity, Update : UpdateEntity>(
     protected val collection: MongoStoreCollection
 ) : Store<Creation, Complete, Update> {
 
     protected val objectMapper = LimberMongoObjectMapper()
 
-    final override fun create(model: Creation, typeRef: TypeReference<Complete>): Complete {
-        val document = collection.insertOne(model)
+    final override fun create(entity: Creation, typeRef: TypeReference<Complete>): Complete {
+        val document = collection.insertOne(entity)
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
@@ -32,8 +32,12 @@ abstract class MongoStore<Creation : CreationModel, Complete : CompleteModel, Up
         return objectMapper.readValue(document.toJson(), typeRef)
     }
 
-    final override fun update(id: UUID, model: Update, typeRef: TypeReference<Complete>): Complete {
-        val map = objectMapper.convertValue<Map<String, Any?>>(model).filterValuesNotNull()
+    final override fun update(
+        id: UUID,
+        entity: Update,
+        typeRef: TypeReference<Complete>
+    ): Complete {
+        val map = objectMapper.convertValue<Map<String, Any?>>(entity).filterValuesNotNull()
         if (map.isEmpty()) return get(id, typeRef) ?: throw NotFoundException()
         val document = collection.findOneAndUpdate(id, Update().apply { set += map })
         return objectMapper.readValue(document.toJson(), typeRef)

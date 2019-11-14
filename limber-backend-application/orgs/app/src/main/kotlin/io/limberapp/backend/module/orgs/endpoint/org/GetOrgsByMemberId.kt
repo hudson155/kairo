@@ -39,8 +39,8 @@ internal class GetOrgsByMemberId @Inject constructor(
     override fun authorization(command: Command) = Authorization.User(command.memberId)
 
     override suspend fun handler(command: Command): List<OrgRep.Complete> {
-        val completeModels = orgService.getByMemberId(command.memberId)
-        return completeModels.map { orgMapper.completeRep(it) }
+        val completeEntitys = orgService.getByMemberId(command.memberId)
+        return completeEntitys.map { orgMapper.completeRep(it) }
     }
 
     companion object {

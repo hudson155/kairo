@@ -23,7 +23,8 @@ internal class UpdateOrg @Inject constructor(
     config: Config,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(application,
+) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(
+    application,
     pathPrefix = config.serving.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
@@ -41,11 +42,11 @@ internal class UpdateOrg @Inject constructor(
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): OrgRep.Complete {
-        val completeModel = orgService.update(
+        val completeEntity = orgService.update(
             id = command.orgId,
-            model = orgMapper.updateModel(command.updateRep)
+            entity = orgMapper.updateEntity(command.updateRep)
         )
-        return orgMapper.completeRep(completeModel)
+        return orgMapper.completeRep(completeEntity)
     }
 
     companion object {
