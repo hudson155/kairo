@@ -12,6 +12,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Deletes an existing user.
+ */
 internal class DeleteUser @Inject constructor(
     application: Application,
     config: Config,

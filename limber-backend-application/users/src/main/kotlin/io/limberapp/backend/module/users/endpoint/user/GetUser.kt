@@ -14,6 +14,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Returns a single user.
+ */
 internal class GetUser @Inject constructor(
     application: Application,
     config: Config,

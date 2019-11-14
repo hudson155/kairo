@@ -15,6 +15,9 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
+/**
+ * Updates a user's information.
+ */
 internal class UpdateUser @Inject constructor(
     application: Application,
     config: Config,
