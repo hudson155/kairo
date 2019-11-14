@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.model.org
+package io.limberapp.backend.module.users.model.user
 
 import io.limberapp.framework.model.CompleteModel
 import io.limberapp.framework.model.CreationModel
@@ -6,25 +6,30 @@ import io.limberapp.framework.model.UpdateModel
 import java.time.LocalDateTime
 import java.util.UUID
 
-internal object OrgModel {
+object UserModel {
 
     data class Creation(
         override val id: UUID,
         override val created: LocalDateTime,
         override val version: Int,
-        val name: String,
-        val members: List<MembershipModel.Complete>
+        val firstName: String?,
+        val lastName: String?,
+        val emailAddress: String,
+        val profilePhotoUrl: String?
     ) : CreationModel()
 
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
         override val version: Int,
-        val name: String,
-        val members: List<MembershipModel.Complete>
+        val firstName: String?,
+        val lastName: String?,
+        val emailAddress: String,
+        val profilePhotoUrl: String?
     ) : CompleteModel()
 
     data class Update(
-        val name: String?
+        val firstName: String?,
+        val lastName: String?
     ) : UpdateModel()
 }

@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.service.user
 import io.limberapp.backend.module.users.model.user.UserModel
 import java.util.UUID
 
-internal interface UserService {
+interface UserService {
 
     fun create(model: UserModel.Creation): UserModel.Complete
 

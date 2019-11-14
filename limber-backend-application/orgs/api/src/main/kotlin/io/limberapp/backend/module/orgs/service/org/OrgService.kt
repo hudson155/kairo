@@ -4,7 +4,7 @@ import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.UUID
 
-internal interface OrgService {
+interface OrgService {
 
     fun create(model: OrgModel.Creation): OrgModel.Complete
 

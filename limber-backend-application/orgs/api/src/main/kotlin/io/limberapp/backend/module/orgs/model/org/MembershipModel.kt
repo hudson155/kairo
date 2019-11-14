@@ -5,7 +5,7 @@ import io.limberapp.framework.model.CreationSubmodel
 import java.time.LocalDateTime
 import java.util.UUID
 
-internal object MembershipModel {
+object MembershipModel {
 
     data class Creation(
         override val created: LocalDateTime,

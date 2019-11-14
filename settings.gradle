@@ -7,9 +7,11 @@ rootProject.name = 'limber'
 include ':limber-backend-application'
 
 include ':limber-backend-application:orgs'
+include ':limber-backend-application:orgs:api'
 include ':limber-backend-application:orgs:app'
 
 include ':limber-backend-application:users'
+include ':limber-backend-application:users:api'
 include ':limber-backend-application:users:app'
 
 /**
