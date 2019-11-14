@@ -8,7 +8,7 @@ database:
     value: CiQA7T1W21k61Rqv1UfEix3LHo282BlwRUlypxRfr29sycu0k6cSNQCfEO6jT1Gnovrp4mxxk8dOoC++uhxLHBlg9pYdCELbk2HP39CvoiL5QdaYffwlLulERrWC
 
 jwt:
-  domain: limber.auth0.com
+  secret: limberapp
 
 serving:
   apiPathPrefix: /api
