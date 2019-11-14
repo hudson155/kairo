@@ -30,9 +30,20 @@ dependencies {
 }
 
 subprojects {
-    dependencies {
-        compile project(":limber-backend-framework:core")
-        testCompile project(":limber-backend-framework:testing")
+
+    if (project.path.matches(':limber-backend-application:[a-z\\-]+:api')) {
+        dependencies {
+            compile project(":limber-backend-framework:models")
+        }
+    } else if (project.path.matches(':limber-backend-application:[a-z\\-]+:app')) {
+        dependencies {
+            compile project(":limber-backend-application:$project.parent.name:api")
+            compile project(":limber-backend-framework:core")
+            testCompile project(":limber-backend-framework:testing")
+        }
+    } else if (project.path.matches(':limber-backend-application:[a-z\\-]+')) {
+    } else {
+        throw new Exception("Unexpected project path: " + project.path)
     }
 }
 
