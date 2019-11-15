@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -36,7 +35,7 @@ internal class CreateMembership @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        creationRep = call.receive()
+        creationRep = call.getAndValidateBody()
     )
 
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)

@@ -11,6 +11,7 @@ import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
+import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.route
@@ -18,6 +19,7 @@ import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
+import io.limberapp.framework.rep.ValidatedRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
@@ -86,6 +88,9 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
             }
         }
     }
+
+    protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody() =
+        receive<T>().apply { validate() }
 
     /**
      * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast
