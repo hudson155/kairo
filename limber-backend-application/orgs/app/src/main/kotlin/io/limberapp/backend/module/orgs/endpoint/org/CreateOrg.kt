@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.ktor.request.receive
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -33,7 +32,7 @@ internal class CreateOrg @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.receive()
+        creationRep = call.getAndValidateBody()
     )
 
     override fun authorization(command: Command) = Authorization.Superuser

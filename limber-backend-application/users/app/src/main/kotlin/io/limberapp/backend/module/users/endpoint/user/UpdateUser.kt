@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.ktor.request.receive
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
@@ -36,7 +35,7 @@ internal class UpdateUser @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
-        updateRep = call.receive()
+        updateRep = call.getAndValidateBody()
     )
 
     override fun authorization(command: Command) = Authorization.User(command.userId)
