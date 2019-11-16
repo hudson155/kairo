@@ -6,13 +6,16 @@ import io.ktor.application.Application
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.framework.LimberApp
-import io.limberapp.framework.config.Config
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import io.limberapp.framework.module.MainModule
+import io.limberapp.framework.module.MongoModule
 
-internal class LimberAppMonolith : LimberApp(loadConfig()) {
+internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
 
-    override fun getMainModule(application: Application) =
-        MainModuleImpl.forProduction(application, config)
+    override fun getMainModules(application: Application) = listOf(
+        MainModule.forProduction(application, config),
+        MongoModule(config.database)
+    )
 
     override val modules = listOf(
         OrgsModule(),

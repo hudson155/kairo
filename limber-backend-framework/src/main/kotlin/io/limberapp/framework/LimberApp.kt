@@ -3,6 +3,7 @@ package io.limberapp.framework
 import com.auth0.jwk.UrlJwkProvider
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import io.ktor.application.Application
 import io.ktor.application.install
@@ -33,8 +34,8 @@ import java.util.UUID
  * This class has a lot of functions, but it's clearer this way.
  */
 @Suppress("TooManyFunctions")
-abstract class LimberApp(
-    protected val config: Config
+abstract class LimberApp<C : Config>(
+    protected val config: C
 ) {
 
     fun bindToApplication(application: Application) = with(application) {
@@ -118,12 +119,11 @@ abstract class LimberApp(
         }
     }
 
-    @Suppress("SpreadOperator") // Okay to use here because it's at application startup.
     private fun Application.bindModules() {
-        Guice.createInjector(listOf(getMainModule(this), *modules.toTypedArray()))
+        Guice.createInjector(getMainModules(this).plus(modules))
     }
 
-    protected abstract fun getMainModule(application: Application): MainModule
+    protected abstract fun getMainModules(application: Application): List<AbstractModule>
 
     protected abstract val modules: List<Module>
 }

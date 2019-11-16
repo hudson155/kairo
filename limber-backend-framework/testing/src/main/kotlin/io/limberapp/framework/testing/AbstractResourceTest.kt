@@ -26,7 +26,7 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private fun withLimberTestApp(limberApp: LimberApp, test: TestApplicationEngine.() -> Unit) {
+private fun withLimberTestApp(limberApp: LimberApp<*>, test: TestApplicationEngine.() -> Unit) {
     withTestApplication({ limberApp.bindToApplication(this) }, test)
 }
 
@@ -41,7 +41,7 @@ abstract class AbstractResourceTest {
 
     protected val deterministicUuidGenerator = DeterministicUuidGenerator()
 
-    protected inner class LimberTest(private val limberApp: LimberApp) {
+    protected inner class LimberTest(private val limberApp: LimberApp<*>) {
 
         @Suppress("LongParameterList") // For this test method, we're ok with it.
         fun test(

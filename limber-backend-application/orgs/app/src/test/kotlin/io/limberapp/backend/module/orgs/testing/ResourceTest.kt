@@ -9,30 +9,34 @@ import io.limberapp.framework.config.jwt.JwtConfig
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.createClient
+import io.limberapp.framework.module.MainModule
+import io.limberapp.framework.module.MongoModule
 import io.limberapp.framework.testing.AbstractResourceTest
 
 abstract class ResourceTest : AbstractResourceTest() {
 
-    private val config = Config(
-        serving = ServingConfig(
+    private val config = object : Config {
+        override val serving = ServingConfig(
             apiPathPrefix = "/",
             staticFiles = StaticFiles(false)
-        ),
-        database = DatabaseConfig.local("limberapptest"),
-        jwt = JwtConfig(requireSignature = false)
-    )
+        )
+        override val jwt = JwtConfig(requireSignature = false)
+    }
+    private val databaseConfig = DatabaseConfig.local("limberapptest")
 
-    override val limberTest = LimberTest(object : LimberApp(config) {
+    override val limberTest = LimberTest(object : LimberApp<Config>(config) {
 
-        override fun getMainModule(application: Application) =
-            TestMainModule(application, fixedClock, deterministicUuidGenerator, config)
+        override fun getMainModules(application: Application) = listOf(
+            MainModule(application, fixedClock, config, deterministicUuidGenerator),
+            MongoModule(databaseConfig)
+        )
 
         override val modules = listOf(OrgsModule())
     })
 
     override fun before() {
         super.before()
-        val mongoClient = config.createClient()
-        mongoClient.getDatabase(config.database.database).drop()
+        val mongoClient = databaseConfig.createClient()
+        mongoClient.getDatabase(databaseConfig.database).drop()
     }
 }

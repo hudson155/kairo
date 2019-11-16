@@ -7,7 +7,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.config.Config
+import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.Authorization
@@ -19,12 +19,12 @@ import java.util.UUID
  */
 internal class UpdateOrg @Inject constructor(
     application: Application,
-    config: Config,
+    servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(
     application,
-    pathPrefix = config.serving.apiPathPrefix,
+    pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
