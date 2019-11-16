@@ -10,7 +10,7 @@ import io.limberapp.framework.config.serving.ServingConfig
  * configuration.
  */
 data class Config(
-    override val database: DatabaseConfig,
+    val database: DatabaseConfig,
     override val jwt: JwtConfig,
     override val serving: ServingConfig
 ) : Config
