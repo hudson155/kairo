@@ -71,6 +71,7 @@ the whole picture.
 ├── endpoint          # Code for API endpoints
 ├── entity            # Entity-related boilerplate (database layer)
 ├── error             # Response body error objects
+├── exception         # Exceptions that might be thrown
 ├── exceptionMapping  # Mapping exceptions to errors
 ├── jackson           # Code related to Jackson serialization
 │   └── module            # Custom modules
