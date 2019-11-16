@@ -67,22 +67,22 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private fun register() {
         application.routing {
             authenticate(optional = true) {
-                route(pathPrefix) { routeEndpoint(this@ApiEndpoint) }
+                route(pathPrefix) { routeEndpoint() }
             }
         }
     }
 
-    private fun Route.routeEndpoint(apiEndpoint: ApiEndpoint<Command, ResponseType>) {
+    private fun Route.routeEndpoint() {
         route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
             handle {
-                val command = apiEndpoint.determineCommand(call)
+                val command = determineCommand(call)
                 val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
                 val jwt = jwtFromPayload(jwtPayload)
                 if (!authorization(command).authorize(jwt)) {
                     call.respond(HttpStatusCode.Forbidden)
                     return@handle
                 }
-                val result = apiEndpoint.handler(command)
+                val result = handler(command)
                 if (result == null) call.respond(HttpStatusCode.NotFound)
                 else call.respond(result)
             }
