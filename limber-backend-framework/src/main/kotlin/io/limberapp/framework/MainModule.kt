@@ -3,6 +3,9 @@ package io.limberapp.framework
 import com.google.inject.AbstractModule
 import io.ktor.application.Application
 import io.limberapp.framework.config.Config
+import io.limberapp.framework.config.database.DatabaseConfig
+import io.limberapp.framework.config.jwt.JwtConfig
+import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
 
@@ -12,14 +15,16 @@ import java.time.Clock
 abstract class MainModule(
     private val application: Application,
     private val clock: Clock,
-    private val uuidGenerator: UuidGenerator,
-    private val config: Config
+    private val config: Config,
+    private val uuidGenerator: UuidGenerator
 ) : AbstractModule() {
 
     override fun configure() {
         bind(Application::class.java).toInstance(application)
         bind(Clock::class.java).toInstance(clock)
+        bind(DatabaseConfig::class.java).toInstance(config.database)
+        bind(JwtConfig::class.java).toInstance(config.jwt)
+        bind(ServingConfig::class.java).toInstance(config.serving)
         bind(UuidGenerator::class.java).toInstance(uuidGenerator)
-        bind(Config::class.java).toInstance(config)
     }
 }

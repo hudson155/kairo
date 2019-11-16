@@ -13,16 +13,16 @@ import io.limberapp.framework.testing.AbstractResourceTest
 
 abstract class ResourceTest : AbstractResourceTest() {
 
-    private val config = Config(
-        serving = ServingConfig(
+    private val config = object : Config {
+        override val serving = ServingConfig(
             apiPathPrefix = "/",
             staticFiles = StaticFiles(false)
-        ),
-        database = DatabaseConfig.local("limberapptest"),
-        jwt = JwtConfig(requireSignature = false)
-    )
+        )
+        override val database = DatabaseConfig.local("limberapptest")
+        override val jwt = JwtConfig(requireSignature = false)
+    }
 
-    override val limberTest = LimberTest(object : LimberApp(config) {
+    override val limberTest = LimberTest(object : LimberApp<Config>(config) {
 
         override fun getMainModule(application: Application) =
             TestMainModule(application, fixedClock, deterministicUuidGenerator, config)
@@ -32,7 +32,7 @@ abstract class ResourceTest : AbstractResourceTest() {
 
     override fun before() {
         super.before()
-        val mongoClient = config.createClient()
+        val mongoClient = config.database.createClient()
         mongoClient.getDatabase(config.database.database).drop()
     }
 }

@@ -5,7 +5,6 @@ import com.google.inject.Singleton
 import com.mongodb.client.MongoDatabase
 import io.ktor.application.Application
 import io.limberapp.framework.MainModule
-import io.limberapp.framework.config.Config
 import io.limberapp.framework.createClient
 import io.limberapp.framework.util.uuidGenerator.RandomUuidGenerator
 import io.limberapp.framework.util.uuidGenerator.UuidGenerator
@@ -16,12 +15,12 @@ internal class MainModuleImpl private constructor(
     config: Config,
     clock: Clock,
     uuidGenerator: UuidGenerator
-) : MainModule(application, clock, uuidGenerator, config) {
+) : MainModule(application, clock, config, uuidGenerator) {
 
     @Provides
     @Singleton
     fun mongoDatabase(config: Config): MongoDatabase {
-        val mongoClient = config.createClient()
+        val mongoClient = config.database.createClient()
         return mongoClient.getDatabase(config.database.database)
     }
 

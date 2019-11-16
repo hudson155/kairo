@@ -7,7 +7,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.config.Config
+import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.Authorization
@@ -19,12 +19,12 @@ import java.util.UUID
  */
 internal class CreateMembership @Inject constructor(
     application: Application,
-    config: Config,
+    servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val membershipMapper: MembershipMapper
 ) : ApiEndpoint<CreateMembership.Command, Unit>(
     application = application,
-    pathPrefix = config.serving.apiPathPrefix,
+    pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 

@@ -6,6 +6,7 @@ import com.mongodb.client.MongoDatabase
 import io.ktor.application.Application
 import io.limberapp.framework.MainModule
 import io.limberapp.framework.config.Config
+import io.limberapp.framework.config.database.DatabaseConfig
 import io.limberapp.framework.createClient
 import io.limberapp.framework.util.uuidGenerator.UuidGenerator
 import java.time.Clock
@@ -13,14 +14,14 @@ import java.time.Clock
 internal class TestMainModule(
     application: Application,
     clock: Clock,
-    uuidGenerator: UuidGenerator,
-    config: Config
-) : MainModule(application, clock, uuidGenerator, config) {
+    config: Config,
+    uuidGenerator: UuidGenerator
+) : MainModule(application, clock, config, uuidGenerator) {
 
     @Provides
     @Singleton
-    fun mongoDatabase(config: Config): MongoDatabase {
-        val mongoClient = config.createClient()
-        return mongoClient.getDatabase(config.database.database)
+    fun mongoDatabase(databseConfig: DatabaseConfig): MongoDatabase {
+        val mongoClient = databseConfig.createClient()
+        return mongoClient.getDatabase(databseConfig.database)
     }
 }

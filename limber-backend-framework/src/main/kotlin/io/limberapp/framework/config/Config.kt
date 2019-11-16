@@ -5,11 +5,11 @@ import io.limberapp.framework.config.jwt.JwtConfig
 import io.limberapp.framework.config.serving.ServingConfig
 
 /**
- * The Config class contains all custom configuration for the app. It doesn't contain Ktor built-in
- * configuration.
+ * The Config interface contains required configuration for the app. It doesn't contain Ktor
+ * built-in configuration.
  */
-data class Config(
-    val database: DatabaseConfig,
-    val jwt: JwtConfig,
+interface Config {
+    val database: DatabaseConfig
+    val jwt: JwtConfig
     val serving: ServingConfig
-)
+}

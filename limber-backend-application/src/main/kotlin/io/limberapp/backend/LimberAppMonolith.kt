@@ -6,10 +6,9 @@ import io.ktor.application.Application
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.framework.LimberApp
-import io.limberapp.framework.config.Config
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 
-internal class LimberAppMonolith : LimberApp(loadConfig()) {
+internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
 
     override fun getMainModule(application: Application) =
         MainModuleImpl.forProduction(application, config)
