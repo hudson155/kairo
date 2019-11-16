@@ -3,7 +3,6 @@ dependencies {
     compile project(":limber-backend-framework:data-conversion")
     compile project(":limber-backend-framework:exception-mapping")
     compile project(":limber-backend-framework:object-mapper")
-    compile libs.gcloud_kms
     compile libs.guice
     compile libs.jackson_kotlin
     compile libs.ktor_auth
