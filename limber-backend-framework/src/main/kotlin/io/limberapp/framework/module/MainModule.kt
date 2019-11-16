@@ -29,12 +29,11 @@ class MainModule(
 
     companion object {
 
-        fun forProduction(application: Application, config: Config) =
-            MainModule(
-                application = application,
-                config = config,
-                clock = Clock.systemUTC(), // For prod, use a real UTC clock.
-                uuidGenerator = RandomUuidGenerator() // For prod, use a real/random UUID generator.
-            )
+        fun forProduction(application: Application, config: Config) = MainModule(
+            application = application,
+            config = config,
+            clock = Clock.systemUTC(), // For prod, use a real UTC clock.
+            uuidGenerator = RandomUuidGenerator() // For prod, use a real/random UUID generator.
+        )
     }
 }
