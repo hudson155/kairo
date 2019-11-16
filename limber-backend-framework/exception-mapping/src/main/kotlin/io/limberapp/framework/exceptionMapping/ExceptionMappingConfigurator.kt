@@ -1,6 +1,7 @@
 package io.limberapp.framework.exceptionMapping
 
 import io.ktor.features.StatusPages
+import io.limberapp.framework.exceptionMapping.exceptionMapper.ForbiddenException
 import io.limberapp.framework.exceptionMapping.exceptionMapper.InvalidTypeIdException
 import io.limberapp.framework.exceptionMapping.exceptionMapper.MissingKotlinParameterException
 import io.limberapp.framework.exceptionMapping.exceptionMapper.NotFoundException
@@ -13,6 +14,7 @@ import io.limberapp.framework.exceptionMapping.exceptionMapper.ValidationError
 class ExceptionMappingConfigurator {
 
     fun configureExceptionMapping(configuration: StatusPages.Configuration) {
+        configuration.exception(ForbiddenException().handler)
         configuration.exception(InvalidTypeIdException().handler)
         configuration.exception(MissingKotlinParameterException().handler)
         configuration.exception(NotFoundException().handler)

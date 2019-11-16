@@ -7,9 +7,9 @@ import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
 import io.ktor.auth.jwt.JWTPrincipal
 import io.ktor.features.MissingRequestParameterException
+import io.ktor.features.NotFoundException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -19,6 +19,7 @@ import io.ktor.routing.routing
 import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
+import io.limberapp.framework.exception.ForbiddenException
 import io.limberapp.framework.rep.ValidatedRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
@@ -78,12 +79,9 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
                 val command = determineCommand(call)
                 val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
                 val jwt = jwtFromPayload(jwtPayload)
-                if (!authorization(command).authorize(jwt)) {
-                    call.respond(HttpStatusCode.Forbidden)
-                    return@handle
-                }
+                if (!authorization(command).authorize(jwt)) throw ForbiddenException()
                 val result = handler(command)
-                if (result == null) call.respond(HttpStatusCode.NotFound)
+                if (result == null) throw NotFoundException()
                 else call.respond(result)
             }
         }
