@@ -39,8 +39,8 @@ internal class GetOrg @Inject constructor(
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): OrgRep.Complete? {
-        val completeModel = orgService.get(command.orgId)
-        return completeModel?.let { orgMapper.completeRep(it) }
+        val completeModel = orgService.get(command.orgId) ?: return null
+        return orgMapper.completeRep(completeModel)
     }
 
     companion object {
