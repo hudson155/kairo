@@ -1,4 +1,5 @@
 dependencies {
+    compile project(":limber-backend-framework:core:api")
     compile project(":limber-backend-framework:entities")
     compile project(":limber-backend-framework:exceptions")
     compile project(":limber-backend-framework:object-mapper")
