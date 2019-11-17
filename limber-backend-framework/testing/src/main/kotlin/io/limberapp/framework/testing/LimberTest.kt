@@ -25,7 +25,7 @@ private fun withLimberTestApp(limberApp: LimberApp<*>, test: TestApplicationEngi
     withTestApplication({ limberApp.bindToApplication(this) }, test)
 }
 
-class LimberTest(private val limberApp: LimberApp<*>) {
+class LimberTest(private val limberApp: TestLimberApp) {
 
     private val objectMapper = LimberObjectMapper()
 
