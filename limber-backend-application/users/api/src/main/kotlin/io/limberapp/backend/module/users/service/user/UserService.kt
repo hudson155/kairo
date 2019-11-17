@@ -9,6 +9,8 @@ interface UserService {
 
     fun get(id: UUID): UserModel.Complete?
 
+    fun getByEmailAddress(emailAddress: String): UserModel.Complete?
+
     fun update(id: UUID, model: UserModel.Update): UserModel.Complete
 
     fun delete(id: UUID)

@@ -29,16 +29,18 @@ sealed class Authorization {
         override fun authorizeInternal(payload: Jwt?) = false
     }
 
-    class User(private val userId: UUID) : Authorization() {
+    class User(private val userId: UUID?) : Authorization() {
         override fun authorizeInternal(payload: Jwt?): Boolean {
             payload ?: return false
+            userId ?: return false
             return payload.user.id == userId
         }
     }
 
-    class OrgMember(private val orgId: UUID) : Authorization() {
+    class OrgMember(private val orgId: UUID?) : Authorization() {
         override fun authorizeInternal(payload: Jwt?): Boolean {
             payload ?: return false
+            orgId ?: return false
             return payload.orgs.containsKey(orgId)
         }
     }
