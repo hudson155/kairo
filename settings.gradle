@@ -6,6 +6,10 @@ rootProject.name = 'limber'
 
 include ':limber-backend-application'
 
+include ':limber-backend-application:auth'
+include ':limber-backend-application:auth:api'
+include ':limber-backend-application:auth:app'
+
 include ':limber-backend-application:orgs'
 include ':limber-backend-application:orgs:api'
 include ':limber-backend-application:orgs:app'
