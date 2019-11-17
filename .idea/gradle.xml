@@ -24,7 +24,6 @@
             <option value="$PROJECT_DIR$/limber-backend-application/users/app" />
             <option value="$PROJECT_DIR$/limber-backend-framework" />
             <option value="$PROJECT_DIR$/limber-backend-framework/core" />
-            <option value="$PROJECT_DIR$/limber-backend-framework/core/api" />
             <option value="$PROJECT_DIR$/limber-backend-framework/data-conversion" />
             <option value="$PROJECT_DIR$/limber-backend-framework/entities" />
             <option value="$PROJECT_DIR$/limber-backend-framework/errors" />
