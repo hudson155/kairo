@@ -55,6 +55,7 @@ complexity:
     threshold: 4
   StringLiteralDuplication:
     active: true
+    excludes: "**/src/test/**/*Test.kt"
     threshold: 3
     ignoreAnnotation: false
     excludeStringsWithLessThan5Characters: false
@@ -321,6 +322,7 @@ potential-bugs:
     active: false
   UnsafeCast:
     active: true
+    excludes: "**/src/test/**/*Test.kt"
   UselessPostfixExpression:
     active: true
   WrongEqualsTypeParameter:

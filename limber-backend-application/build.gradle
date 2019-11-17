@@ -32,6 +32,7 @@ dependencies {
 subprojects {
     if (project.path.matches(':limber-backend-application:[a-z\\-]+:api')) {
         dependencies {
+            compile libs.jackson_annotations
             compile project(":limber-backend-framework:models")
         }
     } else if (project.path.matches(':limber-backend-application:[a-z\\-]+:app')) {

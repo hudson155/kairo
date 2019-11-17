@@ -4,5 +4,6 @@ import java.util.UUID
 
 data class JwtUser(
     val id: UUID,
-    val name: String
+    val firstName: String?,
+    val lastName: String?
 )
