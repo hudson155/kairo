@@ -51,6 +51,7 @@ ext {
 
             // Jackson
             jackson                : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
+            jackson_annotations    : "com.fasterxml.jackson.core:jackson-annotations:$versions.jackson",
             jackson_dataformat_yaml: "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$versions.jackson",
             jackson_datatype_jsr310: "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versions.jackson",
             jackson_kotlin         : "com.fasterxml.jackson.module:jackson-module-kotlin:$versions.jackson",
