@@ -26,6 +26,9 @@ ext {
             // https://github.com/qos-ch/logback/releases
             logback                : '1.2.3',
 
+            // https://github.com/mockk/mockk/releases
+            mockk                  : '1.9.3',
+
             // https://mongodb.github.io/mongo-java-driver/
             mongodb                : '3.11.0',
     ]
@@ -69,5 +72,8 @@ ext {
 
             // JUnit
             junit                  : "junit:junit:$versions.junit",
+
+            // MockK
+            mockk                  : "io.mockk:mockk:$versions.mockk",
     ]
 }
