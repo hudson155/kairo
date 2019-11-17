@@ -8,6 +8,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.testing.ResourceTest
+import io.limberapp.framework.endpoint.authorization.jwt.Claims
 import io.mockk.every
 import org.junit.Test
 import java.time.LocalDateTime
@@ -61,11 +62,11 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
         ) {
             val actual = response.content!!
             val expected = "{" +
-                    "\"https://limberapp.io/orgs\":\"{" +
+                    "\"${Claims.orgs}\":\"{" +
                     "\\\"${org1.id}\\\":{\\\"name\\\":\\\"${org1.name}\\\"}" +
                     "}\"," +
-                    "\"https://limberapp.io/roles\":\"[]\"," +
-                    "\"https://limberapp.io/user\":\"{" +
+                    "\"${Claims.roles}\":\"[]\"," +
+                    "\"${Claims.user}\":\"{" +
                     "\\\"id\\\":\\\"${existingUser.id}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
                     "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"" +
@@ -114,9 +115,9 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
         ) {
             val actual = response.content!!
             val expected = "{" +
-                    "\"https://limberapp.io/orgs\":\"{}\"," +
-                    "\"https://limberapp.io/roles\":\"[]\"," +
-                    "\"https://limberapp.io/user\":\"{" +
+                    "\"${Claims.orgs}\":\"{}\"," +
+                    "\"${Claims.roles}\":\"[]\"," +
+                    "\"${Claims.user}\":\"{" +
                     "\\\"id\\\":\\\"$newUserId\\\"," +
                     "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
                     "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"" +

@@ -1,13 +1,12 @@
 package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.limberapp.framework.endpoint.authorization.jwt.Claims
 import io.limberapp.framework.rep.CreationRep
 import io.limberapp.framework.validation.util.emailAddress
 import io.limberapp.framework.validation.util.ifPresent
 import io.limberapp.framework.validation.util.shortText
 import io.limberapp.framework.validation.util.url
-
-private const val CLAIM_PREFIX = "https://limberapp.io"
 
 object JwtClaimsRequestRep {
 
@@ -26,11 +25,11 @@ object JwtClaimsRequestRep {
     }
 
     data class Complete(
-        @JsonProperty("$CLAIM_PREFIX/orgs")
+        @JsonProperty(Claims.orgs)
         val orgs: String,
-        @JsonProperty("$CLAIM_PREFIX/roles")
+        @JsonProperty(Claims.roles)
         val roles: String,
-        @JsonProperty("$CLAIM_PREFIX/user")
+        @JsonProperty(Claims.user)
         val user: String
     ) : Any()
 }
