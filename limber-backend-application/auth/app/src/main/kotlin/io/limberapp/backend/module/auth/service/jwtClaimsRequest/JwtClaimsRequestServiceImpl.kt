@@ -17,8 +17,8 @@ import java.time.LocalDateTime
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val orgService: OrgService,
     private val userService: UserService,
-    private val uuidGenerator: UuidGenerator,
-    private val clock: Clock
+    private val clock: Clock,
+    private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
 
     private val objectMapper = LimberObjectMapper()
