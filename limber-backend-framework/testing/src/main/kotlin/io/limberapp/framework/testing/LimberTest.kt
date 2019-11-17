@@ -57,7 +57,7 @@ class LimberTest(private val limberApp: TestLimberApp) {
                 jwt = Jwt(
                     orgs = emptyMap(),
                     roles = setOf(JwtRole.SUPERUSER),
-                    user = JwtUser(UUID.randomUUID(), "Jeff Hudson")
+                    user = JwtUser(UUID.randomUUID(), "Jeff", "Hudson")
                 )
             ).sign(Algorithm.none())
             addHeader(HttpHeaders.Authorization, "Bearer $jwt")
