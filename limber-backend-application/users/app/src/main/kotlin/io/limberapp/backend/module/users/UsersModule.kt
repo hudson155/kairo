@@ -3,6 +3,7 @@ package io.limberapp.backend.module.users
 import io.limberapp.backend.module.users.endpoint.user.CreateUser
 import io.limberapp.backend.module.users.endpoint.user.DeleteUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
+import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
 import io.limberapp.backend.module.users.endpoint.user.UpdateUser
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.service.user.UserServiceImpl
@@ -22,6 +23,7 @@ class UsersModule : Module() {
 
         CreateUser::class.java,
         GetUser::class.java,
+        GetUserByEmailAddress::class.java,
         UpdateUser::class.java,
         DeleteUser::class.java
     )

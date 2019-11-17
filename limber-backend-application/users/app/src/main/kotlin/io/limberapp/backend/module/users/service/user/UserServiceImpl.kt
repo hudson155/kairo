@@ -25,6 +25,11 @@ internal class UserServiceImpl @Inject constructor(
         return userMapper.completeModel(completeEntity)
     }
 
+    override fun getByEmailAddress(emailAddress: String): UserModel.Complete? {
+        val completeEntity = userStore.getByEmailAddress(emailAddress) ?: return null
+        return userMapper.completeModel(completeEntity)
+    }
+
     override fun update(id: UUID, model: UserModel.Update): UserModel.Complete {
         val updateEntity = userMapper.updateEntity(model)
         val completeEntity = userStore.update(id, updateEntity)
