@@ -8,8 +8,8 @@ import io.limberapp.framework.createClient
 /**
  * MongoModule configures bindings for MongoDB.
  */
-class MongoModule(
-    private val databaseConfig: DatabaseConfig
+open class MongoModule(
+    protected val databaseConfig: DatabaseConfig
 ) : AbstractModule() {
 
     override fun configure() {
