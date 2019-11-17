@@ -10,6 +10,7 @@ import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.NotFoundException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
+import io.ktor.http.HttpMethod
 import io.ktor.http.Parameters
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -44,9 +45,19 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     abstract suspend fun determineCommand(call: ApplicationCall): Command
 
     /**
-     * Called for each request to the endpoint, to specify the authorization check to be used.
+     * Called for each request to the endpoint, to specify the authorization check to be used. This
+     * should handle authorization for most endpoints.
      */
     abstract fun authorization(command: Command): Authorization
+
+    /**
+     * Called for each request to the endpoint, to specify an additional authorization check to be
+     * used after the request has been handled. This can handle authorization for endpoints where
+     * alternative identifiers are used and it's not possible to know in advance which endpoint.
+     * This should only be used for GET endpoints, or else the operation will have already been
+     * performed.
+     */
+    open fun secondaryAuthorization(response: ResponseType): Authorization = Authorization.Public
 
     /**
      * Called for each request to the endpoint, to handle the execution. This method is the meat and
@@ -81,6 +92,12 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
                 val jwt = jwtFromPayload(jwtPayload)
                 if (!authorization(command).authorize(jwt)) throw ForbiddenException()
                 val result = handler(command)
+                val secondaryAuthorization = secondaryAuthorization(result)
+                if (endpointConfig.httpMethod != HttpMethod.Get) {
+                    // Only GET endpoints can use secondary authorization.
+                    check(secondaryAuthorization is Authorization.Public)
+                }
+                if (!secondaryAuthorization(result).authorize(jwt)) throw ForbiddenException()
                 if (result == null) throw NotFoundException()
                 else call.respond(result)
             }
