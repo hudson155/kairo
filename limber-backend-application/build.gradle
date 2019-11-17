@@ -38,7 +38,6 @@ subprojects {
         dependencies {
             compile project(":limber-backend-application:$project.parent.name:api")
             compile project(":limber-backend-framework:core")
-            testCompile libs.mockk
             testCompile project(":limber-backend-framework:testing")
         }
     } else if (project.path.matches(':limber-backend-application:[a-z\\-]+')) {
