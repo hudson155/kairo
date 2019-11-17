@@ -22,12 +22,12 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
  */
 internal class CreateJwtClaimsRequest @Inject constructor(
     application: Application,
-    servincConfig: ServingConfig,
+    servingConfig: ServingConfig,
     private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
 ) : ApiEndpoint<CreateJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
     application = application,
-    pathPrefix = servincConfig.apiPathPrefix,
+    pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
