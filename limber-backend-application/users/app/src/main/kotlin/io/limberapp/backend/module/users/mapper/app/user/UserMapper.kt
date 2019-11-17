@@ -13,7 +13,8 @@ internal class UserMapper @Inject constructor() {
         firstName = model.firstName,
         lastName = model.lastName,
         emailAddress = model.emailAddress,
-        profilePhotoUrl = model.profilePhotoUrl
+        profilePhotoUrl = model.profilePhotoUrl,
+        roles = model.roles
     )
 
     fun model(entity: UserEntity) = UserModel(
@@ -23,7 +24,8 @@ internal class UserMapper @Inject constructor() {
         firstName = entity.firstName,
         lastName = entity.lastName,
         emailAddress = entity.emailAddress,
-        profilePhotoUrl = entity.profilePhotoUrl
+        profilePhotoUrl = entity.profilePhotoUrl,
+        roles = entity.roles
     )
 
     fun update(model: UserModel.Update) = UserEntity.Update(

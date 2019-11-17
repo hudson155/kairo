@@ -19,7 +19,8 @@ internal class UserMapper @Inject constructor(
         firstName = rep.firstName,
         lastName = rep.lastName,
         emailAddress = rep.emailAddress,
-        profilePhotoUrl = rep.profilePhotoUrl
+        profilePhotoUrl = rep.profilePhotoUrl,
+        roles = emptySet()
     )
 
     fun completeRep(model: UserModel) = UserRep.Complete(

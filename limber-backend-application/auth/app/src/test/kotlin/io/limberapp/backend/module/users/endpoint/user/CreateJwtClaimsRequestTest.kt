@@ -9,6 +9,7 @@ import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.framework.endpoint.authorization.jwt.Claims
+import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.mockk.every
 import org.junit.Test
 import java.time.LocalDateTime
@@ -36,7 +37,8 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
             firstName = "Summer",
             lastName = "Kavan",
             emailAddress = "jhudson@jhudson.ca",
-            profilePhotoUrl = null
+            profilePhotoUrl = null,
+            roles = setOf(JwtRole.SUPERUSER)
         )
 
         val org1 = OrgModel(
@@ -65,7 +67,7 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
                     "\"${Claims.orgs}\":\"{" +
                     "\\\"${org1.id}\\\":{\\\"name\\\":\\\"${org1.name}\\\"}" +
                     "}\"," +
-                    "\"${Claims.roles}\":\"[]\"," +
+                    "\"${Claims.roles}\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
                     "\"${Claims.user}\":\"{" +
                     "\\\"id\\\":\\\"${existingUser.id}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
@@ -101,7 +103,8 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
                     firstName = firstName,
                     lastName = lastName,
                     emailAddress = emailAddress,
-                    profilePhotoUrl = profilePhotoUrl
+                    profilePhotoUrl = profilePhotoUrl,
+                    roles = emptySet()
                 )
             }
         }
