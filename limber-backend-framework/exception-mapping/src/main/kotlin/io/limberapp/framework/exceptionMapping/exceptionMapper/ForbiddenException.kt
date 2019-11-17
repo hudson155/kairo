@@ -5,7 +5,7 @@ import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
-import io.limberapp.framework.error.notFound.NotFoundFrameworkError
+import io.limberapp.framework.error.forbidden.ForbiddenFrameworkError
 import io.limberapp.framework.exception.ForbiddenException
 import io.limberapp.framework.exceptionMapping.ExceptionMapper
 
@@ -16,8 +16,8 @@ internal class ForbiddenException :
         e: ForbiddenException
     ) {
         this.call.respond(
-            status = HttpStatusCode.NotFound,
-            message = NotFoundFrameworkError()
+            status = HttpStatusCode.Forbidden,
+            message = ForbiddenFrameworkError()
         )
     }
 }
