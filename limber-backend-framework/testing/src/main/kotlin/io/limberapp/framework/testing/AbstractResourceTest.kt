@@ -18,6 +18,7 @@ import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.endpoint.authorization.jwt.withJwt
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import io.limberapp.framework.util.uuidGenerator.DeterministicUuidGenerator
+import io.mockk.MockKAnnotations
 import org.junit.Before
 import java.time.Clock
 import java.time.Instant
@@ -95,6 +96,7 @@ abstract class AbstractResourceTest {
 
     @Before
     open fun before() {
+        MockKAnnotations.init(this)
         deterministicUuidGenerator.reset()
     }
 }
