@@ -11,6 +11,10 @@ import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
 import io.limberapp.framework.LimberApp
+import io.limberapp.framework.config.Config
+import io.limberapp.framework.config.jwt.JwtConfig
+import io.limberapp.framework.config.serving.ServingConfig
+import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.endpoint.EndpointConfig
 import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
@@ -32,6 +36,14 @@ private fun withLimberTestApp(limberApp: LimberApp<*>, test: TestApplicationEngi
 }
 
 abstract class AbstractResourceTest {
+
+    protected val config = object : Config {
+        override val serving = ServingConfig(
+            apiPathPrefix = "/",
+            staticFiles = StaticFiles(false)
+        )
+        override val jwt = JwtConfig(requireSignature = false)
+    }
 
     protected abstract val limberTest: LimberTest
 
