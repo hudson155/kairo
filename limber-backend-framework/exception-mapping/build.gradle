@@ -1,5 +1,6 @@
 dependencies {
     compile project(":limber-backend-framework:errors")
+    compile project(":limber-backend-framework:exceptions")
     compile project(":limber-backend-framework:validation")
     compile libs.jackson_kotlin
     compile libs.ktor_server_core
