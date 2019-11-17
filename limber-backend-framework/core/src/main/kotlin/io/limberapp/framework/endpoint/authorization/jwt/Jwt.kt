@@ -7,7 +7,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import java.util.UUID
 
-private object Claims {
+object Claims {
     const val orgs = "https://limberapp.io/orgs"
     const val roles = "https://limberapp.io/roles"
     const val user = "https://limberapp.io/user"
