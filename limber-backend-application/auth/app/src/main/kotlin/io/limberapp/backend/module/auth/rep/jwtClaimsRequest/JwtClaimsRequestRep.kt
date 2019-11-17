@@ -7,7 +7,7 @@ import io.limberapp.framework.validation.util.ifPresent
 import io.limberapp.framework.validation.util.shortText
 import io.limberapp.framework.validation.util.url
 
-private const val claimPrefix = "https://limberapp.io"
+private const val CLAIM_PREFIX = "https://limberapp.io"
 
 object JwtClaimsRequestRep {
 
@@ -26,11 +26,11 @@ object JwtClaimsRequestRep {
     }
 
     data class Complete(
-        @JsonProperty("$claimPrefix/orgs")
+        @JsonProperty("$CLAIM_PREFIX/orgs")
         val orgs: String,
-        @JsonProperty("$claimPrefix/roles")
+        @JsonProperty("$CLAIM_PREFIX/roles")
         val roles: String,
-        @JsonProperty("$claimPrefix/user")
+        @JsonProperty("$CLAIM_PREFIX/user")
         val user: String
     ) : Any()
 }
