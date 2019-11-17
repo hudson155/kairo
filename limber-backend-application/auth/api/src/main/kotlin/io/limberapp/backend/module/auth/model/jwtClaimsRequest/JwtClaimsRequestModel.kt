@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.model.jwtClaimsRequest
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.limberapp.framework.endpoint.authorization.jwt.Claims
 
 object JwtClaimsRequestModel {
 
@@ -12,11 +13,11 @@ object JwtClaimsRequestModel {
     )
 
     data class Complete(
-        @JsonProperty("https://limberapp.io/orgs")
+        @JsonProperty(Claims.orgs)
         val orgs: String,
-        @JsonProperty("https://limberapp.io/roles")
+        @JsonProperty(Claims.roles)
         val roles: String,
-        @JsonProperty("https://limberapp.io/user")
+        @JsonProperty(Claims.user)
         val user: String
     )
 }
