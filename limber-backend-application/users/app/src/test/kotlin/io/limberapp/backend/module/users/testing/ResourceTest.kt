@@ -9,6 +9,7 @@ import io.limberapp.framework.createClient
 import io.limberapp.framework.module.MainModule
 import io.limberapp.framework.module.MongoModule
 import io.limberapp.framework.testing.AbstractResourceTest
+import io.limberapp.framework.testing.LimberTest
 
 abstract class ResourceTest : AbstractResourceTest() {
 
