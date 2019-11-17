@@ -24,6 +24,7 @@ include ':limber-backend-application:users:app'
 
 include ':limber-backend-framework'
 include ':limber-backend-framework:core'
+include ':limber-backend-framework:core:api'
 include ':limber-backend-framework:data-conversion'
 include ':limber-backend-framework:entities'
 include ':limber-backend-framework:errors'
