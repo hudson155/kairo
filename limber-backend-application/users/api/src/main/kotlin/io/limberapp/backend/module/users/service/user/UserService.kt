@@ -11,7 +11,7 @@ interface UserService {
 
     fun getByEmailAddress(emailAddress: String): UserModel?
 
-    fun update(id: UUID, model: UserModel.Update): UserModel
+    fun update(id: UUID, update: UserModel.Update): UserModel
 
     fun delete(id: UUID)
 }

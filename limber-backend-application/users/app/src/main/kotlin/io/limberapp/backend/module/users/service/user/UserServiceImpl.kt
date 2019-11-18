@@ -26,9 +26,8 @@ internal class UserServiceImpl @Inject constructor(
         return userMapper.model(entity)
     }
 
-    override fun update(id: UUID, model: UserModel.Update): UserModel {
-        val update = userMapper.update(model)
-        val entity = userStore.update(id, update)
+    override fun update(id: UUID, update: UserModel.Update): UserModel {
+        val entity = userStore.update(id, userMapper.update(update))
         return userMapper.model(entity)
     }
 

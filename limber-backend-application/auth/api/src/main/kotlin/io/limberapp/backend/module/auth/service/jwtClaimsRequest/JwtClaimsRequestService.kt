@@ -5,5 +5,5 @@ import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestM
 
 interface JwtClaimsRequestService {
 
-    fun requestJwtClaims(model: JwtClaimsRequestModel): JwtClaimsModel
+    fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel
 }

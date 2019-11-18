@@ -29,9 +29,8 @@ internal class OrgServiceImpl @Inject constructor(
         return entities.map { orgMapper.model(it) }
     }
 
-    override fun update(id: UUID, model: OrgModel.Update): OrgModel {
-        val update = orgMapper.update(model)
-        val entity = orgStore.update(id, update)
+    override fun update(id: UUID, update: OrgModel.Update): OrgModel {
+        val entity = orgStore.update(id, orgMapper.update(update))
         return orgMapper.model(entity)
     }
 

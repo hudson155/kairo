@@ -12,7 +12,7 @@ interface OrgService {
 
     fun getByMemberId(memberId: UUID): List<OrgModel>
 
-    fun update(id: UUID, model: OrgModel.Update): OrgModel
+    fun update(id: UUID, update: OrgModel.Update): OrgModel
 
     fun createMembership(id: UUID, model: MembershipModel)
 
