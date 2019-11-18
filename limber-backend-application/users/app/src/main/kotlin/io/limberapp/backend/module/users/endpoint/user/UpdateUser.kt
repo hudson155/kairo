@@ -43,7 +43,7 @@ internal class UpdateUser @Inject constructor(
     override suspend fun handler(command: Command): UserRep.Complete {
         val model = userService.update(
             id = command.userId,
-            model = userMapper.update(command.updateRep)
+            update = userMapper.update(command.updateRep)
         )
         return userMapper.completeRep(model)
     }
