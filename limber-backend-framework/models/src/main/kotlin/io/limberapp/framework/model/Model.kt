@@ -15,16 +15,4 @@ abstract class CreationModel {
     abstract val version: Int
 }
 
-abstract class CompleteSubmodel {
-    abstract val created: LocalDateTime
-}
-
-abstract class CompleteModel {
-    abstract val id: UUID
-    abstract val created: LocalDateTime
-    abstract val version: Int
-}
-
-abstract class UpdateSubmodel
-
 abstract class UpdateModel
