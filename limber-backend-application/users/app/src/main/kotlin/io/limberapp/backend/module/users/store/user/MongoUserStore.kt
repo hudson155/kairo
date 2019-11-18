@@ -9,14 +9,14 @@ import org.litote.kmongo.eq
 
 internal class MongoUserStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : UserStore, MongoStore<UserEntity.Complete, UserEntity.Update>(
+) : UserStore, MongoStore<UserEntity, UserEntity.Update>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = UserEntity.collectionName,
-        clazz = UserEntity.Complete::class
+        clazz = UserEntity::class
     )
 ) {
 
     override fun getByEmailAddress(emailAddress: String) =
-        collection.findOne(UserEntity.Complete::emailAddress eq emailAddress)
+        collection.findOne(UserEntity::emailAddress eq emailAddress)
 }

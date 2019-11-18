@@ -9,7 +9,7 @@ internal class OrgMapper @Inject constructor(
     private val membershipMapper: MembershipMapper
 ) {
 
-    fun entity(model: OrgModel.Creation) = OrgEntity.Complete(
+    fun entity(model: OrgModel.Creation) = OrgEntity(
         id = model.id,
         created = model.created,
         version = model.version,
@@ -17,7 +17,7 @@ internal class OrgMapper @Inject constructor(
         members = model.members.map { membershipMapper.entity(it) }
     )
 
-    fun completeModel(entity: OrgEntity.Complete) = OrgModel.Complete(
+    fun completeModel(entity: OrgEntity) = OrgModel.Complete(
         id = entity.id,
         created = entity.created,
         version = entity.version,

@@ -15,31 +15,28 @@ import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoStore<OrgEntity.Complete, OrgEntity.Update>(
+) : OrgStore, MongoStore<OrgEntity, OrgEntity.Update>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.collectionName,
-        clazz = OrgEntity.Complete::class
+        clazz = OrgEntity::class
     )
 ) {
 
     override fun getByMemberId(memberId: UUID) =
-        collection.find(OrgEntity.Complete::members / MembershipEntity.Complete::userId eq memberId)
+        collection.find(OrgEntity::members / MembershipEntity::userId eq memberId)
 
-    override fun createMembership(id: UUID, entity: MembershipEntity.Complete) {
-        collection.findOneByIdAndUpdate(id, push(OrgEntity.Complete::members, entity))
+    override fun createMembership(id: UUID, entity: MembershipEntity) {
+        collection.findOneByIdAndUpdate(id, push(OrgEntity::members, entity))
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID) {
         collection.findOneAndUpdate(
             filter = and(
-                OrgEntity.Complete::id eq id,
-                OrgEntity.Complete::members / MembershipEntity.Complete::userId eq memberId
+                OrgEntity::id eq id,
+                OrgEntity::members / MembershipEntity::userId eq memberId
             ),
-            update = pullByFilter(
-                property = OrgEntity.Complete::members,
-                filter = MembershipEntity.Complete::userId eq memberId
-            )
+            update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
         )
     }
 }
