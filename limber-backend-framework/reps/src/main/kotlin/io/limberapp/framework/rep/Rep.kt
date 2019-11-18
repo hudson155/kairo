@@ -32,6 +32,4 @@ abstract class CompleteRep {
     abstract val created: LocalDateTime
 }
 
-abstract class UpdateSubrep : ValidatedRep()
-
 abstract class UpdateRep : ValidatedRep()
