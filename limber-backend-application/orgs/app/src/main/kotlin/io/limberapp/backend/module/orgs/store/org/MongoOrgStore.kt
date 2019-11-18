@@ -6,6 +6,7 @@ import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.framework.store.MongoCollection
 import io.limberapp.framework.store.MongoStore
+import org.litote.kmongo.and
 import org.litote.kmongo.div
 import org.litote.kmongo.eq
 import org.litote.kmongo.pullByFilter
@@ -31,6 +32,15 @@ internal class MongoOrgStore @Inject constructor(
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID) {
-        collection.findOneByIdAndUpdate(id, pullByFilter(OrgEntity.Complete::members, MembershipEntity.Complete::userId eq memberId))
+        collection.findOneAndUpdate(
+            filter = and(
+                OrgEntity.Complete::id eq id,
+                OrgEntity.Complete::members / MembershipEntity.Complete::userId eq memberId
+            ),
+            update = pullByFilter(
+                property = OrgEntity.Complete::members,
+                filter = MembershipEntity.Complete::userId eq memberId
+            )
+        )
     }
 }

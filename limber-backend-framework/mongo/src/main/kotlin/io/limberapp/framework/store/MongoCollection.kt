@@ -43,8 +43,12 @@ class MongoCollection<Complete : CompleteEntity>(
     }
 
     fun findOneByIdAndUpdate(id: UUID, update: Bson): Complete {
+        return findOneAndUpdate(KMongoUtil.idFilterQuery(id), update)
+    }
+
+    fun findOneAndUpdate(filter: Bson, update: Bson): Complete {
         val options = FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
-        return delegate.findOneAndUpdate(KMongoUtil.idFilterQuery(id), update, options)
+        return delegate.findOneAndUpdate(filter, update, options)
             ?: throw NotFoundException()
     }
 
