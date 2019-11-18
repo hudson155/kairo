@@ -2,7 +2,6 @@ package io.limberapp.framework.store
 
 import io.limberapp.framework.entity.CompleteEntity
 import io.limberapp.framework.entity.UpdateEntity
-import org.litote.kmongo.util.UpdateConfiguration
 import java.util.UUID
 
 /**
@@ -29,11 +28,5 @@ abstract class MongoStore<Complete : CompleteEntity, Update : UpdateEntity>(
 
     final override fun delete(id: UUID) {
         collection.findOneByIdAndDelete(id)
-    }
-
-    companion object {
-        init {
-            UpdateConfiguration.updateOnlyNotNullProperties = true
-        }
     }
 }

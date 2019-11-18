@@ -10,7 +10,6 @@ import org.bson.conversions.Bson
 import org.litote.kmongo.findOne
 import org.litote.kmongo.findOneById
 import org.litote.kmongo.util.KMongoUtil
-import org.litote.kmongo.util.UpdateConfiguration
 import java.util.UUID
 import kotlin.reflect.KClass
 
@@ -38,20 +37,15 @@ class MongoCollection<Complete : CompleteEntity>(
         return delegate.find(bson).toList()
     }
 
-    fun findOneByIdAndUpdate(id: UUID, update: Bson): Complete {
-        return findOneByIdAndUpdateInternal(id, update)
-    }
-
     fun findOneByIdAndUpdate(id: UUID, update: UpdateEntity): Complete {
-        return findOneByIdAndUpdateInternal(id, update)
+        val bson = KMongoUtil.toBsonModifier(update, updateOnlyNotNullProperties = true)
+        return findOneByIdAndUpdate(id, bson)
     }
 
-    private fun findOneByIdAndUpdateInternal(id: UUID, update: Any): Complete {
-        return delegate.findOneAndUpdate(
-            KMongoUtil.idFilterQuery(id),
-            KMongoUtil.toBsonModifier(update, UpdateConfiguration.updateOnlyNotNullProperties),
-            FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
-        ) ?: throw NotFoundException()
+    fun findOneByIdAndUpdate(id: UUID, update: Bson): Complete {
+        val options = FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
+        return delegate.findOneAndUpdate(KMongoUtil.idFilterQuery(id), update, options)
+            ?: throw NotFoundException()
     }
 
     fun findOneByIdAndDelete(id: UUID) {
