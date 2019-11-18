@@ -23,9 +23,8 @@ internal class MongoOrgStore @Inject constructor(
     )
 ) {
 
-    override fun getByMemberId(memberId: UUID): List<OrgEntity.Complete> {
-        return collection.find(OrgEntity.Complete::members / MembershipEntity.Complete::userId eq memberId)
-    }
+    override fun getByMemberId(memberId: UUID) =
+        collection.find(OrgEntity.Complete::members / MembershipEntity.Complete::userId eq memberId)
 
     override fun createMembership(id: UUID, entity: MembershipEntity.Complete) {
         collection.findOneByIdAndUpdate(id, push(OrgEntity.Complete::members, entity))

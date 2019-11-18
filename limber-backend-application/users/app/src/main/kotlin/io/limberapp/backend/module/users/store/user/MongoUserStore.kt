@@ -17,7 +17,6 @@ internal class MongoUserStore @Inject constructor(
     )
 ) {
 
-    override fun getByEmailAddress(emailAddress: String): UserEntity.Complete? {
-        return collection.findOne(UserEntity.Complete::emailAddress eq emailAddress)
-    }
+    override fun getByEmailAddress(emailAddress: String) =
+        collection.findOne(UserEntity.Complete::emailAddress eq emailAddress)
 }

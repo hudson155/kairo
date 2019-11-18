@@ -18,13 +18,10 @@ abstract class MongoStore<Complete : CompleteEntity, Update : UpdateEntity>(
         collection.insertOne(entity)
     }
 
-    final override fun get(id: UUID): Complete? {
-        return collection.findOneById(id)
-    }
+    final override fun get(id: UUID) = collection.findOneById(id)
 
-    final override fun update(id: UUID, update: Update): Complete {
-        return collection.findOneByIdAndUpdate(id, update)
-    }
+    final override fun update(id: UUID, update: Update) =
+        collection.findOneByIdAndUpdate(id, update)
 
     final override fun delete(id: UUID) {
         collection.findOneByIdAndDelete(id)
