@@ -20,6 +20,9 @@ ext {
             // https://github.com/junit-team/junit4/releases
             junit                  : '4.12',
 
+            // https://github.com/Litote/kmongo/releases
+            kmongo                 : '3.11.1',
+
             // https://github.com/ktorio/ktor/releases
             ktor                   : '1.2.4',
 
@@ -28,9 +31,6 @@ ext {
 
             // https://github.com/mockk/mockk/releases
             mockk                  : '1.9.3',
-
-            // https://mongodb.github.io/mongo-java-driver/
-            mongodb                : '3.11.0',
     ]
 
     libs = [
@@ -63,7 +63,7 @@ ext {
             logback_classic        : "ch.qos.logback:logback-classic:$versions.logback",
 
             // MongoDB
-            mongodb                : "org.mongodb:mongodb-driver-sync:$versions.mongodb",
+            kmongo                 : "org.litote.kmongo:kmongo:$versions.kmongo",
 
             // Google Cloud
             gcloud_kms             : "com.google.cloud:google-cloud-kms:$versions.gcloud_kms",

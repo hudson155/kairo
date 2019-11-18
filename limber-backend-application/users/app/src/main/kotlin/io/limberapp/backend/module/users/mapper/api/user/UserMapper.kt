@@ -12,7 +12,7 @@ internal class UserMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) {
 
-    fun creationModel(rep: UserRep.Creation) = UserModel.Creation(
+    fun model(rep: UserRep.Creation) = UserModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         version = 0,
@@ -22,7 +22,7 @@ internal class UserMapper @Inject constructor(
         profilePhotoUrl = rep.profilePhotoUrl
     )
 
-    fun completeRep(model: UserModel.Complete) = UserRep.Complete(
+    fun completeRep(model: UserModel) = UserRep.Complete(
         id = model.id,
         created = model.created,
         firstName = model.firstName,
@@ -31,7 +31,7 @@ internal class UserMapper @Inject constructor(
         profilePhotoUrl = model.profilePhotoUrl
     )
 
-    fun updateModel(rep: UserRep.Update) = UserModel.Update(
+    fun update(rep: UserRep.Update) = UserModel.Update(
         firstName = rep.firstName,
         lastName = rep.lastName
     )

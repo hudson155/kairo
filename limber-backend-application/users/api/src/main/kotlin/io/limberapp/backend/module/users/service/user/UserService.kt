@@ -5,13 +5,13 @@ import java.util.UUID
 
 interface UserService {
 
-    fun create(model: UserModel.Creation): UserModel.Complete
+    fun create(model: UserModel)
 
-    fun get(id: UUID): UserModel.Complete?
+    fun get(id: UUID): UserModel?
 
-    fun getByEmailAddress(emailAddress: String): UserModel.Complete?
+    fun getByEmailAddress(emailAddress: String): UserModel?
 
-    fun update(id: UUID, model: UserModel.Update): UserModel.Complete
+    fun update(id: UUID, update: UserModel.Update): UserModel
 
     fun delete(id: UUID)
 }

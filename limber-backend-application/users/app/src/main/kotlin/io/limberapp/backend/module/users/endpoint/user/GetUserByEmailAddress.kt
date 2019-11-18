@@ -38,8 +38,8 @@ internal class GetUserByEmailAddress @Inject constructor(
     override fun authorization(command: Command) = Authorization.AnyJwt
 
     override suspend fun handler(command: Command): UserRep.Complete? {
-        val completeModel = userService.getByEmailAddress(command.emailAddress) ?: return null
-        return userMapper.completeRep(completeModel)
+        val model = userService.getByEmailAddress(command.emailAddress) ?: return null
+        return userMapper.completeRep(model)
     }
 
     override fun secondaryAuthorization(response: UserRep.Complete?) =

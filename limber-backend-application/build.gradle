@@ -26,14 +26,13 @@ dependencies {
     compile libs.ktor_server_cio // Local
     compile libs.ktor_server_servlet // Google App Engine
     compile libs.logback_classic
-    compile libs.mongodb
+    compile libs.kmongo
 }
 
 subprojects {
     if (project.path.matches(':limber-backend-application:[a-z\\-]+:api')) {
         dependencies {
             compile libs.jackson_annotations
-            compile project(":limber-backend-framework:models")
         }
     } else if (project.path.matches(':limber-backend-application:[a-z\\-]+:app')) {
         dependencies {

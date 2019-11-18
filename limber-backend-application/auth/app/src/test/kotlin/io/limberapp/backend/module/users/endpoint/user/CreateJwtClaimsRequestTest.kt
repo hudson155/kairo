@@ -29,7 +29,7 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
             profilePhotoUrl = null
         )
 
-        val existingUser = UserModel.Complete(
+        val existingUser = UserModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
             version = 0,
@@ -39,13 +39,13 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
             profilePhotoUrl = null
         )
 
-        val org1 = OrgModel.Complete(
+        val org1 = OrgModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
             version = 0,
             name = "Cranky Pasta",
             members = listOf(
-                MembershipModel.Complete(LocalDateTime.now(fixedClock), existingUser.id)
+                MembershipModel(LocalDateTime.now(fixedClock), existingUser.id)
             )
         )
 
@@ -93,8 +93,8 @@ internal class CreateJwtClaimsRequestTest : ResourceTest(
         every {
             mockedServices[UserService::class].create(any())
         } answers {
-            with(arg(0) as UserModel.Creation) {
-                UserModel.Complete(
+            with(arg(0) as UserModel) {
+                UserModel(
                     id = id,
                     created = created,
                     version = version,

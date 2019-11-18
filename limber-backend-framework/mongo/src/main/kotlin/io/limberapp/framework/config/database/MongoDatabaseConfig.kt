@@ -7,7 +7,7 @@ import io.limberapp.framework.config.EncryptedValue
  * specify that the database is MongoDB, so if/when multiple databases are introduced, this should
  * be renamed.
  */
-data class DatabaseConfig(
+data class MongoDatabaseConfig(
     val protocol: Protocol,
     val host: String,
     val database: String,
@@ -25,7 +25,7 @@ data class DatabaseConfig(
     }
 
     companion object {
-        fun local(database: String) = DatabaseConfig(
+        fun local(database: String) = MongoDatabaseConfig(
             protocol = Protocol.MONGODB,
             host = "localhost",
             database = database,

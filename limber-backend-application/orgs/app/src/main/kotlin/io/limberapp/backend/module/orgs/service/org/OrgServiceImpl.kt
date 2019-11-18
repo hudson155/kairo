@@ -6,9 +6,6 @@ import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.store.org.OrgStore
-import io.limberapp.framework.store.create
-import io.limberapp.framework.store.get
-import io.limberapp.framework.store.update
 import java.util.UUID
 
 internal class OrgServiceImpl @Inject constructor(
@@ -17,31 +14,29 @@ internal class OrgServiceImpl @Inject constructor(
     private val orgMapper: OrgMapper
 ) : OrgService {
 
-    override fun create(model: OrgModel.Creation): OrgModel.Complete {
-        val creationEntity = orgMapper.creationEntity(model)
-        val completeEntity = orgStore.create(creationEntity)
-        return orgMapper.completeModel(completeEntity)
+    override fun create(model: OrgModel) {
+        val entity = orgMapper.entity(model)
+        orgStore.create(entity)
     }
 
-    override fun get(id: UUID): OrgModel.Complete? {
-        val completeEntity = orgStore.get(id) ?: return null
-        return orgMapper.completeModel(completeEntity)
+    override fun get(id: UUID): OrgModel? {
+        val entity = orgStore.get(id) ?: return null
+        return orgMapper.model(entity)
     }
 
-    override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
-        val completeEntities = orgStore.getByMemberId(memberId)
-        return completeEntities.map { orgMapper.completeModel(it) }
+    override fun getByMemberId(memberId: UUID): List<OrgModel> {
+        val entities = orgStore.getByMemberId(memberId)
+        return entities.map { orgMapper.model(it) }
     }
 
-    override fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete {
-        val updateEntity = orgMapper.updateEntity(model)
-        val completeEntity = orgStore.update(id, updateEntity)
-        return orgMapper.completeModel(completeEntity)
+    override fun update(id: UUID, update: OrgModel.Update): OrgModel {
+        val entity = orgStore.update(id, orgMapper.update(update))
+        return orgMapper.model(entity)
     }
 
-    override fun createMembership(id: UUID, model: MembershipModel.Creation) {
-        val creationEntity = membershipMapper.creationEntity(model)
-        orgStore.createMembership(id, creationEntity)
+    override fun createMembership(id: UUID, model: MembershipModel) {
+        val entity = membershipMapper.entity(model)
+        orgStore.createMembership(id, entity)
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID) {

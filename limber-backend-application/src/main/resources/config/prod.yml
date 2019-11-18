@@ -1,4 +1,4 @@
-database:
+mongoDatabase:
   protocol: MONGODB_SRV
   host: cluster0-pct9z.gcp.mongodb.net
   database: limberapp

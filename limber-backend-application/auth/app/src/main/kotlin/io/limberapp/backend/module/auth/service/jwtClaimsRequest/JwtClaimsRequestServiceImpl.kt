@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
+import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -23,43 +24,38 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     private val objectMapper = LimberObjectMapper()
 
-    override fun requestJwtClaims(model: JwtClaimsRequestModel.Creation): JwtClaimsRequestModel.Complete {
-        val user = getOrCreateUser(model)
+    override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
+        val user = getOrCreateUser(request)
         val orgs = orgService.getByMemberId(user.id)
         val jwt = createJwt(user, orgs)
         return convertJwtToModel(jwt)
     }
 
-    private fun getOrCreateUser(model: JwtClaimsRequestModel.Creation): UserModel.Complete {
-        val existingUserAccount = userService.getByEmailAddress(model.emailAddress)
-        if (existingUserAccount != null) return existingUserAccount
-        return userService.create(
-            UserModel.Creation(
-                id = uuidGenerator.generate(),
-                created = LocalDateTime.now(clock),
-                version = 0,
-                firstName = model.firstName,
-                lastName = model.lastName,
-                emailAddress = model.emailAddress,
-                profilePhotoUrl = model.profilePhotoUrl
-            )
+    private fun getOrCreateUser(request: JwtClaimsRequestModel): UserModel {
+        val existingUser = userService.getByEmailAddress(request.emailAddress)
+        if (existingUser != null) return existingUser
+        val newUser = UserModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            version = 0,
+            firstName = request.firstName,
+            lastName = request.lastName,
+            emailAddress = request.emailAddress,
+            profilePhotoUrl = request.profilePhotoUrl
         )
+        userService.create(newUser)
+        return newUser
     }
 
-    private fun createJwt(
-        user: UserModel.Complete,
-        orgs: List<OrgModel.Complete>
-    ) = Jwt(
+    private fun createJwt(user: UserModel, orgs: List<OrgModel>) = Jwt(
         orgs = orgs.associate { Pair(it.id, JwtOrg(it.name)) },
         roles = emptySet(),
         user = JwtUser(user.id, user.firstName, user.lastName)
     )
 
-    private fun convertJwtToModel(jwt: Jwt): JwtClaimsRequestModel.Complete {
-        return JwtClaimsRequestModel.Complete(
-            orgs = objectMapper.writeValueAsString(jwt.orgs),
-            roles = objectMapper.writeValueAsString(jwt.roles),
-            user = objectMapper.writeValueAsString(jwt.user)
-        )
-    }
+    private fun convertJwtToModel(jwt: Jwt): JwtClaimsModel = JwtClaimsModel(
+        orgs = objectMapper.writeValueAsString(jwt.orgs),
+        roles = objectMapper.writeValueAsString(jwt.roles),
+        user = objectMapper.writeValueAsString(jwt.user)
+    )
 }
