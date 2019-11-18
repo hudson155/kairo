@@ -27,8 +27,7 @@ abstract class MongoStore<Complete : CompleteEntity, Update : UpdateEntity>(
     }
 
     final override fun update(id: UUID, update: Update): Complete {
-        return collection.findOneByIdAndUpdate(id, update)
-            ?: throw NotFoundException()
+        return collection.findOneByIdAndUpdate(id, update) ?: throw NotFoundException()
     }
 
     final override fun delete(id: UUID) {
