@@ -1,10 +1,7 @@
 package io.limberapp.framework.store
 
-import com.mongodb.client.MongoCollection
-import io.ktor.features.NotFoundException
 import io.limberapp.framework.entity.CompleteEntity
 import io.limberapp.framework.entity.UpdateEntity
-import org.litote.kmongo.findOneById
 import org.litote.kmongo.util.UpdateConfiguration
 import java.util.UUID
 
@@ -27,11 +24,11 @@ abstract class MongoStore<Complete : CompleteEntity, Update : UpdateEntity>(
     }
 
     final override fun update(id: UUID, update: Update): Complete {
-        return collection.findOneByIdAndUpdate(id, update) ?: throw NotFoundException()
+        return collection.findOneByIdAndUpdate(id, update)
     }
 
     final override fun delete(id: UUID) {
-        collection.findOneByIdAndDelete(id) ?: throw NotFoundException()
+        collection.findOneByIdAndDelete(id)
     }
 
     companion object {
