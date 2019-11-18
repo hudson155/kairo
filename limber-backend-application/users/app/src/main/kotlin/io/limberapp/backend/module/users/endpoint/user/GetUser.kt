@@ -39,8 +39,8 @@ internal class GetUser @Inject constructor(
     override fun authorization(command: Command) = Authorization.User(command.userId)
 
     override suspend fun handler(command: Command): UserRep.Complete? {
-        val completeModel = userService.get(command.userId) ?: return null
-        return userMapper.completeRep(completeModel)
+        val model = userService.get(command.userId) ?: return null
+        return userMapper.completeRep(model)
     }
 
     companion object {

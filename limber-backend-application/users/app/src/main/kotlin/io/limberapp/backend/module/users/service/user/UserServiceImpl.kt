@@ -11,26 +11,25 @@ internal class UserServiceImpl @Inject constructor(
     private val userMapper: UserMapper
 ) : UserService {
 
-    override fun create(model: UserModel.Creation): UserModel.Complete {
+    override fun create(model: UserModel) {
         val entity = userMapper.entity(model)
         userStore.create(entity)
-        return userMapper.completeModel(entity)
     }
 
-    override fun get(id: UUID): UserModel.Complete? {
+    override fun get(id: UUID): UserModel? {
         val entity = userStore.get(id) ?: return null
-        return userMapper.completeModel(entity)
+        return userMapper.model(entity)
     }
 
-    override fun getByEmailAddress(emailAddress: String): UserModel.Complete? {
+    override fun getByEmailAddress(emailAddress: String): UserModel? {
         val entity = userStore.getByEmailAddress(emailAddress) ?: return null
-        return userMapper.completeModel(entity)
+        return userMapper.model(entity)
     }
 
-    override fun update(id: UUID, model: UserModel.Update): UserModel.Complete {
+    override fun update(id: UUID, model: UserModel.Update): UserModel {
         val update = userMapper.update(model)
         val entity = userStore.update(id, update)
-        return userMapper.completeModel(entity)
+        return userMapper.model(entity)
     }
 
     override fun delete(id: UUID) = userStore.delete(id)

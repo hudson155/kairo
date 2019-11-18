@@ -6,7 +6,7 @@ import io.limberapp.backend.module.users.model.user.UserModel
 
 internal class UserMapper @Inject constructor() {
 
-    fun entity(model: UserModel.Creation) = UserEntity(
+    fun entity(model: UserModel) = UserEntity(
         id = model.id,
         created = model.created,
         version = model.version,
@@ -16,7 +16,7 @@ internal class UserMapper @Inject constructor() {
         profilePhotoUrl = model.profilePhotoUrl
     )
 
-    fun completeModel(entity: UserEntity) = UserModel.Complete(
+    fun model(entity: UserEntity) = UserModel(
         id = entity.id,
         created = entity.created,
         version = entity.version,

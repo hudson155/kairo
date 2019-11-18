@@ -14,29 +14,28 @@ internal class OrgServiceImpl @Inject constructor(
     private val orgMapper: OrgMapper
 ) : OrgService {
 
-    override fun create(model: OrgModel.Creation): OrgModel.Complete {
+    override fun create(model: OrgModel) {
         val entity = orgMapper.entity(model)
         orgStore.create(entity)
-        return orgMapper.completeModel(entity)
     }
 
-    override fun get(id: UUID): OrgModel.Complete? {
+    override fun get(id: UUID): OrgModel? {
         val entity = orgStore.get(id) ?: return null
-        return orgMapper.completeModel(entity)
+        return orgMapper.model(entity)
     }
 
-    override fun getByMemberId(memberId: UUID): List<OrgModel.Complete> {
+    override fun getByMemberId(memberId: UUID): List<OrgModel> {
         val entities = orgStore.getByMemberId(memberId)
-        return entities.map { orgMapper.completeModel(it) }
+        return entities.map { orgMapper.model(it) }
     }
 
-    override fun update(id: UUID, model: OrgModel.Update): OrgModel.Complete {
+    override fun update(id: UUID, model: OrgModel.Update): OrgModel {
         val update = orgMapper.update(model)
         val entity = orgStore.update(id, update)
-        return orgMapper.completeModel(entity)
+        return orgMapper.model(entity)
     }
 
-    override fun createMembership(id: UUID, model: MembershipModel.Creation) {
+    override fun createMembership(id: UUID, model: MembershipModel) {
         val entity = membershipMapper.entity(model)
         orgStore.createMembership(id, entity)
     }

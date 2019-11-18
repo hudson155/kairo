@@ -41,11 +41,11 @@ internal class UpdateUser @Inject constructor(
     override fun authorization(command: Command) = Authorization.User(command.userId)
 
     override suspend fun handler(command: Command): UserRep.Complete {
-        val completeModel = userService.update(
+        val model = userService.update(
             id = command.userId,
-            model = userMapper.updateModel(command.updateRep)
+            model = userMapper.update(command.updateRep)
         )
-        return userMapper.completeRep(completeModel)
+        return userMapper.completeRep(model)
     }
 
     companion object {

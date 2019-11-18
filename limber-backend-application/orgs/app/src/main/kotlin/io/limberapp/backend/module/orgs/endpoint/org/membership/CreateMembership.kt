@@ -43,7 +43,7 @@ internal class CreateMembership @Inject constructor(
     override suspend fun handler(command: Command) {
         orgService.createMembership(
             id = command.orgId,
-            model = membershipMapper.creationModel(command.creationRep)
+            model = membershipMapper.model(command.creationRep)
         )
     }
 

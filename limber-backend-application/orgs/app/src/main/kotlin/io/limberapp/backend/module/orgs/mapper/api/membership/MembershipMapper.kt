@@ -10,12 +10,12 @@ internal class MembershipMapper @Inject constructor(
     private val clock: Clock
 ) {
 
-    fun creationModel(rep: MembershipRep.Creation) = MembershipModel.Creation(
+    fun model(rep: MembershipRep.Creation) = MembershipModel(
         created = LocalDateTime.now(clock),
         userId = rep.userId
     )
 
-    fun completeRep(model: MembershipModel.Complete) = MembershipRep.Complete(
+    fun completeRep(model: MembershipModel) = MembershipRep.Complete(
         created = model.created,
         userId = model.userId
     )

@@ -38,8 +38,9 @@ internal class CreateOrg @Inject constructor(
     override fun authorization(command: Command) = Authorization.Superuser
 
     override suspend fun handler(command: Command): OrgRep.Complete {
-        val completeModel = orgService.create(orgMapper.creationModel(command.creationRep))
-        return orgMapper.completeRep(completeModel)
+        val model = orgMapper.model(command.creationRep)
+        orgService.create(model)
+        return orgMapper.completeRep(model)
     }
 
     companion object {

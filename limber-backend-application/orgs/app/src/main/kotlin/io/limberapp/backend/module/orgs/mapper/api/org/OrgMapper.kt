@@ -14,7 +14,7 @@ internal class OrgMapper @Inject constructor(
     private val membershipMapper: MembershipMapper
 ) {
 
-    fun creationModel(rep: OrgRep.Creation) = OrgModel.Creation(
+    fun model(rep: OrgRep.Creation) = OrgModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         version = 0,
@@ -22,14 +22,14 @@ internal class OrgMapper @Inject constructor(
         members = emptyList()
     )
 
-    fun completeRep(model: OrgModel.Complete) = OrgRep.Complete(
+    fun completeRep(model: OrgModel) = OrgRep.Complete(
         id = model.id,
         created = model.created,
         name = model.name,
         members = model.members.map { membershipMapper.completeRep(it) }
     )
 
-    fun updateModel(rep: OrgRep.Update) = OrgModel.Update(
+    fun update(rep: OrgRep.Update) = OrgModel.Update(
         name = rep.name
     )
 }

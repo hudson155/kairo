@@ -43,9 +43,9 @@ internal class CreateJwtClaimsRequest @Inject constructor(
     override fun authorization(command: Command) = Authorization.Public
 
     override suspend fun handler(command: Command): JwtClaimsRequestRep.Complete {
-        val creationModel = jwtClaimsRequestMapper.creationModel(command.creationRep)
-        val completeModel = jwtClaimsRequestService.requestJwtClaims(creationModel)
-        return jwtClaimsRequestMapper.completeRep(completeModel)
+        val requestModel = jwtClaimsRequestMapper.model(command.creationRep)
+        val claimsModel = jwtClaimsRequestService.requestJwtClaims(requestModel)
+        return jwtClaimsRequestMapper.completeRep(claimsModel)
     }
 
     companion object {
