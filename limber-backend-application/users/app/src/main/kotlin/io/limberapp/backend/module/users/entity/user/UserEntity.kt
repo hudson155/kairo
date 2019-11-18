@@ -1,25 +1,17 @@
 package io.limberapp.backend.module.users.entity.user
 
 import io.limberapp.framework.entity.CompleteEntity
-import io.limberapp.framework.entity.CreationEntity
 import io.limberapp.framework.entity.UpdateEntity
+import org.bson.codecs.pojo.annotations.BsonId
 import java.time.LocalDateTime
 import java.util.UUID
 
 object UserEntity {
 
-    data class Creation(
-        override val id: UUID,
-        override val created: LocalDateTime,
-        override val version: Int,
-        val firstName: String?,
-        val lastName: String?,
-        val emailAddress: String,
-        val profilePhotoUrl: String?
-    ) : CreationEntity()
+    const val collectionName = "User"
 
     data class Complete(
-        override val id: UUID,
+        @BsonId override val id: UUID,
         override val created: LocalDateTime,
         override val version: Int,
         val firstName: String?,

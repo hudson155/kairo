@@ -6,7 +6,7 @@ import io.limberapp.backend.module.orgs.model.org.MembershipModel
 
 internal class MembershipMapper @Inject constructor() {
 
-    fun creationEntity(model: MembershipModel.Creation) = MembershipEntity.Creation(
+    fun entity(model: MembershipModel.Creation) = MembershipEntity.Complete(
         created = model.created,
         userId = model.userId
     )
