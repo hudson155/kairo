@@ -2,10 +2,10 @@ package io.limberapp.framework
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClient
-import io.limberapp.framework.config.database.DatabaseConfig
+import io.limberapp.framework.config.database.MongoDatabaseConfig
 import org.litote.kmongo.KMongo
 
-fun DatabaseConfig.createClient(): MongoClient {
+fun MongoDatabaseConfig.createClient(): MongoClient {
     val credentials = user?.let {
         listOfNotNull(it, password?.decryptedValue).joinToString(":")
     }

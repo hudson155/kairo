@@ -14,7 +14,7 @@ internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
 
     override fun getMainModules(application: Application) = listOf(
         MainModule.forProduction(application, config),
-        MongoModule(config.database)
+        MongoModule(config.mongoDatabase)
     )
 
     override val modules = listOf(

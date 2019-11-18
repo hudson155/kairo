@@ -1,12 +1,12 @@
 package io.limberapp.framework.module
 
-import io.limberapp.framework.config.database.DatabaseConfig
+import io.limberapp.framework.config.database.MongoDatabaseConfig
 import io.limberapp.framework.createClient
 
-class TestMongoModule : MongoModule(DatabaseConfig.local("limberapptest")) {
+class TestMongoModule : MongoModule(MongoDatabaseConfig.local("limberapptest")) {
 
     fun dropDatabase() {
-        val mongoClient = databaseConfig.createClient()
-        mongoClient.getDatabase(databaseConfig.database).drop()
+        val mongoClient = mongoDatabaseConfig.createClient()
+        mongoClient.getDatabase(mongoDatabaseConfig.database).drop()
     }
 }

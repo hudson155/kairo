@@ -1,7 +1,7 @@
 package io.limberapp.backend
 
 import io.limberapp.framework.config.Config
-import io.limberapp.framework.config.database.DatabaseConfig
+import io.limberapp.framework.config.database.MongoDatabaseConfig
 import io.limberapp.framework.config.jwt.JwtConfig
 import io.limberapp.framework.config.serving.ServingConfig
 
@@ -10,7 +10,7 @@ import io.limberapp.framework.config.serving.ServingConfig
  * configuration.
  */
 data class Config(
-    val database: DatabaseConfig,
+    val mongoDatabase: MongoDatabaseConfig,
     override val jwt: JwtConfig,
     override val serving: ServingConfig
 ) : Config
