@@ -10,7 +10,6 @@ const orgsReducer = (state: OrgsState = defaultState, abstractAction: OrgsAction
       return { ...state, loadingStatus: 'LOADED', orgs: action.orgs };
     }
     case 'OrgsStartLoading': {
-      const action = abstractAction as OrgsStartLoadingAction;
       return { ...state, loadingStatus: 'LOADING' };
     }
     default:
