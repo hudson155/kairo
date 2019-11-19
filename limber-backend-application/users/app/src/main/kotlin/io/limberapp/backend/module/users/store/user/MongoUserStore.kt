@@ -16,9 +16,9 @@ internal class MongoUserStore @Inject constructor(
         collectionName = UserEntity.collectionName,
         clazz = UserEntity::class
     ),
-    indices = listOf<MongoCollection<UserEntity>.() -> Unit>(
-        { ensureIndex(ascending(UserEntity::emailAddress), unique = true) }
-    )
+    indices = listOf<MongoCollection<UserEntity>.() -> Unit> {
+        ensureIndex(ascending(UserEntity::emailAddress), unique = true)
+    }
 ) {
 
     override fun getByEmailAddress(emailAddress: String) =

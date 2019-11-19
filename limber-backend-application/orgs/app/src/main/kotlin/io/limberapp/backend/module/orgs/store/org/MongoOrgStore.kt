@@ -23,9 +23,9 @@ internal class MongoOrgStore @Inject constructor(
         collectionName = OrgEntity.collectionName,
         clazz = OrgEntity::class
     ),
-    indices = listOf<MongoCollection<OrgEntity>.() -> Unit>(
-        { ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false) }
-    )
+    indices = listOf<MongoCollection<OrgEntity>.() -> Unit> {
+        ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false)
+    }
 ) {
 
     override fun getByMemberId(memberId: UUID) =
