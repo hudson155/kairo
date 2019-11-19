@@ -64,6 +64,8 @@ subprojects {
         compile libs.kotlin_reflect
         compile libs.kotlin_stdlib_jdk8
     }
+
+    archivesBaseName = project.path.replaceFirst(':', '').replace(':', '-')
 }
 
 repositories {
