@@ -16,7 +16,7 @@ internal class MongoUserStore @Inject constructor(
         collectionName = UserEntity.collectionName,
         clazz = UserEntity::class
     ),
-    indices = listOf(
+    indices = listOf<MongoCollection<UserEntity>.() -> Unit>(
         { ensureIndex(ascending(UserEntity::emailAddress), unique = true) }
     )
 ) {
