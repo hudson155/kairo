@@ -7,6 +7,7 @@ import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.framework.store.MongoCollection
 import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
+import org.litote.kmongo.ascending
 import org.litote.kmongo.div
 import org.litote.kmongo.eq
 import org.litote.kmongo.ne
@@ -21,7 +22,10 @@ internal class MongoOrgStore @Inject constructor(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.collectionName,
         clazz = OrgEntity::class
-    )
+    ),
+    indices = listOf<MongoCollection<OrgEntity>.() -> Unit> {
+        ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false)
+    }
 ) {
 
     override fun getByMemberId(memberId: UUID) =

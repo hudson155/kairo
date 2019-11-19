@@ -8,8 +8,13 @@ import java.util.UUID
  * MongoStore is an implementation of Store for MongoDB. It implements some default methods.
  */
 abstract class MongoStore<Complete : CompleteEntity, Update : UpdateEntity>(
-    protected val collection: MongoCollection<Complete>
+    protected val collection: MongoCollection<Complete>,
+    indices: List<MongoCollection<Complete>.() -> Unit>
 ) : Store<Complete, Update> {
+
+    init {
+        indices.forEach { collection.it() }
+    }
 
     final override fun create(entity: Complete) {
         collection.insertOne(entity)
