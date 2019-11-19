@@ -9,7 +9,7 @@ internal interface OrgStore : Store<OrgEntity, OrgEntity.Update> {
 
     fun getByMemberId(memberId: UUID): List<OrgEntity>
 
-    fun createMembership(id: UUID, entity: MembershipEntity)
+    fun createMembership(id: UUID, entity: MembershipEntity): Unit?
 
-    fun deleteMembership(id: UUID, memberId: UUID)
+    fun deleteMembership(id: UUID, memberId: UUID): Unit?
 }

@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.users.service.user
 
 import com.google.inject.Inject
+import io.ktor.features.NotFoundException
 import io.limberapp.backend.module.users.mapper.app.user.UserMapper
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.store.user.UserStore
@@ -27,9 +28,9 @@ internal class UserServiceImpl @Inject constructor(
     }
 
     override fun update(id: UUID, update: UserModel.Update): UserModel {
-        val entity = userStore.update(id, userMapper.update(update))
+        val entity = userStore.update(id, userMapper.update(update)) ?: throw NotFoundException()
         return userMapper.model(entity)
     }
 
-    override fun delete(id: UUID) = userStore.delete(id)
+    override fun delete(id: UUID) = userStore.delete(id) ?: throw NotFoundException()
 }
