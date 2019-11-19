@@ -9,6 +9,7 @@ import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.div
 import org.litote.kmongo.eq
+import org.litote.kmongo.ne
 import org.litote.kmongo.pullByFilter
 import org.litote.kmongo.push
 import java.util.UUID
@@ -27,7 +28,13 @@ internal class MongoOrgStore @Inject constructor(
         collection.find(OrgEntity::members / MembershipEntity::userId eq memberId)
 
     override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
-        return collection.findOneByIdAndUpdate(id, push(OrgEntity::members, entity))?.let { Unit }
+        return collection.findOneAndUpdate(
+            filter = and(
+                OrgEntity::id eq id,
+                OrgEntity::members / MembershipEntity::userId ne entity.userId
+            ),
+            update = push(OrgEntity::members, entity)
+        )?.let { Unit }
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID): Unit? {

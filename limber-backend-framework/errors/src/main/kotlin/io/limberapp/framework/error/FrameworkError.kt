@@ -13,6 +13,7 @@ interface FrameworkError {
      * unique.
      */
     enum class Key {
+        CONFLICT,
         FORBIDDEN,
         INTERNAL,
         MALFORMED_PROPERTY,

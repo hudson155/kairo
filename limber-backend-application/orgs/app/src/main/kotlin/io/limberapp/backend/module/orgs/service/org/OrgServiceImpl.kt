@@ -1,12 +1,13 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import io.ktor.features.NotFoundException
 import io.limberapp.backend.module.orgs.mapper.app.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.store.org.OrgStore
+import io.limberapp.framework.exception.ConflictException
+import io.limberapp.framework.exception.NotFoundException
 import java.util.UUID
 
 internal class OrgServiceImpl @Inject constructor(
@@ -36,8 +37,9 @@ internal class OrgServiceImpl @Inject constructor(
     }
 
     override fun createMembership(id: UUID, model: MembershipModel) {
+        get(id) ?: throw NotFoundException()
         val entity = membershipMapper.entity(model)
-        orgStore.createMembership(id, entity) ?: throw NotFoundException()
+        orgStore.createMembership(id, entity) ?: throw ConflictException()
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID) {
