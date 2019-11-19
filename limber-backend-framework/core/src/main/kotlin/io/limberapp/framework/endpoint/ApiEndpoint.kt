@@ -7,7 +7,6 @@ import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
 import io.ktor.auth.jwt.JWTPrincipal
 import io.ktor.features.MissingRequestParameterException
-import io.ktor.features.NotFoundException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
 import io.ktor.http.HttpMethod
@@ -21,6 +20,7 @@ import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.exception.ForbiddenException
+import io.limberapp.framework.exception.NotFoundException
 import io.limberapp.framework.rep.ValidatedRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast

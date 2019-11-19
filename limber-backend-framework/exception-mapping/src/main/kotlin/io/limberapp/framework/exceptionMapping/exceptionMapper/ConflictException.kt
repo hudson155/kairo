@@ -5,19 +5,20 @@ import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
+import io.limberapp.framework.error.conflict.ConflictFrameworkError
 import io.limberapp.framework.error.notFound.NotFoundFrameworkError
-import io.limberapp.framework.exception.NotFoundException
+import io.limberapp.framework.exception.ConflictException
 import io.limberapp.framework.exceptionMapping.ExceptionMapper
 
-internal class NotFoundException :
-    ExceptionMapper<NotFoundException>() {
+internal class ConflictException :
+    ExceptionMapper<ConflictException>() {
 
     override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: NotFoundException
+        e: ConflictException
     ) {
         this.call.respond(
-            status = HttpStatusCode.NotFound,
-            message = NotFoundFrameworkError()
+            status = HttpStatusCode.Conflict,
+            message = ConflictFrameworkError()
         )
     }
 }
