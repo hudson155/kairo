@@ -3,6 +3,7 @@ package io.limberapp.backend
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.application.Application
+import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.framework.LimberApp
@@ -18,6 +19,7 @@ internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
     )
 
     override val modules = listOf(
+        AuthModule(),
         OrgsModule(),
         UsersModule()
     )

@@ -18,6 +18,7 @@ dependencies {
 
     compile project(":limber-backend-framework")
 
+    compile project(":limber-backend-application:auth:app")
     compile project(":limber-backend-application:orgs:app")
     compile project(":limber-backend-application:users:app")
 
