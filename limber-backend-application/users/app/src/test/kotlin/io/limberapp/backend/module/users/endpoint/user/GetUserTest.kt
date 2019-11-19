@@ -47,7 +47,8 @@ internal class GetUserTest : ResourceTest() {
                 firstName = creationRep.firstName,
                 lastName = creationRep.lastName,
                 emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl
+                profilePhotoUrl = creationRep.profilePhotoUrl,
+                roles = emptySet()
             )
             assertEquals(expected, actual)
         }
