@@ -40,19 +40,7 @@ internal class RemoveUserRoleTest : ResourceTest() {
         limberTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
-        ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            val expected = UserRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                firstName = creationRep.firstName,
-                lastName = creationRep.lastName,
-                emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl,
-                roles = emptySet()
-            )
-            assertEquals(expected, actual)
-        }
+        ) {}
 
         limberTest.test(
             endpointConfig = AddUserRole.endpointConfig,
@@ -102,19 +90,7 @@ internal class RemoveUserRoleTest : ResourceTest() {
         limberTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
-        ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            val expected = UserRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                firstName = creationRep.firstName,
-                lastName = creationRep.lastName,
-                emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl,
-                roles = emptySet()
-            )
-            assertEquals(expected, actual)
-        }
+        ) {}
 
         limberTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
