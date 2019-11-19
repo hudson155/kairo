@@ -5,6 +5,8 @@ import io.limberapp.backend.module.users.endpoint.user.DeleteUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
 import io.limberapp.backend.module.users.endpoint.user.UpdateUser
+import io.limberapp.backend.module.users.endpoint.user.role.AddUserRole
+import io.limberapp.backend.module.users.endpoint.user.role.RemoveUserRole
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.service.user.UserServiceImpl
 import io.limberapp.backend.module.users.store.user.MongoUserStore
@@ -25,6 +27,8 @@ class UsersModule : Module() {
         GetUser::class.java,
         GetUserByEmailAddress::class.java,
         UpdateUser::class.java,
+        AddUserRole::class.java,
+        RemoveUserRole::class.java,
         DeleteUser::class.java
     )
 

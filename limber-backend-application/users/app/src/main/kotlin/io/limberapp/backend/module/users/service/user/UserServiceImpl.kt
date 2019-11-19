@@ -4,6 +4,8 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.users.mapper.app.user.UserMapper
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.store.user.UserStore
+import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
+import io.limberapp.framework.exception.ConflictException
 import io.limberapp.framework.exception.NotFoundException
 import java.util.UUID
 
@@ -30,6 +32,16 @@ internal class UserServiceImpl @Inject constructor(
     override fun update(id: UUID, update: UserModel.Update): UserModel {
         val entity = userStore.update(id, userMapper.update(update)) ?: throw NotFoundException()
         return userMapper.model(entity)
+    }
+
+    override fun addRole(userId: UUID, roleName: JwtRole) {
+        userStore.get(userId) ?: throw NotFoundException()
+        return userStore.addRole(userId, roleName) ?: throw ConflictException()
+    }
+
+    override fun removeRole(userId: UUID, roleName: JwtRole) {
+        userStore.get(userId) ?: throw NotFoundException()
+        return userStore.removeRole(userId, roleName) ?: throw ConflictException()
     }
 
     override fun delete(id: UUID) = userStore.delete(id) ?: throw NotFoundException()
