@@ -97,8 +97,6 @@ workflows:
       # Deployment
       - web-build:
           requires: [web-test]
-          filters:
-            branches: { only: [master] }
       - deploy:
           requires:
             - backend-test
@@ -172,6 +170,8 @@ jobs:
 
   web-build:
     docker: [*image_node]
+    environment:
+      CI: false # https://github.com/facebook/create-react-app/issues/3657
     working_directory: ~/limber/limber-web
     steps:
       - *checkout
