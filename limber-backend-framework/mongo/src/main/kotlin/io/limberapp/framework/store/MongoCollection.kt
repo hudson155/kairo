@@ -2,10 +2,12 @@ package io.limberapp.framework.store
 
 import com.mongodb.client.MongoDatabase
 import com.mongodb.client.model.FindOneAndUpdateOptions
+import com.mongodb.client.model.IndexOptions
 import com.mongodb.client.model.ReturnDocument
 import io.limberapp.framework.entity.CompleteEntity
 import io.limberapp.framework.entity.UpdateEntity
 import org.bson.conversions.Bson
+import org.litote.kmongo.ensureIndex
 import org.litote.kmongo.findOne
 import org.litote.kmongo.findOneById
 import org.litote.kmongo.util.KMongoUtil
@@ -19,6 +21,10 @@ class MongoCollection<Complete : CompleteEntity>(
 ) {
 
     private val delegate = mongoDatabase.getCollection(collectionName, clazz.java)
+
+    fun ensureIndex(index: Bson, unique: Boolean) {
+        delegate.ensureIndex(index, IndexOptions().unique(unique).background(true))
+    }
 
     fun insertOne(entity: Complete) {
         delegate.insertOne(entity)
