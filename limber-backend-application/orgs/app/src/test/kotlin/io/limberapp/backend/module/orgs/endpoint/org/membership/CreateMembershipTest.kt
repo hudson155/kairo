@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org.membership
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
@@ -44,5 +45,30 @@ internal class CreateMembershipTest : ResourceTest() {
             )
             assertEquals(expected, actual)
         }
+    }
+
+    @Test
+    fun createDuplicate() {
+
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val orgId = deterministicUuidGenerator[0]
+        limberTest.test(
+            endpointConfig = CreateOrg.endpointConfig,
+            body = orgCreationRep
+        ) {}
+
+        val userId = UUID.randomUUID()
+        val membershipCreationRep = MembershipRep.Creation(userId)
+        limberTest.test(
+            endpointConfig = CreateMembership.endpointConfig,
+            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
+            body = membershipCreationRep
+        ) {}
+        limberTest.test(
+            endpointConfig = CreateMembership.endpointConfig,
+            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
+            body = membershipCreationRep,
+            expectedStatusCode = HttpStatusCode.Conflict
+        ) {}
     }
 }
