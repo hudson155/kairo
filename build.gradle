@@ -65,6 +65,19 @@ subprojects {
         compile libs.kotlin_stdlib_jdk8
     }
 
+    /**
+     * Either the WAR or Google App Engine plugin decides to throw all of the jars into the same
+     * WEB-INF directory because folders in this directory are now allowed. However, it doesn't
+     * rename the JARs. Some JARs have the same name...
+     *     - :limber-backend-application:orgs:api will have the name api.jar by default.
+     *     - :limber-backend-application:users:api will have the name api.jar by default.
+     * If there are duplicates, only one gets added to the class path and we end up with an error
+     * when we run it.
+     * 
+     * https://github.com/hudson155/limber/issues/98 for more information.
+     * https://stackoverflow.com/a/7465893 for the reason we can't have subdirectories in META-INF.
+     * https://stackoverflow.com/a/6768715 for how to rename the JAR.
+     */
     archivesBaseName = project.path.replaceFirst(':', '').replace(':', '-')
 }
 
