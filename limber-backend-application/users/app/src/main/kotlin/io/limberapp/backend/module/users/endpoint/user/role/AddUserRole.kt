@@ -14,7 +14,7 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
- * Creates a new user.
+ * Gives the user a certain role. Roles are system-wide, NOT org-wide.
  */
 internal class AddUserRole @Inject constructor(
     application: Application,

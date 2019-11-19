@@ -14,7 +14,7 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
- * Creates a new user.
+ * Revokes a certain role from the user. Roles are system-wide, NOT org-wide.
  */
 internal class RemoveUserRole @Inject constructor(
     application: Application,
