@@ -14,7 +14,7 @@ interface Store<Complete : CompleteEntity, Update : UpdateEntity> {
 
     fun get(id: UUID): Complete?
 
-    fun update(id: UUID, update: Update): Complete
+    fun update(id: UUID, update: Update): Complete?
 
-    fun delete(id: UUID)
+    fun delete(id: UUID): Unit?
 }
