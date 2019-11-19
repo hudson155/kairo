@@ -34,7 +34,7 @@ internal class MongoOrgStore @Inject constructor(
                 OrgEntity::members / MembershipEntity::userId ne entity.userId
             ),
             update = push(OrgEntity::members, entity)
-        )?.let { Unit }
+        )?.let { }
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID): Unit? {
@@ -44,6 +44,6 @@ internal class MongoOrgStore @Inject constructor(
                 OrgEntity::members / MembershipEntity::userId eq memberId
             ),
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
-        )?.let { Unit }
+        )?.let { }
     }
 }

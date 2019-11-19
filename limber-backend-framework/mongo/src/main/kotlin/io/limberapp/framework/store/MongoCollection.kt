@@ -24,18 +24,18 @@ class MongoCollection<Complete : CompleteEntity>(
         delegate.insertOne(entity)
     }
 
-    fun findOneById(id: UUID) = delegate.findOneById(id)
+    fun findOneById(id: UUID): Complete? = delegate.findOneById(id)
 
-    fun findOne(bson: Bson) = delegate.findOne(bson)
+    fun findOne(bson: Bson): Complete? = delegate.findOne(bson)
 
-    fun find(bson: Bson) = delegate.find(bson).toList()
+    fun find(bson: Bson): List<Complete> = delegate.find(bson).toList()
 
     fun findOneByIdAndUpdate(id: UUID, update: UpdateEntity): Complete? {
         val bson = KMongoUtil.toBsonModifier(update, updateOnlyNotNullProperties = true)
         return findOneByIdAndUpdate(id, bson)
     }
 
-    fun findOneByIdAndUpdate(id: UUID, update: Bson) =
+    fun findOneByIdAndUpdate(id: UUID, update: Bson): Complete? =
         findOneAndUpdate(KMongoUtil.idFilterQuery(id), update)
 
     fun findOneAndUpdate(filter: Bson, update: Bson): Complete? {
@@ -43,7 +43,6 @@ class MongoCollection<Complete : CompleteEntity>(
         return delegate.findOneAndUpdate(filter, update, options)
     }
 
-    fun findOneByIdAndDelete(id: UUID): Unit? {
-        return delegate.findOneAndDelete(KMongoUtil.idFilterQuery(id))?.let { Unit }
-    }
+    fun findOneByIdAndDelete(id: UUID): Unit? =
+        delegate.findOneAndDelete(KMongoUtil.idFilterQuery(id))?.let { }
 }
