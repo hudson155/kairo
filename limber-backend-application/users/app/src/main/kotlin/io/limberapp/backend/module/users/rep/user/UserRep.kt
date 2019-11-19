@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.rep.user
 
+import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.rep.CompleteRep
 import io.limberapp.framework.rep.CreationRep
 import io.limberapp.framework.rep.UpdateRep
@@ -32,7 +33,8 @@ object UserRep {
         val firstName: String?,
         val lastName: String?,
         val emailAddress: String,
-        val profilePhotoUrl: String?
+        val profilePhotoUrl: String?,
+        val roles: Set<JwtRole>
     ) : CompleteRep()
 
     data class Update(

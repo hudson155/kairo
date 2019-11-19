@@ -41,7 +41,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
             firstName = request.firstName,
             lastName = request.lastName,
             emailAddress = request.emailAddress,
-            profilePhotoUrl = request.profilePhotoUrl
+            profilePhotoUrl = request.profilePhotoUrl,
+            roles = emptySet()
         )
         userService.create(newUser)
         return newUser
@@ -49,7 +50,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     private fun createJwt(user: UserModel, orgs: List<OrgModel>) = Jwt(
         orgs = orgs.associate { Pair(it.id, JwtOrg(it.name)) },
-        roles = emptySet(),
+        roles = user.roles,
         user = JwtUser(user.id, user.firstName, user.lastName)
     )
 

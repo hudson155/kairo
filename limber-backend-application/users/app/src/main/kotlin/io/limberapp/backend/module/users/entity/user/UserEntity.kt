@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.entity.user
 
+import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.entity.CompleteEntity
 import io.limberapp.framework.entity.UpdateEntity
 import org.bson.codecs.pojo.annotations.BsonId
@@ -13,7 +14,8 @@ data class UserEntity(
     val firstName: String?,
     val lastName: String?,
     val emailAddress: String,
-    val profilePhotoUrl: String?
+    val profilePhotoUrl: String?,
+    val roles: Set<JwtRole>
 ) : CompleteEntity() {
 
     data class Update(
