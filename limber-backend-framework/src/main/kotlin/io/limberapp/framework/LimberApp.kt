@@ -1,15 +1,10 @@
 package io.limberapp.framework
 
-import com.auth0.jwk.UrlJwkProvider
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.auth.Authentication
-import io.ktor.auth.jwt.JWTPrincipal
-import io.ktor.auth.jwt.jwt
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -25,6 +20,7 @@ import io.limberapp.framework.dataConversion.conversionService.UuidConversionSer
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import io.limberapp.framework.module.Module
+import io.limberapp.framework.util.configureAuthentication
 import io.limberapp.framework.util.conversionService
 import io.limberapp.framework.util.serveStaticFiles
 import org.slf4j.event.Level
@@ -59,20 +55,7 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            jwt {
-                with(config.jwt) {
-                    when {
-                        requireSignature && domain != null && secret == null ->
-                            verifier(UrlJwkProvider(config.jwt.domain))
-                        requireSignature && domain == null && secret != null ->
-                            verifier(JWT.require(Algorithm.HMAC256(secret)).build())
-                        !requireSignature && domain == null && secret == null ->
-                            verifier(JWT.require(Algorithm.none()).build())
-                        else -> error("Invalid JWT config")
-                    }
-                }
-                validate { credential -> JWTPrincipal(credential.payload) }
-            }
+            configureAuthentication(config.jwt)
         }
     }
 
