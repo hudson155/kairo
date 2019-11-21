@@ -6,7 +6,7 @@ import io.limberapp.framework.config.authentication.UnsignedJwtAuthentication
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.util.uuid.DeterministicUuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.DeterministicUuidGenerator
 import io.mockk.MockKAnnotations
 import org.junit.Before
 import java.time.Clock
@@ -30,7 +30,8 @@ abstract class AbstractResourceTest {
     protected val fixedClock: Clock =
         Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
 
-    protected val deterministicUuidGenerator = DeterministicUuidGenerator()
+    protected val deterministicUuidGenerator =
+        DeterministicUuidGenerator()
 
     @Before
     open fun before() {
