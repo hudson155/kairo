@@ -1,4 +1,4 @@
-package io.limberapp.framework.util.uuidGenerator
+package io.limberapp.framework.util.uuid.uuidGenerator
 
 import java.util.UUID
 

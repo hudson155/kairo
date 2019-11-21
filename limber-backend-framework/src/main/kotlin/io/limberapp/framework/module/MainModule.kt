@@ -5,8 +5,8 @@ import io.ktor.application.Application
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.config.authentication.AuthenticationConfig
 import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.util.uuidGenerator.RandomUuidGenerator
-import io.limberapp.framework.util.uuidGenerator.UuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.RandomUuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 
 /**

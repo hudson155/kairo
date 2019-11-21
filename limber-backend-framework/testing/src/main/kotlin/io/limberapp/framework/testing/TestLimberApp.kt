@@ -6,7 +6,7 @@ import io.limberapp.framework.LimberApp
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.module.MainModule
 import io.limberapp.framework.module.Module
-import io.limberapp.framework.util.uuidGenerator.UuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 
 class TestLimberApp(
