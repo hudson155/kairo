@@ -49,6 +49,7 @@ class MongoCollection<Complete : CompleteEntity>(
         return delegate.findOneAndUpdate(filter, update, options)
     }
 
-    fun findOneByIdAndDelete(id: UUID): Unit? =
-        delegate.findOneAndDelete(KMongoUtil.idFilterQuery(id))?.let { }
+    fun findOneByIdAndDelete(id: UUID): Unit? = findOneAndDelete(KMongoUtil.idFilterQuery(id))
+
+    fun findOneAndDelete(filter: Bson): Unit? = delegate.findOneAndDelete(filter)?.let { }
 }
