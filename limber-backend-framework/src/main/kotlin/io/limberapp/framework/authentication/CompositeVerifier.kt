@@ -1,7 +1,5 @@
-package io.limberapp.framework
+package io.limberapp.framework.authentication
 
-import com.auth0.jwk.Jwk
-import com.auth0.jwk.UrlJwkProvider
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
@@ -10,27 +8,6 @@ import io.limberapp.framework.config.authentication.AuthenticationConfig
 import io.limberapp.framework.config.authentication.JwkAuthentication
 import io.limberapp.framework.config.authentication.JwtAuthentication
 import io.limberapp.framework.config.authentication.UnsignedJwtAuthentication
-import java.security.interfaces.RSAPublicKey
-
-private interface JwtVerifierProvider {
-    operator fun get(keyId: String?): JWTVerifier
-}
-
-private class StaticJwtVerifierProvider(
-    private val jwtVerifier: JWTVerifier
-) : JwtVerifierProvider {
-    override fun get(keyId: String?) = jwtVerifier
-}
-
-private class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider {
-
-    val jwkProvider = UrlJwkProvider(domain)
-
-    override fun get(keyId: String?): JWTVerifier {
-        val algorithm = jwkProvider.get(keyId).makeAlgorithm()
-        return JWT.require(algorithm).build()
-    }
-}
 
 class LimberJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
 
@@ -53,9 +30,4 @@ class LimberJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
         val provider = providers[jwt.issuer] ?: return null
         return provider[jwt.keyId]
     }
-}
-
-private fun Jwk.makeAlgorithm(): Algorithm = when (algorithm) {
-    "RS256" -> Algorithm.RSA256(publicKey as RSAPublicKey, null)
-    else -> throw IllegalArgumentException("Unsupported algorithm $algorithm")
 }

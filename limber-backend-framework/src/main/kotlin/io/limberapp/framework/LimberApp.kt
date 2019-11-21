@@ -17,6 +17,7 @@ import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.jackson.JacksonConverter
+import io.limberapp.framework.authentication.LimberJwtVerifierProvider
 import io.limberapp.framework.config.Config
 import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
