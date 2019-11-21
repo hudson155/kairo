@@ -6,6 +6,7 @@ mongoDatabase:
 authentication:
   mechanisms:
     - type: JWT
+      issuer: https://limberapp.io/
       secret: limberapp
 
 serving:
