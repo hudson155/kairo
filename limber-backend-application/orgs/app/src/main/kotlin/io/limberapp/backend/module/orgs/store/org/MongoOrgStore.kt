@@ -5,7 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.framework.store.MongoCollection
-import io.limberapp.framework.store.MongoCrudStore
+import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -17,7 +17,7 @@ import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoCrudStore<OrgEntity, OrgEntity.Update>(
+) : OrgStore, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.collectionName,
@@ -28,8 +28,17 @@ internal class MongoOrgStore @Inject constructor(
     }
 ) {
 
+    override fun create(entity: OrgEntity) {
+        collection.insertOne(entity)
+    }
+
+    override fun get(id: UUID) = collection.findOneById(id)
+
     override fun getByMemberId(memberId: UUID) =
         collection.find(OrgEntity::members / MembershipEntity::userId eq memberId)
+
+    override fun update(id: UUID, update: OrgEntity.Update) =
+        collection.findOneByIdAndUpdate(id, update)
 
     override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
         return collection.findOneAndUpdate(
@@ -50,4 +59,6 @@ internal class MongoOrgStore @Inject constructor(
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
         )?.let { }
     }
+
+    override fun delete(id: UUID) = collection.findOneByIdAndDelete(id)
 }

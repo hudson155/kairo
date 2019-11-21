@@ -5,7 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.users.entity.user.UserEntity
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.store.MongoCollection
-import io.limberapp.framework.store.MongoCrudStore
+import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.contains
@@ -17,7 +17,7 @@ import java.util.UUID
 
 internal class MongoUserStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : UserStore, MongoCrudStore<UserEntity, UserEntity.Update>(
+) : UserStore, MongoStore<UserEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = UserEntity.collectionName,
@@ -28,8 +28,17 @@ internal class MongoUserStore @Inject constructor(
     }
 ) {
 
+    override fun create(entity: UserEntity) {
+        collection.insertOne(entity)
+    }
+
+    override fun get(id: UUID) = collection.findOneById(id)
+
     override fun getByEmailAddress(emailAddress: String) =
         collection.findOne(UserEntity::emailAddress eq emailAddress)
+
+    override fun update(id: UUID, update: UserEntity.Update) =
+        collection.findOneByIdAndUpdate(id, update)
 
     override fun addRole(userId: UUID, roleName: JwtRole): Unit? {
         return collection.findOneAndUpdate(
@@ -44,4 +53,6 @@ internal class MongoUserStore @Inject constructor(
             update = pull(UserEntity::roles, roleName)
         )?.let {}
     }
+
+    override fun delete(id: UUID) = collection.findOneByIdAndDelete(id)
 }
