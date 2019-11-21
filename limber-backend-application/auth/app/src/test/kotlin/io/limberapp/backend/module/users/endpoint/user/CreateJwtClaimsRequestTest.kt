@@ -16,9 +16,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class CreateJwtClaimsRequestTest : ResourceTest(
-    servicesToMock = listOf(OrgService::class, UserService::class)
-) {
+internal class CreateJwtClaimsRequestTest : ResourceTest() {
 
     @Test
     fun existingUser() {
