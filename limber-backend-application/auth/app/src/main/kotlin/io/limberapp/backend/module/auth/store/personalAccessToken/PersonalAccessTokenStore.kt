@@ -1,0 +1,12 @@
+package io.limberapp.backend.module.auth.store.personalAccessToken
+
+import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
+import io.limberapp.framework.store.CrStore
+import java.util.UUID
+
+internal interface PersonalAccessTokenStore : CrStore<PersonalAccessTokenEntity> {
+
+    fun getByUserId(userId: UUID): List<PersonalAccessTokenEntity>
+
+    fun delete(userId: UUID, id: UUID): Unit?
+}
