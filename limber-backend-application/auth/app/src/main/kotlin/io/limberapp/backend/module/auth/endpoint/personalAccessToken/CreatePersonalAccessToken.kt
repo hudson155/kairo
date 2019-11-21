@@ -15,7 +15,11 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
- * Creates a personal access token for the given user.
+ * Creates a personal access token for the given user. Note that this endpoint returns a "one time
+ * use" rep. This means that the token itself will only be returned by this endpoint, immediately
+ * after it is created. The user must record the token appropriately, because it cannot be returned
+ * again. If a new token is needed, the user can always delete the existing token and create
+ * another.
  */
 internal class CreatePersonalAccessToken @Inject constructor(
     application: Application,

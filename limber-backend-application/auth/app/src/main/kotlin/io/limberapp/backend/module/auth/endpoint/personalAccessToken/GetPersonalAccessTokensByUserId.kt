@@ -15,7 +15,10 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
- * Returns all personal access tokens for the given user.
+ * Returns all personal access tokens for the given user. Note that this endpoint does not actually
+ * return the token itself, just its ID. The token itself is only returned once, immediately after
+ * it is created. The user must record the token appropriately, because it cannot be returned again.
+ * If a new token is needed, the user can always delete the existing token and create another.
  */
 internal class GetPersonalAccessTokensByUserId @Inject constructor(
     application: Application,
