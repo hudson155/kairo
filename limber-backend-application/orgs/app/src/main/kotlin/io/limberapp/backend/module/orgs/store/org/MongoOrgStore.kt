@@ -5,7 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.framework.store.MongoCollection
-import io.limberapp.framework.store.MongoStore
+import io.limberapp.framework.store.MongoCrudStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -17,7 +17,7 @@ import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoStore<OrgEntity, OrgEntity.Update>(
+) : OrgStore, MongoCrudStore<OrgEntity, OrgEntity.Update>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.collectionName,

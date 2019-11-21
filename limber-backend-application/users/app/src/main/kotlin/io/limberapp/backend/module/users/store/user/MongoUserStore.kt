@@ -5,7 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.users.entity.user.UserEntity
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.store.MongoCollection
-import io.limberapp.framework.store.MongoStore
+import io.limberapp.framework.store.MongoCrudStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.contains
@@ -17,7 +17,7 @@ import java.util.UUID
 
 internal class MongoUserStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : UserStore, MongoStore<UserEntity, UserEntity.Update>(
+) : UserStore, MongoCrudStore<UserEntity, UserEntity.Update>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = UserEntity.collectionName,
