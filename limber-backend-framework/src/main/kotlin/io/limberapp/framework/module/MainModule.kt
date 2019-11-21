@@ -3,7 +3,7 @@ package io.limberapp.framework.module
 import com.google.inject.AbstractModule
 import io.ktor.application.Application
 import io.limberapp.framework.config.Config
-import io.limberapp.framework.config.jwt.JwtConfig
+import io.limberapp.framework.config.authentication.AuthenticationConfig
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.util.uuidGenerator.RandomUuidGenerator
 import io.limberapp.framework.util.uuidGenerator.UuidGenerator
@@ -22,7 +22,7 @@ class MainModule(
     override fun configure() {
         bind(Application::class.java).toInstance(application)
         bind(Clock::class.java).toInstance(clock)
-        bind(JwtConfig::class.java).toInstance(config.jwt)
+        bind(AuthenticationConfig::class.java).toInstance(config.authentication)
         bind(ServingConfig::class.java).toInstance(config.serving)
         bind(UuidGenerator::class.java).toInstance(uuidGenerator)
     }

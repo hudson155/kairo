@@ -16,10 +16,10 @@ data class MongoDatabaseConfig(
 ) {
 
     enum class Protocol(private val text: String) {
+
         MONGODB("mongodb"),
         @Suppress("unused")
-        MONGODB_SRV("mongodb+srv"),
-        ;
+        MONGODB_SRV("mongodb+srv");
 
         override fun toString() = text
     }

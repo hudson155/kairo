@@ -1,6 +1,6 @@
 package io.limberapp.framework.config
 
-import io.limberapp.framework.config.jwt.JwtConfig
+import io.limberapp.framework.config.authentication.AuthenticationConfig
 import io.limberapp.framework.config.serving.ServingConfig
 
 /**
@@ -8,6 +8,6 @@ import io.limberapp.framework.config.serving.ServingConfig
  * built-in configuration.
  */
 interface Config {
-    val jwt: JwtConfig
+    val authentication: AuthenticationConfig
     val serving: ServingConfig
 }

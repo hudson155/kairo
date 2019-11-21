@@ -1,7 +1,8 @@
 package io.limberapp.framework.testing
 
 import io.limberapp.framework.config.Config
-import io.limberapp.framework.config.jwt.JwtConfig
+import io.limberapp.framework.config.authentication.AuthenticationConfig
+import io.limberapp.framework.config.authentication.UnsignedJwtAuthentication
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
@@ -19,7 +20,7 @@ abstract class AbstractResourceTest {
             apiPathPrefix = "/",
             staticFiles = StaticFiles(false)
         )
-        override val jwt = JwtConfig(requireSignature = false)
+        override val authentication = AuthenticationConfig(listOf(UnsignedJwtAuthentication))
     }
 
     protected abstract val limberTest: LimberTest
