@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
-import io.limberapp.backend.module.auth.mapper.api.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.endpoint.ApiEndpoint
@@ -19,8 +18,7 @@ import java.util.UUID
 internal class DeletePersonalAccessToken @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val personalAccessTokenService: PersonalAccessTokenService,
-    private val personalAccessTokenMapper: PersonalAccessTokenMapper
+    private val personalAccessTokenService: PersonalAccessTokenService
 ) : ApiEndpoint<DeletePersonalAccessToken.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
