@@ -12,7 +12,7 @@ import io.limberapp.framework.testing.TestLimberApp
 abstract class ResourceTest : AbstractResourceTest() {
 
     protected val mockedServices: MockedServices =
-        MockedServices(listOf(OrgService::class, UserService::class))
+        MockedServices(OrgService::class, UserService::class)
 
     private val testMongoModule = TestMongoModule()
 
