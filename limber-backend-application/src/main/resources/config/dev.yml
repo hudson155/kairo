@@ -3,8 +3,10 @@ mongoDatabase:
   host: localhost
   database: limberapp
 
-jwt:
-  secret: limberapp
+authentication:
+  mechanisms:
+    - type: JWT
+      secret: limberapp
 
 serving:
   apiPathPrefix: /

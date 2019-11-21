@@ -55,7 +55,7 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            configureAuthentication(config.jwt)
+            configureAuthentication(config.authentication)
         }
     }
 
