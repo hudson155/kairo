@@ -19,8 +19,7 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to UUID.randomUUID().toString())
         ) {
-            val actual =
-                objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
+            val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -39,8 +38,7 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {
-            val actual =
-                objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
+            val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             val expected = listOf(
                 PersonalAccessTokenRep.Complete(
                     id = id,
