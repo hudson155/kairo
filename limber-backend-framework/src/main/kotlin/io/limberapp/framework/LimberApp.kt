@@ -22,7 +22,7 @@ import io.limberapp.framework.config.Config
 import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.ktorAuth.LimberAuthCredential
+import io.limberapp.framework.ktorAuth.LimberAuthPrincipal
 import io.limberapp.framework.ktorAuth.LimberAuthVerifier
 import io.limberapp.framework.ktorAuth.limberAuth
 import io.limberapp.framework.module.Module
@@ -64,15 +64,15 @@ abstract class LimberApp<C : Config>(
             val provider = LimberJwtVerifierProvider(config.authentication)
             limberAuth {
                 verifier("Bearer", object : LimberAuthVerifier {
-                    override fun verify(blob: String): LimberAuthCredential? {
+                    override fun verify(blob: String): LimberAuthPrincipal? {
                         val jwt = try {
                             provider.getVerifier(blob)?.verify(blob)
-                        } catch (ex: JWTVerificationException) {
+                        } catch (_: JWTVerificationException) {
                             null
                         } ?: return null
                         val payloadString = String(Base64.getUrlDecoder().decode(jwt.payload))
                         val payload = JWTParser().parsePayload(payloadString)
-                        return LimberAuthCredential(payload)
+                        return LimberAuthPrincipal(payload)
                     }
                 }, default = true)
             }

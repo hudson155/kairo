@@ -26,6 +26,7 @@ class LimberAuthProvider internal constructor(
         val token = call.request.parseAuthorizationHeaderOrNull()
             ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
 
+        @Suppress("TooGenericExceptionCaught") // ktor-auth-jwt does this so we do it too.
         try {
             val principal = getPrincipal(token)
                 ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
@@ -37,7 +38,7 @@ class LimberAuthProvider internal constructor(
 
     private fun ApplicationRequest.parseAuthorizationHeaderOrNull() = try {
         parseAuthorizationHeader()
-    } catch (e: IllegalArgumentException) {
+    } catch (_: IllegalArgumentException) {
         null
     }
 
@@ -48,8 +49,8 @@ class LimberAuthProvider internal constructor(
     }
 
     private fun AuthenticationContext.bearerChallenge(
-        cause: AuthenticationFailedCause
-    ) = challenge(config.authKey, cause) {
+        e: AuthenticationFailedCause
+    ) = challenge(config.authKey, e) {
         val challenge = HttpAuthHeader.Parameterized(
             authScheme = config.defaultScheme,
             parameters = mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
