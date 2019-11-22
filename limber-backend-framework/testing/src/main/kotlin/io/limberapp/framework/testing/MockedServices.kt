@@ -6,6 +6,8 @@ import kotlin.reflect.KClass
 
 class MockedServices(servicesToMock: List<KClass<*>>) : AbstractModule() {
 
+    constructor(vararg servicesToMock: KClass<*>) : this(servicesToMock.toList())
+
     private val mocks = servicesToMock.associateWith { mockkClass(it) }
 
     override fun configure() {

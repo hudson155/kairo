@@ -1,4 +1,4 @@
-package io.limberapp.framework.util
+package io.limberapp.framework.util.uuid
 
 import java.nio.ByteBuffer
 import java.util.UUID

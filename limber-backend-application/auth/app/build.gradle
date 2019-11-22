@@ -1,4 +1,8 @@
 dependencies {
+
     compile project(":limber-backend-application:orgs:api")
     compile project(":limber-backend-application:users:api")
+
+    compile project(":limber-backend-framework:mongo")
+    testCompile project(":limber-backend-framework:mongo:testing")
 }

@@ -17,7 +17,7 @@ import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase
-) : OrgStore, MongoStore<OrgEntity, OrgEntity.Update>(
+) : OrgStore, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.collectionName,
@@ -28,8 +28,17 @@ internal class MongoOrgStore @Inject constructor(
     }
 ) {
 
+    override fun create(entity: OrgEntity) {
+        collection.insertOne(entity)
+    }
+
+    override fun get(id: UUID) = collection.findOneById(id)
+
     override fun getByMemberId(memberId: UUID) =
         collection.find(OrgEntity::members / MembershipEntity::userId eq memberId)
+
+    override fun update(id: UUID, update: OrgEntity.Update) =
+        collection.findOneByIdAndUpdate(id, update)
 
     override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
         return collection.findOneAndUpdate(
@@ -50,4 +59,6 @@ internal class MongoOrgStore @Inject constructor(
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
         )?.let { }
     }
+
+    override fun delete(id: UUID) = collection.findOneByIdAndDelete(id)
 }

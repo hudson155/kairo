@@ -11,7 +11,7 @@ import io.limberapp.framework.endpoint.authorization.jwt.Jwt
 import io.limberapp.framework.endpoint.authorization.jwt.JwtOrg
 import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.util.uuidGenerator.UuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 

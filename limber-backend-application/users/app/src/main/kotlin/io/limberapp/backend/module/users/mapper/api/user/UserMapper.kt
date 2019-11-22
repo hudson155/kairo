@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.mapper.api.user
 import com.google.inject.Inject
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.rep.user.UserRep
-import io.limberapp.framework.util.uuidGenerator.UuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 

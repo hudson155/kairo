@@ -6,7 +6,7 @@ import io.limberapp.framework.config.authentication.UnsignedJwtAuthentication
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.config.serving.StaticFiles
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.util.uuidGenerator.DeterministicUuidGenerator
+import io.limberapp.framework.util.uuid.uuidGenerator.DeterministicUuidGenerator
 import io.mockk.MockKAnnotations
 import org.junit.Before
 import java.time.Clock
