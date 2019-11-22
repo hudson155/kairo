@@ -5,8 +5,6 @@ import com.google.inject.Guice
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.auth.Authentication
-import io.limberapp.framework.ktorAuth.JWTPrincipal
-import io.limberapp.framework.ktorAuth.limberAuth
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -22,6 +20,7 @@ import io.limberapp.framework.config.Config
 import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import io.limberapp.framework.ktorAuth.limberAuth
 import io.limberapp.framework.module.Module
 import io.limberapp.framework.util.conversionService
 import io.limberapp.framework.util.serveStaticFiles
@@ -57,9 +56,7 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            limberAuth {
-                verifier(LimberJwtVerifierProvider(config.authentication)::getVerifier)
-            }
+            limberAuth(LimberJwtVerifierProvider(config.authentication)::getVerifier)
         }
     }
 
