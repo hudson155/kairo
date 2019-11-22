@@ -5,8 +5,8 @@ import com.google.inject.Guice
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.auth.Authentication
-import io.ktor.auth.jwt.JWTPrincipal
-import io.ktor.auth.jwt.jwt
+import io.limberapp.framework.ktorAuth.JWTPrincipal
+import io.limberapp.framework.ktorAuth.jwt
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression

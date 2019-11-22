@@ -1,4 +1,4 @@
-package io.limberapp.framework.authentication
+package io.limberapp.framework.ktorAuth
 
 import com.auth0.jwk.Jwk
 import com.auth0.jwk.UrlJwkProvider
@@ -7,17 +7,17 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import java.security.interfaces.RSAPublicKey
 
-internal sealed class JwtVerifierProvider {
+sealed class JwtVerifierProvider {
     abstract operator fun get(keyId: String?): JWTVerifier
 }
 
-internal class StaticJwtVerifierProvider(
+class StaticJwtVerifierProvider(
     private val jwtVerifier: JWTVerifier
 ) : JwtVerifierProvider() {
     override fun get(keyId: String?) = jwtVerifier
 }
 
-internal class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
+class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
 
     private val jwkProvider = UrlJwkProvider(domain)
 
