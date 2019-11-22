@@ -65,9 +65,9 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.cors() {
         install(CORS) {
-            this.allowSameOrigin = false
-            this.anyHost()
-            this.header(HttpHeaders.Authorization)
+            allowSameOrigin = false
+            anyHost()
+            header(HttpHeaders.Authorization)
         }
     }
 
