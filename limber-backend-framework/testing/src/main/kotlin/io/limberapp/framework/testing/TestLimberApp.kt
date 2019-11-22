@@ -18,8 +18,7 @@ class TestLimberApp(
 ) : LimberApp<Config>(config) {
 
     override fun getMainModules(application: Application): List<AbstractModule> =
-        listOf(MainModule(application, fixedClock, config, deterministicUuidGenerator))
-            .plus(additionalModules)
+        listOf(MainModule(application, fixedClock, config, deterministicUuidGenerator)).plus(additionalModules)
 
     override val modules = listOf(module)
 }

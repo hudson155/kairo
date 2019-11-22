@@ -38,8 +38,7 @@ class LimberTest(private val limberApp: TestLimberApp) {
         expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
         test: TestApplicationCall.() -> Unit
     ) = withLimberTestApp(limberApp) {
-        createCall(endpointConfig, pathParams, queryParams, body)
-            .runTest(expectedStatusCode, test)
+        createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
     }
 
     private fun TestApplicationEngine.createCall(
@@ -48,10 +47,7 @@ class LimberTest(private val limberApp: TestLimberApp) {
         queryParams: Map<String, String>,
         body: Any?
     ): TestApplicationCall {
-        return handleRequest(
-            method = endpointConfig.httpMethod,
-            uri = endpointConfig.path(pathParams, queryParams)
-        ) {
+        return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             val jwt = JWT.create().withJwt(
                 jwt = Jwt(
@@ -65,10 +61,7 @@ class LimberTest(private val limberApp: TestLimberApp) {
         }
     }
 
-    private fun TestApplicationCall.runTest(
-        expectedStatusCode: HttpStatusCode,
-        test: TestApplicationCall.() -> Unit
-    ) {
+    private fun TestApplicationCall.runTest(expectedStatusCode: HttpStatusCode, test: TestApplicationCall.() -> Unit) {
         assertTrue(
             actual = requestHandled,
             message = "The HTTP request was not handled." +
