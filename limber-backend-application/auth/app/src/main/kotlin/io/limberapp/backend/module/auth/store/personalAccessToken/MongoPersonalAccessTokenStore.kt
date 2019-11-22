@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
 import io.limberapp.framework.store.MongoCollection
+import io.limberapp.framework.store.MongoIndex
 import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -18,7 +19,7 @@ internal class MongoPersonalAccessTokenStore @Inject constructor(
         collectionName = PersonalAccessTokenEntity.collectionName,
         clazz = PersonalAccessTokenEntity::class
     ),
-    indices = listOf<MongoCollection<PersonalAccessTokenEntity>.() -> Unit> {
+    indices = listOf<MongoIndex<PersonalAccessTokenEntity>> {
         ensureIndex(ascending(PersonalAccessTokenEntity::userId), unique = false)
     }
 ) {
