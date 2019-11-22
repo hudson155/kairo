@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.framework.store.MongoCollection
+import io.limberapp.framework.store.MongoIndex
 import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -23,7 +24,7 @@ internal class MongoOrgStore @Inject constructor(
         collectionName = OrgEntity.collectionName,
         clazz = OrgEntity::class
     ),
-    indices = listOf<MongoCollection<OrgEntity>.() -> Unit> {
+    indices = listOf<MongoIndex<OrgEntity>> {
         ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false)
     }
 ) {

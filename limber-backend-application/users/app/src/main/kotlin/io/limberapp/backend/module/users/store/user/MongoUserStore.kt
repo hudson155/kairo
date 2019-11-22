@@ -5,6 +5,7 @@ import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.module.users.entity.user.UserEntity
 import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.store.MongoCollection
+import io.limberapp.framework.store.MongoIndex
 import io.limberapp.framework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -23,7 +24,7 @@ internal class MongoUserStore @Inject constructor(
         collectionName = UserEntity.collectionName,
         clazz = UserEntity::class
     ),
-    indices = listOf<MongoCollection<UserEntity>.() -> Unit> {
+    indices = listOf<MongoIndex<UserEntity>> {
         ensureIndex(ascending(UserEntity::emailAddress), unique = true)
     }
 ) {
