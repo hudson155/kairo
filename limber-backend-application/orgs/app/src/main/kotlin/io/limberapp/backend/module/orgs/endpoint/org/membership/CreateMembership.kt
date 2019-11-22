@@ -41,10 +41,8 @@ internal class CreateMembership @Inject constructor(
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command) {
-        orgService.createMembership(
-            id = command.orgId,
-            model = membershipMapper.model(command.creationRep)
-        )
+        val model = membershipMapper.model(command.creationRep)
+        orgService.createMembership(command.orgId, model)
     }
 
     companion object {

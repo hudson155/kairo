@@ -42,8 +42,7 @@ internal class GetUserByEmailAddress @Inject constructor(
         return userMapper.completeRep(model)
     }
 
-    override fun secondaryAuthorization(response: UserRep.Complete?) =
-        Authorization.User(response?.id)
+    override fun secondaryAuthorization(response: UserRep.Complete?) = Authorization.User(response?.id)
 
     companion object {
         const val emailAddress = "emailAddress"
