@@ -21,8 +21,6 @@ import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 import java.util.Base64
 
-private const val JWT_AUTH_KEY = "JWTAuth"
-
 typealias JWTAuthChallengeFunction =
         suspend PipelineContext<*, ApplicationCall>.(defaultScheme: String, realm: String) -> Unit
 
@@ -30,6 +28,8 @@ class JWTAuthenticationProvider internal constructor(
     private val verifier: (HttpAuthHeader) -> JWTVerifier?
 ) : AuthenticationProvider(object : Configuration(name = null) {}) {
 
+    // TODO: Extract these and verifier into a config and make them mutable by the caller.
+    private val authKey = "LimberAuth"
     private val realm = "Limber Server"
     private val schemes = JWTAuthSchemes("Bearer")
 
@@ -50,9 +50,12 @@ class JWTAuthenticationProvider internal constructor(
         pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { intercept(it) }
     }
 
-    private suspend fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(context: AuthenticationContext) {
+    private suspend fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(
+        context: AuthenticationContext
+    ) {
+
         val token = call.request.parseAuthorizationHeaderOrNull()
-            ?: return context.noCredentialsBearerChallenge()
+            ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
 
         try {
             val principal = verifyAndValidate(
@@ -61,23 +64,10 @@ class JWTAuthenticationProvider internal constructor(
                 token = token,
                 schemes = schemes,
                 validate = this@JWTAuthenticationProvider.authenticationFunction
-            )
-            if (principal != null) {
-                context.principal(principal)
-            } else {
-                context.bearerChallenge(
-                    cause = AuthenticationFailedCause.InvalidCredentials,
-                    realm = realm,
-                    schemes = schemes,
-                    challengeFunction = challengeFunction
-                )
-            }
-        } catch (cause: Throwable) {
-            val message = cause.message ?: cause.javaClass.simpleName
-            context.error(
-                JWT_AUTH_KEY,
-                AuthenticationFailedCause.Error(message)
-            )
+            ) ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
+            context.principal(principal)
+        } catch (e: Throwable) {
+            context.handleError(e)
         }
     }
 
@@ -87,50 +77,43 @@ class JWTAuthenticationProvider internal constructor(
         null
     }
 
-    private fun AuthenticationContext.noCredentialsBearerChallenge() = bearerChallenge(
-        cause = AuthenticationFailedCause.NoCredentials,
-        realm = realm,
-        schemes = schemes,
-        challengeFunction = challengeFunction
-    )
-}
+    private suspend fun verifyAndValidate(
+        call: ApplicationCall,
+        jwtVerifier: JWTVerifier?,
+        token: HttpAuthHeader,
+        schemes: JWTAuthSchemes,
+        validate: suspend ApplicationCall.(JWTCredential) -> Principal?
+    ): Principal? {
+        val jwt = try {
+            token.getBlob(schemes)?.let { jwtVerifier?.verify(it) }
+        } catch (ex: JWTVerificationException) {
+            null
+        } ?: return null
 
-private fun AuthenticationContext.bearerChallenge(
-    cause: AuthenticationFailedCause,
-    realm: String,
-    schemes: JWTAuthSchemes,
-    challengeFunction: JWTAuthChallengeFunction
-) = challenge(JWT_AUTH_KEY, cause) {
-    challengeFunction(this, schemes.defaultScheme, realm)
-    if (!it.completed && call.response.status() != null) {
-        it.complete()
+        val payload = jwt.parsePayload()
+        val credentials = JWTCredential(payload)
+        return validate(call, credentials)
     }
-}
 
-private suspend fun verifyAndValidate(
-    call: ApplicationCall,
-    jwtVerifier: JWTVerifier?,
-    token: HttpAuthHeader,
-    schemes: JWTAuthSchemes,
-    validate: suspend ApplicationCall.(JWTCredential) -> Principal?
-): Principal? {
-    val jwt = try {
-        token.getBlob(schemes)?.let { jwtVerifier?.verify(it) }
-    } catch (ex: JWTVerificationException) {
-        null
-    } ?: return null
+    private fun HttpAuthHeader.getBlob(schemes: JWTAuthSchemes) = when {
+        this is HttpAuthHeader.Single && authScheme in schemes -> blob
+        else -> null
+    }
 
-    val payload = jwt.parsePayload()
-    val credentials = JWTCredential(payload)
-    return validate(call, credentials)
-}
+    private fun DecodedJWT.parsePayload(): Payload {
+        val payloadString = String(Base64.getUrlDecoder().decode(payload))
+        return JWTParser().parsePayload(payloadString)
+    }
 
-private fun HttpAuthHeader.getBlob(schemes: JWTAuthSchemes) = when {
-    this is HttpAuthHeader.Single && authScheme in schemes -> blob
-    else -> null
-}
+    private fun AuthenticationContext.bearerChallenge(
+        cause: AuthenticationFailedCause
+    ) = challenge(authKey, cause) {
+        challengeFunction(this, schemes.defaultScheme, realm)
+        if (!it.completed && call.response.status() != null) it.complete()
+    }
 
-private fun DecodedJWT.parsePayload(): Payload {
-    val payloadString = String(Base64.getUrlDecoder().decode(payload))
-    return JWTParser().parsePayload(payloadString)
+    private fun AuthenticationContext.handleError(e: Throwable) {
+        val message = e.message ?: e.javaClass.simpleName
+        error(authKey, AuthenticationFailedCause.Error(message))
+    }
 }
