@@ -74,7 +74,7 @@ abstract class LimberApp<C : Config>(
                         val payload = JWTParser().parsePayload(payloadString)
                         return LimberAuthCredential(payload)
                     }
-                })
+                }, default = true)
             }
         }
     }

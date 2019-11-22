@@ -4,9 +4,9 @@ import io.ktor.auth.Authentication
 
 fun Authentication.Configuration.limberAuth(
     name: String? = null,
-    block: LimberAuthConfig.() -> Unit
+    block: LimberAuthConfig.Builder.() -> Unit
 ) {
-    val config = LimberAuthConfig(name).apply(block)
-    val provider = LimberAuthProvider(config)
+    val config = LimberAuthConfig.Builder(name).apply(block)
+    val provider = LimberAuthProvider(config.build())
     register(provider)
 }

@@ -20,9 +20,6 @@ class LimberAuthProvider internal constructor(
     private val config: LimberAuthConfig
 ) : AuthenticationProvider(config) {
 
-    // TODO: Extract these and verifier into a config and make them mutable by the caller.
-    private val schemes = JWTAuthSchemes("Bearer")
-
     private val challengeFunction: JWTAuthChallengeFunction = { scheme, realm ->
         call.respond(
             UnauthorizedResponse(
@@ -75,7 +72,7 @@ class LimberAuthProvider internal constructor(
     private fun AuthenticationContext.bearerChallenge(
         cause: AuthenticationFailedCause
     ) = challenge(config.authKey, cause) {
-        challengeFunction(this, schemes.defaultScheme, config.realm)
+        challengeFunction(this, config.defaultScheme, config.realm)
         if (!it.completed && call.response.status() != null) it.complete()
     }
 
