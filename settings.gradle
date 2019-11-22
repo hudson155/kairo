@@ -6,17 +6,19 @@ rootProject.name = 'limber'
 
 include ':limber-backend-application'
 
-include ':limber-backend-application:auth'
-include ':limber-backend-application:auth:api'
-include ':limber-backend-application:auth:app'
+include ':limber-backend-application:module'
 
-include ':limber-backend-application:orgs'
-include ':limber-backend-application:orgs:api'
-include ':limber-backend-application:orgs:app'
+include ':limber-backend-application:module:auth'
+include ':limber-backend-application:module:auth:api'
+include ':limber-backend-application:module:auth:app'
 
-include ':limber-backend-application:users'
-include ':limber-backend-application:users:api'
-include ':limber-backend-application:users:app'
+include ':limber-backend-application:module:orgs'
+include ':limber-backend-application:module:orgs:api'
+include ':limber-backend-application:module:orgs:app'
+
+include ':limber-backend-application:module:users'
+include ':limber-backend-application:module:users:api'
+include ':limber-backend-application:module:users:app'
 
 /**
  * Backend Framework

@@ -13,15 +13,16 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/limber-backend-application" />
-            <option value="$PROJECT_DIR$/limber-backend-application/auth" />
-            <option value="$PROJECT_DIR$/limber-backend-application/auth/api" />
-            <option value="$PROJECT_DIR$/limber-backend-application/auth/app" />
-            <option value="$PROJECT_DIR$/limber-backend-application/orgs" />
-            <option value="$PROJECT_DIR$/limber-backend-application/orgs/api" />
-            <option value="$PROJECT_DIR$/limber-backend-application/orgs/app" />
-            <option value="$PROJECT_DIR$/limber-backend-application/users" />
-            <option value="$PROJECT_DIR$/limber-backend-application/users/api" />
-            <option value="$PROJECT_DIR$/limber-backend-application/users/app" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/auth" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/auth/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/auth/app" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/orgs" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/orgs/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/orgs/app" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/users" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/users/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/users/app" />
             <option value="$PROJECT_DIR$/limber-backend-framework" />
             <option value="$PROJECT_DIR$/limber-backend-framework/core" />
             <option value="$PROJECT_DIR$/limber-backend-framework/core/api" />

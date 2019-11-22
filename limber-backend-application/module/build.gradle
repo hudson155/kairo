@@ -1,0 +1,17 @@
+subprojects {
+    if (project.path.matches(':limber-backend-application:module:[a-z\\-]+:api')) {
+        dependencies {
+            compile libs.jackson_annotations
+            compile project(":limber-backend-framework:core:api")
+        }
+    } else if (project.path.matches(':limber-backend-application:module:[a-z\\-]+:app')) {
+        dependencies {
+            compile project(":limber-backend-application:module:$project.parent.name:api")
+            compile project(":limber-backend-framework:core")
+            testCompile project(":limber-backend-framework:testing")
+        }
+    } else if (project.path.matches(':limber-backend-application:module:[a-z\\-]+')) {
+    } else {
+        throw new Exception("Unexpected project path: " + project.path)
+    }
+}
