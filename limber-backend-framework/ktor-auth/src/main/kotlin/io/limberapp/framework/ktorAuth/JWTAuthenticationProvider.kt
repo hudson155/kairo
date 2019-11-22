@@ -26,11 +26,13 @@ private const val JWT_AUTH_KEY = "JWTAuth"
 typealias JWTAuthChallengeFunction =
         suspend PipelineContext<*, ApplicationCall>.(defaultScheme: String, realm: String) -> Unit
 
-class JWTAuthenticationProvider internal constructor(verifier: (HttpAuthHeader) -> JWTVerifier?) :
-    AuthenticationProvider(object : Configuration(name = null) {}) {
+class JWTAuthenticationProvider internal constructor(
+    private val verifier: (HttpAuthHeader) -> JWTVerifier?
+) : AuthenticationProvider(object : Configuration(name = null) {}) {
 
-    private val authHeader: (ApplicationCall) -> HttpAuthHeader? =
-        { call -> call.request.parseAuthorizationHeaderOrNull() }
+    private val realm = "Limber Server"
+    private val schemes = JWTAuthSchemes("Bearer")
+
     private val authenticationFunction: AuthenticationFunction<JWTCredential> =
         { credential -> JWTPrincipal(credential.payload) }
     private val challengeFunction: JWTAuthChallengeFunction = { scheme, realm ->
@@ -45,48 +47,52 @@ class JWTAuthenticationProvider internal constructor(verifier: (HttpAuthHeader) 
     }
 
     init {
+        pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { intercept(it) }
+    }
 
-        val realm = "Ktor Server"
-        val schemes = JWTAuthSchemes("Bearer")
-        pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { context ->
-            val token = authHeader(call)
-            if (token == null) {
+    private suspend fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(context: AuthenticationContext) {
+        val token = call.request.parseAuthorizationHeaderOrNull()
+            ?: return context.noCredentialsBearerChallenge()
+
+        try {
+            val principal = verifyAndValidate(
+                call = call,
+                jwtVerifier = verifier(token),
+                token = token,
+                schemes = schemes,
+                validate = this@JWTAuthenticationProvider.authenticationFunction
+            )
+            if (principal != null) {
+                context.principal(principal)
+            } else {
                 context.bearerChallenge(
-                    cause = AuthenticationFailedCause.NoCredentials,
+                    cause = AuthenticationFailedCause.InvalidCredentials,
                     realm = realm,
                     schemes = schemes,
                     challengeFunction = challengeFunction
                 )
-                return@intercept
             }
-
-            try {
-                val principal = verifyAndValidate(
-                    call = call,
-                    jwtVerifier = verifier(token),
-                    token = token,
-                    schemes = schemes,
-                    validate = this@JWTAuthenticationProvider.authenticationFunction
-                )
-                if (principal != null) {
-                    context.principal(principal)
-                } else {
-                    context.bearerChallenge(
-                        cause = AuthenticationFailedCause.InvalidCredentials,
-                        realm = realm,
-                        schemes = schemes,
-                        challengeFunction = challengeFunction
-                    )
-                }
-            } catch (cause: Throwable) {
-                val message = cause.message ?: cause.javaClass.simpleName
-                context.error(
-                    JWT_AUTH_KEY,
-                    AuthenticationFailedCause.Error(message)
-                )
-            }
+        } catch (cause: Throwable) {
+            val message = cause.message ?: cause.javaClass.simpleName
+            context.error(
+                JWT_AUTH_KEY,
+                AuthenticationFailedCause.Error(message)
+            )
         }
     }
+
+    private fun ApplicationRequest.parseAuthorizationHeaderOrNull() = try {
+        parseAuthorizationHeader()
+    } catch (e: IllegalArgumentException) {
+        null
+    }
+
+    private fun AuthenticationContext.noCredentialsBearerChallenge() = bearerChallenge(
+        cause = AuthenticationFailedCause.NoCredentials,
+        realm = realm,
+        schemes = schemes,
+        challengeFunction = challengeFunction
+    )
 }
 
 private fun AuthenticationContext.bearerChallenge(
@@ -122,12 +128,6 @@ private suspend fun verifyAndValidate(
 private fun HttpAuthHeader.getBlob(schemes: JWTAuthSchemes) = when {
     this is HttpAuthHeader.Single && authScheme in schemes -> blob
     else -> null
-}
-
-private fun ApplicationRequest.parseAuthorizationHeaderOrNull() = try {
-    parseAuthorizationHeader()
-} catch (ex: IllegalArgumentException) {
-    null
 }
 
 private fun DecodedJWT.parsePayload(): Payload {
