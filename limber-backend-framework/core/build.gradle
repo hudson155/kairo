@@ -2,12 +2,12 @@ dependencies {
     compile project(":limber-backend-framework:core:api")
     compile project(":limber-backend-framework:entities")
     compile project(":limber-backend-framework:exceptions")
+    compile project(":limber-backend-framework:ktor-auth")
     compile project(":limber-backend-framework:object-mapper")
     compile project(":limber-backend-framework:reps")
     compile libs.gcloud_kms
     compile libs.guice
     compile libs.jackson_kotlin
     compile libs.ktor_auth
-    compile libs.ktor_auth_jwt
     compile libs.ktor_server_core
 }

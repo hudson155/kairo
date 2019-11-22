@@ -6,7 +6,6 @@ dependencies {
     compile libs.guice
     compile libs.jackson_kotlin
     compile libs.ktor_auth
-    compile libs.ktor_auth_jwt
     compile libs.ktor_jackson
     compile libs.ktor_server_core
 }

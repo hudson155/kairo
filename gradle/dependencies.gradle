@@ -5,6 +5,12 @@ ext {
             // https://mvnrepository.com/artifact/com.google.cloud.tools/appengine-gradle-plugin
             appengine_gradle_plugin: '2.2.0',
 
+            // https://github.com/auth0/java-jwt/releases
+            auth0_java_jwt         : '3.8.3',
+
+            // https://github.com/auth0/jwks-rsa-java/releases
+            auth0_jwks_rsa         : '0.9.0',
+
             // https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-kms
             gcloud_kms             : '1.34.0',
 
@@ -42,12 +48,15 @@ ext {
 
             // Ktor
             ktor_auth              : "io.ktor:ktor-auth:$versions.ktor",
-            ktor_auth_jwt          : "io.ktor:ktor-auth-jwt:$versions.ktor",
             ktor_jackson           : "io.ktor:ktor-jackson:$versions.ktor",
             ktor_server_cio        : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core       : "io.ktor:ktor-server-core:$versions.ktor",
             ktor_server_servlet    : "io.ktor:ktor-server-servlet:$versions.ktor",
             ktor_test              : "io.ktor:ktor-server-test-host:$versions.ktor",
+
+            // JWT
+            auth0_java_jwt         : "com.auth0:java-jwt:$versions.auth0_java_jwt",
+            auth0_jwks_rsa         : "com.auth0:jwks-rsa:$versions.auth0_jwks_rsa",
 
             // Jackson
             jackson                : "com.fasterxml.jackson.core:jackson-databind:$versions.jackson",
