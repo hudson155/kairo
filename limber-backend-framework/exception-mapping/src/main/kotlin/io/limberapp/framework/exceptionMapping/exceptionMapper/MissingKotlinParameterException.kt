@@ -12,12 +12,7 @@ import io.limberapp.framework.exceptionMapping.ExceptionMapper
 internal class MissingKotlinParameterException :
     ExceptionMapper<MissingKotlinParameterException>() {
 
-    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: MissingKotlinParameterException
-    ) {
-        this.call.respond(
-            status = HttpStatusCode.BadRequest,
-            message = MissingPropertyFrameworkError(e.parameter.name!!)
-        )
+    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: MissingKotlinParameterException) {
+        this.call.respond(HttpStatusCode.BadRequest, MissingPropertyFrameworkError(e.parameter.name!!))
     }
 }

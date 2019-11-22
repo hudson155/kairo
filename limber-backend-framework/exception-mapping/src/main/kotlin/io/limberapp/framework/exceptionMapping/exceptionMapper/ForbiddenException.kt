@@ -12,12 +12,7 @@ import io.limberapp.framework.exceptionMapping.ExceptionMapper
 internal class ForbiddenException :
     ExceptionMapper<ForbiddenException>() {
 
-    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: ForbiddenException
-    ) {
-        this.call.respond(
-            status = HttpStatusCode.Forbidden,
-            message = ForbiddenFrameworkError()
-        )
+    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: ForbiddenException) {
+        this.call.respond(HttpStatusCode.Forbidden, ForbiddenFrameworkError())
     }
 }

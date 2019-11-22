@@ -12,12 +12,7 @@ import io.limberapp.framework.exceptionMapping.ExceptionMapper
 internal class InvalidTypeIdException :
     ExceptionMapper<InvalidTypeIdException>() {
 
-    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: InvalidTypeIdException
-    ) {
-        this.call.respond(
-            status = HttpStatusCode.BadRequest,
-            message = MissingPropertyFrameworkError("type")
-        )
+    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: InvalidTypeIdException) {
+        this.call.respond(HttpStatusCode.BadRequest, MissingPropertyFrameworkError("type"))
     }
 }

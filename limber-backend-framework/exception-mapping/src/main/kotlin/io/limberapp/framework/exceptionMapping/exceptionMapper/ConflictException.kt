@@ -12,12 +12,7 @@ import io.limberapp.framework.exceptionMapping.ExceptionMapper
 internal class ConflictException :
     ExceptionMapper<ConflictException>() {
 
-    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: ConflictException
-    ) {
-        this.call.respond(
-            status = HttpStatusCode.Conflict,
-            message = ConflictFrameworkError()
-        )
+    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: ConflictException) {
+        this.call.respond(HttpStatusCode.Conflict, ConflictFrameworkError())
     }
 }
