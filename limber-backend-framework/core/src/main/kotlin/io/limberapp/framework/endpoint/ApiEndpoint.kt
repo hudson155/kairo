@@ -5,7 +5,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
-import io.ktor.auth.jwt.JWTPrincipal
+import io.limberapp.framework.ktorAuth.JWTPrincipal
 import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService

@@ -1,0 +1,5 @@
+dependencies {
+    compile libs.auth0_java_jwt
+    compile libs.auth0_jwks_rsa
+    compile libs.ktor_auth
+}

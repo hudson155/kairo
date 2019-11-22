@@ -3,6 +3,8 @@ package io.limberapp.framework.authentication
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import io.limberapp.framework.ktorAuth.StaticJwtVerifierProvider
+import io.limberapp.framework.ktorAuth.UrlJwtVerifierProvider
 import io.ktor.http.auth.HttpAuthHeader
 import io.limberapp.framework.config.authentication.AuthenticationConfig
 import io.limberapp.framework.config.authentication.JwkAuthentication
