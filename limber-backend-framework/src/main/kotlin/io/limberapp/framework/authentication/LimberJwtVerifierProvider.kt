@@ -18,13 +18,7 @@ class LimberJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
             is JwkAuthentication ->
                 UrlJwtVerifierProvider(mechanism.domain)
             is JwtAuthentication ->
-                StaticJwtVerifierProvider(
-                    JWT.require(
-                        Algorithm.HMAC256(
-                            mechanism.secret
-                        )
-                    ).build()
-                )
+                StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
             is UnsignedJwtAuthentication ->
                 StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
         }
