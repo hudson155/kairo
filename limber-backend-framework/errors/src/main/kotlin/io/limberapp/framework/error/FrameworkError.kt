@@ -9,8 +9,7 @@ interface FrameworkError {
     val message: String
 
     /**
-     * Keys represent a parameterized version of what went wrong; their generic meaning should be
-     * unique.
+     * Keys represent a parameterized version of what went wrong; their generic meaning should be unique.
      */
     enum class Key {
         CONFLICT,
