@@ -6,7 +6,7 @@ import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.limberapp.framework.ktorAuth.JWTPrincipal
-import io.limberapp.framework.ktorAuth.jwt
+import io.limberapp.framework.ktorAuth.limberAuth
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -57,9 +57,8 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            jwt {
+            limberAuth {
                 verifier(LimberJwtVerifierProvider(config.authentication)::getVerifier)
-                validate { credential -> JWTPrincipal(credential.payload) }
             }
         }
     }

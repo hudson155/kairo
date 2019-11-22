@@ -44,7 +44,8 @@ class JWTAuthenticationProvider internal constructor(config: Configuration) :
     class Configuration internal constructor(name: String?) :
         AuthenticationProvider.Configuration(name) {
 
-        internal var authenticationFunction: AuthenticationFunction<JWTCredential> = { null }
+        internal var authenticationFunction: AuthenticationFunction<JWTCredential> =
+            { credential -> JWTPrincipal(credential.payload) }
 
         internal var schemes = JWTAuthSchemes("Bearer")
 
@@ -70,10 +71,6 @@ class JWTAuthenticationProvider internal constructor(config: Configuration) :
             this.verifier = verifier
         }
 
-        fun validate(validate: suspend ApplicationCall.(JWTCredential) -> Principal?) {
-            authenticationFunction = validate
-        }
-
         internal fun build() = JWTAuthenticationProvider(this)
     }
 }
@@ -84,7 +81,7 @@ internal class JWTAuthSchemes(val defaultScheme: String, vararg additionalScheme
     operator fun contains(scheme: String): Boolean = scheme.toLowerCase() in schemesLowerCase
 }
 
-fun Authentication.Configuration.jwt(
+fun Authentication.Configuration.limberAuth(
     name: String? = null,
     configure: JWTAuthenticationProvider.Configuration.() -> Unit
 ) {
