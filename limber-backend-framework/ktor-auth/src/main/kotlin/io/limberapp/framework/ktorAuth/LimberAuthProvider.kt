@@ -21,9 +21,7 @@ class LimberAuthProvider internal constructor(
         pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { intercept(it) }
     }
 
-    private fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(
-        context: AuthenticationContext
-    ) {
+    private fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(context: AuthenticationContext) {
 
         val token = call.request.parseAuthorizationHeaderOrNull()
             ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
@@ -43,24 +41,20 @@ class LimberAuthProvider internal constructor(
         null
     }
 
-    private fun getPrincipal(token: HttpAuthHeader): JWTPrincipal? {
+    private fun getPrincipal(token: HttpAuthHeader): LimberAuthPrincipal? {
         if (token !is HttpAuthHeader.Single) return null
         val verifier = config.verifiers[token.authScheme] ?: return null
-        val credential = verifier.verify(token.blob) ?: return null
-        return JWTPrincipal(credential.payload)
+        return verifier.verify(token.blob) ?: return null
     }
 
     private fun AuthenticationContext.bearerChallenge(
         cause: AuthenticationFailedCause
     ) = challenge(config.authKey, cause) {
-        call.respond(
-            UnauthorizedResponse(
-                HttpAuthHeader.Parameterized(
-                    config.defaultScheme,
-                    mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
-                )
-            )
+        val challenge = HttpAuthHeader.Parameterized(
+            authScheme = config.defaultScheme,
+            parameters = mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
         )
+        call.respond(UnauthorizedResponse(challenge))
         if (!it.completed && call.response.status() != null) it.complete()
     }
 

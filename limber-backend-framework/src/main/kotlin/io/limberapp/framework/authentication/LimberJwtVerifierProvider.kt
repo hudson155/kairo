@@ -7,19 +7,14 @@ import io.limberapp.framework.config.authentication.AuthenticationConfig
 import io.limberapp.framework.config.authentication.JwkAuthentication
 import io.limberapp.framework.config.authentication.JwtAuthentication
 import io.limberapp.framework.config.authentication.UnsignedJwtAuthentication
-import io.limberapp.framework.ktorAuth.StaticJwtVerifierProvider
-import io.limberapp.framework.ktorAuth.UrlJwtVerifierProvider
 
 class LimberJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {
-            is JwkAuthentication ->
-                UrlJwtVerifierProvider(mechanism.domain)
-            is JwtAuthentication ->
-                StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
-            is UnsignedJwtAuthentication ->
-                StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
+            is JwkAuthentication -> UrlJwtVerifierProvider(mechanism.domain)
+            is JwtAuthentication -> StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
+            is UnsignedJwtAuthentication -> StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
         }
         return@associate Pair(mechanism.issuer, provider)
     }
