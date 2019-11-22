@@ -13,23 +13,9 @@ import io.ktor.request.ApplicationRequest
 import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 
-typealias JWTAuthChallengeFunction =
-        suspend PipelineContext<*, ApplicationCall>.(defaultScheme: String, realm: String) -> Unit
-
 class LimberAuthProvider internal constructor(
     private val config: LimberAuthConfig
 ) : AuthenticationProvider(config) {
-
-    private val challengeFunction: JWTAuthChallengeFunction = { scheme, realm ->
-        call.respond(
-            UnauthorizedResponse(
-                HttpAuthHeader.Parameterized(
-                    scheme,
-                    mapOf(HttpAuthHeader.Parameters.Realm to realm)
-                )
-            )
-        )
-    }
 
     init {
         pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { intercept(it) }
@@ -64,15 +50,17 @@ class LimberAuthProvider internal constructor(
         return JWTPrincipal(credential.payload)
     }
 
-    private fun HttpAuthHeader.getBlob(schemes: JWTAuthSchemes) = when {
-        this is HttpAuthHeader.Single && authScheme in schemes -> blob
-        else -> null
-    }
-
     private fun AuthenticationContext.bearerChallenge(
         cause: AuthenticationFailedCause
     ) = challenge(config.authKey, cause) {
-        challengeFunction(this, config.defaultScheme, config.realm)
+        call.respond(
+            UnauthorizedResponse(
+                HttpAuthHeader.Parameterized(
+                    config.defaultScheme,
+                    mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
+                )
+            )
+        )
         if (!it.completed && call.response.status() != null) it.complete()
     }
 
