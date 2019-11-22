@@ -4,8 +4,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.encodeURLParameter
 
 /**
- * The configuration for the API endpoint. Uniquely represents the HTTP method and path
- * template.
+ * The configuration for the API endpoint. Uniquely represents the HTTP method and path template.
  */
 data class EndpointConfig(val httpMethod: HttpMethod, val pathTemplate: String) {
 
@@ -13,8 +12,7 @@ data class EndpointConfig(val httpMethod: HttpMethod, val pathTemplate: String) 
 
         var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
             val pathParam = it.groupValues[1]
-            return@replace checkNotNull(pathParams[pathParam])
-                .encodeURLParameter(spaceToPlus = true)
+            return@replace checkNotNull(pathParams[pathParam]).encodeURLParameter(spaceToPlus = true)
         }
 
         if (queryParams.isNotEmpty()) {

@@ -12,8 +12,8 @@ object Validator {
         val uuid = Regex("$hex{8}-?$hex{4}-?$hex{4}-?$hex{4}-?$hex{12}", RegexOption.IGNORE_CASE)
 
         val hostname = Regex(
-            "[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
-            RegexOption.IGNORE_CASE
+            pattern = "[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
+            option = RegexOption.IGNORE_CASE
         )
 
         val url = run {
@@ -29,23 +29,22 @@ object Validator {
             val hash = Regex("(?:#$validChar*)?")
 
             return@run Regex(
-                pattern = listOf(protocol, hostname, path, queryString, hash)
-                    .joinToString(""),
+                pattern = listOf(protocol, hostname, path, queryString, hash).joinToString(""),
                 option = RegexOption.IGNORE_CASE
             )
         }
 
         val emailAddress = Regex(
-            "[a-z0-9.!#\$%&'*+/=?^_`{|}~-]+@$hostname",
-            RegexOption.IGNORE_CASE
+            pattern = "[a-z0-9.!#\$%&'*+/=?^_`{|}~-]+@$hostname",
+            option = RegexOption.IGNORE_CASE
         )
     }
 
     fun emailAddress(value: String) = Regex.emailAddress.matches(value)
 
     /**
-     * This URL validator is definitely not perfect, but there really is no such thing as a perfect
-     * URL validator - just one that fits the use case.
+     * This URL validator is definitely not perfect, but there really is no such thing as a perfect URL validator - just
+     * one that fits the use case.
      */
     fun url(value: String) = Regex.url.matches(value)
 

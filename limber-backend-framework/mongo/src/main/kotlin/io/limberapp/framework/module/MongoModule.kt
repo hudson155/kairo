@@ -8,9 +8,7 @@ import io.limberapp.framework.createClient
 /**
  * MongoModule configures bindings for MongoDB.
  */
-open class MongoModule(
-    protected val mongoDatabaseConfig: MongoDatabaseConfig
-) : AbstractModule() {
+open class MongoModule(protected val mongoDatabaseConfig: MongoDatabaseConfig) : AbstractModule() {
 
     override fun configure() {
         bind(MongoDatabase::class.java)

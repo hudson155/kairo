@@ -32,9 +32,6 @@ internal class MongoPersonalAccessTokenStore @Inject constructor(
         collection.find(PersonalAccessTokenEntity::userId eq userId)
 
     override fun delete(userId: UUID, id: UUID) = collection.findOneAndDelete(
-        filter = and(
-            PersonalAccessTokenEntity::id eq id,
-            PersonalAccessTokenEntity::userId eq userId
-        )
+        filter = and(PersonalAccessTokenEntity::id eq id, PersonalAccessTokenEntity::userId eq userId)
     )
 }

@@ -47,9 +47,6 @@ internal class DeleteMembership @Inject constructor(
     companion object {
         const val orgId = "orgId"
         const val memberId = "memberId"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Delete,
-            pathTemplate = "/orgs/{$orgId}/memberships/{$memberId}"
-        )
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}/memberships/{$memberId}")
     }
 }

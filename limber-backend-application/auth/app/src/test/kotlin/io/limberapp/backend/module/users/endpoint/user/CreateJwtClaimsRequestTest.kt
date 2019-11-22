@@ -49,12 +49,8 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
             )
         )
 
-        every {
-            mockedServices[UserService::class].getByEmailAddress(jwtRequest.emailAddress)
-        } returns existingUser
-        every {
-            mockedServices[OrgService::class].getByMemberId(existingUser.id)
-        } returns listOf(org1)
+        every { mockedServices[UserService::class].getByEmailAddress(jwtRequest.emailAddress) } returns existingUser
+        every { mockedServices[OrgService::class].getByMemberId(existingUser.id) } returns listOf(org1)
 
         limberTest.test(
             endpointConfig = CreateJwtClaimsRequest.endpointConfig,
@@ -87,12 +83,8 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
 
         val newUserId = deterministicUuidGenerator[0]
 
-        every {
-            mockedServices[UserService::class].getByEmailAddress(jwtRequest.emailAddress)
-        } returns null
-        every {
-            mockedServices[UserService::class].create(any())
-        } answers {
+        every { mockedServices[UserService::class].getByEmailAddress(jwtRequest.emailAddress) } returns null
+        every { mockedServices[UserService::class].create(any()) } answers {
             with(arg(0) as UserModel) {
                 UserModel(
                     id = id,
@@ -106,9 +98,7 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
                 )
             }
         }
-        every {
-            mockedServices[OrgService::class].getByMemberId(newUserId)
-        } returns emptyList()
+        every { mockedServices[OrgService::class].getByMemberId(newUserId) } returns emptyList()
 
         limberTest.test(
             endpointConfig = CreateJwtClaimsRequest.endpointConfig,

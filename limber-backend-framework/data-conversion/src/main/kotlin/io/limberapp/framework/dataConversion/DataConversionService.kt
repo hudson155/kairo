@@ -12,8 +12,8 @@ interface DataConversionService<T : Any> {
     fun isValid(value: String): Boolean
 
     /**
-     * Converts from a validated string to an instance of the type. Behaviour is undefined if a
-     * non-validated string is passed.
+     * Converts from a validated string to an instance of the type. Behaviour is undefined if a non-validated string is
+     * passed.
      */
     fun fromString(value: String): T
 

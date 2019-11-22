@@ -12,9 +12,7 @@ import io.limberapp.framework.dataConversion.DataConversionService
 /**
  * This module configures Jackson conversion for the given conversion service.
  */
-class ConversionServiceModule<T : Any>(
-    conversionService: DataConversionService<T>
-) : SimpleModule() {
+class ConversionServiceModule<T : Any>(conversionService: DataConversionService<T>) : SimpleModule() {
 
     init {
         addSerializer(conversionService.clazz.java, serializer(conversionService))

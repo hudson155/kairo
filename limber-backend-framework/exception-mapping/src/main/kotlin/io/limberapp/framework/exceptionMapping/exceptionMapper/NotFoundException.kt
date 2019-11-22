@@ -12,12 +12,7 @@ import io.limberapp.framework.exceptionMapping.ExceptionMapper
 internal class NotFoundException :
     ExceptionMapper<NotFoundException>() {
 
-    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: NotFoundException
-    ) {
-        this.call.respond(
-            status = HttpStatusCode.NotFound,
-            message = NotFoundFrameworkError()
-        )
+    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: NotFoundException) {
+        this.call.respond(HttpStatusCode.NotFound, NotFoundFrameworkError())
     }
 }

@@ -11,8 +11,8 @@ import io.limberapp.framework.dataConversion.conversionService.UuidConversionSer
 import io.limberapp.framework.jackson.module.conversionService.ConversionServiceModule
 
 /**
- * Custom ObjectMapper configured for Kotlin, pretty printing, custom datatype conversion, etc. This
- * should be used across Limber.
+ * Custom ObjectMapper configured for Kotlin, pretty printing, custom datatype conversion, etc. This should be used
+ * across Limber.
  */
 open class LimberObjectMapper(
     jsonFactory: JsonFactory? = null,

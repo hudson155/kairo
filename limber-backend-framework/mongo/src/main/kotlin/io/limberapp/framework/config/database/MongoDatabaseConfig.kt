@@ -3,9 +3,8 @@ package io.limberapp.framework.config.database
 import io.limberapp.framework.config.EncryptedValue
 
 /**
- * This class encapsulates the configuration for the connection to MongoDB. The class name does not
- * specify that the database is MongoDB, so if/when multiple databases are introduced, this should
- * be renamed.
+ * This class encapsulates the configuration for the connection to MongoDB. The class name does not specify that the
+ * database is MongoDB, so if/when multiple databases are introduced, this should be renamed.
  */
 data class MongoDatabaseConfig(
     val protocol: Protocol,

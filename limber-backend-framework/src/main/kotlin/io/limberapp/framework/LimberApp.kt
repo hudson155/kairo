@@ -36,9 +36,7 @@ import java.util.UUID
  * This class has a lot of functions, but it's clearer this way.
  */
 @Suppress("TooManyFunctions")
-abstract class LimberApp<C : Config>(
-    protected val config: C
-) {
+abstract class LimberApp<C : Config>(protected val config: C) {
 
     fun bindToApplication(application: Application) = with(application) {
         configure()

@@ -9,8 +9,8 @@ import io.limberapp.framework.exceptionMapping.exceptionMapper.NotFoundException
 import io.limberapp.framework.exceptionMapping.exceptionMapper.ValidationError
 
 /**
- * The ExceptionMappingConfigurator sets up exception mapping. Exception mapping refers to catching
- * exceptions and converting them to JSON responses.
+ * The ExceptionMappingConfigurator sets up exception mapping. Exception mapping refers to catching exceptions and
+ * converting them to JSON responses.
  */
 class ExceptionMappingConfigurator {
 

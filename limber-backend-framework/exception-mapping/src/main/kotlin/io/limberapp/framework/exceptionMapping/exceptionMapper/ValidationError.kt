@@ -12,12 +12,7 @@ import io.limberapp.framework.validation.ValidationException
 internal class ValidationError :
     ExceptionMapper<ValidationException>() {
 
-    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(
-        e: ValidationException
-    ) {
-        this.call.respond(
-            status = HttpStatusCode.BadRequest,
-            message = ValidationFrameworkError(e.propertyName)
-        )
+    override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: ValidationException) {
+        this.call.respond(HttpStatusCode.BadRequest, ValidationFrameworkError(e.propertyName))
     }
 }

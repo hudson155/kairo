@@ -20,8 +20,7 @@ internal class CreatePersonalAccessTokenTest : ResourceTest() {
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {
-            val actual =
-                objectMapper.readValue<PersonalAccessTokenRep.OneTimeUse>(response.content!!)
+            val actual = objectMapper.readValue<PersonalAccessTokenRep.OneTimeUse>(response.content!!)
             val expected = PersonalAccessTokenRep.OneTimeUse(
                 id = id,
                 created = LocalDateTime.now(fixedClock),
