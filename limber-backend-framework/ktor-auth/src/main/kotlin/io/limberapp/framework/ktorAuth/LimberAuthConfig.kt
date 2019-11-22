@@ -13,7 +13,9 @@ class LimberAuthConfig private constructor(
     class Builder(private val name: String?) {
 
         /**
-         * The default scheme.
+         * The default scheme, used for challenge responses.
+         *
+         * See https://en.wikipedia.org/wiki/Challenge–response_authentication for info about challenge responses.
          */
         private var defaultScheme: String? = null
 
@@ -23,16 +25,16 @@ class LimberAuthConfig private constructor(
         private val verifiers: MutableMap<String, LimberAuthVerifier> = mutableMapOf()
 
         /**
-         * The auth key used for challenge or error responses. See
-         * https://en.wikipedia.org/wiki/Challenge–response_authentication. I don't really
-         * understand this, but it's how it works.
+         * The auth key used for challenge or error responses.
+         *
+         * See https://en.wikipedia.org/wiki/Challenge–response_authentication for info about challenge responses.
          */
         var authKey = "LimberAuth"
 
         /**
-         * The realm used for challenge responses. See
-         * https://en.wikipedia.org/wiki/Challenge–response_authentication. I don't really
-         * understand this, but it's how it works.
+         * The realm used for challenge responses.
+         *
+         * See https://en.wikipedia.org/wiki/Challenge–response_authentication for info about challenge responses.
          */
         var realm = "Limber Server"
 
@@ -40,6 +42,8 @@ class LimberAuthConfig private constructor(
          * Creates a verifier for the given scheme. Each scheme can only have one verifier. Exactly
          * one of the specified verifiers must be set as the default. The default verifier's scheme
          * is used for challenge responses.
+         *
+         * See https://en.wikipedia.org/wiki/Challenge–response_authentication for info about challenge responses.
          */
         fun verifier(scheme: String, verifier: LimberAuthVerifier, default: Boolean = false) {
             if (default) require(defaultScheme == null) { "Can't set multiple default verifiers." }
