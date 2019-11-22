@@ -5,9 +5,7 @@ import io.ktor.util.DataConversionException
 import io.limberapp.framework.dataConversion.DataConversionService
 import java.lang.reflect.Type
 
-fun <T : Any> conversionService(
-    dataConversionService: DataConversionService<T>
-) = object : ConversionService {
+fun <T : Any> conversionService(dataConversionService: DataConversionService<T>) = object : ConversionService {
     override fun fromValues(values: List<String>, type: Type): Any? {
         return when (values.size) {
             0 -> null
