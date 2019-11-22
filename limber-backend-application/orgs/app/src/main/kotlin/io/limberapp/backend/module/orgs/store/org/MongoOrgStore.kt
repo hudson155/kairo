@@ -43,20 +43,14 @@ internal class MongoOrgStore @Inject constructor(
 
     override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
         return collection.findOneAndUpdate(
-            filter = and(
-                OrgEntity::id eq id,
-                OrgEntity::members / MembershipEntity::userId ne entity.userId
-            ),
+            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId ne entity.userId),
             update = push(OrgEntity::members, entity)
         )?.let { }
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID): Unit? {
         return collection.findOneAndUpdate(
-            filter = and(
-                OrgEntity::id eq id,
-                OrgEntity::members / MembershipEntity::userId eq memberId
-            ),
+            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId eq memberId),
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
         )?.let { }
     }
