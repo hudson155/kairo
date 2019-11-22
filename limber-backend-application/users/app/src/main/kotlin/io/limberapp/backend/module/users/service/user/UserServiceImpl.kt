@@ -15,6 +15,7 @@ internal class UserServiceImpl @Inject constructor(
 ) : UserService {
 
     override fun create(model: UserModel) {
+        getByEmailAddress(model.emailAddress)?.let { throw ConflictException() }
         val entity = userMapper.entity(model)
         userStore.create(entity)
     }
