@@ -5,7 +5,6 @@ import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
-import io.limberapp.framework.ktorAuth.LimberAuthPrincipal
 import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
@@ -21,14 +20,15 @@ import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.exception.ForbiddenException
 import io.limberapp.framework.exception.NotFoundException
+import io.limberapp.framework.ktorAuth.LimberAuthPrincipal
 import io.limberapp.framework.rep.ValidatedRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 import kotlin.reflect.jvm.jvmName
 
 /**
- * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the
- * API. The handler() is called for each request.
+ * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
+ * called for each request.
  */
 abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
@@ -37,34 +37,32 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
 ) {
 
     /**
-     * Called for each request to the endpoint, to determine the command. The implementation should
-     * get all request parameters (if appropriate) and receive the body (if appropriate). This is
-     * the only time in the ApiEndpoint lifecycle that a method will be given access to the Ktor
-     * ApplicationCall.
+     * Called for each request to the endpoint, to determine the command. The implementation should get all request
+     * parameters (if appropriate) and receive the body (if appropriate). This is the only time in the ApiEndpoint
+     * lifecycle that a method will be given access to the Ktor ApplicationCall.
      */
     abstract suspend fun determineCommand(call: ApplicationCall): Command
 
     /**
-     * Called for each request to the endpoint, to specify the authorization check to be used. This
-     * should handle authorization for most endpoints.
+     * Called for each request to the endpoint, to specify the authorization check to be used. This should handle
+     * authorization for most endpoints.
      */
     abstract fun authorization(command: Command): Authorization
 
     /**
-     * Called for each request to the endpoint, to specify an additional authorization check to be
-     * used after the request has been handled. This can handle authorization for endpoints where
-     * alternative identifiers are used and it's not possible to know in advance which endpoint.
-     * This should only be used for GET endpoints, or else the operation will have already been
-     * performed.
+     * Called for each request to the endpoint, to specify an additional authorization check to be used after the
+     * request has been handled. This can handle authorization for endpoints where alternative identifiers are used and
+     * it's not possible to know in advance which endpoint. This should only be used for GET endpoints, or else the
+     * operation will have already been performed.
      */
     open fun secondaryAuthorization(response: ResponseType): Authorization = Authorization.Public
 
     /**
-     * Called for each request to the endpoint, to handle the execution. This method is the meat and
-     * potatoes of the ApiEndpoint instance. By this point, the command has been determined and the
-     * user has been authorized. All that's left is for the "actual work" to be done. However, even
-     * though this is the meat and potatoes, in a good architecture this method probably has very
-     * simple implementation and delegates most of the work to the service layer.
+     * Called for each request to the endpoint, to handle the execution. This method is the meat and potatoes of the
+     * ApiEndpoint instance. By this point, the command has been determined and the user has been authorized. All that's
+     * left is for the "actual work" to be done. However, even though this is the meat and potatoes, in a good
+     * architecture this method probably has very simple implementation and delegates most of the work to the service
+     * layer.
      */
     abstract suspend fun handler(command: Command): ResponseType
 
@@ -108,8 +106,8 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
         receive<T>().apply { validate() }
 
     /**
-     * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast
-     * to that type using the application's ConversionService.
+     * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast to that type using
+     * the application's ConversionService.
      */
     protected fun <T : Any> Parameters.getAsType(clazz: KClass<T>, name: String): T {
         val values = getAll(name) ?: throw MissingRequestParameterException(name)

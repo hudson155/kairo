@@ -5,10 +5,9 @@ import io.limberapp.framework.endpoint.ApiEndpoint
 import kotlin.reflect.KClass
 
 /**
- * A Module encapsulates a distinct concept in the application. It wires up the endpoints and binds
- * services and stores. All endpoints, services, and stores need to be included in exactly 1 module.
- * Modules can use services and stores that are bound in other modules, as long as both modules are
- * included in the same application.
+ * A Module encapsulates a distinct concept in the application. It wires up the endpoints and binds services and stores.
+ * All endpoints, services, and stores need to be included in exactly 1 module. Modules can use services and stores that
+ * are bound in other modules, as long as both modules are included in the same application.
  */
 abstract class Module : AbstractModule() {
 
@@ -28,14 +27,14 @@ abstract class Module : AbstractModule() {
     }
 
     /**
-     * The implementation of this method should bind all necessary services. It's best to bind them
-     * as singletons using the bind() method provided.
+     * The implementation of this method should bind all necessary services. It's best to bind them as singletons using
+     * the bind() method provided.
      */
     protected abstract fun bindServices()
 
     /**
-     * The implementation of this method should bind all necessary stores. It's best to bind them as
-     * singletons using the bind() method provided.
+     * The implementation of this method should bind all necessary stores. It's best to bind them as singletons using
+     * the bind() method provided.
      */
     protected abstract fun bindStores()
 
