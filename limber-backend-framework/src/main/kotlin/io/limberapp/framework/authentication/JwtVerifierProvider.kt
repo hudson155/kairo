@@ -1,4 +1,4 @@
-package io.limberapp.framework.ktorAuth
+package io.limberapp.framework.authentication
 
 import com.auth0.jwk.Jwk
 import com.auth0.jwk.UrlJwkProvider
@@ -11,9 +11,7 @@ sealed class JwtVerifierProvider {
     abstract operator fun get(keyId: String?): JWTVerifier
 }
 
-class StaticJwtVerifierProvider(
-    private val jwtVerifier: JWTVerifier
-) : JwtVerifierProvider() {
+class StaticJwtVerifierProvider(private val jwtVerifier: JWTVerifier) : JwtVerifierProvider() {
     override fun get(keyId: String?) = jwtVerifier
 }
 

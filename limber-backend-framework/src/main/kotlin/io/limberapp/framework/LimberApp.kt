@@ -1,12 +1,12 @@
 package io.limberapp.framework
 
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.impl.JWTParser
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.auth.Authentication
-import io.limberapp.framework.ktorAuth.JWTPrincipal
-import io.limberapp.framework.ktorAuth.jwt
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -22,10 +22,14 @@ import io.limberapp.framework.config.Config
 import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import io.limberapp.framework.ktorAuth.LimberAuthPrincipal
+import io.limberapp.framework.ktorAuth.LimberAuthVerifier
+import io.limberapp.framework.ktorAuth.limberAuth
 import io.limberapp.framework.module.Module
 import io.limberapp.framework.util.conversionService
 import io.limberapp.framework.util.serveStaticFiles
 import org.slf4j.event.Level
+import java.util.Base64
 import java.util.UUID
 
 /**
@@ -57,18 +61,29 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            jwt {
-                verifier(LimberJwtVerifierProvider(config.authentication)::getVerifier)
-                validate { credential -> JWTPrincipal(credential.payload) }
+            val provider = LimberJwtVerifierProvider(config.authentication)
+            limberAuth {
+                verifier("Bearer", object : LimberAuthVerifier {
+                    override fun verify(blob: String): LimberAuthPrincipal? {
+                        val jwt = try {
+                            provider.getVerifier(blob)?.verify(blob)
+                        } catch (_: JWTVerificationException) {
+                            null
+                        } ?: return null
+                        val payloadString = String(Base64.getUrlDecoder().decode(jwt.payload))
+                        val payload = JWTParser().parsePayload(payloadString)
+                        return LimberAuthPrincipal(payload)
+                    }
+                }, default = true)
             }
         }
     }
 
     protected open fun Application.cors() {
         install(CORS) {
-            this.allowSameOrigin = false
-            this.anyHost()
-            this.header(HttpHeaders.Authorization)
+            allowSameOrigin = false
+            anyHost()
+            header(HttpHeaders.Authorization)
         }
     }
 

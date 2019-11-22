@@ -5,7 +5,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
-import io.limberapp.framework.ktorAuth.JWTPrincipal
+import io.limberapp.framework.ktorAuth.LimberAuthPrincipal
 import io.ktor.features.MissingRequestParameterException
 import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
@@ -88,7 +88,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
         route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
             handle {
                 val command = determineCommand(call)
-                val jwtPayload = call.authentication.principal<JWTPrincipal>()?.payload
+                val jwtPayload = call.authentication.principal<LimberAuthPrincipal>()?.payload
                 val jwt = jwtFromPayload(jwtPayload)
                 if (!authorization(command).authorize(jwt)) throw ForbiddenException()
                 val result = handler(command)
