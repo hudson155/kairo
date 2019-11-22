@@ -1,13 +1,17 @@
 package io.limberapp.framework.ktorAuth
 
-import com.auth0.jwt.JWTVerifier
 import io.ktor.auth.AuthenticationProvider
-import io.ktor.http.auth.HttpAuthHeader
 
 class LimberAuthConfig internal constructor(name: String?) :
     AuthenticationProvider.Configuration(name) {
 
+    internal val verifiers: MutableMap<String, LimberAuthVerifier> = mutableMapOf()
+
     var authKey = "LimberAuth"
     var realm = "Limber Server"
-    var verifier: (HttpAuthHeader) -> JWTVerifier? = { null }
+
+    fun verifier(scheme: String, verifier: LimberAuthVerifier) {
+        require(!verifiers.containsKey(scheme))
+        verifiers[scheme] = verifier
+    }
 }

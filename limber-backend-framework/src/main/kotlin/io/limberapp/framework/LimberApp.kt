@@ -1,5 +1,7 @@
 package io.limberapp.framework
 
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.impl.JWTParser
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import io.ktor.application.Application
@@ -20,11 +22,14 @@ import io.limberapp.framework.config.Config
 import io.limberapp.framework.dataConversion.conversionService.UuidConversionService
 import io.limberapp.framework.exceptionMapping.ExceptionMappingConfigurator
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import io.limberapp.framework.ktorAuth.LimberAuthCredential
+import io.limberapp.framework.ktorAuth.LimberAuthVerifier
 import io.limberapp.framework.ktorAuth.limberAuth
 import io.limberapp.framework.module.Module
 import io.limberapp.framework.util.conversionService
 import io.limberapp.framework.util.serveStaticFiles
 import org.slf4j.event.Level
+import java.util.Base64
 import java.util.UUID
 
 /**
@@ -56,8 +61,20 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
+            val provider = LimberJwtVerifierProvider(config.authentication)
             limberAuth {
-                verifier = LimberJwtVerifierProvider(config.authentication)::getVerifier
+                verifier("Bearer", object : LimberAuthVerifier {
+                    override fun verify(blob: String): LimberAuthCredential? {
+                        val jwt = try {
+                            provider.getVerifier(blob)?.verify(blob)
+                        } catch (ex: JWTVerificationException) {
+                            null
+                        } ?: return null
+                        val payloadString = String(Base64.getUrlDecoder().decode(jwt.payload))
+                        val payload = JWTParser().parsePayload(payloadString)
+                        return LimberAuthCredential(payload)
+                    }
+                })
             }
         }
     }
