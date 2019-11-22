@@ -1,3 +1,5 @@
+@file:Suppress("TooGenericExceptionCaught", "SwallowedException")
+
 package io.limberapp.framework.ktorAuth
 
 import com.auth0.jwt.JWTVerifier
@@ -23,7 +25,7 @@ import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 import java.util.Base64
 
-private val JWTAuthKey: Any = "JWTAuth"
+private const val JWT_AUTH_KEY = "JWTAuth"
 
 class JWTCredential(val payload: Payload) : Credential
 
@@ -123,7 +125,7 @@ fun Authentication.Configuration.jwt(
             }
         } catch (cause: Throwable) {
             val message = cause.message ?: cause.javaClass.simpleName
-            context.error(JWTAuthKey, AuthenticationFailedCause.Error(message))
+            context.error(JWT_AUTH_KEY, AuthenticationFailedCause.Error(message))
         }
     }
     register(provider)
@@ -137,7 +139,7 @@ private fun AuthenticationContext.bearerChallenge(
     realm: String,
     schemes: JWTAuthSchemes,
     challengeFunction: JWTAuthChallengeFunction
-) = challenge(JWTAuthKey, cause) {
+) = challenge(JWT_AUTH_KEY, cause) {
     challengeFunction(this, schemes.defaultScheme, realm)
     if (!it.completed && call.response.status() != null) {
         it.complete()
