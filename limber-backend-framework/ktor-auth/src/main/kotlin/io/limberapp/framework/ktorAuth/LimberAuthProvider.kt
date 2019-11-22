@@ -24,13 +24,11 @@ import java.util.Base64
 typealias JWTAuthChallengeFunction =
         suspend PipelineContext<*, ApplicationCall>.(defaultScheme: String, realm: String) -> Unit
 
-class JWTAuthenticationProvider internal constructor(
-    private val verifier: (HttpAuthHeader) -> JWTVerifier?
-) : AuthenticationProvider(object : Configuration(name = null) {}) {
+class LimberAuthProvider internal constructor(
+    private val config: LimberAuthConfig
+) : AuthenticationProvider(config) {
 
     // TODO: Extract these and verifier into a config and make them mutable by the caller.
-    private val authKey = "LimberAuth"
-    private val realm = "Limber Server"
     private val schemes = JWTAuthSchemes("Bearer")
 
     private val authenticationFunction: AuthenticationFunction<JWTCredential> =
@@ -60,10 +58,10 @@ class JWTAuthenticationProvider internal constructor(
         try {
             val principal = verifyAndValidate(
                 call = call,
-                jwtVerifier = verifier(token),
+                jwtVerifier = config.verifier(token),
                 token = token,
                 schemes = schemes,
-                validate = this@JWTAuthenticationProvider.authenticationFunction
+                validate = this@LimberAuthProvider.authenticationFunction
             ) ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
             context.principal(principal)
         } catch (e: Throwable) {
@@ -107,13 +105,13 @@ class JWTAuthenticationProvider internal constructor(
 
     private fun AuthenticationContext.bearerChallenge(
         cause: AuthenticationFailedCause
-    ) = challenge(authKey, cause) {
-        challengeFunction(this, schemes.defaultScheme, realm)
+    ) = challenge(config.authKey, cause) {
+        challengeFunction(this, schemes.defaultScheme, config.realm)
         if (!it.completed && call.response.status() != null) it.complete()
     }
 
     private fun AuthenticationContext.handleError(e: Throwable) {
         val message = e.message ?: e.javaClass.simpleName
-        error(authKey, AuthenticationFailedCause.Error(message))
+        error(config.authKey, AuthenticationFailedCause.Error(message))
     }
 }

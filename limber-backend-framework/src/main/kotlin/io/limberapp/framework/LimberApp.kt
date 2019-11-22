@@ -56,7 +56,9 @@ abstract class LimberApp<C : Config>(
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            limberAuth(LimberJwtVerifierProvider(config.authentication)::getVerifier)
+            limberAuth {
+                verifier = LimberJwtVerifierProvider(config.authentication)::getVerifier
+            }
         }
     }
 
