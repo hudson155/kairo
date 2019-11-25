@@ -5,7 +5,7 @@ import io.limberapp.backend.module.users.entity.user.UserEntity
 import com.piperframework.store.Store
 import java.util.UUID
 
-internal interface UserStore : com.piperframework.store.Store<UserEntity> {
+internal interface UserStore : Store<UserEntity> {
 
     fun create(entity: UserEntity)
 

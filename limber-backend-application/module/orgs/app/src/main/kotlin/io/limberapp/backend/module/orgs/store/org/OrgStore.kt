@@ -5,7 +5,7 @@ import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import com.piperframework.store.Store
 import java.util.UUID
 
-internal interface OrgStore : com.piperframework.store.Store<OrgEntity> {
+internal interface OrgStore : Store<OrgEntity> {
 
     fun create(entity: OrgEntity)
 

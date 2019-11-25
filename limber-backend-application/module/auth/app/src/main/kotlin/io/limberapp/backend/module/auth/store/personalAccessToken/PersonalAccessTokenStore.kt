@@ -4,7 +4,7 @@ import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAcces
 import com.piperframework.store.Store
 import java.util.UUID
 
-internal interface PersonalAccessTokenStore : com.piperframework.store.Store<PersonalAccessTokenEntity> {
+internal interface PersonalAccessTokenStore : Store<PersonalAccessTokenEntity> {
 
     fun create(entity: PersonalAccessTokenEntity)
 
