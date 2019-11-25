@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.store.personalAccessToken
 
 import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
-import io.limberapp.framework.store.Store
+import com.piperframework.store.Store
 import java.util.UUID
 
 internal interface PersonalAccessTokenStore : Store<PersonalAccessTokenEntity> {

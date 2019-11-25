@@ -15,7 +15,7 @@ internal class UpdateUserTest : ResourceTest() {
     fun doesNotExist() {
         val userId = UUID.randomUUID()
         val updateRep = UserRep.Update(firstName = "Gunner")
-        limberTest.test(
+        piperTest.test(
             endpointConfig = UpdateUser.endpointConfig,
             pathParams = mapOf(UpdateUser.userId to userId.toString()),
             body = updateRep,
@@ -33,13 +33,13 @@ internal class UpdateUserTest : ResourceTest() {
             profilePhotoUrl = null
         )
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
         val updateRep = UserRep.Update(firstName = "Gunner")
-        limberTest.test(
+        piperTest.test(
             endpointConfig = UpdateUser.endpointConfig,
             pathParams = mapOf(UpdateUser.userId to id.toString()),
             body = updateRep

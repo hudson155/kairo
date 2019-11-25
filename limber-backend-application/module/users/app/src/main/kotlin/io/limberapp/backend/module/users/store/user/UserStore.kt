@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.store.user
 
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.user.UserEntity
-import io.limberapp.framework.store.Store
+import com.piperframework.store.Store
 import java.util.UUID
 
 internal interface UserStore : Store<UserEntity> {

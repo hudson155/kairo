@@ -19,20 +19,20 @@ internal class CreateMembershipTest : ResourceTest() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
         val userId = UUID.randomUUID()
         val membershipCreationRep = MembershipRep.Creation(userId)
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString())
         ) {
@@ -52,19 +52,19 @@ internal class CreateMembershipTest : ResourceTest() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
         val userId = UUID.randomUUID()
         val membershipCreationRep = MembershipRep.Creation(userId)
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep,

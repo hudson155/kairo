@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":piper")
+    compile libs.junit
+    compile libs.ktor_test
+    compile libs.mockk
+}

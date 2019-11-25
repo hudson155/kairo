@@ -19,7 +19,7 @@ internal class CreateUserTest : ResourceTest() {
             profilePhotoUrl = null
         )
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {
@@ -46,7 +46,7 @@ internal class CreateUserTest : ResourceTest() {
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep1
         ) {}
@@ -57,7 +57,7 @@ internal class CreateUserTest : ResourceTest() {
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep2,
             expectedStatusCode = HttpStatusCode.Conflict

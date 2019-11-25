@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.orgs.entity.org
 
-import io.limberapp.framework.entity.CompleteSubentity
+import com.piperframework.entity.CompleteSubentity
 import java.time.LocalDateTime
 import java.util.UUID
 

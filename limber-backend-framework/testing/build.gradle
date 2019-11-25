@@ -1,6 +1,0 @@
-dependencies {
-    compile project(":limber-backend-framework")
-    compile libs.junit
-    compile libs.ktor_test
-    compile libs.mockk
-}

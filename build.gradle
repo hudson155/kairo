@@ -87,7 +87,7 @@ repositories {
 
 detekt {
     toolVersion = versions.detekt
-    input = files('limber-backend-application', 'limber-backend-framework')
+    input = files('limber-backend-application', 'piper')
     filters = '.*/build/.*,.*/out/.*'
     config = files('.detekt/detekt.yml')
 }

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.orgs.store.org
 
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
-import io.limberapp.framework.store.Store
+import com.piperframework.store.Store
 import java.util.UUID
 
 internal interface OrgStore : Store<OrgEntity> {

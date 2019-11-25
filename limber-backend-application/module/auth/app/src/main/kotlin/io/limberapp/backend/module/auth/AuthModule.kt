@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth
 
+import com.piperframework.module.Module
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.CreateJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.personalAccessToken.CreatePersonalAccessToken
 import io.limberapp.backend.module.auth.endpoint.personalAccessToken.DeletePersonalAccessToken
@@ -10,7 +11,6 @@ import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAcce
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenServiceImpl
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore
 import io.limberapp.backend.module.auth.store.personalAccessToken.PersonalAccessTokenStore
-import io.limberapp.framework.module.Module
 
 /**
  * Authentication is performed by Auth0, so the auth module is not actually responsible for authenticating users. It's

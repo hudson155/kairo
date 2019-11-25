@@ -2,11 +2,11 @@ package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.limberapp.backend.authorization.principal.Claims
-import io.limberapp.framework.rep.CreationRep
-import io.limberapp.framework.validation.util.emailAddress
-import io.limberapp.framework.validation.util.ifPresent
-import io.limberapp.framework.validation.util.shortText
-import io.limberapp.framework.validation.util.url
+import com.piperframework.rep.CreationRep
+import com.piperframework.validation.util.emailAddress
+import com.piperframework.validation.util.ifPresent
+import com.piperframework.validation.util.shortText
+import com.piperframework.validation.util.url
 
 object JwtClaimsRequestRep {
 

@@ -1,5 +1,0 @@
-dependencies {
-    compile project(":limber-backend-framework:data-conversion")
-    compile libs.jackson_datatype_jsr310
-    compile libs.jackson_kotlin
-}

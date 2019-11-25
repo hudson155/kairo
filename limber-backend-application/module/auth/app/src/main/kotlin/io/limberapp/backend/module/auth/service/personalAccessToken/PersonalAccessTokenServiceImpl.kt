@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.auth.mapper.app.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore
-import io.limberapp.framework.exception.NotFoundException
+import com.piperframework.exception.NotFoundException
 import java.util.UUID
 
 internal class PersonalAccessTokenServiceImpl @Inject constructor(

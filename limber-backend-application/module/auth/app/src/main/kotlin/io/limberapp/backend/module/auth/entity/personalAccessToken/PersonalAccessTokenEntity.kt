@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.entity.personalAccessToken
 
-import io.limberapp.framework.entity.CompleteEntity
+import com.piperframework.entity.CompleteEntity
 import org.bson.codecs.pojo.annotations.BsonId
 import java.time.LocalDateTime
 import java.util.UUID

@@ -13,7 +13,7 @@ internal class CreateOrgTest : ResourceTest() {
     fun create() {
         val creationRep = OrgRep.Creation("Cranky Pasta")
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
         ) {

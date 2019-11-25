@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.entity.org
 
-import io.limberapp.framework.entity.CompleteEntity
-import io.limberapp.framework.entity.UpdateEntity
+import com.piperframework.entity.CompleteEntity
+import com.piperframework.entity.UpdateEntity
 import org.bson.codecs.pojo.annotations.BsonId
 import java.time.LocalDateTime
 import java.util.UUID

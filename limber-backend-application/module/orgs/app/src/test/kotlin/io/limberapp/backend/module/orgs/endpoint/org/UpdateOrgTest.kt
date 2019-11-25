@@ -15,7 +15,7 @@ internal class UpdateOrgTest : ResourceTest() {
     fun doesNotExist() {
         val orgId = UUID.randomUUID()
         val updateRep = OrgRep.Update("Standing Teeth")
-        limberTest.test(
+        piperTest.test(
             endpointConfig = UpdateOrg.endpointConfig,
             pathParams = mapOf(UpdateOrg.orgId to orgId.toString()),
             body = updateRep,
@@ -28,13 +28,13 @@ internal class UpdateOrgTest : ResourceTest() {
 
         val creationRep = OrgRep.Creation("Cranky Pasta")
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
         ) {}
 
         val updateRep = OrgRep.Update("Standing Teeth")
-        limberTest.test(
+        piperTest.test(
             endpointConfig = UpdateOrg.endpointConfig,
             pathParams = mapOf(UpdateOrg.orgId to id.toString()),
             body = updateRep

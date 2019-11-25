@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.rep.membership
 
-import io.limberapp.framework.rep.CompleteSubrep
-import io.limberapp.framework.rep.CreationSubrep
+import com.piperframework.rep.CompleteSubrep
+import com.piperframework.rep.CreationSubrep
 import java.time.LocalDateTime
 import java.util.UUID
 

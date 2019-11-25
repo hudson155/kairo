@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.rep.personalAccessToken
 
-import io.limberapp.framework.rep.CompleteRep
+import com.piperframework.rep.CompleteRep
 import java.time.LocalDateTime
 import java.util.UUID
 

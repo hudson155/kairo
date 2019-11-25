@@ -1,0 +1,12 @@
+dependencies {
+    compile project(":piper:entities")
+    compile project(":piper:exceptions")
+    compile project(":piper:ktor-auth")
+    compile project(":piper:object-mapper")
+    compile project(":piper:reps")
+    compile libs.gcloud_kms
+    compile libs.guice
+    compile libs.jackson_kotlin
+    compile libs.ktor_auth
+    compile libs.ktor_server_core
+}

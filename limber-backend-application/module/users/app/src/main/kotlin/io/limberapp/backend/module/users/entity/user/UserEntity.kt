@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.users.entity.user
 
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.framework.entity.CompleteEntity
-import io.limberapp.framework.entity.UpdateEntity
+import com.piperframework.entity.CompleteEntity
+import com.piperframework.entity.UpdateEntity
 import org.bson.codecs.pojo.annotations.BsonId
 import java.time.LocalDateTime
 import java.util.UUID

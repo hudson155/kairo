@@ -16,7 +16,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
     @Test
     fun noOrgs() {
         val userId = UUID.randomUUID()
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetOrgsByMemberId.endpointConfig,
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
         ) {
@@ -30,20 +30,20 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
         val userId = UUID.randomUUID()
         val membershipCreationRep = MembershipRep.Creation(userId)
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetOrgsByMemberId.endpointConfig,
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
         ) {

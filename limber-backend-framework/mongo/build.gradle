@@ -1,5 +1,0 @@
-dependencies {
-    compile project(":limber-backend-framework:common")
-    compile project(":limber-backend-framework:entities")
-    compile libs.kmongo
-}

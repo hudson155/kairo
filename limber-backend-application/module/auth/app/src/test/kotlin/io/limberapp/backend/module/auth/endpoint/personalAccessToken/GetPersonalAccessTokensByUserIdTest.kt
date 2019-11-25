@@ -13,7 +13,7 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
 
     @Test
     fun getNone() {
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to UUID.randomUUID().toString())
         ) {
@@ -27,12 +27,12 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
 
         val userId = UUID.randomUUID()
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {

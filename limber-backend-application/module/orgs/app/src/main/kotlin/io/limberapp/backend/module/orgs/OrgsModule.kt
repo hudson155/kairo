@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs
 
+import com.piperframework.module.Module
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
@@ -11,7 +12,6 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
 import io.limberapp.backend.module.orgs.store.org.MongoOrgStore
 import io.limberapp.backend.module.orgs.store.org.OrgStore
-import io.limberapp.framework.module.Module
 
 /**
  * The orgs module contains the basics of a client/tenant/organization. Be careful not to overload this module with too

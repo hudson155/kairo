@@ -52,7 +52,7 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
         every { mockedServices[UserService::class].getByEmailAddress(jwtRequest.emailAddress) } returns existingUser
         every { mockedServices[OrgService::class].getByMemberId(existingUser.id) } returns listOf(org1)
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateJwtClaimsRequest.endpointConfig,
             body = jwtRequest
         ) {
@@ -100,7 +100,7 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
         }
         every { mockedServices[OrgService::class].getByMemberId(newUserId) } returns emptyList()
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateJwtClaimsRequest.endpointConfig,
             body = jwtRequest
         ) {

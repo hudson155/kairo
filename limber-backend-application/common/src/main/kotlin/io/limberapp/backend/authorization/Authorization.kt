@@ -3,17 +3,17 @@ package io.limberapp.backend.authorization
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.interfaces.Payload
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.piperframework.authorization.PiperAuthorization
+import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.framework.authorization.LimberAuthorization
-import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import java.util.UUID
 
 @Suppress("MethodOverloading") // Detekt incorrectly thinks overrides in nested subclasses are method overloads.
-sealed class Authorization : LimberAuthorization {
+sealed class Authorization : PiperAuthorization {
 
-    private val objectMapper = LimberObjectMapper()
+    private val objectMapper = PiperObjectMapper()
 
     override fun authorize(payload: Payload?): Boolean {
         val jwt = jwtFromPayload(payload)
