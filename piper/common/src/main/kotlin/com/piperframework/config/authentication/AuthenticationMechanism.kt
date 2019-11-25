@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
-    JsonSubTypes.Type(value = com.piperframework.config.authentication.JwkAuthentication::class, name = "JWK"),
-    JsonSubTypes.Type(value = com.piperframework.config.authentication.JwtAuthentication::class, name = "JWT"),
-    JsonSubTypes.Type(value = com.piperframework.config.authentication.UnsignedJwtAuthentication::class, name = "UNSIGNED_JWT")
+    JsonSubTypes.Type(value = JwkAuthentication::class, name = "JWK"),
+    JsonSubTypes.Type(value = JwtAuthentication::class, name = "JWT"),
+    JsonSubTypes.Type(value = UnsignedJwtAuthentication::class, name = "UNSIGNED_JWT")
 )
 sealed class AuthenticationMechanism {
     abstract val issuer: String?
@@ -16,13 +16,13 @@ sealed class AuthenticationMechanism {
 data class JwkAuthentication(
     override val issuer: String,
     val domain: String
-) : com.piperframework.config.authentication.AuthenticationMechanism()
+) : AuthenticationMechanism()
 
 data class JwtAuthentication(
     override val issuer: String,
     val secret: String
-) : com.piperframework.config.authentication.AuthenticationMechanism()
+) : AuthenticationMechanism()
 
-object UnsignedJwtAuthentication : com.piperframework.config.authentication.AuthenticationMechanism() {
+object UnsignedJwtAuthentication : AuthenticationMechanism() {
     override val issuer: Nothing? = null
 }

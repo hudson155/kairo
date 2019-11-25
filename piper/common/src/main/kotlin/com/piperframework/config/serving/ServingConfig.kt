@@ -5,5 +5,5 @@ package com.piperframework.config.serving
  */
 data class ServingConfig(
     val apiPathPrefix: String,
-    val staticFiles: com.piperframework.config.serving.StaticFiles
+    val staticFiles: StaticFiles
 )

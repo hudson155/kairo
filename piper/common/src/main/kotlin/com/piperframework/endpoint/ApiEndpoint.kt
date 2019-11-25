@@ -1,5 +1,7 @@
 package com.piperframework.endpoint
 
+import com.piperframework.authorization.PiperAuthorization
+import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
@@ -15,8 +17,6 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import com.piperframework.authorization.LimberAuthorization
-import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.exception.ForbiddenException
 import com.piperframework.exception.NotFoundException
 import com.piperframework.ktorAuth.LimberAuthPrincipal
@@ -29,10 +29,10 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
  * called for each request.
  */
-abstract class ApiEndpoint<Command : com.piperframework.endpoint.command.AbstractCommand, ResponseType : Any?>(
+abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
     private val pathPrefix: String,
-    private val endpointConfig: com.piperframework.endpoint.EndpointConfig
+    private val endpointConfig: EndpointConfig
 ) {
 
     /**
@@ -46,7 +46,7 @@ abstract class ApiEndpoint<Command : com.piperframework.endpoint.command.Abstrac
      * Called for each request to the endpoint, to specify the authorization check to be used. This should handle
      * authorization for most endpoints.
      */
-    abstract fun authorization(command: Command): com.piperframework.authorization.LimberAuthorization
+    abstract fun authorization(command: Command): PiperAuthorization
 
     /**
      * Called for each request to the endpoint, to specify an additional authorization check to be used after the
@@ -54,7 +54,7 @@ abstract class ApiEndpoint<Command : com.piperframework.endpoint.command.Abstrac
      * it's not possible to know in advance which endpoint. This should only be used for GET endpoints, or else the
      * operation will have already been performed.
      */
-    open fun secondaryAuthorization(response: ResponseType): com.piperframework.authorization.LimberAuthorization? = null
+    open fun secondaryAuthorization(response: ResponseType): PiperAuthorization? = null
 
     /**
      * Called for each request to the endpoint, to handle the execution. This method is the meat and potatoes of the
