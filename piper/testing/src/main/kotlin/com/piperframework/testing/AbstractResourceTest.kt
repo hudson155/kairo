@@ -15,13 +15,13 @@ import java.time.ZoneId
 
 abstract class AbstractResourceTest {
 
-    protected val config = object : com.piperframework.config.Config {
-        override val serving = com.piperframework.config.serving.ServingConfig(
+    protected val config = object : Config {
+        override val serving = ServingConfig(
             apiPathPrefix = "/",
-            staticFiles = com.piperframework.config.serving.StaticFiles(false)
+            staticFiles = StaticFiles(false)
         )
         override val authentication =
-            com.piperframework.config.authentication.AuthenticationConfig(listOf(com.piperframework.config.authentication.UnsignedJwtAuthentication))
+            AuthenticationConfig(listOf(UnsignedJwtAuthentication))
     }
 
     protected abstract val limberTest: LimberTest

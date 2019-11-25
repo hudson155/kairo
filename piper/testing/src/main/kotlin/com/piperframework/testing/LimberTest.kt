@@ -24,7 +24,7 @@ abstract class LimberTest(private val limberApp: TestLimberApp) {
 
     @Suppress("LongParameterList") // For this test method, we're ok with it.
     fun test(
-        endpointConfig: com.piperframework.endpoint.EndpointConfig,
+        endpointConfig: EndpointConfig,
         pathParams: Map<String, String> = emptyMap(),
         queryParams: Map<String, String> = emptyMap(),
         body: Any? = null,
@@ -35,7 +35,7 @@ abstract class LimberTest(private val limberApp: TestLimberApp) {
     }
 
     private fun TestApplicationEngine.createCall(
-        endpointConfig: com.piperframework.endpoint.EndpointConfig,
+        endpointConfig: EndpointConfig,
         pathParams: Map<String, String>,
         queryParams: Map<String, String>,
         body: Any?
