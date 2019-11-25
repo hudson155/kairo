@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth.service.personalAccessToken
 
 import com.google.inject.Inject
+import com.piperframework.exception.NotFoundException
 import io.limberapp.backend.module.auth.mapper.app.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore
-import com.piperframework.exception.NotFoundException
 import java.util.UUID
 
 internal class PersonalAccessTokenServiceImpl @Inject constructor(
@@ -15,6 +15,11 @@ internal class PersonalAccessTokenServiceImpl @Inject constructor(
     override fun create(model: PersonalAccessTokenModel) {
         val entity = personalAccessTokenMapper.entity(model)
         personalAccessTokenStore.create(entity)
+    }
+
+    override fun getByToken(token: String): PersonalAccessTokenModel? {
+        val entity = personalAccessTokenStore.getByToken(token)
+        return entity?.let { personalAccessTokenMapper.model(it) }
     }
 
     override fun getByUserId(userId: UUID): List<PersonalAccessTokenModel> {

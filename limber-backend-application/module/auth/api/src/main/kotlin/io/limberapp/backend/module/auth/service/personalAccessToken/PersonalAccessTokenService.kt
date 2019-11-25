@@ -7,6 +7,8 @@ interface PersonalAccessTokenService {
 
     fun create(model: PersonalAccessTokenModel)
 
+    fun getByToken(token: String): PersonalAccessTokenModel?
+
     fun getByUserId(userId: UUID): List<PersonalAccessTokenModel>
 
     fun delete(userId: UUID, id: UUID)
