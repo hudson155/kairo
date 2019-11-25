@@ -9,9 +9,9 @@ import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import com.piperframework.ktorAuth.LimberAuthPrincipal
-import com.piperframework.ktorAuth.LimberAuthVerifier
-import com.piperframework.ktorAuth.limberAuth
+import com.piperframework.ktorAuth.PiperAuthPrincipal
+import com.piperframework.ktorAuth.PiperAuthVerifier
+import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.Module
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
@@ -60,9 +60,9 @@ abstract class LimberApp<C : Config>(protected val config: C) {
     protected open fun Application.authentication() {
         install(Authentication) {
             val provider = LimberJwtVerifierProvider(config.authentication)
-            limberAuth {
-                verifier("Bearer", object : LimberAuthVerifier {
-                    override fun verify(blob: String): LimberAuthPrincipal? {
+            piperAuth {
+                verifier("Bearer", object : PiperAuthVerifier {
+                    override fun verify(blob: String): PiperAuthPrincipal? {
                         val jwt = try {
                             provider.getVerifier(blob)?.verify(blob)
                         } catch (_: JWTVerificationException) {
@@ -70,7 +70,7 @@ abstract class LimberApp<C : Config>(protected val config: C) {
                         } ?: return null
                         val payloadString = String(Base64.getUrlDecoder().decode(jwt.payload))
                         val payload = JWTParser().parsePayload(payloadString)
-                        return LimberAuthPrincipal(payload)
+                        return PiperAuthPrincipal(payload)
                     }
                 }, default = true)
             }

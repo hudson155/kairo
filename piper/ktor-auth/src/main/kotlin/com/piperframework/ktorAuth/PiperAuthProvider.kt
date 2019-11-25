@@ -13,8 +13,8 @@ import io.ktor.request.ApplicationRequest
 import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 
-class LimberAuthProvider internal constructor(
-    private val config: LimberAuthConfig
+class PiperAuthProvider internal constructor(
+    private val config: PiperAuthConfig
 ) : AuthenticationProvider(config) {
 
     init {
@@ -42,7 +42,7 @@ class LimberAuthProvider internal constructor(
         null
     }
 
-    private fun getPrincipal(token: HttpAuthHeader): LimberAuthPrincipal? {
+    private fun getPrincipal(token: HttpAuthHeader): PiperAuthPrincipal? {
         if (token !is HttpAuthHeader.Single) return null
         val verifier = config.verifiers[token.authScheme] ?: return null
         return verifier.verify(token.blob) ?: return null

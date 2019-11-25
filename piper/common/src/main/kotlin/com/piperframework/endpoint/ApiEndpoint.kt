@@ -19,7 +19,7 @@ import io.ktor.routing.route
 import io.ktor.routing.routing
 import com.piperframework.exception.ForbiddenException
 import com.piperframework.exception.NotFoundException
-import com.piperframework.ktorAuth.LimberAuthPrincipal
+import com.piperframework.ktorAuth.PiperAuthPrincipal
 import com.piperframework.rep.ValidatedRep
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
@@ -85,7 +85,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
         route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
             handle {
                 val command = determineCommand(call)
-                val payload = call.authentication.principal<LimberAuthPrincipal>()?.payload
+                val payload = call.authentication.principal<PiperAuthPrincipal>()?.payload
                 if (!authorization(command).authorize(payload)) throw ForbiddenException()
                 val result = handler(command)
                 val secondaryAuthorization = secondaryAuthorization(result)
