@@ -8,7 +8,7 @@ import com.piperframework.authentication.LimberJwtVerifierProvider
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
-import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.LimberAuthPrincipal
 import com.piperframework.ktorAuth.LimberAuthVerifier
 import com.piperframework.ktorAuth.limberAuth
@@ -109,7 +109,7 @@ abstract class LimberApp<C : Config>(protected val config: C) {
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JacksonConverter(LimberObjectMapper(prettyPrint = true))
+                converter = JacksonConverter(PiperObjectMapper(prettyPrint = true))
             )
         }
     }

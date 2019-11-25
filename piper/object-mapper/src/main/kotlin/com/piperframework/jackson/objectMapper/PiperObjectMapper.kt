@@ -12,9 +12,9 @@ import com.piperframework.jackson.module.conversionService.ConversionServiceModu
 
 /**
  * Custom ObjectMapper configured for Kotlin, pretty printing, custom datatype conversion, etc. This should be used
- * across Limber.
+ * across Piper.
  */
-open class LimberObjectMapper(
+open class PiperObjectMapper(
     jsonFactory: JsonFactory? = null,
     prettyPrint: Boolean = false
 ) : ObjectMapper(jsonFactory) {

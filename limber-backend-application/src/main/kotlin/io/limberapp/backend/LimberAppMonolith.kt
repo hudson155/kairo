@@ -7,7 +7,7 @@ import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 import com.piperframework.LimberApp
-import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.MainModule
 import com.piperframework.module.MongoModule
 
@@ -25,7 +25,7 @@ internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
     )
 }
 
-private val yamlObjectMapper = LimberObjectMapper(YAMLFactory())
+private val yamlObjectMapper = PiperObjectMapper(YAMLFactory())
 
 private fun loadConfig(): Config {
     val envString = System.getenv("LIMBERAPP_ENV") ?: "prod"

@@ -10,7 +10,7 @@ import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
 import com.piperframework.LimberApp
 import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -20,7 +20,7 @@ private fun withLimberTestApp(limberApp: LimberApp<*>, test: TestApplicationEngi
 
 abstract class LimberTest(private val limberApp: TestLimberApp) {
 
-    protected val objectMapper = LimberObjectMapper()
+    protected val objectMapper = PiperObjectMapper()
 
     @Suppress("LongParameterList") // For this test method, we're ok with it.
     fun test(

@@ -10,7 +10,7 @@ import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
-import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
@@ -22,7 +22,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
 
-    private val objectMapper = LimberObjectMapper()
+    private val objectMapper = PiperObjectMapper()
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getOrCreateUser(request)
