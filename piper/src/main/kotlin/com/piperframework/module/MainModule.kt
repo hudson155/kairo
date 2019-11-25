@@ -1,12 +1,10 @@
 package com.piperframework.module
 
 import com.google.inject.AbstractModule
-import io.ktor.application.Application
 import com.piperframework.config.Config
-import com.piperframework.config.authentication.AuthenticationConfig
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.util.uuid.uuidGenerator.RandomUuidGenerator
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import io.ktor.application.Application
 import java.time.Clock
 
 /**
@@ -15,7 +13,7 @@ import java.time.Clock
 class MainModule(
     private val application: Application,
     private val clock: Clock,
-    private val config: com.piperframework.config.Config,
+    private val config: Config,
     private val uuidGenerator: UuidGenerator
 ) : AbstractModule() {
 
@@ -29,7 +27,7 @@ class MainModule(
 
     companion object {
 
-        fun forProduction(application: Application, config: com.piperframework.config.Config) = MainModule(
+        fun forProduction(application: Application, config: Config) = MainModule(
             application = application,
             config = config,
             clock = Clock.systemUTC(), // For prod, use a real UTC clock.

@@ -4,6 +4,17 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.impl.JWTParser
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
+import com.piperframework.authentication.LimberJwtVerifierProvider
+import com.piperframework.config.Config
+import com.piperframework.dataConversion.conversionService.UuidConversionService
+import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
+import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.ktorAuth.LimberAuthPrincipal
+import com.piperframework.ktorAuth.LimberAuthVerifier
+import com.piperframework.ktorAuth.limberAuth
+import com.piperframework.module.Module
+import com.piperframework.util.conversionService
+import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.auth.Authentication
@@ -17,17 +28,6 @@ import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.jackson.JacksonConverter
-import com.piperframework.authentication.LimberJwtVerifierProvider
-import com.piperframework.config.Config
-import com.piperframework.dataConversion.conversionService.UuidConversionService
-import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
-import com.piperframework.jackson.objectMapper.LimberObjectMapper
-import com.piperframework.ktorAuth.LimberAuthPrincipal
-import com.piperframework.ktorAuth.LimberAuthVerifier
-import com.piperframework.ktorAuth.limberAuth
-import com.piperframework.module.Module
-import com.piperframework.util.conversionService
-import com.piperframework.util.serveStaticFiles
 import org.slf4j.event.Level
 import java.util.Base64
 import java.util.UUID
@@ -36,7 +36,7 @@ import java.util.UUID
  * This class has a lot of functions, but it's clearer this way.
  */
 @Suppress("TooManyFunctions")
-abstract class LimberApp<C : com.piperframework.config.Config>(protected val config: C) {
+abstract class LimberApp<C : Config>(protected val config: C) {
 
     fun bindToApplication(application: Application) = with(application) {
         configure()
@@ -126,5 +126,5 @@ abstract class LimberApp<C : com.piperframework.config.Config>(protected val con
 
     protected abstract fun getMainModules(application: Application): List<AbstractModule>
 
-    protected abstract val modules: List<com.piperframework.module.Module>
+    protected abstract val modules: List<Module>
 }

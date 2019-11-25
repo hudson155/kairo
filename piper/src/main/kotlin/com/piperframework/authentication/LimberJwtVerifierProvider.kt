@@ -8,13 +8,13 @@ import com.piperframework.config.authentication.JwkAuthentication
 import com.piperframework.config.authentication.JwtAuthentication
 import com.piperframework.config.authentication.UnsignedJwtAuthentication
 
-class LimberJwtVerifierProvider(authenticationConfig: com.piperframework.config.authentication.AuthenticationConfig) {
+class LimberJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {
-            is com.piperframework.config.authentication.JwkAuthentication -> UrlJwtVerifierProvider(mechanism.domain)
-            is com.piperframework.config.authentication.JwtAuthentication -> StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
-            is com.piperframework.config.authentication.UnsignedJwtAuthentication -> StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
+            is JwkAuthentication -> UrlJwtVerifierProvider(mechanism.domain)
+            is JwtAuthentication -> StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
+            is UnsignedJwtAuthentication -> StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
         }
         return@associate Pair(mechanism.issuer, provider)
     }
