@@ -11,7 +11,7 @@ import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.MainModule
 import com.piperframework.module.MongoModule
 
-internal class PiperAppMonolith : PiperApp<Config>(loadConfig()) {
+internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
 
     override fun getMainModules(application: Application) = listOf(
         MainModule.forProduction(application, config),
