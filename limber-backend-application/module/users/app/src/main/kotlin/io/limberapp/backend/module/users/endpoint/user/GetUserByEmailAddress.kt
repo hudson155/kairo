@@ -18,10 +18,10 @@ import com.piperframework.endpoint.command.AbstractCommand
  */
 internal class GetUserByEmailAddress @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : com.piperframework.endpoint.ApiEndpoint<GetUserByEmailAddress.Command, UserRep.Complete?>(
+) : ApiEndpoint<GetUserByEmailAddress.Command, UserRep.Complete?>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     internal data class Command(
         val emailAddress: String
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         emailAddress = call.parameters.getAsType(String::class, emailAddress)
@@ -46,6 +46,6 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     companion object {
         const val emailAddress = "emailAddress"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Get, "/users")
+        val endpointConfig = EndpointConfig(HttpMethod.Get, "/users")
     }
 }

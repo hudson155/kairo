@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeleteMembership @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val orgService: OrgService
-) : com.piperframework.endpoint.ApiEndpoint<DeleteMembership.Command, Unit>(
+) : ApiEndpoint<DeleteMembership.Command, Unit>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -28,7 +28,7 @@ internal class DeleteMembership @Inject constructor(
     internal data class Command(
         val orgId: UUID,
         val memberId: UUID
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),

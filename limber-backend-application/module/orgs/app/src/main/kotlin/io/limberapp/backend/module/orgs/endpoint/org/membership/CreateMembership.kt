@@ -19,10 +19,10 @@ import java.util.UUID
  */
 internal class CreateMembership @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val membershipMapper: MembershipMapper
-) : com.piperframework.endpoint.ApiEndpoint<CreateMembership.Command, Unit>(
+) : ApiEndpoint<CreateMembership.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -31,7 +31,7 @@ internal class CreateMembership @Inject constructor(
     internal data class Command(
         val orgId: UUID,
         val creationRep: MembershipRep.Creation
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
@@ -47,6 +47,6 @@ internal class CreateMembership @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/memberships")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/memberships")
     }
 }

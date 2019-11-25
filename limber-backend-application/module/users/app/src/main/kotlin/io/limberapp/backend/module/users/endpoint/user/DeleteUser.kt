@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeleteUser @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val userService: UserService
-) : com.piperframework.endpoint.ApiEndpoint<DeleteUser.Command, Unit>(
+) : ApiEndpoint<DeleteUser.Command, Unit>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -27,7 +27,7 @@ internal class DeleteUser @Inject constructor(
 
     internal data class Command(
         val userId: UUID
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId)
@@ -41,6 +41,6 @@ internal class DeleteUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/users/{$userId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/users/{$userId}")
     }
 }

@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeleteOrg @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val orgService: OrgService
-) : com.piperframework.endpoint.ApiEndpoint<DeleteOrg.Command, Unit>(
+) : ApiEndpoint<DeleteOrg.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -27,7 +27,7 @@ internal class DeleteOrg @Inject constructor(
 
     internal data class Command(
         val orgId: UUID
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId)
@@ -41,6 +41,6 @@ internal class DeleteOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}")
     }
 }

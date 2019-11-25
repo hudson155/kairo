@@ -19,10 +19,10 @@ import java.util.UUID
  */
 internal class UpdateUser @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : com.piperframework.endpoint.ApiEndpoint<UpdateUser.Command, UserRep.Complete>(
+) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -31,7 +31,7 @@ internal class UpdateUser @Inject constructor(
     internal data class Command(
         val userId: UUID,
         val updateRep: UserRep.Update
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
@@ -48,6 +48,6 @@ internal class UpdateUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Patch, "/users/{$userId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Patch, "/users/{$userId}")
     }
 }

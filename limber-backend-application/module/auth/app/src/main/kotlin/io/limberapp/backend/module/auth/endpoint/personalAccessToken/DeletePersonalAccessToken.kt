@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeletePersonalAccessToken @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val personalAccessTokenService: PersonalAccessTokenService
-) : com.piperframework.endpoint.ApiEndpoint<DeletePersonalAccessToken.Command, Unit>(
+) : ApiEndpoint<DeletePersonalAccessToken.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -28,7 +28,7 @@ internal class DeletePersonalAccessToken @Inject constructor(
     internal data class Command(
         val userId: UUID,
         val personalAccessTokenId: UUID
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
@@ -44,7 +44,7 @@ internal class DeletePersonalAccessToken @Inject constructor(
     companion object {
         const val userId = "userId"
         const val personalAccessTokenId = "personalAccessTokenId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(
+        val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Delete,
             pathTemplate = "/users/{$userId}/personal-access-tokens/{$personalAccessTokenId}"
         )

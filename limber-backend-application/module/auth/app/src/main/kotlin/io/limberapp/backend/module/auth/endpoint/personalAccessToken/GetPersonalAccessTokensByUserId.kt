@@ -22,10 +22,10 @@ import java.util.UUID
  */
 internal class GetPersonalAccessTokensByUserId @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val personalAccessTokenService: PersonalAccessTokenService,
     private val personalAccessTokenMapper: PersonalAccessTokenMapper
-) : com.piperframework.endpoint.ApiEndpoint<GetPersonalAccessTokensByUserId.Command, List<PersonalAccessTokenRep.Complete>>(
+) : ApiEndpoint<GetPersonalAccessTokensByUserId.Command, List<PersonalAccessTokenRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -33,7 +33,7 @@ internal class GetPersonalAccessTokensByUserId @Inject constructor(
 
     internal data class Command(
         val userId: UUID
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId)
@@ -48,7 +48,7 @@ internal class GetPersonalAccessTokensByUserId @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(
+        val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Get,
             pathTemplate = "/users/{$userId}/personal-access-tokens"
         )

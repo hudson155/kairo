@@ -19,10 +19,10 @@ import java.util.UUID
  */
 internal class GetOrg @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : com.piperframework.endpoint.ApiEndpoint<GetOrg.Command, OrgRep.Complete?>(
+) : ApiEndpoint<GetOrg.Command, OrgRep.Complete?>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -30,7 +30,7 @@ internal class GetOrg @Inject constructor(
 
     internal data class Command(
         val orgId: UUID
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId)
@@ -45,6 +45,6 @@ internal class GetOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Get, "/orgs/{$orgId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Get, "/orgs/{$orgId}")
     }
 }

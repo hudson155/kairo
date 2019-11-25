@@ -11,5 +11,5 @@ import com.piperframework.config.serving.ServingConfig
 data class Config(
     val mongoDatabase: MongoDatabaseConfig,
     override val authentication: com.piperframework.config.authentication.AuthenticationConfig,
-    override val serving: com.piperframework.config.serving.ServingConfig
+    override val serving: ServingConfig
 ) : com.piperframework.config.Config

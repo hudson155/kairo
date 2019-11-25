@@ -21,10 +21,10 @@ import com.piperframework.endpoint.command.AbstractCommand
  */
 internal class CreateJwtClaimsRequest @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
-) : com.piperframework.endpoint.ApiEndpoint<CreateJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
+) : ApiEndpoint<CreateJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -32,7 +32,7 @@ internal class CreateJwtClaimsRequest @Inject constructor(
 
     internal data class Command(
         val creationRep: JwtClaimsRequestRep.Creation
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.getAndValidateBody()
@@ -48,6 +48,6 @@ internal class CreateJwtClaimsRequest @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/jwt-claims-request")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/jwt-claims-request")
     }
 }

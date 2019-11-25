@@ -18,10 +18,10 @@ import com.piperframework.endpoint.command.AbstractCommand
  */
 internal class CreateUser @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : com.piperframework.endpoint.ApiEndpoint<CreateUser.Command, UserRep.Complete>(
+) : ApiEndpoint<CreateUser.Command, UserRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class CreateUser @Inject constructor(
 
     internal data class Command(
         val creationRep: UserRep.Creation
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.getAndValidateBody()
@@ -44,6 +44,6 @@ internal class CreateUser @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/users")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/users")
     }
 }

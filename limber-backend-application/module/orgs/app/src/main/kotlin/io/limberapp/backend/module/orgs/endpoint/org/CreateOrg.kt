@@ -18,10 +18,10 @@ import com.piperframework.endpoint.command.AbstractCommand
  */
 internal class CreateOrg @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : com.piperframework.endpoint.ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
+) : ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class CreateOrg @Inject constructor(
 
     internal data class Command(
         val creationRep: OrgRep.Creation
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.getAndValidateBody()
@@ -44,6 +44,6 @@ internal class CreateOrg @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/orgs")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs")
     }
 }

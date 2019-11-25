@@ -18,9 +18,9 @@ import java.util.UUID
  */
 internal class AddUserRole @Inject constructor(
     application: Application,
-    servingConfig: com.piperframework.config.serving.ServingConfig,
+    servingConfig: ServingConfig,
     private val userService: UserService
-) : com.piperframework.endpoint.ApiEndpoint<AddUserRole.Command, Unit>(
+) : ApiEndpoint<AddUserRole.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class AddUserRole @Inject constructor(
     internal data class Command(
         val userId: UUID,
         val roleName: JwtRole
-    ) : com.piperframework.endpoint.command.AbstractCommand()
+    ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
