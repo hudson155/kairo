@@ -15,37 +15,16 @@ sourceSets {
 }
 
 dependencies {
-
+    compile project(":limber-backend-application:module:auth:app")
+    compile project(":limber-backend-application:module:orgs:app")
+    compile project(":limber-backend-application:module:users:app")
     compile project(":limber-backend-framework")
-
-    compile project(":limber-backend-application:auth:app")
-    compile project(":limber-backend-application:orgs:app")
-    compile project(":limber-backend-application:users:app")
-
     compile libs.guice
     compile libs.jackson_dataformat_yaml
     compile libs.ktor_server_cio // Local
     compile libs.ktor_server_servlet // Google App Engine
     compile libs.logback_classic
     compile libs.kmongo
-}
-
-subprojects {
-    if (project.path.matches(':limber-backend-application:[a-z\\-]+:api')) {
-        dependencies {
-            compile libs.jackson_annotations
-            compile project(":limber-backend-framework:core:api")
-        }
-    } else if (project.path.matches(':limber-backend-application:[a-z\\-]+:app')) {
-        dependencies {
-            compile project(":limber-backend-application:$project.parent.name:api")
-            compile project(":limber-backend-framework:core")
-            testCompile project(":limber-backend-framework:testing")
-        }
-    } else if (project.path.matches(':limber-backend-application:[a-z\\-]+')) {
-    } else {
-        throw new Exception("Unexpected project path: " + project.path)
-    }
 }
 
 appengine {
