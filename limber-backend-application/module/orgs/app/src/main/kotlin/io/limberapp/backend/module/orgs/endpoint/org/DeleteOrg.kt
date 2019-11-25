@@ -6,10 +6,10 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeleteOrg @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val orgService: OrgService
-) : ApiEndpoint<DeleteOrg.Command, Unit>(
+) : com.piperframework.endpoint.ApiEndpoint<DeleteOrg.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -27,7 +27,7 @@ internal class DeleteOrg @Inject constructor(
 
     internal data class Command(
         val orgId: UUID
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId)
@@ -41,6 +41,6 @@ internal class DeleteOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}")
     }
 }

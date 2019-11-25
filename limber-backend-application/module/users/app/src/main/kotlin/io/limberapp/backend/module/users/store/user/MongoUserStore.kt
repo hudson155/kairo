@@ -4,9 +4,9 @@ import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.user.UserEntity
-import io.limberapp.framework.store.MongoCollection
-import io.limberapp.framework.store.MongoIndex
-import io.limberapp.framework.store.MongoStore
+import com.piperframework.store.MongoCollection
+import com.piperframework.store.MongoIndex
+import com.piperframework.store.MongoStore
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.contains

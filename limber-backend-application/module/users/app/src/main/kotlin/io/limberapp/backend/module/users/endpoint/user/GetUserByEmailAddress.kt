@@ -8,20 +8,20 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 
 /**
  * Returns a single user with the given email address.
  */
 internal class GetUserByEmailAddress @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<GetUserByEmailAddress.Command, UserRep.Complete?>(
+) : com.piperframework.endpoint.ApiEndpoint<GetUserByEmailAddress.Command, UserRep.Complete?>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     internal data class Command(
         val emailAddress: String
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         emailAddress = call.parameters.getAsType(String::class, emailAddress)
@@ -46,6 +46,6 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     companion object {
         const val emailAddress = "emailAddress"
-        val endpointConfig = EndpointConfig(HttpMethod.Get, "/users")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Get, "/users")
     }
 }

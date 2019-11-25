@@ -6,10 +6,10 @@ import io.ktor.application.Application
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
-import io.limberapp.framework.LimberApp
-import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.module.MainModule
-import io.limberapp.framework.module.MongoModule
+import com.piperframework.LimberApp
+import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.module.MainModule
+import com.piperframework.module.MongoModule
 
 internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
 

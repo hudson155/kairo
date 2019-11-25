@@ -6,8 +6,8 @@ import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.store.org.OrgStore
-import io.limberapp.framework.exception.ConflictException
-import io.limberapp.framework.exception.NotFoundException
+import com.piperframework.exception.ConflictException
+import com.piperframework.exception.NotFoundException
 import java.util.UUID
 
 internal class OrgServiceImpl @Inject constructor(

@@ -6,10 +6,10 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeletePersonalAccessToken @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val personalAccessTokenService: PersonalAccessTokenService
-) : ApiEndpoint<DeletePersonalAccessToken.Command, Unit>(
+) : com.piperframework.endpoint.ApiEndpoint<DeletePersonalAccessToken.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -28,7 +28,7 @@ internal class DeletePersonalAccessToken @Inject constructor(
     internal data class Command(
         val userId: UUID,
         val personalAccessTokenId: UUID
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
@@ -44,7 +44,7 @@ internal class DeletePersonalAccessToken @Inject constructor(
     companion object {
         const val userId = "userId"
         const val personalAccessTokenId = "personalAccessTokenId"
-        val endpointConfig = EndpointConfig(
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(
             httpMethod = HttpMethod.Delete,
             pathTemplate = "/users/{$userId}/personal-access-tokens/{$personalAccessTokenId}"
         )

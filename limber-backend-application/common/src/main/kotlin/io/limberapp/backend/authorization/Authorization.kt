@@ -6,12 +6,12 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.framework.authorization.LimberAuthorization
-import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.authorization.LimberAuthorization
+import com.piperframework.jackson.objectMapper.LimberObjectMapper
 import java.util.UUID
 
 @Suppress("MethodOverloading") // Detekt incorrectly thinks overrides in nested subclasses are method overloads.
-sealed class Authorization : LimberAuthorization {
+sealed class Authorization : com.piperframework.authorization.LimberAuthorization {
 
     private val objectMapper = LimberObjectMapper()
 

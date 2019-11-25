@@ -8,10 +8,10 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -19,10 +19,10 @@ import java.util.UUID
  */
 internal class UpdateOrg @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(
+) : com.piperframework.endpoint.ApiEndpoint<UpdateOrg.Command, OrgRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -31,7 +31,7 @@ internal class UpdateOrg @Inject constructor(
     internal data class Command(
         val orgId: UUID,
         val updateRep: OrgRep.Update
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
@@ -48,6 +48,6 @@ internal class UpdateOrg @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = EndpointConfig(HttpMethod.Patch, "/orgs/{$orgId}")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Patch, "/orgs/{$orgId}")
     }
 }

@@ -8,10 +8,10 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.auth.mapper.api.jwtClaimsRequest.JwtClaimsRequestMapper
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 
 /**
  * Creates something called a "JWT claims request", which is never persisted anywhere. Instead, think of this claims
@@ -21,10 +21,10 @@ import io.limberapp.framework.endpoint.command.AbstractCommand
  */
 internal class CreateJwtClaimsRequest @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
-) : ApiEndpoint<CreateJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
+) : com.piperframework.endpoint.ApiEndpoint<CreateJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -32,7 +32,7 @@ internal class CreateJwtClaimsRequest @Inject constructor(
 
     internal data class Command(
         val creationRep: JwtClaimsRequestRep.Creation
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.getAndValidateBody()
@@ -48,6 +48,6 @@ internal class CreateJwtClaimsRequest @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/jwt-claims-request")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/jwt-claims-request")
     }
 }

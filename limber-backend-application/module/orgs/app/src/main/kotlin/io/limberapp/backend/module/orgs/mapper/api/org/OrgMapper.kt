@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 

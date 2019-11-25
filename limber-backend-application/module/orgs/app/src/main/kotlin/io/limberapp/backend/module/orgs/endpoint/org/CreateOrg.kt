@@ -8,20 +8,20 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 
 /**
  * Creates a new org.
  */
 internal class CreateOrg @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
+) : com.piperframework.endpoint.ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class CreateOrg @Inject constructor(
 
     internal data class Command(
         val creationRep: OrgRep.Creation
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.getAndValidateBody()
@@ -44,6 +44,6 @@ internal class CreateOrg @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/orgs")
     }
 }

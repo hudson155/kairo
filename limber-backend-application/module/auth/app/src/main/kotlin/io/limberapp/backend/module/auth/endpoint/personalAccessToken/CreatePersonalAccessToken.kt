@@ -8,10 +8,10 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.auth.mapper.api.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -22,10 +22,10 @@ import java.util.UUID
  */
 internal class CreatePersonalAccessToken @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val personalAccessTokenService: PersonalAccessTokenService,
     private val personalAccessTokenMapper: PersonalAccessTokenMapper
-) : ApiEndpoint<CreatePersonalAccessToken.Command, PersonalAccessTokenRep.OneTimeUse>(
+) : com.piperframework.endpoint.ApiEndpoint<CreatePersonalAccessToken.Command, PersonalAccessTokenRep.OneTimeUse>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -33,7 +33,7 @@ internal class CreatePersonalAccessToken @Inject constructor(
 
     internal data class Command(
         val userId: UUID
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId)
@@ -49,7 +49,7 @@ internal class CreatePersonalAccessToken @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = EndpointConfig(
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(
             httpMethod = HttpMethod.Post,
             pathTemplate = "/users/{$userId}/personal-access-tokens"
         )

@@ -6,10 +6,10 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -17,9 +17,9 @@ import java.util.UUID
  */
 internal class DeleteUser @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val userService: UserService
-) : ApiEndpoint<DeleteUser.Command, Unit>(
+) : com.piperframework.endpoint.ApiEndpoint<DeleteUser.Command, Unit>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -27,7 +27,7 @@ internal class DeleteUser @Inject constructor(
 
     internal data class Command(
         val userId: UUID
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId)
@@ -41,6 +41,6 @@ internal class DeleteUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/users/{$userId}")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/users/{$userId}")
     }
 }

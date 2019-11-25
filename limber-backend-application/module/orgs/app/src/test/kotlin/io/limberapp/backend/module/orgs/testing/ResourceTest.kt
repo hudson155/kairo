@@ -2,9 +2,9 @@ package io.limberapp.backend.module.orgs.testing
 
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.test.LimberTestImpl
-import io.limberapp.framework.module.TestMongoModule
-import io.limberapp.framework.testing.AbstractResourceTest
-import io.limberapp.framework.testing.TestLimberApp
+import com.piperframework.module.TestMongoModule
+import com.piperframework.testing.AbstractResourceTest
+import com.piperframework.testing.TestLimberApp
 
 abstract class ResourceTest : AbstractResourceTest() {
 

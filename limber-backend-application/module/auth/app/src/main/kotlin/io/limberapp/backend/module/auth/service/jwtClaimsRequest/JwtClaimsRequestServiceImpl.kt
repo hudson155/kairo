@@ -10,8 +10,8 @@ import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
-import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.jackson.objectMapper.LimberObjectMapper
+import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 

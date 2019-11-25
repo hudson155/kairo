@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.users.rep.user
 
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.framework.rep.CompleteRep
-import io.limberapp.framework.rep.CreationRep
-import io.limberapp.framework.rep.UpdateRep
-import io.limberapp.framework.validation.util.emailAddress
-import io.limberapp.framework.validation.util.ifPresent
-import io.limberapp.framework.validation.util.shortText
-import io.limberapp.framework.validation.util.url
+import com.piperframework.rep.CompleteRep
+import com.piperframework.rep.CreationRep
+import com.piperframework.rep.UpdateRep
+import com.piperframework.validation.util.emailAddress
+import com.piperframework.validation.util.ifPresent
+import com.piperframework.validation.util.shortText
+import com.piperframework.validation.util.url
 import java.time.LocalDateTime
 import java.util.UUID
 

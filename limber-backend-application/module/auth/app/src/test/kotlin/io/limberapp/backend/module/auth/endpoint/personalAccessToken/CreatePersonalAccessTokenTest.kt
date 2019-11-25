@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.personalAccessToken
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
-import io.limberapp.framework.util.uuid.base64Encode
+import com.piperframework.util.uuid.base64Encode
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID

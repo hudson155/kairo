@@ -1,11 +1,11 @@
 package io.limberapp.backend.module.orgs.rep.org
 
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
-import io.limberapp.framework.rep.CompleteRep
-import io.limberapp.framework.rep.CreationRep
-import io.limberapp.framework.rep.UpdateRep
-import io.limberapp.framework.validation.util.ifPresent
-import io.limberapp.framework.validation.util.shortText
+import com.piperframework.rep.CompleteRep
+import com.piperframework.rep.CreationRep
+import com.piperframework.rep.UpdateRep
+import com.piperframework.validation.util.ifPresent
+import com.piperframework.validation.util.shortText
 import java.time.LocalDateTime
 import java.util.UUID
 

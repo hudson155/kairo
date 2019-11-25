@@ -10,7 +10,7 @@ import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAcce
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenServiceImpl
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore
 import io.limberapp.backend.module.auth.store.personalAccessToken.PersonalAccessTokenStore
-import io.limberapp.framework.module.Module
+import com.piperframework.module.Module
 
 /**
  * Authentication is performed by Auth0, so the auth module is not actually responsible for authenticating users. It's
@@ -24,7 +24,7 @@ import io.limberapp.framework.module.Module
  *
  * - The auth module is responsible for personal access tokens. Personal access tokens are only for admins at this time.
  */
-class AuthModule : Module() {
+class AuthModule : com.piperframework.module.Module() {
 
     override val endpoints = listOf(
 

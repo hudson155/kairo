@@ -7,8 +7,8 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import io.limberapp.framework.testing.LimberTest
-import io.limberapp.framework.testing.TestLimberApp
+import com.piperframework.testing.LimberTest
+import com.piperframework.testing.TestLimberApp
 import java.util.UUID
 
 class LimberTestImpl(limberApp: TestLimberApp) : LimberTest(limberApp) {

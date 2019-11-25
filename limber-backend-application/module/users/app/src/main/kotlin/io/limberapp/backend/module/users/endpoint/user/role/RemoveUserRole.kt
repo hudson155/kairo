@@ -7,10 +7,10 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -18,9 +18,9 @@ import java.util.UUID
  */
 internal class RemoveUserRole @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val userService: UserService
-) : ApiEndpoint<RemoveUserRole.Command, Unit>(
+) : com.piperframework.endpoint.ApiEndpoint<RemoveUserRole.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class RemoveUserRole @Inject constructor(
     internal data class Command(
         val userId: UUID,
         val roleName: JwtRole
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
@@ -45,6 +45,7 @@ internal class RemoveUserRole @Inject constructor(
     companion object {
         const val userId = "userId"
         const val roleName = "roleName"
-        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/users/{$userId}/roles/{$roleName}")
+        val endpointConfig =
+            com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/users/{$userId}/roles/{$roleName}")
     }
 }

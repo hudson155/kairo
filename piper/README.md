@@ -64,7 +64,7 @@ the whole picture.
 
 ```
 .
-├── io.limberapp.framework
+├── com.piperframework
 ├── authentication    # Limber authentication configuration
 ├── config            # Limber framework configuration
 ├── dataConversion    # Type conversion

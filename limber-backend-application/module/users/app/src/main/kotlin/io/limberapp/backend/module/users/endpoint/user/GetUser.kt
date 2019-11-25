@@ -8,10 +8,10 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -19,10 +19,10 @@ import java.util.UUID
  */
 internal class GetUser @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<GetUser.Command, UserRep.Complete?>(
+) : com.piperframework.endpoint.ApiEndpoint<GetUser.Command, UserRep.Complete?>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -30,7 +30,7 @@ internal class GetUser @Inject constructor(
 
     internal data class Command(
         val userId: UUID
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId)
@@ -45,6 +45,6 @@ internal class GetUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = EndpointConfig(HttpMethod.Get, "/users/{$userId}")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Get, "/users/{$userId}")
     }
 }

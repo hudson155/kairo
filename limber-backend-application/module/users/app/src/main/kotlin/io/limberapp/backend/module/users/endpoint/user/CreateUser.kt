@@ -8,20 +8,20 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.config.serving.ServingConfig
-import io.limberapp.framework.endpoint.ApiEndpoint
-import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.command.AbstractCommand
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 
 /**
  * Creates a new user.
  */
 internal class CreateUser @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
+    servingConfig: com.piperframework.config.serving.ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<CreateUser.Command, UserRep.Complete>(
+) : com.piperframework.endpoint.ApiEndpoint<CreateUser.Command, UserRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class CreateUser @Inject constructor(
 
     internal data class Command(
         val creationRep: UserRep.Creation
-    ) : AbstractCommand()
+    ) : com.piperframework.endpoint.command.AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         creationRep = call.getAndValidateBody()
@@ -44,6 +44,6 @@ internal class CreateUser @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/users")
+        val endpointConfig = com.piperframework.endpoint.EndpointConfig(HttpMethod.Post, "/users")
     }
 }
