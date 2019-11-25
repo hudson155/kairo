@@ -15,7 +15,7 @@ internal class CreatePersonalAccessTokenTest : ResourceTest() {
     fun create() {
         val userId = UUID.randomUUID()
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {

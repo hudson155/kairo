@@ -11,7 +11,7 @@ internal class DeleteOrgTest : ResourceTest() {
     @Test
     fun doesNotExist() {
         val orgId = UUID.randomUUID()
-        limberTest.test(
+        piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
             pathParams = mapOf(DeleteOrg.orgId to orgId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
@@ -23,17 +23,17 @@ internal class DeleteOrgTest : ResourceTest() {
 
         val creationRep = OrgRep.Creation("Cranky Pasta")
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = creationRep
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
             pathParams = mapOf(DeleteOrg.orgId to id.toString())
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to id.toString()),
             expectedStatusCode = HttpStatusCode.NotFound

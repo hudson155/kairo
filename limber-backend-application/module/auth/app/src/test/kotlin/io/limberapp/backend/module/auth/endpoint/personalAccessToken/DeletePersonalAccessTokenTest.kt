@@ -12,7 +12,7 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
-        limberTest.test(
+        piperTest.test(
             endpointConfig = DeletePersonalAccessToken.endpointConfig,
             pathParams = mapOf(
                 DeletePersonalAccessToken.userId to UUID.randomUUID().toString(),
@@ -27,12 +27,12 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
 
         val userId = UUID.randomUUID()
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = DeletePersonalAccessToken.endpointConfig,
             pathParams = mapOf(
                 DeletePersonalAccessToken.userId to userId.toString(),
@@ -40,7 +40,7 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
             )
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {

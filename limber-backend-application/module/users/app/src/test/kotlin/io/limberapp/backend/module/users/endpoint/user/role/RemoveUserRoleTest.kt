@@ -16,7 +16,7 @@ internal class RemoveUserRoleTest : ResourceTest() {
 
     @Test
     fun userDoesNotExist() {
-        limberTest.test(
+        piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
                 RemoveUserRole.userId to UUID.randomUUID().toString(),
@@ -37,12 +37,12 @@ internal class RemoveUserRoleTest : ResourceTest() {
         )
         val id = deterministicUuidGenerator[0]
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
                 AddUserRole.userId to id.toString(),
@@ -50,7 +50,7 @@ internal class RemoveUserRoleTest : ResourceTest() {
             )
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
                 RemoveUserRole.userId to id.toString(),
@@ -58,7 +58,7 @@ internal class RemoveUserRoleTest : ResourceTest() {
             )
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to id.toString())
         ) {
@@ -87,12 +87,12 @@ internal class RemoveUserRoleTest : ResourceTest() {
         )
         val id = deterministicUuidGenerator[0]
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
                 RemoveUserRole.userId to id.toString(),

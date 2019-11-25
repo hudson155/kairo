@@ -13,7 +13,7 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     @Test
     fun doesNotExist() {
         val emailAddress = "jhudson@jhudson.ca"
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to emailAddress),
             expectedStatusCode = HttpStatusCode.NotFound
@@ -30,12 +30,12 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
             profilePhotoUrl = null
         )
         val id = deterministicUuidGenerator[0]
-        limberTest.test(
+        piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = creationRep
         ) {}
 
-        limberTest.test(
+        piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to creationRep.emailAddress)
         ) {

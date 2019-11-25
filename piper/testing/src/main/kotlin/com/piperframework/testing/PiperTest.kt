@@ -8,17 +8,17 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.ktor.server.testing.withTestApplication
-import com.piperframework.LimberApp
+import com.piperframework.PiperApp
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private fun withLimberTestApp(limberApp: LimberApp<*>, test: TestApplicationEngine.() -> Unit) {
-    withTestApplication({ limberApp.bindToApplication(this) }, test)
+private fun withPiperTestApp(piperApp: PiperApp<*>, test: TestApplicationEngine.() -> Unit) {
+    withTestApplication({ piperApp.bindToApplication(this) }, test)
 }
 
-abstract class LimberTest(private val limberApp: TestLimberApp) {
+abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     protected val objectMapper = PiperObjectMapper()
 
@@ -30,7 +30,7 @@ abstract class LimberTest(private val limberApp: TestLimberApp) {
         body: Any? = null,
         expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
         test: TestApplicationCall.() -> Unit
-    ) = withLimberTestApp(limberApp) {
+    ) = withPiperTestApp(piperApp) {
         createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
     }
 

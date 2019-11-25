@@ -7,11 +7,11 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import com.piperframework.testing.LimberTest
-import com.piperframework.testing.TestLimberApp
+import com.piperframework.testing.PiperTest
+import com.piperframework.testing.TestPiperApp
 import java.util.UUID
 
-class LimberTestImpl(limberApp: TestLimberApp) : LimberTest(limberApp) {
+class LimberTest(piperApp: TestPiperApp) : PiperTest(piperApp) {
 
     override fun createJwt(): String {
         return JWT.create().withJwt(

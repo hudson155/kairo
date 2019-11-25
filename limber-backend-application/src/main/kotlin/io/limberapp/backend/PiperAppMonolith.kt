@@ -6,12 +6,12 @@ import io.ktor.application.Application
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
-import com.piperframework.LimberApp
+import com.piperframework.PiperApp
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.MainModule
 import com.piperframework.module.MongoModule
 
-internal class LimberAppMonolith : LimberApp<Config>(loadConfig()) {
+internal class PiperAppMonolith : PiperApp<Config>(loadConfig()) {
 
     override fun getMainModules(application: Application) = listOf(
         MainModule.forProduction(application, config),

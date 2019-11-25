@@ -24,7 +24,7 @@ abstract class AbstractResourceTest {
             AuthenticationConfig(listOf(UnsignedJwtAuthentication))
     }
 
-    protected abstract val limberTest: LimberTest
+    protected abstract val piperTest: PiperTest
 
     protected val objectMapper = PiperObjectMapper()
 
