@@ -8,7 +8,7 @@ import com.piperframework.config.authentication.JwkAuthentication
 import com.piperframework.config.authentication.JwtAuthentication
 import com.piperframework.config.authentication.UnsignedJwtAuthentication
 
-class LimberJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
+class PiperJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {

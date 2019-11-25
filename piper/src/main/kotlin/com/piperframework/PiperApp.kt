@@ -4,7 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.impl.JWTParser
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
-import com.piperframework.authentication.LimberJwtVerifierProvider
+import com.piperframework.authentication.PiperJwtVerifierProvider
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
@@ -59,7 +59,7 @@ abstract class PiperApp<C : Config>(protected val config: C) {
 
     protected open fun Application.authentication() {
         install(Authentication) {
-            val provider = LimberJwtVerifierProvider(config.authentication)
+            val provider = PiperJwtVerifierProvider(config.authentication)
             piperAuth {
                 verifier("Bearer", object : PiperAuthVerifier {
                     override fun verify(blob: String): PiperAuthPrincipal? {
