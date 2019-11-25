@@ -1,6 +1,8 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
+import com.piperframework.jackson.objectMapper.PiperObjectMapper
+import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtUser
@@ -10,10 +12,9 @@ import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
+import java.util.UUID
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val orgService: OrgService,
@@ -26,6 +27,15 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getOrCreateUser(request)
+        return requestJwtClaimsForUser(user)
+    }
+
+    override fun requestJwtClaimsForExistingUser(userId: UUID): JwtClaimsModel? {
+        val user = userService.get(userId) ?: return null
+        return requestJwtClaimsForUser(user)
+    }
+
+    private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
         val orgs = orgService.getByMemberId(user.id)
         val jwt = createJwt(user, orgs)
         return convertJwtToModel(jwt)
