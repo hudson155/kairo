@@ -1,12 +1,12 @@
 package com.piperframework.exceptionMapping
 
-import io.ktor.features.StatusPages
 import com.piperframework.exceptionMapping.exceptionMapper.ConflictException
 import com.piperframework.exceptionMapping.exceptionMapper.ForbiddenException
 import com.piperframework.exceptionMapping.exceptionMapper.InvalidTypeIdException
 import com.piperframework.exceptionMapping.exceptionMapper.MissingKotlinParameterException
 import com.piperframework.exceptionMapping.exceptionMapper.NotFoundException
 import com.piperframework.exceptionMapping.exceptionMapper.ValidationError
+import io.ktor.features.StatusPages
 
 /**
  * The ExceptionMappingConfigurator sets up exception mapping. Exception mapping refers to catching exceptions and

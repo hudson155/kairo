@@ -1,8 +1,8 @@
 package com.piperframework.util
 
+import com.piperframework.dataConversion.DataConversionService
 import io.ktor.util.ConversionService
 import io.ktor.util.DataConversionException
-import com.piperframework.dataConversion.DataConversionService
 import java.lang.reflect.Type
 
 fun <T : Any> conversionService(dataConversionService: DataConversionService<T>) = object : ConversionService {
