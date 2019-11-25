@@ -10,7 +10,7 @@ typealias MongoIndex<T> = MongoCollection<T>.() -> Unit
 abstract class MongoStore<Complete : CompleteEntity>(
     protected val collection: MongoCollection<Complete>,
     indices: List<MongoIndex<Complete>>
-) : com.piperframework.store.Store<Complete> {
+) : Store<Complete> {
 
     init {
         indices.forEach { collection.it() }

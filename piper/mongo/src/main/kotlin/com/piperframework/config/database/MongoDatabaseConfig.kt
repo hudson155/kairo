@@ -11,7 +11,7 @@ data class MongoDatabaseConfig(
     val host: String,
     val database: String,
     val user: String?,
-    val password: com.piperframework.config.EncryptedValue?
+    val password: EncryptedValue?
 ) {
 
     enum class Protocol(private val text: String) {
