@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.service.user
 
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.model.user.UserModel
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import java.util.UUID
 
 interface UserService {

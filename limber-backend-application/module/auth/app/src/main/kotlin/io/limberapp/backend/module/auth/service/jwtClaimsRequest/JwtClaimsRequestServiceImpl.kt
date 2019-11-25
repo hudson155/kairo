@@ -1,15 +1,15 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
+import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.backend.authorization.principal.JwtOrg
+import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.framework.endpoint.authorization.jwt.Jwt
-import io.limberapp.framework.endpoint.authorization.jwt.JwtOrg
-import io.limberapp.framework.endpoint.authorization.jwt.JwtUser
 import io.limberapp.framework.jackson.objectMapper.LimberObjectMapper
 import io.limberapp.framework.util.uuid.uuidGenerator.UuidGenerator
 import java.time.Clock

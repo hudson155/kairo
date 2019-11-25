@@ -4,12 +4,12 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
+import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.authorization.Authorization
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 

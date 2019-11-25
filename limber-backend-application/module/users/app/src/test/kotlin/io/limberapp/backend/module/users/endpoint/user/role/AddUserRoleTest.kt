@@ -2,11 +2,11 @@ package io.limberapp.backend.module.users.endpoint.user.role
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.endpoint.user.CreateUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID

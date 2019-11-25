@@ -15,8 +15,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import io.limberapp.framework.endpoint.authorization.Authorization
-import io.limberapp.framework.endpoint.authorization.jwt.jwtFromPayload
+import io.limberapp.framework.authorization.LimberAuthorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import io.limberapp.framework.exception.ForbiddenException
 import io.limberapp.framework.exception.NotFoundException
@@ -47,7 +46,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
      * Called for each request to the endpoint, to specify the authorization check to be used. This should handle
      * authorization for most endpoints.
      */
-    abstract fun authorization(command: Command): Authorization
+    abstract fun authorization(command: Command): LimberAuthorization
 
     /**
      * Called for each request to the endpoint, to specify an additional authorization check to be used after the
@@ -55,7 +54,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
      * it's not possible to know in advance which endpoint. This should only be used for GET endpoints, or else the
      * operation will have already been performed.
      */
-    open fun secondaryAuthorization(response: ResponseType): Authorization = Authorization.Public
+    open fun secondaryAuthorization(response: ResponseType): LimberAuthorization? = null
 
     /**
      * Called for each request to the endpoint, to handle the execution. This method is the meat and potatoes of the
@@ -86,16 +85,15 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
         route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
             handle {
                 val command = determineCommand(call)
-                val jwtPayload = call.authentication.principal<LimberAuthPrincipal>()?.payload
-                val jwt = jwtFromPayload(jwtPayload)
-                if (!authorization(command).authorize(jwt)) throw ForbiddenException()
+                val payload = call.authentication.principal<LimberAuthPrincipal>()?.payload
+                if (!authorization(command).authorize(payload)) throw ForbiddenException()
                 val result = handler(command)
                 val secondaryAuthorization = secondaryAuthorization(result)
                 if (endpointConfig.httpMethod != HttpMethod.Get) {
                     // Only GET endpoints can use secondary authorization.
-                    check(secondaryAuthorization is Authorization.Public)
+                    check(secondaryAuthorization == null)
                 }
-                if (!secondaryAuthorization(result).authorize(jwt)) throw ForbiddenException()
+                if (secondaryAuthorization(result)?.authorize(payload) == false) throw ForbiddenException()
                 if (result == null) throw NotFoundException()
                 else call.respond(result)
             }

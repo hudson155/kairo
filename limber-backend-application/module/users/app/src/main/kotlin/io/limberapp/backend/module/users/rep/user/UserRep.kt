@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.rep.user
 
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.framework.rep.CompleteRep
 import io.limberapp.framework.rep.CreationRep
 import io.limberapp.framework.rep.UpdateRep

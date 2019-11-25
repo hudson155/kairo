@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.entity.user
 
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.framework.entity.CompleteEntity
 import io.limberapp.framework.entity.UpdateEntity
 import org.bson.codecs.pojo.annotations.BsonId

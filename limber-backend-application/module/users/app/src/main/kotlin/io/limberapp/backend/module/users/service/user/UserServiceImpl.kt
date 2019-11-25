@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.users.service.user
 
 import com.google.inject.Inject
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.mapper.app.user.UserMapper
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.store.user.UserStore
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.exception.ConflictException
 import io.limberapp.framework.exception.NotFoundException
 import java.util.UUID

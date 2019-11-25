@@ -1,5 +1,4 @@
 dependencies {
-    compile project(":limber-backend-framework:common:api")
     compile project(":limber-backend-framework:entities")
     compile project(":limber-backend-framework:exceptions")
     compile project(":limber-backend-framework:ktor-auth")

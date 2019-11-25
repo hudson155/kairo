@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.model.user
 
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
+import io.limberapp.backend.authorization.principal.JwtRole
 import java.time.LocalDateTime
 import java.util.UUID
 

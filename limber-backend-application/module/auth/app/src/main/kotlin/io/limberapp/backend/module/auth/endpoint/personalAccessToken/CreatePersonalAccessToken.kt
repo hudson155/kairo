@@ -4,13 +4,13 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.auth.mapper.api.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
 import io.limberapp.framework.config.serving.ServingConfig
 import io.limberapp.framework.endpoint.ApiEndpoint
 import io.limberapp.framework.endpoint.EndpointConfig
-import io.limberapp.framework.endpoint.authorization.Authorization
 import io.limberapp.framework.endpoint.command.AbstractCommand
 import java.util.UUID
 

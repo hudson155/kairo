@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":limber-backend-application:common")
+    compile project(":limber-backend-framework:testing")
+}

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.store.user
 
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.user.UserEntity
-import io.limberapp.framework.endpoint.authorization.jwt.JwtRole
 import io.limberapp.framework.store.Store
 import java.util.UUID
 

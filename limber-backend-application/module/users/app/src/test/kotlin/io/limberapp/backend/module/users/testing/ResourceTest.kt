@@ -1,16 +1,16 @@
 package io.limberapp.backend.module.users.testing
 
 import io.limberapp.backend.module.users.UsersModule
+import io.limberapp.backend.test.LimberTestImpl
 import io.limberapp.framework.module.TestMongoModule
 import io.limberapp.framework.testing.AbstractResourceTest
-import io.limberapp.framework.testing.LimberTest
 import io.limberapp.framework.testing.TestLimberApp
 
 abstract class ResourceTest : AbstractResourceTest() {
 
     private val testMongoModule = TestMongoModule()
 
-    override val limberTest = LimberTest(
+    override val limberTest = LimberTestImpl(
         TestLimberApp(
             config = config,
             module = UsersModule(),

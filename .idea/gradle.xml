@@ -13,6 +13,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/limber-backend-application" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common/testing" />
             <option value="$PROJECT_DIR$/limber-backend-application/module" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth/api" />
@@ -25,7 +28,6 @@
             <option value="$PROJECT_DIR$/limber-backend-application/module/users/app" />
             <option value="$PROJECT_DIR$/limber-backend-framework" />
             <option value="$PROJECT_DIR$/limber-backend-framework/common" />
-            <option value="$PROJECT_DIR$/limber-backend-framework/common/api" />
             <option value="$PROJECT_DIR$/limber-backend-framework/data-conversion" />
             <option value="$PROJECT_DIR$/limber-backend-framework/entities" />
             <option value="$PROJECT_DIR$/limber-backend-framework/errors" />
