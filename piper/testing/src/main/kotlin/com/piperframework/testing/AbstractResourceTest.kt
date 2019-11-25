@@ -39,4 +39,3 @@ abstract class AbstractResourceTest {
         deterministicUuidGenerator.reset()
     }
 }
-
