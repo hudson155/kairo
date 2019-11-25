@@ -2,6 +2,8 @@ package com.piperframework.module
 
 import com.google.inject.AbstractModule
 import com.piperframework.config.Config
+import com.piperframework.config.authentication.AuthenticationConfig
+import com.piperframework.config.serving.ServingConfig
 import com.piperframework.util.uuid.uuidGenerator.RandomUuidGenerator
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.ktor.application.Application
@@ -20,8 +22,8 @@ class MainModule(
     override fun configure() {
         bind(Application::class.java).toInstance(application)
         bind(Clock::class.java).toInstance(clock)
-        bind(com.piperframework.config.authentication.AuthenticationConfig::class.java).toInstance(config.authentication)
-        bind(com.piperframework.config.serving.ServingConfig::class.java).toInstance(config.serving)
+        bind(AuthenticationConfig::class.java).toInstance(config.authentication)
+        bind(ServingConfig::class.java).toInstance(config.serving)
         bind(UuidGenerator::class.java).toInstance(uuidGenerator)
     }
 

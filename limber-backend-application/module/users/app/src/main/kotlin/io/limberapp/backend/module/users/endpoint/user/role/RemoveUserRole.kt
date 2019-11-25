@@ -1,16 +1,16 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
 import com.google.inject.Inject
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.service.user.UserService
-import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -45,7 +45,6 @@ internal class RemoveUserRole @Inject constructor(
     companion object {
         const val userId = "userId"
         const val roleName = "roleName"
-        val endpointConfig =
-            com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/users/{$userId}/roles/{$roleName}")
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/users/{$userId}/roles/{$roleName}")
     }
 }

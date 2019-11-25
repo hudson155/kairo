@@ -1,15 +1,15 @@
 package io.limberapp.backend.module.orgs.endpoint.org.membership
 
 import com.google.inject.Inject
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -47,7 +47,6 @@ internal class DeleteMembership @Inject constructor(
     companion object {
         const val orgId = "orgId"
         const val memberId = "memberId"
-        val endpointConfig =
-            com.piperframework.endpoint.EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}/memberships/{$memberId}")
+        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}/memberships/{$memberId}")
     }
 }
