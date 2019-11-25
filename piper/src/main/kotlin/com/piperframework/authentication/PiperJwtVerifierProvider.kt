@@ -1,7 +1,6 @@
 package com.piperframework.authentication
 
 import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.authentication.JwkAuthentication
@@ -19,7 +18,7 @@ class PiperJwtVerifierProvider(authenticationConfig: AuthenticationConfig) {
         return@associate Pair(mechanism.issuer, provider)
     }
 
-    fun getVerifier(blob: String): JWTVerifier? {
+    fun getVerifier(blob: String): TokenVerifier? {
         val jwt = JWT.decode(blob)
         val provider = providers[jwt.issuer] ?: return null
         return provider[jwt.keyId]

@@ -1,7 +1,6 @@
 package com.piperframework
 
 import com.auth0.jwt.exceptions.JWTVerificationException
-import com.auth0.jwt.impl.JWTParser
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.piperframework.authentication.PiperJwtVerifierProvider
@@ -29,7 +28,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.jackson.JacksonConverter
 import org.slf4j.event.Level
-import java.util.Base64
 import java.util.UUID
 
 /**
@@ -63,13 +61,11 @@ abstract class PiperApp<C : Config>(protected val config: C) {
             piperAuth {
                 verifier("Bearer", object : PiperAuthVerifier {
                     override fun verify(blob: String): PiperAuthPrincipal? {
-                        val jwt = try {
+                        val payload = try {
                             provider.getVerifier(blob)?.verify(blob)
                         } catch (_: JWTVerificationException) {
                             null
                         } ?: return null
-                        val payloadString = String(Base64.getUrlDecoder().decode(jwt.payload))
-                        val payload = JWTParser().parsePayload(payloadString)
                         return PiperAuthPrincipal(payload)
                     }
                 }, default = true)

@@ -7,21 +7,22 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import java.security.interfaces.RSAPublicKey
 
-sealed class JwtVerifierProvider {
-    abstract operator fun get(keyId: String?): JWTVerifier
+sealed class TokenVerifierProvider {
+    abstract operator fun get(keyId: String?): TokenVerifier
 }
 
-class StaticJwtVerifierProvider(private val jwtVerifier: JWTVerifier) : JwtVerifierProvider() {
-    override fun get(keyId: String?) = jwtVerifier
+class StaticJwtVerifierProvider(jwtVerifier: JWTVerifier) : TokenVerifierProvider() {
+    private val tokenVerifier = JwtVerifier(jwtVerifier)
+    override fun get(keyId: String?) = tokenVerifier
 }
 
-class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
+class UrlJwtVerifierProvider(domain: String) : TokenVerifierProvider() {
 
     private val jwkProvider = UrlJwkProvider(domain)
 
-    override fun get(keyId: String?): JWTVerifier {
+    override fun get(keyId: String?): TokenVerifier {
         val algorithm = jwkProvider.get(keyId).makeAlgorithm()
-        return JWT.require(algorithm).build()
+        return JwtVerifier(JWT.require(algorithm).build())
     }
 }
 
