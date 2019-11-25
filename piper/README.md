@@ -1,15 +1,15 @@
-# Limber Backend Framework
+# Piper
 
-The Limber backend framework is a highly dynamic backend application framework built on Ktor.
+The Piper backend framework is a highly dynamic backend application framework built on Ktor.
 
-When creating a new Limber project (an implementation project), your backend application should
+When creating a new Piper project (an implementation project), your backend application should
 include, the root module as a dependency. Read through the other modules below to understand what
 they are and see if you need them too.
 
 ## Modules
 
 * [`core`](/core):
-    * This is the nucleus of the Limber framework.
+    * This is the nucleus of the Piper framework.
     * Implementation project modules should always require the `core` module,
         but the implementation project application need not require the `core` module.
 * [`data-conversion`](/data-conversion):
@@ -43,7 +43,7 @@ they are and see if you need them too.
         It's configured with some default modules (e.g. Kotlin),
         default settings (e.g. ability to ignore unknown properties),
         and uses the `data-conversion` module for serialization/deserialization.
-        It should be used across Limber.
+        It should be used across Piper.
 * [`reps`](/reps):
     * Contains base classes for application reps to inherit from.
         Reps are used in the API layer.
@@ -65,8 +65,8 @@ the whole picture.
 ```
 .
 ├── com.piperframework
-├── authentication    # Limber authentication configuration
-├── config            # Limber framework configuration
+├── authentication    # Piper authentication configuration
+├── config            # Piper framework configuration
 ├── dataConversion    # Type conversion
 │   └── conversionService # Individual type converters
 ├── endpoint          # Code for API endpoints
@@ -80,11 +80,11 @@ the whole picture.
 │       └── mongo             # MongoDB module
 │   └── objectMapper      # Custom object mapper
 ├── model             # Model-related boilerplate (application layer)
-├── module            # Code for Limber modules
+├── module            # Code for Piper modules
 ├── mongo             # MongoDB ORM
 ├── rep               # Rep-related boilerplate (API layer)
 ├── testing           # Testing code
-├── store             # Code for Limber stores
+├── store             # Code for Piper stores
 ├── util              # Util
 │   └─ uuidGenerator  # Generates UUIDs
 ├── validation        # Used to validate reps
