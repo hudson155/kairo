@@ -1,4 +1,3 @@
 dependencies {
     compile project(":piper:mongo")
-    testCompile project(":piper:mongo:testing")
 }

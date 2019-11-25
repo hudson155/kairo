@@ -1,0 +1,7 @@
+dependencies {
+    compile project(":piper:errors")
+    compile project(":piper:exceptions")
+    compile project(":piper:validation")
+    compile libs.jackson_kotlin
+    compile libs.ktor_server_core
+}

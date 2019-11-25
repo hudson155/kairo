@@ -18,7 +18,7 @@ dependencies {
     compile project(":limber-backend-application:module:auth:app")
     compile project(":limber-backend-application:module:orgs:app")
     compile project(":limber-backend-application:module:users:app")
-    compile project(":limber-backend-framework")
+    compile project(":piper")
     compile libs.guice
     compile libs.jackson_dataformat_yaml
     compile libs.ktor_server_cio // Local
