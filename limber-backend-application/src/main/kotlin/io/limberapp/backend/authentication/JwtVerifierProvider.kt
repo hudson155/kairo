@@ -1,4 +1,4 @@
-package com.piperframework.authentication
+package io.limberapp.backend.authentication
 
 import com.auth0.jwk.Jwk
 import com.auth0.jwk.UrlJwkProvider
@@ -7,22 +7,21 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import java.security.interfaces.RSAPublicKey
 
-sealed class TokenVerifierProvider {
-    abstract operator fun get(keyId: String?): TokenVerifier
+internal abstract class JwtVerifierProvider {
+    abstract operator fun get(keyId: String?): JWTVerifier
 }
 
-class StaticJwtVerifierProvider(jwtVerifier: JWTVerifier) : TokenVerifierProvider() {
-    private val tokenVerifier = JwtVerifier(jwtVerifier)
-    override fun get(keyId: String?) = tokenVerifier
+internal class StaticJwtVerifierProvider(private val jwtVerifier: JWTVerifier) : JwtVerifierProvider() {
+    override fun get(keyId: String?) = jwtVerifier
 }
 
-class UrlJwtVerifierProvider(domain: String) : TokenVerifierProvider() {
+internal class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
 
     private val jwkProvider = UrlJwkProvider(domain)
 
-    override fun get(keyId: String?): TokenVerifier {
+    override fun get(keyId: String?): JWTVerifier {
         val algorithm = jwkProvider.get(keyId).makeAlgorithm()
-        return JwtVerifier(JWT.require(algorithm).build())
+        return JWT.require(algorithm).build()
     }
 }
 
@@ -31,4 +30,3 @@ private fun Jwk.makeAlgorithm(): Algorithm = when (algorithm) {
     "RS256" -> Algorithm.RSA256(publicKey as RSAPublicKey, null)
     else -> throw IllegalArgumentException("Unsupported algorithm $algorithm")
 }
-

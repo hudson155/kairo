@@ -1,8 +1,8 @@
 package com.piperframework.authorization
 
-import com.auth0.jwt.interfaces.Payload
+import io.ktor.auth.Principal
 
-interface PiperAuthorization {
+interface PiperAuthorization<P : Principal> {
 
-    fun authorize(payload: Payload?): Boolean
+    fun authorize(principal: P?): Boolean
 }

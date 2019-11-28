@@ -3,24 +3,26 @@ package io.limberapp.backend.test
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTCreator
 import com.auth0.jwt.algorithms.Algorithm
+import com.piperframework.testing.PiperTest
+import com.piperframework.testing.TestPiperApp
+import io.ktor.http.auth.HttpAuthHeader
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import com.piperframework.testing.PiperTest
-import com.piperframework.testing.TestPiperApp
 import java.util.UUID
 
 class LimberTest(piperApp: TestPiperApp) : PiperTest(piperApp) {
 
-    override fun createJwt(): String {
-        return JWT.create().withJwt(
+    override fun createAuthHeader(): HttpAuthHeader? {
+        val jwt = JWT.create().withJwt(
             jwt = Jwt(
                 orgs = emptyMap(),
                 roles = setOf(JwtRole.SUPERUSER),
                 user = JwtUser(UUID.randomUUID(), "Jeff", "Hudson")
             )
         ).sign(Algorithm.none())
+        return HttpAuthHeader.Single("Bearer", jwt)
     }
 
     private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {

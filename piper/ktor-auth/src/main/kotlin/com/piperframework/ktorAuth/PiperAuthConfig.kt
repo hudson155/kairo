@@ -1,16 +1,17 @@
 package com.piperframework.ktorAuth
 
 import io.ktor.auth.AuthenticationProvider
+import io.ktor.auth.Principal
 
-class PiperAuthConfig private constructor(
+class PiperAuthConfig<P : Principal> private constructor(
     name: String?,
     val defaultScheme: String,
-    val verifiers: Map<String, PiperAuthVerifier>,
+    val verifiers: Map<String, PiperAuthVerifier<P>>,
     val authKey: String,
     val realm: String
 ) : AuthenticationProvider.Configuration(name) {
 
-    class Builder(private val name: String?) {
+    class Builder<P : Principal>(private val name: String?) {
 
         /**
          * The default scheme, used for challenge responses.
@@ -22,7 +23,7 @@ class PiperAuthConfig private constructor(
         /**
          * All verifiers, with their schemes as keys.
          */
-        private val verifiers: MutableMap<String, PiperAuthVerifier> = mutableMapOf()
+        private val verifiers: MutableMap<String, PiperAuthVerifier<P>> = mutableMapOf()
 
         /**
          * The auth key used for challenge or error responses.
@@ -45,14 +46,14 @@ class PiperAuthConfig private constructor(
          *
          * See https://en.wikipedia.org/wiki/Challenge–response_authentication for info about challenge responses.
          */
-        fun verifier(scheme: String, verifier: PiperAuthVerifier, default: Boolean = false) {
+        fun verifier(scheme: String, verifier: PiperAuthVerifier<P>, default: Boolean = false) {
             if (default) require(defaultScheme == null) { "Can't set multiple default verifiers." }
             require(!verifiers.containsKey(scheme)) { "Can't set multiple verifiers with the same scheme." }
             if (default) defaultScheme = scheme
             verifiers[scheme] = verifier
         }
 
-        fun build(): PiperAuthConfig = PiperAuthConfig(
+        fun build(): PiperAuthConfig<P> = PiperAuthConfig(
             name = name,
             defaultScheme = requireNotNull(defaultScheme),
             verifiers = verifiers,

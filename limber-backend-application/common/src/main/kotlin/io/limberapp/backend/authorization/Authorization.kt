@@ -1,68 +1,46 @@
 package io.limberapp.backend.authorization
 
-import com.auth0.jwt.exceptions.JWTDecodeException
-import com.auth0.jwt.interfaces.Payload
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.authorization.PiperAuthorization
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import java.util.UUID
 
-@Suppress("MethodOverloading") // Detekt incorrectly thinks overrides in nested subclasses are method overloads.
-sealed class Authorization : PiperAuthorization {
+sealed class Authorization : PiperAuthorization<Jwt> {
 
-    private val objectMapper = PiperObjectMapper()
-
-    override fun authorize(payload: Payload?): Boolean {
-        val jwt = jwtFromPayload(payload)
-        if (jwt?.isSuperuser == true) return true
-        return authorizeInternal(jwt)
-    }
-
-    private fun jwtFromPayload(payload: Payload?): Jwt? {
-        payload ?: return null
-        return try {
-            Jwt(
-                orgs = objectMapper.readValue(payload.getClaim(Claims.orgs).asString()),
-                roles = objectMapper.readValue(payload.getClaim(Claims.roles).asString()),
-                user = objectMapper.readValue(payload.getClaim(Claims.user).asString())
-            )
-        } catch (_: JWTDecodeException) {
-            null
-        }
+    override fun authorize(principal: Jwt?): Boolean {
+        if (principal?.isSuperuser == true) return true
+        return authorizeInternal(principal)
     }
 
     private val Jwt.isSuperuser get() = roles.contains(JwtRole.SUPERUSER)
 
-    protected abstract fun authorizeInternal(payload: Jwt?): Boolean
+    protected abstract fun authorizeInternal(principal: Jwt?): Boolean
 
     object Public : Authorization() {
-        override fun authorizeInternal(payload: Jwt?) = true
+        override fun authorizeInternal(principal: Jwt?) = true
     }
 
     object AnyJwt : Authorization() {
-        override fun authorizeInternal(payload: Jwt?) = payload != null
+        override fun authorizeInternal(principal: Jwt?) = principal != null
     }
 
     object Superuser : Authorization() {
-        override fun authorizeInternal(payload: Jwt?) = false
+        override fun authorizeInternal(principal: Jwt?) = false
     }
 
     class User(private val userId: UUID?) : Authorization() {
-        override fun authorizeInternal(payload: Jwt?): Boolean {
-            payload ?: return false
+        override fun authorizeInternal(principal: Jwt?): Boolean {
+            principal ?: return false
             userId ?: return false
-            return payload.user.id == userId
+            return principal.user.id == userId
         }
     }
 
     class OrgMember(private val orgId: UUID?) : Authorization() {
-        override fun authorizeInternal(payload: Jwt?): Boolean {
-            payload ?: return false
+        override fun authorizeInternal(principal: Jwt?): Boolean {
+            principal ?: return false
             orgId ?: return false
-            return payload.orgs.containsKey(orgId)
+            return principal.orgs.containsKey(orgId)
         }
     }
 }

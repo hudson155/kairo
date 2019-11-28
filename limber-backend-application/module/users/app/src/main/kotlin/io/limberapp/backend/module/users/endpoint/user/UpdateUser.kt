@@ -1,17 +1,17 @@
 package io.limberapp.backend.module.users.endpoint.user
 
 import com.google.inject.Inject
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
-import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -22,7 +22,7 @@ internal class UpdateUser @Inject constructor(
     servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : ApiEndpoint<UpdateUser.Command, UserRep.Complete>(
+) : LimberApiEndpoint<UpdateUser.Command, UserRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig

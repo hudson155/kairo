@@ -1,22 +1,16 @@
 package com.piperframework
 
-import com.auth0.jwt.exceptions.JWTVerificationException
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
-import com.piperframework.authentication.PiperJwtVerifierProvider
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import com.piperframework.ktorAuth.PiperAuthPrincipal
-import com.piperframework.ktorAuth.PiperAuthVerifier
-import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.Module
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
 import io.ktor.application.install
-import io.ktor.auth.Authentication
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -55,23 +49,7 @@ abstract class PiperApp<C : Config>(protected val config: C) {
         statusPages()
     }
 
-    protected open fun Application.authentication() {
-        install(Authentication) {
-            val provider = PiperJwtVerifierProvider(config.authentication)
-            piperAuth {
-                verifier("Bearer", object : PiperAuthVerifier {
-                    override fun verify(blob: String): PiperAuthPrincipal? {
-                        val payload = try {
-                            provider.getVerifier(blob)?.verify(blob)
-                        } catch (_: JWTVerificationException) {
-                            null
-                        } ?: return null
-                        return PiperAuthPrincipal(payload)
-                    }
-                }, default = true)
-            }
-        }
-    }
+    abstract fun Application.authentication()
 
     protected open fun Application.cors() {
         install(CORS) {

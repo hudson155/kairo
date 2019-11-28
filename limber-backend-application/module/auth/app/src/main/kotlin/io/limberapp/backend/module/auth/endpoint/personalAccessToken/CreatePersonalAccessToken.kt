@@ -1,17 +1,17 @@
 package io.limberapp.backend.module.auth.endpoint.personalAccessToken
 
 import com.google.inject.Inject
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.mapper.api.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
-import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.command.AbstractCommand
 import java.util.UUID
 
 /**
@@ -25,7 +25,7 @@ internal class CreatePersonalAccessToken @Inject constructor(
     servingConfig: ServingConfig,
     private val personalAccessTokenService: PersonalAccessTokenService,
     private val personalAccessTokenMapper: PersonalAccessTokenMapper
-) : ApiEndpoint<CreatePersonalAccessToken.Command, PersonalAccessTokenRep.OneTimeUse>(
+) : LimberApiEndpoint<CreatePersonalAccessToken.Command, PersonalAccessTokenRep.OneTimeUse>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig

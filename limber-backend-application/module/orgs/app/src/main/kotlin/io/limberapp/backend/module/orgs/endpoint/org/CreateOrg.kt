@@ -1,17 +1,17 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.google.inject.Inject
+import com.piperframework.config.serving.ServingConfig
+import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.command.AbstractCommand
 
 /**
  * Creates a new org.
@@ -21,7 +21,7 @@ internal class CreateOrg @Inject constructor(
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : ApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
+) : LimberApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig

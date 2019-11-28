@@ -1,17 +1,17 @@
 package io.limberapp.backend.module.orgs.testing
 
-import io.limberapp.backend.module.orgs.OrgsModule
-import io.limberapp.backend.test.LimberTest
 import com.piperframework.module.TestMongoModule
 import com.piperframework.testing.AbstractResourceTest
-import com.piperframework.testing.TestPiperApp
+import io.limberapp.backend.module.orgs.OrgsModule
+import io.limberapp.backend.test.LimberTest
+import io.limberapp.backend.test.TestLimberApp
 
 abstract class ResourceTest : AbstractResourceTest() {
 
     private val testMongoModule = TestMongoModule()
 
     override val piperTest = LimberTest(
-        TestPiperApp(
+        TestLimberApp(
             config = config,
             module = OrgsModule(),
             additionalModules = listOf(testMongoModule),
