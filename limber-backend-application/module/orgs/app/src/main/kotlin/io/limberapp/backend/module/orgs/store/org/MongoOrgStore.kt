@@ -42,17 +42,19 @@ internal class MongoOrgStore @Inject constructor(
         collection.findOneByIdAndUpdate(id, update)
 
     override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
-        return collection.findOneAndUpdate(
+        collection.findOneAndUpdate(
             filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId ne entity.userId),
             update = push(OrgEntity::members, entity)
-        )?.let { }
+        ) ?: return null
+        return Unit
     }
 
     override fun deleteMembership(id: UUID, memberId: UUID): Unit? {
-        return collection.findOneAndUpdate(
+        collection.findOneAndUpdate(
             filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId eq memberId),
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
-        )?.let { }
+        ) ?: return null
+        return Unit
     }
 
     override fun delete(id: UUID) = collection.findOneByIdAndDelete(id)

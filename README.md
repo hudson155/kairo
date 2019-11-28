@@ -44,3 +44,12 @@ Limber is a highly dynamic application built on Ktor and React.
         Remember that operations that delete subentities are U-Update operations,
         not D-Delete operations.
 1. Even though they're not real words, prefer "frontend" and "backend" to "front end" and "back end".
+1. Avoid `?.let { }` where you can use early return instead.
+    ```kotlin
+   // No
+   return makeSomething()?.let { transform(it) }
+   
+   // Yes
+   val something = makeSomething() ?: return null
+   return something
+   ```

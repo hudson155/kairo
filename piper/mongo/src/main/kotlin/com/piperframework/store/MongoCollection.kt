@@ -51,5 +51,8 @@ class MongoCollection<Complete : CompleteEntity>(
 
     fun findOneByIdAndDelete(id: UUID): Unit? = findOneAndDelete(KMongoUtil.idFilterQuery(id))
 
-    fun findOneAndDelete(filter: Bson): Unit? = delegate.findOneAndDelete(filter)?.let { }
+    fun findOneAndDelete(filter: Bson): Unit? {
+        delegate.findOneAndDelete(filter) ?: return null
+        return Unit
+    }
 }

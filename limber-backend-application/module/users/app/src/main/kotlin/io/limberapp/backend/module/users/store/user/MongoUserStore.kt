@@ -42,17 +42,19 @@ internal class MongoUserStore @Inject constructor(
         collection.findOneByIdAndUpdate(id, update)
 
     override fun addRole(userId: UUID, roleName: JwtRole): Unit? {
-        return collection.findOneAndUpdate(
+        collection.findOneAndUpdate(
             filter = and(UserEntity::id eq userId, not(UserEntity::roles contains roleName)),
             update = push(UserEntity::roles, roleName)
-        )?.let {}
+        ) ?: return null
+        return Unit
     }
 
     override fun removeRole(userId: UUID, roleName: JwtRole): Unit? {
-        return collection.findOneAndUpdate(
+        collection.findOneAndUpdate(
             filter = and(UserEntity::id eq userId, UserEntity::roles contains roleName),
             update = pull(UserEntity::roles, roleName)
-        )?.let {}
+        ) ?: return null
+        return Unit
     }
 
     override fun delete(id: UUID) = collection.findOneByIdAndDelete(id)

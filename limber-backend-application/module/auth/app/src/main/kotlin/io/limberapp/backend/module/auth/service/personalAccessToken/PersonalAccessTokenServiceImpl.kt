@@ -18,8 +18,8 @@ internal class PersonalAccessTokenServiceImpl @Inject constructor(
     }
 
     override fun getByToken(token: String): PersonalAccessTokenModel? {
-        val entity = personalAccessTokenStore.getByToken(token)
-        return entity?.let { personalAccessTokenMapper.model(it) }
+        val entity = personalAccessTokenStore.getByToken(token) ?: return null
+        return personalAccessTokenMapper.model(entity)
     }
 
     override fun getByUserId(userId: UUID): List<PersonalAccessTokenModel> {
