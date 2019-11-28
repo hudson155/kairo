@@ -6,6 +6,7 @@ import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.server.testing.TestApplicationCall
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.handleRequest
@@ -42,13 +43,12 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
     ): TestApplicationCall {
         return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-            val jwt = createJwt()
-            addHeader(HttpHeaders.Authorization, "Bearer $jwt")
+            createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
             body?.let { setBody(objectMapper.writeValueAsString(it)) }
         }
     }
 
-    protected abstract fun createJwt(): String
+    protected abstract fun createAuthHeader(): HttpAuthHeader?
 
     private fun TestApplicationCall.runTest(expectedStatusCode: HttpStatusCode, test: TestApplicationCall.() -> Unit) {
         assertTrue(

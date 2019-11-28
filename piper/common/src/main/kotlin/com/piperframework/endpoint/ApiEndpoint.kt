@@ -4,11 +4,11 @@ import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.exception.ForbiddenException
 import com.piperframework.exception.NotFoundException
-import com.piperframework.ktorAuth.PiperAuthPrincipal
 import com.piperframework.rep.ValidatedRep
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
+import io.ktor.auth.Principal
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
 import io.ktor.features.MissingRequestParameterException
@@ -29,7 +29,7 @@ import kotlin.reflect.jvm.jvmName
  * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
  * called for each request.
  */
-abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
+abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any?>(
     private val application: Application,
     private val pathPrefix: String,
     private val endpointConfig: EndpointConfig
@@ -46,7 +46,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
      * Called for each request to the endpoint, to specify the authorization check to be used. This should handle
      * authorization for most endpoints.
      */
-    abstract fun authorization(command: Command): PiperAuthorization
+    abstract fun authorization(command: Command): PiperAuthorization<P>
 
     /**
      * Called for each request to the endpoint, to specify an additional authorization check to be used after the
@@ -54,7 +54,7 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
      * it's not possible to know in advance which endpoint. This should only be used for GET endpoints, or else the
      * operation will have already been performed.
      */
-    open fun secondaryAuthorization(response: ResponseType): PiperAuthorization? = null
+    open fun secondaryAuthorization(response: ResponseType): PiperAuthorization<P>? = null
 
     /**
      * Called for each request to the endpoint, to handle the execution. This method is the meat and potatoes of the
@@ -85,15 +85,15 @@ abstract class ApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
         route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
             handle {
                 val command = determineCommand(call)
-                val payload = call.authentication.principal<PiperAuthPrincipal>()?.payload
-                if (!authorization(command).authorize(payload)) throw ForbiddenException()
+                val principal = call.authentication.principal as? P
+                if (!authorization(command).authorize(principal)) throw ForbiddenException()
                 val result = handler(command)
                 val secondaryAuthorization = secondaryAuthorization(result)
                 if (endpointConfig.httpMethod != HttpMethod.Get) {
                     // Only GET endpoints can use secondary authorization.
                     check(secondaryAuthorization == null)
                 }
-                if (secondaryAuthorization(result)?.authorize(payload) == false) throw ForbiddenException()
+                if (secondaryAuthorization(result)?.authorize(principal) == false) throw ForbiddenException()
                 if (result == null) throw NotFoundException()
                 else call.respond(result)
             }

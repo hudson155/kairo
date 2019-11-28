@@ -1,6 +1,8 @@
 package com.piperframework.ktorAuth
 
-interface PiperAuthVerifier {
+import io.ktor.auth.Principal
 
-    fun verify(blob: String): PiperAuthPrincipal?
+interface PiperAuthVerifier<P : Principal> {
+
+    fun verify(blob: String): P?
 }

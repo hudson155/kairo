@@ -2,10 +2,10 @@ package io.limberapp.backend.module.auth.store.personalAccessToken
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
-import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoIndex
 import com.piperframework.store.MongoStore
+import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.eq
@@ -27,6 +27,9 @@ internal class MongoPersonalAccessTokenStore @Inject constructor(
     override fun create(entity: PersonalAccessTokenEntity) {
         collection.insertOne(entity)
     }
+
+    override fun getByToken(token: String) =
+        collection.findOne(PersonalAccessTokenEntity::token eq token)
 
     override fun getByUserId(userId: UUID) =
         collection.find(PersonalAccessTokenEntity::userId eq userId)

@@ -9,7 +9,7 @@ import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.ktor.application.Application
 import java.time.Clock
 
-class TestPiperApp(
+abstract class TestPiperApp(
     config: Config,
     module: Module,
     private val additionalModules: List<AbstractModule>,

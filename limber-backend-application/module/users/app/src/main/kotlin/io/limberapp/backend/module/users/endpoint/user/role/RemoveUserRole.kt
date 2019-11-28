@@ -2,7 +2,6 @@ package io.limberapp.backend.module.users.endpoint.user.role
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.ApiEndpoint
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
@@ -10,6 +9,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.service.user.UserService
 import java.util.UUID
 
@@ -20,7 +20,7 @@ internal class RemoveUserRole @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val userService: UserService
-) : ApiEndpoint<RemoveUserRole.Command, Unit>(
+) : LimberApiEndpoint<RemoveUserRole.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
