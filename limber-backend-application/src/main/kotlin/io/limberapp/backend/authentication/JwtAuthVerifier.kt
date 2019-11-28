@@ -16,6 +16,8 @@ import io.limberapp.backend.authorization.principal.Jwt
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVerifier<Jwt> {
 
+    private val objectMapper = PiperObjectMapper()
+
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {
             is JwkAuthentication -> UrlJwtVerifierProvider(mechanism.domain)
@@ -24,8 +26,6 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
         }
         return@associate Pair(mechanism.issuer, provider)
     }
-
-    private val objectMapper = PiperObjectMapper()
 
     override fun verify(blob: String): Jwt? {
         val decodedJwt = try {
