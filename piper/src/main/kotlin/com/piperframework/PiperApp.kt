@@ -41,9 +41,7 @@ abstract class PiperApp<C : Config>(protected val config: C) {
         registerEndpoints(injector)
     }
 
-    private fun Application.bindModules(): Injector {
-        return Guice.createInjector(getMainModules(this).plus(modules))
-    }
+    private fun Application.bindModules(): Injector = Guice.createInjector(getMainModules(this).plus(modules))
 
     private fun Application.configure(injector: Injector) {
         authentication(injector)
