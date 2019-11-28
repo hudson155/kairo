@@ -8,7 +8,7 @@ import com.piperframework.module.Module
 import com.piperframework.testing.TestPiperApp
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.ktor.auth.Authentication
-import io.limberapp.backend.authentication.JwtAuthVerifier
+import io.limberapp.backend.authentication.jwt.JwtAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
 import java.time.Clock
 
