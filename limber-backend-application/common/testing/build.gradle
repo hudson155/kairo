@@ -2,5 +2,4 @@ dependencies {
     compile project(":limber-backend-application:common")
     compile project(":limber-backend-application")
     compile project(":piper:testing")
-    compile libs.auth0_java_jwt
 }
