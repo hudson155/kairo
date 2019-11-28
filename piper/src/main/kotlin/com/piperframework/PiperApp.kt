@@ -11,6 +11,7 @@ import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
 import io.ktor.application.install
+import io.ktor.auth.Authentication
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
@@ -49,7 +50,11 @@ abstract class PiperApp<C : Config>(protected val config: C) {
         statusPages()
     }
 
-    abstract fun Application.authentication()
+    protected fun Application.authentication() {
+        install(Authentication) {
+            configureAuthentication()
+        }
+    }
 
     protected open fun Application.cors() {
         install(CORS) {
@@ -97,6 +102,8 @@ abstract class PiperApp<C : Config>(protected val config: C) {
     private fun Application.bindModules() {
         Guice.createInjector(getMainModules(this).plus(modules))
     }
+
+    protected abstract fun Authentication.Configuration.configureAuthentication()
 
     protected abstract fun getMainModules(application: Application): List<AbstractModule>
 

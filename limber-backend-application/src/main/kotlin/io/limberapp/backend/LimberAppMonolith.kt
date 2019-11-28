@@ -8,7 +8,6 @@ import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.MainModule
 import com.piperframework.module.MongoModule
 import io.ktor.application.Application
-import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.limberapp.backend.authentication.JwtAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
@@ -18,11 +17,9 @@ import io.limberapp.backend.module.users.UsersModule
 
 internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
 
-    override fun Application.authentication() {
-        install(Authentication) {
-            piperAuth<Jwt> {
-                verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
-            }
+    override fun Authentication.Configuration.configureAuthentication() {
+        piperAuth<Jwt> {
+            verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
         }
     }
 
