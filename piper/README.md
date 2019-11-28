@@ -8,10 +8,10 @@ they are and see if you need them too.
 
 ## Modules
 
-* [`core`](/core):
+* [`core`](/common):
     * This is the nucleus of the Piper framework.
-    * Implementation project modules should always require the `core` module,
-        but the implementation project application need not require the `core` module.
+    * Implementation project modules should always require the `common` module,
+        but the implementation project application need not require the `common` module.
 * [`data-conversion`](/data-conversion):
     * Responsible for converting data types.
         This is used for serialization and deserialization,
@@ -30,11 +30,6 @@ they are and see if you need them too.
         an error from this package should be returned.
 * [`exception-mapping`](/exception-mapping):
     * Maps exceptions to JSON responses from the errors module.
-* [`models`](/models):
-    * Contains base classes for application models to inherit from.
-        Models are used in the application layer.
-        Models should only be used in the API layer to interact with the application layer.
-        Models should never be used in the database layer.
 * [`mongo`](/mongo):
     * Driver to interact with MongoDB, including automatic entity/document mapping.
     * Include this in implementation project modules if they use MongoDB.
