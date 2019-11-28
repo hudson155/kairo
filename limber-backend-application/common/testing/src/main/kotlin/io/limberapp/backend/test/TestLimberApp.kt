@@ -1,6 +1,7 @@
 package io.limberapp.backend.test
 
 import com.google.inject.AbstractModule
+import com.google.inject.Injector
 import com.piperframework.config.Config
 import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.Module
@@ -19,7 +20,7 @@ class TestLimberApp(
     deterministicUuidGenerator: UuidGenerator
 ) : TestPiperApp(config, module, additionalModules, fixedClock, deterministicUuidGenerator) {
 
-    override fun Authentication.Configuration.configureAuthentication() {
+    override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
         piperAuth<Jwt> {
             verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
         }

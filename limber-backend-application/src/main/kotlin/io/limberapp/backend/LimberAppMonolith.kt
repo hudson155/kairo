@@ -2,6 +2,7 @@ package io.limberapp.backend
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.inject.Injector
 import com.piperframework.PiperApp
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.piperAuth
@@ -17,7 +18,7 @@ import io.limberapp.backend.module.users.UsersModule
 
 internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
 
-    override fun Authentication.Configuration.configureAuthentication() {
+    override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
         piperAuth<Jwt> {
             verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
         }
