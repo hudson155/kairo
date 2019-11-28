@@ -1,7 +1,5 @@
 dependencies {
     compile project(":piper:common")
-    compile project(":piper:data-conversion")
     compile project(":piper:exception-mapping")
-    compile project(":piper:object-mapper")
     compile libs.ktor_jackson
 }
