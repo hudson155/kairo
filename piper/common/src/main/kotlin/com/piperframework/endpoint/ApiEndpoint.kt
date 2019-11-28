@@ -65,15 +65,11 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      */
     abstract suspend fun handler(command: Command): ResponseType
 
-    init {
-        register()
-    }
-
     /**
      * Registers the endpoint with the application to bind requests to that endpoint to this
      * ApiEndpoint instance.
      */
-    private fun register() {
+    fun register() {
         application.routing {
             authenticate(optional = true) {
                 route(pathPrefix) { routeEndpoint() }

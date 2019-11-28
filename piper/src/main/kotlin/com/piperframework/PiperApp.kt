@@ -2,6 +2,7 @@ package com.piperframework
 
 import com.google.inject.AbstractModule
 import com.google.inject.Guice
+import com.google.inject.Injector
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
@@ -32,15 +33,18 @@ import java.util.UUID
 abstract class PiperApp<C : Config>(protected val config: C) {
 
     fun bindToApplication(application: Application) = with(application) {
-        configure()
-        bindModules()
+        val injector = bindModules()
+        configure(injector)
         if (config.serving.staticFiles.serve) {
             serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
         }
+        registerEndpoints(injector)
     }
 
-    private fun Application.configure() {
-        authentication()
+    private fun Application.bindModules(): Injector = Guice.createInjector(getMainModules(this).plus(modules))
+
+    private fun Application.configure(injector: Injector) {
+        authentication(injector)
         cors()
         dataConversion()
         defaultHeaders()
@@ -50,9 +54,9 @@ abstract class PiperApp<C : Config>(protected val config: C) {
         statusPages()
     }
 
-    protected fun Application.authentication() {
+    protected fun Application.authentication(injector: Injector) {
         install(Authentication) {
-            configureAuthentication()
+            configureAuthentication(injector)
         }
     }
 
@@ -99,11 +103,16 @@ abstract class PiperApp<C : Config>(protected val config: C) {
         }
     }
 
-    private fun Application.bindModules() {
-        Guice.createInjector(getMainModules(this).plus(modules))
+    private fun registerEndpoints(injector: Injector) {
+        modules.forEach { module ->
+            module.endpoints.forEach {
+                val endpoint = injector.getInstance(it)
+                endpoint.register()
+            }
+        }
     }
 
-    protected abstract fun Authentication.Configuration.configureAuthentication()
+    protected abstract fun Authentication.Configuration.configureAuthentication(injector: Injector)
 
     protected abstract fun getMainModules(application: Application): List<AbstractModule>
 
