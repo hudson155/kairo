@@ -7,7 +7,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import java.security.interfaces.RSAPublicKey
 
-internal abstract class JwtVerifierProvider {
+internal sealed class JwtVerifierProvider {
     abstract operator fun get(keyId: String?): JWTVerifier
 }
 
