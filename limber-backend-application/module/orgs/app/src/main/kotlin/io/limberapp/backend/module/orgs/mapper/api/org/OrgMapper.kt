@@ -17,7 +17,6 @@ internal class OrgMapper @Inject constructor(
     fun model(rep: OrgRep.Creation) = OrgModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
-        version = 0,
         name = rep.name,
         members = emptyList()
     )

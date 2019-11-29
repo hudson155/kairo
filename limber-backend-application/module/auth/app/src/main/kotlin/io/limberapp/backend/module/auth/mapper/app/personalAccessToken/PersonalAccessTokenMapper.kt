@@ -9,7 +9,6 @@ internal class PersonalAccessTokenMapper @Inject constructor() {
     fun entity(model: PersonalAccessTokenModel) = PersonalAccessTokenEntity(
         id = model.id,
         created = model.created,
-        version = model.version,
         userId = model.userId,
         token = model.token
     )
@@ -17,7 +16,6 @@ internal class PersonalAccessTokenMapper @Inject constructor() {
     fun model(entity: PersonalAccessTokenEntity) = PersonalAccessTokenModel(
         id = entity.id,
         created = entity.created,
-        version = entity.version,
         userId = entity.userId,
         token = entity.token
     )

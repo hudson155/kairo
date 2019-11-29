@@ -17,7 +17,6 @@ internal class PersonalAccessTokenMapper @Inject constructor(
     fun model(userId: UUID) = PersonalAccessTokenModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
-        version = 0,
         userId = userId,
         token = uuidGenerator.generate().base64Encode()
     )

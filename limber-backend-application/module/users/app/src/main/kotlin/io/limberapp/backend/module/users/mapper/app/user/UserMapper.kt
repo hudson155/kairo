@@ -9,7 +9,6 @@ internal class UserMapper @Inject constructor() {
     fun entity(model: UserModel) = UserEntity(
         id = model.id,
         created = model.created,
-        version = model.version,
         firstName = model.firstName,
         lastName = model.lastName,
         emailAddress = model.emailAddress,
@@ -20,7 +19,6 @@ internal class UserMapper @Inject constructor() {
     fun model(entity: UserEntity) = UserModel(
         id = entity.id,
         created = entity.created,
-        version = entity.version,
         firstName = entity.firstName,
         lastName = entity.lastName,
         emailAddress = entity.emailAddress,

@@ -12,7 +12,6 @@ internal class OrgMapper @Inject constructor(
     fun entity(model: OrgModel) = OrgEntity(
         id = model.id,
         created = model.created,
-        version = model.version,
         name = model.name,
         members = model.members.map { membershipMapper.entity(it) }
     )
@@ -20,7 +19,6 @@ internal class OrgMapper @Inject constructor(
     fun model(entity: OrgEntity) = OrgModel(
         id = entity.id,
         created = entity.created,
-        version = entity.version,
         name = entity.name,
         members = entity.members.map { membershipMapper.model(it) }
     )

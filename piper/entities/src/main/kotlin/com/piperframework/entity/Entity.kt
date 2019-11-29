@@ -12,7 +12,6 @@ abstract class CompleteSubentity {
 abstract class CompleteEntity {
     abstract val id: UUID
     abstract val created: LocalDateTime
-    abstract val version: Int
 }
 
 abstract class UpdateEntity

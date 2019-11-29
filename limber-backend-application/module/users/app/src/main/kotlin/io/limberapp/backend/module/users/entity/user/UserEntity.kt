@@ -10,7 +10,6 @@ import java.util.UUID
 data class UserEntity(
     @BsonId override val id: UUID,
     override val created: LocalDateTime,
-    override val version: Int,
     val firstName: String?,
     val lastName: String?,
     val emailAddress: String,

@@ -8,7 +8,6 @@ import java.util.UUID
 data class PersonalAccessTokenEntity(
     @BsonId override val id: UUID,
     override val created: LocalDateTime,
-    override val version: Int,
     val userId: UUID,
     val token: String
 ) : CompleteEntity() {

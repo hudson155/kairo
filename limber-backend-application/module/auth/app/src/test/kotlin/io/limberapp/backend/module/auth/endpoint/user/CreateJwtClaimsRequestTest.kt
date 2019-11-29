@@ -31,7 +31,6 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
         val existingUser = UserModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
-            version = 0,
             firstName = "Summer",
             lastName = "Kavan",
             emailAddress = "jhudson@jhudson.ca",
@@ -42,7 +41,6 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
         val org1 = OrgModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
-            version = 0,
             name = "Cranky Pasta",
             members = listOf(
                 MembershipModel(LocalDateTime.now(fixedClock), existingUser.id)
@@ -89,7 +87,6 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
                 UserModel(
                     id = id,
                     created = created,
-                    version = version,
                     firstName = firstName,
                     lastName = lastName,
                     emailAddress = emailAddress,

@@ -9,7 +9,6 @@ import java.util.UUID
 data class OrgEntity(
     @BsonId override val id: UUID,
     override val created: LocalDateTime,
-    override val version: Int,
     val name: String,
     val members: List<MembershipEntity>
 ) : CompleteEntity() {
