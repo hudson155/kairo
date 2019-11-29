@@ -7,7 +7,6 @@ import java.util.UUID
 data class UserModel(
     val id: UUID,
     val created: LocalDateTime,
-    val version: Int,
     val firstName: String?,
     val lastName: String?,
     val emailAddress: String,

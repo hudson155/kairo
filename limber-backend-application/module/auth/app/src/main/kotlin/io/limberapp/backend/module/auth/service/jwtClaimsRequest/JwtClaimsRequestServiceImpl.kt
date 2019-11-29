@@ -47,7 +47,6 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         val newUser = UserModel(
             id = uuidGenerator.generate(),
             created = LocalDateTime.now(clock),
-            version = 0,
             firstName = request.firstName,
             lastName = request.lastName,
             emailAddress = request.emailAddress,
