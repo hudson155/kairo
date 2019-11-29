@@ -39,7 +39,7 @@ internal class DeleteMembership @Inject constructor(
 
     override suspend fun handler(command: Command) {
         orgService.deleteMembership(
-            id = command.orgId,
+            orgId = command.orgId,
             memberId = command.memberId
         )
     }

@@ -36,14 +36,14 @@ internal class OrgServiceImpl @Inject constructor(
         return orgMapper.model(entity)
     }
 
-    override fun createMembership(id: UUID, model: MembershipModel) {
-        get(id) ?: throw NotFoundException()
+    override fun createMembership(orgId: UUID, model: MembershipModel) {
+        get(orgId) ?: throw NotFoundException()
         val entity = membershipMapper.entity(model)
-        orgStore.createMembership(id, entity) ?: throw ConflictException()
+        orgStore.createMembership(orgId, entity) ?: throw ConflictException()
     }
 
-    override fun deleteMembership(id: UUID, memberId: UUID) {
-        orgStore.deleteMembership(id, memberId) ?: throw NotFoundException()
+    override fun deleteMembership(orgId: UUID, memberId: UUID) {
+        orgStore.deleteMembership(orgId, memberId) ?: throw NotFoundException()
     }
 
     override fun delete(id: UUID) = orgStore.delete(id) ?: throw NotFoundException()
