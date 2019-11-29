@@ -1,7 +1,7 @@
 package com.piperframework.module
 
 import com.piperframework.config.database.MongoDatabaseConfig
-import com.piperframework.createClient
+import com.piperframework.mongo.createClient
 
 class TestMongoModule : MongoModule(MongoDatabaseConfig.local("piperapptest")) {
 
