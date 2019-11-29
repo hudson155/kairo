@@ -34,7 +34,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
             null
         } ?: return null
         return Jwt(
-            orgs = objectMapper.readValue(decodedJwt.getClaim(Claims.orgs).asString()),
+            org = objectMapper.readValue(decodedJwt.getClaim(Claims.org).asString()),
             roles = objectMapper.readValue(decodedJwt.getClaim(Claims.roles).asString()),
             user = objectMapper.readValue(decodedJwt.getClaim(Claims.user).asString())
         )
