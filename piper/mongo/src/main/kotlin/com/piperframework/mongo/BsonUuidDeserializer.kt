@@ -8,5 +8,5 @@ import java.util.UUID
 
 class BsonUuidDeserializer : JsonDeserializer<UUID>() {
 
-    override fun deserialize(p: JsonParser, ctxt: DeserializationContext): UUID = UUID(p.binaryValue)
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext) = UUID(p.binaryValue)
 }
