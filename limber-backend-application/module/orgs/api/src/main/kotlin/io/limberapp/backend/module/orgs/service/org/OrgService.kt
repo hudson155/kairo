@@ -14,9 +14,9 @@ interface OrgService {
 
     fun update(id: UUID, update: OrgModel.Update): OrgModel
 
-    fun createMembership(id: UUID, model: MembershipModel)
+    fun createMembership(orgId: UUID, model: MembershipModel)
 
-    fun deleteMembership(id: UUID, memberId: UUID)
+    fun deleteMembership(orgId: UUID, memberId: UUID)
 
     fun delete(id: UUID)
 }
