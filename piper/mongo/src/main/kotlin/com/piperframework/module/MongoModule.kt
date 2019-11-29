@@ -5,7 +5,7 @@ import com.google.inject.AbstractModule
 import com.mongodb.client.MongoDatabase
 import com.piperframework.config.database.MongoDatabaseConfig
 import com.piperframework.mongo.BsonUuidSerializer
-import com.piperframework.createClient
+import com.piperframework.mongo.createClient
 import org.litote.kmongo.util.KMongoConfiguration
 import java.util.UUID
 

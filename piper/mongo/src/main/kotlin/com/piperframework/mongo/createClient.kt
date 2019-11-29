@@ -1,4 +1,4 @@
-package com.piperframework
+package com.piperframework.mongo
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClient
