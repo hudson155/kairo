@@ -5,7 +5,7 @@ import java.util.UUID
 
 private const val UUID_BYTES = 16
 
-internal fun UUID.asByteArray(): ByteArray = ByteBuffer.wrap(ByteArray(UUID_BYTES)).apply {
+fun UUID.asByteArray(): ByteArray = ByteBuffer.wrap(ByteArray(UUID_BYTES)).apply {
     putLong(mostSignificantBits)
     putLong(leastSignificantBits)
 }.array()
