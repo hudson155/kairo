@@ -43,22 +43,6 @@ internal class MongoOrgStore @Inject constructor(
     override fun update(id: UUID, update: OrgEntity.Update) =
         collection.findOneByIdAndUpdate(id, update)
 
-    override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
-        collection.findOneAndUpdate(
-            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId ne entity.userId),
-            update = push(OrgEntity::members, entity)
-        ) ?: return null
-        return Unit
-    }
-
-    override fun deleteMembership(id: UUID, memberId: UUID): Unit? {
-        collection.findOneAndUpdate(
-            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId eq memberId),
-            update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
-        ) ?: return null
-        return Unit
-    }
-
     override fun createFeature(id: UUID, entity: FeatureEntity): Unit? {
         collection.findOneAndUpdate(
             filter = and(
@@ -76,6 +60,22 @@ internal class MongoOrgStore @Inject constructor(
         collection.findOneAndUpdate(
             filter = and(OrgEntity::id eq id, OrgEntity::features / FeatureEntity::id eq featureId),
             update = pullByFilter(OrgEntity::features, FeatureEntity::id eq featureId)
+        ) ?: return null
+        return Unit
+    }
+
+    override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
+        collection.findOneAndUpdate(
+            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId ne entity.userId),
+            update = push(OrgEntity::members, entity)
+        ) ?: return null
+        return Unit
+    }
+
+    override fun deleteMembership(id: UUID, memberId: UUID): Unit? {
+        collection.findOneAndUpdate(
+            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId eq memberId),
+            update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
         ) ?: return null
         return Unit
     }

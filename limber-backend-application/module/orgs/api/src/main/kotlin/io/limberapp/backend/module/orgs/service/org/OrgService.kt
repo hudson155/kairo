@@ -15,13 +15,13 @@ interface OrgService {
 
     fun update(id: UUID, update: OrgModel.Update): OrgModel
 
-    fun createMembership(orgId: UUID, model: MembershipModel)
-
-    fun deleteMembership(orgId: UUID, memberId: UUID)
-
     fun createFeature(orgId: UUID, model: FeatureModel)
 
     fun deleteFeature(orgId: UUID, featureId: UUID)
+
+    fun createMembership(orgId: UUID, model: MembershipModel)
+
+    fun deleteMembership(orgId: UUID, memberId: UUID)
 
     fun delete(id: UUID)
 }
