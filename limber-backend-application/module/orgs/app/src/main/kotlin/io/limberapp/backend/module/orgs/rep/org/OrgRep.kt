@@ -5,6 +5,7 @@ import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
 import com.piperframework.validation.util.ifPresent
 import com.piperframework.validation.util.mediumText
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import java.time.LocalDateTime
 import java.util.UUID
@@ -23,6 +24,7 @@ object OrgRep {
         override val id: UUID,
         override val created: LocalDateTime,
         val name: String,
+        val features: List<FeatureRep.Complete>,
         val members: List<MembershipRep.Complete>
     ) : CompleteRep()
 
