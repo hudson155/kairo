@@ -25,8 +25,8 @@ object JwtClaimsRequestRep {
     }
 
     data class Complete(
-        @JsonProperty(Claims.orgs)
-        val orgs: String,
+        @JsonProperty(Claims.org)
+        val org: String,
         @JsonProperty(Claims.roles)
         val roles: String,
         @JsonProperty(Claims.user)

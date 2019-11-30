@@ -41,7 +41,7 @@ sealed class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
             orgId ?: return false
-            return principal.orgs.containsKey(orgId)
+            return principal.org?.id == orgId
         }
     }
 }

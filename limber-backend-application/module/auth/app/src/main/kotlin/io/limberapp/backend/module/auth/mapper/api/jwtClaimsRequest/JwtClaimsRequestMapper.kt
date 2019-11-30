@@ -15,7 +15,7 @@ internal class JwtClaimsRequestMapper @Inject constructor() {
     )
 
     fun completeRep(model: JwtClaimsModel) = JwtClaimsRequestRep.Complete(
-        orgs = model.orgs,
+        org = model.org,
         roles = model.roles,
         user = model.user
     )

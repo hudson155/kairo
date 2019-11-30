@@ -17,7 +17,7 @@ class LimberTest(piperApp: TestPiperApp) : PiperTest(piperApp) {
     override fun createAuthHeader(): HttpAuthHeader? {
         val jwt = JWT.create().withJwt(
             jwt = Jwt(
-                orgs = emptyMap(),
+                org = null,
                 roles = setOf(JwtRole.SUPERUSER),
                 user = JwtUser(UUID.randomUUID(), "Jeff", "Hudson")
             )
@@ -26,7 +26,7 @@ class LimberTest(piperApp: TestPiperApp) : PiperTest(piperApp) {
     }
 
     private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
-        withClaim(Claims.orgs, objectMapper.writeValueAsString(jwt.orgs))
+        withClaim(Claims.org, objectMapper.writeValueAsString(jwt.org))
         withClaim(Claims.roles, objectMapper.writeValueAsString(jwt.roles))
         withClaim(Claims.user, objectMapper.writeValueAsString(jwt.user))
         return this

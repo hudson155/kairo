@@ -18,7 +18,7 @@ class TokenAuthVerifier(
         val personalAccessToken = personalAccessTokenService.getByToken(blob) ?: return null
         val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(personalAccessToken.userId) ?: return null
         return Jwt(
-            orgs = objectMapper.readValue(claims.orgs),
+            org = objectMapper.readValue(claims.org),
             roles = objectMapper.readValue(claims.roles),
             user = objectMapper.readValue(claims.user)
         )
