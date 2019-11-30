@@ -1,42 +1,47 @@
-package io.limberapp.backend.module.orgs.endpoint.org.membership
+package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
-import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
 import java.time.LocalDateTime
-import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class CreateMembershipTest : ResourceTest() {
+internal class CreateFeatureTest : ResourceTest() {
 
     @Test
     fun create() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
-        val featureId = deterministicUuidGenerator[1]
+        val defaultFeatureId = deterministicUuidGenerator[1]
+        val featureId = deterministicUuidGenerator[2]
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
-        val userId = UUID.randomUUID()
-        val membershipCreationRep = MembershipRep.Creation(userId)
+        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
+        val featureRep = FeatureRep.Complete(
+            id = featureId,
+            created = LocalDateTime.now(fixedClock),
+            name = featureCreationRep.name,
+            path = featureCreationRep.path,
+            type = featureCreationRep.type
+        )
         piperTest.test(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep
+            endpointConfig = CreateFeature.endpointConfig,
+            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            body = featureCreationRep
         ) {
-            val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
-            val expected = MembershipRep.Complete(LocalDateTime.now(fixedClock), userId)
-            assertEquals(expected, actual)
+            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            assertEquals(featureRep, actual)
         }
 
         piperTest.test(
@@ -45,7 +50,7 @@ internal class CreateMembershipTest : ResourceTest() {
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val defaultFeature = FeatureRep.Complete(
-                id = featureId,
+                id = defaultFeatureId,
                 created = LocalDateTime.now(fixedClock),
                 name = DEFAULT_FEATURE_CREATION_REP.name,
                 path = DEFAULT_FEATURE_CREATION_REP.path,
@@ -55,8 +60,8 @@ internal class CreateMembershipTest : ResourceTest() {
                 id = orgId,
                 created = LocalDateTime.now(fixedClock),
                 name = orgCreationRep.name,
-                features = listOf(defaultFeature),
-                members = listOf(MembershipRep.Complete(LocalDateTime.now(fixedClock), userId))
+                features = listOf(defaultFeature, featureRep),
+                members = emptyList()
             )
             assertEquals(expected, actual)
         }
@@ -72,17 +77,16 @@ internal class CreateMembershipTest : ResourceTest() {
             body = orgCreationRep
         ) {}
 
-        val userId = UUID.randomUUID()
-        val membershipCreationRep = MembershipRep.Creation(userId)
+        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
         piperTest.test(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep
+            endpointConfig = CreateFeature.endpointConfig,
+            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            body = featureCreationRep
         ) {}
         piperTest.test(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep,
+            endpointConfig = CreateFeature.endpointConfig,
+            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            body = featureCreationRep,
             expectedStatusCode = HttpStatusCode.Conflict
         ) {}
     }

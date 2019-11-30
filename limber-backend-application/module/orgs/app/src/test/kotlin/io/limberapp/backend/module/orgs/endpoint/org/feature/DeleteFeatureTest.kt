@@ -1,12 +1,12 @@
-package io.limberapp.backend.module.orgs.endpoint.org.membership
+package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
-import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
@@ -14,22 +14,22 @@ import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class DeleteMembershipTest : ResourceTest() {
+internal class DeleteFeatureTest : ResourceTest() {
 
     @Test
     fun orgDoesNotExist() {
         piperTest.test(
-            endpointConfig = DeleteMembership.endpointConfig,
+            endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteMembership.orgId to UUID.randomUUID().toString(),
-                DeleteMembership.memberId to UUID.randomUUID().toString()
+                DeleteFeature.orgId to UUID.randomUUID().toString(),
+                DeleteFeature.featureId to UUID.randomUUID().toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
 
     @Test
-    fun membershipDoesNotExist() {
+    fun featureDoesNotExist() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
@@ -39,10 +39,10 @@ internal class DeleteMembershipTest : ResourceTest() {
         ) {}
 
         piperTest.test(
-            endpointConfig = DeleteMembership.endpointConfig,
+            endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteMembership.orgId to orgId.toString(),
-                DeleteMembership.memberId to UUID.randomUUID().toString()
+                DeleteFeature.orgId to orgId.toString(),
+                DeleteFeature.featureId to UUID.randomUUID().toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -53,25 +53,25 @@ internal class DeleteMembershipTest : ResourceTest() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
-        val featureId = deterministicUuidGenerator[1]
+        val defaultFeatureId = deterministicUuidGenerator[1]
+        val featureId = deterministicUuidGenerator[2]
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
-        val userId = UUID.randomUUID()
-        val membershipCreationRep = MembershipRep.Creation(userId)
+        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
         piperTest.test(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep
+            endpointConfig = CreateFeature.endpointConfig,
+            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            body = featureCreationRep
         ) {}
 
         piperTest.test(
-            endpointConfig = DeleteMembership.endpointConfig,
+            endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteMembership.orgId to orgId.toString(),
-                DeleteMembership.memberId to userId.toString()
+                DeleteFeature.orgId to orgId.toString(),
+                DeleteFeature.featureId to featureId.toString()
             )
         ) {}
 
@@ -81,7 +81,7 @@ internal class DeleteMembershipTest : ResourceTest() {
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             val defaultFeature = FeatureRep.Complete(
-                id = featureId,
+                id = defaultFeatureId,
                 created = LocalDateTime.now(fixedClock),
                 name = DEFAULT_FEATURE_CREATION_REP.name,
                 path = DEFAULT_FEATURE_CREATION_REP.path,

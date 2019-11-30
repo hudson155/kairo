@@ -2,6 +2,8 @@ package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
+import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -30,6 +32,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
 
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
+        val defaultFeatureId = deterministicUuidGenerator[1]
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
@@ -48,11 +51,19 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
+            val defaultFeature = FeatureRep.Complete(
+                id = defaultFeatureId,
+                created = LocalDateTime.now(fixedClock),
+                name = DEFAULT_FEATURE_CREATION_REP.name,
+                path = DEFAULT_FEATURE_CREATION_REP.path,
+                type = DEFAULT_FEATURE_CREATION_REP.type
+            )
             val expected = listOf(
                 OrgRep.Complete(
                     id = orgId,
                     created = LocalDateTime.now(fixedClock),
                     name = orgCreationRep.name,
+                    features = listOf(defaultFeature),
                     members = listOf(MembershipRep.Complete(LocalDateTime.now(fixedClock), userId))
                 )
             )

@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.endpoint.org.membership
+package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -9,20 +9,21 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
-import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
+import io.limberapp.backend.module.orgs.mapper.api.feature.FeatureMapper
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.UUID
 
 /**
- * Creates a membership for a user within an org.
+ * Creates a new feature within an org. This must be done before creating the feature's implementation in the
+ * corresponding module.
  */
-internal class CreateMembership @Inject constructor(
+internal class CreateFeature @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val orgService: OrgService,
-    private val membershipMapper: MembershipMapper
-) : LimberApiEndpoint<CreateMembership.Command, MembershipRep.Complete>(
+    private val featureMapper: FeatureMapper
+) : LimberApiEndpoint<CreateFeature.Command, FeatureRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -30,7 +31,7 @@ internal class CreateMembership @Inject constructor(
 
     internal data class Command(
         val orgId: UUID,
-        val creationRep: MembershipRep.Creation
+        val creationRep: FeatureRep.Creation
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
@@ -40,14 +41,14 @@ internal class CreateMembership @Inject constructor(
 
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
-    override suspend fun handler(command: Command): MembershipRep.Complete {
-        val model = membershipMapper.model(command.creationRep)
-        orgService.createMembership(command.orgId, model)
-        return membershipMapper.completeRep(model)
+    override suspend fun handler(command: Command): FeatureRep.Complete {
+        val model = featureMapper.model(command.creationRep)
+        orgService.createFeature(command.orgId, model)
+        return featureMapper.completeRep(model)
     }
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/memberships")
+        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/features")
     }
 }

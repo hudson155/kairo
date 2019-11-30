@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import io.limberapp.backend.authorization.principal.Claims
 import com.piperframework.rep.CreationRep
 import com.piperframework.validation.util.emailAddress
 import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.shortText
+import com.piperframework.validation.util.mediumText
 import com.piperframework.validation.util.url
+import io.limberapp.backend.authorization.principal.Claims
 
 object JwtClaimsRequestRep {
 
@@ -17,8 +17,8 @@ object JwtClaimsRequestRep {
         val profilePhotoUrl: String?
     ) : CreationRep() {
         override fun validate() {
-            validate(Creation::firstName) { ifPresent { shortText(allowEmpty = false) } }
-            validate(Creation::lastName) { ifPresent { shortText(allowEmpty = false) } }
+            validate(Creation::firstName) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(Creation::lastName) { ifPresent { mediumText(allowEmpty = false) } }
             validate(Creation::emailAddress) { emailAddress() }
             validate(Creation::profilePhotoUrl) { ifPresent { url() } }
         }

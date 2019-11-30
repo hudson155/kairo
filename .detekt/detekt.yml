@@ -363,6 +363,7 @@ style:
     maxJumpCount: 2
   MagicNumber:
     active: true
+    excludes: "**/src/test/**/*Test.kt"
     ignoreNumbers: '-1,0,1'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false

@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.users.rep.user
 
-import io.limberapp.backend.authorization.principal.JwtRole
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
 import com.piperframework.validation.util.emailAddress
 import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.shortText
+import com.piperframework.validation.util.mediumText
 import com.piperframework.validation.util.url
+import io.limberapp.backend.authorization.principal.JwtRole
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -20,8 +20,8 @@ object UserRep {
         val profilePhotoUrl: String?
     ) : CreationRep() {
         override fun validate() {
-            validate(UserRep.Creation::firstName) { ifPresent { shortText(allowEmpty = false) } }
-            validate(UserRep.Creation::lastName) { ifPresent { shortText(allowEmpty = false) } }
+            validate(UserRep.Creation::firstName) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(UserRep.Creation::lastName) { ifPresent { mediumText(allowEmpty = false) } }
             validate(UserRep.Creation::emailAddress) { emailAddress() }
             validate(UserRep.Creation::profilePhotoUrl) { ifPresent { url() } }
         }
@@ -42,8 +42,8 @@ object UserRep {
         val lastName: String? = null
     ) : UpdateRep() {
         override fun validate() {
-            validate(UserRep.Update::firstName) { ifPresent { shortText(allowEmpty = false) } }
-            validate(UserRep.Update::lastName) { ifPresent { shortText(allowEmpty = false) } }
+            validate(UserRep.Update::firstName) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(UserRep.Update::lastName) { ifPresent { mediumText(allowEmpty = false) } }
         }
     }
 }

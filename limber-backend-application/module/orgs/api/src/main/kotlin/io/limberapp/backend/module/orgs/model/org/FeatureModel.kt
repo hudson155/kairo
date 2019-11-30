@@ -3,15 +3,15 @@ package io.limberapp.backend.module.orgs.model.org
 import java.time.LocalDateTime
 import java.util.UUID
 
-data class OrgModel(
+data class FeatureModel(
     val id: UUID,
     val created: LocalDateTime,
     val name: String,
-    val features: List<FeatureModel>,
-    val members: List<MembershipModel>
+    val path: String,
+    val type: Type
 ) {
 
-    data class Update(
-        val name: String?
-    )
+    enum class Type {
+        HOME;
+    }
 }
