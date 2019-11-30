@@ -30,7 +30,11 @@ internal class CreateMembershipTest : ResourceTest() {
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep
-        ) {}
+        ) {
+            val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
+            val expected = MembershipRep.Complete(LocalDateTime.now(fixedClock), userId)
+            assertEquals(expected, actual)
+        }
 
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,

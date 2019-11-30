@@ -22,7 +22,7 @@ internal class CreateMembership @Inject constructor(
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val membershipMapper: MembershipMapper
-) : LimberApiEndpoint<CreateMembership.Command, Unit>(
+) : LimberApiEndpoint<CreateMembership.Command, MembershipRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -40,9 +40,10 @@ internal class CreateMembership @Inject constructor(
 
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
-    override suspend fun handler(command: Command) {
+    override suspend fun handler(command: Command): MembershipRep.Complete {
         val model = membershipMapper.model(command.creationRep)
         orgService.createMembership(command.orgId, model)
+        return membershipMapper.completeRep(model)
     }
 
     companion object {
