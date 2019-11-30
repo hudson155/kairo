@@ -42,9 +42,8 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            members = listOf(
-                MembershipModel(LocalDateTime.now(fixedClock), existingUser.id)
-            )
+            features = listOf(),
+            members = listOf(MembershipModel(LocalDateTime.now(fixedClock), existingUser.id))
         )
 
         every { mockedServices[UserService::class].getByEmailAddress(jwtRequest.emailAddress) } returns existingUser
