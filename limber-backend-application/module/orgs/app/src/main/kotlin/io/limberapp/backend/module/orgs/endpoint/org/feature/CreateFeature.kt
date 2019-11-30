@@ -15,7 +15,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.UUID
 
 /**
- * Creates a new feature user within an org. This must be done before creating the feature's implementation in the
+ * Creates a new feature within an org. This must be done before creating the feature's implementation in the
  * corresponding module.
  */
 internal class CreateFeature @Inject constructor(
