@@ -26,8 +26,8 @@ internal class MongoOrgStore @Inject constructor(
         clazz = OrgEntity::class
     ),
     indices = listOf<MongoIndex<OrgEntity>>(
-        { ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false) },
-        { ensureIndex(ascending(OrgEntity::features / FeatureEntity::id), unique = true) }
+        { ensureIndex(ascending( OrgEntity::features / FeatureEntity::id), unique = true) },
+        { ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false) }
     )
 ) {
 
