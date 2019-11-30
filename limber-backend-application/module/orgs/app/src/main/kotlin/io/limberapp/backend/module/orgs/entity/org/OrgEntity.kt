@@ -10,6 +10,7 @@ data class OrgEntity(
     @BsonId override val id: UUID,
     override val created: LocalDateTime,
     val name: String,
+    val features: List<FeatureEntity>,
     val members: List<MembershipEntity>
 ) : CompleteEntity() {
 

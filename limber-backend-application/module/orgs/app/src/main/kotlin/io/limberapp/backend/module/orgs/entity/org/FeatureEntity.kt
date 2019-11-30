@@ -1,0 +1,14 @@
+package io.limberapp.backend.module.orgs.entity.org
+
+import com.piperframework.entity.CompleteSubentity
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import java.time.LocalDateTime
+import java.util.UUID
+
+data class FeatureEntity(
+    val id: UUID,
+    override val created: LocalDateTime,
+    val name: String,
+    val path: String,
+    val type: FeatureModel.Type
+) : CompleteSubentity()

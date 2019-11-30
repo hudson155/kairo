@@ -2,11 +2,12 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
-import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
-import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoIndex
 import com.piperframework.store.MongoStore
+import io.limberapp.backend.module.orgs.entity.org.FeatureEntity
+import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
+import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -24,9 +25,10 @@ internal class MongoOrgStore @Inject constructor(
         collectionName = OrgEntity.collectionName,
         clazz = OrgEntity::class
     ),
-    indices = listOf<MongoIndex<OrgEntity>> {
-        ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false)
-    }
+    indices = listOf<MongoIndex<OrgEntity>>(
+        { ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false) },
+        { ensureIndex(ascending(OrgEntity::features / FeatureEntity::id), unique = true) }
+    )
 ) {
 
     override fun create(entity: OrgEntity) {
@@ -53,6 +55,27 @@ internal class MongoOrgStore @Inject constructor(
         collection.findOneAndUpdate(
             filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId eq memberId),
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
+        ) ?: return null
+        return Unit
+    }
+
+    override fun createFeature(id: UUID, entity: FeatureEntity): Unit? {
+        collection.findOneAndUpdate(
+            filter = and(
+                OrgEntity::id eq id,
+                OrgEntity::features / FeatureEntity::id ne entity.id,
+                OrgEntity::features / FeatureEntity::name ne entity.name,
+                OrgEntity::features / FeatureEntity::path ne entity.path
+            ),
+            update = push(OrgEntity::features, entity)
+        ) ?: return null
+        return Unit
+    }
+
+    override fun deleteFeature(id: UUID, featureId: UUID): Unit? {
+        collection.findOneAndUpdate(
+            filter = and(OrgEntity::id eq id, OrgEntity::features / FeatureEntity::id eq featureId),
+            update = pullByFilter(OrgEntity::features, FeatureEntity::id eq featureId)
         ) ?: return null
         return Unit
     }
