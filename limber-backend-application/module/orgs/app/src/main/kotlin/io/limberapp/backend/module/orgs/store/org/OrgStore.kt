@@ -16,13 +16,13 @@ internal interface OrgStore : Store<OrgEntity> {
 
     fun getByMemberId(memberId: UUID): List<OrgEntity>
 
-    fun createFeature(id: UUID, entity: FeatureEntity): Unit?
+    fun createFeature(orgId: UUID, entity: FeatureEntity): Unit?
 
-    fun deleteFeature(id: UUID, featureId: UUID): Unit?
+    fun deleteFeature(orgId: UUID, featureId: UUID): Unit?
 
-    fun createMembership(id: UUID, entity: MembershipEntity): Unit?
+    fun createMembership(orgId: UUID, entity: MembershipEntity): Unit?
 
-    fun deleteMembership(id: UUID, memberId: UUID): Unit?
+    fun deleteMembership(orgId: UUID, memberId: UUID): Unit?
 
     fun delete(id: UUID): Unit?
 }

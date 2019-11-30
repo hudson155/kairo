@@ -43,10 +43,10 @@ internal class MongoOrgStore @Inject constructor(
     override fun update(id: UUID, update: OrgEntity.Update) =
         collection.findOneByIdAndUpdate(id, update)
 
-    override fun createFeature(id: UUID, entity: FeatureEntity): Unit? {
+    override fun createFeature(orgId: UUID, entity: FeatureEntity): Unit? {
         collection.findOneAndUpdate(
             filter = and(
-                OrgEntity::id eq id,
+                OrgEntity::id eq orgId,
                 OrgEntity::features / FeatureEntity::id ne entity.id,
                 OrgEntity::features / FeatureEntity::name ne entity.name,
                 OrgEntity::features / FeatureEntity::path ne entity.path
@@ -56,25 +56,25 @@ internal class MongoOrgStore @Inject constructor(
         return Unit
     }
 
-    override fun deleteFeature(id: UUID, featureId: UUID): Unit? {
+    override fun deleteFeature(orgId: UUID, featureId: UUID): Unit? {
         collection.findOneAndUpdate(
-            filter = and(OrgEntity::id eq id, OrgEntity::features / FeatureEntity::id eq featureId),
+            filter = and(OrgEntity::id eq orgId, OrgEntity::features / FeatureEntity::id eq featureId),
             update = pullByFilter(OrgEntity::features, FeatureEntity::id eq featureId)
         ) ?: return null
         return Unit
     }
 
-    override fun createMembership(id: UUID, entity: MembershipEntity): Unit? {
+    override fun createMembership(orgId: UUID, entity: MembershipEntity): Unit? {
         collection.findOneAndUpdate(
-            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId ne entity.userId),
+            filter = and(OrgEntity::id eq orgId, OrgEntity::members / MembershipEntity::userId ne entity.userId),
             update = push(OrgEntity::members, entity)
         ) ?: return null
         return Unit
     }
 
-    override fun deleteMembership(id: UUID, memberId: UUID): Unit? {
+    override fun deleteMembership(orgId: UUID, memberId: UUID): Unit? {
         collection.findOneAndUpdate(
-            filter = and(OrgEntity::id eq id, OrgEntity::members / MembershipEntity::userId eq memberId),
+            filter = and(OrgEntity::id eq orgId, OrgEntity::members / MembershipEntity::userId eq memberId),
             update = pullByFilter(OrgEntity::members, MembershipEntity::userId eq memberId)
         ) ?: return null
         return Unit
