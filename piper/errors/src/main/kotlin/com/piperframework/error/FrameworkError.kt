@@ -17,6 +17,6 @@ interface FrameworkError {
         INTERNAL,
         MALFORMED_PROPERTY,
         MISSING_PROPERTY,
-        NOT_FOUND,
+        NOT_FOUND;
     }
 }
