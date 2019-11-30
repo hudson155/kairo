@@ -1,11 +1,11 @@
 package io.limberapp.backend.module.orgs.rep.org
 
-import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
 import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.shortText
+import com.piperframework.validation.util.mediumText
+import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -15,7 +15,7 @@ object OrgRep {
         val name: String
     ) : CreationRep() {
         override fun validate() {
-            validate(Creation::name) { shortText(allowEmpty = false) }
+            validate(Creation::name) { mediumText(allowEmpty = false) }
         }
     }
 
@@ -30,7 +30,7 @@ object OrgRep {
         val name: String? = null
     ) : UpdateRep() {
         override fun validate() {
-            validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }
+            validate(Update::name) { ifPresent { mediumText(allowEmpty = false) } }
         }
     }
 }
