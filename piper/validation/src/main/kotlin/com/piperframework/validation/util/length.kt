@@ -16,4 +16,4 @@ fun Validation<String>.mediumText(allowEmpty: Boolean) =
 fun Validation<String>.longText(allowEmpty: Boolean) =
     length(IntRange(start = if (allowEmpty) 0 else MIN_CHARS, endInclusive = LONG_TEXT_MAX_CHARS))
 
-fun Validation<String>.length(range: IntRange) = boolean(subject.length in range)
+private fun Validation<String>.length(range: IntRange) = boolean(subject.length in range)
