@@ -11,7 +11,7 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
-import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.backend.module.orgs.service.org.MembershipService
 import java.util.UUID
 
 /**
@@ -20,7 +20,7 @@ import java.util.UUID
 internal class CreateMembership @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val orgService: OrgService,
+    private val membershipService: MembershipService,
     private val membershipMapper: MembershipMapper
 ) : LimberApiEndpoint<CreateMembership.Command, MembershipRep.Complete>(
     application = application,
@@ -42,7 +42,7 @@ internal class CreateMembership @Inject constructor(
 
     override suspend fun handler(command: Command): MembershipRep.Complete {
         val model = membershipMapper.model(command.creationRep)
-        orgService.createMembership(command.orgId, model)
+        membershipService.create(command.orgId, model)
         return membershipMapper.completeRep(model)
     }
 

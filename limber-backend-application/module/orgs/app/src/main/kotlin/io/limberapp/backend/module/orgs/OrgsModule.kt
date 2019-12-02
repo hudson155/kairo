@@ -11,6 +11,10 @@ import io.limberapp.backend.module.orgs.endpoint.org.feature.DeleteFeature
 import io.limberapp.backend.module.orgs.endpoint.org.feature.UpdateFeature
 import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
 import io.limberapp.backend.module.orgs.endpoint.org.membership.DeleteMembership
+import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.org.FeatureServiceImpl
+import io.limberapp.backend.module.orgs.service.org.MembershipService
+import io.limberapp.backend.module.orgs.service.org.MembershipServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
 import io.limberapp.backend.module.orgs.store.org.FeatureStore
@@ -44,6 +48,8 @@ class OrgsModule : Module() {
     )
 
     override fun bindServices() {
+        bind(FeatureService::class, FeatureServiceImpl::class)
+        bind(MembershipService::class, MembershipServiceImpl::class)
         bind(OrgService::class, OrgServiceImpl::class)
     }
 

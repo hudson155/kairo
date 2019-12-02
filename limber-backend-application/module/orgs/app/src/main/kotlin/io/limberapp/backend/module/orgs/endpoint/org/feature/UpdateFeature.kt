@@ -11,7 +11,7 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.mapper.api.feature.FeatureMapper
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
-import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.UUID
 
 /**
@@ -20,7 +20,7 @@ import java.util.UUID
 internal class UpdateFeature @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val orgService: OrgService,
+    private val featureService: FeatureService,
     private val featureMapper: FeatureMapper
 ) : LimberApiEndpoint<UpdateFeature.Command, FeatureRep.Complete>(
     application = application,
@@ -44,7 +44,7 @@ internal class UpdateFeature @Inject constructor(
 
     override suspend fun handler(command: Command): FeatureRep.Complete {
         val update = featureMapper.update(command.updateRep)
-        val model = orgService.updateFeature(command.orgId, command.featureId, update)
+        val model = featureService.update(command.orgId, command.featureId, update)
         return featureMapper.completeRep(model)
     }
 

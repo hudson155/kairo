@@ -9,7 +9,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.UUID
 
 /**
@@ -19,7 +19,7 @@ import java.util.UUID
 internal class DeleteFeature @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val orgService: OrgService
+    private val featureService: FeatureService
 ) : LimberApiEndpoint<DeleteFeature.Command, Unit>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -39,9 +39,9 @@ internal class DeleteFeature @Inject constructor(
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command) {
-        orgService.deleteFeature(
+        featureService.delete(
             orgId = command.orgId,
-            featureId = command.featureId
+            id = command.featureId
         )
     }
 
