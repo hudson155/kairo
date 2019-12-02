@@ -45,6 +45,12 @@ internal class OrgServiceImpl @Inject constructor(
         orgStore.createFeature(orgId, entity) ?: throw ConflictException()
     }
 
+    override fun updateFeature(orgId: UUID, featureId: UUID, update: FeatureModel.Update): FeatureModel {
+        get(orgId)?.features?.singleOrNull { it.id == featureId } ?: throw NotFoundException()
+        val entity = orgStore.updateFeature(orgId, featureId, featureMapper.update(update)) ?: throw ConflictException()
+        return featureMapper.model(entity)
+    }
+
     override fun deleteFeature(orgId: UUID, featureId: UUID) {
         orgStore.deleteFeature(orgId, featureId) ?: throw NotFoundException()
     }
