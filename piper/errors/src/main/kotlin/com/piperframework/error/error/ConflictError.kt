@@ -1,10 +1,10 @@
 package com.piperframework.error.error
 
-import com.piperframework.error.FrameworkError
+import com.piperframework.error.PiperError
 
 /**
  * An error representing the HTTP 409 response code.
  */
-class ConflictError : FrameworkError {
+class ConflictError : PiperError {
     override val message = "Conflict."
 }

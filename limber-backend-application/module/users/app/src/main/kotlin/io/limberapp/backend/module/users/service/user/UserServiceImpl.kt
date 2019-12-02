@@ -5,8 +5,8 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.mapper.app.user.UserMapper
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.store.user.UserStore
-import com.piperframework.exception.ConflictException
-import com.piperframework.exception.NotFoundException
+import com.piperframework.exception.exception.ConflictException
+import com.piperframework.exception.exception.NotFoundException
 import java.util.UUID
 
 internal class UserServiceImpl @Inject constructor(

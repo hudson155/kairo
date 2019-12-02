@@ -2,9 +2,9 @@ package com.piperframework.endpoint
 
 import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.endpoint.command.AbstractCommand
-import com.piperframework.exception.BadRequestException
-import com.piperframework.exception.ForbiddenException
-import com.piperframework.exception.NotFoundException
+import com.piperframework.exception.exception.BadRequestException
+import com.piperframework.exception.exception.ForbiddenException
+import com.piperframework.exception.exception.NotFoundException
 import com.piperframework.rep.ValidatedRep
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall

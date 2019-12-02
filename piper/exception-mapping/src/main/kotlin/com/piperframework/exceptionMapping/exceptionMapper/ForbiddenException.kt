@@ -1,7 +1,7 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
 import com.piperframework.error.error.ForbiddenError
-import com.piperframework.exception.ForbiddenException
+import com.piperframework.exception.exception.ForbiddenException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode

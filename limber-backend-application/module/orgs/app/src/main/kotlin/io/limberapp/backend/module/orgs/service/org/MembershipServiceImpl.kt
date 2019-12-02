@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import com.piperframework.exception.ConflictException
-import com.piperframework.exception.NotFoundException
+import com.piperframework.exception.exception.ConflictException
+import com.piperframework.exception.exception.NotFoundException
 import io.limberapp.backend.module.orgs.mapper.app.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.store.org.MembershipStore

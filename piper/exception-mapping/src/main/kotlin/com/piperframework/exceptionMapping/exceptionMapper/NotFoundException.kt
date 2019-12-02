@@ -1,7 +1,7 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
 import com.piperframework.error.error.NotFoundError
-import com.piperframework.exception.NotFoundException
+import com.piperframework.exception.exception.NotFoundException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode

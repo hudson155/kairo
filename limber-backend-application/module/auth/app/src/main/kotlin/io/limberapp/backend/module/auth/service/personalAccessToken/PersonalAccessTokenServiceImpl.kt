@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.service.personalAccessToken
 
 import com.google.inject.Inject
-import com.piperframework.exception.NotFoundException
+import com.piperframework.exception.exception.NotFoundException
 import io.limberapp.backend.module.auth.mapper.app.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore

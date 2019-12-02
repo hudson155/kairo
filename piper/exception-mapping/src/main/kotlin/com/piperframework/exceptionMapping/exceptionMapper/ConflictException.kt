@@ -1,7 +1,7 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
 import com.piperframework.error.error.ConflictError
-import com.piperframework.exception.ConflictException
+import com.piperframework.exception.exception.ConflictException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode

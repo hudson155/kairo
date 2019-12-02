@@ -1,7 +1,7 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
 import com.piperframework.error.error.BadRequestError
-import com.piperframework.exception.BadRequestException
+import com.piperframework.exception.exception.BadRequestException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
