@@ -113,4 +113,64 @@ internal class UpdateFeatureTest : ResourceTest() {
             assertEquals(expected, actual)
         }
     }
+
+    @Test
+    fun nameConflict() {
+
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val orgId = deterministicUuidGenerator[0]
+        val featureId = deterministicUuidGenerator[2]
+        piperTest.test(
+            endpointConfig = CreateOrg.endpointConfig,
+            body = orgCreationRep
+        ) {}
+
+        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
+        piperTest.test(
+            endpointConfig = CreateFeature.endpointConfig,
+            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            body = featureCreationRep
+        ) {}
+
+        val update = FeatureRep.Update(name = DEFAULT_FEATURE_CREATION_REP.name)
+        piperTest.test(
+            endpointConfig = UpdateFeature.endpointConfig,
+            pathParams = mapOf(
+                UpdateFeature.orgId to orgId.toString(),
+                UpdateFeature.featureId to featureId.toString()
+            ),
+            body = update,
+            expectedStatusCode = HttpStatusCode.Conflict
+        ) {}
+    }
+
+    @Test
+    fun pathConflict() {
+
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val orgId = deterministicUuidGenerator[0]
+        val featureId = deterministicUuidGenerator[2]
+        piperTest.test(
+            endpointConfig = CreateOrg.endpointConfig,
+            body = orgCreationRep
+        ) {}
+
+        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
+        piperTest.test(
+            endpointConfig = CreateFeature.endpointConfig,
+            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            body = featureCreationRep
+        ) {}
+
+        val update = FeatureRep.Update(path = DEFAULT_FEATURE_CREATION_REP.path)
+        piperTest.test(
+            endpointConfig = UpdateFeature.endpointConfig,
+            pathParams = mapOf(
+                UpdateFeature.orgId to orgId.toString(),
+                UpdateFeature.featureId to featureId.toString()
+            ),
+            body = update,
+            expectedStatusCode = HttpStatusCode.Conflict
+        ) {}
+    }
 }
