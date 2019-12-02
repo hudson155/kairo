@@ -18,6 +18,8 @@ internal interface OrgStore : Store<OrgEntity> {
 
     fun createFeature(orgId: UUID, entity: FeatureEntity): Unit?
 
+    fun updateFeature(orgId: UUID, featureId: UUID, update: FeatureEntity.Update): FeatureEntity?
+
     fun deleteFeature(orgId: UUID, featureId: UUID): Unit?
 
     fun createMembership(orgId: UUID, entity: MembershipEntity): Unit?

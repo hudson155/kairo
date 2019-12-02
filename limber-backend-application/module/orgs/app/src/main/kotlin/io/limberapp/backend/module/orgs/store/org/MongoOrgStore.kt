@@ -8,13 +8,17 @@ import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.orgs.entity.org.FeatureEntity
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
+import org.bson.conversions.Bson
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
+import org.litote.kmongo.colProperty
+import org.litote.kmongo.combine
 import org.litote.kmongo.div
 import org.litote.kmongo.eq
 import org.litote.kmongo.ne
 import org.litote.kmongo.pullByFilter
 import org.litote.kmongo.push
+import org.litote.kmongo.setValue
 import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
@@ -26,7 +30,7 @@ internal class MongoOrgStore @Inject constructor(
         clazz = OrgEntity::class
     ),
     indices = listOf<MongoIndex<OrgEntity>>(
-        { ensureIndex(ascending( OrgEntity::features / FeatureEntity::id), unique = true) },
+        { ensureIndex(ascending(OrgEntity::features / FeatureEntity::id), unique = true) },
         { ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false) }
     )
 ) {
@@ -54,6 +58,27 @@ internal class MongoOrgStore @Inject constructor(
             update = push(OrgEntity::features, entity)
         ) ?: return null
         return Unit
+    }
+
+    override fun updateFeature(orgId: UUID, featureId: UUID, update: FeatureEntity.Update): FeatureEntity? {
+        val result = collection.findOneAndUpdate(
+            filter = and(
+                mutableListOf(
+                    OrgEntity::id eq orgId,
+                    OrgEntity::features / FeatureEntity::id eq featureId
+                ).apply {
+                    update.name?.let { add(OrgEntity::features / FeatureEntity::name ne it) }
+                    update.path?.let { add(OrgEntity::features / FeatureEntity::path ne it) }
+                }
+            ),
+            update = combine(
+                mutableListOf<Bson>().apply {
+                    update.name?.let { add(setValue(OrgEntity::features.colProperty.posOp / FeatureEntity::name, it)) }
+                    update.path?.let { add(setValue(OrgEntity::features.colProperty.posOp / FeatureEntity::path, it)) }
+                }
+            )
+        ) ?: return null
+        return result.features.single { it.id == featureId }
     }
 
     override fun deleteFeature(orgId: UUID, featureId: UUID): Unit? {
