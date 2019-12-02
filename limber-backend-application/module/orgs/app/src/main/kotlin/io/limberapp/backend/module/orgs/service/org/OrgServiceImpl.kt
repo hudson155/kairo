@@ -28,7 +28,8 @@ internal class OrgServiceImpl @Inject constructor(
     }
 
     override fun update(id: UUID, update: OrgModel.Update): OrgModel {
-        val entity = orgStore.update(id, orgMapper.update(update)) ?: throw NotFoundException()
+        orgStore.get(id) ?: throw NotFoundException()
+        val entity = orgStore.update(id, orgMapper.update(update))!!
         return orgMapper.model(entity)
     }
 

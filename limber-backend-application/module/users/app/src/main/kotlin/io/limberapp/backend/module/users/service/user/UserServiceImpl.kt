@@ -31,7 +31,8 @@ internal class UserServiceImpl @Inject constructor(
     }
 
     override fun update(id: UUID, update: UserModel.Update): UserModel {
-        val entity = userStore.update(id, userMapper.update(update)) ?: throw NotFoundException()
+        userStore.get(id) ?: throw NotFoundException()
+        val entity = userStore.update(id, userMapper.update(update))!!
         return userMapper.model(entity)
     }
 
