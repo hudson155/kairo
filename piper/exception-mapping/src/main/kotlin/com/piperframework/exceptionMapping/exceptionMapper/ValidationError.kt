@@ -2,7 +2,7 @@ package com.piperframework.exceptionMapping.exceptionMapper
 
 import com.piperframework.error.error.ValidationError
 import com.piperframework.exceptionMapping.ExceptionMapper
-import com.piperframework.validation.ValidationException
+import com.piperframework.exception.ValidationException
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
 import io.ktor.util.pipeline.PipelineContext

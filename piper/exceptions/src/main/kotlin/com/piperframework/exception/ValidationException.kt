@@ -1,3 +1,3 @@
-package com.piperframework.validation
+package com.piperframework.exception
 
 class ValidationException(val propertyName: String) : Exception()
