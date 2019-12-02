@@ -2,6 +2,8 @@ package io.limberapp.backend.module.orgs.rep.feature
 
 import com.piperframework.rep.CompleteSubrep
 import com.piperframework.rep.CreationSubrep
+import com.piperframework.rep.UpdateRep
+import com.piperframework.validation.util.ifPresent
 import com.piperframework.validation.util.path
 import com.piperframework.validation.util.shortText
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
@@ -28,4 +30,14 @@ object FeatureRep {
         val path: String,
         val type: FeatureModel.Type
     ) : CompleteSubrep()
+
+    data class Update(
+        val name: String? = null,
+        val path: String? = null
+    ) : UpdateRep() {
+        override fun validate() {
+            validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }
+            validate(Update::path) { ifPresent { path() } }
+        }
+    }
 }
