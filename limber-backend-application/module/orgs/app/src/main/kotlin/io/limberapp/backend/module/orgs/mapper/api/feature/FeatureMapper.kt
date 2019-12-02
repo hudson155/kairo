@@ -27,4 +27,9 @@ internal class FeatureMapper @Inject constructor(
         path = model.path,
         type = model.type
     )
+
+    fun update(rep: FeatureRep.Update) = FeatureModel.Update(
+        name = rep.name,
+        path = rep.path
+    )
 }

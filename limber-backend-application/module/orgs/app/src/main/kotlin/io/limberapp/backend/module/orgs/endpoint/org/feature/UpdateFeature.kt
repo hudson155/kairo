@@ -15,15 +15,14 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.UUID
 
 /**
- * Creates a new feature within an org. This must be done before creating the feature's implementation in the
- * corresponding module.
+ * Updates a feature's information.
  */
-internal class CreateFeature @Inject constructor(
+internal class UpdateFeature @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val featureService: FeatureService,
     private val featureMapper: FeatureMapper
-) : LimberApiEndpoint<CreateFeature.Command, FeatureRep.Complete>(
+) : LimberApiEndpoint<UpdateFeature.Command, FeatureRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -31,24 +30,27 @@ internal class CreateFeature @Inject constructor(
 
     internal data class Command(
         val orgId: UUID,
-        val creationRep: FeatureRep.Creation
+        val featureId: UUID,
+        val updateRep: FeatureRep.Update
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        creationRep = call.getAndValidateBody()
+        featureId = call.parameters.getAsType(UUID::class, featureId),
+        updateRep = call.getAndValidateBody()
     )
 
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): FeatureRep.Complete {
-        val model = featureMapper.model(command.creationRep)
-        featureService.create(command.orgId, model)
+        val update = featureMapper.update(command.updateRep)
+        val model = featureService.update(command.orgId, command.featureId, update)
         return featureMapper.completeRep(model)
     }
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/features")
+        const val featureId = "featureId"
+        val endpointConfig = EndpointConfig(HttpMethod.Patch, "/orgs/{$orgId}/features/{$featureId}")
     }
 }

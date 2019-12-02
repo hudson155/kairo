@@ -14,4 +14,9 @@ data class FeatureModel(
     enum class Type {
         HOME;
     }
+
+    data class Update(
+        val name: String?,
+        val path: String?
+    )
 }

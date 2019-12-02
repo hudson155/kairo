@@ -8,10 +8,19 @@ import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.feature.CreateFeature
 import io.limberapp.backend.module.orgs.endpoint.org.feature.DeleteFeature
+import io.limberapp.backend.module.orgs.endpoint.org.feature.UpdateFeature
 import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
 import io.limberapp.backend.module.orgs.endpoint.org.membership.DeleteMembership
+import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.org.FeatureServiceImpl
+import io.limberapp.backend.module.orgs.service.org.MembershipService
+import io.limberapp.backend.module.orgs.service.org.MembershipServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
+import io.limberapp.backend.module.orgs.store.org.FeatureStore
+import io.limberapp.backend.module.orgs.store.org.MembershipStore
+import io.limberapp.backend.module.orgs.store.org.MongoFeatureStore
+import io.limberapp.backend.module.orgs.store.org.MongoMembershipStore
 import io.limberapp.backend.module.orgs.store.org.MongoOrgStore
 import io.limberapp.backend.module.orgs.store.org.OrgStore
 
@@ -25,6 +34,7 @@ class OrgsModule : Module() {
     override val endpoints = listOf(
 
         CreateFeature::class.java,
+        UpdateFeature::class.java,
         DeleteFeature::class.java,
 
         CreateMembership::class.java,
@@ -38,10 +48,14 @@ class OrgsModule : Module() {
     )
 
     override fun bindServices() {
+        bind(FeatureService::class, FeatureServiceImpl::class)
+        bind(MembershipService::class, MembershipServiceImpl::class)
         bind(OrgService::class, OrgServiceImpl::class)
     }
 
     override fun bindStores() {
+        bind(FeatureStore::class, MongoFeatureStore::class)
+        bind(MembershipStore::class, MongoMembershipStore::class)
         bind(OrgStore::class, MongoOrgStore::class)
     }
 }
