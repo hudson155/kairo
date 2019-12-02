@@ -3,9 +3,8 @@ package com.piperframework.error.error
 import com.piperframework.error.FrameworkError
 
 /**
- * An error representing that access was forbidden.
+ * An error representing the HTTP 403 response code.
  */
 class ForbiddenError : FrameworkError {
-    override val key = FrameworkError.Key.FORBIDDEN
-    override val message = "Access forbidden."
+    override val message = "Forbidden."
 }
