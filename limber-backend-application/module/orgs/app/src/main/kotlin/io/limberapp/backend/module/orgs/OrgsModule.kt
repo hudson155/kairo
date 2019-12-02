@@ -13,6 +13,10 @@ import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
 import io.limberapp.backend.module.orgs.endpoint.org.membership.DeleteMembership
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
+import io.limberapp.backend.module.orgs.store.org.FeatureStore
+import io.limberapp.backend.module.orgs.store.org.MembershipStore
+import io.limberapp.backend.module.orgs.store.org.MongoFeatureStore
+import io.limberapp.backend.module.orgs.store.org.MongoMembershipStore
 import io.limberapp.backend.module.orgs.store.org.MongoOrgStore
 import io.limberapp.backend.module.orgs.store.org.OrgStore
 
@@ -44,6 +48,8 @@ class OrgsModule : Module() {
     }
 
     override fun bindStores() {
+        bind(FeatureStore::class, MongoFeatureStore::class)
+        bind(MembershipStore::class, MongoMembershipStore::class)
         bind(OrgStore::class, MongoOrgStore::class)
     }
 }
