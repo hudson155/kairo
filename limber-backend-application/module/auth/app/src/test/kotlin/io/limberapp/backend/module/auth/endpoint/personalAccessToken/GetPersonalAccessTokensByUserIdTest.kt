@@ -12,10 +12,15 @@ import kotlin.test.assertTrue
 internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
 
     @Test
-    fun getNone() {
+    fun happyPathNoneExist() {
+
+        // Setup
+        val userId = UUID.randomUUID()
+
+        // GetPersonalAccessTokensByUserId
         piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to UUID.randomUUID().toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -23,27 +28,40 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
     }
 
     @Test
-    fun getExisting() {
+    fun happyPathSomeExist() {
 
+        // Setup
         val userId = UUID.randomUUID()
-        val id = deterministicUuidGenerator[0]
+
+        // CreatePersonalAccessToken
+        val personalAccessToken0Rep = PersonalAccessTokenRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            userId = userId
+        )
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {}
 
+        // CreatePersonalAccessToken
+        val personalAccessToken1Rep = PersonalAccessTokenRep.Complete(
+            id = deterministicUuidGenerator[2],
+            created = LocalDateTime.now(fixedClock),
+            userId = userId
+        )
+        piperTest.test(
+            endpointConfig = CreatePersonalAccessToken.endpointConfig,
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+        ) {}
+
+        // GetPersonalAccessTokensByUserId
         piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
-            val expected = listOf(
-                PersonalAccessTokenRep.Complete(
-                    id = id,
-                    created = LocalDateTime.now(fixedClock),
-                    userId = userId
-                )
-            )
+            val expected = listOf(personalAccessToken0Rep, personalAccessToken1Rep)
             assertEquals(expected, actual)
         }
     }
