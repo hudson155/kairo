@@ -15,7 +15,7 @@ data class FeatureModel(
         HOME;
     }
 
-    class Update(
+    data class Update(
         val name: String?,
         val path: String?
     )
