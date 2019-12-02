@@ -8,6 +8,7 @@ import io.limberapp.backend.module.orgs.endpoint.org.GetOrgsByMemberId
 import io.limberapp.backend.module.orgs.endpoint.org.UpdateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.feature.CreateFeature
 import io.limberapp.backend.module.orgs.endpoint.org.feature.DeleteFeature
+import io.limberapp.backend.module.orgs.endpoint.org.feature.UpdateFeature
 import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
 import io.limberapp.backend.module.orgs.endpoint.org.membership.DeleteMembership
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -25,6 +26,7 @@ class OrgsModule : Module() {
     override val endpoints = listOf(
 
         CreateFeature::class.java,
+        UpdateFeature::class.java,
         DeleteFeature::class.java,
 
         CreateMembership::class.java,
