@@ -1,14 +1,13 @@
-package com.piperframework.error.property.missingProperty
+package com.piperframework.error.error
 
 import com.piperframework.error.FrameworkError
-import com.piperframework.error.property.PropertyFrameworkError
 
 /**
  * An error representing that one of the request body properties was missing.
  */
-class MissingPropertyFrameworkError(
-    override val propetyName: String
-) : PropertyFrameworkError() {
+class MissingPropertyError(
+    propetyName: String
+) : FrameworkError {
     override val key = FrameworkError.Key.MISSING_PROPERTY
     override val message = "No value provided for $propetyName."
 }

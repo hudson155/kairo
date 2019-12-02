@@ -14,7 +14,6 @@ interface FrameworkError {
     enum class Key {
         CONFLICT,
         FORBIDDEN,
-        INTERNAL,
         MALFORMED_PROPERTY,
         MISSING_PROPERTY,
         NOT_FOUND;

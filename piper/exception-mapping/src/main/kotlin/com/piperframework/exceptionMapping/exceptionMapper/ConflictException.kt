@@ -1,6 +1,6 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
-import com.piperframework.error.conflict.ConflictFrameworkError
+import com.piperframework.error.error.ConflictError
 import com.piperframework.exception.ConflictException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
@@ -11,5 +11,5 @@ internal class ConflictException :
     ExceptionMapper<ConflictException>() {
 
     override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: ConflictException) =
-        Pair(HttpStatusCode.Conflict, ConflictFrameworkError())
+        Pair(HttpStatusCode.Conflict, ConflictError())
 }

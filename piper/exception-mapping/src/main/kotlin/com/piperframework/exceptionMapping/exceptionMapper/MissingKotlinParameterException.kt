@@ -1,7 +1,7 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
-import com.piperframework.error.property.missingProperty.MissingPropertyFrameworkError
+import com.piperframework.error.error.MissingPropertyError
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
@@ -11,5 +11,7 @@ internal class MissingKotlinParameterException :
     ExceptionMapper<MissingKotlinParameterException>() {
 
     override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: MissingKotlinParameterException) =
-        Pair(HttpStatusCode.BadRequest, MissingPropertyFrameworkError(e.parameter.name!!))
+        Pair(HttpStatusCode.BadRequest,
+            MissingPropertyError(e.parameter.name!!)
+        )
 }

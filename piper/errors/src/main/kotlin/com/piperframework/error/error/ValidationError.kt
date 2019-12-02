@@ -1,14 +1,13 @@
-package com.piperframework.error.property.validation
+package com.piperframework.error.error
 
 import com.piperframework.error.FrameworkError
-import com.piperframework.error.property.PropertyFrameworkError
 
 /**
  * An error representing that one of the request body properties did not pass validation.
  */
-class ValidationFrameworkError(
-    override val propetyName: String
-) : PropertyFrameworkError() {
+class ValidationError(
+    propetyName: String
+) : FrameworkError {
     override val key = FrameworkError.Key.MALFORMED_PROPERTY
     override val message = "Malformed value provided for $propetyName."
 }

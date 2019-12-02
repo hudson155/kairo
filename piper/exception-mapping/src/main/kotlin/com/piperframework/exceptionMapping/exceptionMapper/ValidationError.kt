@@ -1,6 +1,6 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
-import com.piperframework.error.property.validation.ValidationFrameworkError
+import com.piperframework.error.error.ValidationError
 import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.validation.ValidationException
 import io.ktor.application.ApplicationCall
@@ -11,5 +11,5 @@ internal class ValidationError :
     ExceptionMapper<ValidationException>() {
 
     override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: ValidationException) =
-        Pair(HttpStatusCode.BadRequest, ValidationFrameworkError(e.propertyName))
+        Pair(HttpStatusCode.BadRequest, ValidationError(e.propertyName))
 }

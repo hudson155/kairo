@@ -1,6 +1,6 @@
 package com.piperframework.exceptionMapping.exceptionMapper
 
-import com.piperframework.error.notFound.NotFoundFrameworkError
+import com.piperframework.error.error.NotFoundError
 import com.piperframework.exception.NotFoundException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import io.ktor.application.ApplicationCall
@@ -11,5 +11,5 @@ internal class NotFoundException :
     ExceptionMapper<NotFoundException>() {
 
     override suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: NotFoundException) =
-        Pair(HttpStatusCode.NotFound, NotFoundFrameworkError())
+        Pair(HttpStatusCode.NotFound, NotFoundError())
 }
