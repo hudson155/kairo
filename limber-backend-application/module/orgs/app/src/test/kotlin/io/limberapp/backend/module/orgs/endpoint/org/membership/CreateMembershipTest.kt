@@ -17,73 +17,130 @@ import kotlin.test.assertEquals
 internal class CreateMembershipTest : ResourceTest() {
 
     @Test
-    fun create() {
+    fun orgDoesNotExist() {
 
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = deterministicUuidGenerator[0]
-        val featureId = deterministicUuidGenerator[1]
-        piperTest.test(
-            endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
-        ) {}
-
+        // Setup
+        val orgId = UUID.randomUUID()
         val userId = UUID.randomUUID()
+
+        // CreateFeature
         val membershipCreationRep = MembershipRep.Creation(userId)
-        piperTest.test(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep
-        ) {
-            val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
-            val expected = MembershipRep.Complete(LocalDateTime.now(fixedClock), userId)
-            assertEquals(expected, actual)
-        }
-
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgId.toString())
-        ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val defaultFeature = FeatureRep.Complete(
-                id = featureId,
-                created = LocalDateTime.now(fixedClock),
-                name = DEFAULT_FEATURE_CREATION_REP.name,
-                path = DEFAULT_FEATURE_CREATION_REP.path,
-                type = DEFAULT_FEATURE_CREATION_REP.type
-            )
-            val expected = OrgRep.Complete(
-                id = orgId,
-                created = LocalDateTime.now(fixedClock),
-                name = orgCreationRep.name,
-                features = listOf(defaultFeature),
-                members = listOf(MembershipRep.Complete(LocalDateTime.now(fixedClock), userId))
-            )
-            assertEquals(expected, actual)
-        }
-    }
-
-    @Test
-    fun createDuplicate() {
-
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = deterministicUuidGenerator[0]
-        piperTest.test(
-            endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
-        ) {}
-
-        val userId = UUID.randomUUID()
-        val membershipCreationRep = MembershipRep.Creation(userId)
-        piperTest.test(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep
-        ) {}
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep,
+            expectedStatusCode = HttpStatusCode.NotFound
+        ) {}
+    }
+
+    @Test
+    fun duplicate() {
+
+        // Setup
+        val userId = UUID.randomUUID()
+
+        // CreateOrg
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val defaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        var orgRep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = orgCreationRep.name,
+            features = listOf(defaultFeatureRep),
+            members = emptyList()
+        )
+        piperTest.test(
+            endpointConfig = CreateOrg.endpointConfig,
+            body = orgCreationRep
+        ) {}
+
+        // CreateMembership
+        val membershipCreationRep = MembershipRep.Creation(userId)
+        val membershipRep = MembershipRep.Complete(
+            created = LocalDateTime.now(fixedClock),
+            userId = membershipCreationRep.userId
+        )
+        orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
+        piperTest.test(
+            endpointConfig = CreateMembership.endpointConfig,
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            body = membershipCreationRep
+        ) {}
+
+        // CreateMembership
+        piperTest.test(
+            endpointConfig = CreateMembership.endpointConfig,
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            body = membershipCreationRep,
             expectedStatusCode = HttpStatusCode.Conflict
         ) {}
+
+        // GetOrg
+        piperTest.test(
+            endpointConfig = GetOrg.endpointConfig,
+            pathParams = mapOf(GetOrg.orgId to orgRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            assertEquals(orgRep, actual)
+        }
+    }
+
+    @Test
+    fun happyPath() {
+
+        // Setup
+        val userId = UUID.randomUUID()
+
+        // CreateOrg
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val defaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        var orgRep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = orgCreationRep.name,
+            features = listOf(defaultFeatureRep),
+            members = emptyList()
+        )
+        piperTest.test(
+            endpointConfig = CreateOrg.endpointConfig,
+            body = orgCreationRep
+        ) {}
+
+        // CreateMembership
+        val membershipCreationRep = MembershipRep.Creation(userId)
+        val membershipRep = MembershipRep.Complete(
+            created = LocalDateTime.now(fixedClock),
+            userId = membershipCreationRep.userId
+        )
+        orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
+        piperTest.test(
+            endpointConfig = CreateMembership.endpointConfig,
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            body = membershipCreationRep
+        ) {
+            val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
+            assertEquals(membershipRep, actual)
+        }
+
+        // GetOrg
+        piperTest.test(
+            endpointConfig = GetOrg.endpointConfig,
+            pathParams = mapOf(GetOrg.orgId to orgRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            assertEquals(orgRep, actual)
+        }
     }
 }

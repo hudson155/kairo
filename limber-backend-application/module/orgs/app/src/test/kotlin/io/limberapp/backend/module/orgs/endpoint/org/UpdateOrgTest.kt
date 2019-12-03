@@ -15,49 +15,63 @@ internal class UpdateOrgTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
+
+        // Setup
         val orgId = UUID.randomUUID()
-        val updateRep = OrgRep.Update("Standing Teeth")
+
+        // UpdateOrg
+        val orgUpdateRep = OrgRep.Update("Standing Teeth")
         piperTest.test(
             endpointConfig = UpdateOrg.endpointConfig,
             pathParams = mapOf(UpdateOrg.orgId to orgId.toString()),
-            body = updateRep,
+            body = orgUpdateRep,
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
 
     @Test
-    fun exists() {
+    fun happyPath() {
 
-        val creationRep = OrgRep.Creation("Cranky Pasta")
-        val id = deterministicUuidGenerator[0]
-        val defaultFeatureId = deterministicUuidGenerator[1]
+        // CreateOrg
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val defaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        var orgRep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = orgCreationRep.name,
+            features = listOf(defaultFeatureRep),
+            members = emptyList()
+        )
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = creationRep
+            body = orgCreationRep
         ) {}
 
-        val updateRep = OrgRep.Update("Standing Teeth")
+        // UpdateOrg
+        val orgUpdateRep = OrgRep.Update("Standing Teeth")
+        orgRep = orgRep.copy(name = orgUpdateRep.name!!)
         piperTest.test(
             endpointConfig = UpdateOrg.endpointConfig,
-            pathParams = mapOf(UpdateOrg.orgId to id.toString()),
-            body = updateRep
+            pathParams = mapOf(UpdateOrg.orgId to orgRep.id.toString()),
+            body = orgUpdateRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val defaultFeature = FeatureRep.Complete(
-                id = defaultFeatureId,
-                created = LocalDateTime.now(fixedClock),
-                name = DEFAULT_FEATURE_CREATION_REP.name,
-                path = DEFAULT_FEATURE_CREATION_REP.path,
-                type = DEFAULT_FEATURE_CREATION_REP.type
-            )
-            val expected = OrgRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                name = updateRep.name!!,
-                features = listOf(defaultFeature),
-                members = emptyList()
-            )
-            assertEquals(expected, actual)
+            assertEquals(orgRep, actual)
+        }
+
+        // GetOrg
+        piperTest.test(
+            endpointConfig = GetOrg.endpointConfig,
+            pathParams = mapOf(UpdateOrg.orgId to orgRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            assertEquals(orgRep, actual)
         }
     }
 }

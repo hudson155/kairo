@@ -11,56 +11,68 @@ import kotlin.test.assertEquals
 internal class CreateUserTest : ResourceTest() {
 
     @Test
-    fun create() {
-        val creationRep = UserRep.Creation(
+    fun duplicateEmailAddress() {
+
+        // CreateUser
+        val user1CreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = deterministicUuidGenerator[0]
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep
-        ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            val expected = UserRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                firstName = creationRep.firstName,
-                lastName = creationRep.lastName,
-                emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl,
-                roles = emptySet()
-            )
-            assertEquals(expected, actual)
-        }
+            body = user1CreationRep
+        ) {}
+
+        // CreateUser
+        val user2CreationRep = UserRep.Creation(
+            firstName = "Summer",
+            lastName = "Kavan",
+            emailAddress = "jhudson@jhudson.ca",
+            profilePhotoUrl = null
+        )
+        piperTest.test(
+            endpointConfig = CreateUser.endpointConfig,
+            body = user2CreationRep,
+            expectedStatusCode = HttpStatusCode.Conflict
+        ) {}
     }
 
     @Test
-    fun duplicateEmailAddress() {
+    fun happyPath() {
 
-        val creationRep1 = UserRep.Creation(
+        // CreateUser
+        val userCreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        piperTest.test(
-            endpointConfig = CreateUser.endpointConfig,
-            body = creationRep1
-        ) {}
-
-        val creationRep2 = UserRep.Creation(
-            firstName = "Jeff",
-            lastName = "Hudson",
-            emailAddress = "jhudson@jhudson.ca",
-            profilePhotoUrl = null
+        val userRep = UserRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            firstName = userCreationRep.firstName,
+            lastName = userCreationRep.lastName,
+            emailAddress = userCreationRep.emailAddress,
+            profilePhotoUrl = userCreationRep.profilePhotoUrl,
+            roles = emptySet()
         )
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep2,
-            expectedStatusCode = HttpStatusCode.Conflict
-        ) {}
+            body = userCreationRep
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
+
+        // GetUser
+        piperTest.test(
+            endpointConfig = GetUser.endpointConfig,
+            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
     }
 }

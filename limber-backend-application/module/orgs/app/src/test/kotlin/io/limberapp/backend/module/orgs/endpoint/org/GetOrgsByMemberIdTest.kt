@@ -16,8 +16,11 @@ import kotlin.test.assertTrue
 internal class GetOrgsByMemberIdTest : ResourceTest() {
 
     @Test
-    fun noOrgs() {
+    fun happyPathNoOrgs() {
+
+        // Setup
         val userId = UUID.randomUUID()
+
         piperTest.test(
             endpointConfig = GetOrgsByMemberId.endpointConfig,
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
@@ -28,22 +31,77 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
     }
 
     @Test
-    fun multipleOrgs() {
+    fun happyPathMultipleOrgs() {
 
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = deterministicUuidGenerator[0]
-        val defaultFeatureId = deterministicUuidGenerator[1]
+        // Setup
+        val userId = UUID.randomUUID()
+
+        // CreateOrg
+        val org0CreationRep = OrgRep.Creation("Cranky Pasta")
+        val org0DefaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        var org0Rep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = org0CreationRep.name,
+            features = listOf(org0DefaultFeatureRep),
+            members = emptyList()
+        )
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = org0CreationRep
         ) {}
 
-        val userId = UUID.randomUUID()
-        val membershipCreationRep = MembershipRep.Creation(userId)
+        // CreateMembership
+        val membership0CreationRep = MembershipRep.Creation(userId)
+        val membership0Rep = MembershipRep.Complete(
+            created = LocalDateTime.now(fixedClock),
+            userId = membership0CreationRep.userId
+        )
+        org0Rep = org0Rep.copy(members = org0Rep.members.plus(membership0Rep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep
+            pathParams = mapOf(CreateMembership.orgId to org0Rep.id.toString()),
+            body = membership0CreationRep
+        ) {}
+
+        // CreateOrg
+        val org1CreationRep = OrgRep.Creation("Discreet Bulb")
+        val org1DefaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[3],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        var org1Rep = OrgRep.Complete(
+            id = deterministicUuidGenerator[2],
+            created = LocalDateTime.now(fixedClock),
+            name = org1CreationRep.name,
+            features = listOf(org1DefaultFeatureRep),
+            members = emptyList()
+        )
+        piperTest.test(
+            endpointConfig = CreateOrg.endpointConfig,
+            body = org1CreationRep
+        ) {}
+
+        // CreateMembership
+        val membership1CreationRep = MembershipRep.Creation(userId)
+        val membership1Rep = MembershipRep.Complete(
+            created = LocalDateTime.now(fixedClock),
+            userId = membership1CreationRep.userId
+        )
+        org1Rep = org1Rep.copy(members = org1Rep.members.plus(membership1Rep))
+        piperTest.test(
+            endpointConfig = CreateMembership.endpointConfig,
+            pathParams = mapOf(CreateMembership.orgId to org1Rep.id.toString()),
+            body = membership1CreationRep
         ) {}
 
         piperTest.test(
@@ -51,23 +109,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
-            val defaultFeature = FeatureRep.Complete(
-                id = defaultFeatureId,
-                created = LocalDateTime.now(fixedClock),
-                name = DEFAULT_FEATURE_CREATION_REP.name,
-                path = DEFAULT_FEATURE_CREATION_REP.path,
-                type = DEFAULT_FEATURE_CREATION_REP.type
-            )
-            val expected = listOf(
-                OrgRep.Complete(
-                    id = orgId,
-                    created = LocalDateTime.now(fixedClock),
-                    name = orgCreationRep.name,
-                    features = listOf(defaultFeature),
-                    members = listOf(MembershipRep.Complete(LocalDateTime.now(fixedClock), userId))
-                )
-            )
-            assertEquals(expected, actual)
+            assertEquals(listOf(org0Rep, org1Rep), actual)
         }
     }
 }
