@@ -18,11 +18,17 @@ internal class DeleteFeatureTest : ResourceTest() {
 
     @Test
     fun orgDoesNotExist() {
+
+        // Setup
+        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
+
+        // DeleteFeature
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteFeature.orgId to UUID.randomUUID().toString(),
-                DeleteFeature.featureId to UUID.randomUUID().toString()
+                DeleteFeature.orgId to orgId.toString(),
+                DeleteFeature.featureId to featureId.toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
@@ -31,70 +37,107 @@ internal class DeleteFeatureTest : ResourceTest() {
     @Test
     fun featureDoesNotExist() {
 
+        // Setup
+        val featureId = UUID.randomUUID()
+
+        // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = deterministicUuidGenerator[0]
+        val defaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        val orgRep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = orgCreationRep.name,
+            features = listOf(defaultFeatureRep),
+            members = emptyList()
+        )
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
+        // DeleteFeature
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteFeature.orgId to orgId.toString(),
-                DeleteFeature.featureId to UUID.randomUUID().toString()
+                DeleteFeature.orgId to orgRep.id.toString(),
+                DeleteFeature.featureId to featureId.toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
+
+        // GetOrg
+        piperTest.test(
+            endpointConfig = GetOrg.endpointConfig,
+            pathParams = mapOf("orgId" to orgRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            assertEquals(orgRep, actual)
+        }
     }
 
     @Test
-    fun exists() {
+    fun happyPath() {
 
+        // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val orgId = deterministicUuidGenerator[0]
-        val defaultFeatureId = deterministicUuidGenerator[1]
-        val featureId = deterministicUuidGenerator[2]
+        val defaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        var orgRep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = orgCreationRep.name,
+            features = listOf(defaultFeatureRep),
+            members = emptyList()
+        )
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
             body = orgCreationRep
         ) {}
 
+        // CreateFeature
         val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
+        val feature0Rep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[2],
+            created = LocalDateTime.now(fixedClock),
+            name = featureCreationRep.name,
+            path = featureCreationRep.path,
+            type = featureCreationRep.type
+        )
+        orgRep = orgRep.copy(features = orgRep.features.plus(feature0Rep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
+            pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = featureCreationRep
         ) {}
 
+        // DeleteFeature
+        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != feature0Rep.id })
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteFeature.orgId to orgId.toString(),
-                DeleteFeature.featureId to featureId.toString()
+                DeleteFeature.orgId to orgRep.id.toString(),
+                DeleteFeature.featureId to feature0Rep.id.toString()
             )
         ) {}
 
+        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgId.toString())
+            pathParams = mapOf("orgId" to orgRep.id.toString())
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val defaultFeature = FeatureRep.Complete(
-                id = defaultFeatureId,
-                created = LocalDateTime.now(fixedClock),
-                name = DEFAULT_FEATURE_CREATION_REP.name,
-                path = DEFAULT_FEATURE_CREATION_REP.path,
-                type = DEFAULT_FEATURE_CREATION_REP.type
-            )
-            val expected = OrgRep.Complete(
-                id = orgId,
-                created = LocalDateTime.now(fixedClock),
-                name = orgCreationRep.name,
-                features = listOf(defaultFeature),
-                members = emptyList()
-            )
-            assertEquals(expected, actual)
+            assertEquals(orgRep, actual)
         }
     }
 }
