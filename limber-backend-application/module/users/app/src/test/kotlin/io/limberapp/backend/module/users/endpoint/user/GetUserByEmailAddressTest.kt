@@ -12,7 +12,11 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
+
+        // Setup
         val emailAddress = "jhudson@jhudson.ca"
+
+        // GetUserByEmailAddress
         piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to emailAddress),
@@ -21,35 +25,35 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     }
 
     @Test
-    fun exists() {
+    fun happyPath() {
 
-        val creationRep = UserRep.Creation(
+        // CreateUser
+        val userCreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = deterministicUuidGenerator[0]
+        val userRep = UserRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            firstName = userCreationRep.firstName,
+            lastName = userCreationRep.lastName,
+            emailAddress = userCreationRep.emailAddress,
+            profilePhotoUrl = userCreationRep.profilePhotoUrl,
+            roles = emptySet()
+        )
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep
+            body = userCreationRep
         ) {}
 
         piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
-            queryParams = mapOf(GetUserByEmailAddress.emailAddress to creationRep.emailAddress)
+            queryParams = mapOf(GetUserByEmailAddress.emailAddress to userCreationRep.emailAddress)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            val expected = UserRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                firstName = creationRep.firstName,
-                lastName = creationRep.lastName,
-                emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl,
-                roles = emptySet()
-            )
-            assertEquals(expected, actual)
+            assertEquals(userRep, actual)
         }
     }
 }
