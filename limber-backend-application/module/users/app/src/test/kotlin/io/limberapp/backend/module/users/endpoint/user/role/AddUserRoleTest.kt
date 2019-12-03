@@ -16,10 +16,15 @@ internal class AddUserRoleTest : ResourceTest() {
 
     @Test
     fun userDoesNotExist() {
+
+        // Setup
+        val userId = UUID.randomUUID()
+
+        // AddUserRole
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to UUID.randomUUID().toString(),
+                AddUserRole.userId to userId.toString(),
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
             ),
             expectedStatusCode = HttpStatusCode.NotFound
@@ -27,76 +32,99 @@ internal class AddUserRoleTest : ResourceTest() {
     }
 
     @Test
-    fun userExists() {
+    fun happyPath() {
 
-        val creationRep = UserRep.Creation(
+        // CreateUser
+        val userCreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = deterministicUuidGenerator[0]
+        var userRep = UserRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            firstName = userCreationRep.firstName,
+            lastName = userCreationRep.lastName,
+            emailAddress = userCreationRep.emailAddress,
+            profilePhotoUrl = userCreationRep.profilePhotoUrl,
+            roles = emptySet()
+        )
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep
+            body = userCreationRep
         ) {}
 
+        // AddUserRole
+        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to id.toString(),
+                AddUserRole.userId to userRep.id.toString(),
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
             )
         ) {}
 
+        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id.toString())
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            val expected = UserRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                firstName = creationRep.firstName,
-                lastName = creationRep.lastName,
-                emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl,
-                roles = setOf(JwtRole.SUPERUSER)
-            )
-            assertEquals(expected, actual)
+            assertEquals(userRep, actual)
         }
     }
 
     @Test
-    fun userIsAlreadySuperuser() {
+    fun happyPathIdempotent() {
 
-        val creationRep = UserRep.Creation(
+        // CreateUser
+        val userCreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = deterministicUuidGenerator[0]
+        var userRep = UserRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            firstName = userCreationRep.firstName,
+            lastName = userCreationRep.lastName,
+            emailAddress = userCreationRep.emailAddress,
+            profilePhotoUrl = userCreationRep.profilePhotoUrl,
+            roles = emptySet()
+        )
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep
+            body = userCreationRep
         ) {}
 
+        // AddUserRole
+        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to id.toString(),
+                AddUserRole.userId to userRep.id.toString(),
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
             )
         ) {}
 
+        // AddUserRole
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to id.toString(),
+                AddUserRole.userId to userRep.id.toString(),
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
-            ),
-            expectedStatusCode = HttpStatusCode.Conflict
+            )
         ) {}
+
+        // GetUser
+        piperTest.test(
+            endpointConfig = GetUser.endpointConfig,
+            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
     }
 }
