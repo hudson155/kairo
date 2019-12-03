@@ -13,7 +13,11 @@ internal class UpdateUserTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
+
+        // Setup
         val userId = UUID.randomUUID()
+
+        // UpdateUser
         val updateRep = UserRep.Update(firstName = "Gunner")
         piperTest.test(
             endpointConfig = UpdateUser.endpointConfig,
@@ -24,37 +28,47 @@ internal class UpdateUserTest : ResourceTest() {
     }
 
     @Test
-    fun exists() {
+    fun happyPath() {
 
-        val creationRep = UserRep.Creation(
+        val userCreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = deterministicUuidGenerator[0]
+        var userRep = UserRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            firstName = userCreationRep.firstName,
+            lastName = userCreationRep.lastName,
+            emailAddress = userCreationRep.emailAddress,
+            profilePhotoUrl = userCreationRep.profilePhotoUrl,
+            roles = emptySet()
+        )
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep
+            body = userCreationRep
         ) {}
 
+        // UpdateUser
         val updateRep = UserRep.Update(firstName = "Gunner")
+        userRep = userRep.copy(firstName = updateRep.firstName!!)
         piperTest.test(
             endpointConfig = UpdateUser.endpointConfig,
-            pathParams = mapOf(UpdateUser.userId to id.toString()),
+            pathParams = mapOf(UpdateUser.userId to userRep.id.toString()),
             body = updateRep
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            val expected = UserRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                firstName = updateRep.firstName!!,
-                lastName = creationRep.lastName,
-                emailAddress = creationRep.emailAddress,
-                profilePhotoUrl = creationRep.profilePhotoUrl,
-                roles = emptySet()
-            )
-            assertEquals(expected, actual)
+            assertEquals(userRep, actual)
+        }
+
+        // GetUser
+        piperTest.test(
+            endpointConfig = GetUser.endpointConfig,
+            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
         }
     }
 }
