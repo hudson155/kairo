@@ -12,30 +12,30 @@ import kotlin.test.assertEquals
 internal class CreateOrgTest : ResourceTest() {
 
     @Test
-    fun create() {
-        val creationRep = OrgRep.Creation("Cranky Pasta")
-        val id = deterministicUuidGenerator[0]
-        val defaultFeatureId = deterministicUuidGenerator[1]
+    fun happyPath() {
+
+        // CreateOrg
+        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
+        val defaultFeatureRep = FeatureRep.Complete(
+            id = deterministicUuidGenerator[1],
+            created = LocalDateTime.now(fixedClock),
+            name = DEFAULT_FEATURE_CREATION_REP.name,
+            path = DEFAULT_FEATURE_CREATION_REP.path,
+            type = DEFAULT_FEATURE_CREATION_REP.type
+        )
+        val orgRep = OrgRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            name = orgCreationRep.name,
+            features = listOf(defaultFeatureRep),
+            members = emptyList()
+        )
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = creationRep
+            body = orgCreationRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            val defaultFeature = FeatureRep.Complete(
-                id = defaultFeatureId,
-                created = LocalDateTime.now(fixedClock),
-                name = DEFAULT_FEATURE_CREATION_REP.name,
-                path = DEFAULT_FEATURE_CREATION_REP.path,
-                type = DEFAULT_FEATURE_CREATION_REP.type
-            )
-            val expected = OrgRep.Complete(
-                id = id,
-                created = LocalDateTime.now(fixedClock),
-                name = creationRep.name,
-                features = listOf(defaultFeature),
-                members = emptyList()
-            )
-            assertEquals(expected, actual)
+            assertEquals(orgRep, actual)
         }
     }
 }
