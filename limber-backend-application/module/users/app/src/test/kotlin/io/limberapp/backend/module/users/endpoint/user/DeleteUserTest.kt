@@ -10,7 +10,11 @@ internal class DeleteUserTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
+
+        // Setup
         val userId = UUID.randomUUID()
+
+        // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to userId.toString()),
@@ -19,28 +23,31 @@ internal class DeleteUserTest : ResourceTest() {
     }
 
     @Test
-    fun exists() {
+    fun happyPath() {
 
-        val creationRep = UserRep.Creation(
+        // CreateUser
+        val userCreationRep = UserRep.Creation(
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        val id = deterministicUuidGenerator[0]
+        val userId = deterministicUuidGenerator[0]
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = creationRep
+            body = userCreationRep
         ) {}
 
+        // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
-            pathParams = mapOf(DeleteUser.userId to id.toString())
+            pathParams = mapOf(DeleteUser.userId to userId.toString())
         ) {}
 
+        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to id.toString()),
+            pathParams = mapOf(GetUser.userId to userId.toString()),
             expectedStatusCode = HttpStatusCode.NotFound
         ) {}
     }
