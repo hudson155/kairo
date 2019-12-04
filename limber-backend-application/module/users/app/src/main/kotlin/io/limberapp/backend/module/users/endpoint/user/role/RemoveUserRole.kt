@@ -10,6 +10,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.users.exception.notFound.UserRoleNotFound
 import io.limberapp.backend.module.users.service.user.UserService
 import java.util.UUID
 
@@ -39,7 +40,11 @@ internal class RemoveUserRole @Inject constructor(
     override fun authorization(command: Command) = Authorization.Superuser
 
     override suspend fun handler(command: Command) {
-        userService.removeRole(command.userId, command.roleName)
+        try {
+            userService.removeRole(command.userId, command.roleName)
+        } catch (_: UserRoleNotFound) {
+            return
+        }
     }
 
     companion object {
