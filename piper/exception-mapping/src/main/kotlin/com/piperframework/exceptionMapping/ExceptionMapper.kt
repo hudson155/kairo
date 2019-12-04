@@ -18,6 +18,6 @@ class ExceptionMapper {
             is NotFoundException -> HttpStatusCode.NotFound
             else -> error("Unknown exception type: ${e::class.simpleName}")
         }
-        return PiperError(httpStatusCode.value, "${httpStatusCode.description}: ${e.message}")
+        return PiperError(httpStatusCode.value, httpStatusCode.description, e.message)
     }
 }

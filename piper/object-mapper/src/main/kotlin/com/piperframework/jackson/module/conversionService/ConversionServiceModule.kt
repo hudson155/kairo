@@ -28,7 +28,9 @@ class ConversionServiceModule<T : Any>(conversionService: DataConversionService<
 
     private fun deserializer(conversionService: DataConversionService<T>) =
         object : StdDeserializer<T>(conversionService.clazz.java) {
-            override fun deserialize(p: JsonParser, ctxt: DeserializationContext) =
-                conversionService.fromString(p.valueAsString)
+            override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T {
+                conversionService.assertValid(p.valueAsString, p.currentName)
+                return conversionService.fromString(p.valueAsString)
+            }
         }
 }
