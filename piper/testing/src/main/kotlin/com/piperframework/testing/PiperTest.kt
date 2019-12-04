@@ -5,7 +5,7 @@ import com.piperframework.PiperApp
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
-import com.piperframework.exceptionMapping.CompleteExceptionMapper
+import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -27,7 +27,7 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     protected val objectMapper = PiperObjectMapper()
 
-    private val exceptionMapper = CompleteExceptionMapper()
+    private val exceptionMapper = ExceptionMapper()
 
     @Suppress("LongParameterList") // For this test method, we're ok with it.
     fun test(

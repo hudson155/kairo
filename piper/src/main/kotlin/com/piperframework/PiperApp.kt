@@ -6,7 +6,7 @@ import com.google.inject.Injector
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exception.PiperException
-import com.piperframework.exceptionMapping.CompleteExceptionMapper
+import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.Module
 import com.piperframework.util.conversionService
@@ -103,7 +103,7 @@ abstract class PiperApp<C : Config>(protected val config: C) {
 
     protected open fun Application.statusPages() {
         install(StatusPages) {
-            val exceptionMapper = CompleteExceptionMapper()
+            val exceptionMapper = ExceptionMapper()
             this.exception(PiperException::class.java) {
                 val error = exceptionMapper.handle(it)
                 call.respond(HttpStatusCode.fromValue(error.statusCode), error)
