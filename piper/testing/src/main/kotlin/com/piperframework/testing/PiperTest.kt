@@ -23,13 +23,13 @@ private fun withPiperTestApp(piperApp: PiperApp<*>, test: TestApplicationEngine.
     withTestApplication({ piperApp.bindToApplication(this) }, test)
 }
 
+@Suppress("LongParameterList") // For these methods, we're ok with it.
 abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     protected val objectMapper = PiperObjectMapper()
 
     private val exceptionMapper = ExceptionMapper()
 
-    @Suppress("LongParameterList") // For this test method, we're ok with it.
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String> = emptyMap(),
@@ -46,7 +46,6 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
         test = test
     )
 
-    @Suppress("LongParameterList") // For this test method, we're ok with it.
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String> = emptyMap(),
@@ -68,7 +67,6 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
         )
     }
 
-    @Suppress("LongParameterList") // For this test method, we're ok with it.
     private fun testInternal(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String>,
