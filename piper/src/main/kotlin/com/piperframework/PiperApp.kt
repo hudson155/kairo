@@ -5,12 +5,14 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
-import com.piperframework.exceptionMapping.ExceptionMappingConfigurator
+import com.piperframework.exception.PiperException
+import com.piperframework.exceptionMapping.CompleteExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.Module
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
+import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.features.CORS
@@ -22,7 +24,9 @@ import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.JacksonConverter
+import io.ktor.response.respond
 import org.slf4j.event.Level
 import java.util.UUID
 
@@ -99,7 +103,11 @@ abstract class PiperApp<C : Config>(protected val config: C) {
 
     protected open fun Application.statusPages() {
         install(StatusPages) {
-            ExceptionMappingConfigurator().configureExceptionMapping(this)
+            val exceptionMapper = CompleteExceptionMapper()
+            this.exception(PiperException::class.java) {
+                val error = exceptionMapper.handle(it)
+                call.respond(HttpStatusCode.fromValue(error.statusCode), error)
+            }
         }
     }
 
