@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.exception.conflict.MembershipAlreadyExists
+import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherMembership
 import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.membership.MembershipMapper
@@ -18,7 +18,7 @@ internal class MembershipServiceImpl @Inject constructor(
     override fun create(orgId: UUID, model: MembershipModel) {
         orgService.get(orgId) ?: throw OrgNotFound()
         val entity = membershipMapper.entity(model)
-        membershipStore.create(orgId, entity) ?: throw MembershipAlreadyExists()
+        membershipStore.create(orgId, entity) ?: throw ConflictsWithAnotherMembership()
     }
 
     override fun delete(orgId: UUID, memberId: UUID) {

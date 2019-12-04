@@ -1,10 +1,9 @@
 package io.limberapp.backend.module.orgs.endpoint.org.membership
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.exception.conflict.MembershipAlreadyExists
+import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherMembership
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
@@ -80,7 +79,7 @@ internal class CreateMembershipTest : ResourceTest() {
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
             body = membershipCreationRep,
-            expectedException = MembershipAlreadyExists()
+            expectedException = ConflictsWithAnotherMembership()
         ) {}
 
         // GetOrg

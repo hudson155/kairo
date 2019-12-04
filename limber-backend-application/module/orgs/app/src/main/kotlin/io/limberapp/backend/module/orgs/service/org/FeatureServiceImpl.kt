@@ -2,7 +2,6 @@ package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherFeature
-import io.limberapp.backend.module.orgs.exception.conflict.FeatureAlreadyExists
 import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.feature.FeatureMapper
@@ -19,7 +18,7 @@ internal class FeatureServiceImpl @Inject constructor(
     override fun create(orgId: UUID, model: FeatureModel) {
         orgService.get(orgId) ?: throw OrgNotFound()
         val entity = featureMapper.entity(model)
-        featureStore.create(orgId, entity) ?: throw FeatureAlreadyExists()
+        featureStore.create(orgId, entity) ?: throw ConflictsWithAnotherFeature()
     }
 
     override fun update(orgId: UUID, id: UUID, update: FeatureModel.Update): FeatureModel {
