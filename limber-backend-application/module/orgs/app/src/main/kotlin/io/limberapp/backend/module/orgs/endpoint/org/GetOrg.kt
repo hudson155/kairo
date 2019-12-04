@@ -6,6 +6,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.ktor.features.NotFoundException
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
@@ -22,7 +23,7 @@ internal class GetOrg @Inject constructor(
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : LimberApiEndpoint<GetOrg.Command, OrgRep.Complete?>(
+) : LimberApiEndpoint<GetOrg.Command, OrgRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -38,8 +39,8 @@ internal class GetOrg @Inject constructor(
 
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
-    override suspend fun handler(command: Command): OrgRep.Complete? {
-        val model = orgService.get(command.orgId) ?: return null
+    override suspend fun handler(command: Command): OrgRep.Complete {
+        val model = orgService.get(command.orgId) ?: throw NotFoundException()
         return orgMapper.completeRep(model)
     }
 

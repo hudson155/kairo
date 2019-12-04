@@ -6,7 +6,7 @@ import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.limberapp.backend.authorization.principal.Jwt
 
-abstract class LimberApiEndpoint<Command : AbstractCommand, ResponseType : Any?>(
+abstract class LimberApiEndpoint<Command : AbstractCommand, ResponseType : Any>(
     application: Application,
     pathPrefix: String,
     endpointConfig: EndpointConfig

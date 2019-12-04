@@ -6,6 +6,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.ktor.features.NotFoundException
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
@@ -21,7 +22,7 @@ internal class GetUserByEmailAddress @Inject constructor(
     servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : LimberApiEndpoint<GetUserByEmailAddress.Command, UserRep.Complete?>(
+) : LimberApiEndpoint<GetUserByEmailAddress.Command, UserRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -37,12 +38,12 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     override fun authorization(command: Command) = Authorization.AnyJwt
 
-    override suspend fun handler(command: Command): UserRep.Complete? {
-        val model = userService.getByEmailAddress(command.emailAddress) ?: return null
+    override suspend fun handler(command: Command): UserRep.Complete {
+        val model = userService.getByEmailAddress(command.emailAddress) ?: throw NotFoundException()
         return userMapper.completeRep(model)
     }
 
-    override fun secondaryAuthorization(response: UserRep.Complete?) = Authorization.User(response?.id)
+    override fun secondaryAuthorization(response: UserRep.Complete) = Authorization.User(response.id)
 
     companion object {
         const val emailAddress = "emailAddress"

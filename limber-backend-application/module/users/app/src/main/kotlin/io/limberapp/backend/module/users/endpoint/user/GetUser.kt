@@ -6,6 +6,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.ktor.features.NotFoundException
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
@@ -22,7 +23,7 @@ internal class GetUser @Inject constructor(
     servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : LimberApiEndpoint<GetUser.Command, UserRep.Complete?>(
+) : LimberApiEndpoint<GetUser.Command, UserRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -38,8 +39,8 @@ internal class GetUser @Inject constructor(
 
     override fun authorization(command: Command) = Authorization.User(command.userId)
 
-    override suspend fun handler(command: Command): UserRep.Complete? {
-        val model = userService.get(command.userId) ?: return null
+    override suspend fun handler(command: Command): UserRep.Complete {
+        val model = userService.get(command.userId) ?: throw NotFoundException()
         return userMapper.completeRep(model)
     }
 

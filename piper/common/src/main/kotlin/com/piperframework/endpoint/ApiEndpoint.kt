@@ -4,7 +4,6 @@ import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.exception.exception.BadRequestException
 import com.piperframework.exception.exception.ForbiddenException
-import com.piperframework.exception.exception.NotFoundException
 import com.piperframework.rep.ValidatedRep
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -27,7 +26,7 @@ import kotlin.reflect.full.cast
  * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
  * called for each request.
  */
-abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any?>(
+abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any>(
     private val application: Application,
     private val pathPrefix: String,
     private val endpointConfig: EndpointConfig
@@ -88,7 +87,6 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
                     check(secondaryAuthorization == null)
                 }
                 if (secondaryAuthorization(result)?.authorize(principal) == false) throw ForbiddenException()
-                if (result == null) throw NotFoundException()
                 else call.respond(result)
             }
         }
