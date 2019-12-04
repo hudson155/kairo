@@ -5,6 +5,7 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
+import com.piperframework.exception.EndpointNotFound
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
@@ -27,6 +28,9 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.JacksonConverter
 import io.ktor.response.respond
+import io.ktor.routing.Routing
+import io.ktor.routing.route
+import io.ktor.routing.routing
 import org.slf4j.event.Level
 import java.util.UUID
 
@@ -43,6 +47,7 @@ abstract class PiperApp<C : Config>(protected val config: C) {
             serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
         }
         registerEndpoints(injector)
+        handle404()
     }
 
     private fun Application.bindModules(): Injector = Guice.createInjector(getMainModules(this).plus(modules))
@@ -125,4 +130,12 @@ abstract class PiperApp<C : Config>(protected val config: C) {
     protected abstract fun getMainModules(application: Application): List<AbstractModule>
 
     protected abstract val modules: List<Module>
+
+    private fun Application.handle404(): Routing {
+        return routing {
+            route("${config.serving.apiPathPrefix}/{...}") {
+                handle { throw EndpointNotFound() }
+            }
+        }
+    }
 }
