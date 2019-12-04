@@ -4,8 +4,8 @@ import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import io.ktor.http.HttpStatusCode
 
-abstract class ExceptionMapper<T : PiperException> {
-    abstract fun handle(e: T): PiperError
+interface ExceptionMapper<T : PiperException> {
+    fun handle(e: T): PiperError
 }
 
 @Suppress("FunctionName")

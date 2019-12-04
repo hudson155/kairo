@@ -11,7 +11,7 @@ import com.piperframework.exceptionMapping.exceptionMapper.ConflictExceptionMapp
 import com.piperframework.exceptionMapping.exceptionMapper.ForbiddenExceptionMapper
 import com.piperframework.exceptionMapping.exceptionMapper.NotFoundExceptionMapper
 
-class CompleteExceptionMapper : ExceptionMapper<PiperException>() {
+class CompleteExceptionMapper : ExceptionMapper<PiperException> {
 
     private val badRequestExceptionMapper = BadRequestExceptionMapper()
     private val conflictExceptionMapper = ConflictExceptionMapper()
