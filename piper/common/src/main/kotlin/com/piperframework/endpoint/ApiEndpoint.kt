@@ -2,8 +2,7 @@ package com.piperframework.endpoint
 
 import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.endpoint.command.AbstractCommand
-import com.piperframework.exception.ForbiddenException
-import com.piperframework.exception.NotFoundException
+import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -11,8 +10,6 @@ import io.ktor.application.call
 import io.ktor.auth.Principal
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
-import io.ktor.features.MissingRequestParameterException
-import io.ktor.features.ParameterConversionException
 import io.ktor.features.conversionService
 import io.ktor.http.HttpMethod
 import io.ktor.http.Parameters
@@ -23,13 +20,12 @@ import io.ktor.routing.route
 import io.ktor.routing.routing
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
-import kotlin.reflect.jvm.jvmName
 
 /**
  * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
  * called for each request.
  */
-abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any?>(
+abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any>(
     private val application: Application,
     private val pathPrefix: String,
     private val endpointConfig: EndpointConfig
@@ -90,7 +86,6 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
                     check(secondaryAuthorization == null)
                 }
                 if (secondaryAuthorization(result)?.authorize(principal) == false) throw ForbiddenException()
-                if (result == null) throw NotFoundException()
                 else call.respond(result)
             }
         }
@@ -104,12 +99,12 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * the application's ConversionService.
      */
     protected fun <T : Any> Parameters.getAsType(clazz: KClass<T>, name: String): T {
-        val values = getAll(name) ?: throw MissingRequestParameterException(name)
+        val values = getAll(name) ?: throw ParameterConversionException(name, clazz)
         @Suppress("TooGenericExceptionCaught")
         return try {
             clazz.cast(application.conversionService.fromValues(values, clazz.java))
         } catch (e: Exception) {
-            throw ParameterConversionException(name, clazz.jvmName, e)
+            throw ParameterConversionException(name, clazz, e)
         }
     }
 }

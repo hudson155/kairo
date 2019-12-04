@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import com.piperframework.exception.NotFoundException
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.store.org.OrgStore
@@ -28,9 +28,10 @@ internal class OrgServiceImpl @Inject constructor(
     }
 
     override fun update(id: UUID, update: OrgModel.Update): OrgModel {
-        val entity = orgStore.update(id, orgMapper.update(update)) ?: throw NotFoundException()
+        orgStore.get(id) ?: throw OrgNotFound()
+        val entity = orgStore.update(id, orgMapper.update(update))!!
         return orgMapper.model(entity)
     }
 
-    override fun delete(id: UUID) = orgStore.delete(id) ?: throw NotFoundException()
+    override fun delete(id: UUID) = orgStore.delete(id) ?: throw OrgNotFound()
 }

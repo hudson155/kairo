@@ -1,7 +1,11 @@
 package com.piperframework.testing
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.PiperApp
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.error.PiperError
+import com.piperframework.exception.PiperException
+import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -19,11 +23,13 @@ private fun withPiperTestApp(piperApp: PiperApp<*>, test: TestApplicationEngine.
     withTestApplication({ piperApp.bindToApplication(this) }, test)
 }
 
+@Suppress("LongParameterList") // For these methods, we're ok with it.
 abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     protected val objectMapper = PiperObjectMapper()
 
-    @Suppress("LongParameterList") // For this test method, we're ok with it.
+    private val exceptionMapper = ExceptionMapper()
+
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String> = emptyMap(),
@@ -31,8 +37,50 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
         body: Any? = null,
         expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
         test: TestApplicationCall.() -> Unit
+    ) = testInternal(
+        endpointConfig = endpointConfig,
+        pathParams = pathParams,
+        queryParams = queryParams,
+        body = body,
+        expectedStatusCode = expectedStatusCode,
+        test = test
+    )
+
+    fun test(
+        endpointConfig: EndpointConfig,
+        pathParams: Map<String, String> = emptyMap(),
+        queryParams: Map<String, String> = emptyMap(),
+        body: Any? = null,
+        expectedException: PiperException
+    ) {
+        val expectedError = exceptionMapper.handle(expectedException)
+        testInternal(
+            endpointConfig = endpointConfig,
+            pathParams = pathParams,
+            queryParams = queryParams,
+            body = body,
+            expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
+            test = {
+                val actual = objectMapper.readValue<PiperError>(response.content!!)
+                assertEquals(expectedError, actual)
+            }
+        )
+    }
+
+    private fun testInternal(
+        endpointConfig: EndpointConfig,
+        pathParams: Map<String, String>,
+        queryParams: Map<String, String>,
+        body: Any?,
+        expectedStatusCode: HttpStatusCode,
+        test: TestApplicationCall.() -> Unit
     ) = withPiperTestApp(piperApp) {
-        createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
+        createCall(
+            endpointConfig = endpointConfig,
+            pathParams = pathParams,
+            queryParams = queryParams,
+            body = body
+        ).runTest(expectedStatusCode, test)
     }
 
     private fun TestApplicationEngine.createCall(
@@ -50,7 +98,10 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     protected abstract fun createAuthHeader(): HttpAuthHeader?
 
-    private fun TestApplicationCall.runTest(expectedStatusCode: HttpStatusCode, test: TestApplicationCall.() -> Unit) {
+    private fun TestApplicationCall.runTest(
+        expectedStatusCode: HttpStatusCode,
+        test: TestApplicationCall.() -> Unit
+    ) {
         assertTrue(
             actual = requestHandled,
             message = "The HTTP request was not handled." +

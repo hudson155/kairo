@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -23,8 +23,8 @@ internal class GetOrgTest : ResourceTest() {
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString()),
-            expectedStatusCode = HttpStatusCode.NotFound
-        ) {}
+            expectedException = OrgNotFound()
+        )
     }
 
     @Test

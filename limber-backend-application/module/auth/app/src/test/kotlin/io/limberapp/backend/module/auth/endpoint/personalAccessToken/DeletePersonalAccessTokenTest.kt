@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.personalAccessToken
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.module.auth.exception.notFound.PersonalAccessTokenNotFound
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import org.junit.Test
@@ -25,8 +25,8 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
                 DeletePersonalAccessToken.userId to userId.toString(),
                 DeletePersonalAccessToken.personalAccessTokenId to personalAccessTokenId.toString()
             ),
-            expectedStatusCode = HttpStatusCode.NotFound
-        ) {}
+            expectedException = PersonalAccessTokenNotFound()
+        )
     }
 
     @Test

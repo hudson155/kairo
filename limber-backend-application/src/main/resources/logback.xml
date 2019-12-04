@@ -5,7 +5,7 @@
         </encoder>
     </appender>
     <root level="debug">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </root>
     <logger name="org.mongodb.driver.cluster" level="INFO"/>
     <logger name="org.mongodb.driver.protocol.command" level="INFO"/>

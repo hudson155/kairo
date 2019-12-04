@@ -2,11 +2,11 @@ package io.limberapp.backend.module.users.store.user
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
-import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.users.entity.user.UserEntity
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoIndex
 import com.piperframework.store.MongoStore
+import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.backend.module.users.entity.user.UserEntity
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.contains

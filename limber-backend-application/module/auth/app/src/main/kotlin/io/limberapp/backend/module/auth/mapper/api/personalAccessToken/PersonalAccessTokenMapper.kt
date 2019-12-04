@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth.mapper.api.personalAccessToken
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
-import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import com.piperframework.util.uuid.base64Encode
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
+import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.UUID

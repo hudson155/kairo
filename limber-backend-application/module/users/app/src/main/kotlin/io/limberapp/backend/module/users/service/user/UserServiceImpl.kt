@@ -2,11 +2,13 @@ package io.limberapp.backend.module.users.service.user
 
 import com.google.inject.Inject
 import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.backend.module.users.exception.conflict.ConflictsWithAnotherUser
+import io.limberapp.backend.module.users.exception.conflict.ConflictsWithAnotherUserRole
+import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.exception.notFound.UserRoleNotFound
 import io.limberapp.backend.module.users.mapper.app.user.UserMapper
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.store.user.UserStore
-import com.piperframework.exception.ConflictException
-import com.piperframework.exception.NotFoundException
 import java.util.UUID
 
 internal class UserServiceImpl @Inject constructor(
@@ -15,7 +17,7 @@ internal class UserServiceImpl @Inject constructor(
 ) : UserService {
 
     override fun create(model: UserModel) {
-        getByEmailAddress(model.emailAddress)?.let { throw ConflictException() }
+        getByEmailAddress(model.emailAddress)?.let { throw ConflictsWithAnotherUser() }
         val entity = userMapper.entity(model)
         userStore.create(entity)
     }
@@ -31,19 +33,20 @@ internal class UserServiceImpl @Inject constructor(
     }
 
     override fun update(id: UUID, update: UserModel.Update): UserModel {
-        val entity = userStore.update(id, userMapper.update(update)) ?: throw NotFoundException()
+        userStore.get(id) ?: throw UserNotFound()
+        val entity = userStore.update(id, userMapper.update(update))!!
         return userMapper.model(entity)
     }
 
     override fun addRole(userId: UUID, roleName: JwtRole) {
-        userStore.get(userId) ?: throw NotFoundException()
-        return userStore.addRole(userId, roleName) ?: throw ConflictException()
+        userStore.get(userId) ?: throw UserNotFound()
+        return userStore.addRole(userId, roleName) ?: throw ConflictsWithAnotherUserRole()
     }
 
     override fun removeRole(userId: UUID, roleName: JwtRole) {
-        userStore.get(userId) ?: throw NotFoundException()
-        return userStore.removeRole(userId, roleName) ?: throw ConflictException()
+        userStore.get(userId) ?: throw UserNotFound()
+        return userStore.removeRole(userId, roleName) ?: throw UserRoleNotFound()
     }
 
-    override fun delete(id: UUID) = userStore.delete(id) ?: throw NotFoundException()
+    override fun delete(id: UUID) = userStore.delete(id) ?: throw UserNotFound()
 }

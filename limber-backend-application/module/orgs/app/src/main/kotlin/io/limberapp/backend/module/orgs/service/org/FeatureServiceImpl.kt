@@ -1,8 +1,9 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import com.piperframework.exception.ConflictException
-import com.piperframework.exception.NotFoundException
+import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherFeature
+import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.feature.FeatureMapper
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.store.org.FeatureStore
@@ -15,18 +16,20 @@ internal class FeatureServiceImpl @Inject constructor(
 ) : FeatureService {
 
     override fun create(orgId: UUID, model: FeatureModel) {
-        orgService.get(orgId) ?: throw NotFoundException()
+        orgService.get(orgId) ?: throw OrgNotFound()
         val entity = featureMapper.entity(model)
-        featureStore.create(orgId, entity) ?: throw ConflictException()
+        featureStore.create(orgId, entity) ?: throw ConflictsWithAnotherFeature()
     }
 
     override fun update(orgId: UUID, id: UUID, update: FeatureModel.Update): FeatureModel {
-        orgService.get(orgId)?.features?.singleOrNull { it.id == id } ?: throw NotFoundException()
-        val entity = featureStore.update(orgId, id, featureMapper.update(update)) ?: throw ConflictException()
+        val orgModel = orgService.get(orgId) ?: throw OrgNotFound()
+        orgModel.features.singleOrNull { it.id == id } ?: throw FeatureNotFound()
+        val entity = featureStore.update(orgId, id, featureMapper.update(update)) ?: throw ConflictsWithAnotherFeature()
         return featureMapper.model(entity)
     }
 
     override fun delete(orgId: UUID, id: UUID) {
-        featureStore.delete(orgId, id) ?: throw NotFoundException()
+        orgService.get(orgId) ?: throw OrgNotFound()
+        featureStore.delete(orgId, id) ?: throw FeatureNotFound()
     }
 }

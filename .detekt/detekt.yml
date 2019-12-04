@@ -58,7 +58,7 @@ complexity:
     active: true
     excludes: "**/src/test/**/*Test.kt"
     threshold: 3
-    ignoreAnnotation: false
+    ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: false
   TooManyFunctions:
     active: true

@@ -1,15 +1,23 @@
 package com.piperframework.exceptionMapping
 
-import io.ktor.application.ApplicationCall
-import io.ktor.application.call
+import com.piperframework.error.PiperError
+import com.piperframework.exception.PiperException
+import com.piperframework.exception.exception.badRequest.BadRequestException
+import com.piperframework.exception.exception.conflict.ConflictException
+import com.piperframework.exception.exception.forbidden.ForbiddenException
+import com.piperframework.exception.exception.notFound.NotFoundException
 import io.ktor.http.HttpStatusCode
-import io.ktor.response.respond
-import io.ktor.util.pipeline.PipelineContext
 
-internal abstract class ExceptionMapper<T : Throwable> {
+class ExceptionMapper {
 
-    val handler: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit =
-        { e -> with(handle(e)) { call.respond(first, second) } }
-
-    abstract suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: T): Pair<HttpStatusCode, Any>
+    fun handle(e: PiperException): PiperError {
+        val httpStatusCode = when (e) {
+            is BadRequestException -> HttpStatusCode.BadRequest
+            is ConflictException -> HttpStatusCode.Conflict
+            is ForbiddenException -> HttpStatusCode.Forbidden
+            is NotFoundException -> HttpStatusCode.NotFound
+            else -> error("Unknown exception type: ${e::class.simpleName}")
+        }
+        return PiperError(httpStatusCode.value, "${httpStatusCode.description}: ${e.message}")
+    }
 }

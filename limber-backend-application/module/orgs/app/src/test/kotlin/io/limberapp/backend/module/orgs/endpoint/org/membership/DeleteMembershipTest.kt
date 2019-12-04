@@ -1,9 +1,10 @@
 package io.limberapp.backend.module.orgs.endpoint.org.membership
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
+import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
@@ -30,8 +31,8 @@ internal class DeleteMembershipTest : ResourceTest() {
                 DeleteMembership.orgId to orgId.toString(),
                 DeleteMembership.memberId to userId.toString()
             ),
-            expectedStatusCode = HttpStatusCode.NotFound
-        ) {}
+            expectedException = OrgNotFound()
+        )
     }
 
     @Test
@@ -68,8 +69,8 @@ internal class DeleteMembershipTest : ResourceTest() {
                 DeleteMembership.orgId to orgRep.id.toString(),
                 DeleteMembership.memberId to userId.toString()
             ),
-            expectedStatusCode = HttpStatusCode.NotFound
-        ) {}
+            expectedException = MembershipNotFound()
+        )
 
         // GetOrg
         piperTest.test(

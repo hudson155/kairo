@@ -9,6 +9,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.service.user.UserService
@@ -22,7 +23,7 @@ internal class GetUser @Inject constructor(
     servingConfig: ServingConfig,
     private val userService: UserService,
     private val userMapper: UserMapper
-) : LimberApiEndpoint<GetUser.Command, UserRep.Complete?>(
+) : LimberApiEndpoint<GetUser.Command, UserRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -38,8 +39,8 @@ internal class GetUser @Inject constructor(
 
     override fun authorization(command: Command) = Authorization.User(command.userId)
 
-    override suspend fun handler(command: Command): UserRep.Complete? {
-        val model = userService.get(command.userId) ?: return null
+    override suspend fun handler(command: Command): UserRep.Complete {
+        val model = userService.get(command.userId) ?: throw UserNotFound()
         return userMapper.completeRep(model)
     }
 
