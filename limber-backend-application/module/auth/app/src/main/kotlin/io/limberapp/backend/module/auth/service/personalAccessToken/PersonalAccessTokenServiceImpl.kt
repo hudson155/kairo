@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.service.personalAccessToken
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.auth.exception.notFound.UserNotFound
+import io.limberapp.backend.module.auth.exception.notFound.PersonalAccessTokenNotFound
 import io.limberapp.backend.module.auth.mapper.app.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore
@@ -28,6 +28,6 @@ internal class PersonalAccessTokenServiceImpl @Inject constructor(
     }
 
     override fun delete(userId: UUID, id: UUID) {
-        personalAccessTokenStore.delete(userId, id) ?: throw UserNotFound()
+        personalAccessTokenStore.delete(userId, id) ?: throw PersonalAccessTokenNotFound()
     }
 }
