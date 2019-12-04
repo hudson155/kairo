@@ -13,5 +13,5 @@ internal abstract class ExceptionMapper<T : PiperException> {
     val handler: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit =
         { e -> with(handle(e)) { call.respond(HttpStatusCode.fromValue(statusCode), this) } }
 
-    abstract suspend fun PipelineContext<Unit, ApplicationCall>.handle(e: T): PiperError
+    abstract fun handle(e: T): PiperError
 }
