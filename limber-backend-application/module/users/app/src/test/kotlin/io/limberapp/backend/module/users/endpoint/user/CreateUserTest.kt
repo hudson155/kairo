@@ -38,7 +38,7 @@ internal class CreateUserTest : ResourceTest() {
             endpointConfig = CreateUser.endpointConfig,
             body = user2CreationRep,
             expectedException = ConflictsWithAnotherUser()
-        ) {}
+        )
     }
 
     @Test

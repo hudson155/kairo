@@ -26,7 +26,7 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
                 DeletePersonalAccessToken.personalAccessTokenId to personalAccessTokenId.toString()
             ),
             expectedException = PersonalAccessTokenNotFound()
-        ) {}
+        )
     }
 
     @Test

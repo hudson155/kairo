@@ -19,7 +19,7 @@ internal class DeleteOrgTest : ResourceTest() {
             endpointConfig = DeleteOrg.endpointConfig,
             pathParams = mapOf(DeleteOrg.orgId to orgId.toString()),
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -44,6 +44,6 @@ internal class DeleteOrgTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString()),
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 }

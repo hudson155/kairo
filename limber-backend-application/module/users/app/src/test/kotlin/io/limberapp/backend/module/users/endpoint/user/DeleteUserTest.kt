@@ -20,7 +20,7 @@ internal class DeleteUserTest : ResourceTest() {
             endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to userId.toString()),
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -50,6 +50,6 @@ internal class DeleteUserTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userId.toString()),
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 }

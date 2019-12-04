@@ -28,7 +28,7 @@ internal class RemoveUserRoleTest : ResourceTest() {
                 RemoveUserRole.roleName to JwtRole.SUPERUSER.toString()
             ),
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 
     @Test

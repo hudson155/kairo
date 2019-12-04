@@ -29,7 +29,7 @@ internal class AddUserRoleTest : ResourceTest() {
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
             ),
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 
     @Test

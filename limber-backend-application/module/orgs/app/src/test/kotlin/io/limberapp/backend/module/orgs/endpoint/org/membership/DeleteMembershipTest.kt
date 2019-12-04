@@ -33,7 +33,7 @@ internal class DeleteMembershipTest : ResourceTest() {
                 DeleteMembership.memberId to userId.toString()
             ),
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -71,7 +71,7 @@ internal class DeleteMembershipTest : ResourceTest() {
                 DeleteMembership.memberId to userId.toString()
             ),
             expectedException = MembershipNotFound()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(

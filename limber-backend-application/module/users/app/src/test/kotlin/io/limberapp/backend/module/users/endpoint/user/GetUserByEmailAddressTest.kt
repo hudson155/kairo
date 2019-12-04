@@ -22,7 +22,7 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to emailAddress),
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 
     @Test

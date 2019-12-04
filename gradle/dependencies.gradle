@@ -48,6 +48,7 @@ ext {
 
             // Ktor
             ktor_auth              : "io.ktor:ktor-auth:$versions.ktor",
+            ktor_http_jvm          : "io.ktor:ktor-http-jvm:$versions.ktor",
             ktor_jackson           : "io.ktor:ktor-jackson:$versions.ktor",
             ktor_server_cio        : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core       : "io.ktor:ktor-server-core:$versions.ktor",

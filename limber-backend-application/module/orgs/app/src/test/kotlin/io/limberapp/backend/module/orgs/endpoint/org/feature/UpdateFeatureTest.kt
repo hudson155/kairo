@@ -34,7 +34,7 @@ internal class UpdateFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep,
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -74,7 +74,7 @@ internal class UpdateFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep,
             expectedException = OrgNotFound()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(
@@ -136,7 +136,7 @@ internal class UpdateFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep,
             expectedException = ConflictsWithAnotherOrg()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(
@@ -198,7 +198,7 @@ internal class UpdateFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep,
             expectedException = ConflictsWithAnotherOrg()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(

@@ -25,7 +25,7 @@ internal class GetOrgTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString()),
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test

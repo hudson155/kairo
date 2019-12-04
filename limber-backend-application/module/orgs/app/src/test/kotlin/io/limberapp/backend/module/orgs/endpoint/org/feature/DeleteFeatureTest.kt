@@ -32,7 +32,7 @@ internal class DeleteFeatureTest : ResourceTest() {
                 DeleteFeature.featureId to featureId.toString()
             ),
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -70,7 +70,7 @@ internal class DeleteFeatureTest : ResourceTest() {
                 DeleteFeature.featureId to featureId.toString()
             ),
             expectedException = OrgNotFound()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(

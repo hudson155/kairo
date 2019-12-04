@@ -27,7 +27,7 @@ internal class UpdateOrgTest : ResourceTest() {
             pathParams = mapOf(UpdateOrg.orgId to orgId.toString()),
             body = orgUpdateRep,
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test

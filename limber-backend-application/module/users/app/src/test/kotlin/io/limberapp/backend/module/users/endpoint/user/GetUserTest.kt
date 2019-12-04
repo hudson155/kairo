@@ -23,7 +23,7 @@ internal class GetUserTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userId.toString()),
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 
     @Test

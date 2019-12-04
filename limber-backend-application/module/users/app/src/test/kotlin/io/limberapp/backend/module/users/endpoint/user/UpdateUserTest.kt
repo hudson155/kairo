@@ -25,7 +25,7 @@ internal class UpdateUserTest : ResourceTest() {
             pathParams = mapOf(UpdateUser.userId to userId.toString()),
             body = updateRep,
             expectedException = UserNotFound()
-        ) {}
+        )
     }
 
     @Test

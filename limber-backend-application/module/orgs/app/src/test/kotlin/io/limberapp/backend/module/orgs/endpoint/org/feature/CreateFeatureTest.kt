@@ -30,7 +30,7 @@ internal class CreateFeatureTest : ResourceTest() {
             pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
             body = featureCreationRep,
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -65,7 +65,7 @@ internal class CreateFeatureTest : ResourceTest() {
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = featureCreationRep,
             expectedException = ConflictsWithAnotherOrg()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(
@@ -109,7 +109,7 @@ internal class CreateFeatureTest : ResourceTest() {
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = featureCreationRep,
             expectedException = ConflictsWithAnotherOrg()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(

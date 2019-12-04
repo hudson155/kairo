@@ -31,7 +31,7 @@ internal class CreateMembershipTest : ResourceTest() {
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
             body = membershipCreationRep,
             expectedException = OrgNotFound()
-        ) {}
+        )
     }
 
     @Test
@@ -80,7 +80,7 @@ internal class CreateMembershipTest : ResourceTest() {
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
             body = membershipCreationRep,
             expectedException = ConflictsWithAnotherMembership()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(
