@@ -22,7 +22,7 @@ class ExceptionMapper {
 }
 
 @Suppress("FunctionName")
-internal fun PiperError(
+private fun PiperError(
     httpStatusCode: HttpStatusCode,
     e: PiperException
 ) = PiperError(httpStatusCode.value, "${httpStatusCode.description}: ${e.message}")
