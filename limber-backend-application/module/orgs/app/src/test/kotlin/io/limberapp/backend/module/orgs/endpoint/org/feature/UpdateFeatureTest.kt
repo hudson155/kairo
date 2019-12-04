@@ -3,7 +3,8 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherOrg
+import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherFeature
+import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
@@ -73,7 +74,7 @@ internal class UpdateFeatureTest : ResourceTest() {
                 UpdateFeature.featureId to featureId.toString()
             ),
             body = featureUpdateRep,
-            expectedException = OrgNotFound()
+            expectedException = FeatureNotFound()
         )
 
         // GetOrg
@@ -135,7 +136,7 @@ internal class UpdateFeatureTest : ResourceTest() {
                 UpdateFeature.featureId to featureRep.id.toString()
             ),
             body = featureUpdateRep,
-            expectedException = ConflictsWithAnotherOrg()
+            expectedException = ConflictsWithAnotherFeature()
         )
 
         // GetOrg
@@ -197,7 +198,7 @@ internal class UpdateFeatureTest : ResourceTest() {
                 UpdateFeature.featureId to featureRep.id.toString()
             ),
             body = featureUpdateRep,
-            expectedException = ConflictsWithAnotherOrg()
+            expectedException = ConflictsWithAnotherFeature()
         )
 
         // GetOrg

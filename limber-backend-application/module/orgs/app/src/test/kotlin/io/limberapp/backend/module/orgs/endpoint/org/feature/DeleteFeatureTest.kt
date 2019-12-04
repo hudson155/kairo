@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
+import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
@@ -69,7 +69,7 @@ internal class DeleteFeatureTest : ResourceTest() {
                 DeleteFeature.orgId to orgRep.id.toString(),
                 DeleteFeature.featureId to featureId.toString()
             ),
-            expectedException = OrgNotFound()
+            expectedException = FeatureNotFound()
         )
 
         // GetOrg

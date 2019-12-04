@@ -22,6 +22,7 @@ internal class MembershipServiceImpl @Inject constructor(
     }
 
     override fun delete(orgId: UUID, memberId: UUID) {
+        orgService.get(orgId) ?: throw OrgNotFound()
         membershipStore.delete(orgId, memberId) ?: throw MembershipNotFound()
     }
 }

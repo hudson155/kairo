@@ -22,12 +22,14 @@ internal class FeatureServiceImpl @Inject constructor(
     }
 
     override fun update(orgId: UUID, id: UUID, update: FeatureModel.Update): FeatureModel {
-        orgService.get(orgId)?.features?.singleOrNull { it.id == id } ?: throw FeatureNotFound()
+        val orgModel = orgService.get(orgId) ?: throw OrgNotFound()
+        orgModel.features.singleOrNull { it.id == id } ?: throw FeatureNotFound()
         val entity = featureStore.update(orgId, id, featureMapper.update(update)) ?: throw ConflictsWithAnotherFeature()
         return featureMapper.model(entity)
     }
 
     override fun delete(orgId: UUID, id: UUID) {
+        orgService.get(orgId) ?: throw OrgNotFound()
         featureStore.delete(orgId, id) ?: throw FeatureNotFound()
     }
 }
