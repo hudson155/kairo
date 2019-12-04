@@ -2,7 +2,12 @@
 <project version="4">
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
+      <name>com.google.api.gax.rpc.NotFoundException</name>
+      <name>com.sun.tools.internal.ws.wsdl.framework.ValidationException</name>
+      <name>io.ktor.features.BadRequestException</name>
+      <name>io.ktor.features.NotFoundException</name>
       <name>javax.inject</name>
+      <name>javax.xml.bind.ValidationException</name>
       <name>junit.framework</name>
       <name>kotlin.test.junit.JUnitAsserter</name>
       <name>org.junit.Assert</name>
