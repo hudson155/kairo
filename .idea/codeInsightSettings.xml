@@ -6,6 +6,8 @@
       <name>com.sun.tools.internal.ws.wsdl.framework.ValidationException</name>
       <name>io.ktor.features.BadRequestException</name>
       <name>io.ktor.features.NotFoundException</name>
+      <name>io.ktor.features.ParameterConversionException</name>
+      <name>io.ktor.util.DataConversionException</name>
       <name>javax.inject</name>
       <name>javax.xml.bind.ValidationException</name>
       <name>junit.framework</name>

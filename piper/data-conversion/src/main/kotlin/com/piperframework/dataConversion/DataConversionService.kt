@@ -6,6 +6,10 @@ interface DataConversionService<T : Any> {
 
     val clazz: KClass<T>
 
+    fun assertValid(value: String, name: String?) {
+        if (!isValid(value)) throw DataConversionException(name, clazz)
+    }
+
     /**
      * Should return true iff the string is valid for conversion to the type.
      */

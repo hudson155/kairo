@@ -1,6 +1,8 @@
 package com.piperframework.endpoint
 
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.piperframework.authorization.PiperAuthorization
+import com.piperframework.dataConversion.DataConversionException
 import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
@@ -91,20 +93,27 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
         }
     }
 
-    protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody() =
-        receive<T>().apply { validate() }
+    protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T {
+        val result = try {
+            receive<T>()
+        } catch (e: JsonMappingException) {
+            e.cause?.let { if (it is DataConversionException) throw ParameterConversionException(it) }
+            throw e
+        }
+        return result.apply { validate() }
+    }
 
     /**
      * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast to that type using
      * the application's ConversionService.
      */
     protected fun <T : Any> Parameters.getAsType(clazz: KClass<T>, name: String): T {
-        val values = getAll(name) ?: throw ParameterConversionException(name, clazz)
+        val values = getAll(name) ?: throw ParameterConversionException(DataConversionException(name, clazz))
         @Suppress("TooGenericExceptionCaught")
         return try {
             clazz.cast(application.conversionService.fromValues(values, clazz.java))
         } catch (e: Exception) {
-            throw ParameterConversionException(name, clazz, e)
+            throw ParameterConversionException(DataConversionException(name, clazz, e))
         }
     }
 }
