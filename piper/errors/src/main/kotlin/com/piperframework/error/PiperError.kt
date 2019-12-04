@@ -5,5 +5,6 @@ package com.piperframework.error
  */
 data class PiperError(
     val statusCode: Int,
-    val message: String
+    val statusCodeDescription: String,
+    val message: String?
 )
