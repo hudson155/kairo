@@ -20,6 +20,9 @@
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth/api" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth/app" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/forms" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/forms/api" />
+            <option value="$PROJECT_DIR$/limber-backend-application/module/forms/app" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/orgs" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/orgs/api" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/orgs/app" />

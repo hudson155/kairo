@@ -16,6 +16,7 @@ import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
+import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 
@@ -45,6 +46,7 @@ internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
 
     override val modules = listOf(
         AuthModule(),
+        FormsModule(),
         OrgsModule(),
         UsersModule()
     )

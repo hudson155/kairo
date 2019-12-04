@@ -16,6 +16,7 @@ sourceSets {
 
 dependencies {
     compile project(":limber-backend-application:module:auth:app")
+    compile project(":limber-backend-application:module:forms:app")
     compile project(":limber-backend-application:module:orgs:app")
     compile project(":limber-backend-application:module:users:app")
     compile project(":piper")
