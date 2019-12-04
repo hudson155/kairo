@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest

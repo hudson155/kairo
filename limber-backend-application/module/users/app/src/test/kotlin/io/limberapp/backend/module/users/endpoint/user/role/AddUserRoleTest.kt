@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.endpoint.user.CreateUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
