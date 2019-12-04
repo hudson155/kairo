@@ -11,18 +11,13 @@ import io.ktor.http.HttpStatusCode
 class ExceptionMapper {
 
     fun handle(e: PiperException): PiperError {
-        return when (e) {
-            is BadRequestException -> PiperError(HttpStatusCode.BadRequest, e)
-            is ConflictException -> PiperError(HttpStatusCode.Conflict, e)
-            is ForbiddenException -> PiperError(HttpStatusCode.Forbidden, e)
-            is NotFoundException -> PiperError(HttpStatusCode.NotFound, e)
+        val httpStatusCode = when (e) {
+            is BadRequestException -> HttpStatusCode.BadRequest
+            is ConflictException -> HttpStatusCode.Conflict
+            is ForbiddenException -> HttpStatusCode.Forbidden
+            is NotFoundException -> HttpStatusCode.NotFound
             else -> error("Unknown exception type: ${e::class.simpleName}")
         }
+        return PiperError(httpStatusCode.value, "${httpStatusCode.description}: ${e.message}")
     }
 }
-
-@Suppress("FunctionName")
-private fun PiperError(
-    httpStatusCode: HttpStatusCode,
-    e: PiperException
-) = PiperError(httpStatusCode.value, "${httpStatusCode.description}: ${e.message}")
