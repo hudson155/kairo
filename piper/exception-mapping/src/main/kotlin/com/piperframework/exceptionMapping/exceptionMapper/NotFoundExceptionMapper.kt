@@ -6,5 +6,5 @@ import com.piperframework.exceptionMapping.PiperError
 import io.ktor.http.HttpStatusCode
 
 internal class NotFoundExceptionMapper : ExceptionMapper<NotFoundException>() {
-    override fun handle(e: NotFoundException) = PiperError(HttpStatusCode.NotFound)
+    override fun handle(e: NotFoundException) = PiperError(HttpStatusCode.NotFound, e)
 }
