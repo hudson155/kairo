@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
-import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import org.junit.Test
@@ -18,7 +18,7 @@ internal class DeleteOrgTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
             pathParams = mapOf(DeleteOrg.orgId to orgId.toString()),
-            expectedStatusCode = HttpStatusCode.NotFound
+            expectedException = OrgNotFound()
         ) {}
     }
 
@@ -43,7 +43,7 @@ internal class DeleteOrgTest : ResourceTest() {
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId.toString()),
-            expectedStatusCode = HttpStatusCode.NotFound
+            expectedException = OrgNotFound()
         ) {}
     }
 }

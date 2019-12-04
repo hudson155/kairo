@@ -5,6 +5,7 @@ import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.endpoint.user.CreateUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
+import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import org.junit.Test
@@ -27,52 +28,8 @@ internal class AddUserRoleTest : ResourceTest() {
                 AddUserRole.userId to userId.toString(),
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
             ),
-            expectedStatusCode = HttpStatusCode.NotFound
+            expectedException = UserNotFound()
         ) {}
-    }
-
-    @Test
-    fun happyPath() {
-
-        // CreateUser
-        val userCreationRep = UserRep.Creation(
-            firstName = "Jeff",
-            lastName = "Hudson",
-            emailAddress = "jhudson@jhudson.ca",
-            profilePhotoUrl = null
-        )
-        var userRep = UserRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            firstName = userCreationRep.firstName,
-            lastName = userCreationRep.lastName,
-            emailAddress = userCreationRep.emailAddress,
-            profilePhotoUrl = userCreationRep.profilePhotoUrl,
-            roles = emptySet()
-        )
-        piperTest.test(
-            endpointConfig = CreateUser.endpointConfig,
-            body = userCreationRep
-        ) {}
-
-        // AddUserRole
-        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.test(
-            endpointConfig = AddUserRole.endpointConfig,
-            pathParams = mapOf(
-                AddUserRole.userId to userRep.id.toString(),
-                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
-            )
-        ) {}
-
-        // GetUser
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
-        ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
     }
 
     @Test
@@ -110,6 +67,50 @@ internal class AddUserRoleTest : ResourceTest() {
         ) {}
 
         // AddUserRole
+        piperTest.test(
+            endpointConfig = AddUserRole.endpointConfig,
+            pathParams = mapOf(
+                AddUserRole.userId to userRep.id.toString(),
+                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
+            )
+        ) {}
+
+        // GetUser
+        piperTest.test(
+            endpointConfig = GetUser.endpointConfig,
+            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
+    }
+
+    @Test
+    fun happyPath() {
+
+        // CreateUser
+        val userCreationRep = UserRep.Creation(
+            firstName = "Jeff",
+            lastName = "Hudson",
+            emailAddress = "jhudson@jhudson.ca",
+            profilePhotoUrl = null
+        )
+        var userRep = UserRep.Complete(
+            id = deterministicUuidGenerator[0],
+            created = LocalDateTime.now(fixedClock),
+            firstName = userCreationRep.firstName,
+            lastName = userCreationRep.lastName,
+            emailAddress = userCreationRep.emailAddress,
+            profilePhotoUrl = userCreationRep.profilePhotoUrl,
+            roles = emptySet()
+        )
+        piperTest.test(
+            endpointConfig = CreateUser.endpointConfig,
+            body = userCreationRep
+        ) {}
+
+        // AddUserRole
+        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(

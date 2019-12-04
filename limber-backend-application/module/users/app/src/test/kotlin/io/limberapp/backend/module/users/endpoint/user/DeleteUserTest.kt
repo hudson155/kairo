@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.users.endpoint.user
 
 import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import org.junit.Test
@@ -18,7 +19,7 @@ internal class DeleteUserTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to userId.toString()),
-            expectedStatusCode = HttpStatusCode.NotFound
+            expectedException = UserNotFound()
         ) {}
     }
 
@@ -48,7 +49,7 @@ internal class DeleteUserTest : ResourceTest() {
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userId.toString()),
-            expectedStatusCode = HttpStatusCode.NotFound
+            expectedException = UserNotFound()
         ) {}
     }
 }

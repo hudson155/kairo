@@ -2,6 +2,8 @@ package com.piperframework.testing
 
 import com.piperframework.PiperApp
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.exception.PiperException
+import com.piperframework.exceptionMapping.CompleteExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -23,16 +25,28 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     protected val objectMapper = PiperObjectMapper()
 
+    private val exceptionMapper = CompleteExceptionMapper()
+
     @Suppress("LongParameterList") // For this test method, we're ok with it.
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String> = emptyMap(),
         queryParams: Map<String, String> = emptyMap(),
         body: Any? = null,
-        expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
+        expectedException: PiperException? = null,
         test: TestApplicationCall.() -> Unit
     ) = withPiperTestApp(piperApp) {
-        createCall(endpointConfig, pathParams, queryParams, body).runTest(expectedStatusCode, test)
+        createCall(
+            endpointConfig = endpointConfig,
+            pathParams = pathParams,
+            queryParams = queryParams,
+            body = body
+        ).runTest(expectedException?.let {
+            val error = exceptionMapper.handle(it)
+            return@let HttpStatusCode.fromValue(error.statusCode)
+        } ?: HttpStatusCode.OK,
+            test = test
+        )
     }
 
     private fun TestApplicationEngine.createCall(

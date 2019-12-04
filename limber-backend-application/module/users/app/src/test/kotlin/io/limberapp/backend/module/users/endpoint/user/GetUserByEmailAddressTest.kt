@@ -2,6 +2,7 @@ package io.limberapp.backend.module.users.endpoint.user
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import org.junit.Test
@@ -20,7 +21,7 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
         piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to emailAddress),
-            expectedStatusCode = HttpStatusCode.NotFound
+            expectedException = UserNotFound()
         ) {}
     }
 

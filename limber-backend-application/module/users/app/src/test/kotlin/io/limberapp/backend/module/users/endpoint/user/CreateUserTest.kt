@@ -2,6 +2,8 @@ package io.limberapp.backend.module.users.endpoint.user
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.module.users.exception.conflict.ConflictsWithAnotherUser
+import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import org.junit.Test
@@ -35,7 +37,7 @@ internal class CreateUserTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = user2CreationRep,
-            expectedStatusCode = HttpStatusCode.Conflict
+            expectedException = ConflictsWithAnotherUser()
         ) {}
     }
 
