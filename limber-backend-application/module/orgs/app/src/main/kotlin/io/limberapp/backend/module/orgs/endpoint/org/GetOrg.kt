@@ -6,10 +6,10 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.features.NotFoundException
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -40,7 +40,7 @@ internal class GetOrg @Inject constructor(
     override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
 
     override suspend fun handler(command: Command): OrgRep.Complete {
-        val model = orgService.get(command.orgId) ?: throw NotFoundException()
+        val model = orgService.get(command.orgId) ?: throw OrgNotFound()
         return orgMapper.completeRep(model)
     }
 

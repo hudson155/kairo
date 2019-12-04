@@ -2,8 +2,7 @@ package com.piperframework.endpoint
 
 import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.endpoint.command.AbstractCommand
-import com.piperframework.exception.exception.BadRequestException
-import com.piperframework.exception.exception.ForbiddenException
+import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -100,12 +99,12 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * the application's ConversionService.
      */
     protected fun <T : Any> Parameters.getAsType(clazz: KClass<T>, name: String): T {
-        val values = getAll(name) ?: throw BadRequestException()
+        val values = getAll(name) ?: throw ParameterConversionException(name, clazz)
         @Suppress("TooGenericExceptionCaught")
         return try {
             clazz.cast(application.conversionService.fromValues(values, clazz.java))
-        } catch (_: Exception) {
-            throw BadRequestException()
+        } catch (e: Exception) {
+            throw ParameterConversionException(name, clazz, e)
         }
     }
 }
