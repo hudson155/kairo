@@ -20,9 +20,7 @@ abstract class CreationSubrep : ValidatedRep()
 
 abstract class CreationRep : ValidatedRep()
 
-abstract class CompleteSubrep {
-    abstract val created: LocalDateTime
-}
+abstract class CompleteSubrep
 
 abstract class CompleteRep {
     abstract val id: UUID

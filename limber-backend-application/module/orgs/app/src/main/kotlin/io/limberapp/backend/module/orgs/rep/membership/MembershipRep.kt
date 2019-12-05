@@ -14,7 +14,7 @@ object MembershipRep {
     }
 
     data class Complete(
-        override val created: LocalDateTime,
+        val created: LocalDateTime,
         val userId: UUID
     ) : CompleteSubrep()
 }
