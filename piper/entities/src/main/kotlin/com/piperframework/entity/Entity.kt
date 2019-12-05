@@ -5,13 +5,13 @@ package com.piperframework.entity
 import java.time.LocalDateTime
 import java.util.UUID
 
-abstract class CompleteSubentity {
-    abstract val created: LocalDateTime
+interface CompleteSubentity {
+    val created: LocalDateTime
 }
 
-abstract class CompleteEntity {
-    abstract val id: UUID
-    abstract val created: LocalDateTime
+interface CompleteEntity {
+    val id: UUID
+    val created: LocalDateTime
 }
 
-abstract class UpdateEntity
+interface UpdateEntity

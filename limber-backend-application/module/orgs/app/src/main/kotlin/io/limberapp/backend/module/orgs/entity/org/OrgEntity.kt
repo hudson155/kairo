@@ -12,11 +12,11 @@ data class OrgEntity(
     val name: String,
     val features: List<FeatureEntity>,
     val members: List<MembershipEntity>
-) : CompleteEntity() {
+) : CompleteEntity {
 
     data class Update(
         val name: String?
-    ) : UpdateEntity()
+    ) : UpdateEntity
 
     companion object {
         const val collectionName = "Org"

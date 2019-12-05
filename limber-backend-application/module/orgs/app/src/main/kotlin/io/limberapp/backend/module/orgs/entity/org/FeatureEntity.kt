@@ -12,10 +12,10 @@ data class FeatureEntity(
     val name: String,
     val path: String,
     val type: FeatureModel.Type
-) : CompleteSubentity() {
+) : CompleteSubentity {
 
     data class Update(
         val name: String?,
         val path: String?
-    ) : UpdateEntity()
+    ) : UpdateEntity
 }

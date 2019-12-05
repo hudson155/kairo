@@ -7,4 +7,4 @@ import java.util.UUID
 data class MembershipEntity(
     override val created: LocalDateTime,
     val userId: UUID
-) : CompleteSubentity()
+) : CompleteSubentity
