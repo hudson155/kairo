@@ -14,7 +14,7 @@ object OrgRep {
 
     data class Creation(
         val name: String
-    ) : CreationRep() {
+    ) : CreationRep {
         override fun validate() {
             validate(Creation::name) { mediumText(allowEmpty = false) }
         }
@@ -26,11 +26,11 @@ object OrgRep {
         val name: String,
         val features: List<FeatureRep.Complete>,
         val members: List<MembershipRep.Complete>
-    ) : CompleteRep()
+    ) : CompleteRep
 
     data class Update(
         val name: String? = null
-    ) : UpdateRep() {
+    ) : UpdateRep {
         override fun validate() {
             validate(Update::name) { ifPresent { mediumText(allowEmpty = false) } }
         }

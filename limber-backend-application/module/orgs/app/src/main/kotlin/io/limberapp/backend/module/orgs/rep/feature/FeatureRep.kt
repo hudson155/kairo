@@ -17,7 +17,7 @@ object FeatureRep {
         val name: String,
         val path: String,
         val type: FeatureModel.Type
-    ) : CreationSubrep() {
+    ) : CreationSubrep {
         override fun validate() {
             validate(Creation::name) { shortText(allowEmpty = false) }
             validate(Creation::path) { path() }
@@ -30,12 +30,12 @@ object FeatureRep {
         val name: String,
         val path: String,
         val type: FeatureModel.Type
-    ) : CompleteSubrep()
+    ) : CompleteSubrep
 
     data class Update(
         val name: String? = null,
         val path: String? = null
-    ) : UpdateSubrep() {
+    ) : UpdateSubrep {
         override fun validate() {
             validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }
             validate(Update::path) { ifPresent { path() } }

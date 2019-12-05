@@ -7,26 +7,26 @@ import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.reflect.KProperty1
 
-sealed class ValidatedRep {
+interface ValidatedRep {
 
-    abstract fun validate()
+    fun validate()
 
     fun <R : ValidatedRep, T : Any?> R.validate(property: KProperty1<R, T>, validator: Validation<T>.() -> Unit) {
         Validation(property.get(this), property.name).apply(validator)
     }
 }
 
-abstract class CreationSubrep : ValidatedRep()
+interface CreationSubrep : ValidatedRep
 
-abstract class CreationRep : ValidatedRep()
+interface CreationRep : ValidatedRep
 
-abstract class CompleteSubrep
+interface CompleteSubrep
 
-abstract class CompleteRep {
-    abstract val id: UUID
-    abstract val created: LocalDateTime
+interface CompleteRep {
+    val id: UUID
+    val created: LocalDateTime
 }
 
-abstract class UpdateSubrep : ValidatedRep()
+interface UpdateSubrep : ValidatedRep
 
-abstract class UpdateRep : ValidatedRep()
+interface UpdateRep : ValidatedRep
