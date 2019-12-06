@@ -3,6 +3,7 @@ package io.limberapp.backend.module.users.endpoint.user
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -44,6 +45,9 @@ internal class CreateUser @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/users")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Post,
+            pathTemplate = listOf(StringComponent("users"))
+        )
     }
 }

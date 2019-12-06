@@ -3,6 +3,8 @@ package com.piperframework.testing
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.PiperApp
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper

@@ -3,6 +3,8 @@ package io.limberapp.backend.module.users.endpoint.user.role
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -50,6 +52,14 @@ internal class AddUserRole @Inject constructor(
     companion object {
         const val userId = "userId"
         const val roleName = "roleName"
-        val endpointConfig = EndpointConfig(HttpMethod.Put, "/users/{$userId}/roles/{$roleName}")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Put,
+            pathTemplate = listOf(
+                StringComponent("users"),
+                VariableComponent(userId),
+                StringComponent("roles"),
+                VariableComponent(roleName)
+            )
+        )
     }
 }

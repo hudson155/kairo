@@ -3,6 +3,7 @@ package io.limberapp.backend.module.orgs.endpoint.org
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -45,6 +46,9 @@ internal class GetOrgsByMemberId @Inject constructor(
 
     companion object {
         const val memberId = "memberId"
-        val endpointConfig = EndpointConfig(HttpMethod.Get, "/orgs")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Get,
+            pathTemplate = listOf(StringComponent("orgs"))
+        )
     }
 }

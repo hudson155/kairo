@@ -3,6 +3,8 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -49,6 +51,9 @@ internal class CreateFeature @Inject constructor(
 
     companion object {
         const val orgId = "orgId"
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/orgs/{$orgId}/features")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Post,
+            pathTemplate = listOf(StringComponent("orgs"), VariableComponent(orgId), StringComponent("features"))
+        )
     }
 }

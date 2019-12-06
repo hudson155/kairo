@@ -6,7 +6,21 @@ import io.ktor.http.encodeURLParameter
 /**
  * The configuration for the API endpoint. Uniquely represents the HTTP method and path template.
  */
-data class EndpointConfig(val httpMethod: HttpMethod, val pathTemplate: String) {
+class EndpointConfig private constructor(val httpMethod: HttpMethod, val pathTemplate: String) {
+
+    sealed class PathTemplateComponent {
+
+        class StringComponent(val value: String) : PathTemplateComponent() {
+            override fun toString() = value
+        }
+
+        class VariableComponent(val name: String) : PathTemplateComponent() {
+            override fun toString() = "{$name}"
+        }
+    }
+
+    constructor(httpMethod: HttpMethod, pathTemplate: List<PathTemplateComponent>)
+            : this(httpMethod, "/${pathTemplate.joinToString("/")}")
 
     fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
 

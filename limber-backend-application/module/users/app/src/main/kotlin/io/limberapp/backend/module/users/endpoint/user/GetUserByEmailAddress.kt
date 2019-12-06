@@ -3,6 +3,7 @@ package io.limberapp.backend.module.users.endpoint.user
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -47,6 +48,9 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     companion object {
         const val emailAddress = "emailAddress"
-        val endpointConfig = EndpointConfig(HttpMethod.Get, "/users")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Get,
+            pathTemplate = listOf(StringComponent("users"))
+        )
     }
 }
