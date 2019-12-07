@@ -1,7 +1,3 @@
 package com.piperframework.entity
 
-import java.time.LocalDateTime
-
-interface CompleteSubentity {
-    val created: LocalDateTime
-}
+interface CompleteSubentity
