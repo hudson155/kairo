@@ -6,11 +6,11 @@ import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherFeature
 import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
-import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.util.defaultFeatureRep
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -46,13 +46,7 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         val orgRep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),
@@ -92,13 +86,7 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         var orgRep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),
@@ -128,7 +116,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // UpdateFeature
-        val featureUpdateRep = FeatureRep.Update(name = DEFAULT_FEATURE_CREATION_REP.name)
+        val featureUpdateRep = FeatureRep.Update(name = defaultFeatureRep.name)
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
@@ -154,13 +142,7 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         var orgRep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),
@@ -190,7 +172,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // UpdateFeature
-        val featureUpdateRep = FeatureRep.Update(path = DEFAULT_FEATURE_CREATION_REP.path)
+        val featureUpdateRep = FeatureRep.Update(path = defaultFeatureRep.path)
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
@@ -216,13 +198,7 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         var orgRep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),
