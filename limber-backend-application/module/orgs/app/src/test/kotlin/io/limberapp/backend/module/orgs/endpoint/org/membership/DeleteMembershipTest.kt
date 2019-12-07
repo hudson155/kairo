@@ -5,12 +5,11 @@ import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
-import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.fixtures.membership.MembershipRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
-import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -70,10 +69,6 @@ internal class DeleteMembershipTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
-        val user0Id = UUID.randomUUID()
-        val user1Id = UUID.randomUUID()
-
         // CreateOrg
         var orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
@@ -82,29 +77,21 @@ internal class DeleteMembershipTest : ResourceTest() {
         ) {}
 
         // CreateMembership
-        val membership0CreationRep = MembershipRep.Creation(user0Id)
-        val membership0Rep = MembershipRep.Complete(
-            created = LocalDateTime.now(fixedClock),
-            userId = membership0CreationRep.userId
-        )
+        val membership0Rep = MembershipRepFixtures.Complete[0]()
         orgRep = orgRep.copy(members = orgRep.members.plus(membership0Rep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = membership0CreationRep
+            body = MembershipRepFixtures.Creation[0]
         ) {}
 
         // CreateMembership
-        val membership1CreationRep = MembershipRep.Creation(user1Id)
-        val membership1Rep = MembershipRep.Complete(
-            created = LocalDateTime.now(fixedClock),
-            userId = membership1CreationRep.userId
-        )
+        val membership1Rep = MembershipRepFixtures.Complete[1]()
         orgRep = orgRep.copy(members = orgRep.members.plus(membership1Rep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = membership1CreationRep
+            body = MembershipRepFixtures.Creation[1]
         ) {}
 
         // DeleteMembership
