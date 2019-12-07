@@ -10,7 +10,7 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
-import io.limberapp.backend.module.orgs.testing.util.defaultFeatureRep
+import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -45,18 +45,10 @@ internal class UpdateFeatureTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        val orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        val orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // UpdateFeature
@@ -85,18 +77,10 @@ internal class UpdateFeatureTest : ResourceTest() {
     fun nameConflict() {
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        var orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        var orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // CreateFeature
@@ -116,7 +100,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // UpdateFeature
-        val featureUpdateRep = FeatureRep.Update(name = defaultFeatureRep.name)
+        val featureUpdateRep = FeatureRep.Update(name = orgRep.features.first().name)
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
@@ -141,18 +125,10 @@ internal class UpdateFeatureTest : ResourceTest() {
     fun pathConflict() {
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        var orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        var orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // CreateFeature
@@ -172,7 +148,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // UpdateFeature
-        val featureUpdateRep = FeatureRep.Update(path = defaultFeatureRep.path)
+        val featureUpdateRep = FeatureRep.Update(path = orgRep.features.first().path)
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
@@ -197,18 +173,10 @@ internal class UpdateFeatureTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        var orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        var orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // CreateFeature

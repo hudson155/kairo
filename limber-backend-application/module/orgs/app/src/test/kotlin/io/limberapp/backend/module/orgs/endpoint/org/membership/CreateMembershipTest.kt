@@ -8,7 +8,7 @@ import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
-import io.limberapp.backend.module.orgs.testing.util.defaultFeatureRep
+import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -40,18 +40,10 @@ internal class CreateMembershipTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        var orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        var orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // CreateMembership
@@ -92,18 +84,10 @@ internal class CreateMembershipTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        var orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        var orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // CreateMembership

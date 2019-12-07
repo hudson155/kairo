@@ -3,9 +3,8 @@ package io.limberapp.backend.module.orgs.endpoint.org
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
-import io.limberapp.backend.module.orgs.testing.util.defaultFeatureRep
+import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
-import java.time.LocalDateTime
 import kotlin.test.assertEquals
 
 internal class CreateOrgTest : ResourceTest() {
@@ -14,18 +13,10 @@ internal class CreateOrgTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
-        val orgRep = OrgRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            name = orgCreationRep.name,
-            features = listOf(defaultFeatureRep),
-            members = emptyList()
-        )
+        val orgRep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
