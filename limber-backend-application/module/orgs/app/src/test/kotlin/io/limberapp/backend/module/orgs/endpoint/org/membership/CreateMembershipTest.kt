@@ -8,9 +8,9 @@ import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.fixtures.membership.MembershipRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
-import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -21,23 +21,18 @@ internal class CreateMembershipTest : ResourceTest() {
 
         // Setup
         val orgId = UUID.randomUUID()
-        val userId = UUID.randomUUID()
 
         // CreateFeature
-        val membershipCreationRep = MembershipRep.Creation(userId)
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = membershipCreationRep,
+            body = MembershipRepFixtures.Creation[0],
             expectedException = OrgNotFound()
         )
     }
 
     @Test
     fun duplicate() {
-
-        // Setup
-        val userId = UUID.randomUUID()
 
         // CreateOrg
         var orgRep = OrgRepFixtures.Complete[0](0)
@@ -47,23 +42,19 @@ internal class CreateMembershipTest : ResourceTest() {
         ) {}
 
         // CreateMembership
-        val membershipCreationRep = MembershipRep.Creation(userId)
-        val membershipRep = MembershipRep.Complete(
-            created = LocalDateTime.now(fixedClock),
-            userId = membershipCreationRep.userId
-        )
+        val membershipRep = MembershipRepFixtures.Complete[0]()
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = membershipCreationRep
+            body = MembershipRepFixtures.Creation[0]
         ) {}
 
         // CreateMembership
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = membershipCreationRep,
+            body = MembershipRepFixtures.Creation[1].copy(userId = MembershipRepFixtures.Creation[0].userId),
             expectedException = ConflictsWithAnotherMembership()
         )
 
@@ -91,16 +82,12 @@ internal class CreateMembershipTest : ResourceTest() {
         ) {}
 
         // CreateMembership
-        val membershipCreationRep = MembershipRep.Creation(userId)
-        val membershipRep = MembershipRep.Complete(
-            created = LocalDateTime.now(fixedClock),
-            userId = membershipCreationRep.userId
-        )
+        val membershipRep = MembershipRepFixtures.Complete[0]()
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = membershipCreationRep
+            body = MembershipRepFixtures.Creation[0]
         ) {
             val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
             assertEquals(membershipRep, actual)

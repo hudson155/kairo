@@ -5,6 +5,7 @@ import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.fixtures.membership.MembershipRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
 import java.time.LocalDateTime
@@ -32,9 +33,6 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
     @Test
     fun happyPathMultipleOrgs() {
 
-        // Setup
-        val userId = UUID.randomUUID()
-
         // CreateOrg
         var org0Rep = OrgRepFixtures.Complete[0](0)
         piperTest.test(
@@ -43,16 +41,12 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         ) {}
 
         // CreateMembership
-        val membership0CreationRep = MembershipRep.Creation(userId)
-        val membership0Rep = MembershipRep.Complete(
-            created = LocalDateTime.now(fixedClock),
-            userId = membership0CreationRep.userId
-        )
-        org0Rep = org0Rep.copy(members = org0Rep.members.plus(membership0Rep))
+        val membershipRep = MembershipRepFixtures.Complete[0]()
+        org0Rep = org0Rep.copy(members = org0Rep.members.plus(membershipRep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to org0Rep.id.toString()),
-            body = membership0CreationRep
+            body = MembershipRepFixtures.Creation[0]
         ) {}
 
         // CreateOrg
@@ -63,7 +57,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         ) {}
 
         // CreateMembership
-        val membership1CreationRep = MembershipRep.Creation(userId)
+        val membership1CreationRep = MembershipRep.Creation(membershipRep.userId)
         val membership1Rep = MembershipRep.Complete(
             created = LocalDateTime.now(fixedClock),
             userId = membership1CreationRep.userId
@@ -77,7 +71,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
 
         piperTest.test(
             endpointConfig = GetOrgsByMemberId.endpointConfig,
-            queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
+            queryParams = mapOf(GetOrgsByMemberId.memberId to membershipRep.userId.toString())
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
             assertEquals(listOf(org0Rep, org1Rep), actual)
