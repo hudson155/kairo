@@ -5,13 +5,11 @@ import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
-import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -79,28 +77,21 @@ internal class DeleteFeatureTest : ResourceTest() {
         ) {}
 
         // CreateFeature
-        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
-        val feature0Rep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[2],
-            created = LocalDateTime.now(fixedClock),
-            name = featureCreationRep.name,
-            path = featureCreationRep.path,
-            type = featureCreationRep.type
-        )
-        orgRep = orgRep.copy(features = orgRep.features.plus(feature0Rep))
+        val featureRep = FeatureRepFixtures.Complete[1](2)
+        orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = featureCreationRep
+            body = FeatureRepFixtures.Creation[1]
         ) {}
 
         // DeleteFeature
-        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != feature0Rep.id })
+        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
                 DeleteFeature.orgId to orgRep.id.toString(),
-                DeleteFeature.featureId to feature0Rep.id.toString()
+                DeleteFeature.featureId to featureRep.id.toString()
             )
         ) {}
 

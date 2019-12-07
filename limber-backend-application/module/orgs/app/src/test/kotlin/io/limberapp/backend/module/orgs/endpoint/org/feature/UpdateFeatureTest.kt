@@ -6,13 +6,12 @@ import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherFeature
 import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
-import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -84,19 +83,12 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // CreateFeature
-        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
-        val featureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[2],
-            created = LocalDateTime.now(fixedClock),
-            name = featureCreationRep.name,
-            path = featureCreationRep.path,
-            type = featureCreationRep.type
-        )
+        val featureRep = FeatureRepFixtures.Complete[1](2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = featureCreationRep
+            body = FeatureRepFixtures.Creation[1]
         ) {}
 
         // UpdateFeature
@@ -132,19 +124,12 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // CreateFeature
-        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
-        val featureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[2],
-            created = LocalDateTime.now(fixedClock),
-            name = featureCreationRep.name,
-            path = featureCreationRep.path,
-            type = featureCreationRep.type
-        )
+        val featureRep = FeatureRepFixtures.Complete[1](2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = featureCreationRep
+            body = FeatureRepFixtures.Creation[1]
         ) {}
 
         // UpdateFeature
@@ -180,19 +165,12 @@ internal class UpdateFeatureTest : ResourceTest() {
         ) {}
 
         // CreateFeature
-        val featureCreationRep = FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
-        var featureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[2],
-            created = LocalDateTime.now(fixedClock),
-            name = featureCreationRep.name,
-            path = featureCreationRep.path,
-            type = featureCreationRep.type
-        )
+        var featureRep = FeatureRepFixtures.Complete[1](2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = featureCreationRep
+            body = FeatureRepFixtures.Creation[1]
         ) {}
 
         // UpdateFeature
