@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.users.endpoint.user
 
 import io.limberapp.backend.module.users.exception.notFound.UserNotFound
-import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
+import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
 import org.junit.Test
 import java.util.UUID
 
@@ -26,16 +26,10 @@ internal class DeleteUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userCreationRep = UserRep.Creation(
-            firstName = "Jeff",
-            lastName = "Hudson",
-            emailAddress = "jhudson@jhudson.ca",
-            profilePhotoUrl = null
-        )
         val userId = deterministicUuidGenerator[0]
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = userCreationRep
+            body = UserRepFixtures.Creation[0]
         ) {}
 
         // DeleteUser
