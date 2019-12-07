@@ -2,7 +2,6 @@ package io.limberapp.backend.module.orgs.rep.feature
 
 import com.piperframework.rep.CompleteSubrep
 import com.piperframework.rep.CreationSubrep
-import com.piperframework.rep.UpdateRep
 import com.piperframework.rep.UpdateSubrep
 import com.piperframework.validation.util.ifPresent
 import com.piperframework.validation.util.path
