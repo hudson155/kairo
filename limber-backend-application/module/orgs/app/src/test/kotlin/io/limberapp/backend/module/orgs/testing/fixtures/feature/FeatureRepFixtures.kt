@@ -12,14 +12,14 @@ internal object FeatureRepFixtures {
         FeatureRep.Creation("Events", "/events", FeatureModel.Type.HOME)
     )
 
-    val Complete = Creation.map<FeatureRep.Creation, ResourceTest.(idSeed: Int) -> FeatureRep.Complete> {
-        { idSeed ->
-            FeatureRep.Complete(
+    val Complete = Creation.map { rep ->
+        fun ResourceTest.(idSeed: Int): FeatureRep.Complete {
+            return FeatureRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
                 created = LocalDateTime.now(fixedClock),
-                name = it.name,
-                path = it.path,
-                type = it.type
+                name = rep.name,
+                path = rep.path,
+                type = rep.type
             )
         }
     }
