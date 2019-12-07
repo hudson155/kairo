@@ -12,11 +12,11 @@ internal object MembershipRepFixtures {
         MembershipRep.Creation(UUID.randomUUID())
     )
 
-    val Complete = Creation.map<MembershipRep.Creation, ResourceTest.() -> MembershipRep.Complete> {
-        {
-            MembershipRep.Complete(
+    val Complete = Creation.map { rep ->
+        fun ResourceTest.(): MembershipRep.Complete {
+            return MembershipRep.Complete(
                 created = LocalDateTime.now(fixedClock),
-                userId = it.userId
+                userId = rep.userId
             )
         }
     }

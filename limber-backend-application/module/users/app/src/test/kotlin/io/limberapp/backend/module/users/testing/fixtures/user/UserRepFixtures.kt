@@ -21,15 +21,15 @@ internal object UserRepFixtures {
         )
     )
 
-    val Complete = Creation.map<UserRep.Creation, ResourceTest.(idSeed: Int) -> UserRep.Complete> {
-        { idSeed ->
-            UserRep.Complete(
+    val Complete = Creation.map { rep ->
+        fun ResourceTest.(idSeed: Int): UserRep.Complete {
+            return UserRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
                 created = LocalDateTime.now(fixedClock),
-                firstName = it.firstName,
-                lastName = it.lastName,
-                emailAddress = it.emailAddress,
-                profilePhotoUrl = it.profilePhotoUrl,
+                firstName = rep.firstName,
+                lastName = rep.lastName,
+                emailAddress = rep.emailAddress,
+                profilePhotoUrl = rep.profilePhotoUrl,
                 roles = emptySet()
             )
         }

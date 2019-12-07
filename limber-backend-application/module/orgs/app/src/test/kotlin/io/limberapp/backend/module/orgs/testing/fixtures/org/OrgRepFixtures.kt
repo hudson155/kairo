@@ -12,12 +12,12 @@ internal object OrgRepFixtures {
         OrgRep.Creation("Discreet Bulb")
     )
 
-    val Complete = Creation.map<OrgRep.Creation, ResourceTest.(idSeed: Int) -> OrgRep.Complete> {
-        { idSeed ->
-            OrgRep.Complete(
+    val Complete = Creation.map { rep ->
+        fun ResourceTest.(idSeed: Int): OrgRep.Complete {
+            return OrgRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
                 created = LocalDateTime.now(fixedClock),
-                name = it.name,
+                name = rep.name,
                 features = listOf(FeatureRepFixtures.Complete[0](idSeed + 1)),
                 members = emptyList()
             )
