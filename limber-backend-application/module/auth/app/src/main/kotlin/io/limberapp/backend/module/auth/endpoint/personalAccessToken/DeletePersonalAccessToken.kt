@@ -47,7 +47,7 @@ internal class DeletePersonalAccessToken @Inject constructor(
         const val userId = "userId"
         const val personalAccessTokenId = "personalAccessTokenId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
+            httpMethod = HttpMethod.Delete,
             pathTemplate = listOf(
                 StringComponent("users"),
                 VariableComponent(userId),
