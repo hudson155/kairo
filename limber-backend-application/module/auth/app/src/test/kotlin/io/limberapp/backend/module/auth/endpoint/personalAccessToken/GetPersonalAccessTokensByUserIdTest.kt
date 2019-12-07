@@ -3,8 +3,8 @@ package io.limberapp.backend.module.auth.endpoint.personalAccessToken
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.fixtures.personalAccessToken.PersonalAccessTokenRepFixtures
 import org.junit.Test
-import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -34,22 +34,14 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreatePersonalAccessToken
-        val personalAccessToken0Rep = PersonalAccessTokenRep.Complete(
-            id = deterministicUuidGenerator[0],
-            created = LocalDateTime.now(fixedClock),
-            userId = userId
-        )
+        val personalAccessToken0Rep = PersonalAccessTokenRepFixtures.Complete[0](userId, 0)
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {}
 
         // CreatePersonalAccessToken
-        val personalAccessToken1Rep = PersonalAccessTokenRep.Complete(
-            id = deterministicUuidGenerator[2],
-            created = LocalDateTime.now(fixedClock),
-            userId = userId
-        )
+        val personalAccessToken1Rep = PersonalAccessTokenRepFixtures.Complete[0](userId, 2)
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
@@ -61,8 +53,7 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
-            val expected = listOf(personalAccessToken0Rep, personalAccessToken1Rep)
-            assertEquals(expected, actual)
+            assertEquals(listOf(personalAccessToken0Rep, personalAccessToken1Rep), actual)
         }
     }
 }
