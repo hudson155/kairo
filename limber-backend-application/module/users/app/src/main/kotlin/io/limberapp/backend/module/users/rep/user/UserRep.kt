@@ -18,7 +18,7 @@ object UserRep {
         val lastName: String?,
         val emailAddress: String,
         val profilePhotoUrl: String?
-    ) : CreationRep() {
+    ) : CreationRep {
         override fun validate() {
             validate(UserRep.Creation::firstName) { ifPresent { mediumText(allowEmpty = false) } }
             validate(UserRep.Creation::lastName) { ifPresent { mediumText(allowEmpty = false) } }
@@ -35,12 +35,12 @@ object UserRep {
         val emailAddress: String,
         val profilePhotoUrl: String?,
         val roles: Set<JwtRole>
-    ) : CompleteRep()
+    ) : CompleteRep
 
     data class Update(
         val firstName: String? = null,
         val lastName: String? = null
-    ) : UpdateRep() {
+    ) : UpdateRep {
         override fun validate() {
             validate(UserRep.Update::firstName) { ifPresent { mediumText(allowEmpty = false) } }
             validate(UserRep.Update::lastName) { ifPresent { mediumText(allowEmpty = false) } }

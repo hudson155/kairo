@@ -15,12 +15,12 @@ data class UserEntity(
     val emailAddress: String,
     val profilePhotoUrl: String?,
     val roles: Set<JwtRole>
-) : CompleteEntity() {
+) : CompleteEntity {
 
     data class Update(
         val firstName: String?,
         val lastName: String?
-    ) : UpdateEntity()
+    ) : UpdateEntity
 
     companion object {
         const val collectionName = "User"

@@ -10,7 +10,7 @@ data class PersonalAccessTokenEntity(
     override val created: LocalDateTime,
     val userId: UUID,
     val token: String
-) : CompleteEntity() {
+) : CompleteEntity {
 
     companion object {
         const val collectionName = "PersonalAccessToken"

@@ -15,7 +15,7 @@ object JwtClaimsRequestRep {
         val lastName: String?,
         val emailAddress: String,
         val profilePhotoUrl: String?
-    ) : CreationRep() {
+    ) : CreationRep {
         override fun validate() {
             validate(Creation::firstName) { ifPresent { mediumText(allowEmpty = false) } }
             validate(Creation::lastName) { ifPresent { mediumText(allowEmpty = false) } }

@@ -8,14 +8,14 @@ import java.util.UUID
 
 data class FeatureEntity(
     val id: UUID,
-    override val created: LocalDateTime,
+    val created: LocalDateTime,
     val name: String,
     val path: String,
     val type: FeatureModel.Type
-) : CompleteSubentity() {
+) : CompleteSubentity {
 
     data class Update(
         val name: String?,
         val path: String?
-    ) : UpdateEntity()
+    ) : UpdateEntity
 }

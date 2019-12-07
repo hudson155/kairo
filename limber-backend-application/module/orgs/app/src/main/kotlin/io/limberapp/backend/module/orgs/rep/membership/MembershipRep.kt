@@ -9,12 +9,12 @@ object MembershipRep {
 
     data class Creation(
         val userId: UUID
-    ) : CreationSubrep() {
+    ) : CreationSubrep {
         override fun validate() = Unit
     }
 
     data class Complete(
-        override val created: LocalDateTime,
+        val created: LocalDateTime,
         val userId: UUID
-    ) : CompleteSubrep()
+    ) : CompleteSubrep
 }

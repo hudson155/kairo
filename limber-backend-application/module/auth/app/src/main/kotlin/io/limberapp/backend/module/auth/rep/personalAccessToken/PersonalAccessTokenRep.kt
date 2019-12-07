@@ -11,11 +11,11 @@ object PersonalAccessTokenRep {
         override val created: LocalDateTime,
         val userId: UUID,
         val token: String
-    ) : CompleteRep()
+    ) : CompleteRep
 
     data class Complete(
         override val id: UUID,
         override val created: LocalDateTime,
         val userId: UUID
-    ) : CompleteRep()
+    ) : CompleteRep
 }
