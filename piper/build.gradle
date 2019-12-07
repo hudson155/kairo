@@ -3,3 +3,11 @@ dependencies {
     compile project(":piper:exception-mapping")
     compile libs.ktor_jackson
 }
+
+allprojects {
+    if (!project.path.matches(':piper:util')) {
+        dependencies {
+            compile project(":piper:util")
+        }
+    }
+}

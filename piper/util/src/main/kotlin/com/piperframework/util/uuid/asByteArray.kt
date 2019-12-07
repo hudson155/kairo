@@ -10,5 +10,4 @@ fun UUID.asByteArray(): ByteArray = ByteBuffer.wrap(ByteArray(UUID_BYTES)).apply
     putLong(leastSignificantBits)
 }.array()
 
-@Suppress("FunctionName")
-fun UUID(byteArray: ByteArray) = with(ByteBuffer.wrap(byteArray)) { UUID(long, long) }
+fun uuidFromByteArray(byteArray: ByteArray) = with(ByteBuffer.wrap(byteArray)) { UUID(long, long) }

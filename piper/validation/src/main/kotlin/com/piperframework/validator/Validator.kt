@@ -10,6 +10,7 @@ object Validator {
         val hex = Regex("[a-f0-9]", RegexOption.IGNORE_CASE)
 
         val uuid = Regex("$hex{8}-?$hex{4}-?$hex{4}-?$hex{4}-?$hex{12}", RegexOption.IGNORE_CASE)
+        val base64EncodedUuid = Regex("[A-Za-z0-9+/]{21}[AQgw]==")
 
         val hostname = Regex(
             pattern = "[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+",
@@ -50,4 +51,5 @@ object Validator {
     fun url(value: String) = Regex.url.matches(value)
 
     fun uuid(value: String) = Regex.uuid.matches(value)
+    fun base64EncidedUuid(value: String) = Regex.base64EncodedUuid.matches(value)
 }
