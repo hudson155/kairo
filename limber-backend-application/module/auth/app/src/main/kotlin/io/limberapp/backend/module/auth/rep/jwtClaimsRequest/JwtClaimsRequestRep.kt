@@ -11,10 +11,10 @@ import io.limberapp.backend.authorization.principal.Claims
 object JwtClaimsRequestRep {
 
     data class Creation(
-        val firstName: String?,
-        val lastName: String?,
+        val firstName: String? = null,
+        val lastName: String? = null,
         val emailAddress: String,
-        val profilePhotoUrl: String?
+        val profilePhotoUrl: String? = null
     ) : CreationRep {
         override fun validate() {
             validate(Creation::firstName) { ifPresent { mediumText(allowEmpty = false) } }

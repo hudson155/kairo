@@ -28,10 +28,9 @@ abstract class AbstractResourceTest {
 
     protected val objectMapper = PiperObjectMapper()
 
-    protected val fixedClock: Clock =
-        Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
+    val fixedClock: Clock = Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
 
-    protected val deterministicUuidGenerator = DeterministicUuidGenerator()
+    val deterministicUuidGenerator = DeterministicUuidGenerator()
 
     @Before
     open fun before() {

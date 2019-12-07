@@ -3,6 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -47,6 +48,9 @@ internal class CreateJwtClaimsRequest @Inject constructor(
     }
 
     companion object {
-        val endpointConfig = EndpointConfig(HttpMethod.Post, "/jwt-claims-request")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Post,
+            pathTemplate = listOf(StringComponent("jwt-claims-request"))
+        )
     }
 }

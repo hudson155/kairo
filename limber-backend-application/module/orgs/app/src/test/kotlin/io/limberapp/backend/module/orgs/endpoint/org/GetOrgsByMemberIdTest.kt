@@ -2,11 +2,10 @@ package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
-import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
-import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.util.defaultFeatureRep
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -38,13 +37,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
 
         // CreateOrg
         val org0CreationRep = OrgRep.Creation("Cranky Pasta")
-        val org0DefaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val org0DefaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         var org0Rep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),
@@ -72,13 +65,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
 
         // CreateOrg
         val org1CreationRep = OrgRep.Creation("Discreet Bulb")
-        val org1DefaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[3],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val org1DefaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[3])
         var org1Rep = OrgRep.Complete(
             id = deterministicUuidGenerator[2],
             created = LocalDateTime.now(fixedClock),

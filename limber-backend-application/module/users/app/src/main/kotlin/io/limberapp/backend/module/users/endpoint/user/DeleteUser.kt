@@ -3,6 +3,8 @@ package io.limberapp.backend.module.users.endpoint.user
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -41,6 +43,9 @@ internal class DeleteUser @Inject constructor(
 
     companion object {
         const val userId = "userId"
-        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/users/{$userId}")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Delete,
+            pathTemplate = listOf(StringComponent("users"), VariableComponent(userId))
+        )
     }
 }

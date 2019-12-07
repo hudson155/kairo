@@ -5,11 +5,10 @@ import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherMembership
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
-import io.limberapp.backend.module.orgs.mapper.api.org.DEFAULT_FEATURE_CREATION_REP
-import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.util.defaultFeatureRep
 import org.junit.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -42,13 +41,7 @@ internal class CreateMembershipTest : ResourceTest() {
 
         // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         var orgRep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),
@@ -100,13 +93,7 @@ internal class CreateMembershipTest : ResourceTest() {
 
         // CreateOrg
         val orgCreationRep = OrgRep.Creation("Cranky Pasta")
-        val defaultFeatureRep = FeatureRep.Complete(
-            id = deterministicUuidGenerator[1],
-            created = LocalDateTime.now(fixedClock),
-            name = DEFAULT_FEATURE_CREATION_REP.name,
-            path = DEFAULT_FEATURE_CREATION_REP.path,
-            type = DEFAULT_FEATURE_CREATION_REP.type
-        )
+        val defaultFeatureRep = defaultFeatureRep(deterministicUuidGenerator[1])
         var orgRep = OrgRep.Complete(
             id = deterministicUuidGenerator[0],
             created = LocalDateTime.now(fixedClock),

@@ -3,6 +3,8 @@ package io.limberapp.backend.module.orgs.endpoint.org.membership
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -47,6 +49,14 @@ internal class DeleteMembership @Inject constructor(
     companion object {
         const val orgId = "orgId"
         const val memberId = "memberId"
-        val endpointConfig = EndpointConfig(HttpMethod.Delete, "/orgs/{$orgId}/memberships/{$memberId}")
+        val endpointConfig = EndpointConfig(
+            httpMethod = HttpMethod.Delete,
+            pathTemplate = listOf(
+                StringComponent("orgs"),
+                VariableComponent(orgId),
+                StringComponent("memberships"),
+                VariableComponent(memberId)
+            )
+        )
     }
 }

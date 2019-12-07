@@ -3,6 +3,8 @@ package io.limberapp.backend.module.auth.endpoint.personalAccessToken
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
+import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -50,7 +52,11 @@ internal class GetPersonalAccessTokensByUserId @Inject constructor(
         const val userId = "userId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Get,
-            pathTemplate = "/users/{$userId}/personal-access-tokens"
+            pathTemplate = listOf(
+                StringComponent("users"),
+                VariableComponent(userId),
+                StringComponent("personal-access-tokens")
+            )
         )
     }
 }
