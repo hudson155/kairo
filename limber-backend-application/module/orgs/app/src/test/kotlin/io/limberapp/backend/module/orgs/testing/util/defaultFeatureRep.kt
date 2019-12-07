@@ -6,7 +6,7 @@ import io.limberapp.backend.module.orgs.testing.ResourceTest
 import java.time.LocalDateTime
 import java.util.UUID
 
-fun ResourceTest.defaultFeatureRep(id: UUID) = FeatureRep.Complete(
+internal fun ResourceTest.defaultFeatureRep(id: UUID) = FeatureRep.Complete(
     id = id,
     created = LocalDateTime.now(fixedClock),
     name = "Home",
