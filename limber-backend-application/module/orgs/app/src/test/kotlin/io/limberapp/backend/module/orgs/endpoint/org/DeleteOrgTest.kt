@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
-import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.Test
 import java.util.UUID
 
@@ -26,11 +26,10 @@ internal class DeleteOrgTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        val orgCreationRep = OrgRep.Creation("Cranky Pasta")
         val orgId = deterministicUuidGenerator[0]
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = orgCreationRep
+            body = OrgRepFixtures.Creation[0]
         ) {}
 
         // DeleteOrg
