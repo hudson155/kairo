@@ -26,8 +26,8 @@ internal class DeleteFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteFeature.orgId to orgId.toString(),
-                DeleteFeature.featureId to featureId.toString()
+                DeleteFeature.orgId to orgId,
+                DeleteFeature.featureId to featureId
             ),
             expectedException = OrgNotFound()
         )
@@ -50,8 +50,8 @@ internal class DeleteFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteFeature.orgId to orgRep.id.toString(),
-                DeleteFeature.featureId to featureId.toString()
+                DeleteFeature.orgId to orgRep.id,
+                DeleteFeature.featureId to featureId
             ),
             expectedException = FeatureNotFound()
         )
@@ -59,7 +59,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -81,7 +81,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateFeature.orgId to orgRep.id),
             body = FeatureRepFixtures[0].creation()
         )
 
@@ -90,15 +90,15 @@ internal class DeleteFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
-                DeleteFeature.orgId to orgRep.id.toString(),
-                DeleteFeature.featureId to featureRep.id.toString()
+                DeleteFeature.orgId to orgRep.id,
+                DeleteFeature.featureId to featureRep.id
             )
         ) {}
 
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

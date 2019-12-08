@@ -17,7 +17,7 @@ internal class DeleteOrgTest : ResourceTest() {
         // DeleteOrg
         piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
-            pathParams = mapOf(DeleteOrg.orgId to orgId.toString()),
+            pathParams = mapOf(DeleteOrg.orgId to orgId),
             expectedException = OrgNotFound()
         )
     }
@@ -35,13 +35,13 @@ internal class DeleteOrgTest : ResourceTest() {
         // DeleteOrg
         piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
-            pathParams = mapOf(DeleteOrg.orgId to orgId.toString())
+            pathParams = mapOf(DeleteOrg.orgId to orgId)
         ) {}
 
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgId.toString()),
+            pathParams = mapOf(GetOrg.orgId to orgId),
             expectedException = OrgNotFound()
         )
     }

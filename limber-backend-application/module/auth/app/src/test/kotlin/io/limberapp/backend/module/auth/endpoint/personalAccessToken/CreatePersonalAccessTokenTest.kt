@@ -21,7 +21,7 @@ internal class CreatePersonalAccessTokenTest : ResourceTest() {
         val personalAccessTokenOneTimeUseRep = PersonalAccessTokenRepFixtures[0].oneTimeUse(this, userId, 0)
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         ) {
             val actual = objectMapper.readValue<PersonalAccessTokenRep.OneTimeUse>(response.content!!)
             assertEquals(personalAccessTokenOneTimeUseRep, actual)
@@ -30,7 +30,7 @@ internal class CreatePersonalAccessTokenTest : ResourceTest() {
         // GetPersonalAccessTokensByUserId
         piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(GetPersonalAccessTokensByUserId.userId to userId.toString())
+            pathParams = mapOf(GetPersonalAccessTokensByUserId.userId to userId)
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(personalAccessTokenRep), actual)

@@ -21,7 +21,7 @@ internal class UpdateUserTest : ResourceTest() {
         val updateRep = UserRep.Update(firstName = "Gunner")
         piperTest.test(
             endpointConfig = UpdateUser.endpointConfig,
-            pathParams = mapOf(UpdateUser.userId to userId.toString()),
+            pathParams = mapOf(UpdateUser.userId to userId),
             body = updateRep,
             expectedException = UserNotFound()
         )
@@ -41,7 +41,7 @@ internal class UpdateUserTest : ResourceTest() {
         userRep = userRep.copy(firstName = updateRep.firstName!!)
         piperTest.test(
             endpointConfig = UpdateUser.endpointConfig,
-            pathParams = mapOf(UpdateUser.userId to userRep.id.toString()),
+            pathParams = mapOf(UpdateUser.userId to userRep.id),
             body = updateRep
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
@@ -51,7 +51,7 @@ internal class UpdateUserTest : ResourceTest() {
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

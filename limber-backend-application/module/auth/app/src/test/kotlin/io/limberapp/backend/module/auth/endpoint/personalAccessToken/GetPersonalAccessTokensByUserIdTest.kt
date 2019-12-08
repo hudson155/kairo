@@ -20,7 +20,7 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
         // GetPersonalAccessTokensByUserId
         piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -37,20 +37,20 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
         val personalAccessToken0Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 0)
         piperTest.setup(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         ) {}
 
         // CreatePersonalAccessToken
         val personalAccessToken1Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 2)
         piperTest.setup(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         ) {}
 
         // GetPersonalAccessTokensByUserId
         piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(personalAccessToken0Rep, personalAccessToken1Rep), actual)

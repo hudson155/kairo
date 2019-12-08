@@ -22,7 +22,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         // GetOrgsByMemberId
         piperTest.test(
             endpointConfig = GetOrgsByMemberId.endpointConfig,
-            queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
+            queryParams = mapOf(GetOrgsByMemberId.memberId to userId)
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -47,7 +47,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         org0Rep = org0Rep.copy(members = org0Rep.members.plus(membership0Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to org0Rep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to org0Rep.id),
             body = MembershipRepFixtures[0].creation(userId)
         )
 
@@ -63,14 +63,14 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         org1Rep = org1Rep.copy(members = org1Rep.members.plus(membership1Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to org1Rep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to org1Rep.id),
             body = MembershipRepFixtures[1].creation(userId)
         )
 
         // GetOrgsByMemberId
         piperTest.test(
             endpointConfig = GetOrgsByMemberId.endpointConfig,
-            queryParams = mapOf(GetOrgsByMemberId.memberId to userId.toString())
+            queryParams = mapOf(GetOrgsByMemberId.memberId to userId)
         ) {
             val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
             assertEquals(listOf(org0Rep, org1Rep), actual)

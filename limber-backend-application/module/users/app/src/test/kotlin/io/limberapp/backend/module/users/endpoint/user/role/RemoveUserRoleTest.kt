@@ -24,8 +24,8 @@ internal class RemoveUserRoleTest : ResourceTest() {
         piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
-                RemoveUserRole.userId to userId.toString(),
-                RemoveUserRole.roleName to JwtRole.SUPERUSER.toString()
+                RemoveUserRole.userId to userId,
+                RemoveUserRole.roleName to JwtRole.SUPERUSER
             ),
             expectedException = UserNotFound()
         )
@@ -46,8 +46,8 @@ internal class RemoveUserRoleTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to userRep.id.toString(),
-                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
+                AddUserRole.userId to userRep.id,
+                AddUserRole.roleName to JwtRole.SUPERUSER
             )
         )
 
@@ -56,15 +56,15 @@ internal class RemoveUserRoleTest : ResourceTest() {
         piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
-                RemoveUserRole.userId to userRep.id.toString(),
-                RemoveUserRole.roleName to JwtRole.SUPERUSER.toString()
+                RemoveUserRole.userId to userRep.id,
+                RemoveUserRole.roleName to JwtRole.SUPERUSER
             )
         ) {}
 
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
@@ -85,15 +85,15 @@ internal class RemoveUserRoleTest : ResourceTest() {
         piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
-                RemoveUserRole.userId to userRep.id.toString(),
-                RemoveUserRole.roleName to JwtRole.SUPERUSER.toString()
+                RemoveUserRole.userId to userRep.id,
+                RemoveUserRole.roleName to JwtRole.SUPERUSER
             )
         ) {}
 
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

@@ -21,7 +21,7 @@ internal class UpdateOrgTest : ResourceTest() {
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         piperTest.test(
             endpointConfig = UpdateOrg.endpointConfig,
-            pathParams = mapOf(UpdateOrg.orgId to orgId.toString()),
+            pathParams = mapOf(UpdateOrg.orgId to orgId),
             body = orgUpdateRep,
             expectedException = OrgNotFound()
         )
@@ -42,7 +42,7 @@ internal class UpdateOrgTest : ResourceTest() {
         orgRep = orgRep.copy(name = orgUpdateRep.name!!)
         piperTest.test(
             endpointConfig = UpdateOrg.endpointConfig,
-            pathParams = mapOf(UpdateOrg.orgId to orgRep.id.toString()),
+            pathParams = mapOf(UpdateOrg.orgId to orgRep.id),
             body = orgUpdateRep
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
@@ -52,7 +52,7 @@ internal class UpdateOrgTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(UpdateOrg.orgId to orgRep.id.toString())
+            pathParams = mapOf(UpdateOrg.orgId to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
