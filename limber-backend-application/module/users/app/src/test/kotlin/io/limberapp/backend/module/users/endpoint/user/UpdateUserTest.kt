@@ -31,10 +31,10 @@ internal class UpdateUserTest : ResourceTest() {
     fun happyPath() {
 
         var userRep = UserRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
-        ) {}
+        )
 
         // UpdateUser
         val updateRep = UserRep.Update(firstName = "Gunner")

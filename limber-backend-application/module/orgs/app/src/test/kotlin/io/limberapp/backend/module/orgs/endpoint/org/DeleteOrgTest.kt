@@ -27,10 +27,10 @@ internal class DeleteOrgTest : ResourceTest() {
 
         // CreateOrg
         val orgId = deterministicUuidGenerator[0]
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // DeleteOrg
         piperTest.test(

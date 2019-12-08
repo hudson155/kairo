@@ -45,10 +45,10 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         val orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // UpdateFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
@@ -77,19 +77,19 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         var orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateFeature
         val featureRep = FeatureRepFixtures[0].complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = FeatureRepFixtures[0].creation()
-        ) {}
+        )
 
         // UpdateFeature
         val featureUpdateRep = FeatureRep.Update(name = orgRep.features.first().name)
@@ -118,19 +118,19 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         var orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateFeature
         val featureRep = FeatureRepFixtures[0].complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = FeatureRepFixtures[0].creation()
-        ) {}
+        )
 
         // UpdateFeature
         val featureUpdateRep = FeatureRep.Update(path = orgRep.features.first().path)
@@ -159,19 +159,19 @@ internal class UpdateFeatureTest : ResourceTest() {
 
         // CreateOrg
         var orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateFeature
         var featureRep = FeatureRepFixtures[0].complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = FeatureRepFixtures[0].creation()
-        ) {}
+        )
 
         // UpdateFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")

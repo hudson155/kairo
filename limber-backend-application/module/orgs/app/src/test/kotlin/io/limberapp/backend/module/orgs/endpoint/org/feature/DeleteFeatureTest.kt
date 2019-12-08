@@ -41,10 +41,10 @@ internal class DeleteFeatureTest : ResourceTest() {
 
         // CreateOrg
         val orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // DeleteFeature
         piperTest.test(
@@ -71,19 +71,19 @@ internal class DeleteFeatureTest : ResourceTest() {
 
         // CreateOrg
         var orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateFeature
         val featureRep = FeatureRepFixtures[0].complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
             body = FeatureRepFixtures[0].creation()
-        ) {}
+        )
 
         // DeleteFeature
         orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })

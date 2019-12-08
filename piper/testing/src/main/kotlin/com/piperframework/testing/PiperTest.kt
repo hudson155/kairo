@@ -30,6 +30,20 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     private val exceptionMapper = ExceptionMapper()
 
+    fun setup(
+        endpointConfig: EndpointConfig,
+        pathParams: Map<String, String> = emptyMap(),
+        queryParams: Map<String, String> = emptyMap(),
+        body: Any? = null
+    ) = testInternal(
+        endpointConfig = endpointConfig,
+        pathParams = pathParams,
+        queryParams = queryParams,
+        body = body,
+        expectedStatusCode = HttpStatusCode.OK,
+        test = {}
+    )
+
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String> = emptyMap(),
