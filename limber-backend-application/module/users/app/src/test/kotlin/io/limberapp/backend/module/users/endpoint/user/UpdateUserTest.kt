@@ -30,10 +30,10 @@ internal class UpdateUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        var userRep = UserRepFixtures.Complete[0](0)
+        var userRep = UserRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.Creation[0]
+            body = UserRepFixtures[0].creation()
         ) {}
 
         // UpdateUser

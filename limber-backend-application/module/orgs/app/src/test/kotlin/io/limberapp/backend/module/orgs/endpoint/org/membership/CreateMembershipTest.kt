@@ -21,12 +21,13 @@ internal class CreateMembershipTest : ResourceTest() {
 
         // Setup
         val orgId = UUID.randomUUID()
+        val userId = UUID.randomUUID()
 
-        // CreateFeature
+        // CreateMembership
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
-            body = MembershipRepFixtures.Creation[0],
+            body = MembershipRepFixtures[0].creation(userId),
             expectedException = OrgNotFound()
         )
     }
@@ -34,27 +35,30 @@ internal class CreateMembershipTest : ResourceTest() {
     @Test
     fun duplicate() {
 
+        // Setup
+        val userId = UUID.randomUUID()
+
         // CreateOrg
-        var orgRep = OrgRepFixtures.Complete[0](0)
+        var orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateMembership
-        val membershipRep = MembershipRepFixtures.Complete[0]()
+        val membershipRep = MembershipRepFixtures[0].complete(this, userId)
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = MembershipRepFixtures.Creation[0]
+            body = MembershipRepFixtures[0].creation(userId)
         ) {}
 
         // CreateMembership
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = MembershipRepFixtures.Creation[1].copy(userId = MembershipRepFixtures.Creation[0].userId),
+            body = MembershipRepFixtures[1].creation(userId),
             expectedException = ConflictsWithAnotherMembership()
         )
 
@@ -75,19 +79,19 @@ internal class CreateMembershipTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreateOrg
-        var orgRep = OrgRepFixtures.Complete[0](0)
+        var orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateMembership
-        val membershipRep = MembershipRepFixtures.Complete[0]()
+        val membershipRep = MembershipRepFixtures[0].complete(this, userId)
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = MembershipRepFixtures.Creation[0]
+            body = MembershipRepFixtures[0].creation(userId)
         ) {
             val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
             assertEquals(membershipRep, actual)

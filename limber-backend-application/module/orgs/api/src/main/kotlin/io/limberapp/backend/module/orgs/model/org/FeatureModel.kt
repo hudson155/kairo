@@ -12,6 +12,7 @@ data class FeatureModel(
 ) {
 
     enum class Type {
+        FORMS,
         HOME;
     }
 

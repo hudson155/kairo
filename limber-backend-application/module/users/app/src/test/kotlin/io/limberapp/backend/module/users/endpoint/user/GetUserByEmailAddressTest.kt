@@ -28,12 +28,13 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userRep = UserRepFixtures.Complete[0](0)
+        val userRep = UserRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.Creation[0]
+            body = UserRepFixtures[0].creation()
         ) {}
 
+        // GetUserByEmailAddress
         piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to userRep.emailAddress)

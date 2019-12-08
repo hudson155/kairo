@@ -34,14 +34,14 @@ internal class GetPersonalAccessTokensByUserIdTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreatePersonalAccessToken
-        val personalAccessToken0Rep = PersonalAccessTokenRepFixtures.Complete[0](userId, 0)
+        val personalAccessToken0Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 0)
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
         ) {}
 
         // CreatePersonalAccessToken
-        val personalAccessToken1Rep = PersonalAccessTokenRepFixtures.Complete[0](userId, 2)
+        val personalAccessToken1Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 2)
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
