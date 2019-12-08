@@ -16,13 +16,13 @@ internal class CreateUserTest : ResourceTest() {
         // CreateUser
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.Creation[0]
+            body = UserRepFixtures[0].creation()
         ) {}
 
         // CreateUser
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.Creation[1].copy(emailAddress = UserRepFixtures.Creation[0].emailAddress),
+            body = UserRepFixtures[1].creation().copy(emailAddress = UserRepFixtures[0].creation().emailAddress),
             expectedException = ConflictsWithAnotherUser()
         )
     }
@@ -31,10 +31,10 @@ internal class CreateUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userRep = UserRepFixtures.Complete[0](0)
+        val userRep = UserRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.Creation[0]
+            body = UserRepFixtures[0].creation()
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

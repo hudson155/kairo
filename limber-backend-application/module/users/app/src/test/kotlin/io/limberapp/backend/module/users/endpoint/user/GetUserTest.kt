@@ -29,12 +29,13 @@ internal class GetUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userRep = UserRepFixtures.Complete[0](0)
+        val userRep = UserRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.Creation[0]
+            body = UserRepFixtures[0].creation()
         ) {}
 
+        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id.toString())
