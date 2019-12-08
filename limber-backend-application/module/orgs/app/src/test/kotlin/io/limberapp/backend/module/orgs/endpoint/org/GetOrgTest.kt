@@ -30,10 +30,10 @@ internal class GetOrgTest : ResourceTest() {
 
         // CreateOrg
         val orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // GetOrg
         piperTest.test(

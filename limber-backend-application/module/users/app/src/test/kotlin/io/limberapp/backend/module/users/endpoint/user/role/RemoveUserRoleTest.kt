@@ -36,20 +36,20 @@ internal class RemoveUserRoleTest : ResourceTest() {
 
         // CreateUser
         var userRep = UserRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
-        ) {}
+        )
 
         // AddUserRole
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
                 AddUserRole.userId to userRep.id.toString(),
                 AddUserRole.roleName to JwtRole.SUPERUSER.toString()
             )
-        ) {}
+        )
 
         // RemoveUserRole
         userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
@@ -76,10 +76,10 @@ internal class RemoveUserRoleTest : ResourceTest() {
 
         // CreateUser
         val userRep = UserRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
-        ) {}
+        )
 
         // RemoveUserRole
         piperTest.test(

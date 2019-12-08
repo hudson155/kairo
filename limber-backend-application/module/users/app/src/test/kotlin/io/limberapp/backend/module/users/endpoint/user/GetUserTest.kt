@@ -30,10 +30,10 @@ internal class GetUserTest : ResourceTest() {
 
         // CreateUser
         val userRep = UserRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
-        ) {}
+        )
 
         // GetUser
         piperTest.test(

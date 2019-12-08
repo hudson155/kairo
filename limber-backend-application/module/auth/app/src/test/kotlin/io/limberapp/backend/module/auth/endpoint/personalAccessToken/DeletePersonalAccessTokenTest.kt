@@ -37,17 +37,17 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
 
         // CreatePersonalAccessToken
         val personalAccessToken0Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
-        ) {}
+        )
 
         // CreatePersonalAccessToken
         val personalAccessToken1Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 2)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
-        ) {}
+        )
 
         // DeletePersonalAccessToken
         piperTest.test(

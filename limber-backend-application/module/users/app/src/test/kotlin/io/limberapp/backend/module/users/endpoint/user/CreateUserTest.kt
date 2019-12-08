@@ -14,10 +14,10 @@ internal class CreateUserTest : ResourceTest() {
     fun duplicateEmailAddress() {
 
         // CreateUser
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateUser
         piperTest.test(

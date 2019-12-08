@@ -40,19 +40,19 @@ internal class CreateMembershipTest : ResourceTest() {
 
         // CreateOrg
         var orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateMembership
         val membershipRep = MembershipRepFixtures[0].complete(this, userId)
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
             body = MembershipRepFixtures[0].creation(userId)
-        ) {}
+        )
 
         // CreateMembership
         piperTest.test(
@@ -80,10 +80,10 @@ internal class CreateMembershipTest : ResourceTest() {
 
         // CreateOrg
         var orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
-        ) {}
+        )
 
         // CreateMembership
         val membershipRep = MembershipRepFixtures[0].complete(this, userId)

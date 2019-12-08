@@ -27,10 +27,10 @@ internal class DeleteUserTest : ResourceTest() {
 
         // CreateUser
         val userId = deterministicUuidGenerator[0]
-        piperTest.test(
+        piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
-        ) {}
+        )
 
         // DeleteUser
         piperTest.test(
