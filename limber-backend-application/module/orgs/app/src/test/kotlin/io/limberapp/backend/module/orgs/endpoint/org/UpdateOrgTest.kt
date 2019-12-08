@@ -31,10 +31,10 @@ internal class UpdateOrgTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        var orgRep = OrgRepFixtures.Complete[0](0)
+        var orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // UpdateOrg

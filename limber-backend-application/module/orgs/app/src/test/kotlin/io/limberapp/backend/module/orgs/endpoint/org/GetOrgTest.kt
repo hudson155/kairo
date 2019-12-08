@@ -29,10 +29,10 @@ internal class GetOrgTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        val orgRep = OrgRepFixtures.Complete[0](0)
+        val orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // GetOrg

@@ -40,10 +40,10 @@ internal class DeleteMembershipTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreateOrg
-        val orgRep = OrgRepFixtures.Complete[0](0)
+        val orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // DeleteMembership
@@ -69,38 +69,42 @@ internal class DeleteMembershipTest : ResourceTest() {
     @Test
     fun happyPath() {
 
+        // Setup
+        val user0Id = UUID.randomUUID()
+        val user1Id = UUID.randomUUID()
+
         // CreateOrg
-        var orgRep = OrgRepFixtures.Complete[0](0)
+        var orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateMembership
-        val membership0Rep = MembershipRepFixtures.Complete[0]()
+        val membership0Rep = MembershipRepFixtures[0].complete(this, user0Id)
         orgRep = orgRep.copy(members = orgRep.members.plus(membership0Rep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = MembershipRepFixtures.Creation[0]
+            body = MembershipRepFixtures[0].creation(user0Id)
         ) {}
 
         // CreateMembership
-        val membership1Rep = MembershipRepFixtures.Complete[1]()
+        val membership1Rep = MembershipRepFixtures[1].complete(this, user1Id)
         orgRep = orgRep.copy(members = orgRep.members.plus(membership1Rep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
-            body = MembershipRepFixtures.Creation[1]
+            body = MembershipRepFixtures[1].creation(user1Id)
         ) {}
 
         // DeleteMembership
-        orgRep = orgRep.copy(members = orgRep.members.filter { it.userId != membership0Rep.userId })
+        orgRep = orgRep.copy(members = orgRep.members.filter { it.userId != user0Id })
         piperTest.test(
             endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
                 DeleteMembership.orgId to orgRep.id.toString(),
-                DeleteMembership.memberId to membership0Rep.userId.toString()
+                DeleteMembership.memberId to user0Id.toString()
             )
         ) {}
 

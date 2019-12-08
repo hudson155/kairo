@@ -40,10 +40,10 @@ internal class DeleteFeatureTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         // CreateOrg
-        val orgRep = OrgRepFixtures.Complete[0](0)
+        val orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // DeleteFeature
@@ -70,19 +70,19 @@ internal class DeleteFeatureTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        var orgRep = OrgRepFixtures.Complete[0](0)
+        var orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateFeature
-        val featureRep = FeatureRepFixtures.Complete[1](2)
+        val featureRep = FeatureRepFixtures[0].complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = FeatureRepFixtures.Creation[1]
+            body = FeatureRepFixtures[0].creation()
         ) {}
 
         // DeleteFeature

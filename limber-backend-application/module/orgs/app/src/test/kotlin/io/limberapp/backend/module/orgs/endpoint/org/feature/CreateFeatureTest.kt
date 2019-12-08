@@ -26,7 +26,7 @@ internal class CreateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgId.toString()),
-            body = FeatureRepFixtures.Creation[1],
+            body = FeatureRepFixtures[0].creation(),
             expectedException = OrgNotFound()
         )
     }
@@ -35,17 +35,17 @@ internal class CreateFeatureTest : ResourceTest() {
     fun duplicateName() {
 
         // CreateOrg
-        val orgRep = OrgRepFixtures.Complete[0](0)
+        val orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateFeature
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = FeatureRepFixtures.Creation[1].copy(name = FeatureRepFixtures.Creation[0].name),
+            body = FeatureRepFixtures[0].creation().copy(name = FeatureRepFixtures.default.creation().name),
             expectedException = ConflictsWithAnotherFeature()
         )
 
@@ -63,17 +63,17 @@ internal class CreateFeatureTest : ResourceTest() {
     fun duplicatePath() {
 
         // CreateOrg
-        val orgRep = OrgRepFixtures.Complete[0](0)
+        val orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateFeature
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = FeatureRepFixtures.Creation[1].copy(path = FeatureRepFixtures.Creation[0].path),
+            body = FeatureRepFixtures[0].creation().copy(path = FeatureRepFixtures.default.creation().path),
             expectedException = ConflictsWithAnotherFeature()
         )
 
@@ -91,19 +91,19 @@ internal class CreateFeatureTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        var orgRep = OrgRepFixtures.Complete[0](0)
+        var orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures.Creation[0]
+            body = OrgRepFixtures[0].creation()
         ) {}
 
         // CreateFeature
-        val featureRep = FeatureRepFixtures.Complete[1](2)
+        val featureRep = FeatureRepFixtures[0].complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
-            body = FeatureRepFixtures.Creation[1]
+            body = FeatureRepFixtures[0].creation()
         ) {
             val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
