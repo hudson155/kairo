@@ -17,8 +17,8 @@ internal class CreatePersonalAccessTokenTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreatePersonalAccessToken
-        val personalAccessTokenRep = PersonalAccessTokenRepFixtures.Complete[0](userId, 0)
-        val personalAccessTokenOneTimeUseRep = PersonalAccessTokenRepFixtures.OneTimeUse[0](userId, 0)
+        val personalAccessTokenRep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 0)
+        val personalAccessTokenOneTimeUseRep = PersonalAccessTokenRepFixtures[0].oneTimeUse(this, userId, 0)
         piperTest.test(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
             pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())

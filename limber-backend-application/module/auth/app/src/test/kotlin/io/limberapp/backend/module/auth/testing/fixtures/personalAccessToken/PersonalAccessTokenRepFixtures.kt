@@ -8,24 +8,27 @@ import java.util.UUID
 
 internal object PersonalAccessTokenRepFixtures {
 
-    val OneTimeUse = listOf(
-        fun ResourceTest.(userId: UUID, idSeed: Int): PersonalAccessTokenRep.OneTimeUse {
-            return PersonalAccessTokenRep.OneTimeUse(
+    data class Fixture(
+        val oneTimeUse: ResourceTest.(userId: UUID, idSeed: Int) -> PersonalAccessTokenRep.OneTimeUse,
+        val complete: ResourceTest.(userId: UUID, idSeed: Int) -> PersonalAccessTokenRep.Complete
+    )
+
+    operator fun get(i: Int) = fixtures[i]
+
+    private val fixtures = listOf(
+        Fixture({ userId, idSeed ->
+            PersonalAccessTokenRep.OneTimeUse(
                 id = deterministicUuidGenerator[idSeed],
                 created = LocalDateTime.now(fixedClock),
                 userId = userId,
                 token = deterministicUuidGenerator[idSeed + 1].base64Encode()
             )
-        }
-    )
-
-    val Complete = OneTimeUse.map { rep ->
-        fun ResourceTest.(userId: UUID, idSeed: Int): PersonalAccessTokenRep.Complete {
-            return PersonalAccessTokenRep.Complete(
+        }, { userId, idSeed ->
+            PersonalAccessTokenRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
                 created = LocalDateTime.now(fixedClock),
                 userId = userId
             )
-        }
-    }
+        })
+    )
 }
