@@ -17,15 +17,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     fun defaultModels() = listOf(
         FormTemplateTextQuestionModel(
             id = uuidGenerator.generate(),
-            label = "Additional Information",
-            helpText = null,
-            width = FormTemplateQuestionModel.Width.FULL_WIDTH,
-            multiLine = true,
-            placeholder = null,
-            validator = null
-        ),
-        FormTemplateTextQuestionModel(
-            id = uuidGenerator.generate(),
             label = "Worker Name",
             helpText = null,
             width = FormTemplateQuestionModel.Width.HALF_WIDTH,
@@ -40,6 +31,14 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             width = FormTemplateQuestionModel.Width.HALF_WIDTH,
             earliest = null,
             latest = null
+        ),
+        FormTemplateTextQuestionRep.Creation(
+            label = "Description",
+            helpText = null,
+            width = FormTemplateQuestionModel.Width.FULL_WIDTH,
+            multiLine = true,
+            placeholder = null,
+            validator = null
         )
     )
 
