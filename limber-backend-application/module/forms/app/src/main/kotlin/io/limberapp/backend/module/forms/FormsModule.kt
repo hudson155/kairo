@@ -1,7 +1,17 @@
 package io.limberapp.backend.module.forms
 
-import com.piperframework.endpoint.ApiEndpoint
 import com.piperframework.module.Module
+import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByOrgId
+import io.limberapp.backend.module.forms.endpoint.formTemplate.UpdateFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.part.CreateFormTemplatePart
+import io.limberapp.backend.module.forms.endpoint.formTemplate.part.DeleteFormTemplatePart
+import io.limberapp.backend.module.forms.endpoint.formTemplate.part.UpdateFormTemplatePart
+import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.CreateFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.DeleteFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.UpdateFormTemplateQuestion
 
 /**
  * The forms module handles any form features an org has enabled. An org can have 0 form features, or many form
@@ -15,7 +25,22 @@ import com.piperframework.module.Module
  */
 class FormsModule : Module() {
 
-    override val endpoints = emptyList<Class<out ApiEndpoint<*, *, *>>>()
+    override val endpoints = listOf(
+
+        CreateFormTemplate::class.java,
+        DeleteFormTemplate::class.java,
+        GetFormTemplate::class.java,
+        GetFormTemplatesByOrgId::class.java,
+        UpdateFormTemplate::class.java,
+
+        CreateFormTemplatePart::class.java,
+        UpdateFormTemplatePart::class.java,
+        DeleteFormTemplatePart::class.java,
+
+        CreateFormTemplateQuestion::class.java,
+        DeleteFormTemplateQuestion::class.java,
+        UpdateFormTemplateQuestion::class.java
+    )
 
     override fun bindServices() = Unit
 
