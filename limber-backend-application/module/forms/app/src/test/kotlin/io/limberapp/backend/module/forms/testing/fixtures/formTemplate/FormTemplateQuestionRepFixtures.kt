@@ -55,7 +55,7 @@ internal object FormTemplateQuestionRepFixtures {
                 label = "Worker Name",
                 helpText = null,
                 width = FormTemplateQuestionModel.Width.HALF_WIDTH,
-                maxLength = 100,
+                maxLength = 200,
                 multiLine = false,
                 placeholder = null,
                 validator = null

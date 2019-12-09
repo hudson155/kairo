@@ -9,6 +9,10 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
+import kotlin.reflect.KClass
+
+private val TEXT_QUESTION_MAX_LENGTH_MULTILINE = 10_000
+private val TEXT_QUESTION_MAX_LENGTH_ONE_LINE = 200
 
 internal class FormTemplateQuestionMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator
@@ -61,7 +65,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = rep.placeholder,
             validator = rep.validator
         )
-        else -> unknown("form template question", rep::class)
+        else -> unknown(rep::class)
     }
 
     fun completeRep(model: FormTemplateQuestionModel) = when (model) {
@@ -78,12 +82,12 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             label = model.label,
             helpText = model.helpText,
             width = model.width,
-            maxLength = if (model.multiLine) 10_000 else 200,
+            maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,
             multiLine = model.multiLine,
             placeholder = model.placeholder,
             validator = model.validator
         )
-        else -> unknown("form template question", model::class)
+        else -> unknown(model::class)
     }
 
     fun update(rep: FormTemplateQuestionRep.Update) = when (rep) {
@@ -102,6 +106,8 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = rep.placeholder,
             validator = rep.validator
         )
-        else -> unknown("form template question", rep::class)
+        else -> unknown(rep::class)
     }
+
+    private fun unknown(clazz: KClass<*>): Nothing = unknown("form template question", clazz)
 }
