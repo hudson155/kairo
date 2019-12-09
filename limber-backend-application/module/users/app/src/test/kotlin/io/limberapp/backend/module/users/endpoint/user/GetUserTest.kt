@@ -20,7 +20,7 @@ internal class GetUserTest : ResourceTest() {
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userId.toString()),
+            pathParams = mapOf(GetUser.userId to userId),
             expectedException = UserNotFound()
         )
     }
@@ -38,7 +38,7 @@ internal class GetUserTest : ResourceTest() {
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

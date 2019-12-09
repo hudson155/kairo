@@ -26,7 +26,7 @@ internal class CreateMembershipTest : ResourceTest() {
         // CreateMembership
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgId.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgId),
             body = MembershipRepFixtures[0].creation(userId),
             expectedException = OrgNotFound()
         )
@@ -50,14 +50,14 @@ internal class CreateMembershipTest : ResourceTest() {
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id),
             body = MembershipRepFixtures[0].creation(userId)
         )
 
         // CreateMembership
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id),
             body = MembershipRepFixtures[1].creation(userId),
             expectedException = ConflictsWithAnotherMembership()
         )
@@ -65,7 +65,7 @@ internal class CreateMembershipTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id.toString())
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -90,7 +90,7 @@ internal class CreateMembershipTest : ResourceTest() {
         orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.test(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id),
             body = MembershipRepFixtures[0].creation(userId)
         ) {
             val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
@@ -100,7 +100,7 @@ internal class CreateMembershipTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id.toString())
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

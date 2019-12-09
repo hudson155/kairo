@@ -32,8 +32,8 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     fun setup(
         endpointConfig: EndpointConfig,
-        pathParams: Map<String, String> = emptyMap(),
-        queryParams: Map<String, String> = emptyMap(),
+        pathParams: Map<String, Any> = emptyMap(),
+        queryParams: Map<String, Any> = emptyMap(),
         body: Any? = null
     ) = testInternal(
         endpointConfig = endpointConfig,
@@ -46,8 +46,8 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     fun test(
         endpointConfig: EndpointConfig,
-        pathParams: Map<String, String> = emptyMap(),
-        queryParams: Map<String, String> = emptyMap(),
+        pathParams: Map<String, Any> = emptyMap(),
+        queryParams: Map<String, Any> = emptyMap(),
         body: Any? = null,
         expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
         test: TestApplicationCall.() -> Unit
@@ -62,8 +62,8 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     fun test(
         endpointConfig: EndpointConfig,
-        pathParams: Map<String, String> = emptyMap(),
-        queryParams: Map<String, String> = emptyMap(),
+        pathParams: Map<String, Any> = emptyMap(),
+        queryParams: Map<String, Any> = emptyMap(),
         body: Any? = null,
         expectedException: PiperException
     ) {
@@ -83,16 +83,16 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
 
     private fun testInternal(
         endpointConfig: EndpointConfig,
-        pathParams: Map<String, String>,
-        queryParams: Map<String, String>,
+        pathParams: Map<String, Any>,
+        queryParams: Map<String, Any>,
         body: Any?,
         expectedStatusCode: HttpStatusCode,
         test: TestApplicationCall.() -> Unit
     ) = withPiperTestApp(piperApp) {
         createCall(
             endpointConfig = endpointConfig,
-            pathParams = pathParams,
-            queryParams = queryParams,
+            pathParams = pathParams.mapValues { it.value.toString() },
+            queryParams = queryParams.mapValues { it.value.toString() },
             body = body
         ).runTest(expectedStatusCode, test)
     }

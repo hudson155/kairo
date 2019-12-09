@@ -29,8 +29,8 @@ internal class UpdateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
-                UpdateFeature.orgId to orgId.toString(),
-                UpdateFeature.featureId to featureId.toString()
+                UpdateFeature.orgId to orgId,
+                UpdateFeature.featureId to featureId
             ),
             body = featureUpdateRep,
             expectedException = OrgNotFound()
@@ -55,8 +55,8 @@ internal class UpdateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
-                UpdateFeature.orgId to orgRep.id.toString(),
-                UpdateFeature.featureId to featureId.toString()
+                UpdateFeature.orgId to orgRep.id,
+                UpdateFeature.featureId to featureId
             ),
             body = featureUpdateRep,
             expectedException = FeatureNotFound()
@@ -65,7 +65,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -87,7 +87,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateFeature.orgId to orgRep.id),
             body = FeatureRepFixtures[0].creation()
         )
 
@@ -96,8 +96,8 @@ internal class UpdateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
-                UpdateFeature.orgId to orgRep.id.toString(),
-                UpdateFeature.featureId to featureRep.id.toString()
+                UpdateFeature.orgId to orgRep.id,
+                UpdateFeature.featureId to featureRep.id
             ),
             body = featureUpdateRep,
             expectedException = ConflictsWithAnotherFeature()
@@ -106,7 +106,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -128,7 +128,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateFeature.orgId to orgRep.id),
             body = FeatureRepFixtures[0].creation()
         )
 
@@ -137,8 +137,8 @@ internal class UpdateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
-                UpdateFeature.orgId to orgRep.id.toString(),
-                UpdateFeature.featureId to featureRep.id.toString()
+                UpdateFeature.orgId to orgRep.id,
+                UpdateFeature.featureId to featureRep.id
             ),
             body = featureUpdateRep,
             expectedException = ConflictsWithAnotherFeature()
@@ -147,7 +147,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -169,7 +169,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
             endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateFeature.orgId to orgRep.id),
             body = FeatureRepFixtures[0].creation()
         )
 
@@ -180,8 +180,8 @@ internal class UpdateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = UpdateFeature.endpointConfig,
             pathParams = mapOf(
-                UpdateFeature.orgId to orgRep.id.toString(),
-                UpdateFeature.featureId to featureRep.id.toString()
+                UpdateFeature.orgId to orgRep.id,
+                UpdateFeature.featureId to featureRep.id
             ),
             body = featureUpdateRep
         ) {
@@ -192,7 +192,7 @@ internal class UpdateFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

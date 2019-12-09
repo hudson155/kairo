@@ -17,7 +17,7 @@ internal class DeleteUserTest : ResourceTest() {
         // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
-            pathParams = mapOf(DeleteUser.userId to userId.toString()),
+            pathParams = mapOf(DeleteUser.userId to userId),
             expectedException = UserNotFound()
         )
     }
@@ -35,13 +35,13 @@ internal class DeleteUserTest : ResourceTest() {
         // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
-            pathParams = mapOf(DeleteUser.userId to userId.toString())
+            pathParams = mapOf(DeleteUser.userId to userId)
         ) {}
 
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userId.toString()),
+            pathParams = mapOf(GetUser.userId to userId),
             expectedException = UserNotFound()
         )
     }

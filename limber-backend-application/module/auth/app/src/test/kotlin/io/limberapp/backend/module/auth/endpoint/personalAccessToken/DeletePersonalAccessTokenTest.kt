@@ -22,8 +22,8 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeletePersonalAccessToken.endpointConfig,
             pathParams = mapOf(
-                DeletePersonalAccessToken.userId to userId.toString(),
-                DeletePersonalAccessToken.personalAccessTokenId to personalAccessTokenId.toString()
+                DeletePersonalAccessToken.userId to userId,
+                DeletePersonalAccessToken.personalAccessTokenId to personalAccessTokenId
             ),
             expectedException = PersonalAccessTokenNotFound()
         )
@@ -39,29 +39,29 @@ internal class DeletePersonalAccessTokenTest : ResourceTest() {
         val personalAccessToken0Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 0)
         piperTest.setup(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         )
 
         // CreatePersonalAccessToken
         val personalAccessToken1Rep = PersonalAccessTokenRepFixtures[0].complete(this, userId, 2)
         piperTest.setup(
             endpointConfig = CreatePersonalAccessToken.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         )
 
         // DeletePersonalAccessToken
         piperTest.test(
             endpointConfig = DeletePersonalAccessToken.endpointConfig,
             pathParams = mapOf(
-                DeletePersonalAccessToken.userId to userId.toString(),
-                DeletePersonalAccessToken.personalAccessTokenId to personalAccessToken0Rep.id.toString()
+                DeletePersonalAccessToken.userId to userId,
+                DeletePersonalAccessToken.personalAccessTokenId to personalAccessToken0Rep.id
             )
         ) {}
 
         // GetPersonalAccessTokensByUserId
         piperTest.test(
             endpointConfig = GetPersonalAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreatePersonalAccessToken.userId to userId.toString())
+            pathParams = mapOf(CreatePersonalAccessToken.userId to userId)
         ) {
             val actual = objectMapper.readValue<List<PersonalAccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(personalAccessToken1Rep), actual)

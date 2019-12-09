@@ -24,8 +24,8 @@ internal class AddUserRoleTest : ResourceTest() {
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to userId.toString(),
-                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
+                AddUserRole.userId to userId,
+                AddUserRole.roleName to JwtRole.SUPERUSER
             ),
             expectedException = UserNotFound()
         )
@@ -46,15 +46,15 @@ internal class AddUserRoleTest : ResourceTest() {
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to userRep.id.toString(),
-                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
+                AddUserRole.userId to userRep.id,
+                AddUserRole.roleName to JwtRole.SUPERUSER
             )
         ) {}
 
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
@@ -76,8 +76,8 @@ internal class AddUserRoleTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to userRep.id.toString(),
-                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
+                AddUserRole.userId to userRep.id,
+                AddUserRole.roleName to JwtRole.SUPERUSER
             )
         )
 
@@ -85,15 +85,15 @@ internal class AddUserRoleTest : ResourceTest() {
         piperTest.test(
             endpointConfig = AddUserRole.endpointConfig,
             pathParams = mapOf(
-                AddUserRole.userId to userRep.id.toString(),
-                AddUserRole.roleName to JwtRole.SUPERUSER.toString()
+                AddUserRole.userId to userRep.id,
+                AddUserRole.roleName to JwtRole.SUPERUSER
             )
         ) {}
 
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id.toString())
+            pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

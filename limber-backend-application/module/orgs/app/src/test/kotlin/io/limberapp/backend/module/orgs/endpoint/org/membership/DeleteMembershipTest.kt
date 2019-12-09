@@ -26,8 +26,8 @@ internal class DeleteMembershipTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
-                DeleteMembership.orgId to orgId.toString(),
-                DeleteMembership.memberId to userId.toString()
+                DeleteMembership.orgId to orgId,
+                DeleteMembership.memberId to userId
             ),
             expectedException = OrgNotFound()
         )
@@ -50,8 +50,8 @@ internal class DeleteMembershipTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
-                DeleteMembership.orgId to orgRep.id.toString(),
-                DeleteMembership.memberId to userId.toString()
+                DeleteMembership.orgId to orgRep.id,
+                DeleteMembership.memberId to userId
             ),
             expectedException = MembershipNotFound()
         )
@@ -59,7 +59,7 @@ internal class DeleteMembershipTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -85,7 +85,7 @@ internal class DeleteMembershipTest : ResourceTest() {
         orgRep = orgRep.copy(members = orgRep.members.plus(membership0Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id),
             body = MembershipRepFixtures[0].creation(user0Id)
         )
 
@@ -94,7 +94,7 @@ internal class DeleteMembershipTest : ResourceTest() {
         orgRep = orgRep.copy(members = orgRep.members.plus(membership1Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to orgRep.id.toString()),
+            pathParams = mapOf(CreateMembership.orgId to orgRep.id),
             body = MembershipRepFixtures[1].creation(user1Id)
         )
 
@@ -103,15 +103,15 @@ internal class DeleteMembershipTest : ResourceTest() {
         piperTest.test(
             endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(
-                DeleteMembership.orgId to orgRep.id.toString(),
-                DeleteMembership.memberId to user0Id.toString()
+                DeleteMembership.orgId to orgRep.id,
+                DeleteMembership.memberId to user0Id
             )
         ) {}
 
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id.toString())
+            pathParams = mapOf("orgId" to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
