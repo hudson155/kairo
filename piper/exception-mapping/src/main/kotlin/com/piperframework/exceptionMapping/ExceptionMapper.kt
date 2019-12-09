@@ -6,6 +6,7 @@ import com.piperframework.exception.exception.badRequest.BadRequestException
 import com.piperframework.exception.exception.conflict.ConflictException
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.exception.exception.notFound.NotFoundException
+import com.piperframework.util.uuid.unknown
 import io.ktor.http.HttpStatusCode
 
 class ExceptionMapper {
@@ -16,7 +17,7 @@ class ExceptionMapper {
             is ConflictException -> HttpStatusCode.Conflict
             is ForbiddenException -> HttpStatusCode.Forbidden
             is NotFoundException -> HttpStatusCode.NotFound
-            else -> error("Unknown exception type: ${e::class.simpleName}")
+            else -> unknown("exception", e::class)
         }
         return PiperError(httpStatusCode.value, httpStatusCode.description, e.message)
     }
