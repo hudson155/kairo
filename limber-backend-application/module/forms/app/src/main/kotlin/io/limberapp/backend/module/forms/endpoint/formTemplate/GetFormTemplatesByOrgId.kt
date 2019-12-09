@@ -9,6 +9,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import java.util.UUID
 
 /**
@@ -17,7 +18,7 @@ import java.util.UUID
 internal class GetFormTemplatesByOrgId @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<GetFormTemplatesByOrgId.Command, Nothing>(
+) : LimberApiEndpoint<GetFormTemplatesByOrgId.Command, List<FormTemplateRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig

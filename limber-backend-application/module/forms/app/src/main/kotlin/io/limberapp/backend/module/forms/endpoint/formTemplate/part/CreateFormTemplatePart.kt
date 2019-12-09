@@ -19,7 +19,7 @@ import java.util.UUID
 internal class CreateFormTemplatePart @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<CreateFormTemplatePart.Command, Nothing>(
+) : LimberApiEndpoint<CreateFormTemplatePart.Command, FormTemplatePartRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -27,7 +27,7 @@ internal class CreateFormTemplatePart @Inject constructor(
 
     internal data class Command(
         val formTemplateId: UUID,
-        val index: Short,
+        val index: Short?,
         val creationRep: FormTemplatePartRep.Creation
     ) : AbstractCommand()
 
@@ -45,7 +45,7 @@ internal class CreateFormTemplatePart @Inject constructor(
         const val formTemplateId = "formTemplateId"
         const val index = "index"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
+            httpMethod = HttpMethod.Patch,
             pathTemplate = listOf(
                 StringComponent("form-templates"),
                 VariableComponent(formTemplateId),

@@ -19,7 +19,7 @@ import java.util.UUID
 internal class UpdateFormTemplatePart @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<UpdateFormTemplatePart.Command, Nothing>(
+) : LimberApiEndpoint<UpdateFormTemplatePart.Command, FormTemplatePartRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig

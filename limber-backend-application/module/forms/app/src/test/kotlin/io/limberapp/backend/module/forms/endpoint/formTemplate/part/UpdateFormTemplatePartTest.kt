@@ -26,7 +26,7 @@ internal class UpdateFormTemplatePartTest : ResourceTest() {
         val partId = UUID.randomUUID()
 
         // UpdateFormTemplatePart
-        val formTemplatePartUpdateRep = FormTemplatePartRep.Update("Crazy Form")
+        val formTemplatePartUpdateRep = FormTemplatePartRep.Update("Part 1 (updated)")
         piperTest.test(
             endpointConfig = UpdateFormTemplatePart.endpointConfig,
             pathParams = mapOf(
@@ -53,7 +53,7 @@ internal class UpdateFormTemplatePartTest : ResourceTest() {
         )
 
         // UpdateFormTemplatePart
-        val formTemplatePartUpdateRep = FormTemplatePartRep.Update("Crazy Form")
+        val formTemplatePartUpdateRep = FormTemplatePartRep.Update("Part 1 (updated)")
         piperTest.test(
             endpointConfig = UpdateFormTemplatePart.endpointConfig,
             pathParams = mapOf(

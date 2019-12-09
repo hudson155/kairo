@@ -22,6 +22,10 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGrou
  * "fill out" those templates. A form template akin to a real world blank form (or an infinite stack of blank forms)
  * that are all identical. A form instance is akin to a real world single form that has been filled out. It pertains to
  * a version of a form template, and the form template still exists.
+ *
+ * Form templates are made up of parts. Parts can be thought of as major sections, or perhaps "pages" of a form. Parts
+ * are made up of question groups. Question groups can be thought of as questions that must be together in order to make
+ * sense. Question groups are made up of questions, which are the atomic unit.
  */
 class FormsModule : Module() {
 

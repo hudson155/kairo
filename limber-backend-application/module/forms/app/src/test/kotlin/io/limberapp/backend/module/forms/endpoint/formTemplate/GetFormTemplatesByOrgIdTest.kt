@@ -43,7 +43,7 @@ internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
         )
 
         // CreateFormTemplate
-        val formTemplate1Rep = FormTemplateRepFixtures[1].complete(this, orgId, 2)
+        val formTemplate1Rep = FormTemplateRepFixtures[1].complete(this, orgId, 6)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures[1].creation(orgId)

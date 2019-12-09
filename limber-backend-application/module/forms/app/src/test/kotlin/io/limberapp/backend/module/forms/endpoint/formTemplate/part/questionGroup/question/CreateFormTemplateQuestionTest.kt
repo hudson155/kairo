@@ -7,11 +7,9 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
-import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplatePartRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
-import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplatePartRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import org.junit.Ignore
@@ -146,7 +144,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
                 CreateFormTemplateQuestion.partId to formTemplateRep.parts.single().id,
                 CreateFormTemplateQuestion.questionGroupId to formTemplateRep.parts.single().questionGroups.single().id
             ),
-            queryParams = mapOf(CreateFormTemplateQuestion.index to FormTemplateQuestionRepFixtures.defaults.size),
+            queryParams = mapOf(CreateFormTemplateQuestion.index to FormTemplateQuestionRepFixtures.defaults.size + 1),
             body = FormTemplateQuestionRepFixtures[0].creation(),
             expectedException = IndexOutOfBounds()
         )
@@ -168,9 +166,9 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         // CreateFormTemplateQuestion
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 2)
         formTemplateRep = formTemplateRep.copy(
-            parts = listOf(with(formTemplateRep.parts.single()) part@ {
+            parts = listOf(with(formTemplateRep.parts.single()) part@{
                 this@part.copy(
-                    questionGroups = listOf(with(this@part.questionGroups.single()) questionGroup@ {
+                    questionGroups = listOf(with(this@part.questionGroups.single()) questionGroup@{
                         this@questionGroup.copy(
                             questions = listOf(formTemplateQuestionRep).plus(this@questionGroup.questions)
                         )
@@ -217,9 +215,9 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         // CreateFormTemplateQuestion
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 2)
         formTemplateRep = formTemplateRep.copy(
-            parts = listOf(with(formTemplateRep.parts.single()) part@ {
+            parts = listOf(with(formTemplateRep.parts.single()) part@{
                 this@part.copy(
-                    questionGroups = listOf(with(this@part.questionGroups.single()) questionGroup@ {
+                    questionGroups = listOf(with(this@part.questionGroups.single()) questionGroup@{
                         this@questionGroup.copy(
                             questions = this@questionGroup.questions.plus(formTemplateQuestionRep)
                         )

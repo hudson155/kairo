@@ -27,10 +27,9 @@ internal class CreateFormTemplateTest : ResourceTest() {
         )
 
         // CreateFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures[1].complete(this, orgId, 0).copy(title = formTemplate0Rep.title)
         piperTest.test(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId),
+            body = FormTemplateRepFixtures[1].creation(orgId).copy(title = formTemplate0Rep.title),
             expectedException = ConflictsWithAnotherFormTemplate()
         )
     }

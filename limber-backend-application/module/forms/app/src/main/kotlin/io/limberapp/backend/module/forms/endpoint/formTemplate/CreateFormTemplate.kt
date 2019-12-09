@@ -17,7 +17,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 internal class CreateFormTemplate @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<CreateFormTemplate.Command, Nothing>(
+) : LimberApiEndpoint<CreateFormTemplate.Command, FormTemplateRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig

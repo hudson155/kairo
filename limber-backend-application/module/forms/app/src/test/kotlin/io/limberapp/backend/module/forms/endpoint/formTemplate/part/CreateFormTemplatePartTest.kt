@@ -107,7 +107,8 @@ internal class CreateFormTemplatePartTest : ResourceTest() {
 
         // GetFormTemplate
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig
+            endpointConfig = GetFormTemplate.endpointConfig,
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
             val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
@@ -141,7 +142,8 @@ internal class CreateFormTemplatePartTest : ResourceTest() {
 
         // GetFormTemplate
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig
+            endpointConfig = GetFormTemplate.endpointConfig,
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
             val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)

@@ -18,7 +18,7 @@ import java.util.UUID
 internal class DeleteFormTemplatePart @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<DeleteFormTemplatePart.Command, Nothing>(
+) : LimberApiEndpoint<DeleteFormTemplatePart.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -42,7 +42,7 @@ internal class DeleteFormTemplatePart @Inject constructor(
         const val formTemplateId = "formTemplateId"
         const val partId = "partId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
+            httpMethod = HttpMethod.Delete,
             pathTemplate = listOf(
                 StringComponent("form-templates"),
                 VariableComponent(formTemplateId),

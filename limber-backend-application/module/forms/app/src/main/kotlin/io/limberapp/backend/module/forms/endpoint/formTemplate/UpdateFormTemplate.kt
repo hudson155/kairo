@@ -19,7 +19,7 @@ import java.util.UUID
 internal class UpdateFormTemplate @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<UpdateFormTemplate.Command, Nothing>(
+) : LimberApiEndpoint<UpdateFormTemplate.Command, FormTemplateRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -42,7 +42,7 @@ internal class UpdateFormTemplate @Inject constructor(
     companion object {
         const val formTemplateId = "formTemplateId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Delete,
+            httpMethod = HttpMethod.Patch,
             pathTemplate = listOf(StringComponent("form-templates"), VariableComponent(formTemplateId))
         )
     }

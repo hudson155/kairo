@@ -19,7 +19,7 @@ import java.util.UUID
 internal class CreateFormTemplateQuestion @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<CreateFormTemplateQuestion.Command, Nothing>(
+) : LimberApiEndpoint<CreateFormTemplateQuestion.Command, FormTemplateQuestionRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -29,7 +29,7 @@ internal class CreateFormTemplateQuestion @Inject constructor(
         val formTemplateId: UUID,
         val partId: UUID,
         val questionGroupId: UUID,
-        val index: Short,
+        val index: Short?,
         val creationRep: FormTemplateQuestionRep.Creation
     ) : AbstractCommand()
 

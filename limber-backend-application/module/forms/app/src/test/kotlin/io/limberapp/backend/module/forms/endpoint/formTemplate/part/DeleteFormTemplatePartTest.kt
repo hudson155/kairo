@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplatePartRepFixtures
@@ -55,7 +56,7 @@ internal class DeleteFormTemplatePartTest : ResourceTest() {
                 DeleteFormTemplatePart.formTemplateId to formTemplateRep.id,
                 DeleteFormTemplatePart.partId to partId
             ),
-            expectedException = FormTemplateNotFound()
+            expectedException = FormTemplatePartNotFound()
         )
     }
 

@@ -31,7 +31,7 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        val formTemplateId = deterministicUuidGenerator[0]
+        val formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures[0].creation(orgId)
@@ -40,13 +40,13 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         // DeleteFormTemplate
         piperTest.test(
             endpointConfig = DeleteFormTemplate.endpointConfig,
-            pathParams = mapOf(DeleteFormTemplate.formTemplateId to formTemplateId)
+            pathParams = mapOf(DeleteFormTemplate.formTemplateId to formTemplateRep.id)
         ) {}
 
         // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateId),
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id),
             expectedException = FormTemplateNotFound()
         )
     }

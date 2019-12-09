@@ -4,6 +4,7 @@ import com.piperframework.rep.CompleteSubrep
 import com.piperframework.rep.CreationSubrep
 import com.piperframework.rep.UpdateSubrep
 import com.piperframework.validation.util.ifPresent
+import com.piperframework.validation.util.longText
 import com.piperframework.validation.util.mediumText
 import java.util.UUID
 
@@ -15,7 +16,7 @@ object FormTemplatePartRep {
     ) : CreationSubrep {
         override fun validate() {
             validate(Creation::title) { ifPresent { mediumText(allowEmpty = false) } }
-            validate(Creation::description) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(Creation::description) { ifPresent { longText(allowEmpty = false) } }
         }
     }
 
@@ -32,7 +33,7 @@ object FormTemplatePartRep {
     ) : UpdateSubrep {
         override fun validate() {
             validate(Update::title) { ifPresent { mediumText(allowEmpty = false) } }
-            validate(Update::description) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(Update::description) { ifPresent { longText(allowEmpty = false) } }
         }
     }
 }

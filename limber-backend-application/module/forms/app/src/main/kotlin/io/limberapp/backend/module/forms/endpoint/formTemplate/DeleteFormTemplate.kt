@@ -18,7 +18,7 @@ import java.util.UUID
 internal class DeleteFormTemplate @Inject constructor(
     application: Application,
     servingConfig: ServingConfig
-) : LimberApiEndpoint<DeleteFormTemplate.Command, Nothing>(
+) : LimberApiEndpoint<DeleteFormTemplate.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
