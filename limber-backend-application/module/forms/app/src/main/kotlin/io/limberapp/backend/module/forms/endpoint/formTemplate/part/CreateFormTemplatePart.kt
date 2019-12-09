@@ -33,7 +33,7 @@ internal class CreateFormTemplatePart @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        index = call.parameters.getAsType(Short::class, index),
+        index = call.parameters.getAsType(Short::class, index, optional = true),
         creationRep = call.getAndValidateBody()
     )
 

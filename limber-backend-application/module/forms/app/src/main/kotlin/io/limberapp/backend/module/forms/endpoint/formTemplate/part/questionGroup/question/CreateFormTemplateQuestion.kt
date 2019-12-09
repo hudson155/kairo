@@ -37,7 +37,7 @@ internal class CreateFormTemplateQuestion @Inject constructor(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
         partId = call.parameters.getAsType(UUID::class, partId),
         questionGroupId = call.parameters.getAsType(UUID::class, questionGroupId),
-        index = call.parameters.getAsType(Short::class, index),
+        index = call.parameters.getAsType(Short::class, index, optional = true),
         creationRep = call.getAndValidateBody()
     )
 
