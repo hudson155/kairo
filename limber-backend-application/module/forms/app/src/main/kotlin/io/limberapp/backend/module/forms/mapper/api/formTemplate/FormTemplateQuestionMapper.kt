@@ -32,7 +32,8 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             earliest = null,
             latest = null
         ),
-        FormTemplateTextQuestionRep.Creation(
+        FormTemplateTextQuestionModel(
+            id = uuidGenerator.generate(),
             label = "Description",
             helpText = null,
             width = FormTemplateQuestionModel.Width.FULL_WIDTH,

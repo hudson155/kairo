@@ -14,7 +14,7 @@ internal class FeatureMapper @Inject constructor(
 
     fun defaultModel() = FeatureModel(
         id = uuidGenerator.generate(),
-        created = LocalDateTime.now(),
+        created = LocalDateTime.now(clock),
         name = "Home",
         path = "/home",
         type = FeatureModel.Type.HOME
