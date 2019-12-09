@@ -26,7 +26,7 @@ internal class DeleteOrgTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        val orgId = deterministicUuidGenerator[0]
+        val orgRep = OrgRepFixtures[0].complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
             body = OrgRepFixtures[0].creation()
@@ -35,13 +35,13 @@ internal class DeleteOrgTest : ResourceTest() {
         // DeleteOrg
         piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
-            pathParams = mapOf(DeleteOrg.orgId to orgId)
+            pathParams = mapOf(DeleteOrg.orgId to orgRep.id)
         ) {}
 
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgId),
+            pathParams = mapOf(GetOrg.orgId to orgRep.id),
             expectedException = OrgNotFound()
         )
     }

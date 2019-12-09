@@ -26,7 +26,7 @@ internal class DeleteUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userId = deterministicUuidGenerator[0]
+        val userRep = UserRepFixtures[0].complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[0].creation()
@@ -35,13 +35,13 @@ internal class DeleteUserTest : ResourceTest() {
         // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
-            pathParams = mapOf(DeleteUser.userId to userId)
+            pathParams = mapOf(DeleteUser.userId to userRep.id)
         ) {}
 
         // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userId),
+            pathParams = mapOf(GetUser.userId to userRep.id),
             expectedException = UserNotFound()
         )
     }

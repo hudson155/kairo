@@ -112,7 +112,7 @@ exceptions:
   InstanceOfCheckForException:
     active: true
   NotImplementedDeclaration:
-    active: true
+    active: false
   PrintStackTrace:
     active: true
   RethrowCaughtException:

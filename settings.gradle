@@ -16,6 +16,10 @@ include ':limber-backend-application:module:auth'
 include ':limber-backend-application:module:auth:api'
 include ':limber-backend-application:module:auth:app'
 
+include ':limber-backend-application:module:forms'
+include ':limber-backend-application:module:forms:api'
+include ':limber-backend-application:module:forms:app'
+
 include ':limber-backend-application:module:orgs'
 include ':limber-backend-application:module:orgs:api'
 include ':limber-backend-application:module:orgs:app'
