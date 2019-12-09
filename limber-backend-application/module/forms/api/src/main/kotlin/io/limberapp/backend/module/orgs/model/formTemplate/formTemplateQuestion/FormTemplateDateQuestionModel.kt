@@ -7,8 +7,17 @@ import java.util.UUID
 data class FormTemplateDateQuestionModel(
     override val id: UUID,
     override val label: String,
-    override val helpText: String,
+    override val helpText: String?,
     override val width: FormTemplateQuestionModel.Width,
     val earliest: LocalDate?,
     val latest: LocalDate?
-) : FormTemplateQuestionModel
+) : FormTemplateQuestionModel {
+
+    data class Update(
+        override val label: String?,
+        override val helpText: String?,
+        override val width: FormTemplateQuestionModel.Width?,
+        val earliest: LocalDate?,
+        val latest: LocalDate?
+    ) : FormTemplateQuestionModel.Update
+}

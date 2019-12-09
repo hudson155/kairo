@@ -6,8 +6,14 @@ interface FormTemplateQuestionModel {
 
     val id: UUID
     val label: String
-    val helpText: String
+    val helpText: String?
     val width: Width
 
     enum class Width { HALF_WIDTH, FULL_WIDTH }
+
+    interface Update {
+        val label: String?
+        val helpText: String?
+        val width: Width?
+    }
 }
