@@ -11,8 +11,8 @@ import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.
 import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import kotlin.reflect.KClass
 
-private val TEXT_QUESTION_MAX_LENGTH_MULTILINE = 10_000
-private val TEXT_QUESTION_MAX_LENGTH_ONE_LINE = 200
+private const val TEXT_QUESTION_MAX_LENGTH_MULTILINE = 10_000
+private const val TEXT_QUESTION_MAX_LENGTH_ONE_LINE = 200
 
 internal class FormTemplateQuestionMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator
