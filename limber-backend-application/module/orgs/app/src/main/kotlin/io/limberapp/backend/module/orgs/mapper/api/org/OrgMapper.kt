@@ -20,7 +20,7 @@ internal class OrgMapper @Inject constructor(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         name = rep.name,
-        features = listOf(featureMapper.model()),
+        features = listOf(featureMapper.defaultModel()),
         members = emptyList()
     )
 
