@@ -1,6 +1,9 @@
 build:
   maxIssues: 0
 
+config:
+  validation: true
+
 processors:
   active: true
 
@@ -15,10 +18,15 @@ comments:
     active: false
   EndOfSentenceFormat:
     active: true
-    endOfSentenceFormat: ([.?!][ \t\n\r\f<])|([.?!:]$)
   UndocumentedPublicClass:
     active: false
+    searchInNestedClass: true
+    searchInInnerClass: true
+    searchInInnerObject: true
+    searchInInnerInterface: true
   UndocumentedPublicFunction:
+    active: false
+  UndocumentedPublicProperty:
     active: false
 
 complexity:
@@ -35,6 +43,7 @@ complexity:
     threshold: 10
     ignoreSingleWhenExpression: true
     ignoreSimpleWhenEntries: true
+    ignoreNestingFunctions: false
   LabeledExpression:
     active: false
   LargeClass:
@@ -108,7 +117,6 @@ exceptions:
   active: true
   ExceptionRaisedInUnexpectedLocation:
     active: true
-    methodNames: 'toString,hashCode,equals,finalize'
   InstanceOfCheckForException:
     active: true
   NotImplementedDeclaration:
@@ -119,6 +127,7 @@ exceptions:
     active: true
   ReturnFromFinally:
     active: true
+    ignoreLabeled: false
   SwallowedException:
     active: true
   ThrowingExceptionFromFinally:
@@ -225,14 +234,11 @@ naming:
   active: true
   ClassNaming:
     active: true
-    classPattern: '[A-Z$][a-zA-Z0-9$]*'
   ConstructorParameterNaming:
     active: true
-    parameterPattern: '[a-z][A-Za-z0-9]*'
-    privateParameterPattern: '[a-z][A-Za-z0-9]*'
+    ignoreOverridden: true
   EnumNaming:
     active: true
-    enumEntryPattern: '^[A-Z][_a-zA-Z0-9]*'
   ForbiddenClassName:
     active: false
   FunctionMaxLength:
@@ -243,11 +249,9 @@ naming:
     minimumFunctionNameLength: 3
   FunctionNaming:
     active: true
-    functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
     ignoreOverridden: true
   FunctionParameterNaming:
     active: true
-    parameterPattern: '[a-z][A-Za-z0-9]*'
     ignoreOverriddenFunctions: true
   InvalidPackageDeclaration:
     active: true
@@ -258,17 +262,10 @@ naming:
     ignoreOverriddenFunction: true
   ObjectPropertyNaming:
     active: true
-    constantPattern: '[A-Za-z][_A-Za-z0-9]*'
-    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-    privatePropertyPattern: '(_)?[A-Za-z][_A-Za-z0-9]*'
   PackageNaming:
     active: true
-    packagePattern: '^[a-z]+(\.[a-z][A-Za-z0-9]*)*$'
   TopLevelPropertyNaming:
     active: true
-    constantPattern: '[A-Z][_A-Z0-9]*'
-    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
   VariableMaxLength:
     active: true
     maximumVariableNameLength: 64
@@ -277,8 +274,6 @@ naming:
     minimumVariableNameLength: 1
   VariableNaming:
     active: true
-    variablePattern: '[a-z][A-Za-z0-9]*'
-    privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     ignoreOverridden: true
 
 performance:
@@ -294,6 +289,8 @@ performance:
 
 potential-bugs:
   active: true
+  Deprecation:
+    active: false
   DuplicateCaseInWhenExpression:
     active: true
   EqualsAlwaysReturnsTrueOrFalse:
@@ -301,6 +298,10 @@ potential-bugs:
   EqualsWithHashCodeExist:
     active: true
   ExplicitGarbageCollectionCall:
+    active: true
+  HasPlatformType:
+    active: true
+  ImplicitDefaultLocale:
     active: true
   InvalidRange:
     active: true
@@ -310,7 +311,8 @@ potential-bugs:
     active: true
   LateinitUsage:
     active: true
-    excludes: "**/src/test/**/*Test.kt"
+  MapGetWithNotNullAssertionOperator:
+    active: true
   MissingWhenCase:
     active: true
   RedundantElseInWhen:
@@ -350,6 +352,10 @@ style:
     active: false
   ForbiddenImport:
     active: false
+  ForbiddenMethodCall:
+    active: false
+  ForbiddenPublicDataClass:
+    active: false
   ForbiddenVoid:
     active: true
     ignoreOverridden: false
@@ -368,6 +374,7 @@ style:
     ignoreNumbers: '-1,0,1'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: false
+    ignoreLocalVariableDeclaration: true
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
     ignoreAnnotation: false
@@ -402,6 +409,8 @@ style:
     active: false
   ProtectedMemberInFinalClass:
     active: true
+  RedundantExplicitType:
+    active: true
   RedundantVisibilityModifierRule:
     active: true
   ReturnCount:
@@ -421,6 +430,8 @@ style:
     acceptableDecimalLength: 5
   UnnecessaryAbstractClass:
     active: true
+  UnnecessaryAnnotationUseSiteTarget:
+    active: true
   UnnecessaryApply:
     active: false
   UnnecessaryInheritance:
@@ -437,10 +448,14 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
-    allowedNames: "(_|serialVersionUID)"
+  UseArrayLiteralsInAnnotations:
+    active: true
   UseCheckOrError:
     active: true
   UseDataClass:
+    active: true
+    allowVars: false
+  UseIfInsteadOfWhen:
     active: true
   UseRequire:
     active: true

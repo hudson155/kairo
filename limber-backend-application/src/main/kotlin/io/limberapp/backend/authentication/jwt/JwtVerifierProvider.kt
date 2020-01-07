@@ -25,7 +25,7 @@ internal class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
     }
 }
 
-@Suppress("UnsafeCast")
+@Suppress("UseIfInsteadOfWhen", "UnsafeCast")
 private fun Jwk.makeAlgorithm(): Algorithm = when (algorithm) {
     "RS256" -> Algorithm.RSA256(publicKey as RSAPublicKey, null)
     else -> error("Unsupported algorithm $algorithm")
