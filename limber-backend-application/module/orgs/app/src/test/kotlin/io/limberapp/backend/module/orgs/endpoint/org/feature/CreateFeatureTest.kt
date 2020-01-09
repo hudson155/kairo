@@ -3,7 +3,7 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.exception.conflict.ConflictsWithAnotherFeature
+import io.limberapp.backend.module.orgs.exception.conflict.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -32,34 +32,6 @@ internal class CreateFeatureTest : ResourceTest() {
     }
 
     @Test
-    fun duplicateName() {
-
-        // CreateOrg
-        val orgRep = OrgRepFixtures[0].complete(this, 0)
-        piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
-        )
-
-        // CreateFeature
-        piperTest.test(
-            endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures[0].creation().copy(name = FeatureRepFixtures.default.creation().name),
-            expectedException = ConflictsWithAnotherFeature()
-        )
-
-        // GetOrg
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
-        ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
-            assertEquals(orgRep, actual)
-        }
-    }
-
-    @Test
     fun duplicatePath() {
 
         // CreateOrg
@@ -74,7 +46,7 @@ internal class CreateFeatureTest : ResourceTest() {
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id),
             body = FeatureRepFixtures[0].creation().copy(path = FeatureRepFixtures.default.creation().path),
-            expectedException = ConflictsWithAnotherFeature()
+            expectedException = FeatureIsNotUnique()
         )
 
         // GetOrg
