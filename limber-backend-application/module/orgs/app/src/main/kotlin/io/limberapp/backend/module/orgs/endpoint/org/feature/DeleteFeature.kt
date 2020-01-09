@@ -43,7 +43,7 @@ internal class DeleteFeature @Inject constructor(
     override suspend fun handler(command: Command) {
         featureService.delete(
             orgId = command.orgId,
-            id = command.featureId
+            featureId = command.featureId
         )
     }
 
