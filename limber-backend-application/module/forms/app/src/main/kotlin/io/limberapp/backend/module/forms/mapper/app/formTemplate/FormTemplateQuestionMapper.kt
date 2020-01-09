@@ -5,9 +5,9 @@ import com.piperframework.util.uuid.unknown
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
 import io.limberapp.backend.module.forms.entity.formTemplateQuestion.FormTemplateDateQuestionEntity
 import io.limberapp.backend.module.forms.entity.formTemplateQuestion.FormTemplateTextQuestionEntity
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
-import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
-import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import kotlin.reflect.KClass
 
 internal class FormTemplateQuestionMapper @Inject constructor() {

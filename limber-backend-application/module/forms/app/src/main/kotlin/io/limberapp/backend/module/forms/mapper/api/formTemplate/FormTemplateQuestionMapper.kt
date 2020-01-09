@@ -6,9 +6,9 @@ import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
-import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
-import io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import kotlin.reflect.KClass
 
 private const val TEXT_QUESTION_MAX_LENGTH_MULTILINE = 10_000
@@ -21,7 +21,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     fun defaultModels() = listOf(
         FormTemplateTextQuestionModel(
             id = uuidGenerator.generate(),
-            label = "Worker Name",
+            label = "Worker name",
             helpText = null,
             width = FormTemplateQuestionModel.Width.HALF_WIDTH,
             multiLine = false,
@@ -78,7 +78,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             latest = model.latest
         )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
-            id = uuidGenerator.generate(),
+            id = model.id,
             label = model.label,
             helpText = model.helpText,
             width = model.width,
