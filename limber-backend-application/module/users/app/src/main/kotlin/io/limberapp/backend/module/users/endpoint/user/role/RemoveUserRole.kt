@@ -39,9 +39,8 @@ internal class RemoveUserRole @Inject constructor(
         roleName = call.parameters.getAsType(JwtRole::class, roleName)
     )
 
-    override fun authorization(command: Command) = Authorization.Superuser
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.Superuser.authorize()
         try {
             userService.removeRole(command.userId, command.roleName)
         } catch (_: UserDoesNotHaveRole) {

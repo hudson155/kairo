@@ -37,9 +37,7 @@ internal class UpdateFormTemplatePart @Inject constructor(
         updateRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = TODO()
-
-    override suspend fun handler(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command) = TODO()
 
     companion object {
         const val formTemplateId = "formTemplateId"

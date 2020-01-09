@@ -31,9 +31,7 @@ internal class CreateFormTemplate @Inject constructor(
         creationRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = TODO()
-
-    override suspend fun handler(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command) = TODO()
 
     companion object {
         val endpointConfig = EndpointConfig(

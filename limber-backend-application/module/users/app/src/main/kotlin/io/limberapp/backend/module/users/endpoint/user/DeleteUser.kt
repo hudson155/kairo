@@ -35,9 +35,8 @@ internal class DeleteUser @Inject constructor(
         userId = call.parameters.getAsType(UUID::class, userId)
     )
 
-    override fun authorization(command: Command) = Authorization.User(command.userId)
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.User(command.userId).authorize()
         userService.delete(command.userId)
     }
 

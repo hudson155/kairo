@@ -41,9 +41,8 @@ internal class CreatePersonalAccessToken @Inject constructor(
         userId = call.parameters.getAsType(UUID::class, userId)
     )
 
-    override fun authorization(command: Command) = Authorization.Superuser
-
-    override suspend fun handler(command: Command): PersonalAccessTokenRep.OneTimeUse {
+    override suspend fun Handler.handle(command: Command): PersonalAccessTokenRep.OneTimeUse {
+        Authorization.Superuser.authorize()
         val model = personalAccessTokenMapper.model(command.userId)
         personalAccessTokenService.create(model)
         return personalAccessTokenMapper.oneTimeUseRep(model)

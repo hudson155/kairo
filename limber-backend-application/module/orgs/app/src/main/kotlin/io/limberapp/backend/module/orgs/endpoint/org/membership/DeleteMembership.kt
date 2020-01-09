@@ -37,9 +37,8 @@ internal class DeleteMembership @Inject constructor(
         memberId = call.parameters.getAsType(UUID::class, memberId)
     )
 
-    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.OrgMember(command.orgId).authorize()
         membershipService.delete(
             orgId = command.orgId,
             memberId = command.memberId

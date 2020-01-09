@@ -37,9 +37,8 @@ internal class DeletePersonalAccessToken @Inject constructor(
         personalAccessTokenId = call.parameters.getAsType(UUID::class, personalAccessTokenId)
     )
 
-    override fun authorization(command: Command) = Authorization.Superuser
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.Superuser.authorize()
         personalAccessTokenService.delete(command.userId, command.personalAccessTokenId)
     }
 

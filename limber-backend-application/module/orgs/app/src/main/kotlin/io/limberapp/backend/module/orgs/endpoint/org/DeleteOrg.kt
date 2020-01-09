@@ -35,9 +35,8 @@ internal class DeleteOrg @Inject constructor(
         orgId = call.parameters.getAsType(UUID::class, orgId)
     )
 
-    override fun authorization(command: Command) = Authorization.Superuser
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.Superuser.authorize()
         orgService.delete(command.orgId)
     }
 
