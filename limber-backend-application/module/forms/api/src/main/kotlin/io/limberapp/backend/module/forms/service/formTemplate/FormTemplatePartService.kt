@@ -5,7 +5,7 @@ import java.util.UUID
 
 interface FormTemplatePartService {
 
-    fun create(formTemplateId: UUID, model: FormTemplatePartModel, index: Short? = null)
+    fun create(formTemplateId: UUID, model: FormTemplatePartModel, index: Int? = null)
 
     fun update(
         formTemplateId: UUID,

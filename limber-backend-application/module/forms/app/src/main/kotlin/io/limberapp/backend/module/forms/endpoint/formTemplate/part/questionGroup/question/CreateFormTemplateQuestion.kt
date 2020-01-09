@@ -29,7 +29,7 @@ internal class CreateFormTemplateQuestion @Inject constructor(
         val formTemplateId: UUID,
         val partId: UUID,
         val questionGroupId: UUID,
-        val index: Short?,
+        val index: Int?,
         val creationRep: FormTemplateQuestionRep.Creation
     ) : AbstractCommand()
 
@@ -37,7 +37,7 @@ internal class CreateFormTemplateQuestion @Inject constructor(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
         partId = call.parameters.getAsType(UUID::class, partId),
         questionGroupId = call.parameters.getAsType(UUID::class, questionGroupId),
-        index = call.parameters.getAsType(Short::class, index, optional = true),
+        index = call.parameters.getAsType(Int::class, index, optional = true),
         creationRep = call.getAndValidateBody()
     )
 

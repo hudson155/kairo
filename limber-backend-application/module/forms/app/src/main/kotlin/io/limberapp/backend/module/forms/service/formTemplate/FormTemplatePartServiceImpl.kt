@@ -11,7 +11,7 @@ internal class FormTemplatePartServiceImpl @Inject constructor(
     private val formTemplatePartMapper: FormTemplatePartMapper
 ) : FormTemplatePartService {
 
-    override fun create(formTemplateId: UUID, model: FormTemplatePartModel, index: Short?) {
+    override fun create(formTemplateId: UUID, model: FormTemplatePartModel, index: Int?) {
         val entity = formTemplatePartMapper.entity(model)
         formTemplatePartStore.create(formTemplateId, entity)
     }

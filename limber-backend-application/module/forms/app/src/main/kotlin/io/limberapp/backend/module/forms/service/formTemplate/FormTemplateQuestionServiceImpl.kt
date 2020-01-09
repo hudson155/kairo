@@ -16,7 +16,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         model: FormTemplateQuestionModel,
-        index: Short?
+        index: Int?
     ) {
         val entity = formTemplateQuestionMapper.entity(model)
         formTemplateQuestionStore.create(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId, entity)

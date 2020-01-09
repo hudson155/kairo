@@ -10,7 +10,7 @@ interface FormTemplateQuestionService {
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         model: FormTemplateQuestionModel,
-        index: Short? = null
+        index: Int? = null
     )
 
     fun update(

@@ -27,13 +27,13 @@ internal class CreateFormTemplatePart @Inject constructor(
 
     internal data class Command(
         val formTemplateId: UUID,
-        val index: Short?,
+        val index: Int?,
         val creationRep: FormTemplatePartRep.Creation
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        index = call.parameters.getAsType(Short::class, index, optional = true),
+        index = call.parameters.getAsType(Int::class, index, optional = true),
         creationRep = call.getAndValidateBody()
     )
 
