@@ -7,11 +7,11 @@ interface OrgService {
 
     fun create(model: OrgModel)
 
-    fun get(id: UUID): OrgModel?
+    fun get(orgId: UUID): OrgModel?
 
     fun getByMemberId(memberId: UUID): List<OrgModel>
 
-    fun update(id: UUID, update: OrgModel.Update): OrgModel
+    fun update(orgId: UUID, update: OrgModel.Update): OrgModel
 
-    fun delete(id: UUID)
+    fun delete(orgId: UUID)
 }

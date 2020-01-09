@@ -8,15 +8,15 @@ interface UserService {
 
     fun create(model: UserModel)
 
-    fun get(id: UUID): UserModel?
+    fun get(userId: UUID): UserModel?
 
     fun getByEmailAddress(emailAddress: String): UserModel?
 
-    fun update(id: UUID, update: UserModel.Update): UserModel
+    fun update(userId: UUID, update: UserModel.Update): UserModel
 
-    fun addRole(userId: UUID, roleName: JwtRole)
+    fun addRole(userId: UUID, roleName: JwtRole): UserModel
 
-    fun removeRole(userId: UUID, roleName: JwtRole)
+    fun removeRole(userId: UUID, roleName: JwtRole): UserModel
 
-    fun delete(id: UUID)
+    fun delete(userId: UUID)
 }
