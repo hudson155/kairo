@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.model.formTemplate
+package io.limberapp.backend.module.forms.model.formTemplate
 
 import java.time.LocalDateTime
 import java.util.UUID

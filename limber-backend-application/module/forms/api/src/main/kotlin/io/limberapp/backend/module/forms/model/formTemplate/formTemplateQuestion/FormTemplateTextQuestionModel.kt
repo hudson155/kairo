@@ -1,23 +1,24 @@
-package io.limberapp.backend.module.orgs.model.formTemplate.formTemplateQuestion
+package io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion
 
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
-import java.time.LocalDate
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.util.UUID
 
-data class FormTemplateDateQuestionModel(
+data class FormTemplateTextQuestionModel(
     override val id: UUID,
     override val label: String,
     override val helpText: String?,
     override val width: FormTemplateQuestionModel.Width,
-    val earliest: LocalDate?,
-    val latest: LocalDate?
+    val multiLine: Boolean,
+    val placeholder: String?,
+    val validator: Regex?
 ) : FormTemplateQuestionModel {
 
     data class Update(
         override val label: String?,
         override val helpText: String?,
         override val width: FormTemplateQuestionModel.Width?,
-        val earliest: LocalDate?,
-        val latest: LocalDate?
+        val multiLine: Boolean?,
+        val placeholder: String?,
+        val validator: Regex?
     ) : FormTemplateQuestionModel.Update
 }
