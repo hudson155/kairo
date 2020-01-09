@@ -3,6 +3,7 @@ package io.limberapp.backend.module.auth.store.personalAccessToken
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
 import com.piperframework.store.MongoCollection
+import com.piperframework.store.MongoIndex
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
 import io.limberapp.backend.module.auth.exception.notFound.PersonalAccessTokenNotFound
@@ -19,7 +20,7 @@ internal class MongoPersonalAccessTokenStore @Inject constructor(
         collectionName = PersonalAccessTokenEntity.name,
         clazz = PersonalAccessTokenEntity::class
     ),
-    indices = listOf(
+    indices = listOf<MongoIndex<PersonalAccessTokenEntity>>(
         { ensureIndex(ascending(PersonalAccessTokenEntity::userId), unique = false) },
         { ensureIndex(ascending(PersonalAccessTokenEntity::token), unique = true) }
     )
