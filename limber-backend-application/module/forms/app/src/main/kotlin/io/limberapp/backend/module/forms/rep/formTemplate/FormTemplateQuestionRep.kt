@@ -1,16 +1,25 @@
 package io.limberapp.backend.module.forms.rep.formTemplate
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.piperframework.rep.CompleteSubrep
 import com.piperframework.rep.CreationSubrep
 import com.piperframework.rep.UpdateSubrep
 import com.piperframework.validation.util.ifPresent
 import com.piperframework.validation.util.longText
 import com.piperframework.validation.util.mediumText
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import java.util.UUID
 
 object FormTemplateQuestionRep {
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+    @JsonSubTypes(
+        JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Creation::class, name = "DATE"),
+        JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Creation::class, name = "TEXT")
+    )
     interface Creation : CreationSubrep {
 
         val label: String
@@ -23,6 +32,11 @@ object FormTemplateQuestionRep {
         }
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+    @JsonSubTypes(
+        JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Complete::class, name = "DATE"),
+        JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Complete::class, name = "TEXT")
+    )
     interface Complete : CompleteSubrep {
 
         val id: UUID
@@ -31,6 +45,11 @@ object FormTemplateQuestionRep {
         val width: FormTemplateQuestionModel.Width
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+    @JsonSubTypes(
+        JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Update::class, name = "DATE"),
+        JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Update::class, name = "TEXT")
+    )
     interface Update : UpdateSubrep {
 
         val label: String?

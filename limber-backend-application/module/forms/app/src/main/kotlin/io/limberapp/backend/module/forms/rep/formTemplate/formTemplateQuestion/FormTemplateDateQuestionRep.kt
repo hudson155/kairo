@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.time.LocalDate
 import java.util.UUID
 
