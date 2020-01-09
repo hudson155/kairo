@@ -12,7 +12,9 @@ internal object FormTemplateQuestionGroupRepFixtures {
     val default = Fixture { idSeed ->
         FormTemplateQuestionGroupRep.Complete(
             id = deterministicUuidGenerator[idSeed],
-            questions = FormTemplateQuestionRepFixtures.defaults.map { it.complete(this, idSeed + 1) }
+            questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
+                rep.complete(this, idSeed + 1 + i)
+            }
         )
     }
 }
