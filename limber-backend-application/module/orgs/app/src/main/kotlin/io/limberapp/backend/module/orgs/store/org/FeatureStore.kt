@@ -7,9 +7,11 @@ import java.util.UUID
 
 internal interface FeatureStore : Store<OrgEntity> {
 
-    fun create(orgId: UUID, entity: FeatureEntity): Unit?
+    fun create(orgId: UUID, entity: FeatureEntity)
 
-    fun update(orgId: UUID, id: UUID, update: FeatureEntity.Update): FeatureEntity?
+    fun get(orgId: UUID, featureId: UUID): FeatureEntity?
 
-    fun delete(orgId: UUID, id: UUID): Unit?
+    fun update(orgId: UUID, featureId: UUID, update: FeatureEntity.Update): FeatureEntity
+
+    fun delete(orgId: UUID, featureId: UUID)
 }

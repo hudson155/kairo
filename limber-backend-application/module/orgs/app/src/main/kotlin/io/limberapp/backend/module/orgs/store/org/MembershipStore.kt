@@ -7,7 +7,9 @@ import java.util.UUID
 
 internal interface MembershipStore : Store<OrgEntity> {
 
-    fun create(orgId: UUID, entity: MembershipEntity): Unit?
+    fun create(orgId: UUID, entity: MembershipEntity)
 
-    fun delete(orgId: UUID, memberId: UUID): Unit?
+    fun get(orgId: UUID, userId: UUID): MembershipEntity?
+
+    fun delete(orgId: UUID, userId: UUID)
 }

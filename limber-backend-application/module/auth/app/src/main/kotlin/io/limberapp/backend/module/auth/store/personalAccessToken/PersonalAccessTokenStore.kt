@@ -8,9 +8,11 @@ internal interface PersonalAccessTokenStore : Store<PersonalAccessTokenEntity> {
 
     fun create(entity: PersonalAccessTokenEntity)
 
+    fun get(userId: UUID, personalAccessTokenId: UUID): PersonalAccessTokenEntity?
+
     fun getByToken(token: String): PersonalAccessTokenEntity?
 
     fun getByUserId(userId: UUID): List<PersonalAccessTokenEntity>
 
-    fun delete(userId: UUID, id: UUID): Unit?
+    fun delete(userId: UUID, personalAccessTokenId: UUID)
 }
