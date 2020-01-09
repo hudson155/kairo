@@ -13,6 +13,6 @@ data class PersonalAccessTokenEntity(
 ) : CompleteEntity {
 
     companion object {
-        const val collectionName = "PersonalAccessToken"
+        const val name = "PersonalAccessToken"
     }
 }
