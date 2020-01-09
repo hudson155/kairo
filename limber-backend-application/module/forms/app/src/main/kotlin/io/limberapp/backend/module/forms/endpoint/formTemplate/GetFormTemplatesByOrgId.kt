@@ -8,8 +8,11 @@ import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
 /**
@@ -17,7 +20,9 @@ import java.util.UUID
  */
 internal class GetFormTemplatesByOrgId @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<GetFormTemplatesByOrgId.Command, List<FormTemplateRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -32,7 +37,11 @@ internal class GetFormTemplatesByOrgId @Inject constructor(
         orgId = call.parameters.getAsType(UUID::class, orgId)
     )
 
-    override suspend fun Handler.handle(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command): List<FormTemplateRep.Complete> {
+        Authorization.OrgMember(command.orgId).authorize()
+        val models = formTemplateService.getByOrgId(command.orgId)
+        return models.map { formTemplateMapper.completeRep(it) }
+    }
 
     companion object {
         const val orgId = "orgId"

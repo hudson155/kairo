@@ -10,7 +10,11 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
 /**
@@ -18,7 +22,9 @@ import java.util.UUID
  */
 internal class GetFormTemplate @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<GetFormTemplate.Command, FormTemplateRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -33,7 +39,11 @@ internal class GetFormTemplate @Inject constructor(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId)
     )
 
-    override suspend fun Handler.handle(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
+        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        val model = formTemplateService.get(command.formTemplateId) ?: throw FormTemplateNotFound()
+        return formTemplateMapper.completeRep(model)
+    }
 
     companion object {
         const val formTemplateId = "formTemplateId"

@@ -10,7 +10,11 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
 /**
@@ -18,7 +22,10 @@ import java.util.UUID
  */
 internal class CreateFormTemplateQuestion @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateQuestionService: FormTemplateQuestionService,
+    private val formTemplateQuestionMapper: FormTemplateQuestionMapper
 ) : LimberApiEndpoint<CreateFormTemplateQuestion.Command, FormTemplateQuestionRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -41,7 +48,18 @@ internal class CreateFormTemplateQuestion @Inject constructor(
         creationRep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command): FormTemplateQuestionRep.Complete {
+        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        val model = formTemplateQuestionMapper.model(command.creationRep)
+        formTemplateQuestionService.create(
+            formTemplateId = command.formTemplateId,
+            formTemplatePartId = command.partId,
+            formTemplateQuestionGroupId = command.questionGroupId,
+            model = model,
+            index = command.index
+        )
+        return formTemplateQuestionMapper.completeRep(model)
+    }
 
     companion object {
         const val formTemplateId = "formTemplateId"
