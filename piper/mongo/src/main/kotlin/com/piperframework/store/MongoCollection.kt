@@ -30,9 +30,9 @@ class MongoCollection<Complete : CompleteEntity>(
         .collationStrength(CollationStrength.SECONDARY)
         .build()
 
-    private val findOneAndUpdateOptions = FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
+    private fun findOneAndUpdateOptions() = FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
 
-    private val findOneAndDeleteOptions = FindOneAndDeleteOptions()
+    private fun findOneAndDeleteOptions() = FindOneAndDeleteOptions()
 
     fun ensureIndex(index: Bson, unique: Boolean) {
         delegate.ensureIndex(index, IndexOptions().unique(unique).collation(collation).background(false))
@@ -51,17 +51,17 @@ class MongoCollection<Complete : CompleteEntity>(
     fun find(filter: Bson): List<Complete> =
         delegate.find(filter).toList()
 
-    fun findOneByIdAndUpdate(id: UUID, update: Bson): Complete? =
-        findOneAndUpdate(id(id), update)
+    fun findOneByIdAndUpdate(id: UUID, update: Bson, arrayFilters: List<Bson>? = null): Complete? =
+        findOneAndUpdate(id(id), update, arrayFilters)
 
-    fun findOneAndUpdate(filter: Bson, update: Bson): Complete? =
-        delegate.findOneAndUpdate(filter, update, findOneAndUpdateOptions)
+    fun findOneAndUpdate(filter: Bson, update: Bson, arrayFilters: List<Bson>? = null): Complete? =
+        delegate.findOneAndUpdate(filter, update, findOneAndUpdateOptions().arrayFilters(arrayFilters))
 
     fun findOneByIdAndDelete(id: UUID): Unit? =
         findOneAndDelete(id(id))
 
     fun findOneAndDelete(filter: Bson): Unit? =
-        delegate.findOneAndDelete(filter, findOneAndDeleteOptions)?.let { Unit }
+        delegate.findOneAndDelete(filter, findOneAndDeleteOptions())?.let { Unit }
 
     private fun id(id: UUID) = KMongoUtil.idFilterQuery(id)
 }

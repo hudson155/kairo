@@ -30,7 +30,7 @@ internal class MongoFormTemplatePartStore @Inject constructor(
 
     override fun create(formTemplateId: UUID, entity: FormTemplatePartEntity) {
         formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
-        collection.findOneByIdAndUpdate(formTemplateId, push(FormTemplateEntity::parts, entity))
+        collection.findOneByIdAndUpdate(formTemplateId, push(FormTemplateEntity::parts, entity))!!
     }
 
     override fun get(formTemplateId: UUID, formTemplatePartId: UUID): FormTemplatePartEntity? {

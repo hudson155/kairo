@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.mongo.filteredPosOp
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.forms.entity.FormTemplateEntity
@@ -9,6 +10,7 @@ import io.limberapp.backend.module.forms.entity.FormTemplatePartEntity
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionGroupEntity
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
+import org.bson.Document
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -44,13 +46,14 @@ internal class MongoFormTemplateQuestionGroupStore @Inject constructor(
         entity: FormTemplateQuestionGroupEntity
     ) {
         formTemplatePartStore.get(formTemplateId, formTemplatePartId) ?: throw FormTemplatePartNotFound()
-        collection.findOneAndUpdate(
-            filter = and(
-                FormTemplateEntity::id eq formTemplateId,
-                FormTemplateEntity::parts / FormTemplatePartEntity::id eq formTemplatePartId
+        collection.findOneByIdAndUpdate(
+            id = formTemplateId,
+            update = push(
+                property = FormTemplateEntity::parts.filteredPosOp("part") / FormTemplatePartEntity::questionGroups,
+                value = entity
             ),
-            update = push(FormTemplatePartEntity::questionGroups, entity)
-        )
+            arrayFilters = listOf(Document("part.${FormTemplatePartEntity::id.name}", formTemplatePartId))
+        )!!
     }
 
     override fun get(
@@ -74,8 +77,14 @@ internal class MongoFormTemplateQuestionGroupStore @Inject constructor(
                         / FormTemplateQuestionGroupEntity::id eq formTemplateQuestionGroupId
             ),
             update = pullByFilter(
-                property = FormTemplateEntity::parts / FormTemplatePartEntity::questionGroups,
+                property = FormTemplateEntity::parts.filteredPosOp("part") / FormTemplatePartEntity::questionGroups,
                 filter = FormTemplateQuestionGroupEntity::id eq formTemplateQuestionGroupId
+            ),
+            arrayFilters = listOf(
+                Document(
+                    "part.${FormTemplatePartEntity::id.name}",
+                    Document("\$eq", formTemplatePartId)
+                )
             )
         ) ?: throw FormTemplateQuestionGroupNotFound()
     }

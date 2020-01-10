@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.mongo.filteredPosOp
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.forms.entity.FormTemplateEntity
@@ -10,6 +11,7 @@ import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionGroupEntity
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
+import org.bson.Document
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -48,16 +50,18 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
     ) {
         formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
             ?: throw FormTemplateQuestionGroupNotFound()
-        collection.findOneAndUpdate(
-            filter = and(
-                FormTemplateEntity::id eq formTemplateId,
-                FormTemplateEntity::parts / FormTemplatePartEntity::id eq formTemplatePartId,
-                FormTemplateEntity::parts
-                        / FormTemplatePartEntity::questionGroups
-                        / FormTemplateQuestionGroupEntity::id eq entity.id
+        collection.findOneByIdAndUpdate(
+            id = formTemplateId,
+            update = push(
+                property = (FormTemplateEntity::parts.filteredPosOp("part") / FormTemplatePartEntity::questionGroups)
+                    .filteredPosOp("questionGroup") / FormTemplateQuestionGroupEntity::questions,
+                value = entity
             ),
-            update = push(FormTemplateQuestionGroupEntity::questions, entity)
-        )
+            arrayFilters = listOf(
+                Document("part.${FormTemplatePartEntity::id.name}", formTemplatePartId),
+                Document("questionGroup.${FormTemplateQuestionGroupEntity::id.name}", formTemplateQuestionGroupId)
+            )
+        )!!
     }
 
     override fun get(
@@ -98,13 +102,22 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
                 FormTemplateEntity::parts
                         / FormTemplatePartEntity::questionGroups
                         / FormTemplateQuestionGroupEntity::questions
-                        / FormTemplateQuestionEntity::id eq formTemplateQuestionGroupId
+                        / FormTemplateQuestionEntity::id eq formTemplateQuestionId
             ),
             update = pullByFilter(
-                property = FormTemplateEntity::parts
-                        / FormTemplatePartEntity::questionGroups
-                        / FormTemplateQuestionGroupEntity::questions,
+                property = (FormTemplateEntity::parts.filteredPosOp("part") / FormTemplatePartEntity::questionGroups)
+                    .filteredPosOp("questionGroup") / FormTemplateQuestionGroupEntity::questions,
                 filter = FormTemplateQuestionEntity::id eq formTemplateQuestionId
+            ),
+            arrayFilters = listOf(
+                Document(
+                    "part.${FormTemplatePartEntity::id.name}",
+                    Document("\$eq", formTemplatePartId)
+                ),
+                Document(
+                    "questionGroup.${FormTemplateQuestionGroupEntity::id.name}",
+                    Document("\$eq", formTemplateQuestionGroupId)
+                )
             )
         ) ?: throw FormTemplateQuestionNotFound()
     }
