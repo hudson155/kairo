@@ -119,7 +119,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
             ),
             queryParams = mapOf(CreateFormTemplateQuestion.index to -1),
             body = FormTemplateQuestionRepFixtures[0].creation(),
-            expectedException = IndexOutOfBounds()
+            expectedException = IndexOutOfBounds(-1)
         )
     }
 
@@ -146,7 +146,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
             ),
             queryParams = mapOf(CreateFormTemplateQuestion.index to FormTemplateQuestionRepFixtures.defaults.size + 1),
             body = FormTemplateQuestionRepFixtures[0].creation(),
-            expectedException = IndexOutOfBounds()
+            expectedException = IndexOutOfBounds((FormTemplateQuestionRepFixtures.defaults.size + 1))
         )
     }
 

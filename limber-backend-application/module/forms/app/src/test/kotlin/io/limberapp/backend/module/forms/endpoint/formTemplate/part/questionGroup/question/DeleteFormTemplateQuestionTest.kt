@@ -16,7 +16,6 @@ import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-@Ignore
 internal class DeleteFormTemplateQuestionTest : ResourceTest() {
 
     @Test
