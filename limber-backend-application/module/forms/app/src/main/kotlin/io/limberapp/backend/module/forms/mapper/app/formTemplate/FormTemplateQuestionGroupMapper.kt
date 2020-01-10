@@ -13,9 +13,8 @@ internal class FormTemplateQuestionGroupMapper @Inject constructor(
         questions = model.questions.map { formTemplateQuestionMapper.entity(it) }
     )
 
-    fun model(entity: FormTemplateQuestionGroupEntity) =
-        FormTemplateQuestionGroupModel(
-            id = entity.id,
-            questions = entity.questions.map { formTemplateQuestionMapper.model(it) }
-        )
+    fun model(entity: FormTemplateQuestionGroupEntity) = FormTemplateQuestionGroupModel(
+        id = entity.id,
+        questions = entity.questions.map { formTemplateQuestionMapper.model(it) }
+    )
 }

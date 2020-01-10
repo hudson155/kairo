@@ -1,11 +1,10 @@
 package io.limberapp.backend.module.forms.testing.fixtures.formTemplate
 
-import com.piperframework.util.uuid.uuidGenerator.DeterministicUuidGenerator
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 
 internal object FormTemplateQuestionRepFixtures {
 
@@ -102,10 +101,4 @@ internal object FormTemplateQuestionRepFixtures {
             )
         })
     )
-}
-
-fun main() {
-    (0..20).forEach {
-        println("$it: ${DeterministicUuidGenerator()[it]}")
-    }
 }

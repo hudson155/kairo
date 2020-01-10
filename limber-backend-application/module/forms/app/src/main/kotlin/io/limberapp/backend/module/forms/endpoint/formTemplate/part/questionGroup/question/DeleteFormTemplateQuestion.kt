@@ -11,7 +11,6 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
-import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
@@ -23,8 +22,7 @@ internal class DeleteFormTemplateQuestion @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
-    private val formTemplateQuestionService: FormTemplateQuestionService,
-    private val formTemplateQuestionMapper: FormTemplateQuestionMapper
+    private val formTemplateQuestionService: FormTemplateQuestionService
 ) : LimberApiEndpoint<DeleteFormTemplateQuestion.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
