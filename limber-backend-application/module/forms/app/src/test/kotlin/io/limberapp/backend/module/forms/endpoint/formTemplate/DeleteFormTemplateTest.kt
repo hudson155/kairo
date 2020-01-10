@@ -3,7 +3,6 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Ignore
 import org.junit.Test
 import java.util.UUID
 
