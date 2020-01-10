@@ -41,9 +41,8 @@ internal class CreateFeature @Inject constructor(
         creationRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
-
-    override suspend fun handler(command: Command): FeatureRep.Complete {
+    override suspend fun Handler.handle(command: Command): FeatureRep.Complete {
+        Authorization.OrgMember(command.orgId).authorize()
         val model = featureMapper.model(command.creationRep)
         featureService.create(command.orgId, model)
         return featureMapper.completeRep(model)

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.forms.mapper.app.formTemplate
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.forms.entity.FormTemplatePartEntity
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplatePartModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplatePartModel
 
 internal class FormTemplatePartMapper @Inject constructor(
     private val formTemplateQuestionGroupMapper: FormTemplateQuestionGroupMapper
@@ -22,7 +22,7 @@ internal class FormTemplatePartMapper @Inject constructor(
         questionGroups = entity.questionGroups.map { formTemplateQuestionGroupMapper.model(it) }
     )
 
-    fun update(model: FormTemplatePartModel) = FormTemplatePartEntity.Update(
+    fun update(model: FormTemplatePartModel.Update) = FormTemplatePartEntity.Update(
         title = model.title,
         description = model.description
     )

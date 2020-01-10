@@ -10,7 +10,6 @@ import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-@Ignore
 internal class GetFormTemplateTest : ResourceTest() {
 
     @Test

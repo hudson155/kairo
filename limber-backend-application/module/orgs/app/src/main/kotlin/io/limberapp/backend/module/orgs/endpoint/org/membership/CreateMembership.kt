@@ -40,9 +40,8 @@ internal class CreateMembership @Inject constructor(
         creationRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
-
-    override suspend fun handler(command: Command): MembershipRep.Complete {
+    override suspend fun Handler.handle(command: Command): MembershipRep.Complete {
+        Authorization.OrgMember(command.orgId).authorize()
         val model = membershipMapper.model(command.creationRep)
         membershipService.create(command.orgId, model)
         return membershipMapper.completeRep(model)

@@ -8,11 +8,11 @@ internal interface OrgStore : Store<OrgEntity> {
 
     fun create(entity: OrgEntity)
 
-    fun get(id: UUID): OrgEntity?
-
-    fun update(id: UUID, update: OrgEntity.Update): OrgEntity?
+    fun get(orgId: UUID): OrgEntity?
 
     fun getByMemberId(memberId: UUID): List<OrgEntity>
 
-    fun delete(id: UUID): Unit?
+    fun update(orgId: UUID, update: OrgEntity.Update): OrgEntity
+
+    fun delete(orgId: UUID)
 }

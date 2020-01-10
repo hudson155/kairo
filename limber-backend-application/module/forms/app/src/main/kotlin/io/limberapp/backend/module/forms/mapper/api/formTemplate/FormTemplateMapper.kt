@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.mapper.api.formTemplate
 import com.google.inject.Inject
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import java.time.Clock
 import java.time.LocalDateTime
 

@@ -11,5 +11,5 @@ interface PersonalAccessTokenService {
 
     fun getByUserId(userId: UUID): List<PersonalAccessTokenModel>
 
-    fun delete(userId: UUID, id: UUID)
+    fun delete(userId: UUID, personalAccessTokenId: UUID)
 }

@@ -12,7 +12,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.users.exception.conflict.ConflictsWithAnotherUserRole
+import io.limberapp.backend.module.users.exception.conflict.UserAlreadyHasRole
 import io.limberapp.backend.module.users.service.user.UserService
 import java.util.UUID
 
@@ -39,12 +39,11 @@ internal class AddUserRole @Inject constructor(
         roleName = call.parameters.getAsType(JwtRole::class, roleName)
     )
 
-    override fun authorization(command: Command) = Authorization.Superuser
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.Superuser.authorize()
         try {
             userService.addRole(command.userId, command.roleName)
-        } catch (_: ConflictsWithAnotherUserRole) {
+        } catch (_: UserAlreadyHasRole) {
             return
         }
     }

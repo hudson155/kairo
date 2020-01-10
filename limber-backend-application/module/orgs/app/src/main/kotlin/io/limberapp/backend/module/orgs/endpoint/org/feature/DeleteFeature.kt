@@ -38,12 +38,11 @@ internal class DeleteFeature @Inject constructor(
         featureId = call.parameters.getAsType(UUID::class, featureId)
     )
 
-    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
-
-    override suspend fun handler(command: Command) {
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.OrgMember(command.orgId).authorize()
         featureService.delete(
             orgId = command.orgId,
-            id = command.featureId
+            featureId = command.featureId
         )
     }
 

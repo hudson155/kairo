@@ -6,31 +6,31 @@ ext {
             appengine_gradle_plugin: '2.2.0',
 
             // https://github.com/auth0/java-jwt/releases
-            auth0_java_jwt         : '3.8.3',
+            auth0_java_jwt         : '3.9.0',
 
             // https://github.com/auth0/jwks-rsa-java/releases
             auth0_jwks_rsa         : '0.9.0',
 
-            // https://github.com/googleapis/google-cloud-java/tree/master/google-cloud-clients/google-cloud-kms
-            gcloud_kms             : '1.34.0',
+            // https://github.com/googleapis/java-kms/releases
+            gcloud_kms             : '1.35.1',
 
             // https://github.com/google/guice/releases
             guice                  : '4.2.2',
 
             // https://github.com/FasterXML/jackson-core/releases
-            jackson                : '2.9.9',
+            jackson                : '2.10.2',
 
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
-            kotlin                 : '1.3.50',
+            kotlin                 : '1.3.61',
 
             // https://github.com/junit-team/junit4/releases
-            junit                  : '4.12',
+            junit                  : '4.13',
 
             // https://github.com/Litote/kmongo/releases
-            kmongo                 : '3.11.1',
+            kmongo                 : '3.11.2',
 
             // https://github.com/ktorio/ktor/releases
-            ktor                   : '1.2.4',
+            ktor                   : '1.2.5',
 
             // https://github.com/qos-ch/logback/releases
             logback                : '1.2.3',

@@ -1,16 +1,13 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.forms.exception.conflict.ConflictsWithAnotherFormTemplate
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Ignore
 import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-@Ignore
 internal class CreateFormTemplateTest : ResourceTest() {
 
     @Test
@@ -27,11 +24,23 @@ internal class CreateFormTemplateTest : ResourceTest() {
         )
 
         // CreateFormTemplate
+        val formTemplateRep = FormTemplateRepFixtures[1].complete(this, orgId, 6).copy(title = formTemplate0Rep.title)
         piperTest.test(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[1].creation(orgId).copy(title = formTemplate0Rep.title),
-            expectedException = ConflictsWithAnotherFormTemplate()
-        )
+            body = FormTemplateRepFixtures[1].creation(orgId).copy(title = formTemplate0Rep.title)
+        ) {
+            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            assertEquals(formTemplateRep, actual)
+        }
+
+        // GetFormTemplate
+        piperTest.test(
+            endpointConfig = GetFormTemplate.endpointConfig,
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
+        ) {
+            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            assertEquals(formTemplateRep, actual)
+        }
     }
 
     @Test
@@ -52,7 +61,8 @@ internal class CreateFormTemplateTest : ResourceTest() {
 
         // GetFormTemplate
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig
+            endpointConfig = GetFormTemplate.endpointConfig,
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
             val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)

@@ -39,9 +39,8 @@ internal class GetUser @Inject constructor(
         userId = call.parameters.getAsType(UUID::class, userId)
     )
 
-    override fun authorization(command: Command) = Authorization.User(command.userId)
-
-    override suspend fun handler(command: Command): UserRep.Complete {
+    override suspend fun Handler.handle(command: Command): UserRep.Complete {
+        Authorization.User(command.userId).authorize()
         val model = userService.get(command.userId) ?: throw UserNotFound()
         return userMapper.completeRep(model)
     }

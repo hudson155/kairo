@@ -1,16 +1,19 @@
 package com.piperframework.store
 
 import com.mongodb.client.MongoDatabase
+import com.mongodb.client.model.Collation
+import com.mongodb.client.model.CollationStrength
+import com.mongodb.client.model.FindOneAndDeleteOptions
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.IndexOptions
 import com.mongodb.client.model.ReturnDocument
 import com.piperframework.entity.CompleteEntity
-import com.piperframework.entity.UpdateEntity
 import org.bson.conversions.Bson
 import org.litote.kmongo.ensureIndex
 import org.litote.kmongo.findOne
 import org.litote.kmongo.findOneById
 import org.litote.kmongo.util.KMongoUtil
+import java.util.Locale
 import java.util.UUID
 import kotlin.reflect.KClass
 
@@ -22,37 +25,43 @@ class MongoCollection<Complete : CompleteEntity>(
 
     private val delegate = mongoDatabase.getCollection(collectionName, clazz.java)
 
+    private val collation = Collation.builder()
+        .locale(Locale.ENGLISH.language)
+        .collationStrength(CollationStrength.SECONDARY)
+        .build()
+
+    private fun findOneAndUpdateOptions() = FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
+
+    private fun findOneAndDeleteOptions() = FindOneAndDeleteOptions()
+
     fun ensureIndex(index: Bson, unique: Boolean) {
-        delegate.ensureIndex(index, IndexOptions().unique(unique).background(true))
+        delegate.ensureIndex(index, IndexOptions().unique(unique).collation(collation).background(false))
     }
 
     fun insertOne(entity: Complete) {
         delegate.insertOne(entity)
     }
 
-    fun findOneById(id: UUID): Complete? = delegate.findOneById(id)
+    fun findOneById(id: UUID): Complete? =
+        delegate.findOneById(id)
 
-    fun findOne(bson: Bson): Complete? = delegate.findOne(bson)
+    fun findOne(filter: Bson): Complete? =
+        delegate.findOne(filter)
 
-    fun find(bson: Bson): List<Complete> = delegate.find(bson).toList()
+    fun find(filter: Bson): List<Complete> =
+        delegate.find(filter).toList()
 
-    fun findOneByIdAndUpdate(id: UUID, update: UpdateEntity): Complete? {
-        val bson = KMongoUtil.toBsonModifier(update, updateOnlyNotNullProperties = true)
-        return findOneByIdAndUpdate(id, bson)
-    }
+    fun findOneByIdAndUpdate(id: UUID, update: Bson, arrayFilters: List<Bson>? = null): Complete? =
+        findOneAndUpdate(id(id), update, arrayFilters)
 
-    fun findOneByIdAndUpdate(id: UUID, update: Bson): Complete? =
-        findOneAndUpdate(KMongoUtil.idFilterQuery(id), update)
+    fun findOneAndUpdate(filter: Bson, update: Bson, arrayFilters: List<Bson>? = null): Complete? =
+        delegate.findOneAndUpdate(filter, update, findOneAndUpdateOptions().arrayFilters(arrayFilters))
 
-    fun findOneAndUpdate(filter: Bson, update: Bson): Complete? {
-        val options = FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER)
-        return delegate.findOneAndUpdate(filter, update, options)
-    }
+    fun findOneByIdAndDelete(id: UUID): Unit? =
+        findOneAndDelete(id(id))
 
-    fun findOneByIdAndDelete(id: UUID): Unit? = findOneAndDelete(KMongoUtil.idFilterQuery(id))
+    fun findOneAndDelete(filter: Bson): Unit? =
+        delegate.findOneAndDelete(filter, findOneAndDeleteOptions())?.let { Unit }
 
-    fun findOneAndDelete(filter: Bson): Unit? {
-        delegate.findOneAndDelete(filter) ?: return null
-        return Unit
-    }
+    private fun id(id: UUID) = KMongoUtil.idFilterQuery(id)
 }

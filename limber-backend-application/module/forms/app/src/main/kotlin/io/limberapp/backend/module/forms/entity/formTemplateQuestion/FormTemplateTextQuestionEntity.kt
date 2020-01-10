@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.entity.formTemplateQuestion
 
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.util.UUID
 
 data class FormTemplateTextQuestionEntity(

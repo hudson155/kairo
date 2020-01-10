@@ -10,6 +10,9 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
 /**
@@ -17,7 +20,9 @@ import java.util.UUID
  */
 internal class DeleteFormTemplateQuestion @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateQuestionService: FormTemplateQuestionService
 ) : LimberApiEndpoint<DeleteFormTemplateQuestion.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -38,9 +43,15 @@ internal class DeleteFormTemplateQuestion @Inject constructor(
         questionId = call.parameters.getAsType(UUID::class, questionId)
     )
 
-    override fun authorization(command: Command) = TODO()
-
-    override suspend fun handler(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command) {
+        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        formTemplateQuestionService.delete(
+            formTemplateId = command.formTemplateId,
+            formTemplatePartId = command.partId,
+            formTemplateQuestionGroupId = command.questionGroupId,
+            formTemplateQuestionId = command.questionId
+        )
+    }
 
     companion object {
         const val formTemplateId = "formTemplateId"

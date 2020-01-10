@@ -2,7 +2,7 @@ package io.limberapp.backend.module.forms.mapper.app.formTemplate
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionGroupEntity
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionGroupModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionGroupModel
 
 internal class FormTemplateQuestionGroupMapper @Inject constructor(
     private val formTemplateQuestionMapper: FormTemplateQuestionMapper

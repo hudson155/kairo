@@ -3,10 +3,12 @@ package io.limberapp.backend.module.orgs.store.org
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
 import com.piperframework.store.MongoCollection
-import com.piperframework.store.MongoIndex
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.orgs.entity.org.FeatureEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
+import io.limberapp.backend.module.orgs.exception.conflict.FeatureIsNotUnique
+import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import org.bson.conversions.Bson
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -21,39 +23,41 @@ import org.litote.kmongo.setValue
 import java.util.UUID
 
 internal class MongoFeatureStore @Inject constructor(
-    mongoDatabase: MongoDatabase
+    mongoDatabase: MongoDatabase,
+    private val orgStore: OrgStore
 ) : FeatureStore, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
-        collectionName = OrgEntity.collectionName,
+        collectionName = OrgEntity.name,
         clazz = OrgEntity::class
     ),
-    indices = listOf<MongoIndex<OrgEntity>> {
-        ensureIndex(ascending(OrgEntity::features / FeatureEntity::id), unique = true)
-    }
+    index = { ensureIndex(ascending(OrgEntity::features / FeatureEntity::id), unique = true) }
 ) {
 
-    override fun create(orgId: UUID, entity: FeatureEntity): Unit? {
+    override fun create(orgId: UUID, entity: FeatureEntity) {
+        orgStore.get(orgId) ?: throw OrgNotFound()
         collection.findOneAndUpdate(
             filter = and(
                 OrgEntity::id eq orgId,
-                OrgEntity::features / FeatureEntity::id ne entity.id,
-                OrgEntity::features / FeatureEntity::name ne entity.name,
                 OrgEntity::features / FeatureEntity::path ne entity.path
             ),
             update = push(OrgEntity::features, entity)
-        ) ?: return null
-        return Unit
+        ) ?: throw FeatureIsNotUnique()
     }
 
-    override fun update(orgId: UUID, id: UUID, update: FeatureEntity.Update): FeatureEntity? {
-        val result = collection.findOneAndUpdate(
+    override fun get(orgId: UUID, featureId: UUID): FeatureEntity? {
+        val org = orgStore.get(orgId) ?: throw OrgNotFound()
+        return org.features.singleOrNull { it.id == featureId }
+    }
+
+    override fun update(orgId: UUID, featureId: UUID, update: FeatureEntity.Update): FeatureEntity {
+        get(orgId, featureId) ?: throw FeatureNotFound()
+        val org = collection.findOneAndUpdate(
             filter = and(
                 mutableListOf(
                     OrgEntity::id eq orgId,
-                    OrgEntity::features / FeatureEntity::id eq id
+                    OrgEntity::features / FeatureEntity::id eq featureId
                 ).apply {
-                    update.name?.let { add(OrgEntity::features / FeatureEntity::name ne it) }
                     update.path?.let { add(OrgEntity::features / FeatureEntity::path ne it) }
                 }
             ),
@@ -63,15 +67,15 @@ internal class MongoFeatureStore @Inject constructor(
                     update.path?.let { add(setValue(OrgEntity::features.colProperty.posOp / FeatureEntity::path, it)) }
                 }
             )
-        ) ?: return null
-        return result.features.single { it.id == id }
+        ) ?: throw FeatureIsNotUnique()
+        return org.features.single { it.id == featureId }
     }
 
-    override fun delete(orgId: UUID, id: UUID): Unit? {
+    override fun delete(orgId: UUID, featureId: UUID) {
+        orgStore.get(orgId) ?: throw OrgNotFound()
         collection.findOneAndUpdate(
-            filter = and(OrgEntity::id eq orgId, OrgEntity::features / FeatureEntity::id eq id),
-            update = pullByFilter(OrgEntity::features, FeatureEntity::id eq id)
-        ) ?: return null
-        return Unit
+            filter = and(OrgEntity::id eq orgId, OrgEntity::features / FeatureEntity::id eq featureId),
+            update = pullByFilter(OrgEntity::features, FeatureEntity::id eq featureId)
+        ) ?: throw FeatureNotFound()
     }
 }

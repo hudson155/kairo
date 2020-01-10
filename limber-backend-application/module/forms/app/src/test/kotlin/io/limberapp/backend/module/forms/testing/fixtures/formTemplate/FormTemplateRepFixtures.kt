@@ -18,7 +18,7 @@ internal object FormTemplateRepFixtures {
         Fixture({ orgId ->
             FormTemplateRep.Creation(
                 orgId = orgId,
-                title = "Example Form"
+                title = "Example form"
             )
         }, { orgId, idSeed ->
             FormTemplateRep.Complete(

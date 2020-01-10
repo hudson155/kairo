@@ -23,6 +23,6 @@ data class UserEntity(
     ) : UpdateEntity
 
     companion object {
-        const val collectionName = "User"
+        const val name = "User"
     }
 }

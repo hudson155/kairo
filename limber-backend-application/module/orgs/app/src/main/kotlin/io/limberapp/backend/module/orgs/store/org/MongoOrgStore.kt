@@ -6,8 +6,12 @@ import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
 import io.limberapp.backend.module.orgs.entity.org.OrgEntity
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import org.bson.conversions.Bson
+import org.litote.kmongo.combine
 import org.litote.kmongo.div
 import org.litote.kmongo.eq
+import org.litote.kmongo.setValue
 import java.util.UUID
 
 internal class MongoOrgStore @Inject constructor(
@@ -15,7 +19,7 @@ internal class MongoOrgStore @Inject constructor(
 ) : OrgStore, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
-        collectionName = OrgEntity.collectionName,
+        collectionName = OrgEntity.name,
         clazz = OrgEntity::class
     ),
     indices = emptyList()
@@ -25,13 +29,21 @@ internal class MongoOrgStore @Inject constructor(
         collection.insertOne(entity)
     }
 
-    override fun get(id: UUID) = collection.findOneById(id)
+    override fun get(orgId: UUID) = collection.findOneById(orgId)
 
     override fun getByMemberId(memberId: UUID) =
         collection.find(OrgEntity::members / MembershipEntity::userId eq memberId)
 
-    override fun update(id: UUID, update: OrgEntity.Update) =
-        collection.findOneByIdAndUpdate(id, update)
+    override fun update(orgId: UUID, update: OrgEntity.Update): OrgEntity {
+        return collection.findOneByIdAndUpdate(
+            id = orgId,
+            update = combine(mutableListOf<Bson>().apply {
+                update.name?.let { add(setValue(OrgEntity.Update::name, it)) }
+            })
+        ) ?: throw OrgNotFound()
+    }
 
-    override fun delete(id: UUID) = collection.findOneByIdAndDelete(id)
+    override fun delete(orgId: UUID) {
+        collection.findOneByIdAndDelete(orgId) ?: throw OrgNotFound()
+    }
 }

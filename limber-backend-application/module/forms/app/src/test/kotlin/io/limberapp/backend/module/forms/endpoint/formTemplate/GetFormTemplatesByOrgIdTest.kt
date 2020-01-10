@@ -10,7 +10,6 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-@Ignore
 internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
 
     @Test

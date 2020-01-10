@@ -52,7 +52,7 @@ internal class CreateFormTemplatePartTest : ResourceTest() {
             pathParams = mapOf(CreateFormTemplatePart.formTemplateId to formTemplateRep.id),
             queryParams = mapOf(CreateFormTemplatePart.index to -1),
             body = FormTemplatePartRepFixtures[0].creation(),
-            expectedException = IndexOutOfBounds()
+            expectedException = IndexOutOfBounds(-1)
         )
     }
 
@@ -75,7 +75,7 @@ internal class CreateFormTemplatePartTest : ResourceTest() {
             pathParams = mapOf(CreateFormTemplatePart.formTemplateId to formTemplateRep.id),
             queryParams = mapOf(CreateFormTemplatePart.index to 2),
             body = FormTemplatePartRepFixtures[0].creation(),
-            expectedException = IndexOutOfBounds()
+            expectedException = IndexOutOfBounds(2)
         )
     }
 

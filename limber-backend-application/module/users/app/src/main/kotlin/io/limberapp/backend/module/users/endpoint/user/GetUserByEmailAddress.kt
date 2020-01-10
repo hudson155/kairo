@@ -37,14 +37,12 @@ internal class GetUserByEmailAddress @Inject constructor(
         emailAddress = call.parameters.getAsType(String::class, emailAddress)
     )
 
-    override fun authorization(command: Command) = Authorization.AnyJwt
-
-    override suspend fun handler(command: Command): UserRep.Complete {
+    override suspend fun Handler.handle(command: Command): UserRep.Complete {
+        Authorization.AnyJwt.authorize()
         val model = userService.getByEmailAddress(command.emailAddress) ?: throw UserNotFound()
+        Authorization.User(model.id).authorize()
         return userMapper.completeRep(model)
     }
-
-    override fun secondaryAuthorization(response: UserRep.Complete) = Authorization.User(response.id)
 
     companion object {
         const val emailAddress = "emailAddress"

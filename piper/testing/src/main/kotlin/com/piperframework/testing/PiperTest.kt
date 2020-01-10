@@ -121,7 +121,11 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
             message = "The HTTP request was not handled." +
                     " Is the path wrong or did you forget to register the ApiEndpoint?"
         )
-        assertEquals(expectedStatusCode, response.status(), "Unexpected HTTP response code.")
+        assertEquals(
+            expectedStatusCode,
+            response.status(),
+            "Unexpected HTTP response code.\nResponse: ${response.content}\n"
+        )
         test()
     }
 }

@@ -19,6 +19,6 @@ data class OrgEntity(
     ) : UpdateEntity
 
     companion object {
-        const val collectionName = "Org"
+        const val name = "Org"
     }
 }

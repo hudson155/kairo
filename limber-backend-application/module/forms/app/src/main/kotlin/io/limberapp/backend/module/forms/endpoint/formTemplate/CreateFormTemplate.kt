@@ -8,15 +8,20 @@ import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 
 /**
  * Creates a new form template.
  */
 internal class CreateFormTemplate @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<CreateFormTemplate.Command, FormTemplateRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -31,9 +36,12 @@ internal class CreateFormTemplate @Inject constructor(
         creationRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = TODO()
-
-    override suspend fun handler(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
+        Authorization.OrgMember(command.creationRep.orgId).authorize()
+        val model = formTemplateMapper.model(command.creationRep)
+        formTemplateService.create(model)
+        return formTemplateMapper.completeRep(model)
+    }
 
     companion object {
         val endpointConfig = EndpointConfig(

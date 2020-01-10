@@ -8,7 +8,7 @@ they are and see if you need them too.
 
 ## Modules
 
-* [`core`](/common):
+* [`common`](/common):
     * This is the nucleus of the Piper framework.
     * Implementation project modules should always require the `common` module,
         but the implementation project application need not require the `common` module.
@@ -30,6 +30,10 @@ they are and see if you need them too.
         an error from this package should be returned.
 * [`exception-mapping`](/exception-mapping):
     * Maps exceptions to JSON responses from the errors module.
+* [`exceptions`](/exceptions):
+    * Exception base classes.
+* [`ktor-auth`](/ktor-auth):
+    * Helps configure authentication for Ktor.
 * [`mongo`](/mongo):
     * Driver to interact with MongoDB, including automatic entity/document mapping.
     * Include this in implementation project modules if they use MongoDB.
@@ -48,6 +52,8 @@ they are and see if you need them too.
     * Contains testing utilities.
     * Include this in implementation project modules as a test dependency
         (assuming you write tests).
+* [`util`](/util):
+    * Contains utilities.
 * [`validation`](/validation):
     * Provides a Validator class for ad-hoc validation,
         as well as the Validation class which is used to validate reps.

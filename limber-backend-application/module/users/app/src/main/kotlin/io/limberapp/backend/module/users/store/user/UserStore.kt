@@ -9,15 +9,15 @@ internal interface UserStore : Store<UserEntity> {
 
     fun create(entity: UserEntity)
 
-    fun get(id: UUID): UserEntity?
-
-    fun update(id: UUID, update: UserEntity.Update): UserEntity?
+    fun get(userId: UUID): UserEntity?
 
     fun getByEmailAddress(emailAddress: String): UserEntity?
 
-    fun addRole(userId: UUID, roleName: JwtRole): Unit?
+    fun update(userId: UUID, update: UserEntity.Update): UserEntity
 
-    fun removeRole(userId: UUID, roleName: JwtRole): Unit?
+    fun addRole(userId: UUID, role: JwtRole): UserEntity
 
-    fun delete(id: UUID): Unit?
+    fun removeRole(userId: UUID, role: JwtRole): UserEntity
+
+    fun delete(userId: UUID)
 }

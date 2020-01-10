@@ -40,9 +40,8 @@ internal class UpdateUser @Inject constructor(
         updateRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = Authorization.User(command.userId)
-
-    override suspend fun handler(command: Command): UserRep.Complete {
+    override suspend fun Handler.handle(command: Command): UserRep.Complete {
+        Authorization.User(command.userId).authorize()
         val update = userMapper.update(command.updateRep)
         val model = userService.update(command.userId, update)
         return userMapper.completeRep(model)

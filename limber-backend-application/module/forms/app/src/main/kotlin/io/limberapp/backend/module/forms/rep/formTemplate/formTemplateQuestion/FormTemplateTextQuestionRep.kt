@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 import com.piperframework.validation.util.ifPresent
 import com.piperframework.validation.util.mediumText
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.util.UUID
 
 object FormTemplateTextQuestionRep {

@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.forms.testing.fixtures.formTemplate
 
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionModel
 
 internal object FormTemplateQuestionRepFixtures {
 
@@ -42,7 +42,7 @@ internal object FormTemplateQuestionRepFixtures {
     val defaults = listOf(
         Fixture({
             FormTemplateTextQuestionRep.Creation(
-                label = "Worker Name",
+                label = "Worker name",
                 helpText = null,
                 width = FormTemplateQuestionModel.Width.HALF_WIDTH,
                 multiLine = false,
@@ -52,7 +52,7 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
-                label = "Worker Name",
+                label = "Worker name",
                 helpText = null,
                 width = FormTemplateQuestionModel.Width.HALF_WIDTH,
                 maxLength = 200,

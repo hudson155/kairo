@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.mapper.api.formTemplate
 import com.google.inject.Inject
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionGroupRep
-import io.limberapp.backend.module.orgs.model.formTemplate.FormTemplateQuestionGroupModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionGroupModel
 
 internal class FormTemplateQuestionGroupMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,

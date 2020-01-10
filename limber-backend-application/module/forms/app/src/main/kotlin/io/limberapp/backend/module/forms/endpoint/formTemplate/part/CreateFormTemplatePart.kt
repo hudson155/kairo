@@ -10,7 +10,11 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplatePartMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplatePartRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
 /**
@@ -18,7 +22,10 @@ import java.util.UUID
  */
 internal class CreateFormTemplatePart @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplatePartService: FormTemplatePartService,
+    private val formTemplatePartMapper: FormTemplatePartMapper
 ) : LimberApiEndpoint<CreateFormTemplatePart.Command, FormTemplatePartRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -27,19 +34,22 @@ internal class CreateFormTemplatePart @Inject constructor(
 
     internal data class Command(
         val formTemplateId: UUID,
-        val index: Short?,
+        val index: Int?,
         val creationRep: FormTemplatePartRep.Creation
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        index = call.parameters.getAsType(Short::class, index, optional = true),
+        index = call.parameters.getAsType(Int::class, index, optional = true),
         creationRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = TODO()
-
-    override suspend fun handler(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command): FormTemplatePartRep.Complete {
+        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        val model = formTemplatePartMapper.model(command.creationRep)
+        formTemplatePartService.create(command.formTemplateId, model, command.index)
+        return formTemplatePartMapper.completeRep(model)
+    }
 
     companion object {
         const val formTemplateId = "formTemplateId"

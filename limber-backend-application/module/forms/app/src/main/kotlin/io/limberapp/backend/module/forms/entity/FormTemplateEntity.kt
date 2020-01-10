@@ -21,6 +21,6 @@ data class FormTemplateEntity(
     ) : UpdateEntity
 
     companion object {
-        const val collectionName = "FormTemplate"
+        const val name = "FormTemplate"
     }
 }

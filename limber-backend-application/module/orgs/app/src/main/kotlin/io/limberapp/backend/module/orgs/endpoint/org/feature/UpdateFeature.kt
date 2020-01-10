@@ -42,9 +42,8 @@ internal class UpdateFeature @Inject constructor(
         updateRep = call.getAndValidateBody()
     )
 
-    override fun authorization(command: Command) = Authorization.OrgMember(command.orgId)
-
-    override suspend fun handler(command: Command): FeatureRep.Complete {
+    override suspend fun Handler.handle(command: Command): FeatureRep.Complete {
+        Authorization.OrgMember(command.orgId).authorize()
         val update = featureMapper.update(command.updateRep)
         val model = featureService.update(command.orgId, command.featureId, update)
         return featureMapper.completeRep(model)

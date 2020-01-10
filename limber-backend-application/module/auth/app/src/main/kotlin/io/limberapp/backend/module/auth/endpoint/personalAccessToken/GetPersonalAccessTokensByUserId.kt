@@ -41,9 +41,8 @@ internal class GetPersonalAccessTokensByUserId @Inject constructor(
         userId = call.parameters.getAsType(UUID::class, userId)
     )
 
-    override fun authorization(command: Command) = Authorization.Superuser
-
-    override suspend fun handler(command: Command): List<PersonalAccessTokenRep.Complete> {
+    override suspend fun Handler.handle(command: Command): List<PersonalAccessTokenRep.Complete> {
+        Authorization.Superuser.authorize()
         val models = personalAccessTokenService.getByUserId(command.userId)
         return models.map { personalAccessTokenMapper.completeRep(it) }
     }

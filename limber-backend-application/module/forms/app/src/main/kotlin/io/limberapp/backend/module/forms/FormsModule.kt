@@ -12,6 +12,20 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.part.UpdateFormTe
 import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.CreateFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.DeleteFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.UpdateFormTemplateQuestion
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartServiceImpl
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplatePartStore
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionGroupStore
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
+import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplatePartStore
+import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionGroupStore
+import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionStore
+import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateStore
 
 /**
  * The forms module handles any form features an org has enabled. An org can have 0 form features, or many form
@@ -46,7 +60,16 @@ class FormsModule : Module() {
         UpdateFormTemplateQuestion::class.java
     )
 
-    override fun bindServices() = Unit
+    override fun bindServices() {
+        bind(FormTemplatePartService::class, FormTemplatePartServiceImpl::class)
+        bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
+        bind(FormTemplateService::class, FormTemplateServiceImpl::class)
+    }
 
-    override fun bindStores() = Unit
+    override fun bindStores() {
+        bind(FormTemplatePartStore::class, MongoFormTemplatePartStore::class)
+        bind(FormTemplateQuestionGroupStore::class, MongoFormTemplateQuestionGroupStore::class)
+        bind(FormTemplateQuestionStore::class, MongoFormTemplateQuestionStore::class)
+        bind(FormTemplateStore::class, MongoFormTemplateStore::class)
+    }
 }
