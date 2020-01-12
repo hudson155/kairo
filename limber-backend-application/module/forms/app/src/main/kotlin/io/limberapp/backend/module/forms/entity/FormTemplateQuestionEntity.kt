@@ -2,8 +2,6 @@ package io.limberapp.backend.module.forms.entity
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.piperframework.entity.CompleteSubentity
-import com.piperframework.entity.UpdateSubentity
 import io.limberapp.backend.module.forms.entity.formTemplateQuestion.FormTemplateDateQuestionEntity
 import io.limberapp.backend.module.forms.entity.formTemplateQuestion.FormTemplateTextQuestionEntity
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
@@ -14,14 +12,14 @@ import java.util.UUID
     JsonSubTypes.Type(value = FormTemplateDateQuestionEntity::class, name = "DATE"),
     JsonSubTypes.Type(value = FormTemplateTextQuestionEntity::class, name = "TEXT")
 )
-interface FormTemplateQuestionEntity : CompleteSubentity {
+interface FormTemplateQuestionEntity {
 
     val id: UUID
     val label: String
     val helpText: String?
     val width: FormTemplateQuestionModel.Width
 
-    interface Update : UpdateSubentity {
+    interface Update {
         val label: String?
         val helpText: String?
         val width: FormTemplateQuestionModel.Width?

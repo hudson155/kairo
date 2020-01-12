@@ -7,7 +7,6 @@ import com.mongodb.client.model.FindOneAndDeleteOptions
 import com.mongodb.client.model.FindOneAndUpdateOptions
 import com.mongodb.client.model.IndexOptions
 import com.mongodb.client.model.ReturnDocument
-import com.piperframework.entity.CompleteEntity
 import org.bson.conversions.Bson
 import org.litote.kmongo.ensureIndex
 import org.litote.kmongo.findOne
@@ -17,7 +16,7 @@ import java.util.Locale
 import java.util.UUID
 import kotlin.reflect.KClass
 
-class MongoCollection<Complete : CompleteEntity>(
+class MongoCollection<Complete : Any>(
     mongoDatabase: MongoDatabase,
     collectionName: String,
     clazz: KClass<Complete>

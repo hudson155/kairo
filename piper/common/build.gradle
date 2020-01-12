@@ -1,5 +1,4 @@
 dependencies {
-    compile project(":piper:entities")
     compile project(":piper:exceptions")
     compile project(":piper:ktor-auth")
     compile project(":piper:object-mapper")

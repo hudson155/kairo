@@ -32,7 +32,6 @@
             <option value="$PROJECT_DIR$/piper" />
             <option value="$PROJECT_DIR$/piper/common" />
             <option value="$PROJECT_DIR$/piper/data-conversion" />
-            <option value="$PROJECT_DIR$/piper/entities" />
             <option value="$PROJECT_DIR$/piper/errors" />
             <option value="$PROJECT_DIR$/piper/exception-mapping" />
             <option value="$PROJECT_DIR$/piper/exceptions" />

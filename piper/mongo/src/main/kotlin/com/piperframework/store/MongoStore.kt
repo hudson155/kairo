@@ -1,13 +1,11 @@
 package com.piperframework.store
 
-import com.piperframework.entity.CompleteEntity
-
 typealias MongoIndex<Complete> = MongoCollection<Complete>.() -> Unit
 
 /**
  * MongoStore is an implementation of Store for MongoDB.
  */
-abstract class MongoStore<Complete : CompleteEntity>(
+abstract class MongoStore<Complete : Any>(
     protected val collection: MongoCollection<Complete>,
     indices: List<MongoIndex<Complete>>
 ) : Store {
