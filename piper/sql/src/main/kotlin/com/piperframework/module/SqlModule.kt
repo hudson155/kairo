@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule
 import com.piperframework.config.database.SqlDatabaseConfig
 import com.piperframework.sql.createDataSource
 import org.flywaydb.core.Flyway
+import org.jetbrains.exposed.sql.Database
 import javax.sql.DataSource
 
 /**
@@ -12,13 +13,10 @@ import javax.sql.DataSource
 open class SqlModule(private val sqlDatabaseConfig: SqlDatabaseConfig) : AbstractModule() {
 
     override fun configure() {
-        bindDataSource()
-    }
-
-    private fun bindDataSource() {
         val dataSource = sqlDatabaseConfig.createDataSource()
         dataSource.runMigrations()
-        bind(DataSource::class.java).toInstance(dataSource)
+        val database = Database.connect(dataSource)
+        bind(Database::class.java).toInstance(database)
     }
 
     private fun DataSource.runMigrations() {
