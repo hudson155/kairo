@@ -1,16 +1,16 @@
 package io.limberapp.backend.module.orgs.store.org
 
 import com.piperframework.store.Store
-import io.limberapp.backend.module.orgs.entity.org.FeatureEntity
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import java.util.UUID
 
 internal interface FeatureStore : Store {
 
-    fun create(orgId: UUID, entity: FeatureEntity)
+    fun create(orgId: UUID, model: FeatureModel)
 
-    fun get(orgId: UUID, featureId: UUID): FeatureEntity?
+    fun get(orgId: UUID, featureId: UUID): FeatureModel?
 
-    fun update(orgId: UUID, featureId: UUID, update: FeatureEntity.Update): FeatureEntity
+    fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update): FeatureModel
 
     fun delete(orgId: UUID, featureId: UUID)
 }

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.piperframework.store.Store
-import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.util.UUID
 
 internal interface FormTemplateQuestionStore : Store {
@@ -10,7 +10,7 @@ internal interface FormTemplateQuestionStore : Store {
         formTemplateId: UUID,
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
-        entity: FormTemplateQuestionEntity
+        model: FormTemplateQuestionModel
     )
 
     fun get(
@@ -18,15 +18,15 @@ internal interface FormTemplateQuestionStore : Store {
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID
-    ): FormTemplateQuestionEntity?
+    ): FormTemplateQuestionModel?
 
     fun update(
         formTemplateId: UUID,
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID,
-        update: FormTemplateQuestionEntity.Update
-    ): FormTemplateQuestionEntity
+        update: FormTemplateQuestionModel.Update
+    ): FormTemplateQuestionModel
 
     fun delete(
         formTemplateId: UUID,

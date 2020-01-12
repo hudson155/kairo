@@ -10,6 +10,8 @@ import io.limberapp.backend.module.users.exception.conflict.EmailAddressAlreadyT
 import io.limberapp.backend.module.users.exception.conflict.UserAlreadyHasRole
 import io.limberapp.backend.module.users.exception.conflict.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.mapper.app.user.UserMapper
+import io.limberapp.backend.module.users.model.user.UserModel
 import org.bson.conversions.Bson
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -23,7 +25,8 @@ import org.litote.kmongo.setValue
 import java.util.UUID
 
 internal class MongoUserStore @Inject constructor(
-    mongoDatabase: MongoDatabase
+    mongoDatabase: MongoDatabase,
+    private val userMapper: UserMapper
 ) : UserStore, MongoStore<UserEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
@@ -33,39 +36,50 @@ internal class MongoUserStore @Inject constructor(
     index = { ensureIndex(ascending(UserEntity::emailAddress), unique = true) }
 ) {
 
-    override fun create(entity: UserEntity) {
+    override fun create(model: UserModel) {
+        val entity = userMapper.entity(model)
         getByEmailAddress(entity.emailAddress)?.let { throw EmailAddressAlreadyTaken(entity.emailAddress) }
         collection.insertOne(entity)
     }
 
-    override fun get(userId: UUID) = collection.findOneById(userId)
-
-    override fun getByEmailAddress(emailAddress: String) = collection.findOne(UserEntity::emailAddress eq emailAddress)
-
-    override fun update(userId: UUID, update: UserEntity.Update): UserEntity {
-        return collection.findOneByIdAndUpdate(
-            id = userId,
-            update = combine(mutableListOf<Bson>().apply {
-                update.firstName?.let { add(setValue(UserEntity.Update::firstName, it)) }
-                update.lastName?.let { add(setValue(UserEntity.Update::lastName, it)) }
-            })
-        ) ?: throw UserNotFound()
+    override fun get(userId: UUID): UserModel? {
+        val entity = collection.findOneById(userId) ?: return null
+        return userMapper.model(entity)
     }
 
-    override fun addRole(userId: UUID, role: JwtRole): UserEntity {
+    override fun getByEmailAddress(emailAddress: String): UserModel? {
+        val entity = collection.findOne(UserEntity::emailAddress eq emailAddress) ?: return null
+        return userMapper.model(entity)
+    }
+
+    override fun update(userId: UUID, update: UserModel.Update): UserModel {
+        val updateEntity = userMapper.update(update)
+        val entity = collection.findOneByIdAndUpdate(
+            id = userId,
+            update = combine(mutableListOf<Bson>().apply {
+                updateEntity.firstName?.let { add(setValue(UserEntity.Update::firstName, it)) }
+                updateEntity.lastName?.let { add(setValue(UserEntity.Update::lastName, it)) }
+            })
+        ) ?: throw UserNotFound()
+        return userMapper.model(entity)
+    }
+
+    override fun addRole(userId: UUID, role: JwtRole): UserModel {
         get(userId) ?: throw UserNotFound()
-        return collection.findOneAndUpdate(
+        val entity = collection.findOneAndUpdate(
             filter = and(UserEntity::id eq userId, not(UserEntity::roles contains role)),
             update = push(UserEntity::roles, role)
         ) ?: throw UserAlreadyHasRole(role)
+        return userMapper.model(entity)
     }
 
-    override fun removeRole(userId: UUID, role: JwtRole): UserEntity {
+    override fun removeRole(userId: UUID, role: JwtRole): UserModel {
         get(userId) ?: throw UserNotFound()
-        return collection.findOneAndUpdate(
+        val entity = collection.findOneAndUpdate(
             filter = and(UserEntity::id eq userId, UserEntity::roles contains role),
             update = pull(UserEntity::roles, role)
         ) ?: throw UserDoesNotHaveRole(role)
+        return userMapper.model(entity)
     }
 
     override fun delete(userId: UUID) {

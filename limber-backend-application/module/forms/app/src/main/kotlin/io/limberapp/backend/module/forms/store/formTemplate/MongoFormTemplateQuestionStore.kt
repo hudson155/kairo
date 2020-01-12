@@ -11,6 +11,8 @@ import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionGroupEntity
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionMapper
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.bson.Document
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -22,7 +24,8 @@ import java.util.UUID
 
 internal class MongoFormTemplateQuestionStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val formTemplateQuestionGroupStore: FormTemplateQuestionGroupStore
+    private val formTemplateQuestionGroupStore: FormTemplateQuestionGroupStore,
+    private val formTemplateQuestionMapper: FormTemplateQuestionMapper
 ) : FormTemplateQuestionStore, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
@@ -46,10 +49,11 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
         formTemplateId: UUID,
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
-        entity: FormTemplateQuestionEntity
+        model: FormTemplateQuestionModel
     ) {
         formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
             ?: throw FormTemplateQuestionGroupNotFound()
+        val entity = formTemplateQuestionMapper.entity(model)
         collection.findOneByIdAndUpdate(
             id = formTemplateId,
             update = push(
@@ -69,7 +73,7 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID
-    ): FormTemplateQuestionEntity? {
+    ): FormTemplateQuestionModel? {
         val formTemplateQuestionGroup =
             formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
                 ?: throw FormTemplateQuestionGroupNotFound()
@@ -81,7 +85,7 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID,
-        update: FormTemplateQuestionEntity.Update
+        update: FormTemplateQuestionModel.Update
     ) = TODO()
 
     override fun delete(

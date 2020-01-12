@@ -9,6 +9,9 @@ import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.backend.module.orgs.exception.conflict.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.mapper.app.feature.FeatureMapper
+import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import org.bson.conversions.Bson
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -24,7 +27,9 @@ import java.util.UUID
 
 internal class MongoFeatureStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val orgStore: OrgStore
+    private val orgStore: OrgStore,
+    private val featureMapper: FeatureMapper,
+    private val orgMapper: OrgMapper
 ) : FeatureStore, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
@@ -34,7 +39,8 @@ internal class MongoFeatureStore @Inject constructor(
     index = { ensureIndex(ascending(OrgEntity::features / FeatureEntity::id), unique = true) }
 ) {
 
-    override fun create(orgId: UUID, entity: FeatureEntity) {
+    override fun create(orgId: UUID, model: FeatureModel) {
+        val entity = featureMapper.entity(model)
         orgStore.get(orgId) ?: throw OrgNotFound()
         collection.findOneAndUpdate(
             filter = and(
@@ -45,14 +51,15 @@ internal class MongoFeatureStore @Inject constructor(
         ) ?: throw FeatureIsNotUnique()
     }
 
-    override fun get(orgId: UUID, featureId: UUID): FeatureEntity? {
+    override fun get(orgId: UUID, featureId: UUID): FeatureModel? {
         val org = orgStore.get(orgId) ?: throw OrgNotFound()
         return org.features.singleOrNull { it.id == featureId }
     }
 
-    override fun update(orgId: UUID, featureId: UUID, update: FeatureEntity.Update): FeatureEntity {
+    override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update): FeatureModel {
+        val updateEntity = featureMapper.update(update)
         get(orgId, featureId) ?: throw FeatureNotFound()
-        val org = collection.findOneAndUpdate(
+        val entity = collection.findOneAndUpdate(
             filter = and(
                 mutableListOf(
                     OrgEntity::id eq orgId,
@@ -68,7 +75,8 @@ internal class MongoFeatureStore @Inject constructor(
                 }
             )
         ) ?: throw FeatureIsNotUnique()
-        return org.features.single { it.id == featureId }
+        val model = orgMapper.model(entity)
+        return model.features.single { it.id == featureId }
     }
 
     override fun delete(orgId: UUID, featureId: UUID) {

@@ -9,6 +9,8 @@ import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.backend.module.orgs.exception.conflict.UserIsAlreadyAMemberOfOrg
 import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.mapper.app.membership.MembershipMapper
+import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -20,7 +22,8 @@ import java.util.UUID
 
 internal class MongoMembershipStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val orgStore: OrgStore
+    private val orgStore: OrgStore,
+    private val membershipMapper: MembershipMapper
 ) : MembershipStore, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
@@ -30,7 +33,8 @@ internal class MongoMembershipStore @Inject constructor(
     index = { ensureIndex(ascending(OrgEntity::members / MembershipEntity::userId), unique = false) }
 ) {
 
-    override fun create(orgId: UUID, entity: MembershipEntity) {
+    override fun create(orgId: UUID, model: MembershipModel) {
+        val entity = membershipMapper.entity(model)
         orgStore.get(orgId) ?: throw OrgNotFound()
         collection.findOneAndUpdate(
             filter = and(OrgEntity::id eq orgId, OrgEntity::members / MembershipEntity::userId ne entity.userId),
@@ -38,7 +42,7 @@ internal class MongoMembershipStore @Inject constructor(
         ) ?: throw UserIsAlreadyAMemberOfOrg()
     }
 
-    override fun get(orgId: UUID, userId: UUID): MembershipEntity? {
+    override fun get(orgId: UUID, userId: UUID): MembershipModel? {
         val org = orgStore.get(orgId) ?: throw OrgNotFound()
         return org.members.singleOrNull { it.userId == userId }
     }

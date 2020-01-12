@@ -10,6 +10,8 @@ import io.limberapp.backend.module.forms.entity.FormTemplatePartEntity
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionGroupEntity
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
+import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionGroupMapper
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionGroupModel
 import org.bson.Document
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -21,7 +23,8 @@ import java.util.UUID
 
 internal class MongoFormTemplateQuestionGroupStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val formTemplatePartStore: FormTemplatePartStore
+    private val formTemplatePartStore: FormTemplatePartStore,
+    private val formTemplateQuestionGroupMapper: FormTemplateQuestionGroupMapper
 ) : FormTemplateQuestionGroupStore, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
@@ -43,9 +46,10 @@ internal class MongoFormTemplateQuestionGroupStore @Inject constructor(
     override fun create(
         formTemplateId: UUID,
         formTemplatePartId: UUID,
-        entity: FormTemplateQuestionGroupEntity
+        model: FormTemplateQuestionGroupModel
     ) {
         formTemplatePartStore.get(formTemplateId, formTemplatePartId) ?: throw FormTemplatePartNotFound()
+        val entity = formTemplateQuestionGroupMapper.entity(model)
         collection.findOneByIdAndUpdate(
             id = formTemplateId,
             update = push(
@@ -60,7 +64,7 @@ internal class MongoFormTemplateQuestionGroupStore @Inject constructor(
         formTemplateId: UUID,
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID
-    ): FormTemplateQuestionGroupEntity? {
+    ): FormTemplateQuestionGroupModel? {
         val formTemplatePart = formTemplatePartStore.get(formTemplateId, formTemplatePartId)
             ?: throw FormTemplatePartNotFound()
         return formTemplatePart.questionGroups.singleOrNull { it.id == formTemplateQuestionGroupId }

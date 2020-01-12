@@ -1,14 +1,12 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
 import java.util.UUID
 
 internal class FormTemplateQuestionServiceImpl @Inject constructor(
-    private val formTemplateQuestionStore: FormTemplateQuestionStore,
-    private val formTemplateQuestionMapper: FormTemplateQuestionMapper
+    private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService {
 
     override fun create(
@@ -17,10 +15,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplateQuestionGroupId: UUID,
         model: FormTemplateQuestionModel,
         index: Int?
-    ) {
-        val entity = formTemplateQuestionMapper.entity(model)
-        formTemplateQuestionStore.create(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId, entity)
-    }
+    ) = formTemplateQuestionStore.create(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId, model)
 
     override fun update(
         formTemplateId: UUID,
@@ -28,28 +23,23 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID,
         update: FormTemplateQuestionModel.Update
-    ): FormTemplateQuestionModel {
-        val entity = formTemplateQuestionStore.update(
-            formTemplateId = formTemplateId,
-            formTemplatePartId = formTemplatePartId,
-            formTemplateQuestionGroupId = formTemplateQuestionGroupId,
-            formTemplateQuestionId = formTemplateQuestionId,
-            update = formTemplateQuestionMapper.update(update)
-        )
-        return formTemplateQuestionMapper.model(entity)
-    }
+    ): FormTemplateQuestionModel = formTemplateQuestionStore.update(
+        formTemplateId = formTemplateId,
+        formTemplatePartId = formTemplatePartId,
+        formTemplateQuestionGroupId = formTemplateQuestionGroupId,
+        formTemplateQuestionId = formTemplateQuestionId,
+        update = update
+    )
 
     override fun delete(
         formTemplateId: UUID,
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID
-    ) {
-        formTemplateQuestionStore.delete(
-            formTemplateId = formTemplateId,
-            formTemplatePartId = formTemplatePartId,
-            formTemplateQuestionGroupId = formTemplateQuestionGroupId,
-            formTemplateQuestionId = formTemplateQuestionId
-        )
-    }
+    ) = formTemplateQuestionStore.delete(
+        formTemplateId = formTemplateId,
+        formTemplatePartId = formTemplatePartId,
+        formTemplateQuestionGroupId = formTemplateQuestionGroupId,
+        formTemplateQuestionId = formTemplateQuestionId
+    )
 }

@@ -1,18 +1,18 @@
 package io.limberapp.backend.module.auth.store.personalAccessToken
 
 import com.piperframework.store.Store
-import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAccessTokenEntity
+import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
 import java.util.UUID
 
 internal interface PersonalAccessTokenStore : Store {
 
-    fun create(entity: PersonalAccessTokenEntity)
+    fun create(model: PersonalAccessTokenModel)
 
-    fun get(userId: UUID, personalAccessTokenId: UUID): PersonalAccessTokenEntity?
+    fun get(userId: UUID, personalAccessTokenId: UUID): PersonalAccessTokenModel?
 
-    fun getByToken(token: String): PersonalAccessTokenEntity?
+    fun getByToken(token: String): PersonalAccessTokenModel?
 
-    fun getByUserId(userId: UUID): List<PersonalAccessTokenEntity>
+    fun getByUserId(userId: UUID): List<PersonalAccessTokenModel>
 
     fun delete(userId: UUID, personalAccessTokenId: UUID)
 }

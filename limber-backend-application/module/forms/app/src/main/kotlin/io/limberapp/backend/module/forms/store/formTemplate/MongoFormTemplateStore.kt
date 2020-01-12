@@ -6,6 +6,8 @@ import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.forms.entity.FormTemplateEntity
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateMapper
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.bson.conversions.Bson
 import org.litote.kmongo.ascending
 import org.litote.kmongo.combine
@@ -14,7 +16,8 @@ import org.litote.kmongo.setValue
 import java.util.UUID
 
 internal class MongoFormTemplateStore @Inject constructor(
-    mongoDatabase: MongoDatabase
+    mongoDatabase: MongoDatabase,
+    private val formTemplateMapper: FormTemplateMapper
 ) : FormTemplateStore, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
@@ -24,22 +27,31 @@ internal class MongoFormTemplateStore @Inject constructor(
     index = { ensureIndex(ascending(FormTemplateEntity::orgId), unique = false) }
 ) {
 
-    override fun create(entity: FormTemplateEntity) {
+    override fun create(model: FormTemplateModel) {
+        val entity = formTemplateMapper.entity(model)
         collection.insertOne(entity)
     }
 
-    override fun get(formTemplateId: UUID) = collection.findOneById(formTemplateId)
+    override fun get(formTemplateId: UUID): FormTemplateModel? {
+        val entity = collection.findOneById(formTemplateId) ?: return null
+        return formTemplateMapper.model(entity)
+    }
 
-    override fun getByOrgId(orgId: UUID) = collection.find(FormTemplateEntity::orgId eq orgId)
+    override fun getByOrgId(orgId: UUID): List<FormTemplateModel> {
+        val entities = collection.find(FormTemplateEntity::orgId eq orgId)
+        return entities.map { formTemplateMapper.model(it) }
+    }
 
-    override fun update(formTemplateId: UUID, update: FormTemplateEntity.Update): FormTemplateEntity {
-        return collection.findOneByIdAndUpdate(
+    override fun update(formTemplateId: UUID, update: FormTemplateModel.Update): FormTemplateModel {
+        val updateEntity = formTemplateMapper.update(update)
+        val entity = collection.findOneByIdAndUpdate(
             id = formTemplateId,
             update = combine(mutableListOf<Bson>().apply {
-                update.description?.let { add(setValue(FormTemplateEntity.Update::description, it)) }
-                update.title?.let { add(setValue(FormTemplateEntity.Update::title, it)) }
+                updateEntity.description?.let { add(setValue(FormTemplateEntity.Update::description, it)) }
+                updateEntity.title?.let { add(setValue(FormTemplateEntity.Update::title, it)) }
             })
         ) ?: throw FormTemplateNotFound()
+        return formTemplateMapper.model(entity)
     }
 
     override fun delete(formTemplateId: UUID) {
