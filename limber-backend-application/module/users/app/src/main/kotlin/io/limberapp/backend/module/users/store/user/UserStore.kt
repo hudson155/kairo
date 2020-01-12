@@ -5,7 +5,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.user.UserEntity
 import java.util.UUID
 
-internal interface UserStore : Store<UserEntity> {
+internal interface UserStore : Store {
 
     fun create(entity: UserEntity)
 

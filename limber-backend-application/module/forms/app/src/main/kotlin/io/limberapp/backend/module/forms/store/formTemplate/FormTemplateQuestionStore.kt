@@ -1,11 +1,10 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.piperframework.store.Store
-import io.limberapp.backend.module.forms.entity.FormTemplateEntity
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
 import java.util.UUID
 
-internal interface FormTemplateQuestionStore : Store<FormTemplateEntity> {
+internal interface FormTemplateQuestionStore : Store {
 
     fun create(
         formTemplateId: UUID,
