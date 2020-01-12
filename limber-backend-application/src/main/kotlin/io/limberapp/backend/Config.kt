@@ -3,6 +3,7 @@ package io.limberapp.backend
 import com.piperframework.config.Config
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.database.MongoDatabaseConfig
+import com.piperframework.config.database.SqlDatabaseConfig
 import com.piperframework.config.serving.ServingConfig
 
 /**
@@ -10,6 +11,7 @@ import com.piperframework.config.serving.ServingConfig
  */
 data class Config(
     val mongoDatabase: MongoDatabaseConfig,
+    val sqlDatabase: SqlDatabaseConfig,
     override val authentication: AuthenticationConfig,
     override val serving: ServingConfig
 ) : Config
