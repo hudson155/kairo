@@ -25,8 +25,12 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?) = principal != null
     }
 
-    object Superuser : Authorization() {
-        override fun authorizeInternal(principal: Jwt?) = false
+    class Role(private val role: JwtRole?) : Authorization() {
+        override fun authorizeInternal(principal: Jwt?): Boolean {
+            principal ?: return false
+            role ?: return false
+            return principal.roles.contains(role)
+        }
     }
 
     class User(private val userId: UUID?) : Authorization() {

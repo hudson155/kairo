@@ -10,6 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.mapper.api.user.UserMapper
 import io.limberapp.backend.module.users.rep.user.UserRep
@@ -38,7 +39,7 @@ internal class CreateUser @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): UserRep.Complete {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         val model = userMapper.model(command.creationRep)
         userService.create(model)
         return userMapper.completeRep(model)

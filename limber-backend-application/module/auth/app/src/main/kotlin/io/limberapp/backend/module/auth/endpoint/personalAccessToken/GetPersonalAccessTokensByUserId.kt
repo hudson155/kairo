@@ -11,6 +11,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.mapper.api.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
@@ -43,7 +44,7 @@ internal class GetPersonalAccessTokensByUserId @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): List<PersonalAccessTokenRep.Complete> {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         val models = personalAccessTokenService.getByUserId(command.userId)
         return models.map { personalAccessTokenMapper.completeRep(it) }
     }

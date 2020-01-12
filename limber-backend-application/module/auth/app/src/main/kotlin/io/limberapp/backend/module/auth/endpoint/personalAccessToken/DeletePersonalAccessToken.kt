@@ -11,6 +11,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
 import java.util.UUID
@@ -39,7 +40,7 @@ internal class DeletePersonalAccessToken @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command) {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         personalAccessTokenService.delete(command.userId, command.personalAccessTokenId)
     }
 

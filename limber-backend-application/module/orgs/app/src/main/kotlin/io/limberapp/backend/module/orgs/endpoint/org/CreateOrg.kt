@@ -10,6 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.mapper.api.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -38,7 +39,7 @@ internal class CreateOrg @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): OrgRep.Complete {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         val model = orgMapper.model(command.creationRep)
         orgService.create(model)
         return orgMapper.completeRep(model)
