@@ -8,8 +8,8 @@ import java.util.UUID
 data class UserEntity(
     @BsonId val id: UUID,
     val created: LocalDateTime,
-    val firstName: String?,
-    val lastName: String?,
+    val firstName: String,
+    val lastName: String,
     val emailAddress: String,
     val profilePhotoUrl: String?,
     val roles: Set<JwtRole>
