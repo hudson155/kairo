@@ -12,10 +12,19 @@ ext {
             auth0_jwks_rsa         : '0.9.0',
 
             // https://github.com/googleapis/java-kms/releases
+            exposed                : '0.17.7',
+
+            // https://github.com/flyway/flyway/releases
+            flyway                 : '6.1.4',
+
+            // https://github.com/googleapis/java-kms/releases
             gcloud_kms             : '1.35.1',
 
             // https://github.com/google/guice/releases
             guice                  : '4.2.2',
+
+            // https://github.com/brettwooldridge/HikariCP/releases
+            hikari                 : '3.4.2',
 
             // https://github.com/FasterXML/jackson-core/releases
             jackson                : '2.10.2',
@@ -37,6 +46,9 @@ ext {
 
             // https://github.com/mockk/mockk/releases
             mockk                  : '1.9.3',
+
+            // https://mvnrepository.com/artifact/org.postgresql/postgresql
+            postgres               : '42.2.9',
     ]
 
     libs = [
@@ -71,6 +83,12 @@ ext {
 
             // Logback
             logback_classic        : "ch.qos.logback:logback-classic:$versions.logback",
+
+            // Postgres
+            exposed                : "org.jetbrains.exposed:exposed:$versions.exposed",
+            flyway                 : "org.flywaydb:flyway-core:$versions.flyway",
+            hikari                 : "com.zaxxer:HikariCP:$versions.hikari",
+            postgres               : "org.postgresql:postgresql:$versions.postgres",
 
             // MongoDB
             kmongo                 : "org.litote.kmongo:kmongo:$versions.kmongo",

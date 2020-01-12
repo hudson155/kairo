@@ -1,4 +1,6 @@
 dependencies {
     compile project(":piper:mongo")
     testCompile project(":piper:mongo:testing")
+    compile project(":piper:sql")
+    testCompile project(":piper:sql:testing")
 }

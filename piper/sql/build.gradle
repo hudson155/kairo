@@ -1,0 +1,8 @@
+dependencies {
+    compile project(":piper:common")
+    compile project(":piper:entities")
+    compile libs.exposed
+    compile libs.flyway
+    compile libs.hikari
+    compile libs.postgres
+}

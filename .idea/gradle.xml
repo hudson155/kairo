@@ -41,6 +41,8 @@
             <option value="$PROJECT_DIR$/piper/mongo/testing" />
             <option value="$PROJECT_DIR$/piper/object-mapper" />
             <option value="$PROJECT_DIR$/piper/reps" />
+            <option value="$PROJECT_DIR$/piper/sql" />
+            <option value="$PROJECT_DIR$/piper/sql/testing" />
             <option value="$PROJECT_DIR$/piper/testing" />
             <option value="$PROJECT_DIR$/piper/util" />
             <option value="$PROJECT_DIR$/piper/validation" />
