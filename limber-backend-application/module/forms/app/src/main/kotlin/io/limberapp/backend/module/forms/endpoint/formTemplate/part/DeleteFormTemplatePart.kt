@@ -6,6 +6,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -21,8 +22,8 @@ import java.util.UUID
 internal class DeleteFormTemplatePart @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val formTemplateService: FormTemplateService,
-    private val formTemplatePartService: FormTemplatePartService
+    @Service private val formTemplateService: FormTemplateService,
+    @Service private val formTemplatePartService: FormTemplatePartService
 ) : LimberApiEndpoint<DeleteFormTemplatePart.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,

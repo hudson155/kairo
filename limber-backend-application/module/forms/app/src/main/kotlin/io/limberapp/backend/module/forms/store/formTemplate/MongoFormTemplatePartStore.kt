@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.module.annotation.Store
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.forms.entity.FormTemplateEntity
@@ -10,6 +11,8 @@ import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotFound
 import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplatePartMapper
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplatePartModel
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -20,9 +23,9 @@ import java.util.UUID
 
 internal class MongoFormTemplatePartStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val formTemplateStore: FormTemplateStore,
+    @Store private val formTemplateStore: FormTemplateService,
     private val formTemplatePartMapper: FormTemplatePartMapper
-) : FormTemplatePartStore, MongoStore<FormTemplateEntity>(
+) : FormTemplatePartService, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = FormTemplateEntity.name,
@@ -31,7 +34,7 @@ internal class MongoFormTemplatePartStore @Inject constructor(
     index = { ensureIndex(ascending(FormTemplateEntity::parts / FormTemplatePartEntity::id), unique = true) }
 ) {
 
-    override fun create(formTemplateId: UUID, model: FormTemplatePartModel) {
+    override fun create(formTemplateId: UUID, model: FormTemplatePartModel, index: Int?) {
         formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
         val entity = formTemplatePartMapper.entity(model)
         collection.findOneByIdAndUpdate(formTemplateId, push(FormTemplateEntity::parts, entity))!!

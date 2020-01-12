@@ -7,5 +7,7 @@ interface MembershipService {
 
     fun create(orgId: UUID, model: MembershipModel)
 
-    fun delete(orgId: UUID, memberId: UUID)
+    fun get(orgId: UUID, userId: UUID): MembershipModel?
+
+    fun delete(orgId: UUID, userId: UUID)
 }

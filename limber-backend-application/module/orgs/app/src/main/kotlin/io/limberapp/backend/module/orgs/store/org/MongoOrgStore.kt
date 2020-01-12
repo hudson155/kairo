@@ -9,6 +9,7 @@ import io.limberapp.backend.module.orgs.entity.org.OrgEntity
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.backend.module.orgs.service.org.OrgService
 import org.bson.conversions.Bson
 import org.litote.kmongo.combine
 import org.litote.kmongo.div
@@ -19,7 +20,7 @@ import java.util.UUID
 internal class MongoOrgStore @Inject constructor(
     mongoDatabase: MongoDatabase,
     private val orgMapper: OrgMapper
-) : OrgStore, MongoStore<OrgEntity>(
+) : OrgService, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.name,

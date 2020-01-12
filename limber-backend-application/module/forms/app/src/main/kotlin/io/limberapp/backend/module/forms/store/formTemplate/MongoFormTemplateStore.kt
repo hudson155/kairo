@@ -8,6 +8,7 @@ import io.limberapp.backend.module.forms.entity.FormTemplateEntity
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import org.bson.conversions.Bson
 import org.litote.kmongo.ascending
 import org.litote.kmongo.combine
@@ -18,7 +19,7 @@ import java.util.UUID
 internal class MongoFormTemplateStore @Inject constructor(
     mongoDatabase: MongoDatabase,
     private val formTemplateMapper: FormTemplateMapper
-) : FormTemplateStore, MongoStore<FormTemplateEntity>(
+) : FormTemplateService, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = FormTemplateEntity.name,

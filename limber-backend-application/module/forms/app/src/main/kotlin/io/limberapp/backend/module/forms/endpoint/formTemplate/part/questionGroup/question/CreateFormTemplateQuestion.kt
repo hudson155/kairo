@@ -1,11 +1,13 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question
 
 import com.google.inject.Inject
+import com.google.inject.name.Named
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -23,8 +25,8 @@ import java.util.UUID
 internal class CreateFormTemplateQuestion @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val formTemplateService: FormTemplateService,
-    private val formTemplateQuestionService: FormTemplateQuestionService,
+    @Service private val formTemplateService: FormTemplateService,
+    @Service private val formTemplateQuestionService: FormTemplateQuestionService,
     private val formTemplateQuestionMapper: FormTemplateQuestionMapper
 ) : LimberApiEndpoint<CreateFormTemplateQuestion.Command, FormTemplateQuestionRep.Complete>(
     application = application,

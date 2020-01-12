@@ -1,12 +1,13 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
+import com.google.inject.name.Named
+import com.piperframework.module.annotation.Store
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.store.org.OrgStore
 import java.util.UUID
 
 internal class OrgServiceImpl @Inject constructor(
-    private val orgStore: OrgStore
+    @Store private val orgStore: OrgService
 ) : OrgService {
 
     override fun create(model: OrgModel) = orgStore.create(model)

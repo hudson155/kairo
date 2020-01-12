@@ -7,6 +7,8 @@ interface FormTemplatePartService {
 
     fun create(formTemplateId: UUID, model: FormTemplatePartModel, index: Int? = null)
 
+    fun get(formTemplateId: UUID, formTemplatePartId: UUID): FormTemplatePartModel?
+
     fun update(
         formTemplateId: UUID,
         formTemplatePartId: UUID,

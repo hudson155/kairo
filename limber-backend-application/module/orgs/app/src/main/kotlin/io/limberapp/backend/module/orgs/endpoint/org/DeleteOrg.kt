@@ -6,6 +6,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -20,7 +21,7 @@ import java.util.UUID
 internal class DeleteOrg @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val orgService: OrgService
+    @Service private val orgService: OrgService
 ) : LimberApiEndpoint<DeleteOrg.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,

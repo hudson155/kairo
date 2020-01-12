@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.module.annotation.Store
 import com.piperframework.mongo.filteredPosOp
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
@@ -13,6 +14,8 @@ import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestion
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionGroupService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import org.bson.Document
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -24,9 +27,9 @@ import java.util.UUID
 
 internal class MongoFormTemplateQuestionStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val formTemplateQuestionGroupStore: FormTemplateQuestionGroupStore,
+    @Store private val formTemplateQuestionGroupStore: FormTemplateQuestionGroupService,
     private val formTemplateQuestionMapper: FormTemplateQuestionMapper
-) : FormTemplateQuestionStore, MongoStore<FormTemplateEntity>(
+) : FormTemplateQuestionService, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = FormTemplateEntity.name,
@@ -49,7 +52,8 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
         formTemplateId: UUID,
         formTemplatePartId: UUID,
         formTemplateQuestionGroupId: UUID,
-        model: FormTemplateQuestionModel
+        model: FormTemplateQuestionModel,
+        index: Int?
     ) {
         formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
             ?: throw FormTemplateQuestionGroupNotFound()

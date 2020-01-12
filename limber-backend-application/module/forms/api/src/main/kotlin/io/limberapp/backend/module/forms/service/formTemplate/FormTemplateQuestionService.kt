@@ -13,6 +13,13 @@ interface FormTemplateQuestionService {
         index: Int? = null
     )
 
+    fun get(
+        formTemplateId: UUID,
+        formTemplatePartId: UUID,
+        formTemplateQuestionGroupId: UUID,
+        formTemplateQuestionId: UUID
+    ): FormTemplateQuestionModel?
+
     fun update(
         formTemplateId: UUID,
         formTemplatePartId: UUID,

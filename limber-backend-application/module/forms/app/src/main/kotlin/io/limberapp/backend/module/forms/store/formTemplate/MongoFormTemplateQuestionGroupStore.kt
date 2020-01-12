@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.module.annotation.Store
 import com.piperframework.mongo.filteredPosOp
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
@@ -12,6 +13,8 @@ import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotF
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
 import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionGroupMapper
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionGroupModel
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionGroupService
 import org.bson.Document
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -23,9 +26,9 @@ import java.util.UUID
 
 internal class MongoFormTemplateQuestionGroupStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val formTemplatePartStore: FormTemplatePartStore,
+    @Store private val formTemplatePartStore: FormTemplatePartService,
     private val formTemplateQuestionGroupMapper: FormTemplateQuestionGroupMapper
-) : FormTemplateQuestionGroupStore, MongoStore<FormTemplateEntity>(
+) : FormTemplateQuestionGroupService, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = FormTemplateEntity.name,

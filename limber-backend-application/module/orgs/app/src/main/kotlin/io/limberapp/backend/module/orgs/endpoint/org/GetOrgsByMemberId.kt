@@ -5,6 +5,7 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -21,7 +22,7 @@ import java.util.UUID
 internal class GetOrgsByMemberId @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val orgService: OrgService,
+    @Service private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<GetOrgsByMemberId.Command, List<OrgRep.Complete>>(
     application = application,

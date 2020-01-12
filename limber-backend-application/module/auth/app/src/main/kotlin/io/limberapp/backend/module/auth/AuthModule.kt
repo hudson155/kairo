@@ -10,7 +10,6 @@ import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsReques
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
 import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenServiceImpl
 import io.limberapp.backend.module.auth.store.personalAccessToken.MongoPersonalAccessTokenStore
-import io.limberapp.backend.module.auth.store.personalAccessToken.PersonalAccessTokenStore
 
 /**
  * Authentication is performed by Auth0, so the auth module is not actually responsible for authenticating users. It's
@@ -36,11 +35,11 @@ class AuthModule : Module() {
     )
 
     override fun bindServices() {
-        bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
-        bind(PersonalAccessTokenService::class, PersonalAccessTokenServiceImpl::class)
+        bindService(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
+        bindService(PersonalAccessTokenService::class, PersonalAccessTokenServiceImpl::class)
     }
 
     override fun bindStores() {
-        bind(PersonalAccessTokenStore::class, MongoPersonalAccessTokenStore::class)
+        bindStore(PersonalAccessTokenService::class, MongoPersonalAccessTokenStore::class)
     }
 }

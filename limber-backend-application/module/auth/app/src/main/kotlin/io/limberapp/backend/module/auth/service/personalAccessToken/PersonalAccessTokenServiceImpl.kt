@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.auth.service.personalAccessToken
 
 import com.google.inject.Inject
+import com.piperframework.module.annotation.Store
 import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
-import io.limberapp.backend.module.auth.store.personalAccessToken.PersonalAccessTokenStore
 import java.util.UUID
 
 internal class PersonalAccessTokenServiceImpl @Inject constructor(
-    private val personalAccessTokenStore: PersonalAccessTokenStore
+    @Store private val personalAccessTokenStore: PersonalAccessTokenService
 ) : PersonalAccessTokenService {
 
     override fun create(model: PersonalAccessTokenModel) = personalAccessTokenStore.create(model)

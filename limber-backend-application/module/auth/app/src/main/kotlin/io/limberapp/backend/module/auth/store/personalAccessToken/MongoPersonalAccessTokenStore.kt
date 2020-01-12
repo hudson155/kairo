@@ -9,6 +9,7 @@ import io.limberapp.backend.module.auth.entity.personalAccessToken.PersonalAcces
 import io.limberapp.backend.module.auth.exception.notFound.PersonalAccessTokenNotFound
 import io.limberapp.backend.module.auth.mapper.app.personalAccessToken.PersonalAccessTokenMapper
 import io.limberapp.backend.module.auth.model.personalAccessToken.PersonalAccessTokenModel
+import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.eq
@@ -17,7 +18,7 @@ import java.util.UUID
 internal class MongoPersonalAccessTokenStore @Inject constructor(
     mongoDatabase: MongoDatabase,
     private val personalAccessTokenMapper: PersonalAccessTokenMapper
-) : PersonalAccessTokenStore, MongoStore<PersonalAccessTokenEntity>(
+) : PersonalAccessTokenService, MongoStore<PersonalAccessTokenEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = PersonalAccessTokenEntity.name,
@@ -32,16 +33,6 @@ internal class MongoPersonalAccessTokenStore @Inject constructor(
     override fun create(model: PersonalAccessTokenModel) {
         val entity = personalAccessTokenMapper.entity(model)
         collection.insertOne(entity)
-    }
-
-    override fun get(userId: UUID, personalAccessTokenId: UUID): PersonalAccessTokenModel? {
-        val entity = collection.findOne(
-            filter = and(
-                PersonalAccessTokenEntity::userId eq userId,
-                PersonalAccessTokenEntity::id eq personalAccessTokenId
-            )
-        ) ?: return null
-        return personalAccessTokenMapper.model(entity)
     }
 
     override fun getByToken(token: String): PersonalAccessTokenModel? {

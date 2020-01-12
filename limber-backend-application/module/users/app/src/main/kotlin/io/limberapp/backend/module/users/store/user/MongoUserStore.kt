@@ -12,6 +12,7 @@ import io.limberapp.backend.module.users.exception.conflict.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.mapper.app.user.UserMapper
 import io.limberapp.backend.module.users.model.user.UserModel
+import io.limberapp.backend.module.users.service.user.UserService
 import org.bson.conversions.Bson
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -27,7 +28,7 @@ import java.util.UUID
 internal class MongoUserStore @Inject constructor(
     mongoDatabase: MongoDatabase,
     private val userMapper: UserMapper
-) : UserStore, MongoStore<UserEntity>(
+) : UserService, MongoStore<UserEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = UserEntity.name,

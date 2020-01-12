@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
+import com.piperframework.module.annotation.Store
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
 import java.util.UUID
 
 internal class FormTemplateQuestionServiceImpl @Inject constructor(
-    private val formTemplateQuestionStore: FormTemplateQuestionStore
+    @Store private val formTemplateQuestionStore: FormTemplateQuestionService
 ) : FormTemplateQuestionService {
 
     override fun create(
@@ -16,6 +16,18 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         model: FormTemplateQuestionModel,
         index: Int?
     ) = formTemplateQuestionStore.create(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId, model)
+
+    override fun get(
+        formTemplateId: UUID,
+        formTemplatePartId: UUID,
+        formTemplateQuestionGroupId: UUID,
+        formTemplateQuestionId: UUID
+    ) = formTemplateQuestionStore.get(
+        formTemplateId = formTemplateId,
+        formTemplatePartId = formTemplatePartId,
+        formTemplateQuestionGroupId = formTemplateQuestionGroupId,
+        formTemplateQuestionId = formTemplateQuestionId
+    )
 
     override fun update(
         formTemplateId: UUID,

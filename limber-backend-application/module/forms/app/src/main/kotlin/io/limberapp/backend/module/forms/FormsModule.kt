@@ -14,14 +14,11 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGrou
 import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.UpdateFormTemplateQuestion
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartServiceImpl
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionGroupService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplatePartStore
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionGroupStore
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplatePartStore
 import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionGroupStore
 import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionStore
@@ -61,15 +58,15 @@ class FormsModule : Module() {
     )
 
     override fun bindServices() {
-        bind(FormTemplatePartService::class, FormTemplatePartServiceImpl::class)
-        bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
-        bind(FormTemplateService::class, FormTemplateServiceImpl::class)
+        bindService(FormTemplatePartService::class, FormTemplatePartServiceImpl::class)
+        bindService(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
+        bindService(FormTemplateService::class, FormTemplateServiceImpl::class)
     }
 
     override fun bindStores() {
-        bind(FormTemplatePartStore::class, MongoFormTemplatePartStore::class)
-        bind(FormTemplateQuestionGroupStore::class, MongoFormTemplateQuestionGroupStore::class)
-        bind(FormTemplateQuestionStore::class, MongoFormTemplateQuestionStore::class)
-        bind(FormTemplateStore::class, MongoFormTemplateStore::class)
+        bindStore(FormTemplatePartService::class, MongoFormTemplatePartStore::class)
+        bindStore(FormTemplateQuestionGroupService::class, MongoFormTemplateQuestionGroupStore::class)
+        bindStore(FormTemplateQuestionService::class, MongoFormTemplateQuestionStore::class)
+        bindStore(FormTemplateService::class, MongoFormTemplateStore::class)
     }
 }

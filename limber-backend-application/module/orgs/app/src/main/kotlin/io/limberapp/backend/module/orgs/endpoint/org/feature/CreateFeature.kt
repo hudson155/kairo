@@ -6,6 +6,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -23,7 +24,7 @@ import java.util.UUID
 internal class CreateFeature @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val featureService: FeatureService,
+    @Service private val featureService: FeatureService,
     private val featureMapper: FeatureMapper
 ) : LimberApiEndpoint<CreateFeature.Command, FeatureRep.Complete>(
     application = application,

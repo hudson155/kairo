@@ -8,7 +8,7 @@ typealias MongoIndex<Complete> = MongoCollection<Complete>.() -> Unit
 abstract class MongoStore<Complete : Any>(
     protected val collection: MongoCollection<Complete>,
     indices: List<MongoIndex<Complete>>
-) : Store {
+) {
 
     constructor(collection: MongoCollection<Complete>, index: MongoIndex<Complete>) : this(collection, listOf(index))
 

@@ -2,6 +2,7 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.module.annotation.Store
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.orgs.entity.org.FeatureEntity
@@ -12,6 +13,8 @@ import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.feature.FeatureMapper
 import io.limberapp.backend.module.orgs.mapper.app.org.OrgMapper
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.org.OrgService
 import org.bson.conversions.Bson
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
@@ -27,10 +30,10 @@ import java.util.UUID
 
 internal class MongoFeatureStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val orgStore: OrgStore,
+    @Store private val orgStore: OrgService,
     private val featureMapper: FeatureMapper,
     private val orgMapper: OrgMapper
-) : FeatureStore, MongoStore<OrgEntity>(
+) : FeatureService, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.name,
@@ -40,8 +43,8 @@ internal class MongoFeatureStore @Inject constructor(
 ) {
 
     override fun create(orgId: UUID, model: FeatureModel) {
-        val entity = featureMapper.entity(model)
         orgStore.get(orgId) ?: throw OrgNotFound()
+        val entity = featureMapper.entity(model)
         collection.findOneAndUpdate(
             filter = and(
                 OrgEntity::id eq orgId,
@@ -57,21 +60,35 @@ internal class MongoFeatureStore @Inject constructor(
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update): FeatureModel {
-        val updateEntity = featureMapper.update(update)
         get(orgId, featureId) ?: throw FeatureNotFound()
+        val updateEntity = featureMapper.update(update)
         val entity = collection.findOneAndUpdate(
             filter = and(
                 mutableListOf(
                     OrgEntity::id eq orgId,
                     OrgEntity::features / FeatureEntity::id eq featureId
                 ).apply {
-                    update.path?.let { add(OrgEntity::features / FeatureEntity::path ne it) }
+                    updateEntity.path?.let { add(OrgEntity::features / FeatureEntity::path ne it) }
                 }
             ),
             update = combine(
                 mutableListOf<Bson>().apply {
-                    update.name?.let { add(setValue(OrgEntity::features.colProperty.posOp / FeatureEntity::name, it)) }
-                    update.path?.let { add(setValue(OrgEntity::features.colProperty.posOp / FeatureEntity::path, it)) }
+                    updateEntity.name?.let {
+                        add(
+                            setValue(
+                                OrgEntity::features.colProperty.posOp / FeatureEntity::name,
+                                it
+                            )
+                        )
+                    }
+                    updateEntity.path?.let {
+                        add(
+                            setValue(
+                                OrgEntity::features.colProperty.posOp / FeatureEntity::path,
+                                it
+                            )
+                        )
+                    }
                 }
             )
         ) ?: throw FeatureIsNotUnique()

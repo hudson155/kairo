@@ -2,6 +2,7 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
+import com.piperframework.module.annotation.Store
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.orgs.entity.org.MembershipEntity
@@ -11,6 +12,8 @@ import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.app.membership.MembershipMapper
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
+import io.limberapp.backend.module.orgs.service.org.MembershipService
+import io.limberapp.backend.module.orgs.service.org.OrgService
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -22,9 +25,9 @@ import java.util.UUID
 
 internal class MongoMembershipStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    private val orgStore: OrgStore,
+    @Store private val orgStore: OrgService,
     private val membershipMapper: MembershipMapper
-) : MembershipStore, MongoStore<OrgEntity>(
+) : MembershipService, MongoStore<OrgEntity>(
     collection = MongoCollection(
         mongoDatabase = mongoDatabase,
         collectionName = OrgEntity.name,

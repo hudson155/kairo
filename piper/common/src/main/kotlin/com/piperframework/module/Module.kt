@@ -2,6 +2,8 @@ package com.piperframework.module
 
 import com.google.inject.AbstractModule
 import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.module.annotation.Service
+import com.piperframework.module.annotation.Store
 import kotlin.reflect.KClass
 
 /**
@@ -38,10 +40,20 @@ abstract class Module : AbstractModule() {
      */
     protected abstract fun bindStores()
 
+    protected fun <T : Any> bindService(serviceClass: KClass<T>, implementationClass: KClass<out T>) =
+        bind(serviceClass, Service::class, implementationClass)
+
+    protected fun <T : Any> bindStore(serviceClass: KClass<T>, implementationClass: KClass<out T>) =
+        bind(serviceClass, Store::class, implementationClass)
+
     /**
      * This method should be used to bind services and stores.
      */
-    protected fun <T : Any> bind(serviceClass: KClass<T>, implementationClass: KClass<out T>) {
-        bind(serviceClass.java).to(implementationClass.java).asEagerSingleton()
+    private fun <T : Any> bind(
+        serviceClass: KClass<T>,
+        annotation: KClass<out Annotation>,
+        implementationClass: KClass<out T>
+    ) {
+        bind(serviceClass.java).annotatedWith(annotation.java).to(implementationClass.java).asEagerSingleton()
     }
 }

@@ -7,6 +7,8 @@ interface FeatureService {
 
     fun create(orgId: UUID, model: FeatureModel)
 
+    fun get(orgId: UUID, featureId: UUID): FeatureModel?
+
     fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update): FeatureModel
 
     fun delete(orgId: UUID, featureId: UUID)
