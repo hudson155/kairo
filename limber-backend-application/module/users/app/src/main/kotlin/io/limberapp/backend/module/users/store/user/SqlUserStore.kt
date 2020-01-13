@@ -13,11 +13,8 @@ import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
@@ -28,7 +25,7 @@ class SqlUserStore @Inject constructor(
 
     override fun create(model: UserModel) = transaction<Unit> {
         getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(model.emailAddress) }
-        val dbAccountId = AccountTable.insertAndGetId { s ->
+        AccountTable.insert { s ->
             s[createdDate] = model.created
             s[guid] = model.id
             s[name] = "${model.firstName} ${model.lastName}"
@@ -37,7 +34,7 @@ class SqlUserStore @Inject constructor(
         }
         UserTable.insert { s ->
             s[createdDate] = model.created
-            s[accountId] = dbAccountId.value
+            s[accountGuid] = model.id
             s[emailAddress] = model.emailAddress
             s[firstName] = model.firstName
             s[lastName] = model.lastName
@@ -58,9 +55,7 @@ class SqlUserStore @Inject constructor(
     }
 
     override fun update(userId: UUID, update: UserModel.Update) = transaction {
-        UserTable.update({
-            exists(AccountTable.select { (AccountTable.id eq UserTable.accountId) and (AccountTable.guid eq userId) })
-        }) { s ->
+        UserTable.update({ UserTable.accountGuid eq userId }) { s ->
             update.firstName?.let { s[firstName] = it }
             update.lastName?.let { s[lastName] = it }
         }
