@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import java.util.UUID
@@ -51,9 +50,9 @@ internal class SqlMembershipStore @Inject constructor(
     }
 
     override fun delete(orgId: UUID, userId: UUID) = transaction<Unit> {
-        MembershipTable.deleteWhere { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) }
-            .ifEq(0) { throw MembershipNotFound() }
-            .ifGt(1, ::badSql)
+        MembershipTable.deleteAtMostOneWhere {
+            (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId)
+        }.ifEq(0) { throw MembershipNotFound() }
     }
 
     private fun ResultRow.toMembershipModel() = MembershipModel(

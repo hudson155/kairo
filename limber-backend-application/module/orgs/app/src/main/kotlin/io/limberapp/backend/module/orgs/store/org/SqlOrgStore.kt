@@ -13,7 +13,6 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -60,9 +59,8 @@ internal class SqlOrgStore @Inject constructor(
     }
 
     override fun delete(orgId: UUID) = transaction<Unit> {
-        OrgTable.deleteWhere { OrgTable.guid eq orgId }
+        OrgTable.deleteAtMostOneWhere { OrgTable.guid eq orgId }
             .ifEq(0) { throw OrgNotFound() }
-            .ifGt(1, ::badSql)
     }
 
     private fun ResultRow.toOrgModel(): OrgModel {

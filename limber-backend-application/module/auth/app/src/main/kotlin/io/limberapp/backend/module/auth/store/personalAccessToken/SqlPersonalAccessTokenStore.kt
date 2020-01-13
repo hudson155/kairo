@@ -9,7 +9,6 @@ import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAcce
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import java.util.UUID
@@ -38,12 +37,10 @@ internal class SqlPersonalAccessTokenStore @Inject constructor(
     }
 
     override fun delete(userId: UUID, personalAccessTokenId: UUID) = transaction<Unit> {
-        PersonalAccessTokenTable.deleteWhere {
+        PersonalAccessTokenTable.deleteAtMostOneWhere {
             (PersonalAccessTokenTable.accountGuid eq userId) and
                     (PersonalAccessTokenTable.guid eq personalAccessTokenId)
-        }
-            .ifEq(0) { throw PersonalAccessTokenNotFound() }
-            .ifGt(1, ::badSql)
+        }.ifEq(0) { throw PersonalAccessTokenNotFound() }
     }
 
     private fun ResultRow.toPersonalAccessTokenModel() = PersonalAccessTokenModel(

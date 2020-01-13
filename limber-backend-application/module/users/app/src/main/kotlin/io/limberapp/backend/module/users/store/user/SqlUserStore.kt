@@ -13,7 +13,6 @@ import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
@@ -91,9 +90,8 @@ class SqlUserStore @Inject constructor(
     }
 
     override fun delete(userId: UUID) = transaction<Unit> {
-        AccountTable.deleteWhere { AccountTable.guid eq userId }
+        AccountTable.deleteAtMostOneWhere { AccountTable.guid eq userId }
             .ifEq(0) { throw UserNotFound() }
-            .ifGt(1, ::badSql)
     }
 
     private fun ResultRow.toUserModel() = UserModel(

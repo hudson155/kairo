@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
-import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
@@ -76,9 +75,8 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun delete(orgId: UUID, featureId: UUID) = transaction<Unit> {
-        FeatureTable.deleteWhere { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
+        FeatureTable.deleteAtMostOneWhere { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
             .ifEq(0) { throw FeatureNotFound() }
-            .ifGt(1, ::badSql)
     }
 
     private fun ResultRow.toFeatureModel() = FeatureModel(
