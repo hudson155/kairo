@@ -15,6 +15,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
@@ -24,21 +25,25 @@ class SqlUserStore @Inject constructor(
 
     override fun create(model: UserModel) = transaction<Unit> {
         getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(model.emailAddress) }
-        AccountTable.insert { s ->
-            s[createdDate] = model.created
-            s[guid] = model.id
-            s[name] = "${model.firstName} ${model.lastName}"
-            s[identityProvider] = JwtRole.IDENTITY_PROVIDER in model.roles
-            s[superuser] = JwtRole.SUPERUSER in model.roles
-        }
-        UserTable.insert { s ->
-            s[createdDate] = model.created
-            s[accountGuid] = model.id
-            s[emailAddress] = model.emailAddress
-            s[firstName] = model.firstName
-            s[lastName] = model.lastName
-            s[profilePhotoUrl] = model.profilePhotoUrl
-        }
+        AccountTable.insert { it.createAccount(model) }
+        UserTable.insert { it.createUser(model) }
+    }
+
+    private fun InsertStatement<*>.createAccount(model: UserModel) {
+        this[AccountTable.createdDate] = model.created
+        this[AccountTable.guid] = model.id
+        this[AccountTable.name] = "${model.firstName} ${model.lastName}"
+        this[AccountTable.identityProvider] = JwtRole.IDENTITY_PROVIDER in model.roles
+        this[AccountTable.superuser] = JwtRole.SUPERUSER in model.roles
+    }
+
+    private fun InsertStatement<*>.createUser(model: UserModel) {
+        this[UserTable.createdDate] = model.created
+        this[UserTable.accountGuid] = model.id
+        this[UserTable.emailAddress] = model.emailAddress
+        this[UserTable.firstName] = model.firstName
+        this[UserTable.lastName] = model.lastName
+        this[UserTable.profilePhotoUrl] = model.profilePhotoUrl
     }
 
     override fun get(userId: UUID) = transaction {

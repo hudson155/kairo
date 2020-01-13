@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
@@ -21,14 +22,7 @@ internal class SqlFeatureStore @Inject constructor(
 ) : FeatureService, SqlStore(database) {
 
     override fun create(orgId: UUID, models: List<FeatureModel>) = transaction<Unit> {
-        FeatureTable.batchInsert(models) { model ->
-            this[FeatureTable.createdDate] = model.created
-            this[FeatureTable.guid] = model.id
-            this[FeatureTable.orgGuid] = orgId
-            this[FeatureTable.name] = model.name
-            this[FeatureTable.path] = model.path
-            this[FeatureTable.type] = model.type.name
-        }
+        FeatureTable.batchInsert(models) { model -> createFeature(orgId, model) }
     }
 
     override fun create(orgId: UUID, model: FeatureModel) = transaction<Unit> {
@@ -37,14 +31,16 @@ internal class SqlFeatureStore @Inject constructor(
             (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path)
         }.singleOrNull()?.let { throw FeatureIsNotUnique() }
 
-        FeatureTable.insert { s ->
-            s[createdDate] = model.created
-            s[guid] = model.id
-            s[orgGuid] = orgId
-            s[name] = model.name
-            s[path] = model.path
-            s[type] = model.type.name
-        }
+        FeatureTable.insert { it.createFeature(orgId, model) }
+    }
+
+    private fun InsertStatement<*>.createFeature(orgId: UUID, model: FeatureModel) {
+        this[FeatureTable.createdDate] = model.created
+        this[FeatureTable.guid] = model.id
+        this[FeatureTable.orgGuid] = orgId
+        this[FeatureTable.name] = model.name
+        this[FeatureTable.path] = model.path
+        this[FeatureTable.type] = model.type.name
     }
 
     override fun get(orgId: UUID, featureId: UUID) = transaction {

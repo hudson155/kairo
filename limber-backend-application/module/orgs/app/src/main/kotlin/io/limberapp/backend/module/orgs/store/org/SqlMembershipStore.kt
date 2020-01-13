@@ -13,6 +13,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.util.UUID
 
 internal class SqlMembershipStore @Inject constructor(
@@ -20,22 +21,20 @@ internal class SqlMembershipStore @Inject constructor(
 ) : MembershipService, SqlStore(database) {
 
     override fun create(orgId: UUID, models: List<MembershipModel>) = transaction<Unit> {
-        MembershipTable.batchInsert(models) { model ->
-            this[MembershipTable.createdDate] = model.created
-            this[MembershipTable.orgGuid] = orgId
-            this[MembershipTable.accountGuid] = model.userId
-        }
+        MembershipTable.batchInsert(models) { model -> createMembership(orgId, model) }
     }
 
     override fun create(orgId: UUID, model: MembershipModel) = transaction<Unit> {
 
         get(orgId, model.userId)?.let { throw UserIsAlreadyAMemberOfOrg() }
 
-        MembershipTable.insert { s ->
-            s[createdDate] = model.created
-            s[orgGuid] = orgId
-            s[accountGuid] = model.userId
-        }
+        MembershipTable.insert { it.createMembership(orgId, model) }
+    }
+
+    private fun InsertStatement<*>.createMembership(orgId: UUID, model: MembershipModel) {
+        this[MembershipTable.createdDate] = model.created
+        this[MembershipTable.orgGuid] = orgId
+        this[MembershipTable.accountGuid] = model.userId
     }
 
     override fun get(orgId: UUID, userId: UUID) = transaction {

@@ -16,6 +16,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
@@ -26,13 +27,15 @@ internal class SqlOrgStore @Inject constructor(
 ) : OrgService, SqlStore(database) {
 
     override fun create(model: OrgModel) = transaction {
-        OrgTable.insert { s ->
-            s[createdDate] = model.created
-            s[guid] = model.id
-            s[name] = model.name
-        }
+        OrgTable.insert { it.createOrg(model) }
         featureStore.create(model.id, model.features)
         membershipStore.create(model.id, model.members)
+    }
+
+    private fun InsertStatement<*>.createOrg(model: OrgModel) {
+        this[OrgTable.createdDate] = model.created
+        this[OrgTable.guid] = model.id
+        this[OrgTable.name] = model.name
     }
 
     override fun get(orgId: UUID) = transaction {

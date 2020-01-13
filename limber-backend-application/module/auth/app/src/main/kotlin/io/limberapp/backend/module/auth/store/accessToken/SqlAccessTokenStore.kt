@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.util.UUID
 
 internal class SqlAccessTokenStore @Inject constructor(
@@ -18,12 +19,14 @@ internal class SqlAccessTokenStore @Inject constructor(
 ) : AccessTokenService, SqlStore(database) {
 
     override fun create(model: AccessTokenModel) = transaction<Unit> {
-        AccessTokenTable.insert { s ->
-            s[createdDate] = model.created
-            s[guid] = model.id
-            s[accountGuid] = model.userId
-            s[token] = model.token
-        }
+        AccessTokenTable.insert { it.createAccessToken(model) }
+    }
+
+    private fun InsertStatement<*>.createAccessToken(model: AccessTokenModel) {
+        this[AccessTokenTable.createdDate] = model.created
+        this[AccessTokenTable.guid] = model.id
+        this[AccessTokenTable.accountGuid] = model.userId
+        this[AccessTokenTable.token] = model.token
     }
 
     override fun getByToken(token: String) = transaction {
