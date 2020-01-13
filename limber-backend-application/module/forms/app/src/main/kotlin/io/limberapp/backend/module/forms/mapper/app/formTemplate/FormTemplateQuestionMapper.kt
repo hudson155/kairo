@@ -15,17 +15,17 @@ internal class FormTemplateQuestionMapper @Inject constructor() {
     fun entity(model: FormTemplateQuestionModel) = when (model) {
         is FormTemplateDateQuestionModel -> FormTemplateDateQuestionEntity(
             id = model.id,
+            created = model.created,
             label = model.label,
             helpText = model.helpText,
-            width = model.width,
             earliest = model.earliest,
             latest = model.latest
         )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionEntity(
             id = model.id,
+            created = model.created,
             label = model.label,
             helpText = model.helpText,
-            width = model.width,
             multiLine = model.multiLine,
             placeholder = model.placeholder,
             validator = model.validator
@@ -36,17 +36,17 @@ internal class FormTemplateQuestionMapper @Inject constructor() {
     fun model(entity: FormTemplateQuestionEntity) = when (entity) {
         is FormTemplateDateQuestionEntity -> FormTemplateDateQuestionModel(
             id = entity.id,
+            created = entity.created,
             label = entity.label,
             helpText = entity.helpText,
-            width = entity.width,
             earliest = entity.earliest,
             latest = entity.latest
         )
         is FormTemplateTextQuestionEntity -> FormTemplateTextQuestionModel(
             id = entity.id,
+            created = entity.created,
             label = entity.label,
             helpText = entity.helpText,
-            width = entity.width,
             multiLine = entity.multiLine,
             placeholder = entity.placeholder,
             validator = entity.validator
@@ -58,14 +58,12 @@ internal class FormTemplateQuestionMapper @Inject constructor() {
         is FormTemplateDateQuestionModel.Update -> FormTemplateDateQuestionEntity.Update(
             label = model.label,
             helpText = model.helpText,
-            width = model.width,
             earliest = model.earliest,
             latest = model.latest
         )
         is FormTemplateTextQuestionModel.Update -> FormTemplateTextQuestionEntity.Update(
             label = model.label,
             helpText = model.helpText,
-            width = model.width,
             multiLine = model.multiLine,
             placeholder = model.placeholder,
             validator = model.validator

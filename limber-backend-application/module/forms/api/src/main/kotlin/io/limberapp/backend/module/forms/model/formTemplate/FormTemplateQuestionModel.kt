@@ -1,19 +1,17 @@
 package io.limberapp.backend.module.forms.model.formTemplate
 
+import java.time.LocalDateTime
 import java.util.UUID
 
 interface FormTemplateQuestionModel {
 
     val id: UUID
+    val created: LocalDateTime
     val label: String
     val helpText: String?
-    val width: Width
-
-    enum class Width { HALF_WIDTH, FULL_WIDTH }
 
     interface Update {
         val label: String?
         val helpText: String?
-        val width: Width?
     }
 }

@@ -1,14 +1,14 @@
 package io.limberapp.backend.module.forms.entity.formTemplateQuestion
 
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import java.time.LocalDateTime
 import java.util.UUID
 
 data class FormTemplateTextQuestionEntity(
     override val id: UUID,
+    override val created: LocalDateTime,
     override val label: String,
     override val helpText: String?,
-    override val width: FormTemplateQuestionModel.Width,
     val multiLine: Boolean,
     val placeholder: String?,
     val validator: Regex?
@@ -17,7 +17,6 @@ data class FormTemplateTextQuestionEntity(
     data class Update(
         override val label: String?,
         override val helpText: String?,
-        override val width: FormTemplateQuestionModel.Width?,
         val multiLine: Boolean?,
         val placeholder: String?,
         val validator: Regex?

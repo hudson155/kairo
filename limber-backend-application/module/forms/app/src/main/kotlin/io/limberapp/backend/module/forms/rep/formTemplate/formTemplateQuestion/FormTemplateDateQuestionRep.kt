@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.time.LocalDate
 import java.util.UUID
 
@@ -10,7 +9,6 @@ object FormTemplateDateQuestionRep {
     data class Creation(
         override val label: String,
         override val helpText: String? = null,
-        override val width: FormTemplateQuestionModel.Width,
         val earliest: LocalDate? = null,
         val latest: LocalDate? = null
     ) : FormTemplateQuestionRep.Creation
@@ -19,7 +17,6 @@ object FormTemplateDateQuestionRep {
         override val id: UUID,
         override val label: String,
         override val helpText: String?,
-        override val width: FormTemplateQuestionModel.Width,
         val earliest: LocalDate?,
         val latest: LocalDate?
     ) : FormTemplateQuestionRep.Complete
@@ -27,7 +24,6 @@ object FormTemplateDateQuestionRep {
     data class Update(
         override val label: String? = null,
         override val helpText: String? = null,
-        override val width: FormTemplateQuestionModel.Width,
         val earliest: LocalDate? = null,
         val latest: LocalDate? = null
     ) : FormTemplateQuestionRep.Update
