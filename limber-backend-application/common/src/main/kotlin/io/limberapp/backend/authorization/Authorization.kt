@@ -13,7 +13,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         return authorizeInternal(principal)
     }
 
-    private val Jwt.isSuperuser get() = roles.contains(JwtRole.SUPERUSER)
+    private val Jwt.isSuperuser get() = JwtRole.SUPERUSER in roles
 
     protected abstract fun authorizeInternal(principal: Jwt?): Boolean
 
@@ -29,7 +29,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
             role ?: return false
-            return principal.roles.contains(role)
+            return role in principal.roles
         }
     }
 
