@@ -1,44 +1,44 @@
-package io.limberapp.backend.module.forms.endpoint.formTemplate.part
+package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplatePartNotFound
+import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
-import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplatePartRepFixtures
+import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class DeleteFormTemplatePartTest : ResourceTest() {
+internal class DeleteFormTemplateQuestionTest : ResourceTest() {
 
     @Test
     fun formTemplateDoesNotExist() {
 
         // Setup
         val formTemplateId = UUID.randomUUID()
-        val partId = UUID.randomUUID()
+        val questionId = UUID.randomUUID()
 
         // DeleteFormTemplate
         piperTest.test(
-            endpointConfig = DeleteFormTemplatePart.endpointConfig,
+            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
-                DeleteFormTemplatePart.formTemplateId to formTemplateId,
-                DeleteFormTemplatePart.partId to partId
+                DeleteFormTemplateQuestion.formTemplateId to formTemplateId,
+                DeleteFormTemplateQuestion.questionId to questionId
             ),
             expectedException = FormTemplateNotFound()
         )
     }
 
     @Test
-    fun formTemplatePartDoesNotExist() {
+    fun formTemplateQuestionDoesNotExist() {
 
         // Setup
         val orgId = UUID.randomUUID()
-        val partId = UUID.randomUUID()
+        val questionId = UUID.randomUUID()
 
         // CreateFormTemplate
         val formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
@@ -47,14 +47,14 @@ internal class DeleteFormTemplatePartTest : ResourceTest() {
             body = FormTemplateRepFixtures[0].creation(orgId)
         )
 
-        // DeleteFormTemplate
+        // DeleteFormTemplateQuestion
         piperTest.test(
-            endpointConfig = DeleteFormTemplatePart.endpointConfig,
+            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
-                DeleteFormTemplatePart.formTemplateId to formTemplateRep.id,
-                DeleteFormTemplatePart.partId to partId
+                DeleteFormTemplateQuestion.formTemplateId to formTemplateRep.id,
+                DeleteFormTemplateQuestion.questionId to questionId
             ),
-            expectedException = FormTemplatePartNotFound()
+            expectedException = FormTemplateQuestionNotFound()
         )
     }
 
@@ -71,22 +71,27 @@ internal class DeleteFormTemplatePartTest : ResourceTest() {
             body = FormTemplateRepFixtures[0].creation(orgId)
         )
 
-        // CreateFormTemplatePart
-        val formTemplatePartRep = FormTemplatePartRepFixtures[0].complete(this, 6)
-        formTemplateRep = formTemplateRep.copy(parts = formTemplateRep.parts.plus(formTemplatePartRep))
+        // CreateFormTemplateQuestion
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 4)
+        formTemplateRep = formTemplateRep.copy(
+            questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
+        )
         piperTest.setup(
-            endpointConfig = CreateFormTemplatePart.endpointConfig,
-            pathParams = mapOf(CreateFormTemplatePart.formTemplateId to formTemplateRep.id),
-            body = FormTemplatePartRepFixtures[0].creation()
+            endpointConfig = CreateFormTemplateQuestion.endpointConfig,
+            pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
+            queryParams = mapOf(CreateFormTemplateQuestion.index to 0),
+            body = FormTemplateQuestionRepFixtures[0].creation()
         )
 
-        // DeleteFormTemplatePart
-        formTemplateRep = formTemplateRep.copy(parts = formTemplateRep.parts.filter { it.id != formTemplatePartRep.id })
+        // DeleteFormTemplateQuestion
+        formTemplateRep = formTemplateRep.copy(
+            questions = formTemplateRep.questions.filter { it.id != formTemplateQuestionRep.id }
+        )
         piperTest.test(
-            endpointConfig = DeleteFormTemplatePart.endpointConfig,
+            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
-                DeleteFormTemplatePart.formTemplateId to formTemplateRep.id,
-                DeleteFormTemplatePart.partId to formTemplatePartRep.id
+                DeleteFormTemplateQuestion.formTemplateId to formTemplateRep.id,
+                DeleteFormTemplateQuestion.questionId to formTemplateQuestionRep.id
             )
         ) {}
 

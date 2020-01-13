@@ -28,7 +28,7 @@ object FormTemplateRep {
         val orgId: UUID,
         val title: String,
         val description: String?,
-        val parts: List<FormTemplatePartRep.Complete>
+        val questions: List<FormTemplateQuestionRep.Complete>
     ) : CompleteRep
 
     data class Update(

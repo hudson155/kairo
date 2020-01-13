@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.forms.endpoint.formTemplate.part
+package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -6,25 +6,20 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
-import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
+import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import java.util.UUID
 
 /**
- * Deletes a existing part from a form template.
+ * Updates a form template question's information.
  */
-internal class DeleteFormTemplatePart @Inject constructor(
+internal class UpdateFormTemplateQuestion @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig,
-    @Service private val formTemplateService: FormTemplateService,
-    @Service private val formTemplatePartService: FormTemplatePartService
-) : LimberApiEndpoint<DeleteFormTemplatePart.Command, Unit>(
+    servingConfig: ServingConfig
+) : LimberApiEndpoint<UpdateFormTemplateQuestion.Command, FormTemplateQuestionRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -32,29 +27,28 @@ internal class DeleteFormTemplatePart @Inject constructor(
 
     internal data class Command(
         val formTemplateId: UUID,
-        val partId: UUID
+        val questionId: UUID,
+        val updateRep: FormTemplateQuestionRep.Update
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        partId = call.parameters.getAsType(UUID::class, partId)
+        questionId = call.parameters.getAsType(UUID::class, questionId),
+        updateRep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command) {
-        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
-        formTemplatePartService.delete(command.formTemplateId, command.partId)
-    }
+    override suspend fun Handler.handle(command: Command) = TODO()
 
     companion object {
         const val formTemplateId = "formTemplateId"
-        const val partId = "partId"
+        const val questionId = "questionId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Delete,
+            httpMethod = HttpMethod.Patch,
             pathTemplate = listOf(
                 StringComponent("form-templates"),
                 VariableComponent(formTemplateId),
-                StringComponent("parts"),
-                VariableComponent(partId)
+                StringComponent("questions"),
+                VariableComponent(questionId)
             )
         )
     }

@@ -6,21 +6,13 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplat
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByOrgId
 import io.limberapp.backend.module.forms.endpoint.formTemplate.UpdateFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.part.CreateFormTemplatePart
-import io.limberapp.backend.module.forms.endpoint.formTemplate.part.DeleteFormTemplatePart
-import io.limberapp.backend.module.forms.endpoint.formTemplate.part.UpdateFormTemplatePart
-import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.CreateFormTemplateQuestion
-import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.DeleteFormTemplateQuestion
-import io.limberapp.backend.module.forms.endpoint.formTemplate.part.questionGroup.question.UpdateFormTemplateQuestion
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartService
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplatePartServiceImpl
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionGroupService
+import io.limberapp.backend.module.forms.endpoint.formTemplate.question.CreateFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.question.UpdateFormTemplateQuestion
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
-import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplatePartStore
-import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionGroupStore
 import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionStore
 import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateStore
 
@@ -34,9 +26,7 @@ import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateSto
  * that are all identical. A form instance is akin to a real world single form that has been filled out. It pertains to
  * a version of a form template, and the form template still exists.
  *
- * Form templates are made up of parts. Parts can be thought of as major sections, or perhaps "pages" of a form. Parts
- * are made up of question groups. Question groups can be thought of as questions that must be together in order to make
- * sense. Question groups are made up of questions, which are the atomic unit.
+ * Form templates are made up of questions, which are the atomic unit.
  */
 class FormsModule : Module() {
 
@@ -48,24 +38,17 @@ class FormsModule : Module() {
         GetFormTemplatesByOrgId::class.java,
         UpdateFormTemplate::class.java,
 
-        CreateFormTemplatePart::class.java,
-        UpdateFormTemplatePart::class.java,
-        DeleteFormTemplatePart::class.java,
-
         CreateFormTemplateQuestion::class.java,
         DeleteFormTemplateQuestion::class.java,
         UpdateFormTemplateQuestion::class.java
     )
 
     override fun bindServices() {
-        bindService(FormTemplatePartService::class, FormTemplatePartServiceImpl::class)
         bindService(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
         bindService(FormTemplateService::class, FormTemplateServiceImpl::class)
     }
 
     override fun bindStores() {
-        bindStore(FormTemplatePartService::class, MongoFormTemplatePartStore::class)
-        bindStore(FormTemplateQuestionGroupService::class, MongoFormTemplateQuestionGroupStore::class)
         bindStore(FormTemplateQuestionService::class, MongoFormTemplateQuestionStore::class)
         bindStore(FormTemplateService::class, MongoFormTemplateStore::class)
     }

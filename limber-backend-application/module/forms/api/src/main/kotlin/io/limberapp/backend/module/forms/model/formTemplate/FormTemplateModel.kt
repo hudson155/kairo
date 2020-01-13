@@ -9,7 +9,7 @@ data class FormTemplateModel(
     val orgId: UUID,
     val title: String,
     val description: String?,
-    val parts: List<FormTemplatePartModel>
+    val questions: List<FormTemplateQuestionModel>
 ) {
 
     data class Update(

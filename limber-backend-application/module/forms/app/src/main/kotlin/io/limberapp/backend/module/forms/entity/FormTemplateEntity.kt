@@ -10,7 +10,7 @@ data class FormTemplateEntity(
     val orgId: UUID,
     val title: String,
     val description: String?,
-    val parts: List<FormTemplatePartEntity>
+    val questions: List<FormTemplateQuestionEntity>
 ) {
 
     data class Update(

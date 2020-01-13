@@ -5,7 +5,7 @@ import io.limberapp.backend.module.forms.entity.FormTemplateEntity
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 
 internal class FormTemplateMapper @Inject constructor(
-    private val formTemplatePartMapper: FormTemplatePartMapper
+    private val formTemplateQuestionMapper: FormTemplateQuestionMapper
 ) {
 
     fun entity(model: FormTemplateModel) = FormTemplateEntity(
@@ -14,7 +14,7 @@ internal class FormTemplateMapper @Inject constructor(
         orgId = model.orgId,
         title = model.title,
         description = model.description,
-        parts = model.parts.map { formTemplatePartMapper.entity(it) }
+        questions = model.questions.map { formTemplateQuestionMapper.entity(it) }
     )
 
     fun model(entity: FormTemplateEntity) = FormTemplateModel(
@@ -23,7 +23,7 @@ internal class FormTemplateMapper @Inject constructor(
         orgId = entity.orgId,
         title = entity.title,
         description = entity.description,
-        parts = entity.parts.map { formTemplatePartMapper.model(it) }
+        questions = entity.questions.map { formTemplateQuestionMapper.model(it) }
     )
 
     fun update(model: FormTemplateModel.Update) = FormTemplateEntity.Update(

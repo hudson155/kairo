@@ -5,33 +5,15 @@ import java.util.UUID
 
 interface FormTemplateQuestionService {
 
-    fun create(
-        formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
-        model: FormTemplateQuestionModel,
-        index: Int? = null
-    )
+    fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, index: Int? = null)
 
-    fun get(
-        formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
-        formTemplateQuestionId: UUID
-    ): FormTemplateQuestionModel?
+    fun get(formTemplateId: UUID, formTemplateQuestionId: UUID): FormTemplateQuestionModel?
 
     fun update(
         formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID,
         update: FormTemplateQuestionModel.Update
     ): FormTemplateQuestionModel
 
-    fun delete(
-        formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
-        formTemplateQuestionId: UUID
-    )
+    fun delete(formTemplateId: UUID, formTemplateQuestionId: UUID)
 }

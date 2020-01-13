@@ -3,20 +3,16 @@ package io.limberapp.backend.module.forms.store.formTemplate
 import com.google.inject.Inject
 import com.mongodb.client.MongoDatabase
 import com.piperframework.module.annotation.Store
-import com.piperframework.mongo.filteredPosOp
 import com.piperframework.store.MongoCollection
 import com.piperframework.store.MongoStore
 import io.limberapp.backend.module.forms.entity.FormTemplateEntity
-import io.limberapp.backend.module.forms.entity.FormTemplatePartEntity
 import io.limberapp.backend.module.forms.entity.FormTemplateQuestionEntity
-import io.limberapp.backend.module.forms.entity.FormTemplateQuestionGroupEntity
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionGroupNotFound
+import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.mapper.app.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionGroupService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
-import org.bson.Document
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.div
@@ -27,7 +23,7 @@ import java.util.UUID
 
 internal class MongoFormTemplateQuestionStore @Inject constructor(
     mongoDatabase: MongoDatabase,
-    @Store private val formTemplateQuestionGroupStore: FormTemplateQuestionGroupService,
+    @Store private val formTemplateStore: FormTemplateService,
     private val formTemplateQuestionMapper: FormTemplateQuestionMapper
 ) : FormTemplateQuestionService, MongoStore<FormTemplateEntity>(
     collection = MongoCollection(
@@ -37,95 +33,45 @@ internal class MongoFormTemplateQuestionStore @Inject constructor(
     ),
     index = {
         ensureIndex(
-            index = ascending(
-                FormTemplateEntity::parts
-                        / FormTemplatePartEntity::questionGroups
-                        / FormTemplateQuestionGroupEntity::questions
-                        / FormTemplateQuestionEntity::id
-            ),
+            index = ascending(FormTemplateEntity::questions / FormTemplateQuestionEntity::id),
             unique = true
         )
     }
 ) {
 
-    override fun create(
-        formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
-        model: FormTemplateQuestionModel,
-        index: Int?
-    ) {
-        formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
-            ?: throw FormTemplateQuestionGroupNotFound()
+    override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, index: Int?) {
+        formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
         val entity = formTemplateQuestionMapper.entity(model)
-        collection.findOneByIdAndUpdate(
-            id = formTemplateId,
-            update = push(
-                property = (FormTemplateEntity::parts.filteredPosOp("part") / FormTemplatePartEntity::questionGroups)
-                    .filteredPosOp("questionGroup") / FormTemplateQuestionGroupEntity::questions,
-                value = entity
-            ),
-            arrayFilters = listOf(
-                Document("part.${FormTemplatePartEntity::id.name}", formTemplatePartId),
-                Document("questionGroup.${FormTemplateQuestionGroupEntity::id.name}", formTemplateQuestionGroupId)
-            )
-        )!!
+        collection.findOneByIdAndUpdate(formTemplateId, push(FormTemplateEntity::questions, entity))!!
     }
 
     override fun get(
         formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID
     ): FormTemplateQuestionModel? {
-        val formTemplateQuestionGroup =
-            formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
-                ?: throw FormTemplateQuestionGroupNotFound()
-        return formTemplateQuestionGroup.questions.singleOrNull { it.id == formTemplateQuestionId }
+        val formTemplate = formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
+        return formTemplate.questions.singleOrNull { it.id == formTemplateQuestionId }
     }
 
     override fun update(
         formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID,
         update: FormTemplateQuestionModel.Update
     ) = TODO()
 
     override fun delete(
         formTemplateId: UUID,
-        formTemplatePartId: UUID,
-        formTemplateQuestionGroupId: UUID,
         formTemplateQuestionId: UUID
     ) {
-        formTemplateQuestionGroupStore.get(formTemplateId, formTemplatePartId, formTemplateQuestionGroupId)
-            ?: throw FormTemplateQuestionGroupNotFound()
+        formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
         collection.findOneAndUpdate(
             filter = and(
                 FormTemplateEntity::id eq formTemplateId,
-                FormTemplateEntity::parts / FormTemplatePartEntity::id eq formTemplatePartId,
-                FormTemplateEntity::parts
-                        / FormTemplatePartEntity::questionGroups
-                        / FormTemplateQuestionGroupEntity::id eq formTemplateQuestionGroupId,
-                FormTemplateEntity::parts
-                        / FormTemplatePartEntity::questionGroups
-                        / FormTemplateQuestionGroupEntity::questions
-                        / FormTemplateQuestionEntity::id eq formTemplateQuestionId
+                FormTemplateEntity::questions / FormTemplateQuestionEntity::id eq formTemplateQuestionId
             ),
             update = pullByFilter(
-                property = (FormTemplateEntity::parts.filteredPosOp("part") / FormTemplatePartEntity::questionGroups)
-                    .filteredPosOp("questionGroup") / FormTemplateQuestionGroupEntity::questions,
+                property = FormTemplateEntity::questions,
                 filter = FormTemplateQuestionEntity::id eq formTemplateQuestionId
-            ),
-            arrayFilters = listOf(
-                Document(
-                    "part.${FormTemplatePartEntity::id.name}",
-                    Document("\$eq", formTemplatePartId)
-                ),
-                Document(
-                    "questionGroup.${FormTemplateQuestionGroupEntity::id.name}",
-                    Document("\$eq", formTemplateQuestionGroupId)
-                )
             )
         ) ?: throw FormTemplateQuestionNotFound()
     }
