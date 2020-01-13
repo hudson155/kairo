@@ -40,14 +40,16 @@ import java.util.UUID
 @Suppress("TooManyFunctions")
 abstract class PiperApp<C : Config>(protected val config: C) {
 
-    fun bindToApplication(application: Application) = with(application) {
-        val injector = bindModules()
-        configure(injector)
-        if (config.serving.staticFiles.serve) {
-            serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
+    fun bindToApplication(application: Application) {
+        with(application) {
+            val injector = bindModules()
+            configure(injector)
+            if (config.serving.staticFiles.serve) {
+                serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
+            }
+            registerEndpoints(injector)
+            handle404()
         }
-        registerEndpoints(injector)
-        handle404()
     }
 
     private fun Application.bindModules(): Injector = Guice.createInjector(getMainModules(this).plus(modules))

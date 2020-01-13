@@ -5,5 +5,5 @@ package com.piperframework.config.database
  */
 data class SqlDatabaseConfig(
     val jdbcUrl: String,
-    val username: String
+    val username: String?
 )

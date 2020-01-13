@@ -10,12 +10,14 @@ import javax.sql.DataSource
 /**
  * MongoModule configures bindings for an SQL database.
  */
-open class SqlModule(private val sqlDatabaseConfig: SqlDatabaseConfig) : AbstractModule() {
+open class SqlModule(sqlDatabaseConfig: SqlDatabaseConfig) : AbstractModule() {
+
+    protected val dataSource = sqlDatabaseConfig.createDataSource().apply {
+        runMigrations()
+    }
+    protected val database = Database.connect(dataSource)
 
     override fun configure() {
-        val dataSource = sqlDatabaseConfig.createDataSource()
-        dataSource.runMigrations()
-        val database = Database.connect(dataSource)
         bind(Database::class.java).toInstance(database)
     }
 

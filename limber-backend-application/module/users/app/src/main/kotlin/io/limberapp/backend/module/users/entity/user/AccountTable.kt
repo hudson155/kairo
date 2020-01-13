@@ -1,0 +1,10 @@
+package io.limberapp.backend.module.users.entity.user
+
+import com.piperframework.store.SqlTable
+
+object AccountTable : SqlTable("users", "account") {
+    val guid = uuid("guid").uniqueIndex()
+    val name = text("name")
+    val identityProvider = bool("identity_provider")
+    val superuser = bool("superuser")
+}

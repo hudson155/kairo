@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.testing
 
-import com.piperframework.module.TestMongoModule
+import com.piperframework.module.TestSqlModule
 import com.piperframework.testing.AbstractResourceTest
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.backend.test.LimberTest
@@ -8,13 +8,13 @@ import io.limberapp.backend.test.TestLimberApp
 
 abstract class ResourceTest : AbstractResourceTest() {
 
-    private val testMongoModule = TestMongoModule()
+    private val testSqlModule = TestSqlModule()
 
     override val piperTest = LimberTest(
         TestLimberApp(
             config = config,
             module = UsersModule(),
-            additionalModules = listOf(testMongoModule),
+            additionalModules = listOf(testSqlModule),
             fixedClock = fixedClock,
             deterministicUuidGenerator = deterministicUuidGenerator
         )
@@ -22,6 +22,6 @@ abstract class ResourceTest : AbstractResourceTest() {
 
     override fun before() {
         super.before()
-        testMongoModule.dropDatabase()
+        testSqlModule.dropDatabase()
     }
 }
