@@ -1,8 +1,6 @@
 dependencies {
     compile project(":limber-backend-application:module:orgs:api")
     compile project(":limber-backend-application:module:users:api")
-    compile project(":piper:mongo")
-    testCompile project(":piper:mongo:testing")
     compile project(":piper:sql")
     testCompile project(":piper:sql:testing")
 }
