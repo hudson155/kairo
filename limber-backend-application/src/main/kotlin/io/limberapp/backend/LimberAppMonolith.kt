@@ -16,7 +16,7 @@ import io.limberapp.backend.authentication.token.TokenAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
-import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
+import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
@@ -34,7 +34,7 @@ internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
                 scheme = TokenAuthVerifier.scheme,
                 verifier = TokenAuthVerifier(
                     injector.getInstance(JwtClaimsRequestService::class.java),
-                    injector.getInstance(PersonalAccessTokenService::class.java)
+                    injector.getInstance(AccessTokenService::class.java)
                 )
             )
         }

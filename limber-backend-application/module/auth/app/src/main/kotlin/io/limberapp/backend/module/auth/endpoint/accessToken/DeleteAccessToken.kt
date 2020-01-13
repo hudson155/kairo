@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.personalAccessToken
+package io.limberapp.backend.module.auth.endpoint.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -13,17 +13,17 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
+import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import java.util.UUID
 
 /**
- * Deletes the given personal access token from the given user.
+ * Deletes the given access token from the given user.
  */
-internal class DeletePersonalAccessToken @Inject constructor(
+internal class DeleteAccessToken @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    @Service private val personalAccessTokenService: PersonalAccessTokenService
-) : LimberApiEndpoint<DeletePersonalAccessToken.Command, Unit>(
+    @Service private val accessTokenService: AccessTokenService
+) : LimberApiEndpoint<DeleteAccessToken.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -31,29 +31,29 @@ internal class DeletePersonalAccessToken @Inject constructor(
 
     internal data class Command(
         val userId: UUID,
-        val personalAccessTokenId: UUID
+        val accessTokenId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
-        personalAccessTokenId = call.parameters.getAsType(UUID::class, personalAccessTokenId)
+        accessTokenId = call.parameters.getAsType(UUID::class, accessTokenId)
     )
 
     override suspend fun Handler.handle(command: Command) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        personalAccessTokenService.delete(command.userId, command.personalAccessTokenId)
+        accessTokenService.delete(command.userId, command.accessTokenId)
     }
 
     companion object {
         const val userId = "userId"
-        const val personalAccessTokenId = "personalAccessTokenId"
+        const val accessTokenId = "accessTokenId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Delete,
             pathTemplate = listOf(
                 StringComponent("users"),
                 VariableComponent(userId),
-                StringComponent("personal-access-tokens"),
-                VariableComponent(personalAccessTokenId)
+                StringComponent("access-tokens"),
+                VariableComponent(accessTokenId)
             )
         )
     }

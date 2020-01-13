@@ -1,10 +1,10 @@
-package io.limberapp.backend.module.auth.rep.personalAccessToken
+package io.limberapp.backend.module.auth.rep.accessToken
 
 import com.piperframework.rep.CompleteRep
 import java.time.LocalDateTime
 import java.util.UUID
 
-object PersonalAccessTokenRep {
+object AccessTokenRep {
 
     data class OneTimeUse(
         override val id: UUID,

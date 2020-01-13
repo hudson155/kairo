@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.personalAccessToken
+package io.limberapp.backend.module.auth.endpoint.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -13,23 +13,23 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.mapper.api.personalAccessToken.PersonalAccessTokenMapper
-import io.limberapp.backend.module.auth.rep.personalAccessToken.PersonalAccessTokenRep
-import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
+import io.limberapp.backend.module.auth.mapper.api.accessToken.AccessTokenMapper
+import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
+import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import java.util.UUID
 
 /**
- * Creates a personal access token for the given user. Note that this endpoint returns a "one time use" rep. This means
- * that the token itself will only be returned by this endpoint, immediately after it is created. The user must record
- * the token appropriately, because it cannot be returned again. If a new token is needed, the user can always delete
- * the existing token and create another.
+ * Returns all access tokens for the given user. Note that this endpoint does not actually return the token itself, just
+ * its ID. The token itself is only returned once, immediately after it is created. The user must record the token
+ * appropriately, because it cannot be returned again. If a new token is needed, the user can always delete the existing
+ * token and create another.
  */
-internal class CreatePersonalAccessToken @Inject constructor(
+internal class GetAccessTokensByUserId @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    @Service private val personalAccessTokenService: PersonalAccessTokenService,
-    private val personalAccessTokenMapper: PersonalAccessTokenMapper
-) : LimberApiEndpoint<CreatePersonalAccessToken.Command, PersonalAccessTokenRep.OneTimeUse>(
+    @Service private val accessTokenService: AccessTokenService,
+    private val accessTokenMapper: AccessTokenMapper
+) : LimberApiEndpoint<GetAccessTokensByUserId.Command, List<AccessTokenRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -43,21 +43,20 @@ internal class CreatePersonalAccessToken @Inject constructor(
         userId = call.parameters.getAsType(UUID::class, userId)
     )
 
-    override suspend fun Handler.handle(command: Command): PersonalAccessTokenRep.OneTimeUse {
+    override suspend fun Handler.handle(command: Command): List<AccessTokenRep.Complete> {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val model = personalAccessTokenMapper.model(command.userId)
-        personalAccessTokenService.create(model)
-        return personalAccessTokenMapper.oneTimeUseRep(model)
+        val models = accessTokenService.getByUserId(command.userId)
+        return models.map { accessTokenMapper.completeRep(it) }
     }
 
     companion object {
         const val userId = "userId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
+            httpMethod = HttpMethod.Get,
             pathTemplate = listOf(
                 StringComponent("users"),
                 VariableComponent(userId),
-                StringComponent("personal-access-tokens")
+                StringComponent("access-tokens")
             )
         )
     }

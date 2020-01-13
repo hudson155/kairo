@@ -1,9 +1,9 @@
-package io.limberapp.backend.module.auth.model.personalAccessToken
+package io.limberapp.backend.module.auth.model.accessToken
 
 import java.time.LocalDateTime
 import java.util.UUID
 
-data class PersonalAccessTokenModel(
+data class AccessTokenModel(
     val id: UUID,
     val created: LocalDateTime,
     val userId: UUID,
