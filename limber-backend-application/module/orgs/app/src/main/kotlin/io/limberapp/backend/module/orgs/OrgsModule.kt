@@ -17,9 +17,9 @@ import io.limberapp.backend.module.orgs.service.org.MembershipService
 import io.limberapp.backend.module.orgs.service.org.MembershipServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
-import io.limberapp.backend.module.orgs.store.org.MongoFeatureStore
-import io.limberapp.backend.module.orgs.store.org.MongoMembershipStore
-import io.limberapp.backend.module.orgs.store.org.MongoOrgStore
+import io.limberapp.backend.module.orgs.store.org.SqlFeatureStore
+import io.limberapp.backend.module.orgs.store.org.SqlMembershipStore
+import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 
 /**
  * The orgs module contains the basics of a client/tenant/organization. Be careful not to overload this module with too
@@ -51,8 +51,8 @@ class OrgsModule : Module() {
     }
 
     override fun bindStores() {
-        bindStore(FeatureService::class, MongoFeatureStore::class)
-        bindStore(MembershipService::class, MongoMembershipStore::class)
-        bindStore(OrgService::class, MongoOrgStore::class)
+        bindStore(FeatureService::class, SqlFeatureStore::class)
+        bindStore(MembershipService::class, SqlMembershipStore::class)
+        bindStore(OrgService::class, SqlOrgStore::class)
     }
 }
