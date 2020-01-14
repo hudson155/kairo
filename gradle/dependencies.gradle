@@ -35,9 +35,6 @@ ext {
             // https://github.com/junit-team/junit4/releases
             junit                  : '4.13',
 
-            // https://github.com/Litote/kmongo/releases
-            kmongo                 : '3.11.2',
-
             // https://github.com/ktorio/ktor/releases
             ktor                   : '1.2.5',
 
@@ -89,9 +86,6 @@ ext {
             flyway                 : "org.flywaydb:flyway-core:$versions.flyway",
             hikari                 : "com.zaxxer:HikariCP:$versions.hikari",
             postgres               : "org.postgresql:postgresql:$versions.postgres",
-
-            // MongoDB
-            kmongo                 : "org.litote.kmongo:kmongo:$versions.kmongo",
 
             // Google Cloud
             gcloud_kms             : "com.google.cloud:google-cloud-kms:$versions.gcloud_kms",

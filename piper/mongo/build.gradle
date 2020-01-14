@@ -1,4 +1,0 @@
-dependencies {
-    compile project(":piper:common")
-    compile libs.kmongo
-}

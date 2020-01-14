@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.Database
 import javax.sql.DataSource
 
 /**
- * MongoModule configures bindings for an SQL database.
+ * SqlModule configures bindings for an SQL database.
  */
 open class SqlModule(sqlDatabaseConfig: SqlDatabaseConfig) : AbstractModule() {
 

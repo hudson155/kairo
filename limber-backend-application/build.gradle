@@ -27,7 +27,6 @@ dependencies {
     compile libs.ktor_server_cio // Local
     compile libs.ktor_server_servlet // Google App Engine
     compile libs.logback_classic
-    compile libs.kmongo
 }
 
 appengine {

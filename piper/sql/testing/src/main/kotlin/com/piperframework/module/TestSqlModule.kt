@@ -3,9 +3,6 @@ package com.piperframework.module
 import com.piperframework.config.database.SqlDatabaseConfig
 import java.sql.Connection
 
-/**
- * MongoModule configures bindings for an SQL database.
- */
 open class TestSqlModule : SqlModule(SqlDatabaseConfig("jdbc:postgresql://localhost/limber_test", "postgres")) {
 
     fun dropDatabase() {
