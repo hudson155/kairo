@@ -8,6 +8,7 @@ import com.piperframework.config.serving.StaticFiles
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.util.uuid.uuidGenerator.DeterministicUuidGenerator
 import io.mockk.MockKAnnotations
+import org.junit.After
 import org.junit.Before
 import java.time.Clock
 import java.time.Instant
@@ -37,4 +38,7 @@ abstract class AbstractResourceTest {
         MockKAnnotations.init(this)
         deterministicUuidGenerator.reset()
     }
+
+    @After
+    open fun after() = Unit
 }

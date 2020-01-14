@@ -21,6 +21,8 @@ open class SqlModule(sqlDatabaseConfig: SqlDatabaseConfig) : AbstractModule() {
         bind(Database::class.java).toInstance(database)
     }
 
+    fun close() = dataSource.close()
+
     private fun DataSource.runMigrations() {
         val flyway = Flyway.configure().dataSource(this).load()
         flyway.migrate()
