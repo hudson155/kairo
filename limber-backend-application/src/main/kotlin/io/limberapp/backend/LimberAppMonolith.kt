@@ -7,7 +7,6 @@ import com.piperframework.PiperApp
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.MainModule
-import com.piperframework.module.MongoModule
 import com.piperframework.module.SqlModule
 import io.ktor.application.Application
 import io.ktor.auth.Authentication
@@ -15,8 +14,8 @@ import io.limberapp.backend.authentication.jwt.JwtAuthVerifier
 import io.limberapp.backend.authentication.token.TokenAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.module.auth.AuthModule
-import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
+import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
@@ -42,7 +41,6 @@ internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
 
     override fun getMainModules(application: Application) = listOf(
         MainModule.forProduction(application, config),
-        MongoModule(config.mongoDatabase),
         SqlModule(config.sqlDatabase)
     )
 
