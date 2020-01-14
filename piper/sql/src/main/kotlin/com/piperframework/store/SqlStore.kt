@@ -11,6 +11,7 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 import org.jetbrains.exposed.sql.transactions.transaction
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
 
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
