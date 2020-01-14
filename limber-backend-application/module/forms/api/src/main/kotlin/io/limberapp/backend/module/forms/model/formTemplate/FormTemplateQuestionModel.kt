@@ -9,6 +9,12 @@ interface FormTemplateQuestionModel {
     val created: LocalDateTime
     val label: String
     val helpText: String?
+    val type: Type
+
+    enum class Type {
+        DATE,
+        TEXT;
+    }
 
     interface Update {
         val label: String?

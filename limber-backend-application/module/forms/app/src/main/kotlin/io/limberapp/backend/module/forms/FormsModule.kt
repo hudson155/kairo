@@ -13,8 +13,8 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
-import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateQuestionStore
-import io.limberapp.backend.module.forms.store.formTemplate.MongoFormTemplateStore
+import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateQuestionStore
+import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
 
 /**
  * The forms module handles any form features an org has enabled. An org can have 0 form features, or many form
@@ -49,7 +49,7 @@ class FormsModule : Module() {
     }
 
     override fun bindStores() {
-        bindStore(FormTemplateQuestionService::class, MongoFormTemplateQuestionStore::class)
-        bindStore(FormTemplateService::class, MongoFormTemplateStore::class)
+        bindStore(FormTemplateQuestionService::class, SqlFormTemplateQuestionStore::class)
+        bindStore(FormTemplateService::class, SqlFormTemplateStore::class)
     }
 }

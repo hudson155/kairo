@@ -70,7 +70,7 @@ CREATE TABLE forms.form_template
     id           BIGSERIAL PRIMARY KEY,
     created_date TIMESTAMP   NOT NULL,
     guid         UUID UNIQUE NOT NULL,
-    org_guid     UUID        NOT NULL REFERENCES orgs.org (guid) ON DELETE CASCADE,
+    org_guid     UUID        NOT NULL,
     title        VARCHAR     NOT NULL,
     description  VARCHAR
 );
@@ -83,5 +83,10 @@ CREATE TABLE forms.form_template_question
     form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE CASCADE,
     label              VARCHAR     NOT NULL,
     help_text          VARCHAR,
-    description        VARCHAR
+    type               VARCHAR     NOT NULL,
+    multi_line         BOOLEAN,
+    placeholder        VARCHAR,
+    validator          VARCHAR,
+    earliest           DATE,
+    latest             DATE
 );

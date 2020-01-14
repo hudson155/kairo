@@ -14,6 +14,8 @@ data class FormTemplateDateQuestionModel(
     val latest: LocalDate?
 ) : FormTemplateQuestionModel {
 
+    override val type = FormTemplateQuestionModel.Type.DATE
+
     data class Update(
         override val label: String?,
         override val helpText: String?,

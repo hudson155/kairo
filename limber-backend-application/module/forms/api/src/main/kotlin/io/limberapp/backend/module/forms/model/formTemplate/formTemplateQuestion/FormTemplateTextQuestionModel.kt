@@ -14,6 +14,8 @@ data class FormTemplateTextQuestionModel(
     val validator: Regex?
 ) : FormTemplateQuestionModel {
 
+    override val type = FormTemplateQuestionModel.Type.TEXT
+
     data class Update(
         override val label: String?,
         override val helpText: String?,
