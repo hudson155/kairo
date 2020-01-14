@@ -35,13 +35,13 @@ internal class CreateFormTemplateQuestion @Inject constructor(
 
     internal data class Command(
         val formTemplateId: UUID,
-        val index: Int?,
+        val rank: Int?,
         val creationRep: FormTemplateQuestionRep.Creation
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        index = call.parameters.getAsType(Int::class, index, optional = true),
+        rank = call.parameters.getAsType(Int::class, rank, optional = true),
         creationRep = call.getAndValidateBody()
     )
 
@@ -51,14 +51,14 @@ internal class CreateFormTemplateQuestion @Inject constructor(
         formTemplateQuestionService.create(
             formTemplateId = command.formTemplateId,
             model = model,
-            index = command.index
+            rank = command.rank
         )
         return formTemplateQuestionMapper.completeRep(model)
     }
 
     companion object {
         const val formTemplateId = "formTemplateId"
-        const val index = "index"
+        const val rank = "rank"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Post,
             pathTemplate = listOf(

@@ -87,7 +87,7 @@ internal class UpdateFormTemplateQuestionTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(CreateFormTemplateQuestion.index to 0),
+            queryParams = mapOf(CreateFormTemplateQuestion.rank to 0),
             body = FormTemplateQuestionRepFixtures[0].creation()
         )
 

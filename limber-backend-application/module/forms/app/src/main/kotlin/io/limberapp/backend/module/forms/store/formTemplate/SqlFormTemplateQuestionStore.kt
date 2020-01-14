@@ -24,12 +24,12 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
     override fun create(
         formTemplateId: UUID,
         models: List<FormTemplateQuestionModel>,
-        index: Int?
+        rank: Int?
     ) = transaction<Unit> {
         FormTemplateQuestionTable.batchInsert(models) { model -> createFormTemplateQuestion(formTemplateId, model) }
     }
 
-    override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, index: Int?) = transaction<Unit> {
+    override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) = transaction<Unit> {
         FormTemplateQuestionTable.insert { it.createFormTemplateQuestion(formTemplateId, model) }
     }
 

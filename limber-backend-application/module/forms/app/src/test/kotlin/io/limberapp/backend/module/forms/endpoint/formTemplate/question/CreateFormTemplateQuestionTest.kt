@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.piperframework.exception.exception.badRequest.IndexOutOfBounds
+import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
@@ -34,7 +34,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
     }
 
     @Test
-    fun indexOutOfBoundsLow() {
+    fun rankOutOfBoundsLow() {
 
         // Setup
         val orgId = UUID.randomUUID()
@@ -50,14 +50,14 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(CreateFormTemplateQuestion.index to -1),
+            queryParams = mapOf(CreateFormTemplateQuestion.rank to -1),
             body = FormTemplateQuestionRepFixtures[0].creation(),
-            expectedException = IndexOutOfBounds(-1)
+            expectedException = RankOutOfBounds(-1)
         )
     }
 
     @Test
-    fun indexOutOfBoundsHigh() {
+    fun rankOutOfBoundsHigh() {
 
         // Setup
         val orgId = UUID.randomUUID()
@@ -73,14 +73,14 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(CreateFormTemplateQuestion.index to FormTemplateQuestionRepFixtures.defaults.size + 1),
+            queryParams = mapOf(CreateFormTemplateQuestion.rank to FormTemplateQuestionRepFixtures.defaults.size + 1),
             body = FormTemplateQuestionRepFixtures[0].creation(),
-            expectedException = IndexOutOfBounds((FormTemplateQuestionRepFixtures.defaults.size + 1))
+            expectedException = RankOutOfBounds((FormTemplateQuestionRepFixtures.defaults.size + 1))
         )
     }
 
     @Test
-    fun happyPathFirstIndex() {
+    fun happyPathFirstRank() {
 
         // Setup
         val orgId = UUID.randomUUID()
@@ -100,7 +100,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(CreateFormTemplateQuestion.index to 0),
+            queryParams = mapOf(CreateFormTemplateQuestion.rank to 0),
             body = FormTemplateQuestionRepFixtures[0].creation()
         ) {
             val actual = objectMapper.readValue<FormTemplateQuestionRep.Complete>(response.content!!)
@@ -117,7 +117,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
     }
 
     @Test
-    fun happyPathLastIndex() {
+    fun happyPathLastRank() {
 
         // Setup
         val orgId = UUID.randomUUID()
