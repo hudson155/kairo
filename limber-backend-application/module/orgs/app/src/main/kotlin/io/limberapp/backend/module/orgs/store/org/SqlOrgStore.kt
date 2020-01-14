@@ -17,6 +17,7 @@ import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
@@ -53,12 +54,14 @@ internal class SqlOrgStore @Inject constructor(
     }
 
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {
-        OrgTable.update({ OrgTable.guid eq orgId }) { s ->
-            update.name?.let { s[name] = it }
-        }
+        OrgTable.update({ OrgTable.guid eq orgId }) { it.updateOrg(update) }
             .ifEq(0) { throw OrgNotFound() }
             .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(orgId))
+    }
+
+    private fun UpdateStatement.updateOrg(update: OrgModel.Update) {
+        update.name?.let { this[OrgTable.name] = it }
     }
 
     override fun delete(orgId: UUID) = transaction<Unit> {

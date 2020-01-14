@@ -16,6 +16,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
@@ -59,10 +60,7 @@ class SqlUserStore @Inject constructor(
     }
 
     override fun update(userId: UUID, update: UserModel.Update) = transaction {
-        UserTable.update({ UserTable.accountGuid eq userId }) { s ->
-            update.firstName?.let { s[firstName] = it }
-            update.lastName?.let { s[lastName] = it }
-        }
+        UserTable.update({ UserTable.accountGuid eq userId }) { it.updateUser(update) }
             .ifEq(0) { throw UserNotFound() }
             .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(userId))
@@ -71,11 +69,11 @@ class SqlUserStore @Inject constructor(
     override fun addRole(userId: UUID, role: JwtRole) = transaction {
         val existing = get(userId) ?: throw UserNotFound()
         if (role in existing.roles) throw UserAlreadyHasRole(role)
-        AccountTable.update({ AccountTable.guid eq userId }) { s ->
-            when (role) {
-                JwtRole.IDENTITY_PROVIDER -> s[identityProvider] = true
-                JwtRole.SUPERUSER -> s[superuser] = true
-            }
+        AccountTable.update({ AccountTable.guid eq userId }) {
+            it.updateAccount(
+                identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) true else null,
+                superuser = if (role == JwtRole.SUPERUSER) true else null
+            )
         }
             .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(userId))
@@ -84,14 +82,24 @@ class SqlUserStore @Inject constructor(
     override fun removeRole(userId: UUID, role: JwtRole) = transaction {
         val existing = get(userId) ?: throw UserNotFound()
         if (role !in existing.roles) throw UserDoesNotHaveRole(role)
-        AccountTable.update({ AccountTable.guid eq userId }) { s ->
-            when (role) {
-                JwtRole.IDENTITY_PROVIDER -> s[identityProvider] = false
-                JwtRole.SUPERUSER -> s[superuser] = false
-            }
+        AccountTable.update({ AccountTable.guid eq userId }) {
+            it.updateAccount(
+                identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) false else null,
+                superuser = if (role == JwtRole.SUPERUSER) false else null
+            )
         }
             .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(userId))
+    }
+
+    private fun UpdateStatement.updateAccount(identityProvider: Boolean? = null, superuser: Boolean? = null) {
+        identityProvider?.let { this[AccountTable.identityProvider] = it }
+        superuser?.let { this[AccountTable.superuser] = it }
+    }
+
+    private fun UpdateStatement.updateUser(update: UserModel.Update) {
+        update.firstName?.let { this[UserTable.firstName] = it }
+        update.lastName?.let { this[UserTable.lastName] = it }
     }
 
     override fun delete(userId: UUID) = transaction<Unit> {
