@@ -17,6 +17,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.max
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
@@ -106,7 +107,32 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         formTemplateId: UUID,
         formTemplateQuestionId: UUID,
         update: FormTemplateQuestionModel.Update
-    ) = TODO()
+    ) = transaction {
+        FormTemplateQuestionTable.update({
+            (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                    (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+        }) { it.updateFormTemplate(update) }
+            .ifEq(0) { throw FormTemplateQuestionNotFound() }
+            .ifGt(1, ::badSql)
+        return@transaction checkNotNull(get(formTemplateId, formTemplateQuestionId))
+    }
+
+    private fun UpdateStatement.updateFormTemplate(update: FormTemplateQuestionModel.Update) {
+        update.label?.let { this[FormTemplateQuestionTable.label] = it }
+        update.helpText?.let { this[FormTemplateQuestionTable.helpText] = it }
+        when (update) {
+            is FormTemplateDateQuestionModel.Update -> {
+                update.earliest?.let { this[FormTemplateQuestionTable.earliest] = it }
+                update.latest?.let { this[FormTemplateQuestionTable.latest] = it }
+            }
+            is FormTemplateTextQuestionModel.Update -> {
+                update.multiLine?.let { this[FormTemplateQuestionTable.multiLine] = it }
+                update.placeholder?.let { this[FormTemplateQuestionTable.placeholder] = it }
+                update.validator?.let { this[FormTemplateQuestionTable.validator] = it.pattern }
+            }
+            else -> error("Unexpected question type: ${update::class.qualifiedName}")
+        }
+    }
 
     override fun delete(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {
         FormTemplateQuestionTable.deleteAtMostOneWhere {

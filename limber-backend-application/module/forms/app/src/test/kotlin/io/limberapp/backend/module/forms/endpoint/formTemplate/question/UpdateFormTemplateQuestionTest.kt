@@ -10,12 +10,10 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Ignore
 import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-@Ignore
 internal class UpdateFormTemplateQuestionTest : ResourceTest() {
 
     @Test

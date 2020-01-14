@@ -6,11 +6,15 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
 /**
@@ -18,7 +22,9 @@ import java.util.UUID
  */
 internal class UpdateFormTemplate @Inject constructor(
     application: Application,
-    servingConfig: ServingConfig
+    servingConfig: ServingConfig,
+    @Service private val formTemplateService: FormTemplateService,
+    private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<UpdateFormTemplate.Command, FormTemplateRep.Complete>(
     application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -35,7 +41,12 @@ internal class UpdateFormTemplate @Inject constructor(
         updateRep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command) = TODO()
+    override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
+        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        val update = formTemplateMapper.update(command.updateRep)
+        val model = formTemplateService.update(command.formTemplateId, update)
+        return formTemplateMapper.completeRep(model)
+    }
 
     companion object {
         const val formTemplateId = "formTemplateId"
