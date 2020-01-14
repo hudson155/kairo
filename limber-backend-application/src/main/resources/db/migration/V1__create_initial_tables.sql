@@ -81,6 +81,7 @@ CREATE TABLE forms.form_template_question
     created_date       TIMESTAMP   NOT NULL,
     guid               UUID UNIQUE NOT NULL,
     form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE CASCADE,
+    rank               INT         NOT NULL,
     label              VARCHAR     NOT NULL,
     help_text          VARCHAR,
     type               VARCHAR     NOT NULL,

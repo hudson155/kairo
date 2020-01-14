@@ -10,12 +10,10 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Ignore
 import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-@Ignore
 internal class CreateFormTemplateQuestionTest : ResourceTest() {
 
     @Test
@@ -93,7 +91,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         )
 
         // CreateFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 2)
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
@@ -109,7 +107,8 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
 
         // GetFormTemplate
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig
+            endpointConfig = GetFormTemplate.endpointConfig,
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
             val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
@@ -130,7 +129,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         )
 
         // CreateFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 2)
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
         )
@@ -145,7 +144,8 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
 
         // GetFormTemplate
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig
+            endpointConfig = GetFormTemplate.endpointConfig,
+            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
             val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
