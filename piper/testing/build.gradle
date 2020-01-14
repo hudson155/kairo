@@ -3,4 +3,6 @@ dependencies {
     api libs.junit
     api libs.ktor_test
     api libs.mockk
+    api libs.spek_dsl
+    runtimeOnly libs.spek_runner
 }

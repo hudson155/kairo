@@ -49,6 +49,9 @@ ext {
 
             // https://mvnrepository.com/artifact/org.postgresql/postgresql
             postgres               : '42.2.9',
+
+            // https://github.com/spekframework/spek/releases
+            spek                   : '2.0.9',
     ]
 
     libs = [
@@ -101,6 +104,10 @@ ext {
 
             // JUnit
             junit                  : "junit:junit:$versions.junit",
+
+            // Spek
+            spek_dsl               : "org.spekframework.spek2:spek-dsl-jvm:$versions.spek",
+            spek_runner            : "org.spekframework.spek2:spek-runner-junit5:$versions.spek",
 
             // MockK
             mockk                  : "io.mockk:mockk:$versions.mockk",
