@@ -15,18 +15,19 @@ sourceSets {
 }
 
 dependencies {
-    compile project(":limber-backend-application:module:auth:app")
-    compile project(":limber-backend-application:module:forms:app")
-    compile project(":limber-backend-application:module:orgs:app")
-    compile project(":limber-backend-application:module:users:app")
-    compile project(":piper")
-    compile libs.auth0_java_jwt
-    compile libs.auth0_jwks_rsa
-    compile libs.guice
-    compile libs.jackson_dataformat_yaml
-    compile libs.ktor_server_cio // Local
-    compile libs.ktor_server_servlet // Google App Engine
-    compile libs.logback_classic
+    implementation project(":limber-backend-application:common")
+    implementation project(":limber-backend-application:module:auth:app")
+    implementation project(":limber-backend-application:module:forms:app")
+    implementation project(":limber-backend-application:module:orgs:app")
+    implementation project(":limber-backend-application:module:users:app")
+    implementation project(":piper")
+    implementation project(":piper:sql")
+    api libs.auth0_java_jwt
+    api libs.auth0_jwks_rsa
+    implementation libs.jackson_dataformat_yaml
+    implementation libs.ktor_server_cio // Local
+    implementation libs.ktor_server_servlet // Google App Engine
+    implementation libs.logback_classic
 }
 
 appengine {

@@ -66,8 +66,8 @@ subprojects {
     }
 
     dependencies {
-        compile libs.kotlin_reflect
-        compile libs.kotlin_stdlib_jdk8
+        implementation libs.kotlin_reflect
+        implementation libs.kotlin_stdlib_jdk8
     }
 
     /**

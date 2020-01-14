@@ -1,6 +1,6 @@
 dependencies {
-    compile project(":piper")
-    compile libs.junit
-    compile libs.ktor_test
-    compile libs.mockk
+    api project(":piper")
+    api libs.junit
+    api libs.ktor_test
+    api libs.mockk
 }

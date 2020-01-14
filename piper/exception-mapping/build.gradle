@@ -1,5 +1,5 @@
 dependencies {
-    compile project(":piper:errors")
-    compile project(":piper:exceptions")
-    compile libs.ktor_http_jvm
+    api project(":piper:errors")
+    api project(":piper:exceptions")
+    implementation libs.ktor_http_jvm
 }

@@ -1,4 +1,4 @@
 dependencies {
-    compile project(":piper:sql")
-    testCompile project(":piper:sql:testing")
+    implementation project(":piper:sql")
+    testImplementation project(":piper:sql:testing")
 }
