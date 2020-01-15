@@ -8,8 +8,8 @@ import com.piperframework.config.serving.StaticFiles
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.util.uuid.uuidGenerator.DeterministicUuidGenerator
 import io.mockk.MockKAnnotations
-import org.junit.After
-import org.junit.Before
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
@@ -33,15 +33,21 @@ abstract class AbstractResourceTest {
 
     val deterministicUuidGenerator = DeterministicUuidGenerator()
 
-    @Before
-    open fun before() {
+    @BeforeEach
+    fun beforeInternal() {
+        println("running before each")
         MockKAnnotations.init(this)
         deterministicUuidGenerator.reset()
         piperTest.start()
+        before()
     }
 
-    @After
-    open fun after() {
+    open fun before() = Unit
+
+    @AfterEach
+    fun afterInternal() {
         piperTest.stop()
     }
+
+    open fun after() = Unit
 }

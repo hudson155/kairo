@@ -28,9 +28,10 @@ allprojects {
 
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-    // Running tests via the command line does not log the result of each test.
-    // This adds such logging, so that when tests fail on CI we can know which ones failed.
     test {
+        useJUnitPlatform()
+        // Running tests via the command line does not log the result of each test.
+        // This adds such logging, so that when tests fail on CI we can know which ones failed.
         afterTest { desc, result ->
             logger.quiet "Test ${result.resultType}: ${desc.className}::${desc.name}"
         }

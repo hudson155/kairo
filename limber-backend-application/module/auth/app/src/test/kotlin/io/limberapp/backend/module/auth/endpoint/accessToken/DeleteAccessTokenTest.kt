@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.exception.notFound.AccessTokenNotFound
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.accessToken.AccessTokenRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 

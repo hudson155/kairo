@@ -1,8 +1,9 @@
 dependencies {
     api project(":piper")
-    api libs.junit
+    api libs.junit_api
+    runtimeElements libs.junit_engine
+    api libs.kotlin_test
+    api libs.kotlin_test_junit5
     api libs.ktor_test
     api libs.mockk
-    api libs.spek_dsl
-    runtimeOnly libs.spek_runner
 }

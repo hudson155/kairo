@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class CreateOrgTest : ResourceTest() {

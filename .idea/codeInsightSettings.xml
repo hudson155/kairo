@@ -13,6 +13,7 @@
       <name>junit.framework</name>
       <name>kotlin.test.junit.JUnitAsserter</name>
       <name>org.junit.Assert</name>
+      <name>org.junit.Test</name>
       <name>org.litote.kmongo.MongoOperator</name>
     </excluded-names>
   </component>

@@ -5,7 +5,7 @@ import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 

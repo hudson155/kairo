@@ -22,12 +22,10 @@ abstract class ResourceTest : AbstractResourceTest() {
     }
 
     override fun before() {
-        super.before()
         testSqlModule.dropDatabase()
     }
 
     override fun after() {
-        super.after()
         testSqlModule.close()
     }
 }
