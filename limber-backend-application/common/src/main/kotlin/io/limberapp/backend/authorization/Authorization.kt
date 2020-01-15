@@ -5,7 +5,6 @@ import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import java.util.UUID
 
-@Suppress("MethodOverloading") // Detekt incorrectly thinks overrides in nested subclasses are method overloads.
 abstract class Authorization : PiperAuthorization<Jwt> {
 
     override fun authorize(principal: Jwt?): Boolean {
