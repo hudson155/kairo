@@ -20,10 +20,6 @@ comments:
     active: true
   UndocumentedPublicClass:
     active: false
-    searchInNestedClass: true
-    searchInInnerClass: true
-    searchInInnerObject: true
-    searchInInnerInterface: true
   UndocumentedPublicFunction:
     active: false
   UndocumentedPublicProperty:
@@ -373,11 +369,11 @@ style:
     excludes: "**/src/test/**/*Test.kt"
     ignoreNumbers: '-1,0,1'
     ignoreHashCodeFunction: true
-    ignorePropertyDeclaration: false
+    ignorePropertyDeclaration: true
     ignoreLocalVariableDeclaration: true
     ignoreConstantDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
-    ignoreAnnotation: false
+    ignoreAnnotation: true
     ignoreNamedArgument: true
     ignoreEnums: false
     ignoreRanges: false
