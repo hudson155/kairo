@@ -48,8 +48,7 @@ allprojects {
     }
 
     detekt {
-        input = files('src/main/kotlin')
-        config = files("$rootDir/.detekt/detekt.yml")
+        config = files("$rootDir/.detekt/config.yml")
     }
 }
 
