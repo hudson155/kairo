@@ -11,6 +11,7 @@ import javax.sql.DataSource
 /**
  * SqlModule configures bindings for an SQL database.
  */
+@Suppress("LateinitUsage")
 open class SqlModule(private val sqlDatabaseConfig: SqlDatabaseConfig) : ModuleWithLifecycle() {
 
     private val logger = LoggerFactory.getLogger(SqlModule::class.java)

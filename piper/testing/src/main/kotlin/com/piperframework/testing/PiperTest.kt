@@ -99,13 +99,10 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
 
     fun start() {
         engine.start()
-        try {
+        engine.doOrStop {
             engine.application.moduleFunction()
             // TestApplicationEngine does not raise ApplicationStarted.
             engine.environment.monitor.raise(ApplicationStarted, engine.application)
-        } catch (e: Throwable) {
-            stop()
-            throw e
         }
     }
 
@@ -114,10 +111,15 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
     }
 
     private fun withPiperTestApp(test: TestApplicationEngine.() -> Unit) {
+        engine.doOrStop { test() }
+    }
+
+    private fun TestApplicationEngine.doOrStop(function: TestApplicationEngine.() -> Unit) {
+        @Suppress("TooGenericExceptionCaught")
         try {
-            engine.test()
+            function()
         } catch (e: Throwable) {
-            engine.stop(0L, 0L, TimeUnit.MILLISECONDS)
+            stop()
             throw e
         }
     }

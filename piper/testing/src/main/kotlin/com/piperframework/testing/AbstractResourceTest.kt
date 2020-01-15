@@ -41,12 +41,12 @@ abstract class AbstractResourceTest {
         before()
     }
 
-    open fun before() = Unit
+    open fun before() {}
 
     @AfterEach
     fun afterInternal() {
         piperTest.stop()
     }
 
-    open fun after() = Unit
+    open fun after() {}
 }
