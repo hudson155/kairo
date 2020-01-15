@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
+import io.limberapp.backend.module.orgs.store.org.OrgStore
 
 internal class OrgServiceImpl @Inject constructor(
-    @Store private val orgStore: OrgService
+    private val orgStore: OrgStore
 ) : OrgService by orgStore

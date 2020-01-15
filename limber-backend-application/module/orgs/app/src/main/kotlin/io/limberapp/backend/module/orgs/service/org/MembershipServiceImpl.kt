@@ -1,14 +1,15 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
+import io.limberapp.backend.module.orgs.store.org.MembershipStore
+import io.limberapp.backend.module.orgs.store.org.OrgStore
 import java.util.UUID
 
 internal class MembershipServiceImpl @Inject constructor(
-    @Store private val membershipStore: MembershipService,
-    @Store private val orgStore: OrgService
+    private val membershipStore: MembershipStore,
+    private val orgStore: OrgStore
 ) : MembershipService by membershipStore {
 
     override fun create(orgId: UUID, model: MembershipModel) {

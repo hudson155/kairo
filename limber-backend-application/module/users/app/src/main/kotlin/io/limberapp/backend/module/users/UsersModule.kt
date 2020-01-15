@@ -11,6 +11,7 @@ import io.limberapp.backend.module.users.endpoint.user.role.RemoveUserRole
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.service.user.UserServiceImpl
 import io.limberapp.backend.module.users.store.user.SqlUserStore
+import io.limberapp.backend.module.users.store.user.UserStore
 
 /**
  * The users module contains the basics of a user of the platform. Be careful not to overload this module with too much
@@ -31,10 +32,10 @@ class UsersModule : Module() {
     )
 
     override fun bindServices() {
-        bindService(UserService::class, UserServiceImpl::class)
+        bind(UserService::class, UserServiceImpl::class)
     }
 
     override fun bindStores() {
-        bindStore(UserService::class, SqlUserStore::class)
+        bind(UserStore::class, SqlUserStore::class)
     }
 }

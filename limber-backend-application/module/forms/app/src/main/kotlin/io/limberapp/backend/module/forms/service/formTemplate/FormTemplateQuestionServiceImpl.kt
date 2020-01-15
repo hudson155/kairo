@@ -1,14 +1,15 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import java.util.UUID
 
 internal class FormTemplateQuestionServiceImpl @Inject constructor(
-    @Store private val formTemplateStore: FormTemplateService,
-    @Store private val formTemplateQuestionStore: FormTemplateQuestionService
+    private val formTemplateStore: FormTemplateStore,
+    private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService by formTemplateQuestionStore {
 
     override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) {

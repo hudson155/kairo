@@ -8,7 +8,6 @@ import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder
@@ -23,7 +22,7 @@ import java.util.UUID
 
 internal class SqlFormTemplateQuestionStore @Inject constructor(
     database: Database
-) : FormTemplateQuestionService, SqlStore(database) {
+) : FormTemplateQuestionStore, SqlStore(database) {
 
     override fun create(
         formTemplateId: UUID,

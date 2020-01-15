@@ -17,6 +17,9 @@ import io.limberapp.backend.module.orgs.service.org.MembershipService
 import io.limberapp.backend.module.orgs.service.org.MembershipServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
+import io.limberapp.backend.module.orgs.store.org.FeatureStore
+import io.limberapp.backend.module.orgs.store.org.MembershipStore
+import io.limberapp.backend.module.orgs.store.org.OrgStore
 import io.limberapp.backend.module.orgs.store.org.SqlFeatureStore
 import io.limberapp.backend.module.orgs.store.org.SqlMembershipStore
 import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
@@ -45,14 +48,14 @@ class OrgsModule : Module() {
     )
 
     override fun bindServices() {
-        bindService(FeatureService::class, FeatureServiceImpl::class)
-        bindService(MembershipService::class, MembershipServiceImpl::class)
-        bindService(OrgService::class, OrgServiceImpl::class)
+        bind(FeatureService::class, FeatureServiceImpl::class)
+        bind(MembershipService::class, MembershipServiceImpl::class)
+        bind(OrgService::class, OrgServiceImpl::class)
     }
 
     override fun bindStores() {
-        bindStore(FeatureService::class, SqlFeatureStore::class)
-        bindStore(MembershipService::class, SqlMembershipStore::class)
-        bindStore(OrgService::class, SqlOrgStore::class)
+        bind(FeatureStore::class, SqlFeatureStore::class)
+        bind(MembershipStore::class, SqlMembershipStore::class)
+        bind(OrgStore::class, SqlOrgStore::class)
     }
 }

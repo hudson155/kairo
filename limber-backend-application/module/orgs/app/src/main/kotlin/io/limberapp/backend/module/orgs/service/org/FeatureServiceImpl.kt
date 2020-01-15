@@ -1,14 +1,15 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import io.limberapp.backend.module.orgs.store.org.FeatureStore
+import io.limberapp.backend.module.orgs.store.org.OrgStore
 import java.util.UUID
 
 internal class FeatureServiceImpl @Inject constructor(
-    @Store private val featureStore: FeatureService,
-    @Store private val orgStore: OrgService
+    private val featureStore: FeatureStore,
+    private val orgStore: OrgStore
 ) : FeatureService by featureStore {
 
     override fun create(orgId: UUID, model: FeatureModel) {

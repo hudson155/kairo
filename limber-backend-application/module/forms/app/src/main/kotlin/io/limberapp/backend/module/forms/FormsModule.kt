@@ -13,6 +13,8 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateQuestionStore
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
 
@@ -44,12 +46,12 @@ class FormsModule : Module() {
     )
 
     override fun bindServices() {
-        bindService(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
-        bindService(FormTemplateService::class, FormTemplateServiceImpl::class)
+        bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
+        bind(FormTemplateService::class, FormTemplateServiceImpl::class)
     }
 
     override fun bindStores() {
-        bindStore(FormTemplateQuestionService::class, SqlFormTemplateQuestionStore::class)
-        bindStore(FormTemplateService::class, SqlFormTemplateStore::class)
+        bind(FormTemplateQuestionStore::class, SqlFormTemplateQuestionStore::class)
+        bind(FormTemplateStore::class, SqlFormTemplateStore::class)
     }
 }

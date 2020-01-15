@@ -6,7 +6,6 @@ import io.limberapp.backend.module.orgs.entity.org.FeatureTable
 import io.limberapp.backend.module.orgs.exception.conflict.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.service.org.FeatureService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
@@ -20,7 +19,7 @@ import java.util.UUID
 
 internal class SqlFeatureStore @Inject constructor(
     database: Database
-) : FeatureService, SqlStore(database) {
+) : FeatureStore, SqlStore(database) {
 
     override fun create(orgId: UUID, models: List<FeatureModel>) = transaction<Unit> {
         FeatureTable.batchInsert(models) { model -> createFeature(orgId, model) }

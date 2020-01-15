@@ -5,7 +5,6 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
-import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -22,7 +21,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 internal class CreateOrg @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    @Service private val orgService: OrgService,
+    private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<CreateOrg.Command, OrgRep.Complete>(
     application = application,

@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.users.service.user
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
+import io.limberapp.backend.module.users.store.user.UserStore
 
 internal class UserServiceImpl @Inject constructor(
-    @Store private val userStore: UserService
+    private val userStore: UserStore
 ) : UserService by userStore

@@ -6,7 +6,6 @@ import io.limberapp.backend.module.orgs.entity.org.MembershipTable
 import io.limberapp.backend.module.orgs.exception.conflict.UserIsAlreadyAMemberOfOrg
 import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
-import io.limberapp.backend.module.orgs.service.org.MembershipService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
@@ -18,7 +17,7 @@ import java.util.UUID
 
 internal class SqlMembershipStore @Inject constructor(
     database: Database
-) : MembershipService, SqlStore(database) {
+) : MembershipStore, SqlStore(database) {
 
     override fun create(orgId: UUID, models: List<MembershipModel>) = transaction<Unit> {
         MembershipTable.batchInsert(models) { model -> createMembership(orgId, model) }

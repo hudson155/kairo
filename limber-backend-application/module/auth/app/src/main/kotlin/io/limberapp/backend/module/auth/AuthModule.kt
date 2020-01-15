@@ -1,14 +1,15 @@
 package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.CreateJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.accessToken.CreateAccessToken
 import io.limberapp.backend.module.auth.endpoint.accessToken.DeleteAccessToken
 import io.limberapp.backend.module.auth.endpoint.accessToken.GetAccessTokensByUserId
-import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
-import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestServiceImpl
+import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.CreateJwtClaimsRequest
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
+import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
+import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestServiceImpl
+import io.limberapp.backend.module.auth.store.accessToken.AccessTokenStore
 import io.limberapp.backend.module.auth.store.accessToken.SqlAccessTokenStore
 
 /**
@@ -35,11 +36,11 @@ class AuthModule : Module() {
     )
 
     override fun bindServices() {
-        bindService(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
-        bindService(AccessTokenService::class, AccessTokenServiceImpl::class)
+        bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
+        bind(AccessTokenService::class, AccessTokenServiceImpl::class)
     }
 
     override fun bindStores() {
-        bindStore(AccessTokenService::class, SqlAccessTokenStore::class)
+        bind(AccessTokenStore::class, SqlAccessTokenStore::class)
     }
 }

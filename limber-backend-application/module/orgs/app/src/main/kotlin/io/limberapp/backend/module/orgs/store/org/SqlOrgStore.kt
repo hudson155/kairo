@@ -1,15 +1,11 @@
 package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.orgs.entity.org.MembershipTable
 import io.limberapp.backend.module.orgs.entity.org.OrgTable
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.service.org.FeatureService
-import io.limberapp.backend.module.orgs.service.org.MembershipService
-import io.limberapp.backend.module.orgs.service.org.OrgService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
@@ -23,9 +19,9 @@ import java.util.UUID
 
 internal class SqlOrgStore @Inject constructor(
     database: Database,
-    @Store private val featureStore: FeatureService,
-    @Store private val membershipStore: MembershipService
-) : OrgService, SqlStore(database) {
+    private val featureStore: FeatureStore,
+    private val membershipStore: MembershipStore
+) : OrgStore, SqlStore(database) {
 
     override fun create(model: OrgModel) = transaction {
         OrgTable.insert { it.createOrg(model) }

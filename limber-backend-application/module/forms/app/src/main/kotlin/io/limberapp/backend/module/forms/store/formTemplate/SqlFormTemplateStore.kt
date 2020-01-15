@@ -1,13 +1,10 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.forms.entity.FormTemplateTable
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
@@ -19,8 +16,8 @@ import java.util.UUID
 
 internal class SqlFormTemplateStore @Inject constructor(
     database: Database,
-    @Store private val formTemplateQuestionStore: FormTemplateQuestionService
-) : FormTemplateService, SqlStore(database) {
+    private val formTemplateQuestionStore: FormTemplateQuestionStore
+) : FormTemplateStore, SqlStore(database) {
 
     override fun create(model: FormTemplateModel) = transaction {
         FormTemplateTable.insert { it.createFormTemplate(model) }

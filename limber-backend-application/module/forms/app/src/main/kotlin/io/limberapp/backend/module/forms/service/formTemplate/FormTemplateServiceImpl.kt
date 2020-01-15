@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 
 internal class FormTemplateServiceImpl @Inject constructor(
-    @Store private val formTemplateStore: FormTemplateService
+    private val formTemplateStore: FormTemplateStore
 ) : FormTemplateService by formTemplateStore

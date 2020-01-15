@@ -5,7 +5,6 @@ import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.auth.entity.accessToken.AccessTokenTable
 import io.limberapp.backend.module.auth.exception.notFound.AccessTokenNotFound
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
-import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
@@ -16,7 +15,7 @@ import java.util.UUID
 
 internal class SqlAccessTokenStore @Inject constructor(
     database: Database
-) : AccessTokenService, SqlStore(database) {
+) : AccessTokenStore, SqlStore(database) {
 
     override fun create(model: AccessTokenModel) = transaction<Unit> {
         AccessTokenTable.insert { it.createAccessToken(model) }

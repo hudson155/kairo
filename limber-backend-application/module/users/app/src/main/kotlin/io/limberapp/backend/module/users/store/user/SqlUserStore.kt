@@ -10,7 +10,6 @@ import io.limberapp.backend.module.users.exception.conflict.UserAlreadyHasRole
 import io.limberapp.backend.module.users.exception.conflict.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.model.user.UserModel
-import io.limberapp.backend.module.users.service.user.UserService
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
@@ -22,7 +21,7 @@ import java.util.UUID
 
 class SqlUserStore @Inject constructor(
     database: Database
-) : UserService, SqlStore(database) {
+) : UserStore, SqlStore(database) {
 
     override fun create(model: UserModel) = transaction<Unit> {
         getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(model.emailAddress) }

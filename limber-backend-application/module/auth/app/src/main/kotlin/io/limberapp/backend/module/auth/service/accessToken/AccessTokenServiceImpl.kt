@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.service.accessToken
 
 import com.google.inject.Inject
-import com.piperframework.module.annotation.Store
+import io.limberapp.backend.module.auth.store.accessToken.AccessTokenStore
 
 internal class AccessTokenServiceImpl @Inject constructor(
-    @Store private val accessTokenStore: AccessTokenService
+    private val accessTokenStore: AccessTokenStore
 ) : AccessTokenService by accessTokenStore

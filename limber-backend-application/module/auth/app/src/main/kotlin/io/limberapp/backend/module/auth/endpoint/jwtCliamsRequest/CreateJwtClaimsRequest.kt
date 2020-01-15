@@ -5,7 +5,6 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
 import com.piperframework.endpoint.command.AbstractCommand
-import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
@@ -25,7 +24,7 @@ import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsReques
 internal class CreateJwtClaimsRequest @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    @Service private val jwtClaimsRequestService: JwtClaimsRequestService,
+    private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
 ) : LimberApiEndpoint<CreateJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
     application = application,
