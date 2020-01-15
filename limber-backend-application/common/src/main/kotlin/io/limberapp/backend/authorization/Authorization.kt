@@ -3,13 +3,21 @@ package io.limberapp.backend.authorization
 import com.piperframework.authorization.PiperAuthorization
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
+import org.slf4j.LoggerFactory
 import java.util.UUID
 
 abstract class Authorization : PiperAuthorization<Jwt> {
 
+    private val logger = LoggerFactory.getLogger(Authorization::class.java)
+
     override fun authorize(principal: Jwt?): Boolean {
-        if (principal?.isSuperuser == true) return true
-        return authorizeInternal(principal)
+        val authorized = authorizeInternal(principal)
+        if (authorized) return true
+        if (principal?.isSuperuser == true) {
+            logger.info("Overriding Authorization access for user with ID ${principal.user.id}.")
+            return true
+        }
+        return false
     }
 
     private val Jwt.isSuperuser get() = JwtRole.SUPERUSER in roles
