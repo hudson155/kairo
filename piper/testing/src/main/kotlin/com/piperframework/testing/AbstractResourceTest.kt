@@ -35,7 +35,6 @@ abstract class AbstractResourceTest {
 
     @BeforeEach
     fun beforeInternal() {
-        println("running before each")
         MockKAnnotations.init(this)
         deterministicUuidGenerator.reset()
         piperTest.start()
