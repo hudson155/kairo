@@ -2,6 +2,7 @@ package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
+import com.piperframework.module.annotation.Service
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
@@ -17,8 +18,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
-    private val orgService: OrgService,
-    private val userService: UserService,
+    @Service private val orgService: OrgService,
+    @Service private val userService: UserService,
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {

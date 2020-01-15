@@ -3,11 +3,13 @@ package io.limberapp.backend
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Injector
+import com.google.inject.Key
 import com.piperframework.PiperApp
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.MainModule
 import com.piperframework.module.SqlModule
+import com.piperframework.module.annotation.Service
 import io.ktor.application.Application
 import io.ktor.auth.Authentication
 import io.limberapp.backend.authentication.jwt.JwtAuthVerifier
@@ -32,8 +34,8 @@ internal class LimberAppMonolith : PiperApp<Config>(loadConfig()) {
             verifier(
                 scheme = TokenAuthVerifier.scheme,
                 verifier = TokenAuthVerifier(
-                    injector.getInstance(JwtClaimsRequestService::class.java),
-                    injector.getInstance(AccessTokenService::class.java)
+                    injector.getInstance(Key.get(JwtClaimsRequestService::class.java, Service::class.java)),
+                    injector.getInstance(Key.get(AccessTokenService::class.java, Service::class.java))
                 )
             )
         }
