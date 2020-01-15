@@ -38,9 +38,6 @@ ext {
             // https://github.com/junit-team/junit5/releases
             junit                  : '5.5.2',
 
-            // https://github.com/junit-team/junit4/releases
-            junit4                 : '4.13',
-
             // https://github.com/ktorio/ktor/releases
             ktor                   : '1.2.5',
 
@@ -107,7 +104,6 @@ ext {
             // JUnit
             junit_api              : "org.junit.jupiter:junit-jupiter-api:$versions.junit",
             junit_engine           : "org.junit.jupiter:junit-jupiter-engine:$versions.junit",
-            junit4                 : "junit:junit:$versions.junit4",
 
             // MockK
             mockk                  : "io.mockk:mockk:$versions.mockk",
