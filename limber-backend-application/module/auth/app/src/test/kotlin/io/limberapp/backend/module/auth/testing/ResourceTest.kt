@@ -15,15 +15,16 @@ abstract class ResourceTest : AbstractResourceTest() {
 
     private val testSqlModule = TestSqlModule()
 
-    override val piperTest = LimberTest(
+    override val piperTest = LimberTest {
         TestLimberApp(
+            application = this,
             config = config,
             module = AuthModule(),
             additionalModules = listOf(mockedServices, testSqlModule),
             fixedClock = fixedClock,
             deterministicUuidGenerator = deterministicUuidGenerator
         )
-    )
+    }
 
     override fun before() {
         super.before()

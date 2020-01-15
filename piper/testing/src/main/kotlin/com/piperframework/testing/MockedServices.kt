@@ -1,10 +1,10 @@
 package com.piperframework.testing
 
-import com.google.inject.AbstractModule
+import com.piperframework.module.ModuleWithLifecycle
 import io.mockk.mockkClass
 import kotlin.reflect.KClass
 
-class MockedServices(servicesToMock: List<KClass<*>>) : AbstractModule() {
+class MockedServices(servicesToMock: List<KClass<*>>) : ModuleWithLifecycle() {
 
     constructor(vararg servicesToMock: KClass<*>) : this(servicesToMock.toList())
 
@@ -13,6 +13,8 @@ class MockedServices(servicesToMock: List<KClass<*>>) : AbstractModule() {
     override fun configure() {
         mocks.forEach { bindMock(it.key) }
     }
+
+    override fun unconfigure() = Unit
 
     private fun <T : Any> bindMock(clazz: KClass<T>) {
         bind(clazz.java).toInstance(get(clazz))

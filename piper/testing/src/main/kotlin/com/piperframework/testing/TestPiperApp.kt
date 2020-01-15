@@ -1,23 +1,24 @@
 package com.piperframework.testing
 
-import com.google.inject.AbstractModule
-import com.piperframework.PiperApp
+import com.piperframework.SimplePiperApp
 import com.piperframework.config.Config
 import com.piperframework.module.MainModule
 import com.piperframework.module.Module
+import com.piperframework.module.ModuleWithLifecycle
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.ktor.application.Application
 import java.time.Clock
 
 abstract class TestPiperApp(
+    application: Application,
     config: Config,
     module: Module,
-    private val additionalModules: List<AbstractModule>,
+    private val additionalModules: List<ModuleWithLifecycle>,
     private val fixedClock: Clock,
     private val deterministicUuidGenerator: UuidGenerator
-) : PiperApp<Config>(config) {
+) : SimplePiperApp<Config>(application, config) {
 
-    override fun getMainModules(application: Application): List<AbstractModule> =
+    override fun getMainModules(application: Application) =
         listOf(MainModule(application, fixedClock, config, deterministicUuidGenerator)).plus(additionalModules)
 
     override val modules = listOf(module)

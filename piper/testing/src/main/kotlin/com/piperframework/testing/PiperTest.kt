@@ -1,30 +1,28 @@
 package com.piperframework.testing
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.piperframework.PiperApp
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
+import io.ktor.application.Application
+import io.ktor.application.ApplicationStarted
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.server.testing.TestApplicationCall
 import io.ktor.server.testing.TestApplicationEngine
+import io.ktor.server.testing.createTestEnvironment
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
-import io.ktor.server.testing.withTestApplication
+import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private fun withPiperTestApp(piperApp: PiperApp<*>, test: TestApplicationEngine.() -> Unit) {
-    withTestApplication({ piperApp.bindToApplication(this) }, test)
-}
-
 @Suppress("LongParameterList") // For these methods, we're ok with it.
-abstract class PiperTest(private val piperApp: TestPiperApp) {
+abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
 
     protected val objectMapper = PiperObjectMapper()
 
@@ -88,13 +86,40 @@ abstract class PiperTest(private val piperApp: TestPiperApp) {
         body: Any?,
         expectedStatusCode: HttpStatusCode,
         test: TestApplicationCall.() -> Unit
-    ) = withPiperTestApp(piperApp) {
+    ) = withPiperTestApp {
         createCall(
             endpointConfig = endpointConfig,
             pathParams = pathParams.mapValues { it.value.toString() },
             queryParams = queryParams.mapValues { it.value.toString() },
             body = body
         ).runTest(expectedStatusCode, test)
+    }
+
+    private val engine = TestApplicationEngine(createTestEnvironment())
+
+    fun start() {
+        engine.start()
+        try {
+            engine.application.moduleFunction()
+            // TestApplicationEngine does not raise ApplicationStarted.
+            engine.environment.monitor.raise(ApplicationStarted, engine.application)
+        } catch (e: Throwable) {
+            stop()
+            throw e
+        }
+    }
+
+    fun stop() {
+        engine.stop(0L, 0L, TimeUnit.MILLISECONDS)
+    }
+
+    private fun withPiperTestApp(test: TestApplicationEngine.() -> Unit) {
+        try {
+            engine.test()
+        } catch (e: Throwable) {
+            engine.stop(0L, 0L, TimeUnit.MILLISECONDS)
+            throw e
+        }
     }
 
     private fun TestApplicationEngine.createCall(

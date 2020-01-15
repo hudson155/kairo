@@ -14,4 +14,4 @@ internal fun main(args: Array<String>) = EngineMain.main(args)
  * how the application is started (whether from the Main function above or some other way (e.g. Google App Engine).
  */
 @Suppress("unused")
-internal fun Application.main() = LimberAppMonolith().bindToApplication(this)
+internal fun Application.main() = LimberAppMonolith(this)

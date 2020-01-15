@@ -37,8 +37,11 @@ abstract class AbstractResourceTest {
     open fun before() {
         MockKAnnotations.init(this)
         deterministicUuidGenerator.reset()
+        piperTest.start()
     }
 
     @After
-    open fun after() = Unit
+    open fun after() {
+        piperTest.stop()
+    }
 }

@@ -1,6 +1,5 @@
 package com.piperframework.module
 
-import com.google.inject.AbstractModule
 import com.piperframework.config.Config
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.serving.ServingConfig
@@ -17,7 +16,7 @@ class MainModule(
     private val clock: Clock,
     private val config: Config,
     private val uuidGenerator: UuidGenerator
-) : AbstractModule() {
+) : ModuleWithLifecycle() {
 
     override fun configure() {
         bind(Application::class.java).toInstance(application)
@@ -26,6 +25,8 @@ class MainModule(
         bind(ServingConfig::class.java).toInstance(config.serving)
         bind(UuidGenerator::class.java).toInstance(uuidGenerator)
     }
+
+    override fun unconfigure() = Unit
 
     companion object {
 

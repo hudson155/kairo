@@ -1,6 +1,5 @@
 package com.piperframework.module
 
-import com.google.inject.AbstractModule
 import com.piperframework.endpoint.ApiEndpoint
 import com.piperframework.module.annotation.Service
 import com.piperframework.module.annotation.Store
@@ -11,7 +10,7 @@ import kotlin.reflect.KClass
  * All endpoints, services, and stores need to be included in exactly 1 module. Modules can use services and stores that
  * are bound in other modules, as long as both modules are included in the same application.
  */
-abstract class Module : AbstractModule() {
+abstract class Module : ModuleWithLifecycle() {
 
     /**
      * Endpoints are automatically wired up.
@@ -23,6 +22,8 @@ abstract class Module : AbstractModule() {
         bindServices()
         bindStores()
     }
+
+    final override fun unconfigure() = Unit
 
     private fun configureEndpoints() {
         endpoints.forEach { bind(it).asEagerSingleton() }
