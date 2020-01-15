@@ -1,5 +1,5 @@
 dependencies {
-    api project(":limber-backend-application")
-    api project(":limber-backend-application:common")
+    implementation project(":limber-backend-application")
+    implementation project(":limber-backend-application:common")
     api project(":piper:testing")
 }
