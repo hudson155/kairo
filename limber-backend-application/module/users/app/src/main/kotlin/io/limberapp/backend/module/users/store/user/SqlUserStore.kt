@@ -16,7 +16,6 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
-import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 class SqlUserStore @Inject constructor(
@@ -49,45 +48,51 @@ class SqlUserStore @Inject constructor(
     override fun get(userId: UUID) = transaction {
         return@transaction (UserTable innerJoin AccountTable)
             .select { AccountTable.guid eq userId }
-            .singleOrNull()?.toUserModel()
+            .singleOrNull()
+            ?.toUserModel()
     }
 
     override fun getByEmailAddress(emailAddress: String) = transaction {
         return@transaction (UserTable innerJoin AccountTable)
             .select { UserTable.emailAddress eq emailAddress }
-            .singleOrNull()?.toUserModel()
+            .singleOrNull()
+            ?.toUserModel()
     }
 
     override fun update(userId: UUID, update: UserModel.Update) = transaction {
-        UserTable.update({ UserTable.accountGuid eq userId }) { it.updateUser(update) }
+        UserTable
+            .updateAtMostOne(where = { UserTable.accountGuid eq userId }, body = { it.updateUser(update) })
             .ifEq(0) { throw UserNotFound() }
-            .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(userId))
     }
 
     override fun addRole(userId: UUID, role: JwtRole) = transaction {
         val existing = get(userId) ?: throw UserNotFound()
         if (role in existing.roles) throw UserAlreadyHasRole(role)
-        AccountTable.update({ AccountTable.guid eq userId }) {
-            it.updateAccount(
-                identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) true else null,
-                superuser = if (role == JwtRole.SUPERUSER) true else null
-            )
-        }
-            .ifGt(1, ::badSql)
+        AccountTable
+            .updateAtMostOne(
+                where = { AccountTable.guid eq userId },
+                body = {
+                    it.updateAccount(
+                        identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) true else null,
+                        superuser = if (role == JwtRole.SUPERUSER) true else null
+                    )
+                })
         return@transaction checkNotNull(get(userId))
     }
 
     override fun removeRole(userId: UUID, role: JwtRole) = transaction {
         val existing = get(userId) ?: throw UserNotFound()
         if (role !in existing.roles) throw UserDoesNotHaveRole(role)
-        AccountTable.update({ AccountTable.guid eq userId }) {
-            it.updateAccount(
-                identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) false else null,
-                superuser = if (role == JwtRole.SUPERUSER) false else null
-            )
-        }
-            .ifGt(1, ::badSql)
+        AccountTable
+            .updateAtMostOne(
+                where = { AccountTable.guid eq userId },
+                body = {
+                    it.updateAccount(
+                        identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) false else null,
+                        superuser = if (role == JwtRole.SUPERUSER) false else null
+                    )
+                })
         return@transaction checkNotNull(get(userId))
     }
 
@@ -102,7 +107,8 @@ class SqlUserStore @Inject constructor(
     }
 
     override fun delete(userId: UUID) = transaction<Unit> {
-        AccountTable.deleteAtMostOneWhere { AccountTable.guid eq userId }
+        AccountTable
+            .deleteAtMostOneWhere { AccountTable.guid eq userId }
             .ifEq(0) { throw UserNotFound() }
     }
 
