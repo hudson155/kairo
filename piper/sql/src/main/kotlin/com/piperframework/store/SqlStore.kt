@@ -9,7 +9,9 @@ import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.statements.BatchInsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
@@ -28,7 +30,14 @@ abstract class SqlStore(private val database: Database) {
         }
     }
 
-    fun Table.deleteAtMostOneWhere(op: SqlExpressionBuilder.() -> Op<Boolean>) = deleteWhere(op = op).ifGt(1, ::badSql)
+    fun <T : Table> T.updateAtMostOne(
+        where: (SqlExpressionBuilder.() -> Op<Boolean>),
+        body: T.(UpdateStatement) -> Unit
+    ) = update(where = where, body = body).ifGt(1, ::badSql)
+
+    fun Table.deleteAtMostOneWhere(
+        op: SqlExpressionBuilder.() -> Op<Boolean>
+    ) = deleteWhere(op = op).ifGt(1, ::badSql)
 
     protected inline fun Int.ifGt(int: Int, function: () -> Nothing): Int = if (this > int) function() else this
 
