@@ -1,12 +1,11 @@
 dependencies {
-    compile project(":piper:entities")
-    compile project(":piper:exceptions")
-    compile project(":piper:ktor-auth")
-    compile project(":piper:object-mapper")
-    compile project(":piper:reps")
-    compile libs.gcloud_kms
-    compile libs.guice
-    compile libs.jackson_kotlin
-    compile libs.ktor_auth
-    compile libs.ktor_server_core
+    api project(":piper:data-conversion")
+    api project(":piper:exceptions")
+    api project(":piper:ktor-auth")
+    api project(":piper:object-mapper")
+    api project(":piper:reps")
+    api project(":piper:util")
+    api libs.guice
+    api libs.jackson_kotlin
+    api libs.ktor_server_core
 }

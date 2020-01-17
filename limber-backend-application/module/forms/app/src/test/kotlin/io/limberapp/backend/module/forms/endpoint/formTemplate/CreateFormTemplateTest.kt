@@ -4,44 +4,11 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class CreateFormTemplateTest : ResourceTest() {
-
-    @Test
-    fun duplicateTitle() {
-
-        // Setup
-        val orgId = UUID.randomUUID()
-
-        // CreateFormTemplate
-        val formTemplate0Rep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
-        piperTest.setup(
-            endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
-        )
-
-        // CreateFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures[1].complete(this, orgId, 6).copy(title = formTemplate0Rep.title)
-        piperTest.test(
-            endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[1].creation(orgId).copy(title = formTemplate0Rep.title)
-        ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
-            assertEquals(formTemplateRep, actual)
-        }
-
-        // GetFormTemplate
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
-            assertEquals(formTemplateRep, actual)
-        }
-    }
 
     @Test
     fun happyPath() {

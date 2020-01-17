@@ -11,7 +11,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.user.UserModel
 import io.limberapp.backend.module.users.service.user.UserService
 import io.mockk.every
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.test.assertEquals

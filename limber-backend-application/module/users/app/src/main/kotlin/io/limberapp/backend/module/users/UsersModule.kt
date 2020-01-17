@@ -10,7 +10,7 @@ import io.limberapp.backend.module.users.endpoint.user.role.AddUserRole
 import io.limberapp.backend.module.users.endpoint.user.role.RemoveUserRole
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.service.user.UserServiceImpl
-import io.limberapp.backend.module.users.store.user.MongoUserStore
+import io.limberapp.backend.module.users.store.user.SqlUserStore
 import io.limberapp.backend.module.users.store.user.UserStore
 
 /**
@@ -36,6 +36,6 @@ class UsersModule : Module() {
     }
 
     override fun bindStores() {
-        bind(UserStore::class, MongoUserStore::class)
+        bind(UserStore::class, SqlUserStore::class)
     }
 }

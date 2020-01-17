@@ -41,7 +41,7 @@ internal class DeleteMembership @Inject constructor(
         Authorization.OrgMember(command.orgId).authorize()
         membershipService.delete(
             orgId = command.orgId,
-            memberId = command.memberId
+            userId = command.memberId
         )
     }
 

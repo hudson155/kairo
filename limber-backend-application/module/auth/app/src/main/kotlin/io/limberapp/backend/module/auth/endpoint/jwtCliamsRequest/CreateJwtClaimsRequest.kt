@@ -9,6 +9,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.mapper.api.jwtClaimsRequest.JwtClaimsRequestMapper
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
@@ -40,7 +41,7 @@ internal class CreateJwtClaimsRequest @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): JwtClaimsRequestRep.Complete {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.IDENTITY_PROVIDER).authorize()
         val requestModel = jwtClaimsRequestMapper.model(command.creationRep)
         val claimsModel = jwtClaimsRequestService.requestJwtClaims(requestModel)
         return jwtClaimsRequestMapper.completeRep(claimsModel)

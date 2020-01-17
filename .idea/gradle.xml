@@ -32,15 +32,14 @@
             <option value="$PROJECT_DIR$/piper" />
             <option value="$PROJECT_DIR$/piper/common" />
             <option value="$PROJECT_DIR$/piper/data-conversion" />
-            <option value="$PROJECT_DIR$/piper/entities" />
             <option value="$PROJECT_DIR$/piper/errors" />
             <option value="$PROJECT_DIR$/piper/exception-mapping" />
             <option value="$PROJECT_DIR$/piper/exceptions" />
             <option value="$PROJECT_DIR$/piper/ktor-auth" />
-            <option value="$PROJECT_DIR$/piper/mongo" />
-            <option value="$PROJECT_DIR$/piper/mongo/testing" />
             <option value="$PROJECT_DIR$/piper/object-mapper" />
             <option value="$PROJECT_DIR$/piper/reps" />
+            <option value="$PROJECT_DIR$/piper/sql" />
+            <option value="$PROJECT_DIR$/piper/sql/testing" />
             <option value="$PROJECT_DIR$/piper/testing" />
             <option value="$PROJECT_DIR$/piper/util" />
             <option value="$PROJECT_DIR$/piper/validation" />

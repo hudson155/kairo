@@ -4,8 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -42,7 +41,7 @@ internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
         )
 
         // CreateFormTemplate
-        val formTemplate1Rep = FormTemplateRepFixtures[1].complete(this, orgId, 6)
+        val formTemplate1Rep = FormTemplateRepFixtures[1].complete(this, orgId, 4)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures[1].creation(orgId)

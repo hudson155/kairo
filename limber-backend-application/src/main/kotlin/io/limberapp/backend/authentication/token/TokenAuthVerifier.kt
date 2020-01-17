@@ -5,18 +5,18 @@ import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.PiperAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
-import io.limberapp.backend.module.auth.service.personalAccessToken.PersonalAccessTokenService
+import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 
 class TokenAuthVerifier(
     private val jwtClaimsRequestService: JwtClaimsRequestService,
-    private val personalAccessTokenService: PersonalAccessTokenService
+    private val accessTokenService: AccessTokenService
 ) : PiperAuthVerifier<Jwt> {
 
     private val objectMapper = PiperObjectMapper()
 
     override fun verify(blob: String): Jwt? {
-        val personalAccessToken = personalAccessTokenService.getByToken(blob) ?: return null
-        val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(personalAccessToken.userId) ?: return null
+        val accessToken = accessTokenService.getByToken(blob) ?: return null
+        val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.userId) ?: return null
         return Jwt(
             org = objectMapper.readValue(claims.org),
             roles = objectMapper.readValue(claims.roles),

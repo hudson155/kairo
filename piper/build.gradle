@@ -1,13 +1,14 @@
 dependencies {
-    compile project(":piper:common")
-    compile project(":piper:exception-mapping")
-    compile libs.ktor_jackson
+    api project(":piper:common")
+    api project(":piper:errors")
+    api project(":piper:exception-mapping")
+    implementation libs.ktor_jackson
 }
 
-allprojects {
+subprojects {
     if (!project.path.matches(':piper:util')) {
         dependencies {
-            compile project(":piper:util")
+            implementation project(":piper:util")
         }
     }
 }

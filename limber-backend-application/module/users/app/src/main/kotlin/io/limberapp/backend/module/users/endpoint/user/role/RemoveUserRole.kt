@@ -40,7 +40,7 @@ internal class RemoveUserRole @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command) {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         try {
             userService.removeRole(command.userId, command.roleName)
         } catch (_: UserDoesNotHaveRole) {

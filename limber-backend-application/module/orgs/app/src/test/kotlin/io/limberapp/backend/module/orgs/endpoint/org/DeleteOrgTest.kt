@@ -3,7 +3,7 @@ package io.limberapp.backend.module.orgs.endpoint.org
 import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteOrgTest : ResourceTest() {

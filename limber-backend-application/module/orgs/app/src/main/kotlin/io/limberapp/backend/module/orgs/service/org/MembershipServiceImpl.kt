@@ -1,22 +1,24 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.mapper.app.membership.MembershipMapper
+import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.store.org.MembershipStore
+import io.limberapp.backend.module.orgs.store.org.OrgStore
 import java.util.UUID
 
 internal class MembershipServiceImpl @Inject constructor(
     private val membershipStore: MembershipStore,
-    private val membershipMapper: MembershipMapper
-) : MembershipService {
+    private val orgStore: OrgStore
+) : MembershipService by membershipStore {
 
     override fun create(orgId: UUID, model: MembershipModel) {
-        val entity = membershipMapper.entity(model)
-        membershipStore.create(orgId, entity)
+        orgStore.get(orgId) ?: throw OrgNotFound()
+        membershipStore.create(orgId, model)
     }
 
-    override fun delete(orgId: UUID, memberId: UUID) {
-        membershipStore.delete(orgId, memberId)
+    override fun delete(orgId: UUID, userId: UUID) {
+        orgStore.get(orgId) ?: throw OrgNotFound()
+        membershipStore.delete(orgId, userId)
     }
 }

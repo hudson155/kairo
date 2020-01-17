@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.forms.testing.fixtures.formTemplate
 
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
+import java.time.LocalDateTime
 
 internal object FormTemplateQuestionRepFixtures {
 
@@ -20,7 +20,6 @@ internal object FormTemplateQuestionRepFixtures {
             FormTemplateTextQuestionRep.Creation(
                 label = "Additional Information",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.FULL_WIDTH,
                 multiLine = true,
                 placeholder = null,
                 validator = null
@@ -28,9 +27,9 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Additional Information",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.FULL_WIDTH,
                 maxLength = 10_000,
                 multiLine = true,
                 placeholder = null,
@@ -44,7 +43,6 @@ internal object FormTemplateQuestionRepFixtures {
             FormTemplateTextQuestionRep.Creation(
                 label = "Worker name",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.HALF_WIDTH,
                 multiLine = false,
                 placeholder = null,
                 validator = null
@@ -52,9 +50,9 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Worker name",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.HALF_WIDTH,
                 maxLength = 200,
                 multiLine = false,
                 placeholder = null,
@@ -65,16 +63,15 @@ internal object FormTemplateQuestionRepFixtures {
             FormTemplateDateQuestionRep.Creation(
                 label = "Date",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.HALF_WIDTH,
                 earliest = null,
                 latest = null
             )
         }, { idSeed ->
             FormTemplateDateQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Date",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.HALF_WIDTH,
                 earliest = null,
                 latest = null
             )
@@ -83,7 +80,6 @@ internal object FormTemplateQuestionRepFixtures {
             FormTemplateTextQuestionRep.Creation(
                 label = "Description",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.FULL_WIDTH,
                 multiLine = true,
                 placeholder = null,
                 validator = null
@@ -91,9 +87,9 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Description",
                 helpText = null,
-                width = FormTemplateQuestionModel.Width.FULL_WIDTH,
                 maxLength = 10_000,
                 multiLine = true,
                 placeholder = null,

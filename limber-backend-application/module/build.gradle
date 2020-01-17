@@ -1,14 +1,15 @@
 subprojects {
     if (project.path.matches(':limber-backend-application:module:[a-z\\-]+:api')) {
         dependencies {
-            compile libs.jackson_annotations
-            compile project(":limber-backend-application:common:api")
+            implementation libs.jackson_annotations
+            implementation project(":limber-backend-application:common:api")
         }
     } else if (project.path.matches(':limber-backend-application:module:[a-z\\-]+:app')) {
         dependencies {
-            compile project(":limber-backend-application:module:$project.parent.name:api")
-            compile project(":limber-backend-application:common")
-            testCompile project(":limber-backend-application:common:testing")
+            api project(":limber-backend-application:module:$project.parent.name:api")
+            implementation project(":limber-backend-application:common")
+            implementation project(":limber-backend-application:common:api")
+            testImplementation project(":limber-backend-application:common:testing")
         }
     } else if (project.path.matches(':limber-backend-application:module:[a-z\\-]+')) {
     } else {

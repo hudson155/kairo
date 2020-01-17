@@ -34,9 +34,9 @@ they are and see if you need them too.
     * Exception base classes.
 * [`ktor-auth`](/ktor-auth):
     * Helps configure authentication for Ktor.
-* [`mongo`](/mongo):
-    * Driver to interact with MongoDB, including automatic entity/document mapping.
-    * Include this in implementation project modules if they use MongoDB.
+* [`sql`](/sql):
+    * Driver to interact with a SQL database.
+    * Include this in implementation project modules if they use a SQL database.
 * [`object-mapper`](/object-mapper):
     * Custom Jackson object mapper implementation.
         It's configured with some default modules (e.g. Kotlin),
@@ -78,12 +78,11 @@ the whole picture.
 ├── jackson           # Code related to Jackson serialization
 │   └── module            # Custom modules
 │       └── conversionService # Data conversion module
-│       └── mongo             # MongoDB module
 │   └── objectMapper      # Custom object mapper
 ├── model             # Model-related boilerplate (application layer)
 ├── module            # Code for Piper modules
-├── mongo             # MongoDB ORM
 ├── rep               # Rep-related boilerplate (API layer)
+├── sql               # SQL driver
 ├── testing           # Testing code
 ├── store             # Code for Piper stores
 ├── util              # Util

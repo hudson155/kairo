@@ -2,20 +2,20 @@ buildscript {
     apply from: "$rootDir/gradle/dependencies.gradle"
     repositories {
         jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
     }
     dependencies {
+        classpath libs.detekt_gradle_plugin
         classpath libs.kotlin_gradle_plugin
     }
-}
-
-plugins {
-    // https://github.com/arturbosch/detekt/releases
-    id("io.gitlab.arturbosch.detekt").version('1.3.1')
 }
 
 allprojects {
 
     apply plugin: 'kotlin'
+    apply plugin: 'io.gitlab.arturbosch.detekt'
 
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
@@ -28,9 +28,10 @@ allprojects {
 
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-    // Running tests via the command line does not log the result of each test.
-    // This adds such logging, so that when tests fail on CI we can know which ones failed.
     test {
+        useJUnitPlatform()
+        // Running tests via the command line does not log the result of each test.
+        // This adds such logging, so that when tests fail on CI we can know which ones failed.
         afterTest { desc, result ->
             logger.quiet "Test ${result.resultType}: ${desc.className}::${desc.name}"
         }
@@ -44,6 +45,10 @@ allprojects {
         doLast {
             configurations.findAll { it.canBeResolved }.files
         }
+    }
+
+    detekt {
+        config = files("$rootDir/.detekt/config.yml")
     }
 }
 
@@ -61,8 +66,8 @@ subprojects {
     }
 
     dependencies {
-        compile libs.kotlin_reflect
-        compile libs.kotlin_stdlib_jdk8
+        runtimeOnly libs.kotlin_reflect
+        implementation libs.kotlin_stdlib_jdk8
     }
 
     /**
@@ -83,9 +88,4 @@ subprojects {
 
 repositories {
     jcenter()
-}
-
-detekt {
-    input = files('limber-backend-application/src/main/kotlin', 'piper/src/main/kotlin')
-    config = files('.detekt/detekt.yml')
 }

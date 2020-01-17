@@ -1,11 +1,6 @@
-mongoDatabase:
-  protocol: MONGODB_SRV
-  host: cluster0-pct9z.gcp.mongodb.net
-  database: limberapp
-  user: limberapp
-  password:
-    encrypted: true
-    value: CiQA7T1W21k61Rqv1UfEix3LHo282BlwRUlypxRfr29sycu0k6cSNQCfEO6jT1Gnovrp4mxxk8dOoC++uhxLHBlg9pYdCELbk2HP39CvoiL5QdaYffwlLulERrWC
+sqlDatabase:
+  jdbcUrl: jdbc:postgresql://localhost/limber
+  username: limber
 
 authentication:
   mechanisms:

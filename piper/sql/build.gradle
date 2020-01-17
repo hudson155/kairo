@@ -1,0 +1,7 @@
+dependencies {
+    api project(":piper:common")
+    api libs.exposed
+    api libs.flyway
+    api libs.hikari
+    api libs.postgres
+}

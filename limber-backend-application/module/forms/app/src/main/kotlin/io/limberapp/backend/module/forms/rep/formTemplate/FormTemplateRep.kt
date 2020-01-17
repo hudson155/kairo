@@ -23,12 +23,12 @@ object FormTemplateRep {
     }
 
     data class Complete(
-        override val id: UUID,
+        val id: UUID,
         override val created: LocalDateTime,
         val orgId: UUID,
         val title: String,
         val description: String?,
-        val parts: List<FormTemplatePartRep.Complete>
+        val questions: List<FormTemplateQuestionRep.Complete>
     ) : CompleteRep
 
     data class Update(

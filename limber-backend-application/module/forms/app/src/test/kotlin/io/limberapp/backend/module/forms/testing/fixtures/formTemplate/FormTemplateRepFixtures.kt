@@ -27,7 +27,9 @@ internal object FormTemplateRepFixtures {
                 orgId = orgId,
                 title = "Example form",
                 description = null,
-                parts = listOf(FormTemplatePartRepFixtures.default.complete(this, idSeed + 1))
+                questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
+                    rep.complete(this, idSeed + 1 + i)
+                }
             )
         }),
         Fixture({ orgId ->
@@ -42,7 +44,9 @@ internal object FormTemplateRepFixtures {
                 orgId = orgId,
                 title = "Vehicle Inspection",
                 description = null,
-                parts = listOf(FormTemplatePartRepFixtures.default.complete(this, idSeed + 1))
+                questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
+                    rep.complete(this, idSeed + 1 + i)
+                }
             )
         })
     )

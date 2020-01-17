@@ -1,4 +1,4 @@
 dependencies {
-    compile project(":limber-backend-application:common:api")
-    compile project(":piper:common")
+    api project(":limber-backend-application:common:api")
+    api project(":piper:common")
 }

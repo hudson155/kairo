@@ -14,9 +14,9 @@ interface UserService {
 
     fun update(userId: UUID, update: UserModel.Update): UserModel
 
-    fun addRole(userId: UUID, roleName: JwtRole): UserModel
+    fun addRole(userId: UUID, role: JwtRole): UserModel
 
-    fun removeRole(userId: UUID, roleName: JwtRole): UserModel
+    fun removeRole(userId: UUID, role: JwtRole): UserModel
 
     fun delete(userId: UUID)
 }

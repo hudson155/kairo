@@ -11,11 +11,20 @@ ext {
             // https://github.com/auth0/jwks-rsa-java/releases
             auth0_jwks_rsa         : '0.9.0',
 
-            // https://github.com/googleapis/java-kms/releases
-            gcloud_kms             : '1.35.1',
+            // https://github.com/arturbosch/detekt/releases
+            detekt                 : '1.3.1',
+
+            // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed
+            exposed                : '0.17.7',
+
+            // https://github.com/flyway/flyway/releases
+            flyway                 : '6.1.4',
 
             // https://github.com/google/guice/releases
             guice                  : '4.2.2',
+
+            // https://github.com/brettwooldridge/HikariCP/releases
+            hikari                 : '3.4.2',
 
             // https://github.com/FasterXML/jackson-core/releases
             jackson                : '2.10.2',
@@ -23,11 +32,8 @@ ext {
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
             kotlin                 : '1.3.61',
 
-            // https://github.com/junit-team/junit4/releases
-            junit                  : '4.13',
-
-            // https://github.com/Litote/kmongo/releases
-            kmongo                 : '3.11.2',
+            // https://github.com/junit-team/junit5/releases
+            junit                  : '5.5.2',
 
             // https://github.com/ktorio/ktor/releases
             ktor                   : '1.2.5',
@@ -37,6 +43,9 @@ ext {
 
             // https://github.com/mockk/mockk/releases
             mockk                  : '1.9.3',
+
+            // https://mvnrepository.com/artifact/org.postgresql/postgresql
+            postgres               : '42.2.9',
     ]
 
     libs = [
@@ -45,6 +54,11 @@ ext {
             kotlin_gradle_plugin   : "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
             kotlin_reflect         : "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin",
             kotlin_stdlib_jdk8     : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
+            kotlin_test            : "org.jetbrains.kotlin:kotlin-test:$versions.kotlin",
+            kotlin_test_junit5     : "org.jetbrains.kotlin:kotlin-test-junit5:$versions.kotlin",
+
+            // Detekt
+            detekt_gradle_plugin   : "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt",
 
             // Ktor
             ktor_auth              : "io.ktor:ktor-auth:$versions.ktor",
@@ -72,17 +86,18 @@ ext {
             // Logback
             logback_classic        : "ch.qos.logback:logback-classic:$versions.logback",
 
-            // MongoDB
-            kmongo                 : "org.litote.kmongo:kmongo:$versions.kmongo",
-
-            // Google Cloud
-            gcloud_kms             : "com.google.cloud:google-cloud-kms:$versions.gcloud_kms",
+            // Postgres
+            exposed                : "org.jetbrains.exposed:exposed:$versions.exposed",
+            flyway                 : "org.flywaydb:flyway-core:$versions.flyway",
+            hikari                 : "com.zaxxer:HikariCP:$versions.hikari",
+            postgres               : "org.postgresql:postgresql:$versions.postgres",
 
             // App Engine
             appengine_gradle_plugin: "com.google.cloud.tools:appengine-gradle-plugin:$versions.appengine_gradle_plugin",
 
             // JUnit
-            junit                  : "junit:junit:$versions.junit",
+            junit_api              : "org.junit.jupiter:junit-jupiter-api:$versions.junit",
+            junit_engine           : "org.junit.jupiter:junit-jupiter-engine:$versions.junit",
 
             // MockK
             mockk                  : "io.mockk:mockk:$versions.mockk",

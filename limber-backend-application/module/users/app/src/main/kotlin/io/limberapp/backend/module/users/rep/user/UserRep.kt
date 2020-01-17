@@ -14,24 +14,24 @@ import java.util.UUID
 object UserRep {
 
     data class Creation(
-        val firstName: String? = null,
-        val lastName: String? = null,
+        val firstName: String,
+        val lastName: String,
         val emailAddress: String,
         val profilePhotoUrl: String? = null
     ) : CreationRep {
         override fun validate() {
-            validate(UserRep.Creation::firstName) { ifPresent { mediumText(allowEmpty = false) } }
-            validate(UserRep.Creation::lastName) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(UserRep.Creation::firstName) { mediumText(allowEmpty = false) }
+            validate(UserRep.Creation::lastName) { mediumText(allowEmpty = false) }
             validate(UserRep.Creation::emailAddress) { emailAddress() }
             validate(UserRep.Creation::profilePhotoUrl) { ifPresent { url() } }
         }
     }
 
     data class Complete(
-        override val id: UUID,
+        val id: UUID,
         override val created: LocalDateTime,
-        val firstName: String?,
-        val lastName: String?,
+        val firstName: String,
+        val lastName: String,
         val emailAddress: String,
         val profilePhotoUrl: String?,
         val roles: Set<JwtRole>

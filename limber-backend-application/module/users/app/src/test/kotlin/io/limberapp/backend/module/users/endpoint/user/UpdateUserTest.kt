@@ -5,7 +5,7 @@ import io.limberapp.backend.module.users.exception.notFound.UserNotFound
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
@@ -30,6 +30,7 @@ internal class UpdateUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
+        // CreateUser
         var userRep = UserRepFixtures[0].complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,

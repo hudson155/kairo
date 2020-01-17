@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.rep.membership
 
-import com.piperframework.rep.CompleteSubrep
-import com.piperframework.rep.CreationSubrep
+import com.piperframework.rep.CompleteRep
+import com.piperframework.rep.CreationRep
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -9,12 +9,12 @@ object MembershipRep {
 
     data class Creation(
         val userId: UUID
-    ) : CreationSubrep {
+    ) : CreationRep {
         override fun validate() = Unit
     }
 
     data class Complete(
-        val created: LocalDateTime,
+        override val created: LocalDateTime,
         val userId: UUID
-    ) : CompleteSubrep
+    ) : CompleteRep
 }

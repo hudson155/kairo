@@ -3,17 +3,24 @@ package io.limberapp.backend.authorization
 import com.piperframework.authorization.PiperAuthorization
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
+import org.slf4j.LoggerFactory
 import java.util.UUID
 
-@Suppress("MethodOverloading") // Detekt incorrectly thinks overrides in nested subclasses are method overloads.
 abstract class Authorization : PiperAuthorization<Jwt> {
 
+    private val logger = LoggerFactory.getLogger(Authorization::class.java)
+
     override fun authorize(principal: Jwt?): Boolean {
-        if (principal?.isSuperuser == true) return true
-        return authorizeInternal(principal)
+        val authorized = authorizeInternal(principal)
+        if (authorized) return true
+        if (principal?.isSuperuser == true) {
+            logger.info("Overriding Authorization access for user with ID ${principal.user.id}.")
+            return true
+        }
+        return false
     }
 
-    private val Jwt.isSuperuser get() = roles.contains(JwtRole.SUPERUSER)
+    private val Jwt.isSuperuser get() = JwtRole.SUPERUSER in roles
 
     protected abstract fun authorizeInternal(principal: Jwt?): Boolean
 
@@ -25,8 +32,12 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?) = principal != null
     }
 
-    object Superuser : Authorization() {
-        override fun authorizeInternal(principal: Jwt?) = false
+    class Role(private val role: JwtRole?) : Authorization() {
+        override fun authorizeInternal(principal: Jwt?): Boolean {
+            principal ?: return false
+            role ?: return false
+            return role in principal.roles
+        }
     }
 
     class User(private val userId: UUID?) : Authorization() {

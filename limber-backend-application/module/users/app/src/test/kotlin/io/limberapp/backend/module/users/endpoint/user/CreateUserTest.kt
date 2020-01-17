@@ -5,7 +5,7 @@ import io.limberapp.backend.module.users.exception.conflict.EmailAddressAlreadyT
 import io.limberapp.backend.module.users.rep.user.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class CreateUserTest : ResourceTest() {

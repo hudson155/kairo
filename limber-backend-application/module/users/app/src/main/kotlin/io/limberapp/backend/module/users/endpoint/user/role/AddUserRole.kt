@@ -40,7 +40,7 @@ internal class AddUserRole @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command) {
-        Authorization.Superuser.authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         try {
             userService.addRole(command.userId, command.roleName)
         } catch (_: UserAlreadyHasRole) {

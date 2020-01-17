@@ -1,7 +1,6 @@
-mongoDatabase:
-  protocol: MONGODB
-  host: localhost
-  database: limberapp
+sqlDatabase:
+  jdbcUrl: jdbc:postgresql://localhost/limber
+  username: postgres
 
 authentication:
   mechanisms:

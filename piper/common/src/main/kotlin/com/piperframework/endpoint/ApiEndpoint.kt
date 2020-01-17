@@ -38,7 +38,9 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
 
         internal suspend fun handle(): ResponseType {
             val result = handle(command)
-            check(authorized) { "Every endpoint needs to implement authorization. ${this@ApiEndpoint::class.simpleName} does not." }
+            check(authorized) {
+                "Every endpoint needs to implement authorization. ${this@ApiEndpoint::class.simpleName} does not."
+            }
             return result
         }
 
