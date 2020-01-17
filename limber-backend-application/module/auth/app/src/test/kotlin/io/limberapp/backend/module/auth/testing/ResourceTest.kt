@@ -29,4 +29,8 @@ abstract class ResourceTest : AbstractResourceTest() {
     override fun before() {
         testSqlModule.dropDatabase()
     }
+
+    override fun after() {
+        testSqlModule.close()
+    }
 }

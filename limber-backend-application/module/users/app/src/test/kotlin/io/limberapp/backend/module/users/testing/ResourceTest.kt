@@ -22,8 +22,11 @@ abstract class ResourceTest : AbstractResourceTest() {
         )
     }
 
-    @BeforeEach
     override fun before() {
         testSqlModule.dropDatabase()
+    }
+
+    override fun after() {
+        testSqlModule.close()
     }
 }
