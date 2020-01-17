@@ -18,9 +18,12 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {
-            is AuthenticationMechanism.Jwk -> UrlJwtVerifierProvider(mechanism.domain)
-            is AuthenticationMechanism.Jwt -> StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
-            is AuthenticationMechanism.UnsignedJwt -> StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
+            is AuthenticationMechanism.Jwk ->
+                UrlJwtVerifierProvider(mechanism.domain)
+            is AuthenticationMechanism.Jwt ->
+                StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
+            is AuthenticationMechanism.UnsignedJwt ->
+                StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
         }
         return@associate Pair(mechanism.issuer, provider)
     }
