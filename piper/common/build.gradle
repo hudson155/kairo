@@ -4,6 +4,7 @@ dependencies {
     api project(":piper:ktor-auth")
     api project(":piper:object-mapper")
     api project(":piper:reps")
+    api project(":piper:util")
     implementation libs.gcloud_kms
     api libs.guice
     api libs.jackson_kotlin
