@@ -10,8 +10,8 @@ class ConfigStringDeserializer : JsonDeserializer<String>() {
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String {
         val node = p.codec.readTree<JsonNode>(p)
-        val type = ConfigString.Type.valueOf(checkNotNull(node["type"].textValue()))
-        val plaintextValue = checkNotNull(node["value"].textValue())
+        val type = ConfigString.Type.valueOf(checkNotNull(node[ConfigString::type.name].textValue()))
+        val plaintextValue = checkNotNull(node[ConfigString::value.name].textValue())
         return when (type) {
             ConfigString.Type.PLAINTEXT -> plaintextValue
             ConfigString.Type.ENVIRONMENT_VARIABLE -> checkNotNull(System.getenv(plaintextValue))
