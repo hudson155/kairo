@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 object FormTemplateDateQuestionRep {
@@ -15,6 +16,7 @@ object FormTemplateDateQuestionRep {
 
     data class Complete(
         override val id: UUID,
+        override val created: LocalDateTime,
         override val label: String,
         override val helpText: String?,
         val earliest: LocalDate?,

@@ -74,6 +74,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     fun completeRep(model: FormTemplateQuestionModel) = when (model) {
         is FormTemplateDateQuestionModel -> FormTemplateDateQuestionRep.Complete(
             id = model.id,
+            created = model.created,
             label = model.label,
             helpText = model.helpText,
             earliest = model.earliest,
@@ -81,6 +82,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
             id = model.id,
+            created = model.created,
             label = model.label,
             helpText = model.helpText,
             maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,

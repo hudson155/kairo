@@ -4,6 +4,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
+import java.time.LocalDateTime
 
 internal object FormTemplateQuestionRepFixtures {
 
@@ -26,6 +27,7 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Additional Information",
                 helpText = null,
                 maxLength = 10_000,
@@ -48,6 +50,7 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Worker name",
                 helpText = null,
                 maxLength = 200,
@@ -66,6 +69,7 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateDateQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Date",
                 helpText = null,
                 earliest = null,
@@ -83,6 +87,7 @@ internal object FormTemplateQuestionRepFixtures {
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
                 id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
                 label = "Description",
                 helpText = null,
                 maxLength = 10_000,

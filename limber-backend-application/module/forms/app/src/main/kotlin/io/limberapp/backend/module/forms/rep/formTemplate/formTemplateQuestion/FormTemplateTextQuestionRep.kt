@@ -3,6 +3,7 @@ package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 import com.piperframework.validation.util.ifPresent
 import com.piperframework.validation.util.mediumText
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
+import java.time.LocalDateTime
 import java.util.UUID
 
 object FormTemplateTextQuestionRep {
@@ -22,6 +23,7 @@ object FormTemplateTextQuestionRep {
 
     data class Complete(
         override val id: UUID,
+        override val created: LocalDateTime,
         override val label: String,
         override val helpText: String?,
         val maxLength: Int,

@@ -7,14 +7,14 @@ import java.util.UUID
 object AccessTokenRep {
 
     data class OneTimeUse(
-        override val id: UUID,
+        val id: UUID,
         override val created: LocalDateTime,
         val userId: UUID,
         val token: String
     ) : CompleteRep
 
     data class Complete(
-        override val id: UUID,
+        val id: UUID,
         override val created: LocalDateTime,
         val userId: UUID
     ) : CompleteRep

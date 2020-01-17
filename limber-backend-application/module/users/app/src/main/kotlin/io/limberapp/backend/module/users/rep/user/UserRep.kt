@@ -28,7 +28,7 @@ object UserRep {
     }
 
     data class Complete(
-        override val id: UUID,
+        val id: UUID,
         override val created: LocalDateTime,
         val firstName: String,
         val lastName: String,
