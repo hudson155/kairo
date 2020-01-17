@@ -31,9 +31,10 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
     ) = transaction<Unit> {
         val insertionRank = validateInsertionRank(formTemplateId, rank)
         incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = models.size)
-        FormTemplateQuestionTable.batchInsertIndexed(models) { i, model ->
-            createFormTemplateQuestion(formTemplateId, model, insertionRank + i)
-        }
+        FormTemplateQuestionTable
+            .batchInsertIndexed(models) { i, model ->
+                createFormTemplateQuestion(formTemplateId, model, insertionRank + i)
+            }
     }
 
     override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) = transaction<Unit> {
@@ -44,23 +45,28 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
 
     private fun validateInsertionRank(formTemplateId: UUID, rank: Int?): Int {
         rank?.let { if (it < 0) throw RankOutOfBounds(it) }
-        val maxExistingRank = FormTemplateQuestionTable.slice(
-            FormTemplateQuestionTable.formTemplateGuid,
-            FormTemplateQuestionTable.rank.max()
-        ).select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
+        val resultRow = FormTemplateQuestionTable
+            .slice(
+                FormTemplateQuestionTable.formTemplateGuid,
+                FormTemplateQuestionTable.rank.max()
+            )
+            .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
             .groupBy(FormTemplateQuestionTable.formTemplateGuid)
-            .singleOrNull()?.get(FormTemplateQuestionTable.rank.max()) ?: -1
+            .singleOrNull()
+        val maxExistingRank = resultRow?.get(FormTemplateQuestionTable.rank.max()) ?: -1
         rank?.let { if (it > maxExistingRank + 1) throw RankOutOfBounds(it) }
         return rank ?: maxExistingRank + 1
     }
 
     private fun incrementExistingRanks(formTemplateId: UUID, atLeast: Int, incrementBy: Int) {
-        FormTemplateQuestionTable.update({
-            (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                    (FormTemplateQuestionTable.rank greaterEq atLeast)
-        }) {
-            with(SqlExpressionBuilder) { it.update(rank, rank + incrementBy) }
-        }
+        FormTemplateQuestionTable
+            .update(
+                where = {
+                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                            (FormTemplateQuestionTable.rank greaterEq atLeast)
+                },
+                body = { with(SqlExpressionBuilder) { it.update(rank, rank + incrementBy) } }
+            )
     }
 
     private fun InsertStatement<*>.createFormTemplateQuestion(
@@ -90,16 +96,20 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
     }
 
     override fun get(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction {
-        return@transaction FormTemplateQuestionTable.select {
-            (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                    (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
-        }.singleOrNull()?.toFormTemplateQuestionModel()
+        return@transaction FormTemplateQuestionTable
+            .select {
+                (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                        (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+            }
+            .singleOrNull()
+            ?.toFormTemplateQuestionModel()
     }
 
     override fun getByFormTemplateId(formTemplateId: UUID) = transaction {
-        return@transaction FormTemplateQuestionTable.select {
-            FormTemplateQuestionTable.formTemplateGuid eq formTemplateId
-        }.orderBy(FormTemplateQuestionTable.rank).map { it.toFormTemplateQuestionModel() }
+        return@transaction FormTemplateQuestionTable
+            .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
+            .orderBy(FormTemplateQuestionTable.rank)
+            .map { it.toFormTemplateQuestionModel() }
     }
 
     override fun update(
@@ -107,12 +117,15 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         formTemplateQuestionId: UUID,
         update: FormTemplateQuestionModel.Update
     ) = transaction {
-        FormTemplateQuestionTable.update({
-            (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                    (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
-        }) { it.updateFormTemplate(update) }
+        FormTemplateQuestionTable
+            .updateAtMostOne(
+                where = {
+                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                            (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+                },
+                body = { it.updateFormTemplate(update) }
+            )
             .ifEq(0) { throw FormTemplateQuestionNotFound() }
-            .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(formTemplateId, formTemplateQuestionId))
     }
 
@@ -134,10 +147,11 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
     }
 
     override fun delete(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {
-        FormTemplateQuestionTable.deleteAtMostOneWhere {
-            (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                    (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
-        }
+        FormTemplateQuestionTable
+            .deleteAtMostOneWhere {
+                (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                        (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+            }
             .ifEq(0) { throw FormTemplateQuestionNotFound() }
     }
 

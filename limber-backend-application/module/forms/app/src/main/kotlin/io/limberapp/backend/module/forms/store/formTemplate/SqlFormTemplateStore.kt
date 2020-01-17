@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
-import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 internal class SqlFormTemplateStore @Inject constructor(
@@ -33,19 +32,25 @@ internal class SqlFormTemplateStore @Inject constructor(
     }
 
     override fun get(formTemplateId: UUID) = transaction {
-        return@transaction FormTemplateTable.select { FormTemplateTable.guid eq formTemplateId }
-            .singleOrNull()?.toFormTemplateModel()
+        return@transaction FormTemplateTable
+            .select { FormTemplateTable.guid eq formTemplateId }
+            .singleOrNull()
+            ?.toFormTemplateModel()
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
-        return@transaction FormTemplateTable.select { FormTemplateTable.orgGuid eq orgId }
+        return@transaction FormTemplateTable
+            .select { FormTemplateTable.orgGuid eq orgId }
             .map { it.toFormTemplateModel() }
     }
 
     override fun update(formTemplateId: UUID, update: FormTemplateModel.Update) = transaction {
-        FormTemplateTable.update({ FormTemplateTable.guid eq formTemplateId }) { it.updateFormTemplate(update) }
+        FormTemplateTable
+            .updateAtMostOne(
+                where = { FormTemplateTable.guid eq formTemplateId },
+                body = { it.updateFormTemplate(update) }
+            )
             .ifEq(0) { throw FormTemplateNotFound() }
-            .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(formTemplateId))
     }
 
@@ -55,7 +60,8 @@ internal class SqlFormTemplateStore @Inject constructor(
     }
 
     override fun delete(formTemplateId: UUID) = transaction<Unit> {
-        FormTemplateTable.deleteAtMostOneWhere { FormTemplateTable.guid eq formTemplateId }
+        FormTemplateTable
+            .deleteAtMostOneWhere { FormTemplateTable.guid eq formTemplateId }
             .ifEq(0) { throw FormTemplateNotFound() }
     }
 
