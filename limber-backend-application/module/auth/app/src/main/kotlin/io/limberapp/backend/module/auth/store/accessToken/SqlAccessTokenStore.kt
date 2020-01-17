@@ -29,20 +29,23 @@ internal class SqlAccessTokenStore @Inject constructor(
     }
 
     override fun getByToken(token: String) = transaction {
-        return@transaction AccessTokenTable.select { AccessTokenTable.token eq token }
+        return@transaction AccessTokenTable
+            .select { AccessTokenTable.token eq token }
             .singleOrNull()?.toAccessTokenModel()
     }
 
     override fun getByUserId(userId: UUID) = transaction {
-        return@transaction AccessTokenTable.select { AccessTokenTable.accountGuid eq userId }
+        return@transaction AccessTokenTable
+            .select { AccessTokenTable.accountGuid eq userId }
             .map { it.toAccessTokenModel() }
     }
 
     override fun delete(userId: UUID, accessTokenId: UUID) = transaction<Unit> {
-        AccessTokenTable.deleteAtMostOneWhere {
-            (AccessTokenTable.accountGuid eq userId) and
-                    (AccessTokenTable.guid eq accessTokenId)
-        }.ifEq(0) { throw AccessTokenNotFound() }
+        AccessTokenTable
+            .deleteAtMostOneWhere {
+                (AccessTokenTable.accountGuid eq userId) and (AccessTokenTable.guid eq accessTokenId)
+            }
+            .ifEq(0) { throw AccessTokenNotFound() }
     }
 
     private fun ResultRow.toAccessTokenModel() = AccessTokenModel(
