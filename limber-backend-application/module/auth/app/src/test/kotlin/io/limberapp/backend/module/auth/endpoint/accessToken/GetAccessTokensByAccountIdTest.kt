@@ -9,18 +9,18 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class GetAccessTokensByUserIdTest : ResourceTest() {
+internal class GetAccessTokensByAccountIdTest : ResourceTest() {
 
     @Test
     fun happyPathNoneExist() {
 
         // Setup
-        val userId = UUID.randomUUID()
+        val accountId = UUID.randomUUID()
 
-        // GetAccessTokensByUserId
+        // GetAccessTokensByAccountId
         piperTest.test(
-            endpointConfig = GetAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -31,26 +31,26 @@ internal class GetAccessTokensByUserIdTest : ResourceTest() {
     fun happyPathSomeExist() {
 
         // Setup
-        val userId = UUID.randomUUID()
+        val accountId = UUID.randomUUID()
 
         // CreateAccessToken
-        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, userId, 0)
+        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
         piperTest.setup(
             endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {}
 
         // CreateAccessToken
-        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, userId, 2)
+        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, accountId, 2)
         piperTest.setup(
             endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {}
 
-        // GetAccessTokensByUserId
+        // GetAccessTokensByAccountId
         piperTest.test(
-            endpointConfig = GetAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(accessToken0Rep, accessToken1Rep), actual)

@@ -34,7 +34,7 @@ internal class SqlAccessTokenStore @Inject constructor(
             .singleOrNull()?.toAccessTokenModel()
     }
 
-    override fun getByUserId(userId: UUID) = transaction {
+    override fun getByAccountId(userId: UUID) = transaction {
         return@transaction AccessTokenTable
             .select { AccessTokenTable.accountGuid eq userId }
             .map { it.toAccessTokenModel() }

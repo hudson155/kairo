@@ -8,7 +8,9 @@ import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.user.UserModel
+import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.user.UserService
 import io.mockk.every
 import org.junit.jupiter.api.Test
@@ -22,7 +24,14 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
     fun happyPathUserDoesNotExist() {
 
         // Setup
+        val userId = deterministicUuidGenerator[0]
         val emailAddress = "jhudson@jhudson.ca"
+        every { mockedServices[AccountService::class].get(userId) } returns AccountModel(
+            id = userId,
+            created = LocalDateTime.now(fixedClock),
+            name = "Jeff Hudson",
+            roles = emptySet()
+        )
         every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
         every { mockedServices[UserService::class].create(any()) } returns Unit
         every { mockedServices[OrgService::class].getByMemberId(any()) } returns emptyList()
@@ -34,7 +43,6 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
             emailAddress = emailAddress,
             profilePhotoUrl = null
         )
-        val userId = deterministicUuidGenerator[0]
         piperTest.test(
             endpointConfig = CreateJwtClaimsRequest.endpointConfig,
             body = jwtRequest
@@ -56,14 +64,20 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
     fun happyPathUserExists() {
 
         // Setup
-        val existingUser = UserModel(
+        val existingAccount = AccountModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
-            firstName = "Summer",
-            lastName = "Kavan",
+            name = "Summer Kavan",
+            roles = setOf(JwtRole.SUPERUSER)
+        )
+        val existingUser = UserModel(
+            id = existingAccount.id,
+            created = existingAccount.created,
+            firstName = existingAccount.name.split(' ')[0],
+            lastName = existingAccount.name.split(' ')[1],
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null,
-            roles = setOf(JwtRole.SUPERUSER)
+            roles = existingAccount.roles
         )
         val existingOrg = OrgModel(
             id = UUID.randomUUID(),
@@ -72,6 +86,7 @@ internal class CreateJwtClaimsRequestTest : ResourceTest() {
             features = listOf(),
             members = listOf(MembershipModel(LocalDateTime.now(fixedClock), existingUser.id))
         )
+        every { mockedServices[AccountService::class].get(existingUser.id) } returns existingAccount
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
         every { mockedServices[OrgService::class].getByMemberId(existingUser.id) } returns listOf(existingOrg)
 

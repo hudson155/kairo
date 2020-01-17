@@ -9,7 +9,7 @@ interface AccessTokenService {
 
     fun getByToken(token: String): AccessTokenModel?
 
-    fun getByUserId(userId: UUID): List<AccessTokenModel>
+    fun getByAccountId(userId: UUID): List<AccessTokenModel>
 
     fun delete(userId: UUID, accessTokenId: UUID)
 }

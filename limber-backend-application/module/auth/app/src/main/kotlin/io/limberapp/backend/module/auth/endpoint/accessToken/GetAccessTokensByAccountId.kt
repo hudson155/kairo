@@ -18,43 +18,43 @@ import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import java.util.UUID
 
 /**
- * Returns all access tokens for the given user. Note that this endpoint does not actually return the token itself, just
- * its ID. The token itself is only returned once, immediately after it is created. The user must record the token
- * appropriately, because it cannot be returned again. If a new token is needed, the user can always delete the existing
- * token and create another.
+ * Returns all access tokens for the given account. Note that this endpoint does not actually return the token itself,
+ * just its ID. The token itself is only returned once, immediately after it is created. The account must record the
+ * token appropriately, because it cannot be returned again. If a new token is needed, the account can always delete the
+ * existing token and create another.
  */
-internal class GetAccessTokensByUserId @Inject constructor(
+internal class GetAccessTokensByAccountId @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val accessTokenService: AccessTokenService,
     private val accessTokenMapper: AccessTokenMapper
-) : LimberApiEndpoint<GetAccessTokensByUserId.Command, List<AccessTokenRep.Complete>>(
+) : LimberApiEndpoint<GetAccessTokensByAccountId.Command, List<AccessTokenRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val userId: UUID
+        val accountId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        userId = call.parameters.getAsType(UUID::class, userId)
+        accountId = call.parameters.getAsType(UUID::class, accountId)
     )
 
     override suspend fun Handler.handle(command: Command): List<AccessTokenRep.Complete> {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val models = accessTokenService.getByUserId(command.userId)
+        val models = accessTokenService.getByAccountId(command.accountId)
         return models.map { accessTokenMapper.completeRep(it) }
     }
 
     companion object {
-        const val userId = "userId"
+        const val accountId = "accountId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Get,
             pathTemplate = listOf(
-                StringComponent("users"),
-                VariableComponent(userId),
+                StringComponent("accounts"),
+                VariableComponent(accountId),
                 StringComponent("access-tokens")
             )
         )

@@ -7,12 +7,12 @@ import java.util.UUID
 interface JwtClaimsRequestService {
 
     /**
-     * Generates JWT claims. If a user does not exist, it creates one.
+     * Generates JWT claims. If a user with the same email address does not exist, it creates a user.
      */
     fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel
 
     /**
-     * Generates JWT claims. If a user does not exist, it returns null.
+     * Generates JWT claims. If the account does not exist, it returns null.
      */
-    fun requestJwtClaimsForExistingUser(userId: UUID): JwtClaimsModel?
+    fun requestJwtClaimsForExistingUser(accountId: UUID): JwtClaimsModel?
 }

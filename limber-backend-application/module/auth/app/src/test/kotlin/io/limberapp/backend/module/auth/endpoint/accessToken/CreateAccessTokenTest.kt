@@ -14,23 +14,23 @@ internal class CreateAccessTokenTest : ResourceTest() {
     fun happyPath() {
 
         // Setup
-        val userId = UUID.randomUUID()
+        val accountId = UUID.randomUUID()
 
         // CreateAccessToken
-        val accessTokenRep = AccessTokenRepFixtures[0].complete(this, userId, 0)
-        val accessTokenOneTimeUseRep = AccessTokenRepFixtures[0].oneTimeUse(this, userId, 0)
+        val accessTokenRep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
+        val accessTokenOneTimeUseRep = AccessTokenRepFixtures[0].oneTimeUse(this, accountId, 0)
         piperTest.test(
             endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<AccessTokenRep.OneTimeUse>(response.content!!)
             assertEquals(accessTokenOneTimeUseRep, actual)
         }
 
-        // GetAccessTokensByUserId
+        // GetAccessTokensByAccountId
         piperTest.test(
-            endpointConfig = GetAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(GetAccessTokensByUserId.userId to userId)
+            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
+            pathParams = mapOf(GetAccessTokensByAccountId.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(accessTokenRep), actual)
