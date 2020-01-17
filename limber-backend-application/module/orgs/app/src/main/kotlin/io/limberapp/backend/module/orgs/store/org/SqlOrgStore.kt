@@ -14,7 +14,6 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
-import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 internal class SqlOrgStore @Inject constructor(
@@ -36,23 +35,30 @@ internal class SqlOrgStore @Inject constructor(
     }
 
     override fun get(orgId: UUID) = transaction {
-        return@transaction OrgTable.select { OrgTable.guid eq orgId }
-            .singleOrNull()?.toOrgModel()
+        return@transaction OrgTable
+            .select { OrgTable.guid eq orgId }
+            .singleOrNull()
+            ?.toOrgModel()
     }
 
     override fun getByMemberId(memberId: UUID) = transaction {
-        return@transaction OrgTable.select {
-            exists(MembershipTable.select {
-                (MembershipTable.orgGuid eq OrgTable.guid) and (MembershipTable.accountGuid eq memberId)
-            })
-        }
+        return@transaction OrgTable
+            .select {
+                exists(
+                    MembershipTable
+                        .select {
+                            (MembershipTable.orgGuid eq OrgTable.guid) and
+                                    (MembershipTable.accountGuid eq memberId)
+                        }
+                )
+            }
             .map { it.toOrgModel() }
     }
 
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {
-        OrgTable.update({ OrgTable.guid eq orgId }) { it.updateOrg(update) }
+        OrgTable
+            .updateAtMostOne(where = { OrgTable.guid eq orgId }, body = { it.updateOrg(update) })
             .ifEq(0) { throw OrgNotFound() }
-            .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(orgId))
     }
 
@@ -61,7 +67,8 @@ internal class SqlOrgStore @Inject constructor(
     }
 
     override fun delete(orgId: UUID) = transaction<Unit> {
-        OrgTable.deleteAtMostOneWhere { OrgTable.guid eq orgId }
+        OrgTable
+            .deleteAtMostOneWhere { OrgTable.guid eq orgId }
             .ifEq(0) { throw OrgNotFound() }
     }
 

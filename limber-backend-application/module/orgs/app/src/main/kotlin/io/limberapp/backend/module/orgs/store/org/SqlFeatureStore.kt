@@ -14,7 +14,6 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
-import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 internal class SqlFeatureStore @Inject constructor(
@@ -26,11 +25,9 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun create(orgId: UUID, model: FeatureModel) = transaction<Unit> {
-
-        FeatureTable.select {
-            (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path)
-        }.singleOrNull()?.let { throw FeatureIsNotUnique() }
-
+        FeatureTable
+            .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path) }
+            .singleOrNull()?.let { throw FeatureIsNotUnique() }
         FeatureTable.insert { it.createFeature(orgId, model) }
     }
 
@@ -44,28 +41,32 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun get(orgId: UUID, featureId: UUID) = transaction {
-        return@transaction FeatureTable.select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
-            .singleOrNull()?.toFeatureModel()
+        return@transaction FeatureTable
+            .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
+            .singleOrNull()
+            ?.toFeatureModel()
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
-        return@transaction FeatureTable.select { (FeatureTable.orgGuid eq orgId) }
+        return@transaction FeatureTable
+            .select { (FeatureTable.orgGuid eq orgId) }
             .map { it.toFeatureModel() }
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {
 
         update.path?.let {
-            FeatureTable.select {
-                (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq it)
-            }.singleOrNull()?.let { throw FeatureIsNotUnique() }
+            FeatureTable
+                .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq it) }
+                .singleOrNull()?.let { throw FeatureIsNotUnique() }
         }
 
-        FeatureTable.update({
-            (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId)
-        }) { it.updateFeature(update) }
+        FeatureTable
+            .updateAtMostOne(
+                where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
+                body = { it.updateFeature(update) }
+            )
             .ifEq(0) { throw FeatureNotFound() }
-            .ifGt(1, ::badSql)
         return@transaction checkNotNull(get(orgId, featureId))
     }
 
@@ -75,7 +76,8 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun delete(orgId: UUID, featureId: UUID) = transaction<Unit> {
-        FeatureTable.deleteAtMostOneWhere { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
+        FeatureTable
+            .deleteAtMostOneWhere { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
             .ifEq(0) { throw FeatureNotFound() }
     }
 

@@ -24,9 +24,7 @@ internal class SqlMembershipStore @Inject constructor(
     }
 
     override fun create(orgId: UUID, model: MembershipModel) = transaction<Unit> {
-
         get(orgId, model.userId)?.let { throw UserIsAlreadyAMemberOfOrg() }
-
         MembershipTable.insert { it.createMembership(orgId, model) }
     }
 
@@ -37,20 +35,22 @@ internal class SqlMembershipStore @Inject constructor(
     }
 
     override fun get(orgId: UUID, userId: UUID) = transaction {
-        return@transaction MembershipTable.select {
-            (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId)
-        }.singleOrNull()?.toMembershipModel()
+        return@transaction MembershipTable
+            .select { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) }
+            .singleOrNull()
+            ?.toMembershipModel()
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
-        return@transaction MembershipTable.select { (MembershipTable.orgGuid eq orgId) }
+        return@transaction MembershipTable
+            .select { (MembershipTable.orgGuid eq orgId) }
             .map { it.toMembershipModel() }
     }
 
     override fun delete(orgId: UUID, userId: UUID) = transaction<Unit> {
-        MembershipTable.deleteAtMostOneWhere {
-            (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId)
-        }.ifEq(0) { throw MembershipNotFound() }
+        MembershipTable
+            .deleteAtMostOneWhere { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) }
+            .ifEq(0) { throw MembershipNotFound() }
     }
 
     private fun ResultRow.toMembershipModel() = MembershipModel(
