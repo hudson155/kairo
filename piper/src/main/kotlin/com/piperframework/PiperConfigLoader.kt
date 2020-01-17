@@ -7,8 +7,6 @@ abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(priv
 
     protected open val objectMapper = PiperObjectMapper()
 
-    private fun getEnvironmentVariable(name: String): String? = System.getenv(name)
-
     abstract fun load(): Config
 
     protected fun loadInternal(fileName: String): Config? {
