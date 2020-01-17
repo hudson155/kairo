@@ -5,7 +5,6 @@ dependencies {
     api project(":piper:object-mapper")
     api project(":piper:reps")
     api project(":piper:util")
-    implementation libs.gcloud_kms
     api libs.guice
     api libs.jackson_kotlin
     api libs.ktor_server_core

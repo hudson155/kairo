@@ -14,14 +14,11 @@ ext {
             // https://github.com/arturbosch/detekt/releases
             detekt                 : '1.3.1',
 
-            // https://github.com/googleapis/java-kms/releases
+            // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed
             exposed                : '0.17.7',
 
             // https://github.com/flyway/flyway/releases
             flyway                 : '6.1.4',
-
-            // https://github.com/googleapis/java-kms/releases
-            gcloud_kms             : '1.35.1',
 
             // https://github.com/google/guice/releases
             guice                  : '4.2.2',
@@ -94,9 +91,6 @@ ext {
             flyway                 : "org.flywaydb:flyway-core:$versions.flyway",
             hikari                 : "com.zaxxer:HikariCP:$versions.hikari",
             postgres               : "org.postgresql:postgresql:$versions.postgres",
-
-            // Google Cloud
-            gcloud_kms             : "com.google.cloud:google-cloud-kms:$versions.gcloud_kms",
 
             // App Engine
             appengine_gradle_plugin: "com.google.cloud.tools:appengine-gradle-plugin:$versions.appengine_gradle_plugin",
