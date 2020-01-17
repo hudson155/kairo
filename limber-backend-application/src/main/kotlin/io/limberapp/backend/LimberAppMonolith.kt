@@ -1,10 +1,7 @@
 package io.limberapp.backend
 
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Injector
 import com.piperframework.SimplePiperApp
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.MainModule
 import com.piperframework.module.SqlModule
@@ -20,7 +17,10 @@ import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 
-internal class LimberAppMonolith(application: Application) : SimplePiperApp<Config>(application, loadConfig()) {
+internal class LimberAppMonolith(application: Application) : SimplePiperApp<Config>(
+    application = application,
+    config = LimberConfigLoader().load()
+) {
 
     override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
         piperAuth<Jwt> {
@@ -50,13 +50,4 @@ internal class LimberAppMonolith(application: Application) : SimplePiperApp<Conf
         OrgsModule(),
         UsersModule()
     )
-}
-
-private val yamlObjectMapper = PiperObjectMapper(YAMLFactory())
-
-private fun loadConfig(): Config {
-    val envString = System.getenv("LIMBERAPP_ENV") ?: "prod"
-    val stream = object {}.javaClass.getResourceAsStream("/config/$envString.yml")
-        ?: error("Config for LIMBER_ENV=$envString not found.")
-    return yamlObjectMapper.readValue(stream)
 }

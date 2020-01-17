@@ -8,6 +8,7 @@ fun SqlDatabaseConfig.createDataSource(): HikariDataSource {
     val hikariConfig = HikariConfig().apply {
         jdbcUrl = this@createDataSource.jdbcUrl
         username = this@createDataSource.username
+        password = this@createDataSource.password
     }
     return HikariDataSource(hikariConfig)
 }

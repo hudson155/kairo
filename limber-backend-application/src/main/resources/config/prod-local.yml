@@ -1,6 +1,9 @@
 sqlDatabase:
   jdbcUrl: jdbc:postgresql://34.68.206.182/limber
   username: limber
+  password:
+    type: ENVIRONMENT_VARIABLE
+    value: LIMBER_PROD_POSTGRES_PASSWORD
 
 authentication:
   mechanisms:
