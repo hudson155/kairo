@@ -10,13 +10,16 @@ import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.user.UserModel
+import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.user.UserService
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.UUID
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
+    private val accountService: AccountService,
     private val orgService: OrgService,
     private val userService: UserService,
     private val clock: Clock,
@@ -26,22 +29,24 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val objectMapper = PiperObjectMapper()
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
-        val user = getOrCreateUser(request)
-        return requestJwtClaimsForUser(user)
+        val user = getAccountOrCreateUser(request)
+        val account = checkNotNull(accountService.get(user.id))
+        return requestJwtClaimsForUser(account, user)
     }
 
-    override fun requestJwtClaimsForExistingUser(userId: UUID): JwtClaimsModel? {
-        val user = userService.get(userId) ?: return null
-        return requestJwtClaimsForUser(user)
+    override fun requestJwtClaimsForExistingUser(accountId: UUID): JwtClaimsModel? {
+        val account = accountService.get(accountId) ?: return null
+        val user = userService.get(accountId)
+        return requestJwtClaimsForUser(account, user)
     }
 
-    private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
-        val orgs = orgService.getByMemberId(user.id)
-        val jwt = createJwt(user, orgs)
+    private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
+        val orgs = orgService.getByMemberId(account.id)
+        val jwt = createJwt(account, user, orgs)
         return convertJwtToModel(jwt)
     }
 
-    private fun getOrCreateUser(request: JwtClaimsRequestModel): UserModel {
+    private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
         val existingUser = userService.getByEmailAddress(request.emailAddress)
         if (existingUser != null) return existingUser
         val newUser = UserModel(
@@ -57,12 +62,12 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         return newUser
     }
 
-    private fun createJwt(user: UserModel, orgs: List<OrgModel>): Jwt {
+    private fun createJwt(account: AccountModel, user: UserModel?, orgs: List<OrgModel>): Jwt {
         check(orgs.size <= 1)
         return Jwt(
             org = orgs.singleOrNull()?.let { JwtOrg(it.id, it.name) },
-            roles = user.roles,
-            user = JwtUser(user.id, user.firstName, user.lastName)
+            roles = account.roles,
+            user = JwtUser(account.id, user?.firstName, user?.lastName)
         )
     }
 

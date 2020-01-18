@@ -15,14 +15,14 @@ internal class DeleteAccessTokenTest : ResourceTest() {
     fun doesNotExist() {
 
         // Setup
-        val userId = UUID.randomUUID()
+        val accountId = UUID.randomUUID()
         val accessTokenId = UUID.randomUUID()
 
         // DeleteAccessToken
         piperTest.test(
             endpointConfig = DeleteAccessToken.endpointConfig,
             pathParams = mapOf(
-                DeleteAccessToken.userId to userId,
+                DeleteAccessToken.accountId to accountId,
                 DeleteAccessToken.accessTokenId to accessTokenId
             ),
             expectedException = AccessTokenNotFound()
@@ -33,35 +33,35 @@ internal class DeleteAccessTokenTest : ResourceTest() {
     fun happyPath() {
 
         // Setup
-        val userId = UUID.randomUUID()
+        val accountId = UUID.randomUUID()
 
         // CreateAccessToken
-        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, userId, 0)
+        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
         piperTest.setup(
             endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         )
 
         // CreateAccessToken
-        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, userId, 2)
+        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, accountId, 2)
         piperTest.setup(
             endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         )
 
         // DeleteAccessToken
         piperTest.test(
             endpointConfig = DeleteAccessToken.endpointConfig,
             pathParams = mapOf(
-                DeleteAccessToken.userId to userId,
+                DeleteAccessToken.accountId to accountId,
                 DeleteAccessToken.accessTokenId to accessToken0Rep.id
             )
         ) {}
 
-        // GetAccessTokensByUserId
+        // GetAccessTokensByAccountId
         piperTest.test(
-            endpointConfig = GetAccessTokensByUserId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.userId to userId)
+            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
+            pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(accessToken1Rep), actual)

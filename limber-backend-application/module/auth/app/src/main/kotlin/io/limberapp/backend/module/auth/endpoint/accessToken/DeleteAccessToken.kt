@@ -16,7 +16,7 @@ import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import java.util.UUID
 
 /**
- * Deletes the given access token from the given user.
+ * Deletes the given access token from the given account.
  */
 internal class DeleteAccessToken @Inject constructor(
     application: Application,
@@ -29,28 +29,28 @@ internal class DeleteAccessToken @Inject constructor(
 ) {
 
     internal data class Command(
-        val userId: UUID,
+        val accountId: UUID,
         val accessTokenId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        userId = call.parameters.getAsType(UUID::class, userId),
+        accountId = call.parameters.getAsType(UUID::class, accountId),
         accessTokenId = call.parameters.getAsType(UUID::class, accessTokenId)
     )
 
     override suspend fun Handler.handle(command: Command) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        accessTokenService.delete(command.userId, command.accessTokenId)
+        accessTokenService.delete(command.accountId, command.accessTokenId)
     }
 
     companion object {
-        const val userId = "userId"
+        const val accountId = "accountId"
         const val accessTokenId = "accessTokenId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Delete,
             pathTemplate = listOf(
-                StringComponent("users"),
-                VariableComponent(userId),
+                StringComponent("accounts"),
+                VariableComponent(accountId),
                 StringComponent("access-tokens"),
                 VariableComponent(accessTokenId)
             )

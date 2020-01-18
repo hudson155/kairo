@@ -8,8 +8,12 @@ import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
 import io.limberapp.backend.module.users.endpoint.user.UpdateUser
 import io.limberapp.backend.module.users.endpoint.user.role.AddUserRole
 import io.limberapp.backend.module.users.endpoint.user.role.RemoveUserRole
+import io.limberapp.backend.module.users.service.account.AccountService
+import io.limberapp.backend.module.users.service.account.AccountServiceImpl
 import io.limberapp.backend.module.users.service.user.UserService
 import io.limberapp.backend.module.users.service.user.UserServiceImpl
+import io.limberapp.backend.module.users.store.account.AccountStore
+import io.limberapp.backend.module.users.store.account.SqlAccountStore
 import io.limberapp.backend.module.users.store.user.SqlUserStore
 import io.limberapp.backend.module.users.store.user.UserStore
 
@@ -32,10 +36,12 @@ class UsersModule : Module() {
     )
 
     override fun bindServices() {
+        bind(AccountService::class, AccountServiceImpl::class)
         bind(UserService::class, UserServiceImpl::class)
     }
 
     override fun bindStores() {
+        bind(AccountStore::class, SqlAccountStore::class)
         bind(UserStore::class, SqlUserStore::class)
     }
 }
