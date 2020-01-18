@@ -62,7 +62,6 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         return newUser
     }
 
-    // TODO: Introduce account model because non-user accounts don't have user records.
     private fun createJwt(account: AccountModel, user: UserModel?, orgs: List<OrgModel>): Jwt {
         check(orgs.size <= 1)
         return Jwt(
