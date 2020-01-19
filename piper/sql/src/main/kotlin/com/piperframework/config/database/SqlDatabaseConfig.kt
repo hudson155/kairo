@@ -9,5 +9,6 @@ data class SqlDatabaseConfig(
     val jdbcUrl: String,
     val username: String?,
     @JsonDeserialize(using = ConfigStringDeserializer::class)
-    val password: String?
+    val password: String?,
+    val properties: Map<String, String> = emptyMap()
 )
