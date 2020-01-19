@@ -7,8 +7,9 @@ import com.zaxxer.hikari.HikariDataSource
 fun SqlDatabaseConfig.createDataSource(): HikariDataSource {
     val hikariConfig = HikariConfig().apply {
         jdbcUrl = this@createDataSource.jdbcUrl
-        username = this@createDataSource.username
-        password = this@createDataSource.password
+        this@createDataSource.username?.let { username = it }
+        this@createDataSource.password?.let { password = it }
+        this@createDataSource.properties.forEach { addDataSourceProperty(it.key, it.value) }
     }
     return HikariDataSource(hikariConfig)
 }
