@@ -13,16 +13,15 @@ const AuthActions = {
   ensureSetJwt(getJwt: () => Promise<string>): ThunkAction<Promise<void>, State, null, AnyAction> {
     return async (dispatch, getState): Promise<void> => {
       if (getState().auth.loadingStatus === 'NOT_LOADED_OR_LOADING') {
-        getJwt().then((jwt: string) => {
-          dispatch(setJwt(jwt));
-          const decodedJwt = jsonwebtoken.decode(jwt) as { [key: string]: any };
-          const jwtUserClaim = JSON.parse(decodedJwt['https://limberapp.io/user']);
-          dispatch(UserActions.setJwtUser({
-            id: jwtUserClaim.id,
-            firstName: jwtUserClaim.firstName,
-            lastName: jwtUserClaim.lastName,
-          }));
-        });
+        const jwt: string = await getJwt();
+        dispatch(setJwt(jwt));
+        const decodedJwt = jsonwebtoken.decode(jwt) as { [key: string]: any };
+        const jwtUserClaim = JSON.parse(decodedJwt['https://limberapp.io/user']);
+        dispatch(UserActions.setJwtUser({
+          id: jwtUserClaim.id,
+          firstName: jwtUserClaim.firstName,
+          lastName: jwtUserClaim.lastName,
+        }));
       }
     };
   },
