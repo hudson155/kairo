@@ -48,12 +48,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
         // First, create the injector.
         val modules = getMainModules(application).plus(modules)
-        val injector = try {
-            Guice.createInjector(Stage.PRODUCTION, modules)
-        } catch (e: Exception) {
-            println(e)
-            throw e
-        }
+        val injector = Guice.createInjector(Stage.PRODUCTION, modules)
 
         // Then, configure the application.
         // Pass the injector because configuration may require services that are bound in the injector.
