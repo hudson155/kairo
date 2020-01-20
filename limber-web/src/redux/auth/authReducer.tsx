@@ -5,7 +5,7 @@ const defaultState: AuthState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 
 const authReducer = (state: AuthState = defaultState, abstractAction: AuthAction): AuthState => {
   switch (abstractAction.type) {
-    case 'AuthSetJwt': {
+    case 'AUTH_SET_JWT': {
       const action = abstractAction as AuthSetJwtAction;
       return { ...state, loadingStatus: 'LOADED', jwt: action.jwt };
     }

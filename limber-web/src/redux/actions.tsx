@@ -1,6 +1,2 @@
-import ThemeActions from './theme/ThemeActions';
-
-const Actions = {
-  theme: ThemeActions,
-};
+const Actions = {};
 export default Actions;

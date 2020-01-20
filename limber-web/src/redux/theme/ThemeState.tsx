@@ -1,4 +1,4 @@
-import ThemeModel from '../../models/ThemeModel';
+import ThemeModel from '../../models/theme/ThemeModel';
 import { LoadingStatus } from '../util/LoadingStatus';
 
 export default interface ThemeState {
