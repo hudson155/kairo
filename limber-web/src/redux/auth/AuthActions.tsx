@@ -4,7 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 import State from '../../state';
 
 function setJwt(jwt: string): AuthSetJwtAction {
-  return { type: 'AuthSetJwt', jwt };
+  return { type: 'AUTH_SET_JWT', jwt };
 }
 
 const AuthActions = {

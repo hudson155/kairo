@@ -1,16 +1,16 @@
 import { AnyAction } from 'redux';
-import OrgModel from '../../models/OrgModel';
+import OrgModel from '../../models/orgs/OrgModel';
 import { OrgsSetAllAction, OrgsStartLoadingAction } from './OrgsAction';
 import Api from '../../api/Api';
 import { ThunkAction } from 'redux-thunk';
 import State from '../../state';
 
 function setAll(orgs: Map<string, OrgModel>): OrgsSetAllAction {
-  return { type: 'OrgsSetAll', orgs };
+  return { type: 'ORGS_SET_ALL', orgs };
 }
 
 function startLoading(): OrgsStartLoadingAction {
-  return { type: 'OrgsStartLoading' };
+  return { type: 'ORGS_START_LOADING' };
 }
 
 const OrgsActions = {

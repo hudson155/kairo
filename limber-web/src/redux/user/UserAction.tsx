@@ -1,4 +1,4 @@
-import UserModel from '../../models/UserModel';
+import UserModel from '../../models/user/UserModel';
 
 export default interface UserAction {
   type: 'USER_SET';

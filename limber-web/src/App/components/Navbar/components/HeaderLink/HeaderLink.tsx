@@ -1,7 +1,10 @@
 import React, { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import State from '../../../../../state';
 
 interface Props {
+  color: string;
   to: string;
   children: string;
 }
@@ -19,4 +22,6 @@ const HeaderLink: React.FC<Props> = (props: Props) => {
   return <Link to={props.to} style={style}>{props.children}</Link>;
 };
 
-export default HeaderLink;
+export default connect((state: State) => ({
+  color: state.theme.theme.navBarLinkColor,
+}))(HeaderLink);

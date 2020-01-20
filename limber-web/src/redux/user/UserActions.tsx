@@ -1,4 +1,4 @@
-import UserModel from '../../models/UserModel';
+import UserModel from '../../models/user/UserModel';
 import { SetUserAction } from './UserAction';
 
 function set(user: UserModel): SetUserAction {

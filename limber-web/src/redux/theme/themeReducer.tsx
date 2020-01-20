@@ -1,17 +1,12 @@
-import ThemeAction from './ThemeAction';
 import ThemeState from './ThemeState';
 
 const defaultState: ThemeState = {
   loadingStatus: 'LOADED',
   theme: {
     navBarColor: '#24292e',
+    navBarLinkColor: 'white',
   },
 };
 
-const themeReducer = (state: ThemeState = defaultState, abstractAction: ThemeAction): ThemeState => {
-  switch (abstractAction.type) {
-    default:
-      return state;
-  }
-};
+const themeReducer = (state: ThemeState = defaultState): ThemeState => state;
 export default themeReducer;

@@ -1,4 +1,4 @@
-import OrgModel from '../../models/OrgModel';
+import OrgModel from '../../models/orgs/OrgModel';
 import { Request } from '../Request';
 
 class GetOrgsByMemberIdRequest extends Request<OrgModel[]> {

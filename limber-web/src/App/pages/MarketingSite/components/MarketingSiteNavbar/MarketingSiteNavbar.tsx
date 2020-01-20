@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from '../../../../components/Navbar/Navbar';
-import HeaderLinkGroup
-  from '../../../../components/Navbar/components/HeaderLinkGroup/HeaderLinkGroup';
+import HeaderLinkGroup from '../../../../components/Navbar/components/HeaderLinkGroup/HeaderLinkGroup';
 import HeaderLink from '../../../../components/Navbar/components/HeaderLink/HeaderLink';
 
 const MarketingSiteNavbar: React.FC = () => {

@@ -1,8 +1,8 @@
 export default interface AuthAction {
-  type: 'AuthSetJwt';
+  type: 'AUTH_SET_JWT';
 }
 
 export interface AuthSetJwtAction extends AuthAction {
-  type: 'AuthSetJwt';
+  type: 'AUTH_SET_JWT';
   jwt: string;
 }

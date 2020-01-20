@@ -1,4 +1,4 @@
-import OrgModel from '../../models/OrgModel';
+import OrgModel from '../../models/orgs/OrgModel';
 import { LoadingStatus } from '../util/LoadingStatus';
 
 export default interface OrgsState {
