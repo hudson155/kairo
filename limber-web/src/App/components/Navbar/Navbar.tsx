@@ -1,14 +1,11 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import State from '../../../state';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
   color: string;
   left?: ReactNode;
   right?: ReactNode;
-  dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
 const AppPageHeader: React.FC<Props> = (props: Props) => {
