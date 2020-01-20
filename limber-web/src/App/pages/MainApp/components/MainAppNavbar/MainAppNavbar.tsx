@@ -3,14 +3,11 @@ import { connect } from 'react-redux';
 import State from '../../../../../state';
 import HeaderLink from '../../../../components/Navbar/components/HeaderLink/HeaderLink';
 import HeaderLinkGroup from '../../../../components/Navbar/components/HeaderLinkGroup/HeaderLinkGroup';
-import { AnyAction } from 'redux';
 import HeaderText from '../../../../components/Navbar/components/HeaderText/HeaderText';
 import Navbar from '../../../../components/Navbar/Navbar';
-import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
   name?: string;
-  dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
 const MainAppNavbar: React.FC<Props> = (props: Props) => {
@@ -34,5 +31,5 @@ const MainAppNavbar: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  name: [state.user.user?.firstName, state.user.user?.lastName].filter(x => Boolean(x)).join(' '),
+  name: [state.auth.user?.firstName, state.auth.user?.lastName].filter(x => Boolean(x)).join(' '),
 }))(MainAppNavbar);

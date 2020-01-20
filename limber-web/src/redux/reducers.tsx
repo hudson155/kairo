@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import themeReducer from './theme/themeReducer';
 import userReducer from './user/userReducer';
 import authReducer from './auth/authReducer';
-import orgsReducer from './orgs/orgsReducer';
+import orgReducer from './org/orgReducer';
 
 export default combineReducers({
   auth: authReducer,
-  orgs: orgsReducer,
+  org: orgReducer,
   theme: themeReducer,
   user: userReducer,
 });

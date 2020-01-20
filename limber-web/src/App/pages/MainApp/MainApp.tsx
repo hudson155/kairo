@@ -11,6 +11,8 @@ import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
 import Footer from '../../components/Footer/Footer';
 import { ThunkDispatch } from 'redux-thunk';
 import { LoadingStatus } from '../../../redux/util/LoadingStatus';
+import UserActions from '../../../redux/user/UserActions';
+import OrgActions from '../../../redux/org/OrgActions';
 
 interface Props {
   authLoadingStatus: LoadingStatus;
@@ -21,7 +23,10 @@ const MainApp: React.FC<Props> = (props: Props) => {
   const auth0 = useAuth0();
   if (auth0.loading) return null;
 
-  props.dispatch(AuthActions.ensureSetJwt(auth0.getTokenSilently));
+  props.dispatch(AuthActions.ensureSetJwt(auth0.getTokenSilently)).then(() => {
+    props.dispatch(OrgActions.ensureLoaded());
+    props.dispatch(UserActions.ensureLoaded());
+  });
   if (props.authLoadingStatus !== 'LOADED') {
     /**
      * Don't render anything if the auth loading status is not loaded yet. Normally we wouldn't care
