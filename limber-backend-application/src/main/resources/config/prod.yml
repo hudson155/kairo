@@ -10,6 +10,8 @@ sqlDatabase:
   password:
     type: ENCRYPTED
     value: CiQA7T1W2zbXtzIDrzNXSXGZpXqYdhg6nYmkTZcIQ9rmxtg+ejMSQQCfEO6jX/DC1A6Is4HOkZGdiwRYOeoQ2X2t70zy+FI+aZ92CZ6jo6U/0FG9nt+X61Q0heCtk4UQYPuesT8dMcPz
+  connectionTimeout: 2500
+  maximumPoolSize: 10
   properties:
     # https://cloud.google.com/sql/docs/mysql/connect-app-engine
     socketFactory: com.google.cloud.sql.postgres.SocketFactory

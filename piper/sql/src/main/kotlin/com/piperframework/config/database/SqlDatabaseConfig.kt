@@ -9,5 +9,8 @@ data class SqlDatabaseConfig(
     val jdbcUrl: String,
     val username: String?,
     val password: ConfigString?,
+    val connectionTimeout: Long?,
+    val minimumIdle: Int?,
+    val maximumPoolSize: Int?,
     val properties: Map<String, String> = emptyMap()
 )

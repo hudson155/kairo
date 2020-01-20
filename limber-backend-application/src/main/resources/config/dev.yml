@@ -1,6 +1,8 @@
 sqlDatabase:
   jdbcUrl: jdbc:postgresql://localhost/limber
   username: postgres
+  connectionTimeout: 1000
+  maximumPoolSize: 2
 
 authentication:
   mechanisms:
