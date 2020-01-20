@@ -16,10 +16,9 @@ function setUser(user: UserModel): UserSetUserAction {
 const UserActions = {
   ensureLoaded(): ThunkAction<void, State, null, AnyAction> {
     return async (dispatch, getState): Promise<void> => {
-      if (getState().auth.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
+      if (getState().user.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingUser());
       const userId = getState().auth.user!!.id;
-      if (userId === undefined) return;
       const response = (await Api.users.getUser(userId))!!; // TODO: No double bang
       console.log(response);
       dispatch(setUser(response));
