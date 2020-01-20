@@ -6,7 +6,7 @@ import UserActions from '../user/UserActions';
 import jsonwebtoken from 'jsonwebtoken';
 
 function setJwt(jwt: string): AuthSetJwtAction {
-  return { type: 'AUTH_SET_JWT', jwt };
+  return { type: 'AUTH__SET_JWT', jwt };
 }
 
 const AuthActions = {

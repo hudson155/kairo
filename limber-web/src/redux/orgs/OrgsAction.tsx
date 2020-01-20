@@ -1,14 +1,14 @@
 import OrgModel from '../../models/orgs/OrgModel';
 
 export default interface OrgsAction {
-  type: 'ORGS_SET_ALL' | 'ORGS_START_LOADING';
+  type: 'ORGS__SET_ALL' | 'ORGS__START_LOADING';
 }
 
 export interface OrgsSetAllAction extends OrgsAction {
-  type: 'ORGS_SET_ALL';
+  type: 'ORGS__SET_ALL';
   orgs: Map<string, OrgModel>;
 }
 
 export interface OrgsStartLoadingAction extends OrgsAction {
-  type: 'ORGS_START_LOADING';
+  type: 'ORGS__START_LOADING';
 }

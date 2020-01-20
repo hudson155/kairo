@@ -5,11 +5,11 @@ const defaultState: OrgsState = { loadingStatus: 'NOT_LOADED_OR_LOADING', orgs: 
 
 const orgsReducer = (state: OrgsState = defaultState, abstractAction: OrgsAction): OrgsState => {
   switch (abstractAction.type) {
-    case 'ORGS_SET_ALL': {
+    case 'ORGS__SET_ALL': {
       const action = abstractAction as OrgsSetAllAction;
       return { ...state, loadingStatus: 'LOADED', orgs: action.orgs };
     }
-    case 'ORGS_START_LOADING': {
+    case 'ORGS__START_LOADING': {
       return { ...state, loadingStatus: 'LOADING' };
     }
     default:

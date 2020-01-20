@@ -6,11 +6,11 @@ import { ThunkAction } from 'redux-thunk';
 import State from '../../state';
 
 function setAll(orgs: Map<string, OrgModel>): OrgsSetAllAction {
-  return { type: 'ORGS_SET_ALL', orgs };
+  return { type: 'ORGS__SET_ALL', orgs };
 }
 
 function startLoading(): OrgsStartLoadingAction {
-  return { type: 'ORGS_START_LOADING' };
+  return { type: 'ORGS__START_LOADING' };
 }
 
 const OrgsActions = {

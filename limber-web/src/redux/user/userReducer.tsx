@@ -5,7 +5,7 @@ const defaultState: UserState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 
 const userReducer = (state: UserState = defaultState, abstractAction: UserAction): UserState => {
   switch (abstractAction.type) {
-    case 'USER_SET': {
+    case 'USER__SET': {
       const action = abstractAction as SetUserAction;
       return { ...state, user: action.user };
     }
