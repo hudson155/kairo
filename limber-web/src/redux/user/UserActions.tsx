@@ -4,7 +4,6 @@ import JwtUserModel from '../../models/user/JwtUserModel';
 import { ThunkAction } from 'redux-thunk';
 import State from '../../state';
 import { AnyAction } from 'redux';
-import jsonwebtoken from 'jsonwebtoken';
 import Api from '../../api/Api';
 
 function startLoadingUser(): UserStartLoadingUserAction {

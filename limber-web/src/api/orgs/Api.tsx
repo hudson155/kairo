@@ -1,7 +1,3 @@
-import getOrgsByMemberId from './getOrgsByMemberId';
-
-const OrgsApi = {
-  getOrgsByMemberId,
-};
+const OrgsApi = {};
 
 export default OrgsApi;
