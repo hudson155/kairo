@@ -118,7 +118,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JacksonConverter(PiperObjectMapper(prettyPrint = true))
+                converter = JacksonConverter(PiperObjectMapper(prettyPrint = true, serializeUnitToEmptyString = true))
             )
         }
     }

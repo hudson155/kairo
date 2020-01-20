@@ -1,10 +1,13 @@
 package com.piperframework.jackson.objectMapper
 
 import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.piperframework.dataConversion.conversionService.UuidConversionService
@@ -16,18 +19,25 @@ import com.piperframework.jackson.module.conversionService.ConversionServiceModu
  */
 open class PiperObjectMapper(
     jsonFactory: JsonFactory? = null,
-    prettyPrint: Boolean = false
+    prettyPrint: Boolean = false,
+    serializeUnitToEmptyString: Boolean = false
 ) : ObjectMapper(jsonFactory) {
 
     init {
-        registerKotlinModule()
+        registerKotlinModule(serializeUnitToEmptyString)
         if (prettyPrint) configurePrettyPrinting()
         ignoreUnknownProperties()
         registerDefaultModules()
     }
 
-    private fun registerKotlinModule() {
-        registerModule(KotlinModule())
+    private fun registerKotlinModule(serializeUnitToEmptyString: Boolean) {
+        val kotlinModule = KotlinModule()
+        if (serializeUnitToEmptyString) {
+            kotlinModule.addSerializer(object : StdSerializer<Unit>(Unit::class.java) {
+                override fun serialize(value: Unit, gen: JsonGenerator, provider: SerializerProvider) = Unit
+            })
+        }
+        registerModule(kotlinModule)
     }
 
     private fun configurePrettyPrinting() {
