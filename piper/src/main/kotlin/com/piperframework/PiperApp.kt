@@ -24,6 +24,7 @@ abstract class PiperApp<Context : Any>(application: Application) {
 
     private fun onStartInternal(application: Application) {
         logger.info("PiperApp starting...")
+        @Suppress("TooGenericExceptionCaught")
         try {
             check(context == null)
             context = onStart(application)
@@ -49,6 +50,7 @@ abstract class PiperApp<Context : Any>(application: Application) {
     private fun Application.shutDown() {
         val latch = CountDownLatch(1)
         thread {
+            @Suppress("MagicNumber")
             latch.await(10L, TimeUnit.SECONDS)
             environment.monitor.raise(ApplicationStopPreparing, environment)
             (environment as? ApplicationEngineEnvironment)?.stop() ?: dispose()
