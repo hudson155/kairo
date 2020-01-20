@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "REACT_APP_ROOT_URL=https://limberapp.appspot.com REACT_APP_API_URL=https://limberapp.appspot.com/api react-app-rewired build",
+    "build": "react-app-rewired build",
     "build-local": "REACT_APP_ROOT_URL=http://localhost:55100 REACT_APP_API_URL=http://localhost:55100/api react-app-rewired build && cp -r build/* ../limber-backend-application/src/main/webapp",
     "test": "react-app-rewired test --passWithNoTests",
     "typescript": "tsc",

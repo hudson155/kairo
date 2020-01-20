@@ -1,7 +1,7 @@
 kmsConfig:
-  project: limberapp
+  project: limber-main
   location: global
-  keyRing: limberapp
+  keyRing: limber
   cryptoKey: secrets
 
 sqlDatabase:
@@ -15,7 +15,7 @@ sqlDatabase:
   properties:
     # https://cloud.google.com/sql/docs/mysql/connect-app-engine
     socketFactory: com.google.cloud.sql.postgres.SocketFactory
-    cloudSqlInstance: limberapp:us-central1:limberapp-prod
+    cloudSqlInstance: limber-main:northamerica-northeast1:limber-prod
     useSSL: false
 
 authentication:
