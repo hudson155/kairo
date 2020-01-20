@@ -177,6 +177,8 @@ jobs:
     docker: [*image_node]
     environment:
       CI: false # https://github.com/facebook/create-react-app/issues/3657
+      REACT_APP_ROOT_URL: https://limber-main.appspot.com
+      REACT_APP_API_URL: https://limber-main.appspot.com/api
     working_directory: ~/limber/limber-web
     steps:
       - *checkout
@@ -197,7 +199,7 @@ jobs:
       - run: cp -r limber-web/build/* limber-backend-application/src/main/webapp
       - run: |
           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          gcloud --quiet config set project limber-main
+          gcloud --quiet config set compute/zone limber-main:northamerica-northeast1:limber-prod
       - run: ./gradlew limber-backend-application:appengineDeploy
 

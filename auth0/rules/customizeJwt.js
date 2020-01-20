@@ -1,6 +1,6 @@
 function customizeJwt(user, context, callback) {
   request.post({
-    url: 'https://limberapp.appspot.com/api/jwt-claims-request',
+    url: 'https://limber-main.appspot.com/api/jwt-claims-request',
     method: 'POST',
     headers: {
       Authorization: `Token ${configuration.accessToken}`,

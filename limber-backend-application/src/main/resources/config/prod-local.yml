@@ -1,5 +1,5 @@
 sqlDatabase:
-  jdbcUrl: jdbc:postgresql://34.68.206.182/limber
+  jdbcUrl: jdbc:postgresql://35.203.81.79/limber
   username: limber
   password:
     type: ENVIRONMENT_VARIABLE

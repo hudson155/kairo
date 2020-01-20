@@ -33,7 +33,7 @@ dependencies {
 
 appengine {
     deploy {
-        projectId = 'limberapp'
+        projectId = 'limber-main'
         version = 'GCLOUD_CONFIG'
     }
 }
