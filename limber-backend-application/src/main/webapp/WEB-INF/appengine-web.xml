@@ -5,7 +5,7 @@
     <instance-class>F1</instance-class>
     <automatic-scaling>
         <target-cpu-utilization>0.65</target-cpu-utilization>
-        <min-instances>1</min-instances>
+        <min-instances>0</min-instances>
         <max-instances>1</max-instances>
         <max-concurrent-requests>50</max-concurrent-requests>
     </automatic-scaling>
