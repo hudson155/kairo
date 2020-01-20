@@ -12,6 +12,7 @@ import Footer from '../../components/Footer/Footer';
 import { ThunkDispatch } from 'redux-thunk';
 import { LoadingStatus } from '../../../redux/util/LoadingStatus';
 import UserActions from '../../../redux/user/UserActions';
+import OrgActions from '../../../redux/org/OrgActions';
 
 interface Props {
   authLoadingStatus: LoadingStatus;
@@ -23,6 +24,7 @@ const MainApp: React.FC<Props> = (props: Props) => {
   if (auth0.loading) return null;
 
   props.dispatch(AuthActions.ensureSetJwt(auth0.getTokenSilently)).then(() => {
+    props.dispatch(OrgActions.ensureLoaded());
     props.dispatch(UserActions.ensureLoaded());
   });
   if (props.authLoadingStatus !== 'LOADED') {

@@ -9,17 +9,12 @@ const authReducer = (state: AuthState = defaultState, abstractAction: AuthAction
     case 'AUTH__SET_JWT': {
       const action = abstractAction as AuthSetJwtAction;
       const decodedJwt = jsonwebtoken.decode(action.jwt) as { [key: string]: any };
+      const orgClaim = JSON.parse(decodedJwt['https://limberapp.io/org']);
       const userClaim = JSON.parse(decodedJwt['https://limberapp.io/user']);
-      return {
-        ...state,
-        loadingStatus: 'LOADED',
-        jwt: action.jwt,
-        user: {
-          id: userClaim.id,
-          firstName: userClaim.firstName,
-          lastName: userClaim.lastName,
-        },
-      };
+      const newState: AuthState = { ...state, loadingStatus: 'LOADED', jwt: action.jwt };
+      if (orgClaim !== null) newState.org = { id: orgClaim.id, name: orgClaim.name };
+      newState.user = { id: userClaim.id, firstName: userClaim.firstName, lastName: userClaim.lastName };
+      return newState;
     }
     default:
       return state;
