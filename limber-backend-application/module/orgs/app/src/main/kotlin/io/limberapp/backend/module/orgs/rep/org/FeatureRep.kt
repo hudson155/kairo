@@ -18,8 +18,8 @@ object FeatureRep {
         val type: FeatureModel.Type
     ) : CreationRep {
         override fun validate() {
-            validate(FeatureRep.Creation::name) { shortText(allowEmpty = false) }
-            validate(FeatureRep.Creation::path) { path() }
+            validate(Creation::name) { shortText(allowEmpty = false) }
+            validate(Creation::path) { path() }
         }
     }
 
@@ -36,8 +36,8 @@ object FeatureRep {
         val path: String? = null
     ) : UpdateRep {
         override fun validate() {
-            validate(FeatureRep.Update::name) { ifPresent { shortText(allowEmpty = false) } }
-            validate(FeatureRep.Update::path) { ifPresent { path() } }
+            validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }
+            validate(Update::path) { ifPresent { path() } }
         }
     }
 }
