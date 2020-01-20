@@ -19,6 +19,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
 
@@ -31,6 +32,8 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
     private val pathPrefix: String,
     private val endpointConfig: EndpointConfig
 ) {
+
+    private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 
     inner class Handler(private val command: Command, private val principal: P?) {
 
@@ -71,6 +74,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * ApiEndpoint instance.
      */
     fun register() {
+        logger.info("  Registering ${endpointConfig.httpMethod.value} ${endpointConfig.pathTemplate}")
         application.routing {
             authenticate(optional = true) {
                 route(pathPrefix) { routeEndpoint() }

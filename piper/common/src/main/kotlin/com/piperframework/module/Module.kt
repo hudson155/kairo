@@ -1,6 +1,7 @@
 package com.piperframework.module
 
 import com.piperframework.endpoint.ApiEndpoint
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
 /**
@@ -9,6 +10,8 @@ import kotlin.reflect.KClass
  * are bound in other modules, as long as both modules are included in the same application.
  */
 abstract class Module : ModuleWithLifecycle() {
+
+    private val logger = LoggerFactory.getLogger(Module::class.java)
 
     /**
      * Endpoints are automatically wired up.
@@ -24,6 +27,7 @@ abstract class Module : ModuleWithLifecycle() {
     final override fun unconfigure() = Unit
 
     private fun configureEndpoints() {
+        logger.info("Binding ${endpoints.size} endpoints for module ${this::class.simpleName}...")
         endpoints.forEach { bind(it).asEagerSingleton() }
     }
 
