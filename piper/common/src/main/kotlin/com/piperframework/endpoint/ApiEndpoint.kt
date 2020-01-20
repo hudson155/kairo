@@ -74,7 +74,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * ApiEndpoint instance.
      */
     fun register() {
-        logger.info("  Registering ${endpointConfig.httpMethod.value} ${endpointConfig.pathTemplate}")
+        logger.info("Registering ${endpointConfig.httpMethod.value} ${endpointConfig.pathTemplate}")
         application.routing {
             authenticate(optional = true) {
                 route(pathPrefix) { routeEndpoint() }
