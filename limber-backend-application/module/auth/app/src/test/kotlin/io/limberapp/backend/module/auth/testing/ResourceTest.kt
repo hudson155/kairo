@@ -6,7 +6,7 @@ import com.piperframework.testing.MockedServices
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.service.account.AccountService
-import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.test.LimberTest
 import io.limberapp.backend.test.TestLimberApp
 

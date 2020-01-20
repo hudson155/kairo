@@ -11,9 +11,9 @@ import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestM
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
-import io.limberapp.backend.module.users.model.user.UserModel
+import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.AccountService
-import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.backend.module.users.service.account.UserService
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.UUID

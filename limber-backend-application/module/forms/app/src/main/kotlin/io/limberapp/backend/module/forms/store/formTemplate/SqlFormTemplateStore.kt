@@ -2,7 +2,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import io.limberapp.backend.module.forms.entity.FormTemplateTable
+import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.jetbrains.exposed.sql.Database

@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.testing.fixtures.user
 
-import io.limberapp.backend.module.users.rep.user.UserRep
+import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import java.time.LocalDateTime
 

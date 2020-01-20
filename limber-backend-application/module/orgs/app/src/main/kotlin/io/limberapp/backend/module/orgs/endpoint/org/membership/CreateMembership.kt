@@ -11,8 +11,8 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.orgs.mapper.api.membership.MembershipMapper
-import io.limberapp.backend.module.orgs.rep.membership.MembershipRep
+import io.limberapp.backend.module.orgs.mapper.org.MembershipMapper
+import io.limberapp.backend.module.orgs.rep.org.MembershipRep
 import io.limberapp.backend.module.orgs.service.org.MembershipService
 import java.util.UUID
 
