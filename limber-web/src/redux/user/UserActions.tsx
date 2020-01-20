@@ -1,11 +1,17 @@
 import UserModel from '../../models/user/UserModel';
-import { SetUserAction } from './UserAction';
+import { SetJwtUserAction, SetUserAction } from './UserAction';
+import JwtUserModel from '../../models/user/JwtUserModel';
 
-function set(user: UserModel): SetUserAction {
-  return { type: 'USER__SET', user };
+function setJwtUser(jwtUser: JwtUserModel): SetJwtUserAction {
+  return { type: 'USER__SET_JWT_USER', jwtUser };
+}
+
+function setUser(user: UserModel): SetUserAction {
+  return { type: 'USER__SET_USER', user };
 }
 
 const UserActions = {
-  set,
+  setJwtUser,
+  setUser,
 };
 export default UserActions;

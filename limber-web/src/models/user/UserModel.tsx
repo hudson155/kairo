@@ -1,7 +1,6 @@
-export default interface UserModel {
-  id: string;
-  firstName: string;
-  lastName: string;
+import JwtUserModel from './JwtUserModel';
+
+export default interface UserModel extends JwtUserModel {
   emailAddress?: string;
   profilePhotoUrl?: string;
 }

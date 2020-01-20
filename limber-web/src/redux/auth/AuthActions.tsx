@@ -17,7 +17,7 @@ const AuthActions = {
           dispatch(setJwt(jwt));
           const decodedJwt = jsonwebtoken.decode(jwt) as { [key: string]: any };
           const jwtUserClaim = JSON.parse(decodedJwt['https://limberapp.io/user']);
-          dispatch(UserActions.set({
+          dispatch(UserActions.setJwtUser({
             id: jwtUserClaim.id,
             firstName: jwtUserClaim.firstName,
             lastName: jwtUserClaim.lastName,
