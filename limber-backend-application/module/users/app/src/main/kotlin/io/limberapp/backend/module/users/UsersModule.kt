@@ -10,12 +10,12 @@ import io.limberapp.backend.module.users.endpoint.user.role.AddUserRole
 import io.limberapp.backend.module.users.endpoint.user.role.RemoveUserRole
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.AccountServiceImpl
-import io.limberapp.backend.module.users.service.user.UserService
-import io.limberapp.backend.module.users.service.user.UserServiceImpl
+import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.backend.module.users.service.account.UserServiceImpl
 import io.limberapp.backend.module.users.store.account.AccountStore
 import io.limberapp.backend.module.users.store.account.SqlAccountStore
-import io.limberapp.backend.module.users.store.user.SqlUserStore
-import io.limberapp.backend.module.users.store.user.UserStore
+import io.limberapp.backend.module.users.store.account.SqlUserStore
+import io.limberapp.backend.module.users.store.account.UserStore
 
 /**
  * The users module contains the basics of a user of the platform. Be careful not to overload this module with too much

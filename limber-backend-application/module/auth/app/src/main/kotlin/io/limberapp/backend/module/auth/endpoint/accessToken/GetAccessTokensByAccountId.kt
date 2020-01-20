@@ -12,7 +12,7 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.mapper.api.accessToken.AccessTokenMapper
+import io.limberapp.backend.module.auth.mapper.accessToken.AccessTokenMapper
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import java.util.UUID

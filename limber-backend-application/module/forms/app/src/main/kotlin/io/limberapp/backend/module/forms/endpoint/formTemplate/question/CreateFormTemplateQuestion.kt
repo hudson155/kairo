@@ -11,7 +11,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
-import io.limberapp.backend.module.forms.mapper.api.formTemplate.FormTemplateQuestionMapper
+import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService

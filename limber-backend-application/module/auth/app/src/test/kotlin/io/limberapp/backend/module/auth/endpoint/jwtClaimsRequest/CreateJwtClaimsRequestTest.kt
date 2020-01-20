@@ -9,9 +9,9 @@ import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
-import io.limberapp.backend.module.users.model.user.UserModel
+import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.AccountService
-import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.backend.module.users.service.account.UserService
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

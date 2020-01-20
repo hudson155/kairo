@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.store.account
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.users.entity.user.AccountTable
+import io.limberapp.backend.module.users.entity.account.AccountTable
 import io.limberapp.backend.module.users.model.account.AccountModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow

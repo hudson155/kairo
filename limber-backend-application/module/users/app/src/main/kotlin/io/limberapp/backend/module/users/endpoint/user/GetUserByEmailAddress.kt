@@ -11,9 +11,9 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.exception.notFound.UserNotFound
-import io.limberapp.backend.module.users.mapper.api.user.UserMapper
-import io.limberapp.backend.module.users.rep.user.UserRep
-import io.limberapp.backend.module.users.service.user.UserService
+import io.limberapp.backend.module.users.mapper.account.UserMapper
+import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.backend.module.users.service.account.UserService
 
 /**
  * Returns a single user with the given email address.
