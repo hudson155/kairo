@@ -34,5 +34,5 @@ const MainAppNavbar: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  name: [state.user.user?.firstName, state.user.user?.lastName].filter(x => x !== undefined).join(' '),
+  name: [state.user.user?.firstName, state.user.user?.lastName].filter(x => Boolean(x)).join(' '),
 }))(MainAppNavbar);
