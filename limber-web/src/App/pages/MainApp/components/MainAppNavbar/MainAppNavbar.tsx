@@ -31,5 +31,5 @@ const MainAppNavbar: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  name: [state.user.jwtUser?.firstName, state.user.jwtUser?.lastName].filter(x => Boolean(x)).join(' '),
+  name: [state.auth.user?.firstName, state.auth.user?.lastName].filter(x => Boolean(x)).join(' '),
 }))(MainAppNavbar);

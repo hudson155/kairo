@@ -2,8 +2,6 @@ import { AuthSetJwtAction } from './AuthAction';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import State from '../../state';
-import UserActions from '../user/UserActions';
-import jsonwebtoken from 'jsonwebtoken';
 
 function setJwt(jwt: string): AuthSetJwtAction {
   return { type: 'AUTH__SET_JWT', jwt };
@@ -15,13 +13,6 @@ const AuthActions = {
       if (getState().auth.loadingStatus === 'NOT_LOADED_OR_LOADING') {
         const jwt: string = await getJwt();
         dispatch(setJwt(jwt));
-        const decodedJwt = jsonwebtoken.decode(jwt) as { [key: string]: any };
-        const jwtUserClaim = JSON.parse(decodedJwt['https://limberapp.io/user']);
-        dispatch(UserActions.setJwtUser({
-          id: jwtUserClaim.id,
-          firstName: jwtUserClaim.firstName,
-          lastName: jwtUserClaim.lastName,
-        }));
       }
     };
   },
