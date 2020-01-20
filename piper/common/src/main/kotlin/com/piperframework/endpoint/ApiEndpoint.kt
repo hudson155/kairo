@@ -88,6 +88,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
                 val command = determineCommand(call)
                 val principal = call.authentication.principal as? P
                 val result = Handler(command, principal).handle()
+                check(result !is Unit)
                 call.respond(result)
             }
         }
