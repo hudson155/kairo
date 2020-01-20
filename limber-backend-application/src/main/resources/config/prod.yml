@@ -9,7 +9,7 @@ sqlDatabase:
   username: limber
   password:
     type: ENCRYPTED
-    value: CiQA7T1W2zbXtzIDrzNXSXGZpXqYdhg6nYmkTZcIQ9rmxtg+ejMSQQCfEO6jX/DC1A6Is4HOkZGdiwRYOeoQ2X2t70zy+FI+aZ92CZ6jo6U/0FG9nt+X61Q0heCtk4UQYPuesT8dMcPz
+    value: CiQA06vbeIEEpB4fagiXm1yZhdpiKI6ift932S+fap8Mvsf7Q1ASQQDbebrMAypLHIDJSHAhp16pMw5/JKR2lvO0bhX7Ux6h2Jv9UiP9b9fA51Gr7RABpOtfMywGvap2FmsIGOwqNyRM
   connectionTimeout: 2500
   maximumPoolSize: 10
   properties:
