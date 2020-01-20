@@ -9,6 +9,9 @@ fun SqlDatabaseConfig.createDataSource(): HikariDataSource {
         jdbcUrl = this@createDataSource.jdbcUrl
         this@createDataSource.username?.let { username = it }
         this@createDataSource.password?.let { password = it.value }
+        this@createDataSource.connectionTimeout?.let { connectionTimeout = it }
+        this@createDataSource.minimumIdle?.let { minimumIdle = it }
+        this@createDataSource.maximumPoolSize?.let { maximumPoolSize = it }
         this@createDataSource.properties.forEach { addDataSourceProperty(it.key, it.value) }
     }
     return HikariDataSource(hikariConfig)
