@@ -72,6 +72,7 @@ ext {
             ktor_jackson                  : "io.ktor:ktor-jackson:$versions.ktor",
             ktor_server_cio               : "io.ktor:ktor-server-cio:$versions.ktor",
             ktor_server_core              : "io.ktor:ktor-server-core:$versions.ktor",
+            ktor_server_host_common       : "io.ktor:ktor-server-host-common:$versions.ktor",
             ktor_server_servlet           : "io.ktor:ktor-server-servlet:$versions.ktor",
             ktor_test                     : "io.ktor:ktor-server-test-host:$versions.ktor",
 

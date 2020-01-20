@@ -3,6 +3,7 @@ dependencies {
     api project(":piper:errors")
     api project(":piper:exception-mapping")
     implementation libs.ktor_jackson
+    implementation libs.ktor_server_host_common
 }
 
 subprojects {
