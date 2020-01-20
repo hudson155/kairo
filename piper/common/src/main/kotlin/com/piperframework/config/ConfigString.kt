@@ -5,5 +5,5 @@ data class ConfigString(
     val value: String
 ) {
 
-    enum class Type { PLAINTEXT, ENVIRONMENT_VARIABLE }
+    enum class Type { PLAINTEXT, ENVIRONMENT_VARIABLE, ENCRYPTED }
 }

@@ -24,6 +24,7 @@ dependencies {
     implementation project(":piper:sql")
     api libs.auth0_java_jwt
     api libs.auth0_jwks_rsa
+    implementation libs.gcloud_kms
     implementation libs.jackson_dataformat_yaml
     implementation libs.ktor_server_cio // Local
     implementation libs.ktor_server_servlet // Google App Engine

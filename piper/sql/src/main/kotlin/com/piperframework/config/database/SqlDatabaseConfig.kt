@@ -1,6 +1,6 @@
 package com.piperframework.config.database
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.piperframework.config.ConfigString
 
 /**
  * This class encapsulates the configuration for the connection to an SQL database.
@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 data class SqlDatabaseConfig(
     val jdbcUrl: String,
     val username: String?,
-    @JsonDeserialize(using = ConfigStringDeserializer::class)
-    val password: String?,
+    val password: ConfigString?,
     val properties: Map<String, String> = emptyMap()
 )
