@@ -2,6 +2,7 @@ package com.piperframework
 
 import com.google.inject.Guice
 import com.google.inject.Injector
+import com.google.inject.Stage
 import com.piperframework.config.Config
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exception.EndpointNotFound
@@ -47,7 +48,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
         // First, create the injector.
         val modules = getMainModules(application).plus(modules)
-        val injector = Guice.createInjector(modules)
+        val injector = Guice.createInjector(Stage.PRODUCTION, modules)
 
         // Then, configure the application.
         // Pass the injector because configuration may require services that are bound in the injector.
