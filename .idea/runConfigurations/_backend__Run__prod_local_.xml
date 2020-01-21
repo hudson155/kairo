@@ -3,7 +3,6 @@
     <ExternalSystemSettings>
       <option name="env">
         <map>
-          <entry key="GOOGLE_APPLICATION_CREDENTIALS" value="$PROJECT_DIR$/../../secure/superuser@limberapp.iam.gserviceaccount.com" />
           <entry key="LIMBERAPP_ENV" value="prod-local" />
         </map>
       </option>
@@ -30,7 +29,10 @@
           <script value="build-local" />
         </scripts>
         <node-interpreter value="project" />
-        <envs />
+        <envs>
+          <env name="REACT_APP_API_URL" value="http://localhost:8080/api" />
+          <env name="REACT_APP_ROOT_URL" value="http://localhost:8080" />
+        </envs>
       </option>
     </method>
   </configuration>

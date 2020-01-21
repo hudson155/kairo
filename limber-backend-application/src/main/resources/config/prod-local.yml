@@ -17,4 +17,4 @@ serving:
   apiPathPrefix: /api
   staticFiles:
     serve: true
-    rootPath: limber-backend-application/src/main/webapp
+    rootPath: ../../src/main/webapp
