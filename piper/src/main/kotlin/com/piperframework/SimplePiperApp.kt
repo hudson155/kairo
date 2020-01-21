@@ -23,6 +23,7 @@ import io.ktor.features.Compression
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
+import io.ktor.features.HttpsRedirect
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -70,6 +71,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
     }
 
     private fun Application.configure(injector: Injector) {
+        httpsRedirect()
         authentication(injector)
         cors()
         dataConversion()
@@ -78,6 +80,12 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         callLogging()
         contentNegotiation()
         statusPages()
+    }
+
+    protected fun Application.httpsRedirect() {
+        if (config.serving.redirectHttpToHttps) {
+            install(HttpsRedirect)
+        }
     }
 
     protected fun Application.authentication(injector: Injector) {
