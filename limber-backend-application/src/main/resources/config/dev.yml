@@ -14,6 +14,7 @@ authentication:
       domain: limber.auth0.com
 
 serving:
+  redirectHttpToHttps: false
   apiPathPrefix: /
   staticFiles:
     serve: false

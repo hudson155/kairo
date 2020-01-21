@@ -18,6 +18,7 @@ abstract class AbstractResourceTest {
 
     protected val config = object : Config {
         override val serving = ServingConfig(
+            redirectHttpToHttps = false,
             apiPathPrefix = "/",
             staticFiles = StaticFiles(false)
         )
