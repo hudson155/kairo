@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore

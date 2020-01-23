@@ -3,8 +3,8 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.accessToken
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.auth.exception.notFound.AccessTokenNotFound
+import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.accessToken.AccessTokenRepFixtures

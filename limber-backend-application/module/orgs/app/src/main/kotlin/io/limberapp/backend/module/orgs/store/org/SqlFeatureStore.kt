@@ -3,8 +3,8 @@ package io.limberapp.backend.module.orgs.store.org
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.orgs.entity.org.FeatureTable
-import io.limberapp.backend.module.orgs.exception.conflict.FeatureIsNotUnique
-import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
+import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest

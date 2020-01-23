@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.store.accessToken
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.auth.entity.accessToken.AccessTokenTable
-import io.limberapp.backend.module.auth.exception.notFound.AccessTokenNotFound
+import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow

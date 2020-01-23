@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.exception.conflict
+package io.limberapp.backend.module.orgs.exception.org
 
 import com.piperframework.exception.exception.conflict.ConflictException
 

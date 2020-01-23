@@ -3,8 +3,8 @@ package io.limberapp.backend.module.orgs.store.org
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.orgs.entity.org.MembershipTable
-import io.limberapp.backend.module.orgs.exception.conflict.UserIsAlreadyAMemberOfOrg
-import io.limberapp.backend.module.orgs.exception.notFound.MembershipNotFound
+import io.limberapp.backend.module.orgs.exception.org.UserIsAlreadyAMemberOfOrg
+import io.limberapp.backend.module.orgs.exception.org.MembershipNotFound
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow

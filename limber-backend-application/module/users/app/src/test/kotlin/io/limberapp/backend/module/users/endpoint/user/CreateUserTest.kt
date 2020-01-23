@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.endpoint.user
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.users.exception.conflict.EmailAddressAlreadyTaken
+import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
@@ -23,7 +23,9 @@ internal class CreateUserTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
             body = UserRepFixtures[1].creation().copy(emailAddress = UserRepFixtures[0].creation().emailAddress),
-            expectedException = EmailAddressAlreadyTaken(UserRepFixtures[0].creation().emailAddress)
+            expectedException = EmailAddressAlreadyTaken(
+                UserRepFixtures[0].creation().emailAddress
+            )
         )
     }
 

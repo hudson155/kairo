@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.orgs.entity.org.MembershipTable
 import io.limberapp.backend.module.orgs.entity.org.OrgTable
-import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow

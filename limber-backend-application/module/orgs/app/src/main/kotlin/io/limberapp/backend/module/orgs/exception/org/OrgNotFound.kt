@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.exception.notFound
+package io.limberapp.backend.module.orgs.exception.org
 
 import com.piperframework.exception.exception.notFound.EntityNotFound
 

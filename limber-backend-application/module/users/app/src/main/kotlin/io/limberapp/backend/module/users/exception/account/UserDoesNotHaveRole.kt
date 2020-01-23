@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.exception.conflict
+package io.limberapp.backend.module.users.exception.account
 
 import com.piperframework.exception.exception.conflict.ConflictException
 import io.limberapp.backend.authorization.principal.JwtRole

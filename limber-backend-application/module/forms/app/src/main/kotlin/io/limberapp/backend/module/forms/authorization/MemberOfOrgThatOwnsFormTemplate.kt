@@ -2,7 +2,7 @@ package io.limberapp.backend.module.forms.authorization
 
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 

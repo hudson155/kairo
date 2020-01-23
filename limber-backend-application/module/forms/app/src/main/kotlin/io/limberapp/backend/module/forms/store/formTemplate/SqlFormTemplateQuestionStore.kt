@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel

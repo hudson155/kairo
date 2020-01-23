@@ -4,7 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.endpoint.user.CreateUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
-import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures

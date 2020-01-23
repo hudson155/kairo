@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.store.org.MembershipStore
 import io.limberapp.backend.module.orgs.store.org.OrgStore

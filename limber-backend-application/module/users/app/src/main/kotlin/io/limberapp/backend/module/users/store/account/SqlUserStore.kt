@@ -5,10 +5,10 @@ import com.piperframework.store.SqlStore
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import io.limberapp.backend.module.users.entity.account.UserTable
-import io.limberapp.backend.module.users.exception.conflict.EmailAddressAlreadyTaken
-import io.limberapp.backend.module.users.exception.conflict.UserAlreadyHasRole
-import io.limberapp.backend.module.users.exception.conflict.UserDoesNotHaveRole
-import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
+import io.limberapp.backend.module.users.exception.account.UserAlreadyHasRole
+import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
+import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow
@@ -23,7 +23,10 @@ class SqlUserStore @Inject constructor(
 ) : UserStore, SqlStore(database) {
 
     override fun create(model: UserModel) = transaction<Unit> {
-        getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(model.emailAddress) }
+        getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(
+            model.emailAddress
+        )
+        }
         AccountTable.insert { it.createAccount(model) }
         UserTable.insert { it.createUser(model) }
     }

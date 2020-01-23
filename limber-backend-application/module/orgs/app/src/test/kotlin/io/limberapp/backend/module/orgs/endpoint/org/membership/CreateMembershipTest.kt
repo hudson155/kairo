@@ -3,8 +3,8 @@ package io.limberapp.backend.module.orgs.endpoint.org.membership
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.exception.conflict.UserIsAlreadyAMemberOfOrg
-import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.exception.org.UserIsAlreadyAMemberOfOrg
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest

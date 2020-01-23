@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.exception.notFound
+package io.limberapp.backend.module.users.exception.account
 
 import com.piperframework.exception.exception.notFound.EntityNotFound
 

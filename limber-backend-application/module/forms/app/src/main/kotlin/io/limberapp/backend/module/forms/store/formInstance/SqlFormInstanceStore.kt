@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
-import io.limberapp.backend.module.forms.exception.notFound.FormInstanceNotFound
+import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.ResultRow

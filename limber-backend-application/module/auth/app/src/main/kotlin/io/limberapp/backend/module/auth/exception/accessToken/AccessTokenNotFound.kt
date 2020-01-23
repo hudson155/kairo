@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.exception.notFound
+package io.limberapp.backend.module.auth.exception.accessToken
 
 import com.piperframework.exception.exception.notFound.EntityNotFound
 

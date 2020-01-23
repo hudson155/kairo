@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
 import org.junit.jupiter.api.Test
