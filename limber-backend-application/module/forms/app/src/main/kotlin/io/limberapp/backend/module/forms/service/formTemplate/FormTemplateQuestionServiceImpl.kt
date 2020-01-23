@@ -12,6 +12,11 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService by formTemplateQuestionStore {
 
+    override fun create(formTemplateId: UUID, models: List<FormTemplateQuestionModel>, rank: Int?) {
+        formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
+        formTemplateQuestionStore.create(formTemplateId, models, rank)
+    }
+
     override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) {
         formTemplateStore.get(formTemplateId) ?: throw FormTemplateNotFound()
         formTemplateQuestionStore.create(formTemplateId, model, rank)

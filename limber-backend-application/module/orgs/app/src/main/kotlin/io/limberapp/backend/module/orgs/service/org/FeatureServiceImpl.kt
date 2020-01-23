@@ -12,6 +12,11 @@ internal class FeatureServiceImpl @Inject constructor(
     private val orgStore: OrgStore
 ) : FeatureService by featureStore {
 
+    override fun create(orgId: UUID, models: List<FeatureModel>) {
+        orgStore.get(orgId) ?: throw OrgNotFound()
+        featureStore.create(orgId, models)
+    }
+
     override fun create(orgId: UUID, model: FeatureModel) {
         orgStore.get(orgId) ?: throw OrgNotFound()
         featureStore.create(orgId, model)
