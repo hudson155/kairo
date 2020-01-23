@@ -9,6 +9,10 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.UpdateFormTemplat
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.CreateFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.UpdateFormTemplateQuestion
+import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
+import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionServiceImpl
+import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
+import io.limberapp.backend.module.forms.service.formInstance.FormInstanceServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -38,6 +42,8 @@ class FormsModule : Module() {
     )
 
     override fun bindServices() {
+        bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
+        bind(FormInstanceService::class, FormInstanceServiceImpl::class)
         bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
         bind(FormTemplateService::class, FormTemplateServiceImpl::class)
     }
