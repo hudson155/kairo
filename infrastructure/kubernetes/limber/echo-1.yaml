@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: echo1
+  namespace: limber-prod
   labels:
     instance: limber-prod
 spec:
@@ -15,6 +16,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echo1
+  namespace: limber-prod
+  labels:
+    instance: limber-prod
 spec:
   selector:
     matchLabels:
