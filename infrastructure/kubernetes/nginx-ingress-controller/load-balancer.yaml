@@ -1,0 +1,32 @@
+# This is copied from the following source:
+# https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.26.1/deploy/static/provider/cloud-generic.yaml
+# but modified slightly (by adding the service.beta.kubernetes.io/do-loadbalancer-hostname annotation) to fix a problem
+# with outbound traffic destined for the service itself.
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: ingress-nginx
+  annotations:
+    # See https://www.digitalocean.com/community/questions/how-do-i-correct-a-connection-timed-out-error-during-http-01-challenge-propagation-with-cert-manager?answer=57678
+    # See https://github.com/digitalocean/digitalocean-cloud-controller-manager/blob/master/docs/controllers/services/examples/README.md#accessing-pods-over-a-managed-load-balancer-from-inside-the-cluster
+    service.beta.kubernetes.io/do-loadbalancer-hostname: echo1.limberapp.io # TODO: Change this to limberapp.io once it exists in Kubernetes.
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+spec:
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
+
+---
