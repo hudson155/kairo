@@ -1,0 +1,19 @@
+# This prod issuer is the one actually used in production. Use the staging one around to perform manual testing when
+# changing anything related to TLS certificates. We don't want to have the prod issuer make too many requests to Let's
+# Encrypt, or it will get rate limited.
+
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+  namespace: cert-manager
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: jeff.hudson@limberapp.io
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
