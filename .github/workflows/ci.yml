@@ -128,9 +128,9 @@ jobs:
         with:
           node-version: 12
       - uses: actions/cache@v1.1.0
-      with:
-        path: limber-web/node_modules
-        key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
       - run: yarn build
         working-directory: ./limber-web
         env:
