@@ -5,20 +5,6 @@ on:
     branches-ignore:
       - master
 
-apply_gradle_wrapper_cache: &apply_gradle_wrapper_cache
-  uses: actions/cache@v1.1.0
-  with:
-    path: ~/.gradle/caches
-    key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
-    restore-keys: |
-      ${{ runner.os }}-gradle-dependencies-v1-
-
-apply_gradle_dependencies_cache: &apply_gradle_dependencies_cache
-  uses: actions/cache@v1.1.0
-  with:
-    path: ~/.gradle/wrapper
-    key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-
 jobs:
 
   backend-dependencies:
@@ -28,8 +14,16 @@ jobs:
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
-      - *apply_gradle_dependencies_cache
-      - *apply_gradle_wrapper_cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
       - run: ./gradlew --no-daemon --info --stacktrace downloadDependencies
 
   backend-lint:
@@ -40,8 +34,16 @@ jobs:
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
-      - *apply_gradle_dependencies_cache
-      - *apply_gradle_wrapper_cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
       - run: bash ./gradlew --no-daemon --info --stacktrace detekt
 
   backend-test:
@@ -61,6 +63,80 @@ jobs:
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
-      - *apply_gradle_dependencies_cache
-      - *apply_gradle_wrapper_cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
       - run: bash ./gradlew --no-daemon --info --stacktrace test
+
+  web-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-v1-
+      - run: yarn install
+        working-directory: ./limber-web
+
+  web-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-v1-
+      - run: yarn lint
+        working-directory: ./limber-web
+
+  web-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-v1-
+      - run: yarn test
+        working-directory: ./limber-web
+
+  web-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - run: yarn build
+        working-directory: ./limber-web
+        env:
+          CI: false # https://github.com/facebook/create-react-app/issues/3657
+          REACT_APP_ROOT_URL: https://limber-main.appspot.com
+          REACT_APP_API_URL: https://limber-main.appspot.com/api
+      - uses: actions/upload-artifact@v1.0.0
+        with:
+          name: web-build
+          path: limber-web/build
