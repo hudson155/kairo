@@ -124,6 +124,8 @@ jobs:
             ${{ runner.os }}-node-modules-v1-
       - run: yarn test
         working-directory: ./limber-web
+        env:
+          CI: true # https://github.com/facebook/create-react-app/issues/6899
 
   web-build:
     runs-on: ubuntu-latest
