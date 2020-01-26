@@ -5,6 +5,20 @@ on:
     branches-ignore:
       - master
 
+apply_gradle_wrapper_cache: &apply_gradle_wrapper_cache
+  uses: actions/cache@v1.1.0
+  with:
+    path: ~/.gradle/caches
+    key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+    restore-keys: |
+      ${{ runner.os }}-gradle-dependencies-v1-
+
+apply_gradle_dependencies_cache: &apply_gradle_dependencies_cache
+  uses: actions/cache@v1.1.0
+  with:
+    path: ~/.gradle/wrapper
+    key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
 jobs:
 
   backend-dependencies:
@@ -14,16 +28,8 @@ jobs:
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
-      - uses: actions/cache@v1.1.0
-        with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - uses: actions/cache@v1.1.0
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v1-
+      - *apply_gradle_dependencies_cache
+      - *apply_gradle_wrapper_cache
       - run: ./gradlew --no-daemon --info --stacktrace downloadDependencies
 
   backend-lint:
@@ -34,16 +40,8 @@ jobs:
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
-      - uses: actions/cache@v1.1.0
-        with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - uses: actions/cache@v1.1.0
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v1-
+      - *apply_gradle_dependencies_cache
+      - *apply_gradle_wrapper_cache
       - run: bash ./gradlew --no-daemon --info --stacktrace detekt
 
   backend-test:
@@ -63,14 +61,6 @@ jobs:
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 1.8
-      - uses: actions/cache@v1.1.0
-        with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - uses: actions/cache@v1.1.0
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v1-
+      - *apply_gradle_dependencies_cache
+      - *apply_gradle_wrapper_cache
       - run: bash ./gradlew --no-daemon --info --stacktrace test
