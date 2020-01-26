@@ -33,8 +33,6 @@ jobs:
 
   backend-test:
     runs-on: ubuntu-latest
-    container:
-      image: openjdk:8-jdk
     services:
       postgres:
         image: postgres:11
@@ -46,6 +44,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-java@v1.3.0
 #      - restore_backend_wrapper_cache
 #      - restore_backend_dependencies_cache
       - run: bash ./gradlew --no-daemon test --info --stacktrace
