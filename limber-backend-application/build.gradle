@@ -1,11 +1,15 @@
 buildscript {
     dependencies {
-        classpath libs.appengine_gradle_plugin
+        classpath libs.shadow
     }
 }
 
-apply plugin: 'war'
-apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'io.limberapp.backend'
+version '0.0.0'
+mainClassName = 'io.limberapp.backend.ApplicationKt'
 
 sourceSets {
     main.kotlin.srcDirs = main.java.srcDirs = ['src/main/kotlin']
@@ -24,16 +28,14 @@ dependencies {
     implementation project(":piper:sql")
     api libs.auth0_java_jwt
     api libs.auth0_jwks_rsa
-    implementation libs.gcloud_kms
     implementation libs.jackson_dataformat_yaml
     implementation libs.ktor_server_cio // Local
-    implementation libs.ktor_server_servlet // Google App Engine
     implementation libs.logback_classic
 }
 
-appengine {
-    deploy {
-        projectId = 'limber-main'
-        version = 'GCLOUD_CONFIG'
+shadowJar {
+    manifest {
+        attributes 'MainClass': mainClassName
+        archiveName = 'limber-backend.jar'
     }
 }
