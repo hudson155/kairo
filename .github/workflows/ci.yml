@@ -42,8 +42,6 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v1-
       - run: bash ./gradlew --no-daemon --info --stacktrace detekt
 
   backend-test:
@@ -71,8 +69,6 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v1-
       - run: bash ./gradlew --no-daemon --info --stacktrace test
 
   web-dependencies:
@@ -103,8 +99,6 @@ jobs:
         with:
           path: limber-web/node_modules
           key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-v1-
       - run: yarn lint
         working-directory: ./limber-web
 
@@ -120,8 +114,6 @@ jobs:
         with:
           path: limber-web/node_modules
           key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-v1-
       - run: yarn test
         working-directory: ./limber-web
         env:
@@ -139,8 +131,6 @@ jobs:
       with:
         path: limber-web/node_modules
         key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node-modules-v1-
       - run: yarn build
         working-directory: ./limber-web
         env:
