@@ -43,4 +43,4 @@ jobs:
       - uses: actions/checkout@v2.0.0
 #      - restore_backend_wrapper_cache
 #      - restore_backend_dependencies_cache
-      - run: bash ./gradlew --no-daemon test
+      - run: bash ./gradlew --no-daemon test --info --stacktrace
