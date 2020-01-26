@@ -81,22 +81,36 @@ workflows:
     jobs:
 
       # Backend checks
-      - backend-dependencies
+      - backend-dependencies:
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
       - backend-lint:
           requires: [backend-dependencies]
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
       - backend-test:
           requires: [backend-dependencies]
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
 
       # Web checks
-      - web-dependencies
+      - web-dependencies:
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
       - web-lint:
           requires: [web-dependencies]
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
       - web-test:
           requires: [web-dependencies]
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
 
       # Deployment
       - web-build:
           requires: [web-test]
+          filters:
+            branches: { ignore: [feature/205-github-actions] }
       - deploy:
           requires:
             - backend-test
