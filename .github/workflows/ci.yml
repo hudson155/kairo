@@ -21,7 +21,9 @@ jobs:
       - uses: actions/cache@v1.1.0
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('gradle/dependencies.gradle', '**/build.gradle') }}
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
       - run: ./gradlew --no-daemon --info --stacktrace downloadDependencies
 
   backend-lint:
@@ -39,7 +41,9 @@ jobs:
       - uses: actions/cache@v1.1.0
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('gradle/dependencies.gradle', '**/build.gradle') }}
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
       - run: bash ./gradlew --no-daemon --info --stacktrace detekt
 
   backend-test:
@@ -66,5 +70,7 @@ jobs:
       - uses: actions/cache@v1.1.0
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('gradle/dependencies.gradle', '**/build.gradle') }}
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
       - run: bash ./gradlew --no-daemon --info --stacktrace test
