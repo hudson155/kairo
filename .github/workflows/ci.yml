@@ -1,10 +1,9 @@
-name: Android Feature Branch CI
+name: GitHub Actions
 
 on:
   push:
-    branches:
-      - '*'
-      - '!master'
+    branches-ignore:
+      - master
 
 jobs:
   lint:
