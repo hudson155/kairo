@@ -22,7 +22,7 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('gradle/dependencies.gradle', '**/build.gradle') }}
-      - run: ./gradlew --no-daemon downloadDependencies
+      - run: ./gradlew --no-daemon --info --stacktrace downloadDependencies
 
   backend-lint:
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('gradle/dependencies.gradle', '**/build.gradle') }}
-      - run: bash ./gradlew --no-daemon detekt
+      - run: bash ./gradlew --no-daemon --info --stacktrace detekt
 
   backend-test:
     runs-on: ubuntu-latest
@@ -67,4 +67,4 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('gradle/dependencies.gradle', '**/build.gradle') }}
-      - run: bash ./gradlew --no-daemon test --info --stacktrace
+      - run: bash ./gradlew --no-daemon --info --stacktrace test
