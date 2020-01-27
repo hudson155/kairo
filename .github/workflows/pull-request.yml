@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2.0.0
       - uses: actions/setup-java@v1.3.0
         with:
-          java-version: 1.8
+          java-version: 11
       - uses: actions/cache@v1.1.0
         with:
           path: ~/.gradle/wrapper
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v2.0.0
       - uses: actions/setup-java@v1.3.0
         with:
-          java-version: 1.8
+          java-version: 11
       - uses: actions/cache@v1.1.0
         with:
           path: ~/.gradle/wrapper
@@ -63,7 +63,7 @@ jobs:
       - uses: actions/checkout@v2.0.0
       - uses: actions/setup-java@v1.3.0
         with:
-          java-version: 1.8
+          java-version: 11
       - uses: actions/cache@v1.1.0
         with:
           path: ~/.gradle/wrapper
