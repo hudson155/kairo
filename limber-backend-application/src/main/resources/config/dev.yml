@@ -1,6 +1,6 @@
 sqlDatabase:
   jdbcUrl:
-    type: TEXT
+    type: PLAINTEXT
     value: jdbc:postgresql://localhost/limber
   username: postgres
   connectionTimeout: 1000

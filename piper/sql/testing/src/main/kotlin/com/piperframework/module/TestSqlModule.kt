@@ -1,9 +1,16 @@
 package com.piperframework.module
 
+import com.piperframework.config.ConfigString
 import com.piperframework.config.database.SqlDatabaseConfig
 import java.sql.Connection
 
-open class TestSqlModule : SqlModule(SqlDatabaseConfig("jdbc:postgresql://localhost/limber_test", "postgres", null)) {
+open class TestSqlModule : SqlModule(
+    SqlDatabaseConfig(
+        jdbcUrl = ConfigString(type = ConfigString.Type.PLAINTEXT, value = "jdbc:postgresql://localhost/limber_test"),
+        username = "postgres",
+        password = null
+    )
+) {
 
     fun dropDatabase() {
         val connection = dataSource.connection
