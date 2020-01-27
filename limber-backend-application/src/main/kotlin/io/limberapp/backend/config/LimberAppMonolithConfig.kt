@@ -17,7 +17,7 @@ internal data class LimberAppMonolithConfig(
 
     fun decrypt() = copy(sqlDatabase = sqlDatabase.decrypt())
 
-    private fun SqlDatabaseConfig.decrypt() = copy(password = password?.decrypt())
+    private fun SqlDatabaseConfig.decrypt() = copy(jdbcUrl = jdbcUrl.decrypt(), password = password?.decrypt())
 
     private fun ConfigString.decrypt(): ConfigString {
         return when (type) {

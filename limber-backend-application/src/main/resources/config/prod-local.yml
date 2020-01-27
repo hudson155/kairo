@@ -1,5 +1,7 @@
 sqlDatabase:
-  jdbcUrl: jdbc:postgresql://db-limber-prod-do-user-7022079-0.db.ondigitalocean.com:25060/limber?sslmode=require
+  jdbcUrl:
+    type: TEXT
+    value: jdbc:postgresql://db-limber-prod-do-user-7022079-0.db.ondigitalocean.com:25060/limber?sslmode=require
   username: limber
   password:
     type: ENVIRONMENT_VARIABLE

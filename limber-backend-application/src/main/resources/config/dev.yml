@@ -1,5 +1,7 @@
 sqlDatabase:
-  jdbcUrl: jdbc:postgresql://localhost/limber
+  jdbcUrl:
+    type: TEXT
+    value: jdbc:postgresql://localhost/limber
   username: postgres
   connectionTimeout: 1000
   maximumPoolSize: 2

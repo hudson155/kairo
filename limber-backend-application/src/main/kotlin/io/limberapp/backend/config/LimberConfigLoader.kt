@@ -15,7 +15,7 @@ internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(L
 
     override fun load(): LimberAppMonolithConfig {
         logger.info("Loading config...")
-        val envString = System.getenv(LIMBER_CONFIG) ?: "config"
+        val envString = System.getenv(LIMBER_CONFIG) ?: "prod"
         logger.info("Loading config for environment $envString...")
         val config = loadInternal("/config/$envString.yml") ?: error("Config for $LIMBER_CONFIG=$envString not found.")
         logger.info("Loaded config for environment $envString.")
