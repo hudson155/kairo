@@ -5,7 +5,7 @@ import com.piperframework.PiperConfigLoader
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import org.slf4j.LoggerFactory
 
-private const val LIMBER_ENV = "LIMBER_ENV"
+private const val LIMBER_CONFIG = "LIMBER_CONFIG"
 
 internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(LimberAppMonolithConfig::class) {
 
@@ -15,9 +15,9 @@ internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(L
 
     override fun load(): LimberAppMonolithConfig {
         logger.info("Loading config...")
-        val envString = System.getenv(LIMBER_ENV) ?: error("Environment variable $LIMBER_ENV not specified.")
+        val envString = System.getenv(LIMBER_CONFIG) ?: "config"
         logger.info("Loading config for environment $envString...")
-        val config = loadInternal("/config/$envString.yml") ?: error("Config for $LIMBER_ENV=$envString not found.")
+        val config = loadInternal("/config/$envString.yml") ?: error("Config for $LIMBER_CONFIG=$envString not found.")
         logger.info("Loaded config for environment $envString.")
         logger.info("Decrypting config for environment $envString...")
         val decryptedConfig = config.decrypt()

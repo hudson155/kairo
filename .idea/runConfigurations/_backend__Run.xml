@@ -9,7 +9,7 @@
     <option name="MAIN_CLASS_NAME" value="io.limberapp.backend.ApplicationKt" />
     <option name="WORKING_DIRECTORY" value="" />
     <envs>
-      <env name="LIMBER_ENV" value="dev" />
+      <env name="LIMBER_CONFIG" value="dev" />
     </envs>
     <method v="2">
       <option name="Make" enabled="true" />
