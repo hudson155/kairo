@@ -73,6 +73,7 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
       - run: bash ./gradlew --no-daemon --info --stacktrace limber-backend-application:shadowJar
+      - run: echo ${{ secrets.LIMBER_GITHUB_DOCKER_REPOSITORY_ACCESS_TOKEN }} | docker login docker.pkg.github.com --username hudson155 --password-stdin
       - run: docker build -t docker.pkg.github.com/hudson155/limber/limber-backend:master limber-backend-application
       - run: docker tag docker.pkg.github.com/hudson155/limber/limber-backend:master docker.pkg.github.com/hudson155/limber/limber-backend:$(git rev-parse HEAD)
       - run: docker push docker.pkg.github.com/hudson155/limber/limber-backend:master
