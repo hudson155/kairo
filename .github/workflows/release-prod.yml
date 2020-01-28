@@ -133,3 +133,8 @@ jobs:
           CI: false # https://github.com/facebook/create-react-app/issues/3657
           REACT_APP_ROOT_URL: https://limber-main.appspot.com
           REACT_APP_API_URL: https://limber-main.appspot.com/api
+      - run: echo ${{ secrets.LIMBER_GITHUB_DOCKER_REPOSITORY_ACCESS_TOKEN }} | docker login docker.pkg.github.com --username hudson155 --password-stdin
+      - run: docker build -t docker.pkg.github.com/hudson155/limber/limber-web:master limber-web
+      - run: docker tag docker.pkg.github.com/hudson155/limber/limber-web:master docker.pkg.github.com/hudson155/limber/limber-web:$(git rev-parse HEAD)
+      - run: docker push docker.pkg.github.com/hudson155/limber/limber-web:master
+      - run: docker push docker.pkg.github.com/hudson155/limber/limber-web:$(git rev-parse HEAD)
