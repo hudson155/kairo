@@ -6,6 +6,6 @@ sealed class HealthCheckModel {
 
     data class UnhealthyHealthCheckModel(
         val reason: String,
-        val e: Exception? = null
+        val e: Exception
     ) : HealthCheckModel()
 }

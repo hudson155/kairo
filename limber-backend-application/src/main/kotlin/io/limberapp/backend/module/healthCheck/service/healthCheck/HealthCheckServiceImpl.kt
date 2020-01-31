@@ -3,6 +3,7 @@ package io.limberapp.backend.module.healthCheck.service.healthCheck
 import com.google.inject.Inject
 import io.limberapp.backend.module.healthCheck.model.healthCheck.HealthCheckModel
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.transactions.transaction
 
 internal class HealthCheckServiceImpl @Inject constructor(
     private val database: Database
@@ -15,15 +16,8 @@ internal class HealthCheckServiceImpl @Inject constructor(
 
     private fun checkDatabase(): HealthCheckModel? {
         try {
-            val connection = database.connector()
-            if (connection.isClosed) {
-                return HealthCheckModel.UnhealthyHealthCheckModel("Database connection is closed.")
-            }
-            if (connection.isReadOnly) {
-                return HealthCheckModel.UnhealthyHealthCheckModel("Database connection is read-only.")
-            }
-            if (!connection.createStatement().execute("SELECT 1")) {
-                return HealthCheckModel.UnhealthyHealthCheckModel("Database health check query returned an unexpected value.")
+            transaction(database) {
+                exec("SELECT 1")
             }
         } catch (e: Exception) {
             return HealthCheckModel.UnhealthyHealthCheckModel("Database health check failed.", e)
