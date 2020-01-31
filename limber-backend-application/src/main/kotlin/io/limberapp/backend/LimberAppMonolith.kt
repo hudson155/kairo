@@ -16,6 +16,7 @@ import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.forms.FormsModule
+import io.limberapp.backend.module.healthCheck.HealthCheckModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 
@@ -47,6 +48,9 @@ internal class LimberAppMonolith(application: Application) : SimplePiperApp<Limb
     )
 
     override val modules = listOf(
+
+        HealthCheckModule(),
+
         AuthModule(),
         FormsModule(),
         OrgsModule(),
