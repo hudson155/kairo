@@ -132,8 +132,8 @@ jobs:
         working-directory: ./limber-web
         env:
           CI: false # https://github.com/facebook/create-react-app/issues/3657
-          REACT_APP_ROOT_URL: https://limber-main.appspot.com
-          REACT_APP_API_URL: https://limber-main.appspot.com/api
+          REACT_APP_ROOT_URL: https://limberapp.io
+          REACT_APP_API_URL: https://api.limberapp.io
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_DOCKER_REGISTRY_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_DOCKER_REGISTRY_ACCESS_TOKEN }} registry.digitalocean.com
       - run: docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
       - run: docker tag registry.digitalocean.com/limber/limber-web:master registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
