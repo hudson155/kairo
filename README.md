@@ -57,5 +57,5 @@ Limber is a highly dynamic application built on Ktor and React.
    
    // Yes
    val something = makeSomething() ?: return null
-   return something
+   return transform(something)
    ```
