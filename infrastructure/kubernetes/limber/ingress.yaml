@@ -19,11 +19,11 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: echo1
+              serviceName: limber-backend
               servicePort: 80
     - host: echo2.limberapp.io
       http:
         paths:
           - backend:
-              serviceName: echo2
+              serviceName: limber-web
               servicePort: 80
