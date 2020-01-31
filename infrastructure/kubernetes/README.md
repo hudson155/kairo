@@ -17,5 +17,5 @@ kubectl apply --recursive -f infrastructure/kubernetes/tls-certificates
 ## `limber`
 
 ```
-kubectl apply --recursive -f infrastructure/kubernetes/limber --prune -l instance=limber-prod
+kubectl apply --recursive -f infrastructure/kubernetes/limber --prune -l instance=limber-prod --namespace limber-prod
 ```
