@@ -8,6 +8,7 @@ import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.healthCheck.mapper.healthCheck.HealthCheckMapper
@@ -41,6 +42,7 @@ internal class HealthCheck @Inject constructor(
         val model = healthCheckService.healthCheck()
         if (model is HealthCheckModel.UnhealthyHealthCheckModel) {
             logger.error("Health check failed: ${model.reason}", model.e)
+            responseCode = HttpStatusCode.InternalServerError
         }
         return healthCheckMapper.completeRep(model)
     }
