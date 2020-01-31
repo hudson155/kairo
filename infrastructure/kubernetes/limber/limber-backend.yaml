@@ -34,5 +34,13 @@ spec:
           image: registry.digitalocean.com/limber/limber-backend:master
           ports:
             - containerPort: 55100
+          env:
+            - name: LIMBER_PROD_POSTGRES_JDBC_URL
+              value: jdbc:postgresql://db-limber-prod-do-user-7022079-0.db.ondigitalocean.com:25060/limber?sslmode=require
+            - name: LIMBER_PROD_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: limber-prod-postgres-credentials
+                  key: password
       imagePullSecrets:
         - name: do-registry
