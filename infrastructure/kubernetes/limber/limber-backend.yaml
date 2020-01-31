@@ -43,4 +43,4 @@ spec:
                   name: limber-prod-postgres-credentials
                   key: password
       imagePullSecrets:
-        - name: do-registry
+        - name: limber-prod-do-registry

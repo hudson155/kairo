@@ -35,4 +35,4 @@ spec:
           ports:
             - containerPort: 80
       imagePullSecrets:
-        - name: do-registry
+        - name: limber-prod-do-registry
