@@ -11,19 +11,19 @@ metadata:
 spec:
   tls:
     - hosts:
-        - echo1.limberapp.io
-        - echo2.limberapp.io
+        - limberapp.io
+        - api.limberapp.io
       secretName: limber-prod-tls
   rules:
-    - host: echo1.limberapp.io
-      http:
-        paths:
-          - backend:
-              serviceName: limber-backend
-              servicePort: 80
-    - host: echo2.limberapp.io
+    - host: limberapp.io
       http:
         paths:
           - backend:
               serviceName: limber-web
+              servicePort: 80
+    - host: api.limberapp.io
+      http:
+        paths:
+          - backend:
+              serviceName: limber-backend
               servicePort: 80
