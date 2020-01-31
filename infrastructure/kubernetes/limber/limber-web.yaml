@@ -30,8 +30,8 @@ spec:
         app: limber-web
     spec:
       containers:
-        - name: docker.pkg.github.com/hudson155/limber/limber-web:master
-          image: hashicorp/http-echo
+        - name: limber-web
+          image: registry.digitalocean.com/limber/limber-web:master
           ports:
             - containerPort: 80
       imagePullSecrets:

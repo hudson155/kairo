@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: limber-backend
-          image: docker.pkg.github.com/hudson155/limber/limber-backend:master
+          image: registry.digitalocean.com/limber/limber-backend:master
           ports:
             - containerPort: 55100
       imagePullSecrets:
