@@ -78,6 +78,7 @@ jobs:
       - run: docker tag registry.digitalocean.com/limber/limber-backend:master registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
       - run: docker push registry.digitalocean.com/limber/limber-backend:master
       - run: docker push registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
+      - run: kubectl set image deployment/limber-backend limber-backend=registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) --namespace limber-prod
 
   web-dependencies:
     name: Web / Download Dependencies
@@ -138,3 +139,4 @@ jobs:
       - run: docker tag registry.digitalocean.com/limber/limber-web:master registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
       - run: docker push registry.digitalocean.com/limber/limber-web:master
       - run: docker push registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
+      - run: kubectl set image deployment/limber-web limber-web=registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) --namespace limber-prod
