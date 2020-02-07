@@ -1,6 +1,5 @@
 dependencies {
     api project(":piper:common")
-    implementation libs.gcloud_postgres_socket_factory
     api libs.exposed
     api libs.flyway
     api libs.hikari

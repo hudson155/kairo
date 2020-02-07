@@ -1,0 +1,167 @@
+name: Pull Request
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+
+  backend-dependencies:
+    name: Backend / Download Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-java@v1.3.0
+        with:
+          java-version: 11
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-dependencies-v1-
+      - run: ./gradlew --no-daemon --info --stacktrace downloadDependencies
+
+  backend-lint:
+    name: Backend / Run Linter
+    runs-on: ubuntu-latest
+    needs: backend-dependencies
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-java@v1.3.0
+        with:
+          java-version: 11
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+      - run: bash ./gradlew --no-daemon --info --stacktrace detekt
+
+  backend-test:
+    name: Backend / Run Tests
+    runs-on: ubuntu-latest
+    needs: backend-dependencies
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: limber_test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-java@v1.3.0
+        with:
+          java-version: 11
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+      - run: bash ./gradlew --no-daemon --info --stacktrace test
+
+  backend-build:
+    name: Backend / Build
+    runs-on: ubuntu-latest
+    needs: backend-dependencies
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-java@v1.3.0
+        with:
+          java-version: 11
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v1.1.0
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+      - run: bash ./gradlew --no-daemon --info --stacktrace limber-backend-application:shadowJar
+      - run: docker build -t registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) limber-backend-application
+
+  web-dependencies:
+    name: Web / Download Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-v1-
+      - run: yarn install
+        working-directory: ./limber-web
+
+  web-lint:
+    name: Web / Run Linter
+    runs-on: ubuntu-latest
+    needs: web-dependencies
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn lint
+        working-directory: ./limber-web
+
+  web-test:
+    name: Web / Run Tests
+    runs-on: ubuntu-latest
+    needs: web-dependencies
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn test
+        working-directory: ./limber-web
+        env:
+          CI: true # https://github.com/facebook/create-react-app/issues/6899
+
+  web-build:
+    name: Web / Build
+    runs-on: ubuntu-latest
+    needs: web-dependencies
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - uses: actions/setup-node@v1.2.0
+        with:
+          node-version: 12
+      - uses: actions/cache@v1.1.0
+        with:
+          path: limber-web/node_modules
+          key: ${{ runner.os }}-node-modules-v1-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn build
+        working-directory: ./limber-web
+        env:
+          CI: false # https://github.com/facebook/create-react-app/issues/3657
+          REACT_APP_ROOT_URL: https://limberapp.io
+          REACT_APP_API_URL: https://api.limberapp.io
+      - run: docker build -t registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) limber-web

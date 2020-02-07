@@ -4,8 +4,7 @@ import io.ktor.application.Application
 import io.ktor.server.cio.EngineMain
 
 /**
- * Main entry point to run the application locally. Google App Engine does not use EngineMain, which is from
- * ktor_server_cio.
+ * Main entry point to run the application locally.
  */
 internal fun main(args: Array<String>) = EngineMain.main(args)
 

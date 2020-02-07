@@ -24,11 +24,6 @@ import io.limberapp.backend.module.orgs.store.org.SqlFeatureStore
 import io.limberapp.backend.module.orgs.store.org.SqlMembershipStore
 import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 
-/**
- * The orgs module contains the basics of a client/tenant/organization. Be careful not to overload this module with too
- * much information about an org. Technically, almost everything could be related back to the org and you could make an
- * argument to put it in this module, but the intention is to keep this module as slim as possible.
- */
 class OrgsModule : Module() {
 
     override val endpoints = listOf(

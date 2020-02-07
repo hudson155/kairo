@@ -13,6 +13,7 @@ import io.ktor.auth.Principal
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
 import io.ktor.features.conversionService
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -39,18 +40,20 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
 
         private var authorized = false
 
-        internal suspend fun handle(): ResponseType {
+        internal suspend fun handle(): Pair<HttpStatusCode?, ResponseType> {
             val result = handle(command)
             check(authorized) {
                 "Every endpoint needs to implement authorization. ${this@ApiEndpoint::class.simpleName} does not."
             }
-            return result
+            return Pair(responseCode, result)
         }
 
         fun PiperAuthorization<P>.authorize() {
             if (!authorize(principal)) throw ForbiddenException()
             authorized = true
         }
+
+        var responseCode: HttpStatusCode? = null
     }
 
     /**
@@ -88,7 +91,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
                 val command = determineCommand(call)
                 val principal = call.authentication.principal as? P
                 val result = Handler(command, principal).handle()
-                call.respond(result)
+                call.respond(result.first ?: HttpStatusCode.OK, result.second)
             }
         }
     }

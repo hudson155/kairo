@@ -10,7 +10,7 @@ metadata:
   annotations:
     # See https://www.digitalocean.com/community/questions/how-do-i-correct-a-connection-timed-out-error-during-http-01-challenge-propagation-with-cert-manager?answer=57678
     # See https://github.com/digitalocean/digitalocean-cloud-controller-manager/blob/master/docs/controllers/services/examples/README.md#accessing-pods-over-a-managed-load-balancer-from-inside-the-cluster
-    service.beta.kubernetes.io/do-loadbalancer-hostname: echo1.limberapp.io # TODO: Change this to limberapp.io once it exists in Kubernetes.
+    service.beta.kubernetes.io/do-loadbalancer-hostname: limberapp.io
   namespace: ingress-nginx
   labels:
     app.kubernetes.io/name: ingress-nginx

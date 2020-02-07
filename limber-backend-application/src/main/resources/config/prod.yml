@@ -1,22 +1,13 @@
-kmsConfig:
-  project: limber-main
-  location: global
-  keyRing: limber
-  cryptoKey: secrets
-
 sqlDatabase:
-  jdbcUrl: jdbc:postgresql:///limber
+  jdbcUrl:
+    type: ENVIRONMENT_VARIABLE
+    value: LIMBER_PROD_POSTGRES_JDBC_URL
   username: limber
   password:
-    type: ENCRYPTED
-    value: CiQA06vbeIEEpB4fagiXm1yZhdpiKI6ift932S+fap8Mvsf7Q1ASQQDbebrMAypLHIDJSHAhp16pMw5/JKR2lvO0bhX7Ux6h2Jv9UiP9b9fA51Gr7RABpOtfMywGvap2FmsIGOwqNyRM
+    type: ENVIRONMENT_VARIABLE
+    value: LIMBER_PROD_POSTGRES_PASSWORD
   connectionTimeout: 2500
   maximumPoolSize: 10
-  properties:
-    # https://cloud.google.com/sql/docs/mysql/connect-app-engine
-    socketFactory: com.google.cloud.sql.postgres.SocketFactory
-    cloudSqlInstance: limber-main:northamerica-northeast1:limber-prod
-    useSSL: false
 
 authentication:
   mechanisms:
@@ -25,8 +16,7 @@ authentication:
       domain: limber.auth0.com
 
 serving:
-  redirectHttpToHttps: true
-  apiPathPrefix: /api
+  redirectHttpToHttps: false
+  apiPathPrefix: /
   staticFiles:
-    serve: true
-    rootPath: .
+    serve: false
