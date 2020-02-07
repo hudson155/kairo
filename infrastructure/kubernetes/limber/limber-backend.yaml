@@ -39,6 +39,13 @@ items:
           containers:
             - name: limber-backend
               image: registry.digitalocean.com/limber/limber-backend:master
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 500Mi
+                limits:
+                  cpu: 250m
+                  memory: 500Mi
               ports:
                 - containerPort: 55100
               env:

@@ -39,6 +39,13 @@ items:
           containers:
             - name: limber-web
               image: registry.digitalocean.com/limber/limber-web:master
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 200Mi
+                limits:
+                  cpu: 100m
+                  memory: 200Mi
               ports:
                 - containerPort: 80
           imagePullSecrets:
