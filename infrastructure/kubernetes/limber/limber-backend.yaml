@@ -5,9 +5,9 @@ items:
     kind: Service
     metadata:
       name: limber-backend
-      namespace: limber-prod
+      namespace: limber
       labels:
-        instance: limber-prod
+        instance: limber
     spec:
       ports:
         - port: 80
@@ -18,9 +18,9 @@ items:
     kind: Deployment
     metadata:
       name: limber-backend
-      namespace: limber-prod
+      namespace: limber
       labels:
-        instance: limber-prod
+        instance: limber
     spec:
       selector:
         matchLabels:
@@ -50,4 +50,4 @@ items:
                       name: limber-prod-postgres-credentials
                       key: password
           imagePullSecrets:
-            - name: limber-prod-do-registry
+            - name: limber-do-registry

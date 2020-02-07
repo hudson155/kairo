@@ -2,9 +2,9 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: limber-ingress
-  namespace: limber-prod
+  namespace: limber
   labels:
-    instance: limber-prod
+    instance: limber
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -13,7 +13,7 @@ spec:
     - hosts:
         - limberapp.io
         - api.limberapp.io
-      secretName: limber-prod-tls
+      secretName: limber-tls
   rules:
     - host: limberapp.io
       http:
