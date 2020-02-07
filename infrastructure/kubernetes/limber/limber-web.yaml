@@ -39,6 +39,7 @@ items:
           containers:
             - name: limber-web
               image: registry.digitalocean.com/limber/limber-web:master
+              imagePullPolicy: Always
               resources:
                 requests:
                   cpu: 80m
