@@ -5,6 +5,7 @@ import io.limberapp.backend.module.healthCheck.model.healthCheck.HealthCheckMode
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.transaction
 
+@Suppress("TooGenericExceptionCaught")
 internal class HealthCheckServiceImpl @Inject constructor(
     private val database: Database
 ) : HealthCheckService {
