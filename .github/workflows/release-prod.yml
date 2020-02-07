@@ -3,7 +3,7 @@ name: Release (prod)
 on:
   push:
     branches:
-      - feature/205-github-actions
+      - master
 
 jobs:
 

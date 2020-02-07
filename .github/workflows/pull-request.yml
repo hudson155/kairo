@@ -3,7 +3,7 @@ name: Pull Request
 on:
   push:
     branches-ignore:
-      - feature/205-github-actions
+      - master
 
 jobs:
 
