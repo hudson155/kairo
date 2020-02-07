@@ -15,13 +15,13 @@ internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(L
 
     override fun load(): LimberAppMonolithConfig {
         logger.info("Loading config...")
-        val envString = System.getenv(LIMBER_CONFIG) ?: "prod"
-        logger.info("Loading config for environment $envString...")
-        val config = loadInternal("/config/$envString.yml") ?: error("Config for $LIMBER_CONFIG=$envString not found.")
-        logger.info("Loaded config for environment $envString.")
-        logger.info("Decrypting config for environment $envString...")
+        val configName = System.getenv(LIMBER_CONFIG) ?: "prod"
+        logger.info("Loading config $configName...")
+        val config = loadInternal("/config/$configName.yml") ?: error("Config $LIMBER_CONFIG=$configName not found.")
+        logger.info("Loaded config $configName.")
+        logger.info("Decrypting config $configName...")
         val decryptedConfig = config.decrypt()
-        logger.info("Decrypted config for environment $envString.")
+        logger.info("Decrypted config $configName.")
         return decryptedConfig
     }
 }
