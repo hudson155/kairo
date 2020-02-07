@@ -73,12 +73,17 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
       - run: bash ./gradlew --no-daemon --info --stacktrace limber-backend-application:shadowJar
-      - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_DOCKER_REGISTRY_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_DOCKER_REGISTRY_ACCESS_TOKEN }} registry.digitalocean.com
+      - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
       - run: docker build -t registry.digitalocean.com/limber/limber-backend:master limber-backend-application
       - run: docker tag registry.digitalocean.com/limber/limber-backend:master registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
       - run: docker push registry.digitalocean.com/limber/limber-backend:master
       - run: docker push registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
-      - run: kubectl set image deployment/limber-backend limber-backend=registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) --namespace limber-prod
+      - uses: digitalocean/action-doctl@v1.6.0
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
+        with:
+          args: kubernetes cluster kubeconfig show kubernetes-limber-prod > $GITHUB_WORKSPACE/.kubeconfig
+      - run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig set image deployment/limber-backend limber-backend=registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) --namespace limber-prod
 
   web-dependencies:
     name: Web / Download Dependencies
@@ -134,9 +139,14 @@ jobs:
           CI: false # https://github.com/facebook/create-react-app/issues/3657
           REACT_APP_ROOT_URL: https://limberapp.io
           REACT_APP_API_URL: https://api.limberapp.io
-      - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_DOCKER_REGISTRY_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_DOCKER_REGISTRY_ACCESS_TOKEN }} registry.digitalocean.com
+      - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
       - run: docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
       - run: docker tag registry.digitalocean.com/limber/limber-web:master registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
       - run: docker push registry.digitalocean.com/limber/limber-web:master
       - run: docker push registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
-      - run: kubectl set image deployment/limber-web limber-web=registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) --namespace limber-prod
+      - uses: digitalocean/action-doctl@v1.6.0
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
+        with:
+          args: kubernetes cluster kubeconfig show kubernetes-limber-prod > $GITHUB_WORKSPACE/.kubeconfig
+      - run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig set image deployment/limber-web limber-web=registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) --namespace limber-prod
