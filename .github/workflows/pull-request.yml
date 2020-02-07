@@ -92,7 +92,7 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
       - run: bash ./gradlew --no-daemon --info --stacktrace limber-backend-application:shadowJar
-      - run: docker build -t docker.pkg.github.com/hudson155/limber/limber-backend:master limber-backend-application
+      - run: docker build -t registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) limber-backend-application
 
   web-dependencies:
     name: Web / Download Dependencies
@@ -164,3 +164,4 @@ jobs:
           CI: false # https://github.com/facebook/create-react-app/issues/3657
           REACT_APP_ROOT_URL: https://limberapp.io
           REACT_APP_API_URL: https://api.limberapp.io
+      - run: docker build -t registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) limber-web
