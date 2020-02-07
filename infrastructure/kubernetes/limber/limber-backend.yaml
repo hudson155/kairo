@@ -56,5 +56,17 @@ items:
                     secretKeyRef:
                       name: limber-prod-postgres-credentials
                       key: password
+              livenessProbe:
+                httpGet:
+                  path: /health-check
+                  port: 55100
+                initialDelaySeconds: 5
+                periodSeconds: 5
+              readinessProbe:
+                httpGet:
+                  path: /health-check
+                  port: 55100
+                initialDelaySeconds: 5
+                periodSeconds: 5
           imagePullSecrets:
             - name: limber-do-registry
