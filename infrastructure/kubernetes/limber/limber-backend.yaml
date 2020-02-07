@@ -41,11 +41,11 @@ items:
               image: registry.digitalocean.com/limber/limber-backend:master
               resources:
                 requests:
-                  cpu: 250m
-                  memory: 500Mi
+                  cpu: 200m
+                  memory: 400Mi
                 limits:
-                  cpu: 250m
-                  memory: 500Mi
+                  cpu: 400m
+                  memory: 800Mi
               ports:
                 - containerPort: 55100
               env:
@@ -60,13 +60,17 @@ items:
                 httpGet:
                   path: /health-check
                   port: 55100
-                initialDelaySeconds: 5
+                initialDelaySeconds: 30
                 periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 12
               readinessProbe:
                 httpGet:
                   path: /health-check
                   port: 55100
-                initialDelaySeconds: 5
+                initialDelaySeconds: 30
                 periodSeconds: 5
+                successThreshold: 5
+                failureThreshold: 12
           imagePullSecrets:
             - name: limber-do-registry

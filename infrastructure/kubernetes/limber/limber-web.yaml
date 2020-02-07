@@ -41,11 +41,11 @@ items:
               image: registry.digitalocean.com/limber/limber-web:master
               resources:
                 requests:
-                  cpu: 100m
-                  memory: 200Mi
+                  cpu: 80m
+                  memory: 100Mi
                 limits:
-                  cpu: 100m
-                  memory: 200Mi
+                  cpu: 200m
+                  memory: 400Mi
               ports:
                 - containerPort: 80
               livenessProbe:
@@ -54,11 +54,15 @@ items:
                   port: 80
                 initialDelaySeconds: 5
                 periodSeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
               readinessProbe:
                 httpGet:
                   path: /
                   port: 80
                 initialDelaySeconds: 5
                 periodSeconds: 5
+                successThreshold: 5
+                failureThreshold: 3
           imagePullSecrets:
             - name: limber-do-registry
