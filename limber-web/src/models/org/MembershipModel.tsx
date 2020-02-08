@@ -1,3 +1,3 @@
-export default interface FeatureModel {
+export default interface MembershipModel {
   userId: string;
 }
