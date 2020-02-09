@@ -9,12 +9,9 @@ object FormInstanceRep {
 
     data class Creation(
         val orgId: UUID,
-        val formTemplateId: UUID,
-        val questions: List<FormInstanceQuestionRep.Creation>
+        val formTemplateId: UUID
     ) : CreationRep {
-        override fun validate() {
-            validate(Creation::questions) { subject.forEach { it.validate() } }
-        }
+        override fun validate() = Unit
     }
 
     data class Complete(

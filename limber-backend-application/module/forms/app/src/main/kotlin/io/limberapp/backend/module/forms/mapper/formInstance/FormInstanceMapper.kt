@@ -18,7 +18,7 @@ internal class FormInstanceMapper @Inject constructor(
         created = LocalDateTime.now(clock),
         orgId = rep.orgId,
         formTemplateId = rep.formTemplateId,
-        questions = rep.questions.map { formInstanceQuestionMapper.model(it) }
+        questions = emptyList()
     )
 
     fun completeRep(model: FormInstanceModel) = FormInstanceRep.Complete(
