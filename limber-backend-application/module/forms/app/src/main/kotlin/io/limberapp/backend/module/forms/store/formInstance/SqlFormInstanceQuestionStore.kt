@@ -22,10 +22,6 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
             .batchInsert(models) { model -> mapper.formInstanceQuestionEntity(this, formInstanceId, model) }
     }
 
-    override fun createOrUpdate(formInstanceId: UUID, model: FormInstanceQuestionModel) = transaction<Unit> {
-        TODO()
-    }
-
     override fun get(formInstanceId: UUID, formTemplateQuestionId: UUID) = transaction {
         val entity = FormInstanceQuestionTable
             .select {

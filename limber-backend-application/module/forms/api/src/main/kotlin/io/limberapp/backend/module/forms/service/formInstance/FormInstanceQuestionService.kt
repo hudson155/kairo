@@ -7,8 +7,6 @@ interface FormInstanceQuestionService {
 
     fun create(formInstanceId: UUID, models: List<FormInstanceQuestionModel>)
 
-    fun createOrUpdate(formInstanceId: UUID, model: FormInstanceQuestionModel)
-
     fun get(formInstanceId: UUID, formTemplateQuestionId: UUID): FormInstanceQuestionModel?
 
     fun getByFormInstanceId(formInstanceId: UUID): List<FormInstanceQuestionModel>

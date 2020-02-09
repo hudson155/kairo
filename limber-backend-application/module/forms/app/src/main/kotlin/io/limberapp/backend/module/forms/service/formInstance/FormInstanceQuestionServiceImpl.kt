@@ -17,11 +17,6 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
         formInstanceQuestionStore.create(formInstanceId, models)
     }
 
-    override fun createOrUpdate(formInstanceId: UUID, model: FormInstanceQuestionModel) {
-        formInstanceStore.get(formInstanceId) ?: throw FormInstanceNotFound()
-        formInstanceQuestionStore.createOrUpdate(formInstanceId, model)
-    }
-
     override fun delete(formInstanceId: UUID, formTemplateQuestionId: UUID) {
         formInstanceStore.get(formInstanceId) ?: throw FormInstanceNotFound()
         return formInstanceQuestionStore.delete(formInstanceId, formTemplateQuestionId)
