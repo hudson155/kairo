@@ -23,7 +23,7 @@ internal class UpdateFormTemplateQuestionTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // UpdateFormTemplate
+        // UpdateFormTemplateQuestion
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
             endpointConfig = UpdateFormTemplateQuestion.endpointConfig,

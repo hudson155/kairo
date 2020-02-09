@@ -22,7 +22,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // DeleteFormTemplate
+        // DeleteFormTemplateQuestion
         piperTest.test(
             endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
