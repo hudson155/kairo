@@ -15,5 +15,6 @@ internal class FormInstanceServiceImpl @Inject constructor(
     override fun create(model: FormInstanceModel) {
         val formTemplate = formTemplateService.get(model.formTemplateId) ?: throw FormTemplateNotFound()
         if (model.orgId != formTemplate.orgId) throw FormTemplateCannotBeInstantiatedInAnotherOrg()
+        formInstanceStore.create(model)
     }
 }
