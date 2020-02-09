@@ -22,6 +22,8 @@ import io.limberapp.backend.module.orgs.store.org.MembershipStore
 import io.limberapp.backend.module.orgs.store.org.OrgStore
 import io.limberapp.backend.module.orgs.store.org.SqlFeatureStore
 import io.limberapp.backend.module.orgs.store.org.SqlMembershipStore
+import io.limberapp.backend.module.orgs.store.org.SqlOrgMapper
+import io.limberapp.backend.module.orgs.store.org.SqlOrgMapperImpl
 import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 
 class OrgsModule : Module() {
@@ -49,6 +51,7 @@ class OrgsModule : Module() {
     }
 
     override fun bindStores() {
+        bind(SqlOrgMapper::class, SqlOrgMapperImpl::class)
         bind(FeatureStore::class, SqlFeatureStore::class)
         bind(MembershipStore::class, SqlMembershipStore::class)
         bind(OrgStore::class, SqlOrgStore::class)

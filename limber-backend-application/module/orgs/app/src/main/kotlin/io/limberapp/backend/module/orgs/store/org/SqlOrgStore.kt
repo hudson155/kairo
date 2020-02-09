@@ -7,38 +7,31 @@ import io.limberapp.backend.module.orgs.entity.org.OrgTable
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlOrgStore @Inject constructor(
     database: Database,
     private val featureStore: FeatureStore,
-    private val membershipStore: MembershipStore
+    private val membershipStore: MembershipStore,
+    private val mapper: SqlOrgMapper
 ) : OrgStore, SqlStore(database) {
 
     override fun create(model: OrgModel) = transaction {
-        OrgTable.insert { it.createOrg(model) }
+        OrgTable.insert { mapper.orgEntity(it, model) }
         featureStore.create(model.id, model.features)
         membershipStore.create(model.id, model.members)
     }
 
-    private fun InsertStatement<*>.createOrg(model: OrgModel) {
-        this[OrgTable.createdDate] = model.created
-        this[OrgTable.guid] = model.id
-        this[OrgTable.name] = model.name
-    }
-
     override fun get(orgId: UUID) = transaction {
-        return@transaction OrgTable
+        val entity = OrgTable
             .select { OrgTable.guid eq orgId }
-            .singleOrNull()
-            ?.toOrgModel()
+            .singleOrNull() ?: return@transaction null
+        return@transaction mapper.orgModel(entity)
     }
 
     override fun getByMemberId(memberId: UUID) = transaction {
@@ -52,7 +45,7 @@ internal class SqlOrgStore @Inject constructor(
                         }
                 )
             }
-            .map { it.toOrgModel() }
+            .map { mapper.orgModel(it) }
     }
 
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {
@@ -70,16 +63,5 @@ internal class SqlOrgStore @Inject constructor(
         OrgTable
             .deleteAtMostOneWhere { OrgTable.guid eq orgId }
             .ifEq(0) { throw OrgNotFound() }
-    }
-
-    private fun ResultRow.toOrgModel(): OrgModel {
-        val guid = this[OrgTable.guid]
-        return OrgModel(
-            id = guid,
-            created = this[OrgTable.createdDate],
-            name = this[OrgTable.name],
-            features = featureStore.getByOrgId(guid),
-            members = membershipStore.getByOrgId(guid)
-        )
     }
 }

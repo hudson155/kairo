@@ -7,54 +7,37 @@ import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.util.UUID
 
 internal class SqlFormInstanceStore @Inject constructor(
     database: Database,
-    private val formInstanceQuestionStore: FormInstanceQuestionStore
+    private val formInstanceQuestionStore: FormInstanceQuestionStore,
+    private val mapper: SqlFormInstanceMapper
 ) : FormInstanceStore, SqlStore(database) {
 
     override fun create(model: FormInstanceModel) = transaction {
-        FormInstanceTable.insert { it.createFormInstance(model) }
+        FormInstanceTable.insert { mapper.formInstanceEntity(it, model) }
         formInstanceQuestionStore.create(model.id, model.questions)
     }
 
-    private fun InsertStatement<*>.createFormInstance(model: FormInstanceModel) {
-        this[FormInstanceTable.createdDate] = model.created
-        this[FormInstanceTable.guid] = model.id
-        this[FormInstanceTable.formTemplateGuid] = model.formTemplateId
-    }
-
     override fun get(formInstanceId: UUID) = transaction {
-        return@transaction FormInstanceTable
+        val entity = FormInstanceTable
             .select { FormInstanceTable.guid eq formInstanceId }
-            .singleOrNull()
-            ?.toFormInstanceModel()
+            .singleOrNull() ?: return@transaction null
+        return@transaction mapper.formInstanceModel(entity)
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
         return@transaction (FormInstanceTable innerJoin FormTemplateTable)
             .select { FormTemplateTable.orgGuid eq orgId }
-            .map { it.toFormInstanceModel() }
+            .map { mapper.formInstanceModel(it) }
     }
 
     override fun delete(formInstanceId: UUID) = transaction<Unit> {
         FormInstanceTable
             .deleteAtMostOneWhere { FormInstanceTable.guid eq formInstanceId }
             .ifEq(0) { throw FormInstanceNotFound() }
-    }
-
-    private fun ResultRow.toFormInstanceModel(): FormInstanceModel {
-        val guid = this[FormInstanceTable.guid]
-        return FormInstanceModel(
-            id = guid,
-            created = this[FormInstanceTable.createdDate],
-            formTemplateId = this[FormInstanceTable.formTemplateGuid],
-            questions = formInstanceQuestionStore.getByFormInstanceId(guid)
-        )
     }
 }

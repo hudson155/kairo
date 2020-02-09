@@ -6,38 +6,31 @@ import io.limberapp.backend.module.auth.entity.accessToken.AccessTokenTable
 import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.util.UUID
 
 internal class SqlAccessTokenStore @Inject constructor(
-    database: Database
+    database: Database,
+    private val mapper: SqlAccessTokenMapper
 ) : AccessTokenStore, SqlStore(database) {
 
     override fun create(model: AccessTokenModel) = transaction<Unit> {
-        AccessTokenTable.insert { it.createAccessToken(model) }
-    }
-
-    private fun InsertStatement<*>.createAccessToken(model: AccessTokenModel) {
-        this[AccessTokenTable.createdDate] = model.created
-        this[AccessTokenTable.guid] = model.id
-        this[AccessTokenTable.accountGuid] = model.userId
-        this[AccessTokenTable.token] = model.token
+        AccessTokenTable.insert { mapper.accesstokenEntity(it, model) }
     }
 
     override fun getByToken(token: String) = transaction {
-        return@transaction AccessTokenTable
+        val entity = AccessTokenTable
             .select { AccessTokenTable.token eq token }
-            .singleOrNull()?.toAccessTokenModel()
+            .singleOrNull() ?: return@transaction null
+        return@transaction mapper.accessTokenModel(entity)
     }
 
     override fun getByAccountId(userId: UUID) = transaction {
         return@transaction AccessTokenTable
             .select { AccessTokenTable.accountGuid eq userId }
-            .map { it.toAccessTokenModel() }
+            .map { mapper.accessTokenModel(it) }
     }
 
     override fun delete(userId: UUID, accessTokenId: UUID) = transaction<Unit> {
@@ -47,11 +40,4 @@ internal class SqlAccessTokenStore @Inject constructor(
             }
             .ifEq(0) { throw AccessTokenNotFound() }
     }
-
-    private fun ResultRow.toAccessTokenModel() = AccessTokenModel(
-        id = this[AccessTokenTable.guid],
-        created = this[AccessTokenTable.createdDate],
-        userId = this[AccessTokenTable.accountGuid],
-        token = this[AccessTokenTable.token]
-    )
 }
