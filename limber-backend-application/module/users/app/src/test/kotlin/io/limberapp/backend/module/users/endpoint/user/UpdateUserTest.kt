@@ -31,10 +31,10 @@ internal class UpdateUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        var userRep = UserRepFixtures[0].complete(this, 0)
+        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures[0].creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation()
         )
 
         // UpdateUser

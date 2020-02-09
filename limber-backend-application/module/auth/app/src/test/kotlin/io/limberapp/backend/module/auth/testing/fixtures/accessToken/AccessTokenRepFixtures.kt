@@ -13,22 +13,18 @@ internal object AccessTokenRepFixtures {
         val complete: ResourceTest.(userId: UUID, idSeed: Int) -> AccessTokenRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
-
-    private val fixtures = listOf(
-        Fixture({ userId, idSeed ->
-            AccessTokenRep.OneTimeUse(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                userId = userId,
-                token = deterministicUuidGenerator[idSeed + 1].base64Encode()
-            )
-        }, { userId, idSeed ->
-            AccessTokenRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                userId = userId
-            )
-        })
-    )
+    val fixture = Fixture({ userId, idSeed ->
+        AccessTokenRep.OneTimeUse(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            userId = userId,
+            token = deterministicUuidGenerator[idSeed + 1].base64Encode()
+        )
+    }, { userId, idSeed ->
+        AccessTokenRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            userId = userId
+        )
+    })
 }

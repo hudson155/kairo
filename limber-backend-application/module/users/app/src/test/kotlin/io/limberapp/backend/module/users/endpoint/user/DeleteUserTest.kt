@@ -26,10 +26,10 @@ internal class DeleteUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userRep = UserRepFixtures[0].complete(this, 0)
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures[0].creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation()
         )
 
         // DeleteUser

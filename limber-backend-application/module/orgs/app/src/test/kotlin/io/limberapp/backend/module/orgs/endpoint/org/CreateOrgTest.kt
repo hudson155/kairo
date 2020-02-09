@@ -13,10 +13,10 @@ internal class CreateOrgTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        val orgRep = OrgRepFixtures[0].complete(this, 0)
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.test(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

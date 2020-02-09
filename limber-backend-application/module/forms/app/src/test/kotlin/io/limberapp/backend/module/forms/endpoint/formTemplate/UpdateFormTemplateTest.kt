@@ -34,10 +34,10 @@ internal class UpdateFormTemplateTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // UpdateFormTemplate

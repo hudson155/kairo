@@ -16,15 +16,17 @@ internal class CreateUserTest : ResourceTest() {
         // CreateUser
         piperTest.setup(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures[0].creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation()
         )
 
         // CreateUser
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures[1].creation().copy(emailAddress = UserRepFixtures[0].creation().emailAddress),
+            body = UserRepFixtures.billGatesFixture.creation().copy(
+                emailAddress = UserRepFixtures.jeffHudsonFixture.creation().emailAddress
+            ),
             expectedException = EmailAddressAlreadyTaken(
-                UserRepFixtures[0].creation().emailAddress
+                UserRepFixtures.jeffHudsonFixture.creation().emailAddress
             )
         )
     }
@@ -33,10 +35,10 @@ internal class CreateUserTest : ResourceTest() {
     fun happyPath() {
 
         // CreateUser
-        val userRep = UserRepFixtures[0].complete(this, 0)
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.test(
             endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures[0].creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation()
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

@@ -12,24 +12,12 @@ internal object MembershipRepFixtures {
         val complete: ResourceTest.(userId: UUID) -> MembershipRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
-
-    private val fixtures = listOf(
-        Fixture({ userId ->
-            MembershipRep.Creation(userId)
-        }, { userId ->
-            MembershipRep.Complete(
-                created = LocalDateTime.now(fixedClock),
-                userId = userId
-            )
-        }),
-        Fixture({ userId ->
-            MembershipRep.Creation(userId)
-        }, { userId ->
-            MembershipRep.Complete(
-                created = LocalDateTime.now(fixedClock),
-                userId = userId
-            )
-        })
-    )
+    val fixture = Fixture({ userId ->
+        MembershipRep.Creation(userId)
+    }, { userId ->
+        MembershipRep.Complete(
+            created = LocalDateTime.now(fixedClock),
+            userId = userId
+        )
+    })
 }

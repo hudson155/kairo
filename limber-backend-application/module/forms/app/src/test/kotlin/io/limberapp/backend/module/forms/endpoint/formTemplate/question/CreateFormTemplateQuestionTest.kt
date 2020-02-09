@@ -26,7 +26,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateId),
-            body = FormTemplateQuestionRepFixtures[0].creation(),
+            body = FormTemplateQuestionRepFixtures.textFixture.creation(),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -38,10 +38,10 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // CreateFormTemplateQuestion
@@ -49,7 +49,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
             queryParams = mapOf(CreateFormTemplateQuestion.rank to -1),
-            body = FormTemplateQuestionRepFixtures[0].creation(),
+            body = FormTemplateQuestionRepFixtures.textFixture.creation(),
             expectedException = RankOutOfBounds(-1)
         )
     }
@@ -61,10 +61,10 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // CreateFormTemplateQuestion
@@ -72,7 +72,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
             queryParams = mapOf(CreateFormTemplateQuestion.rank to FormTemplateQuestionRepFixtures.defaults.size + 1),
-            body = FormTemplateQuestionRepFixtures[0].creation(),
+            body = FormTemplateQuestionRepFixtures.textFixture.creation(),
             expectedException = RankOutOfBounds((FormTemplateQuestionRepFixtures.defaults.size + 1))
         )
     }
@@ -84,14 +84,14 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // CreateFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 4)
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
@@ -99,7 +99,7 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
             queryParams = mapOf(CreateFormTemplateQuestion.rank to 0),
-            body = FormTemplateQuestionRepFixtures[0].creation()
+            body = FormTemplateQuestionRepFixtures.textFixture.creation()
         ) {
             val actual = objectMapper.readValue<FormTemplateQuestionRep.Complete>(response.content!!)
             assertEquals(formTemplateQuestionRep, actual)
@@ -122,21 +122,21 @@ internal class CreateFormTemplateQuestionTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // CreateFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 4)
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
         )
         piperTest.test(
             endpointConfig = CreateFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            body = FormTemplateQuestionRepFixtures[0].creation()
+            body = FormTemplateQuestionRepFixtures.textFixture.creation()
         ) {
             val actual = objectMapper.readValue<FormTemplateQuestionRep.Complete>(response.content!!)
             assertEquals(formTemplateQuestionRep, actual)

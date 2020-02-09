@@ -17,8 +17,8 @@ internal class CreateAccessTokenTest : ResourceTest() {
         val accountId = UUID.randomUUID()
 
         // CreateAccessToken
-        val accessTokenRep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
-        val accessTokenOneTimeUseRep = AccessTokenRepFixtures[0].oneTimeUse(this, accountId, 0)
+        val accessTokenRep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
+        val accessTokenOneTimeUseRep = AccessTokenRepFixtures.fixture.oneTimeUse(this, accountId, 0)
         piperTest.test(
             endpointConfig = CreateAccessToken.endpointConfig,
             pathParams = mapOf(CreateAccessToken.accountId to accountId)

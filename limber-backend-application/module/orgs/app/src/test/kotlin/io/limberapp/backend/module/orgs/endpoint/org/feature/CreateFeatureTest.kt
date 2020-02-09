@@ -26,7 +26,7 @@ internal class CreateFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgId),
-            body = FeatureRepFixtures[0].creation(),
+            body = FeatureRepFixtures.formsFixture.creation(),
             expectedException = OrgNotFound()
         )
     }
@@ -35,17 +35,17 @@ internal class CreateFeatureTest : ResourceTest() {
     fun duplicatePath() {
 
         // CreateOrg
-        val orgRep = OrgRepFixtures[0].complete(this, 0)
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // CreateFeature
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures[0].creation().copy(path = FeatureRepFixtures.default.creation().path),
+            body = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path),
             expectedException = FeatureIsNotUnique()
         )
 
@@ -63,19 +63,19 @@ internal class CreateFeatureTest : ResourceTest() {
     fun happyPath() {
 
         // CreateOrg
-        var orgRep = OrgRepFixtures[0].complete(this, 0)
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // CreateFeature
-        val featureRep = FeatureRepFixtures[0].complete(this, 2)
+        val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
             endpointConfig = CreateFeature.endpointConfig,
             pathParams = mapOf(CreateFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures[0].creation()
+            body = FeatureRepFixtures.formsFixture.creation()
         ) {
             val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)

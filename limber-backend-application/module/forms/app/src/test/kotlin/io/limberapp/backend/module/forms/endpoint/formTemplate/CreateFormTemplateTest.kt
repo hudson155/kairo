@@ -17,10 +17,10 @@ internal class CreateFormTemplateTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.test(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         ) {
             val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)

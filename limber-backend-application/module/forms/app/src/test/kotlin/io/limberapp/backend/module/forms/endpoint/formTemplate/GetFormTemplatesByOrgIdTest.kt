@@ -34,17 +34,17 @@ internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // CreateFormTemplate
-        val formTemplate0Rep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // CreateFormTemplate
-        val formTemplate1Rep = FormTemplateRepFixtures[1].complete(this, orgId, 4)
+        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, orgId, 4)
         piperTest.setup(
             endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[1].creation(orgId)
+            body = FormTemplateRepFixtures.vehicleInspectionFixture.creation(orgId)
         )
 
         // GetFormTemplatesByOrgId

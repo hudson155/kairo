@@ -34,14 +34,14 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
         val accountId = UUID.randomUUID()
 
         // CreateAccessToken
-        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
+        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         piperTest.setup(
             endpointConfig = CreateAccessToken.endpointConfig,
             pathParams = mapOf(CreateAccessToken.accountId to accountId)
         ) {}
 
         // CreateAccessToken
-        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, accountId, 2)
+        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(
             endpointConfig = CreateAccessToken.endpointConfig,
             pathParams = mapOf(CreateAccessToken.accountId to accountId)

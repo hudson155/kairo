@@ -36,35 +36,35 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreateOrg
-        var org0Rep = OrgRepFixtures[0].complete(this, 0)
+        var org0Rep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // CreateMembership
-        val membership0Rep = MembershipRepFixtures[0].complete(this, userId)
+        val membership0Rep = MembershipRepFixtures.fixture.complete(this, userId)
         org0Rep = org0Rep.copy(members = org0Rep.members.plus(membership0Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to org0Rep.id),
-            body = MembershipRepFixtures[0].creation(userId)
+            body = MembershipRepFixtures.fixture.creation(userId)
         )
 
         // CreateOrg
-        var org1Rep = OrgRepFixtures[1].complete(this, 2)
+        var org1Rep = OrgRepFixtures.discreetBulbFixture.complete(this, 2)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[1].creation()
+            body = OrgRepFixtures.discreetBulbFixture.creation()
         )
 
         // CreateMembership
-        val membership1Rep = MembershipRepFixtures[1].complete(this, userId)
+        val membership1Rep = MembershipRepFixtures.fixture.complete(this, userId)
         org1Rep = org1Rep.copy(members = org1Rep.members.plus(membership1Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to org1Rep.id),
-            body = MembershipRepFixtures[1].creation(userId)
+            body = MembershipRepFixtures.fixture.creation(userId)
         )
 
         // GetOrgsByMemberId

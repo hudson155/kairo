@@ -40,10 +40,10 @@ internal class DeleteMembershipTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         // CreateOrg
-        val orgRep = OrgRepFixtures[0].complete(this, 0)
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // DeleteMembership
@@ -74,28 +74,28 @@ internal class DeleteMembershipTest : ResourceTest() {
         val user1Id = UUID.randomUUID()
 
         // CreateOrg
-        var orgRep = OrgRepFixtures[0].complete(this, 0)
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // CreateMembership
-        val membership0Rep = MembershipRepFixtures[0].complete(this, user0Id)
+        val membership0Rep = MembershipRepFixtures.fixture.complete(this, user0Id)
         orgRep = orgRep.copy(members = orgRep.members.plus(membership0Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id),
-            body = MembershipRepFixtures[0].creation(user0Id)
+            body = MembershipRepFixtures.fixture.creation(user0Id)
         )
 
         // CreateMembership
-        val membership1Rep = MembershipRepFixtures[1].complete(this, user1Id)
+        val membership1Rep = MembershipRepFixtures.fixture.complete(this, user1Id)
         orgRep = orgRep.copy(members = orgRep.members.plus(membership1Rep))
         piperTest.setup(
             endpointConfig = CreateMembership.endpointConfig,
             pathParams = mapOf(CreateMembership.orgId to orgRep.id),
-            body = MembershipRepFixtures[1].creation(user1Id)
+            body = MembershipRepFixtures.fixture.creation(user1Id)
         )
 
         // DeleteMembership

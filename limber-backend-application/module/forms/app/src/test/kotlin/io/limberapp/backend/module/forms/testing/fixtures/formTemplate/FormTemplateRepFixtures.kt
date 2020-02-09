@@ -12,42 +12,39 @@ internal object FormTemplateRepFixtures {
         val complete: ResourceTest.(orgId: UUID, idSeed: Int) -> FormTemplateRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
+    val exampleFormFixture = Fixture({ orgId ->
+        FormTemplateRep.Creation(
+            orgId = orgId,
+            title = "Example form"
+        )
+    }, { orgId, idSeed ->
+        FormTemplateRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            orgId = orgId,
+            title = "Example form",
+            description = null,
+            questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
+                rep.complete(this, idSeed + 1 + i)
+            }
+        )
+    })
 
-    private val fixtures = listOf(
-        Fixture({ orgId ->
-            FormTemplateRep.Creation(
-                orgId = orgId,
-                title = "Example form"
-            )
-        }, { orgId, idSeed ->
-            FormTemplateRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                orgId = orgId,
-                title = "Example form",
-                description = null,
-                questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
-                    rep.complete(this, idSeed + 1 + i)
-                }
-            )
-        }),
-        Fixture({ orgId ->
-            FormTemplateRep.Creation(
-                orgId = orgId,
-                title = "Vehicle Inspection"
-            )
-        }, { orgId, idSeed ->
-            FormTemplateRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                orgId = orgId,
-                title = "Vehicle Inspection",
-                description = null,
-                questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
-                    rep.complete(this, idSeed + 1 + i)
-                }
-            )
-        })
-    )
+    val vehicleInspectionFixture = Fixture({ orgId ->
+        FormTemplateRep.Creation(
+            orgId = orgId,
+            title = "Vehicle Inspection"
+        )
+    }, { orgId, idSeed ->
+        FormTemplateRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            orgId = orgId,
+            title = "Vehicle Inspection",
+            description = null,
+            questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
+                rep.complete(this, idSeed + 1 + i)
+            }
+        )
+    })
 }
