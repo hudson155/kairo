@@ -19,6 +19,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
     override fun formInstanceEntity(insertStatement: InsertStatement<*>, model: FormInstanceModel) {
         insertStatement[FormInstanceTable.createdDate] = model.created
         insertStatement[FormInstanceTable.guid] = model.id
+        insertStatement[FormInstanceTable.orgGuid] = model.orgId
         insertStatement[FormInstanceTable.formTemplateGuid] = model.formTemplateId
     }
 
@@ -47,6 +48,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
         return FormInstanceModel(
             id = guid,
             created = resultRow[FormInstanceTable.createdDate],
+            orgId = resultRow[FormInstanceTable.orgGuid],
             formTemplateId = resultRow[FormInstanceTable.formTemplateGuid],
             questions = formInstanceQuestionStore.getByFormInstanceId(guid)
         )

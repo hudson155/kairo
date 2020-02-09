@@ -8,6 +8,7 @@ import java.util.UUID
 object FormInstanceRep {
 
     data class Creation(
+        val orgId: UUID,
         val formTemplateId: UUID,
         val questions: List<FormInstanceQuestionRep.Creation>
     ) : CreationRep {
@@ -19,6 +20,7 @@ object FormInstanceRep {
     data class Complete(
         val id: UUID,
         override val created: LocalDateTime,
+        val orgId: UUID,
         val formTemplateId: UUID,
         val questions: List<FormInstanceQuestionRep.Complete>
     ) : CompleteRep
