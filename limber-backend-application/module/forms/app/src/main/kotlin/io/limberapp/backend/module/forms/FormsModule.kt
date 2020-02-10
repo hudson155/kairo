@@ -1,18 +1,18 @@
 package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.forms.endpoint.formInstance.CreateFormInstance
+import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByOrgId
-import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByOrgId
-import io.limberapp.backend.module.forms.endpoint.formTemplate.UpdateFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.question.CreateFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PatchFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PostFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
-import io.limberapp.backend.module.forms.endpoint.formTemplate.question.UpdateFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PatchFormTemplateQuestion
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
@@ -38,20 +38,20 @@ class FormsModule : Module() {
 
     override val endpoints = listOf(
 
-        CreateFormInstance::class.java,
+        PostFormInstance::class.java,
         DeleteFormInstance::class.java,
         GetFormInstance::class.java,
         GetFormInstancesByOrgId::class.java,
 
-        CreateFormTemplate::class.java,
+        PostFormTemplate::class.java,
         DeleteFormTemplate::class.java,
         GetFormTemplate::class.java,
         GetFormTemplatesByOrgId::class.java,
-        UpdateFormTemplate::class.java,
+        PatchFormTemplate::class.java,
 
-        CreateFormTemplateQuestion::class.java,
+        PostFormTemplateQuestion::class.java,
         DeleteFormTemplateQuestion::class.java,
-        UpdateFormTemplateQuestion::class.java
+        PatchFormTemplateQuestion::class.java
     )
 
     override fun bindServices() {

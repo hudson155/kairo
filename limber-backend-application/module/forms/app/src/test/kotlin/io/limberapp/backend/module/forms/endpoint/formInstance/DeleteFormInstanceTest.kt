@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
-import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
@@ -30,17 +30,17 @@ internal class DeleteFormInstanceTest : ResourceTest() {
         // Setup
         val orgId = UUID.randomUUID()
 
-        // CreateFormTemplate
+        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
-            endpointConfig = CreateFormTemplate.endpointConfig,
+            endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
-        // CreateFormInstance
+        // PostFormInstance
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, orgId, formTemplateRep.id, 4)
         piperTest.setup(
-            endpointConfig = CreateFormInstance.endpointConfig,
+            endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(orgId, formTemplateRep.id)
         )
 

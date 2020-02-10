@@ -27,10 +27,10 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // CreateUser
+        // PostUser
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.test(
-            endpointConfig = CreateUser.endpointConfig,
+            endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation()
         ) {}
 

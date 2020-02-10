@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class GetOrgTest : ResourceTest() {
+internal class PatchOrgTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
@@ -17,10 +17,12 @@ internal class GetOrgTest : ResourceTest() {
         // Setup
         val orgId = UUID.randomUUID()
 
-        // GetOrg
+        // PatchOrg
+        val orgUpdateRep = OrgRep.Update("Standing Teeth")
         piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgId),
+            endpointConfig = PatchOrg.endpointConfig,
+            pathParams = mapOf(PatchOrg.orgId to orgId),
+            body = orgUpdateRep,
             expectedException = OrgNotFound()
         )
     }
@@ -29,16 +31,28 @@ internal class GetOrgTest : ResourceTest() {
     fun happyPath() {
 
         // PostOrg
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
+        // PatchOrg
+        val orgUpdateRep = OrgRep.Update("Standing Teeth")
+        orgRep = orgRep.copy(name = orgUpdateRep.name!!)
+        piperTest.test(
+            endpointConfig = PatchOrg.endpointConfig,
+            pathParams = mapOf(PatchOrg.orgId to orgRep.id),
+            body = orgUpdateRep
+        ) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            assertEquals(orgRep, actual)
+        }
+
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
+            pathParams = mapOf(PatchOrg.orgId to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

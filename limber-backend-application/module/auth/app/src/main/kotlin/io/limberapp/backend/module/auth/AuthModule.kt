@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.auth.endpoint.accessToken.CreateAccessToken
+import io.limberapp.backend.module.auth.endpoint.accessToken.PostAccessToken
 import io.limberapp.backend.module.auth.endpoint.accessToken.DeleteAccessToken
 import io.limberapp.backend.module.auth.endpoint.accessToken.GetAccessTokensByAccountId
-import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.CreateJwtClaimsRequest
+import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
@@ -18,9 +18,9 @@ class AuthModule : Module() {
 
     override val endpoints = listOf(
 
-        CreateJwtClaimsRequest::class.java,
+        PostJwtClaimsRequest::class.java,
 
-        CreateAccessToken::class.java,
+        PostAccessToken::class.java,
         GetAccessTokensByAccountId::class.java,
         DeleteAccessToken::class.java
     )

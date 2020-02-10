@@ -28,10 +28,10 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         // Setup
         val orgId = UUID.randomUUID()
 
-        // CreateFormTemplate
+        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
-            endpointConfig = CreateFormTemplate.endpointConfig,
+            endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 

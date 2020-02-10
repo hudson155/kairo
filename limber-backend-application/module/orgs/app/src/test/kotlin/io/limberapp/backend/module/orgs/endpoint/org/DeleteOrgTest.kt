@@ -25,10 +25,10 @@ internal class DeleteOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // CreateOrg
+        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
+            endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
@@ -35,24 +35,24 @@ internal class GetFormInstancesByOrgIdTest : ResourceTest() {
         // Setup
         val orgId = UUID.randomUUID()
 
-        // CreateFormTemplate
+        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
-            endpointConfig = CreateFormTemplate.endpointConfig,
+            endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
-        // CreateFormInstance
+        // PostFormInstance
         val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, orgId, formTemplateRep.id, 4)
         piperTest.setup(
-            endpointConfig = CreateFormInstance.endpointConfig,
+            endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(orgId, formTemplateRep.id)
         )
 
-        // CreateFormInstance
+        // PostFormInstance
         val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, orgId, formTemplateRep.id, 5)
         piperTest.setup(
-            endpointConfig = CreateFormInstance.endpointConfig,
+            endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(orgId, formTemplateRep.id)
         )
 

@@ -6,6 +6,7 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class DeleteFormTemplateQuestionTest : ResourceTest() {
+internal class PatchFormTemplateQuestionTest : ResourceTest() {
 
     @Test
     fun formTemplateDoesNotExist() {
@@ -22,13 +23,15 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // DeleteFormTemplateQuestion
+        // PatchFormTemplateQuestion
+        val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
-            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
+            endpointConfig = PatchFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
-                DeleteFormTemplateQuestion.formTemplateId to formTemplateId,
-                DeleteFormTemplateQuestion.questionId to questionId
+                PatchFormTemplateQuestion.formTemplateId to formTemplateId,
+                PatchFormTemplateQuestion.questionId to questionId
             ),
+            body = formTemplateQuestionUpdateRep,
             expectedException = FormTemplateNotFound()
         )
     }
@@ -47,13 +50,15 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
             body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
-        // DeleteFormTemplateQuestion
+        // PatchFormTemplateQuestion
+        val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
-            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
+            endpointConfig = PatchFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
-                DeleteFormTemplateQuestion.formTemplateId to formTemplateRep.id,
-                DeleteFormTemplateQuestion.questionId to questionId
+                PatchFormTemplateQuestion.formTemplateId to formTemplateRep.id,
+                PatchFormTemplateQuestion.questionId to questionId
             ),
+            body = formTemplateQuestionUpdateRep,
             expectedException = FormTemplateQuestionNotFound()
         )
     }
@@ -72,7 +77,8 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         )
 
         // PostFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
+        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture .complete(this, 4)
+                as FormTemplateTextQuestionRep.Complete
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
@@ -83,16 +89,21 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
             body = FormTemplateQuestionRepFixtures.textFixture.creation()
         )
 
-        // DeleteFormTemplateQuestion
+        // PatchFormTemplateQuestion
+        val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
+        formTemplateQuestionRep = formTemplateQuestionRep.copy(label = formTemplateQuestionUpdateRep.label!!)
         formTemplateRep = formTemplateRep.copy(
-            questions = formTemplateRep.questions.filter { it.id != formTemplateQuestionRep.id }
+            questions = formTemplateRep.questions.map {
+                if (it.id == formTemplateQuestionRep.id) formTemplateQuestionRep else it
+            }
         )
         piperTest.test(
-            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
+            endpointConfig = PatchFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
-                DeleteFormTemplateQuestion.formTemplateId to formTemplateRep.id,
-                DeleteFormTemplateQuestion.questionId to formTemplateQuestionRep.id
-            )
+                PatchFormTemplateQuestion.formTemplateId to formTemplateRep.id,
+                PatchFormTemplateQuestion.questionId to formTemplateQuestionRep.id
+            ),
+            body = formTemplateQuestionUpdateRep
         ) {}
 
         // GetFormTemplate

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.orgs.endpoint.org.membership.CreateMembership
+import io.limberapp.backend.module.orgs.endpoint.org.membership.PostMembership
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.membership.MembershipRepFixtures
@@ -35,35 +35,35 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
         // Setup
         val userId = UUID.randomUUID()
 
-        // CreateOrg
+        // PostOrg
         var org0Rep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
+            endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // CreateMembership
+        // PostMembership
         val membership0Rep = MembershipRepFixtures.fixture.complete(this, userId)
         org0Rep = org0Rep.copy(members = org0Rep.members.plus(membership0Rep))
         piperTest.setup(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to org0Rep.id),
+            endpointConfig = PostMembership.endpointConfig,
+            pathParams = mapOf(PostMembership.orgId to org0Rep.id),
             body = MembershipRepFixtures.fixture.creation(userId)
         )
 
-        // CreateOrg
+        // PostOrg
         var org1Rep = OrgRepFixtures.discreetBulbFixture.complete(this, 2)
         piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
+            endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.discreetBulbFixture.creation()
         )
 
-        // CreateMembership
+        // PostMembership
         val membership1Rep = MembershipRepFixtures.fixture.complete(this, userId)
         org1Rep = org1Rep.copy(members = org1Rep.members.plus(membership1Rep))
         piperTest.setup(
-            endpointConfig = CreateMembership.endpointConfig,
-            pathParams = mapOf(CreateMembership.orgId to org1Rep.id),
+            endpointConfig = PostMembership.endpointConfig,
+            pathParams = mapOf(PostMembership.orgId to org1Rep.id),
             body = MembershipRepFixtures.fixture.creation(userId)
         )
 

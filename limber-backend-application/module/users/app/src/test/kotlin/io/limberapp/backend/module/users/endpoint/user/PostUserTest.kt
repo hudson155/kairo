@@ -1,27 +1,33 @@
 package io.limberapp.backend.module.users.endpoint.user
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.users.exception.account.UserNotFound
+import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
 import org.junit.jupiter.api.Test
-import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class GetUserTest : ResourceTest() {
+internal class PostUserTest : ResourceTest() {
 
     @Test
-    fun doesNotExist() {
+    fun duplicateEmailAddress() {
 
-        // Setup
-        val userId = UUID.randomUUID()
+        // PostUser
+        piperTest.setup(
+            endpointConfig = PostUser.endpointConfig,
+            body = UserRepFixtures.jeffHudsonFixture.creation()
+        )
 
-        // GetUser
+        // PostUser
         piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userId),
-            expectedException = UserNotFound()
+            endpointConfig = PostUser.endpointConfig,
+            body = UserRepFixtures.billGatesFixture.creation().copy(
+                emailAddress = UserRepFixtures.jeffHudsonFixture.creation().emailAddress
+            ),
+            expectedException = EmailAddressAlreadyTaken(
+                UserRepFixtures.jeffHudsonFixture.creation().emailAddress
+            )
         )
     }
 
@@ -30,10 +36,13 @@ internal class GetUserTest : ResourceTest() {
 
         // PostUser
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
-        piperTest.setup(
+        piperTest.test(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation()
-        )
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
 
         // GetUser
         piperTest.test(

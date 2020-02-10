@@ -35,18 +35,18 @@ internal class DeleteAccessTokenTest : ResourceTest() {
         // Setup
         val accountId = UUID.randomUUID()
 
-        // CreateAccessToken
+        // PostAccessToken
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         piperTest.setup(
-            endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            endpointConfig = PostAccessToken.endpointConfig,
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         )
 
-        // CreateAccessToken
+        // PostAccessToken
         val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(
-            endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            endpointConfig = PostAccessToken.endpointConfig,
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         )
 
         // DeleteAccessToken
@@ -61,7 +61,7 @@ internal class DeleteAccessTokenTest : ResourceTest() {
         // GetAccessTokensByAccountId
         piperTest.test(
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(accessToken1Rep), actual)

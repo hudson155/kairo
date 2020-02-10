@@ -3,8 +3,9 @@ package io.limberapp.backend.module.orgs.endpoint.org.membership
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.exception.org.MembershipNotFound
+import io.limberapp.backend.module.orgs.exception.org.UserIsAlreadyAMemberOfOrg
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
+import io.limberapp.backend.module.orgs.rep.org.MembershipRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.membership.MembershipRepFixtures
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class DeleteMembershipTest : ResourceTest() {
+internal class PostMembershipTest : ResourceTest() {
 
     @Test
     fun orgDoesNotExist() {
@@ -22,44 +23,49 @@ internal class DeleteMembershipTest : ResourceTest() {
         val orgId = UUID.randomUUID()
         val userId = UUID.randomUUID()
 
-        // DeleteMembership
+        // PostMembership
         piperTest.test(
-            endpointConfig = DeleteMembership.endpointConfig,
-            pathParams = mapOf(
-                DeleteMembership.orgId to orgId,
-                DeleteMembership.memberId to userId
-            ),
+            endpointConfig = PostMembership.endpointConfig,
+            pathParams = mapOf(PostMembership.orgId to orgId),
+            body = MembershipRepFixtures.fixture.creation(userId),
             expectedException = OrgNotFound()
         )
     }
 
     @Test
-    fun membershipDoesNotExist() {
+    fun duplicate() {
 
         // Setup
         val userId = UUID.randomUUID()
 
         // PostOrg
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // DeleteMembership
+        // PostMembership
+        val membershipRep = MembershipRepFixtures.fixture.complete(this, userId)
+        orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
+        piperTest.setup(
+            endpointConfig = PostMembership.endpointConfig,
+            pathParams = mapOf(PostMembership.orgId to orgRep.id),
+            body = MembershipRepFixtures.fixture.creation(userId)
+        )
+
+        // PostMembership
         piperTest.test(
-            endpointConfig = DeleteMembership.endpointConfig,
-            pathParams = mapOf(
-                DeleteMembership.orgId to orgRep.id,
-                DeleteMembership.memberId to userId
-            ),
-            expectedException = MembershipNotFound()
+            endpointConfig = PostMembership.endpointConfig,
+            pathParams = mapOf(PostMembership.orgId to orgRep.id),
+            body = MembershipRepFixtures.fixture.creation(userId),
+            expectedException = UserIsAlreadyAMemberOfOrg()
         )
 
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -70,8 +76,7 @@ internal class DeleteMembershipTest : ResourceTest() {
     fun happyPath() {
 
         // Setup
-        val user0Id = UUID.randomUUID()
-        val user1Id = UUID.randomUUID()
+        val userId = UUID.randomUUID()
 
         // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
@@ -81,37 +86,21 @@ internal class DeleteMembershipTest : ResourceTest() {
         )
 
         // PostMembership
-        val membership0Rep = MembershipRepFixtures.fixture.complete(this, user0Id)
-        orgRep = orgRep.copy(members = orgRep.members.plus(membership0Rep))
-        piperTest.setup(
-            endpointConfig = PostMembership.endpointConfig,
-            pathParams = mapOf(PostMembership.orgId to orgRep.id),
-            body = MembershipRepFixtures.fixture.creation(user0Id)
-        )
-
-        // PostMembership
-        val membership1Rep = MembershipRepFixtures.fixture.complete(this, user1Id)
-        orgRep = orgRep.copy(members = orgRep.members.plus(membership1Rep))
-        piperTest.setup(
-            endpointConfig = PostMembership.endpointConfig,
-            pathParams = mapOf(PostMembership.orgId to orgRep.id),
-            body = MembershipRepFixtures.fixture.creation(user1Id)
-        )
-
-        // DeleteMembership
-        orgRep = orgRep.copy(members = orgRep.members.filter { it.userId != user0Id })
+        val membershipRep = MembershipRepFixtures.fixture.complete(this, userId)
+        orgRep = orgRep.copy(members = orgRep.members.plus(membershipRep))
         piperTest.test(
-            endpointConfig = DeleteMembership.endpointConfig,
-            pathParams = mapOf(
-                DeleteMembership.orgId to orgRep.id,
-                DeleteMembership.memberId to user0Id
-            )
-        ) {}
+            endpointConfig = PostMembership.endpointConfig,
+            pathParams = mapOf(PostMembership.orgId to orgRep.id),
+            body = MembershipRepFixtures.fixture.creation(userId)
+        ) {
+            val actual = objectMapper.readValue<MembershipRep.Complete>(response.content!!)
+            assertEquals(membershipRep, actual)
+        }
 
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

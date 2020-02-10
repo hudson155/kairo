@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class GetUserTest : ResourceTest() {
+internal class PatchUserTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
@@ -17,10 +17,12 @@ internal class GetUserTest : ResourceTest() {
         // Setup
         val userId = UUID.randomUUID()
 
-        // GetUser
+        // PatchUser
+        val updateRep = UserRep.Update(firstName = "Gunner")
         piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userId),
+            endpointConfig = PatchUser.endpointConfig,
+            pathParams = mapOf(PatchUser.userId to userId),
+            body = updateRep,
             expectedException = UserNotFound()
         )
     }
@@ -29,11 +31,23 @@ internal class GetUserTest : ResourceTest() {
     fun happyPath() {
 
         // PostUser
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation()
         )
+
+        // PatchUser
+        val updateRep = UserRep.Update(firstName = "Gunner")
+        userRep = userRep.copy(firstName = updateRep.firstName!!)
+        piperTest.test(
+            endpointConfig = PatchUser.endpointConfig,
+            pathParams = mapOf(PatchUser.userId to userRep.id),
+            body = updateRep
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
 
         // GetUser
         piperTest.test(

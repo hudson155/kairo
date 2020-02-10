@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 
-internal class GetFormTemplateTest : ResourceTest() {
+internal class PatchFormTemplateTest : ResourceTest() {
 
     @Test
     fun doesNotExist() {
@@ -17,10 +17,12 @@ internal class GetFormTemplateTest : ResourceTest() {
         // Setup
         val formTemplateId = UUID.randomUUID()
 
-        // GetFormTemplate
+        // PatchFormTemplate
+        val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateId),
+            endpointConfig = PatchFormTemplate.endpointConfig,
+            pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateId),
+            body = formTemplateUpdateRep,
             expectedException = FormTemplateNotFound()
         )
     }
@@ -32,11 +34,23 @@ internal class GetFormTemplateTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
+
+        // PatchFormTemplate
+        val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
+        formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
+        piperTest.test(
+            endpointConfig = PatchFormTemplate.endpointConfig,
+            pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateRep.id),
+            body = formTemplateUpdateRep
+        ) {
+            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            assertEquals(formTemplateRep, actual)
+        }
 
         // GetFormTemplate
         piperTest.test(
