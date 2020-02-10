@@ -18,11 +18,11 @@ internal class SqlOrgStore @Inject constructor(
     database: Database,
     private val featureStore: FeatureStore,
     private val membershipStore: MembershipStore,
-    private val mapper: SqlOrgMapper
+    private val sqlOrgMapper: SqlOrgMapper
 ) : OrgStore, SqlStore(database) {
 
     override fun create(model: OrgModel) = transaction {
-        OrgTable.insert { mapper.orgEntity(it, model) }
+        OrgTable.insert { sqlOrgMapper.orgEntity(it, model) }
         featureStore.create(model.id, model.features)
         membershipStore.create(model.id, model.members)
     }
@@ -31,7 +31,7 @@ internal class SqlOrgStore @Inject constructor(
         val entity = OrgTable
             .select { OrgTable.guid eq orgId }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.orgModel(entity)
+        return@transaction sqlOrgMapper.orgModel(entity)
     }
 
     override fun getByMemberId(memberId: UUID) = transaction {
@@ -45,7 +45,7 @@ internal class SqlOrgStore @Inject constructor(
                         }
                 )
             }
-            .map { mapper.orgModel(it) }
+            .map { sqlOrgMapper.orgModel(it) }
     }
 
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {

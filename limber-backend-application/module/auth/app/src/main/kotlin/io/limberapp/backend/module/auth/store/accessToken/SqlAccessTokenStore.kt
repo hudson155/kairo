@@ -13,24 +13,24 @@ import java.util.UUID
 
 internal class SqlAccessTokenStore @Inject constructor(
     database: Database,
-    private val mapper: SqlAccessTokenMapper
+    private val sqlAccessTokenMapper: SqlAccessTokenMapper
 ) : AccessTokenStore, SqlStore(database) {
 
     override fun create(model: AccessTokenModel) = transaction<Unit> {
-        AccessTokenTable.insert { mapper.accesstokenEntity(it, model) }
+        AccessTokenTable.insert { sqlAccessTokenMapper.accesstokenEntity(it, model) }
     }
 
     override fun getByToken(token: String) = transaction {
         val entity = AccessTokenTable
             .select { AccessTokenTable.token eq token }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.accessTokenModel(entity)
+        return@transaction sqlAccessTokenMapper.accessTokenModel(entity)
     }
 
     override fun getByAccountId(userId: UUID) = transaction {
         return@transaction AccessTokenTable
             .select { AccessTokenTable.accountGuid eq userId }
-            .map { mapper.accessTokenModel(it) }
+            .map { sqlAccessTokenMapper.accessTokenModel(it) }
     }
 
     override fun delete(userId: UUID, accessTokenId: UUID) = transaction<Unit> {

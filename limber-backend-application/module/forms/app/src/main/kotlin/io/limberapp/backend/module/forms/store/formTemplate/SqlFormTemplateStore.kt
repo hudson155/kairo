@@ -14,11 +14,11 @@ import java.util.UUID
 internal class SqlFormTemplateStore @Inject constructor(
     database: Database,
     private val formTemplateQuestionStore: FormTemplateQuestionStore,
-    private val mapper: SqlFormTemplateMapper
+    private val sqlFormTemplateMapper: SqlFormTemplateMapper
 ) : FormTemplateStore, SqlStore(database) {
 
     override fun create(model: FormTemplateModel) = transaction {
-        FormTemplateTable.insert { mapper.formTemplateEntity(it, model) }
+        FormTemplateTable.insert { sqlFormTemplateMapper.formTemplateEntity(it, model) }
         formTemplateQuestionStore.create(model.id, model.questions)
     }
 
@@ -26,13 +26,13 @@ internal class SqlFormTemplateStore @Inject constructor(
         val entity = FormTemplateTable
             .select { FormTemplateTable.guid eq formTemplateId }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.formTemplateModel(entity)
+        return@transaction sqlFormTemplateMapper.formTemplateModel(entity)
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
         return@transaction FormTemplateTable
             .select { FormTemplateTable.orgGuid eq orgId }
-            .map { mapper.formTemplateModel(it) }
+            .map { sqlFormTemplateMapper.formTemplateModel(it) }
     }
 
     override fun update(formTemplateId: UUID, update: FormTemplateModel.Update) = transaction {

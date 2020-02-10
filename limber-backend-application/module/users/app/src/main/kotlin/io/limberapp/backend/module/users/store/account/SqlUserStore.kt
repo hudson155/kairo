@@ -18,27 +18,27 @@ import java.util.UUID
 
 internal class SqlUserStore @Inject constructor(
     database: Database,
-    private val mapper: SqlAccountMapperImpl
+    private val sqlAccountMapper: SqlAccountMapperImpl
 ) : UserStore, SqlStore(database) {
 
     override fun create(model: UserModel) = transaction<Unit> {
         getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(model.emailAddress) }
-        AccountTable.insert { mapper.accountEntity(it, model) }
-        UserTable.insert { mapper.userEntity(it, model) }
+        AccountTable.insert { sqlAccountMapper.accountEntity(it, model) }
+        UserTable.insert { sqlAccountMapper.userEntity(it, model) }
     }
 
     override fun get(userId: UUID) = transaction {
         val entity = (UserTable innerJoin AccountTable)
             .select { AccountTable.guid eq userId }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.userModel(entity)
+        return@transaction sqlAccountMapper.userModel(entity)
     }
 
     override fun getByEmailAddress(emailAddress: String) = transaction {
         val entity = (UserTable innerJoin AccountTable)
             .select { UserTable.emailAddress eq emailAddress }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.userModel(entity)
+        return@transaction sqlAccountMapper.userModel(entity)
     }
 
     override fun update(userId: UUID, update: UserModel.Update) = transaction {

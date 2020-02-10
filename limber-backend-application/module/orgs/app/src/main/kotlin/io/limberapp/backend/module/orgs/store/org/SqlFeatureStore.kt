@@ -16,31 +16,31 @@ import java.util.UUID
 
 internal class SqlFeatureStore @Inject constructor(
     database: Database,
-    private val mapper: SqlOrgMapper
+    private val sqlOrgMapper: SqlOrgMapper
 ) : FeatureStore, SqlStore(database) {
 
     override fun create(orgId: UUID, models: List<FeatureModel>) = transaction<Unit> {
-        FeatureTable.batchInsert(models) { model -> mapper.featureEntity(this, orgId, model) }
+        FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
     }
 
     override fun create(orgId: UUID, model: FeatureModel) = transaction<Unit> {
         FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path) }
             .singleOrNull()?.let { throw FeatureIsNotUnique() }
-        FeatureTable.insert { mapper.featureEntity(it, orgId, model) }
+        FeatureTable.insert { sqlOrgMapper.featureEntity(it, orgId, model) }
     }
 
     override fun get(orgId: UUID, featureId: UUID) = transaction {
         val entity = FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.featureModel(entity)
+        return@transaction sqlOrgMapper.featureModel(entity)
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
         return@transaction FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) }
-            .map { mapper.featureModel(it) }
+            .map { sqlOrgMapper.featureModel(it) }
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {

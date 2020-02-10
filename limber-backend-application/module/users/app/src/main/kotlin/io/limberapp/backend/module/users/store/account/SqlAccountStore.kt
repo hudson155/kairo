@@ -9,13 +9,13 @@ import java.util.UUID
 
 internal class SqlAccountStore @Inject constructor(
     database: Database,
-    private val mapper: SqlAccountMapperImpl
+    private val sqlAccountMapper: SqlAccountMapperImpl
 ) : AccountStore, SqlStore(database) {
 
     override fun get(accountId: UUID) = transaction {
         val entity = AccountTable
             .select { AccountTable.guid eq accountId }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.accountModel(entity)
+        return@transaction sqlAccountMapper.accountModel(entity)
     }
 }

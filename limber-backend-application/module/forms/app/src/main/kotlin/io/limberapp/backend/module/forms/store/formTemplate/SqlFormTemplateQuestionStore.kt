@@ -20,7 +20,7 @@ import java.util.UUID
 
 internal class SqlFormTemplateQuestionStore @Inject constructor(
     database: Database,
-    private val mapper: SqlFormTemplateMapper
+    private val sqlFormTemplateMapper: SqlFormTemplateMapper
 ) : FormTemplateQuestionStore, SqlStore(database) {
 
     override fun create(
@@ -32,14 +32,15 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = models.size)
         FormTemplateQuestionTable
             .batchInsertIndexed(models) { i, model ->
-                mapper.formTemplateQuestionEntity(this, formTemplateId, model, insertionRank + i)
+                sqlFormTemplateMapper.formTemplateQuestionEntity(this, formTemplateId, model, insertionRank + i)
             }
     }
 
     override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) = transaction<Unit> {
         val insertionRank = validateInsertionRank(formTemplateId, rank)
         incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = 1)
-        FormTemplateQuestionTable.insert { mapper.formTemplateQuestionEntity(it, formTemplateId, model, insertionRank) }
+        FormTemplateQuestionTable
+            .insert { sqlFormTemplateMapper.formTemplateQuestionEntity(it, formTemplateId, model, insertionRank) }
     }
 
     private fun validateInsertionRank(formTemplateId: UUID, rank: Int?): Int {
@@ -75,14 +76,14 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
                         (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
             }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.formTemplateQuestionModel(entity)
+        return@transaction sqlFormTemplateMapper.formTemplateQuestionModel(entity)
     }
 
     override fun getByFormTemplateId(formTemplateId: UUID) = transaction {
         return@transaction FormTemplateQuestionTable
             .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
             .orderBy(FormTemplateQuestionTable.rank)
-            .map { mapper.formTemplateQuestionModel(it) }
+            .map { sqlFormTemplateMapper.formTemplateQuestionModel(it) }
     }
 
     override fun update(

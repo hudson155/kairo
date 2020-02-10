@@ -15,29 +15,29 @@ import java.util.UUID
 
 internal class SqlMembershipStore @Inject constructor(
     database: Database,
-    private val mapper: SqlOrgMapper
+    private val sqlOrgMapper: SqlOrgMapper
 ) : MembershipStore, SqlStore(database) {
 
     override fun create(orgId: UUID, models: List<MembershipModel>) = transaction<Unit> {
-        MembershipTable.batchInsert(models) { model -> mapper.membershipEntity(this, orgId, model) }
+        MembershipTable.batchInsert(models) { model -> sqlOrgMapper.membershipEntity(this, orgId, model) }
     }
 
     override fun create(orgId: UUID, model: MembershipModel) = transaction<Unit> {
         get(orgId, model.userId)?.let { throw UserIsAlreadyAMemberOfOrg() }
-        MembershipTable.insert { mapper.membershipEntity(it, orgId, model) }
+        MembershipTable.insert { sqlOrgMapper.membershipEntity(it, orgId, model) }
     }
 
     override fun get(orgId: UUID, userId: UUID) = transaction {
         val entity = MembershipTable
             .select { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) }
             .singleOrNull() ?: return@transaction null
-        return@transaction mapper.membershipModel(entity)
+        return@transaction sqlOrgMapper.membershipModel(entity)
     }
 
     override fun getByOrgId(orgId: UUID) = transaction {
         return@transaction MembershipTable
             .select { (MembershipTable.orgGuid eq orgId) }
-            .map { mapper.membershipModel(it) }
+            .map { sqlOrgMapper.membershipModel(it) }
     }
 
     override fun delete(orgId: UUID, userId: UUID) = transaction<Unit> {
