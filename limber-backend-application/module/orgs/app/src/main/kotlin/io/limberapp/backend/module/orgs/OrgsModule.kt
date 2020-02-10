@@ -30,30 +30,30 @@ class OrgsModule : Module() {
 
     override val endpoints = listOf(
 
+        PostOrg::class.java,
+        GetOrg::class.java,
+        GetOrgsByMemberId::class.java,
+        PatchOrg::class.java,
+        DeleteOrg::class.java,
+
         PostFeature::class.java,
         PatchFeature::class.java,
         DeleteFeature::class.java,
 
         PostMembership::class.java,
-        DeleteMembership::class.java,
-
-        PostOrg::class.java,
-        GetOrg::class.java,
-        GetOrgsByMemberId::class.java,
-        PatchOrg::class.java,
-        DeleteOrg::class.java
+        DeleteMembership::class.java
     )
 
     override fun bindServices() {
+        bind(OrgService::class, OrgServiceImpl::class)
         bind(FeatureService::class, FeatureServiceImpl::class)
         bind(MembershipService::class, MembershipServiceImpl::class)
-        bind(OrgService::class, OrgServiceImpl::class)
     }
 
     override fun bindStores() {
         bind(SqlOrgMapper::class, SqlOrgMapperImpl::class)
+        bind(OrgStore::class, SqlOrgStore::class)
         bind(FeatureStore::class, SqlFeatureStore::class)
         bind(MembershipStore::class, SqlMembershipStore::class)
-        bind(OrgStore::class, SqlOrgStore::class)
     }
 }

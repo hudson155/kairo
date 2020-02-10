@@ -38,15 +38,7 @@ import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
 
 class FormsModule : Module() {
 
-    override val endpoints = listOf(
-
-        PostFormInstance::class.java,
-        DeleteFormInstance::class.java,
-        GetFormInstance::class.java,
-        GetFormInstancesByOrgId::class.java,
-
-        PutFormInstanceQuestion::class.java,
-        DeleteFormInstanceQuestion::class.java,
+    private val formTemplateEndpoints = listOf(
 
         PostFormTemplate::class.java,
         DeleteFormTemplate::class.java,
@@ -59,21 +51,48 @@ class FormsModule : Module() {
         PatchFormTemplateQuestion::class.java
     )
 
+    private val formInstanceEndpoints = listOf(
+
+        PostFormInstance::class.java,
+        DeleteFormInstance::class.java,
+        GetFormInstance::class.java,
+        GetFormInstancesByOrgId::class.java,
+
+        PutFormInstanceQuestion::class.java,
+        DeleteFormInstanceQuestion::class.java
+    )
+
+    override val endpoints = formTemplateEndpoints + formInstanceEndpoints
+
     override fun bindServices() {
-        bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
-        bind(FormInstanceService::class, FormInstanceServiceImpl::class)
+        bindFormInstanceServices()
+        bindFormTemplateServices()
+    }
+
+    private fun bindFormTemplateServices() {
         bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
         bind(FormTemplateService::class, FormTemplateServiceImpl::class)
     }
 
+    private fun bindFormInstanceServices() {
+        bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
+        bind(FormInstanceService::class, FormInstanceServiceImpl::class)
+    }
+
     override fun bindStores() {
+        bindFormInstanceStores()
+        bindFormTemplateStores()
+    }
 
-        bind(SqlFormInstanceMapper::class, SqlFormInstanceMapperImpl::class)
-        bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
-        bind(FormInstanceStore::class, SqlFormInstanceStore::class)
-
+    private fun bindFormTemplateStores() {
         bind(SqlFormTemplateMapper::class, SqlFormTemplateMapperImpl::class)
         bind(FormTemplateQuestionStore::class, SqlFormTemplateQuestionStore::class)
         bind(FormTemplateStore::class, SqlFormTemplateStore::class)
+    }
+
+    private fun bindFormInstanceStores() {
+        bind(SqlFormInstanceMapper::class, SqlFormInstanceMapperImpl::class)
+        bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
+        bind(FormInstanceStore::class, SqlFormInstanceStore::class)
     }
 }
