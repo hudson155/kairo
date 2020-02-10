@@ -26,7 +26,7 @@ internal class GetFormInstance @Inject constructor(
     private val formInstanceService: FormInstanceService,
     private val formInstanceMapper: FormInstanceMapper
 ) : LimberApiEndpoint<GetFormInstance.Command, FormInstanceRep.Complete>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

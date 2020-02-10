@@ -26,7 +26,7 @@ internal class GetFormTemplate @Inject constructor(
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<GetFormTemplate.Command, FormTemplateRep.Complete>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

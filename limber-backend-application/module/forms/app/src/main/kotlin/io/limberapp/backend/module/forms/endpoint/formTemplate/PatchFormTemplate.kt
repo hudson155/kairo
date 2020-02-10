@@ -25,7 +25,7 @@ internal class PatchFormTemplate @Inject constructor(
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<PatchFormTemplate.Command, FormTemplateRep.Complete>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

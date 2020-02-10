@@ -23,7 +23,7 @@ internal class DeleteFeature @Inject constructor(
     servingConfig: ServingConfig,
     private val featureService: FeatureService
 ) : LimberApiEndpoint<DeleteFeature.Command, Unit>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
