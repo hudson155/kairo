@@ -1,6 +1,10 @@
 package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
+import io.limberapp.backend.module.forms.endpoint.formInstance.CreateFormInstance
+import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
+import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
+import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByOrgId
 import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
@@ -33,6 +37,11 @@ import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
 class FormsModule : Module() {
 
     override val endpoints = listOf(
+
+        CreateFormInstance::class.java,
+        DeleteFormInstance::class.java,
+        GetFormInstance::class.java,
+        GetFormInstancesByOrgId::class.java,
 
         CreateFormTemplate::class.java,
         DeleteFormTemplate::class.java,
