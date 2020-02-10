@@ -17,7 +17,9 @@ object FormInstanceQuestionRep {
         JsonSubTypes.Type(value = FormInstanceTextQuestionRep.Creation::class, name = "TEXT")
     )
     interface Creation : CreationRep {
+
         val formTemplateQuestionId: UUID
+
         override fun validate() = Unit
     }
 
