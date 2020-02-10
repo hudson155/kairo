@@ -10,14 +10,11 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQues
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
-import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
-import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlFormInstanceQuestionStore @Inject constructor(
@@ -89,22 +86,10 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
                     (FormInstanceQuestionTable.formInstanceGuid eq formInstanceId) and
                             (FormInstanceQuestionTable.formTemplateQuestionGuid eq formTemplateQuestionId)
                 },
-                body = { it.updateFormInstance(update) },
+                body = { sqlFormInstanceMapper.formInstanceEntity(it, update) },
                 notFound = { throw FormInstanceQuestionNotFound() }
             )
         return@transaction checkNotNull(get(formInstanceId, formTemplateQuestionId))
-    }
-
-    private fun UpdateStatement.updateFormInstance(update: FormInstanceQuestionModel.Update) {
-        when (update) {
-            is FormInstanceDateQuestionModel.Update -> {
-                update.date?.let { this[FormInstanceQuestionTable.date] = it }
-            }
-            is FormInstanceTextQuestionModel.Update -> {
-                update.text?.let { this[FormInstanceQuestionTable.text] = it }
-            }
-            else -> error("Unexpected question type: ${update::class.qualifiedName}")
-        }
     }
 
     override fun delete(formInstanceId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {

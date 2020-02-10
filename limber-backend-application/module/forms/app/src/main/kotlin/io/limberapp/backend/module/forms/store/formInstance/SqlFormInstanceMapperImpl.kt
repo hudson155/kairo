@@ -10,6 +10,7 @@ import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlFormInstanceMapperImpl @Inject constructor(
@@ -21,6 +22,18 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
         insertStatement[FormInstanceTable.guid] = model.id
         insertStatement[FormInstanceTable.orgGuid] = model.orgId
         insertStatement[FormInstanceTable.formTemplateGuid] = model.formTemplateId
+    }
+
+    override fun formInstanceEntity(updateStatement: UpdateStatement, update: FormInstanceQuestionModel.Update) {
+        when (update) {
+            is FormInstanceDateQuestionModel.Update -> {
+                update.date?.let { updateStatement[FormInstanceQuestionTable.date] = it }
+            }
+            is FormInstanceTextQuestionModel.Update -> {
+                update.text?.let { updateStatement[FormInstanceQuestionTable.text] = it }
+            }
+            else -> error("Unexpected question type: ${update::class.qualifiedName}")
+        }
     }
 
     override fun formInstanceQuestionEntity(
