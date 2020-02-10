@@ -37,11 +37,11 @@ internal class SqlFormTemplateStore @Inject constructor(
 
     override fun update(formTemplateId: UUID, update: FormTemplateModel.Update) = transaction {
         FormTemplateTable
-            .updateAtMostOne(
+            .updateExactlyOne(
                 where = { FormTemplateTable.guid eq formTemplateId },
-                body = { it.updateFormTemplate(update) }
+                body = { it.updateFormTemplate(update) },
+                notFound = { throw FormTemplateNotFound() }
             )
-            .ifEq(0) { throw FormTemplateNotFound() }
         return@transaction checkNotNull(get(formTemplateId))
     }
 

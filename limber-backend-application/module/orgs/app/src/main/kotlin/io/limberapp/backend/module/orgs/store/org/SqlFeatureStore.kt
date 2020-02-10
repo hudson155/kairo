@@ -52,11 +52,11 @@ internal class SqlFeatureStore @Inject constructor(
         }
 
         FeatureTable
-            .updateAtMostOne(
+            .updateExactlyOne(
                 where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
-                body = { it.updateFeature(update) }
+                body = { it.updateFeature(update) },
+                notFound = { throw FeatureNotFound() }
             )
-            .ifEq(0) { throw FeatureNotFound() }
         return@transaction checkNotNull(get(orgId, featureId))
     }
 

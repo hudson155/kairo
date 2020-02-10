@@ -92,14 +92,14 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         update: FormTemplateQuestionModel.Update
     ) = transaction {
         FormTemplateQuestionTable
-            .updateAtMostOne(
+            .updateExactlyOne(
                 where = {
                     (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
                             (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
                 },
-                body = { it.updateFormTemplate(update) }
+                body = { it.updateFormTemplate(update) },
+                notFound = { throw FormTemplateQuestionNotFound() }
             )
-            .ifEq(0) { throw FormTemplateQuestionNotFound() }
         return@transaction checkNotNull(get(formTemplateId, formTemplateQuestionId))
     }
 

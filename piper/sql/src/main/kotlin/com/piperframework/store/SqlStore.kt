@@ -30,10 +30,11 @@ abstract class SqlStore(private val database: Database) {
         }
     }
 
-    fun <T : Table> T.updateAtMostOne(
+    fun <T : Table> T.updateExactlyOne(
         where: (SqlExpressionBuilder.() -> Op<Boolean>),
-        body: T.(UpdateStatement) -> Unit
-    ) = update(where = where, body = body).ifGt(1, ::badSql)
+        body: T.(UpdateStatement) -> Unit,
+        notFound: () -> Nothing
+    ) = update(where = where, body = body).ifGt(1, ::badSql).ifEq(0, notFound)
 
     fun Table.deleteAtMostOneWhere(
         op: SqlExpressionBuilder.() -> Op<Boolean>

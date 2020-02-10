@@ -2,6 +2,7 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.util.thisShouldNeverHappen
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import io.limberapp.backend.module.users.entity.account.UserTable
@@ -43,8 +44,11 @@ internal class SqlUserStore @Inject constructor(
 
     override fun update(userId: UUID, update: UserModel.Update) = transaction {
         UserTable
-            .updateAtMostOne(where = { UserTable.accountGuid eq userId }, body = { it.updateUser(update) })
-            .ifEq(0) { throw UserNotFound() }
+            .updateExactlyOne(
+                where = { UserTable.accountGuid eq userId },
+                body = { it.updateUser(update) },
+                notFound = { throw UserNotFound() }
+            )
         return@transaction checkNotNull(get(userId))
     }
 
@@ -52,14 +56,16 @@ internal class SqlUserStore @Inject constructor(
         val existing = get(userId) ?: throw UserNotFound()
         if (role in existing.roles) throw UserAlreadyHasRole(role)
         AccountTable
-            .updateAtMostOne(
+            .updateExactlyOne(
                 where = { AccountTable.guid eq userId },
                 body = {
                     it.updateAccount(
                         identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) true else null,
                         superuser = if (role == JwtRole.SUPERUSER) true else null
                     )
-                })
+                },
+                notFound = ::thisShouldNeverHappen
+            )
         return@transaction checkNotNull(get(userId))
     }
 
@@ -67,14 +73,16 @@ internal class SqlUserStore @Inject constructor(
         val existing = get(userId) ?: throw UserNotFound()
         if (role !in existing.roles) throw UserDoesNotHaveRole(role)
         AccountTable
-            .updateAtMostOne(
+            .updateExactlyOne(
                 where = { AccountTable.guid eq userId },
                 body = {
                     it.updateAccount(
                         identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) false else null,
                         superuser = if (role == JwtRole.SUPERUSER) false else null
                     )
-                })
+                },
+                notFound = ::thisShouldNeverHappen
+            )
         return@transaction checkNotNull(get(userId))
     }
 

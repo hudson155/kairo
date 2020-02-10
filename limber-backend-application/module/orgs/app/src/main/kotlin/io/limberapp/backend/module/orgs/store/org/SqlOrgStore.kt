@@ -50,8 +50,11 @@ internal class SqlOrgStore @Inject constructor(
 
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {
         OrgTable
-            .updateAtMostOne(where = { OrgTable.guid eq orgId }, body = { it.updateOrg(update) })
-            .ifEq(0) { throw OrgNotFound() }
+            .updateExactlyOne(
+                where = { OrgTable.guid eq orgId },
+                body = { it.updateOrg(update) },
+                notFound = { throw OrgNotFound() }
+            )
         return@transaction checkNotNull(get(orgId))
     }
 
