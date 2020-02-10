@@ -41,22 +41,22 @@ class FormsModule : Module() {
     private val formTemplateEndpoints = listOf(
 
         PostFormTemplate::class.java,
-        DeleteFormTemplate::class.java,
         GetFormTemplate::class.java,
         GetFormTemplatesByOrgId::class.java,
         PatchFormTemplate::class.java,
+        DeleteFormTemplate::class.java,
 
         PostFormTemplateQuestion::class.java,
-        DeleteFormTemplateQuestion::class.java,
-        PatchFormTemplateQuestion::class.java
+        PatchFormTemplateQuestion::class.java,
+        DeleteFormTemplateQuestion::class.java
     )
 
     private val formInstanceEndpoints = listOf(
 
         PostFormInstance::class.java,
-        DeleteFormInstance::class.java,
         GetFormInstance::class.java,
         GetFormInstancesByOrgId::class.java,
+        DeleteFormInstance::class.java,
 
         PutFormInstanceQuestion::class.java,
         DeleteFormInstanceQuestion::class.java
