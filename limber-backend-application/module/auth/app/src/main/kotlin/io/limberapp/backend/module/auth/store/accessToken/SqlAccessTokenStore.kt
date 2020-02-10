@@ -35,9 +35,9 @@ internal class SqlAccessTokenStore @Inject constructor(
 
     override fun delete(userId: UUID, accessTokenId: UUID) = transaction<Unit> {
         AccessTokenTable
-            .deleteAtMostOneWhere {
-                (AccessTokenTable.accountGuid eq userId) and (AccessTokenTable.guid eq accessTokenId)
-            }
-            .ifEq(0) { throw AccessTokenNotFound() }
+            .deleteExactlyOne(
+                where = { (AccessTokenTable.accountGuid eq userId) and (AccessTokenTable.guid eq accessTokenId) },
+                notFound = { throw AccessTokenNotFound() }
+            )
     }
 }

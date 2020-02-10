@@ -43,10 +43,12 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
 
     override fun delete(formInstanceId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {
         FormInstanceQuestionTable
-            .deleteAtMostOneWhere {
-                (FormInstanceQuestionTable.formInstanceGuid eq formInstanceId) and
-                        (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
-            }
-            .ifEq(0) { throw FormInstanceQuestionNotFound() }
+            .deleteExactlyOne(
+                where = {
+                    (FormInstanceQuestionTable.formInstanceGuid eq formInstanceId) and
+                            (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+                },
+                notFound = { throw FormInstanceQuestionNotFound() }
+            )
     }
 }

@@ -63,8 +63,6 @@ internal class SqlOrgStore @Inject constructor(
     }
 
     override fun delete(orgId: UUID) = transaction<Unit> {
-        OrgTable
-            .deleteAtMostOneWhere { OrgTable.guid eq orgId }
-            .ifEq(0) { throw OrgNotFound() }
+        OrgTable.deleteExactlyOne(where = { OrgTable.guid eq orgId }, notFound = { throw OrgNotFound() })
     }
 }

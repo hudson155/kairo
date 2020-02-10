@@ -42,7 +42,9 @@ internal class SqlMembershipStore @Inject constructor(
 
     override fun delete(orgId: UUID, userId: UUID) = transaction<Unit> {
         MembershipTable
-            .deleteAtMostOneWhere { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) }
-            .ifEq(0) { throw MembershipNotFound() }
+            .deleteExactlyOne(
+                where = { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) },
+                notFound = { throw MembershipNotFound() }
+            )
     }
 }

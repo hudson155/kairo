@@ -97,8 +97,6 @@ internal class SqlUserStore @Inject constructor(
     }
 
     override fun delete(userId: UUID) = transaction<Unit> {
-        AccountTable
-            .deleteAtMostOneWhere { AccountTable.guid eq userId }
-            .ifEq(0) { throw UserNotFound() }
+        AccountTable.deleteExactlyOne(where = { AccountTable.guid eq userId }, notFound = { throw UserNotFound() })
     }
 }

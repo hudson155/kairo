@@ -36,9 +36,10 @@ abstract class SqlStore(private val database: Database) {
         notFound: () -> Nothing
     ) = update(where = where, body = body).ifGt(1, ::badSql).ifEq(0, notFound)
 
-    fun Table.deleteAtMostOneWhere(
-        op: SqlExpressionBuilder.() -> Op<Boolean>
-    ) = deleteWhere(op = op).ifGt(1, ::badSql)
+    fun Table.deleteExactlyOne(
+        where: SqlExpressionBuilder.() -> Op<Boolean>,
+        notFound: () -> Nothing
+    ) = deleteWhere(op = where).ifGt(1, ::badSql).ifEq(0, notFound)
 
     protected inline fun Int.ifGt(int: Int, function: () -> Nothing): Int = if (this > int) function() else this
 

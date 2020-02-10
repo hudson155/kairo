@@ -52,7 +52,9 @@ internal class SqlFormTemplateStore @Inject constructor(
 
     override fun delete(formTemplateId: UUID) = transaction<Unit> {
         FormTemplateTable
-            .deleteAtMostOneWhere { FormTemplateTable.guid eq formTemplateId }
-            .ifEq(0) { throw FormTemplateNotFound() }
+            .deleteExactlyOne(
+                where = { FormTemplateTable.guid eq formTemplateId },
+                notFound = { throw FormTemplateNotFound() }
+            )
     }
 }

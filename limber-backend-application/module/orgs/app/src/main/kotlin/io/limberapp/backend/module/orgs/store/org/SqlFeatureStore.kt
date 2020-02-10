@@ -67,7 +67,9 @@ internal class SqlFeatureStore @Inject constructor(
 
     override fun delete(orgId: UUID, featureId: UUID) = transaction<Unit> {
         FeatureTable
-            .deleteAtMostOneWhere { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
-            .ifEq(0) { throw FeatureNotFound() }
+            .deleteExactlyOne(
+                where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
+                notFound = { throw FeatureNotFound() }
+            )
     }
 }
