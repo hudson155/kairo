@@ -65,34 +65,34 @@ class FormsModule : Module() {
     override val endpoints = formTemplateEndpoints + formInstanceEndpoints
 
     override fun bindServices() {
-        bindFormInstanceServices()
         bindFormTemplateServices()
+        bindFormInstanceServices()
     }
 
     private fun bindFormTemplateServices() {
-        bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
         bind(FormTemplateService::class, FormTemplateServiceImpl::class)
+        bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
     }
 
     private fun bindFormInstanceServices() {
-        bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
         bind(FormInstanceService::class, FormInstanceServiceImpl::class)
+        bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
     }
 
     override fun bindStores() {
-        bindFormInstanceStores()
         bindFormTemplateStores()
+        bindFormInstanceStores()
     }
 
     private fun bindFormTemplateStores() {
         bind(SqlFormTemplateMapper::class, SqlFormTemplateMapperImpl::class)
-        bind(FormTemplateQuestionStore::class, SqlFormTemplateQuestionStore::class)
         bind(FormTemplateStore::class, SqlFormTemplateStore::class)
+        bind(FormTemplateQuestionStore::class, SqlFormTemplateQuestionStore::class)
     }
 
     private fun bindFormInstanceStores() {
         bind(SqlFormInstanceMapper::class, SqlFormInstanceMapperImpl::class)
-        bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
         bind(FormInstanceStore::class, SqlFormInstanceStore::class)
+        bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
     }
 }
