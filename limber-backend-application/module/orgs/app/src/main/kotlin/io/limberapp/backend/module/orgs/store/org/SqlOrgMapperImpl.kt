@@ -9,6 +9,7 @@ import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlOrgMapperImpl @Inject constructor(
@@ -25,6 +26,11 @@ internal class SqlOrgMapperImpl @Inject constructor(
         insertStatement[FeatureTable.type] = model.type.name
     }
 
+    override fun featureEntity(updateStatement: UpdateStatement, update: FeatureModel.Update) {
+        update.name?.let { updateStatement[FeatureTable.name] = it }
+        update.path?.let { updateStatement[FeatureTable.path] = it }
+    }
+
     override fun membershipEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: MembershipModel) {
         insertStatement[MembershipTable.createdDate] = model.created
         insertStatement[MembershipTable.orgGuid] = orgId
@@ -35,6 +41,10 @@ internal class SqlOrgMapperImpl @Inject constructor(
         insertStatement[OrgTable.createdDate] = model.created
         insertStatement[OrgTable.guid] = model.id
         insertStatement[OrgTable.name] = model.name
+    }
+
+    override fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update) {
+        update.name?.let { updateStatement[OrgTable.name] = it }
     }
 
     override fun featureModel(resultRow: ResultRow) = FeatureModel(

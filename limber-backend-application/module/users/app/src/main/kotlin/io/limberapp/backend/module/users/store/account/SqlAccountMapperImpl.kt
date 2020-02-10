@@ -8,6 +8,7 @@ import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 
 internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
 
@@ -19,6 +20,15 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
         insertStatement[AccountTable.superuser] = JwtRole.SUPERUSER in model.roles
     }
 
+    override fun accountEntity(
+        updateStatement: UpdateStatement,
+        identityProvider: Boolean?,
+        superuser: Boolean?
+    ) {
+        identityProvider?.let { updateStatement[AccountTable.identityProvider] = it }
+        superuser?.let { updateStatement[AccountTable.superuser] = it }
+    }
+
     override fun userEntity(insertStatement: InsertStatement<*>, model: UserModel) {
         insertStatement[UserTable.createdDate] = model.created
         insertStatement[UserTable.accountGuid] = model.id
@@ -26,6 +36,11 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
         insertStatement[UserTable.firstName] = model.firstName
         insertStatement[UserTable.lastName] = model.lastName
         insertStatement[UserTable.profilePhotoUrl] = model.profilePhotoUrl
+    }
+
+    override fun userEntity(updateStatement: UpdateStatement, update: UserModel.Update) {
+        update.firstName?.let { updateStatement[UserTable.firstName] = it }
+        update.lastName?.let { updateStatement[UserTable.lastName] = it }
     }
 
     override fun accountModel(resultRow: ResultRow) = AccountModel(

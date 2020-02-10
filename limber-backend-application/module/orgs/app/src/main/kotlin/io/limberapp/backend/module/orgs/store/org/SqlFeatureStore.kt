@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlFeatureStore @Inject constructor(
@@ -54,15 +53,10 @@ internal class SqlFeatureStore @Inject constructor(
         FeatureTable
             .updateExactlyOne(
                 where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
-                body = { it.updateFeature(update) },
+                body = { sqlOrgMapper.featureEntity(it, update) },
                 notFound = { throw FeatureNotFound() }
             )
         return@transaction checkNotNull(get(orgId, featureId))
-    }
-
-    private fun UpdateStatement.updateFeature(update: FeatureModel.Update) {
-        update.name?.let { this[FeatureTable.name] = it }
-        update.path?.let { this[FeatureTable.path] = it }
     }
 
     override fun delete(orgId: UUID, featureId: UUID) = transaction<Unit> {

@@ -4,11 +4,14 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 interface SqlFormTemplateMapper {
 
     fun formTemplateEntity(insertStatement: InsertStatement<*>, model: FormTemplateModel)
+
+    fun formTemplateEntity(updateStatement: UpdateStatement, update: FormTemplateModel.Update)
 
     fun formTemplateQuestionEntity(
         insertStatement: InsertStatement<*>,
@@ -16,6 +19,8 @@ interface SqlFormTemplateMapper {
         model: FormTemplateQuestionModel,
         index: Int
     )
+
+    fun formTemplateQuestionEntity(updateStatement: UpdateStatement, update: FormTemplateQuestionModel.Update)
 
     fun formTemplateModel(resultRow: ResultRow): FormTemplateModel
 

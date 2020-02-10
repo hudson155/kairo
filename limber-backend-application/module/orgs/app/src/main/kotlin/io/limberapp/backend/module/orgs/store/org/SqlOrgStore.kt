@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlOrgStore @Inject constructor(
@@ -52,14 +51,10 @@ internal class SqlOrgStore @Inject constructor(
         OrgTable
             .updateExactlyOne(
                 where = { OrgTable.guid eq orgId },
-                body = { it.updateOrg(update) },
+                body = { sqlOrgMapper.orgEntity(it, update) },
                 notFound = { throw OrgNotFound() }
             )
         return@transaction checkNotNull(get(orgId))
-    }
-
-    private fun UpdateStatement.updateOrg(update: OrgModel.Update) {
-        update.name?.let { this[OrgTable.name] = it }
     }
 
     override fun delete(orgId: UUID) = transaction<Unit> {

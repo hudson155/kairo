@@ -8,7 +8,6 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlFormTemplateStore @Inject constructor(
@@ -39,15 +38,10 @@ internal class SqlFormTemplateStore @Inject constructor(
         FormTemplateTable
             .updateExactlyOne(
                 where = { FormTemplateTable.guid eq formTemplateId },
-                body = { it.updateFormTemplate(update) },
+                body = { sqlFormTemplateMapper.formTemplateEntity(it, update) },
                 notFound = { throw FormTemplateNotFound() }
             )
         return@transaction checkNotNull(get(formTemplateId))
-    }
-
-    private fun UpdateStatement.updateFormTemplate(update: FormTemplateModel.Update) {
-        update.title?.let { this[FormTemplateTable.title] = it }
-        update.description?.let { this[FormTemplateTable.description] = it }
     }
 
     override fun delete(formTemplateId: UUID) = transaction<Unit> {

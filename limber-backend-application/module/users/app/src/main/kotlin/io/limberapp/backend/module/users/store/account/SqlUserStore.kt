@@ -14,7 +14,6 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlUserStore @Inject constructor(
@@ -46,7 +45,7 @@ internal class SqlUserStore @Inject constructor(
         UserTable
             .updateExactlyOne(
                 where = { UserTable.accountGuid eq userId },
-                body = { it.updateUser(update) },
+                body = { sqlAccountMapper.userEntity(it, update) },
                 notFound = { throw UserNotFound() }
             )
         return@transaction checkNotNull(get(userId))
@@ -59,7 +58,8 @@ internal class SqlUserStore @Inject constructor(
             .updateExactlyOne(
                 where = { AccountTable.guid eq userId },
                 body = {
-                    it.updateAccount(
+                    sqlAccountMapper.accountEntity(
+                        updateStatement = it,
                         identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) true else null,
                         superuser = if (role == JwtRole.SUPERUSER) true else null
                     )
@@ -76,7 +76,8 @@ internal class SqlUserStore @Inject constructor(
             .updateExactlyOne(
                 where = { AccountTable.guid eq userId },
                 body = {
-                    it.updateAccount(
+                    sqlAccountMapper.accountEntity(
+                        updateStatement = it,
                         identityProvider = if (role == JwtRole.IDENTITY_PROVIDER) false else null,
                         superuser = if (role == JwtRole.SUPERUSER) false else null
                     )
@@ -84,16 +85,6 @@ internal class SqlUserStore @Inject constructor(
                 notFound = ::thisShouldNeverHappen
             )
         return@transaction checkNotNull(get(userId))
-    }
-
-    private fun UpdateStatement.updateAccount(identityProvider: Boolean? = null, superuser: Boolean? = null) {
-        identityProvider?.let { this[AccountTable.identityProvider] = it }
-        superuser?.let { this[AccountTable.superuser] = it }
-    }
-
-    private fun UpdateStatement.updateUser(update: UserModel.Update) {
-        update.firstName?.let { this[UserTable.firstName] = it }
-        update.lastName?.let { this[UserTable.lastName] = it }
     }
 
     override fun delete(userId: UUID) = transaction<Unit> {

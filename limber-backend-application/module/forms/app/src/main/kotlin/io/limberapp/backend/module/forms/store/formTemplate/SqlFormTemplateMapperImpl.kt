@@ -9,6 +9,7 @@ import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal class SqlFormTemplateMapperImpl @Inject constructor(
@@ -21,6 +22,11 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
         insertStatement[FormTemplateTable.orgGuid] = model.orgId
         insertStatement[FormTemplateTable.title] = model.title
         insertStatement[FormTemplateTable.description] = model.description
+    }
+
+    override fun formTemplateEntity(updateStatement: UpdateStatement, update: FormTemplateModel.Update) {
+        update.title?.let { updateStatement[FormTemplateTable.title] = it }
+        update.description?.let { updateStatement[FormTemplateTable.description] = it }
     }
 
     override fun formTemplateQuestionEntity(
@@ -47,6 +53,26 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 insertStatement[FormTemplateQuestionTable.validator] = model.validator?.pattern
             }
             else -> error("Unexpected question type: ${model::class.qualifiedName}")
+        }
+    }
+
+    override fun formTemplateQuestionEntity(
+        updateStatement: UpdateStatement,
+        update: FormTemplateQuestionModel.Update
+    ) {
+        update.label?.let { updateStatement[FormTemplateQuestionTable.label] = it }
+        update.helpText?.let { updateStatement[FormTemplateQuestionTable.helpText] = it }
+        when (update) {
+            is FormTemplateDateQuestionModel.Update -> {
+                update.earliest?.let { updateStatement[FormTemplateQuestionTable.earliest] = it }
+                update.latest?.let { updateStatement[FormTemplateQuestionTable.latest] = it }
+            }
+            is FormTemplateTextQuestionModel.Update -> {
+                update.multiLine?.let { updateStatement[FormTemplateQuestionTable.multiLine] = it }
+                update.placeholder?.let { updateStatement[FormTemplateQuestionTable.placeholder] = it }
+                update.validator?.let { updateStatement[FormTemplateQuestionTable.validator] = it.pattern }
+            }
+            else -> error("Unexpected question type: ${update::class.qualifiedName}")
         }
     }
 
