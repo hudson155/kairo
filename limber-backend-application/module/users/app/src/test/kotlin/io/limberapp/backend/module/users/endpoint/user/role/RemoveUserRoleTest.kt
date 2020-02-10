@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.endpoint.user.CreateUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
+import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -32,6 +33,36 @@ internal class RemoveUserRoleTest : ResourceTest() {
     }
 
     @Test
+    fun roleDoesNotExist() {
+
+        // CreateUser
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        piperTest.setup(
+            endpointConfig = CreateUser.endpointConfig,
+            body = UserRepFixtures.jeffHudsonFixture.creation()
+        )
+
+        // RemoveUserRole
+        piperTest.test(
+            endpointConfig = RemoveUserRole.endpointConfig,
+            pathParams = mapOf(
+                RemoveUserRole.userId to userRep.id,
+                RemoveUserRole.roleName to JwtRole.SUPERUSER
+            ),
+            expectedException = UserDoesNotHaveRole(JwtRole.SUPERUSER)
+        )
+
+        // GetUser
+        piperTest.test(
+            endpointConfig = GetUser.endpointConfig,
+            pathParams = mapOf(GetUser.userId to userRep.id)
+        ) {
+            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            assertEquals(userRep, actual)
+        }
+    }
+
+    @Test
     fun happyPath() {
 
         // CreateUser
@@ -53,35 +84,6 @@ internal class RemoveUserRoleTest : ResourceTest() {
 
         // RemoveUserRole
         userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
-        piperTest.test(
-            endpointConfig = RemoveUserRole.endpointConfig,
-            pathParams = mapOf(
-                RemoveUserRole.userId to userRep.id,
-                RemoveUserRole.roleName to JwtRole.SUPERUSER
-            )
-        ) {}
-
-        // GetUser
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id)
-        ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-    }
-
-    @Test
-    fun happyPathIdempotent() {
-
-        // CreateUser
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation()
-        )
-
-        // RemoveUserRole
         piperTest.test(
             endpointConfig = RemoveUserRole.endpointConfig,
             pathParams = mapOf(
