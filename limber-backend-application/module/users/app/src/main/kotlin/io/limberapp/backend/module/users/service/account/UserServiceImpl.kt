@@ -4,5 +4,5 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.users.store.account.UserStore
 
 internal class UserServiceImpl @Inject constructor(
-    private val userStore: UserStore
+    userStore: UserStore
 ) : UserService by userStore

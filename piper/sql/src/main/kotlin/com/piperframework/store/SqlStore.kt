@@ -1,5 +1,6 @@
 package com.piperframework.store
 
+import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.ResultRow
@@ -12,11 +13,23 @@ import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import org.postgresql.util.PSQLException
+import org.postgresql.util.ServerErrorMessage
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
 
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
+
+    fun doOperationAndHandleErrors(operation: () -> Unit, onError: (error: ServerErrorMessage) -> Unit) {
+        try {
+            operation()
+        } catch (e: ExposedSQLException) {
+            val error = (e.cause as PSQLException).serverErrorMessage
+            onError(error)
+            throw e
+        }
+    }
 
     fun <E : Any> Table.batchInsertIndexed(
         data: Iterable<E>,

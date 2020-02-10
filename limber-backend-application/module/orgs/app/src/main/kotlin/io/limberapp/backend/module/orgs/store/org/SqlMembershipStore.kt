@@ -2,8 +2,10 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.store.isForeignKeyViolation
 import io.limberapp.backend.module.orgs.entity.org.MembershipTable
 import io.limberapp.backend.module.orgs.exception.org.MembershipNotFound
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.exception.org.UserIsAlreadyAMemberOfOrg
 import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import org.jetbrains.exposed.sql.Database
@@ -18,13 +20,29 @@ internal class SqlMembershipStore @Inject constructor(
     private val sqlOrgMapper: SqlOrgMapper
 ) : MembershipStore, SqlStore(database) {
 
-    override fun create(orgId: UUID, models: Set<MembershipModel>) = transaction<Unit> {
-        MembershipTable.batchInsert(models) { model -> sqlOrgMapper.membershipEntity(this, orgId, model) }
+    override fun create(orgId: UUID, models: Set<MembershipModel>) = transaction {
+        doOperationAndHandleErrors(
+            operation = {
+                MembershipTable.batchInsert(models) { model -> sqlOrgMapper.membershipEntity(this, orgId, model) }
+            },
+            onError = { error ->
+                when {
+                    error.isForeignKeyViolation(MembershipTable.orgGuidForeignKey) -> throw OrgNotFound()
+                }
+            }
+        )
     }
 
-    override fun create(orgId: UUID, model: MembershipModel) = transaction<Unit> {
+    override fun create(orgId: UUID, model: MembershipModel) = transaction {
         get(orgId, model.userId)?.let { throw UserIsAlreadyAMemberOfOrg() }
-        MembershipTable.insert { sqlOrgMapper.membershipEntity(it, orgId, model) }
+        doOperationAndHandleErrors(
+            operation = { MembershipTable.insert { sqlOrgMapper.membershipEntity(it, orgId, model) } },
+            onError = { error ->
+                when {
+                    error.isForeignKeyViolation(MembershipTable.orgGuidForeignKey) -> throw OrgNotFound()
+                }
+            }
+        )
     }
 
     override fun get(orgId: UUID, userId: UUID) = transaction {

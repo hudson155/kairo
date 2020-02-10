@@ -2,9 +2,12 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.store.isForeignKeyViolation
+import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.module.orgs.entity.org.FeatureTable
 import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.and
@@ -18,15 +21,31 @@ internal class SqlFeatureStore @Inject constructor(
     private val sqlOrgMapper: SqlOrgMapper
 ) : FeatureStore, SqlStore(database) {
 
-    override fun create(orgId: UUID, models: Set<FeatureModel>) = transaction<Unit> {
-        FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
+    override fun create(orgId: UUID, models: Set<FeatureModel>) = transaction {
+        doOperationAndHandleErrors(
+            operation = {
+                FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
+            },
+            onError = { error ->
+                when {
+                    error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
+                }
+            }
+        )
     }
 
-    override fun create(orgId: UUID, model: FeatureModel) = transaction<Unit> {
+    override fun create(orgId: UUID, model: FeatureModel) = transaction {
         FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path) }
             .singleOrNull()?.let { throw FeatureIsNotUnique() }
-        FeatureTable.insert { sqlOrgMapper.featureEntity(it, orgId, model) }
+        doOperationAndHandleErrors(
+            operation = { FeatureTable.insert { sqlOrgMapper.featureEntity(it, orgId, model) } },
+            onError = { error ->
+                when {
+                    error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
+                }
+            }
+        )
     }
 
     override fun get(orgId: UUID, featureId: UUID) = transaction {
@@ -44,19 +63,22 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {
-
-        update.path?.let {
-            FeatureTable
-                .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq it) }
-                .singleOrNull()?.let { throw FeatureIsNotUnique() }
-        }
-
-        FeatureTable
-            .updateExactlyOne(
-                where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
-                body = { sqlOrgMapper.featureEntity(it, update) },
-                notFound = { throw FeatureNotFound() }
-            )
+        doOperationAndHandleErrors(
+            operation = {
+                FeatureTable
+                    .updateExactlyOne(
+                        where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
+                        body = { sqlOrgMapper.featureEntity(it, update) },
+                        notFound = { throw FeatureNotFound() }
+                    )
+            },
+            onError = { error ->
+                when {
+                    error.isUniqueConstraintViolation(FeatureTable.orgPathUniqueConstraint) ->
+                        throw FeatureIsNotUnique()
+                }
+            }
+        )
         return@transaction checkNotNull(get(orgId, featureId))
     }
 

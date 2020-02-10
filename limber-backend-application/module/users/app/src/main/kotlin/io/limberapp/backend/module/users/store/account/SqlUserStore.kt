@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.thisShouldNeverHappen
+import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import io.limberapp.backend.module.users.entity.account.UserTable
@@ -21,10 +21,17 @@ internal class SqlUserStore @Inject constructor(
     private val sqlAccountMapper: SqlAccountMapperImpl
 ) : UserStore, SqlStore(database) {
 
-    override fun create(model: UserModel) = transaction<Unit> {
-        getByEmailAddress(model.emailAddress)?.let { throw EmailAddressAlreadyTaken(model.emailAddress) }
+    override fun create(model: UserModel) = transaction {
         AccountTable.insert { sqlAccountMapper.accountEntity(it, model) }
-        UserTable.insert { sqlAccountMapper.userEntity(it, model) }
+        doOperationAndHandleErrors(
+            operation = { UserTable.insert { sqlAccountMapper.userEntity(it, model) } },
+            onError = { error ->
+                when {
+                    error.isUniqueConstraintViolation(UserTable.emailAddressUniqueConstraint) ->
+                        throw EmailAddressAlreadyTaken(model.emailAddress)
+                }
+            }
+        )
     }
 
     override fun get(userId: UUID) = transaction {
@@ -52,8 +59,7 @@ internal class SqlUserStore @Inject constructor(
     }
 
     override fun addRole(userId: UUID, role: JwtRole) = transaction {
-        val existing = get(userId) ?: throw UserNotFound()
-        if (role in existing.roles) throw UserAlreadyHasRole(role)
+        get(userId)?.let { if (role in it.roles) throw UserAlreadyHasRole(role) }
         AccountTable
             .updateExactlyOne(
                 where = { AccountTable.guid eq userId },
@@ -64,14 +70,13 @@ internal class SqlUserStore @Inject constructor(
                         superuser = if (role == JwtRole.SUPERUSER) true else null
                     )
                 },
-                notFound = ::thisShouldNeverHappen
+                notFound = { throw UserNotFound() }
             )
         return@transaction checkNotNull(get(userId))
     }
 
     override fun removeRole(userId: UUID, role: JwtRole) = transaction {
-        val existing = get(userId) ?: throw UserNotFound()
-        if (role !in existing.roles) throw UserDoesNotHaveRole(role)
+        get(userId)?.let { if (role !in it.roles) throw UserDoesNotHaveRole(role) }
         AccountTable
             .updateExactlyOne(
                 where = { AccountTable.guid eq userId },
@@ -82,7 +87,7 @@ internal class SqlUserStore @Inject constructor(
                         superuser = if (role == JwtRole.SUPERUSER) false else null
                     )
                 },
-                notFound = ::thisShouldNeverHappen
+                notFound = { throw UserNotFound() }
             )
         return@transaction checkNotNull(get(userId))
     }
