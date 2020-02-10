@@ -20,8 +20,10 @@ object FormTemplateQuestionRep {
         JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Creation::class, name = "TEXT")
     )
     interface Creation : CreationRep {
+
         val label: String
         val helpText: String?
+
         override fun validate() {
             validate(Creation::label) { mediumText(allowEmpty = false) }
             validate(Creation::helpText) { ifPresent { longText(allowEmpty = false) } }
@@ -45,8 +47,10 @@ object FormTemplateQuestionRep {
         JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Update::class, name = "TEXT")
     )
     interface Update : UpdateRep {
+
         val label: String?
         val helpText: String?
+
         override fun validate() {
             validate(Update::label) { ifPresent { mediumText(allowEmpty = false) } }
             validate(Update::helpText) { ifPresent { longText(allowEmpty = false) } }
