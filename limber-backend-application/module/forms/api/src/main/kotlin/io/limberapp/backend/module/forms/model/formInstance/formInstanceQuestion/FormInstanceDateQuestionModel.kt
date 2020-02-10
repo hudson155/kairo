@@ -13,4 +13,8 @@ data class FormInstanceDateQuestionModel(
 ) : FormInstanceQuestionModel {
 
     override val type = FormTemplateQuestionModel.Type.DATE
+
+    data class Update(
+        val date: LocalDate? = null
+    ) : FormInstanceQuestionModel.Update
 }

@@ -1,18 +1,20 @@
 package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByOrgId
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
+import io.limberapp.backend.module.forms.endpoint.formInstance.question.DeleteFormInstanceQuestion
+import io.limberapp.backend.module.forms.endpoint.formInstance.question.PutFormInstanceQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByOrgId
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PatchFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PostFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PatchFormTemplateQuestion
+import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PostFormTemplateQuestion
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
@@ -42,6 +44,9 @@ class FormsModule : Module() {
         DeleteFormInstance::class.java,
         GetFormInstance::class.java,
         GetFormInstancesByOrgId::class.java,
+
+        PutFormInstanceQuestion::class.java,
+        DeleteFormInstanceQuestion::class.java,
 
         PostFormTemplate::class.java,
         DeleteFormTemplate::class.java,

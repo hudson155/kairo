@@ -7,6 +7,8 @@ interface FormInstanceQuestionService {
 
     fun create(formInstanceId: UUID, models: Set<FormInstanceQuestionModel>)
 
+    fun upsert(formInstanceId: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel
+
     fun get(formInstanceId: UUID, formTemplateQuestionId: UUID): FormInstanceQuestionModel?
 
     fun getByFormInstanceId(formInstanceId: UUID): List<FormInstanceQuestionModel>

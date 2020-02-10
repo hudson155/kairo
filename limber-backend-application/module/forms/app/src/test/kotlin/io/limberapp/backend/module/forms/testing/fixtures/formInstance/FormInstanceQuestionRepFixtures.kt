@@ -13,18 +13,16 @@ internal object FormInstanceQuestionRepFixtures {
         val complete: ResourceTest.(formTemplateQuestionId: UUID) -> FormInstanceQuestionRep.Complete
     )
 
-    private val textFixture = listOf(
-        Fixture({ formTemplateQuestionId ->
-            FormInstanceTextQuestionRep.Creation(
-                formTemplateQuestionId = formTemplateQuestionId,
-                text = "Nothing significant to add."
-            )
-        }, { formTemplateQuestionId ->
-            FormInstanceTextQuestionRep.Complete(
-                created = LocalDateTime.now(fixedClock),
-                formTemplateQuestionId = formTemplateQuestionId,
-                text = "Nothing significant to add."
-            )
-        })
-    )
+    val textFixture = Fixture({ formTemplateQuestionId ->
+        FormInstanceTextQuestionRep.Creation(
+            formTemplateQuestionId = formTemplateQuestionId,
+            text = "Nothing significant to add."
+        )
+    }, { formTemplateQuestionId ->
+        FormInstanceTextQuestionRep.Complete(
+            created = LocalDateTime.now(fixedClock),
+            formTemplateQuestionId = formTemplateQuestionId,
+            text = "Nothing significant to add."
+        )
+    })
 }

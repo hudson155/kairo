@@ -12,4 +12,8 @@ data class FormInstanceTextQuestionModel(
 ) : FormInstanceQuestionModel {
 
     override val type = FormTemplateQuestionModel.Type.TEXT
+
+    data class Update(
+        val text: String? = null
+    ) : FormInstanceQuestionModel.Update
 }
