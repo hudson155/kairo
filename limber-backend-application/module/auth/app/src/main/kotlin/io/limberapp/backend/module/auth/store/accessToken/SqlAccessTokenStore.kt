@@ -31,6 +31,7 @@ internal class SqlAccessTokenStore @Inject constructor(
         return@transaction AccessTokenTable
             .select { AccessTokenTable.accountGuid eq userId }
             .map { sqlAccessTokenMapper.accessTokenModel(it) }
+            .toSet()
     }
 
     override fun delete(userId: UUID, accessTokenId: UUID) = transaction<Unit> {

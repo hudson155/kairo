@@ -19,8 +19,8 @@ internal object OrgRepFixtures {
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
-            members = emptyList()
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
+            members = emptySet()
         )
     })
 
@@ -31,8 +31,8 @@ internal object OrgRepFixtures {
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
             name = "Discreet Bulb",
-            features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
-            members = emptyList()
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
+            members = emptySet()
         )
     })
 }

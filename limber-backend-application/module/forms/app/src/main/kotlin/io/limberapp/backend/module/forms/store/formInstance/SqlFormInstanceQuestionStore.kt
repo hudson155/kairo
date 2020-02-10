@@ -17,7 +17,7 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
     private val sqlFormInstanceMapper: SqlFormInstanceMapper
 ) : FormInstanceQuestionStore, SqlStore(database) {
 
-    override fun create(formInstanceId: UUID, models: List<FormInstanceQuestionModel>) = transaction<Unit> {
+    override fun create(formInstanceId: UUID, models: Set<FormInstanceQuestionModel>) = transaction<Unit> {
         FormInstanceQuestionTable
             .batchInsert(models) { model ->
                 sqlFormInstanceMapper.formInstanceQuestionEntity(this, formInstanceId, model)

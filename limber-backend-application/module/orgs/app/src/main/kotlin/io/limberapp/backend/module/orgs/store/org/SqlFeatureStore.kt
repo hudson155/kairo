@@ -18,7 +18,7 @@ internal class SqlFeatureStore @Inject constructor(
     private val sqlOrgMapper: SqlOrgMapper
 ) : FeatureStore, SqlStore(database) {
 
-    override fun create(orgId: UUID, models: List<FeatureModel>) = transaction<Unit> {
+    override fun create(orgId: UUID, models: Set<FeatureModel>) = transaction<Unit> {
         FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
     }
 
@@ -40,6 +40,7 @@ internal class SqlFeatureStore @Inject constructor(
         return@transaction FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) }
             .map { sqlOrgMapper.featureModel(it) }
+            .toSet()
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {

@@ -19,7 +19,7 @@ internal class SqlFormInstanceStore @Inject constructor(
 
     override fun create(model: FormInstanceModel) = transaction {
         FormInstanceTable.insert { sqlFormInstanceMapper.formInstanceEntity(it, model) }
-        formInstanceQuestionStore.create(model.id, model.questions)
+        formInstanceQuestionStore.create(model.id, model.questions.toSet())
     }
 
     override fun get(formInstanceId: UUID) = transaction {
@@ -33,6 +33,7 @@ internal class SqlFormInstanceStore @Inject constructor(
         return@transaction (FormInstanceTable innerJoin FormTemplateTable)
             .select { FormTemplateTable.orgGuid eq orgId }
             .map { sqlFormInstanceMapper.formInstanceModel(it) }
+            .toSet()
     }
 
     override fun delete(formInstanceId: UUID) = transaction<Unit> {

@@ -99,7 +99,7 @@ internal class DeleteMembershipTest : ResourceTest() {
         )
 
         // DeleteMembership
-        orgRep = orgRep.copy(members = orgRep.members.filter { it.userId != user0Id })
+        orgRep = orgRep.copy(members = orgRep.members.filter { it.userId != user0Id }.toSet())
         piperTest.test(
             endpointConfig = DeleteMembership.endpointConfig,
             pathParams = mapOf(

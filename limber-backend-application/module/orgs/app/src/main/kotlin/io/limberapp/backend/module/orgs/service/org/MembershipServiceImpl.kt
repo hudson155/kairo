@@ -12,7 +12,7 @@ internal class MembershipServiceImpl @Inject constructor(
     private val orgStore: OrgStore
 ) : MembershipService by membershipStore {
 
-    override fun create(orgId: UUID, models: List<MembershipModel>) {
+    override fun create(orgId: UUID, models: Set<MembershipModel>) {
         orgStore.get(orgId) ?: throw OrgNotFound()
         membershipStore.create(orgId, models)
     }

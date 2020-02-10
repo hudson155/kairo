@@ -9,7 +9,7 @@ interface FormInstanceService {
 
     fun get(formInstanceId: UUID): FormInstanceModel?
 
-    fun getByOrgId(orgId: UUID): List<FormInstanceModel>
+    fun getByOrgId(orgId: UUID): Set<FormInstanceModel>
 
     fun delete(formInstanceId: UUID)
 }

@@ -45,6 +45,7 @@ internal class SqlOrgStore @Inject constructor(
                 )
             }
             .map { sqlOrgMapper.orgModel(it) }
+            .toSet()
     }
 
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {

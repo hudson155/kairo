@@ -34,7 +34,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         )
         every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
         every { mockedServices[UserService::class].create(any()) } returns Unit
-        every { mockedServices[OrgService::class].getByMemberId(any()) } returns emptyList()
+        every { mockedServices[OrgService::class].getByMemberId(any()) } returns emptySet()
 
         // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(
@@ -83,12 +83,12 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            features = listOf(),
-            members = listOf(MembershipModel(LocalDateTime.now(fixedClock), existingUser.id))
+            features = emptySet(),
+            members = setOf(MembershipModel(LocalDateTime.now(fixedClock), existingUser.id))
         )
         every { mockedServices[AccountService::class].get(existingUser.id) } returns existingAccount
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
-        every { mockedServices[OrgService::class].getByMemberId(existingUser.id) } returns listOf(existingOrg)
+        every { mockedServices[OrgService::class].getByMemberId(existingUser.id) } returns setOf(existingOrg)
 
         // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(

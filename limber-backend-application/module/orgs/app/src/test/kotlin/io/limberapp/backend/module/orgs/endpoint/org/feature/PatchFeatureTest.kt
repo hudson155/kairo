@@ -135,7 +135,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // PatchFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
         featureRep = featureRep.copy(name = featureUpdateRep.name!!)
-        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it })
+        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it }.toSet())
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
             pathParams = mapOf(

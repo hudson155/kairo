@@ -18,7 +18,7 @@ internal class SqlMembershipStore @Inject constructor(
     private val sqlOrgMapper: SqlOrgMapper
 ) : MembershipStore, SqlStore(database) {
 
-    override fun create(orgId: UUID, models: List<MembershipModel>) = transaction<Unit> {
+    override fun create(orgId: UUID, models: Set<MembershipModel>) = transaction<Unit> {
         MembershipTable.batchInsert(models) { model -> sqlOrgMapper.membershipEntity(this, orgId, model) }
     }
 
@@ -38,6 +38,7 @@ internal class SqlMembershipStore @Inject constructor(
         return@transaction MembershipTable
             .select { (MembershipTable.orgGuid eq orgId) }
             .map { sqlOrgMapper.membershipModel(it) }
+            .toSet()
     }
 
     override fun delete(orgId: UUID, userId: UUID) = transaction<Unit> {

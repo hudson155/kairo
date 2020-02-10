@@ -5,7 +5,7 @@ import java.util.UUID
 
 interface FormInstanceQuestionService {
 
-    fun create(formInstanceId: UUID, models: List<FormInstanceQuestionModel>)
+    fun create(formInstanceId: UUID, models: Set<FormInstanceQuestionModel>)
 
     fun get(formInstanceId: UUID, formTemplateQuestionId: UUID): FormInstanceQuestionModel?
 

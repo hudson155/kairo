@@ -32,6 +32,7 @@ internal class SqlFormTemplateStore @Inject constructor(
         return@transaction FormTemplateTable
             .select { FormTemplateTable.orgGuid eq orgId }
             .map { sqlFormTemplateMapper.formTemplateModel(it) }
+            .toSet()
     }
 
     override fun update(formTemplateId: UUID, update: FormTemplateModel.Update) = transaction {
