@@ -26,11 +26,13 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 import io.limberapp.backend.module.forms.store.formInstance.FormInstanceQuestionStore
 import io.limberapp.backend.module.forms.store.formInstance.FormInstanceStore
 import io.limberapp.backend.module.forms.store.formInstance.SqlFormInstanceMapper
+import io.limberapp.backend.module.forms.store.formInstance.SqlFormInstanceMapperImpl
 import io.limberapp.backend.module.forms.store.formInstance.SqlFormInstanceQuestionStore
 import io.limberapp.backend.module.forms.store.formInstance.SqlFormInstanceStore
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateMapper
+import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateMapperImpl
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateQuestionStore
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
 
@@ -83,11 +85,13 @@ class FormsModule : Module() {
     }
 
     private fun bindFormTemplateStores() {
+        bind(SqlFormTemplateMapper::class, SqlFormTemplateMapperImpl::class)
         bind(FormTemplateStore::class, SqlFormTemplateStore::class)
         bind(FormTemplateQuestionStore::class, SqlFormTemplateQuestionStore::class)
     }
 
     private fun bindFormInstanceStores() {
+        bind(SqlFormInstanceMapper::class, SqlFormInstanceMapperImpl::class)
         bind(FormInstanceStore::class, SqlFormInstanceStore::class)
         bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
     }
