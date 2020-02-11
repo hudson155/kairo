@@ -18,7 +18,7 @@ import java.util.UUID
 
 internal class SqlUserStore @Inject constructor(
     database: Database,
-    private val sqlAccountMapper: SqlAccountMapperImpl
+    private val sqlAccountMapper: SqlAccountMapper
 ) : UserStore, SqlStore(database) {
 
     override fun create(model: UserModel) = transaction {

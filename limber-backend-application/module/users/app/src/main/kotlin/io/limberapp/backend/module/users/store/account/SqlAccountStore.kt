@@ -9,7 +9,7 @@ import java.util.UUID
 
 internal class SqlAccountStore @Inject constructor(
     database: Database,
-    private val sqlAccountMapper: SqlAccountMapperImpl
+    private val sqlAccountMapper: SqlAccountMapper
 ) : AccountStore, SqlStore(database) {
 
     override fun get(accountId: UUID) = transaction {
