@@ -3,7 +3,7 @@ package io.limberapp.backend.module.healthCheck.rep.healthCheck
 import com.piperframework.rep.CompleteRep
 import java.time.LocalDateTime
 
-object HealthCheckRep {
+internal object HealthCheckRep {
 
     enum class State {
         HEALTHY,

@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.entity.formTemplate
 import com.piperframework.sql.columnTypes.localDateTime.localdate
 import com.piperframework.store.SqlTable
 
-object FormTemplateQuestionTable : SqlTable("forms", "form_template_question") {
+internal object FormTemplateQuestionTable : SqlTable("forms", "form_template_question") {
 
     val guid = uuid("guid")
 

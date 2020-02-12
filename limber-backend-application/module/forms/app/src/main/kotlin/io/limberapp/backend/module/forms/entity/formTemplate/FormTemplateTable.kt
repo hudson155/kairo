@@ -2,7 +2,7 @@ package io.limberapp.backend.module.forms.entity.formTemplate
 
 import com.piperframework.store.SqlTable
 
-object FormTemplateTable : SqlTable("forms", "form_template") {
+internal object FormTemplateTable : SqlTable("forms", "form_template") {
 
     val guid = uuid("guid")
 

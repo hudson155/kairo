@@ -4,7 +4,7 @@ import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.service.org.MembershipService
 import java.util.UUID
 
-interface MembershipStore : MembershipService {
+internal interface MembershipStore : MembershipService {
 
     fun create(orgId: UUID, models: Set<MembershipModel>)
 

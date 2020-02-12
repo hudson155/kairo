@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FormTemplateTextQuestionRep {
+internal object FormTemplateTextQuestionRep {
 
     data class Creation(
         override val label: String,

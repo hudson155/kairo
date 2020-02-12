@@ -2,7 +2,7 @@ package io.limberapp.backend.module.orgs.entity.org
 
 import com.piperframework.store.SqlTable
 
-object FeatureTable : SqlTable("orgs", "feature") {
+internal object FeatureTable : SqlTable("orgs", "feature") {
 
     val guid = uuid("guid")
 

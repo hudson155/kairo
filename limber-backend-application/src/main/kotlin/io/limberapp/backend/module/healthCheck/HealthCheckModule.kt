@@ -11,7 +11,7 @@ import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckSe
  * into account resources that all other modules use. This is why it's defined directly in the application rather than
  * in its own module module.
  */
-class HealthCheckModule : Module() {
+internal class HealthCheckModule : Module() {
 
     override val endpoints: List<Class<out ApiEndpoint<*, *, *>>> = listOf(HealthCheck::class.java)
 

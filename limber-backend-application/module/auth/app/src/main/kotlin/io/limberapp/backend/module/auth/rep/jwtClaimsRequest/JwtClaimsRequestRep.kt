@@ -8,7 +8,7 @@ import com.piperframework.validation.util.mediumText
 import com.piperframework.validation.util.url
 import io.limberapp.backend.authorization.principal.Claims
 
-object JwtClaimsRequestRep {
+internal object JwtClaimsRequestRep {
 
     data class Creation(
         val firstName: String,

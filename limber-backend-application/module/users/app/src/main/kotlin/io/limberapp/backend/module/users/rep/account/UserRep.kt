@@ -11,7 +11,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import java.time.LocalDateTime
 import java.util.UUID
 
-object UserRep {
+internal object UserRep {
 
     data class Creation(
         val firstName: String,

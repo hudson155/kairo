@@ -8,7 +8,7 @@ import com.piperframework.validation.util.mediumText
 import java.time.LocalDateTime
 import java.util.UUID
 
-object OrgRep {
+internal object OrgRep {
 
     data class Creation(
         val name: String

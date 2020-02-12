@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 
-interface SqlTenantMapper {
+internal interface SqlTenantMapper {
 
     fun tenantEntity(insertStatement: InsertStatement<*>, model: TenantModel)
 

@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
-class MemberOfOrgThatOwnsFormTemplate(
+internal class MemberOfOrgThatOwnsFormTemplate(
     private val formTemplateService: FormTemplateService,
     private val formTemplateId: UUID?
 ) : Authorization() {

@@ -5,7 +5,7 @@ import com.piperframework.rep.CreationRep
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FormInstanceRep {
+internal object FormInstanceRep {
 
     data class Creation(
         val orgId: UUID,
