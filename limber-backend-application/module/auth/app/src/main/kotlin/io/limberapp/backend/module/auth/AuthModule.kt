@@ -5,6 +5,10 @@ import io.limberapp.backend.module.auth.endpoint.account.accessToken.DeleteAcces
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.GetAccessTokensByAccountId
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.PostAccessToken
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
+import io.limberapp.backend.module.auth.endpoint.tenant.DeleteTenant
+import io.limberapp.backend.module.auth.endpoint.tenant.GetTenant
+import io.limberapp.backend.module.auth.endpoint.tenant.PatchTenant
+import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
@@ -23,6 +27,11 @@ import io.limberapp.backend.module.auth.store.tenant.TenantStore
 class AuthModule : Module() {
 
     override val endpoints = listOf(
+
+        PostTenant::class.java,
+        GetTenant::class.java,
+        PatchTenant::class.java,
+        DeleteTenant::class.java,
 
         PostJwtClaimsRequest::class.java,
 
