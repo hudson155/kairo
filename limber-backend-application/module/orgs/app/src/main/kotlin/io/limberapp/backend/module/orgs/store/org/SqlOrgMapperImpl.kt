@@ -17,6 +17,16 @@ internal class SqlOrgMapperImpl @Inject constructor(
     private val membershipStore: MembershipStore
 ) : SqlOrgMapper {
 
+    override fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel) {
+        insertStatement[OrgTable.createdDate] = model.created
+        insertStatement[OrgTable.guid] = model.id
+        insertStatement[OrgTable.name] = model.name
+    }
+
+    override fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update) {
+        update.name?.let { updateStatement[OrgTable.name] = it }
+    }
+
     override fun featureEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: FeatureModel) {
         insertStatement[FeatureTable.createdDate] = model.created
         insertStatement[FeatureTable.guid] = model.id
@@ -37,14 +47,15 @@ internal class SqlOrgMapperImpl @Inject constructor(
         insertStatement[MembershipTable.accountGuid] = model.userId
     }
 
-    override fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel) {
-        insertStatement[OrgTable.createdDate] = model.created
-        insertStatement[OrgTable.guid] = model.id
-        insertStatement[OrgTable.name] = model.name
-    }
-
-    override fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update) {
-        update.name?.let { updateStatement[OrgTable.name] = it }
+    override fun orgModel(resultRow: ResultRow): OrgModel {
+        val guid = resultRow[OrgTable.guid]
+        return OrgModel(
+            id = guid,
+            created = resultRow[OrgTable.createdDate],
+            name = resultRow[OrgTable.name],
+            features = featureStore.getByOrgId(guid),
+            members = membershipStore.getByOrgId(guid)
+        )
     }
 
     override fun featureModel(resultRow: ResultRow) = FeatureModel(
@@ -59,15 +70,4 @@ internal class SqlOrgMapperImpl @Inject constructor(
         created = resultRow[MembershipTable.createdDate],
         userId = resultRow[MembershipTable.accountGuid]
     )
-
-    override fun orgModel(resultRow: ResultRow): OrgModel {
-        val guid = resultRow[OrgTable.guid]
-        return OrgModel(
-            id = guid,
-            created = resultRow[OrgTable.createdDate],
-            name = resultRow[OrgTable.name],
-            features = featureStore.getByOrgId(guid),
-            members = membershipStore.getByOrgId(guid)
-        )
-    }
 }

@@ -10,19 +10,19 @@ import java.util.UUID
 
 interface SqlOrgMapper {
 
+    fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel)
+
+    fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update)
+
     fun featureEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: FeatureModel)
 
     fun featureEntity(updateStatement: UpdateStatement, update: FeatureModel.Update)
 
     fun membershipEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: MembershipModel)
 
-    fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel)
-
-    fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update)
+    fun orgModel(resultRow: ResultRow): OrgModel
 
     fun featureModel(resultRow: ResultRow): FeatureModel
 
     fun membershipModel(resultRow: ResultRow): MembershipModel
-
-    fun orgModel(resultRow: ResultRow): OrgModel
 }
