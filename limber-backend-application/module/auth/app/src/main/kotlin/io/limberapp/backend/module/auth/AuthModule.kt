@@ -9,6 +9,8 @@ import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestServiceImpl
+import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.backend.module.auth.service.tenant.TenantServiceImpl
 import io.limberapp.backend.module.auth.store.accessToken.AccessTokenStore
 import io.limberapp.backend.module.auth.store.accessToken.SqlAccessTokenMapper
 import io.limberapp.backend.module.auth.store.accessToken.SqlAccessTokenMapperImpl
@@ -30,7 +32,11 @@ class AuthModule : Module() {
     )
 
     override fun bindServices() {
+
+        bind(TenantService::class, TenantServiceImpl::class)
+
         bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
+
         bind(AccessTokenService::class, AccessTokenServiceImpl::class)
     }
 
