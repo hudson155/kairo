@@ -4,5 +4,5 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.auth.store.accessToken.AccessTokenStore
 
 internal class AccessTokenServiceImpl @Inject constructor(
-    private val accessTokenStore: AccessTokenStore
+    accessTokenStore: AccessTokenStore
 ) : AccessTokenService by accessTokenStore

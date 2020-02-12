@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -28,11 +28,11 @@ internal class GetOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // CreateOrg
-        val orgRep = OrgRepFixtures[0].complete(this, 0)
+        // PostOrg
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            endpointConfig = PostOrg.endpointConfig,
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // GetOrg

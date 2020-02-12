@@ -1,10 +1,9 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.orgs.endpoint.org.CreateOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.exception.notFound.FeatureNotFound
-import io.limberapp.backend.module.orgs.exception.notFound.OrgNotFound
+import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
+import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
@@ -29,7 +28,7 @@ internal class DeleteFeatureTest : ResourceTest() {
                 DeleteFeature.orgId to orgId,
                 DeleteFeature.featureId to featureId
             ),
-            expectedException = OrgNotFound()
+            expectedException = FeatureNotFound()
         )
     }
 
@@ -39,11 +38,11 @@ internal class DeleteFeatureTest : ResourceTest() {
         // Setup
         val featureId = UUID.randomUUID()
 
-        // CreateOrg
-        val orgRep = OrgRepFixtures[0].complete(this, 0)
+        // PostOrg
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            endpointConfig = PostOrg.endpointConfig,
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // DeleteFeature
@@ -69,24 +68,24 @@ internal class DeleteFeatureTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // CreateOrg
-        var orgRep = OrgRepFixtures[0].complete(this, 0)
+        // PostOrg
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
-            endpointConfig = CreateOrg.endpointConfig,
-            body = OrgRepFixtures[0].creation()
+            endpointConfig = PostOrg.endpointConfig,
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // CreateFeature
-        val featureRep = FeatureRepFixtures[0].complete(this, 2)
+        // PostFeature
+        val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
-            endpointConfig = CreateFeature.endpointConfig,
-            pathParams = mapOf(CreateFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures[0].creation()
+            endpointConfig = PostFeature.endpointConfig,
+            pathParams = mapOf(PostFeature.orgId to orgRep.id),
+            body = FeatureRepFixtures.formsFixture.creation()
         )
 
         // DeleteFeature
-        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })
+        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id }.toSet())
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(

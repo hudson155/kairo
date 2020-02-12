@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.forms.endpoint.formTemplate.CreateFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
@@ -22,7 +22,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // DeleteFormTemplate
+        // DeleteFormTemplateQuestion
         piperTest.test(
             endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
@@ -40,11 +40,11 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val orgId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // CreateFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        // PostFormTemplate
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
-            endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            endpointConfig = PostFormTemplate.endpointConfig,
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
         // DeleteFormTemplateQuestion
@@ -64,23 +64,23 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         // Setup
         val orgId = UUID.randomUUID()
 
-        // CreateFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures[0].complete(this, orgId, 0)
+        // PostFormTemplate
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
         piperTest.setup(
-            endpointConfig = CreateFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures[0].creation(orgId)
+            endpointConfig = PostFormTemplate.endpointConfig,
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
         )
 
-        // CreateFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures[0].complete(this, 4)
+        // PostFormTemplateQuestion
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
         piperTest.setup(
-            endpointConfig = CreateFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(CreateFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(CreateFormTemplateQuestion.rank to 0),
-            body = FormTemplateQuestionRepFixtures[0].creation()
+            endpointConfig = PostFormTemplateQuestion.endpointConfig,
+            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
+            queryParams = mapOf(PostFormTemplateQuestion.rank to 0),
+            body = FormTemplateQuestionRepFixtures.textFixture.creation()
         )
 
         // DeleteFormTemplateQuestion

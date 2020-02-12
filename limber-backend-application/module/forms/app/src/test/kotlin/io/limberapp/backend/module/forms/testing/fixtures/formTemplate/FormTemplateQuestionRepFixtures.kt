@@ -13,31 +13,6 @@ internal object FormTemplateQuestionRepFixtures {
         val complete: ResourceTest.(idSeed: Int) -> FormTemplateQuestionRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
-
-    private val fixtures = listOf(
-        Fixture({
-            FormTemplateTextQuestionRep.Creation(
-                label = "Additional Information",
-                helpText = null,
-                multiLine = true,
-                placeholder = null,
-                validator = null
-            )
-        }, { idSeed ->
-            FormTemplateTextQuestionRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                label = "Additional Information",
-                helpText = null,
-                maxLength = 10_000,
-                multiLine = true,
-                placeholder = null,
-                validator = null
-            )
-        })
-    )
-
     val defaults = listOf(
         Fixture({
             FormTemplateTextQuestionRep.Creation(
@@ -97,4 +72,25 @@ internal object FormTemplateQuestionRepFixtures {
             )
         })
     )
+
+    val textFixture = Fixture({
+        FormTemplateTextQuestionRep.Creation(
+            label = "Additional Information",
+            helpText = null,
+            multiLine = true,
+            placeholder = null,
+            validator = null
+        )
+    }, { idSeed ->
+        FormTemplateTextQuestionRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            label = "Additional Information",
+            helpText = null,
+            maxLength = 10_000,
+            multiLine = true,
+            placeholder = null,
+            validator = null
+        )
+    })
 }

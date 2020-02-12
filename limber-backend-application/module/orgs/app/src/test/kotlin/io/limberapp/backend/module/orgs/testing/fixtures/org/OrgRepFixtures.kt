@@ -12,30 +12,27 @@ internal object OrgRepFixtures {
         val complete: ResourceTest.(idSeed: Int) -> OrgRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
+    val crankyPastaFixture = Fixture({
+        OrgRep.Creation("Cranky Pasta")
+    }, { idSeed ->
+        OrgRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            name = "Cranky Pasta",
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
+            members = emptySet()
+        )
+    })
 
-    private val fixtures = listOf(
-        Fixture({
-            OrgRep.Creation("Cranky Pasta")
-        }, { idSeed ->
-            OrgRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                name = "Cranky Pasta",
-                features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
-                members = emptyList()
-            )
-        }),
-        Fixture({
-            OrgRep.Creation("Discreet Bulb")
-        }, { idSeed ->
-            OrgRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                name = "Discreet Bulb",
-                features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
-                members = emptyList()
-            )
-        })
-    )
+    val discreetBulbFixture = Fixture({
+        OrgRep.Creation("Discreet Bulb")
+    }, { idSeed ->
+        OrgRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            name = "Discreet Bulb",
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
+            members = emptySet()
+        )
+    })
 }

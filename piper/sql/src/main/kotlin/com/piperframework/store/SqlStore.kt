@@ -1,5 +1,6 @@
 package com.piperframework.store
 
+import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Op
 import org.jetbrains.exposed.sql.ResultRow
@@ -12,13 +13,31 @@ import org.jetbrains.exposed.sql.statements.BatchInsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
+import org.postgresql.util.PSQLException
+import org.postgresql.util.ServerErrorMessage
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
 
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
 
-    fun <E : Any> Table.batchInsertIndexed(
+    protected data class Operation(val operation: () -> Unit)
+
+    protected data class OperationError(val error: ServerErrorMessage)
+
+    protected fun doOperation(operation: () -> Unit): Operation = Operation(operation)
+
+    protected infix fun Operation.andHandleError(onError: OperationError.() -> Unit) {
+        try {
+            operation()
+        } catch (e: ExposedSQLException) {
+            val error = (e.cause as PSQLException).serverErrorMessage
+            OperationError(error).onError()
+            throw e
+        }
+    }
+
+    protected fun <E : Any> Table.batchInsertIndexed(
         data: Iterable<E>,
         ignore: Boolean = false,
         body: BatchInsertStatement.(Int, E) -> Unit
@@ -30,18 +49,20 @@ abstract class SqlStore(private val database: Database) {
         }
     }
 
-    fun <T : Table> T.updateAtMostOne(
+    protected fun <T : Table> T.updateExactlyOne(
         where: (SqlExpressionBuilder.() -> Op<Boolean>),
-        body: T.(UpdateStatement) -> Unit
-    ) = update(where = where, body = body).ifGt(1, ::badSql)
+        body: T.(UpdateStatement) -> Unit,
+        notFound: () -> Nothing
+    ) = update(where = where, body = body).ifGt(1, ::badSql).ifEq(0, notFound)
 
-    fun Table.deleteAtMostOneWhere(
-        op: SqlExpressionBuilder.() -> Op<Boolean>
-    ) = deleteWhere(op = op).ifGt(1, ::badSql)
+    protected fun Table.deleteExactlyOne(
+        where: SqlExpressionBuilder.() -> Op<Boolean>,
+        notFound: () -> Nothing
+    ) = deleteWhere(op = where).ifGt(1, ::badSql).ifEq(0, notFound)
 
-    protected inline fun Int.ifGt(int: Int, function: () -> Nothing): Int = if (this > int) function() else this
+    private inline fun Int.ifGt(int: Int, function: () -> Nothing): Int = if (this > int) function() else this
 
-    protected inline fun Int.ifEq(int: Int, function: () -> Nothing): Int = if (this == int) function() else this
+    private inline fun Int.ifEq(int: Int, function: () -> Nothing): Int = if (this == int) function() else this
 
-    protected fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
+    private fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
 }

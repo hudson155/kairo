@@ -11,44 +11,41 @@ internal object UserRepFixtures {
         val complete: ResourceTest.(idSeed: Int) -> UserRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
+    val jeffHudsonFixture = Fixture({
+        UserRep.Creation(
+            firstName = "Jeff",
+            lastName = "Hudson",
+            emailAddress = "jhudson@jhudson.ca",
+            profilePhotoUrl = null
+        )
+    }, { idSeed ->
+        UserRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            firstName = "Jeff",
+            lastName = "Hudson",
+            emailAddress = "jhudson@jhudson.ca",
+            profilePhotoUrl = null,
+            roles = emptySet()
+        )
+    })
 
-    private val fixtures = listOf(
-        Fixture({
-            UserRep.Creation(
-                firstName = "Jeff",
-                lastName = "Hudson",
-                emailAddress = "jhudson@jhudson.ca",
-                profilePhotoUrl = null
-            )
-        }, { idSeed ->
-            UserRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                firstName = "Jeff",
-                lastName = "Hudson",
-                emailAddress = "jhudson@jhudson.ca",
-                profilePhotoUrl = null,
-                roles = emptySet()
-            )
-        }),
-        Fixture({
-            UserRep.Creation(
-                firstName = "Bill",
-                lastName = "Gates",
-                emailAddress = "bill.gates@microsoft.com",
-                profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg"
-            )
-        }, { idSeed ->
-            UserRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                firstName = "Bill",
-                lastName = "Gates",
-                emailAddress = "bill.gates@microsoft.com",
-                profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg",
-                roles = emptySet()
-            )
-        })
-    )
+    val billGatesFixture = Fixture({
+        UserRep.Creation(
+            firstName = "Bill",
+            lastName = "Gates",
+            emailAddress = "bill.gates@microsoft.com",
+            profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg"
+        )
+    }, { idSeed ->
+        UserRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            firstName = "Bill",
+            lastName = "Gates",
+            emailAddress = "bill.gates@microsoft.com",
+            profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg",
+            roles = emptySet()
+        )
+    })
 }

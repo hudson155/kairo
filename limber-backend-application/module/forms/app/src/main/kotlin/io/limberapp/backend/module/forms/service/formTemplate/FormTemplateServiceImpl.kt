@@ -4,5 +4,5 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 
 internal class FormTemplateServiceImpl @Inject constructor(
-    private val formTemplateStore: FormTemplateStore
+    formTemplateStore: FormTemplateStore
 ) : FormTemplateService by formTemplateStore

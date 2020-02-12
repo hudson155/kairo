@@ -9,7 +9,7 @@ interface OrgService {
 
     fun get(orgId: UUID): OrgModel?
 
-    fun getByMemberId(memberId: UUID): List<OrgModel>
+    fun getByMemberId(memberId: UUID): Set<OrgModel>
 
     fun update(orgId: UUID, update: OrgModel.Update): OrgModel
 

@@ -20,7 +20,7 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
         // GetAccessTokensByAccountId
         piperTest.test(
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -33,24 +33,24 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
         // Setup
         val accountId = UUID.randomUUID()
 
-        // CreateAccessToken
-        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
+        // PostAccessToken
+        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         piperTest.setup(
-            endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            endpointConfig = PostAccessToken.endpointConfig,
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {}
 
-        // CreateAccessToken
-        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, accountId, 2)
+        // PostAccessToken
+        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(
-            endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            endpointConfig = PostAccessToken.endpointConfig,
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {}
 
         // GetAccessTokensByAccountId
         piperTest.test(
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(accessToken0Rep, accessToken1Rep), actual)

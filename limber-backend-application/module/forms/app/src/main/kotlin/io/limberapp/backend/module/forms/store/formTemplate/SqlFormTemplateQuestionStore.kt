@@ -4,24 +4,20 @@ import com.google.inject.Inject
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
-import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
-import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.max
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.InsertStatement
-import org.jetbrains.exposed.sql.statements.UpdateStatement
 import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 internal class SqlFormTemplateQuestionStore @Inject constructor(
-    database: Database
+    database: Database,
+    private val sqlFormTemplateMapper: SqlFormTemplateMapper
 ) : FormTemplateQuestionStore, SqlStore(database) {
 
     override fun create(
@@ -33,14 +29,15 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = models.size)
         FormTemplateQuestionTable
             .batchInsertIndexed(models) { i, model ->
-                createFormTemplateQuestion(formTemplateId, model, insertionRank + i)
+                sqlFormTemplateMapper.formTemplateQuestionEntity(this, formTemplateId, model, insertionRank + i)
             }
     }
 
     override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) = transaction<Unit> {
         val insertionRank = validateInsertionRank(formTemplateId, rank)
         incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = 1)
-        FormTemplateQuestionTable.insert { it.createFormTemplateQuestion(formTemplateId, model, insertionRank) }
+        FormTemplateQuestionTable
+            .insert { sqlFormTemplateMapper.formTemplateQuestionEntity(it, formTemplateId, model, insertionRank) }
     }
 
     private fun validateInsertionRank(formTemplateId: UUID, rank: Int?): Int {
@@ -69,47 +66,21 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
             )
     }
 
-    private fun InsertStatement<*>.createFormTemplateQuestion(
-        formTemplateId: UUID,
-        model: FormTemplateQuestionModel,
-        index: Int
-    ) {
-        this[FormTemplateQuestionTable.createdDate] = model.created
-        this[FormTemplateQuestionTable.guid] = model.id
-        this[FormTemplateQuestionTable.formTemplateGuid] = formTemplateId
-        this[FormTemplateQuestionTable.rank] = index
-        this[FormTemplateQuestionTable.label] = model.label
-        this[FormTemplateQuestionTable.helpText] = model.helpText
-        this[FormTemplateQuestionTable.type] = model.type.name
-        when (model) {
-            is FormTemplateDateQuestionModel -> {
-                this[FormTemplateQuestionTable.earliest] = model.earliest
-                this[FormTemplateQuestionTable.latest] = model.latest
-            }
-            is FormTemplateTextQuestionModel -> {
-                this[FormTemplateQuestionTable.multiLine] = model.multiLine
-                this[FormTemplateQuestionTable.placeholder] = model.placeholder
-                this[FormTemplateQuestionTable.validator] = model.validator?.pattern
-            }
-            else -> error("Unexpected question type: ${model::class.qualifiedName}")
-        }
-    }
-
     override fun get(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction {
-        return@transaction FormTemplateQuestionTable
+        val entity = FormTemplateQuestionTable
             .select {
                 (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
                         (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
             }
-            .singleOrNull()
-            ?.toFormTemplateQuestionModel()
+            .singleOrNull() ?: return@transaction null
+        return@transaction sqlFormTemplateMapper.formTemplateQuestionModel(entity)
     }
 
     override fun getByFormTemplateId(formTemplateId: UUID) = transaction {
         return@transaction FormTemplateQuestionTable
             .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
             .orderBy(FormTemplateQuestionTable.rank)
-            .map { it.toFormTemplateQuestionModel() }
+            .map { sqlFormTemplateMapper.formTemplateQuestionModel(it) }
     }
 
     override fun update(
@@ -118,61 +89,25 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         update: FormTemplateQuestionModel.Update
     ) = transaction {
         FormTemplateQuestionTable
-            .updateAtMostOne(
+            .updateExactlyOne(
                 where = {
                     (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
                             (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
                 },
-                body = { it.updateFormTemplate(update) }
+                body = { sqlFormTemplateMapper.formTemplateQuestionEntity(it, update) },
+                notFound = { throw FormTemplateQuestionNotFound() }
             )
-            .ifEq(0) { throw FormTemplateQuestionNotFound() }
         return@transaction checkNotNull(get(formTemplateId, formTemplateQuestionId))
-    }
-
-    private fun UpdateStatement.updateFormTemplate(update: FormTemplateQuestionModel.Update) {
-        update.label?.let { this[FormTemplateQuestionTable.label] = it }
-        update.helpText?.let { this[FormTemplateQuestionTable.helpText] = it }
-        when (update) {
-            is FormTemplateDateQuestionModel.Update -> {
-                update.earliest?.let { this[FormTemplateQuestionTable.earliest] = it }
-                update.latest?.let { this[FormTemplateQuestionTable.latest] = it }
-            }
-            is FormTemplateTextQuestionModel.Update -> {
-                update.multiLine?.let { this[FormTemplateQuestionTable.multiLine] = it }
-                update.placeholder?.let { this[FormTemplateQuestionTable.placeholder] = it }
-                update.validator?.let { this[FormTemplateQuestionTable.validator] = it.pattern }
-            }
-            else -> error("Unexpected question type: ${update::class.qualifiedName}")
-        }
     }
 
     override fun delete(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {
         FormTemplateQuestionTable
-            .deleteAtMostOneWhere {
-                (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                        (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
-            }
-            .ifEq(0) { throw FormTemplateQuestionNotFound() }
+            .deleteExactlyOne(
+                where = {
+                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                            (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+                },
+                notFound = { throw FormTemplateQuestionNotFound() }
+            )
     }
-
-    private fun ResultRow.toFormTemplateQuestionModel() =
-        when (FormTemplateQuestionModel.Type.valueOf(this[FormTemplateQuestionTable.type])) {
-            FormTemplateQuestionModel.Type.DATE -> FormTemplateDateQuestionModel(
-                id = this[FormTemplateQuestionTable.guid],
-                created = this[FormTemplateQuestionTable.createdDate],
-                label = this[FormTemplateQuestionTable.label],
-                helpText = this[FormTemplateQuestionTable.helpText],
-                earliest = this[FormTemplateQuestionTable.earliest],
-                latest = this[FormTemplateQuestionTable.latest]
-            )
-            FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel(
-                id = this[FormTemplateQuestionTable.guid],
-                created = this[FormTemplateQuestionTable.createdDate],
-                label = this[FormTemplateQuestionTable.label],
-                helpText = this[FormTemplateQuestionTable.helpText],
-                multiLine = checkNotNull(this[FormTemplateQuestionTable.multiLine]),
-                placeholder = this[FormTemplateQuestionTable.placeholder],
-                validator = this[FormTemplateQuestionTable.validator]?.let { Regex(it) }
-            )
-        }
 }

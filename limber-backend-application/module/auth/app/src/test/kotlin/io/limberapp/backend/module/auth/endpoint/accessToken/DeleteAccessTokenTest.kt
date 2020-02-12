@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.accessToken
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.auth.exception.notFound.AccessTokenNotFound
+import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.accessToken.AccessTokenRepFixtures
@@ -35,18 +35,18 @@ internal class DeleteAccessTokenTest : ResourceTest() {
         // Setup
         val accountId = UUID.randomUUID()
 
-        // CreateAccessToken
-        val accessToken0Rep = AccessTokenRepFixtures[0].complete(this, accountId, 0)
+        // PostAccessToken
+        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         piperTest.setup(
-            endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            endpointConfig = PostAccessToken.endpointConfig,
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         )
 
-        // CreateAccessToken
-        val accessToken1Rep = AccessTokenRepFixtures[0].complete(this, accountId, 2)
+        // PostAccessToken
+        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(
-            endpointConfig = CreateAccessToken.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            endpointConfig = PostAccessToken.endpointConfig,
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         )
 
         // DeleteAccessToken
@@ -61,7 +61,7 @@ internal class DeleteAccessTokenTest : ResourceTest() {
         // GetAccessTokensByAccountId
         piperTest.test(
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(CreateAccessToken.accountId to accountId)
+            pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
             val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(listOf(accessToken1Rep), actual)

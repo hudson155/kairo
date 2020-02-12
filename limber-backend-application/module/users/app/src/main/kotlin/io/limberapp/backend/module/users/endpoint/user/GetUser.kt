@@ -11,7 +11,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService

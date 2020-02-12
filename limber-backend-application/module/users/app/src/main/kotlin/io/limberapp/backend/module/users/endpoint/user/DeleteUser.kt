@@ -22,7 +22,7 @@ internal class DeleteUser @Inject constructor(
     servingConfig: ServingConfig,
     private val userService: UserService
 ) : LimberApiEndpoint<DeleteUser.Command, Unit>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

@@ -36,7 +36,6 @@ object FormTemplateQuestionRep {
         JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Complete::class, name = "TEXT")
     )
     interface Complete : CompleteRep {
-
         val id: UUID
         val label: String
         val helpText: String?

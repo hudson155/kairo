@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import io.limberapp.backend.module.users.exception.notFound.UserNotFound
+import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
 import org.junit.jupiter.api.Test
@@ -25,11 +25,11 @@ internal class DeleteUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // CreateUser
-        val userRep = UserRepFixtures[0].complete(this, 0)
+        // PostUser
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.setup(
-            endpointConfig = CreateUser.endpointConfig,
-            body = UserRepFixtures[0].creation()
+            endpointConfig = PostUser.endpointConfig,
+            body = UserRepFixtures.jeffHudsonFixture.creation()
         )
 
         // DeleteUser

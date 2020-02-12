@@ -12,8 +12,6 @@ internal object FeatureRepFixtures {
         val complete: ResourceTest.(idSeed: Int) -> FeatureRep.Complete
     )
 
-    operator fun get(i: Int) = fixtures[i]
-
     val default = Fixture(
         {
             FeatureRep.Creation("Home", "/home", FeatureModel.Type.HOME)
@@ -29,20 +27,18 @@ internal object FeatureRepFixtures {
         }
     )
 
-    private val fixtures = listOf(
-        Fixture(
-            {
-                FeatureRep.Creation("Forms", "/forms", FeatureModel.Type.FORMS)
-            },
-            { idSeed ->
-                FeatureRep.Complete(
-                    id = deterministicUuidGenerator[idSeed],
-                    created = LocalDateTime.now(fixedClock),
-                    name = "Forms",
-                    path = "/forms",
-                    type = FeatureModel.Type.FORMS
-                )
-            }
-        )
+    val formsFixture = Fixture(
+        {
+            FeatureRep.Creation("Forms", "/forms", FeatureModel.Type.FORMS)
+        },
+        { idSeed ->
+            FeatureRep.Complete(
+                id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
+                name = "Forms",
+                path = "/forms",
+                type = FeatureModel.Type.FORMS
+            )
+        }
     )
 }

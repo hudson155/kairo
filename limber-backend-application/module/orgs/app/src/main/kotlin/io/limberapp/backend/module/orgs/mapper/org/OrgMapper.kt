@@ -18,16 +18,16 @@ internal class OrgMapper @Inject constructor(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         name = rep.name,
-        features = listOf(featureMapper.defaultModel()),
-        members = emptyList()
+        features = setOf(featureMapper.defaultModel()),
+        members = emptySet()
     )
 
     fun completeRep(model: OrgModel) = OrgRep.Complete(
         id = model.id,
         created = model.created,
         name = model.name,
-        features = model.features.map { featureMapper.completeRep(it) },
-        members = model.members.map { membershipMapper.completeRep(it) }
+        features = model.features.map { featureMapper.completeRep(it) }.toSet(),
+        members = model.members.map { membershipMapper.completeRep(it) }.toSet()
     )
 
     fun update(rep: OrgRep.Update) = OrgModel.Update(

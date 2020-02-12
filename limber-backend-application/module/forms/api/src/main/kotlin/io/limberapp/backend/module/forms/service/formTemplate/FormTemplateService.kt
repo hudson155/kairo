@@ -9,7 +9,7 @@ interface FormTemplateService {
 
     fun get(formTemplateId: UUID): FormTemplateModel?
 
-    fun getByOrgId(orgId: UUID): List<FormTemplateModel>
+    fun getByOrgId(orgId: UUID): Set<FormTemplateModel>
 
     fun update(formTemplateId: UUID, update: FormTemplateModel.Update): FormTemplateModel
 

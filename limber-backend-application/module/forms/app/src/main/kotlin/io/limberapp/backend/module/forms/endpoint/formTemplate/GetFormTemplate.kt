@@ -11,7 +11,7 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
-import io.limberapp.backend.module.forms.exception.notFound.FormTemplateNotFound
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -26,7 +26,7 @@ internal class GetFormTemplate @Inject constructor(
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<GetFormTemplate.Command, FormTemplateRep.Complete>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {

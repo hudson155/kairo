@@ -22,8 +22,8 @@ object OrgRep {
         val id: UUID,
         override val created: LocalDateTime,
         val name: String,
-        val features: List<FeatureRep.Complete>,
-        val members: List<MembershipRep.Complete>
+        val features: Set<FeatureRep.Complete>,
+        val members: Set<MembershipRep.Complete>
     ) : CompleteRep
 
     data class Update(

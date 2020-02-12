@@ -22,7 +22,7 @@ internal class DeleteMembership @Inject constructor(
     servingConfig: ServingConfig,
     private val membershipService: MembershipService
 ) : LimberApiEndpoint<DeleteMembership.Command, Unit>(
-    application,
+    application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
