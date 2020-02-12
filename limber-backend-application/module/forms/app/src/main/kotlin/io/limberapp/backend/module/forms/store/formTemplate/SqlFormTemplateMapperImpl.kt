@@ -33,12 +33,12 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
         insertStatement: InsertStatement<*>,
         formTemplateId: UUID,
         model: FormTemplateQuestionModel,
-        index: Int
+        rank: Int
     ) {
         insertStatement[FormTemplateQuestionTable.createdDate] = model.created
         insertStatement[FormTemplateQuestionTable.guid] = model.id
         insertStatement[FormTemplateQuestionTable.formTemplateGuid] = formTemplateId
-        insertStatement[FormTemplateQuestionTable.rank] = index
+        insertStatement[FormTemplateQuestionTable.rank] = rank
         insertStatement[FormTemplateQuestionTable.label] = model.label
         insertStatement[FormTemplateQuestionTable.helpText] = model.helpText
         insertStatement[FormTemplateQuestionTable.type] = model.type.name

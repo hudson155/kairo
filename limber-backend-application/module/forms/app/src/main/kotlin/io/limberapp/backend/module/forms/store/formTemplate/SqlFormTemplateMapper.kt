@@ -17,7 +17,7 @@ interface SqlFormTemplateMapper {
         insertStatement: InsertStatement<*>,
         formTemplateId: UUID,
         model: FormTemplateQuestionModel,
-        index: Int
+        rank: Int
     )
 
     fun formTemplateQuestionEntity(updateStatement: UpdateStatement, update: FormTemplateQuestionModel.Update)
