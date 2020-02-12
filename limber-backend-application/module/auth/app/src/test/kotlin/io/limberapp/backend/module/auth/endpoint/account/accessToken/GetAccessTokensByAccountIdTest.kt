@@ -22,7 +22,7 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
+            val actual = objectMapper.readValue<Set<AccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -52,8 +52,8 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<List<AccessTokenRep.Complete>>(response.content!!)
-            assertEquals(listOf(accessToken0Rep, accessToken1Rep), actual)
+            val actual = objectMapper.readValue<Set<AccessTokenRep.Complete>>(response.content!!)
+            assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)
         }
     }
 }
