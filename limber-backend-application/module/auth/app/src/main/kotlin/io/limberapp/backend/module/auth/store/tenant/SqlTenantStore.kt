@@ -69,7 +69,7 @@ internal class SqlTenantStore @Inject constructor(
         return@transaction checkNotNull(get(update.domain ?: domain))
     }
 
-    override fun delete(domain: String) {
+    override fun delete(domain: String) = transaction<Unit> {
         TenantTable.deleteExactlyOne(
             where = { TenantTable.domain.lowerCase() eq domain.toLowerCase() },
             notFound = { throw TenantNotFound() }
