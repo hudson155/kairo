@@ -56,7 +56,7 @@ internal class GetFormInstancesByOrgIdTest : ResourceTest() {
             body = FormInstanceRepFixtures.fixture.creation(orgId, formTemplateRep.id)
         )
 
-        // GetFormTemplatesByOrgId
+        // GetFormInstancesByOrgId
         piperTest.test(
             endpointConfig = GetFormInstancesByOrgId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByOrgId.orgId to orgId)
