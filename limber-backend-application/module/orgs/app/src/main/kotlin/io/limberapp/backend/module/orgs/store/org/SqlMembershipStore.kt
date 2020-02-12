@@ -21,28 +21,22 @@ internal class SqlMembershipStore @Inject constructor(
 ) : MembershipStore, SqlStore(database) {
 
     override fun create(orgId: UUID, models: Set<MembershipModel>) = transaction {
-        doOperationAndHandleErrors(
-            operation = {
-                MembershipTable.batchInsert(models) { model -> sqlOrgMapper.membershipEntity(this, orgId, model) }
-            },
-            onError = { error ->
-                when {
-                    error.isForeignKeyViolation(MembershipTable.orgGuidForeignKey) -> throw OrgNotFound()
-                }
+        doOperation {
+            MembershipTable.batchInsert(models) { model -> sqlOrgMapper.membershipEntity(this, orgId, model) }
+        } andHandleError {
+            when {
+                error.isForeignKeyViolation(MembershipTable.orgGuidForeignKey) -> throw OrgNotFound()
             }
-        )
+        }
     }
 
     override fun create(orgId: UUID, model: MembershipModel) = transaction {
         get(orgId, model.userId)?.let { throw UserIsAlreadyAMemberOfOrg() }
-        doOperationAndHandleErrors(
-            operation = { MembershipTable.insert { sqlOrgMapper.membershipEntity(it, orgId, model) } },
-            onError = { error ->
-                when {
-                    error.isForeignKeyViolation(MembershipTable.orgGuidForeignKey) -> throw OrgNotFound()
-                }
+        doOperation { MembershipTable.insert { sqlOrgMapper.membershipEntity(it, orgId, model) } } andHandleError {
+            when {
+                error.isForeignKeyViolation(MembershipTable.orgGuidForeignKey) -> throw OrgNotFound()
             }
-        )
+        }
     }
 
     override fun get(orgId: UUID, userId: UUID) = transaction {

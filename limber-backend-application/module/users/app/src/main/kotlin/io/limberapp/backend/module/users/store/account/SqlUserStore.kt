@@ -23,15 +23,12 @@ internal class SqlUserStore @Inject constructor(
 
     override fun create(model: UserModel) = transaction {
         AccountTable.insert { sqlAccountMapper.accountEntity(it, model) }
-        doOperationAndHandleErrors(
-            operation = { UserTable.insert { sqlAccountMapper.userEntity(it, model) } },
-            onError = { error ->
-                when {
-                    error.isUniqueConstraintViolation(UserTable.emailAddressUniqueConstraint) ->
-                        throw EmailAddressAlreadyTaken(model.emailAddress)
-                }
+        doOperation { UserTable.insert { sqlAccountMapper.userEntity(it, model) } } andHandleError {
+            when {
+                error.isUniqueConstraintViolation(UserTable.emailAddressUniqueConstraint) ->
+                    throw EmailAddressAlreadyTaken(model.emailAddress)
             }
-        )
+        }
     }
 
     override fun get(userId: UUID) = transaction {

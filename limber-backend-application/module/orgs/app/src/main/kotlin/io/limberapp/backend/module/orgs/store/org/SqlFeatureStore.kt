@@ -22,30 +22,24 @@ internal class SqlFeatureStore @Inject constructor(
 ) : FeatureStore, SqlStore(database) {
 
     override fun create(orgId: UUID, models: Set<FeatureModel>) = transaction {
-        doOperationAndHandleErrors(
-            operation = {
-                FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
-            },
-            onError = { error ->
-                when {
-                    error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
-                }
+        doOperation {
+            FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
+        } andHandleError {
+            when {
+                error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
             }
-        )
+        }
     }
 
     override fun create(orgId: UUID, model: FeatureModel) = transaction {
         FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path) }
             .singleOrNull()?.let { throw FeatureIsNotUnique() }
-        doOperationAndHandleErrors(
-            operation = { FeatureTable.insert { sqlOrgMapper.featureEntity(it, orgId, model) } },
-            onError = { error ->
-                when {
-                    error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
-                }
+        doOperation { FeatureTable.insert { sqlOrgMapper.featureEntity(it, orgId, model) } } andHandleError {
+            when {
+                error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
             }
-        )
+        }
     }
 
     override fun get(orgId: UUID, featureId: UUID) = transaction {
@@ -63,22 +57,18 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {
-        doOperationAndHandleErrors(
-            operation = {
-                FeatureTable
-                    .updateExactlyOne(
-                        where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
-                        body = { sqlOrgMapper.featureEntity(it, update) },
-                        notFound = { throw FeatureNotFound() }
-                    )
-            },
-            onError = { error ->
-                when {
-                    error.isUniqueConstraintViolation(FeatureTable.orgPathUniqueConstraint) ->
-                        throw FeatureIsNotUnique()
-                }
+        doOperation {
+            FeatureTable
+                .updateExactlyOne(
+                    where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) },
+                    body = { sqlOrgMapper.featureEntity(it, update) },
+                    notFound = { throw FeatureNotFound() }
+                )
+        } andHandleError {
+            when {
+                error.isUniqueConstraintViolation(FeatureTable.orgPathUniqueConstraint) -> throw FeatureIsNotUnique()
             }
-        )
+        }
         return@transaction checkNotNull(get(orgId, featureId))
     }
 

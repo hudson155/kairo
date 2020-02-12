@@ -21,17 +21,23 @@ abstract class SqlStore(private val database: Database) {
 
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
 
-    fun doOperationAndHandleErrors(operation: () -> Unit, onError: (error: ServerErrorMessage) -> Unit) {
+    protected class Operation(val operation: () -> Unit)
+
+    protected class OperationError(val error: ServerErrorMessage)
+
+    protected fun doOperation(operation: () -> Unit): Operation = Operation(operation)
+
+    protected infix fun Operation.andHandleError(onError: OperationError.() -> Unit) {
         try {
             operation()
         } catch (e: ExposedSQLException) {
             val error = (e.cause as PSQLException).serverErrorMessage
-            onError(error)
+            OperationError(error).onError()
             throw e
         }
     }
 
-    fun <E : Any> Table.batchInsertIndexed(
+    protected fun <E : Any> Table.batchInsertIndexed(
         data: Iterable<E>,
         ignore: Boolean = false,
         body: BatchInsertStatement.(Int, E) -> Unit
@@ -43,20 +49,20 @@ abstract class SqlStore(private val database: Database) {
         }
     }
 
-    fun <T : Table> T.updateExactlyOne(
+    protected fun <T : Table> T.updateExactlyOne(
         where: (SqlExpressionBuilder.() -> Op<Boolean>),
         body: T.(UpdateStatement) -> Unit,
         notFound: () -> Nothing
     ) = update(where = where, body = body).ifGt(1, ::badSql).ifEq(0, notFound)
 
-    fun Table.deleteExactlyOne(
+    protected fun Table.deleteExactlyOne(
         where: SqlExpressionBuilder.() -> Op<Boolean>,
         notFound: () -> Nothing
     ) = deleteWhere(op = where).ifGt(1, ::badSql).ifEq(0, notFound)
 
-    protected inline fun Int.ifGt(int: Int, function: () -> Nothing): Int = if (this > int) function() else this
+    private inline fun Int.ifGt(int: Int, function: () -> Nothing): Int = if (this > int) function() else this
 
-    protected inline fun Int.ifEq(int: Int, function: () -> Nothing): Int = if (this == int) function() else this
+    private inline fun Int.ifEq(int: Int, function: () -> Nothing): Int = if (this == int) function() else this
 
-    protected fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
+    private fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
 }

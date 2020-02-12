@@ -42,20 +42,17 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
     }
 
     private fun create(formInstanceId: UUID, model: FormInstanceQuestionModel) = transaction {
-        doOperationAndHandleErrors(
-            operation = {
-                FormInstanceQuestionTable
-                    .insert { sqlFormInstanceMapper.formInstanceQuestionEntity(it, formInstanceId, model) }
-            },
-            onError = { error ->
-                when {
-                    error.isForeignKeyViolation(FormInstanceQuestionTable.formInstanceGuidForeignKey) ->
-                        throw FormInstanceNotFound()
-                    error.isForeignKeyViolation(FormInstanceQuestionTable.formTemplateQuestionGuidForeignKey) ->
-                        throw FormTemplateQuestionNotFound()
-                }
+        doOperation {
+            FormInstanceQuestionTable
+                .insert { sqlFormInstanceMapper.formInstanceQuestionEntity(it, formInstanceId, model) }
+        } andHandleError {
+            when {
+                error.isForeignKeyViolation(FormInstanceQuestionTable.formInstanceGuidForeignKey) ->
+                    throw FormInstanceNotFound()
+                error.isForeignKeyViolation(FormInstanceQuestionTable.formTemplateQuestionGuidForeignKey) ->
+                    throw FormTemplateQuestionNotFound()
             }
-        )
+        }
     }
 
     override fun get(formInstanceId: UUID, formTemplateQuestionId: UUID) = transaction {
