@@ -49,12 +49,23 @@ internal class SqlTenantStore @Inject constructor(
     }
 
     override fun update(domain: String, update: TenantModel.Update) = transaction {
-        TenantTable
-            .updateExactlyOne(
-                where = { TenantTable.domain.lowerCase() eq domain.toLowerCase() },
-                body = { sqlTenantMapper.tenantEntity(it, update) },
-                notFound = { throw TenantNotFound() }
-            )
+        doOperation {
+            TenantTable
+                .updateExactlyOne(
+                    where = { TenantTable.domain.lowerCase() eq domain.toLowerCase() },
+                    body = { sqlTenantMapper.tenantEntity(it, update) },
+                    notFound = { throw TenantNotFound() }
+                )
+        } andHandleError {
+            when {
+                error.isUniqueConstraintViolation(TenantTable.domainUniqueConstraint) ->
+                    throw TenantDomainAlreadyRegistered(checkNotNull(update.domain))
+                error.isUniqueConstraintViolation(TenantTable.orgGuidUniqueConstraint) ->
+                    throw OrgAlreadyHasTenant(checkNotNull(update.orgId))
+                error.isUniqueConstraintViolation(TenantTable.auth0ClientIdUniqueConstraint) ->
+                    throw Auth0ClientIdAlreadyRegistered(checkNotNull(update.auth0ClientId))
+            }
+        }
         return@transaction checkNotNull(get(update.domain ?: domain))
     }
 
