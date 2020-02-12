@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.statements.InsertStatement
 
 internal class SqlAccessTokenMapperImpl @Inject constructor() : SqlAccessTokenMapper {
 
-    override fun accesstokenEntity(insertStatement: InsertStatement<*>, model: AccessTokenModel) {
+    override fun accessTokenEntity(insertStatement: InsertStatement<*>, model: AccessTokenModel) {
         insertStatement[AccessTokenTable.createdDate] = model.created
         insertStatement[AccessTokenTable.guid] = model.id
         insertStatement[AccessTokenTable.accountGuid] = model.userId
