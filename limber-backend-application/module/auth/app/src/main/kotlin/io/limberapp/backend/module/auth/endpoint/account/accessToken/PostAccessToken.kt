@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.accessToken
+package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig

@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.auth.endpoint.accessToken.PostAccessToken
-import io.limberapp.backend.module.auth.endpoint.accessToken.DeleteAccessToken
-import io.limberapp.backend.module.auth.endpoint.accessToken.GetAccessTokensByAccountId
+import io.limberapp.backend.module.auth.endpoint.account.accessToken.PostAccessToken
+import io.limberapp.backend.module.auth.endpoint.account.accessToken.DeleteAccessToken
+import io.limberapp.backend.module.auth.endpoint.account.accessToken.GetAccessTokensByAccountId
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl

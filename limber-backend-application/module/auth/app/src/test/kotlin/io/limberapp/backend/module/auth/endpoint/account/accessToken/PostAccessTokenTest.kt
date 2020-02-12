@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.accessToken
+package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
