@@ -21,9 +21,9 @@ abstract class SqlStore(private val database: Database) {
 
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
 
-    protected class Operation(val operation: () -> Unit)
+    protected data class Operation(val operation: () -> Unit)
 
-    protected class OperationError(val error: ServerErrorMessage)
+    protected data class OperationError(val error: ServerErrorMessage)
 
     protected fun doOperation(operation: () -> Unit): Operation = Operation(operation)
 
