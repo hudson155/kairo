@@ -7,7 +7,7 @@ sqlDatabase:
     type: ENVIRONMENT_VARIABLE
     value: LIMBER_PROD_POSTGRES_PASSWORD
   connectionTimeout: 2500
-  maximumPoolSize: 10
+  maximumPoolSize: 8
 
 authentication:
   mechanisms:
