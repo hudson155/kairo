@@ -4,7 +4,7 @@ import com.piperframework.rep.CompleteRep
 import java.time.LocalDateTime
 import java.util.UUID
 
-object AccessTokenRep {
+internal object AccessTokenRep {
 
     data class OneTimeUse(
         val id: UUID,

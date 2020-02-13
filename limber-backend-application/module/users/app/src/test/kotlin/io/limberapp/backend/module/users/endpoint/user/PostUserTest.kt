@@ -14,6 +14,7 @@ internal class PostUserTest : ResourceTest() {
     fun duplicateEmailAddress() {
 
         // PostUser
+        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation()
@@ -22,12 +23,8 @@ internal class PostUserTest : ResourceTest() {
         // PostUser
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.billGatesFixture.creation().copy(
-                emailAddress = UserRepFixtures.jeffHudsonFixture.creation().emailAddress
-            ),
-            expectedException = EmailAddressAlreadyTaken(
-                UserRepFixtures.jeffHudsonFixture.creation().emailAddress
-            )
+            body = UserRepFixtures.billGatesFixture.creation().copy(emailAddress = jeffHudsonUserRep.emailAddress),
+            expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
         )
     }
 

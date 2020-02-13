@@ -2,7 +2,7 @@ package io.limberapp.backend.module.orgs.entity.org
 
 import com.piperframework.store.SqlTable
 
-object MembershipTable : SqlTable("orgs", "membership") {
+internal object MembershipTable : SqlTable("orgs", "membership") {
 
     val orgGuid = uuid("org_guid").references(OrgTable.guid)
     const val orgGuidForeignKey = "membership_org_guid_fkey"

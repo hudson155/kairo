@@ -5,7 +5,7 @@ import com.piperframework.rep.CreationRep
 import java.time.LocalDateTime
 import java.util.UUID
 
-object MembershipRep {
+internal object MembershipRep {
 
     data class Creation(
         val userId: UUID

@@ -4,7 +4,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRe
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FormInstanceTextQuestionRep {
+internal object FormInstanceTextQuestionRep {
 
     data class Creation(
         override val formTemplateQuestionId: UUID,

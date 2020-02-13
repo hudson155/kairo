@@ -9,7 +9,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FormInstanceQuestionRep {
+internal object FormInstanceQuestionRep {
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
     @JsonSubTypes(

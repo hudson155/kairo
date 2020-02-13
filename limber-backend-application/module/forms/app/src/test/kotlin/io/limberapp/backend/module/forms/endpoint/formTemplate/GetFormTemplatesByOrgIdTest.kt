@@ -22,7 +22,7 @@ internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
             endpointConfig = GetFormTemplatesByOrgId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByOrgId.orgId to orgId)
         ) {
-            val actual = objectMapper.readValue<List<FormTemplateRep.Complete>>(response.content!!)
+            val actual = objectMapper.readValue<Set<FormTemplateRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -52,8 +52,8 @@ internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
             endpointConfig = GetFormTemplatesByOrgId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByOrgId.orgId to orgId)
         ) {
-            val actual = objectMapper.readValue<List<FormTemplateRep.Complete>>(response.content!!)
-            assertEquals(listOf(formTemplate0Rep, formTemplate1Rep), actual)
+            val actual = objectMapper.readValue<Set<FormTemplateRep.Complete>>(response.content!!)
+            assertEquals(setOf(formTemplate0Rep, formTemplate1Rep), actual)
         }
     }
 }

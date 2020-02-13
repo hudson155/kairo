@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.accessToken
+package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -12,51 +12,47 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.mapper.accessToken.AccessTokenMapper
-import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import java.util.UUID
 
 /**
- * Creates an access token for the given account. Note that this endpoint returns a "one time use" rep. This means that
- * the token itself will only be returned by this endpoint, immediately after it is created. The account must record the
- * token appropriately, because it cannot be returned again. If a new token is needed, the account can always delete the
- * existing token and create another.
+ * Deletes the given access token from the given account.
  */
-internal class PostAccessToken @Inject constructor(
+internal class DeleteAccessToken @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val accessTokenService: AccessTokenService,
-    private val accessTokenMapper: AccessTokenMapper
-) : LimberApiEndpoint<PostAccessToken.Command, AccessTokenRep.OneTimeUse>(
+    private val accessTokenService: AccessTokenService
+) : LimberApiEndpoint<DeleteAccessToken.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val accountId: UUID
+        val accountId: UUID,
+        val accessTokenId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        accountId = call.parameters.getAsType(UUID::class, accountId)
+        accountId = call.parameters.getAsType(UUID::class, accountId),
+        accessTokenId = call.parameters.getAsType(UUID::class, accessTokenId)
     )
 
-    override suspend fun Handler.handle(command: Command): AccessTokenRep.OneTimeUse {
+    override suspend fun Handler.handle(command: Command) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val model = accessTokenMapper.model(command.accountId)
-        accessTokenService.create(model)
-        return accessTokenMapper.oneTimeUseRep(model)
+        accessTokenService.delete(command.accountId, command.accessTokenId)
     }
 
     companion object {
         const val accountId = "accountId"
+        const val accessTokenId = "accessTokenId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
+            httpMethod = HttpMethod.Delete,
             pathTemplate = listOf(
                 StringComponent("accounts"),
                 VariableComponent(accountId),
-                StringComponent("access-tokens")
+                StringComponent("access-tokens"),
+                VariableComponent(accessTokenId)
             )
         )
     }

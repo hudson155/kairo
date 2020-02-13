@@ -10,7 +10,7 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FeatureRep {
+internal object FeatureRep {
 
     data class Creation(
         val name: String,

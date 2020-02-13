@@ -9,7 +9,7 @@ import com.piperframework.validation.util.mediumText
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FormTemplateRep {
+internal object FormTemplateRep {
 
     data class Creation(
         val orgId: UUID,

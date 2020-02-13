@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.entity.account
 
 import com.piperframework.store.SqlTable
 
-object AccountTable : SqlTable("users", "account") {
+internal object AccountTable : SqlTable("users", "account") {
 
     val guid = uuid("guid")
 

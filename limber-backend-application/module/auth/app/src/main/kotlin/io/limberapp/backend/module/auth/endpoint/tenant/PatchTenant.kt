@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.accessToken
+package io.limberapp.backend.module.auth.endpoint.tenant
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -12,48 +12,46 @@ import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
-import java.util.UUID
+import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
+import io.limberapp.backend.module.auth.rep.tenant.TenantRep
+import io.limberapp.backend.module.auth.service.tenant.TenantService
 
 /**
- * Deletes the given access token from the given account.
+ * Updates the tenant for the given domain.
  */
-internal class DeleteAccessToken @Inject constructor(
+internal class PatchTenant @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val accessTokenService: AccessTokenService
-) : LimberApiEndpoint<DeleteAccessToken.Command, Unit>(
+    private val tenantService: TenantService,
+    private val tenantMapper: TenantMapper
+) : LimberApiEndpoint<PatchTenant.Command, TenantRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val accountId: UUID,
-        val accessTokenId: UUID
+        val tenantDomain: String,
+        val updateRep: TenantRep.Update
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        accountId = call.parameters.getAsType(UUID::class, accountId),
-        accessTokenId = call.parameters.getAsType(UUID::class, accessTokenId)
+        tenantDomain = call.parameters.getAsType(String::class, tenantDomain),
+        updateRep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command) {
+    override suspend fun Handler.handle(command: Command): TenantRep.Complete {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        accessTokenService.delete(command.accountId, command.accessTokenId)
+        val update = tenantMapper.update(command.updateRep)
+        val model = tenantService.update(command.tenantDomain, update)
+        return tenantMapper.completeRep(model)
     }
 
     companion object {
-        const val accountId = "accountId"
-        const val accessTokenId = "accessTokenId"
+        const val tenantDomain = "tenantDomain"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Delete,
-            pathTemplate = listOf(
-                StringComponent("accounts"),
-                VariableComponent(accountId),
-                StringComponent("access-tokens"),
-                VariableComponent(accessTokenId)
-            )
+            httpMethod = HttpMethod.Patch,
+            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(tenantDomain))
         )
     }
 }

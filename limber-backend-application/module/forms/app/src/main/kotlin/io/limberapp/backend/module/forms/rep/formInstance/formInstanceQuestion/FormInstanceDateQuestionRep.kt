@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
-object FormInstanceDateQuestionRep {
+internal object FormInstanceDateQuestionRep {
 
     data class Creation(
         override val formTemplateQuestionId: UUID,

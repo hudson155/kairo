@@ -42,6 +42,8 @@ object Validator {
 
     fun emailAddress(value: String) = Regex.emailAddress.matches(value)
 
+    fun hostname(value: String) = Regex.hostname.matches(value)
+
     fun path(value: String) = Regex.path.matches(value)
 
     /**

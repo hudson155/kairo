@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotF
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.UUID
 
-class MemberOfOrgThatOwnsFormInstance(
+internal class MemberOfOrgThatOwnsFormInstance(
     private val formInstanceService: FormInstanceService,
     private val formInstanceId: UUID?
 ) : Authorization() {

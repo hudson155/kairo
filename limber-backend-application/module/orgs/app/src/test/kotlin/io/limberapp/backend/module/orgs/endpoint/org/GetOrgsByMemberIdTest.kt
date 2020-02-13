@@ -24,7 +24,7 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
             endpointConfig = GetOrgsByMemberId.endpointConfig,
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId)
         ) {
-            val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
+            val actual = objectMapper.readValue<Set<OrgRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -72,8 +72,8 @@ internal class GetOrgsByMemberIdTest : ResourceTest() {
             endpointConfig = GetOrgsByMemberId.endpointConfig,
             queryParams = mapOf(GetOrgsByMemberId.memberId to userId)
         ) {
-            val actual = objectMapper.readValue<List<OrgRep.Complete>>(response.content!!)
-            assertEquals(listOf(org0Rep, org1Rep), actual)
+            val actual = objectMapper.readValue<Set<OrgRep.Complete>>(response.content!!)
+            assertEquals(setOf(org0Rep, org1Rep), actual)
         }
     }
 }
