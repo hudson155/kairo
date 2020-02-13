@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import thunk from 'redux-thunk';
 import { Auth0Provider } from './react-auth0-wrapper';
 
+export const rootUrl = `${window.location.protocol}//${window.location.host}`;
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 // A function that routes the user to the right place after signing in.
@@ -26,7 +27,7 @@ ReactDOM.render(
     <Auth0Provider
       domain="limber.auth0.com"
       client_id={process.env['REACT_APP_AUTH0_CLIENT_ID']}
-      redirect_uri={process.env['REACT_APP_ROOT_URL']}
+      redirect_uri={rootUrl}
       audience="https://limber.auth0.com/api/v2/"
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore-line
