@@ -8,7 +8,8 @@ import rootReducer from './redux/reducers';
 import * as serviceWorker from './serviceWorker';
 import thunk from 'redux-thunk';
 
-export const rootUrl = `${window.location.protocol}//${window.location.host}`;
+export const rootDomain = window.location.host;
+export const rootUrl = `${window.location.protocol}//${rootDomain}`;
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
