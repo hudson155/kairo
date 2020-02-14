@@ -30,11 +30,14 @@ internal class PatchUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
+        // Setup
+        val orgId = UUID.randomUUID()
+
         // PostUser
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
         // PatchUser

@@ -19,20 +19,7 @@ internal object OrgRepFixtures {
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
-            members = emptySet()
-        )
-    })
-
-    val discreetBulbFixture = Fixture({
-        OrgRep.Creation("Discreet Bulb")
-    }, { idSeed ->
-        OrgRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
-            name = "Discreet Bulb",
-            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1)),
-            members = emptySet()
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
         )
     })
 }

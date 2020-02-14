@@ -35,11 +35,14 @@ internal class DeleteUserRoleTest : ResourceTest() {
     @Test
     fun roleDoesNotExist() {
 
+        // Setup
+        val orgId = UUID.randomUUID()
+
         // PostUser
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
         // DeleteUserRole
@@ -65,11 +68,14 @@ internal class DeleteUserRoleTest : ResourceTest() {
     @Test
     fun happyPath() {
 
+        // Setup
+        val orgId = UUID.randomUUID()
+
         // PostUser
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
         // PutUserRole

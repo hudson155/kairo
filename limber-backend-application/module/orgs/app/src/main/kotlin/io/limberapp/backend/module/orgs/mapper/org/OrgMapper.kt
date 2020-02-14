@@ -10,24 +10,21 @@ import java.time.LocalDateTime
 internal class OrgMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator,
-    private val featureMapper: FeatureMapper,
-    private val membershipMapper: MembershipMapper
+    private val featureMapper: FeatureMapper
 ) {
 
     fun model(rep: OrgRep.Creation) = OrgModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         name = rep.name,
-        features = setOf(featureMapper.defaultModel()),
-        members = emptySet()
+        features = setOf(featureMapper.defaultModel())
     )
 
     fun completeRep(model: OrgModel) = OrgRep.Complete(
         id = model.id,
         created = model.created,
         name = model.name,
-        features = model.features.map { featureMapper.completeRep(it) }.toSet(),
-        members = model.members.map { membershipMapper.completeRep(it) }.toSet()
+        features = model.features.map { featureMapper.completeRep(it) }.toSet()
     )
 
     fun update(rep: OrgRep.Update) = OrgModel.Update(

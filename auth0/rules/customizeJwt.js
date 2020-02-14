@@ -6,6 +6,7 @@ function customizeJwt(user, context, callback) {
       Authorization: `Token ${configuration.accessToken}`,
     },
     json: {
+      auth0ClientId: context.clientID,
       firstName: user.given_name,
       lastName: user.family_name,
       emailAddress: user.email,

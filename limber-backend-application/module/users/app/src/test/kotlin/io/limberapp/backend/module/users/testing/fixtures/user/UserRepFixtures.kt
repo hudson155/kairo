@@ -3,25 +3,28 @@ package io.limberapp.backend.module.users.testing.fixtures.user
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import java.time.LocalDateTime
+import java.util.UUID
 
 internal object UserRepFixtures {
 
     data class Fixture(
-        val creation: () -> UserRep.Creation,
-        val complete: ResourceTest.(idSeed: Int) -> UserRep.Complete
+        val creation: (orgId: UUID) -> UserRep.Creation,
+        val complete: ResourceTest.(orgId: UUID, idSeed: Int) -> UserRep.Complete
     )
 
-    val jeffHudsonFixture = Fixture({
+    val jeffHudsonFixture = Fixture({ orgId ->
         UserRep.Creation(
+            orgId = orgId,
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-    }, { idSeed ->
+    }, { orgId, idSeed ->
         UserRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
+            orgId = orgId,
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
@@ -30,17 +33,19 @@ internal object UserRepFixtures {
         )
     })
 
-    val billGatesFixture = Fixture({
+    val billGatesFixture = Fixture({ orgId ->
         UserRep.Creation(
+            orgId = orgId,
             firstName = "Bill",
             lastName = "Gates",
             emailAddress = "bill.gates@microsoft.com",
             profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg"
         )
-    }, { idSeed ->
+    }, { orgId, idSeed ->
         UserRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
+            orgId = orgId,
             firstName = "Bill",
             lastName = "Gates",
             emailAddress = "bill.gates@microsoft.com",

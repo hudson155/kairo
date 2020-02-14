@@ -9,8 +9,6 @@ interface OrgService {
 
     fun get(orgId: UUID): OrgModel?
 
-    fun getByMemberId(memberId: UUID): Set<OrgModel>
-
     fun update(orgId: UUID, update: OrgModel.Update): OrgModel
 
     fun delete(orgId: UUID)

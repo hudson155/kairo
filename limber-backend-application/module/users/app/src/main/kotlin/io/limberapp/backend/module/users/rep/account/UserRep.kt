@@ -14,6 +14,7 @@ import java.util.UUID
 internal object UserRep {
 
     data class Creation(
+        val orgId: UUID,
         val firstName: String,
         val lastName: String,
         val emailAddress: String,
@@ -30,6 +31,7 @@ internal object UserRep {
     data class Complete(
         val id: UUID,
         override val created: LocalDateTime,
+        val orgId: UUID,
         val firstName: String,
         val lastName: String,
         val emailAddress: String,

@@ -32,6 +32,7 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
     override fun userEntity(insertStatement: InsertStatement<*>, model: UserModel) {
         insertStatement[UserTable.createdDate] = model.created
         insertStatement[UserTable.accountGuid] = model.id
+        insertStatement[UserTable.orgGuid] = model.orgId
         insertStatement[UserTable.emailAddress] = model.emailAddress
         insertStatement[UserTable.firstName] = model.firstName
         insertStatement[UserTable.lastName] = model.lastName
@@ -56,6 +57,7 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
     override fun userModel(resultRow: ResultRow) = UserModel(
         id = resultRow[AccountTable.guid],
         created = resultRow[UserTable.createdDate],
+        orgId = resultRow[UserTable.orgGuid],
         firstName = resultRow[UserTable.firstName],
         lastName = resultRow[UserTable.lastName],
         emailAddress = resultRow[UserTable.emailAddress],
