@@ -3,6 +3,7 @@ package io.limberapp.backend.module.users.store.account
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import io.limberapp.backend.module.users.entity.account.UserTable
@@ -34,14 +35,14 @@ internal class SqlUserStore @Inject constructor(
     override fun get(userId: UUID) = transaction {
         val entity = (UserTable innerJoin AccountTable)
             .select { AccountTable.guid eq userId }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlAccountMapper.userModel(entity)
     }
 
     override fun getByEmailAddress(emailAddress: String) = transaction {
         val entity = (UserTable innerJoin AccountTable)
             .select { UserTable.emailAddress eq emailAddress }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlAccountMapper.userModel(entity)
     }
 

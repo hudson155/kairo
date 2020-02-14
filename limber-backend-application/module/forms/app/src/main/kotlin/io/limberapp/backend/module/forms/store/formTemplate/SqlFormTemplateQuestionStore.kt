@@ -3,6 +3,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 import com.google.inject.Inject
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import com.piperframework.store.SqlStore
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
@@ -49,7 +50,7 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
             )
             .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
             .groupBy(FormTemplateQuestionTable.formTemplateGuid)
-            .singleOrNull()
+            .singleNullOrThrow()
         val maxExistingRank = resultRow?.get(FormTemplateQuestionTable.rank.max()) ?: -1
         rank?.let { if (it > maxExistingRank + 1) throw RankOutOfBounds(it) }
         return rank ?: maxExistingRank + 1
@@ -72,7 +73,7 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
                 (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
                         (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
             }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormTemplateMapper.formTemplateQuestionModel(entity)
     }
 

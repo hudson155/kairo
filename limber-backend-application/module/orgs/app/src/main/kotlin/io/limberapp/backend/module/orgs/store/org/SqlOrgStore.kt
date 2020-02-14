@@ -2,6 +2,7 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.orgs.entity.org.MembershipTable
 import io.limberapp.backend.module.orgs.entity.org.OrgTable
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
@@ -29,7 +30,7 @@ internal class SqlOrgStore @Inject constructor(
     override fun get(orgId: UUID) = transaction {
         val entity = OrgTable
             .select { OrgTable.guid eq orgId }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlOrgMapper.orgModel(entity)
     }
 

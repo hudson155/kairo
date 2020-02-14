@@ -3,6 +3,7 @@ package io.limberapp.backend.module.orgs.store.org
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.orgs.entity.org.MembershipTable
 import io.limberapp.backend.module.orgs.exception.org.MembershipNotFound
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
@@ -42,7 +43,7 @@ internal class SqlMembershipStore @Inject constructor(
     override fun get(orgId: UUID, userId: UUID) = transaction {
         val entity = MembershipTable
             .select { (MembershipTable.orgGuid eq orgId) and (MembershipTable.accountGuid eq userId) }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlOrgMapper.membershipModel(entity)
     }
 

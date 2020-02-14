@@ -2,6 +2,7 @@ package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
+import com.piperframework.util.uuid.singleNullOrThrow
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
@@ -65,7 +66,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private fun createJwt(account: AccountModel, user: UserModel?, orgs: Set<OrgModel>): Jwt {
         check(orgs.size <= 1)
         return Jwt(
-            org = orgs.singleOrNull()?.let { JwtOrg(it.id, it.name) },
+            org = orgs.singleNullOrThrow()?.let { JwtOrg(it.id, it.name) },
             roles = account.roles,
             user = JwtUser(account.id, user?.firstName, user?.lastName)
         )

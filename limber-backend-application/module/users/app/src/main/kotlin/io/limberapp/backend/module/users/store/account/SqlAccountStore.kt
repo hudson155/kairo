@@ -2,6 +2,7 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.select
@@ -15,7 +16,7 @@ internal class SqlAccountStore @Inject constructor(
     override fun get(accountId: UUID) = transaction {
         val entity = AccountTable
             .select { AccountTable.guid eq accountId }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlAccountMapper.accountModel(entity)
     }
 }

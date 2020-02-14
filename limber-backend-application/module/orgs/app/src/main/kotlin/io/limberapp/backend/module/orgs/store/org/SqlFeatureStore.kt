@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.orgs.entity.org.FeatureTable
 import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
@@ -34,7 +35,7 @@ internal class SqlFeatureStore @Inject constructor(
     override fun create(orgId: UUID, model: FeatureModel) = transaction {
         FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.path eq model.path) }
-            .singleOrNull()?.let { throw FeatureIsNotUnique() }
+            .singleNullOrThrow()?.let { throw FeatureIsNotUnique() }
         doOperation { FeatureTable.insert { sqlOrgMapper.featureEntity(it, orgId, model) } } andHandleError {
             when {
                 error.isForeignKeyViolation(FeatureTable.orgGuidForeignKey) -> throw OrgNotFound()
@@ -45,7 +46,7 @@ internal class SqlFeatureStore @Inject constructor(
     override fun get(orgId: UUID, featureId: UUID) = transaction {
         val entity = FeatureTable
             .select { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid eq featureId) }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlOrgMapper.featureModel(entity)
     }
 
