@@ -7,6 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import TenantActions from '../redux/tenant/TenantActions';
+import TenantState from '../redux/tenant/TenantState';
 
 // A function that routes the user to the right place after signing in.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,14 +20,14 @@ const onRedirectCallback = (appState: any): any => {
 };
 
 interface Props {
-  state: State;
+  tenantState: TenantState;
   dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
 const App: React.FC<Props> = (props: Props) => {
   props.dispatch(TenantActions.ensureLoaded());
-  console.log(props.state);
-  if (props.state.tenant.loadingStatus !== 'LOADED') {
+  console.log(props.tenantState);
+  if (props.tenantState.loadingStatus !== 'LOADED') {
     /**
      * Don't render anything if the tenant loading status is not loaded yet. Normally we wouldn't
      * care to add a restriction like this because we'd rather do a partial load, but for the case
@@ -38,7 +39,7 @@ const App: React.FC<Props> = (props: Props) => {
 
   return <Auth0Provider
     domain="limber.auth0.com"
-    client_id={props.state.tenant.tenant!!.auth0ClientId}
+    client_id={props.tenantState.tenant!!.auth0ClientId}
     redirect_uri={rootUrl}
     audience="https://limber.auth0.com/api/v2/"
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -50,5 +51,5 @@ const App: React.FC<Props> = (props: Props) => {
 };
 
 export default connect(
-  (state: State) => ({ state }),
+  (state: State) => ({ tenantState: state.tenant }),
 )(App);

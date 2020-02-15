@@ -9,9 +9,10 @@ import State from '../state';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { useAuth } from './useAuth';
+import TenantState from '../redux/tenant/TenantState';
 
 interface Props {
-  state: State;
+  tenantState: TenantState;
   dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
@@ -20,8 +21,8 @@ const AppRouter: React.FC<Props> = (props: Props) => {
   if (auth.isLoading()) return null;
 
   // props.dispatch(TenantActions.ensureLoaded());
-  // console.log(props.state);
-  // if (props.state.tenant.loadingStatus !== 'LOADED') {
+  // console.log(props.tenantState);
+  // if (props.tenantState.loadingStatus !== 'LOADED') {
   //   /**
   //    * Don't render anything if the tenant loading status is not loaded yet. Normally we wouldn't
   //    * care to add a restriction like this because we'd rather do a partial load, but for the case
@@ -41,5 +42,5 @@ const AppRouter: React.FC<Props> = (props: Props) => {
 };
 
 export default connect(
-  (state: State) => ({ state }),
+  (state: State) => ({ tenantState: state.tenant }),
 )(AppRouter);
