@@ -17,7 +17,8 @@ internal class FeatureMapper @Inject constructor(
         created = LocalDateTime.now(clock),
         name = "Home",
         path = "/home",
-        type = FeatureModel.Type.HOME
+        type = FeatureModel.Type.HOME,
+        isDefaultFeature = true
     )
 
     fun model(rep: FeatureRep.Creation) = FeatureModel(
@@ -25,7 +26,8 @@ internal class FeatureMapper @Inject constructor(
         created = LocalDateTime.now(clock),
         name = rep.name,
         path = rep.path,
-        type = rep.type
+        type = rep.type,
+        isDefaultFeature = false
     )
 
     fun completeRep(model: FeatureModel) = FeatureRep.Complete(
@@ -33,11 +35,13 @@ internal class FeatureMapper @Inject constructor(
         created = model.created,
         name = model.name,
         path = model.path,
-        type = model.type
+        type = model.type,
+        isDefaultFeature = model.isDefaultFeature
     )
 
     fun update(rep: FeatureRep.Update) = FeatureModel.Update(
         name = rep.name,
-        path = rep.path
+        path = rep.path,
+        isDefaultFeature = rep.isDefaultFeature
     )
 }

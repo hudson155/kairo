@@ -10,11 +10,11 @@ VALUES (NOW(), 'd92d4629-1286-450a-9e89-cccebed3b373', 'fcef16c1-d994-4dd5-b2ea-
 INSERT INTO orgs.org (created_date, guid, name)
 VALUES (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'Limber');
 INSERT INTO orgs.feature (created_date, guid, org_guid,
-                          name, path, type)
+                          name, path, type, is_default_feature)
 VALUES (NOW(), '75a2ed7a-4247-4e63-ab10-a60df3d9aeee', '5761db85-7701-4ce4-9162-ab0fb4149b0d',
-        'Home', '/home', 'HOME'),
+        'Home', '/home', 'HOME', TRUE),
        (NOW(), '3dc95c5d-767c-4b29-9c50-a6f93edd0c06', '5761db85-7701-4ce4-9162-ab0fb4149b0d',
-        'Forms', '/forms', 'FORMS');
+        'Forms', '/forms', 'FORMS', FALSE);
 INSERT INTO auth.tenant (created_date, domain, org_guid, auth0_client_id)
 VALUES (NOW(), 'localhost:3000', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa'),
        (NOW(), 'limberapp.io', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa');
