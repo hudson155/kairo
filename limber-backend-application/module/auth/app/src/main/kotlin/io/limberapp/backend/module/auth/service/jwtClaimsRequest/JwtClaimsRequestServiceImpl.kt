@@ -43,7 +43,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     }
 
     private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
-        val org = user?.let { orgService.get(it.orgId) }
+        val org = user?.let { checkNotNull(orgService.get(it.orgId)) }
         val jwt = createJwt(account, user, org)
         return convertJwtToModel(jwt)
     }
