@@ -87,6 +87,12 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     fun happyPathUserExists() {
 
         // Setup
+        val existingOrg = OrgModel(
+            id = UUID.randomUUID(),
+            created = LocalDateTime.now(fixedClock),
+            name = "Cranky Pasta",
+            features = emptySet()
+        )
         val existingAccount = AccountModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
@@ -96,22 +102,16 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val existingUser = UserModel(
             id = existingAccount.id,
             created = existingAccount.created,
-            orgId = UUID.randomUUID(),
+            orgId = existingOrg.id,
             firstName = existingAccount.name.split(' ')[0],
             lastName = existingAccount.name.split(' ')[1],
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null,
             roles = existingAccount.roles
         )
-        val existingOrg = OrgModel(
-            id = UUID.randomUUID(),
-            created = LocalDateTime.now(fixedClock),
-            name = "Cranky Pasta",
-            features = emptySet()
-        )
-        every { mockedServices[AccountService::class].get(existingUser.id) } returns existingAccount
+        every { mockedServices[AccountService::class].get(existingAccount.id) } returns existingAccount
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
-        every { mockedServices[OrgService::class].get(existingUser.orgId) } returns existingOrg
+        every { mockedServices[OrgService::class].get(existingOrg.id) } returns existingOrg
 
         // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(
