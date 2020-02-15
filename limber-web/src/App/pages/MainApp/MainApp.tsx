@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
-import { useAuth0 } from '../../../react-auth0-wrapper';
 import State from '../../../state';
 import AuthActions from '../../../redux/auth/AuthActions';
 import EventsPage from './pages/EventsPage/EventsPage';
@@ -13,6 +12,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { LoadingStatus } from '../../../redux/util/LoadingStatus';
 import UserActions from '../../../redux/user/UserActions';
 import OrgActions from '../../../redux/org/OrgActions';
+import { useAuth } from '../../useAuth';
 
 interface Props {
   authLoadingStatus: LoadingStatus;
@@ -20,9 +20,9 @@ interface Props {
 }
 
 const MainApp: React.FC<Props> = (props: Props) => {
-  const auth0 = useAuth0();
+  const auth = useAuth();
 
-  props.dispatch(AuthActions.ensureSetJwt(auth0.getTokenSilently)).then(() => {
+  props.dispatch(AuthActions.ensureSetJwt(auth.getTokenSilently)).then(() => {
     props.dispatch(OrgActions.ensureLoaded());
     props.dispatch(UserActions.ensureLoaded());
   });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useAuth0 } from '../react-auth0-wrapper';
 import SignInRedirector from './pages/SignInRedirector/SignInRedirector';
 import SignOutRedirector from './pages/SignOutRedirector/SignOutRedirector';
 import MainApp from './pages/MainApp/MainApp';
@@ -9,8 +8,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import State from '../state';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
-import OrgActions from '../redux/org/OrgActions';
-import TenantActions from '../redux/tenant/TenantActions';
+import { useAuth } from './useAuth';
 
 interface Props {
   state: State;
@@ -18,8 +16,8 @@ interface Props {
 }
 
 const AppRouter: React.FC<Props> = (props: Props) => {
-  const auth0 = useAuth0();
-  if (auth0.loading) return null;
+  const auth = useAuth();
+  if (auth.isLoading()) return null;
 
   // props.dispatch(TenantActions.ensureLoaded());
   // console.log(props.state);
@@ -37,7 +35,7 @@ const AppRouter: React.FC<Props> = (props: Props) => {
     <Switch>
       <Route path="/signin" exact component={SignInRedirector} />
       <Route path="/signout" exact component={SignOutRedirector} />
-      <Route component={auth0.isAuthenticated ? MainApp : MarketingSite} />
+      <Route component={auth.isAuthenticated() ? MainApp : MarketingSite} />
     </Switch>
   </Router>;
 };
