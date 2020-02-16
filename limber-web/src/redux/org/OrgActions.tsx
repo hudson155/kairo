@@ -18,8 +18,7 @@ const OrgActions = {
     return async (dispatch, getState): Promise<void> => {
       if (getState().org.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingOrg());
-      const orgId = getState().auth.org?.id;
-      if (orgId === undefined) return;
+      const orgId = getState().auth.auth!!.org.id;
       const response = (await Api.orgs.getOrg(orgId))!!; // TODO: No double bang
       console.log(response);
       dispatch(setOrg(response));

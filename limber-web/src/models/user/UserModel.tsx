@@ -3,6 +3,6 @@ export default interface UserModel {
   orgId: string;
   firstName: string;
   lastName: string;
-  emailAddress?: string;
+  emailAddress: string;
   profilePhotoUrl?: string;
 }

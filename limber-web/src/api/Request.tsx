@@ -21,7 +21,7 @@ export abstract class Request<T> {
     }
 
     const headers: { [key: string]: string } = {};
-    const jwt = store.getState().auth.jwt;
+    const jwt = store.getState().auth.auth?.jwt;
     if (jwt) {
       headers['Authorization'] = `Bearer ${jwt}`;
     }
