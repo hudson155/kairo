@@ -9,13 +9,20 @@ import Page from '../../components/Page/Page';
 import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
 import Footer from '../../components/Footer/Footer';
 import { ThunkDispatch } from 'redux-thunk';
-import { LoadingStatus } from '../../../redux/util/LoadingStatus';
 import UserActions from '../../../redux/user/UserActions';
 import OrgActions from '../../../redux/org/OrgActions';
 import { useAuth } from '../../useAuth';
+import FeatureModel from '../../../models/org/FeatureModel';
+
+function determineDefaultFeature(features: FeatureModel[]) {
+  const featureMarkedAsDefault = features.find(feature => feature.isDefaultFeature);
+  if (featureMarkedAsDefault) return featureMarkedAsDefault;
+  return features[0];
+}
 
 interface Props {
-  authLoadingStatus: LoadingStatus;
+  state: State;
+  features?: FeatureModel[];
   dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
@@ -26,7 +33,8 @@ const MainApp: React.FC<Props> = (props: Props) => {
     props.dispatch(OrgActions.ensureLoaded());
     props.dispatch(UserActions.ensureLoaded());
   });
-  if (props.authLoadingStatus !== 'LOADED') {
+  if (props.state.auth.loadingStatus !== 'LOADED'
+    || props.state.org.loadingStatus !== 'LOADED') {
     /**
      * Don't render anything if the auth loading status is not loaded yet. Normally we wouldn't care
      * to add a restriction like this because we'd rather do a partial load, but for the case of
@@ -36,10 +44,12 @@ const MainApp: React.FC<Props> = (props: Props) => {
     return null;
   }
 
+  const defaultFeature = determineDefaultFeature(props.features!!);
+
   return <Page header={<MainAppNavbar />} footer={<Footer />}>
     <Switch>
       <Route path="/" exact>
-        <Redirect to="/events" />
+        <Redirect to={defaultFeature.path} />
       </Route>,
       <Route path="/events" exact component={EventsPage} />,
     </Switch>
@@ -47,5 +57,8 @@ const MainApp: React.FC<Props> = (props: Props) => {
 };
 
 export default connect(
-  (state: State) => ({ authLoadingStatus: state.auth.loadingStatus }),
+  (state: State) => ({
+    state,
+    features: state.org.org?.features,
+  }),
 )(MainApp);
