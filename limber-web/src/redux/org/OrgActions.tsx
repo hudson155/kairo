@@ -1,9 +1,9 @@
-import OrgModel from '../../models/org/OrgModel';
-import { OrgSetOrgAction, OrgStartLoadingOrgAction } from './OrgAction';
-import { ThunkAction } from 'redux-thunk';
-import State from '../../state';
 import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import Api from '../../api/Api';
+import OrgModel from '../../models/org/OrgModel';
+import State from '../../state';
+import { OrgSetOrgAction, OrgStartLoadingOrgAction } from './OrgAction';
 
 function startLoadingOrg(): OrgStartLoadingOrgAction {
   return { type: 'ORG__START_LOADING_ORG' };

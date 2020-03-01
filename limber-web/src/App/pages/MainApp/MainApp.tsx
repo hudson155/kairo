@@ -1,18 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import State from '../../../state';
-import AuthActions from '../../../redux/auth/AuthActions';
-import FormInstancesListPage from './pages/FormInstancesListPage/FormInstancesListPage';
-import Page from '../../components/Page/Page';
-import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
-import Footer from '../../components/Footer/Footer';
 import { ThunkDispatch } from 'redux-thunk';
-import UserActions from '../../../redux/user/UserActions';
-import OrgActions from '../../../redux/org/OrgActions';
-import { useAuth } from '../../useAuth';
 import FeatureModel from '../../../models/org/FeatureModel';
+import AuthActions from '../../../redux/auth/AuthActions';
+import OrgActions from '../../../redux/org/OrgActions';
+import UserActions from '../../../redux/user/UserActions';
+import State from '../../../state';
+import Footer from '../../components/Footer/Footer';
+import Page from '../../components/Page/Page';
+import { useAuth } from '../../useAuth';
+import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
+import FormInstancesListPage from './pages/FormInstancesListPage/FormInstancesListPage';
 
 function determineDefaultFeature(features: FeatureModel[]) {
   const featureMarkedAsDefault = features.find(feature => feature.isDefaultFeature);

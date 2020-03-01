@@ -1,15 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import SignInRedirector from './pages/SignInRedirector/SignInRedirector';
-import SignOutRedirector from './pages/SignOutRedirector/SignOutRedirector';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import TenantState from '../redux/tenant/TenantState';
+import State from '../state';
 import MainApp from './pages/MainApp/MainApp';
 import MarketingSite from './pages/MarketingSite/MarketingSite';
-import { ThunkDispatch } from 'redux-thunk';
-import State from '../state';
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
+import SignInRedirector from './pages/SignInRedirector/SignInRedirector';
+import SignOutRedirector from './pages/SignOutRedirector/SignOutRedirector';
 import { useAuth } from './useAuth';
-import TenantState from '../redux/tenant/TenantState';
 
 interface Props {
   tenantState: TenantState;

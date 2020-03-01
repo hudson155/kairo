@@ -1,9 +1,9 @@
-import UserModel from '../../models/user/UserModel';
-import { UserSetUserAction, UserStartLoadingUserAction } from './UserAction';
-import { ThunkAction } from 'redux-thunk';
-import State from '../../state';
 import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import Api from '../../api/Api';
+import UserModel from '../../models/user/UserModel';
+import State from '../../state';
+import { UserSetUserAction, UserStartLoadingUserAction } from './UserAction';
 
 function startLoadingUser(): UserStartLoadingUserAction {
   return { type: 'USER__START_LOADING_USER' };

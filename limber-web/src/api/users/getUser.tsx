@@ -1,5 +1,5 @@
-import { Request } from '../Request';
 import UserModel from '../../models/user/UserModel';
+import { Request } from '../Request';
 
 class GetUserRequest extends Request<UserModel | undefined> {
   constructor(userId: string) {

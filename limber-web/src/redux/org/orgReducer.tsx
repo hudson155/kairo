@@ -1,5 +1,5 @@
-import OrgState from './OrgState';
 import OrgAction, { OrgSetOrgAction } from './OrgAction';
+import OrgState from './OrgState';
 
 const defaultState: OrgState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 

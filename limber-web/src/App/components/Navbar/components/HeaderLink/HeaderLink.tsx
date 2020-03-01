@@ -1,6 +1,6 @@
 import React, { CSSProperties } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import State from '../../../../../state';
 
 interface Props {

@@ -1,5 +1,5 @@
-import { useAuth0 } from '../react-auth0-wrapper';
 import { rootUrl } from '../index';
+import { useAuth0 } from '../react-auth0-wrapper';
 
 export function useAuth() {
   const mechanism = process.env['REACT_APP_AUTH_MECHANISM'];

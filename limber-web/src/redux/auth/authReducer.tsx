@@ -1,6 +1,6 @@
-import AuthState from './AuthState';
-import AuthAction, { AuthSetJwtAction } from './AuthAction';
 import jsonwebtoken from 'jsonwebtoken';
+import AuthAction, { AuthSetJwtAction } from './AuthAction';
+import AuthState from './AuthState';
 
 const defaultState: AuthState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 

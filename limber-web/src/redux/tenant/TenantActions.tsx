@@ -1,10 +1,10 @@
-import TenantModel from '../../models/tenant/TenantModel';
-import { TenantSetTenantAction, TenantStartLoadingTenantAction } from './TenantAction';
-import { ThunkAction } from 'redux-thunk';
-import State from '../../state';
 import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import Api from '../../api/Api';
 import { rootDomain } from '../../index';
+import TenantModel from '../../models/tenant/TenantModel';
+import State from '../../state';
+import { TenantSetTenantAction, TenantStartLoadingTenantAction } from './TenantAction';
 
 function startLoadingTenant(): TenantStartLoadingTenantAction {
   return { type: 'TENANT__START_LOADING_TENANT' };

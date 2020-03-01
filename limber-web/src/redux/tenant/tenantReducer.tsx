@@ -1,5 +1,5 @@
-import TenantState from './TenantState';
 import TenantAction, { TenantSetTenantAction } from './TenantAction';
+import TenantState from './TenantState';
 
 const defaultState: TenantState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 

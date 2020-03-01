@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import FeatureModel from '../../../../../models/org/FeatureModel';
 import State from '../../../../../state';
 import HeaderLink from '../../../../components/Navbar/components/HeaderLink/HeaderLink';
 import HeaderLinkGroup from '../../../../components/Navbar/components/HeaderLinkGroup/HeaderLinkGroup';
 import HeaderText from '../../../../components/Navbar/components/HeaderText/HeaderText';
 import Navbar from '../../../../components/Navbar/Navbar';
-import FeatureModel from '../../../../../models/org/FeatureModel';
 
 interface Props {
   features?: FeatureModel[];

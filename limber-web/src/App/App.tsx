@@ -1,13 +1,13 @@
 import React from 'react';
-import { Auth0Provider } from '../react-auth0-wrapper';
-import { rootUrl } from '../index';
-import AppRouter from './AppRouter';
-import State from '../state';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { rootUrl } from '../index';
+import { Auth0Provider } from '../react-auth0-wrapper';
 import TenantActions from '../redux/tenant/TenantActions';
 import TenantState from '../redux/tenant/TenantState';
+import State from '../state';
+import AppRouter from './AppRouter';
 
 // A function that routes the user to the right place after signing in.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,5 +1,5 @@
-import UserState from './UserState';
 import UserAction, { UserSetUserAction } from './UserAction';
+import UserState from './UserState';
 
 const defaultState: UserState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 

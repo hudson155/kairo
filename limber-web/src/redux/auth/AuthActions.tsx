@@ -1,7 +1,7 @@
-import { AuthSetJwtAction } from './AuthAction';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import State from '../../state';
+import { AuthSetJwtAction } from './AuthAction';
 
 function setJwt(jwt: string): AuthSetJwtAction {
   return { type: 'AUTH__SET_JWT', jwt };
