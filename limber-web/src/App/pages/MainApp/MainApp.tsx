@@ -4,9 +4,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import FeatureModel from '../../../models/org/FeatureModel';
+import Actions from '../../../redux/Actions';
 import AuthActions from '../../../redux/auth/AuthActions';
-import OrgActions from '../../../redux/org/OrgActions';
-import UserActions from '../../../redux/user/UserActions';
 import State from '../../../state';
 import Footer from '../../components/Footer/Footer';
 import Page from '../../components/Page/Page';
@@ -30,8 +29,8 @@ const MainApp: React.FC<Props> = (props: Props) => {
   const auth = useAuth();
 
   props.dispatch(AuthActions.ensureSetJwt(auth.getTokenSilently)).then(() => {
-    props.dispatch(OrgActions.ensureLoaded());
-    props.dispatch(UserActions.ensureLoaded());
+    props.dispatch(Actions.org.ensureLoaded());
+    props.dispatch(Actions.user.ensureLoaded());
   });
   if (props.state.auth.loadingStatus !== 'LOADED'
     || props.state.org.loadingStatus !== 'LOADED') {
@@ -52,7 +51,7 @@ const MainApp: React.FC<Props> = (props: Props) => {
         <Redirect to={defaultFeature.path} />
       </Route>,
       {props.features!!.map(feature => {
-        return <Route key={feature.path} path={feature.path} exact component={FormInstancesListPage} />
+        return <Route key={feature.path} path={feature.path} exact component={FormInstancesListPage} />;
       })}
     </Switch>
   </Page>;

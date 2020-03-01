@@ -4,7 +4,7 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { rootUrl } from '../index';
 import { Auth0Provider } from '../react-auth0-wrapper';
-import TenantActions from '../redux/tenant/TenantActions';
+import Actions from '../redux/Actions';
 import TenantState from '../redux/tenant/TenantState';
 import State from '../state';
 import AppRouter from './AppRouter';
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const App: React.FC<Props> = (props: Props) => {
-  props.dispatch(TenantActions.ensureLoaded());
+  props.dispatch(Actions.tenant.ensureLoaded());
   console.log(props.tenantState);
   if (props.tenantState.loadingStatus !== 'LOADED') {
     /**
