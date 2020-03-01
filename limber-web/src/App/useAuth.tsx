@@ -4,7 +4,7 @@ import { useAuth0 } from '../react-auth0-wrapper';
 interface Auth {
   isLoading: () => boolean;
   isAuthenticated: () => boolean;
-  getTokenSilently: () => string;
+  getTokenSilently: () => Promise<string>;
   login: () => void;
   logout: () => void;
 }
@@ -26,10 +26,10 @@ function localStorageAuth(): Auth {
   return {
     isLoading: (): boolean => false,
     isAuthenticated: (): boolean => Boolean(localStorage.getItem('jwt')),
-    getTokenSilently: (): string => {
+    getTokenSilently: (): Promise<string> => {
       const result = localStorage.getItem('jwt');
       if (result === null) throw new Error('Cannot get null token.');
-      return result;
+      return Promise.resolve(result);
     },
     login: (): void => {
     },
@@ -45,7 +45,7 @@ function auth0Auth(auth0: any): Auth {
   return {
     isLoading: (): boolean => auth0.loading,
     isAuthenticated: (): boolean => auth0.isAuthenticated,
-    getTokenSilently: (): string => auth0.getTokenSilently(),
+    getTokenSilently: (): Promise<string> => auth0.getTokenSilently(),
     login: (): void => auth0.loginWithRedirect(),
     logout: (): void => auth0.logout({ returnTo: rootUrl }),
   };
