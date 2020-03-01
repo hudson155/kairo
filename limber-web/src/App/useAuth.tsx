@@ -1,7 +1,15 @@
 import { rootUrl } from '../index';
 import { useAuth0 } from '../react-auth0-wrapper';
 
-export function useAuth() {
+interface Auth {
+  isLoading: () => boolean;
+  isAuthenticated: () => boolean;
+  getTokenSilently: () => string;
+  login: () => void;
+  logout: () => void;
+}
+
+export function useAuth(): Auth {
   const mechanism = process.env['REACT_APP_AUTH_MECHANISM'];
 
   const auth0 = useAuth0();
@@ -14,26 +22,31 @@ export function useAuth() {
   }
 }
 
-function localStorageAuth() {
+function localStorageAuth(): Auth {
   return {
-    isLoading: () => false,
-    isAuthenticated: () => Boolean(localStorage.getItem('jwt')),
-    getTokenSilently: () => localStorage.getItem('jwt'),
-    login: () => {
+    isLoading: (): boolean => false,
+    isAuthenticated: (): boolean => Boolean(localStorage.getItem('jwt')),
+    getTokenSilently: (): string => {
+      const result = localStorage.getItem('jwt');
+      if (result === null) throw new Error('Cannot get null token.');
+      return result;
     },
-    logout: () => {
+    login: (): void => {
+    },
+    logout: (): void => {
       localStorage.removeItem('jwt');
       window.location.assign(rootUrl);
     },
   };
 }
 
-function auth0Auth(auth0: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function auth0Auth(auth0: any): Auth {
   return {
-    isLoading: () => auth0.loading,
-    isAuthenticated: () => auth0.isAuthenticated,
-    getTokenSilently: () => auth0.getTokenSilently(),
-    login: () => auth0.loginWithRedirect(),
-    logout: () => auth0.logout({ returnTo: rootUrl }),
+    isLoading: (): boolean => auth0.loading,
+    isAuthenticated: (): boolean => auth0.isAuthenticated,
+    getTokenSilently: (): string => auth0.getTokenSilently(),
+    login: (): void => auth0.loginWithRedirect(),
+    logout: (): void => auth0.logout({ returnTo: rootUrl }),
   };
 }

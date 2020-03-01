@@ -8,6 +8,8 @@ import LoadableState, { assertLoaded } from '../redux/util/LoadableState';
 import State from '../state';
 import AppRouter from './AppRouter';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // A function that routes the user to the right place after signing in.
 const onRedirectCallback = (appState: any): any => {
   window.history.replaceState(
@@ -38,6 +40,7 @@ const App: React.FC<Props> = (props: Props) => {
     client_id={assertLoaded(props.tenantState).auth0ClientId}
     redirect_uri={rootUrl}
     audience={`https://${process.env['REACT_APP_AUTH0_DOMAIN']}/api/v2/`}
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore-line
     onRedirectCallback={onRedirectCallback}
   >

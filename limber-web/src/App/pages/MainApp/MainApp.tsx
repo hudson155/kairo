@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { TD } from '../../../index';
@@ -50,9 +50,9 @@ const MainApp: React.FC<Props> = (props: Props) => {
       <Route path="/" exact>
         <Redirect to={defaultFeature.path} />
       </Route>,
-      {features!.map(feature => {
+      {features.map(feature => {
         return <Route key={feature.path} path={feature.path} exact
-                      component={() => <FeaturePage feature={feature} />} />;
+                      component={(): ReactElement => <FeaturePage feature={feature} />} />;
       })}
     </Switch>
   </Page>;
