@@ -6,7 +6,4 @@ export default interface FeatureModel {
   isDefaultFeature: boolean;
 }
 
-enum FeatureModelType {
-  FORMS,
-  HOME,
-}
+export type FeatureModelType = 'FORMS' | 'HOME';

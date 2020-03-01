@@ -11,7 +11,7 @@ import Footer from '../../components/Footer/Footer';
 import Page from '../../components/Page/Page';
 import { useAuth } from '../../useAuth';
 import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
-import FormInstancesListPage from './pages/FormInstancesListPage/FormInstancesListPage';
+import FeaturePage from './pages/FeaturePage/FeaturePage';
 
 function determineDefaultFeature(features: FeatureModel[]): FeatureModel {
   const featureMarkedAsDefault = features.find(feature => feature.isDefaultFeature);
@@ -51,7 +51,8 @@ const MainApp: React.FC<Props> = (props: Props) => {
         <Redirect to={defaultFeature.path} />
       </Route>,
       {features!.map(feature => {
-        return <Route key={feature.path} path={feature.path} exact component={FormInstancesListPage} />;
+        return <Route key={feature.path} path={feature.path} exact
+                      component={() => <FeaturePage feature={feature} />} />;
       })}
     </Switch>
   </Page>;
