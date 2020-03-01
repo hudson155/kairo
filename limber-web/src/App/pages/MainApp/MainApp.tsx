@@ -4,7 +4,7 @@ import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import State from '../../../state';
 import AuthActions from '../../../redux/auth/AuthActions';
-import EventsPage from './pages/EventsPage/EventsPage';
+import FormInstancesListPage from './pages/FormInstancesListPage/FormInstancesListPage';
 import Page from '../../components/Page/Page';
 import MainAppNavbar from './components/MainAppNavbar/MainAppNavbar';
 import Footer from '../../components/Footer/Footer';
@@ -51,7 +51,7 @@ const MainApp: React.FC<Props> = (props: Props) => {
       <Route path="/" exact>
         <Redirect to={defaultFeature.path} />
       </Route>,
-      <Route path="/events" exact component={EventsPage} />,
+      <Route path="/events" exact component={FormInstancesListPage} />,
     </Switch>
   </Page>;
 };
