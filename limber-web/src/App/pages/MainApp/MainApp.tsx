@@ -51,7 +51,9 @@ const MainApp: React.FC<Props> = (props: Props) => {
       <Route path="/" exact>
         <Redirect to={defaultFeature.path} />
       </Route>,
-      <Route path="/events" exact component={FormInstancesListPage} />,
+      {props.features!!.map(feature => {
+        return <Route key={feature.path} path={feature.path} exact component={FormInstancesListPage} />
+      })}
     </Switch>
   </Page>;
 };
