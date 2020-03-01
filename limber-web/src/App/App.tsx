@@ -40,7 +40,7 @@ const App: React.FC<Props> = (props: Props) => {
 
   return <Auth0Provider
     domain="limber.auth0.com"
-    client_id={props.tenantState.model!!.auth0ClientId}
+    client_id={props.tenantState.model!.auth0ClientId}
     redirect_uri={rootUrl}
     audience="https://limber.auth0.com/api/v2/"
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

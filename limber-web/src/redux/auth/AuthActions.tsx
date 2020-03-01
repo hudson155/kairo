@@ -6,9 +6,9 @@ function setJwt(jwt: string): AuthSetJwtAction {
 }
 
 const AuthActions = {
-  ensureSetJwt(getJwt: () => Promise<string>): TA {
+  ensureJwtIsSet(getJwt: () => Promise<string>): TA {
     return async (dispatch, getState): Promise<void> => {
-      if (getState().auth.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
+      if (getState().auth.loadingStatus !== 'INITIAL') return;
       const jwt = await getJwt();
       dispatch(setJwt(jwt));
     };

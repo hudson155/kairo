@@ -28,5 +28,5 @@ const AppPageHeader: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  color: state.theme.model!!.navBarColor,
+  color: state.theme.model!.navBarColor,
 }))(AppPageHeader);

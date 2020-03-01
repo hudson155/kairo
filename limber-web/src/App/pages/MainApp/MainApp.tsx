@@ -28,7 +28,7 @@ interface Props {
 const MainApp: React.FC<Props> = (props: Props) => {
   const auth = useAuth();
 
-  props.dispatch(AuthActions.ensureSetJwt(auth.getTokenSilently)).then(() => {
+  props.dispatch(AuthActions.ensureJwtIsSet(auth.getTokenSilently)).then(() => {
     props.dispatch(Actions.org.ensureLoaded());
     props.dispatch(Actions.user.ensureLoaded());
   });
@@ -43,14 +43,14 @@ const MainApp: React.FC<Props> = (props: Props) => {
     return null;
   }
 
-  const defaultFeature = determineDefaultFeature(props.features!!);
+  const defaultFeature = determineDefaultFeature(props.features!);
 
   return <Page header={<MainAppNavbar />} footer={<Footer />}>
     <Switch>
       <Route path="/" exact>
         <Redirect to={defaultFeature.path} />
       </Route>,
-      {props.features!!.map(feature => {
+      {props.features!.map(feature => {
         return <Route key={feature.path} path={feature.path} exact component={FormInstancesListPage} />;
       })}
     </Switch>
