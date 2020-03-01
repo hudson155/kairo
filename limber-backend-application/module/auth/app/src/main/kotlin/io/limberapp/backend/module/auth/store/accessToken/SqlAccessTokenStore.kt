@@ -2,6 +2,7 @@ package io.limberapp.backend.module.auth.store.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.auth.entity.accessToken.AccessTokenTable
 import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
@@ -23,7 +24,7 @@ internal class SqlAccessTokenStore @Inject constructor(
     override fun getByToken(token: String) = transaction {
         val entity = AccessTokenTable
             .select { AccessTokenTable.token eq token }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlAccessTokenMapper.accessTokenModel(entity)
     }
 

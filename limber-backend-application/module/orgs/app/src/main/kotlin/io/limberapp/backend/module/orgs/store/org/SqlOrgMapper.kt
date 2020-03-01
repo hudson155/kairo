@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.orgs.store.org
 
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.model.org.MembershipModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -18,11 +17,7 @@ internal interface SqlOrgMapper {
 
     fun featureEntity(updateStatement: UpdateStatement, update: FeatureModel.Update)
 
-    fun membershipEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: MembershipModel)
-
     fun orgModel(resultRow: ResultRow): OrgModel
 
     fun featureModel(resultRow: ResultRow): FeatureModel
-
-    fun membershipModel(resultRow: ResultRow): MembershipModel
 }

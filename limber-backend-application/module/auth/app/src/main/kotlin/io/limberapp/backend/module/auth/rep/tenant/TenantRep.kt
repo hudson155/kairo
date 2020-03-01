@@ -17,8 +17,8 @@ object TenantRep {
         val auth0ClientId: String
     ) : CreationRep {
         override fun validate() {
-            validate(TenantRep.Creation::domain) { hostname() }
-            validate(TenantRep.Creation::auth0ClientId) { mediumText(allowEmpty = false) }
+            validate(Creation::domain) { hostname() }
+            validate(Creation::auth0ClientId) { mediumText(allowEmpty = false) }
         }
     }
 
@@ -35,8 +35,8 @@ object TenantRep {
         val auth0ClientId: String? = null
     ) : UpdateRep {
         override fun validate() {
-            validate(TenantRep.Update::domain) { ifPresent { hostname() } }
-            validate(TenantRep.Update::auth0ClientId) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(Update::domain) { ifPresent { hostname() } }
+            validate(Update::auth0ClientId) { ifPresent { mediumText(allowEmpty = false) } }
         }
     }
 }

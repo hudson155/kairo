@@ -6,6 +6,7 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
 import org.junit.jupiter.api.Test
+import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostUserTest : ResourceTest() {
@@ -13,17 +14,20 @@ internal class PostUserTest : ResourceTest() {
     @Test
     fun duplicateEmailAddress() {
 
+        // Setup
+        val orgId = UUID.randomUUID()
+
         // PostUser
-        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
         // PostUser
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.billGatesFixture.creation().copy(emailAddress = jeffHudsonUserRep.emailAddress),
+            body = UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress),
             expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
         )
     }
@@ -31,11 +35,14 @@ internal class PostUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
+        // Setup
+        val orgId = UUID.randomUUID()
+
         // PostUser
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, 0)
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation()
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         ) {
             val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

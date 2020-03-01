@@ -8,6 +8,7 @@ import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
+import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
@@ -21,6 +22,7 @@ import java.util.UUID
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val accountService: AccountService,
     private val orgService: OrgService,
+    private val tenantService: TenantService,
     private val userService: UserService,
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
@@ -41,17 +43,22 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     }
 
     private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
-        val orgs = orgService.getByMemberId(account.id)
-        val jwt = createJwt(account, user, orgs)
+        val org = user?.let { checkNotNull(orgService.get(it.orgId)) }
+        val jwt = createJwt(account, user, org)
         return convertJwtToModel(jwt)
     }
 
     private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
+
         val existingUser = userService.getByEmailAddress(request.emailAddress)
         if (existingUser != null) return existingUser
+
+        val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
+
         val newUser = UserModel(
             id = uuidGenerator.generate(),
             created = LocalDateTime.now(clock),
+            orgId = tenant.orgId,
             firstName = request.firstName,
             lastName = request.lastName,
             emailAddress = request.emailAddress,
@@ -59,13 +66,13 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
             roles = emptySet()
         )
         userService.create(newUser)
+
         return newUser
     }
 
-    private fun createJwt(account: AccountModel, user: UserModel?, orgs: Set<OrgModel>): Jwt {
-        check(orgs.size <= 1)
+    private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
         return Jwt(
-            org = orgs.singleOrNull()?.let { JwtOrg(it.id, it.name) },
+            org = org?.let { JwtOrg(it.id, it.name) },
             roles = account.roles,
             user = JwtUser(account.id, user?.firstName, user?.lastName)
         )

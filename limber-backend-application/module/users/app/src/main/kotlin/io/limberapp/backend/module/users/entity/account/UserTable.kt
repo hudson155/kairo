@@ -6,6 +6,8 @@ internal object UserTable : SqlTable("users", "user") {
 
     val accountGuid = uuid("account_guid").references(AccountTable.guid)
 
+    val orgGuid = uuid("org_guid")
+
     val emailAddress = text("email_address")
     const val emailAddressUniqueConstraint = "user_email_address_key"
 

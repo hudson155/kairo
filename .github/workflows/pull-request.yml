@@ -55,6 +55,7 @@ jobs:
         image: postgres:11
         env:
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: limber_test
         ports:
           - 5432:5432
@@ -73,6 +74,8 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
       - run: bash ./gradlew --no-daemon --info --stacktrace test
+        env:
+          LIMBER_PROD_POSTGRES_PASSWORD: postgres
 
   backend-build:
     name: Backend / Build
@@ -162,6 +165,5 @@ jobs:
         working-directory: ./limber-web
         env:
           CI: false # https://github.com/facebook/create-react-app/issues/3657
-          REACT_APP_ROOT_URL: https://limberapp.io
           REACT_APP_API_URL: https://api.limberapp.io
       - run: docker build -t registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) limber-web

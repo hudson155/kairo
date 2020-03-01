@@ -15,6 +15,7 @@ internal class UserMapper @Inject constructor(
     fun model(rep: UserRep.Creation) = UserModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
+        orgId = rep.orgId,
         firstName = rep.firstName,
         lastName = rep.lastName,
         emailAddress = rep.emailAddress,
@@ -25,6 +26,7 @@ internal class UserMapper @Inject constructor(
     fun completeRep(model: UserModel) = UserRep.Complete(
         id = model.id,
         created = model.created,
+        orgId = model.orgId,
         firstName = model.firstName,
         lastName = model.lastName,
         emailAddress = model.emailAddress,

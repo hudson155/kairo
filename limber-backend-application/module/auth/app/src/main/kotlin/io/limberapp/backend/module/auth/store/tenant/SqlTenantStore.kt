@@ -3,6 +3,7 @@ package io.limberapp.backend.module.auth.store.tenant
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.auth.entity.tenant.TenantTable
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
@@ -37,14 +38,14 @@ internal class SqlTenantStore @Inject constructor(
     override fun get(domain: String) = transaction {
         val entity = TenantTable
             .select { TenantTable.domain.lowerCase() eq domain.toLowerCase() }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlTenantMapper.tenantModel(entity)
     }
 
     override fun getByAuth0ClientId(auth0ClientId: String) = transaction {
         val entity = TenantTable
             .select { TenantTable.auth0ClientId eq auth0ClientId }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlTenantMapper.tenantModel(entity)
     }
 

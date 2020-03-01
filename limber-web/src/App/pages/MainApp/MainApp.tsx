@@ -21,7 +21,6 @@ interface Props {
 
 const MainApp: React.FC<Props> = (props: Props) => {
   const auth0 = useAuth0();
-  if (auth0.loading) return null;
 
   props.dispatch(AuthActions.ensureSetJwt(auth0.getTokenSilently)).then(() => {
     props.dispatch(OrgActions.ensureLoaded());

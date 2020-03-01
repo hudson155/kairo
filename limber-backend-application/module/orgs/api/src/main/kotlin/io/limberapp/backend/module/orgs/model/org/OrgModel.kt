@@ -7,8 +7,7 @@ data class OrgModel(
     val id: UUID,
     val created: LocalDateTime,
     val name: String,
-    val features: Set<FeatureModel>,
-    val members: Set<MembershipModel>
+    val features: Set<FeatureModel>
 ) {
 
     data class Update(

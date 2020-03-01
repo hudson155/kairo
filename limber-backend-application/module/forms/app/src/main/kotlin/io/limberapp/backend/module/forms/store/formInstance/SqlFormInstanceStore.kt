@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.store.formInstance
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
+import com.piperframework.util.uuid.singleNullOrThrow
 import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
@@ -25,7 +26,7 @@ internal class SqlFormInstanceStore @Inject constructor(
     override fun get(formInstanceId: UUID) = transaction {
         val entity = FormInstanceTable
             .select { FormInstanceTable.guid eq formInstanceId }
-            .singleOrNull() ?: return@transaction null
+            .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormInstanceMapper.formInstanceModel(entity)
     }
 
