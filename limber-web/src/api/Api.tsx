@@ -1,6 +1,6 @@
-import OrgsApi from './orgs/Api';
-import TenantsApi from './tenants/Api';
-import UsersApi from './users/Api';
+import OrgsApi from './orgs/OrgsApi';
+import TenantsApi from './tenants/TenantsApi';
+import UsersApi from './users/UsersApi';
 
 const Api = {
   orgs: OrgsApi,
