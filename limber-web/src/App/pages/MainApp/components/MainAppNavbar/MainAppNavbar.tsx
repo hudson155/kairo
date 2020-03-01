@@ -30,14 +30,10 @@ const MainAppNavbar: React.FC<Props> = (props: Props) => {
       <HeaderLinkGroup>{defaultFeatureNavLink}</HeaderLinkGroup>
       <HeaderLinkGroup>{featureNavLinks}</HeaderLinkGroup>
     </>}
-    right={
-      <>
-        <HeaderLinkGroup>
-          {props.name && <HeaderText>{props.name}</HeaderText>}
-          <HeaderLink to="/signout">Sign Out</HeaderLink>
-        </HeaderLinkGroup>
-      </>
-    } />;
+    right={<HeaderLinkGroup>
+      {props.name && <HeaderText>{props.name}</HeaderText>}
+      <HeaderLink to="/signout">Sign Out</HeaderLink>
+    </HeaderLinkGroup>} />;
 };
 
 export default connect((state: State) => ({
