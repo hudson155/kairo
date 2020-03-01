@@ -31,8 +31,7 @@ abstract class SqlStore(private val database: Database) {
         try {
             operation()
         } catch (e: ExposedSQLException) {
-            val error = (e.cause as PSQLException).serverErrorMessage
-            OperationError(error).onError()
+            (e.cause as? PSQLException)?.let { OperationError(it.serverErrorMessage).onError() }
             throw e
         }
     }
