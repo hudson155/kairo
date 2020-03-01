@@ -8,7 +8,7 @@ open class TestSqlModule : SqlModule(
     SqlDatabaseConfig(
         jdbcUrl = ConfigString(type = ConfigString.Type.PLAINTEXT, value = "jdbc:postgresql://localhost/limber_test"),
         username = "postgres",
-        password = null
+        password = System.getenv("LIMBER_PROD_POSTGRES_PASSWORD")?.let { ConfigString(ConfigString.Type.PLAINTEXT, it) }
     )
 ) {
 
