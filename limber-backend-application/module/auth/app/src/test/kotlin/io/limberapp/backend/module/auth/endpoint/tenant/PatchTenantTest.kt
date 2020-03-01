@@ -85,7 +85,7 @@ internal class PatchTenantTest : ResourceTest() {
         )
 
         // PostTenant
-        val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
+        var someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.someclientFixture.creation(org1Id)
@@ -93,12 +93,15 @@ internal class PatchTenantTest : ResourceTest() {
 
         // PatchTenant
         val tenantUpdateRep = TenantRep.Update(orgId = limberappTenantRep.orgId)
+        someclientTenantRep = someclientTenantRep.copy(orgId = tenantUpdateRep.orgId!!)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
             body = tenantUpdateRep,
-            pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain),
-            expectedException = OrgAlreadyHasTenant(limberappTenantRep.orgId)
-        )
+            pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(someclientTenantRep, actual)
+        }
 
         // GetTenant
         piperTest.test(
@@ -125,7 +128,7 @@ internal class PatchTenantTest : ResourceTest() {
         )
 
         // PostTenant
-        val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
+        var someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.someclientFixture.creation(org1Id)
@@ -133,12 +136,15 @@ internal class PatchTenantTest : ResourceTest() {
 
         // PatchTenant
         val tenantUpdateRep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
+        someclientTenantRep = someclientTenantRep.copy(auth0ClientId = tenantUpdateRep.auth0ClientId!!)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
             body = tenantUpdateRep,
-            pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain),
-            expectedException = Auth0ClientIdAlreadyRegistered(limberappTenantRep.auth0ClientId)
-        )
+            pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(someclientTenantRep, actual)
+        }
 
         // GetTenant
         piperTest.test(

@@ -2,7 +2,6 @@ package io.limberapp.backend.module.auth.endpoint.tenant
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
-import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -39,21 +38,43 @@ internal class PostTenantTest : ResourceTest() {
     fun duplicateOrgId() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val org0Id = UUID.randomUUID()
+        val org1Id = UUID.randomUUID()
 
         // PostTenant
-        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
+        val tenant0Rep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(orgId)
+            body = TenantRepFixtures.limberappFixture.creation(org0Id)
         )
 
         // PostTenant
+        val tenant1Rep = TenantRepFixtures.someclientFixture.complete(this, org1Id).copy(orgId = tenant0Rep.orgId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(orgId),
-            expectedException = OrgAlreadyHasTenant(limberappTenantRep.orgId)
-        )
+            body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(orgId = tenant0Rep.orgId)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(tenant1Rep, actual)
+        }
+
+        // GetTenant
+        piperTest.test(
+            endpointConfig = GetTenant.endpointConfig,
+            pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(tenant0Rep, actual)
+        }
+
+        // GetTenant
+        piperTest.test(
+            endpointConfig = GetTenant.endpointConfig,
+            pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(tenant1Rep, actual)
+        }
     }
 
     @Test
@@ -64,20 +85,40 @@ internal class PostTenantTest : ResourceTest() {
         val org1Id = UUID.randomUUID()
 
         // PostTenant
-        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
+        val tenant0Rep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.limberappFixture.creation(org0Id)
         )
 
         // PostTenant
+        val tenant1Rep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
+            .copy(auth0ClientId = tenant0Rep.auth0ClientId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(
-                auth0ClientId = limberappTenantRep.auth0ClientId
-            ),
-            expectedException = Auth0ClientIdAlreadyRegistered(limberappTenantRep.auth0ClientId)
-        )
+            body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(auth0ClientId = tenant0Rep.auth0ClientId)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(tenant1Rep, actual)
+        }
+
+        // GetTenant
+        piperTest.test(
+            endpointConfig = GetTenant.endpointConfig,
+            pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(tenant0Rep, actual)
+        }
+
+        // GetTenant
+        piperTest.test(
+            endpointConfig = GetTenant.endpointConfig,
+            pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
+        ) {
+            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            assertEquals(tenant1Rep, actual)
+        }
     }
 
     @Test
