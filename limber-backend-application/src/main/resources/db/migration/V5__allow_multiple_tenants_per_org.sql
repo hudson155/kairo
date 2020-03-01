@@ -1,5 +1,5 @@
 ALTER TABLE auth.tenant
-    ALTER COLUMN org_guid DROP NOT NULL;
+    DROP CONSTRAINT tenant_auth0_client_id_key;
 
 ALTER TABLE auth.tenant
-    ALTER COLUMN auth0_client_id DROP NOT NULL;
+    DROP CONSTRAINT tenant_org_guid_key;
