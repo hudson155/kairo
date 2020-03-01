@@ -8,6 +8,7 @@ const authReducer = (state: AuthState = defaultState, abstractAction: AuthAction
   switch (abstractAction.type) {
     case 'AUTH__SET_JWT': {
       const action = abstractAction as AuthSetJwtAction;
+      console.log(`JWT: ${action.jwt}`);
       const decodedJwt = jsonwebtoken.decode(action.jwt) as { [key: string]: any };
       const orgClaim = JSON.parse(decodedJwt['https://limberapp.io/org']);
       const userClaim = JSON.parse(decodedJwt['https://limberapp.io/user']);
