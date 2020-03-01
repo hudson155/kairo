@@ -23,7 +23,7 @@ export default abstract class Request<T> {
     }
 
     const headers: { [key: string]: string } = {};
-    const jwt = store.getState().auth.auth?.jwt;
+    const jwt = store.getState().auth.model?.jwt;
     if (jwt) {
       headers['Authorization'] = `Bearer ${jwt}`;
     }

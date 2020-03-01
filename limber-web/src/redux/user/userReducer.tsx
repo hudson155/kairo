@@ -1,9 +1,10 @@
+import UserModel from '../../models/user/UserModel';
+import LoadableState from '../util/LoadableState';
 import UserAction, { UserSetUserAction } from './UserAction';
-import UserState from './UserState';
 
-const defaultState: UserState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
+const defaultState: LoadableState<UserModel> = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 
-const userReducer = (state: UserState = defaultState, abstractAction: UserAction): UserState => {
+const userReducer = (state: LoadableState<UserModel> = defaultState, abstractAction: UserAction): LoadableState<UserModel> => {
   switch (abstractAction.type) {
     case 'USER__START_LOADING_USER': {
       const action = abstractAction as UserSetUserAction;
@@ -11,7 +12,7 @@ const userReducer = (state: UserState = defaultState, abstractAction: UserAction
     }
     case 'USER__SET_USER': {
       const action = abstractAction as UserSetUserAction;
-      return { ...state, user: action.user };
+      return { ...state, model: action.user };
     }
     default:
       return state;

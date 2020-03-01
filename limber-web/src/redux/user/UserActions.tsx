@@ -16,7 +16,7 @@ const UserActions = {
     return async (dispatch, getState): Promise<void> => {
       if (getState().user.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingUser());
-      const userId = getState().auth.auth!!.user.id;
+      const userId = getState().auth.model!!.user.id;
       const response = (await Api.users.getUser(userId))!!; // TODO: No double bang
       console.log(response);
       dispatch(setUser(response));

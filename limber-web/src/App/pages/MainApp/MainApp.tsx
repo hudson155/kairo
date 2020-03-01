@@ -60,6 +60,6 @@ const MainApp: React.FC<Props> = (props: Props) => {
 export default connect(
   (state: State) => ({
     state,
-    features: state.org.org?.features,
+    features: state.org.model?.features,
   }),
 )(MainApp);

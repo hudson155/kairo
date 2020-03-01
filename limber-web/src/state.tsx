@@ -1,13 +1,14 @@
-import AuthState from './redux/auth/AuthState';
-import OrgState from './redux/org/OrgState';
-import TenantState from './redux/tenant/TenantState';
-import ThemeState from './redux/theme/ThemeState';
-import UserState from './redux/user/UserState';
+import AuthModel from './models/auth/AuthModel';
+import OrgModel from './models/org/OrgModel';
+import TenantModel from './models/tenant/TenantModel';
+import ThemeModel from './models/theme/ThemeModel';
+import UserModel from './models/user/UserModel';
+import LoadableState from './redux/util/LoadableState';
 
 export default interface State {
-  auth: AuthState;
-  org: OrgState;
-  tenant: TenantState;
-  theme: ThemeState;
-  user: UserState;
+  auth: LoadableState<AuthModel>;
+  org: LoadableState<OrgModel>;
+  tenant: LoadableState<TenantModel>;
+  theme: LoadableState<ThemeModel>;
+  user: LoadableState<UserModel>;
 }

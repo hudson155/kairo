@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import TenantState from '../redux/tenant/TenantState';
+import TenantModel from '../models/tenant/TenantModel';
+import LoadableState from '../redux/util/LoadableState';
 import State from '../state';
 import MainApp from './pages/MainApp/MainApp';
 import MarketingSite from './pages/MarketingSite/MarketingSite';
@@ -12,7 +13,7 @@ import SignOutRedirector from './pages/SignOutRedirector/SignOutRedirector';
 import { useAuth } from './useAuth';
 
 interface Props {
-  tenantState: TenantState;
+  tenantState: LoadableState<TenantModel>;
   dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 

@@ -1,12 +1,13 @@
-import ThemeState from './ThemeState';
+import ThemeModel from '../../models/theme/ThemeModel';
+import LoadableState from '../util/LoadableState';
 
-const defaultState: ThemeState = {
+const defaultState: LoadableState<ThemeModel> = {
   loadingStatus: 'LOADED',
-  theme: {
+  model: {
     navBarColor: '#24292e',
     navBarLinkColor: 'white',
   },
 };
 
-const themeReducer = (state: ThemeState = defaultState): ThemeState => state;
+const themeReducer = (state: LoadableState<ThemeModel> = defaultState): LoadableState<ThemeModel> => state;
 export default themeReducer;

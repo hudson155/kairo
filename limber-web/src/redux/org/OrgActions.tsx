@@ -22,7 +22,7 @@ const OrgActions = {
     return async (dispatch, getState): Promise<void> => {
       if (getState().org.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingOrg());
-      const orgId = assertLoaded(getState().auth.loadingStatus, getState().auth.auth).org.id;
+      const orgId = assertLoaded(getState().auth.loadingStatus, getState().auth.model).org.id;
       const response = (await Api.orgs.getOrg(orgId))!!; // TODO: No double bang
       console.log(response);
       dispatch(setOrg(response));

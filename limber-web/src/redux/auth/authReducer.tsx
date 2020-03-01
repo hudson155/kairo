@@ -1,10 +1,11 @@
 import jsonwebtoken from 'jsonwebtoken';
+import AuthModel from '../../models/auth/AuthModel';
+import LoadableState from '../util/LoadableState';
 import AuthAction, { AuthSetJwtAction } from './AuthAction';
-import AuthState from './AuthState';
 
-const defaultState: AuthState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
+const defaultState: LoadableState<AuthModel> = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
 
-const authReducer = (state: AuthState = defaultState, abstractAction: AuthAction): AuthState => {
+const authReducer = (state: LoadableState<AuthModel> = defaultState, abstractAction: AuthAction): LoadableState<AuthModel> => {
   switch (abstractAction.type) {
     case 'AUTH__SET_JWT': {
       const action = abstractAction as AuthSetJwtAction;
@@ -15,7 +16,7 @@ const authReducer = (state: AuthState = defaultState, abstractAction: AuthAction
       return {
         ...state,
         loadingStatus: 'LOADED',
-        auth: {
+        model: {
           jwt: action.jwt,
           org: { id: orgClaim.id, name: orgClaim.name },
           user: { id: userClaim.id, firstName: userClaim.firstName, lastName: userClaim.lastName },

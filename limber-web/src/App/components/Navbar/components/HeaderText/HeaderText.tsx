@@ -19,5 +19,5 @@ const HeaderText: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  color: state.theme.theme.navBarLinkColor,
+  color: state.theme.model!!.navBarLinkColor,
 }))(HeaderText);

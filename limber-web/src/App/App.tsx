@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { rootUrl } from '../index';
+import TenantModel from '../models/tenant/TenantModel';
 import { Auth0Provider } from '../react-auth0-wrapper';
 import Actions from '../redux/Actions';
-import TenantState from '../redux/tenant/TenantState';
+import LoadableState from '../redux/util/LoadableState';
 import State from '../state';
 import AppRouter from './AppRouter';
 
@@ -20,7 +21,7 @@ const onRedirectCallback = (appState: any): any => {
 };
 
 interface Props {
-  tenantState: TenantState;
+  tenantState: LoadableState<TenantModel>;
   dispatch: ThunkDispatch<State, null, AnyAction>;
 }
 
@@ -39,7 +40,7 @@ const App: React.FC<Props> = (props: Props) => {
 
   return <Auth0Provider
     domain="limber.auth0.com"
-    client_id={props.tenantState.tenant!!.auth0ClientId}
+    client_id={props.tenantState.model!!.auth0ClientId}
     redirect_uri={rootUrl}
     audience="https://limber.auth0.com/api/v2/"
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

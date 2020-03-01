@@ -41,6 +41,6 @@ const MainAppNavbar: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  features: state.org.org?.features,
-  name: [state.auth.auth?.user.firstName, state.auth.auth?.user.lastName].filter(x => Boolean(x)).join(' '),
+  features: state.org.model?.features,
+  name: [state.auth.model?.user.firstName, state.auth.model?.user.lastName].filter(x => Boolean(x)).join(' '),
 }))(MainAppNavbar);
