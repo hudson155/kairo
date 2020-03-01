@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { assertLoaded } from '../../../../../redux/util/LoadableState';
 import State from '../../../../../state';
 
 interface Props {
@@ -23,5 +24,5 @@ const HeaderLink: React.FC<Props> = (props: Props) => {
 };
 
 export default connect((state: State) => ({
-  color: state.theme.model!.navBarLinkColor,
+  color: assertLoaded(state.theme).navBarLinkColor,
 }))(HeaderLink);

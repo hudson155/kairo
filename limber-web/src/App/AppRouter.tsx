@@ -21,6 +21,6 @@ const AppRouter: React.FC = () => {
   </Router>;
 };
 
-export default connect(
-  (state: State) => ({ tenantState: state.tenant }),
-)(AppRouter);
+export default connect((state: State) => ({
+  tenantState: state.tenant,
+}))(AppRouter);

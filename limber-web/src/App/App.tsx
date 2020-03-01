@@ -45,6 +45,6 @@ const App: React.FC<Props> = (props: Props) => {
   </Auth0Provider>;
 };
 
-export default connect(
-  (state: State) => ({ tenantState: state.tenant }),
-)(App);
+export default connect((state: State) => ({
+  tenantState: state.tenant,
+}))(App);
