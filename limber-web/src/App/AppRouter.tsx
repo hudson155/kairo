@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import State from '../state';
 import MainApp from './pages/MainApp/MainApp';
 import MarketingSite from './pages/MarketingSite/MarketingSite';
 import SignInRedirector from './pages/SignInRedirector/SignInRedirector';
@@ -21,6 +19,4 @@ const AppRouter: React.FC = () => {
   </Router>;
 };
 
-export default connect((state: State) => ({
-  tenantState: state.tenant,
-}))(AppRouter);
+export default AppRouter;
