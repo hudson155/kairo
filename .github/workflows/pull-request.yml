@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
       - run: bash ./gradlew --no-daemon --info --stacktrace test
         env:
-          POSTGRES_PASSWORD: postgres
+          LIMBER_PROD_POSTGRES_PASSWORD: postgres
 
   backend-build:
     name: Backend / Build
