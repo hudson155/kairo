@@ -21,4 +21,5 @@ const orgReducer = (state: LoadableState<OrgModel> = defaultState, abstractActio
       return state;
   }
 };
+
 export default orgReducer;

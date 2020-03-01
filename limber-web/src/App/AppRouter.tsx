@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { TD } from '../index';
 import TenantModel from '../models/tenant/TenantModel';
 import LoadableState from '../redux/util/LoadableState';
 import State from '../state';
@@ -14,7 +15,7 @@ import { useAuth } from './useAuth';
 
 interface Props {
   tenantState: LoadableState<TenantModel>;
-  dispatch: ThunkDispatch<State, null, AnyAction>;
+  dispatch: TD;
 }
 
 const AppRouter: React.FC<Props> = (props: Props) => {

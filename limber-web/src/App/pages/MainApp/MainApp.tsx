@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { TD } from '../../../index';
 import FeatureModel from '../../../models/org/FeatureModel';
 import Actions from '../../../redux/Actions';
 import AuthActions from '../../../redux/auth/AuthActions';
@@ -22,7 +23,7 @@ function determineDefaultFeature(features: FeatureModel[]) {
 interface Props {
   state: State;
   features?: FeatureModel[];
-  dispatch: ThunkDispatch<State, null, AnyAction>;
+  dispatch: TD;
 }
 
 const MainApp: React.FC<Props> = (props: Props) => {

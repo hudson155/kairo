@@ -9,4 +9,5 @@ const Actions = {
   tenant: TenantActions,
   user: UserActions,
 };
+
 export default Actions;

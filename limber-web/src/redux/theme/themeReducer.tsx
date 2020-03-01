@@ -10,4 +10,5 @@ const defaultState: LoadableState<ThemeModel> = {
 };
 
 const themeReducer = (state: LoadableState<ThemeModel> = defaultState): LoadableState<ThemeModel> => state;
+
 export default themeReducer;

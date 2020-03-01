@@ -21,4 +21,5 @@ const userReducer = (state: LoadableState<UserModel> = defaultState, abstractAct
       return state;
   }
 };
+
 export default userReducer;

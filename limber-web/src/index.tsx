@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AnyAction, applyMiddleware, createStore } from 'redux';
-import thunk, { ThunkAction } from 'redux-thunk';
+import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import App from './App/App';
 import './index.css';
 import rootReducer from './redux/reducers';
@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import State from './state';
 
 export type TA = ThunkAction<Promise<void>, State, null, AnyAction>;
+export type TD = ThunkDispatch<State, null, AnyAction>;
 
 export const rootDomain = window.location.host;
 export const rootUrl = `${window.location.protocol}//${rootDomain}`;

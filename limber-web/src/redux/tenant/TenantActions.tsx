@@ -29,4 +29,5 @@ const TenantActions = {
     };
   },
 };
+
 export default TenantActions;

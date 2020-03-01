@@ -21,4 +21,5 @@ const tenantReducer = (state: LoadableState<TenantModel> = defaultState, abstrac
       return state;
   }
 };
+
 export default tenantReducer;

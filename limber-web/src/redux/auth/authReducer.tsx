@@ -26,4 +26,5 @@ const authReducer = (state: LoadableState<AuthModel> = defaultState, abstractAct
       return state;
   }
 };
+
 export default authReducer;
