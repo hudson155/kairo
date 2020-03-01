@@ -7,5 +7,4 @@ const Api = {
   tenants: TenantsApi,
   users: UsersApi,
 };
-
 export default Api;

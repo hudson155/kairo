@@ -1,6 +1,6 @@
 import { store } from '../index';
 
-export abstract class Request<T> {
+export default abstract class Request<T> {
   path: string;
   queryParams?: Map<string, string>;
 
@@ -11,7 +11,9 @@ export abstract class Request<T> {
 
   async request(): Promise<T> {
     let url = process.env['REACT_APP_API_URL'] as string;
+
     url += this.path;
+
     if (this.queryParams?.size) {
       const queryParams: string[] = [];
       this.queryParams.forEach((key, value) => {
@@ -25,6 +27,7 @@ export abstract class Request<T> {
     if (jwt) {
       headers['Authorization'] = `Bearer ${jwt}`;
     }
+
     const response: Response = await fetch(url, { headers });
     return await response.json();
   }

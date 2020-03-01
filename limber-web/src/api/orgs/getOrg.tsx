@@ -1,5 +1,5 @@
 import OrgModel from '../../models/org/OrgModel';
-import { Request } from '../Request';
+import Request from '../Request';
 
 class GetOrgRequest extends Request<OrgModel | undefined> {
   constructor(orgId: string) {
