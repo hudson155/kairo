@@ -1,9 +1,6 @@
-import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import Api from '../../api/Api';
-import { rootDomain } from '../../index';
+import { rootDomain, TA } from '../../index';
 import TenantModel from '../../models/tenant/TenantModel';
-import State from '../../state';
 import { TenantSetTenantAction, TenantStartLoadingTenantAction } from './TenantAction';
 
 function startLoadingTenant(): TenantStartLoadingTenantAction {
@@ -15,7 +12,7 @@ function setTenant(tenant: TenantModel): TenantSetTenantAction {
 }
 
 const TenantActions = {
-  ensureLoaded(): ThunkAction<void, State, null, AnyAction> {
+  ensureLoaded(): TA {
     return async (dispatch, getState): Promise<void> => {
       if (getState().tenant.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingTenant());

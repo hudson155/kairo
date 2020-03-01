@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { AnyAction, applyMiddleware, createStore } from 'redux';
+import thunk, { ThunkAction } from 'redux-thunk';
 import App from './App/App';
 import './index.css';
 import rootReducer from './redux/reducers';
 import * as serviceWorker from './serviceWorker';
+import State from './state';
 
 export const rootDomain = window.location.host;
 export const rootUrl = `${window.location.protocol}//${rootDomain}`;
+export type TA = ThunkAction<Promise<void>, State, null, AnyAction>
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(

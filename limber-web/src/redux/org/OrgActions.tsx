@@ -1,8 +1,7 @@
-import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import Api from '../../api/Api';
+import { TA } from '../../index';
 import OrgModel from '../../models/org/OrgModel';
-import State from '../../state';
+import { LoadingStatus } from '../util/LoadingStatus';
 import { OrgSetOrgAction, OrgStartLoadingOrgAction } from './OrgAction';
 
 function startLoadingOrg(): OrgStartLoadingOrgAction {
@@ -13,12 +12,17 @@ function setOrg(org: OrgModel): OrgSetOrgAction {
   return { type: 'ORG__SET_ORG', org };
 }
 
+function assertLoaded<T>(loadingStatus: LoadingStatus, state?: T): T {
+  if (loadingStatus !== 'LOADED') throw Error('TODO');
+  return state!!
+}
+
 const OrgActions = {
-  ensureLoaded(): ThunkAction<void, State, null, AnyAction> {
+  ensureLoaded(): TA {
     return async (dispatch, getState): Promise<void> => {
       if (getState().org.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingOrg());
-      const orgId = getState().auth.auth!!.org.id;
+      const orgId = assertLoaded(getState().auth.loadingStatus, getState().auth.auth).org.id;
       const response = (await Api.orgs.getOrg(orgId))!!; // TODO: No double bang
       console.log(response);
       dispatch(setOrg(response));

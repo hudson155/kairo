@@ -1,7 +1,7 @@
 import UserModel from '../../models/user/UserModel';
 
 export default interface UserAction {
-  type: 'USER__START_LOADING_USER' | 'USER__SET_JWT_USER' | 'USER__SET_USER';
+  type: 'USER__START_LOADING_USER' | 'USER__SET_USER';
 }
 
 export interface UserStartLoadingUserAction extends UserAction {

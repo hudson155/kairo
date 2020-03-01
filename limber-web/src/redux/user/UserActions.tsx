@@ -1,8 +1,6 @@
-import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import Api from '../../api/Api';
+import { TA } from '../../index';
 import UserModel from '../../models/user/UserModel';
-import State from '../../state';
 import { UserSetUserAction, UserStartLoadingUserAction } from './UserAction';
 
 function startLoadingUser(): UserStartLoadingUserAction {
@@ -14,7 +12,7 @@ function setUser(user: UserModel): UserSetUserAction {
 }
 
 const UserActions = {
-  ensureLoaded(): ThunkAction<void, State, null, AnyAction> {
+  ensureLoaded(): TA {
     return async (dispatch, getState): Promise<void> => {
       if (getState().user.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
       dispatch(startLoadingUser());

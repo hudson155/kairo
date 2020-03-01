@@ -1,6 +1,4 @@
-import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
-import State from '../../state';
+import { TA } from '../../index';
 import { AuthSetJwtAction } from './AuthAction';
 
 function setJwt(jwt: string): AuthSetJwtAction {
@@ -8,12 +6,11 @@ function setJwt(jwt: string): AuthSetJwtAction {
 }
 
 const AuthActions = {
-  ensureSetJwt(getJwt: () => Promise<string>): ThunkAction<Promise<void>, State, null, AnyAction> {
+  ensureSetJwt(getJwt: () => Promise<string>): TA {
     return async (dispatch, getState): Promise<void> => {
-      if (getState().auth.loadingStatus === 'NOT_LOADED_OR_LOADING') {
-        const jwt: string = await getJwt();
-        dispatch(setJwt(jwt));
-      }
+      if (getState().auth.loadingStatus !== 'NOT_LOADED_OR_LOADING') return;
+      const jwt = await getJwt();
+      dispatch(setJwt(jwt));
     };
   },
 };
