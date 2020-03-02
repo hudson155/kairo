@@ -1,17 +1,20 @@
 package io.limberapp.backend.module.auth.mapper.accessToken
 
 import com.google.inject.Inject
+import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.util.uuid.base64Encode
 import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
+import org.mindrot.jbcrypt.BCrypt
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.UUID
 
 internal class AccessTokenMapper @Inject constructor(
     private val clock: Clock,
-    private val uuidGenerator: UuidGenerator
+    private val uuidGenerator: UuidGenerator,
+    private val hashingConfig: HashingConfig
 ) {
 
     fun model(userId: UUID): Pair<AccessTokenModel, UUID> {
@@ -21,7 +24,10 @@ internal class AccessTokenMapper @Inject constructor(
             id = id,
             created = LocalDateTime.now(clock),
             userId = userId,
-            encryptedSecret = rawSecretAsUuid.base64Encode().dropLast(2)
+            encryptedSecret = run {
+                val salt = BCrypt.gensalt(hashingConfig.logRounds)
+                return@run BCrypt.hashpw(rawSecretAsUuid.base64Encode().dropLast(2), salt)
+            }
         )
         return Pair(model, rawSecretAsUuid)
     }

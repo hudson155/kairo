@@ -3,6 +3,7 @@ package com.piperframework.testing
 import com.piperframework.config.Config
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.authentication.AuthenticationMechanism
+import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.config.serving.StaticFiles
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
@@ -17,13 +18,17 @@ import java.time.ZoneId
 abstract class AbstractResourceTest {
 
     protected val config = object : Config {
+
+        override val authentication =
+            AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt))
+
+        override val hashing = HashingConfig(logRounds = 4)
+
         override val serving = ServingConfig(
             redirectHttpToHttps = false,
             apiPathPrefix = "/",
             staticFiles = StaticFiles(false)
         )
-        override val authentication =
-            AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt))
     }
 
     protected abstract val piperTest: PiperTest

@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
 
 internal class SqlAccessTokenStore @Inject constructor(
@@ -26,7 +27,7 @@ internal class SqlAccessTokenStore @Inject constructor(
             .select { AccessTokenTable.guid eq accessTokenId }
             .singleNullOrThrow() ?: return@transaction null
         val model = sqlAccessTokenMapper.accessTokenModel(entity)
-        if (model.encryptedSecret != accessTokenSecret) return@transaction null
+        if (!BCrypt.checkpw(accessTokenSecret, model.encryptedSecret)) return@transaction null
         return@transaction model
     }
 

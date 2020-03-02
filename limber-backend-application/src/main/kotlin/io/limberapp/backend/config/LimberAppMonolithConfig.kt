@@ -4,6 +4,7 @@ import com.piperframework.config.Config
 import com.piperframework.config.ConfigString
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.database.SqlDatabaseConfig
+import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
 
 /**
@@ -12,6 +13,7 @@ import com.piperframework.config.serving.ServingConfig
 internal data class LimberAppMonolithConfig(
     val sqlDatabase: SqlDatabaseConfig,
     override val authentication: AuthenticationConfig,
+    override val hashing: HashingConfig,
     override val serving: ServingConfig
 ) : Config {
 
