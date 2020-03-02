@@ -367,7 +367,7 @@ style:
   MagicNumber:
     active: true
     excludes: "**/src/test/**/*Test.kt"
-    ignoreNumbers: '-1,0,1'
+    ignoreNumbers: '-1,0,1,2'
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: true
     ignoreLocalVariableDeclaration: true
