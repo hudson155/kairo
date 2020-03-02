@@ -22,7 +22,8 @@ internal object FeatureRepFixtures {
                 created = LocalDateTime.now(fixedClock),
                 name = "Home",
                 path = "/home",
-                type = FeatureModel.Type.HOME
+                type = FeatureModel.Type.HOME,
+                isDefaultFeature = true
             )
         }
     )
@@ -37,7 +38,8 @@ internal object FeatureRepFixtures {
                 created = LocalDateTime.now(fixedClock),
                 name = "Forms",
                 path = "/forms",
-                type = FeatureModel.Type.FORMS
+                type = FeatureModel.Type.FORMS,
+                isDefaultFeature = false
             )
         }
     )

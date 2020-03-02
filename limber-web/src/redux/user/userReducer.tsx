@@ -1,20 +1,25 @@
-import UserState from './UserState';
-import UserAction, { UserSetUserAction } from './UserAction';
+import UserModel from '../../models/user/UserModel';
+import LoadableState from '../util/LoadableState';
+import UserAction, { UserSetUserAction, UserSetUserErrorAction } from './UserAction';
 
-const defaultState: UserState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
+const defaultState: LoadableState<UserModel> = { loadingStatus: 'INITIAL' };
 
-const userReducer = (state: UserState = defaultState, abstractAction: UserAction): UserState => {
+const userReducer = (state: LoadableState<UserModel> = defaultState, abstractAction: UserAction): LoadableState<UserModel> => {
   switch (abstractAction.type) {
     case 'USER__START_LOADING_USER': {
-      const action = abstractAction as UserSetUserAction;
       return { ...state, loadingStatus: 'LOADING' };
     }
     case 'USER__SET_USER': {
       const action = abstractAction as UserSetUserAction;
-      return { ...state, user: action.user };
+      return { ...state, loadingStatus: 'LOADED', model: action.user };
+    }
+    case 'USER__SET_USER_ERROR': {
+      const action = abstractAction as UserSetUserErrorAction;
+      return { ...state, loadingStatus: 'ERROR', errorMessage: action.message };
     }
     default:
       return state;
   }
 };
+
 export default userReducer;

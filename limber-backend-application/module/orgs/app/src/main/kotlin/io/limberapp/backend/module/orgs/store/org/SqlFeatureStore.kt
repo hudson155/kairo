@@ -15,6 +15,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.update
 import java.util.UUID
 
 internal class SqlFeatureStore @Inject constructor(
@@ -58,6 +59,15 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {
+
+        if (update.isDefaultFeature == true) {
+            FeatureTable
+                .update(
+                    where = { (FeatureTable.orgGuid eq orgId) and (FeatureTable.guid neq featureId) },
+                    body = { it[isDefaultFeature] = false }
+                )
+        }
+
         doOperation {
             FeatureTable
                 .updateExactlyOne(

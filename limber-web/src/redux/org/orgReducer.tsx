@@ -1,19 +1,25 @@
-import OrgState from './OrgState';
-import OrgAction, { OrgSetOrgAction } from './OrgAction';
+import OrgModel from '../../models/org/OrgModel';
+import LoadableState from '../util/LoadableState';
+import OrgAction, { OrgSetOrgAction, OrgSetOrgErrorAction } from './OrgAction';
 
-const defaultState: OrgState = { loadingStatus: 'NOT_LOADED_OR_LOADING' };
+const defaultState: LoadableState<OrgModel> = { loadingStatus: 'INITIAL' };
 
-const orgReducer = (state: OrgState = defaultState, abstractAction: OrgAction): OrgState => {
+const orgReducer = (state: LoadableState<OrgModel> = defaultState, abstractAction: OrgAction): LoadableState<OrgModel> => {
   switch (abstractAction.type) {
     case 'ORG__START_LOADING_ORG': {
       return { ...state, loadingStatus: 'LOADING' };
     }
     case 'ORG__SET_ORG': {
       const action = abstractAction as OrgSetOrgAction;
-      return { ...state, loadingStatus: 'LOADED', org: action.org };
+      return { ...state, loadingStatus: 'LOADED', model: action.org };
+    }
+    case 'ORG__SET_ORG_ERROR': {
+      const action = abstractAction as OrgSetOrgErrorAction;
+      return { ...state, loadingStatus: 'ERROR', errorMessage: action.message };
     }
     default:
       return state;
   }
 };
+
 export default orgReducer;

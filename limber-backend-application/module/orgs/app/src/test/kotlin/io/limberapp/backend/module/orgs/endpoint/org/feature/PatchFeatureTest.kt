@@ -156,4 +156,69 @@ internal class PatchFeatureTest : ResourceTest() {
             assertEquals(orgRep, actual)
         }
     }
+
+    @Test
+    fun happyPathSetAndRemoveDefault() {
+
+        // PostOrg
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+        piperTest.setup(
+            endpointConfig = PostOrg.endpointConfig,
+            body = OrgRepFixtures.crankyPastaFixture.creation()
+        )
+
+        // PostFeature
+        var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+        orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
+        piperTest.setup(
+            endpointConfig = PostFeature.endpointConfig,
+            pathParams = mapOf(PostFeature.orgId to orgRep.id),
+            body = FeatureRepFixtures.formsFixture.creation()
+        )
+
+        // PatchFeature
+        val featureUpdateRep0 = FeatureRep.Update(isDefaultFeature = true)
+        featureRep = featureRep.copy(isDefaultFeature = true)
+        orgRep = orgRep.copy(
+            features = orgRep.features.map {
+                if (it.id == featureRep.id) featureRep else it.copy(isDefaultFeature = false)
+            }.toSet()
+        )
+        piperTest.test(
+            endpointConfig = PatchFeature.endpointConfig,
+            pathParams = mapOf(
+                PatchFeature.orgId to orgRep.id,
+                PatchFeature.featureId to featureRep.id
+            ),
+            body = featureUpdateRep0
+        ) {
+            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            assertEquals(featureRep, actual)
+        }
+
+        // PatchFeature
+        val featureUpdateRep1 = FeatureRep.Update(isDefaultFeature = false)
+        featureRep = featureRep.copy(isDefaultFeature = false)
+        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it }.toSet())
+        piperTest.test(
+            endpointConfig = PatchFeature.endpointConfig,
+            pathParams = mapOf(
+                PatchFeature.orgId to orgRep.id,
+                PatchFeature.featureId to featureRep.id
+            ),
+            body = featureUpdateRep1
+        ) {
+            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            assertEquals(featureRep, actual)
+        }
+
+        // GetOrg
+        piperTest.test(
+            endpointConfig = GetOrg.endpointConfig,
+            pathParams = mapOf("orgId" to orgRep.id)
+        ) {
+            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            assertEquals(orgRep, actual)
+        }
+    }
 }

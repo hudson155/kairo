@@ -28,12 +28,14 @@ internal object FeatureRep {
         override val created: LocalDateTime,
         val name: String,
         val path: String,
-        val type: FeatureModel.Type
+        val type: FeatureModel.Type,
+        val isDefaultFeature: Boolean
     ) : CompleteRep
 
     data class Update(
         val name: String? = null,
-        val path: String? = null
+        val path: String? = null,
+        val isDefaultFeature: Boolean? = null
     ) : UpdateRep {
         override fun validate() {
             validate(Update::name) { ifPresent { shortText(allowEmpty = false) } }

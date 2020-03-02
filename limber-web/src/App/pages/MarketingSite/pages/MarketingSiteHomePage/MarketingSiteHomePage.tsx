@@ -1,6 +1,6 @@
 import React from 'react';
-import PageMainContainer from '../../../../components/PageMainContainer/PageMainContainer';
 import { Link } from 'react-router-dom';
+import PageMainContainer from '../../../../components/PageMainContainer/PageMainContainer';
 
 const MarketingSiteHomePage: React.FC = () => {
   return <PageMainContainer>

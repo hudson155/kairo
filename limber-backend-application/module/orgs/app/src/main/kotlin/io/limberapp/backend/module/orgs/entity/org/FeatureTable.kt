@@ -15,4 +15,6 @@ internal object FeatureTable : SqlTable("orgs", "feature") {
     const val orgPathUniqueConstraint = "feature_org_guid_path_key"
 
     val type = text("type")
+
+    val isDefaultFeature = bool("is_default_feature")
 }

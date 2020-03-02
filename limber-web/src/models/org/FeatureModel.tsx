@@ -3,9 +3,7 @@ export default interface FeatureModel {
   name: string;
   path: string;
   type: FeatureModelType;
+  isDefaultFeature: boolean;
 }
 
-enum FeatureModelType {
-  FORMS,
-  HOME,
-}
+export type FeatureModelType = 'FORMS' | 'HOME';

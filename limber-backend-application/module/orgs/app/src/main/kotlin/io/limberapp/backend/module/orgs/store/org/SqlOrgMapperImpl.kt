@@ -31,11 +31,13 @@ internal class SqlOrgMapperImpl @Inject constructor(
         insertStatement[FeatureTable.name] = model.name
         insertStatement[FeatureTable.path] = model.path
         insertStatement[FeatureTable.type] = model.type.name
+        insertStatement[FeatureTable.isDefaultFeature] = model.isDefaultFeature
     }
 
     override fun featureEntity(updateStatement: UpdateStatement, update: FeatureModel.Update) {
         update.name?.let { updateStatement[FeatureTable.name] = it }
         update.path?.let { updateStatement[FeatureTable.path] = it }
+        update.isDefaultFeature?.let { updateStatement[FeatureTable.isDefaultFeature] = it }
     }
 
     override fun orgModel(resultRow: ResultRow): OrgModel {
@@ -53,6 +55,7 @@ internal class SqlOrgMapperImpl @Inject constructor(
         created = resultRow[FeatureTable.createdDate],
         name = resultRow[FeatureTable.name],
         path = resultRow[FeatureTable.path],
-        type = FeatureModel.Type.valueOf(resultRow[FeatureTable.type])
+        type = FeatureModel.Type.valueOf(resultRow[FeatureTable.type]),
+        isDefaultFeature = resultRow[FeatureTable.isDefaultFeature]
     )
 }

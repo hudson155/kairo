@@ -1,5 +1,5 @@
-import { Request } from '../Request';
 import TenantModel from '../../models/tenant/TenantModel';
+import Request from '../Request';
 
 class GetTenantRequest extends Request<TenantModel | undefined> {
   constructor(tenantDomain: string) {

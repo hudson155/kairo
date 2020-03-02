@@ -8,7 +8,8 @@ data class FeatureModel(
     val created: LocalDateTime,
     val name: String,
     val path: String,
-    val type: Type
+    val type: Type,
+    val isDefaultFeature: Boolean
 ) {
 
     enum class Type {
@@ -18,6 +19,7 @@ data class FeatureModel(
 
     data class Update(
         val name: String?,
-        val path: String?
+        val path: String?,
+        val isDefaultFeature: Boolean?
     )
 }
