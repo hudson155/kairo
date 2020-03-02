@@ -21,11 +21,13 @@ internal class SqlAccessTokenStore @Inject constructor(
         AccessTokenTable.insert { sqlAccessTokenMapper.accessTokenEntity(it, model) }
     }
 
-    override fun getByToken(token: String) = transaction {
+    override fun getIfValid(accessTokenId: UUID, accessTokenSecret: String) = transaction {
         val entity = AccessTokenTable
-            .select { AccessTokenTable.token eq token }
+            .select { AccessTokenTable.guid eq accessTokenId }
             .singleNullOrThrow() ?: return@transaction null
-        return@transaction sqlAccessTokenMapper.accessTokenModel(entity)
+        val model = sqlAccessTokenMapper.accessTokenModel(entity)
+        if (model.encryptedSecret != accessTokenSecret) return@transaction null
+        return@transaction model
     }
 
     override fun getByAccountId(userId: UUID) = transaction {

@@ -14,18 +14,23 @@ internal class AccessTokenMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) {
 
-    fun model(userId: UUID) = AccessTokenModel(
-        id = uuidGenerator.generate(),
-        created = LocalDateTime.now(clock),
-        userId = userId,
-        token = uuidGenerator.generate().base64Encode()
-    )
+    fun model(userId: UUID): Pair<AccessTokenModel, UUID> {
+        val id = uuidGenerator.generate()
+        val rawSecretAsUuid = uuidGenerator.generate()
+        val model = AccessTokenModel(
+            id = id,
+            created = LocalDateTime.now(clock),
+            userId = userId,
+            encryptedSecret = rawSecretAsUuid.base64Encode().dropLast(2)
+        )
+        return Pair(model, rawSecretAsUuid)
+    }
 
-    fun oneTimeUseRep(model: AccessTokenModel) = AccessTokenRep.OneTimeUse(
+    fun oneTimeUseRep(model: AccessTokenModel, rawSecretAsUuid: UUID) = AccessTokenRep.OneTimeUse(
         id = model.id,
         created = model.created,
         userId = model.userId,
-        token = model.token
+        token = model.id.base64Encode().dropLast(2) + rawSecretAsUuid.base64Encode().dropLast(2)
     )
 
     fun completeRep(model: AccessTokenModel) = AccessTokenRep.Complete(

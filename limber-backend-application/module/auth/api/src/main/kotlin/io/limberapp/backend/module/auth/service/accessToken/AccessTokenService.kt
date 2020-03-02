@@ -7,7 +7,7 @@ interface AccessTokenService {
 
     fun create(model: AccessTokenModel)
 
-    fun getByToken(token: String): AccessTokenModel?
+    fun getIfValid(accessTokenId: UUID, accessTokenSecret: String): AccessTokenModel?
 
     fun getByAccountId(userId: UUID): Set<AccessTokenModel>
 

@@ -13,4 +13,9 @@ Well, since I've already told you what it doesn't do, here's what it does do.
     Auth0 has some of this information, but reaches out to the auth module for the rest.
 
 * The auth module is responsible for access tokens.
-    Access tokens are only for admins at this time.
+    Access tokens are only for superusers and identity providers at this time.
+    Base64 encoded UUIDs are 24 characters in length.
+    The last 2 characters are always '='.
+    Access tokens are comprised of back-to-back base64 encoded UUIDs, with these '=' characters removed.
+    Therefore the length is always 44 characters.
+    The first portion is the token ID, and the second portion is the token secret.
