@@ -8,7 +8,7 @@ ext {
             // https://github.com/auth0/jwks-rsa-java/releases
             auth0_jwks_rsa: '0.9.0',
 
-            // https://mvnrepository.com/artifact/org.mindrot.bcrypt/bcrypt
+            // https://mvnrepository.com/artifact/org.mindrot/jbcrypt
             jbcrypt        : '0.4',
 
             // https://github.com/arturbosch/detekt/releases
