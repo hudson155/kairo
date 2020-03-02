@@ -18,7 +18,8 @@ internal object AccessTokenRepFixtures {
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
             userId = userId,
-            token = deterministicUuidGenerator[idSeed + 1].base64Encode()
+            token = deterministicUuidGenerator[idSeed].base64Encode().dropLast(2)
+                    + deterministicUuidGenerator[idSeed + 1].base64Encode().dropLast(2)
         )
     }, { userId, idSeed ->
         AccessTokenRep.Complete(

@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
+import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
 
 internal class SqlAccessTokenStore @Inject constructor(
@@ -21,11 +22,13 @@ internal class SqlAccessTokenStore @Inject constructor(
         AccessTokenTable.insert { sqlAccessTokenMapper.accessTokenEntity(it, model) }
     }
 
-    override fun getByToken(token: String) = transaction {
+    override fun getIfValid(accessTokenId: UUID, accessTokenSecret: String) = transaction {
         val entity = AccessTokenTable
-            .select { AccessTokenTable.token eq token }
+            .select { AccessTokenTable.guid eq accessTokenId }
             .singleNullOrThrow() ?: return@transaction null
-        return@transaction sqlAccessTokenMapper.accessTokenModel(entity)
+        val model = sqlAccessTokenMapper.accessTokenModel(entity)
+        if (!BCrypt.checkpw(accessTokenSecret, model.encryptedSecret)) return@transaction null
+        return@transaction model
     }
 
     override fun getByAccountId(userId: UUID) = transaction {

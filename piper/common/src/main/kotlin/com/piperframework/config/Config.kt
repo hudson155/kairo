@@ -1,6 +1,7 @@
 package com.piperframework.config
 
 import com.piperframework.config.authentication.AuthenticationConfig
+import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
 
 /**
@@ -8,5 +9,6 @@ import com.piperframework.config.serving.ServingConfig
  */
 interface Config {
     val authentication: AuthenticationConfig
+    val hashing: HashingConfig
     val serving: ServingConfig
 }

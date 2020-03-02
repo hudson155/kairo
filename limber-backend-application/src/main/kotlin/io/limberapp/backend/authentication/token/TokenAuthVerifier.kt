@@ -3,9 +3,17 @@ package io.limberapp.backend.authentication.token
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.PiperAuthVerifier
+import com.piperframework.util.uuid.uuidFromBase64Encoded
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
+import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
+
+/**
+ * Base64 encoded UUIDs are 24 characters in length. The last 2 characters are always '='. Access tokens are comprised
+ * of back-to-back base64 encoded UUIDs, with these '=' characters removed. Therefore the length is 44 characters. The
+ * first portion is the token ID, and the second portion is the token secret.
+ */
+private const val TOKEN_PART_LENGTH = 22
 
 class TokenAuthVerifier(
     private val jwtClaimsRequestService: JwtClaimsRequestService,
@@ -15,7 +23,10 @@ class TokenAuthVerifier(
     private val objectMapper = PiperObjectMapper()
 
     override fun verify(blob: String): Jwt? {
-        val accessToken = accessTokenService.getByToken(blob) ?: return null
+        if (blob.length != TOKEN_PART_LENGTH * 2) return null
+        val accessTokenId = uuidFromBase64Encoded("${blob.substring(0, TOKEN_PART_LENGTH)}==")
+        val accessTokenSecret = blob.substring(TOKEN_PART_LENGTH, TOKEN_PART_LENGTH * 2)
+        val accessToken = accessTokenService.getIfValid(accessTokenId, accessTokenSecret) ?: return null
         val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.userId) ?: return null
         return Jwt(
             org = objectMapper.readValue(claims.org),

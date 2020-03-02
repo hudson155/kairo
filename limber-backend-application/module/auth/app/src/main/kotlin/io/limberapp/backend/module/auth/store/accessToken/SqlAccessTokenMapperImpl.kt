@@ -12,13 +12,13 @@ internal class SqlAccessTokenMapperImpl @Inject constructor() : SqlAccessTokenMa
         insertStatement[AccessTokenTable.createdDate] = model.created
         insertStatement[AccessTokenTable.guid] = model.id
         insertStatement[AccessTokenTable.accountGuid] = model.userId
-        insertStatement[AccessTokenTable.token] = model.token
+        insertStatement[AccessTokenTable.encryptedSecret] = model.encryptedSecret
     }
 
     override fun accessTokenModel(resultRow: ResultRow) = AccessTokenModel(
         id = resultRow[AccessTokenTable.guid],
         created = resultRow[AccessTokenTable.createdDate],
         userId = resultRow[AccessTokenTable.accountGuid],
-        token = resultRow[AccessTokenTable.token]
+        encryptedSecret = resultRow[AccessTokenTable.encryptedSecret]
     )
 }

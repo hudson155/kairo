@@ -44,9 +44,9 @@ internal class PostAccessToken @Inject constructor(
 
     override suspend fun Handler.handle(command: Command): AccessTokenRep.OneTimeUse {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val model = accessTokenMapper.model(command.accountId)
+        val (model, rawSecretAsUuid) = accessTokenMapper.model(command.accountId)
         accessTokenService.create(model)
-        return accessTokenMapper.oneTimeUseRep(model)
+        return accessTokenMapper.oneTimeUseRep(model, rawSecretAsUuid)
     }
 
     companion object {

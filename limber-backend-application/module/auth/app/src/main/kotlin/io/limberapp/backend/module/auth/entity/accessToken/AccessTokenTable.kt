@@ -8,5 +8,5 @@ internal object AccessTokenTable : SqlTable("auth", "access_token") {
 
     val accountGuid = uuid("account_guid")
 
-    val token = text("token")
+    val encryptedSecret = text("encrypted_secret")
 }

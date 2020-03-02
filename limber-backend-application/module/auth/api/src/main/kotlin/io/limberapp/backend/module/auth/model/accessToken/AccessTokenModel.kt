@@ -7,5 +7,5 @@ data class AccessTokenModel(
     val id: UUID,
     val created: LocalDateTime,
     val userId: UUID,
-    val token: String
+    val encryptedSecret: String
 )
