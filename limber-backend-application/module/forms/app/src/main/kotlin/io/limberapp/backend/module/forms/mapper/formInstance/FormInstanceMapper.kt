@@ -19,7 +19,7 @@ internal class FormInstanceMapper @Inject constructor(
     fun model(rep: FormInstanceRep.Creation) = FormInstanceModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
-        orgId = rep.orgId,
+        featureId = rep.featureId,
         formTemplateId = rep.formTemplateId,
         questions = emptyList()
     )
@@ -27,7 +27,7 @@ internal class FormInstanceMapper @Inject constructor(
     fun completeRep(model: FormInstanceModel) = FormInstanceRep.Complete(
         id = model.id,
         created = model.created,
-        orgId = model.orgId,
+        featureId = model.featureId,
         formTemplateId = model.formTemplateId,
         questions = model.questions.map { formInstanceQuestionMapper.completeRep(it) }
     )

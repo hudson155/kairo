@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
-internal class MemberOfOrgThatOwnsFormTemplate(
+internal class HasAccessToFormTemplate(
     private val formTemplateService: FormTemplateService,
     private val formTemplateId: UUID?
 ) : Authorization() {
@@ -16,6 +16,6 @@ internal class MemberOfOrgThatOwnsFormTemplate(
         formTemplateId ?: return false
         if (!AnyJwt.authorize(principal)) return false
         val existingModel = formTemplateService.get(formTemplateId) ?: throw FormTemplateNotFound()
-        return OrgMember(existingModel.orgId).authorize(principal)
+        return HasAccessToFeature(existingModel.featureId).authorize(principal)
     }
 }

@@ -9,7 +9,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
@@ -39,7 +39,7 @@ internal class PostFormInstance @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): FormInstanceRep.Complete {
-        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.creationRep.formTemplateId).authorize()
+        HasAccessToFormTemplate(formTemplateService, command.creationRep.formTemplateId).authorize()
         val model = formInstanceMapper.model(command.creationRep)
         formInstanceService.create(model)
         return formInstanceMapper.completeRep(model)

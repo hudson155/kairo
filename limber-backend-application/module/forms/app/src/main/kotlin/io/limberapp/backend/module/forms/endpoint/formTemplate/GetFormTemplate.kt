@@ -10,7 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormTemplate
+import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -40,7 +40,7 @@ internal class GetFormTemplate @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
-        MemberOfOrgThatOwnsFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
         val model = formTemplateService.get(command.formTemplateId) ?: throw FormTemplateNotFound()
         return formTemplateMapper.completeRep(model)
     }

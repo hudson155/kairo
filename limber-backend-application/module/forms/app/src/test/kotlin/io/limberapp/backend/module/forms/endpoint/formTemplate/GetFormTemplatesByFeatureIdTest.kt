@@ -9,18 +9,18 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
+internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
 
     @Test
     fun happyPathNoFormTemplates() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
-        // GetFormTemplatesByOrgId
+        // GetFormTemplatesByFeatureId
         piperTest.test(
-            endpointConfig = GetFormTemplatesByOrgId.endpointConfig,
-            queryParams = mapOf(GetFormTemplatesByOrgId.orgId to orgId)
+            endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
+            queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)
         ) {
             val actual = objectMapper.readValue<Set<FormTemplateRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
@@ -31,26 +31,26 @@ internal class GetFormTemplatesByOrgIdTest : ResourceTest() {
     fun happyPathMultipleFormTemplates() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplate
-        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, orgId, 4)
+        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureId, 4)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.vehicleInspectionFixture.creation(orgId)
+            body = FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureId)
         )
 
-        // GetFormTemplatesByOrgId
+        // GetFormTemplatesByFeatureId
         piperTest.test(
-            endpointConfig = GetFormTemplatesByOrgId.endpointConfig,
-            queryParams = mapOf(GetFormTemplatesByOrgId.orgId to orgId)
+            endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
+            queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)
         ) {
             val actual = objectMapper.readValue<Set<FormTemplateRep.Complete>>(response.content!!)
             assertEquals(setOf(formTemplate0Rep, formTemplate1Rep), actual)

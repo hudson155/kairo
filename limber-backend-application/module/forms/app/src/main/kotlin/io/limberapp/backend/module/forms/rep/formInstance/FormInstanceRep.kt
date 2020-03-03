@@ -8,7 +8,7 @@ import java.util.UUID
 internal object FormInstanceRep {
 
     data class Creation(
-        val orgId: UUID,
+        val featureId: UUID,
         val formTemplateId: UUID
     ) : CreationRep {
         override fun validate() = Unit
@@ -17,7 +17,7 @@ internal object FormInstanceRep {
     data class Complete(
         val id: UUID,
         override val created: LocalDateTime,
-        val orgId: UUID,
+        val featureId: UUID,
         val formTemplateId: UUID,
         val questions: List<FormInstanceQuestionRep.Complete>
     ) : CompleteRep

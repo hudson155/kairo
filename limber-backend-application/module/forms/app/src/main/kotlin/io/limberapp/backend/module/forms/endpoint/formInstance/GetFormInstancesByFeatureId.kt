@@ -16,35 +16,35 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceServic
 import java.util.UUID
 
 /**
- * Returns all form instances within the org.
+ * Returns all form instances within the feature.
  */
-internal class GetFormInstancesByOrgId @Inject constructor(
+internal class GetFormInstancesByFeatureId @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formInstanceService: FormInstanceService,
     private val formInstanceMapper: FormInstanceMapper
-) : LimberApiEndpoint<GetFormInstancesByOrgId.Command, List<FormInstanceRep.Complete>>(
+) : LimberApiEndpoint<GetFormInstancesByFeatureId.Command, List<FormInstanceRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val orgId: UUID
+        val featureId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, orgId)
+        featureId = call.parameters.getAsType(UUID::class, featureId)
     )
 
     override suspend fun Handler.handle(command: Command): List<FormInstanceRep.Complete> {
-        Authorization.OrgMember(command.orgId).authorize()
-        val models = formInstanceService.getByOrgId(command.orgId)
+        Authorization.HasAccessToFeature(command.featureId).authorize()
+        val models = formInstanceService.getByFeatureId(command.featureId)
         return models.map { formInstanceMapper.completeRep(it) }
     }
 
     companion object {
-        const val orgId = "orgId"
+        const val featureId = "featureId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Get,
             pathTemplate = listOf(StringComponent("form-instances"))

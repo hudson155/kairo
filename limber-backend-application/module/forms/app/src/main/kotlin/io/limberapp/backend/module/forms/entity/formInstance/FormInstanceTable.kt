@@ -7,7 +7,7 @@ internal object FormInstanceTable : SqlTable("forms", "form_instance") {
 
     val guid = uuid("guid")
 
-    val orgGuid = uuid("org_guid")
+    val featureGuid = uuid("feature_guid")
 
     val formTemplateGuid = uuid("form_template_guid").references(FormTemplateTable.guid)
 }

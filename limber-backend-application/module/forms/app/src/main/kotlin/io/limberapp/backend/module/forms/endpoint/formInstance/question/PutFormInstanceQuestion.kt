@@ -10,7 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormInstance
+import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceQuestionMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
@@ -43,7 +43,7 @@ internal class PutFormInstanceQuestion @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): FormInstanceQuestionRep.Complete {
-        MemberOfOrgThatOwnsFormInstance(formInstanceService, command.formInstanceId).authorize()
+        HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()
         val model = formInstanceQuestionMapper.model(command.creationRep)
         formInstanceQuestionService.upsert(
             formInstanceId = command.formInstanceId,

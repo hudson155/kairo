@@ -6,7 +6,7 @@ internal object FormTemplateTable : SqlTable("forms", "form_template") {
 
     val guid = uuid("guid")
 
-    val orgGuid = uuid("org_guid")
+    val featureGuid = uuid("feature_guid")
 
     val title = text("title")
 
