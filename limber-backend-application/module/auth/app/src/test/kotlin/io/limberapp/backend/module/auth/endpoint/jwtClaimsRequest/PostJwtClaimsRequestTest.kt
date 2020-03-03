@@ -66,7 +66,8 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             val expected = "{" +
                     "\"${Claims.org}\":\"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
-                    "\\\"name\\\":\\\"${existingOrg.name}\\\"" +
+                    "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+                    "\\\"featureIds\\\":[]" +
                     "}\"," +
                     "\"${Claims.roles}\":\"[]\"," +
                     "\"${Claims.user}\":\"{" +
@@ -131,7 +132,8 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             val expected = "{" +
                     "\"${Claims.org}\":\"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
-                    "\\\"name\\\":\\\"${existingOrg.name}\\\"" +
+                    "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+                    "\\\"featureIds\\\":[]" +
                     "}\"," +
                     "\"${Claims.roles}\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
                     "\"${Claims.user}\":\"{" +

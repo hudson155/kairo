@@ -4,5 +4,6 @@ import java.util.UUID
 
 data class JwtOrg(
     val id: UUID,
-    val name: String
+    val name: String,
+    val featureIds: Set<UUID>
 )
