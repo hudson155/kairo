@@ -1,0 +1,3 @@
+CREATE SCHEMA auth;
+CREATE SCHEMA orgs;
+CREATE SCHEMA users;
