@@ -8,20 +8,20 @@ import java.util.UUID
 internal object FormInstanceRepFixtures {
 
     data class Fixture(
-        val creation: (orgId: UUID, formTemplateId: UUID) -> FormInstanceRep.Creation,
-        val complete: ResourceTest.(orgId: UUID, formTemplateId: UUID, idSeed: Int) -> FormInstanceRep.Complete
+        val creation: (featureId: UUID, formTemplateId: UUID) -> FormInstanceRep.Creation,
+        val complete: ResourceTest.(featureId: UUID, formTemplateId: UUID, idSeed: Int) -> FormInstanceRep.Complete
     )
 
-    val fixture = Fixture({ orgId, formTemplateId ->
+    val fixture = Fixture({ featureId, formTemplateId ->
         FormInstanceRep.Creation(
-            orgId = orgId,
+            featureId = featureId,
             formTemplateId = formTemplateId
         )
-    }, { orgId, formTemplateId, idSeed ->
+    }, { featureId, formTemplateId, idSeed ->
         FormInstanceRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
-            orgId = orgId,
+            featureId = featureId,
             formTemplateId = formTemplateId,
             questions = emptyList()
         )

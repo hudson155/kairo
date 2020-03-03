@@ -40,14 +40,14 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     fun formTemplateQuestionDoesNotExist() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PatchFormTemplateQuestion
@@ -67,13 +67,13 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     fun happyPath() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplateQuestion

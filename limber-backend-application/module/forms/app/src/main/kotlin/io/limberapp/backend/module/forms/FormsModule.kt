@@ -3,13 +3,13 @@ package io.limberapp.backend.module.forms
 import com.piperframework.module.Module
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
-import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByOrgId
+import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureId
 import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.question.DeleteFormInstanceQuestion
 import io.limberapp.backend.module.forms.endpoint.formInstance.question.PutFormInstanceQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByOrgId
+import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByFeatureId
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PatchFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
@@ -42,7 +42,7 @@ class FormsModule : Module() {
 
         PostFormTemplate::class.java,
         GetFormTemplate::class.java,
-        GetFormTemplatesByOrgId::class.java,
+        GetFormTemplatesByFeatureId::class.java,
         PatchFormTemplate::class.java,
         DeleteFormTemplate::class.java,
 
@@ -55,7 +55,7 @@ class FormsModule : Module() {
 
         PostFormInstance::class.java,
         GetFormInstance::class.java,
-        GetFormInstancesByOrgId::class.java,
+        GetFormInstancesByFeatureId::class.java,
         DeleteFormInstance::class.java,
 
         PutFormInstanceQuestion::class.java,

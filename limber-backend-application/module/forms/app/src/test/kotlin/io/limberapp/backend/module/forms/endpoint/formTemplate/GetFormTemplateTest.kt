@@ -29,13 +29,13 @@ internal class GetFormTemplateTest : ResourceTest() {
     fun happyPath() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // GetFormTemplate

@@ -35,13 +35,13 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     fun rankOutOfBoundsLow() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplateQuestion
@@ -58,13 +58,13 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     fun rankOutOfBoundsHigh() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplateQuestion
@@ -81,13 +81,13 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     fun happyPathFirstRank() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplateQuestion
@@ -119,13 +119,13 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     fun happyPathLastRank() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplateQuestion

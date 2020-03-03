@@ -30,9 +30,9 @@ internal class SqlFormInstanceStore @Inject constructor(
         return@transaction sqlFormInstanceMapper.formInstanceModel(entity)
     }
 
-    override fun getByOrgId(orgId: UUID) = transaction {
+    override fun getByFeatureId(featureId: UUID) = transaction {
         return@transaction (FormInstanceTable innerJoin FormTemplateTable)
-            .select { FormTemplateTable.orgGuid eq orgId }
+            .select { FormTemplateTable.featureGuid eq featureId }
             .map { sqlFormInstanceMapper.formInstanceModel(it) }
             .toSet()
     }

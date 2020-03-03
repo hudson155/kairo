@@ -10,7 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.forms.authorization.MemberOfOrgThatOwnsFormInstance
+import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.UUID
@@ -40,7 +40,7 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command) {
-        MemberOfOrgThatOwnsFormInstance(formInstanceService, command.formInstanceId).authorize()
+        HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()
         formInstanceQuestionService.delete(
             formInstanceId = command.formInstanceId,
             formTemplateQuestionId = command.questionId

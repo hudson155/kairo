@@ -31,20 +31,20 @@ internal class GetFormInstanceTest : ResourceTest() {
     fun happyPath() {
 
         // Setup
-        val orgId = UUID.randomUUID()
+        val featureId = UUID.randomUUID()
 
         // PostFormTemplate
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, orgId, 0)
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(orgId)
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormInstance
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, orgId, formTemplateRep.id, 4)
+        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(orgId, formTemplateRep.id)
+            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // GetFormInstance

@@ -16,7 +16,7 @@ internal class FormTemplateMapper @Inject constructor(
     fun model(rep: FormTemplateRep.Creation) = FormTemplateModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
-        orgId = rep.orgId,
+        featureId = rep.featureId,
         title = rep.title,
         description = rep.description,
         questions = formTemplateQuestionMapper.defaultModels()
@@ -25,7 +25,7 @@ internal class FormTemplateMapper @Inject constructor(
     fun completeRep(model: FormTemplateModel) = FormTemplateRep.Complete(
         id = model.id,
         created = model.created,
-        orgId = model.orgId,
+        featureId = model.featureId,
         title = model.title,
         description = model.description,
         questions = model.questions.map { formTemplateQuestionMapper.completeRep(it) }

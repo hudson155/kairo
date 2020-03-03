@@ -5,7 +5,7 @@ CREATE TABLE forms.form_template
     id           BIGSERIAL PRIMARY KEY,
     created_date TIMESTAMP   NOT NULL,
     guid         UUID UNIQUE NOT NULL,
-    org_guid     UUID        NOT NULL,
+    feature_guid UUID        NOT NULL,
     title        VARCHAR     NOT NULL,
     description  VARCHAR
 );
@@ -32,7 +32,7 @@ CREATE TABLE forms.form_instance
     id                 BIGSERIAL PRIMARY KEY,
     created_date       TIMESTAMP   NOT NULL,
     guid               UUID UNIQUE NOT NULL,
-    org_guid           UUID        NOT NULL,
+    feature_guid       UUID        NOT NULL,
     form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT
 );
 

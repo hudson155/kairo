@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotF
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.UUID
 
-internal class MemberOfOrgThatOwnsFormInstance(
+internal class HasAccessToFormInstance(
     private val formInstanceService: FormInstanceService,
     private val formInstanceId: UUID?
 ) : Authorization() {
@@ -16,6 +16,6 @@ internal class MemberOfOrgThatOwnsFormInstance(
         formInstanceId ?: return false
         if (!AnyJwt.authorize(principal)) return false
         val existingModel = formInstanceService.get(formInstanceId) ?: throw FormInstanceNotFound()
-        return OrgMember(existingModel.orgId).authorize(principal)
+        return HasAccessToFeature(existingModel.featureId).authorize(principal)
     }
 }

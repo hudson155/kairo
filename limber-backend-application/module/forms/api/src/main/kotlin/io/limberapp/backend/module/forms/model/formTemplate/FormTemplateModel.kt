@@ -6,7 +6,7 @@ import java.util.UUID
 data class FormTemplateModel(
     val id: UUID,
     val created: LocalDateTime,
-    val orgId: UUID,
+    val featureId: UUID,
     val title: String,
     val description: String?,
     val questions: List<FormTemplateQuestionModel>

@@ -29,9 +29,9 @@ internal class SqlFormTemplateStore @Inject constructor(
         return@transaction sqlFormTemplateMapper.formTemplateModel(entity)
     }
 
-    override fun getByOrgId(orgId: UUID) = transaction {
+    override fun getByFeatureId(featureId: UUID) = transaction {
         return@transaction FormTemplateTable
-            .select { FormTemplateTable.orgGuid eq orgId }
+            .select { FormTemplateTable.featureGuid eq featureId }
             .map { sqlFormTemplateMapper.formTemplateModel(it) }
             .toSet()
     }

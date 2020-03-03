@@ -12,7 +12,7 @@ import java.util.UUID
 internal object FormTemplateRep {
 
     data class Creation(
-        val orgId: UUID,
+        val featureId: UUID,
         val title: String,
         val description: String? = null
     ) : CreationRep {
@@ -25,7 +25,7 @@ internal object FormTemplateRep {
     data class Complete(
         val id: UUID,
         override val created: LocalDateTime,
-        val orgId: UUID,
+        val featureId: UUID,
         val title: String,
         val description: String?,
         val questions: List<FormTemplateQuestionRep.Complete>

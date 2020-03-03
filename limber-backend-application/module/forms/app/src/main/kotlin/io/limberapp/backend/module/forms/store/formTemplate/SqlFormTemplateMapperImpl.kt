@@ -19,7 +19,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
     override fun formTemplateEntity(insertStatement: InsertStatement<*>, model: FormTemplateModel) {
         insertStatement[FormTemplateTable.createdDate] = model.created
         insertStatement[FormTemplateTable.guid] = model.id
-        insertStatement[FormTemplateTable.orgGuid] = model.orgId
+        insertStatement[FormTemplateTable.featureGuid] = model.featureId
         insertStatement[FormTemplateTable.title] = model.title
         insertStatement[FormTemplateTable.description] = model.description
     }
@@ -81,7 +81,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
         return FormTemplateModel(
             id = guid,
             created = resultRow[FormTemplateTable.createdDate],
-            orgId = resultRow[FormTemplateTable.orgGuid],
+            featureId = resultRow[FormTemplateTable.featureGuid],
             title = resultRow[FormTemplateTable.title],
             description = resultRow[FormTemplateTable.description],
             questions = formTemplateQuestionStore.getByFormTemplateId(guid)

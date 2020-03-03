@@ -72,7 +72,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
         return Jwt(
-            org = org?.let { JwtOrg(it.id, it.name) },
+            org = org?.let { JwtOrg(it.id, it.name, it.features.map { it.id }.toSet()) },
             roles = account.roles,
             user = JwtUser(account.id, user?.firstName, user?.lastName)
         )

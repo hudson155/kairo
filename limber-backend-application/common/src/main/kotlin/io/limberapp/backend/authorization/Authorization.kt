@@ -55,4 +55,13 @@ abstract class Authorization : PiperAuthorization<Jwt> {
             return principal.org?.id == orgId
         }
     }
+
+    class HasAccessToFeature(private val featureId: UUID?) : Authorization() {
+        override fun authorizeInternal(principal: Jwt?): Boolean {
+            principal ?: return false
+            featureId ?: return false
+            principal.org ?: return false
+            return featureId in principal.org.featureIds
+        }
+    }
 }

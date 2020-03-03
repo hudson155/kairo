@@ -8,20 +8,20 @@ import java.util.UUID
 internal object FormTemplateRepFixtures {
 
     data class Fixture(
-        val creation: (orgId: UUID) -> FormTemplateRep.Creation,
-        val complete: ResourceTest.(orgId: UUID, idSeed: Int) -> FormTemplateRep.Complete
+        val creation: (featureId: UUID) -> FormTemplateRep.Creation,
+        val complete: ResourceTest.(featureId: UUID, idSeed: Int) -> FormTemplateRep.Complete
     )
 
-    val exampleFormFixture = Fixture({ orgId ->
+    val exampleFormFixture = Fixture({ featureId ->
         FormTemplateRep.Creation(
-            orgId = orgId,
+            featureId = featureId,
             title = "Example form"
         )
-    }, { orgId, idSeed ->
+    }, { featureId, idSeed ->
         FormTemplateRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
-            orgId = orgId,
+            featureId = featureId,
             title = "Example form",
             description = null,
             questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
@@ -30,16 +30,16 @@ internal object FormTemplateRepFixtures {
         )
     })
 
-    val vehicleInspectionFixture = Fixture({ orgId ->
+    val vehicleInspectionFixture = Fixture({ featureId ->
         FormTemplateRep.Creation(
-            orgId = orgId,
+            featureId = featureId,
             title = "Vehicle Inspection"
         )
-    }, { orgId, idSeed ->
+    }, { featureId, idSeed ->
         FormTemplateRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
-            orgId = orgId,
+            featureId = featureId,
             title = "Vehicle Inspection",
             description = null,
             questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->

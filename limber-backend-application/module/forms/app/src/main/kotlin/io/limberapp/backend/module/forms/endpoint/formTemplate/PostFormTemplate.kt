@@ -37,7 +37,7 @@ internal class PostFormTemplate @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
-        Authorization.OrgMember(command.creationRep.orgId).authorize()
+        Authorization.HasAccessToFeature(command.creationRep.featureId).authorize()
         val model = formTemplateMapper.model(command.creationRep)
         formTemplateService.create(model)
         return formTemplateMapper.completeRep(model)

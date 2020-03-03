@@ -16,35 +16,35 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 import java.util.UUID
 
 /**
- * Returns all form templates within the org.
+ * Returns all form templates within the feature.
  */
-internal class GetFormTemplatesByOrgId @Inject constructor(
+internal class GetFormTemplatesByFeatureId @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
-) : LimberApiEndpoint<GetFormTemplatesByOrgId.Command, List<FormTemplateRep.Complete>>(
+) : LimberApiEndpoint<GetFormTemplatesByFeatureId.Command, List<FormTemplateRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val orgId: UUID
+        val featureId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, orgId)
+        featureId = call.parameters.getAsType(UUID::class, featureId)
     )
 
     override suspend fun Handler.handle(command: Command): List<FormTemplateRep.Complete> {
-        Authorization.OrgMember(command.orgId).authorize()
-        val models = formTemplateService.getByOrgId(command.orgId)
+        Authorization.HasAccessToFeature(command.featureId).authorize()
+        val models = formTemplateService.getByFeatureId(command.featureId)
         return models.map { formTemplateMapper.completeRep(it) }
     }
 
     companion object {
-        const val orgId = "orgId"
+        const val featureId = "featureId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Get,
             pathTemplate = listOf(StringComponent("form-templates"))
