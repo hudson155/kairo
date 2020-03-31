@@ -5,8 +5,8 @@ Limber is a highly dynamic application built on Ktor and React.
 ## Setup
 
 Prerequisites:
-    Java, Postgres, and IntelliJ
-    (all can be installed through Homebrew).
+Java, Postgres, and IntelliJ
+(all can be installed through Homebrew).
 
 1. Clone the repo and `cd` into it.
 1. `psql limber -f db/reset.sql`.
