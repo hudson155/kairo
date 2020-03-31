@@ -2,6 +2,23 @@
 
 Limber is a highly dynamic application built on Ktor and React.
 
+## Setup
+
+Prerequisites:
+    Java, Postgres, and IntelliJ
+    (all can be installed through Homebrew).
+
+1. Clone the repo and `cd` into it.
+1. `psql limber -f db/reset.sql`.
+1. From IntelliJ, run the `[backend] Run (dev)` config.
+1. `psql limber -f db/insert_fixtures.sql`.
+1. `echo "REACT_APP_AUTH_MECHANISM=LOCAL_STORAGE_JWT" > limber-web/.env.local`
+1. From IntelliJ, run the `[web] Run` config.
+1. In the browser console, run the following
+    ```javascript
+   localStorage.setItem('jwt', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2xpbWJlcmFwcC5pby9vcmciOiJ7XCJpZFwiOlwiNTc2MWRiODUtNzcwMS00Y2U0LTkxNjItYWIwZmI0MTQ5YjBkXCIsXCJuYW1lXCI6XCJMaW1iZXJcIixcImZlYXR1cmVJZHNcIjpbXCI3NWEyZWQ3YS00MjQ3LTRlNjMtYWIxMC1hNjBkZjNkOWFlZWVcIl19IiwiaHR0cHM6Ly9saW1iZXJhcHAuaW8vcm9sZXMiOiJbXSIsImh0dHBzOi8vbGltYmVyYXBwLmlvL3VzZXIiOiJ7XCJpZFwiOlwiM2UyZDE2ODEtYTY2Ni00NTZlLWExNjgtNjQ3ZDhjM2EzMTUwXCIsXCJmaXJzdE5hbWVcIjpcIkplZmZcIixcImxhc3ROYW1lXCI6XCJIdWRzb25cIn0iLCJpc3MiOiJodHRwczovL2xpbWJlcmFwcC5pby8iLCJpYXQiOjE1ODAwMDAwMDAsImV4cCI6MjAwMDAwMDAwMH0.dr7913iBz-EYmj295okdiL5IFdnStiZLrAzoMlevOk8')
+    ```
+
 ## Modules
 
 * [`limber-backend-application`](/limber-backend-application):
