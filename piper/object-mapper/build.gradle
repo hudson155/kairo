@@ -1,5 +1,0 @@
-dependencies {
-    implementation project(":piper:data-conversion")
-    implementation libs.jackson_datatype_jsr310
-    api libs.jackson_kotlin
-}
