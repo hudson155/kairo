@@ -13,7 +13,8 @@ interface FormTemplateQuestionModel {
 
     enum class Type {
         DATE,
-        TEXT;
+        TEXT,
+        RADIO_SELECTOR;
     }
 
     interface Update {
