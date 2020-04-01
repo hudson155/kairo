@@ -1,5 +1,0 @@
-dependencies {
-    api project(":piper:errors")
-    api project(":piper:exceptions")
-    implementation libs.ktor_http_jvm
-}
