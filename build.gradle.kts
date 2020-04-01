@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     `kotlin-dsl`
 }
@@ -61,9 +63,11 @@ allprojects {
         }
     }
 
-//    detekt {
-//        config = files("$rootDir/.detekt/config.yml")
-//    }
+    tasks {
+        named<Detekt>("detekt") {
+            config.setFrom("$rootDir/.detekt/config.yml")
+        }
+    }
 }
 
 subprojects {
