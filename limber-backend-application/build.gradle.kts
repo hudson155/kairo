@@ -47,12 +47,8 @@ dependencies {
 tasks {
     named<ShadowJar>("shadowJar") {
         manifest {
-            attributes(
-                mapOf(
-                    "MainClass" to application.mainClassName,
-                    "archiveName" to "limber-backend.jar"
-                )
-            )
+            attributes(mapOf("MainClass" to application.mainClassName))
+            archiveName = "limber-backend.jar"
         }
     }
 }
