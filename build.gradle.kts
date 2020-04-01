@@ -28,6 +28,7 @@ allprojects {
     tasks.compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
+
     tasks.compileJava {
         options.encoding = "UTF-8"
     }

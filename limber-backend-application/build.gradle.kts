@@ -10,7 +10,6 @@ buildscript {
 
 plugins {
     application
-    Dependencies.Shadow.shadow
 }
 apply(plugin = "com.github.johnrengelman.shadow")
 
@@ -27,9 +26,7 @@ sourceSets {
     getByName("test").kotlin.srcDir("src/test/kotlin")
     getByName("test").java.srcDirs("src/test/kotlin")
     getByName("main").resources.srcDir("src/main/resources")
-    getByName("main").resources.srcDirs("src/test/resources")
     getByName("test").resources.srcDir("src/test/resources")
-    getByName("test").resources.srcDirs("src/test/resources")
 }
 
 dependencies {
