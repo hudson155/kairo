@@ -42,6 +42,7 @@
             <option value="$PROJECT_DIR$/piper/sql" />
             <option value="$PROJECT_DIR$/piper/sql/testing" />
             <option value="$PROJECT_DIR$/piper/testing" />
+            <option value="$PROJECT_DIR$/piper/types" />
             <option value="$PROJECT_DIR$/piper/util" />
             <option value="$PROJECT_DIR$/piper/validation" />
           </set>
