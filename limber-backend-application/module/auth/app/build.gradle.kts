@@ -12,11 +12,11 @@ tasks.compileTestKotlin {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":limber-backend-application:module:orgs:api"))
-    implementation(project(":limber-backend-application:module:users:api"))
-    api(project(":limber-backend-application:module:${project.parent!!.name}:api"))
+    api(project(":limber-backend-application:module:auth:api"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:common:api"))
+    implementation(project(":limber-backend-application:module:orgs:api"))
+    implementation(project(":limber-backend-application:module:users:api"))
     implementation(project(":piper:sql"))
     implementation(Dependencies.Bcrypt.jbcrypt)
     testImplementation(project(":limber-backend-application:common:testing"))

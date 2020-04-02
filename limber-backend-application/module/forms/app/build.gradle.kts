@@ -12,7 +12,7 @@ tasks.compileTestKotlin {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":limber-backend-application:module:${project.parent!!.name}:api"))
+    api(project(":limber-backend-application:module:forms:api"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:common:api"))
     implementation(project(":piper:sql"))
