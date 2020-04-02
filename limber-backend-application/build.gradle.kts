@@ -39,7 +39,7 @@ detekt {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-    archiveBaseName.set("limber-backend")
+    archiveFileName.set("limber-backend.jar")
     mergeServiceFiles()
     manifest {
         attributes(mapOf("MainClass" to application.mainClassName))
