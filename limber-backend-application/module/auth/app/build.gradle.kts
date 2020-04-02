@@ -22,6 +22,13 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
+
 detekt {
     config = files("$rootDir/.detekt/config.yml")
 }
