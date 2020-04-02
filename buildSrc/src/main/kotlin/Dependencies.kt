@@ -1,17 +1,5 @@
 object Dependencies {
 
-    object Kotlin {
-        const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
-        const val stdlibJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-        const val test = "org.jetbrains.kotlin:kotlin-test:${Versions.kotlin}"
-        const val testJunit5 = "org.jetbrains.kotlin:kotlin-test-junit5:${Versions.kotlin}"
-    }
-
-    object Detekt {
-        const val gradlePlugin = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${Versions.detekt}"
-    }
-
     object Ktor {
         const val auth = "io.ktor:ktor-auth:${Versions.ktor}"
         const val httpJvm = "io.ktor:ktor-http-jvm:${Versions.ktor}"
