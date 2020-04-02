@@ -12,8 +12,8 @@ tasks.compileTestKotlin {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(Dependencies.Jackson.annotations)
     implementation(project(":limber-backend-application:common:api"))
+    implementation(Dependencies.Jackson.annotations)
 }
 
 detekt {
