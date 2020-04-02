@@ -1,6 +1,6 @@
 package com.piperframework.rep
 
-import java.time.LocalDateTime
+import com.piperframework.types.LocalDateTime
 
 interface CompleteRep {
     val created: LocalDateTime
