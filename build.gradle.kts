@@ -7,14 +7,11 @@ repositories {
 }
 
 subprojects {
-
     buildscript {
-
         repositories {
             jcenter()
         }
     }
-
     repositories {
         jcenter()
     }
