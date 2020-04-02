@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -7,10 +8,7 @@ plugins {
     id(Plugins.shadow).version(Versions.shadow)
 }
 
-tasks.compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-tasks.compileTestKotlin {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
 }
 
