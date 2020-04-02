@@ -1,17 +1,12 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.gradle.api.internal.HasConvention
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
-buildscript {
-    dependencies {
-        classpath(Dependencies.Shadow.shadow)
-    }
-}
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    kotlin("jvm")
     application
+    id(Plugins.detekt).version(Versions.detekt)
+    id(Plugins.shadow).version(Versions.shadow)
 }
-apply(plugin = "com.github.johnrengelman.shadow")
 
 group = "io.limberapp.backend"
 version = "0.0.0"
@@ -19,17 +14,8 @@ application {
     mainClassName = "io.limberapp.backend.ApplicationKt"
 }
 
-val SourceSet.kotlin: SourceDirectorySet get() = (this as HasConvention).convention.getPlugin<KotlinSourceSet>().kotlin
-sourceSets {
-    getByName("main").kotlin.srcDir("src/main/kotlin")
-    getByName("main").java.srcDirs("src/main/kotlin")
-    getByName("test").kotlin.srcDir("src/test/kotlin")
-    getByName("test").java.srcDirs("src/test/kotlin")
-    getByName("main").resources.srcDir("src/main/resources")
-    getByName("test").resources.srcDir("src/test/resources")
-}
-
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:module:auth:app"))
     implementation(project(":limber-backend-application:module:forms:app"))
@@ -44,11 +30,18 @@ dependencies {
     implementation(Dependencies.Logback.logbackClassic)
 }
 
-tasks {
-    named<ShadowJar>("shadowJar") {
-        manifest {
-            attributes(mapOf("MainClass" to application.mainClassName))
-            archiveName = "limber-backend.jar"
-        }
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+detekt {
+    config = files("$rootDir/.detekt/config.yml")
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveFileName.set("limber-backend.jar")
+    mergeServiceFiles()
+    manifest {
+        attributes(mapOf("MainClass" to application.mainClassName))
     }
 }

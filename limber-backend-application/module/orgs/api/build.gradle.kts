@@ -7,10 +7,8 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":piper:errors"))
-    api(project(":piper:exceptions"))
-    api(project(":piper:util"))
-    implementation(Dependencies.Ktor.httpJvm)
+    implementation(project(":limber-backend-application:common:api"))
+    implementation(Dependencies.Jackson.annotations)
 }
 
 tasks.withType<KotlinCompile>().configureEach {

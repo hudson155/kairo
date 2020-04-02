@@ -1,4 +1,12 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    kotlin("jvm")
+    id(Plugins.detekt).version(Versions.detekt)
+}
+
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     api(project(":piper:common"))
     api(project(":piper:errors"))
     api(project(":piper:exception-mapping"))
@@ -6,10 +14,10 @@ dependencies {
     implementation(Dependencies.Ktor.serverHostCommon)
 }
 
-subprojects {
-    if (project.path != ":piper:util") {
-        dependencies {
-            implementation(project(":piper:util"))
-        }
-    }
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+detekt {
+    config = files("$rootDir/.detekt/config.yml")
 }
