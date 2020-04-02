@@ -11,6 +11,7 @@ tasks.compileTestKotlin {
 }
 
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     api(project(":piper:data-conversion"))
     api(project(":piper:exceptions"))
     api(project(":piper:ktor-auth"))
