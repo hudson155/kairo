@@ -1,56 +1,5 @@
 object Dependencies {
 
-    private object Versions {
-
-        // https://github.com/auth0/java-jwt/releases
-        const val auth0JavaJwt = "3.9.0"
-
-        // https://github.com/auth0/jwks-rsa-java/releases
-        const val auth0JwksRsa = "0.9.0"
-
-        // https://github.com/arturbosch/detekt/releases
-        const val detekt = "1.3.1"
-
-        // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed
-        const val exposed = "0.17.7"
-
-        // https://github.com/flyway/flyway/releases
-        const val flyway = "6.1.4"
-
-        // https://github.com/google/guice/releases
-        const val guice = "4.2.2"
-
-        // https://github.com/brettwooldridge/HikariCP/releases
-        const val hikari = "3.4.2"
-
-        // https://github.com/FasterXML/jackson-core/releases
-        const val jackson = "2.10.2"
-
-        // https://mvnrepository.com/artifact/org.mindrot/jbcrypt
-        const val jbcrypt = "0.4"
-
-        // https://github.com/junit-team/junit5/releases
-        const val junit = "5.5.2"
-
-        // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
-        const val kotlin = "1.3.61"
-
-        // https://github.com/ktorio/ktor/releases
-        const val ktor = "1.2.5"
-
-        // https://github.com/qos-ch/logback/releases
-        const val logback = "1.2.3"
-
-        // https://github.com/mockk/mockk/releases
-        const val mockK = "1.9.3"
-
-        // https://mvnrepository.com/artifact/org.postgresql/postgresql
-        const val postgres = "42.2.9"
-
-        // https://github.com/johnrengelman/shadow/releases
-        const val shadow = "5.1.0"
-    }
-
     object Kotlin {
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
@@ -102,10 +51,6 @@ object Dependencies {
         const val flyway = "org.flywaydb:flyway-core:${Versions.flyway}"
         const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
         const val postgres = "org.postgresql:postgresql:${Versions.postgres}"
-    }
-
-    object Shadow {
-        const val shadow = "com.github.jengelman.gradle.plugins:shadow:${Versions.shadow}"
     }
 
     object JUnit {

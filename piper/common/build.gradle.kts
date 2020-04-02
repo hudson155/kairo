@@ -1,3 +1,15 @@
+plugins {
+    kotlin("jvm")
+    id("io.gitlab.arturbosch.detekt")
+}
+
+tasks.compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+tasks.compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 dependencies {
     api(project(":piper:data-conversion"))
     api(project(":piper:exceptions"))
@@ -8,4 +20,8 @@ dependencies {
     api(Dependencies.Guice.guice)
     api(Dependencies.Jackson.moduleKotlin)
     api(Dependencies.Ktor.serverCore)
+}
+
+detekt {
+    config = files("$rootDir/.detekt/config.yml")
 }

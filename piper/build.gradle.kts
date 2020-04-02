@@ -1,4 +1,17 @@
+plugins {
+    kotlin("jvm")
+    id("io.gitlab.arturbosch.detekt").version(Versions.detekt)
+}
+
+tasks.compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+tasks.compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 dependencies {
+    implementation(kotlin("stdlib-jdk8"))
     api(project(":piper:common"))
     api(project(":piper:errors"))
     api(project(":piper:exception-mapping"))
@@ -6,10 +19,6 @@ dependencies {
     implementation(Dependencies.Ktor.serverHostCommon)
 }
 
-subprojects {
-    if (project.path != ":piper:util") {
-        dependencies {
-            implementation(project(":piper:util"))
-        }
-    }
+detekt {
+    config = files("$rootDir/.detekt/config.yml")
 }

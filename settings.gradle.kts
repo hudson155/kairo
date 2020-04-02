@@ -10,8 +10,6 @@ include(":limber-backend-application:common")
 include(":limber-backend-application:common:api")
 include(":limber-backend-application:common:testing")
 
-include(":limber-backend-application:module")
-
 include(":limber-backend-application:module:auth")
 include(":limber-backend-application:module:auth:api")
 include(":limber-backend-application:module:auth:app")

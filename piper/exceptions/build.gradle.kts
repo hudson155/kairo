@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id(Plugins.detekt)
+    id("io.gitlab.arturbosch.detekt")
 }
 
 tasks.compileKotlin {
@@ -12,8 +12,6 @@ tasks.compileTestKotlin {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":limber-backend-application:common:api"))
-    api(project(":piper:common"))
 }
 
 detekt {
