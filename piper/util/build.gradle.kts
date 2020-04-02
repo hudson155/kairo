@@ -5,12 +5,12 @@ plugins {
     id(Plugins.detekt)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

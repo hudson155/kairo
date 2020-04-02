@@ -8,10 +8,6 @@ plugins {
     id(Plugins.shadow).version(Versions.shadow)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 group = "io.limberapp.backend"
 version = "0.0.0"
 application {
@@ -32,6 +28,10 @@ dependencies {
     implementation(Dependencies.Jackson.dataFormatYaml)
     implementation(Dependencies.Ktor.serverCio)
     implementation(Dependencies.Logback.logbackClassic)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

@@ -5,14 +5,14 @@ plugins {
     id(Plugins.detekt)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":limber-backend-application:common:api"))
     implementation(Dependencies.Jackson.annotations)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

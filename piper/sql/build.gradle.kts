@@ -5,10 +5,6 @@ plugins {
     id(Plugins.detekt)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     api(project(":piper:common"))
@@ -16,6 +12,10 @@ dependencies {
     api(Dependencies.Sql.flyway)
     api(Dependencies.Sql.hikari)
     api(Dependencies.Sql.postgres)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

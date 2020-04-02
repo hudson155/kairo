@@ -5,10 +5,6 @@ plugins {
     id(Plugins.detekt)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     api(kotlin("test"))
@@ -18,6 +14,10 @@ dependencies {
     runtimeElements(Dependencies.JUnit.engine)
     api(Dependencies.Ktor.test)
     api(Dependencies.MockK.mockK)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

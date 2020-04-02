@@ -5,10 +5,6 @@ plugins {
     id(Plugins.detekt)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     api(project(":limber-backend-application:module:users:api"))
@@ -17,6 +13,10 @@ dependencies {
     implementation(project(":piper:sql"))
     testImplementation(project(":limber-backend-application:common:testing"))
     testImplementation(project(":piper:sql:testing"))
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {
