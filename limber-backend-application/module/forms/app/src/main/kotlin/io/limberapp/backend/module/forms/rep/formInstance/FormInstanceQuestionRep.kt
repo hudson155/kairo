@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
+import com.piperframework.validation.RepValidation
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import java.time.LocalDateTime
@@ -20,7 +21,7 @@ internal object FormInstanceQuestionRep {
 
         val formTemplateQuestionId: UUID
 
-        override fun validate() = Unit
+        override fun validate() = RepValidation {}
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")

@@ -1,7 +1,8 @@
 package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
-import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.mediumText
+import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
+import com.piperframework.validator.Validator
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import java.time.LocalDateTime
 import java.util.UUID
@@ -15,9 +16,9 @@ internal object FormTemplateTextQuestionRep {
         val placeholder: String? = null,
         val validator: Regex? = null
     ) : FormTemplateQuestionRep.Creation {
-        override fun validate() {
+        override fun validate() = RepValidation {
             super.validate()
-            validate(Creation::placeholder) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(Creation::placeholder) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
         }
     }
 
@@ -39,9 +40,9 @@ internal object FormTemplateTextQuestionRep {
         val placeholder: String? = null,
         val validator: Regex? = null
     ) : FormTemplateQuestionRep.Update {
-        override fun validate() {
+        override fun validate() = RepValidation {
             super.validate()
-            validate(Update::placeholder) { ifPresent { mediumText(allowEmpty = false) } }
+            validate(Update::placeholder) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.piperframework.endpoint
+package com.piperframework.endpoint.exception
 
 import com.piperframework.dataConversion.DataConversionException
 import com.piperframework.exception.exception.badRequest.BadRequestException

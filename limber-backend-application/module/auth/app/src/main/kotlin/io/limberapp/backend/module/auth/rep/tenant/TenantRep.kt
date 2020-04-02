@@ -3,9 +3,9 @@ package io.limberapp.backend.module.auth.rep.tenant
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
-import com.piperframework.validation.util.hostname
-import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.mediumText
+import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
+import com.piperframework.validator.Validator
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -16,9 +16,9 @@ object TenantRep {
         val orgId: UUID,
         val auth0ClientId: String
     ) : CreationRep {
-        override fun validate() {
-            validate(Creation::domain) { hostname() }
-            validate(Creation::auth0ClientId) { mediumText(allowEmpty = false) }
+        override fun validate() = RepValidation {
+            validate(Creation::domain) { Validator.hostname(value) }
+            validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
         }
     }
 
@@ -34,9 +34,9 @@ object TenantRep {
         val orgId: UUID? = null,
         val auth0ClientId: String? = null
     ) : UpdateRep {
-        override fun validate() {
-            validate(Update::domain) { ifPresent { hostname() } }
-            validate(Update::auth0ClientId) { ifPresent { mediumText(allowEmpty = false) } }
+        override fun validate() = RepValidation {
+            validate(Update::domain) { ifPresent { Validator.hostname(value) } }
+            validate(Update::auth0ClientId) { ifPresent { Validator.auth0ClientId(value) } }
         }
     }
 }
