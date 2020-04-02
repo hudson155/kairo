@@ -49,6 +49,8 @@ object Validator {
 
     fun emailAddress(value: String) = Regex.emailAddress.matches(value)
 
+    fun featureName(value: String) = value.length in 3..20
+
     fun hostname(value: String) = Regex.hostname.matches(value)
 
     fun humanName(value: String) = value.length in 1..40
@@ -56,8 +58,6 @@ object Validator {
     fun length1hundred(value: String, allowEmpty: Boolean) = value.length in (if (allowEmpty) 0 else 1)..100
 
     fun length10thousand(value: String, allowEmpty: Boolean) = value.length in (if (allowEmpty) 0 else 1)..10_000
-
-    fun lengthCustom(value: String, minInclusive: Int, maxInclusive: Int) = value.length in minInclusive..maxInclusive
 
     fun orgName(value: String) = value.length in 3..40
 

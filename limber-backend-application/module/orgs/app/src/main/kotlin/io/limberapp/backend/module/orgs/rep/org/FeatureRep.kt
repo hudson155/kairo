@@ -18,7 +18,7 @@ internal object FeatureRep {
         val type: FeatureModel.Type
     ) : CreationRep {
         override fun validate() = RepValidation {
-            validate(Creation::name) { Validator.lengthCustom(value, minInclusive = 3, maxInclusive = 20) }
+            validate(Creation::name) { Validator.featureName(value) }
             validate(Creation::path) { Validator.path(value) }
         }
     }
@@ -38,7 +38,7 @@ internal object FeatureRep {
         val isDefaultFeature: Boolean? = null
     ) : UpdateRep {
         override fun validate() = RepValidation {
-            validate(Update::name) { ifPresent { Validator.lengthCustom(value, minInclusive = 3, maxInclusive = 20) } }
+            validate(Update::name) { ifPresent { Validator.featureName(value) } }
             validate(Update::path) { ifPresent { Validator.path(value) } }
         }
     }
