@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("io.gitlab.arturbosch.detekt")
+    id(Plugins.detekt)
 }
 
 tasks.compileKotlin {
