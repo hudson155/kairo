@@ -1,12 +1,28 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
+    kotlin("multiplatform")
     id(Plugins.detekt)
 }
 
-dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+            }
+        }
+        jvm().compilations["main"].defaultSourceSet {
+            dependencies {
+                implementation(kotlin("stdlib-jdk8"))
+            }
+        }
+        js().compilations["main"].defaultSourceSet  {
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+            }
+        }
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {
