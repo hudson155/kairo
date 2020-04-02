@@ -3,6 +3,7 @@ package com.piperframework.validator
 /**
  * This object contains methods to validate primitive inputs.
  */
+@Suppress("MagicNumber")
 object Validator {
 
     fun auth0ClientId(value: String) = Regex.auth0ClientId.matches(value)
