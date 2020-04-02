@@ -12,7 +12,6 @@ tasks.compileTestKotlin {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":piper:exceptions"))
 }
 
 detekt {
