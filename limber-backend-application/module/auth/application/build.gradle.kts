@@ -7,11 +7,11 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":limber-backend-application:module:auth:api"))
+    api(project(":limber-backend-application:module:auth:service-interface"))
     implementation(project(":limber-backend-application:common"))
-    implementation(project(":limber-backend-application:common:api"))
-    implementation(project(":limber-backend-application:module:orgs:api"))
-    implementation(project(":limber-backend-application:module:users:api"))
+    implementation(project(":limber-backend-application:common:service-interface"))
+    implementation(project(":limber-backend-application:module:orgs:service-interface"))
+    implementation(project(":limber-backend-application:module:users:service-interface"))
     implementation(project(":piper:sql"))
     implementation(Dependencies.Bcrypt.jbcrypt)
     testImplementation(project(":limber-backend-application:common:testing"))

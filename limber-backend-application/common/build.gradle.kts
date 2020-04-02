@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":limber-backend-application:common:api"))
+    api(project(":limber-backend-application:common:service-interface"))
     api(project(":piper:common"))
 }
 

@@ -7,7 +7,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":limber-backend-application:common:api"))
+    implementation(project(":limber-backend-application:common:service-interface"))
     implementation(Dependencies.Jackson.annotations)
 }
 
