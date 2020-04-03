@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
-import com.piperframework.serialization.LocalDateTimeSerializer
-import com.piperframework.serialization.RegexSerializer
-import com.piperframework.serialization.UuidSerializer
+import com.piperframework.serialization.serializer.LocalDateTimeSerializer
+import com.piperframework.serialization.serializer.RegexSerializer
+import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.validation.RepValidation
 import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator

@@ -2,8 +2,8 @@ package io.limberapp.backend.module.forms.rep.formInstance
 
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
-import com.piperframework.serialization.LocalDateTimeSerializer
-import com.piperframework.serialization.UuidSerializer
+import com.piperframework.serialization.serializer.LocalDateTimeSerializer
+import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.validation.RepValidation
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.healthCheck.rep.healthCheck
 
 import com.piperframework.rep.CompleteRep
-import com.piperframework.serialization.LocalDateTimeSerializer
+import com.piperframework.serialization.serializer.LocalDateTimeSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 

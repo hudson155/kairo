@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.rep.accessToken
 
 import com.piperframework.rep.CompleteRep
-import com.piperframework.serialization.LocalDateTimeSerializer
-import com.piperframework.serialization.UuidSerializer
+import com.piperframework.serialization.serializer.LocalDateTimeSerializer
+import com.piperframework.serialization.serializer.UuidSerializer
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.util.UUID

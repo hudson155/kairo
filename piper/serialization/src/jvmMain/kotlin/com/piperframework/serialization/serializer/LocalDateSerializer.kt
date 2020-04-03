@@ -1,4 +1,4 @@
-package com.piperframework.serialization
+package com.piperframework.serialization.serializer
 
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.Encoder
