@@ -1,9 +1,11 @@
 package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.piperframework.rep.CreationRep
 import com.piperframework.validation.RepValidation
 import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
+import io.limberapp.backend.authorization.principal.Claims
 
 internal object JwtClaimsRequestRep {
 
@@ -22,4 +24,13 @@ internal object JwtClaimsRequestRep {
             validate(Creation::profilePhotoUrl) { ifPresent { Validator.url(value) } }
         }
     }
+
+    data class Complete(
+        @JsonProperty(Claims.org)
+        val org: String,
+        @JsonProperty(Claims.roles)
+        val roles: String,
+        @JsonProperty(Claims.user)
+        val user: String
+    ) : Any()
 }
