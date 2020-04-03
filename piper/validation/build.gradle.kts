@@ -8,7 +8,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation(kotlin("reflect"))
             }
         }
         jvm().compilations["main"].defaultSourceSet {

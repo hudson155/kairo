@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
     implementation(project(":piper:sql"))
 }
 

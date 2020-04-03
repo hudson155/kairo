@@ -8,7 +8,6 @@ import com.piperframework.serialization.UuidSerializer
 import com.piperframework.validation.RepValidation
 import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.util.UUID

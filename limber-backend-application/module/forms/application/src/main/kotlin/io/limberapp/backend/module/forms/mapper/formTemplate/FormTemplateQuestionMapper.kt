@@ -68,7 +68,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = rep.placeholder,
             validator = rep.validator
         )
-        else -> unknown(rep::class)
+        else -> unknownFormTemplateQuestion(rep::class)
     }
 
     fun completeRep(model: FormTemplateQuestionModel) = when (model) {
@@ -90,7 +90,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = model.placeholder,
             validator = model.validator
         )
-        else -> unknown(model::class)
+        else -> unknownFormTemplateQuestion(model::class)
     }
 
     fun update(rep: FormTemplateQuestionRep.Update) = when (rep) {
@@ -107,9 +107,10 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = rep.placeholder,
             validator = rep.validator
         )
-        else -> unknown(rep::class)
+        else -> unknownFormTemplateQuestion(rep::class)
     }
 
-    private fun unknown(klass: KClass<*>): Nothing =
+    private fun unknownFormTemplateQuestion(klass: KClass<*>): Nothing {
         unknown("form template question", klass)
+    }
 }

@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
     implementation(project(":limber-backend-application:common:service-interface"))
 }
 

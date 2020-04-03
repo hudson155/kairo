@@ -15,7 +15,6 @@ application {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:module:auth:application"))
     implementation(project(":limber-backend-application:module:forms:application"))

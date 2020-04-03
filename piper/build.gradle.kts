@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
     api(project(":piper:common"))
     api(project(":piper:data-conversion"))
     api(project(":piper:errors"))

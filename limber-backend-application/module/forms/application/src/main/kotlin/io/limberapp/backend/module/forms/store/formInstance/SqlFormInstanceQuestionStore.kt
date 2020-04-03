@@ -9,7 +9,7 @@ import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestio
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
-import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
+import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceQuestionMapper
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.and
@@ -20,7 +20,7 @@ import java.util.UUID
 
 internal class SqlFormInstanceQuestionStore @Inject constructor(
     database: Database,
-    private val formInstanceMapper: FormInstanceMapper,
+    private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
     private val sqlFormInstanceMapper: SqlFormInstanceMapper
 ) : FormInstanceQuestionStore, SqlStore(database) {
 
@@ -38,7 +38,7 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
             create(formInstanceId, model)
             return@transaction model
         } else {
-            return@transaction update(formInstanceId, formTemplateQuestionId, formInstanceMapper.update(model))
+            return@transaction update(formInstanceId, formTemplateQuestionId, formInstanceQuestionMapper.update(model))
         }
     }
 

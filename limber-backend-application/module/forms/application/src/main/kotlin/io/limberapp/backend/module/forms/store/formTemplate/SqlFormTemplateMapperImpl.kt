@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
+import com.piperframework.util.unknown
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
@@ -11,6 +12,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
+import kotlin.reflect.KClass
 
 internal class SqlFormTemplateMapperImpl @Inject constructor(
     private val formTemplateQuestionStore: FormTemplateQuestionStore
@@ -52,7 +54,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 insertStatement[FormTemplateQuestionTable.placeholder] = model.placeholder
                 insertStatement[FormTemplateQuestionTable.validator] = model.validator?.pattern
             }
-            else -> error("Unexpected question type: ${model::class.qualifiedName}")
+            else -> unknownFormTemplateQuestion(model::class)
         }
     }
 
@@ -72,7 +74,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 update.placeholder?.let { updateStatement[FormTemplateQuestionTable.placeholder] = it }
                 update.validator?.let { updateStatement[FormTemplateQuestionTable.validator] = it.pattern }
             }
-            else -> error("Unexpected question type: ${update::class.qualifiedName}")
+            else -> unknownFormTemplateQuestion(update::class)
         }
     }
 
@@ -108,4 +110,8 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 validator = resultRow[FormTemplateQuestionTable.validator]?.let { Regex(it) }
             )
         }
+
+    private fun unknownFormTemplateQuestion(klass: KClass<*>) {
+        unknown("form template question", klass::class)
+    }
 }

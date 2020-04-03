@@ -8,7 +8,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation(kotlin("reflect"))
                 implementation(project(":piper:types"))
                 api(project(":piper:validation"))
             }

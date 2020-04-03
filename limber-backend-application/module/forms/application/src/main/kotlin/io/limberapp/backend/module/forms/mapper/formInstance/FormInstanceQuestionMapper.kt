@@ -27,7 +27,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = rep.formTemplateQuestionId,
             text = rep.text
         )
-        else -> unknown(rep::class)
+        else -> unknownFormInstanceQuestion(rep::class)
     }
 
     fun completeRep(model: FormInstanceQuestionModel) = when (model) {
@@ -41,9 +41,16 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = model.formTemplateQuestionId,
             text = model.text
         )
-        else -> unknown(model::class)
+        else -> unknownFormInstanceQuestion(model::class)
     }
 
-    private fun unknown(klass: KClass<*>): Nothing =
+    fun update(model: FormInstanceQuestionModel) = when (model) {
+        is FormInstanceDateQuestionModel -> FormInstanceDateQuestionModel.Update(date = model.date)
+        is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
+        else -> unknownFormInstanceQuestion(model::class)
+    }
+
+    private fun unknownFormInstanceQuestion(klass: KClass<*>): Nothing {
         unknown("form instance question", klass)
+    }
 }
