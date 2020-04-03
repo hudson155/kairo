@@ -1,6 +1,7 @@
 /artifacts/
 /dictionaries/
 /modules/
+/modules.xml
 /compiler.xml
 /jarRepositories.xml
 /workspace.xml
