@@ -26,7 +26,7 @@ internal class PostJwtClaimsRequest @Inject constructor(
     servingConfig: ServingConfig,
     private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
-) : LimberApiEndpoint<PostJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
+) : LimberApiEndpoint<PostJwtClaimsRequest.Command, Map<String, String>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -40,7 +40,7 @@ internal class PostJwtClaimsRequest @Inject constructor(
         creationRep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): JwtClaimsRequestRep.Complete {
+    override suspend fun Handler.handle(command: Command): Map<String, String> {
         Authorization.Role(JwtRole.IDENTITY_PROVIDER).authorize()
         val requestModel = jwtClaimsRequestMapper.model(command.creationRep)
         val claimsModel = jwtClaimsRequestService.requestJwtClaims(requestModel)
