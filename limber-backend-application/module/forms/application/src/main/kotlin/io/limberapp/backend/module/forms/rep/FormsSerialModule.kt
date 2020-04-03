@@ -8,11 +8,8 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.SerializersModuleBuilder
 
-fun serialModule(buildAction: SerializersModuleBuilder.() -> Unit) = SerializersModule(buildAction)
-
-val formsSerialModule = serialModule {
+internal val formsSerialModule = SerializersModule {
 
     baseClass(FormTemplateQuestionRep.Creation::class) {
         subclass(FormTemplateDateQuestionRep.Creation::class)
