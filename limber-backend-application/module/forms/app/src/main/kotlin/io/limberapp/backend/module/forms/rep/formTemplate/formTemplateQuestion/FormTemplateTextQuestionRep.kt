@@ -17,7 +17,7 @@ internal object FormTemplateTextQuestionRep {
         val validator: Regex? = null
     ) : FormTemplateQuestionRep.Creation {
         override fun validate() = RepValidation {
-            super.validate()
+            validate(super.validate())
             validate(Creation::placeholder) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
         }
     }
@@ -41,7 +41,7 @@ internal object FormTemplateTextQuestionRep {
         val validator: Regex? = null
     ) : FormTemplateQuestionRep.Update {
         override fun validate() = RepValidation {
-            super.validate()
+            validate(super.validate())
             validate(Update::placeholder) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
         }
     }

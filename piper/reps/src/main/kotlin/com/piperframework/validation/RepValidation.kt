@@ -9,6 +9,10 @@ class RepValidation(validation: Builder.() -> Unit) {
 
         val validations = mutableListOf<Pair<ValueValidation<*>, Boolean>>()
 
+        fun validate(validate: RepValidation) {
+            validations.addAll(validate.validations)
+        }
+
         fun <R : ValidatedRep, T : Any?> R.validate(
             property: KProperty1<R, T>,
             validator: ValueValidation<T>.() -> Boolean
