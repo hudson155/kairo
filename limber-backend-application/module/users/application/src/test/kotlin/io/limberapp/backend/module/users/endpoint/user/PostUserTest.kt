@@ -28,7 +28,9 @@ internal class PostUserTest : ResourceTest() {
         // PostUser
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = json.stringify(UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress)),
+            body = json.stringify(
+                UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress)
+            ),
             expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
         )
     }

@@ -11,11 +11,9 @@ actual object LocalDateSerializer : KSerializer<String> {
 
     override val descriptor = PrimitiveDescriptor(LocalDate::class.simpleName!!, PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: String) {
+    override fun serialize(encoder: Encoder, value: String) =
         encoder.encodeString(value)
-    }
 
-    override fun deserialize(decoder: Decoder): String {
-        return decoder.decodeString()
-    }
+    override fun deserialize(decoder: Decoder): String =
+        decoder.decodeString()
 }

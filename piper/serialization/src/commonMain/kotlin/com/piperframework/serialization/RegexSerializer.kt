@@ -10,11 +10,9 @@ object RegexSerializer : KSerializer<Regex> {
 
     override val descriptor = PrimitiveDescriptor(Regex::class.simpleName!!, PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: Regex) {
+    override fun serialize(encoder: Encoder, value: Regex) =
         encoder.encodeString(value.pattern)
-    }
 
-    override fun deserialize(decoder: Decoder): Regex {
-        return Regex(decoder.decodeString())
-    }
+    override fun deserialize(decoder: Decoder): Regex =
+        Regex(decoder.decodeString())
 }

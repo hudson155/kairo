@@ -29,7 +29,9 @@ internal class PostTenantTest : ResourceTest() {
         // PostTenant
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.someclientFixture.creation(org1Id).copy(domain = limberappTenantRep.domain)),
+            body = json.stringify(
+                TenantRepFixtures.someclientFixture.creation(org1Id).copy(domain = limberappTenantRep.domain)
+            ),
             expectedException = TenantDomainAlreadyRegistered(limberappTenantRep.domain)
         )
     }
@@ -96,7 +98,9 @@ internal class PostTenantTest : ResourceTest() {
             .copy(auth0ClientId = tenant0Rep.auth0ClientId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.someclientFixture.creation(org1Id).copy(auth0ClientId = tenant0Rep.auth0ClientId))
+            body = json.stringify(
+                TenantRepFixtures.someclientFixture.creation(org1Id).copy(auth0ClientId = tenant0Rep.auth0ClientId)
+            )
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)

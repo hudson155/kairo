@@ -14,11 +14,9 @@ abstract class ConversionServiceSerializer<T : Any>(
 
     override val descriptor = PrimitiveDescriptor(serialName, PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: T) {
+    override fun serialize(encoder: Encoder, value: T) =
         encoder.encodeString(conversionService.toString(value))
-    }
 
-    override fun deserialize(decoder: Decoder): T {
-        return conversionService.fromString(decoder.decodeString())
-    }
+    override fun deserialize(decoder: Decoder): T =
+        conversionService.fromString(decoder.decodeString())
 }

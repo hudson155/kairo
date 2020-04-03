@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.testing.fixtures.feature
 
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import java.time.LocalDateTime

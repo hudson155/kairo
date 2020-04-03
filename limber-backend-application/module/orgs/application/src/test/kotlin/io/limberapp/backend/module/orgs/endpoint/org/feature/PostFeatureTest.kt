@@ -46,7 +46,9 @@ internal class PostFeatureTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = json.stringify(FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path)),
+            body = json.stringify(
+                FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path)
+            ),
             expectedException = FeatureIsNotUnique()
         )
 

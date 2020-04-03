@@ -93,7 +93,9 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = json.stringify(FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id))
+            body = json.stringify(
+                FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            )
         ) {
             val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
             assertEquals(formInstanceQuestionRep, actual)
@@ -136,7 +138,9 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = json.stringify(FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id))
+            body = json.stringify(
+                FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            )
         )
 
         // PutFormInstanceQuestion
