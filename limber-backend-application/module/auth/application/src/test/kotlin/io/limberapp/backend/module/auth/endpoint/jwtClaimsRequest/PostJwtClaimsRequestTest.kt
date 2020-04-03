@@ -14,6 +14,7 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.mockk.every
+import com.piperframework.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -47,7 +48,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(existingOrg.id)
+            body = json.stringify(TenantRepFixtures.limberappFixture.creation(existingOrg.id))
         )
 
         // PostJwtClaimsRequest
@@ -60,20 +61,20 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         )
         piperTest.test(
             endpointConfig = PostJwtClaimsRequest.endpointConfig,
-            body = jwtRequest
+            body = json.stringify(jwtRequest)
         ) {
             val actual = response.content!!
-            val expected = "{" +
-                    "\"${Claims.org}\":\"{" +
+            val expected = "{\n" +
+                    "    \"${Claims.org}\": \"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
-                    "}\"," +
-                    "\"${Claims.roles}\":\"[]\"," +
-                    "\"${Claims.user}\":\"{" +
+                    "}\",\n" +
+                    "    \"${Claims.roles}\": \"[]\",\n" +
+                    "    \"${Claims.user}\": \"{" +
                     "\\\"id\\\":\\\"$userId\\\"," +
                     "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
-                    "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"" +
+                    "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
                     "}"
             assertEquals(expected, actual)
         }
@@ -113,7 +114,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(existingOrg.id)
+            body = json.stringify(TenantRepFixtures.limberappFixture.creation(existingOrg.id))
         )
 
         // PostJwtClaimsRequest
@@ -126,20 +127,20 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         )
         piperTest.test(
             endpointConfig = PostJwtClaimsRequest.endpointConfig,
-            body = jwtRequest
+            body = json.stringify(jwtRequest)
         ) {
             val actual = response.content!!
-            val expected = "{" +
-                    "\"${Claims.org}\":\"{" +
+            val expected = "{\n" +
+                    "    \"${Claims.org}\": \"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
-                    "}\"," +
-                    "\"${Claims.roles}\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
-                    "\"${Claims.user}\":\"{" +
+                    "}\",\n" +
+                    "    \"${Claims.roles}\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
+                    "    \"${Claims.user}\": \"{" +
                     "\\\"id\\\":\\\"${existingUser.id}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
-                    "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"" +
+                    "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
                     "}"
             assertEquals(expected, actual)
         }

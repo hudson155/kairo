@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.mapper.org
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import java.time.Clock
@@ -24,7 +24,7 @@ internal class OrgMapper @Inject constructor(
         id = model.id,
         created = model.created,
         name = model.name,
-        features = model.features.map { featureMapper.completeRep(it) }.toSet()
+        features = model.features.map { featureMapper.completeRep(it) }
     )
 
     fun update(rep: OrgRep.Update) = OrgModel.Update(

@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.mapper.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.unknown
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.unknown
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
@@ -110,5 +110,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         else -> unknown(rep::class)
     }
 
-    private fun unknown(clazz: KClass<*>): Nothing = unknown("form template question", clazz)
+    private fun unknown(clazz: KClass<*>): Nothing =
+        unknown("form template question", clazz)
 }

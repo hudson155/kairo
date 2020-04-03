@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.mapper.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.unknown
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.unknown
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
@@ -46,5 +46,6 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         else -> unknown(model::class)
     }
 
-    private fun unknown(clazz: KClass<*>): Nothing = unknown("form instance question", clazz)
+    private fun unknown(clazz: KClass<*>): Nothing =
+        unknown("form instance question", clazz)
 }

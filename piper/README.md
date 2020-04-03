@@ -14,32 +14,25 @@ they are and see if you need them too.
         but the implementation project application need not require the `common` module.
 * [`data-conversion`](/data-conversion):
     * Responsible for converting data types.
-        This is used for serialization and deserialization,
-        both by registering with Jackson
-        (for serializing and deserializing arbitrary objects as well as request/response bodies)
-        and by registering with Ktor DataConversion
-        (for serializing and deserializing request/response parameters).
+        Leverages the `serialization` module and Ktor's DataConversion feature
+        to serialize and deserialize path parameters.
 * [`errors`](/errors):
     * Contains classes for JSON errors intended to be returned to the client.
         Every time something goes wrong (whether it's a 4xx error or a 5xx error),
         an error from this package should be returned.
 * [`exception-mapping`](/exception-mapping):
-    * Maps exceptions to JSON responses from the errors module.
+    * Maps exceptions to JSON responses from the `errors` module.
 * [`exceptions`](/exceptions):
     * Exception base classes.
 * [`ktor-auth`](/ktor-auth):
     * Helps configure authentication for Ktor.
-* [`object-mapper`](/object-mapper):
-    * Custom Jackson object mapper implementation.
-        It's configured with some default modules (e.g. Kotlin),
-        default settings (e.g. ability to ignore unknown properties),
-        and uses the `data-conversion` module for serialization/deserialization.
-        It should be used across Piper.
 * [`reps`](/reps):
     * Contains base classes for application reps to inherit from.
         Reps are used in the API layer.
         Reps should never be used in the application layer.
         Reps should never be used in the database layer.
+* [`serialization`](/serialization):
+    * Custom type serialization configs.
 * [`sql`](/sql):
     * Driver to interact with a SQL database.
     * Include this in implementation project modules if they use a SQL database.
@@ -47,6 +40,8 @@ they are and see if you need them too.
     * Contains testing utilities.
     * Include this in implementation project modules as a test dependency
         (assuming you write tests).
+* [`types`](/testing):
+    * Contains custom types.
 * [`util`](/util):
     * Contains utilities.
 * [`validation`](/validation):
@@ -61,27 +56,22 @@ the whole picture.
 ```
 .
 ├── com.piperframework
-├── authentication    # Piper authentication configuration
+├── authorization     # Piper authorization configuration
 ├── config            # Piper framework configuration
 ├── dataConversion    # Type conversion
-│   └── conversionService # Individual type converters
-├── endpoint          # Code for API endpoints
+├── endpoint          # Code for REST API endpoints
 ├── error             # Response body error objects
 ├── exception         # Exceptions that might be thrown
 ├── exceptionMapping  # Mapping exceptions to errors
-├── jackson           # Code related to Jackson serialization
-│   └── module            # Custom modules
-│       └── conversionService # Data conversion module
-│   └── objectMapper      # Custom object mapper
-├── model             # Model-related boilerplate (application layer)
+├── ktorAuth          # Ktor/Piper authorization integration
 ├── module            # Code for Piper modules
 ├── rep               # Rep-related boilerplate (API layer)
+├── serialization     # Serialization and deserialization code
 ├── sql               # SQL driver
 ├── testing           # Testing code
+├── types             # Custom types
 ├── store             # Code for Piper stores
 ├── util              # Util
-│   └─ uuidGenerator  # Generates UUIDs
-├── validation        # Used to validate reps
-│   └─ util               # Individual validators
+├── validation        # Value and rep validation
 └── validator         # Validator for ad-hoc validation
 ```

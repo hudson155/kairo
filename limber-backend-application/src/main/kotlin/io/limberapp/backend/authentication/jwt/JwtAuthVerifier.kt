@@ -4,17 +4,25 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.authentication.AuthenticationMechanism
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.PiperAuthVerifier
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.backend.authorization.principal.JwtOrg
+import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.backend.authorization.principal.JwtUser
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.parse
+import kotlinx.serialization.parseList
+import org.slf4j.LoggerFactory
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVerifier<Jwt> {
 
-    private val objectMapper = PiperObjectMapper()
+    private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
+
+    private val json = Json(JsonConfiguration.Stable) // TODO: Don't duplicat this config
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {
@@ -31,13 +39,14 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
     override fun verify(blob: String): Jwt? {
         val decodedJwt = try {
             getVerifier(blob)?.verify(blob)
-        } catch (_: JWTVerificationException) {
+        } catch (e: JWTVerificationException) {
+            logger.warn("JWT verification exception", e)
             null
         } ?: return null
         return Jwt(
-            org = objectMapper.readValue(decodedJwt.getClaim(Claims.org).asString()),
-            roles = objectMapper.readValue(decodedJwt.getClaim(Claims.roles).asString()),
-            user = objectMapper.readValue(decodedJwt.getClaim(Claims.user).asString())
+            org = decodedJwt.getClaim(Claims.org).asString()?.let { json.parse<JwtOrg>(it) },
+            roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString()).let { json.parseList<JwtRole>(it) },
+            user = requireNotNull(decodedJwt.getClaim(Claims.user).asString()).let { json.parse<JwtUser>(it) }
         )
     }
 

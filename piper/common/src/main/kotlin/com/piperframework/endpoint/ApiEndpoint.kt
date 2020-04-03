@@ -1,8 +1,6 @@
 package com.piperframework.endpoint
 
-import com.fasterxml.jackson.databind.JsonMappingException
 import com.piperframework.authorization.PiperAuthorization
-import com.piperframework.dataConversion.DataConversionException
 import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.endpoint.exception.ParameterConversionException
 import com.piperframework.endpoint.exception.ValidationException
@@ -91,6 +89,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
         route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
             handle {
                 val command = determineCommand(call)
+                @Suppress("UNCHECKED_CAST")
                 val principal = call.authentication.principal as? P
                 val result = Handler(command, principal).handle()
                 call.respond(result.first ?: HttpStatusCode.OK, result.second)
@@ -99,11 +98,11 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
     }
 
     protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T {
+        @Suppress("TooGenericExceptionCaught")
         val result = try {
             receive<T>()
-        } catch (e: JsonMappingException) {
-            e.cause?.let { if (it is DataConversionException) throw ParameterConversionException(it) }
-            throw e
+        } catch (e: Exception) {
+            throw ParameterConversionException(cause = e)
         }
         return result.apply {
             val validation = validate()
@@ -113,7 +112,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
 
     protected fun <T : Any> Parameters.getAsType(clazz: KClass<T>, name: String): T {
         return getAsType(clazz, name, optional = true)
-            ?: throw ParameterConversionException(DataConversionException(name, clazz))
+            ?: throw ParameterConversionException("Missing required parameter: $name.")
     }
 
     /**
@@ -127,7 +126,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
         return try {
             clazz.cast(application.conversionService.fromValues(values, clazz.java))
         } catch (e: Exception) {
-            throw ParameterConversionException(DataConversionException(name, clazz, e))
+            throw ParameterConversionException(cause = e)
         }
     }
 }

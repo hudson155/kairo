@@ -9,6 +9,7 @@ import io.limberapp.backend.module.auth.endpoint.tenant.DeleteTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.GetTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.PatchTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
+import io.limberapp.backend.module.auth.rep.authSerialModule
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
@@ -25,6 +26,8 @@ import io.limberapp.backend.module.auth.store.tenant.SqlTenantStore
 import io.limberapp.backend.module.auth.store.tenant.TenantStore
 
 class AuthModule : Module() {
+
+    override val serialModule = authSerialModule
 
     override val endpoints = listOf(
 

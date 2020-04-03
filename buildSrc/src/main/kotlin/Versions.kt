@@ -34,7 +34,7 @@ object Versions {
     const val kotlin = "1.3.71"
 
     // https://github.com/ktorio/ktor/releases
-    const val ktor = "1.2.5"
+    const val ktor = "1.3.2"
 
     // https://github.com/qos-ch/logback/releases
     const val logback = "1.2.3"
@@ -44,6 +44,9 @@ object Versions {
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     const val postgres = "42.2.9"
+
+    // https://github.com/Kotlin/kotlinx.serialization/releases
+    const val serialization = "0.20.0"
 
     // https://github.com/johnrengelman/shadow/releases
     const val shadow = "5.1.0"

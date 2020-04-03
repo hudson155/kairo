@@ -1,8 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -10,6 +9,8 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import kotlinx.serialization.parse
+import com.piperframework.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -31,7 +32,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
                 PatchFormTemplateQuestion.formTemplateId to formTemplateId,
                 PatchFormTemplateQuestion.questionId to questionId
             ),
-            body = formTemplateQuestionUpdateRep,
+            body = json.stringify(formTemplateQuestionUpdateRep),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -47,7 +48,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         )
 
         // PatchFormTemplateQuestion
@@ -58,7 +59,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
                 PatchFormTemplateQuestion.formTemplateId to formTemplateRep.id,
                 PatchFormTemplateQuestion.questionId to questionId
             ),
-            body = formTemplateQuestionUpdateRep,
+            body = json.stringify(formTemplateQuestionUpdateRep),
             expectedException = FormTemplateQuestionNotFound()
         )
     }
@@ -73,11 +74,11 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         )
 
         // PostFormTemplateQuestion
-        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture .complete(this, 4)
+        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
                 as FormTemplateTextQuestionRep.Complete
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
@@ -86,7 +87,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = PostFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
             queryParams = mapOf(PostFormTemplateQuestion.rank to 0),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation()
+            body = json.stringify(FormTemplateQuestionRepFixtures.textFixture.creation())
         )
 
         // PatchFormTemplateQuestion
@@ -103,7 +104,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
                 PatchFormTemplateQuestion.formTemplateId to formTemplateRep.id,
                 PatchFormTemplateQuestion.questionId to formTemplateQuestionRep.id
             ),
-            body = formTemplateQuestionUpdateRep
+            body = json.stringify(formTemplateQuestionUpdateRep)
         ) {}
 
         // GetFormTemplate
@@ -111,7 +112,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
     }

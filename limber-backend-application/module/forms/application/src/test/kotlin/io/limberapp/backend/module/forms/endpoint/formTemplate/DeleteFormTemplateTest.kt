@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
@@ -32,7 +33,7 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         )
 
         // DeleteFormTemplate

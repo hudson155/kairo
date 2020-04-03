@@ -1,8 +1,7 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtUser
@@ -15,6 +14,9 @@ import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.stringify
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.UUID
@@ -28,7 +30,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
 
-    private val objectMapper = PiperObjectMapper()
+    private val json = Json(JsonConfiguration.Stable) // TODO: Don't duplicat this config
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getAccountOrCreateUser(request)
@@ -44,7 +46,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
         val org = user?.let { checkNotNull(orgService.get(it.orgId)) }
-        val jwt = createJwt(account, user, org)
+        val jwt = createUserJwt(account, user, org)
         return convertJwtToModel(jwt)
     }
 
@@ -70,17 +72,17 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         return newUser
     }
 
-    private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
+    private fun createUserJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
         return Jwt(
-            org = org?.let { JwtOrg(it.id, it.name, it.features.map { it.id }.toSet()) },
-            roles = account.roles,
+            org = org?.let { JwtOrg(it.id, it.name, it.features.map { it.id }) },
+            roles = account.roles.toList(),
             user = JwtUser(account.id, user?.firstName, user?.lastName)
         )
     }
 
     private fun convertJwtToModel(jwt: Jwt): JwtClaimsModel = JwtClaimsModel(
-        org = objectMapper.writeValueAsString(jwt.org),
-        roles = objectMapper.writeValueAsString(jwt.roles),
-        user = objectMapper.writeValueAsString(jwt.user)
+        org = jwt.org?.let { json.stringify(it) },
+        roles = json.stringify(jwt.roles),
+        user = json.stringify(jwt.user)
     )
 }

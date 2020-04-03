@@ -37,10 +37,12 @@ internal class PutFormInstanceQuestion @Inject constructor(
         val creationRep: FormInstanceQuestionRep.Creation
     ) : AbstractCommand()
 
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        formInstanceId = call.parameters.getAsType(UUID::class, formInstanceId),
-        creationRep = call.getAndValidateBody()
-    )
+    override suspend fun determineCommand(call: ApplicationCall): Command {
+        return Command(
+            formInstanceId = call.parameters.getAsType(UUID::class, formInstanceId),
+            creationRep = call.getAndValidateBody()
+        )
+    }
 
     override suspend fun Handler.handle(command: Command): FormInstanceQuestionRep.Complete {
         HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()

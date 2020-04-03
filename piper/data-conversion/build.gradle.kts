@@ -1,18 +1,33 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm")
+    kotlin("multiplatform")
     id(Plugins.detekt)
 }
 
-dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":piper:util"))
-    implementation(project(":piper:validation"))
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+                implementation(kotlin("reflect"))
+                implementation(project(":piper:types"))
+                implementation(project(":piper:validation"))
+                api(Dependencies.Serialization.common)
+            }
+        }
+        jvm().compilations["main"].defaultSourceSet {
+            dependencies {
+                implementation(kotlin("stdlib-jdk8"))
+                implementation(project(":piper:util"))
+                api(Dependencies.Serialization.jvm)
+            }
+        }
+        js().compilations["main"].defaultSourceSet  {
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+                api(Dependencies.Serialization.js)
+            }
+        }
+    }
 }
 
 detekt {

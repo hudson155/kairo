@@ -1,8 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     application
     id(Plugins.detekt).version(Versions.detekt)
     id(Plugins.shadow).version(Versions.shadow)
@@ -16,6 +15,7 @@ application {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:module:auth:application"))
     implementation(project(":limber-backend-application:module:forms:application"))
@@ -26,12 +26,10 @@ dependencies {
     api(Dependencies.Jwt.auth0JavaJwt)
     api(Dependencies.Jwt.auth0JwksRsa)
     implementation(Dependencies.Jackson.dataFormatYaml)
+    implementation(Dependencies.Jackson.moduleKotlin)
     implementation(Dependencies.Ktor.serverCio)
     implementation(Dependencies.Logback.logbackClassic)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
+    implementation(Dependencies.Serialization.jvm)
 }
 
 detekt {

@@ -8,31 +8,47 @@ import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exception.EndpointNotFound
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
+import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
+import io.ktor.features.ContentConverter
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.HttpsRedirect
 import io.ktor.features.StatusPages
+import io.ktor.features.suitableCharset
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.jackson.JacksonConverter
+import io.ktor.http.content.TextContent
+import io.ktor.http.withCharset
+import io.ktor.request.ApplicationReceiveRequest
+import io.ktor.request.contentCharset
 import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.ktor.util.pipeline.PipelineContext
+import io.ktor.utils.io.ByteReadChannel
+import io.ktor.utils.io.jvm.javaio.toInputStream
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.modules.getContextualOrDefault
+import kotlinx.serialization.modules.plus
 import org.slf4j.event.Level
 import java.util.UUID
 
@@ -104,7 +120,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
     protected open fun Application.dataConversion() {
         install(DataConversion) {
-            convert(UUID::class, conversionService(UuidConversionService()))
+            convert(UUID::class, conversionService(UuidConversionService))
         }
     }
 
@@ -126,7 +142,69 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JacksonConverter(PiperObjectMapper(prettyPrint = true, serializeUnitToEmptyString = true))
+                converter = object : ContentConverter {
+
+                    private val json = Json(
+                        configuration = JsonConfiguration.Stable.copy(prettyPrint = true),
+                        context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
+                    )
+
+                    override suspend fun convertForReceive(
+                        context: PipelineContext<ApplicationReceiveRequest, ApplicationCall>
+                    ): Any? {
+                        val request = context.subject
+                        val type = request.type
+                        val value = request.value as? ByteReadChannel ?: return null
+                        val reader = value.toInputStream().reader(context.call.request.contentCharset() ?: Charsets.UTF_8)
+                        val string = reader.readText()
+                        val deserializer = json.context.getContextualOrDefault(type)
+                        return json.parse(deserializer, string)
+                    }
+
+                    override suspend fun convertForSend(
+                        context: PipelineContext<Any, ApplicationCall>,
+                        contentType: ContentType,
+                        value: Any
+                    ): Any? {
+                        val serializer = json.serializer(value)
+                        return TextContent(json.stringify(serializer, value), contentType.withCharset(context.call.suitableCharset()))
+                    }
+
+                    private fun Json.serializer(value: Any): KSerializer<Any> {
+                        return when(value) {
+                            is List<*> -> ListSerializer(elementSerializer(value))
+                            else -> context.getContextualOrDefault(value::class)
+                        } as KSerializer<Any>
+                    }
+
+                    private fun Json.elementSerializer(collection: Collection<*>): KSerializer<*> {
+                        @Suppress("DEPRECATION_ERROR")
+                        val serializers = collection.mapNotNull { value ->
+                            value?.let { serializer(it) }
+                        }.distinctBy { it.descriptor.name }
+
+                        if (serializers.size > 1) {
+                            @Suppress("DEPRECATION_ERROR")
+                            val message = "Serializing collections of different element types is not yet supported. " +
+                                    "Selected serializers: ${serializers.map { it.descriptor.name }}"
+                            error(message)
+                        }
+
+                        val selected: KSerializer<*> = serializers.singleOrNull() ?: String.serializer()
+                        if (selected.descriptor.isNullable) {
+                            return selected
+                        }
+
+                        @Suppress("UNCHECKED_CAST")
+                        selected as KSerializer<Any>
+
+                        if (collection.any { it == null }) {
+                            return selected.nullable
+                        }
+
+                        return selected
+                    }
+                }
             )
         }
     }

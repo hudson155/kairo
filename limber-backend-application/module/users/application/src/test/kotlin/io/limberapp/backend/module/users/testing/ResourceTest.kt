@@ -5,9 +5,8 @@ import com.piperframework.testing.AbstractResourceTest
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.backend.test.LimberTest
 import io.limberapp.backend.test.TestLimberApp
-import org.junit.jupiter.api.BeforeEach
 
-abstract class ResourceTest : AbstractResourceTest() {
+abstract class ResourceTest : AbstractResourceTest(UsersModule()) {
 
     private val testSqlModule = TestSqlModule()
 
@@ -15,7 +14,7 @@ abstract class ResourceTest : AbstractResourceTest() {
         TestLimberApp(
             application = this,
             config = config,
-            module = UsersModule(),
+            module = module,
             additionalModules = listOf(testSqlModule),
             fixedClock = fixedClock,
             deterministicUuidGenerator = deterministicUuidGenerator

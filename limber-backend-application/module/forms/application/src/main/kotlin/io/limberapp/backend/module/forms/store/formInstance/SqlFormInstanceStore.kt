@@ -2,7 +2,7 @@ package io.limberapp.backend.module.forms.store.formInstance
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound

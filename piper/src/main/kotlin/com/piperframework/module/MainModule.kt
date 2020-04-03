@@ -4,8 +4,8 @@ import com.piperframework.config.Config
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.util.uuid.uuidGenerator.RandomUuidGenerator
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.RandomUuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.ktor.application.Application
 import java.time.Clock
 

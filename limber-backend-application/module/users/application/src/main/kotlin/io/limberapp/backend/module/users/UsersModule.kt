@@ -1,13 +1,14 @@
 package io.limberapp.backend.module.users
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.endpoint.user.DeleteUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
 import io.limberapp.backend.module.users.endpoint.user.PatchUser
-import io.limberapp.backend.module.users.endpoint.user.role.PutUserRole
+import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.endpoint.user.role.DeleteUserRole
+import io.limberapp.backend.module.users.endpoint.user.role.PutUserRole
+import io.limberapp.backend.module.users.rep.account.usersSerialModule
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.AccountServiceImpl
 import io.limberapp.backend.module.users.service.account.UserService
@@ -20,6 +21,8 @@ import io.limberapp.backend.module.users.store.account.SqlUserStore
 import io.limberapp.backend.module.users.store.account.UserStore
 
 class UsersModule : Module() {
+
+    override val serialModule = usersSerialModule
 
     override val endpoints = listOf(
 

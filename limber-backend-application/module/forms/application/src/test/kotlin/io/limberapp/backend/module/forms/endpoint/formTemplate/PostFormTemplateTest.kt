@@ -1,9 +1,10 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -20,9 +21,9 @@ internal class PostFormTemplateTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.test(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
 
@@ -31,7 +32,7 @@ internal class PostFormTemplateTest : ResourceTest() {
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
     }

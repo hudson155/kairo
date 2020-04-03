@@ -1,7 +1,8 @@
 package com.piperframework.endpoint.exception
 
-import com.piperframework.dataConversion.DataConversionException
 import com.piperframework.exception.exception.badRequest.BadRequestException
 
-class ParameterConversionException(dataConversionException: DataConversionException) :
-    BadRequestException(dataConversionException.message!!, dataConversionException)
+class ParameterConversionException(
+    message: String = "Could not convert parameter to the appropriate type.",
+    cause: Exception? = null
+) : BadRequestException(message, cause)

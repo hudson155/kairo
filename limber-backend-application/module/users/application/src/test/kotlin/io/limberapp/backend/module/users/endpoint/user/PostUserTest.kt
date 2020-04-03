@@ -1,10 +1,11 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
+import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -21,13 +22,13 @@ internal class PostUserTest : ResourceTest() {
         val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
+            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
         )
 
         // PostUser
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress),
+            body = json.stringify(UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress)),
             expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
         )
     }
@@ -42,9 +43,9 @@ internal class PostUserTest : ResourceTest() {
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
+            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
 
@@ -53,7 +54,7 @@ internal class PostUserTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }

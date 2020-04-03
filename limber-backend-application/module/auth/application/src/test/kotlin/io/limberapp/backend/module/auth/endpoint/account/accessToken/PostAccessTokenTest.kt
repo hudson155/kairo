@@ -1,9 +1,10 @@
 package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.accessToken.AccessTokenRepFixtures
+import kotlinx.serialization.parse
+import kotlinx.serialization.parseList
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -23,7 +24,7 @@ internal class PostAccessTokenTest : ResourceTest() {
             endpointConfig = PostAccessToken.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<AccessTokenRep.OneTimeUse>(response.content!!)
+            val actual = json.parse<AccessTokenRep.OneTimeUse>(response.content!!)
             assertEquals(accessTokenOneTimeUseRep, actual)
         }
 
@@ -32,7 +33,7 @@ internal class PostAccessTokenTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(GetAccessTokensByAccountId.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<Set<AccessTokenRep.Complete>>(response.content!!)
+            val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessTokenRep), actual)
         }
     }

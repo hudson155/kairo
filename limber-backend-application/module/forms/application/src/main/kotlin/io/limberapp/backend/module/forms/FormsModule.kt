@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureId
@@ -15,6 +16,7 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PatchFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PostFormTemplateQuestion
+import io.limberapp.backend.module.forms.rep.formsSerialModule
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
@@ -35,6 +37,13 @@ import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateMappe
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateMapperImpl
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateQuestionStore
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.PolymorphicSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.parse
 
 class FormsModule : Module() {
 
@@ -61,6 +70,8 @@ class FormsModule : Module() {
         PutFormInstanceQuestion::class.java,
         DeleteFormInstanceQuestion::class.java
     )
+
+    override val serialModule = formsSerialModule
 
     override val endpoints = formTemplateEndpoints + formInstanceEndpoints
 
@@ -95,4 +106,40 @@ class FormsModule : Module() {
         bind(FormInstanceStore::class, SqlFormInstanceStore::class)
         bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
     }
+}
+
+interface Animal {
+    val name: String
+}
+
+@Serializable
+@SerialName("CLASS")
+data class Dog(override val name: String, val breed: String) : Animal
+
+fun main() {
+    val json = Json(context = SerializersModule {
+        contextual(Animal::class, PolymorphicSerializer(Animal::class))
+        contextual(Dog::class, PolymorphicSerializer(Animal::class) as KSerializer<Dog>)
+        polymorphic(Animal::class) {
+            Dog::class with Dog.serializer()
+        }
+    })
+    val original = Dog("Timothy", "Husky")
+    println("Original: $original")
+    val string = json.stringify(original)
+    println("String: $string")
+    val deserialized = json.parse<Animal>(string)
+    println("Deserialized: $deserialized")
+//    val json = Json(configuration = JsonConfiguration.Stable.copy(prettyPrint = true), context = formsSerialModule)
+//    val question = FormInstanceTextQuestionRep.Creation(
+//        text = "Nothing significant to add",
+//        formTemplateQuestionId = UUID.fromString("f1450306-5176-34a5-beaf-bbf8ed995985")
+//    )
+//    println(question)
+//    val string = json.stringify(question)
+//    println(string)
+//    val parsed1 = json.parse<FormInstanceQuestionRep.Creation>(string)
+//    println(parsed1)
+//    val parsed2 = json.parse(json.context.getContextualOrDefault(FormInstanceQuestionRep.Creation::class), string)
+//    println(parsed2)
 }

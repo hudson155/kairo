@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.store.formTemplate
 import com.google.inject.Inject
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import com.piperframework.store.SqlStore
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel

@@ -1,10 +1,11 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import kotlinx.serialization.parse
+import com.piperframework.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -22,7 +23,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PatchFormTemplate.endpointConfig,
             pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateId),
-            body = formTemplateUpdateRep,
+            body = json.stringify(formTemplateUpdateRep),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -37,7 +38,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         )
 
         // PatchFormTemplate
@@ -46,9 +47,9 @@ internal class PatchFormTemplateTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PatchFormTemplate.endpointConfig,
             pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateRep.id),
-            body = formTemplateUpdateRep
+            body = json.stringify(formTemplateUpdateRep)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
 
@@ -57,7 +58,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
     }

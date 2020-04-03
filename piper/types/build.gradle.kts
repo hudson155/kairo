@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("multiplatform")
     id(Plugins.detekt)
@@ -10,6 +8,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation(kotlin("reflect"))
             }
         }
         jvm().compilations["main"].defaultSourceSet {
@@ -23,10 +22,6 @@ kotlin {
             }
         }
     }
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

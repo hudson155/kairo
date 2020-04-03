@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     id(Plugins.detekt)
@@ -7,12 +5,8 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
     implementation(project(":limber-backend-application:common:service-interface"))
-    implementation(Dependencies.Jackson.annotations)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 detekt {

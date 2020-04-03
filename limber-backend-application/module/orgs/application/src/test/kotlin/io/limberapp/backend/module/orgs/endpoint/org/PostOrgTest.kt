@@ -1,9 +1,10 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
+import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -16,9 +17,9 @@ internal class PostOrgTest : ResourceTest() {
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.test(
             endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
+            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
 
@@ -27,7 +28,7 @@ internal class PostOrgTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }

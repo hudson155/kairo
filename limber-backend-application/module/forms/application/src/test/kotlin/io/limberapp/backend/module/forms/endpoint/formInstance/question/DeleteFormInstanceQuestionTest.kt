@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
@@ -11,6 +11,7 @@ import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -46,14 +47,14 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         )
 
         // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
+            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
         )
 
         // PutFormInstanceQuestion
@@ -63,7 +64,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            body = json.stringify(FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id))
         )
 
         // DeleteFormInstanceQuestion
@@ -81,7 +82,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }
@@ -96,14 +97,14 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
+            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
         )
 
         // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
+            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
         )
 
         // PutFormInstanceQuestion
@@ -113,7 +114,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            body = json.stringify(FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id))
         )
 
         // DeleteFormInstanceQuestion
@@ -131,7 +132,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }

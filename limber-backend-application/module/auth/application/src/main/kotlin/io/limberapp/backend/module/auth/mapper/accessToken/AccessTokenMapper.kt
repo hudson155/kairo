@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.mapper.accessToken
 import com.google.inject.Inject
 import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.util.uuid.base64Encode
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import org.mindrot.jbcrypt.BCrypt

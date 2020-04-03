@@ -6,16 +6,17 @@ import com.piperframework.config.authentication.AuthenticationMechanism
 import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.config.serving.StaticFiles
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import com.piperframework.util.uuid.uuidGenerator.DeterministicUuidGenerator
+import com.piperframework.module.Module
+import com.piperframework.util.uuid.DeterministicUuidGenerator
 import io.mockk.MockKAnnotations
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
 
-abstract class AbstractResourceTest {
+abstract class AbstractResourceTest(protected val module: Module) {
 
     protected val config = object : Config {
 
@@ -33,7 +34,7 @@ abstract class AbstractResourceTest {
 
     protected abstract val piperTest: PiperTest
 
-    protected val objectMapper = PiperObjectMapper()
+    protected val json = Json(context = module.serialModule)
 
     val fixedClock: Clock = Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
 

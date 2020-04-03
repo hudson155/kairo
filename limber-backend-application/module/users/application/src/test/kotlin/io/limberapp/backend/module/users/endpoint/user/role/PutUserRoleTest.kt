@@ -1,13 +1,14 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
+import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
+import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -41,7 +42,7 @@ internal class PutUserRoleTest : ResourceTest() {
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
+            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
         )
 
         // PutUserRole
@@ -59,7 +60,7 @@ internal class PutUserRoleTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }
@@ -74,7 +75,7 @@ internal class PutUserRoleTest : ResourceTest() {
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
+            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
         )
 
         // PutUserRole
@@ -101,7 +102,7 @@ internal class PutUserRoleTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }

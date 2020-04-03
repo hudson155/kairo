@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.mapper.org
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import java.time.Clock

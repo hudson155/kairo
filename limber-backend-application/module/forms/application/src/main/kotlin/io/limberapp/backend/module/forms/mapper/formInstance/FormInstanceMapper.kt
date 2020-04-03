@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.mapper.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel

@@ -2,23 +2,34 @@ package io.limberapp.backend.module.forms.rep.formInstance
 
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
+import com.piperframework.serialization.LocalDateTimeSerializer
+import com.piperframework.serialization.UuidSerializer
 import com.piperframework.validation.RepValidation
+import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FormInstanceRep {
 
+    @Serializable
     data class Creation(
+        @Serializable(with = UuidSerializer::class)
         val featureId: UUID,
+        @Serializable(with = UuidSerializer::class)
         val formTemplateId: UUID
     ) : CreationRep {
         override fun validate() = RepValidation {}
     }
 
+    @Serializable
     data class Complete(
+        @Serializable(with = UuidSerializer::class)
         val id: UUID,
+        @Serializable(with = LocalDateTimeSerializer::class)
         override val created: LocalDateTime,
+        @Serializable(with = UuidSerializer::class)
         val featureId: UUID,
+        @Serializable(with = UuidSerializer::class)
         val formTemplateId: UUID,
         val questions: List<FormInstanceQuestionRep.Complete>
     ) : CompleteRep

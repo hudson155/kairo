@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.select

@@ -6,7 +6,7 @@ import com.piperframework.exception.exception.badRequest.BadRequestException
 import com.piperframework.exception.exception.conflict.ConflictException
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.exception.exception.notFound.NotFoundException
-import com.piperframework.util.uuid.unknown
+import com.piperframework.util.unknown
 import io.ktor.http.HttpStatusCode
 
 class ExceptionMapper {

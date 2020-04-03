@@ -1,18 +1,15 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     id(Plugins.detekt)
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
     api(project(":limber-backend-application:common:service-interface"))
     api(project(":piper:common"))
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
+    implementation(project(":piper:serialization"))
 }
 
 detekt {

@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.store.formInstance
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceQuestionTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound

@@ -5,6 +5,7 @@ import com.piperframework.module.Module
 import io.limberapp.backend.module.healthCheck.endpoint.healthCheck.HealthCheck
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckService
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckServiceImpl
+import kotlinx.serialization.modules.SerializersModule
 
 /**
  * The health check module contains a health check that should indicate whether or not the service is healthy, taking
@@ -12,6 +13,8 @@ import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckSe
  * in its own module module.
  */
 internal class HealthCheckModule : Module() {
+
+    override val serialModule = SerializersModule { }
 
     override val endpoints: List<Class<out ApiEndpoint<*, *, *>>> = listOf(HealthCheck::class.java)
 

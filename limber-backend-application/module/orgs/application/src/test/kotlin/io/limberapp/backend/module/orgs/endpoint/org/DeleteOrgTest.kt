@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -29,7 +30,7 @@ internal class DeleteOrgTest : ResourceTest() {
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
+            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
         )
 
         // DeleteOrg

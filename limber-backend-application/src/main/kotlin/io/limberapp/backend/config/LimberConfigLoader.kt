@@ -1,8 +1,9 @@
 package io.limberapp.backend.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.piperframework.PiperConfigLoader
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import org.slf4j.LoggerFactory
 
 private const val LIMBER_CONFIG = "LIMBER_CONFIG"
@@ -11,7 +12,7 @@ internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(L
 
     private val logger = LoggerFactory.getLogger(LimberConfigLoader::class.java)
 
-    override val objectMapper = PiperObjectMapper(YAMLFactory())
+    override val objectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
     override fun load(): LimberAppMonolithConfig {
         logger.info("Loading config...")
