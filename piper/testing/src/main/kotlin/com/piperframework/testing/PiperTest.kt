@@ -24,7 +24,7 @@ import kotlin.test.assertTrue
 @Suppress("LongParameterList") // For these methods, we're ok with it.
 abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
 
-    protected val json = Json(JsonConfiguration.Stable) // TODO: Don't duplicat this config
+    protected val json = Json(JsonConfiguration.Stable)
 
     private val exceptionMapper = ExceptionMapper()
 

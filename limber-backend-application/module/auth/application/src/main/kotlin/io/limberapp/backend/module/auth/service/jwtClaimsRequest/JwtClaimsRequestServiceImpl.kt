@@ -30,7 +30,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
 
-    private val json = Json(JsonConfiguration.Stable) // TODO: Don't duplicat this config
+    private val json = Json(JsonConfiguration.Stable)
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getAccountOrCreateUser(request)

@@ -22,7 +22,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
 
     private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
 
-    private val json = Json(JsonConfiguration.Stable) // TODO: Don't duplicat this config
+    private val json = Json(JsonConfiguration.Stable)
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {

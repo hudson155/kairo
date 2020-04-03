@@ -22,7 +22,7 @@ class TokenAuthVerifier(
     private val accessTokenService: AccessTokenService
 ) : PiperAuthVerifier<Jwt> {
 
-    private val json = Json(JsonConfiguration.Stable) // TODO: Don't duplicat this config
+    private val json = Json(JsonConfiguration.Stable)
 
     override fun verify(blob: String): Jwt? {
         if (blob.length != TOKEN_PART_LENGTH * 2) return null
