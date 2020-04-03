@@ -110,6 +110,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         else -> unknown(rep::class)
     }
 
-    private fun unknown(clazz: KClass<*>): Nothing =
-        unknown("form template question", clazz)
+    private fun unknown(klass: KClass<*>): Nothing =
+        unknown("form template question", klass)
 }

@@ -16,15 +16,8 @@ enum class JwtRole {
 
     @Serializer(forClass = JwtRole::class)
     companion object : KSerializer<JwtRole> {
-
         override val descriptor = PrimitiveDescriptor(JwtRole::class.simpleName!!, PrimitiveKind.STRING)
-
-        override fun serialize(encoder: Encoder, value: JwtRole) {
-            encoder.encodeString(value.name)
-        }
-
-        override fun deserialize(decoder: Decoder): JwtRole {
-            return valueOf(decoder.decodeString())
-        }
+        override fun serialize(encoder: Encoder, value: JwtRole) = encoder.encodeString(value.name)
+        override fun deserialize(decoder: Decoder): JwtRole = valueOf(decoder.decodeString())
     }
 }

@@ -13,18 +13,18 @@ fun <T : Any> conversionService(dataConversionService: DataConversionService<T>)
             1 -> {
                 val value = values.single()
                 if (!dataConversionService.isValid(value)) {
-                    throw DataConversionException(null, dataConversionService.clazz)
+                    throw DataConversionException(null, dataConversionService.klass)
                 }
                 dataConversionService.fromString(value)
             }
-            else -> throw DataConversionException(null, dataConversionService.clazz)
+            else -> throw DataConversionException(null, dataConversionService.klass)
         }
     }
 
     override fun toValues(value: Any?): List<String> {
         value ?: return emptyList()
-        if (value::class != dataConversionService.clazz) {
-            throw DataConversionException(null, dataConversionService.clazz)
+        if (value::class != dataConversionService.klass) {
+            throw DataConversionException(null, dataConversionService.klass)
         }
         // Not sure why the function signature is Any?. If this cast ever causes an issue, remove
         // the suppression and fix the issue, but for now we'll leave it.

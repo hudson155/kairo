@@ -155,7 +155,8 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
                         val request = context.subject
                         val type = request.type
                         val value = request.value as? ByteReadChannel ?: return null
-                        val reader = value.toInputStream().reader(context.call.request.contentCharset() ?: Charsets.UTF_8)
+                        val charset = context.call.request.contentCharset() ?: Charsets.UTF_8
+                        val reader = value.toInputStream().reader(charset)
                         val string = reader.readText()
                         val deserializer = json.context.getContextualOrDefault(type)
                         return json.parse(deserializer, string)
@@ -167,26 +168,29 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
                         value: Any
                     ): Any? {
                         val serializer = json.serializer(value)
-                        return TextContent(json.stringify(serializer, value), contentType.withCharset(context.call.suitableCharset()))
+                        val charset = context.call.suitableCharset()
+                        val string = json.stringify(serializer, value)
+                        return TextContent(string, contentType.withCharset(charset))
                     }
 
                     private fun Json.serializer(value: Any): KSerializer<Any> {
-                        return when(value) {
+                        @Suppress("UseIfInsteadOfWhen")
+                        val serializer = when (value) {
                             is List<*> -> ListSerializer(elementSerializer(value))
                             else -> context.getContextualOrDefault(value::class)
-                        } as KSerializer<Any>
+                        }
+                        @Suppress("UNCHECKED_CAST")
+                        return serializer as KSerializer<Any>
                     }
 
                     private fun Json.elementSerializer(collection: Collection<*>): KSerializer<*> {
-                        @Suppress("DEPRECATION_ERROR")
                         val serializers = collection.mapNotNull { value ->
                             value?.let { serializer(it) }
-                        }.distinctBy { it.descriptor.name }
+                        }.distinctBy { it.descriptor.serialName }
 
                         if (serializers.size > 1) {
-                            @Suppress("DEPRECATION_ERROR")
                             val message = "Serializing collections of different element types is not yet supported. " +
-                                    "Selected serializers: ${serializers.map { it.descriptor.name }}"
+                                    "Selected serializers: ${serializers.map { it.descriptor.serialName }}"
                             error(message)
                         }
 

@@ -20,16 +20,9 @@ internal object HealthCheckRep {
 
         @Serializer(forClass = State::class)
         companion object : KSerializer<State> {
-
             override val descriptor = PrimitiveDescriptor(State::class.simpleName!!, PrimitiveKind.STRING)
-
-            override fun serialize(encoder: Encoder, value: State) {
-                encoder.encodeString(value.name)
-            }
-
-            override fun deserialize(decoder: Decoder): State {
-                return valueOf(decoder.decodeString())
-            }
+            override fun serialize(encoder: Encoder, value: State) = encoder.encodeString(value.name)
+            override fun deserialize(decoder: Decoder) = valueOf(decoder.decodeString())
         }
     }
 

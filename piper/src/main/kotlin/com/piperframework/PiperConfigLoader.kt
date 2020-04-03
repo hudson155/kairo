@@ -3,7 +3,7 @@ package com.piperframework
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import kotlin.reflect.KClass
 
-abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(private val clazz: KClass<Config>) {
+abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(private val klass: KClass<Config>) {
 
     protected open val objectMapper = jacksonObjectMapper()
 
@@ -11,6 +11,6 @@ abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(priv
 
     protected fun loadInternal(fileName: String): Config? {
         val stream = this.javaClass.getResourceAsStream(fileName) ?: return null
-        return objectMapper.readValue(stream, clazz.java)
+        return objectMapper.readValue(stream, klass.java)
     }
 }

@@ -7,7 +7,7 @@ import java.util.UUID
 
 actual object UuidConversionService : DataConversionService<UUID> {
 
-    override val clazz = UUID::class
+    override val klass = UUID::class
 
     override fun isValid(value: String) = Validator.uuid(value) || Validator.base64EncidedUuid(value)
 

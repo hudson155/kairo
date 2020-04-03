@@ -5,7 +5,7 @@ import com.piperframework.validator.Validator
 
 actual object UuidConversionService : DataConversionService<String> {
 
-    override val clazz = String::class
+    override val klass = String::class
 
     override fun isValid(value: String) = Validator.uuid(value) || Validator.base64EncidedUuid(value)
 
