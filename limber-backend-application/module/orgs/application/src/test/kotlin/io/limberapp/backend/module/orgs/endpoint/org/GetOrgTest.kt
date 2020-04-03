@@ -5,7 +5,7 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import kotlinx.serialization.parse
-import com.piperframework.serialization.stringify
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

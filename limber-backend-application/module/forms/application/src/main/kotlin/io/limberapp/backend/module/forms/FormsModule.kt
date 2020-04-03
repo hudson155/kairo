@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureId
@@ -44,6 +43,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 
 class FormsModule : Module() {
 

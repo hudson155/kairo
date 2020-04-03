@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

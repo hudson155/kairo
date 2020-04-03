@@ -6,7 +6,7 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import kotlinx.serialization.parse
-import com.piperframework.serialization.stringify
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

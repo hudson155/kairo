@@ -14,7 +14,7 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.mockk.every
-import com.piperframework.serialization.stringify
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.UUID

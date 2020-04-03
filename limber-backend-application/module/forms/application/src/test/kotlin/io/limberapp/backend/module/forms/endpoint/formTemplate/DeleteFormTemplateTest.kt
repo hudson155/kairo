@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 

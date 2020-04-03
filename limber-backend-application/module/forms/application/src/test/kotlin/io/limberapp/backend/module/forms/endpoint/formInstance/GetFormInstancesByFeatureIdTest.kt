@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import kotlinx.serialization.parseList
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

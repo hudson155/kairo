@@ -3,7 +3,6 @@ package io.limberapp.backend.test
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTCreator
 import com.auth0.jwt.algorithms.Algorithm
-import com.piperframework.serialization.stringify
 import com.piperframework.testing.PiperTest
 import io.ktor.application.Application
 import io.ktor.http.auth.HttpAuthHeader
@@ -12,6 +11,7 @@ import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.stringify
 import java.util.UUID
 
 class LimberTest(moduleFunction: Application.() -> Unit) : PiperTest(moduleFunction) {

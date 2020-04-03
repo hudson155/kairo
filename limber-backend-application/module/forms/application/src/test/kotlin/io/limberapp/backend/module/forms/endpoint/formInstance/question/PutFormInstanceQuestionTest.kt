@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
@@ -9,15 +8,12 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQues
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
-import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
-import io.limberapp.backend.module.forms.rep.formsSerialModule
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
@@ -9,6 +8,7 @@ import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

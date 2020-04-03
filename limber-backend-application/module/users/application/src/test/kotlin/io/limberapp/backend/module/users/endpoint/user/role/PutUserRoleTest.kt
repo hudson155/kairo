@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.endpoint.user.PostUser
@@ -9,6 +8,7 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
 import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

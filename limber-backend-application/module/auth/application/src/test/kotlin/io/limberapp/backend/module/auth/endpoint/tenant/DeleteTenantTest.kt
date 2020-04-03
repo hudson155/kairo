@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
-import com.piperframework.serialization.stringify
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
+import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
