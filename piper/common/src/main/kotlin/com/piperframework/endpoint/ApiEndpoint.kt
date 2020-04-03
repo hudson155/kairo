@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonMappingException
 import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.dataConversion.DataConversionException
 import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.endpoint.exception.ParameterConversionException
+import com.piperframework.endpoint.exception.ValidationException
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
 import io.ktor.application.Application
@@ -103,7 +105,10 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
             e.cause?.let { if (it is DataConversionException) throw ParameterConversionException(it) }
             throw e
         }
-        return result.apply { validate() }
+        return result.apply {
+            val validation = validate()
+            if (!validation.isValid) throw ValidationException(validation.firstInvalidPropertyName)
+        }
     }
 
     protected fun <T : Any> Parameters.getAsType(clazz: KClass<T>, name: String): T {

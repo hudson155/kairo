@@ -449,8 +449,7 @@ style:
   UseCheckOrError:
     active: true
   UseDataClass:
-    active: true
-    allowVars: false
+    active: false
   UseIfInsteadOfWhen:
     active: true
   UseRequire:

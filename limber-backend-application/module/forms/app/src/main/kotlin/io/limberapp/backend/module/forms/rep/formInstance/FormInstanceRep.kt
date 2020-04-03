@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.rep.formInstance
 
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
+import com.piperframework.validation.RepValidation
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -11,7 +12,7 @@ internal object FormInstanceRep {
         val featureId: UUID,
         val formTemplateId: UUID
     ) : CreationRep {
-        override fun validate() = Unit
+        override fun validate() = RepValidation {}
     }
 
     data class Complete(

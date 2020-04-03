@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
-import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.longText
-import com.piperframework.validation.util.mediumText
+import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
+import com.piperframework.validator.Validator
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import java.util.UUID
@@ -24,9 +24,9 @@ internal object FormTemplateQuestionRep {
         val label: String
         val helpText: String?
 
-        override fun validate() {
-            validate(Creation::label) { mediumText(allowEmpty = false) }
-            validate(Creation::helpText) { ifPresent { longText(allowEmpty = false) } }
+        override fun validate() = RepValidation {
+            validate(Creation::label) { Validator.length1hundred(value, allowEmpty = false) }
+            validate(Creation::helpText) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
         }
     }
 
@@ -51,9 +51,9 @@ internal object FormTemplateQuestionRep {
         val label: String?
         val helpText: String?
 
-        override fun validate() {
-            validate(Update::label) { ifPresent { mediumText(allowEmpty = false) } }
-            validate(Update::helpText) { ifPresent { longText(allowEmpty = false) } }
+        override fun validate() = RepValidation {
+            validate(Update::label) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
+            validate(Update::helpText) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
         }
     }
 }

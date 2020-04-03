@@ -3,10 +3,9 @@ package io.limberapp.backend.module.users.rep.account
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
-import com.piperframework.validation.util.emailAddress
-import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.mediumText
-import com.piperframework.validation.util.url
+import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
+import com.piperframework.validator.Validator
 import io.limberapp.backend.authorization.principal.JwtRole
 import java.time.LocalDateTime
 import java.util.UUID
@@ -20,11 +19,11 @@ internal object UserRep {
         val emailAddress: String,
         val profilePhotoUrl: String? = null
     ) : CreationRep {
-        override fun validate() {
-            validate(UserRep.Creation::firstName) { mediumText(allowEmpty = false) }
-            validate(UserRep.Creation::lastName) { mediumText(allowEmpty = false) }
-            validate(UserRep.Creation::emailAddress) { emailAddress() }
-            validate(UserRep.Creation::profilePhotoUrl) { ifPresent { url() } }
+        override fun validate() = RepValidation {
+            validate(Creation::firstName) { Validator.humanName(value) }
+            validate(Creation::lastName) { Validator.humanName(value) }
+            validate(Creation::emailAddress) { Validator.emailAddress(value) }
+            validate(Creation::profilePhotoUrl) { ifPresent { Validator.url(value) } }
         }
     }
 
@@ -43,9 +42,9 @@ internal object UserRep {
         val firstName: String? = null,
         val lastName: String? = null
     ) : UpdateRep {
-        override fun validate() {
-            validate(UserRep.Update::firstName) { ifPresent { mediumText(allowEmpty = false) } }
-            validate(UserRep.Update::lastName) { ifPresent { mediumText(allowEmpty = false) } }
+        override fun validate() = RepValidation {
+            validate(Update::firstName) { ifPresent { Validator.humanName(value) } }
+            validate(Update::lastName) { ifPresent { Validator.humanName(value) } }
         }
     }
 }

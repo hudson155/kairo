@@ -7,7 +7,6 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    api(project(":piper:exceptions"))
 }
 
 tasks.withType<KotlinCompile>().configureEach {

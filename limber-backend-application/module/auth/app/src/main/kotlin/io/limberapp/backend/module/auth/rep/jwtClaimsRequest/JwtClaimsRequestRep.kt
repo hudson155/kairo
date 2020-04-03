@@ -2,10 +2,9 @@ package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.piperframework.rep.CreationRep
-import com.piperframework.validation.util.emailAddress
-import com.piperframework.validation.util.ifPresent
-import com.piperframework.validation.util.mediumText
-import com.piperframework.validation.util.url
+import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
+import com.piperframework.validator.Validator
 import io.limberapp.backend.authorization.principal.Claims
 
 internal object JwtClaimsRequestRep {
@@ -17,12 +16,12 @@ internal object JwtClaimsRequestRep {
         val emailAddress: String,
         val profilePhotoUrl: String? = null
     ) : CreationRep {
-        override fun validate() {
-            validate(Creation::auth0ClientId) { mediumText(allowEmpty = false) }
-            validate(Creation::firstName) { mediumText(allowEmpty = false) }
-            validate(Creation::lastName) { mediumText(allowEmpty = false) }
-            validate(Creation::emailAddress) { emailAddress() }
-            validate(Creation::profilePhotoUrl) { ifPresent { url() } }
+        override fun validate() = RepValidation {
+            validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
+            validate(Creation::firstName) { Validator.humanName(value) }
+            validate(Creation::lastName) { Validator.humanName(value) }
+            validate(Creation::emailAddress) { Validator.emailAddress(value) }
+            validate(Creation::profilePhotoUrl) { ifPresent { Validator.url(value) } }
         }
     }
 
