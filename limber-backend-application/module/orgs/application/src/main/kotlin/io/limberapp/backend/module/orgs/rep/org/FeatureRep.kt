@@ -16,10 +16,16 @@ import java.util.UUID
 internal object FeatureRep {
 
     @Serializable
+    enum class Type {
+        FORMS,
+        HOME;
+    }
+
+    @Serializable
     data class Creation(
         val name: String,
         val path: String,
-        val type: FeatureModel.Type
+        val type: Type
     ) : CreationRep {
         override fun validate() = RepValidation {
             validate(Creation::name) { Validator.featureName(value) }
@@ -35,7 +41,7 @@ internal object FeatureRep {
         override val created: LocalDateTime,
         val name: String,
         val path: String,
-        val type: FeatureModel.Type,
+        val type: Type,
         val isDefaultFeature: Boolean
     ) : CompleteRep
 

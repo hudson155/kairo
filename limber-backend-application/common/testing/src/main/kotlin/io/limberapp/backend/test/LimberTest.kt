@@ -10,7 +10,6 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.stringify
 import java.util.UUID
 
@@ -29,7 +28,7 @@ class LimberTest(moduleFunction: Application.() -> Unit) : PiperTest(moduleFunct
 
     private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
         withClaim(Claims.org, jwt.org?.let { json.stringify(it) })
-        withClaim(Claims.roles, json.stringify(ListSerializer(JwtRole), jwt.roles))
+        withClaim(Claims.roles, json.stringify(jwt.roles))
         withClaim(Claims.user, json.stringify(jwt.user))
         return this
     }
