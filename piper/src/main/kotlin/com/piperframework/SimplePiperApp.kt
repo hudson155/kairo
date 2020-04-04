@@ -169,4 +169,3 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         }
     }
 }
-
