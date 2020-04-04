@@ -1,12 +1,11 @@
 package com.piperframework
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import kotlin.reflect.KClass
 
 abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(private val klass: KClass<Config>) {
 
-    protected open val objectMapper = ObjectMapper().registerKotlinModule()
+    protected abstract val objectMapper: ObjectMapper
 
     abstract fun load(): Config
 
