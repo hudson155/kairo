@@ -31,7 +31,7 @@ internal class PostAccessTokenTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(GetAccessTokensByAccountId.accountId to accountId)
         ) {
-            val actual = json.parse<List<AccessTokenRep.Complete>>(response.content!!).toSet()
+            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(setOf(accessTokenRep), actual)
         }
     }

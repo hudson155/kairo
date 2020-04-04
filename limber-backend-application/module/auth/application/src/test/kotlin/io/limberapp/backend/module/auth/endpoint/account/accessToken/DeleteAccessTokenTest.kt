@@ -62,7 +62,7 @@ internal class DeleteAccessTokenTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = json.parse<List<AccessTokenRep.Complete>>(response.content!!).toSet()
+            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(setOf(accessToken1Rep), actual)
         }
     }

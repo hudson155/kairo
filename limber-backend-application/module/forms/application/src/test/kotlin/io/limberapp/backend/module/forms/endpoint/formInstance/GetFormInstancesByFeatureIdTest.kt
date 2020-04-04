@@ -60,7 +60,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parse<List<FormInstanceRep.Complete>>(response.content!!).toSet()
+            val actual = json.parse<Set<FormInstanceRep.Complete>>(response.content!!)
             assertEquals(setOf(formInstance0Rep, formInstance1Rep), actual)
         }
     }
