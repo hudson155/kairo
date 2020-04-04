@@ -27,7 +27,7 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
         val charset = context.call.request.contentCharset() ?: Charsets.UTF_8
         val reader = value.toInputStream().reader(charset)
         val string = reader.readText()
-        val deserializer = json.context.getContextualOrDefault(type)
+        val deserializer = json.serializer(type)
         return json.parse(deserializer, string)
     }
 
