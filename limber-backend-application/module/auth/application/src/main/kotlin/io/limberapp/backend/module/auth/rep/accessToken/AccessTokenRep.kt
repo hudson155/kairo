@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object AccessTokenRep {
+
     data class OneTimeUse(
         val id: UUID,
         override val created: LocalDateTime,

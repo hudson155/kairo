@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 object TenantRep {
+
     data class Creation(
         val domain: String,
         val orgId: UUID,

@@ -6,6 +6,7 @@ import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
 
 internal object JwtClaimsRequestRep {
+
     data class Creation(
         val auth0ClientId: String,
         val firstName: String,

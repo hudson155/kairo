@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FormTemplateRep {
+
     data class Creation(
         val featureId: UUID,
         val title: String,

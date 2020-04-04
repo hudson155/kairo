@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object UserRep {
+
     data class Creation(
         val orgId: UUID,
         val firstName: String,

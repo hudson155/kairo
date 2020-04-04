@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object OrgRep {
+
     data class Creation(
         val name: String
     ) : CreationRep {
