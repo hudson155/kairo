@@ -4,6 +4,7 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Stage
 import com.piperframework.config.Config
+import com.piperframework.contentNegotiation.JsonContentConverter
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exception.EndpointNotFound
 import com.piperframework.exception.PiperException
@@ -13,41 +14,26 @@ import com.piperframework.module.ModuleWithLifecycle
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
-import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.Compression
-import io.ktor.features.ContentConverter
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.HttpsRedirect
 import io.ktor.features.StatusPages
-import io.ktor.features.suitableCharset
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.TextContent
-import io.ktor.http.withCharset
-import io.ktor.request.ApplicationReceiveRequest
-import io.ktor.request.contentCharset
 import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import io.ktor.util.pipeline.PipelineContext
-import io.ktor.utils.io.ByteReadChannel
-import io.ktor.utils.io.jvm.javaio.toInputStream
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.nullable
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.modules.getContextualOrDefault
 import kotlinx.serialization.modules.plus
 import org.slf4j.event.Level
 import java.util.UUID
@@ -142,73 +128,10 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = object : ContentConverter {
-
-                    private val json = Json(
-                        configuration = JsonConfiguration.Stable.copy(prettyPrint = true),
-                        context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
-                    )
-
-                    override suspend fun convertForReceive(
-                        context: PipelineContext<ApplicationReceiveRequest, ApplicationCall>
-                    ): Any? {
-                        val request = context.subject
-                        val type = request.type
-                        val value = request.value as? ByteReadChannel ?: return null
-                        val charset = context.call.request.contentCharset() ?: Charsets.UTF_8
-                        val reader = value.toInputStream().reader(charset)
-                        val string = reader.readText()
-                        val deserializer = json.context.getContextualOrDefault(type)
-                        return json.parse(deserializer, string)
-                    }
-
-                    override suspend fun convertForSend(
-                        context: PipelineContext<Any, ApplicationCall>,
-                        contentType: ContentType,
-                        value: Any
-                    ): Any? {
-                        val serializer = json.serializer(value)
-                        val charset = context.call.suitableCharset()
-                        val string = json.stringify(serializer, value)
-                        return TextContent(string, contentType.withCharset(charset))
-                    }
-
-                    private fun Json.serializer(value: Any): KSerializer<Any> {
-                        @Suppress("UseIfInsteadOfWhen")
-                        val serializer = when (value) {
-                            is List<*> -> ListSerializer(elementSerializer(value))
-                            else -> context.getContextualOrDefault(value::class)
-                        }
-                        @Suppress("UNCHECKED_CAST")
-                        return serializer as KSerializer<Any>
-                    }
-
-                    private fun Json.elementSerializer(collection: Collection<*>): KSerializer<*> {
-                        val serializers = collection.mapNotNull { value ->
-                            value?.let { serializer(it) }
-                        }.distinctBy { it.descriptor.serialName }
-
-                        if (serializers.size > 1) {
-                            val message = "Serializing collections of different element types is not yet supported. " +
-                                    "Selected serializers: ${serializers.map { it.descriptor.serialName }}"
-                            error(message)
-                        }
-
-                        val selected: KSerializer<*> = serializers.singleOrNull() ?: String.serializer()
-                        if (selected.descriptor.isNullable) {
-                            return selected
-                        }
-
-                        @Suppress("UNCHECKED_CAST")
-                        selected as KSerializer<Any>
-
-                        if (collection.any { it == null }) {
-                            return selected.nullable
-                        }
-
-                        return selected
-                    }
-                }
+                converter = JsonContentConverter(Json(
+                    configuration = JsonConfiguration.Stable.copy(prettyPrint = true),
+                    context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
+                ))
             )
         }
     }
@@ -246,3 +169,4 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         }
     }
 }
+

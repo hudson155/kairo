@@ -56,22 +56,23 @@ the whole picture.
 ```
 .
 ├── com.piperframework
-├── authorization     # Piper authorization configuration
-├── config            # Piper framework configuration
-├── dataConversion    # Type conversion
-├── endpoint          # Code for REST API endpoints
-├── error             # Response body error objects
-├── exception         # Exceptions that might be thrown
-├── exceptionMapping  # Mapping exceptions to errors
-├── ktorAuth          # Ktor/Piper authorization integration
-├── module            # Code for Piper modules
-├── rep               # Rep-related boilerplate (API layer)
-├── serialization     # Serialization and deserialization code
-├── sql               # SQL driver
-├── testing           # Testing code
-├── types             # Custom types
-├── store             # Code for Piper stores
-├── util              # Util
-├── validation        # Value and rep validation
-└── validator         # Validator for ad-hoc validation
+├── authorization      # Piper authorization configuration
+├── config             # Piper framework configuration
+├── contentNegotiation # Ktor HTTP content negotiation
+├── dataConversion     # Type conversion
+├── endpoint           # Code for REST API endpoints
+├── error              # Response body error objects
+├── exception          # Exceptions that might be thrown
+├── exceptionMapping   # Mapping exceptions to errors
+├── ktorAuth           # Ktor/Piper authorization integration
+├── module             # Code for Piper modules
+├── rep                # Rep-related boilerplate (API layer)
+├── serialization      # Serialization and deserialization code
+├── sql                # SQL driver
+├── testing            # Testing code
+├── types              # Custom types
+├── store              # Code for Piper stores
+├── util               # Util
+├── validation         # Value and rep validation
+└── validator          # Validator for ad-hoc validation
 ```
