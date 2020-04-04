@@ -1,4 +1,4 @@
-package com.piperframework.sql.columnTypes.localDateTime
+package com.piperframework.sql.columnTypes
 
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType
@@ -8,7 +8,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-fun Table.localdate(name: String): Column<LocalDate> = registerColumn(name, LocalDateColumnType())
+fun Table.localdate(name: String): Column<LocalDate> = registerColumn(name,
+    LocalDateColumnType()
+)
 
 class LocalDateColumnType : ColumnType() {
 

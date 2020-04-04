@@ -1,6 +1,6 @@
 package com.piperframework.store
 
-import com.piperframework.sql.columnTypes.localDateTime.localdatetime
+import com.piperframework.sql.columnTypes.localdatetime
 import org.jetbrains.exposed.dao.IdTable
 
 /**
