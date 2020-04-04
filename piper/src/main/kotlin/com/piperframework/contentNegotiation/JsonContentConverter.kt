@@ -15,6 +15,7 @@ import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.getContextualOrDefault
 
@@ -57,14 +58,14 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
         val serializers = collection.mapNotNull { value -> value?.let { serializer(it) } }
             .distinctBy { it.descriptor.serialName }
 
-        if (serializers.size != 1) {
+        if (serializers.size > 1) {
             error(
                 "Serializing collections of different element types is not yet supported." +
                         " Selected serializers: ${serializers.map { it.descriptor.serialName }}"
             )
         }
 
-        val serializer = serializers.single()
+        val serializer = serializers.singleOrNull() ?: String.serializer()
         if (serializer.descriptor.isNullable) return serializer
         if (collection.any { it == null }) return serializer.nullable
         return serializer
