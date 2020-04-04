@@ -84,7 +84,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         )
 
         // DeleteFeature
-        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })
+        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id }.toSet())
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
