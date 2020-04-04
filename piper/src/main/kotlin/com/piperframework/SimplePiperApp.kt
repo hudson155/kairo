@@ -126,7 +126,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JsonContentConverter(Json())
+                converter = JsonContentConverter(Json(prettyPrint = true))
             )
         }
     }
