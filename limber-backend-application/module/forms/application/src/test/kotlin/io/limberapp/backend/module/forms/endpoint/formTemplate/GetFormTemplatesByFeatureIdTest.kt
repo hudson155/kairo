@@ -21,7 +21,7 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parse<List<FormTemplateRep.Complete>>(response.content!!)
+            val actual = json.parse<Set<FormTemplateRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
