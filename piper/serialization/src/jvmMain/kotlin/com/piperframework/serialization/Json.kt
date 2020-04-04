@@ -24,4 +24,3 @@ class Json(prettyPrint: Boolean = false) {
 
     fun <T : Any> stringify(model: T): String = objectMapper.writeValueAsString(model)
 }
-
