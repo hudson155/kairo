@@ -8,7 +8,6 @@ dependencies {
     api(project(":limber-backend-application:module:forms:service-interface"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:common:service-interface"))
-    implementation(project(":piper:serialization"))
     implementation(project(":piper:sql"))
     implementation(Dependencies.Jackson.annotations)
     testImplementation(project(":limber-backend-application:common:testing"))

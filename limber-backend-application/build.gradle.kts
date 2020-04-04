@@ -25,7 +25,6 @@ dependencies {
     api(Dependencies.Jwt.auth0JavaJwt)
     api(Dependencies.Jwt.auth0JwksRsa)
     implementation(Dependencies.Jackson.dataFormatYaml)
-    implementation(Dependencies.Jackson.moduleKotlin)
     implementation(Dependencies.Ktor.serverCio)
     implementation(Dependencies.Logback.logbackClassic)
 }

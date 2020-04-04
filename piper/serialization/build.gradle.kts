@@ -10,7 +10,6 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(kotlin("reflect"))
                 implementation(project(":piper:data-conversion"))
-                implementation(project(":piper:types"))
             }
         }
         jvm().compilations["main"].defaultSourceSet {
