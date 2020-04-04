@@ -6,6 +6,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import kotlinx.serialization.modules.SerializersModule
 
@@ -13,16 +14,19 @@ val formsSerialModule = SerializersModule {
 
     baseClass(FormTemplateQuestionRep.Creation::class) {
         subclass(FormTemplateDateQuestionRep.Creation::class)
+        subclass(FormTemplateRadioSelectorQuestionRep.Creation::class)
         subclass(FormTemplateTextQuestionRep.Creation::class)
     }
 
     baseClass(FormTemplateQuestionRep.Complete::class) {
         subclass(FormTemplateDateQuestionRep.Complete::class)
+        subclass(FormTemplateRadioSelectorQuestionRep.Complete::class)
         subclass(FormTemplateTextQuestionRep.Complete::class)
     }
 
     baseClass(FormTemplateQuestionRep.Update::class) {
         subclass(FormTemplateDateQuestionRep.Update::class)
+        subclass(FormTemplateRadioSelectorQuestionRep.Update::class)
         subclass(FormTemplateTextQuestionRep.Update::class)
     }
 
