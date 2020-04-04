@@ -88,7 +88,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
         )
 
         // DeleteUserRole
-        userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER })
+        userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
         piperTest.test(
             endpointConfig = DeleteUserRole.endpointConfig,
             pathParams = mapOf(
