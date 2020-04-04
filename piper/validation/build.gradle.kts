@@ -15,7 +15,7 @@ kotlin {
                 implementation(kotlin("stdlib-jdk8"))
             }
         }
-        js().compilations["main"].defaultSourceSet  {
+        js().compilations["main"].defaultSourceSet {
             dependencies {
                 implementation(kotlin("stdlib-js"))
             }
@@ -25,5 +25,12 @@ kotlin {
 
 detekt {
     config = files("$rootDir/.detekt/config.yml")
-    input = files("src/commonMain/kotlin", "src/commonTest/kotlin", "src/jsMain/kotlin", "src/jsTest/kotlin", "src/jvmMain/kotlin", "src/jvmTest/kotlin")
+    input = files(
+        "src/commonMain/kotlin",
+        "src/commonTest/kotlin",
+        "src/jsMain/kotlin",
+        "src/jsTest/kotlin",
+        "src/jvmMain/kotlin",
+        "src/jvmTest/kotlin"
+    )
 }

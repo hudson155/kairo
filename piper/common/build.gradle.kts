@@ -13,7 +13,6 @@ dependencies {
     api(Dependencies.Guice.guice)
     implementation(Dependencies.Jackson.annotations)
     api(Dependencies.Ktor.serverCore)
-    implementation(Dependencies.Serialization.jvm)
 }
 
 detekt {

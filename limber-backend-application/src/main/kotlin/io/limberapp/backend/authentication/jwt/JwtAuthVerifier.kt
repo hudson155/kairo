@@ -7,22 +7,19 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import com.piperframework.config.authentication.AuthenticationConfig
 import com.piperframework.config.authentication.AuthenticationMechanism
 import com.piperframework.ktorAuth.PiperAuthVerifier
+import com.piperframework.serialization.Json
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.parse
-import kotlinx.serialization.parseList
 import org.slf4j.LoggerFactory
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVerifier<Jwt> {
 
     private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
 
-    private val json = Json(JsonConfiguration.Stable)
+    private val json = Json()
 
     private val providers = authenticationConfig.mechanisms.associate { mechanism ->
         val provider = when (mechanism) {
@@ -45,7 +42,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
         } ?: return null
         return Jwt(
             org = decodedJwt.getClaim(Claims.org).asString()?.let { json.parse<JwtOrg>(it) },
-            roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString()).let { json.parseList<JwtRole>(it) },
+            roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString()).let { json.parse<Set<JwtRole>>(it) },
             user = requireNotNull(decodedJwt.getClaim(Claims.user).asString()).let { json.parse<JwtUser>(it) }
         )
     }

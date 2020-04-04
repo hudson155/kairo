@@ -4,8 +4,6 @@ import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTa
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -22,15 +20,13 @@ internal class PostUserTest : ResourceTest() {
         val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
         // PostUser
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = json.stringify(
-                UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress)
-            ),
+            body = UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress),
             expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
         )
     }
@@ -45,7 +41,7 @@ internal class PostUserTest : ResourceTest() {
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
-            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         ) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)

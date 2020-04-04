@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization")
     application
     id(Plugins.detekt).version(Versions.detekt)
     id(Plugins.shadow).version(Versions.shadow)
@@ -28,7 +28,6 @@ dependencies {
     implementation(Dependencies.Jackson.moduleKotlin)
     implementation(Dependencies.Ktor.serverCio)
     implementation(Dependencies.Logback.logbackClassic)
-    implementation(Dependencies.Serialization.jvm)
 }
 
 detekt {

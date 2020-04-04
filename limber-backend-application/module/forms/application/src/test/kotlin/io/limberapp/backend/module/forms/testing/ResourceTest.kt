@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.test.LimberTest
 import io.limberapp.backend.test.TestLimberApp
 
-abstract class ResourceTest : AbstractResourceTest(FormsModule()) {
+abstract class ResourceTest : AbstractResourceTest() {
 
     private val testSqlModule = TestSqlModule()
 
@@ -14,7 +14,7 @@ abstract class ResourceTest : AbstractResourceTest(FormsModule()) {
         TestLimberApp(
             application = this,
             config = config,
-            module = module,
+            module = FormsModule(),
             additionalModules = listOf(testSqlModule),
             fixedClock = fixedClock,
             deterministicUuidGenerator = deterministicUuidGenerator

@@ -45,9 +45,6 @@ object Versions {
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     const val postgres = "42.2.9"
 
-    // https://github.com/Kotlin/kotlinx.serialization/releases
-    const val serialization = "0.20.0"
-
     // https://github.com/johnrengelman/shadow/releases
     const val shadow = "5.1.0"
 }

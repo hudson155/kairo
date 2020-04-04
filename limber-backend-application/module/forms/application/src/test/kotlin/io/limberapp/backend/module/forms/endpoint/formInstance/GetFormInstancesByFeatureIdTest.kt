@@ -5,8 +5,6 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import kotlinx.serialization.parseList
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -25,7 +23,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parseList<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<List<FormInstanceRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -40,21 +38,21 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormInstance
         val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
+            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // PostFormInstance
         val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
+            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // GetFormInstancesByFeatureId
@@ -62,7 +60,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parseList<FormInstanceRep.Complete>(response.content!!).toSet()
+            val actual = json.parse<List<FormInstanceRep.Complete>>(response.content!!).toSet()
             assertEquals(setOf(formInstance0Rep, formInstance1Rep), actual)
         }
     }

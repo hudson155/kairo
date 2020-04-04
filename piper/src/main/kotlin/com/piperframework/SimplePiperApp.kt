@@ -11,6 +11,7 @@ import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
+import com.piperframework.serialization.Json
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
@@ -32,9 +33,6 @@ import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.modules.plus
 import org.slf4j.event.Level
 import java.util.UUID
 
@@ -128,10 +126,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JsonContentConverter(Json(
-                    configuration = JsonConfiguration.Stable.copy(prettyPrint = true),
-                    context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
-                ))
+                converter = JsonContentConverter(Json())
             )
         }
     }

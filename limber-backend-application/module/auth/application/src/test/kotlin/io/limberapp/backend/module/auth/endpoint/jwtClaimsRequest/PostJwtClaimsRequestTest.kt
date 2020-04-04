@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
-import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
@@ -14,7 +13,6 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.mockk.every
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.UUID
@@ -48,7 +46,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.limberappFixture.creation(existingOrg.id))
+            body = TenantRepFixtures.limberappFixture.creation(existingOrg.id)
         )
 
         // PostJwtClaimsRequest
@@ -61,20 +59,20 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         )
         piperTest.test(
             endpointConfig = PostJwtClaimsRequest.endpointConfig,
-            body = json.stringify(jwtRequest)
+            body = jwtRequest
         ) {
             val actual = response.content!!
-            val expected = "{\n" +
-                    "    \"${Claims.org}\": \"{" +
+            val expected = "{" +
+                    "\"org\":\"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
-                    "}\",\n" +
-                    "    \"${Claims.roles}\": \"[]\",\n" +
-                    "    \"${Claims.user}\": \"{" +
+                    "}\"," +
+                    "\"roles\":\"[]\"," +
+                    "\"user\":\"{" +
                     "\\\"id\\\":\\\"$userId\\\"," +
                     "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
-                    "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
+                    "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"" +
                     "}"
             assertEquals(expected, actual)
         }
@@ -114,7 +112,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.limberappFixture.creation(existingOrg.id))
+            body = TenantRepFixtures.limberappFixture.creation(existingOrg.id)
         )
 
         // PostJwtClaimsRequest
@@ -127,20 +125,20 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         )
         piperTest.test(
             endpointConfig = PostJwtClaimsRequest.endpointConfig,
-            body = json.stringify(jwtRequest)
+            body = jwtRequest
         ) {
             val actual = response.content!!
-            val expected = "{\n" +
-                    "    \"${Claims.org}\": \"{" +
+            val expected = "{" +
+                    "\"org\":\"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
-                    "}\",\n" +
-                    "    \"${Claims.roles}\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
-                    "    \"${Claims.user}\": \"{" +
+                    "}\"," +
+                    "\"roles\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
+                    "\"user\":\"{" +
                     "\\\"id\\\":\\\"${existingUser.id}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
-                    "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
+                    "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"" +
                     "}"
             assertEquals(expected, actual)
         }

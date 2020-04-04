@@ -9,8 +9,6 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -32,7 +30,7 @@ internal class PatchFeatureTest : ResourceTest() {
                 PatchFeature.orgId to orgId,
                 PatchFeature.featureId to featureId
             ),
-            body = json.stringify(featureUpdateRep),
+            body = featureUpdateRep,
             expectedException = FeatureNotFound()
         )
     }
@@ -47,7 +45,7 @@ internal class PatchFeatureTest : ResourceTest() {
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // PatchFeature
@@ -58,7 +56,7 @@ internal class PatchFeatureTest : ResourceTest() {
                 PatchFeature.orgId to orgRep.id,
                 PatchFeature.featureId to featureId
             ),
-            body = json.stringify(featureUpdateRep),
+            body = featureUpdateRep,
             expectedException = FeatureNotFound()
         )
 
@@ -79,7 +77,7 @@ internal class PatchFeatureTest : ResourceTest() {
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // PostFeature
@@ -88,7 +86,7 @@ internal class PatchFeatureTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = json.stringify(FeatureRepFixtures.formsFixture.creation())
+            body = FeatureRepFixtures.formsFixture.creation()
         )
 
         // PatchFeature
@@ -99,7 +97,7 @@ internal class PatchFeatureTest : ResourceTest() {
                 PatchFeature.orgId to orgRep.id,
                 PatchFeature.featureId to featureRep.id
             ),
-            body = json.stringify(featureUpdateRep),
+            body = featureUpdateRep,
             expectedException = FeatureIsNotUnique()
         )
 
@@ -120,7 +118,7 @@ internal class PatchFeatureTest : ResourceTest() {
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // PostFeature
@@ -129,7 +127,7 @@ internal class PatchFeatureTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = json.stringify(FeatureRepFixtures.formsFixture.creation())
+            body = FeatureRepFixtures.formsFixture.creation()
         )
 
         // PatchFeature
@@ -142,7 +140,7 @@ internal class PatchFeatureTest : ResourceTest() {
                 PatchFeature.orgId to orgRep.id,
                 PatchFeature.featureId to featureRep.id
             ),
-            body = json.stringify(featureUpdateRep)
+            body = featureUpdateRep
         ) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
@@ -165,7 +163,7 @@ internal class PatchFeatureTest : ResourceTest() {
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // PostFeature
@@ -174,7 +172,7 @@ internal class PatchFeatureTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = json.stringify(FeatureRepFixtures.formsFixture.creation())
+            body = FeatureRepFixtures.formsFixture.creation()
         )
 
         // PatchFeature
@@ -191,7 +189,7 @@ internal class PatchFeatureTest : ResourceTest() {
                 PatchFeature.orgId to orgRep.id,
                 PatchFeature.featureId to featureRep.id
             ),
-            body = json.stringify(featureUpdateRep0)
+            body = featureUpdateRep0
         ) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
@@ -207,7 +205,7 @@ internal class PatchFeatureTest : ResourceTest() {
                 PatchFeature.orgId to orgRep.id,
                 PatchFeature.featureId to featureRep.id
             ),
-            body = json.stringify(featureUpdateRep1)
+            body = featureUpdateRep1
         ) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)

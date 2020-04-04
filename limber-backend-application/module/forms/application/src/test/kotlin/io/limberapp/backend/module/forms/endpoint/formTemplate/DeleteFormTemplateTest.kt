@@ -3,7 +3,6 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -33,7 +32,7 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // DeleteFormTemplate

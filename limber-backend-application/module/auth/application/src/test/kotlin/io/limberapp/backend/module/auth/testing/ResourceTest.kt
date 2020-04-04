@@ -10,7 +10,7 @@ import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.test.LimberTest
 import io.limberapp.backend.test.TestLimberApp
 
-abstract class ResourceTest : AbstractResourceTest(AuthModule()) {
+abstract class ResourceTest : AbstractResourceTest() {
 
     protected val mockedServices: MockedServices = MockedServices(
         AccountService::class,
@@ -24,7 +24,7 @@ abstract class ResourceTest : AbstractResourceTest(AuthModule()) {
         TestLimberApp(
             application = this,
             config = config,
-            module = module,
+            module = AuthModule(),
             additionalModules = listOf(mockedServices, testSqlModule),
             fixedClock = fixedClock,
             deterministicUuidGenerator = deterministicUuidGenerator

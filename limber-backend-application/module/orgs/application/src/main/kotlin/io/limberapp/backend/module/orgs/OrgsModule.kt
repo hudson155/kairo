@@ -8,7 +8,6 @@ import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.endpoint.org.feature.DeleteFeature
 import io.limberapp.backend.module.orgs.endpoint.org.feature.PatchFeature
 import io.limberapp.backend.module.orgs.endpoint.org.feature.PostFeature
-import io.limberapp.backend.module.orgs.rep.org.orgSerialModule
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.FeatureServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -21,8 +20,6 @@ import io.limberapp.backend.module.orgs.store.org.SqlOrgMapperImpl
 import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 
 class OrgsModule : Module() {
-
-    override val serialModule = orgSerialModule
 
     override val endpoints = listOf(
 

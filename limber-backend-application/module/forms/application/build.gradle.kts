@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm")
-    kotlin("plugin.serialization")
     id(Plugins.detekt)
 }
 
@@ -11,6 +10,7 @@ dependencies {
     implementation(project(":limber-backend-application:common:service-interface"))
     implementation(project(":piper:serialization"))
     implementation(project(":piper:sql"))
+    implementation(Dependencies.Jackson.annotations)
     testImplementation(project(":limber-backend-application:common:testing"))
     testImplementation(project(":piper:sql:testing"))
 }

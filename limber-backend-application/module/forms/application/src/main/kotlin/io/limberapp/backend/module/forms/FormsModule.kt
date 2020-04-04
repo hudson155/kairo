@@ -15,7 +15,6 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PatchFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PostFormTemplateQuestion
-import io.limberapp.backend.module.forms.rep.formsSerialModule
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
@@ -62,8 +61,6 @@ class FormsModule : Module() {
         PutFormInstanceQuestion::class.java,
         DeleteFormInstanceQuestion::class.java
     )
-
-    override val serialModule = formsSerialModule
 
     override val endpoints = formTemplateEndpoints + formInstanceEndpoints
 

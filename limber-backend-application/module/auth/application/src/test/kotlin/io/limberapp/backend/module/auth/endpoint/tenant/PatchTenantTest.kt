@@ -5,8 +5,6 @@ import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -23,7 +21,7 @@ internal class PatchTenantTest : ResourceTest() {
         val tenantUpdateRep = TenantRep.Update(domain = "newdomain.com", auth0ClientId = "zyxwvutsrqponmlkjihgfe")
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
-            body = json.stringify(tenantUpdateRep),
+            body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to tenantDomain),
             expectedException = TenantNotFound()
         )
@@ -40,21 +38,21 @@ internal class PatchTenantTest : ResourceTest() {
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.limberappFixture.creation(org0Id))
+            body = TenantRepFixtures.limberappFixture.creation(org0Id)
         )
 
         // PostTenant
         val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.someclientFixture.creation(org1Id))
+            body = TenantRepFixtures.someclientFixture.creation(org1Id)
         )
 
         // PatchTenant
         val tenantUpdateRep = TenantRep.Update(domain = limberappTenantRep.domain)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
-            body = json.stringify(tenantUpdateRep),
+            body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain),
             expectedException = TenantDomainAlreadyRegistered(limberappTenantRep.domain)
         )
@@ -80,14 +78,14 @@ internal class PatchTenantTest : ResourceTest() {
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.limberappFixture.creation(org0Id))
+            body = TenantRepFixtures.limberappFixture.creation(org0Id)
         )
 
         // PostTenant
         var someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.someclientFixture.creation(org1Id))
+            body = TenantRepFixtures.someclientFixture.creation(org1Id)
         )
 
         // PatchTenant
@@ -95,7 +93,7 @@ internal class PatchTenantTest : ResourceTest() {
         someclientTenantRep = someclientTenantRep.copy(orgId = tenantUpdateRep.orgId!!)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
-            body = json.stringify(tenantUpdateRep),
+            body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
@@ -123,14 +121,14 @@ internal class PatchTenantTest : ResourceTest() {
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.limberappFixture.creation(org0Id))
+            body = TenantRepFixtures.limberappFixture.creation(org0Id)
         )
 
         // PostTenant
         var someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.someclientFixture.creation(org1Id))
+            body = TenantRepFixtures.someclientFixture.creation(org1Id)
         )
 
         // PatchTenant
@@ -138,7 +136,7 @@ internal class PatchTenantTest : ResourceTest() {
         someclientTenantRep = someclientTenantRep.copy(auth0ClientId = tenantUpdateRep.auth0ClientId!!)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
-            body = json.stringify(tenantUpdateRep),
+            body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
@@ -166,7 +164,7 @@ internal class PatchTenantTest : ResourceTest() {
         var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = json.stringify(TenantRepFixtures.limberappFixture.creation(orgId))
+            body = TenantRepFixtures.limberappFixture.creation(orgId)
         )
 
         // PatchTenant
@@ -174,7 +172,7 @@ internal class PatchTenantTest : ResourceTest() {
         tenantRep = tenantRep.copy(domain = tenantUpdateRep.domain!!, auth0ClientId = tenantUpdateRep.auth0ClientId!!)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
-            body = json.stringify(tenantUpdateRep),
+            body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to originalTenantRep.domain)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)

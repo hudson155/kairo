@@ -4,6 +4,7 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
+import com.piperframework.serialization.Json
 import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.http.ContentType
@@ -15,16 +16,13 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.createTestEnvironment
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.parse
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @Suppress("LongParameterList") // For these methods, we're ok with it.
 abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
 
-    protected val json = Json(JsonConfiguration.Stable)
+    protected val json = Json()
 
     private val exceptionMapper = ExceptionMapper()
 
@@ -32,7 +30,7 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any> = emptyMap(),
         queryParams: Map<String, Any> = emptyMap(),
-        body: String? = null
+        body: Any? = null
     ) = testInternal(
         endpointConfig = endpointConfig,
         pathParams = pathParams,
@@ -46,7 +44,7 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any> = emptyMap(),
         queryParams: Map<String, Any> = emptyMap(),
-        body: String? = null,
+        body: Any? = null,
         expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
         test: TestApplicationCall.() -> Unit
     ) = testInternal(
@@ -62,7 +60,7 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any> = emptyMap(),
         queryParams: Map<String, Any> = emptyMap(),
-        body: String? = null,
+        body: Any? = null,
         expectedException: PiperException
     ) {
         val expectedError = exceptionMapper.handle(expectedException)
@@ -83,7 +81,7 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any>,
         queryParams: Map<String, Any>,
-        body: String?,
+        body: Any?,
         expectedStatusCode: HttpStatusCode,
         test: TestApplicationCall.() -> Unit
     ) = withPiperTestApp {
@@ -128,12 +126,12 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String>,
         queryParams: Map<String, String>,
-        body: String?
+        body: Any?
     ): TestApplicationCall {
         return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
-            body?.let { setBody(it) }
+            body?.let { setBody(json.stringify(it)) }
         }
     }
 

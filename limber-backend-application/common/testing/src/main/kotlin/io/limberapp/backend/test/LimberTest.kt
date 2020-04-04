@@ -10,7 +10,6 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import kotlinx.serialization.stringify
 import java.util.UUID
 
 class LimberTest(moduleFunction: Application.() -> Unit) : PiperTest(moduleFunction) {
@@ -19,7 +18,7 @@ class LimberTest(moduleFunction: Application.() -> Unit) : PiperTest(moduleFunct
         val jwt = JWT.create().withJwt(
             jwt = Jwt(
                 org = null,
-                roles = listOf(JwtRole.SUPERUSER),
+                roles = setOf(JwtRole.SUPERUSER),
                 user = JwtUser(UUID.randomUUID(), "Jeff", "Hudson")
             )
         ).sign(Algorithm.none())

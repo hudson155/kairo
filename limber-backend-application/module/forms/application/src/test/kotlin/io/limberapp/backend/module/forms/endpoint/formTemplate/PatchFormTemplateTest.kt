@@ -4,8 +4,6 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -23,7 +21,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PatchFormTemplate.endpointConfig,
             pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateId),
-            body = json.stringify(formTemplateUpdateRep),
+            body = formTemplateUpdateRep,
             expectedException = FormTemplateNotFound()
         )
     }
@@ -38,7 +36,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PatchFormTemplate
@@ -47,7 +45,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PatchFormTemplate.endpointConfig,
             pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateRep.id),
-            body = json.stringify(formTemplateUpdateRep)
+            body = formTemplateUpdateRep
         ) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)

@@ -12,8 +12,6 @@ import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -31,7 +29,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceId),
-            body = json.stringify(FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateQuestionId)),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateQuestionId),
             expectedException = FormInstanceNotFound()
         )
     }
@@ -47,21 +45,21 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormInstance
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
+            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // PutFormInstanceQuestion
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = json.stringify(FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateQuestionId)),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateQuestionId),
             expectedException = FormTemplateQuestionNotFound()
         )
     }
@@ -76,14 +74,14 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
+            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // PutFormInstanceQuestion
@@ -93,9 +91,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = json.stringify(
-                FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
-            )
+            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
         ) {
             val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
             assertEquals(formInstanceQuestionRep, actual)
@@ -121,14 +117,14 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
-            body = json.stringify(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))
+            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // PutFormInstanceQuestion
@@ -138,9 +134,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = json.stringify(
-                FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
-            )
+            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
         )
 
         // PutFormInstanceQuestion
@@ -153,11 +147,9 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = json.stringify(
-                (FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
-                        as FormInstanceTextQuestionRep.Creation)
-                    .copy(text = "completely new text")
-            )
+            body = (FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+                    as FormInstanceTextQuestionRep.Creation)
+                .copy(text = "completely new text")
         ) {
             val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
             assertEquals(formInstanceQuestion1Rep, actual)

@@ -7,8 +7,6 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -43,7 +41,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // DeleteFeature
@@ -73,7 +71,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // PostFeature
@@ -82,7 +80,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = json.stringify(FeatureRepFixtures.formsFixture.creation())
+            body = FeatureRepFixtures.formsFixture.creation()
         )
 
         // DeleteFeature

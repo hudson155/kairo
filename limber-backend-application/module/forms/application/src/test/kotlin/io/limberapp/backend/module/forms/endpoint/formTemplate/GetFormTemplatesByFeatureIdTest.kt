@@ -3,8 +3,6 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import kotlinx.serialization.parseList
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -23,7 +21,7 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parseList<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<List<FormTemplateRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -38,14 +36,14 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
         val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))
+            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
         // PostFormTemplate
         val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureId, 4)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
-            body = json.stringify(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureId))
+            body = FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureId)
         )
 
         // GetFormTemplatesByFeatureId
@@ -53,7 +51,7 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parseList<FormTemplateRep.Complete>(response.content!!).toSet()
+            val actual = json.parse<List<FormTemplateRep.Complete>>(response.content!!).toSet()
             assertEquals(setOf(formTemplate0Rep, formTemplate1Rep), actual)
         }
     }

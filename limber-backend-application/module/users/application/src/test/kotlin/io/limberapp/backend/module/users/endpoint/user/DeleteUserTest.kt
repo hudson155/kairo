@@ -3,7 +3,6 @@ package io.limberapp.backend.module.users.endpoint.user
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -33,7 +32,7 @@ internal class DeleteUserTest : ResourceTest() {
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
-            body = json.stringify(UserRepFixtures.jeffHudsonFixture.creation(orgId))
+            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
         // DeleteUser

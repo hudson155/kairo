@@ -4,8 +4,6 @@ import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -23,7 +21,7 @@ internal class PatchOrgTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PatchOrg.endpointConfig,
             pathParams = mapOf(PatchOrg.orgId to orgId),
-            body = json.stringify(orgUpdateRep),
+            body = orgUpdateRep,
             expectedException = OrgNotFound()
         )
     }
@@ -35,7 +33,7 @@ internal class PatchOrgTest : ResourceTest() {
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
-            body = json.stringify(OrgRepFixtures.crankyPastaFixture.creation())
+            body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
         // PatchOrg
@@ -44,7 +42,7 @@ internal class PatchOrgTest : ResourceTest() {
         piperTest.test(
             endpointConfig = PatchOrg.endpointConfig,
             pathParams = mapOf(PatchOrg.orgId to orgRep.id),
-            body = json.stringify(orgUpdateRep)
+            body = orgUpdateRep
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

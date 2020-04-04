@@ -1,14 +1,12 @@
 package io.limberapp.backend.authentication.token
 
 import com.piperframework.ktorAuth.PiperAuthVerifier
+import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.uuidFromBase64Encoded
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.parse
 
 /**
  * Base64 encoded UUIDs are 24 characters in length. The last 2 characters are always '='. Access tokens are comprised
@@ -22,7 +20,7 @@ class TokenAuthVerifier(
     private val accessTokenService: AccessTokenService
 ) : PiperAuthVerifier<Jwt> {
 
-    private val json = Json(JsonConfiguration.Stable)
+    private val json = Json()
 
     override fun verify(blob: String): Jwt? {
         if (blob.length != TOKEN_PART_LENGTH * 2) return null

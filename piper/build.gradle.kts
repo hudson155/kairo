@@ -11,6 +11,7 @@ dependencies {
     api(project(":piper:exception-mapping"))
     api(project(":piper:serialization"))
     implementation(Dependencies.Jackson.moduleKotlin)
+    implementation(Dependencies.Ktor.jackson)
     implementation(Dependencies.Ktor.serverHostCommon)
 }
 
