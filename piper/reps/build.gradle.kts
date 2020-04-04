@@ -1,13 +1,30 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
+    kotlin("multiplatform")
     id(Plugins.detekt)
 }
 
-dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    api(project(":piper:validation"))
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+                implementation(project(":piper:types"))
+                api(project(":piper:validation"))
+            }
+        }
+        jvm().compilations["main"].defaultSourceSet {
+            dependencies {
+                implementation(kotlin("stdlib-jdk8"))
+            }
+        }
+        js().compilations["main"].defaultSourceSet  {
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+            }
+        }
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {

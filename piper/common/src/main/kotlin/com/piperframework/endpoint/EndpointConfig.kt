@@ -24,7 +24,7 @@ class EndpointConfig private constructor(val httpMethod: HttpMethod, val pathTem
 
     fun path(pathParams: Map<String, String>, queryParams: Map<String, String>): String {
 
-        var path = pathTemplate.replace(Regex("\\{([a-z]+)}", RegexOption.IGNORE_CASE)) {
+        var path = pathTemplate.replace(Regex("\\{([A-Za-z]+)}")) {
             val pathParam = it.groupValues[1]
             return@replace checkNotNull(pathParams[pathParam]).encodeURLParameter(spaceToPlus = true)
         }

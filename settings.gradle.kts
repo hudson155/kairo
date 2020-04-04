@@ -7,24 +7,24 @@ rootProject.name = "limber"
 include(":limber-backend-application")
 
 include(":limber-backend-application:common")
-include(":limber-backend-application:common:api")
+include(":limber-backend-application:common:service-interface")
 include(":limber-backend-application:common:testing")
 
 include(":limber-backend-application:module:auth")
-include(":limber-backend-application:module:auth:api")
-include(":limber-backend-application:module:auth:app")
+include(":limber-backend-application:module:auth:application")
+include(":limber-backend-application:module:auth:service-interface")
 
 include(":limber-backend-application:module:forms")
-include(":limber-backend-application:module:forms:api")
-include(":limber-backend-application:module:forms:app")
+include(":limber-backend-application:module:forms:application")
+include(":limber-backend-application:module:forms:service-interface")
 
 include(":limber-backend-application:module:orgs")
-include(":limber-backend-application:module:orgs:api")
-include(":limber-backend-application:module:orgs:app")
+include(":limber-backend-application:module:orgs:application")
+include(":limber-backend-application:module:orgs:service-interface")
 
 include(":limber-backend-application:module:users")
-include(":limber-backend-application:module:users:api")
-include(":limber-backend-application:module:users:app")
+include(":limber-backend-application:module:users:application")
+include(":limber-backend-application:module:users:service-interface")
 
 /**
  * Piper (Backend Framework)
@@ -42,5 +42,6 @@ include(":piper:reps")
 include(":piper:sql")
 include(":piper:sql:testing")
 include(":piper:testing")
+include(":piper:types")
 include(":piper:util")
 include(":piper:validation")

@@ -5,5 +5,5 @@ import com.piperframework.exception.PiperException
 abstract class ConflictException(
     message: String,
     developerMessage: String,
-    cause: Throwable? = null
+    cause: Exception? = null
 ) : PiperException(message, developerMessage, cause)
