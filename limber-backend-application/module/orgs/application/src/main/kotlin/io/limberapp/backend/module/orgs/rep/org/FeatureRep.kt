@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FeatureRep {
+
     enum class Type {
         FORMS,
         HOME;
