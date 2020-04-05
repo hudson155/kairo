@@ -7,7 +7,7 @@ rootProject.name = "limber"
 include(":limber-backend-application")
 
 include(":limber-backend-application:common")
-include(":limber-backend-application:common:service-interface")
+include(":limber-backend-application:common:interface")
 include(":limber-backend-application:common:testing")
 
 include(":limber-backend-application:module:auth")

@@ -15,7 +15,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/limber-backend-application" />
             <option value="$PROJECT_DIR$/limber-backend-application/common" />
-            <option value="$PROJECT_DIR$/limber-backend-application/common/service-interface" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common/interface" />
             <option value="$PROJECT_DIR$/limber-backend-application/common/testing" />
             <option value="$PROJECT_DIR$/limber-backend-application/module" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth" />
