@@ -6,7 +6,6 @@ import com.piperframework.config.authentication.AuthenticationMechanism
 import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.config.serving.StaticFiles
-import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.DeterministicUuidGenerator
 import io.mockk.MockKAnnotations
 import org.junit.jupiter.api.AfterEach

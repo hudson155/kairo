@@ -33,4 +33,3 @@ internal fun configureJsonForFormsModule(json: Json) {
         FormTemplateQuestionRepMixIn.Update::class.java
     )
 }
-

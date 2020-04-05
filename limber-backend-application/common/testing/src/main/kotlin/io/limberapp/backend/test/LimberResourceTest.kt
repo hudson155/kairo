@@ -13,11 +13,11 @@ abstract class LimberResourceTest : AbstractResourceTest() {
         }
     }
 
-    abstract val module: Module
+    protected abstract val module: Module
 
-    abstract val additionalModules: Set<ModuleWithLifecycle>
+    protected abstract val additionalModules: Set<ModuleWithLifecycle>
 
-    override val piperTest by lazy {
+    final override val piperTest by lazy {
         LimberTest(json) {
             TestLimberApp(
                 application = this,
