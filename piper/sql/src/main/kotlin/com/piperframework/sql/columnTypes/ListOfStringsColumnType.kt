@@ -15,9 +15,13 @@ class ListOfStringsColumnType : ColumnType() {
 
     override fun sqlType() = "TEXT[]"
 
-    override fun valueFromDB(value: Any): Any = when (value) {
-        is Iterable<*> -> value
-        is PgArray -> value.array
+    override fun valueFromDB(value: Any): List<String> = when (value) {
+        is Iterable<*> -> value.map{it.toString()}
+        is PgArray -> {
+            val array = value.array
+            if (array is Array<*>) array.map{ it.toString() }
+            else unexpectedValue(array)
+        }
         else -> unexpectedValue(value)
     }
 
