@@ -2,7 +2,7 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.orgs.entity.org.OrgTable
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel

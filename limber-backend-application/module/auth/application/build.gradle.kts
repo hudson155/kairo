@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     id(Plugins.detekt)
@@ -12,14 +10,11 @@ dependencies {
     implementation(project(":limber-backend-application:common:service-interface"))
     implementation(project(":limber-backend-application:module:orgs:service-interface"))
     implementation(project(":limber-backend-application:module:users:service-interface"))
+    implementation(project(":piper:serialization"))
     implementation(project(":piper:sql"))
     implementation(Dependencies.Bcrypt.jbcrypt)
     testImplementation(project(":limber-backend-application:common:testing"))
     testImplementation(project(":piper:sql:testing"))
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
 }
 
 tasks.test {
@@ -31,4 +26,5 @@ tasks.test {
 
 detekt {
     config = files("$rootDir/.detekt/config.yml")
+    input = files("src/main/kotlin", "src/test/kotlin")
 }

@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -18,7 +17,7 @@ internal class PostOrgTest : ResourceTest() {
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
 
@@ -27,7 +26,7 @@ internal class PostOrgTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }

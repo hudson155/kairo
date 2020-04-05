@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
@@ -60,7 +59,7 @@ internal class DeleteFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }
@@ -99,7 +98,7 @@ internal class DeleteFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }

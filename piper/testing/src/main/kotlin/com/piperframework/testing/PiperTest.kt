@@ -1,11 +1,10 @@
 package com.piperframework.testing
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
+import com.piperframework.serialization.Json
 import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.http.ContentType
@@ -17,14 +16,13 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.createTestEnvironment
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
-import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @Suppress("LongParameterList") // For these methods, we're ok with it.
 abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
 
-    protected val objectMapper = PiperObjectMapper()
+    protected val json = Json()
 
     private val exceptionMapper = ExceptionMapper()
 
@@ -73,7 +71,7 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
             body = body,
             expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
             test = {
-                val actual = objectMapper.readValue<PiperError>(response.content!!)
+                val actual = json.parse<PiperError>(response.content!!)
                 assertEquals(expectedError, actual)
             }
         )
@@ -100,14 +98,14 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
     fun start() {
         engine.start()
         engine.doOrStop {
-            engine.application.moduleFunction()
+            application.moduleFunction()
             // TestApplicationEngine does not raise ApplicationStarted.
-            engine.environment.monitor.raise(ApplicationStarted, engine.application)
+            environment.monitor.raise(ApplicationStarted, application)
         }
     }
 
     fun stop() {
-        engine.stop(0L, 0L, TimeUnit.MILLISECONDS)
+        engine.stop(0L, 0L)
     }
 
     private fun withPiperTestApp(test: TestApplicationEngine.() -> Unit) {
@@ -133,7 +131,7 @@ abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
         return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
-            body?.let { setBody(objectMapper.writeValueAsString(it)) }
+            body?.let { setBody(json.stringify(it)) }
         }
     }
 

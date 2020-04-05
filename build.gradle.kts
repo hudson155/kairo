@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
 plugins {
     kotlin("multiplatform") version Versions.kotlin
 }
@@ -14,12 +17,18 @@ tasks.create("downloadDependencies") {
 }
 
 subprojects {
+
     buildscript {
         repositories {
             jcenter()
         }
     }
+
     repositories {
         jcenter()
+    }
+
+    tasks.withType<KotlinCompile<*>>().configureEach {
+        (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "1.8"
     }
 }

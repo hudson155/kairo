@@ -37,8 +37,8 @@
             <option value="$PROJECT_DIR$/piper/exception-mapping" />
             <option value="$PROJECT_DIR$/piper/exceptions" />
             <option value="$PROJECT_DIR$/piper/ktor-auth" />
-            <option value="$PROJECT_DIR$/piper/object-mapper" />
             <option value="$PROJECT_DIR$/piper/reps" />
+            <option value="$PROJECT_DIR$/piper/serialization" />
             <option value="$PROJECT_DIR$/piper/sql" />
             <option value="$PROJECT_DIR$/piper/sql/testing" />
             <option value="$PROJECT_DIR$/piper/testing" />

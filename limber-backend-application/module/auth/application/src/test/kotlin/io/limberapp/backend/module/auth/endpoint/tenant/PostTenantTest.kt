@@ -1,7 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -54,7 +52,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(orgId = tenant0Rep.orgId)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)
         }
 
@@ -63,7 +61,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant0Rep, actual)
         }
 
@@ -72,7 +70,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)
         }
     }
@@ -98,7 +96,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(auth0ClientId = tenant0Rep.auth0ClientId)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)
         }
 
@@ -107,7 +105,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant0Rep, actual)
         }
 
@@ -116,7 +114,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)
         }
     }
@@ -134,7 +132,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.limberappFixture.creation(org0Id)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant0Rep, actual)
         }
 
@@ -144,7 +142,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = PostTenant.endpointConfig,
             body = TenantRepFixtures.someclientFixture.creation(org1Id)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)
         }
 
@@ -153,7 +151,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant0Rep, actual)
         }
 
@@ -162,7 +160,7 @@ internal class PostTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenant1Rep, actual)
         }
     }

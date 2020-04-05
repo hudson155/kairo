@@ -7,7 +7,7 @@ internal object HealthCheckRep {
 
     enum class State {
         HEALTHY,
-        UNHEALTHY,
+        UNHEALTHY;
     }
 
     data class Complete(

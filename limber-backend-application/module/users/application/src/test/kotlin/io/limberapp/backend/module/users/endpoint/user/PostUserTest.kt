@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -44,7 +43,7 @@ internal class PostUserTest : ResourceTest() {
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
 
@@ -53,7 +52,7 @@ internal class PostUserTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }

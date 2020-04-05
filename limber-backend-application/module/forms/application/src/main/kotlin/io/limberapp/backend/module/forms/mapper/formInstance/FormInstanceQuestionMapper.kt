@@ -1,8 +1,7 @@
 package io.limberapp.backend.module.forms.mapper.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.unknown
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.unknown
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
@@ -14,8 +13,7 @@ import java.time.LocalDateTime
 import kotlin.reflect.KClass
 
 internal class FormInstanceQuestionMapper @Inject constructor(
-    private val clock: Clock,
-    private val uuidGenerator: UuidGenerator
+    private val clock: Clock
 ) {
 
     fun model(rep: FormInstanceQuestionRep.Creation) = when (rep) {
@@ -29,7 +27,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = rep.formTemplateQuestionId,
             text = rep.text
         )
-        else -> unknown(rep::class)
+        else -> unknownFormInstanceQuestion(rep::class)
     }
 
     fun completeRep(model: FormInstanceQuestionModel) = when (model) {
@@ -43,8 +41,16 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = model.formTemplateQuestionId,
             text = model.text
         )
-        else -> unknown(model::class)
+        else -> unknownFormInstanceQuestion(model::class)
     }
 
-    private fun unknown(clazz: KClass<*>): Nothing = unknown("form instance question", clazz)
+    fun update(model: FormInstanceQuestionModel) = when (model) {
+        is FormInstanceDateQuestionModel -> FormInstanceDateQuestionModel.Update(date = model.date)
+        is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
+        else -> unknownFormInstanceQuestion(model::class)
+    }
+
+    private fun unknownFormInstanceQuestion(klass: KClass<*>): Nothing {
+        unknown("form instance question", klass)
+    }
 }

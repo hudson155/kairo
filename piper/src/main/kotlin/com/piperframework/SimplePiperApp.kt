@@ -4,13 +4,14 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Stage
 import com.piperframework.config.Config
+import com.piperframework.contentNegotiation.JsonContentConverter
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exception.EndpointNotFound
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
+import com.piperframework.serialization.Json
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
@@ -28,7 +29,6 @@ import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
-import io.ktor.jackson.JacksonConverter
 import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
@@ -104,7 +104,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
     protected open fun Application.dataConversion() {
         install(DataConversion) {
-            convert(UUID::class, conversionService(UuidConversionService()))
+            convert(UUID::class, conversionService(UuidConversionService))
         }
     }
 
@@ -126,7 +126,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JacksonConverter(PiperObjectMapper(prettyPrint = true, serializeUnitToEmptyString = true))
+                converter = JsonContentConverter(Json(prettyPrint = true))
             )
         }
     }

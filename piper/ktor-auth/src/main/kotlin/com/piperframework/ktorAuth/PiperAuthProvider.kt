@@ -13,10 +13,13 @@ import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.request.ApplicationRequest
 import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
+import org.slf4j.LoggerFactory
 
 class PiperAuthProvider<P : Principal> internal constructor(
     private val config: PiperAuthConfig<P>
 ) : AuthenticationProvider(config) {
+
+    private val logger = LoggerFactory.getLogger(PiperAuthProvider::class.java)
 
     init {
         pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { intercept(it) }
@@ -32,14 +35,15 @@ class PiperAuthProvider<P : Principal> internal constructor(
             val principal = getPrincipal(token)
                 ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
             context.principal(principal)
-        } catch (e: Throwable) {
+        } catch (e: Exception) {
             context.handleError(e)
         }
     }
 
     private fun ApplicationRequest.parseAuthorizationHeaderOrNull() = try {
         parseAuthorizationHeader()
-    } catch (_: IllegalArgumentException) {
+    } catch (e: IllegalArgumentException) {
+        logger.warn("Could not parse authorization header.", e)
         null
     }
 
@@ -60,7 +64,8 @@ class PiperAuthProvider<P : Principal> internal constructor(
         if (!it.completed && call.response.status() != null) it.complete()
     }
 
-    private fun AuthenticationContext.handleError(e: Throwable) {
+    private fun AuthenticationContext.handleError(e: Exception) {
+        logger.warn("Authentication error.", e)
         val message = e.message ?: e.javaClass.simpleName
         error(config.authKey, AuthenticationFailedCause.Error(message))
     }

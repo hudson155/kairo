@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.testing.fixtures.feature
 
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import java.time.LocalDateTime
@@ -14,7 +13,7 @@ internal object FeatureRepFixtures {
 
     val default = Fixture(
         {
-            FeatureRep.Creation("Home", "/home", FeatureModel.Type.HOME)
+            FeatureRep.Creation("Home", "/home", FeatureRep.Type.HOME)
         },
         { idSeed ->
             FeatureRep.Complete(
@@ -22,7 +21,7 @@ internal object FeatureRepFixtures {
                 created = LocalDateTime.now(fixedClock),
                 name = "Home",
                 path = "/home",
-                type = FeatureModel.Type.HOME,
+                type = FeatureRep.Type.HOME,
                 isDefaultFeature = true
             )
         }
@@ -30,7 +29,7 @@ internal object FeatureRepFixtures {
 
     val formsFixture = Fixture(
         {
-            FeatureRep.Creation("Forms", "/forms", FeatureModel.Type.FORMS)
+            FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS)
         },
         { idSeed ->
             FeatureRep.Complete(
@@ -38,7 +37,7 @@ internal object FeatureRepFixtures {
                 created = LocalDateTime.now(fixedClock),
                 name = "Forms",
                 path = "/forms",
-                type = FeatureModel.Type.FORMS,
+                type = FeatureRep.Type.FORMS,
                 isDefaultFeature = false
             )
         }

@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -52,7 +51,7 @@ internal class GetFormInstanceTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }

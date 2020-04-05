@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.serialization.Json
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtUser
@@ -28,7 +28,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
 
-    private val objectMapper = PiperObjectMapper()
+    private val json = Json()
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getAccountOrCreateUser(request)
@@ -79,8 +79,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     }
 
     private fun convertJwtToModel(jwt: Jwt): JwtClaimsModel = JwtClaimsModel(
-        org = objectMapper.writeValueAsString(jwt.org),
-        roles = objectMapper.writeValueAsString(jwt.roles),
-        user = objectMapper.writeValueAsString(jwt.user)
+        org = jwt.org?.let { json.stringify(it) },
+        roles = json.stringify(jwt.roles),
+        user = json.stringify(jwt.user)
     )
 }

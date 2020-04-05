@@ -1,8 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -77,7 +76,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         )
 
         // PostFormTemplateQuestion
-        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture .complete(this, 4)
+        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
                 as FormTemplateTextQuestionRep.Complete
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
@@ -111,7 +110,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
     }

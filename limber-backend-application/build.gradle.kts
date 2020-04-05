@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -26,16 +25,14 @@ dependencies {
     api(Dependencies.Jwt.auth0JavaJwt)
     api(Dependencies.Jwt.auth0JwksRsa)
     implementation(Dependencies.Jackson.dataFormatYaml)
+    implementation(Dependencies.Jackson.moduleKotlin)
     implementation(Dependencies.Ktor.serverCio)
     implementation(Dependencies.Logback.logbackClassic)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 detekt {
     config = files("$rootDir/.detekt/config.yml")
+    input = files("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.named<ShadowJar>("shadowJar") {

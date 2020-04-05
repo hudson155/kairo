@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
@@ -66,7 +65,7 @@ internal class PatchFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }
@@ -107,7 +106,7 @@ internal class PatchFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }
@@ -143,7 +142,7 @@ internal class PatchFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep
         ) {
-            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
         }
 
@@ -152,7 +151,7 @@ internal class PatchFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }
@@ -192,7 +191,7 @@ internal class PatchFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep0
         ) {
-            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
         }
 
@@ -208,7 +207,7 @@ internal class PatchFeatureTest : ResourceTest() {
             ),
             body = featureUpdateRep1
         ) {
-            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
         }
 
@@ -217,7 +216,7 @@ internal class PatchFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf("orgId" to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }

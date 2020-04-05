@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -43,7 +42,7 @@ internal class GetTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
     }

@@ -5,7 +5,6 @@ import com.piperframework.testing.AbstractResourceTest
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.backend.test.LimberTest
 import io.limberapp.backend.test.TestLimberApp
-import org.junit.jupiter.api.BeforeEach
 
 abstract class ResourceTest : AbstractResourceTest() {
 

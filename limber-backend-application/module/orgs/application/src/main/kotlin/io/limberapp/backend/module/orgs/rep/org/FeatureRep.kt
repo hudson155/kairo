@@ -6,16 +6,20 @@ import com.piperframework.rep.UpdateRep
 import com.piperframework.validation.RepValidation
 import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FeatureRep {
 
+    enum class Type {
+        FORMS,
+        HOME;
+    }
+
     data class Creation(
         val name: String,
         val path: String,
-        val type: FeatureModel.Type
+        val type: Type
     ) : CreationRep {
         override fun validate() = RepValidation {
             validate(Creation::name) { Validator.featureName(value) }
@@ -28,7 +32,7 @@ internal object FeatureRep {
         override val created: LocalDateTime,
         val name: String,
         val path: String,
-        val type: FeatureModel.Type,
+        val type: Type,
         val isDefaultFeature: Boolean
     ) : CompleteRep
 

@@ -1,8 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
-import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
@@ -65,7 +62,7 @@ internal class PatchTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to someclientTenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)
         }
     }
@@ -99,7 +96,7 @@ internal class PatchTenantTest : ResourceTest() {
             body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)
         }
 
@@ -108,7 +105,7 @@ internal class PatchTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to someclientTenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)
         }
     }
@@ -142,7 +139,7 @@ internal class PatchTenantTest : ResourceTest() {
             body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to someclientTenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)
         }
 
@@ -151,7 +148,7 @@ internal class PatchTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to someclientTenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)
         }
     }
@@ -178,7 +175,7 @@ internal class PatchTenantTest : ResourceTest() {
             body = tenantUpdateRep,
             pathParams = mapOf(PatchTenant.tenantDomain to originalTenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
 
@@ -194,7 +191,7 @@ internal class PatchTenantTest : ResourceTest() {
             endpointConfig = GetTenant.endpointConfig,
             pathParams = mapOf(GetTenant.tenantDomain to tenantRep.domain)
         ) {
-            val actual = objectMapper.readValue<TenantRep.Complete>(response.content!!)
+            val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
     }

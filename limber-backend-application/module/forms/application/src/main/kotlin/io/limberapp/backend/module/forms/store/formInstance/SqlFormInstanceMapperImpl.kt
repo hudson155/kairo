@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.store.formInstance
 
 import com.google.inject.Inject
+import com.piperframework.util.unknown
 import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceQuestionTable
 import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceTable
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
@@ -12,6 +13,7 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
+import kotlin.reflect.KClass
 
 internal class SqlFormInstanceMapperImpl @Inject constructor(
     private val formInstanceQuestionStore: FormInstanceQuestionStore
@@ -32,7 +34,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             is FormInstanceTextQuestionModel.Update -> {
                 update.text?.let { updateStatement[FormInstanceQuestionTable.text] = it }
             }
-            else -> error("Unexpected question type: ${update::class.qualifiedName}")
+            else -> unknownFormInstanceQuestion(update::class)
         }
     }
 
@@ -52,7 +54,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             is FormInstanceTextQuestionModel -> {
                 insertStatement[FormInstanceQuestionTable.text] = model.text
             }
-            else -> error("Unexpected question type: ${model::class.qualifiedName}")
+            else -> unknownFormInstanceQuestion(model::class)
         }
     }
 
@@ -80,4 +82,8 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 text = checkNotNull(resultRow[FormInstanceQuestionTable.text])
             )
         }
+
+    private fun unknownFormInstanceQuestion(klass: KClass<*>) {
+        unknown("form instance question", klass::class)
+    }
 }

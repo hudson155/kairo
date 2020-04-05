@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -63,7 +62,7 @@ internal class DeleteAccessTokenTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<Set<AccessTokenRep.Complete>>(response.content!!)
+            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(setOf(accessToken1Rep), actual)
         }
     }

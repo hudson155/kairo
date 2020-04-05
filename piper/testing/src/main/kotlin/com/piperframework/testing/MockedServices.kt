@@ -16,10 +16,10 @@ class MockedServices(servicesToMock: List<KClass<*>>) : ModuleWithLifecycle() {
 
     override fun unconfigure() = Unit
 
-    private fun <T : Any> bindMock(clazz: KClass<T>) {
-        bind(clazz.java).toInstance(get(clazz))
+    private fun <T : Any> bindMock(klass: KClass<T>) {
+        bind(klass.java).toInstance(get(klass))
     }
 
     @Suppress("UNCHECKED_CAST", "UnsafeCast")
-    operator fun <T : Any> get(clazz: KClass<T>) = mocks[clazz] as T
+    operator fun <T : Any> get(klass: KClass<T>) = mocks[klass] as T
 }

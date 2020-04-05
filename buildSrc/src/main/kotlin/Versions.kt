@@ -34,7 +34,7 @@ object Versions {
     const val kotlin = "1.3.71"
 
     // https://github.com/ktorio/ktor/releases
-    const val ktor = "1.2.5"
+    const val ktor = "1.3.2"
 
     // https://github.com/qos-ch/logback/releases
     const val logback = "1.2.3"

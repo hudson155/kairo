@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
-import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
@@ -64,13 +63,13 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         ) {
             val actual = response.content!!
             val expected = "{" +
-                    "\"${Claims.org}\":\"{" +
+                    "\"org\":\"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
                     "}\"," +
-                    "\"${Claims.roles}\":\"[]\"," +
-                    "\"${Claims.user}\":\"{" +
+                    "\"roles\":\"[]\"," +
+                    "\"user\":\"{" +
                     "\\\"id\\\":\\\"$userId\\\"," +
                     "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
                     "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"" +
@@ -130,13 +129,13 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         ) {
             val actual = response.content!!
             val expected = "{" +
-                    "\"${Claims.org}\":\"{" +
+                    "\"org\":\"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
                     "}\"," +
-                    "\"${Claims.roles}\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
-                    "\"${Claims.user}\":\"{" +
+                    "\"roles\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
+                    "\"user\":\"{" +
                     "\\\"id\\\":\\\"${existingUser.id}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
                     "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"" +

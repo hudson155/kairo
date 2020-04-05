@@ -6,7 +6,7 @@ import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
 import com.piperframework.testing.TestPiperApp
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.ktor.application.Application
 import io.ktor.auth.Authentication
 import io.limberapp.backend.authentication.jwt.JwtAuthVerifier

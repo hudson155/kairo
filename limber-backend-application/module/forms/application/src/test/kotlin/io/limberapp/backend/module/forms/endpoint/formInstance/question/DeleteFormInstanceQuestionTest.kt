@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
@@ -81,7 +80,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }
@@ -131,7 +130,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }

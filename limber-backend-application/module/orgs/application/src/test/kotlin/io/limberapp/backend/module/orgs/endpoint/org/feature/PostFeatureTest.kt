@@ -1,8 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
+import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
@@ -54,7 +53,7 @@ internal class PostFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }
@@ -77,7 +76,7 @@ internal class PostFeatureTest : ResourceTest() {
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
             body = FeatureRepFixtures.formsFixture.creation()
         ) {
-            val actual = objectMapper.readValue<FeatureRep.Complete>(response.content!!)
+            val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
         }
 
@@ -86,7 +85,7 @@ internal class PostFeatureTest : ResourceTest() {
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
-            val actual = objectMapper.readValue<OrgRep.Complete>(response.content!!)
+            val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
     }

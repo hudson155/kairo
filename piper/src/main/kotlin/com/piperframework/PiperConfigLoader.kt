@@ -1,16 +1,16 @@
 package com.piperframework
 
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
+import com.fasterxml.jackson.databind.ObjectMapper
 import kotlin.reflect.KClass
 
-abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(private val clazz: KClass<Config>) {
+abstract class PiperConfigLoader<Config : com.piperframework.config.Config>(private val klass: KClass<Config>) {
 
-    protected open val objectMapper = PiperObjectMapper()
+    protected abstract val objectMapper: ObjectMapper
 
     abstract fun load(): Config
 
     protected fun loadInternal(fileName: String): Config? {
         val stream = this.javaClass.getResourceAsStream(fileName) ?: return null
-        return objectMapper.readValue(stream, clazz.java)
+        return objectMapper.readValue(stream, klass.java)
     }
 }

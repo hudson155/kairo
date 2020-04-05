@@ -17,7 +17,9 @@ function customizeJwt(user, context, callback) {
     if (200 > response.statusCode || response.statusCode > 299) {
       return callback(new Error(`API returned ${response.statusCode} response code`));
     }
-    Object.assign(context.accessToken, body);
+    Object.keys(body).forEach(key => {
+      context.accessToken[`https://limberapp.io/${key}`] = body[key]
+    });
     return callback(null, user, context);
   });
 }

@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
@@ -94,7 +93,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
             body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceQuestionRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
             assertEquals(formInstanceQuestionRep, actual)
         }
 
@@ -103,7 +102,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }
@@ -152,7 +151,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
                     as FormInstanceTextQuestionRep.Creation)
                 .copy(text = "completely new text")
         ) {
-            val actual = objectMapper.readValue<FormInstanceQuestionRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
             assertEquals(formInstanceQuestion1Rep, actual)
         }
 
@@ -161,7 +160,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
         ) {
-            val actual = objectMapper.readValue<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
     }

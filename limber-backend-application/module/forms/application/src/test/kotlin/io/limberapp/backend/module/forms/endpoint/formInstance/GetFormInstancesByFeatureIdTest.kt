@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
@@ -24,7 +23,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = objectMapper.readValue<Set<FormInstanceRep.Complete>>(response.content!!)
+            val actual = json.parse<Set<FormInstanceRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -61,7 +60,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = objectMapper.readValue<Set<FormInstanceRep.Complete>>(response.content!!)
+            val actual = json.parse<Set<FormInstanceRep.Complete>>(response.content!!)
             assertEquals(setOf(formInstance0Rep, formInstance1Rep), actual)
         }
     }

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.store.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.auth.entity.accessToken.AccessTokenTable
 import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel

@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -43,7 +42,7 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to userRep.emailAddress)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }

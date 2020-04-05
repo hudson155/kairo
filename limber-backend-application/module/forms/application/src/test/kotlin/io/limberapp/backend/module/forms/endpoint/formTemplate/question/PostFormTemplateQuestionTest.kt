@@ -1,9 +1,8 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
+import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -101,7 +100,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
             queryParams = mapOf(PostFormTemplateQuestion.rank to 0),
             body = FormTemplateQuestionRepFixtures.textFixture.creation()
         ) {
-            val actual = objectMapper.readValue<FormTemplateQuestionRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
             assertEquals(formTemplateQuestionRep, actual)
         }
 
@@ -110,7 +109,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
     }
@@ -138,7 +137,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
             pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
             body = FormTemplateQuestionRepFixtures.textFixture.creation()
         ) {
-            val actual = objectMapper.readValue<FormTemplateQuestionRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
             assertEquals(formTemplateQuestionRep, actual)
         }
 
@@ -147,7 +146,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
         ) {
-            val actual = objectMapper.readValue<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
     }

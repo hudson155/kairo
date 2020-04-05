@@ -1,9 +1,8 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
+import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
@@ -60,7 +59,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }
@@ -103,7 +102,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
         ) {
-            val actual = objectMapper.readValue<UserRep.Complete>(response.content!!)
+            val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
     }

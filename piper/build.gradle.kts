@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     id(Plugins.detekt).version(Versions.detekt)
@@ -8,16 +6,15 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     api(project(":piper:common"))
+    api(project(":piper:data-conversion"))
     api(project(":piper:errors"))
     api(project(":piper:exception-mapping"))
+    api(project(":piper:serialization"))
     implementation(Dependencies.Ktor.jackson)
     implementation(Dependencies.Ktor.serverHostCommon)
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 detekt {
     config = files("$rootDir/.detekt/config.yml")
+    input = files("src/main/kotlin", "src/test/kotlin")
 }

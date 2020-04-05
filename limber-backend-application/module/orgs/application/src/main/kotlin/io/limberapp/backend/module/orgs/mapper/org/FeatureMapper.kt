@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.mapper.org
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import java.time.Clock
@@ -26,7 +26,7 @@ internal class FeatureMapper @Inject constructor(
         created = LocalDateTime.now(clock),
         name = rep.name,
         path = rep.path,
-        type = rep.type,
+        type = type(rep.type),
         isDefaultFeature = false
     )
 
@@ -35,7 +35,7 @@ internal class FeatureMapper @Inject constructor(
         created = model.created,
         name = model.name,
         path = model.path,
-        type = model.type,
+        type = type(model.type),
         isDefaultFeature = model.isDefaultFeature
     )
 
@@ -44,4 +44,14 @@ internal class FeatureMapper @Inject constructor(
         path = rep.path,
         isDefaultFeature = rep.isDefaultFeature
     )
+
+    private fun type(type: FeatureRep.Type) = when (type) {
+        FeatureRep.Type.FORMS -> FeatureModel.Type.FORMS
+        FeatureRep.Type.HOME -> FeatureModel.Type.HOME
+    }
+
+    private fun type(type: FeatureModel.Type) = when (type) {
+        FeatureModel.Type.FORMS -> FeatureRep.Type.FORMS
+        FeatureModel.Type.HOME -> FeatureRep.Type.HOME
+    }
 }

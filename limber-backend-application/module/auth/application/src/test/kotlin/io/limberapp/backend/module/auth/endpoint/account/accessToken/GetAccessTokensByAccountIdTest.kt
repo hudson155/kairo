@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.accessToken.AccessTokenRepFixtures
@@ -22,7 +21,7 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<Set<AccessTokenRep.Complete>>(response.content!!)
+            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -38,21 +37,21 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
         piperTest.setup(
             endpointConfig = PostAccessToken.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
-        ) {}
+        )
 
         // PostAccessToken
         val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(
             endpointConfig = PostAccessToken.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
-        ) {}
+        )
 
         // GetAccessTokensByAccountId
         piperTest.test(
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = objectMapper.readValue<Set<AccessTokenRep.Complete>>(response.content!!)
+            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
             assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)
         }
     }

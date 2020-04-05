@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     id(Plugins.detekt)
@@ -15,10 +13,6 @@ dependencies {
     testImplementation(project(":piper:sql:testing"))
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 tasks.test {
     useJUnitPlatform()
     testLogging {
@@ -28,4 +22,5 @@ tasks.test {
 
 detekt {
     config = files("$rootDir/.detekt/config.yml")
+    input = files("src/main/kotlin", "src/test/kotlin")
 }

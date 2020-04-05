@@ -1,10 +1,10 @@
 package io.limberapp.backend.authentication.token
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.piperframework.jackson.objectMapper.PiperObjectMapper
 import com.piperframework.ktorAuth.PiperAuthVerifier
+import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.uuidFromBase64Encoded
 import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 
@@ -20,7 +20,7 @@ class TokenAuthVerifier(
     private val accessTokenService: AccessTokenService
 ) : PiperAuthVerifier<Jwt> {
 
-    private val objectMapper = PiperObjectMapper()
+    private val json = Json()
 
     override fun verify(blob: String): Jwt? {
         if (blob.length != TOKEN_PART_LENGTH * 2) return null
@@ -29,9 +29,9 @@ class TokenAuthVerifier(
         val accessToken = accessTokenService.getIfValid(accessTokenId, accessTokenSecret) ?: return null
         val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.userId) ?: return null
         return Jwt(
-            org = objectMapper.readValue(claims.org),
-            roles = objectMapper.readValue(claims.roles),
-            user = objectMapper.readValue(claims.user)
+            org = claims.org?.let { json.parse<JwtOrg>(it) },
+            roles = json.parse(claims.roles),
+            user = json.parse(claims.user)
         )
     }
 

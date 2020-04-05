@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("multiplatform")
     id(Plugins.detekt)
@@ -17,7 +15,7 @@ kotlin {
                 implementation(kotlin("stdlib-jdk8"))
             }
         }
-        js().compilations["main"].defaultSourceSet  {
+        js().compilations["main"].defaultSourceSet {
             dependencies {
                 implementation(kotlin("stdlib-js"))
             }
@@ -25,10 +23,14 @@ kotlin {
     }
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 detekt {
     config = files("$rootDir/.detekt/config.yml")
+    input = files(
+        "src/commonMain/kotlin",
+        "src/commonTest/kotlin",
+        "src/jsMain/kotlin",
+        "src/jsTest/kotlin",
+        "src/jvmMain/kotlin",
+        "src/jvmTest/kotlin"
+    )
 }

@@ -5,7 +5,7 @@ import com.piperframework.config.Config
 import com.piperframework.module.MainModule
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
-import com.piperframework.util.uuid.uuidGenerator.UuidGenerator
+import com.piperframework.util.uuid.UuidGenerator
 import io.ktor.application.Application
 import java.time.Clock
 

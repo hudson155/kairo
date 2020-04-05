@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.store.account
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.uuid.singleNullOrThrow
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.entity.account.AccountTable
 import io.limberapp.backend.module.users.entity.account.UserTable
