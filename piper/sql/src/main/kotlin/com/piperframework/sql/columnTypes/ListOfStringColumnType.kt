@@ -5,12 +5,12 @@ import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.Table
 import org.postgresql.jdbc.PgArray
 
-fun Table.list(name: String): Column<List<String>> = registerColumn(
+fun Table.listOfString(name: String): Column<List<String>> = registerColumn(
     name,
-    ListColumnType()
+    ListOfStringColumnType()
 )
 
-class ListColumnType : ColumnType() {
+class ListOfStringColumnType : ColumnType() {
 
     override fun sqlType() = "TEXT[]"
 
