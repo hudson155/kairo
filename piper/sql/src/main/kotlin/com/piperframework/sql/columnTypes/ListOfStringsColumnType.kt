@@ -8,10 +8,10 @@ import java.sql.PreparedStatement
 
 fun Table.listOfStrings(name: String): Column<List<String>> = registerColumn(
     name,
-    ListOfStringColumnType()
+    ListOfStringsColumnType()
 )
 
-class ListOfStringColumnType : ColumnType() {
+class ListOfStringsColumnType : ColumnType() {
 
     override fun sqlType() = "TEXT[]"
 
