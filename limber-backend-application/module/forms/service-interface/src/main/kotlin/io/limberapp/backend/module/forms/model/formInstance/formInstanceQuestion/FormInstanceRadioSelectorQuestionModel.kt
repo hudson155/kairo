@@ -5,11 +5,12 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestion
 import java.time.LocalDateTime
 import java.util.UUID
 
-class FormInstanceRadioSelectorQuestionModel(
+data class FormInstanceRadioSelectorQuestionModel(
     override val created: LocalDateTime,
     override val formTemplateQuestionId: UUID?,
     val selection: Set<String>
-): FormInstanceQuestionModel {
+) : FormInstanceQuestionModel {
+
     override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
 
     data class Update(

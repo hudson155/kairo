@@ -5,9 +5,11 @@ import com.piperframework.util.unknownType
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
@@ -47,6 +49,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             multiLine = true,
             placeholder = null,
             validator = null
+        ),
+        FormTemplateRadioSelectorQuestionModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            label = "Description",
+            helpText = null,
+            options = mutableSetOf("test_option_one", "test_option_two")
         )
     )
 
@@ -67,6 +76,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             multiLine = rep.multiLine,
             placeholder = rep.placeholder,
             validator = rep.validator
+        )
+        is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            label = rep.label,
+            helpText = rep.helpText,
+            options = rep.options
         )
         else -> unknownFormTemplateQuestion(rep::class)
     }
@@ -90,6 +106,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = model.placeholder,
             validator = model.validator
         )
+        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete (
+            id = model.id,
+            created = model.created,
+            label = model.label,
+            helpText = model.helpText,
+            options = model.options
+        )
         else -> unknownFormTemplateQuestion(model::class)
     }
 
@@ -106,6 +129,11 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             multiLine = rep.multiLine,
             placeholder = rep.placeholder,
             validator = rep.validator
+        )
+        is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
+            label = rep.label,
+            helpText = rep.helpText,
+            options = rep.options
         )
         else -> unknownFormTemplateQuestion(rep::class)
     }

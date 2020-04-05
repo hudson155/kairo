@@ -7,6 +7,7 @@ import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -54,6 +55,9 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 insertStatement[FormTemplateQuestionTable.placeholder] = model.placeholder
                 insertStatement[FormTemplateQuestionTable.validator] = model.validator?.pattern
             }
+            is FormTemplateRadioSelectorQuestionModel -> {
+                insertStatement[FormTemplateQuestionTable.options] = model.options.toList()
+            }
             else -> unknownFormTemplateQuestion(model::class)
         }
     }
@@ -73,6 +77,9 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 update.multiLine?.let { updateStatement[FormTemplateQuestionTable.multiLine] = it }
                 update.placeholder?.let { updateStatement[FormTemplateQuestionTable.placeholder] = it }
                 update.validator?.let { updateStatement[FormTemplateQuestionTable.validator] = it.pattern }
+            }
+            is FormTemplateRadioSelectorQuestionModel.Update -> {
+                update.options?.let { updateStatement[FormTemplateQuestionTable.options] = it.toList() }
             }
             else -> unknownFormTemplateQuestion(update::class)
         }
@@ -108,6 +115,13 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 multiLine = checkNotNull(resultRow[FormTemplateQuestionTable.multiLine]),
                 placeholder = resultRow[FormTemplateQuestionTable.placeholder],
                 validator = resultRow[FormTemplateQuestionTable.validator]?.let { Regex(it) }
+            )
+            FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel(
+                id = resultRow[FormTemplateQuestionTable.guid],
+                created = resultRow[FormTemplateQuestionTable.createdDate],
+                label = resultRow[FormTemplateQuestionTable.label],
+                helpText = resultRow[FormTemplateQuestionTable.helpText],
+                options = checkNotNull(resultRow[FormTemplateQuestionTable.options]).toSet()
             )
         }
 

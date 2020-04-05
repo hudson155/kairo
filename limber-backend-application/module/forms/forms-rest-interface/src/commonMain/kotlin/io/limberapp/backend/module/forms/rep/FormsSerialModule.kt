@@ -3,6 +3,7 @@ package io.limberapp.backend.module.forms.rep
 import com.piperframework.serialization.baseClass
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
@@ -32,11 +33,13 @@ val formsSerialModule = SerializersModule {
 
     baseClass(FormInstanceQuestionRep.Creation::class) {
         subclass(FormInstanceDateQuestionRep.Creation::class)
+        subclass(FormInstanceRadioSelectorQuestionRep.Creation::class)
         subclass(FormInstanceTextQuestionRep.Creation::class)
     }
 
     baseClass(FormInstanceQuestionRep.Complete::class) {
         subclass(FormInstanceDateQuestionRep.Complete::class)
+        subclass(FormInstanceRadioSelectorQuestionRep.Complete::class)
         subclass(FormInstanceTextQuestionRep.Complete::class)
     }
 }

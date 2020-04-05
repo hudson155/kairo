@@ -7,6 +7,7 @@ import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceTable
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.jetbrains.exposed.sql.ResultRow
@@ -80,6 +81,11 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
                 formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 text = checkNotNull(resultRow[FormInstanceQuestionTable.text])
+            )
+            FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
+                created = resultRow[FormInstanceQuestionTable.createdDate],
+                formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                selection = checkNotNull(resultRow[FormInstanceQuestionTable.selection]).toSet()
             )
         }
 
