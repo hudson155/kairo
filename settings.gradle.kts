@@ -12,18 +12,22 @@ include(":limber-backend-application:common:testing")
 
 include(":limber-backend-application:module:auth")
 include(":limber-backend-application:module:auth:application")
+include(":limber-backend-application:module:auth:rest-interface")
 include(":limber-backend-application:module:auth:service-interface")
 
 include(":limber-backend-application:module:forms")
 include(":limber-backend-application:module:forms:application")
+include(":limber-backend-application:module:forms:rest-interface")
 include(":limber-backend-application:module:forms:service-interface")
 
 include(":limber-backend-application:module:orgs")
 include(":limber-backend-application:module:orgs:application")
+include(":limber-backend-application:module:orgs:rest-interface")
 include(":limber-backend-application:module:orgs:service-interface")
 
 include(":limber-backend-application:module:users")
 include(":limber-backend-application:module:users:application")
+include(":limber-backend-application:module:users:rest-interface")
 include(":limber-backend-application:module:users:service-interface")
 
 /**
