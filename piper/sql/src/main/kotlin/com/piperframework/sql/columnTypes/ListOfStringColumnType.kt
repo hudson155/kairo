@@ -7,10 +7,10 @@ import org.postgresql.jdbc.PgArray
 
 fun Table.list(name: String): Column<List<String>> = registerColumn(
     name,
-    SetColumnType()
+    ListColumnType()
 )
 
-class SetColumnType : ColumnType() {
+class ListColumnType : ColumnType() {
 
     override fun sqlType() = "TEXT[]"
 
