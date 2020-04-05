@@ -15,11 +15,11 @@ internal object FormInstanceRadioSelectorQuestionRep {
     @Serializable
     @SerialName("RADIO_SELECTOR")
     data class Creation(
-        val selection: Set<String>
+        val selection: String
     ) : FormInstanceQuestionRep.Creation {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Creation::selection) { value.all { Validator.length1hundred(it, allowEmpty = false) } }
+            validate(Creation::selection) { Validator.length1hundred(value, allowEmpty = false) }
         }
     }
 
@@ -30,6 +30,6 @@ internal object FormInstanceRadioSelectorQuestionRep {
         override val created: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
         override val formTemplateQuestionId: UUID?,
-        val selection: Set<String>
+        val selection: String
     ) : FormInstanceQuestionRep.Complete
 }

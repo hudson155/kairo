@@ -21,7 +21,8 @@ internal object FormTemplateRadioSelectorQuestionRep {
     ) : FormTemplateQuestionRep.Creation {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Creation::options) { value.all{ Validator.length1hundred(it, allowEmpty = false)} }
+            validate(Creation::options) { value.all { Validator.length1hundred(it, allowEmpty = false) } }
+            validate(Creation::options) { value.isNotEmpty() }
         }
     }
 
@@ -46,9 +47,8 @@ internal object FormTemplateRadioSelectorQuestionRep {
     ) : FormTemplateQuestionRep.Update {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Update::options) {
-                value.all { Validator.length1hundred(it, allowEmpty = false) }
-            }
+            validate(Update::options) { value.all { Validator.length1hundred(it, allowEmpty = false) } }
+            validate(Update::options) { value.isNotEmpty() }
         }
     }
 }

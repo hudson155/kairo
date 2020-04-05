@@ -33,7 +33,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
             created = LocalDateTime.now(clock),
             formTemplateQuestionId = rep.formTemplateQuestionId,
-            selection = rep.selection
+            selection = mutableSetOf(rep.selection)
         )
         else -> unknownFormInstanceQuestion(rep::class)
     }
@@ -52,7 +52,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
             created = model.created,
             formTemplateQuestionId = model.formTemplateQuestionId,
-            selection = model.selection
+            selection = model.selection.elementAt(0)
         )
         else -> unknownFormInstanceQuestion(model::class)
     }
