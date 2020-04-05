@@ -60,6 +60,8 @@ internal class FormInstanceQuestionMapper @Inject constructor(
     fun update(model: FormInstanceQuestionModel) = when (model) {
         is FormInstanceDateQuestionModel -> FormInstanceDateQuestionModel.Update(date = model.date)
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
+        is FormInstanceRadioSelectorQuestionModel ->
+            FormInstanceRadioSelectorQuestionModel.Update(selection = model.selection)
         else -> unknownFormInstanceQuestion(model::class)
     }
 

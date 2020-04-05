@@ -21,7 +21,7 @@ internal class PostFormInstanceTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
 
         // PostFormInstance
-        FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateId, 4)
+        FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateId, 6)
         piperTest.test(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateId),
@@ -44,7 +44,7 @@ internal class PostFormInstanceTest : ResourceTest() {
         )
 
         // PostFormInstance
-        FormInstanceRepFixtures.fixture.complete(this, feature1Id, formTemplateRep.id, 4)
+        FormInstanceRepFixtures.fixture.complete(this, feature1Id, formTemplateRep.id, 6)
         piperTest.test(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(feature1Id, formTemplateRep.id),
@@ -66,7 +66,7 @@ internal class PostFormInstanceTest : ResourceTest() {
         )
 
         // PostFormInstance
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
+        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 6)
         piperTest.test(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)

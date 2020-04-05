@@ -53,9 +53,16 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         FormTemplateRadioSelectorQuestionModel(
             id = uuidGenerator.generate(),
             created = LocalDateTime.now(clock),
-            label = "Description",
+            label = "No options",
             helpText = null,
-            options = mutableSetOf("test_option_one", "test_option_two")
+            options = setOf()
+        ),
+        FormTemplateRadioSelectorQuestionModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            label = "Two options",
+            helpText = null,
+            options = setOf("test_option_one", "test_option_two")
         )
     )
 
@@ -106,7 +113,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             placeholder = model.placeholder,
             validator = model.validator
         )
-        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete (
+        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
             id = model.id,
             created = model.created,
             label = model.label,

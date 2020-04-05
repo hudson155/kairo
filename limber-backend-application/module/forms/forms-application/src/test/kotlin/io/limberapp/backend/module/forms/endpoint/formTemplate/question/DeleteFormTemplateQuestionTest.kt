@@ -71,7 +71,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         )
 
         // PostFormTemplateQuestion
-        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
+        val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 6)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )

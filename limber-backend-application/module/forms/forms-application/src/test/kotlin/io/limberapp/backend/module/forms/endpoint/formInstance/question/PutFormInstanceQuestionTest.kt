@@ -52,7 +52,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         )
 
         // PostFormInstance
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
+        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 6)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
@@ -84,7 +84,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         )
 
         // PostFormInstance
-        var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
+        var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 6)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
@@ -130,7 +130,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         )
 
         // PostFormInstance
-        var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
+        var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 6)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)

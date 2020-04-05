@@ -42,14 +42,14 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
         )
 
         // PostFormInstance
-        val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
+        val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 6)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
         // PostFormInstance
-        val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
+        val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 7)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
