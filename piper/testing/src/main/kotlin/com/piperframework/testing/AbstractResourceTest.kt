@@ -33,8 +33,6 @@ abstract class AbstractResourceTest {
 
     protected abstract val piperTest: PiperTest
 
-    protected val json = Json()
-
     val fixedClock: Clock = Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
 
     val deterministicUuidGenerator = DeterministicUuidGenerator()

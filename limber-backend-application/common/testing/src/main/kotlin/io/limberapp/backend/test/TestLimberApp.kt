@@ -17,7 +17,7 @@ class TestLimberApp(
     application: Application,
     config: Config,
     module: Module,
-    additionalModules: List<ModuleWithLifecycle>,
+    additionalModules: Set<ModuleWithLifecycle>,
     fixedClock: Clock,
     deterministicUuidGenerator: UuidGenerator
 ) : TestPiperApp(application, config, module, additionalModules, fixedClock, deterministicUuidGenerator) {

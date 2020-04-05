@@ -20,9 +20,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @Suppress("LongParameterList") // For these methods, we're ok with it.
-abstract class PiperTest(private val moduleFunction: Application.() -> Unit) {
-
-    protected val json = Json()
+abstract class PiperTest(
+    protected val json: Json,
+    private val moduleFunction: Application.() -> Unit
+) {
 
     private val exceptionMapper = ExceptionMapper()
 

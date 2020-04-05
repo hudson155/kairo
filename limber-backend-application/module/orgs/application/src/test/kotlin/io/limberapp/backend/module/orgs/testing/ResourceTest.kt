@@ -1,25 +1,16 @@
 package io.limberapp.backend.module.orgs.testing
 
 import com.piperframework.module.TestSqlModule
-import com.piperframework.testing.AbstractResourceTest
 import io.limberapp.backend.module.orgs.OrgsModule
-import io.limberapp.backend.test.LimberTest
-import io.limberapp.backend.test.TestLimberApp
+import io.limberapp.backend.test.LimberResourceTest
 
-abstract class ResourceTest : AbstractResourceTest() {
+abstract class ResourceTest : LimberResourceTest() {
+
+    override val module = OrgsModule()
 
     private val testSqlModule = TestSqlModule()
 
-    override val piperTest = LimberTest {
-        TestLimberApp(
-            application = this,
-            config = config,
-            module = OrgsModule(),
-            additionalModules = listOf(testSqlModule),
-            fixedClock = fixedClock,
-            deterministicUuidGenerator = deterministicUuidGenerator
-        )
-    }
+    override val additionalModules = setOf(testSqlModule)
 
     override fun before() {
         testSqlModule.dropDatabase()
