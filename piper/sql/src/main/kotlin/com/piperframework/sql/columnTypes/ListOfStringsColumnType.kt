@@ -4,8 +4,9 @@ import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.Table
 import org.postgresql.jdbc.PgArray
+import java.sql.PreparedStatement
 
-fun Table.listOfString(name: String): Column<List<String>> = registerColumn(
+fun Table.listOfStrings(name: String): Column<List<String>> = registerColumn(
     name,
     ListOfStringColumnType()
 )
@@ -27,6 +28,14 @@ class ListOfStringColumnType : ColumnType() {
         }
         is Iterable<*> -> "'{${value.joinToString()}}'"
         else -> nonNullValueToString(value)
+    }
+
+    override fun setParameter(stmt: PreparedStatement, index: Int, value: Any?) {
+        if (value is List<*>) {
+            stmt.setArray(index, stmt.connection.createArrayOf("text", value.toTypedArray()))
+        } else {
+            super.setParameter(stmt, index, value)
+        }
     }
 
     private fun unexpectedValue(value: Any): Nothing =
