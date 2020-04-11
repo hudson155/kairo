@@ -12,16 +12,21 @@ kotlin {
                 implementation(project(":piper:data-conversion"))
             }
         }
-        jvm().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation(kotlin("stdlib-jdk8"))
-                implementation(Dependencies.Jackson.dataTypeJsr310)
-                implementation(Dependencies.Jackson.moduleKotlin)
+        jvm {
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-jdk8"))
+                    implementation(Dependencies.Jackson.dataTypeJsr310)
+                    implementation(Dependencies.Jackson.moduleKotlin)
+                }
             }
         }
-        js().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation(kotlin("stdlib-js"))
+        js {
+            browser { }
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-js"))
+                }
             }
         }
     }

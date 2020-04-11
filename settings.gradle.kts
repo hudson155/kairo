@@ -11,24 +11,30 @@ include(":limber-backend-application:common:interface")
 include(":limber-backend-application:common:testing")
 
 include(":limber-backend-application:module:auth")
-include(":limber-backend-application:module:auth:application")
-include(":limber-backend-application:module:auth:rest-interface")
-include(":limber-backend-application:module:auth:service-interface")
+include(":limber-backend-application:module:auth:auth-application")
+include(":limber-backend-application:module:auth:auth-rest-interface")
+include(":limber-backend-application:module:auth:auth-service-interface")
 
 include(":limber-backend-application:module:forms")
-include(":limber-backend-application:module:forms:application")
-include(":limber-backend-application:module:forms:rest-interface")
-include(":limber-backend-application:module:forms:service-interface")
+include(":limber-backend-application:module:forms:forms-application")
+include(":limber-backend-application:module:forms:forms-rest-interface")
+include(":limber-backend-application:module:forms:forms-service-interface")
 
 include(":limber-backend-application:module:orgs")
-include(":limber-backend-application:module:orgs:application")
-include(":limber-backend-application:module:orgs:rest-interface")
-include(":limber-backend-application:module:orgs:service-interface")
+include(":limber-backend-application:module:orgs:orgs-application")
+include(":limber-backend-application:module:orgs:orgs-rest-interface")
+include(":limber-backend-application:module:orgs:orgs-service-interface")
 
 include(":limber-backend-application:module:users")
-include(":limber-backend-application:module:users:application")
-include(":limber-backend-application:module:users:rest-interface")
-include(":limber-backend-application:module:users:service-interface")
+include(":limber-backend-application:module:users:users-application")
+include(":limber-backend-application:module:users:users-rest-interface")
+include(":limber-backend-application:module:users:users-service-interface")
+
+/**
+ * Web
+ */
+
+include(":limber-web")
 
 /**
  * Piper (Backend Framework)

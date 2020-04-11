@@ -10,14 +10,19 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
             }
         }
-        jvm().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation(kotlin("stdlib-jdk8"))
+        jvm {
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-jdk8"))
+                }
             }
         }
-        js().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation(kotlin("stdlib-js"))
+        js {
+            browser { }
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-js"))
+                }
             }
         }
     }

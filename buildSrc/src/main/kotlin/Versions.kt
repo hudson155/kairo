@@ -33,6 +33,9 @@ object Versions {
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
     const val kotlin = "1.3.71"
 
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    const val kotlinxCoroutines = "1.3.5"
+
     // https://github.com/ktorio/ktor/releases
     const val ktor = "1.3.2"
 
