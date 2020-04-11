@@ -8,7 +8,7 @@ import kotlinx.coroutines.await
 import org.w3c.fetch.RequestInit
 import kotlin.browser.window
 
-internal enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
+private enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
 
 internal object Api {
 
