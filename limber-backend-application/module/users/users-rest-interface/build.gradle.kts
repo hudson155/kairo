@@ -8,19 +8,24 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation(project(":limber-backend-application:common:interface"))
-                implementation(project(":piper:reps"))
-                implementation(project(":piper:types"))
+                api(project(":limber-backend-application:common:interface"))
+                api(project(":piper:reps"))
+                api(project(":piper:types"))
             }
         }
-        jvm().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation(kotlin("stdlib-jdk8"))
+        jvm {
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-jdk8"))
+                }
             }
         }
-        js().compilations["main"].defaultSourceSet {
-            dependencies {
-                implementation(kotlin("stdlib-js"))
+        js {
+            browser { }
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-js"))
+                }
             }
         }
     }
