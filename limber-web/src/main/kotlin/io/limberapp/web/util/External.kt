@@ -1,6 +1,6 @@
 package io.limberapp.web.util
 
-interface Process {
+internal interface Process {
 
     interface Env {
         val API_ROOT_URL: String
@@ -10,6 +10,6 @@ interface Process {
     val env: Env
 }
 
-external val process: Process
+internal external val process: Process
 
 internal external fun encodeURIComponent(uriComponent: String): String
