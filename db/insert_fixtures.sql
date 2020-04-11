@@ -36,7 +36,7 @@ VALUES (NOW(), '3e2d1681-a666-456e-a168-647d8c3a3150', 'jeff.hudson@limberapp.io
 -- Create vehicle inspection form.
 INSERT INTO forms.form_template (created_date, guid, feature_guid,
                                  title, description)
-VALUES (NOW(), '85ae9d91-2666-4174-bdfe-1f7cd868869c', '75a2ed7a-4247-4e63-ab10-a60df3d9aeee',
+VALUES (NOW(), '85ae9d91-2666-4174-bdfe-1f7cd868869c', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
         'Vehicle Inspection', NULL);
 INSERT INTO forms.form_template_question (created_date, guid, form_template_guid, rank,
                                           label, help_text, type, multi_line, placeholder, validator, earliest, latest)
@@ -48,9 +48,9 @@ VALUES (NOW(), '59c0b82c-57d3-4d29-b7ef-0bbf90084d7d', '85ae9d91-2666-4174-bdfe-
         'Description', NULL, 'TEXT', TRUE, NULL, NULL, NULL, NULL);
 INSERT INTO forms.form_instance (created_date, guid, feature_guid,
                                  form_template_guid)
-VALUES (NOW(), '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '75a2ed7a-4247-4e63-ab10-a60df3d9aeee',
+VALUES (NOW(), '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
         '85ae9d91-2666-4174-bdfe-1f7cd868869c'),
-       (NOW(), '168af0c7-1ab1-40f6-9715-c9e8c241442f', '75a2ed7a-4247-4e63-ab10-a60df3d9aeee',
+       (NOW(), '168af0c7-1ab1-40f6-9715-c9e8c241442f', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
         '85ae9d91-2666-4174-bdfe-1f7cd868869c');
 INSERT INTO forms.form_instance_question (created_date, form_instance_guid, form_template_question_guid,
                                           type, text, date)
