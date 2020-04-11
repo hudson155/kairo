@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":limber-backend-application:common:service-interface"))
+    implementation(project(":limber-backend-application:common:interface"))
 }
 
 detekt {

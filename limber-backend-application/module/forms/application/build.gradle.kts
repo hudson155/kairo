@@ -5,9 +5,10 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(project(":limber-backend-application:module:forms:rest-interface"))
     api(project(":limber-backend-application:module:forms:service-interface"))
     implementation(project(":limber-backend-application:common"))
-    implementation(project(":limber-backend-application:common:service-interface"))
+    implementation(project(":limber-backend-application:common:interface"))
     implementation(project(":piper:sql"))
     implementation(Dependencies.Jackson.annotations)
     testImplementation(project(":limber-backend-application:common:testing"))
