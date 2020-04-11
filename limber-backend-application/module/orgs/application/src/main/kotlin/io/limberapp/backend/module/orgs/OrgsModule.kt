@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.orgs
 
 import com.piperframework.module.Module
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PatchOrg
@@ -20,6 +21,8 @@ import io.limberapp.backend.module.orgs.store.org.SqlOrgMapperImpl
 import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 
 class OrgsModule : Module() {
+
+    override fun configureJson(json: Json) = Unit
 
     override val endpoints = listOf(
 

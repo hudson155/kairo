@@ -66,7 +66,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         return Context(modules)
     }
 
-    override fun onStop(application: Application, context: Context) {
+    final override fun onStop(application: Application, context: Context) {
         context.modules.forEach { it.unconfigure() }
     }
 
@@ -126,7 +126,9 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
         install(ContentNegotiation) {
             register(
                 contentType = ContentType.Application.Json,
-                converter = JsonContentConverter(Json(prettyPrint = true))
+                converter = JsonContentConverter(Json(prettyPrint = true).apply {
+                    modules.forEach { it.configureJson(this) }
+                })
             )
         }
     }

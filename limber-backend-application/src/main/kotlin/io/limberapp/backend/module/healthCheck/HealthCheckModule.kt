@@ -2,6 +2,7 @@ package io.limberapp.backend.module.healthCheck
 
 import com.piperframework.endpoint.ApiEndpoint
 import com.piperframework.module.Module
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.healthCheck.endpoint.healthCheck.HealthCheck
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckService
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckServiceImpl
@@ -12,6 +13,8 @@ import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckSe
  * in its own module module.
  */
 internal class HealthCheckModule : Module() {
+
+    override fun configureJson(json: Json) = Unit
 
     override val endpoints: List<Class<out ApiEndpoint<*, *, *>>> = listOf(HealthCheck::class.java)
 

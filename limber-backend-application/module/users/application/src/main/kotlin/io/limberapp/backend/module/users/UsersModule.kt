@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.users
 
 import com.piperframework.module.Module
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.users.endpoint.user.DeleteUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
@@ -20,6 +21,8 @@ import io.limberapp.backend.module.users.store.account.SqlUserStore
 import io.limberapp.backend.module.users.store.account.UserStore
 
 class UsersModule : Module() {
+
+    override fun configureJson(json: Json) = Unit
 
     override val endpoints = listOf(
 

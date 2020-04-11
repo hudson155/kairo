@@ -1,17 +1,23 @@
 package com.piperframework.module
 
 import com.piperframework.endpoint.ApiEndpoint
+import com.piperframework.serialization.Json
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
 /**
- * A Module encapsulates a distinct concept in the application. It wires up the endpoints and binds services and stores.
- * All endpoints, services, and stores need to be included in exactly 1 module. Modules can use services and stores that
- * are bound in other modules, as long as both modules are included in the same application.
+ * A [Module] encapsulates a distinct concept in the application. It wires up the endpoints and binds services and.
+ * stores. All endpoints, services, and stores need to be included in exactly 1 module. Modules can use services and
+ * stores that are bound in other modules, as long as both modules are included in the same application.
  */
 abstract class Module : ModuleWithLifecycle() {
 
     private val logger = LoggerFactory.getLogger(Module::class.java)
+
+    /**
+     * Configure [Json] instance for serialization and deserialization of reps in this module.
+     */
+    abstract fun configureJson(json: Json)
 
     /**
      * Endpoints are automatically wired up.

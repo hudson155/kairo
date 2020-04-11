@@ -9,9 +9,10 @@ dependencies {
     api(project(":piper:exceptions"))
     api(project(":piper:ktor-auth"))
     api(project(":piper:reps"))
+    api(project(":piper:serialization"))
     api(project(":piper:util"))
     api(Dependencies.Guice.guice)
-    implementation(Dependencies.Jackson.annotations)
+    api(Dependencies.Jackson.moduleKotlin)
     api(Dependencies.Ktor.serverCore)
 }
 

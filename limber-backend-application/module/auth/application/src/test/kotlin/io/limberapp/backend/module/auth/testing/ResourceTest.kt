@@ -1,16 +1,18 @@
 package io.limberapp.backend.module.auth.testing
 
 import com.piperframework.module.TestSqlModule
-import com.piperframework.testing.AbstractResourceTest
 import com.piperframework.testing.MockedServices
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
-import io.limberapp.backend.test.LimberTest
-import io.limberapp.backend.test.TestLimberApp
+import io.limberapp.backend.test.LimberResourceTest
 
-abstract class ResourceTest : AbstractResourceTest() {
+abstract class ResourceTest : LimberResourceTest() {
+
+    override val module = AuthModule()
+
+    private val testSqlModule = TestSqlModule()
 
     protected val mockedServices: MockedServices = MockedServices(
         AccountService::class,
@@ -18,18 +20,7 @@ abstract class ResourceTest : AbstractResourceTest() {
         UserService::class
     )
 
-    private val testSqlModule = TestSqlModule()
-
-    override val piperTest = LimberTest {
-        TestLimberApp(
-            application = this,
-            config = config,
-            module = AuthModule(),
-            additionalModules = listOf(mockedServices, testSqlModule),
-            fixedClock = fixedClock,
-            deterministicUuidGenerator = deterministicUuidGenerator
-        )
-    }
+    override val additionalModules = setOf(mockedServices, testSqlModule)
 
     override fun before() {
         testSqlModule.dropDatabase()

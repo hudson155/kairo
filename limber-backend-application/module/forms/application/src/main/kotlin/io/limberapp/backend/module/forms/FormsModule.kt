@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureId
@@ -15,6 +16,7 @@ import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PatchFormTemplateQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.PostFormTemplateQuestion
+import io.limberapp.backend.module.forms.rep.configureJsonForFormsModule
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
@@ -94,5 +96,9 @@ class FormsModule : Module() {
         bind(SqlFormInstanceMapper::class, SqlFormInstanceMapperImpl::class)
         bind(FormInstanceStore::class, SqlFormInstanceStore::class)
         bind(FormInstanceQuestionStore::class, SqlFormInstanceQuestionStore::class)
+    }
+
+    override fun configureJson(json: Json) {
+        configureJsonForFormsModule(json)
     }
 }
