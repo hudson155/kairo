@@ -9,9 +9,7 @@ import kotlinx.css.color
 import kotlinx.css.display
 import kotlinx.css.fontWeight
 import kotlinx.css.marginRight
-import kotlinx.css.properties.TextDecoration
 import kotlinx.css.px
-import kotlinx.css.textDecoration
 import react.RBuilder
 import react.RHandler
 import react.RProps
@@ -30,7 +28,6 @@ private val headerLink = functionalComponent<Props> { props ->
             marginRight = 16.px
             color = Color.white
             fontWeight = FontWeight.bold
-            textDecoration = TextDecoration.none
         }
         navLink(to = props.to, exact = true) {
             props.children()
