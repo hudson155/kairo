@@ -45,8 +45,8 @@ private val mainApp = functionalComponent<RProps> {
             features.default?.let { route(path = "/", exact = true) { redirect(from = "/", to = it.path) } }
             features.map { feature ->
                 route(path = feature.path, exact = true) { buildElement { featurePage(feature) } }
-                route(path = "/") { buildElement { notFoundPage() } }
             }
+            route(path = "/") { buildElement { notFoundPage() } }
         }
     }
 }
