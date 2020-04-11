@@ -42,8 +42,4 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.5")
 }
 
-kotlin.target.browser {
-    webpackTask {
-        this.configDirectory
-    }
-}
+kotlin.target.browser {}
