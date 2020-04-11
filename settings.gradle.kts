@@ -31,6 +31,12 @@ include(":limber-backend-application:module:users:users-rest-interface")
 include(":limber-backend-application:module:users:users-service-interface")
 
 /**
+ * Web
+ */
+
+include(":limber-web")
+
+/**
  * Piper (Backend Framework)
  */
 

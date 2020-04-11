@@ -34,6 +34,7 @@
             <option value="$PROJECT_DIR$/limber-backend-application/module/users/users-application" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/users/users-rest-interface" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/users/users-service-interface" />
+            <option value="$PROJECT_DIR$/limber-web" />
             <option value="$PROJECT_DIR$/piper" />
             <option value="$PROJECT_DIR$/piper/common" />
             <option value="$PROJECT_DIR$/piper/data-conversion" />
