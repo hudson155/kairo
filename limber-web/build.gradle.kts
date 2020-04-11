@@ -1,5 +1,6 @@
 plugins {
     kotlin("js")
+    id(Plugins.detekt).version(Versions.detekt)
 }
 
 group = "io.limberapp.web"
@@ -35,3 +36,8 @@ dependencies {
 }
 
 kotlin.target.browser {}
+
+detekt {
+    config = files("$projectDir/.detekt/config.yml")
+    input = files("src/main/kotlin", "src/test/kotlin")
+}
