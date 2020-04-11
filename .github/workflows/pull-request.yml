@@ -78,7 +78,7 @@ jobs:
           LIMBER_PROD_POSTGRES_PASSWORD: postgres
 
   build-backend:
-    name: Build
+    name: Build Backend
     runs-on: ubuntu-latest
     needs: dependencies
     steps:
@@ -98,7 +98,7 @@ jobs:
       - run: docker build -t registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) limber-backend-application
 
   build-web:
-    name: Build
+    name: Build Web
     runs-on: ubuntu-latest
     needs: dependencies
     steps:
