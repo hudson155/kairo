@@ -11,9 +11,9 @@ import react.functionalComponent
 internal data class Props(val header: ReactElement?, val footer: ReactElement?) : RProps
 
 private val page = functionalComponent<Props> { props ->
-    props.header?.let { footer { child(it) } }
+    props.header?.let { header { child(it) } }
     main { props.children() }
-    props.footer?.let { header { child(it) } }
+    props.footer?.let { footer { child(it) } }
 }
 
 internal fun RBuilder.page(
