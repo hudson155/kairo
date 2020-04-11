@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":limber-backend-application:module:orgs:rest-interface"))
-    api(project(":limber-backend-application:module:orgs:service-interface"))
+    implementation(project(":limber-backend-application:module:users:users-rest-interface"))
+    api(project(":limber-backend-application:module:users:users-service-interface"))
     implementation(project(":limber-backend-application:common"))
     implementation(project(":limber-backend-application:common:interface"))
     implementation(project(":piper:sql"))
