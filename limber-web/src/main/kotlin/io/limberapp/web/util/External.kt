@@ -4,6 +4,7 @@ interface Process {
 
     interface Env {
         val API_ROOT_URL: String
+        val COPYRIGHT_HOLDER: String
     }
 
     val env: Env

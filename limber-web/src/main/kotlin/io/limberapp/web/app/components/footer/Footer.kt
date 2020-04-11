@@ -1,5 +1,6 @@
 package io.limberapp.web.app.components.footer
 
+import io.limberapp.web.util.process
 import kotlinx.css.Display
 import kotlinx.css.display
 import kotlinx.css.padding
@@ -17,7 +18,7 @@ import kotlin.js.Date
 private val footer = functionalComponent<RProps> {
     styledDiv {
         css { display = Display.flex; padding(16.px) }
-        styledP { small { +"Copyright © ${Date().getFullYear()} Jeff Hudson" } }
+        styledP { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
     }
 }
 

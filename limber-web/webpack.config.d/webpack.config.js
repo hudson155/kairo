@@ -25,10 +25,12 @@ function getEnvironmentVariables() {
     case 'development':
       return {
         API_ROOT_URL: JSON.stringify('http://localhost:55100'),
+        COPYRIGHT_HOLDER: JSON.stringify('Jeff Hudson'),
       };
     case 'production':
       return {
         API_ROOT_URL: JSON.stringify('https://api.limberapp.io'),
+        COPYRIGHT_HOLDER: JSON.stringify('Jeff Hudson'),
       };
     default:
       throw new Error(`Unknown NODE_ENV: ${nodeEnv}.`);
