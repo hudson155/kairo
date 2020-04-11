@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "io.limberapp.web"
-version = "0.0.0"
+version = "0.1.0-SNAPSHOT"
 
 repositories {
     maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers/")
