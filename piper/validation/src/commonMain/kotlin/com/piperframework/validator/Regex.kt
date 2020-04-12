@@ -2,7 +2,7 @@ package com.piperframework.validator
 
 internal object Regex {
 
-    val auth0ClientId = Regex("[A-Za-z0-9]{22}")
+    val auth0ClientId = Regex("[A-Za-z0-9]{32}")
 
     val base64EncodedUuid = Regex("[A-Za-z0-9+/]{21}[AQgw]==")
 

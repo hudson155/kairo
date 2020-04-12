@@ -18,7 +18,10 @@ internal class PatchTenantTest : ResourceTest() {
         val tenantDomain = "fakedomain.com"
 
         // PatchTenant
-        val tenantUpdateRep = TenantRep.Update(domain = "newdomain.com", auth0ClientId = "zyxwvutsrqponmlkjihgfe")
+        val tenantUpdateRep = TenantRep.Update(
+            domain = "newdomain.com",
+            auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"
+        )
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
             body = tenantUpdateRep,
@@ -168,7 +171,10 @@ internal class PatchTenantTest : ResourceTest() {
         )
 
         // PatchTenant
-        val tenantUpdateRep = TenantRep.Update(domain = "newdomain.com", auth0ClientId = "zyxwvutsrqponmlkjihgfe")
+        val tenantUpdateRep = TenantRep.Update(
+            domain = "newdomain.com",
+            auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"
+        )
         tenantRep = tenantRep.copy(domain = tenantUpdateRep.domain!!, auth0ClientId = tenantUpdateRep.auth0ClientId!!)
         piperTest.test(
             endpointConfig = PatchTenant.endpointConfig,
