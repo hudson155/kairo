@@ -10,7 +10,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRe
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-internal object FormInstanceRadioSelectorQuestionRep {
+object FormInstanceRadioSelectorQuestionRep {
 
     @Serializable
     @SerialName("RADIO_SELECTOR")

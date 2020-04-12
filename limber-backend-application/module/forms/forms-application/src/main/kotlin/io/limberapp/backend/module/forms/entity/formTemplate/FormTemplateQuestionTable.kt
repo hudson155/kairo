@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.entity.formTemplate
 
-import com.piperframework.sql.columnTypes.listOfStrings
 import com.piperframework.sql.columnTypes.localdate
+import com.piperframework.sql.columnTypes.stringList
 import com.piperframework.store.SqlTable
 
 internal object FormTemplateQuestionTable : SqlTable("forms", "form_template_question") {
@@ -28,5 +28,5 @@ internal object FormTemplateQuestionTable : SqlTable("forms", "form_template_que
 
     val latest = localdate("latest").nullable()
 
-    val options = listOfStrings("options").nullable()
+    val options = stringList("options").nullable()
 }

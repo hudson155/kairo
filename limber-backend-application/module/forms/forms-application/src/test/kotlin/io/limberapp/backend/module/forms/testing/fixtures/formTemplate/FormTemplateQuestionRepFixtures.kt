@@ -74,24 +74,9 @@ internal object FormTemplateQuestionRepFixtures {
         }),
         Fixture({
             FormTemplateRadioSelectorQuestionRep.Creation(
-                label = "No options",
-                helpText = null,
-                options = setOf<String>()
-            )
-        }, { idSeed ->
-            FormTemplateRadioSelectorQuestionRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                label = "No options",
-                helpText = null,
-                options = setOf<String>()
-            )
-        }),
-                Fixture({
-            FormTemplateRadioSelectorQuestionRep.Creation(
                 label = "Two options",
                 helpText = null,
-                options = setOf<String>("test_option_one", "test_option_two")
+                options = listOf<String>("test_option_one", "test_option_two")
             )
         }, { idSeed ->
             FormTemplateRadioSelectorQuestionRep.Complete(
@@ -99,7 +84,7 @@ internal object FormTemplateQuestionRepFixtures {
                 created = LocalDateTime.now(fixedClock),
                 label = "Two options",
                 helpText = null,
-                options = setOf<String>("test_option_one", "test_option_two")
+                options = listOf<String>("test_option_one", "test_option_two")
             )
         })
     )

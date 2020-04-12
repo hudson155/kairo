@@ -53,13 +53,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         FormTemplateRadioSelectorQuestionModel(
             id = uuidGenerator.generate(),
             created = LocalDateTime.now(clock),
-            label = "No options",
-            helpText = null,
-            options = setOf()
-        ),
-        FormTemplateRadioSelectorQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
             label = "Two options",
             helpText = null,
             options = setOf("test_option_one", "test_option_two")
@@ -75,6 +68,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             earliest = rep.earliest,
             latest = rep.latest
         )
+        is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            label = rep.label,
+            helpText = rep.helpText,
+            options = rep.options.toSet()
+        )
         is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
             id = uuidGenerator.generate(),
             created = LocalDateTime.now(clock),
@@ -83,13 +83,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             multiLine = rep.multiLine,
             placeholder = rep.placeholder,
             validator = rep.validator
-        )
-        is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
-            label = rep.label,
-            helpText = rep.helpText,
-            options = rep.options
         )
         else -> unknownFormTemplateQuestion(rep::class)
     }
@@ -103,6 +96,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             earliest = model.earliest,
             latest = model.latest
         )
+        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
+            id = model.id,
+            created = model.created,
+            label = model.label,
+            helpText = model.helpText,
+            options = model.options.toList()
+        )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
             id = model.id,
             created = model.created,
@@ -112,13 +112,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             multiLine = model.multiLine,
             placeholder = model.placeholder,
             validator = model.validator
-        )
-        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
-            id = model.id,
-            created = model.created,
-            label = model.label,
-            helpText = model.helpText,
-            options = model.options
         )
         else -> unknownFormTemplateQuestion(model::class)
     }
@@ -130,17 +123,17 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             earliest = rep.earliest,
             latest = rep.latest
         )
+        is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
+            label = rep.label,
+            helpText = rep.helpText,
+            options = rep.options.toSet()
+        )
         is FormTemplateTextQuestionRep.Update -> FormTemplateTextQuestionModel.Update(
             label = rep.label,
             helpText = rep.helpText,
             multiLine = rep.multiLine,
             placeholder = rep.placeholder,
             validator = rep.validator
-        )
-        is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
-            label = rep.label,
-            helpText = rep.helpText,
-            options = rep.options
         )
         else -> unknownFormTemplateQuestion(rep::class)
     }

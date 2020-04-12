@@ -25,15 +25,15 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = formTemplateQuestionId,
             date = rep.date
         )
+        is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
+            created = LocalDateTime.now(clock),
+            formTemplateQuestionId = formTemplateQuestionId,
+            selections = setOf(rep.selection)
+        )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
             created = LocalDateTime.now(clock),
             formTemplateQuestionId = formTemplateQuestionId,
             text = rep.text
-        )
-        is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
-            created = LocalDateTime.now(clock),
-            formTemplateQuestionId = rep.formTemplateQuestionId,
-            selection = mutableSetOf(rep.selection)
         )
         else -> unknownFormInstanceQuestion(rep::class)
     }
@@ -44,24 +44,24 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = model.formTemplateQuestionId,
             date = model.date
         )
+        is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
+            created = model.created,
+            formTemplateQuestionId = model.formTemplateQuestionId,
+            selection = model.selections.elementAt(0)
+        )
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(
             created = model.created,
             formTemplateQuestionId = model.formTemplateQuestionId,
             text = model.text
-        )
-        is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
-            created = model.created,
-            formTemplateQuestionId = model.formTemplateQuestionId,
-            selection = model.selection.elementAt(0)
         )
         else -> unknownFormInstanceQuestion(model::class)
     }
 
     fun update(model: FormInstanceQuestionModel) = when (model) {
         is FormInstanceDateQuestionModel -> FormInstanceDateQuestionModel.Update(date = model.date)
-        is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
         is FormInstanceRadioSelectorQuestionModel ->
-            FormInstanceRadioSelectorQuestionModel.Update(selection = model.selection)
+            FormInstanceRadioSelectorQuestionModel.Update(selections = model.selections)
+        is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
         else -> unknownFormInstanceQuestion(model::class)
     }
 

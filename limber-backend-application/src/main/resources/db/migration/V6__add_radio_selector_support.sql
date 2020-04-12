@@ -1,7 +1,5 @@
 ALTER TABLE forms.form_template_question
-ADD COLUMN
-    options                 TEXT[];
+ADD COLUMN options TEXT[];
 
 ALTER TABLE forms.form_instance_question
-ADD COLUMN
-    selection               TEXT[];
+ADD COLUMN selections TEXT[];

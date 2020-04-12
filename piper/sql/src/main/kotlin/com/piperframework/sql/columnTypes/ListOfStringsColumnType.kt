@@ -6,12 +6,12 @@ import org.jetbrains.exposed.sql.Table
 import org.postgresql.jdbc.PgArray
 import java.sql.PreparedStatement
 
-fun Table.listOfStrings(name: String): Column<List<String>> = registerColumn(
+fun Table.stringList(name: String): Column<List<String>> = registerColumn(
     name,
-    ListOfStringsColumnType()
+    StringListColumnType()
 )
 
-class ListOfStringsColumnType : ColumnType() {
+class StringListColumnType : ColumnType() {
 
     override fun sqlType() = "TEXT[]"
 

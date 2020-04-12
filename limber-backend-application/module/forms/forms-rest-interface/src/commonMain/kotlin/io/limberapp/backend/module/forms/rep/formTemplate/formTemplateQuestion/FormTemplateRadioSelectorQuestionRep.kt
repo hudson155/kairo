@@ -17,7 +17,7 @@ internal object FormTemplateRadioSelectorQuestionRep {
     data class Creation(
         override val label: String,
         override val helpText: String? = null,
-        val options: Set<String>
+        val options: List<String>
     ) : FormTemplateQuestionRep.Creation {
         override fun validate() = RepValidation {
             validate(super.validate())
@@ -35,7 +35,7 @@ internal object FormTemplateRadioSelectorQuestionRep {
         override val created: LocalDateTime,
         override val label: String,
         override val helpText: String?,
-        val options: Set<String>
+        val options: List<String>
     ) : FormTemplateQuestionRep.Complete
 
     @Serializable
@@ -43,7 +43,7 @@ internal object FormTemplateRadioSelectorQuestionRep {
     data class Update(
         override val label: String? = null,
         override val helpText: String? = null,
-        val options: Set<String>
+        val options: List<String>
     ) : FormTemplateQuestionRep.Update {
         override fun validate() = RepValidation {
             validate(super.validate())
