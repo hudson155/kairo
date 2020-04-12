@@ -13,24 +13,24 @@ internal object TenantRepFixtures {
     )
 
     val limberappFixture = Fixture({ orgId ->
-        TenantRep.Creation("limberapp.io", orgId, "abcdefghijklmnopqrstuv")
+        TenantRep.Creation("limberapp.io", orgId, "abcdefghijklmnopqrstuvwxyzabcdef")
     }, { orgId ->
         TenantRep.Complete(
             domain = "limberapp.io",
             orgId = orgId,
             created = LocalDateTime.now(fixedClock),
-            auth0ClientId = "abcdefghijklmnopqrstuv"
+            auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef"
         )
     })
 
     val someclientFixture = Fixture({ orgId ->
-        TenantRep.Creation("limber.someclient.com", orgId, "0123456789012345678901")
+        TenantRep.Creation("limber.someclient.com", orgId, "01234567890123456789012345678901")
     }, { orgId ->
         TenantRep.Complete(
             domain = "limber.someclient.com",
             orgId = orgId,
             created = LocalDateTime.now(fixedClock),
-            auth0ClientId = "0123456789012345678901"
+            auth0ClientId = "01234567890123456789012345678901"
         )
     })
 }
