@@ -35,7 +35,7 @@ object UserRep {
         val lastName: String,
         val emailAddress: String,
         val profilePhotoUrl: String?,
-        val roles: Set<JwtRole>
+        val roles: List<JwtRole>
     ) : CompleteRep
 
     data class Update(

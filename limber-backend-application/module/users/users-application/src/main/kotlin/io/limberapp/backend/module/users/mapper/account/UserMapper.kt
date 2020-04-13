@@ -31,7 +31,7 @@ internal class UserMapper @Inject constructor(
         lastName = model.lastName,
         emailAddress = model.emailAddress,
         profilePhotoUrl = model.profilePhotoUrl,
-        roles = model.roles
+        roles = model.roles.toList()
     )
 
     fun update(rep: UserRep.Update) = UserModel.Update(

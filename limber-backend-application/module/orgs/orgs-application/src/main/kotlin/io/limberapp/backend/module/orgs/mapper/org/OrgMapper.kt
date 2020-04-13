@@ -24,7 +24,7 @@ internal class OrgMapper @Inject constructor(
         id = model.id,
         created = model.created,
         name = model.name,
-        features = model.features.map { featureMapper.completeRep(it) }.toSet()
+        features = model.features.map { featureMapper.completeRep(it) }
     )
 
     fun update(rep: OrgRep.Update) = OrgModel.Update(

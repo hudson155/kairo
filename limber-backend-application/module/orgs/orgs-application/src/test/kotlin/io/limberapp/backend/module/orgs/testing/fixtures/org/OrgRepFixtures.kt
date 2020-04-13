@@ -19,7 +19,7 @@ internal object OrgRepFixtures {
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
+            features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
         )
     })
 }
