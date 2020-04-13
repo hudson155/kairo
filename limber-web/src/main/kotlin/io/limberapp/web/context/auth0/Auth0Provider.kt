@@ -3,9 +3,11 @@ package io.limberapp.web.context.auth0
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.util.AppState
 import io.limberapp.web.util.Auth0Client
+import io.limberapp.web.util.Auth0LogoutRequestProps
 import io.limberapp.web.util.async
 import io.limberapp.web.util.createAuth0Client
 import io.limberapp.web.util.process
+import io.limberapp.web.util.rootUrl
 import kotlinext.js.asJsObject
 import kotlinx.coroutines.await
 import react.RBuilder
@@ -33,17 +35,17 @@ private val auth0Provider = functionalComponent<Props> { props ->
 
     useEffect(emptyList()) {
         async {
-            println(window.location)
             val config = Auth0ConfigImpl(
                 domain = process.env.AUTH0_DOMAIN,
                 client_id = "eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa",
-                redirect_uri = "http://localhost:8080"
+                redirect_uri = rootUrl,
+                audience = "https://${process.env.AUTH0_DOMAIN}/api/v2/"
             )
             val client = createAuth0Client(config.asJsObject()).await()
             setAuth0Client(client)
             if (window.location.search.contains("code=")) {
                 val appState = client.handleRedirectCallback().await().appState
-                (props.onRedirectCallback)(appState)
+                props.onRedirectCallback(appState)
             }
             setIsAuthenticated(client.isAuthenticated().await())
             setIsLoading(false)
@@ -56,7 +58,9 @@ private val auth0Provider = functionalComponent<Props> { props ->
             isAuthenticated = isAuthenticated,
             login = { checkNotNull(auth0Client).loginWithRedirect() },
             getJwt = { checkNotNull(auth0Client).getTokenSilently().await() },
-            logout = { checkNotNull(auth0Client).logout() }
+            logout = {
+                checkNotNull(auth0Client).logout(Auth0LogoutRequestProps(rootUrl).asJsObject())
+            }
         )
     )
     child(createElement(auth0Context.Provider, configObject, props.children))

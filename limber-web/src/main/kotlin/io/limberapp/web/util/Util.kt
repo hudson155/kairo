@@ -5,7 +5,7 @@ import kotlinx.coroutines.launch
 import kotlin.browser.window
 
 internal val rootDomain = window.location.host
-internal val rootUrl = "${window.location.protocol}://$rootDomain"
+internal val rootUrl = "${window.location.protocol}//$rootDomain"
 
 private val mainScope = MainScope()
 

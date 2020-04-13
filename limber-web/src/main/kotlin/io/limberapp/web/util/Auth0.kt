@@ -8,7 +8,7 @@ internal external interface Auth0Client {
     fun isAuthenticated(): Promise<Boolean>
     fun loginWithRedirect()
     fun getTokenSilently(): Promise<String>
-    fun logout()
+    fun logout(request: JsObject)
 }
 
 internal external interface AppState {
@@ -18,6 +18,8 @@ internal external interface AppState {
 internal external interface RedirectCallbackResponse {
     val appState: AppState?
 }
+
+data class Auth0LogoutRequestProps(val returnTo: String)
 
 @JsModule("@auth0/auth0-spa-js")
 @JsNonModule
