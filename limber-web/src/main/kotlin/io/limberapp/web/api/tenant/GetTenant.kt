@@ -4,6 +4,6 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.web.api.Api
 
 internal suspend fun getTenant(tenantDomain: String): TenantRep.Complete {
-    return Api.get("/tenants/$tenantDomain")
+    return Api.get("/tenants", queryParams = listOf("tenantDomain" to tenantDomain))
         .unsafeCast<TenantRep.Complete>()
 }

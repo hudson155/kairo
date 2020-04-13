@@ -4,19 +4,20 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.util.singleNullOrThrow
+import io.limberapp.backend.module.auth.entity.tenant.TenantDomainTable
 import io.limberapp.backend.module.auth.entity.tenant.TenantTable
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
-import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.lowerCase
 import org.jetbrains.exposed.sql.select
+import java.util.UUID
 
 internal class SqlTenantStore @Inject constructor(
     database: Database,
+    private val tenantDomainStore: TenantDomainStore,
     private val sqlTenantMapper: SqlTenantMapper
 ) : TenantStore, SqlStore(database) {
 
@@ -25,19 +26,25 @@ internal class SqlTenantStore @Inject constructor(
             TenantTable.insert { sqlTenantMapper.tenantEntity(it, model) }
         } andHandleError {
             when {
-                error.isUniqueConstraintViolation(TenantTable.domainUniqueConstraint) ->
-                    throw TenantDomainAlreadyRegistered(model.domain)
                 error.isUniqueConstraintViolation(TenantTable.orgGuidUniqueConstraint) ->
                     throw OrgAlreadyHasTenant(model.orgId)
                 error.isUniqueConstraintViolation(TenantTable.auth0ClientIdUniqueConstraint) ->
                     throw Auth0ClientIdAlreadyRegistered(model.auth0ClientId)
             }
         }
+        tenantDomainStore.create(model.orgId, model.domains)
     }
 
-    override fun get(domain: String) = transaction {
+    override fun get(orgId: UUID) = transaction {
         val entity = TenantTable
-            .select { TenantTable.domain.lowerCase() eq domain.toLowerCase() }
+            .select { TenantTable.orgGuid eq orgId }
+            .singleNullOrThrow() ?: return@transaction null
+        return@transaction sqlTenantMapper.tenantModel(entity)
+    }
+
+    override fun getByDomain(domain: String) = transaction {
+        val entity = (TenantTable innerJoin TenantDomainTable)
+            .select { TenantDomainTable.domain eq domain }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlTenantMapper.tenantModel(entity)
     }
@@ -49,30 +56,26 @@ internal class SqlTenantStore @Inject constructor(
         return@transaction sqlTenantMapper.tenantModel(entity)
     }
 
-    override fun update(domain: String, update: TenantModel.Update) = transaction {
+    override fun update(orgId: UUID, update: TenantModel.Update) = transaction {
         doOperation {
             TenantTable
                 .updateExactlyOne(
-                    where = { TenantTable.domain.lowerCase() eq domain.toLowerCase() },
+                    where = { TenantTable.orgGuid eq orgId },
                     body = { sqlTenantMapper.tenantEntity(it, update) },
                     notFound = { throw TenantNotFound() }
                 )
         } andHandleError {
             when {
-                error.isUniqueConstraintViolation(TenantTable.domainUniqueConstraint) ->
-                    throw TenantDomainAlreadyRegistered(checkNotNull(update.domain))
-                error.isUniqueConstraintViolation(TenantTable.orgGuidUniqueConstraint) ->
-                    throw OrgAlreadyHasTenant(checkNotNull(update.orgId))
                 error.isUniqueConstraintViolation(TenantTable.auth0ClientIdUniqueConstraint) ->
                     throw Auth0ClientIdAlreadyRegistered(checkNotNull(update.auth0ClientId))
             }
         }
-        return@transaction checkNotNull(get(update.domain ?: domain))
+        return@transaction checkNotNull(get(orgId))
     }
 
-    override fun delete(domain: String) = transaction<Unit> {
+    override fun delete(orgId: UUID) = transaction<Unit> {
         TenantTable.deleteExactlyOne(
-            where = { TenantTable.domain.lowerCase() eq domain.toLowerCase() },
+            where = { TenantTable.orgGuid eq orgId },
             notFound = { throw TenantNotFound() }
         )
     }

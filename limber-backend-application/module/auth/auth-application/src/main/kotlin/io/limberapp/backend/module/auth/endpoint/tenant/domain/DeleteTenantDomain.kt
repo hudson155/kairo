@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.tenant
+package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -11,45 +11,51 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
-import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
-import io.limberapp.backend.module.auth.rep.tenant.TenantRep
-import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import java.util.UUID
 
 /**
- * Returns a single tenant.
+ * Deletes a domain from a tenant.
  */
-internal class GetTenant @Inject constructor(
+internal class DeleteTenantDomain @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val tenantService: TenantService,
-    private val tenantMapper: TenantMapper
-) : LimberApiEndpoint<GetTenant.Command, TenantRep.Complete>(
+    private val tenantDomainService: TenantDomainService
+) : LimberApiEndpoint<DeleteTenantDomain.Command, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val orgId: UUID
+        val orgId: UUID,
+        val domain: String
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, orgId)
+        orgId = call.parameters.getAsType(UUID::class, orgId),
+        domain = call.parameters.getAsType(String::class, domain)
     )
 
-    override suspend fun Handler.handle(command: Command): TenantRep.Complete {
-        Authorization.Public.authorize()
-        val model = tenantService.get(command.orgId) ?: throw TenantNotFound()
-        return tenantMapper.completeRep(model)
+    override suspend fun Handler.handle(command: Command) {
+        Authorization.OrgMember(command.orgId).authorize()
+        tenantDomainService.delete(
+            orgId = command.orgId,
+            domain = command.domain
+        )
     }
 
     companion object {
         const val orgId = "orgId"
+        const val domain = "domain"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Get,
-            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(orgId))
+            httpMethod = HttpMethod.Delete,
+            pathTemplate = listOf(
+                StringComponent("orgs"),
+                VariableComponent(orgId),
+                StringComponent("domains"),
+                VariableComponent(domain)
+            )
         )
     }
 }

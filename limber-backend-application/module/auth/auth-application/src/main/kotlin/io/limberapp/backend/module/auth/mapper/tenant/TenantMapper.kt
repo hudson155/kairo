@@ -7,26 +7,25 @@ import java.time.Clock
 import java.time.LocalDateTime
 
 internal class TenantMapper @Inject constructor(
-    private val clock: Clock
+    private val clock: Clock,
+    private val tenantDomainMapper: TenantDomainMapper
 ) {
 
     fun model(rep: TenantRep.Creation) = TenantModel(
-        domain = rep.domain,
         created = LocalDateTime.now(clock),
         orgId = rep.orgId,
-        auth0ClientId = rep.auth0ClientId
+        auth0ClientId = rep.auth0ClientId,
+        domains = setOf(tenantDomainMapper.model(rep.domain))
     )
 
     fun completeRep(model: TenantModel) = TenantRep.Complete(
-        domain = model.domain,
         created = model.created,
         orgId = model.orgId,
-        auth0ClientId = model.auth0ClientId
+        auth0ClientId = model.auth0ClientId,
+        domains = model.domains.map { tenantDomainMapper.completeRep(it) }
     )
 
     fun update(rep: TenantRep.Update) = TenantModel.Update(
-        domain = rep.domain,
-        orgId = rep.orgId,
         auth0ClientId = rep.auth0ClientId
     )
 }

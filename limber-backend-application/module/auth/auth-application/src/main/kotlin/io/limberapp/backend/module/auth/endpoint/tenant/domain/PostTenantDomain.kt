@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.endpoint.tenant
+package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -10,22 +10,21 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
-import io.limberapp.backend.module.auth.rep.tenant.TenantRep
-import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.backend.module.auth.mapper.tenant.TenantDomainMapper
+import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
+import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import java.util.UUID
 
 /**
- * Updates a tenant's information.
+ * Creates a new domain within a tenant.
  */
-internal class PatchTenant @Inject constructor(
+internal class PostTenantDomain @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val tenantService: TenantService,
-    private val tenantMapper: TenantMapper
-) : LimberApiEndpoint<PatchTenant.Command, TenantRep.Complete>(
+    private val tenantDomainService: TenantDomainService,
+    private val tenantDomainMapper: TenantDomainMapper
+) : LimberApiEndpoint<PostTenantDomain.Command, TenantDomainRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
@@ -33,26 +32,26 @@ internal class PatchTenant @Inject constructor(
 
     internal data class Command(
         val orgId: UUID,
-        val updateRep: TenantRep.Update
+        val creationRep: TenantDomainRep.Creation
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        updateRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): TenantRep.Complete {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val update = tenantMapper.update(command.updateRep)
-        val model = tenantService.update(command.orgId, update)
-        return tenantMapper.completeRep(model)
+    override suspend fun Handler.handle(command: Command): TenantDomainRep.Complete {
+        Authorization.OrgMember(command.orgId).authorize()
+        val model = tenantDomainMapper.model(command.creationRep)
+        tenantDomainService.create(command.orgId, model)
+        return tenantDomainMapper.completeRep(model)
     }
 
     companion object {
         const val orgId = "orgId"
         val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Patch,
-            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(orgId))
+            httpMethod = HttpMethod.Post,
+            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(orgId), StringComponent("domains"))
         )
     }
 }

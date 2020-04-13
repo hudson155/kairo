@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.testing.fixtures.tenant
 
+import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import java.time.LocalDateTime
@@ -13,24 +14,29 @@ internal object TenantRepFixtures {
     )
 
     val limberappFixture = Fixture({ orgId ->
-        TenantRep.Creation("limberapp.io", orgId, "abcdefghijklmnopqrstuvwxyzabcdef")
+        TenantRep.Creation(orgId, "abcdefghijklmnopqrstuvwxyzabcdef", TenantDomainRep.Creation("limberapp.io"))
     }, { orgId ->
         TenantRep.Complete(
-            domain = "limberapp.io",
             orgId = orgId,
             created = LocalDateTime.now(fixedClock),
-            auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef"
+            auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
+            domains = listOf(TenantDomainRep.Complete(created = LocalDateTime.now(fixedClock), domain = "limberapp.io"))
         )
     })
 
     val someclientFixture = Fixture({ orgId ->
-        TenantRep.Creation("limber.someclient.com", orgId, "01234567890123456789012345678901")
+        TenantRep.Creation(orgId, "01234567890123456789012345678901", TenantDomainRep.Creation("limber.someclient.com"))
     }, { orgId ->
         TenantRep.Complete(
-            domain = "limber.someclient.com",
             orgId = orgId,
             created = LocalDateTime.now(fixedClock),
-            auth0ClientId = "01234567890123456789012345678901"
+            auth0ClientId = "01234567890123456789012345678901",
+            domains = listOf(
+                TenantDomainRep.Complete(
+                    created = LocalDateTime.now(fixedClock),
+                    domain = "limber.someclient.com"
+                )
+            )
         )
     })
 }

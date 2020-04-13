@@ -13,6 +13,7 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import java.util.UUID
 
 /**
  * Deletes an existing tenant.
@@ -28,23 +29,23 @@ internal class DeleteTenant @Inject constructor(
 ) {
 
     internal data class Command(
-        val tenantDomain: String
+        val orgId: UUID
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        tenantDomain = call.parameters.getAsType(String::class, tenantDomain)
+        orgId = call.parameters.getAsType(UUID::class, orgId)
     )
 
     override suspend fun Handler.handle(command: Command) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        tenantService.delete(command.tenantDomain)
+        tenantService.delete(command.orgId)
     }
 
     companion object {
-        const val tenantDomain = "tenantDomain"
+        const val orgId = "orgId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Delete,
-            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(tenantDomain))
+            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(orgId))
         )
     }
 }

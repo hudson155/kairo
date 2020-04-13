@@ -12,30 +12,27 @@ import com.piperframework.validator.Validator
 object TenantRep {
 
     data class Creation(
-        val domain: String,
         val orgId: UUID,
-        val auth0ClientId: String
+        val auth0ClientId: String,
+        val domain: TenantDomainRep.Creation
     ) : CreationRep {
         override fun validate() = RepValidation {
-            validate(Creation::domain) { Validator.hostname(value) }
             validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
+            validate(Creation::domain)
         }
     }
 
     data class Complete(
-        val domain: String,
         override val created: LocalDateTime,
         val orgId: UUID,
-        val auth0ClientId: String
+        val auth0ClientId: String,
+        val domains: List<TenantDomainRep.Complete>
     ) : CompleteRep
 
     data class Update(
-        val domain: String? = null,
-        val orgId: UUID? = null,
         val auth0ClientId: String? = null
     ) : UpdateRep {
         override fun validate() = RepValidation {
-            validate(Update::domain) { ifPresent { Validator.hostname(value) } }
             validate(Update::auth0ClientId) { ifPresent { Validator.auth0ClientId(value) } }
         }
     }

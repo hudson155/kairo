@@ -63,7 +63,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -104,7 +104,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -149,7 +149,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -214,7 +214,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
