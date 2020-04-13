@@ -40,10 +40,7 @@ internal class DeleteTenantDomain @Inject constructor(
 
     override suspend fun Handler.handle(command: Command) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        tenantDomainService.delete(
-            orgId = command.orgId,
-            domain = command.domain
-        )
+        tenantDomainService.delete(command.orgId, command.domain)
     }
 
     companion object {
