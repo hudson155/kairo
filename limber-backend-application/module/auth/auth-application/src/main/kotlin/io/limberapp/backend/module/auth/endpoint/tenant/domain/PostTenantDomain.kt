@@ -10,6 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.mapper.tenant.TenantDomainMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
@@ -41,7 +42,7 @@ internal class PostTenantDomain @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command): TenantDomainRep.Complete {
-        Authorization.OrgMember(command.orgId).authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         val model = tenantDomainMapper.model(command.creationRep)
         tenantDomainService.create(command.orgId, model)
         return tenantDomainMapper.completeRep(model)

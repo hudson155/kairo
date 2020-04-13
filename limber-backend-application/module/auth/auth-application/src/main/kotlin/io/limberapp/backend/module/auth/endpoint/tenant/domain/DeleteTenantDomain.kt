@@ -10,6 +10,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import java.util.UUID
@@ -38,7 +39,7 @@ internal class DeleteTenantDomain @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: Command) {
-        Authorization.OrgMember(command.orgId).authorize()
+        Authorization.Role(JwtRole.SUPERUSER).authorize()
         tenantDomainService.delete(
             orgId = command.orgId,
             domain = command.domain
