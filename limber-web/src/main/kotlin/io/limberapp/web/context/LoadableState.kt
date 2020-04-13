@@ -6,6 +6,8 @@ internal data class LoadableState<S : Any>(val loadingStatus: LoadingStatus, val
 
     val hasBegunLoading = loadingStatus != LoadingStatus.INITIAL
 
+    val isLoaded = loadingStatus == LoadingStatus.LOADED
+
     companion object {
         fun <S : Any> initial() = LoadableState<S>(LoadingStatus.INITIAL, null)
     }

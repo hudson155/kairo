@@ -23,20 +23,8 @@ import react.router.dom.switch
 import react.useEffect
 
 private val mainApp = functionalComponent<RProps> {
-
     val global = useGlobalState()
-
-    useEffect {
-        if (global.state.tenant.hasBegunLoading) return@useEffect
-        global.dispatch(BeginLoadingTenant)
-        async {
-            val tenant = getTenant(rootDomain)
-            global.dispatch(SetTenant(tenant))
-        }
-    }
-
     val features = global.state.org.state!!.features.toList()
-
     page(header = buildElement { navbar(features, "Firstname Lastname") }, footer = buildElement { footer() }) {
         switch {
             features.default?.let { route(path = "/", exact = true) { redirect(from = "/", to = it.path) } }

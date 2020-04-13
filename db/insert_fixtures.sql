@@ -17,6 +17,7 @@ VALUES (NOW(), '75a2ed7a-4247-4e63-ab10-a60df3d9aeee', '5761db85-7701-4ce4-9162-
         'Forms', '/forms', 'FORMS', FALSE);
 INSERT INTO auth.tenant (created_date, domain, org_guid, auth0_client_id)
 VALUES (NOW(), 'localhost:3000', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa'),
+       (NOW(), 'localhost:8080', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa'),
        (NOW(), 'limberapp.io', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa');
 
 -- Create user accounts.

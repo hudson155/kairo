@@ -25,7 +25,7 @@ import kotlin.browser.window
 private val auth0Context = createContext<Auth0Context>()
 internal fun useAuth() = useContext(auth0Context)
 
-internal data class Props(val onRedirectCallback: (AppState?) -> Unit) : RProps
+internal data class Props(val clientId: String, val onRedirectCallback: (AppState?) -> Unit) : RProps
 
 private val auth0Provider = functionalComponent<Props> { props ->
 
@@ -37,7 +37,7 @@ private val auth0Provider = functionalComponent<Props> { props ->
         async {
             val config = Auth0ConfigImpl(
                 domain = process.env.AUTH0_DOMAIN,
-                client_id = "eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa",
+                client_id = props.clientId,
                 redirect_uri = rootUrl,
                 audience = "https://${process.env.AUTH0_DOMAIN}/api/v2/"
             )
@@ -66,7 +66,11 @@ private val auth0Provider = functionalComponent<Props> { props ->
     child(createElement(auth0Context.Provider, configObject, props.children))
 }
 
-internal fun RBuilder.auth0Provider(onRedirectCallback: (AppState?) -> Unit, children: RHandler<Props>) {
-    child(auth0Provider, Props(onRedirectCallback), handler = children)
+internal fun RBuilder.auth0Provider(
+    clientId: String,
+    onRedirectCallback: (AppState?) -> Unit,
+    children: RHandler<Props>
+) {
+    child(auth0Provider, Props(clientId, onRedirectCallback), handler = children)
 }
 
