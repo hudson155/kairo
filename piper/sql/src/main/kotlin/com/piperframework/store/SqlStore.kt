@@ -33,7 +33,7 @@ abstract class SqlStore(private val database: Database) {
             operation()
         } catch (e: ExposedSQLException) {
             e.cause?.let {
-                when (it) {
+                return@let when (it) {
                     is PSQLException -> it
                     is BatchUpdateException -> it.cause as? PSQLException
                     else -> null
