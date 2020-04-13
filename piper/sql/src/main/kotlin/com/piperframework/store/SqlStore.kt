@@ -32,13 +32,13 @@ abstract class SqlStore(private val database: Database) {
         try {
             operation()
         } catch (e: ExposedSQLException) {
-            val cause = e.cause ?: throw e
-            val psqlException = when (cause) {
-                is PSQLException -> cause
-                is BatchUpdateException -> cause.cause as? PSQLException
-                else -> null
-            } ?: throw e
-            OperationError(psqlException.serverErrorMessage).onError()
+            e.cause?.let {
+                when (it) {
+                    is PSQLException -> it
+                    is BatchUpdateException -> it.cause as? PSQLException
+                    else -> null
+                }
+            }?.let { OperationError(it.serverErrorMessage).onError() }
         }
     }
 
