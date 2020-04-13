@@ -4,6 +4,8 @@ import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
 import io.limberapp.web.util.encodeURIComponent
 import io.limberapp.web.util.process
+import kotlinext.js.JsObject
+import kotlinext.js.asJsObject
 import kotlinx.coroutines.await
 import org.w3c.fetch.RequestInit
 import kotlin.browser.window
@@ -72,9 +74,9 @@ internal object Api {
         return url
     }
 
-    private fun headers(body: Boolean): Map<String, String> {
+    private fun headers(body: Boolean): JsObject {
         val headers = mutableMapOf("Accept" to "application/json")
         if (body) headers["Content-Type"] = "application/json"
-        return headers
+        return headers.asJsObject()
     }
 }

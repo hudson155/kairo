@@ -1,8 +1,16 @@
 package io.limberapp.web.app.pages.signInPage
 
+import io.limberapp.web.context.auth0.useAuth
 import react.RBuilder
-import react.ReactElement
+import react.RProps
+import react.child
+import react.functionalComponent
 
-internal fun RBuilder.signInPage(): ReactElement {
-    TODO()
+private val signInPage = functionalComponent<RProps> {
+    val auth = useAuth()
+    auth.login()
+}
+
+internal fun RBuilder.signInPage() {
+    child(signInPage)
 }

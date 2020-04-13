@@ -2,6 +2,7 @@ package io.limberapp.web.app
 
 import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.context.auth0.useAuth
 import react.RBuilder
 import react.RProps
 import react.buildElement
@@ -12,6 +13,8 @@ import react.router.dom.route
 import react.router.dom.switch
 
 private val app = functionalComponent<RProps> {
+    val auth = useAuth()
+    if (auth.isLoading) return@functionalComponent
     browserRouter {
         switch {
             route(path = "/signin", exact = true) { buildElement { signInPage() } }
