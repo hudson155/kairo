@@ -51,7 +51,7 @@ internal class DeleteTenantDomain @Inject constructor(
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Delete,
             pathTemplate = listOf(
-                StringComponent("orgs"),
+                StringComponent("tenants"),
                 VariableComponent(orgId),
                 StringComponent("domains"),
                 VariableComponent(domain)
