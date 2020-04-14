@@ -12,10 +12,17 @@ import react.child
 import react.functionalComponent
 import react.router.dom.route
 import react.router.dom.switch
+import styled.StyleSheet
 import styled.css
 import styled.styledDiv
 import styled.styledH1
 
+private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
+    val root by css {
+        display = Display.flex
+        flexGrow = 1.0
+    }
+}
 
 // TODO: https://github.com/JetBrains/kotlin-wrappers/issues/62
 
@@ -24,8 +31,7 @@ private val formPage = functionalComponent<RProps> {
     //  https://reacttraining.com/react-router/web/example/nesting
     styledDiv {
         css {
-            display = Display.flex
-            flexGrow = 1.0
+            +Styles.root
         }
         sideNav(links = listOf(
             NavLink("/forms", "Home"),

@@ -1,6 +1,7 @@
 package io.limberapp.web.app.components.navbar
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.web.app.components.ColorConsts
 import io.limberapp.web.app.components.navbar.components.headerLink.headerLink
 import io.limberapp.web.app.components.navbar.components.headerLinkGroup.headerLinkGroup
 import io.limberapp.web.app.components.navbar.components.headerText.headerText
@@ -31,7 +32,7 @@ private val navbar = functionalComponent<Props> { props ->
             display = Display.flex
             justifyContent = JustifyContent.spaceBetween
             height = 32.px
-            backgroundColor = Color("#24292E")
+            backgroundColor = ColorConsts.gray
             padding(vertical = 16.px, horizontal = 0.px)
         }
         styledDiv {
