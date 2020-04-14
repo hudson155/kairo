@@ -8,7 +8,7 @@ import react.functionalComponent
 
 private val signInPage = functionalComponent<RProps> {
     val auth = useAuth()
-    auth.login()
+    auth.signIn()
 }
 
 internal fun RBuilder.signInPage() {

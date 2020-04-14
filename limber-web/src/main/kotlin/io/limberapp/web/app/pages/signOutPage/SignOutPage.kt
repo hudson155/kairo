@@ -8,7 +8,7 @@ import react.functionalComponent
 
 private val signOutPage = functionalComponent<RProps> {
     val auth = useAuth()
-    auth.logout()
+    auth.signOut()
 }
 
 internal fun RBuilder.signOutPage() {
