@@ -25,7 +25,6 @@ private val globalState = createContext<StateAndDispatch<GlobalStateContext, Act
 internal fun useGlobalState() = useContext(globalState)
 
 private val initialState = GlobalStateContext(
-    message = "testing message here!",
     tenant = LoadableState.initial(),
     org = LoadableState(
         LoadableState.LoadingStatus.LOADED, OrgRep.Complete(
