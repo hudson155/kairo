@@ -4,9 +4,6 @@ import com.piperframework.store.SqlTable
 
 internal object TenantTable : SqlTable("auth", "tenant") {
 
-    val domain = text("domain")
-    const val domainUniqueConstraint = "tenant_domain_key"
-
     val orgGuid = uuid("org_guid")
     const val orgGuidUniqueConstraint = "tenant_org_guid_key"
 

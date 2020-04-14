@@ -15,6 +15,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
+import java.sql.BatchUpdateException
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
@@ -31,8 +32,13 @@ abstract class SqlStore(private val database: Database) {
         try {
             operation()
         } catch (e: ExposedSQLException) {
-            (e.cause as? PSQLException)?.let { OperationError(it.serverErrorMessage).onError() }
-            throw e
+            e.cause?.let {
+                return@let when (it) {
+                    is PSQLException -> it
+                    is BatchUpdateException -> it.cause as? PSQLException
+                    else -> null
+                }
+            }?.let { OperationError(it.serverErrorMessage).onError() }
         }
     }
 

@@ -15,9 +15,11 @@ VALUES (NOW(), '75a2ed7a-4247-4e63-ab10-a60df3d9aeee', '5761db85-7701-4ce4-9162-
         'Home', '/home', 'HOME', TRUE),
        (NOW(), '3dc95c5d-767c-4b29-9c50-a6f93edd0c06', '5761db85-7701-4ce4-9162-ab0fb4149b0d',
         'Forms', '/forms', 'FORMS', FALSE);
-INSERT INTO auth.tenant (created_date, domain, org_guid, auth0_client_id)
-VALUES (NOW(), 'localhost:3000', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa'),
-       (NOW(), 'limberapp.io', '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa');
+INSERT INTO auth.tenant (created_date, org_guid, auth0_client_id)
+VALUES (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa');
+INSERT INTO auth.tenant_domain (created_date, org_guid, domain)
+VALUES (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'localhost:3000'),
+       (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'limberapp.io');
 
 -- Create user accounts.
 INSERT INTO users.account (created_date, guid, name, identity_provider, superuser)
@@ -29,7 +31,7 @@ INSERT INTO users.user (created_date, account_guid, email_address, first_name, l
 VALUES (NOW(), '3e2d1681-a666-456e-a168-647d8c3a3150', 'jeff.hudson@limberapp.io', 'Jeff', 'Hudson',
         'https://lh6.googleusercontent.com/-FW2t5iZWAcg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rczJ7skwxHKEbvhG5MiQXYnamb0eg/photo.jpg',
         '5761db85-7701-4ce4-9162-ab0fb4149b0d'),
-        (NOW(), '71fe66b2-f115-43b9-a993-cbeb51c1b46a', 'nguld12@gmail.com', 'Noah', 'Guld',
+       (NOW(), '71fe66b2-f115-43b9-a993-cbeb51c1b46a', 'nguld12@gmail.com', 'Noah', 'Guld',
         'https://avatars0.githubusercontent.com/u/8917186?s=460&u=364b0d5270cb9657b4222c0816713831805957c9&v=4',
         '5761db85-7701-4ce4-9162-ab0fb4149b0d');
 

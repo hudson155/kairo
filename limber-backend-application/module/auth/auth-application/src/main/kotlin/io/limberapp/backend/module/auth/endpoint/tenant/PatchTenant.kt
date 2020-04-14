@@ -15,9 +15,10 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import java.util.UUID
 
 /**
- * Updates the tenant for the given domain.
+ * Updates a tenant's information.
  */
 internal class PatchTenant @Inject constructor(
     application: Application,
@@ -31,27 +32,27 @@ internal class PatchTenant @Inject constructor(
 ) {
 
     internal data class Command(
-        val tenantDomain: String,
+        val orgId: UUID,
         val updateRep: TenantRep.Update
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        tenantDomain = call.parameters.getAsType(String::class, tenantDomain),
+        orgId = call.parameters.getAsType(UUID::class, orgId),
         updateRep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: Command): TenantRep.Complete {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val update = tenantMapper.update(command.updateRep)
-        val model = tenantService.update(command.tenantDomain, update)
+        val model = tenantService.update(command.orgId, update)
         return tenantMapper.completeRep(model)
     }
 
     companion object {
-        const val tenantDomain = "tenantDomain"
+        const val orgId = "orgId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Patch,
-            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(tenantDomain))
+            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(orgId))
         )
     }
 }

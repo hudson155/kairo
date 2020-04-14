@@ -14,12 +14,12 @@ internal class GetTenantTest : ResourceTest() {
     fun doesNotExist() {
 
         // Setup
-        val tenantDomain = "fakedomain.com"
+        val orgId = UUID.randomUUID()
 
         // GetTenant
         piperTest.test(
             endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenantDomain),
+            pathParams = mapOf(GetTenant.orgId to orgId),
             expectedException = TenantNotFound()
         )
     }
@@ -40,7 +40,7 @@ internal class GetTenantTest : ResourceTest() {
         // GetTenant
         piperTest.test(
             endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenantRep.domain)
+            pathParams = mapOf(GetTenant.orgId to orgId)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)

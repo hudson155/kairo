@@ -4,15 +4,13 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class TenantModel(
-    val domain: String,
     val created: LocalDateTime,
     val orgId: UUID,
-    val auth0ClientId: String
+    val auth0ClientId: String,
+    val domains: Set<TenantDomainModel>
 ) {
 
     data class Update(
-        val domain: String?,
-        val orgId: UUID?,
         val auth0ClientId: String?
     )
 }

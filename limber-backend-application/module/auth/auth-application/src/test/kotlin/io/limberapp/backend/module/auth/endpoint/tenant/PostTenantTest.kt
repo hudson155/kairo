@@ -1,5 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
+import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -11,157 +13,116 @@ import kotlin.test.assertEquals
 internal class PostTenantTest : ResourceTest() {
 
     @Test
-    fun duplicateDomain() {
-
-        // Setup
-        val org0Id = UUID.randomUUID()
-        val org1Id = UUID.randomUUID()
-
-        // PostTenant
-        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(org0Id)
-        )
-
-        // PostTenant
-        piperTest.test(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(domain = limberappTenantRep.domain),
-            expectedException = TenantDomainAlreadyRegistered(limberappTenantRep.domain)
-        )
-    }
-
-    @Test
     fun duplicateOrgId() {
 
         // Setup
-        val org0Id = UUID.randomUUID()
-        val org1Id = UUID.randomUUID()
+        val limberappOrgId = UUID.randomUUID()
+        val someclientOrgId = UUID.randomUUID()
 
         // PostTenant
-        val tenant0Rep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
+        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(org0Id)
+            body = TenantRepFixtures.limberappFixture.creation(limberappOrgId)
         )
 
         // PostTenant
-        val tenant1Rep = TenantRepFixtures.someclientFixture.complete(this, org1Id).copy(orgId = tenant0Rep.orgId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(orgId = tenant0Rep.orgId)
-        ) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant1Rep, actual)
-        }
-
-        // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
-        ) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant0Rep, actual)
-        }
-
-        // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
-        ) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant1Rep, actual)
-        }
+            body = TenantRepFixtures.someclientFixture.creation(someclientOrgId).copy(orgId = limberappTenantRep.orgId),
+            expectedException = OrgAlreadyHasTenant(limberappTenantRep.orgId)
+        )
     }
 
     @Test
     fun duplicateAuth0ClientId() {
 
         // Setup
-        val org0Id = UUID.randomUUID()
-        val org1Id = UUID.randomUUID()
+        val limberappOrgId = UUID.randomUUID()
+        val someclientOrgId = UUID.randomUUID()
 
         // PostTenant
-        val tenant0Rep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
+        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
         piperTest.setup(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(org0Id)
+            body = TenantRepFixtures.limberappFixture.creation(limberappOrgId)
         )
 
         // PostTenant
-        val tenant1Rep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
-            .copy(auth0ClientId = tenant0Rep.auth0ClientId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(org1Id).copy(auth0ClientId = tenant0Rep.auth0ClientId)
-        ) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant1Rep, actual)
-        }
+            body = TenantRepFixtures.someclientFixture.creation(someclientOrgId).copy(
+                auth0ClientId = limberappTenantRep.auth0ClientId
+            ),
+            expectedException = Auth0ClientIdAlreadyRegistered(limberappTenantRep.auth0ClientId)
+        )
+    }
 
-        // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
-        ) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant0Rep, actual)
-        }
+    @Test
+    fun duplicateDomain() {
 
-        // GetTenant
+        // Setup
+        val limberappOrgId = UUID.randomUUID()
+        val someclientOrgId = UUID.randomUUID()
+
+        // PostTenant
+        piperTest.setup(
+            endpointConfig = PostTenant.endpointConfig,
+            body = TenantRepFixtures.limberappFixture.creation(limberappOrgId)
+        )
+
+        // PostTenant
+        val duplicateDomain = TenantRepFixtures.limberappFixture.creation(limberappOrgId).domain
         piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
-        ) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant1Rep, actual)
-        }
+            endpointConfig = PostTenant.endpointConfig,
+            body = TenantRepFixtures.someclientFixture.creation(someclientOrgId).copy(domain = duplicateDomain),
+            expectedException = TenantDomainAlreadyRegistered(duplicateDomain.domain)
+        )
     }
 
     @Test
     fun happyPath() {
 
         // Setup
-        val org0Id = UUID.randomUUID()
-        val org1Id = UUID.randomUUID()
+        val limberappOrgId = UUID.randomUUID()
+        val someclientOrgId = UUID.randomUUID()
 
         // PostTenant
-        val tenant0Rep = TenantRepFixtures.limberappFixture.complete(this, org0Id)
+        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(org0Id)
+            body = TenantRepFixtures.limberappFixture.creation(limberappOrgId)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant0Rep, actual)
+            assertEquals(limberappTenantRep, actual)
         }
 
         // PostTenant
-        val tenant1Rep = TenantRepFixtures.someclientFixture.complete(this, org1Id)
+        val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, someclientOrgId)
         piperTest.test(
             endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(org1Id)
+            body = TenantRepFixtures.someclientFixture.creation(someclientOrgId)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant1Rep, actual)
+            assertEquals(someclientTenantRep, actual)
         }
 
         // GetTenant
         piperTest.test(
             endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenant0Rep.domain)
+            pathParams = mapOf(GetTenant.orgId to limberappOrgId)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant0Rep, actual)
+            assertEquals(limberappTenantRep, actual)
         }
 
         // GetTenant
         piperTest.test(
             endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.tenantDomain to tenant1Rep.domain)
+            pathParams = mapOf(GetTenant.orgId to someclientOrgId)
         ) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenant1Rep, actual)
+            assertEquals(someclientTenantRep, actual)
         }
     }
 }

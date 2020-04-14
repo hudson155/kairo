@@ -63,7 +63,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -104,7 +104,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -133,7 +133,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // PatchFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
         featureRep = featureRep.copy(name = featureUpdateRep.name!!)
-        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it }.toSet())
+        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it })
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
             pathParams = mapOf(
@@ -149,7 +149,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -181,7 +181,7 @@ internal class PatchFeatureTest : ResourceTest() {
         orgRep = orgRep.copy(
             features = orgRep.features.map {
                 if (it.id == featureRep.id) featureRep else it.copy(isDefaultFeature = false)
-            }.toSet()
+            }
         )
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
@@ -198,7 +198,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // PatchFeature
         val featureUpdateRep1 = FeatureRep.Update(isDefaultFeature = false)
         featureRep = featureRep.copy(isDefaultFeature = false)
-        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it }.toSet())
+        orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it })
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
             pathParams = mapOf(
@@ -214,7 +214,7 @@ internal class PatchFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

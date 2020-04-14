@@ -57,7 +57,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
@@ -84,7 +84,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         )
 
         // DeleteFeature
-        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id }.toSet())
+        orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
@@ -96,7 +96,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf("orgId" to orgRep.id)
+            pathParams = mapOf(GetOrg.orgId to orgRep.id)
         ) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)

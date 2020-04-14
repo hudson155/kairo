@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
 import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
 import com.piperframework.endpoint.command.AbstractCommand
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -15,41 +14,40 @@ import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantService
-import java.util.UUID
 
 /**
- * Returns a single tenant.
+ * Returns the tenant for the given domain.
  */
-internal class GetTenant @Inject constructor(
+internal class GetTenantByDomain @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val tenantService: TenantService,
     private val tenantMapper: TenantMapper
-) : LimberApiEndpoint<GetTenant.Command, TenantRep.Complete>(
+) : LimberApiEndpoint<GetTenantByDomain.Command, TenantRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointConfig = endpointConfig
 ) {
 
     internal data class Command(
-        val orgId: UUID
+        val tenantDomain: String
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, orgId)
+        tenantDomain = call.parameters.getAsType(String::class, domain)
     )
 
     override suspend fun Handler.handle(command: Command): TenantRep.Complete {
         Authorization.Public.authorize()
-        val model = tenantService.get(command.orgId) ?: throw TenantNotFound()
+        val model = tenantService.getByDomain(command.tenantDomain) ?: throw TenantNotFound()
         return tenantMapper.completeRep(model)
     }
 
     companion object {
-        const val orgId = "orgId"
+        const val domain = "domain"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Get,
-            pathTemplate = listOf(StringComponent("tenants"), VariableComponent(orgId))
+            pathTemplate = listOf(StringComponent("tenants"))
         )
     }
 }
