@@ -19,7 +19,7 @@ internal external interface RedirectCallbackResponse {
     val appState: AppState?
 }
 
-data class Auth0LogoutRequestProps(val returnTo: String)
+internal data class Auth0LogoutRequestProps(val returnTo: String)
 
 @JsModule("@auth0/auth0-spa-js")
 @JsNonModule
