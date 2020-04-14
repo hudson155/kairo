@@ -42,6 +42,8 @@ jobs:
           LIMBER_PROD_POSTGRES_PASSWORD: postgres
       - run: ./gradlew --info --stacktrace detekt
       - run: ./gradlew --info --stacktrace build
+        env:
+          NODE_ENV: production
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
       - run: docker build -t registry.digitalocean.com/limber/limber-backend:master limber-backend-application
       - run: docker tag registry.digitalocean.com/limber/limber-backend:master registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
