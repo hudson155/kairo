@@ -5,7 +5,7 @@ import io.limberapp.web.context.globalState.action.Action
 
 internal sealed class TenantAction : Action() {
 
-    object BeginLoading : TenantAction()
+    internal object BeginLoading : TenantAction()
 
-    data class Set(val tenant: TenantRep.Complete) : TenantAction()
+    internal data class Set(val tenant: TenantRep.Complete) : TenantAction()
 }
