@@ -30,7 +30,7 @@ private val initialState = GlobalStateContext(
             id = "",
             created = "",
             name = "",
-            features = setOf(
+            features = listOf(
                 FeatureRep.Complete(
                     id = "75a2ed7a-4247-4e63-ab10-a60df3d9aeee",
                     created = Date().toISOString(),
