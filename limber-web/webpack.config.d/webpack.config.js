@@ -20,8 +20,8 @@ const environmentVariables = Object.entries(getEnvironmentVariables()).reduce((r
 config.plugins.push(new webpack.DefinePlugin(environmentVariables));
 
 function getEnvironmentVariables() {
-  const nodeEnv = process.env.NODE_ENV || 'development';
-  switch (nodeEnv) {
+  const env = process.env.ENV || 'development';
+  switch (env) {
     case 'development':
       return {
         API_ROOT_URL: JSON.stringify('http://localhost:55100'),
@@ -35,6 +35,6 @@ function getEnvironmentVariables() {
         COPYRIGHT_HOLDER: JSON.stringify('Jeff Hudson'),
       };
     default:
-      throw new Error(`Unknown NODE_ENV: ${nodeEnv}.`);
+      throw new Error(`Unknown DEPLOYMENT_ENV: ${env}.`);
   }
 }
