@@ -1,5 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formFeature
 
+import io.limberapp.web.app.components.sideNav.NavLink
 import io.limberapp.web.app.components.sideNav.sideNav
 import kotlinx.css.Display
 import kotlinx.css.display
@@ -26,7 +27,12 @@ private val formPage = functionalComponent<RProps> {
             display = Display.flex
             flexGrow = 1.0
         }
-        sideNav(links = emptyList())
+        sideNav(links = listOf(
+            NavLink("/forms", "Home"),
+            NavLink("/forms/templates", "Templates"),
+            NavLink("/forms/instances", "Instances")
+
+        ))
         styledDiv {
             switch {
                 route(path = "/forms", exact = true) { styledH1 { +"Welcome to Forms" } }

@@ -20,6 +20,7 @@ import styled.css
 import styled.getClassName
 import styled.styledDiv
 
+// TODO: allow sub headers
 internal data class NavLink(val to: String, val name: String)
 
 internal data class Props(val links: List<NavLink>) : RProps
@@ -39,31 +40,20 @@ private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
 
 private val sideNav = functionalComponent<Props> { props ->
     // Manually add the css
-    // TODO move this somewhere
     Styles.activeNavLink.invoke(CSSBuilder())
 
     styledDiv {
         css {
             +Styles.root
         }
-        navLink(
-            to = "/forms/",
-            exact = true,
-            activeClassName = Styles.getClassName { it::activeNavLink }
-        ) {
-            +"Home"
-        }
-        navLink(
-            to = "/forms/templates",
-            activeClassName = Styles.getClassName { it::activeNavLink }
-        ) {
-            +"Templates"
-        }
-        navLink(
-            to = "/forms/instances",
-            activeClassName = Styles.getClassName { it::activeNavLink }
-        ) {
-            +"Insantes"
+        props.links.map {
+            navLink(
+                to = it.to,
+                exact = true,
+                activeClassName = Styles.getClassName { it::activeNavLink }
+            ) {
+                +it.name
+            }
         }
     }
 }
