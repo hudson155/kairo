@@ -3,7 +3,7 @@ name: Release (prod)
 on:
   push:
     branches:
-      - feature/249-ci
+      - master
 
 jobs:
   deploy:

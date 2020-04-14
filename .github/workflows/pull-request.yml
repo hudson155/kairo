@@ -3,7 +3,7 @@ name: Pull Request
 on:
   push:
     branches-ignore:
-      - feature/249-ci
+      - master
 
 jobs:
   build:
