@@ -36,7 +36,10 @@ private val app = functionalComponent<RProps> {
         }
     }
     if (!global.state.tenant.isLoaded) return@functionalComponent
-    auth0Provider(onRedirectCallback = onRedirectCallback) {
+    auth0Provider(
+        clientId = checkNotNull(global.state.tenant.state).auth0ClientId,
+        onRedirectCallback = onRedirectCallback
+    ) {
         appWithGlobalState()
     }
 }
