@@ -20,23 +20,28 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - uses: actions/checkout@v2.0.0
+      - uses: actions/checkout@v2.1.0
       - uses: actions/setup-java@v1.3.0
         with:
           java-version: 11
-      - uses: actions/cache@v1.1.0
+      - uses: actions/cache@v1.1.2
         with:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - uses: actions/cache@v1.1.0
+      - uses: actions/cache@v1.1.2
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
           restore-keys: |
             ${{ runner.os }}-gradle-dependencies-v1-
-      - run: ./gradlew --no-daemon --info --stacktrace build
+      - run: ./gradlew --info --stacktrace downloadDependencies
+      - run: ./gradlew --info --stacktrace classes
+      - run: ./gradlew --info --stacktrace testClasses
+      - run: ./gradlew --info --stacktrace test
         env:
           LIMBER_PROD_POSTGRES_PASSWORD: postgres
+      - run: ./gradlew --info --stacktrace detekt
+      - run: ./gradlew --info --stacktrace build
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
       - run: docker build -t registry.digitalocean.com/limber/limber-backend:master limber-backend-application
       - run: docker tag registry.digitalocean.com/limber/limber-backend:master registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
@@ -46,10 +51,10 @@ jobs:
       - run: docker tag registry.digitalocean.com/limber/limber-web:master registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
       - run: docker push registry.digitalocean.com/limber/limber-web:master
       - run: docker push registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
-      - uses: digitalocean/action-doctl@v1.6.0
+      - uses: digitalocean/action-doctl@v1.8.0
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
         with:
-          args: kubernetes cluster kubeconfig show limber > $GITHUB_WORKSPACE/.kubeconfig
+          args: kubernetes cluster kubeconfig show k8s-limber-prod > $GITHUB_WORKSPACE/.kubeconfig
       - run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig set image deployment/limber-backend limber-backend=registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD) --namespace limber
       - run: kubectl --kubeconfig=$GITHUB_WORKSPACE/.kubeconfig set image deployment/limber-web limber-web=registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) --namespace limber
