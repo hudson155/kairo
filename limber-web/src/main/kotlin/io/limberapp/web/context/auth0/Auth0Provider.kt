@@ -35,7 +35,7 @@ private val authProvider = functionalComponent<Props> { props ->
 
     useEffect(emptyList()) {
         async {
-            val config = Auth0ConfigImpl(
+            val config = Auth0Config(
                 domain = process.env.AUTH0_DOMAIN,
                 client_id = props.clientId,
                 redirect_uri = rootUrl,
