@@ -7,8 +7,6 @@ import kotlin.browser.document
 
 internal fun main() {
     render(document.getElementById("root")) {
-        stateProvider {
-            app()
-        }
+        stateProvider { app() }
     }
 }
