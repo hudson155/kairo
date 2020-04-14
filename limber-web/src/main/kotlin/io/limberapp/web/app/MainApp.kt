@@ -1,17 +1,12 @@
 package io.limberapp.web.app
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
-import io.limberapp.web.api.tenant.getTenant
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
-import io.limberapp.web.context.globalState.action.tenant.BeginLoadingTenant
-import io.limberapp.web.context.globalState.action.tenant.SetTenant
 import io.limberapp.web.context.globalState.useGlobalState
-import io.limberapp.web.util.async
-import io.limberapp.web.util.rootDomain
 import react.RBuilder
 import react.RProps
 import react.buildElement
@@ -20,7 +15,6 @@ import react.functionalComponent
 import react.router.dom.redirect
 import react.router.dom.route
 import react.router.dom.switch
-import react.useEffect
 
 private val mainApp = functionalComponent<RProps> {
     val global = useGlobalState()

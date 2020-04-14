@@ -4,8 +4,6 @@ import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
 import io.limberapp.web.util.encodeURIComponent
 import io.limberapp.web.util.process
-import kotlinext.js.JsObject
-import kotlinext.js.asJsObject
 import kotlinext.js.jsObject
 import kotlinx.coroutines.await
 import org.w3c.fetch.RequestInit

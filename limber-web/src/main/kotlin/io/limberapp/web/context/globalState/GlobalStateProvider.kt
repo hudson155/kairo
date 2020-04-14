@@ -56,9 +56,10 @@ private val initialState = GlobalStateContext(
 
 private val stateProvider = functionalComponent<RProps> { props ->
     val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
+        @Suppress("UseIfInsteadOfWhen")
         return@useReducer when (action) {
             is TenantAction -> tenantReducer(state, action)
-            else -> throw Exception("Unhandled action: $action.")
+            else -> error("Unhandled action: $action.")
         }
     }, initialState)
     val configObject = ProviderValue(StateAndDispatch(state, dispatch))
