@@ -1,14 +1,12 @@
 package io.limberapp.web
 
 import io.limberapp.web.app.app
+import io.limberapp.web.context.globalState.stateProvider
 import react.dom.render
 import kotlin.browser.document
-import kotlin.browser.window
-
-internal val rootDomain = window.location.host
 
 internal fun main() {
     render(document.getElementById("root")) {
-        app()
+        stateProvider { app() }
     }
 }

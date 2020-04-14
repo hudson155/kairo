@@ -32,10 +32,13 @@ dependencies {
     implementation(npm("styled-components", "5.1.0"))
     implementation(npm("inline-style-prefixer", "6.0.0"))
 
+    implementation(npm("@auth0/auth0-spa-js", "1.6.5"))
+
     implementation(Dependencies.Kotlinx.coroutinesCommon)
 }
 
 kotlin.target.browser {}
+kotlin.target.useCommonJs()
 
 detekt {
     config = files("$projectDir/.detekt/config.yml")

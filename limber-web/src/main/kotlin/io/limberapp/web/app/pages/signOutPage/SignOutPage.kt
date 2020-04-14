@@ -1,8 +1,16 @@
 package io.limberapp.web.app.pages.signOutPage
 
+import io.limberapp.web.context.auth0.useAuth
 import react.RBuilder
-import react.ReactElement
+import react.RProps
+import react.child
+import react.functionalComponent
 
-internal fun RBuilder.signOutPage(): ReactElement {
-    TODO()
+private val signOutPage = functionalComponent<RProps> {
+    val auth = useAuth()
+    auth.signOut()
+}
+
+internal fun RBuilder.signOutPage() {
+    child(signOutPage)
 }

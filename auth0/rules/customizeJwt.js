@@ -3,7 +3,9 @@ function customizeJwt(user, context, callback) {
     url: 'https://api.limberapp.io/jwt-claims-request',
     method: 'POST',
     headers: {
-      Authorization: `Token ${configuration.accessToken}`,
+      'Authorization': `Token ${configuration.accessToken}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     json: {
       auth0ClientId: context.clientID,
@@ -15,7 +17,7 @@ function customizeJwt(user, context, callback) {
   }, (error, response, body) => {
     if (error) return callback(error);
     if (200 > response.statusCode || response.statusCode > 299) {
-      return callback(new Error(`API returned ${response.statusCode} response code`));
+      return callback(new Error(`API returned ${response.statusCode} response code.`));
     }
     Object.entries(body).forEach(([key, value]) => {
       context.accessToken[`https://limberapp.io/${key}`] = value;

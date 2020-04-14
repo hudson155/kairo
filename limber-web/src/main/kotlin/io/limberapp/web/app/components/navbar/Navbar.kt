@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.navbar.components.headerLink.headerLink
 import io.limberapp.web.app.components.navbar.components.headerLinkGroup.headerLinkGroup
 import io.limberapp.web.app.components.navbar.components.headerText.headerText
 import io.limberapp.web.app.default
+import io.limberapp.web.context.auth0.useAuth
 import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
@@ -24,6 +25,7 @@ import styled.styledDiv
 internal data class Props(val features: List<FeatureRep.Complete>, val name: String?) : RProps
 
 private val navbar = functionalComponent<Props> { props ->
+    val auth = useAuth()
     styledDiv {
         css {
             display = Display.flex
@@ -45,7 +47,11 @@ private val navbar = functionalComponent<Props> { props ->
             css { display = Display.flex }
             headerLinkGroup {
                 props.name?.let { headerText { +it } }
-                headerLink(to = "/signout") { +"Sign Out" }
+                if (auth.isAuthenticated) {
+                    headerLink(to = "/signout") { +"Sign Out" }
+                } else {
+                    headerLink(to = "/signin") { +"Sign In" }
+                }
             }
         }
     }

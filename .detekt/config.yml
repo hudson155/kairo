@@ -65,6 +65,7 @@ complexity:
     threshold: 3
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: false
+    ignoreStringsRegex: "^$"
   TooManyFunctions:
     active: true
     thresholdInFiles: 16
