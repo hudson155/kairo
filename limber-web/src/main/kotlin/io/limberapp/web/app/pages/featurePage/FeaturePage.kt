@@ -1,7 +1,7 @@
 package io.limberapp.web.app.pages.featurePage
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
-import io.limberapp.web.app.pages.featurePage.pages.formInstancesListPage.formInstancesListPage
+import io.limberapp.web.app.pages.featurePage.pages.formFeature.formInstancesListPage.formInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.homePage.homePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import react.RBuilder

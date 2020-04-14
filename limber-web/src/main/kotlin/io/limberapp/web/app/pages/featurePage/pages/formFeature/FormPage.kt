@@ -1,0 +1,42 @@
+package io.limberapp.web.app.pages.featurePage.pages.formFeature
+
+import io.limberapp.web.app.components.sideNav.sideNav
+import kotlinx.css.Display
+import kotlinx.css.display
+import kotlinx.css.flexGrow
+import react.RBuilder
+import react.RProps
+import react.buildElement
+import react.child
+import react.functionalComponent
+import react.router.dom.route
+import react.router.dom.switch
+import styled.css
+import styled.styledDiv
+import styled.styledH1
+
+
+// TODO: https://github.com/JetBrains/kotlin-wrappers/issues/62
+
+private val formPage = functionalComponent<RProps> {
+    // TODO: Once we have access to the hooks, we can fix the routing here see:
+    //  https://reacttraining.com/react-router/web/example/nesting
+    styledDiv {
+        css {
+            display = Display.flex
+            flexGrow = 1.0
+        }
+        sideNav(links = emptyList())
+        styledDiv {
+            switch {
+                route(path = "/forms", exact = true) { styledH1 { +"Welcome to Forms" } }
+                route(path = "/forms/instances", exact = false) { buildElement { formInstancesListPage() } }
+                route(path = "/forms/templates", exact = false) { buildElement { formTemplatesListPage() } }
+            }
+        }
+    }
+}
+
+internal fun RBuilder.formPage() {
+    child(formPage)
+}
