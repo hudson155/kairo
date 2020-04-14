@@ -5,12 +5,12 @@ import io.limberapp.web.context.globalState.GlobalStateContext
 
 internal fun tenantReducer(state: GlobalStateContext, action: TenantAction): GlobalStateContext {
     return when (action) {
-        is BeginLoadingTenant -> state.copy(
+        is TenantAction.BeginLoading -> state.copy(
             tenant = state.tenant.copy(
                 loadingStatus = LoadableState.LoadingStatus.LOADING
             )
         )
-        is SetTenant -> state.copy(
+        is TenantAction.Set -> state.copy(
             tenant = state.tenant.copy(
                 loadingStatus = LoadableState.LoadingStatus.LOADED,
                 state = action.tenant

@@ -11,8 +11,7 @@ import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.context.auth0.authProvider
 import io.limberapp.web.context.auth0.useAuth
-import io.limberapp.web.context.globalState.action.tenant.BeginLoadingTenant
-import io.limberapp.web.context.globalState.action.tenant.SetTenant
+import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.AppState
 import io.limberapp.web.util.async
@@ -37,10 +36,10 @@ private val app = functionalComponent<RProps> {
 
     useEffect {
         if (global.state.tenant.hasBegunLoading) return@useEffect
-        global.dispatch(BeginLoadingTenant)
+        global.dispatch(TenantAction.BeginLoading)
         async {
             val tenant = getTenant(rootDomain)
-            global.dispatch(SetTenant(tenant))
+            global.dispatch(TenantAction.Set(tenant))
         }
     }
 
