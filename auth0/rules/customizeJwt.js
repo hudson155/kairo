@@ -4,8 +4,8 @@ function customizeJwt(user, context, callback) {
     method: 'POST',
     headers: {
       'Authorization': `Token ${configuration.accessToken}`,
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     json: {
       auth0ClientId: context.clientID,
