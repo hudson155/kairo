@@ -1,7 +1,7 @@
 package io.limberapp.web.app
 
 import io.limberapp.web.api.tenant.getTenant
-import io.limberapp.web.context.auth0.auth0Provider
+import io.limberapp.web.context.auth0.authProvider
 import io.limberapp.web.context.globalState.action.tenant.BeginLoadingTenant
 import io.limberapp.web.context.globalState.action.tenant.SetTenant
 import io.limberapp.web.context.globalState.useGlobalState
@@ -36,7 +36,7 @@ private val app = functionalComponent<RProps> {
         }
     }
     if (!global.state.tenant.isLoaded) return@functionalComponent
-    auth0Provider(
+    authProvider(
         clientId = checkNotNull(global.state.tenant.state).auth0ClientId,
         onRedirectCallback = onRedirectCallback
     ) {
