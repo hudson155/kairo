@@ -4,7 +4,7 @@ import com.piperframework.restInterface.Fetch
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.footer.footer
-import io.limberapp.web.app.components.navbar.navbar
+import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
@@ -108,7 +108,7 @@ private val appFeatureRouter = functionalComponent<RProps> {
     val global = useGlobalState()
     val features = global.state.org.state!!.features.toList()
 
-    page(header = buildElement { navbar(features, "Firstname Lastname") }, footer = buildElement { footer() }) {
+    page(header = buildElement { mainAppNavbar(features, "Firstname Lastname") }, footer = buildElement { footer() }) {
         switch {
             features.default?.let { route(path = "/", exact = true) { redirect(from = "/", to = it.path) } }
             features.map { feature ->
