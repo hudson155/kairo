@@ -50,13 +50,13 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 insertStatement[FormTemplateQuestionTable.earliest] = model.earliest
                 insertStatement[FormTemplateQuestionTable.latest] = model.latest
             }
+            is FormTemplateRadioSelectorQuestionModel -> {
+                insertStatement[FormTemplateQuestionTable.options] = model.options
+            }
             is FormTemplateTextQuestionModel -> {
                 insertStatement[FormTemplateQuestionTable.multiLine] = model.multiLine
                 insertStatement[FormTemplateQuestionTable.placeholder] = model.placeholder
                 insertStatement[FormTemplateQuestionTable.validator] = model.validator?.pattern
-            }
-            is FormTemplateRadioSelectorQuestionModel -> {
-                insertStatement[FormTemplateQuestionTable.options] = model.options.toList()
             }
             else -> unknownFormTemplateQuestion(model::class)
         }
@@ -73,13 +73,13 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 update.earliest?.let { updateStatement[FormTemplateQuestionTable.earliest] = it }
                 update.latest?.let { updateStatement[FormTemplateQuestionTable.latest] = it }
             }
+            is FormTemplateRadioSelectorQuestionModel.Update -> {
+                update.options?.let { updateStatement[FormTemplateQuestionTable.options] = it }
+            }
             is FormTemplateTextQuestionModel.Update -> {
                 update.multiLine?.let { updateStatement[FormTemplateQuestionTable.multiLine] = it }
                 update.placeholder?.let { updateStatement[FormTemplateQuestionTable.placeholder] = it }
                 update.validator?.let { updateStatement[FormTemplateQuestionTable.validator] = it.pattern }
-            }
-            is FormTemplateRadioSelectorQuestionModel.Update -> {
-                update.options?.let { updateStatement[FormTemplateQuestionTable.options] = it.toList() }
             }
             else -> unknownFormTemplateQuestion(update::class)
         }
@@ -107,6 +107,13 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 earliest = resultRow[FormTemplateQuestionTable.earliest],
                 latest = resultRow[FormTemplateQuestionTable.latest]
             )
+            FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel(
+                id = resultRow[FormTemplateQuestionTable.guid],
+                created = resultRow[FormTemplateQuestionTable.createdDate],
+                label = resultRow[FormTemplateQuestionTable.label],
+                helpText = resultRow[FormTemplateQuestionTable.helpText],
+                options = checkNotNull(resultRow[FormTemplateQuestionTable.options])
+            )
             FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel(
                 id = resultRow[FormTemplateQuestionTable.guid],
                 created = resultRow[FormTemplateQuestionTable.createdDate],
@@ -115,13 +122,6 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 multiLine = checkNotNull(resultRow[FormTemplateQuestionTable.multiLine]),
                 placeholder = resultRow[FormTemplateQuestionTable.placeholder],
                 validator = resultRow[FormTemplateQuestionTable.validator]?.let { Regex(it) }
-            )
-            FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel(
-                id = resultRow[FormTemplateQuestionTable.guid],
-                created = resultRow[FormTemplateQuestionTable.createdDate],
-                label = resultRow[FormTemplateQuestionTable.label],
-                helpText = resultRow[FormTemplateQuestionTable.helpText],
-                options = checkNotNull(resultRow[FormTemplateQuestionTable.options]).toSet()
             )
         }
 

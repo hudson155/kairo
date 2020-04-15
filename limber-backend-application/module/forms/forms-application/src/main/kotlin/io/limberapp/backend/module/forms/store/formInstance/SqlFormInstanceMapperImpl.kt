@@ -32,6 +32,9 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             is FormInstanceDateQuestionModel.Update -> {
                 update.date?.let { updateStatement[FormInstanceQuestionTable.date] = it }
             }
+            is FormInstanceRadioSelectorQuestionModel.Update -> {
+                update.selections?.let { updateStatement[FormInstanceQuestionTable.selections] = it.toList() }
+            }
             is FormInstanceTextQuestionModel.Update -> {
                 update.text?.let { updateStatement[FormInstanceQuestionTable.text] = it }
             }
@@ -51,6 +54,9 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
         when (model) {
             is FormInstanceDateQuestionModel -> {
                 insertStatement[FormInstanceQuestionTable.date] = model.date
+            }
+            is FormInstanceRadioSelectorQuestionModel -> {
+                insertStatement[FormInstanceQuestionTable.selections] = model.selections.toList()
             }
             is FormInstanceTextQuestionModel -> {
                 insertStatement[FormInstanceQuestionTable.text] = model.text
@@ -77,15 +83,15 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 date = checkNotNull(resultRow[FormInstanceQuestionTable.date])
             )
-            FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
-                created = resultRow[FormInstanceQuestionTable.createdDate],
-                formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
-                text = checkNotNull(resultRow[FormInstanceQuestionTable.text])
-            )
             FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
                 formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 selections = checkNotNull(resultRow[FormInstanceQuestionTable.selections]).toSet()
+            )
+            FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
+                created = resultRow[FormInstanceQuestionTable.createdDate],
+                formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                text = checkNotNull(resultRow[FormInstanceQuestionTable.text])
             )
         }
 

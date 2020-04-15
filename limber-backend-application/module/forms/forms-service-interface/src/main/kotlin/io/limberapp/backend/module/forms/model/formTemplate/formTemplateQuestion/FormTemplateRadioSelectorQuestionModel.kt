@@ -9,13 +9,13 @@ data class FormTemplateRadioSelectorQuestionModel(
     override val created: LocalDateTime,
     override val label: String,
     override val helpText: String?,
-    val options: Set<String>
+    val options: List<String>
 ) : FormTemplateQuestionModel {
     override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
 
     data class Update(
         override val label: String?,
         override val helpText: String?,
-        val options: Set<String>?
+        val options: List<String>?
     ) : FormTemplateQuestionModel.Update
 }

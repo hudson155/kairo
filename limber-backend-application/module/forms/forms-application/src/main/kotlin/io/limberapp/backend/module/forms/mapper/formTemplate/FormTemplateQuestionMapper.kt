@@ -55,7 +55,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             created = LocalDateTime.now(clock),
             label = "Two options",
             helpText = null,
-            options = setOf("test_option_one", "test_option_two")
+            options = listOf("test_option_one", "test_option_two")
         )
     )
 
@@ -73,7 +73,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             created = LocalDateTime.now(clock),
             label = rep.label,
             helpText = rep.helpText,
-            options = rep.options.toSet()
+            options = rep.options
         )
         is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
             id = uuidGenerator.generate(),
@@ -101,7 +101,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             created = model.created,
             label = model.label,
             helpText = model.helpText,
-            options = model.options.toList()
+            options = model.options
         )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
             id = model.id,
@@ -126,7 +126,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
             label = rep.label,
             helpText = rep.helpText,
-            options = rep.options.toSet()
+            options = rep.options
         )
         is FormTemplateTextQuestionRep.Update -> FormTemplateTextQuestionModel.Update(
             label = rep.label,

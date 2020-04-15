@@ -5,6 +5,7 @@ import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.types.LocalDateTime
 import com.piperframework.types.UUID
 import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import kotlinx.serialization.SerialName
@@ -21,8 +22,14 @@ internal object FormTemplateRadioSelectorQuestionRep {
     ) : FormTemplateQuestionRep.Creation {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Creation::options) { value.all { Validator.length1hundred(it, allowEmpty = false) } }
-            validate(Creation::options) { value.isNotEmpty() }
+            validate(Creation::options) {
+                value.isNotEmpty() && value.all {
+                    Validator.length1hundred(
+                        it,
+                        allowEmpty = false
+                    )
+                } && value.count() == value.toSet().count()
+            }
         }
     }
 
@@ -43,12 +50,20 @@ internal object FormTemplateRadioSelectorQuestionRep {
     data class Update(
         override val label: String? = null,
         override val helpText: String? = null,
-        val options: List<String>
+        val options: List<String>? = null
     ) : FormTemplateQuestionRep.Update {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Update::options) { value.all { Validator.length1hundred(it, allowEmpty = false) } }
-            validate(Update::options) { value.isNotEmpty() }
+            validate(Update::options) {
+                ifPresent {
+                    value.isNotEmpty() && value.all {
+                        Validator.length1hundred(
+                            it,
+                            allowEmpty = false
+                        )
+                    } && value.count() == value.toSet().count()
+                }
+            }
         }
     }
 }

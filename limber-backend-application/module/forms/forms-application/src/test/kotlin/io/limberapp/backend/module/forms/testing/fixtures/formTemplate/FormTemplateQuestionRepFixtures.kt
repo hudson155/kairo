@@ -76,7 +76,7 @@ internal object FormTemplateQuestionRepFixtures {
             FormTemplateRadioSelectorQuestionRep.Creation(
                 label = "Two options",
                 helpText = null,
-                options = listOf<String>("test_option_one", "test_option_two")
+                options = listOf("test_option_one", "test_option_two")
             )
         }, { idSeed ->
             FormTemplateRadioSelectorQuestionRep.Complete(
@@ -84,7 +84,7 @@ internal object FormTemplateQuestionRepFixtures {
                 created = LocalDateTime.now(fixedClock),
                 label = "Two options",
                 helpText = null,
-                options = listOf<String>("test_option_one", "test_option_two")
+                options = listOf("test_option_one", "test_option_two")
             )
         })
     )
