@@ -28,7 +28,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
             created = LocalDateTime.now(clock),
             formTemplateQuestionId = formTemplateQuestionId,
-            selections = setOf(rep.selection)
+            selection = rep.selection
         )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
             created = LocalDateTime.now(clock),
@@ -47,7 +47,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
             created = model.created,
             formTemplateQuestionId = model.formTemplateQuestionId,
-            selection = model.selections.elementAt(0)
+            selection = model.selection
         )
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(
             created = model.created,
@@ -60,7 +60,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
     fun update(model: FormInstanceQuestionModel) = when (model) {
         is FormInstanceDateQuestionModel -> FormInstanceDateQuestionModel.Update(date = model.date)
         is FormInstanceRadioSelectorQuestionModel ->
-            FormInstanceRadioSelectorQuestionModel.Update(selections = model.selections)
+            FormInstanceRadioSelectorQuestionModel.Update(selection = model.selection)
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
         else -> unknownFormInstanceQuestion(model::class)
     }

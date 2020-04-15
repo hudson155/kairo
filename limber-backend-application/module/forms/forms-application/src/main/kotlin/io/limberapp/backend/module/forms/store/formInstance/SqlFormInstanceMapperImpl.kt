@@ -33,7 +33,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 update.date?.let { updateStatement[FormInstanceQuestionTable.date] = it }
             }
             is FormInstanceRadioSelectorQuestionModel.Update -> {
-                update.selections?.let { updateStatement[FormInstanceQuestionTable.selections] = it.toList() }
+                update.selection?.let { updateStatement[FormInstanceQuestionTable.selections] = listOf(it) }
             }
             is FormInstanceTextQuestionModel.Update -> {
                 update.text?.let { updateStatement[FormInstanceQuestionTable.text] = it }
@@ -56,7 +56,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 insertStatement[FormInstanceQuestionTable.date] = model.date
             }
             is FormInstanceRadioSelectorQuestionModel -> {
-                insertStatement[FormInstanceQuestionTable.selections] = model.selections.toList()
+                insertStatement[FormInstanceQuestionTable.selections] = listOf(model.selection)
             }
             is FormInstanceTextQuestionModel -> {
                 insertStatement[FormInstanceQuestionTable.text] = model.text
@@ -86,7 +86,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
                 formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
-                selections = checkNotNull(resultRow[FormInstanceQuestionTable.selections]).toSet()
+                selection = checkNotNull(resultRow[FormInstanceQuestionTable.selections]).elementAt(0)
             )
             FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
