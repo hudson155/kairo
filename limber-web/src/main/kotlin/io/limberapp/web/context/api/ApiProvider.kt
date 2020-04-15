@@ -3,7 +3,6 @@ package io.limberapp.web.context.api
 import io.limberapp.web.api.Fetch
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.context.auth0.useAuth
-import kotlinx.coroutines.await
 import react.RBuilder
 import react.RHandler
 import react.RProps
@@ -24,7 +23,7 @@ private val apiProvider = functionalComponent<RProps> { props ->
     val fetch = object : Fetch() {
         override suspend fun headers(body: Boolean): dynamic {
             val headers = super.headers(body)
-            if (auth.isAuthenticated) headers["Authorization"] = "Bearer ${auth.getJwt().await()}"
+            if (auth.isAuthenticated) headers["Authorization"] = "Bearer ${auth.jwt}"
             return headers
         }
     }
