@@ -23,7 +23,7 @@ private val apiProvider = functionalComponent<RProps> { props ->
     val fetch = object : Fetch() {
         override suspend fun headers(body: Boolean): dynamic {
             val headers = super.headers(body)
-            if (auth.isAuthenticated) headers["Authorization"] = "Bearer ${auth.jwt}"
+            if (auth.isAuthenticated) headers["Authorization"] = "Bearer ${checkNotNull(auth.jwt).raw}"
             return headers
         }
     }
