@@ -11,7 +11,7 @@ import kotlin.browser.window
 
 private enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
 
-internal object Fetch {
+internal open class Fetch {
 
     suspend fun delete(path: String) = fetch(
         httpMethod = HttpMethod.DELETE,
@@ -73,11 +73,10 @@ internal object Fetch {
         return url
     }
 
-    private fun headers(body: Boolean): dynamic {
-        val headers = jsObject<dynamic> {
+    protected open suspend fun headers(body: Boolean): dynamic {
+        return jsObject<dynamic> {
             this["Accept"] = "application/json"
+            if (body) this["Content-Type"] = "application/json"
         }
-        if (body) headers["Content-Type"] = "application/json"
-        return headers
     }
 }
