@@ -255,8 +255,7 @@ naming:
   MatchingDeclarationName:
     active: false
   MemberNameEqualsClassName:
-    active: true
-    ignoreOverriddenFunction: true
+    active: false
   ObjectPropertyNaming:
     active: true
   PackageNaming:

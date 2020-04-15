@@ -1,7 +1,6 @@
 package io.limberapp.web.app
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
-import io.limberapp.web.api.tenant.getTenant
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.components.page.page
@@ -9,9 +8,12 @@ import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.context.api.apiProvider
+import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth0.authProvider
 import io.limberapp.web.context.auth0.useAuth
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
+import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.AppState
 import io.limberapp.web.util.async
@@ -31,25 +33,10 @@ import kotlin.browser.document
 import kotlin.browser.window
 
 private val app = functionalComponent<RProps> {
-
-    val global = useGlobalState()
-
-    useEffect {
-        if (global.state.tenant.hasBegunLoading) return@useEffect
-        global.dispatch(TenantAction.BeginLoading)
-        async {
-            val tenant = getTenant(rootDomain)
-            global.dispatch(TenantAction.Set(tenant))
+    globalStateProvider {
+        apiProvider {
+            child(appWithAuth)
         }
-    }
-
-    if (!global.state.tenant.isLoaded) return@functionalComponent
-
-    authProvider(
-        clientId = checkNotNull(global.state.tenant.state).auth0ClientId,
-        onRedirectCallback = onRedirectCallback
-    ) {
-        child(appWithAuth)
     }
 }
 
@@ -67,6 +54,30 @@ private val onRedirectCallback: (AppState?) -> Unit = {
 
 private val appWithAuth = functionalComponent<RProps> {
 
+    val api = useApi()
+    val global = useGlobalState()
+
+    useEffect {
+        if (global.state.tenant.hasBegunLoading) return@useEffect
+        global.dispatch(TenantAction.BeginLoading)
+        async {
+            val tenant = api.tenants.get(rootDomain)
+            global.dispatch(TenantAction.Set(tenant))
+        }
+    }
+
+    if (!global.state.tenant.isLoaded) return@functionalComponent
+
+    authProvider(
+        clientId = checkNotNull(global.state.tenant.state).auth0ClientId,
+        onRedirectCallback = onRedirectCallback
+    ) {
+        child(appRouter)
+    }
+}
+
+private val appRouter = functionalComponent<RProps> {
+
     val auth = useAuth()
     if (auth.isLoading) return@functionalComponent
 
@@ -74,12 +85,12 @@ private val appWithAuth = functionalComponent<RProps> {
         switch {
             route(path = "/signin", exact = true) { buildElement { signInPage() } }
             route(path = "/signout", exact = true) { buildElement { signOutPage() } }
-            route(path = "/") { buildElement { child(appMain) } }
+            route(path = "/") { buildElement { child(appFeatureRouter) } }
         }
     }
 }
 
-private val appMain = functionalComponent<RProps> {
+private val appFeatureRouter = functionalComponent<RProps> {
 
     val global = useGlobalState()
     val features = global.state.org.state!!.features.toList()
