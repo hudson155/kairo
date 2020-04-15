@@ -27,59 +27,54 @@ import styled.getClassName
 import styled.styledDiv
 
 // TODO (259): allow sub headers
-internal data class NavLink(val to: String, val name: String)
+internal data class SideNavLink(val to: String, val name: String)
 
-internal data class Props(val links: List<NavLink>) : RProps
+internal data class Props(val links: List<SideNavLink>) : RProps
 
 private val sideNav = functionalComponent<Props> { props ->
     val theme = useContext(ThemeContext)
-    console.log("theme", theme);
 
     // TODO (259): Improve default css'ing
-    class Styles : StyleSheet("SideNavBarStyles", isStatic = true) {
-        val navLink by css {
-            padding = "4px 8px 4px 8px"
-            hover {
-                backgroundColor = theme.backgroundDark
-                color = theme.white
-            }
-        }
+    val styles = object : StyleSheet("SideNavBarStyles", isStatic = true) {
         val activeNavLink by css {
             backgroundColor = theme.backgroundAccent
             color = theme.white
             pointerEvents = PointerEvents.none
         }
+        val navLink by css {
+            hover {
+                backgroundColor = theme.backgroundDark
+                color = theme.white
+            }
+            padding = "4px 8px 4px 8px"
+        }
         val root by css {
             backgroundColor = theme.backgroundLight
-            width = 150.px
             display = Display.flex
             flexDirection = FlexDirection.column
             height = LinearDimension.fitContent
+            width = 150.px
         }
     }
-    val styles = Styles();
 
-    // Manually add the css
+    // Manually add the css to style sheet
+    // https://github.com/JetBrains/kotlin-wrappers/issues/179
     styles.activeNavLink.invoke(CSSBuilder())
     styles.navLink.invoke(CSSBuilder())
 
     styledDiv {
-        css {
-            +styles.root
-        }
+        css { +styles.root }
         props.links.map {
             navLink(
                 to = it.to,
                 exact = true,
                 className = styles.getClassName { s -> s::navLink },
                 activeClassName = styles.getClassName { s -> s::activeNavLink }
-            ) {
-                +it.name
-            }
+            ) { +it.name }
         }
     }
 }
 
-internal fun RBuilder.sideNav(links: List<NavLink>) {
+internal fun RBuilder.sideNav(links: List<SideNavLink>) {
     child(sideNav, Props(links))
 }

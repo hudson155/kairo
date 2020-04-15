@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formFeature
 
-import io.limberapp.web.app.components.sideNav.NavLink
+import io.limberapp.web.app.components.sideNav.SideNavLink
 import io.limberapp.web.app.components.sideNav.sideNav
 import kotlinx.css.Display
 import kotlinx.css.display
@@ -26,24 +26,22 @@ private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
 
 private val formPage = functionalComponent<RProps> {
     styledDiv {
-        css {
-            +Styles.root
-        }
+        css { +Styles.root }
         // TODO (263) : Once we have access to the hooks, we can fix the routing here see:
         //  https://reacttraining.com/react-router/web/example/nesting
         sideNav(
             links = listOf(
-                NavLink("/forms", "Home"),
-                NavLink("/forms/templates", "Templates"),
-                NavLink("/forms/instances", "Instances")
+                SideNavLink("/forms", "Home"),
+                SideNavLink("/forms/templates", "Templates"),
+                SideNavLink("/forms/instances", "Instances")
 
             )
         )
         styledDiv {
             switch {
                 route(path = "/forms", exact = true) { styledH1 { +"Welcome to Forms" } }
-                route(path = "/forms/instances", exact = false) { buildElement { formInstancesListPage() } }
-                route(path = "/forms/templates", exact = false) { buildElement { formTemplatesListPage() } }
+                route(path = "/forms/instances") { buildElement { formInstancesListPage() } }
+                route(path = "/forms/templates") { buildElement { formTemplatesListPage() } }
             }
         }
     }
