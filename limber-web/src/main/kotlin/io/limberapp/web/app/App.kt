@@ -1,7 +1,7 @@
 package io.limberapp.web.app
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
-import io.limberapp.web.api.tenant.getTenant
+import io.limberapp.web.api.Api
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.components.page.page
@@ -38,7 +38,7 @@ private val app = functionalComponent<RProps> {
         if (global.state.tenant.hasBegunLoading) return@useEffect
         global.dispatch(TenantAction.BeginLoading)
         async {
-            val tenant = getTenant(rootDomain)
+            val tenant = Api.Tenants.get(rootDomain)
             global.dispatch(TenantAction.Set(tenant))
         }
     }

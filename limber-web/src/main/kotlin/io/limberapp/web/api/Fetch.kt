@@ -11,7 +11,7 @@ import kotlin.browser.window
 
 private enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
 
-internal object Api {
+internal object Fetch {
 
     suspend fun delete(path: String) = fetch(
         httpMethod = HttpMethod.DELETE,
