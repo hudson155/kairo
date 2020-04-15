@@ -4,7 +4,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.web.api.Fetch
 import io.limberapp.web.api.formTemplate.api.question.FormTemplateQuestionApi
 
-internal object FormTemplateApi {
+internal class FormTemplateApi {
 
     suspend fun post(rep: FormTemplateRep.Creation): FormTemplateRep.Complete {
         return Fetch.post("/form-templates", rep)
@@ -25,5 +25,5 @@ internal object FormTemplateApi {
         Fetch.delete("/form-templates/$formTemplateId")
     }
 
-    val Questions = FormTemplateQuestionApi
+    val questions = FormTemplateQuestionApi()
 }

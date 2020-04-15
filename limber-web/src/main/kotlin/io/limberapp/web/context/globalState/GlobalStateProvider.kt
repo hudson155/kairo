@@ -53,7 +53,7 @@ private val initialState = GlobalStateContext(
     tenant = LoadableState.initial()
 )
 
-private val stateProvider = functionalComponent<RProps> { props ->
+private val globalStateProvider = functionalComponent<RProps> { props ->
     val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
         @Suppress("UseIfInsteadOfWhen")
         return@useReducer when (action) {
@@ -65,6 +65,6 @@ private val stateProvider = functionalComponent<RProps> { props ->
     child(createElement(globalState.Provider, configObject, props.children))
 }
 
-internal fun RBuilder.stateProvider(children: RHandler<Props>) {
-    child(stateProvider, handler = children)
+internal fun RBuilder.globalStateProvider(children: RHandler<Props>) {
+    child(globalStateProvider, handler = children)
 }

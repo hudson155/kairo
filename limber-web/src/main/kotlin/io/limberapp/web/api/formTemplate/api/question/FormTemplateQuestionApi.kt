@@ -3,7 +3,7 @@ package io.limberapp.web.api.formTemplate.api.question
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.web.api.Fetch
 
-internal object FormTemplateQuestionApi {
+internal class FormTemplateQuestionApi {
 
     suspend fun put(
         formTemplateId: String,

@@ -3,7 +3,7 @@ package io.limberapp.web.api.user
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.web.api.Fetch
 
-internal object UserApi {
+internal class UserApi {
 
     suspend fun get(userId: String): UserRep.Complete {
         return Fetch.get("/users/$userId")
