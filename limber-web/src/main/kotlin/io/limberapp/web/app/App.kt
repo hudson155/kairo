@@ -53,6 +53,9 @@ private val onRedirectCallback: (AppState?) -> Unit = {
 
 private val appWithAuth = functionalComponent<RProps> {
 
+    // We use a non-authenticated API here rather than calling the useApi() hook which we should do everywhere else
+    // because the tenant must be fetched before we can create the AuthProvider, and the AuthProvider is required for
+    // the ApiProvider.
     val nonAuthenticatedApi = Api(Fetch())
     val global = useGlobalState()
 
@@ -76,7 +79,6 @@ private val appWithAuth = functionalComponent<RProps> {
 }
 
 private val appWithApi = functionalComponent<RProps> {
-
     apiProvider {
         child(appRouter)
     }
@@ -85,7 +87,6 @@ private val appWithApi = functionalComponent<RProps> {
 private val appRouter = functionalComponent<RProps> {
 
     val auth = useAuth()
-
     if (auth.isLoading) return@functionalComponent
 
     browserRouter {
