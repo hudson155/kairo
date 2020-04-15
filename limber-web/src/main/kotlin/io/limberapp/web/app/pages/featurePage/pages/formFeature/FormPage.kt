@@ -30,13 +30,15 @@ private val formPage = functionalComponent<RProps> {
             +Styles.root
         }
         // TODO (263) : Once we have access to the hooks, we can fix the routing here see:
-        //  https://reacttraining.com/react-router/web/example/nestingk
-        sideNav(links = listOf(
-            NavLink("/forms", "Home"),
-            NavLink("/forms/templates", "Templates"),
-            NavLink("/forms/instances", "Instances")
+        //  https://reacttraining.com/react-router/web/example/nesting
+        sideNav(
+            links = listOf(
+                NavLink("/forms", "Home"),
+                NavLink("/forms/templates", "Templates"),
+                NavLink("/forms/instances", "Instances")
 
-        ))
+            )
+        )
         styledDiv {
             switch {
                 route(path = "/forms", exact = true) { styledH1 { +"Welcome to Forms" } }

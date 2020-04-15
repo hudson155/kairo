@@ -7,7 +7,6 @@ import io.limberapp.web.app.components.navbar.components.headerLinkGroup.headerL
 import io.limberapp.web.app.components.navbar.components.headerText.headerText
 import io.limberapp.web.app.default
 import io.limberapp.web.context.auth.useAuth
-import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.backgroundColor

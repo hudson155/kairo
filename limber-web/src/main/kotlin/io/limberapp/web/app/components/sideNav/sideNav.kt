@@ -1,25 +1,18 @@
 package io.limberapp.web.app.components.sideNav
 
 import io.limberapp.web.app.components.ColorConsts
-import kotlinx.css.BorderStyle
 import kotlinx.css.CSSBuilder
-import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.LinearDimension
 import kotlinx.css.PointerEvents
 import kotlinx.css.backgroundColor
-import kotlinx.css.borderColor
-import kotlinx.css.borderRadius
-import kotlinx.css.borderStyle
-import kotlinx.css.borderWidth
 import kotlinx.css.color
 import kotlinx.css.display
 import kotlinx.css.flexDirection
 import kotlinx.css.height
 import kotlinx.css.padding
 import kotlinx.css.pointerEvents
-import kotlinx.css.properties.border
 import kotlinx.css.px
 import kotlinx.css.width
 import react.RBuilder
