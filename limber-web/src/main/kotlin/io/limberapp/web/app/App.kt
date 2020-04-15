@@ -1,6 +1,7 @@
 package io.limberapp.web.app
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.web.api.Fetch
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.components.page.page
@@ -8,8 +9,8 @@ import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.apiProvider
-import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth0.authProvider
 import io.limberapp.web.context.auth0.useAuth
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
@@ -34,9 +35,7 @@ import kotlin.browser.window
 
 private val app = functionalComponent<RProps> {
     globalStateProvider {
-        apiProvider {
-            child(appWithAuth)
-        }
+        child(appWithAuth)
     }
 }
 
@@ -54,14 +53,14 @@ private val onRedirectCallback: (AppState?) -> Unit = {
 
 private val appWithAuth = functionalComponent<RProps> {
 
-    val api = useApi()
+    val nonAuthenticatedApi = Api(Fetch())
     val global = useGlobalState()
 
     useEffect {
         if (global.state.tenant.hasBegunLoading) return@useEffect
         global.dispatch(TenantAction.BeginLoading)
         async {
-            val tenant = api.tenants.get(rootDomain)
+            val tenant = nonAuthenticatedApi.tenants.get(rootDomain)
             global.dispatch(TenantAction.Set(tenant))
         }
     }
@@ -72,6 +71,13 @@ private val appWithAuth = functionalComponent<RProps> {
         clientId = checkNotNull(global.state.tenant.state).auth0ClientId,
         onRedirectCallback = onRedirectCallback
     ) {
+        child(appWithApi)
+    }
+}
+
+private val appWithApi = functionalComponent<RProps> {
+
+    apiProvider {
         child(appRouter)
     }
 }
@@ -79,6 +85,7 @@ private val appWithAuth = functionalComponent<RProps> {
 private val appRouter = functionalComponent<RProps> {
 
     val auth = useAuth()
+
     if (auth.isLoading) return@functionalComponent
 
     browserRouter {

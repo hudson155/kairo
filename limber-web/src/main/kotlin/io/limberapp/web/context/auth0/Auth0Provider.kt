@@ -57,7 +57,7 @@ private val authProvider = functionalComponent<Props> { props ->
             isLoading = isLoading,
             isAuthenticated = isAuthenticated,
             signIn = { checkNotNull(auth0Client).loginWithRedirect() },
-            getJwt = { checkNotNull(auth0Client).getTokenSilently().await() },
+            getJwt = { checkNotNull(auth0Client).getTokenSilently() },
             signOut = { checkNotNull(auth0Client).logout(Auth0LogoutRequestProps(rootUrl).asJsObject()) }
         )
     )
