@@ -32,11 +32,12 @@ import styled.css
 import styled.getClassName
 import styled.styledDiv
 
-// TODO: allow sub headers
+// TODO (259): allow sub headers
 internal data class NavLink(val to: String, val name: String)
 
 internal data class Props(val links: List<NavLink>) : RProps
 
+// TODO (259): Improve default css'ing
 private object Styles : StyleSheet("SideNavBarStyles", isStatic = true) {
     val navLink by css {
         padding = "4px 8px 4px 8px"

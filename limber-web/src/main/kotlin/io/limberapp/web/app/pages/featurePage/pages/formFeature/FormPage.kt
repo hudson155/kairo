@@ -24,15 +24,13 @@ private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
     }
 }
 
-// TODO: https://github.com/JetBrains/kotlin-wrappers/issues/62
-
 private val formPage = functionalComponent<RProps> {
-    // TODO: Once we have access to the hooks, we can fix the routing here see:
-    //  https://reacttraining.com/react-router/web/example/nesting
     styledDiv {
         css {
             +Styles.root
         }
+        // TODO (263) : Once we have access to the hooks, we can fix the routing here see:
+        //  https://reacttraining.com/react-router/web/example/nestingk
         sideNav(links = listOf(
             NavLink("/forms", "Home"),
             NavLink("/forms/templates", "Templates"),
