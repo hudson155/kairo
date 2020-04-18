@@ -2,6 +2,7 @@ package io.limberapp.web.api
 
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
+import com.piperframework.serialization.Json
 import io.limberapp.web.util.encodeURIComponent
 import io.limberapp.web.util.process
 import kotlinext.js.jsObject
@@ -10,6 +11,8 @@ import org.w3c.fetch.RequestInit
 import kotlin.browser.window
 
 private enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
+
+internal val json = Json()
 
 internal open class Fetch {
 
@@ -53,7 +56,7 @@ internal open class Fetch {
         path: String,
         queryParams: List<Pair<String, String>>,
         body: Any?
-    ): Any? {
+    ): String {
         val url = url(path, queryParams)
         val headers = headers(body != null)
         val requestInit = RequestInit(
@@ -61,7 +64,7 @@ internal open class Fetch {
             headers = headers,
             body = body?.let { JSON.stringify(it) } ?: undefined
         )
-        return window.fetch(url, requestInit).await().json().await()
+        return window.fetch(url, requestInit).await().text().await()
     }
 
     private fun url(path: String, queryParams: List<Pair<String, String>>): String {

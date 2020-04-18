@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":limber-backend-application:module:forms:forms-rest-interface"))
     implementation(project(":limber-backend-application:module:orgs:orgs-rest-interface"))
     implementation(project(":limber-backend-application:module:users:users-rest-interface"))
+    implementation(project(":piper:serialization"))
 
     implementation("org.jetbrains:kotlin-react:16.13.0-pre.94-kotlin-1.3.70")
     implementation(npm("react", "16.13.0"))
