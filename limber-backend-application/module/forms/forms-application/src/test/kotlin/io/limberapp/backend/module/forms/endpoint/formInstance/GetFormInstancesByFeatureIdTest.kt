@@ -23,7 +23,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parse<Set<FormInstanceRep.Complete>>(response.content!!)
+            val actual = json.parseList<FormInstanceRep.Complete>(response.content!!).toSet()
             assertTrue(actual.isEmpty())
         }
     }
@@ -60,7 +60,7 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
         ) {
-            val actual = json.parse<Set<FormInstanceRep.Complete>>(response.content!!)
+            val actual = json.parseList<FormInstanceRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(formInstance0Rep, formInstance1Rep), actual)
         }
     }

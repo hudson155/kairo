@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.users
 
 import com.piperframework.module.Module
-import com.piperframework.serialization.Json
 import io.limberapp.backend.module.users.endpoint.user.DeleteUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
@@ -19,13 +18,13 @@ import io.limberapp.backend.module.users.store.account.SqlAccountMapperImpl
 import io.limberapp.backend.module.users.store.account.SqlAccountStore
 import io.limberapp.backend.module.users.store.account.SqlUserStore
 import io.limberapp.backend.module.users.store.account.UserStore
+import kotlinx.serialization.modules.EmptyModule
 
 class UsersModule : Module() {
 
-    override fun configureJson(json: Json) = Unit
+    override val serialModule = EmptyModule
 
     override val endpoints = listOf(
-
         PostUser::class.java,
         GetUser::class.java,
         GetUserByEmailAddress::class.java,

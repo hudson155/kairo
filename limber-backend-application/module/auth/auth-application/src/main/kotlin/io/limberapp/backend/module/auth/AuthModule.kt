@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
-import com.piperframework.serialization.Json
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.DeleteAccessToken
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.GetAccessTokensByAccountId
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.PostAccessToken
@@ -31,10 +30,11 @@ import io.limberapp.backend.module.auth.store.tenant.SqlTenantMapperImpl
 import io.limberapp.backend.module.auth.store.tenant.SqlTenantStore
 import io.limberapp.backend.module.auth.store.tenant.TenantDomainStore
 import io.limberapp.backend.module.auth.store.tenant.TenantStore
+import kotlinx.serialization.modules.EmptyModule
 
 class AuthModule : Module() {
 
-    override fun configureJson(json: Json) = Unit
+    override val serialModule = EmptyModule
 
     override val endpoints = listOf(
 

@@ -62,17 +62,17 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             body = jwtRequest
         ) {
             val actual = response.content!!
-            val expected = "{" +
-                    "\"org\":\"{" +
+            val expected = "{\n" +
+                    "    \"org\": \"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
-                    "}\"," +
-                    "\"roles\":\"[]\"," +
-                    "\"user\":\"{" +
+                    "}\",\n" +
+                    "    \"roles\": \"[]\",\n" +
+                    "    \"user\": \"{" +
                     "\\\"id\\\":\\\"$userId\\\"," +
                     "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
-                    "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"" +
+                    "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
                     "}"
             assertEquals(expected, actual)
         }
@@ -128,17 +128,17 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             body = jwtRequest
         ) {
             val actual = response.content!!
-            val expected = "{" +
-                    "\"org\":\"{" +
+            val expected = "{\n" +
+                    "    \"org\": \"{" +
                     "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
                     "\\\"featureIds\\\":[]" +
-                    "}\"," +
-                    "\"roles\":\"[\\\"${JwtRole.SUPERUSER}\\\"]\"," +
-                    "\"user\":\"{" +
+                    "}\",\n" +
+                    "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
+                    "    \"user\": \"{" +
                     "\\\"id\\\":\\\"${existingUser.id}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
-                    "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"" +
+                    "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
                     "}"
             assertEquals(expected, actual)
         }

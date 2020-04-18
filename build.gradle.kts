@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 plugins {
     kotlin("multiplatform") version Versions.kotlin
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 repositories {
@@ -30,5 +31,6 @@ subprojects {
 
     tasks.withType<KotlinCompile<*>>().configureEach {
         (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "1.8"
+        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlinx.serialization.ImplicitReflectionSerializer"
     }
 }

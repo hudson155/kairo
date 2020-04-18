@@ -3,15 +3,20 @@ package io.limberapp.backend.module.forms.rep.formTemplate
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
+import com.piperframework.serialization.serializer.LocalDateTimeSerializer
+import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.types.LocalDateTime
 import com.piperframework.types.UUID
 import com.piperframework.validation.RepValidation
 import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
+import kotlinx.serialization.Serializable
 
 object FormTemplateRep {
 
+    @Serializable
     data class Creation(
+        @Serializable(with = UuidSerializer::class)
         val featureId: UUID,
         val title: String,
         val description: String? = null
@@ -22,15 +27,20 @@ object FormTemplateRep {
         }
     }
 
+    @Serializable
     data class Complete(
+        @Serializable(with = UuidSerializer::class)
         val id: UUID,
+        @Serializable(with = LocalDateTimeSerializer::class)
         override val created: LocalDateTime,
+        @Serializable(with = UuidSerializer::class)
         val featureId: UUID,
         val title: String,
         val description: String?,
         val questions: List<FormTemplateQuestionRep.Complete>
     ) : CompleteRep
 
+    @Serializable
     data class Update(
         val title: String? = null,
         val description: String? = null

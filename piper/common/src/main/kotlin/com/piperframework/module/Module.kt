@@ -1,7 +1,7 @@
 package com.piperframework.module
 
 import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.serialization.Json
+import kotlinx.serialization.modules.SerialModule
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
@@ -15,9 +15,9 @@ abstract class Module : ModuleWithLifecycle() {
     private val logger = LoggerFactory.getLogger(Module::class.java)
 
     /**
-     * Configure [Json] instance for serialization and deserialization of reps in this module.
+     * The serial module is used for serialization.
      */
-    abstract fun configureJson(json: Json)
+    abstract val serialModule: SerialModule
 
     /**
      * Endpoints are automatically wired up.

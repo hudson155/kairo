@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id(Plugins.detekt)
 }
 
@@ -9,6 +10,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 api(project(":piper:reps"))
+                implementation(project(":piper:serialization"))
                 api(project(":piper:types"))
             }
         }

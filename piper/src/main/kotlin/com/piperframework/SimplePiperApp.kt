@@ -33,6 +33,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import kotlinx.serialization.modules.plus
 import org.slf4j.event.Level
 import java.util.UUID
 
@@ -124,11 +125,13 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
     protected open fun Application.contentNegotiation() {
         install(ContentNegotiation) {
+            val json = Json(
+                prettyPrint = true,
+                context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
+            )
             register(
                 contentType = ContentType.Application.Json,
-                converter = JsonContentConverter(Json(prettyPrint = true).apply {
-                    modules.forEach { it.configureJson(this) }
-                })
+                converter = JsonContentConverter(json)
             )
         }
     }

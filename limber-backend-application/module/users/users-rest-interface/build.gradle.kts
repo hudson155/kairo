@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id(Plugins.detekt)
 }
 
@@ -10,6 +11,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 api(project(":limber-backend-application:common:interface"))
                 api(project(":piper:reps"))
+                implementation(project(":piper:serialization"))
                 api(project(":piper:types"))
             }
         }

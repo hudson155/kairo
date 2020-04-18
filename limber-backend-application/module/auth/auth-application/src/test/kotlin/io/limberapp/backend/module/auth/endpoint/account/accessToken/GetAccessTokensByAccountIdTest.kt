@@ -21,7 +21,7 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
+            val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertTrue(actual.isEmpty())
         }
     }
@@ -51,7 +51,7 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
             endpointConfig = GetAccessTokensByAccountId.endpointConfig,
             pathParams = mapOf(PostAccessToken.accountId to accountId)
         ) {
-            val actual = json.parse<Set<AccessTokenRep.Complete>>(response.content!!)
+            val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)
         }
     }
