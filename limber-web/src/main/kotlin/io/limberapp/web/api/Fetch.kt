@@ -3,6 +3,7 @@ package io.limberapp.web.api
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
 import com.piperframework.serialization.Json
+import io.limberapp.backend.module.forms.rep.formsSerialModule
 import io.limberapp.web.util.encodeURIComponent
 import io.limberapp.web.util.process
 import kotlinext.js.jsObject
@@ -12,7 +13,7 @@ import kotlin.browser.window
 
 private enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
 
-internal val json = Json()
+internal val json = Json(context = formsSerialModule)
 
 internal open class Fetch {
 
