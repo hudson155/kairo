@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
-    api(project(":piper:common"))
-    api(Dependencies.Sql.exposed)
-    api(Dependencies.Sql.flyway)
-    api(Dependencies.Sql.hikari)
-    api(Dependencies.Sql.postgres)
+    api(project(":piper:config")) // Uses ConfigString in the interface
+    api(project(":piper:module")) // This artifact implements a module
+    api(Dependencies.Sql.exposed) // Provides Exposed SQL DSL
+    implementation(Dependencies.Sql.flyway)
+    api(Dependencies.Sql.hikari) // Uses Hikari in the interface
+    api(Dependencies.Sql.postgres) // This artifact only supports Postgres right now
 }
 
 detekt {

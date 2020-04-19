@@ -8,16 +8,16 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                implementation(kotlin("reflect"))
                 implementation(project(":piper:data-conversion"))
+                implementation(project(":piper:types"))
+                api(Dependencies.Serialization.common)
             }
         }
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
                     implementation(kotlin("stdlib-jdk8"))
-                    implementation(Dependencies.Jackson.dataTypeJsr310)
-                    implementation(Dependencies.Jackson.moduleKotlin)
+                    api(Dependencies.Serialization.jvm)
                 }
             }
         }
@@ -26,6 +26,7 @@ kotlin {
             compilations["main"].defaultSourceSet {
                 dependencies {
                     implementation(kotlin("stdlib-js"))
+                    api(Dependencies.Serialization.js)
                 }
             }
         }

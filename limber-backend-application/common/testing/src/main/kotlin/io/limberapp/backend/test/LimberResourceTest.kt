@@ -7,11 +7,7 @@ import com.piperframework.testing.AbstractResourceTest
 
 abstract class LimberResourceTest : AbstractResourceTest() {
 
-    protected val json by lazy {
-        Json().apply {
-            module.configureJson(this)
-        }
-    }
+    protected val json by lazy { Json(context = module.serialModule) }
 
     protected abstract val module: Module
 

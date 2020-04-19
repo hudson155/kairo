@@ -14,9 +14,7 @@ object Dependencies {
     }
 
     object Jackson {
-        const val annotations = "com.fasterxml.jackson.core:jackson-annotations:${Versions.jackson}"
         const val dataFormatYaml = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.jackson}"
-        const val dataTypeJsr310 = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jackson}"
         const val moduleKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}"
     }
 
@@ -33,19 +31,24 @@ object Dependencies {
     object Ktor {
         const val auth = "io.ktor:ktor-auth:${Versions.ktor}"
         const val httpJvm = "io.ktor:ktor-http-jvm:${Versions.ktor}"
-        const val jackson = "io.ktor:ktor-jackson:${Versions.ktor}"
         const val serverCio = "io.ktor:ktor-server-cio:${Versions.ktor}"
         const val serverCore = "io.ktor:ktor-server-core:${Versions.ktor}"
         const val serverHostCommon = "io.ktor:ktor-server-host-common:${Versions.ktor}"
         const val test = "io.ktor:ktor-server-test-host:${Versions.ktor}"
     }
 
-    object Logback {
-        const val logbackClassic = "ch.qos.logback:logback-classic:${Versions.logback}"
+    object Logging {
+        const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
     }
 
     object MockK {
         const val mockK = "io.mockk:mockk:${Versions.mockK}"
+    }
+
+    object Serialization {
+        const val common = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
+        const val js = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
+        const val jvm = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
     }
 
     object Sql {

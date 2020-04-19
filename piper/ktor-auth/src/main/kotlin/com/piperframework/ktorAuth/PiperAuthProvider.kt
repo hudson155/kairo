@@ -15,7 +15,11 @@ import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 import org.slf4j.LoggerFactory
 
-class PiperAuthProvider<P : Principal> internal constructor(
+/**
+ * A Ktor [AuthenticationProvider] that uses multiple config-driven [PiperAuthVerifier] instances to handle
+ * authentication.
+ */
+internal class PiperAuthProvider<P : Principal> internal constructor(
     private val config: PiperAuthConfig<P>
 ) : AuthenticationProvider(config) {
 

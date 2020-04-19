@@ -15,7 +15,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/limber-backend-application" />
             <option value="$PROJECT_DIR$/limber-backend-application/common" />
-            <option value="$PROJECT_DIR$/limber-backend-application/common/interface" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common/module" />
             <option value="$PROJECT_DIR$/limber-backend-application/common/testing" />
             <option value="$PROJECT_DIR$/limber-backend-application/module" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth" />
@@ -36,12 +36,14 @@
             <option value="$PROJECT_DIR$/limber-backend-application/module/users/users-service-interface" />
             <option value="$PROJECT_DIR$/limber-web" />
             <option value="$PROJECT_DIR$/piper" />
-            <option value="$PROJECT_DIR$/piper/common" />
+            <option value="$PROJECT_DIR$/piper/application" />
+            <option value="$PROJECT_DIR$/piper/config" />
             <option value="$PROJECT_DIR$/piper/data-conversion" />
             <option value="$PROJECT_DIR$/piper/errors" />
             <option value="$PROJECT_DIR$/piper/exception-mapping" />
             <option value="$PROJECT_DIR$/piper/exceptions" />
             <option value="$PROJECT_DIR$/piper/ktor-auth" />
+            <option value="$PROJECT_DIR$/piper/module" />
             <option value="$PROJECT_DIR$/piper/reps" />
             <option value="$PROJECT_DIR$/piper/serialization" />
             <option value="$PROJECT_DIR$/piper/sql" />

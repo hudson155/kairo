@@ -2,6 +2,7 @@ package io.limberapp.web.api.formTemplate.api.question
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.web.api.Fetch
+import io.limberapp.web.api.json
 
 internal class FormTemplateQuestionApi(private val fetch: Fetch) {
 
@@ -9,8 +10,8 @@ internal class FormTemplateQuestionApi(private val fetch: Fetch) {
         formTemplateId: String,
         rep: FormTemplateQuestionRep.Creation
     ): FormTemplateQuestionRep.Complete {
-        return fetch.put("/form-templates/$formTemplateId/questions", rep)
-            .unsafeCast<FormTemplateQuestionRep.Complete>()
+        val string = fetch.put("/form-templates/$formTemplateId/questions", rep)
+        return json.parse(string)
     }
 
     suspend fun patch(
@@ -18,8 +19,8 @@ internal class FormTemplateQuestionApi(private val fetch: Fetch) {
         questionId: String,
         rep: FormTemplateQuestionRep.Update
     ): FormTemplateQuestionRep.Complete {
-        return fetch.patch("/form-templates/$formTemplateId/questions/$questionId", rep)
-            .unsafeCast<FormTemplateQuestionRep.Complete>()
+        val string = fetch.patch("/form-templates/$formTemplateId/questions/$questionId", rep)
+        return json.parse(string)
     }
 
     suspend fun delete(formTemplateId: String, questionId: String) {

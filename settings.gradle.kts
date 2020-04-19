@@ -7,7 +7,7 @@ rootProject.name = "limber"
 include(":limber-backend-application")
 
 include(":limber-backend-application:common")
-include(":limber-backend-application:common:interface")
+include(":limber-backend-application:common:module")
 include(":limber-backend-application:common:testing")
 
 include(":limber-backend-application:module:auth")
@@ -40,13 +40,14 @@ include(":limber-web")
  * Piper (Backend Framework)
  */
 
-include(":piper")
-include(":piper:common")
+include(":piper:application")
+include(":piper:config")
 include(":piper:data-conversion")
 include(":piper:errors")
 include(":piper:exception-mapping")
 include(":piper:exceptions")
 include(":piper:ktor-auth")
+include(":piper:module")
 include(":piper:reps")
 include(":piper:serialization")
 include(":piper:sql")

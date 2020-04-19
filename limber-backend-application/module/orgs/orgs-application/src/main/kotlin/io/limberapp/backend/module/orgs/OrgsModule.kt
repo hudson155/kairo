@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.orgs
 
 import com.piperframework.module.Module
-import com.piperframework.serialization.Json
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PatchOrg
@@ -19,10 +18,11 @@ import io.limberapp.backend.module.orgs.store.org.SqlFeatureStore
 import io.limberapp.backend.module.orgs.store.org.SqlOrgMapper
 import io.limberapp.backend.module.orgs.store.org.SqlOrgMapperImpl
 import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
+import kotlinx.serialization.modules.EmptyModule
 
 class OrgsModule : Module() {
 
-    override fun configureJson(json: Json) = Unit
+    override val serialModule = EmptyModule
 
     override val endpoints = listOf(
 
@@ -37,13 +37,17 @@ class OrgsModule : Module() {
     )
 
     override fun bindServices() {
+
         bind(OrgService::class, OrgServiceImpl::class)
+
         bind(FeatureService::class, FeatureServiceImpl::class)
     }
 
     override fun bindStores() {
+
         bind(SqlOrgMapper::class, SqlOrgMapperImpl::class)
         bind(OrgStore::class, SqlOrgStore::class)
+
         bind(FeatureStore::class, SqlFeatureStore::class)
     }
 }

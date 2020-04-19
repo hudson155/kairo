@@ -8,7 +8,7 @@ object Validator {
 
     fun auth0ClientId(value: String) = Regex.auth0ClientId.matches(value)
 
-    fun base64EncidedUuid(value: String) = Regex.base64EncodedUuid.matches(value)
+    fun base64EncodedUuid(value: String) = Regex.base64EncodedUuid.matches(value)
 
     fun emailAddress(value: String) = Regex.emailAddress.matches(value)
 

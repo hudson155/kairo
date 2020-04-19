@@ -2,6 +2,7 @@ package io.limberapp.web.api.formInstance.api.question
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.web.api.Fetch
+import io.limberapp.web.api.json
 
 internal class FormInstanceQuestionApi(private val fetch: Fetch) {
 
@@ -9,8 +10,8 @@ internal class FormInstanceQuestionApi(private val fetch: Fetch) {
         formInstanceId: String,
         rep: FormInstanceQuestionRep.Creation
     ): FormInstanceQuestionRep.Complete {
-        return fetch.put("/form-instances/$formInstanceId/questions", rep)
-            .unsafeCast<FormInstanceQuestionRep.Complete>()
+        val string = fetch.put("/form-instances/$formInstanceId/questions", rep)
+        return json.parse(string)
     }
 
     suspend fun delete(formInstanceId: String, questionId: String) {

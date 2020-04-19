@@ -4,6 +4,9 @@ import com.piperframework.rep.ValidatedRep
 import kotlin.jvm.JvmName
 import kotlin.reflect.KProperty1
 
+/**
+ * Validation class for [ValidatedRep]s.
+ */
 class RepValidation(validation: Builder.() -> Unit) {
 
     class Builder internal constructor() {
@@ -22,6 +25,9 @@ class RepValidation(validation: Builder.() -> Unit) {
             validations.add(validation to validation.validator())
         }
 
+        /**
+         * Validates a sub-rep.
+         */
         @JvmName("validateRep")
         fun <R : ValidatedRep, T : ValidatedRep> R.validate(
             property: KProperty1<R, T>
@@ -29,6 +35,9 @@ class RepValidation(validation: Builder.() -> Unit) {
             validate(property.get(this).validate())
         }
 
+        /**
+         * Validates a list of sub-reps.
+         */
         @JvmName("validateReps")
         fun <R : ValidatedRep, T : List<ValidatedRep>> R.validate(
             property: KProperty1<R, T>

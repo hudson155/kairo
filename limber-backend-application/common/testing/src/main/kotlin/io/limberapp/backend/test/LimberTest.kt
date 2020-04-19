@@ -19,7 +19,7 @@ class LimberTest(json: Json, moduleFunction: Application.() -> Unit) : PiperTest
         val jwt = JWT.create().withJwt(
             jwt = Jwt(
                 org = null,
-                roles = setOf(JwtRole.SUPERUSER),
+                roles = listOf(JwtRole.SUPERUSER),
                 user = JwtUser(UUID.randomUUID(), "Jeff", "Hudson")
             )
         ).sign(Algorithm.none())
@@ -28,7 +28,7 @@ class LimberTest(json: Json, moduleFunction: Application.() -> Unit) : PiperTest
 
     private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
         withClaim(Claims.org, jwt.org?.let { json.stringify(it) })
-        withClaim(Claims.roles, json.stringify(jwt.roles))
+        withClaim(Claims.roles, json.stringifyList(jwt.roles))
         withClaim(Claims.user, json.stringify(jwt.user))
         return this
     }

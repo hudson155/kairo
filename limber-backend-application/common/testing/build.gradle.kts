@@ -6,8 +6,9 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":limber-backend-application"))
-    implementation(project(":limber-backend-application:common"))
+    api(project(":limber-backend-application:common:module"))
     api(project(":piper:testing"))
+    implementation(Dependencies.Jwt.auth0JavaJwt)
 }
 
 detekt {
