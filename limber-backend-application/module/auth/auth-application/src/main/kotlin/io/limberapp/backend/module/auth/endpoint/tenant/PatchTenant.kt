@@ -38,7 +38,7 @@ internal class PatchTenant @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        updateRep = call.getAndValidateBody()
+        updateRep = call.getAndValidateBody<TenantRep.Update>().required()
     )
 
     override suspend fun Handler.handle(command: Command): TenantRep.Complete {

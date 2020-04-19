@@ -1,10 +1,10 @@
 package io.limberapp.web.api.user
 
+import com.piperframework.restInterface.Fetch
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.users.rep.account.UserRep
-import io.limberapp.web.api.Fetch
-import io.limberapp.web.api.json
 
-internal class UserApi(private val fetch: Fetch) {
+internal class UserApi(private val fetch: Fetch, private val json: Json) {
 
     suspend fun get(userId: String): UserRep.Complete {
         val string = fetch.get("/users/$userId")

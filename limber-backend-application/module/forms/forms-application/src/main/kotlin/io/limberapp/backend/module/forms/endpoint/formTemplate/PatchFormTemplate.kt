@@ -37,7 +37,7 @@ internal class PatchFormTemplate @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        updateRep = call.getAndValidateBody()
+        updateRep = call.getAndValidateBody<FormTemplateRep.Update>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {

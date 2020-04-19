@@ -1,11 +1,11 @@
 package io.limberapp.web.api.formTemplate
 
+import com.piperframework.restInterface.Fetch
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
-import io.limberapp.web.api.Fetch
 import io.limberapp.web.api.formTemplate.api.question.FormTemplateQuestionApi
-import io.limberapp.web.api.json
 
-internal class FormTemplateApi(private val fetch: Fetch) {
+internal class FormTemplateApi(private val fetch: Fetch, private val json: Json) {
 
     suspend fun post(rep: FormTemplateRep.Creation): FormTemplateRep.Complete {
         val string = fetch.post("/form-templates", rep)
@@ -26,5 +26,5 @@ internal class FormTemplateApi(private val fetch: Fetch) {
         fetch.delete("/form-templates/$formTemplateId")
     }
 
-    val questions = FormTemplateQuestionApi(fetch)
+    val questions = FormTemplateQuestionApi(fetch, json)
 }

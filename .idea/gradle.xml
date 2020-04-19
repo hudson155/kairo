@@ -45,6 +45,7 @@
             <option value="$PROJECT_DIR$/piper/ktor-auth" />
             <option value="$PROJECT_DIR$/piper/module" />
             <option value="$PROJECT_DIR$/piper/reps" />
+            <option value="$PROJECT_DIR$/piper/rest-interface" />
             <option value="$PROJECT_DIR$/piper/serialization" />
             <option value="$PROJECT_DIR$/piper/sql" />
             <option value="$PROJECT_DIR$/piper/sql/testing" />

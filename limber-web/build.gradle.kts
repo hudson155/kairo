@@ -6,10 +6,6 @@ plugins {
 group = "io.limberapp.web"
 version = "0.1.0-SNAPSHOT"
 
-repositories {
-    maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers/")
-}
-
 dependencies {
 
     implementation(kotlin("stdlib-js"))
@@ -18,7 +14,9 @@ dependencies {
     implementation(project(":limber-backend-application:module:forms:forms-rest-interface"))
     implementation(project(":limber-backend-application:module:orgs:orgs-rest-interface"))
     implementation(project(":limber-backend-application:module:users:users-rest-interface"))
+    implementation(project(":piper:rest-interface"))
     implementation(project(":piper:serialization"))
+    implementation(project(":piper:util"))
 
     implementation("org.jetbrains:kotlin-react:16.13.0-pre.94-kotlin-1.3.70")
     implementation(npm("react", "16.13.0"))
@@ -35,7 +33,8 @@ dependencies {
 
     implementation(npm("@auth0/auth0-spa-js", "1.6.5"))
 
-    implementation(Dependencies.Kotlinx.coroutinesCommon)
+    implementation(Dependencies.Kotlin.extensions)
+    implementation(Dependencies.Kotlinx.coroutinesJs)
 }
 
 kotlin.target.browser {}

@@ -23,9 +23,12 @@ object Dependencies {
         const val auth0JwksRsa = "com.auth0:jwks-rsa:${Versions.auth0JwksRsa}"
     }
 
+    object Kotlin {
+        const val extensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinExtensions}"
+    }
+
     object Kotlinx {
-        const val coroutinesCommon =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:${Versions.kotlinxCoroutines}"
+        const val coroutinesJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.kotlinxCoroutines}"
     }
 
     object Ktor {

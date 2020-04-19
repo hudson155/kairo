@@ -38,7 +38,7 @@ internal class PostTenantDomain @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<TenantDomainRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): TenantDomainRep.Complete {

@@ -28,6 +28,7 @@ subprojects {
 
     repositories {
         jcenter()
+        maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers/")
     }
 
     tasks.withType<KotlinCompile<*>>().configureEach {

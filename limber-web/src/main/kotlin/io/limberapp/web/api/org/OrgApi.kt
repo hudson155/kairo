@@ -1,11 +1,11 @@
 package io.limberapp.web.api.org
 
+import com.piperframework.restInterface.Fetch
+import com.piperframework.serialization.Json
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.web.api.Fetch
-import io.limberapp.web.api.json
 
-internal class OrgApi(private val fetch: Fetch) {
+internal class OrgApi(private val fetch: Fetch, private val json: Json) {
 
     suspend fun get(orgId: UUID): OrgRep.Complete {
         val string = fetch.get("/orgs/$orgId")

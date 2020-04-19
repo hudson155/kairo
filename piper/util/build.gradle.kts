@@ -14,6 +14,7 @@ kotlin {
             compilations["main"].defaultSourceSet {
                 dependencies {
                     implementation(kotlin("stdlib-jdk8"))
+                    implementation(kotlin("reflect"))
                 }
             }
         }

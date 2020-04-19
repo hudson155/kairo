@@ -6,6 +6,7 @@ import io.ktor.http.encodeURLParameter
 /**
  * The configuration for the API endpoint. Uniquely represents the HTTP method and path template.
  */
+@Deprecated("API Transition")
 class EndpointConfig private constructor(val httpMethod: HttpMethod, val pathTemplate: String) {
 
     sealed class PathTemplateComponent {

@@ -37,7 +37,7 @@ internal class PatchOrg @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        updateRep = call.getAndValidateBody()
+        updateRep = call.getAndValidateBody<OrgRep.Update>().required()
     )
 
     override suspend fun Handler.handle(command: Command): OrgRep.Complete {

@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":piper:errors")) // Parses errors internally
     implementation(project(":piper:exception-mapping")) // Used for expected exceptions/errors
     implementation(project(":piper:module")) // Tests application (so do implementations)
+    implementation(project(":piper:reps"))
     api(project(":piper:serialization")) // Includes Json in interface (so do implementations)
     runtimeOnly(Dependencies.JUnit.engine)
     api(Dependencies.Ktor.test)

@@ -38,7 +38,7 @@ internal class PostFeature @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<FeatureRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FeatureRep.Complete {

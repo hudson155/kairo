@@ -1,22 +1,16 @@
-package io.limberapp.web.api
+package com.piperframework.restInterface
 
 import com.piperframework.rep.CreationRep
 import com.piperframework.rep.UpdateRep
-import com.piperframework.serialization.Json
-import io.limberapp.backend.module.forms.rep.formsSerialModule
-import io.limberapp.web.util.encodeURIComponent
-import io.limberapp.web.util.process
+import com.piperframework.util.encodeURIComponent
 import kotlinext.js.jsObject
 import kotlinx.coroutines.await
 import org.w3c.fetch.RequestInit
 import kotlin.browser.window
 
-private enum class HttpMethod { DELETE, GET, PATCH, POST, PUT }
+open class Fetch(private val rootUrl: String) {
 
-internal val json = Json(context = formsSerialModule)
-
-internal open class Fetch {
-
+    @Deprecated("API Transition")
     suspend fun delete(path: String) = fetch(
         httpMethod = HttpMethod.DELETE,
         path = path,
@@ -24,6 +18,7 @@ internal open class Fetch {
         body = null
     )
 
+    @Deprecated("API Transition")
     suspend fun get(path: String, queryParams: List<Pair<String, String>> = emptyList()) = fetch(
         httpMethod = HttpMethod.GET,
         path = path,
@@ -31,6 +26,7 @@ internal open class Fetch {
         body = null
     )
 
+    @Deprecated("API Transition")
     suspend fun patch(path: String, body: UpdateRep) = fetch(
         httpMethod = HttpMethod.PATCH,
         path = path,
@@ -38,6 +34,7 @@ internal open class Fetch {
         body = body
     )
 
+    @Deprecated("API Transition")
     suspend fun post(path: String, body: CreationRep) = fetch(
         httpMethod = HttpMethod.POST,
         path = path,
@@ -45,6 +42,7 @@ internal open class Fetch {
         body = body
     )
 
+    @Deprecated("API Transition")
     suspend fun put(path: String, body: CreationRep?) = fetch(
         httpMethod = HttpMethod.PUT,
         path = path,
@@ -52,6 +50,7 @@ internal open class Fetch {
         body = body
     )
 
+    @Deprecated("API Transition")
     private suspend fun fetch(
         httpMethod: HttpMethod,
         path: String,
@@ -68,14 +67,28 @@ internal open class Fetch {
         return window.fetch(url, requestInit).await().text().await()
     }
 
+    suspend operator fun invoke(request: PiperEndpoint): String {
+        val url = request.url
+        val headers = headers(request.body != null)
+        val requestInit = RequestInit(
+            method = request.httpMethod.name,
+            headers = headers,
+            body = request.body?.let { JSON.stringify(it) } ?: undefined
+        )
+        return window.fetch(url, requestInit).await().text().await()
+    }
+
+    @Deprecated("API Transition")
     private fun url(path: String, queryParams: List<Pair<String, String>>): String {
         val queryString = queryParams.joinToString("&") {
             "${encodeURIComponent(it.first)}=${encodeURIComponent(it.second)}"
         }
-        var url = process.env.API_ROOT_URL + path.split('/').joinToString("/") { encodeURIComponent(it) }
+        var url = rootUrl + path.split('/').joinToString("/") { encodeURIComponent(it) }
         if (queryString.isNotEmpty()) url += "?$queryString"
         return url
     }
+
+    private val PiperEndpoint.url: String get() = rootUrl + href
 
     protected open suspend fun headers(body: Boolean): dynamic {
         return jsObject<dynamic> {

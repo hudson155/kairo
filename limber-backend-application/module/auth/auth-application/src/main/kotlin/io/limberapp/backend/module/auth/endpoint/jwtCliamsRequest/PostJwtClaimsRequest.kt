@@ -37,7 +37,7 @@ internal class PostJwtClaimsRequest @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<JwtClaimsRequestRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): JwtClaimsRequestRep.Complete {

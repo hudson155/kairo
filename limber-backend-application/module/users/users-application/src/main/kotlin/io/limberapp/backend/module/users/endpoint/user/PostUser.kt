@@ -34,7 +34,7 @@ internal class PostUser @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<UserRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): UserRep.Complete {

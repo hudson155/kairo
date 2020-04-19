@@ -34,7 +34,7 @@ internal class PostTenant @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<TenantRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): TenantRep.Complete {

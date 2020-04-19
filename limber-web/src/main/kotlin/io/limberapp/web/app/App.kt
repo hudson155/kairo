@@ -1,7 +1,7 @@
 package io.limberapp.web.app
 
+import com.piperframework.restInterface.Fetch
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
-import io.limberapp.web.api.Fetch
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.components.page.page
@@ -18,6 +18,7 @@ import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.AppState
 import io.limberapp.web.util.async
+import io.limberapp.web.util.process
 import io.limberapp.web.util.rootDomain
 import kotlinext.js.jsObject
 import react.RBuilder
@@ -56,7 +57,7 @@ private val appWithAuth = functionalComponent<RProps> {
     // We use a non-authenticated API here rather than calling the useApi() hook which we should do everywhere else
     // because the tenant must be fetched before we can create the AuthProvider, and the AuthProvider is required for
     // the ApiProvider.
-    val nonAuthenticatedApi = Api(Fetch())
+    val nonAuthenticatedApi = Api(Fetch(process.env.API_ROOT_URL))
     val global = useGlobalState()
 
     useEffect {

@@ -4,8 +4,11 @@ import com.piperframework.authorization.PiperAuthorization
 import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.endpoint.exception.ParameterConversionException
 import com.piperframework.endpoint.exception.ValidationException
+import com.piperframework.exception.exception.badRequest.BodyRequired
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
+import com.piperframework.restInterface.PiperEndpointTemplate
+import com.piperframework.util.forKtor
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
@@ -15,7 +18,7 @@ import io.ktor.auth.authentication
 import io.ktor.features.conversionService
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
-import io.ktor.request.receive
+import io.ktor.request.receiveOrNull
 import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.routing.route
@@ -31,7 +34,7 @@ import kotlin.reflect.full.cast
 abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any>(
     private val application: Application,
     private val pathPrefix: String,
-    private val endpointConfig: EndpointConfig
+    private val endpointTemplate: PiperEndpointTemplate
 ) {
 
     private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
@@ -77,7 +80,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * ApiEndpoint instance.
      */
     fun register() {
-        logger.info("Registering ${endpointConfig.httpMethod.value} ${endpointConfig.pathTemplate}")
+        logger.info("Registering ${endpointTemplate.httpMethod} ${endpointTemplate.pathTemplate}")
         application.routing {
             authenticate(optional = true) {
                 route(pathPrefix) { routeEndpoint() }
@@ -86,9 +89,10 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
     }
 
     private fun Route.routeEndpoint() {
-        route(endpointConfig.pathTemplate, endpointConfig.httpMethod) {
+        route(endpointTemplate.pathTemplate, endpointTemplate.httpMethod.forKtor()) {
             handle {
                 val command = determineCommand(call)
+
                 @Suppress("UNCHECKED_CAST")
                 val principal = call.authentication.principal as? P
                 val result = Handler(command, principal).handle()
@@ -97,17 +101,22 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
         }
     }
 
-    protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T {
+    protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T? {
         @Suppress("TooGenericExceptionCaught")
         val result = try {
-            receive<T>()
+            receiveOrNull<T>()
         } catch (e: Exception) {
             throw ParameterConversionException(cause = e)
-        }
+        } ?: return null
         return result.apply {
             val validation = validate()
             if (!validation.isValid) throw ValidationException(validation.firstInvalidPropertyName)
         }
+    }
+
+    protected fun <T : ValidatedRep> T?.required(): T {
+        this ?: throw BodyRequired()
+        return this
     }
 
     protected fun <T : Any> Parameters.getAsType(klass: KClass<T>, name: String): T {
