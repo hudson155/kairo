@@ -2,7 +2,7 @@ package io.limberapp.web.context.api
 
 import io.limberapp.web.api.Fetch
 import io.limberapp.web.context.ProviderValue
-import io.limberapp.web.context.auth0.useAuth
+import io.limberapp.web.context.auth.useAuth
 import react.RBuilder
 import react.RHandler
 import react.RProps

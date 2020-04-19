@@ -1,4 +1,4 @@
-package io.limberapp.web.context.auth0
+package io.limberapp.web.context.auth
 
 import com.piperframework.types.UUID
 import io.limberapp.web.util.decodeJwt
