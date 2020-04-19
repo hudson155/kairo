@@ -8,7 +8,7 @@ import java.util.UUID
 
 data class FormInstanceDateQuestionModel(
     override val created: LocalDateTime,
-    override val formTemplateQuestionId: UUID?,
+    override val questionId: UUID?,
     val date: LocalDate
 ) : FormInstanceQuestionModel {
 

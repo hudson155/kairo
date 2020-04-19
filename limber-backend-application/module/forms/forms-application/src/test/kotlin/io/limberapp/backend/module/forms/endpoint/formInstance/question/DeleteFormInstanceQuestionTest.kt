@@ -63,7 +63,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+                PutFormInstanceQuestion.questionId to formTemplateRep.questions.first().id
             ),
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
@@ -116,7 +116,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+                PutFormInstanceQuestion.questionId to formTemplateRep.questions.first().id
             ),
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
@@ -127,7 +127,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = DeleteFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 DeleteFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                DeleteFormInstanceQuestion.questionId to formInstanceQuestionRep.formTemplateQuestionId!!
+                DeleteFormInstanceQuestion.questionId to formInstanceQuestionRep.questionId!!
             )
         ) {}
 

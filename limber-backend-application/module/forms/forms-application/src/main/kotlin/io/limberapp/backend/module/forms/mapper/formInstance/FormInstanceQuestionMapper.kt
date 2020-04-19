@@ -17,15 +17,15 @@ internal class FormInstanceQuestionMapper @Inject constructor(
     private val clock: Clock
 ) {
 
-    fun model(formTemplateQuestionId: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
+    fun model(questionId: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
         is FormInstanceDateQuestionRep.Creation -> FormInstanceDateQuestionModel(
             created = LocalDateTime.now(clock),
-            formTemplateQuestionId = formTemplateQuestionId,
+            questionId = questionId,
             date = rep.date
         )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
             created = LocalDateTime.now(clock),
-            formTemplateQuestionId = formTemplateQuestionId,
+            questionId = questionId,
             text = rep.text
         )
         else -> unknownFormInstanceQuestion(rep::class)
@@ -34,12 +34,12 @@ internal class FormInstanceQuestionMapper @Inject constructor(
     fun completeRep(model: FormInstanceQuestionModel) = when (model) {
         is FormInstanceDateQuestionModel -> FormInstanceDateQuestionRep.Complete(
             created = model.created,
-            formTemplateQuestionId = model.formTemplateQuestionId,
+            questionId = model.questionId,
             date = model.date
         )
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(
             created = model.created,
-            formTemplateQuestionId = model.formTemplateQuestionId,
+            questionId = model.questionId,
             text = model.text
         )
         else -> unknownFormInstanceQuestion(model::class)

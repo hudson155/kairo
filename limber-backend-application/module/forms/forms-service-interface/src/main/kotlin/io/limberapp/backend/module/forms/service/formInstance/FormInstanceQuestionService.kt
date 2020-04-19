@@ -7,5 +7,5 @@ interface FormInstanceQuestionService {
 
     fun upsert(formInstanceId: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel
 
-    fun delete(formInstanceId: UUID, formTemplateQuestionId: UUID)
+    fun delete(formInstanceId: UUID, questionId: UUID)
 }

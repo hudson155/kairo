@@ -41,10 +41,7 @@ internal class DeleteFormTemplateQuestion @Inject constructor(
 
     override suspend fun Handler.handle(command: Command) {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
-        formTemplateQuestionService.delete(
-            formTemplateId = command.formTemplateId,
-            formTemplateQuestionId = command.questionId
-        )
+        formTemplateQuestionService.delete(command.formTemplateId, command.questionId)
     }
 
     companion object {

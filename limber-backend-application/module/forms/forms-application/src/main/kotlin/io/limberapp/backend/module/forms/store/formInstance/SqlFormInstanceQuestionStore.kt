@@ -32,13 +32,13 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
     }
 
     override fun upsert(formInstanceId: UUID, model: FormInstanceQuestionModel) = transaction {
-        val formTemplateQuestionId = checkNotNull(model.formTemplateQuestionId)
-        val existingFormInstanceQuestionModel = get(formInstanceId, formTemplateQuestionId)
+        val questionId = checkNotNull(model.questionId)
+        val existingFormInstanceQuestionModel = get(formInstanceId, questionId)
         if (existingFormInstanceQuestionModel == null) {
             create(formInstanceId, model)
             return@transaction model
         } else {
-            return@transaction update(formInstanceId, formTemplateQuestionId, formInstanceQuestionMapper.update(model))
+            return@transaction update(formInstanceId, questionId, formInstanceQuestionMapper.update(model))
         }
     }
 
@@ -56,11 +56,11 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
         }
     }
 
-    override fun get(formInstanceId: UUID, formTemplateQuestionId: UUID) = transaction {
+    override fun get(formInstanceId: UUID, questionId: UUID) = transaction {
         val entity = FormInstanceQuestionTable
             .select {
                 (FormInstanceQuestionTable.formInstanceGuid eq formInstanceId) and
-                        (FormInstanceQuestionTable.formTemplateQuestionGuid eq formTemplateQuestionId)
+                        (FormInstanceQuestionTable.formTemplateQuestionGuid eq questionId)
             }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormInstanceMapper.formInstanceQuestionModel(entity)
@@ -75,27 +75,27 @@ internal class SqlFormInstanceQuestionStore @Inject constructor(
 
     private fun update(
         formInstanceId: UUID,
-        formTemplateQuestionId: UUID,
+        questionId: UUID,
         update: FormInstanceQuestionModel.Update
     ) = transaction {
         FormInstanceQuestionTable
             .updateExactlyOne(
                 where = {
                     (FormInstanceQuestionTable.formInstanceGuid eq formInstanceId) and
-                            (FormInstanceQuestionTable.formTemplateQuestionGuid eq formTemplateQuestionId)
+                            (FormInstanceQuestionTable.formTemplateQuestionGuid eq questionId)
                 },
                 body = { sqlFormInstanceMapper.formInstanceEntity(it, update) },
                 notFound = { throw FormInstanceQuestionNotFound() }
             )
-        return@transaction checkNotNull(get(formInstanceId, formTemplateQuestionId))
+        return@transaction checkNotNull(get(formInstanceId, questionId))
     }
 
-    override fun delete(formInstanceId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {
+    override fun delete(formInstanceId: UUID, questionId: UUID) = transaction<Unit> {
         FormInstanceQuestionTable
             .deleteExactlyOne(
                 where = {
                     (FormInstanceQuestionTable.formInstanceGuid eq formInstanceId) and
-                            (FormInstanceQuestionTable.formTemplateQuestionGuid eq formTemplateQuestionId)
+                            (FormInstanceQuestionTable.formTemplateQuestionGuid eq questionId)
                 },
                 notFound = { throw FormInstanceQuestionNotFound() }
             )

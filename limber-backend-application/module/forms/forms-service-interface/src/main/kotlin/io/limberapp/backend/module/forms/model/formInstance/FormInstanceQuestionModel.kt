@@ -7,7 +7,7 @@ import java.util.UUID
 interface FormInstanceQuestionModel {
 
     val created: LocalDateTime
-    val formTemplateQuestionId: UUID?
+    val questionId: UUID?
     val type: FormTemplateQuestionModel.Type
 
     interface Update

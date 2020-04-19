@@ -22,7 +22,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
     fun formInstanceDoesNotExist() {
 
         // Setup
-        val formTemplateQuestionId = UUID.randomUUID()
+        val questionId = UUID.randomUUID()
         val formInstanceId = UUID.randomUUID()
 
         // PostFormTemplateQuestion
@@ -30,7 +30,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceId,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateQuestionId
+                PutFormInstanceQuestion.questionId to questionId
             ),
             body = FormInstanceQuestionRepFixtures.textFixture.creation(),
             expectedException = FormInstanceNotFound()
@@ -42,7 +42,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
         // Setup
         val featureId = UUID.randomUUID()
-        val formTemplateQuestionId = UUID.randomUUID()
+        val questionId = UUID.randomUUID()
 
         // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
@@ -63,7 +63,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateQuestionId
+                PutFormInstanceQuestion.questionId to questionId
             ),
             body = FormInstanceQuestionRepFixtures.textFixture.creation(),
             expectedException = FormTemplateQuestionNotFound()
@@ -98,7 +98,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+                PutFormInstanceQuestion.questionId to formTemplateRep.questions.first().id
             ),
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         ) {
@@ -144,7 +144,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+                PutFormInstanceQuestion.questionId to formTemplateRep.questions.first().id
             ),
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
@@ -160,7 +160,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
                 PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
-                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+                PutFormInstanceQuestion.questionId to formTemplateRep.questions.first().id
             ),
             body = (FormInstanceQuestionRepFixtures.textFixture.creation() as FormInstanceTextQuestionRep.Creation)
                 .copy(text = "completely new text")

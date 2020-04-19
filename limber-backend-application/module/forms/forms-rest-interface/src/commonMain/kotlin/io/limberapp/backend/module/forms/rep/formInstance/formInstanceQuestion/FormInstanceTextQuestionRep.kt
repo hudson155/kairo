@@ -22,7 +22,7 @@ object FormInstanceTextQuestionRep {
         @Serializable(with = LocalDateTimeSerializer::class)
         override val created: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        override val formTemplateQuestionId: UUID?,
+        override val questionId: UUID?,
         val text: String
     ) : FormInstanceQuestionRep.Complete
 }

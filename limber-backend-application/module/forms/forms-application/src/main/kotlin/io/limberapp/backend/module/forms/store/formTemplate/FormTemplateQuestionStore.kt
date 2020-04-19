@@ -8,7 +8,7 @@ internal interface FormTemplateQuestionStore : FormTemplateQuestionService {
 
     fun create(formTemplateId: UUID, models: List<FormTemplateQuestionModel>, rank: Int? = null)
 
-    fun get(formTemplateId: UUID, formTemplateQuestionId: UUID): FormTemplateQuestionModel?
+    fun get(formTemplateId: UUID, questionId: UUID): FormTemplateQuestionModel?
 
     fun getByFormTemplateId(formTemplateId: UUID): List<FormTemplateQuestionModel>
 }

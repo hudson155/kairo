@@ -14,6 +14,6 @@ object FormInstanceQuestionRep {
 
     interface Complete : CompleteRep {
         override val created: LocalDateTime
-        val formTemplateQuestionId: UUID?
+        val questionId: UUID?
     }
 }
