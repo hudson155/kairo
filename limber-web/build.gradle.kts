@@ -35,6 +35,8 @@ dependencies {
 
     implementation(npm("@auth0/auth0-spa-js", "1.6.5"))
 
+    implementation(npm("jsonwebtoken", "8.5.1"))
+
     implementation(Dependencies.Kotlinx.coroutinesCommon)
 }
 

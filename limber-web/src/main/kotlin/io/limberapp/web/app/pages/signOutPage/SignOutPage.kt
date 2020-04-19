@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.signOutPage
 
-import io.limberapp.web.context.auth0.useAuth
+import io.limberapp.web.context.auth.useAuth
 import react.RBuilder
 import react.RProps
 import react.child

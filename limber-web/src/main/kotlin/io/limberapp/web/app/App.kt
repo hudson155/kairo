@@ -11,8 +11,8 @@ import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.apiProvider
-import io.limberapp.web.context.auth0.authProvider
-import io.limberapp.web.context.auth0.useAuth
+import io.limberapp.web.context.auth.authProvider
+import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState

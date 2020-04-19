@@ -1,4 +1,4 @@
-package io.limberapp.web.context.auth0
+package io.limberapp.web.context.auth
 
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.util.AppState
@@ -32,6 +32,7 @@ private val authProvider = functionalComponent<Props> { props ->
     val (isLoading, setIsLoading) = useState(true)
     val (auth0Client, setAuth0Client) = useState<Auth0Client?>(null)
     val (isAuthenticated, setIsAuthenticated) = useState(false)
+    val (jwt, setJwt) = useState<Jwt?>(null)
 
     useEffect(emptyList()) {
         async {
@@ -47,7 +48,9 @@ private val authProvider = functionalComponent<Props> { props ->
                 val appState = client.handleRedirectCallback().await().appState
                 props.onRedirectCallback(appState)
             }
-            setIsAuthenticated(client.isAuthenticated().await())
+            val isAuthenticatedWithAuth0 = client.isAuthenticated().await()
+            setIsAuthenticated(isAuthenticatedWithAuth0)
+            setJwt(if (isAuthenticatedWithAuth0) Jwt(client.getTokenSilently().await()) else null)
             setIsLoading(false)
         }
     }
@@ -57,7 +60,7 @@ private val authProvider = functionalComponent<Props> { props ->
             isLoading = isLoading,
             isAuthenticated = isAuthenticated,
             signIn = { checkNotNull(auth0Client).loginWithRedirect() },
-            getJwt = { checkNotNull(auth0Client).getTokenSilently() },
+            jwt = jwt,
             signOut = { checkNotNull(auth0Client).logout(Auth0LogoutRequestProps(rootUrl).asJsObject()) }
         )
     )
