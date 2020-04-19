@@ -11,7 +11,6 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 api(project(":piper:reps"))
                 implementation(project(":piper:serialization"))
-                api(project(":piper:types"))
             }
         }
         jvm {

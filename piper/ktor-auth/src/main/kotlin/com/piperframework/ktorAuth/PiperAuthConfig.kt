@@ -3,6 +3,9 @@ package com.piperframework.ktorAuth
 import io.ktor.auth.AuthenticationProvider
 import io.ktor.auth.Principal
 
+/**
+ * Configuration for how to verify [Principal]s using one or more [PiperAuthVerifier]s.
+ */
 class PiperAuthConfig<P : Principal> private constructor(
     name: String?,
     val defaultScheme: String,

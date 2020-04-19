@@ -8,6 +8,10 @@ import kotlinx.serialization.modules.SerializersModuleBuilder
 import kotlinx.serialization.serializer
 import kotlin.reflect.KClass
 
+/**
+ * Used to create serialization modules which help the serializer serialize and deserialize abstract classes
+ * polymorphically.
+ */
 @OptIn(ImplicitReflectionSerializer::class)
 class PolymorphicBuilder<T : Any> internal constructor(private val baseClass: KClass<T>) {
 

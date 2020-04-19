@@ -7,6 +7,9 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.PrimitiveDescriptor
 import kotlinx.serialization.PrimitiveKind
 
+/**
+ * Abstract serializer that delegates serialization to a data conversion service.
+ */
 abstract class ConversionServiceSerializer<T : Any>(
     serialName: String,
     private val conversionService: DataConversionService<T>

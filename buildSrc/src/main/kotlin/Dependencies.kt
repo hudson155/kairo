@@ -37,8 +37,8 @@ object Dependencies {
         const val test = "io.ktor:ktor-server-test-host:${Versions.ktor}"
     }
 
-    object Logback {
-        const val logbackClassic = "ch.qos.logback:logback-classic:${Versions.logback}"
+    object Logging {
+        const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
     }
 
     object MockK {

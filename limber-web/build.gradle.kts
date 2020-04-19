@@ -1,6 +1,6 @@
 plugins {
     kotlin("js")
-    id(Plugins.detekt).version(Versions.detekt)
+    id(Plugins.detekt)
 }
 
 group = "io.limberapp.web"

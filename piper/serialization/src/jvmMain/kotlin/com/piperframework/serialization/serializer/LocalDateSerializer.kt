@@ -8,6 +8,9 @@ import kotlinx.serialization.PrimitiveKind
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * In the JVM, LocalDates use the [java.time.LocalDate] class.
+ */
 actual object LocalDateSerializer : KSerializer<LocalDate> {
 
     override val descriptor = PrimitiveDescriptor("LocalDate", PrimitiveKind.STRING)

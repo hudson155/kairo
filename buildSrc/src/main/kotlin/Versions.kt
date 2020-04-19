@@ -39,9 +39,6 @@ object Versions {
     // https://github.com/ktorio/ktor/releases
     const val ktor = "1.3.2"
 
-    // https://github.com/qos-ch/logback/releases
-    const val logback = "1.2.3"
-
     // https://github.com/mockk/mockk/releases
     const val mockK = "1.9.3"
 
@@ -53,4 +50,7 @@ object Versions {
 
     // https://github.com/johnrengelman/shadow/releases
     const val shadow = "5.1.0"
+
+    // https://github.com/qos-ch/slf4j/releases
+    const val slf4j = "1.7.25"
 }

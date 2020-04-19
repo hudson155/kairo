@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     application
-    id(Plugins.detekt).version(Versions.detekt)
+    id(Plugins.detekt)
     id(Plugins.shadow).version(Versions.shadow)
 }
 
@@ -16,19 +16,19 @@ application {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":limber-backend-application:common"))
+    implementation(project(":limber-backend-application:common:module")) // HealthCheckModule is defined in the application
     implementation(project(":limber-backend-application:module:auth:auth-application"))
     implementation(project(":limber-backend-application:module:forms:forms-application"))
     implementation(project(":limber-backend-application:module:orgs:orgs-application"))
     implementation(project(":limber-backend-application:module:users:users-application"))
-    implementation(project(":piper"))
+    implementation(project(":piper:application"))
+    implementation(project(":piper:reps")) // HealthCheckModule rest interface is defined in the application
     implementation(project(":piper:sql"))
-    api(Dependencies.Jwt.auth0JavaJwt)
-    api(Dependencies.Jwt.auth0JwksRsa)
-    implementation(Dependencies.Jackson.dataFormatYaml)
-    implementation(Dependencies.Jackson.moduleKotlin)
+    implementation(Dependencies.Jwt.auth0JavaJwt)
+    implementation(Dependencies.Jwt.auth0JwksRsa)
+    implementation(Dependencies.Jackson.dataFormatYaml) // For config loader
+    implementation(Dependencies.Jackson.moduleKotlin) // For config loader
     implementation(Dependencies.Ktor.serverCio)
-    implementation(Dependencies.Logback.logbackClassic)
 }
 
 detekt {

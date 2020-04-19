@@ -9,10 +9,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                api(project(":limber-backend-application:common:interface"))
                 api(project(":piper:reps"))
                 implementation(project(":piper:serialization"))
-                api(project(":piper:types"))
             }
         }
         jvm {

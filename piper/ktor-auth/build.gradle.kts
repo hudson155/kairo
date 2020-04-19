@@ -5,8 +5,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(kotlin("reflect"))
-    api(Dependencies.Ktor.auth)
+    api(Dependencies.Ktor.auth) // Provides Ktor auth along with this artifact
 }
 
 detekt {
