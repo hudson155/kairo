@@ -26,7 +26,7 @@ class RepValidation(validation: Builder.() -> Unit) {
         }
 
         /**
-         * Validates a sub-rep
+         * Validates a sub-rep.
          */
         @JvmName("validateRep")
         fun <R : ValidatedRep, T : ValidatedRep> R.validate(

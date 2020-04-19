@@ -9,6 +9,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                api(project(":limber-backend-application:common"))
                 api(project(":piper:reps"))
                 implementation(project(":piper:serialization"))
             }
