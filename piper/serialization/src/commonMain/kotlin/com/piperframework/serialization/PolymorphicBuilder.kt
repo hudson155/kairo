@@ -15,14 +15,14 @@ import kotlin.reflect.KClass
 @OptIn(ImplicitReflectionSerializer::class)
 class PolymorphicBuilder<T : Any> internal constructor(private val baseClass: KClass<T>) {
 
-    private class ClassAndSerializer<U : Any>(private val klass: KClass<U>, private val serializer: KSerializer<U>) {
+    private class ClassAndSerializer<U : Any>(private val kClass: KClass<U>, private val serializer: KSerializer<U>) {
 
         fun applyTo(moduleBuilder: SerializersModuleBuilder) {
-            moduleBuilder.contextual(klass, serializer)
+            moduleBuilder.contextual(kClass, serializer)
         }
 
         fun applyTo(moduleBuilder: PolymorphicModuleBuilder<Any>) {
-            moduleBuilder.addSubclass(klass, klass.serializer())
+            moduleBuilder.addSubclass(kClass, kClass.serializer())
         }
     }
 

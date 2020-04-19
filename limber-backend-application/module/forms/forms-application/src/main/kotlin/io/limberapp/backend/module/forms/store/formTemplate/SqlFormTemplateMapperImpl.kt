@@ -111,7 +111,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
             )
         }
 
-    private fun unknownFormTemplateQuestion(klass: KClass<*>) {
-        unknown("form template question", klass::class)
+    private fun unknownFormTemplateQuestion(kClass: KClass<*>) {
+        unknown("form template question", kClass::class)
     }
 }

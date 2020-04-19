@@ -110,8 +110,8 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
         }
     }
 
-    protected fun <T : Any> Parameters.getAsType(klass: KClass<T>, name: String): T {
-        return getAsType(klass, name, optional = true)
+    protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String): T {
+        return getAsType(kClass, name, optional = true)
             ?: throw ParameterConversionException("Missing required parameter: $name.")
     }
 
@@ -119,12 +119,12 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast to that type using
      * the application's ConversionService.
      */
-    protected fun <T : Any> Parameters.getAsType(klass: KClass<T>, name: String, optional: Boolean = false): T? {
+    protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String, optional: Boolean = false): T? {
         check(optional)
         val values = getAll(name) ?: return null
         @Suppress("TooGenericExceptionCaught")
         return try {
-            klass.cast(application.conversionService.fromValues(values, klass.java))
+            kClass.cast(application.conversionService.fromValues(values, kClass.java))
         } catch (e: Exception) {
             throw ParameterConversionException(cause = e)
         }
