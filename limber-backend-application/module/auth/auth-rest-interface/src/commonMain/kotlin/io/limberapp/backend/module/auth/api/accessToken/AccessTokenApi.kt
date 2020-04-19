@@ -5,6 +5,7 @@ import com.piperframework.restInterface.PiperEndpoint
 import com.piperframework.types.UUID
 import com.piperframework.util.enc
 
+@Suppress("StringLiteralDuplication")
 object AccessTokenApi {
 
     data class Post(val accountId: UUID) : PiperEndpoint(

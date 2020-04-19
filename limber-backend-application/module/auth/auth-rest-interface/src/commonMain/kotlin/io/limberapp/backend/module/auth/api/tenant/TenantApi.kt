@@ -6,6 +6,7 @@ import com.piperframework.types.UUID
 import com.piperframework.util.enc
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 
+@Suppress("StringLiteralDuplication")
 object TenantApi {
 
     data class Post(val rep: TenantRep.Creation?) : PiperEndpoint(

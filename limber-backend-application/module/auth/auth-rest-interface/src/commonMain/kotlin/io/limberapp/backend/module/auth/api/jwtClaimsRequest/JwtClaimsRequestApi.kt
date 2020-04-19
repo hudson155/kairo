@@ -4,6 +4,7 @@ import com.piperframework.restInterface.HttpMethod
 import com.piperframework.restInterface.PiperEndpoint
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 
+@Suppress("StringLiteralDuplication")
 object JwtClaimsRequestApi {
 
     data class Post(val rep: JwtClaimsRequestRep.Creation?) : PiperEndpoint(
