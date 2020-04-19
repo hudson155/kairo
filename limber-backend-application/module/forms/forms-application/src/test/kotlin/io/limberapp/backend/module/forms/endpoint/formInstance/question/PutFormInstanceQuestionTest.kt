@@ -28,8 +28,11 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         // PostFormTemplateQuestion
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceId),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateQuestionId),
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceId,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateQuestionId
+            ),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation(),
             expectedException = FormInstanceNotFound()
         )
     }
@@ -58,8 +61,11 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         // PutFormInstanceQuestion
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateQuestionId),
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateQuestionId
+            ),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation(),
             expectedException = FormTemplateQuestionNotFound()
         )
     }
@@ -90,8 +96,11 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+            ),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation()
         ) {
             val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
             assertEquals(formInstanceQuestionRep, actual)
@@ -133,8 +142,11 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestion0Rep))
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+            ),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
 
         // PutFormInstanceQuestion
@@ -146,9 +158,11 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestion1Rep))
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = (FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
-                    as FormInstanceTextQuestionRep.Creation)
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+            ),
+            body = (FormInstanceQuestionRepFixtures.textFixture.creation() as FormInstanceTextQuestionRep.Creation)
                 .copy(text = "completely new text")
         ) {
             val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)

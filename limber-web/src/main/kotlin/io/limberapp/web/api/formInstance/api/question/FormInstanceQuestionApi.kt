@@ -8,9 +8,10 @@ internal class FormInstanceQuestionApi(private val fetch: Fetch, private val jso
 
     suspend fun put(
         formInstanceId: String,
+        questionId: String,
         rep: FormInstanceQuestionRep.Creation
     ): FormInstanceQuestionRep.Complete {
-        val string = fetch.put("/form-instances/$formInstanceId/questions", rep)
+        val string = fetch.put("/form-instances/$formInstanceId/questions/$questionId", rep)
         return json.parse(string)
     }
 

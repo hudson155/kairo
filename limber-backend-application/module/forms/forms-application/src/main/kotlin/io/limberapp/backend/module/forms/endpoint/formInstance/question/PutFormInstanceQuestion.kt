@@ -34,17 +34,19 @@ internal class PutFormInstanceQuestion @Inject constructor(
 
     internal data class Command(
         val formInstanceId: UUID,
+        val formTemplateQuestionId: UUID,
         val creationRep: FormInstanceQuestionRep.Creation
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formInstanceId = call.parameters.getAsType(UUID::class, formInstanceId),
+        formTemplateQuestionId = call.parameters.getAsType(UUID::class, formTemplateQuestionId),
         creationRep = call.getAndValidateBody<FormInstanceQuestionRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FormInstanceQuestionRep.Complete {
         HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()
-        val model = formInstanceQuestionMapper.model(command.creationRep)
+        val model = formInstanceQuestionMapper.model(command.formTemplateQuestionId, command.creationRep)
         formInstanceQuestionService.upsert(
             formInstanceId = command.formInstanceId,
             model = model
@@ -54,12 +56,14 @@ internal class PutFormInstanceQuestion @Inject constructor(
 
     companion object {
         const val formInstanceId = "formInstanceId"
+        const val formTemplateQuestionId = "formTemplateQuestionId"
         val endpointConfig = EndpointConfig(
             httpMethod = HttpMethod.Put,
             pathTemplate = listOf(
                 StringComponent("form-instances"),
                 VariableComponent(formInstanceId),
-                StringComponent("questions")
+                StringComponent("questions"),
+                VariableComponent(formTemplateQuestionId)
             )
         )
     }
