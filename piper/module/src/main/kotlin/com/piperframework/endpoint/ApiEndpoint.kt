@@ -8,7 +8,7 @@ import com.piperframework.exception.exception.badRequest.BodyRequired
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
 import com.piperframework.restInterface.PiperEndpointTemplate
-import com.piperframework.util.forKtor
+import com.piperframework.restInterface.forKtor
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call

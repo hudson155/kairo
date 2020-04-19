@@ -21,7 +21,9 @@ abstract class LimberApiEndpoint<Command : AbstractCommand, ResponseType : Any>(
         pathPrefix: String,
         endpointConfig: EndpointConfig
     ) : this(
-        application, pathPrefix, PiperEndpointTemplate(
+        application = application,
+        pathPrefix = pathPrefix,
+        endpointTemplate = PiperEndpointTemplate(
             httpMethod = when (endpointConfig.httpMethod) {
                 HttpMethod.Delete -> com.piperframework.restInterface.HttpMethod.DELETE
                 HttpMethod.Get -> com.piperframework.restInterface.HttpMethod.GET

@@ -6,7 +6,7 @@ import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.restInterface.PiperEndpoint
 import com.piperframework.serialization.Json
-import com.piperframework.util.forKtor
+import com.piperframework.restInterface.forKtor
 import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.http.ContentType
