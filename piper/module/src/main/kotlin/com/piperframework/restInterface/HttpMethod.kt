@@ -1,6 +1,5 @@
 package com.piperframework.restInterface
 
-import com.piperframework.restInterface.HttpMethod
 import io.ktor.http.HttpMethod as KtorHttpMethod
 
 fun HttpMethod.forKtor() = when (this) {
