@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
+import io.limberapp.backend.module.auth.api.accessToken.AccessTokenApi
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.accessToken.AccessTokenRepFixtures
@@ -17,10 +18,7 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
         val accountId = UUID.randomUUID()
 
         // GetAccessTokensByAccountId
-        piperTest.test(
-            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        ) {
+        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertTrue(actual.isEmpty())
         }
@@ -34,23 +32,14 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
 
         // PostAccessToken
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
-        piperTest.setup(
-            endpointConfig = PostAccessToken.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        )
+        piperTest.setup(AccessTokenApi.Post(accountId))
 
         // PostAccessToken
         val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
-        piperTest.setup(
-            endpointConfig = PostAccessToken.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        )
+        piperTest.setup(AccessTokenApi.Post(accountId))
 
         // GetAccessTokensByAccountId
-        piperTest.test(
-            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        ) {
+        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)
         }

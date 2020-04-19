@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
+import io.limberapp.backend.module.auth.api.accessToken.AccessTokenApi
 import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -19,11 +20,7 @@ internal class DeleteAccessTokenTest : ResourceTest() {
 
         // DeleteAccessToken
         piperTest.test(
-            endpointConfig = DeleteAccessToken.endpointConfig,
-            pathParams = mapOf(
-                DeleteAccessToken.accountId to accountId,
-                DeleteAccessToken.accessTokenId to accessTokenId
-            ),
+            endpoint = AccessTokenApi.Delete(accountId, accessTokenId),
             expectedException = AccessTokenNotFound()
         )
     }
@@ -36,32 +33,17 @@ internal class DeleteAccessTokenTest : ResourceTest() {
 
         // PostAccessToken
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
-        piperTest.setup(
-            endpointConfig = PostAccessToken.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        )
+        piperTest.setup(AccessTokenApi.Post(accountId))
 
         // PostAccessToken
         val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
-        piperTest.setup(
-            endpointConfig = PostAccessToken.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        )
+        piperTest.setup(AccessTokenApi.Post(accountId))
 
         // DeleteAccessToken
-        piperTest.test(
-            endpointConfig = DeleteAccessToken.endpointConfig,
-            pathParams = mapOf(
-                DeleteAccessToken.accountId to accountId,
-                DeleteAccessToken.accessTokenId to accessToken0Rep.id
-            )
-        ) {}
+        piperTest.test(AccessTokenApi.Delete(accountId, accessToken0Rep.id)) {}
 
         // GetAccessTokensByAccountId
-        piperTest.test(
-            endpointConfig = GetAccessTokensByAccountId.endpointConfig,
-            pathParams = mapOf(PostAccessToken.accountId to accountId)
-        ) {
+        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken1Rep), actual)
         }

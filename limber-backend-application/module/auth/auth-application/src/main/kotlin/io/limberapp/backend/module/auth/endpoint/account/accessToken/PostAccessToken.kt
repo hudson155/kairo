@@ -2,16 +2,13 @@ package io.limberapp.backend.module.auth.endpoint.account.accessToken
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.auth.api.accessToken.AccessTokenApi
 import io.limberapp.backend.module.auth.mapper.accessToken.AccessTokenMapper
 import io.limberapp.backend.module.auth.rep.accessToken.AccessTokenRep
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
@@ -28,36 +25,19 @@ internal class PostAccessToken @Inject constructor(
     servingConfig: ServingConfig,
     private val accessTokenService: AccessTokenService,
     private val accessTokenMapper: AccessTokenMapper
-) : LimberApiEndpoint<PostAccessToken.Command, AccessTokenRep.OneTimeUse>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+) : LimberApiEndpoint<AccessTokenApi.Post, AccessTokenRep.OneTimeUse>(
+    application, servingConfig.apiPathPrefix,
+    endpointTemplate = AccessTokenApi.Post::class.template()
 ) {
 
-    internal data class Command(
-        val accountId: UUID
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        accountId = call.parameters.getAsType(UUID::class, accountId)
+    override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.Post(
+        accountId = call.parameters.getAsType(UUID::class, "accountId")
     )
 
-    override suspend fun Handler.handle(command: Command): AccessTokenRep.OneTimeUse {
+    override suspend fun Handler.handle(command: AccessTokenApi.Post): AccessTokenRep.OneTimeUse {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val (model, rawSecretAsUuid) = accessTokenMapper.model(command.accountId)
         accessTokenService.create(model)
         return accessTokenMapper.oneTimeUseRep(model, rawSecretAsUuid)
-    }
-
-    companion object {
-        const val accountId = "accountId"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
-            pathTemplate = listOf(
-                StringComponent("accounts"),
-                VariableComponent(accountId),
-                StringComponent("access-tokens")
-            )
-        )
     }
 }

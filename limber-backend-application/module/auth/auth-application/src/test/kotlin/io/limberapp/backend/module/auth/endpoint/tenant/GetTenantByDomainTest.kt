@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -18,8 +19,7 @@ internal class GetTenantByDomainTest : ResourceTest() {
 
         // GetTenantByDomain
         piperTest.test(
-            endpointConfig = GetTenantByDomain.endpointConfig,
-            queryParams = mapOf(GetTenantByDomain.domain to tenantDomain),
+            endpoint = TenantApi.GetByDomain(tenantDomain),
             expectedException = TenantNotFound()
         )
     }
@@ -32,16 +32,10 @@ internal class GetTenantByDomainTest : ResourceTest() {
 
         // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(orgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
         // GetTenantByDomain
-        piperTest.test(
-            endpointConfig = GetTenantByDomain.endpointConfig,
-            queryParams = mapOf(GetTenantByDomain.domain to tenantRep.domains.single().domain)
-        ) {
+        piperTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }

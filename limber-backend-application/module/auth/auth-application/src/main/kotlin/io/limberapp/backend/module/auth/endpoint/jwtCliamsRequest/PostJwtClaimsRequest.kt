@@ -2,15 +2,13 @@ package io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.mapper.jwtClaimsRequest.JwtClaimsRequestMapper
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
@@ -26,31 +24,19 @@ internal class PostJwtClaimsRequest @Inject constructor(
     servingConfig: ServingConfig,
     private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
-) : LimberApiEndpoint<PostJwtClaimsRequest.Command, JwtClaimsRequestRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+) : LimberApiEndpoint<JwtClaimsRequestApi.Post, JwtClaimsRequestRep.Complete>(
+    application, servingConfig.apiPathPrefix,
+    endpointTemplate = JwtClaimsRequestApi.Post::class.template()
 ) {
 
-    internal data class Command(
-        val creationRep: JwtClaimsRequestRep.Creation
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody<JwtClaimsRequestRep.Creation>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = JwtClaimsRequestApi.Post(
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): JwtClaimsRequestRep.Complete {
+    override suspend fun Handler.handle(command: JwtClaimsRequestApi.Post): JwtClaimsRequestRep.Complete {
         Authorization.Role(JwtRole.IDENTITY_PROVIDER).authorize()
-        val requestModel = jwtClaimsRequestMapper.model(command.creationRep)
+        val requestModel = jwtClaimsRequestMapper.model(command.rep.required())
         val claimsModel = jwtClaimsRequestService.requestJwtClaims(requestModel)
         return jwtClaimsRequestMapper.completeRep(claimsModel)
-    }
-
-    companion object {
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
-            pathTemplate = listOf(StringComponent("jwt-claims-request"))
-        )
     }
 }

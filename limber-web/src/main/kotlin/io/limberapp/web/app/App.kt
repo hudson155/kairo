@@ -1,6 +1,7 @@
 package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
+import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.navbar
@@ -64,7 +65,7 @@ private val appWithAuth = functionalComponent<RProps> {
         if (global.state.tenant.hasBegunLoading) return@useEffect
         global.dispatch(TenantAction.BeginLoading)
         async {
-            val tenant = nonAuthenticatedApi.tenants.get(rootDomain)
+            val tenant = nonAuthenticatedApi.tenants(TenantApi.GetByDomain(rootDomain))
             global.dispatch(TenantAction.Set(tenant))
         }
     }
