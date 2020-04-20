@@ -73,7 +73,7 @@ complexity:
     thresholdInInterfaces: 16
     thresholdInObjects: 16
     thresholdInEnums: 8
-    ignoreDeprecated: false
+    ignoreDeprecated: true
     ignorePrivate: false
     ignoreOverridden: false
 

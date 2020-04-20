@@ -54,6 +54,9 @@ Read through the other artifacts below to understand what they are and see if yo
     * Contains base classes for application reps to inherit from.
         Reps are used in the API layer on all platforms.
         Reps should never be used in the application layer or database layer on the backend.
+* [`rest-interface`](/rest-interface):
+    * Multiplatform.
+    * Supports JVM and JS REST interfaces.
 * [`serialization`](/serialization):
     * Multiplatform.
     * Multiplatform (JVM/JS) serialization code for reps.
@@ -101,6 +104,7 @@ the whole picture.
 ├── ktorAuth           # Ktor/Piper authorization integration
 ├── module             # Code for Piper modules
 ├── rep                # Rep-related boilerplate (API layer)
+├── restInterface      # JVM and JS REST interfaces
 ├── serialization      # Serialization and deserialization code
 ├── sql                # SQL driver
 ├── testing            # Testing code

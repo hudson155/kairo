@@ -33,7 +33,7 @@ internal class PostFormTemplate @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<FormTemplateRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {

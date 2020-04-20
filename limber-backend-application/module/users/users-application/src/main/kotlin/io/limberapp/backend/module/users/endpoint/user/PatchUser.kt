@@ -37,7 +37,7 @@ internal class PatchUser @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         userId = call.parameters.getAsType(UUID::class, userId),
-        updateRep = call.getAndValidateBody()
+        updateRep = call.getAndValidateBody<UserRep.Update>().required()
     )
 
     override suspend fun Handler.handle(command: Command): UserRep.Complete {

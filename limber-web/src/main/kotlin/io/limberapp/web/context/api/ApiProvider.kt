@@ -1,8 +1,9 @@
 package io.limberapp.web.context.api
 
-import io.limberapp.web.api.Fetch
+import com.piperframework.restInterface.Fetch
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.util.process
 import react.RBuilder
 import react.RHandler
 import react.RProps
@@ -20,7 +21,7 @@ private val apiProvider = functionalComponent<RProps> { props ->
 
     val auth = useAuth()
 
-    val fetch = object : Fetch() {
+    val fetch = object : Fetch(process.env.API_ROOT_URL) {
         override suspend fun headers(body: Boolean): dynamic {
             val headers = super.headers(body)
             if (auth.isAuthenticated) headers["Authorization"] = "Bearer ${checkNotNull(auth.jwt).raw}"

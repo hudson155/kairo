@@ -41,7 +41,7 @@ internal class PostFormTemplateQuestion @Inject constructor(
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
         rank = call.parameters.getAsType(Int::class, rank, optional = true),
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<FormTemplateQuestionRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FormTemplateQuestionRep.Complete {

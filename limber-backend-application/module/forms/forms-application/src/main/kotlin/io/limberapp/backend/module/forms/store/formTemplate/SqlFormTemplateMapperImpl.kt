@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.util.unknown
+import com.piperframework.util.unknownType
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
@@ -112,6 +112,6 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
         }
 
     private fun unknownFormTemplateQuestion(klass: KClass<*>) {
-        unknown("form template question", klass::class)
+        unknownType("form template question", klass::class)
     }
 }

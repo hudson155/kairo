@@ -1,10 +1,10 @@
 package io.limberapp.web.api.formInstance.api.question
 
+import com.piperframework.restInterface.Fetch
+import com.piperframework.serialization.Json
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
-import io.limberapp.web.api.Fetch
-import io.limberapp.web.api.json
 
-internal class FormInstanceQuestionApi(private val fetch: Fetch) {
+internal class FormInstanceQuestionApi(private val fetch: Fetch, private val json: Json) {
 
     suspend fun put(
         formInstanceId: String,

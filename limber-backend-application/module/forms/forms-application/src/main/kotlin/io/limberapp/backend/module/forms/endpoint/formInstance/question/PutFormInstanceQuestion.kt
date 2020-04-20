@@ -39,7 +39,7 @@ internal class PutFormInstanceQuestion @Inject constructor(
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         formInstanceId = call.parameters.getAsType(UUID::class, formInstanceId),
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<FormInstanceQuestionRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FormInstanceQuestionRep.Complete {

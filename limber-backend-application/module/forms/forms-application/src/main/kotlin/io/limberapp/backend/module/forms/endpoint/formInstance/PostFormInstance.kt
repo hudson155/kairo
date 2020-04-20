@@ -35,7 +35,7 @@ internal class PostFormInstance @Inject constructor(
     ) : AbstractCommand()
 
     override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody()
+        creationRep = call.getAndValidateBody<FormInstanceRep.Creation>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FormInstanceRep.Complete {

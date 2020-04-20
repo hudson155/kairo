@@ -11,7 +11,9 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 api(project(":limber-backend-application:common"))
                 api(project(":piper:reps"))
+                implementation(project(":piper:rest-interface"))
                 implementation(project(":piper:serialization"))
+                implementation(project(":piper:util"))
             }
         }
         jvm {

@@ -4,7 +4,9 @@ import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
+import com.piperframework.restInterface.PiperEndpoint
 import com.piperframework.serialization.Json
+import com.piperframework.restInterface.forKtor
 import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.http.ContentType
@@ -27,6 +29,7 @@ abstract class PiperTest(
 
     private val exceptionMapper = ExceptionMapper()
 
+    @Deprecated("API Transition")
     fun setup(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any> = emptyMap(),
@@ -41,6 +44,13 @@ abstract class PiperTest(
         test = {}
     )
 
+    fun setup(endpointConfig: PiperEndpoint) = testInternal(
+        endpointConfig = endpointConfig,
+        expectedStatusCode = HttpStatusCode.OK,
+        test = {}
+    )
+
+    @Deprecated("API Transition")
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any> = emptyMap(),
@@ -57,6 +67,17 @@ abstract class PiperTest(
         test = test
     )
 
+    fun test(
+        endpointConfig: PiperEndpoint,
+        expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
+        test: TestApplicationCall.() -> Unit
+    ) = testInternal(
+        endpointConfig = endpointConfig,
+        expectedStatusCode = expectedStatusCode,
+        test = test
+    )
+
+    @Deprecated("API Transition")
     fun test(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any> = emptyMap(),
@@ -78,6 +99,19 @@ abstract class PiperTest(
         )
     }
 
+    fun test(endpoint: PiperEndpoint, expectedException: PiperException) {
+        val expectedError = exceptionMapper.handle(expectedException)
+        testInternal(
+            endpointConfig = endpoint,
+            expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
+            test = {
+                val actual = json.parse<PiperError>(response.content!!)
+                assertEquals(expectedError, actual)
+            }
+        )
+    }
+
+    @Deprecated("API Transition")
     private fun testInternal(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, Any>,
@@ -92,6 +126,15 @@ abstract class PiperTest(
             queryParams = queryParams.mapValues { it.value.toString() },
             body = body
         ).runTest(expectedStatusCode, test)
+    }
+
+    private fun testInternal(
+        endpointConfig: PiperEndpoint,
+        expectedStatusCode: HttpStatusCode,
+        test: TestApplicationCall.() -> Unit
+    ) = withPiperTestApp {
+        createCall(endpointConfig)
+            .runTest(expectedStatusCode, test)
     }
 
     private val engine = TestApplicationEngine(createTestEnvironment())
@@ -123,6 +166,7 @@ abstract class PiperTest(
         }
     }
 
+    @Deprecated("API Transition")
     private fun TestApplicationEngine.createCall(
         endpointConfig: EndpointConfig,
         pathParams: Map<String, String>,
@@ -133,6 +177,14 @@ abstract class PiperTest(
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
             body?.let { setBody(json.stringify(it)) }
+        }
+    }
+
+    private fun TestApplicationEngine.createCall(endpointConfig: PiperEndpoint): TestApplicationCall {
+        return handleRequest(endpointConfig.httpMethod.forKtor(), endpointConfig.href) {
+            addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
+            endpointConfig.body?.let { setBody(json.stringify(it)) }
         }
     }
 

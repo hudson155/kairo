@@ -39,7 +39,7 @@ internal class PatchFeature @Inject constructor(
     override suspend fun determineCommand(call: ApplicationCall) = Command(
         orgId = call.parameters.getAsType(UUID::class, orgId),
         featureId = call.parameters.getAsType(UUID::class, featureId),
-        updateRep = call.getAndValidateBody()
+        updateRep = call.getAndValidateBody<FeatureRep.Update>().required()
     )
 
     override suspend fun Handler.handle(command: Command): FeatureRep.Complete {

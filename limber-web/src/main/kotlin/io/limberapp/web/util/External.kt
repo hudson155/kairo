@@ -13,5 +13,3 @@ internal interface Process {
 }
 
 internal external val process: Process
-
-internal external fun encodeURIComponent(uriComponent: String): String

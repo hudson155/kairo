@@ -33,6 +33,9 @@ object Versions {
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
     const val kotlin = "1.3.71"
 
+    // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
+    const val kotlinExtensions = "1.0.1-pre.94-kotlin-1.3.70"
+
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
     const val kotlinxCoroutines = "1.3.5"
 
