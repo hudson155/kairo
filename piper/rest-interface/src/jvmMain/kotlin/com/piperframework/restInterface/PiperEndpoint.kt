@@ -4,6 +4,7 @@ import com.piperframework.rep.ValidatedRep
 import com.piperframework.util.unknownType
 import org.slf4j.LoggerFactory
 import java.util.UUID
+import kotlin.random.Random
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.primaryConstructor
@@ -38,13 +39,13 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
             val templateValue = "{${it.name}}"
 
             // Depending on the type of the parameter, generate a temporary placeholder value differently.
-            val placeholderValue = when (it.type) {
-                String::class.starProjectedType -> UUID.randomUUID().toString()
-                UUID::class.starProjectedType -> UUID.randomUUID()
-                else -> {
-                    if (it.type.withNullability(false).isSubtypeOf(ValidatedRep::class.starProjectedType)) null
-                    else unknownType(it.type)
-                }
+            val placeholderValue = when {
+                it.type.isMarkedNullable -> null
+                it.type == Int::class.starProjectedType -> Random.nextInt()
+                it.type == String::class.starProjectedType -> UUID.randomUUID().toString()
+                it.type == UUID::class.starProjectedType -> UUID.randomUUID()
+                it.type.withNullability(false).isSubtypeOf(ValidatedRep::class.starProjectedType) -> null
+                else -> unknownType(it.type)
             }
 
             // Record the temporary placeholder value and corresponding Ktor template value in argReplacements.
