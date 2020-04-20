@@ -7,7 +7,7 @@ import java.util.UUID
 
 data class FormInstanceRadioSelectorQuestionModel(
     override val created: LocalDateTime,
-    override val formTemplateQuestionId: UUID?,
+    override val questionId: UUID?,
     val selection: String
 ) : FormInstanceQuestionModel {
 
