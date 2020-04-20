@@ -1,4 +1,4 @@
-package com.piperframework.sql.columnTypes.localDateTime
+package com.piperframework.sql.columnTypes
 
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType

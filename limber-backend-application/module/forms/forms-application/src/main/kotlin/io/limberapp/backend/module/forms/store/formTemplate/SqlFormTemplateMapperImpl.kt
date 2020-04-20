@@ -7,6 +7,7 @@ import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateTable
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
@@ -49,6 +50,9 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 insertStatement[FormTemplateQuestionTable.earliest] = model.earliest
                 insertStatement[FormTemplateQuestionTable.latest] = model.latest
             }
+            is FormTemplateRadioSelectorQuestionModel -> {
+                insertStatement[FormTemplateQuestionTable.options] = model.options
+            }
             is FormTemplateTextQuestionModel -> {
                 insertStatement[FormTemplateQuestionTable.multiLine] = model.multiLine
                 insertStatement[FormTemplateQuestionTable.placeholder] = model.placeholder
@@ -68,6 +72,9 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
             is FormTemplateDateQuestionModel.Update -> {
                 update.earliest?.let { updateStatement[FormTemplateQuestionTable.earliest] = it }
                 update.latest?.let { updateStatement[FormTemplateQuestionTable.latest] = it }
+            }
+            is FormTemplateRadioSelectorQuestionModel.Update -> {
+                update.options?.let { updateStatement[FormTemplateQuestionTable.options] = it }
             }
             is FormTemplateTextQuestionModel.Update -> {
                 update.multiLine?.let { updateStatement[FormTemplateQuestionTable.multiLine] = it }
@@ -99,6 +106,13 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 helpText = resultRow[FormTemplateQuestionTable.helpText],
                 earliest = resultRow[FormTemplateQuestionTable.earliest],
                 latest = resultRow[FormTemplateQuestionTable.latest]
+            )
+            FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel(
+                id = resultRow[FormTemplateQuestionTable.guid],
+                created = resultRow[FormTemplateQuestionTable.createdDate],
+                label = resultRow[FormTemplateQuestionTable.label],
+                helpText = resultRow[FormTemplateQuestionTable.helpText],
+                options = checkNotNull(resultRow[FormTemplateQuestionTable.options])
             )
             FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel(
                 id = resultRow[FormTemplateQuestionTable.guid],

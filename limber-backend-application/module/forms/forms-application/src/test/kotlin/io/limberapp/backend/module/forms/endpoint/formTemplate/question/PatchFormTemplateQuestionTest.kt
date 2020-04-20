@@ -76,7 +76,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         )
 
         // PostFormTemplateQuestion
-        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
+        var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
                 as FormTemplateTextQuestionRep.Complete
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)

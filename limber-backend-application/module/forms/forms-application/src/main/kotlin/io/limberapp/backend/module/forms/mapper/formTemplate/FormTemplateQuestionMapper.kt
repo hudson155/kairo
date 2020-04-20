@@ -5,9 +5,11 @@ import com.piperframework.util.unknownType
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
@@ -47,6 +49,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             multiLine = true,
             placeholder = null,
             validator = null
+        ),
+        FormTemplateRadioSelectorQuestionModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            label = "Two options",
+            helpText = null,
+            options = listOf("test_option_one", "test_option_two")
         )
     )
 
@@ -58,6 +67,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             helpText = rep.helpText,
             earliest = rep.earliest,
             latest = rep.latest
+        )
+        is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
+            id = uuidGenerator.generate(),
+            created = LocalDateTime.now(clock),
+            label = rep.label,
+            helpText = rep.helpText,
+            options = rep.options
         )
         is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
             id = uuidGenerator.generate(),
@@ -80,6 +96,13 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             earliest = model.earliest,
             latest = model.latest
         )
+        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
+            id = model.id,
+            created = model.created,
+            label = model.label,
+            helpText = model.helpText,
+            options = model.options
+        )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
             id = model.id,
             created = model.created,
@@ -99,6 +122,11 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             helpText = rep.helpText,
             earliest = rep.earliest,
             latest = rep.latest
+        )
+        is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
+            label = rep.label,
+            helpText = rep.helpText,
+            options = rep.options
         )
         is FormTemplateTextQuestionRep.Update -> FormTemplateTextQuestionModel.Update(
             label = rep.label,

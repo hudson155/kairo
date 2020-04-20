@@ -40,7 +40,7 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
         )
 
         // PostFormTemplate
-        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureId, 4)
+        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureId, 5)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureId)

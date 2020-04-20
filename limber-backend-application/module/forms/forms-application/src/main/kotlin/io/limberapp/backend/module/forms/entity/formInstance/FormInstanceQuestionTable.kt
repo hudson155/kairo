@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.entity.formInstance
 
-import com.piperframework.sql.columnTypes.localDateTime.localdate
+import com.piperframework.sql.columnTypes.localdate
+import com.piperframework.sql.columnTypes.stringList
 import com.piperframework.store.SqlTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 
@@ -19,4 +20,6 @@ internal object FormInstanceQuestionTable : SqlTable("forms", "form_instance_que
     val text = text("text").nullable()
 
     val date = localdate("date").nullable()
+
+    val selections = stringList("selections").nullable()
 }

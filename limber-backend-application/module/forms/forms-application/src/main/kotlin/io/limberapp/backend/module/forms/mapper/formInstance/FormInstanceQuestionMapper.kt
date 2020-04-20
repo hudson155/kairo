@@ -4,9 +4,11 @@ import com.google.inject.Inject
 import com.piperframework.util.unknownType
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
@@ -23,6 +25,11 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = formTemplateQuestionId,
             date = rep.date
         )
+        is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
+            created = LocalDateTime.now(clock),
+            formTemplateQuestionId = formTemplateQuestionId,
+            selection = rep.selection
+        )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
             created = LocalDateTime.now(clock),
             formTemplateQuestionId = formTemplateQuestionId,
@@ -37,6 +44,11 @@ internal class FormInstanceQuestionMapper @Inject constructor(
             formTemplateQuestionId = model.formTemplateQuestionId,
             date = model.date
         )
+        is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
+            created = model.created,
+            formTemplateQuestionId = model.formTemplateQuestionId,
+            selection = model.selection
+        )
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(
             created = model.created,
             formTemplateQuestionId = model.formTemplateQuestionId,
@@ -47,6 +59,8 @@ internal class FormInstanceQuestionMapper @Inject constructor(
 
     fun update(model: FormInstanceQuestionModel) = when (model) {
         is FormInstanceDateQuestionModel -> FormInstanceDateQuestionModel.Update(date = model.date)
+        is FormInstanceRadioSelectorQuestionModel ->
+            FormInstanceRadioSelectorQuestionModel.Update(selection = model.selection)
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionModel.Update(text = model.text)
         else -> unknownFormInstanceQuestion(model::class)
     }

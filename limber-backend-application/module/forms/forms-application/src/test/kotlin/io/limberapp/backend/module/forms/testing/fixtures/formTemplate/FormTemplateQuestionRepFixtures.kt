@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.testing.fixtures.formTemplate
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import java.time.LocalDateTime
@@ -69,6 +70,21 @@ internal object FormTemplateQuestionRepFixtures {
                 multiLine = true,
                 placeholder = null,
                 validator = null
+            )
+        }),
+        Fixture({
+            FormTemplateRadioSelectorQuestionRep.Creation(
+                label = "Two options",
+                helpText = null,
+                options = listOf("test_option_one", "test_option_two")
+            )
+        }, { idSeed ->
+            FormTemplateRadioSelectorQuestionRep.Complete(
+                id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
+                label = "Two options",
+                helpText = null,
+                options = listOf("test_option_one", "test_option_two")
             )
         })
     )
