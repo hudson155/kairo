@@ -44,8 +44,8 @@ abstract class PiperTest(
         test = {}
     )
 
-    fun setup(endpointConfig: PiperEndpoint) = testInternal(
-        endpointConfig = endpointConfig,
+    fun setup(endpoint: PiperEndpoint) = testInternal(
+        endpoint = endpoint,
         expectedStatusCode = HttpStatusCode.OK,
         test = {}
     )
@@ -68,11 +68,11 @@ abstract class PiperTest(
     )
 
     fun test(
-        endpointConfig: PiperEndpoint,
+        endpoint: PiperEndpoint,
         expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
         test: TestApplicationCall.() -> Unit
     ) = testInternal(
-        endpointConfig = endpointConfig,
+        endpoint = endpoint,
         expectedStatusCode = expectedStatusCode,
         test = test
     )
@@ -102,7 +102,7 @@ abstract class PiperTest(
     fun test(endpoint: PiperEndpoint, expectedException: PiperException) {
         val expectedError = exceptionMapper.handle(expectedException)
         testInternal(
-            endpointConfig = endpoint,
+            endpoint = endpoint,
             expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
             test = {
                 val actual = json.parse<PiperError>(response.content!!)
@@ -129,11 +129,11 @@ abstract class PiperTest(
     }
 
     private fun testInternal(
-        endpointConfig: PiperEndpoint,
+        endpoint: PiperEndpoint,
         expectedStatusCode: HttpStatusCode,
         test: TestApplicationCall.() -> Unit
     ) = withPiperTestApp {
-        createCall(endpointConfig)
+        createCall(endpoint)
             .runTest(expectedStatusCode, test)
     }
 
@@ -180,11 +180,11 @@ abstract class PiperTest(
         }
     }
 
-    private fun TestApplicationEngine.createCall(endpointConfig: PiperEndpoint): TestApplicationCall {
-        return handleRequest(endpointConfig.httpMethod.forKtor(), endpointConfig.href) {
+    private fun TestApplicationEngine.createCall(endpoint: PiperEndpoint): TestApplicationCall {
+        return handleRequest(endpoint.httpMethod.forKtor(), endpoint.href) {
             addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
             createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
-            endpointConfig.body?.let { setBody(json.stringify(it)) }
+            endpoint.body?.let { setBody(json.stringify(it)) }
         }
     }
 
