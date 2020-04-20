@@ -2,15 +2,12 @@ package io.limberapp.backend.module.users.endpoint.user
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.UUID
 
@@ -21,30 +18,18 @@ internal class DeleteUser @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val userService: UserService
-) : LimberApiEndpoint<DeleteUser.Command, Unit>(
+) : LimberApiEndpoint<UserApi.Delete, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = UserApi.Delete::class.template()
 ) {
 
-    internal data class Command(
-        val userId: UUID
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        userId = call.parameters.getAsType(UUID::class, userId)
+    override suspend fun determineCommand(call: ApplicationCall) = UserApi.Delete(
+        userId = call.parameters.getAsType(UUID::class, "userId")
     )
 
-    override suspend fun Handler.handle(command: Command) {
+    override suspend fun Handler.handle(command: UserApi.Delete) {
         Authorization.User(command.userId).authorize()
         userService.delete(command.userId)
-    }
-
-    companion object {
-        const val userId = "userId"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Delete,
-            pathTemplate = listOf(StringComponent("users"), VariableComponent(userId))
-        )
     }
 }

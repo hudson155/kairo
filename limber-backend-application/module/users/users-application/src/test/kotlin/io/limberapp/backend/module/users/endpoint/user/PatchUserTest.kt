@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -17,9 +18,7 @@ internal class PatchUserTest : ResourceTest() {
 
         val updateRep = UserRep.Update(firstName = "Gunner")
         piperTest.test(
-            endpointConfig = PatchUser.endpointConfig,
-            pathParams = mapOf(PatchUser.userId to userId),
-            body = updateRep,
+            endpoint = UserApi.Patch(userId, updateRep),
             expectedException = UserNotFound()
         )
     }
@@ -30,26 +29,16 @@ internal class PatchUserTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        )
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
 
         val updateRep = UserRep.Update(firstName = "Gunner")
         userRep = userRep.copy(firstName = updateRep.firstName!!)
-        piperTest.test(
-            endpointConfig = PatchUser.endpointConfig,
-            pathParams = mapOf(PatchUser.userId to userRep.id),
-            body = updateRep
-        ) {
+        piperTest.test(UserApi.Patch(userRep.id, updateRep)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id)
-        ) {
+        piperTest.test(UserApi.Get(userRep.id)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }

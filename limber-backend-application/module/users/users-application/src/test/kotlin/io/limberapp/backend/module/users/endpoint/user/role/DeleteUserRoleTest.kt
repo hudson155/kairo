@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.users.endpoint.user.GetUser
-import io.limberapp.backend.module.users.endpoint.user.PostUser
+import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.api.user.role.UserRoleApi
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
@@ -20,11 +20,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteUserRole.endpointConfig,
-            pathParams = mapOf(
-                DeleteUserRole.userId to userId,
-                DeleteUserRole.roleName to JwtRole.SUPERUSER
-            ),
+            endpoint = UserRoleApi.Delete(userId, JwtRole.SUPERUSER),
             expectedException = UserNotFound()
         )
     }
@@ -35,24 +31,14 @@ internal class DeleteUserRoleTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        )
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
 
         piperTest.test(
-            endpointConfig = DeleteUserRole.endpointConfig,
-            pathParams = mapOf(
-                DeleteUserRole.userId to userRep.id,
-                DeleteUserRole.roleName to JwtRole.SUPERUSER
-            ),
+            endpoint = UserRoleApi.Delete(userRep.id, JwtRole.SUPERUSER),
             expectedException = UserDoesNotHaveRole(JwtRole.SUPERUSER)
         )
 
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id)
-        ) {
+        piperTest.test(UserApi.Get(userRep.id)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
@@ -64,33 +50,15 @@ internal class DeleteUserRoleTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        )
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
 
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.setup(
-            endpointConfig = PutUserRole.endpointConfig,
-            pathParams = mapOf(
-                PutUserRole.userId to userRep.id,
-                PutUserRole.roleName to JwtRole.SUPERUSER
-            )
-        )
+        piperTest.setup(UserRoleApi.Put(userRep.id, JwtRole.SUPERUSER))
 
         userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER })
-        piperTest.test(
-            endpointConfig = DeleteUserRole.endpointConfig,
-            pathParams = mapOf(
-                DeleteUserRole.userId to userRep.id,
-                DeleteUserRole.roleName to JwtRole.SUPERUSER
-            )
-        ) {}
+        piperTest.test(UserRoleApi.Delete(userRep.id, JwtRole.SUPERUSER)) {}
 
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id)
-        ) {
+        piperTest.test(UserApi.Get(userRep.id)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }

@@ -1,0 +1,19 @@
+package io.limberapp.backend.module.users.user
+
+import com.piperframework.restInterface.Fetch
+import com.piperframework.serialization.Json
+import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.rep.account.UserRep
+
+class UserClient(private val fetch: Fetch, private val json: Json) {
+
+    suspend operator fun invoke(endpoint: UserApi.Get): UserRep.Complete {
+        val string = fetch(endpoint)
+        return json.parse(string)
+    }
+
+    suspend operator fun invoke(endpoint: UserApi.Patch): UserRep.Complete {
+        val string = fetch(endpoint)
+        return json.parse(string)
+    }
+}

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -16,8 +17,7 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
         val emailAddress = "jhudson@jhudson.ca"
 
         piperTest.test(
-            endpointConfig = GetUserByEmailAddress.endpointConfig,
-            queryParams = mapOf(GetUserByEmailAddress.emailAddress to emailAddress),
+            endpoint = UserApi.GetByEmailAddress(emailAddress),
             expectedException = UserNotFound()
         )
     }
@@ -28,15 +28,9 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.test(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        ) {}
+        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId))) {}
 
-        piperTest.test(
-            endpointConfig = GetUserByEmailAddress.endpointConfig,
-            queryParams = mapOf(GetUserByEmailAddress.emailAddress to userRep.emailAddress)
-        ) {
+        piperTest.test(UserApi.GetByEmailAddress(userRep.emailAddress)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }

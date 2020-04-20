@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -16,14 +17,13 @@ internal class PostUserTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        )
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
 
         piperTest.test(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress),
+            endpoint = UserApi.Post(
+                rep = UserRepFixtures.billGatesFixture.creation(orgId)
+                    .copy(emailAddress = jeffHudsonUserRep.emailAddress)
+            ),
             expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
         )
     }
@@ -34,18 +34,12 @@ internal class PostUserTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.test(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        ) {
+        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId))) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id)
-        ) {
+        piperTest.test(UserApi.Get(userRep.id)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
