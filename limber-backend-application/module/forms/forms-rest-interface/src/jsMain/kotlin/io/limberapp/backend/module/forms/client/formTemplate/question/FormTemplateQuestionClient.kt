@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.forms.formTemplate.question
+package io.limberapp.backend.module.forms.client.formTemplate.question
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json

@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.tenant
+package io.limberapp.backend.module.auth.client.tenant
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json

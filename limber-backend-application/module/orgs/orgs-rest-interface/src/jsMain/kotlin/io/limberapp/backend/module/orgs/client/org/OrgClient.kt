@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.org
+package io.limberapp.backend.module.orgs.client.org
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json
