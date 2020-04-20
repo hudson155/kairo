@@ -22,13 +22,10 @@ object FormTemplateRadioSelectorQuestionRep {
     ) : FormTemplateQuestionRep.Creation {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Creation::options) {
-                value.isNotEmpty() && value.all {
-                    Validator.length1hundred(
-                        it,
-                        allowEmpty = false
-                    )
-                } && value.count() == value.toSet().count()
+            validate(Creation::options) inner@ {
+                if (value.isEmpty()) return@inner false
+                if (value.any { !Validator.length1hundred(it, allowEmpty = false) }) return@inner false
+                return@inner value.distinct().size == value.size
             }
         }
     }
@@ -56,12 +53,9 @@ object FormTemplateRadioSelectorQuestionRep {
             validate(super.validate())
             validate(Update::options) {
                 ifPresent {
-                    value.isNotEmpty() && value.all {
-                        Validator.length1hundred(
-                            it,
-                            allowEmpty = false
-                        )
-                    } && value.count() == value.toSet().count()
+                    if (value.isEmpty()) return@ifPresent false
+                    if (value.any { !Validator.length1hundred(it, allowEmpty = false) }) return@ifPresent false
+                    return@ifPresent value.distinct().size == value.size
                 }
             }
         }

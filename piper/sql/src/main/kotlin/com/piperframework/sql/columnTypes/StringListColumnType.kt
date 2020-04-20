@@ -6,10 +6,7 @@ import org.jetbrains.exposed.sql.Table
 import org.postgresql.jdbc.PgArray
 import java.sql.PreparedStatement
 
-fun Table.stringList(name: String): Column<List<String>> = registerColumn(
-    name,
-    StringListColumnType()
-)
+fun Table.stringList(name: String): Column<List<String>> = registerColumn(name, StringListColumnType())
 
 class StringListColumnType : ColumnType() {
 
@@ -26,10 +23,7 @@ class StringListColumnType : ColumnType() {
     }
 
     override fun valueToString(value: Any?): String = when (value) {
-        null -> {
-            if (!nullable) error("NULL in non-nullable column")
-            "NULL"
-        }
+        null -> if (nullable) "NULL" else error("NULL in non-nullable column")
         is Iterable<*> -> "'{${value.joinToString()}}'"
         else -> nonNullValueToString(value)
     }
