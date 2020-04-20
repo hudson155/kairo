@@ -9,9 +9,9 @@ interface FormTemplateQuestionService {
 
     fun update(
         formTemplateId: UUID,
-        formTemplateQuestionId: UUID,
+        questionId: UUID,
         update: FormTemplateQuestionModel.Update
     ): FormTemplateQuestionModel
 
-    fun delete(formTemplateId: UUID, formTemplateQuestionId: UUID)
+    fun delete(formTemplateId: UUID, questionId: UUID)
 }

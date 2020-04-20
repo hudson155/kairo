@@ -49,7 +49,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
     ) {
         insertStatement[FormInstanceQuestionTable.createdDate] = model.created
         insertStatement[FormInstanceQuestionTable.formInstanceGuid] = formInstanceId
-        insertStatement[FormInstanceQuestionTable.formTemplateQuestionGuid] = model.formTemplateQuestionId
+        insertStatement[FormInstanceQuestionTable.formTemplateQuestionGuid] = model.questionId
         insertStatement[FormInstanceQuestionTable.type] = model.type.name
         when (model) {
             is FormInstanceDateQuestionModel -> {
@@ -80,7 +80,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
         when (FormTemplateQuestionModel.Type.valueOf(resultRow[FormInstanceQuestionTable.type])) {
             FormTemplateQuestionModel.Type.DATE -> FormInstanceDateQuestionModel(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
-                formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                questionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 date = checkNotNull(resultRow[FormInstanceQuestionTable.date])
             )
             FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
@@ -90,7 +90,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             )
             FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
-                formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                questionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 text = checkNotNull(resultRow[FormInstanceQuestionTable.text])
             )
         }

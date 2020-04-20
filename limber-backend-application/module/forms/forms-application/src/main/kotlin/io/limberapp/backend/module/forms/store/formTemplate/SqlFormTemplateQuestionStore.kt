@@ -67,11 +67,11 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
             )
     }
 
-    override fun get(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction {
+    override fun get(formTemplateId: UUID, questionId: UUID) = transaction {
         val entity = FormTemplateQuestionTable
             .select {
                 (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                        (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+                        (FormTemplateQuestionTable.guid eq questionId)
             }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormTemplateMapper.formTemplateQuestionModel(entity)
@@ -86,27 +86,27 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
 
     override fun update(
         formTemplateId: UUID,
-        formTemplateQuestionId: UUID,
+        questionId: UUID,
         update: FormTemplateQuestionModel.Update
     ) = transaction {
         FormTemplateQuestionTable
             .updateExactlyOne(
                 where = {
                     (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                            (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+                            (FormTemplateQuestionTable.guid eq questionId)
                 },
                 body = { sqlFormTemplateMapper.formTemplateQuestionEntity(it, update) },
                 notFound = { throw FormTemplateQuestionNotFound() }
             )
-        return@transaction checkNotNull(get(formTemplateId, formTemplateQuestionId))
+        return@transaction checkNotNull(get(formTemplateId, questionId))
     }
 
-    override fun delete(formTemplateId: UUID, formTemplateQuestionId: UUID) = transaction<Unit> {
+    override fun delete(formTemplateId: UUID, questionId: UUID) = transaction<Unit> {
         FormTemplateQuestionTable
             .deleteExactlyOne(
                 where = {
                     (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                            (FormTemplateQuestionTable.guid eq formTemplateQuestionId)
+                            (FormTemplateQuestionTable.guid eq questionId)
                 },
                 notFound = { throw FormTemplateQuestionNotFound() }
             )
