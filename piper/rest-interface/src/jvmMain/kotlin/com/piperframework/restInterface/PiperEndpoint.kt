@@ -6,10 +6,8 @@ import org.slf4j.LoggerFactory
 import java.util.UUID
 import kotlin.random.Random
 import kotlin.reflect.KClass
-import kotlin.reflect.full.isSubtypeOf
+import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.primaryConstructor
-import kotlin.reflect.full.starProjectedType
-import kotlin.reflect.full.withNullability
 
 private val logger = LoggerFactory.getLogger(PiperEndpoint::class.java)
 
@@ -39,12 +37,15 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
             val templateValue = "{${it.name}}"
 
             // Depending on the type of the parameter, generate a temporary placeholder value differently.
+            val type = it.type
+            val kClass = it.type.classifier as KClass<*>
             val placeholderValue = when {
-                it.type.isMarkedNullable -> null
-                it.type == Int::class.starProjectedType -> Random.nextInt()
-                it.type == String::class.starProjectedType -> UUID.randomUUID().toString()
-                it.type == UUID::class.starProjectedType -> UUID.randomUUID()
-                it.type.withNullability(false).isSubtypeOf(ValidatedRep::class.starProjectedType) -> null
+                type.isMarkedNullable -> null
+                kClass == Int::class -> Random.nextInt()
+                kClass == String::class -> UUID.randomUUID().toString()
+                kClass == UUID::class -> UUID.randomUUID()
+                kClass.isSubclassOf(Enum::class) -> kClass.java.enumConstants.first()
+                kClass.isSubclassOf(ValidatedRep::class) -> null
                 else -> unknownType(it.type)
             }
 
