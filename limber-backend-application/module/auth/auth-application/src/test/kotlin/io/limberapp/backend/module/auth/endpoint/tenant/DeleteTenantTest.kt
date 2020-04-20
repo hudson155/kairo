@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
@@ -16,8 +17,7 @@ internal class DeleteTenantTest : ResourceTest() {
 
         // DeleteTenant
         piperTest.test(
-            endpointConfig = DeleteTenant.endpointConfig,
-            pathParams = mapOf(DeleteTenant.orgId to orgId),
+            endpoint = TenantApi.Delete(orgId),
             expectedException = TenantNotFound()
         )
     }
@@ -30,21 +30,14 @@ internal class DeleteTenantTest : ResourceTest() {
 
         // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(orgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
         // DeleteTenant
-        piperTest.test(
-            endpointConfig = DeleteTenant.endpointConfig,
-            pathParams = mapOf(DeleteTenant.orgId to tenantRep.orgId)
-        ) {}
+        piperTest.test(TenantApi.Delete(tenantRep.orgId)) {}
 
         // GetTenant
         piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.orgId to orgId),
+            endpoint = TenantApi.Get(orgId),
             expectedException = TenantNotFound()
         )
     }

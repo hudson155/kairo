@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
-import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
+import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
+import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
@@ -44,10 +44,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
 
         // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(existingOrg.id)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.id)))
 
         // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(
@@ -57,10 +54,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             emailAddress = emailAddress,
             profilePhotoUrl = null
         )
-        piperTest.test(
-            endpointConfig = PostJwtClaimsRequest.endpointConfig,
-            body = jwtRequest
-        ) {
+        piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
             val actual = response.content!!
             val expected = "{\n" +
                     "    \"org\": \"{" +
@@ -110,10 +104,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
 
         // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(existingOrg.id)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.id)))
 
         // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(
@@ -123,10 +114,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        piperTest.test(
-            endpointConfig = PostJwtClaimsRequest.endpointConfig,
-            body = jwtRequest
-        ) {
+        piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
             val actual = response.content!!
             val expected = "{\n" +
                     "    \"org\": \"{" +

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
-import io.limberapp.backend.module.auth.endpoint.tenant.GetTenant
-import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
+import io.limberapp.backend.module.auth.api.tenant.TenantApi
+import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
@@ -23,9 +23,7 @@ internal class PostTenantDomainTest : ResourceTest() {
 
         // PostTenantDomain
         piperTest.test(
-            endpointConfig = PostTenantDomain.endpointConfig,
-            pathParams = mapOf(PostTenantDomain.orgId to orgId),
-            body = TenantDomainRepFixtures.limberappFixture.creation(),
+            endpoint = TenantDomainApi.Post(orgId, TenantDomainRepFixtures.limberappFixture.creation()),
             expectedException = TenantNotFound()
         )
     }
@@ -39,31 +37,20 @@ internal class PostTenantDomainTest : ResourceTest() {
 
         // PostTenant
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(limberappOrgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId)))
 
         // PostTenant
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.someclientFixture.creation(someclientOrgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgId)))
 
         // PostTenantDomain
         val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         piperTest.test(
-            endpointConfig = PostTenantDomain.endpointConfig,
-            pathParams = mapOf(PostTenantDomain.orgId to limberappOrgId),
-            body = TenantDomainRepFixtures.someclientFixture.creation(),
+            endpoint = TenantDomainApi.Post(limberappOrgId, TenantDomainRepFixtures.someclientFixture.creation()),
             expectedException = TenantDomainAlreadyRegistered(tenantDomainRep.domain)
         )
 
         // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.orgId to limberappOrgId)
-        ) {
+        piperTest.test(TenantApi.Get(limberappOrgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(limberappTenantRep, actual)
         }
@@ -77,28 +64,18 @@ internal class PostTenantDomainTest : ResourceTest() {
 
         // PostTenant
         var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(orgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
         // PostTenantDomain
         val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         tenantRep = tenantRep.copy(domains = tenantRep.domains.plus(tenantDomainRep))
-        piperTest.test(
-            endpointConfig = PostTenantDomain.endpointConfig,
-            pathParams = mapOf(PostTenantDomain.orgId to orgId),
-            body = TenantDomainRepFixtures.someclientFixture.creation()
-        ) {
+        piperTest.test(TenantDomainApi.Post(orgId, TenantDomainRepFixtures.someclientFixture.creation())) {
             val actual = json.parse<TenantDomainRep.Complete>(response.content!!)
             assertEquals(tenantDomainRep, actual)
         }
 
         // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.orgId to orgId)
-        ) {
+        piperTest.test(TenantApi.Get(orgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }

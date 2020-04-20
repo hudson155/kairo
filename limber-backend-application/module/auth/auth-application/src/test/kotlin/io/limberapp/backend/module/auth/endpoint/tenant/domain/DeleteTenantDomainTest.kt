@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
-import io.limberapp.backend.module.auth.endpoint.tenant.GetTenant
-import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
+import io.limberapp.backend.module.auth.api.tenant.TenantApi
+import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
@@ -23,11 +23,7 @@ internal class DeleteTenantDomainTest : ResourceTest() {
 
         // DeleteTenantDomain
         piperTest.test(
-            endpointConfig = DeleteTenantDomain.endpointConfig,
-            pathParams = mapOf(
-                DeleteTenantDomain.orgId to orgId,
-                DeleteTenantDomain.domain to tenantDomain
-            ),
+            endpoint = TenantDomainApi.Delete(orgId, tenantDomain),
             expectedException = TenantDomainNotFound()
         )
     }
@@ -41,26 +37,16 @@ internal class DeleteTenantDomainTest : ResourceTest() {
 
         // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(orgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
         // DeleteTenantDomain
         piperTest.test(
-            endpointConfig = DeleteTenantDomain.endpointConfig,
-            pathParams = mapOf(
-                DeleteTenantDomain.orgId to orgId,
-                DeleteTenantDomain.domain to tenantDomain
-            ),
+            endpoint = TenantDomainApi.Delete(orgId, tenantDomain),
             expectedException = TenantDomainNotFound()
         )
 
         // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.orgId to orgId)
-        ) {
+        piperTest.test(TenantApi.Get(orgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
@@ -74,35 +60,22 @@ internal class DeleteTenantDomainTest : ResourceTest() {
 
         // PostTenant
         var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(
-            endpointConfig = PostTenant.endpointConfig,
-            body = TenantRepFixtures.limberappFixture.creation(orgId)
-        )
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
         // PostTenantDomain
         val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         tenantRep = tenantRep.copy(domains = tenantRep.domains.plus(tenantDomainRep))
-        piperTest.test(
-            endpointConfig = PostTenantDomain.endpointConfig,
-            pathParams = mapOf(PostTenantDomain.orgId to orgId),
-            body = TenantDomainRepFixtures.someclientFixture.creation()
-        ) {
+        piperTest.test(TenantDomainApi.Post(orgId, TenantDomainRepFixtures.someclientFixture.creation())) {
             val actual = json.parse<TenantDomainRep.Complete>(response.content!!)
             assertEquals(tenantDomainRep, actual)
         }
 
         // DeleteTenantDomain
         tenantRep = tenantRep.copy(domains = tenantRep.domains.minus(tenantDomainRep))
-        piperTest.test(
-            endpointConfig = DeleteTenantDomain.endpointConfig,
-            pathParams = mapOf(DeleteTenantDomain.orgId to orgId, DeleteTenantDomain.domain to tenantDomainRep.domain)
-        ) {}
+        piperTest.test(TenantDomainApi.Delete(orgId, tenantDomainRep.domain)) {}
 
         // GetTenant
-        piperTest.test(
-            endpointConfig = GetTenant.endpointConfig,
-            pathParams = mapOf(GetTenant.orgId to orgId)
-        ) {
+        piperTest.test(TenantApi.Get(orgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
