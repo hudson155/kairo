@@ -11,10 +11,8 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val formTemplateId = UUID.randomUUID()
 
-        // DeleteFormTemplate
         piperTest.test(
             endpointConfig = DeleteFormTemplate.endpointConfig,
             pathParams = mapOf(DeleteFormTemplate.formTemplateId to formTemplateId),
@@ -25,23 +23,19 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // DeleteFormTemplate
         piperTest.test(
             endpointConfig = DeleteFormTemplate.endpointConfig,
             pathParams = mapOf(DeleteFormTemplate.formTemplateId to formTemplateRep.id)
         ) {}
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id),

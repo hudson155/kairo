@@ -13,10 +13,8 @@ internal class GetOrgTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgId),
@@ -27,14 +25,12 @@ internal class GetOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)

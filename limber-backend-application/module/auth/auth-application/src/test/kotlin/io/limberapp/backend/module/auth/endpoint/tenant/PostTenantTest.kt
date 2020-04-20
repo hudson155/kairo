@@ -16,15 +16,12 @@ internal class PostTenantTest : ResourceTest() {
     @Test
     fun duplicateOrgId() {
 
-        // Setup
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
-        // PostTenant
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId)))
 
-        // PostTenant
         piperTest.test(
             endpoint = TenantApi.Post(
                 TenantRepFixtures.someclientFixture.creation(someclientOrgId)
@@ -37,15 +34,12 @@ internal class PostTenantTest : ResourceTest() {
     @Test
     fun duplicateAuth0ClientId() {
 
-        // Setup
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
-        // PostTenant
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId)))
 
-        // PostTenant
         piperTest.test(
             endpoint = TenantApi.Post(
                 TenantRepFixtures.someclientFixture.creation(someclientOrgId)
@@ -58,14 +52,11 @@ internal class PostTenantTest : ResourceTest() {
     @Test
     fun duplicateDomain() {
 
-        // Setup
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
-        // PostTenant
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId)))
 
-        // PostTenant
         val duplicateDomain = TenantRepFixtures.limberappFixture.creation(limberappOrgId).domain
         piperTest.test(
             endpoint = TenantApi.Post(
@@ -79,31 +70,26 @@ internal class PostTenantTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
-        // PostTenant
         val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
         piperTest.test(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId))) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(limberappTenantRep, actual)
         }
 
-        // PostTenant
         val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, someclientOrgId)
         piperTest.test(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgId))) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)
         }
 
-        // GetTenant
         piperTest.test(TenantApi.Get(limberappOrgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(limberappTenantRep, actual)
         }
 
-        // GetTenant
         piperTest.test(TenantApi.Get(someclientOrgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(someclientTenantRep, actual)

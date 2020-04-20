@@ -11,10 +11,8 @@ internal class DeleteUserTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val userId = UUID.randomUUID()
 
-        // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to userId),
@@ -25,23 +23,19 @@ internal class DeleteUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
-        // DeleteUser
         piperTest.test(
             endpointConfig = DeleteUser.endpointConfig,
             pathParams = mapOf(DeleteUser.userId to userRep.id)
         ) {}
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id),

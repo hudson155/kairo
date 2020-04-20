@@ -14,11 +14,9 @@ internal class DeleteAccessTokenTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val accountId = UUID.randomUUID()
         val accessTokenId = UUID.randomUUID()
 
-        // DeleteAccessToken
         piperTest.test(
             endpoint = AccessTokenApi.Delete(accountId, accessTokenId),
             expectedException = AccessTokenNotFound()
@@ -28,21 +26,16 @@ internal class DeleteAccessTokenTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val accountId = UUID.randomUUID()
 
-        // PostAccessToken
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         piperTest.setup(AccessTokenApi.Post(accountId))
 
-        // PostAccessToken
         val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(AccessTokenApi.Post(accountId))
 
-        // DeleteAccessToken
         piperTest.test(AccessTokenApi.Delete(accountId, accessToken0Rep.id)) {}
 
-        // GetAccessTokensByAccountId
         piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken1Rep), actual)

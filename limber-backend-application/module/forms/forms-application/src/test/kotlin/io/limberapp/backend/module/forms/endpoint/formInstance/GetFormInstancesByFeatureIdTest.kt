@@ -15,10 +15,8 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
     @Test
     fun happyPathNoFormInstances() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // GetFormInstancesByFeatureId
         piperTest.test(
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)
@@ -31,31 +29,26 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
     @Test
     fun happyPathMultipleFormInstances() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // PostFormInstance
         val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // GetFormInstancesByFeatureId
         piperTest.test(
             endpointConfig = GetFormInstancesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormInstancesByFeatureId.featureId to featureId)

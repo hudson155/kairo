@@ -13,10 +13,8 @@ internal class PostAccessTokenTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val accountId = UUID.randomUUID()
 
-        // PostAccessToken
         val accessTokenRep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         val accessTokenOneTimeUseRep = AccessTokenRepFixtures.fixture.oneTimeUse(this, accountId, 0)
         piperTest.test(AccessTokenApi.Post(accountId)) {
@@ -24,7 +22,6 @@ internal class PostAccessTokenTest : ResourceTest() {
             assertEquals(accessTokenOneTimeUseRep, actual)
         }
 
-        // GetAccessTokensByAccountId
         piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessTokenRep), actual)

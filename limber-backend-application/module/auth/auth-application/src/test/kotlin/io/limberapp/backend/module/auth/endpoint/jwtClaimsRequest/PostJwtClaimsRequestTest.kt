@@ -23,7 +23,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     @Test
     fun happyPathUserDoesNotExist() {
 
-        // Setup
         val userId = deterministicUuidGenerator[0]
         val emailAddress = "jhudson@jhudson.ca"
         val existingOrg = OrgModel(
@@ -42,11 +41,9 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         every { mockedServices[UserService::class].create(any()) } returns Unit
         every { mockedServices[OrgService::class].get(existingOrg.id) } returns existingOrg
 
-        // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.id)))
 
-        // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(
             auth0ClientId = tenantRep.auth0ClientId,
             firstName = "Jeff",
@@ -75,7 +72,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     @Test
     fun happyPathUserExists() {
 
-        // Setup
         val existingOrg = OrgModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
@@ -102,11 +98,9 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
         every { mockedServices[OrgService::class].get(existingOrg.id) } returns existingOrg
 
-        // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.id)))
 
-        // PostJwtClaimsRequest
         val jwtRequest = JwtClaimsRequestRep.Creation(
             auth0ClientId = tenantRep.auth0ClientId,
             firstName = "Jeff",

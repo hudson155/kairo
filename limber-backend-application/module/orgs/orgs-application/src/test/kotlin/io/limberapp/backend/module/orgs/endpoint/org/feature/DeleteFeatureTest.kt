@@ -16,11 +16,9 @@ internal class DeleteFeatureTest : ResourceTest() {
     @Test
     fun orgDoesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
         val featureId = UUID.randomUUID()
 
-        // DeleteFeature
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
@@ -34,17 +32,14 @@ internal class DeleteFeatureTest : ResourceTest() {
     @Test
     fun featureDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // DeleteFeature
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
             pathParams = mapOf(
@@ -54,7 +49,6 @@ internal class DeleteFeatureTest : ResourceTest() {
             expectedException = FeatureNotFound()
         )
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
@@ -67,14 +61,12 @@ internal class DeleteFeatureTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PostFeature
         val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
@@ -83,7 +75,6 @@ internal class DeleteFeatureTest : ResourceTest() {
             body = FeatureRepFixtures.formsFixture.creation()
         )
 
-        // DeleteFeature
         orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })
         piperTest.test(
             endpointConfig = DeleteFeature.endpointConfig,
@@ -93,7 +84,6 @@ internal class DeleteFeatureTest : ResourceTest() {
             )
         ) {}
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)

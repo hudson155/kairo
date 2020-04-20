@@ -14,10 +14,8 @@ internal class GetTenantTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // GetTenant
         piperTest.test(
             endpoint = TenantApi.Get(orgId),
             expectedException = TenantNotFound()
@@ -27,14 +25,11 @@ internal class GetTenantTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
-        // GetTenant
         piperTest.test(TenantApi.Get(orgId)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)

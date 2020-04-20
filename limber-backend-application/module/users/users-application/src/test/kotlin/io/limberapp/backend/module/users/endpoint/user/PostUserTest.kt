@@ -13,17 +13,14 @@ internal class PostUserTest : ResourceTest() {
     @Test
     fun duplicateEmailAddress() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
-        // PostUser
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.billGatesFixture.creation(orgId).copy(emailAddress = jeffHudsonUserRep.emailAddress),
@@ -34,10 +31,8 @@ internal class PostUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
@@ -47,7 +42,6 @@ internal class PostUserTest : ResourceTest() {
             assertEquals(userRep, actual)
         }
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)

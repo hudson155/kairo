@@ -18,11 +18,9 @@ internal class PatchFeatureTest : ResourceTest() {
     @Test
     fun orgDoesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
         val featureId = UUID.randomUUID()
 
-        // PatchFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
@@ -38,17 +36,14 @@ internal class PatchFeatureTest : ResourceTest() {
     @Test
     fun featureDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PatchFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
@@ -60,7 +55,6 @@ internal class PatchFeatureTest : ResourceTest() {
             expectedException = FeatureNotFound()
         )
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
@@ -73,14 +67,12 @@ internal class PatchFeatureTest : ResourceTest() {
     @Test
     fun pathConflict() {
 
-        // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PostFeature
         val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
@@ -89,7 +81,6 @@ internal class PatchFeatureTest : ResourceTest() {
             body = FeatureRepFixtures.formsFixture.creation()
         )
 
-        // PatchFeature
         val featureUpdateRep = FeatureRep.Update(path = orgRep.features.first().path)
         piperTest.test(
             endpointConfig = PatchFeature.endpointConfig,
@@ -101,7 +92,6 @@ internal class PatchFeatureTest : ResourceTest() {
             expectedException = FeatureIsNotUnique()
         )
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
@@ -114,14 +104,12 @@ internal class PatchFeatureTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PostFeature
         var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
@@ -130,7 +118,6 @@ internal class PatchFeatureTest : ResourceTest() {
             body = FeatureRepFixtures.formsFixture.creation()
         )
 
-        // PatchFeature
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
         featureRep = featureRep.copy(name = featureUpdateRep.name!!)
         orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it })
@@ -146,7 +133,6 @@ internal class PatchFeatureTest : ResourceTest() {
             assertEquals(featureRep, actual)
         }
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
@@ -159,14 +145,12 @@ internal class PatchFeatureTest : ResourceTest() {
     @Test
     fun happyPathSetAndRemoveDefault() {
 
-        // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PostFeature
         var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.setup(
@@ -175,7 +159,6 @@ internal class PatchFeatureTest : ResourceTest() {
             body = FeatureRepFixtures.formsFixture.creation()
         )
 
-        // PatchFeature
         val featureUpdateRep0 = FeatureRep.Update(isDefaultFeature = true)
         featureRep = featureRep.copy(isDefaultFeature = true)
         orgRep = orgRep.copy(
@@ -195,7 +178,6 @@ internal class PatchFeatureTest : ResourceTest() {
             assertEquals(featureRep, actual)
         }
 
-        // PatchFeature
         val featureUpdateRep1 = FeatureRep.Update(isDefaultFeature = false)
         featureRep = featureRep.copy(isDefaultFeature = false)
         orgRep = orgRep.copy(features = orgRep.features.map { if (it.id == featureRep.id) featureRep else it })
@@ -211,7 +193,6 @@ internal class PatchFeatureTest : ResourceTest() {
             assertEquals(featureRep, actual)
         }
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)

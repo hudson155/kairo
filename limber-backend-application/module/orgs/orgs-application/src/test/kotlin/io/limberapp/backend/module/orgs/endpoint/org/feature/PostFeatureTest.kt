@@ -18,10 +18,8 @@ internal class PostFeatureTest : ResourceTest() {
     @Test
     fun orgDoesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostFeature
         piperTest.test(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgId),
@@ -33,14 +31,12 @@ internal class PostFeatureTest : ResourceTest() {
     @Test
     fun duplicatePath() {
 
-        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PostFeature
         piperTest.test(
             endpointConfig = PostFeature.endpointConfig,
             pathParams = mapOf(PostFeature.orgId to orgRep.id),
@@ -48,7 +44,6 @@ internal class PostFeatureTest : ResourceTest() {
             expectedException = FeatureIsNotUnique()
         )
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
@@ -61,14 +56,12 @@ internal class PostFeatureTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PostFeature
         val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
         piperTest.test(
@@ -80,7 +73,6 @@ internal class PostFeatureTest : ResourceTest() {
             assertEquals(featureRep, actual)
         }
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)

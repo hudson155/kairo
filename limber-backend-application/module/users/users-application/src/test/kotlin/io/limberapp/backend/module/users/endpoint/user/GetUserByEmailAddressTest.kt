@@ -13,10 +13,8 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val emailAddress = "jhudson@jhudson.ca"
 
-        // GetUserByEmailAddress
         piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to emailAddress),
@@ -27,17 +25,14 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.test(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         ) {}
 
-        // GetUserByEmailAddress
         piperTest.test(
             endpointConfig = GetUserByEmailAddress.endpointConfig,
             queryParams = mapOf(GetUserByEmailAddress.emailAddress to userRep.emailAddress)

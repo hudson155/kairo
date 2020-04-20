@@ -11,10 +11,8 @@ internal class DeleteOrgTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // DeleteOrg
         piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
             pathParams = mapOf(DeleteOrg.orgId to orgId),
@@ -25,20 +23,17 @@ internal class DeleteOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // DeleteOrg
         piperTest.test(
             endpointConfig = DeleteOrg.endpointConfig,
             pathParams = mapOf(DeleteOrg.orgId to orgRep.id)
         ) {}
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id),

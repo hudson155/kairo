@@ -13,10 +13,8 @@ internal class GetUserTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val userId = UUID.randomUUID()
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userId),
@@ -27,17 +25,14 @@ internal class GetUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)

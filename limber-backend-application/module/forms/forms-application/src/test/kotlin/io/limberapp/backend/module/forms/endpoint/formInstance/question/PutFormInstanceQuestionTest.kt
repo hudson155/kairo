@@ -21,11 +21,9 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun formInstanceDoesNotExist() {
 
-        // Setup
         val formTemplateQuestionId = UUID.randomUUID()
         val formInstanceId = UUID.randomUUID()
 
-        // PostFormTemplateQuestion
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
@@ -40,25 +38,21 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun formTemplateQuestionDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
         val formTemplateQuestionId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // PutFormInstanceQuestion
         piperTest.test(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
@@ -73,24 +67,20 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // PutFormInstanceQuestion
         val formInstanceQuestionRep =
             FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions.first().id)
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
@@ -106,7 +96,6 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             assertEquals(formInstanceQuestionRep, actual)
         }
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
@@ -119,24 +108,20 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun happyPathIdempotent() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 4)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // PutFormInstanceQuestion
         val formInstanceQuestion0Rep =
             FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions.first().id)
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestion0Rep))
@@ -149,7 +134,6 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
 
-        // PutFormInstanceQuestion
         val formInstanceQuestion1Rep =
             (FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions.first().id)
                     as FormInstanceTextQuestionRep.Complete)
@@ -169,7 +153,6 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
             assertEquals(formInstanceQuestion1Rep, actual)
         }
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)

@@ -12,10 +12,8 @@ internal class PostFormTemplateTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.test(
             endpointConfig = PostFormTemplate.endpointConfig,
@@ -25,7 +23,6 @@ internal class PostFormTemplateTest : ResourceTest() {
             assertEquals(formTemplateRep, actual)
         }
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)

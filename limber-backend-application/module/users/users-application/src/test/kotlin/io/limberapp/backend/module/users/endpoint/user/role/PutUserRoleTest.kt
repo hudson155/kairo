@@ -16,10 +16,8 @@ internal class PutUserRoleTest : ResourceTest() {
     @Test
     fun userDoesNotExist() {
 
-        // Setup
         val userId = UUID.randomUUID()
 
-        // PutUserRole
         piperTest.test(
             endpointConfig = PutUserRole.endpointConfig,
             pathParams = mapOf(
@@ -33,17 +31,14 @@ internal class PutUserRoleTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
-        // PutUserRole
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
         piperTest.test(
             endpointConfig = PutUserRole.endpointConfig,
@@ -53,7 +48,6 @@ internal class PutUserRoleTest : ResourceTest() {
             )
         ) {}
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
@@ -66,17 +60,14 @@ internal class PutUserRoleTest : ResourceTest() {
     @Test
     fun happyPathIdempotent() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
-        // PutUserRole
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
         piperTest.setup(
             endpointConfig = PutUserRole.endpointConfig,
@@ -86,7 +77,6 @@ internal class PutUserRoleTest : ResourceTest() {
             )
         )
 
-        // PutUserRole
         piperTest.test(
             endpointConfig = PutUserRole.endpointConfig,
             pathParams = mapOf(
@@ -95,7 +85,6 @@ internal class PutUserRoleTest : ResourceTest() {
             )
         ) {}
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)
