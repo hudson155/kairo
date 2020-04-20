@@ -41,6 +41,7 @@ object Dependencies {
     }
 
     object Logging {
+        const val logbackClassic = "ch.qos.logback:logback-classic:${Versions.logback}"
         const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
     }
 
