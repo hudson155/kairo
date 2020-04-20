@@ -6,7 +6,7 @@ import io.limberapp.web.app.components.navbar.components.headerLinkGroup.headerL
 import io.limberapp.web.app.components.navbar.components.headerText.headerText
 import io.limberapp.web.app.default
 import io.limberapp.web.context.auth.useAuth
-import io.limberapp.web.context.theme.ThemeContext
+import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.backgroundColor
@@ -19,7 +19,6 @@ import react.RBuilder
 import react.RProps
 import react.child
 import react.functionalComponent
-import react.useContext
 import styled.css
 import styled.styledDiv
 
@@ -27,7 +26,7 @@ internal data class Props(val features: List<FeatureRep.Complete>, val name: Str
 
 private val navbar = functionalComponent<Props> { props ->
     val auth = useAuth()
-    val theme = useContext(ThemeContext)
+    val theme = useTheme()
 
     styledDiv {
         css {

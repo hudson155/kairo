@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.sideNav
 
-import io.limberapp.web.context.theme.ThemeContext
+import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.CSSBuilder
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -20,7 +20,6 @@ import react.RProps
 import react.child
 import react.functionalComponent
 import react.router.dom.navLink
-import react.useContext
 import styled.StyleSheet
 import styled.css
 import styled.getClassName
@@ -32,7 +31,7 @@ internal data class SideNavLink(val to: String, val name: String)
 internal data class Props(val links: List<SideNavLink>) : RProps
 
 private val sideNav = functionalComponent<Props> { props ->
-    val theme = useContext(ThemeContext)
+    val theme = useTheme()
 
     // TODO (259): Improve default css'ing
     val styles = object : StyleSheet("SideNavBarStyles", isStatic = true) {
