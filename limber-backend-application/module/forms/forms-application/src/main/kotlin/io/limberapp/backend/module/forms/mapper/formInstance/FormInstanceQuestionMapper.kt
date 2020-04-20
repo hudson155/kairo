@@ -27,7 +27,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         )
         is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
             created = LocalDateTime.now(clock),
-            formTemplateQuestionId = formTemplateQuestionId,
+            questionId = questionId,
             selection = rep.selection
         )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
@@ -46,7 +46,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         )
         is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
             created = model.created,
-            formTemplateQuestionId = model.formTemplateQuestionId,
+            questionId = model.questionId,
             selection = model.selection
         )
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(

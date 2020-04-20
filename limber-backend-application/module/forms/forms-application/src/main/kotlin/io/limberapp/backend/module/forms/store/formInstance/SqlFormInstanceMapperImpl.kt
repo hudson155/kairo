@@ -85,7 +85,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             )
             FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
                 created = resultRow[FormInstanceQuestionTable.createdDate],
-                formTemplateQuestionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                questionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 selection = checkNotNull(resultRow[FormInstanceQuestionTable.selections]).single()
             )
             FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
