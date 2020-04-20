@@ -2,13 +2,11 @@ package io.limberapp.backend.module.healthCheck.endpoint.healthCheck
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.limberapp.backend.api.healthCheck.HealthCheckApi
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.healthCheck.mapper.healthCheck.HealthCheckMapper
@@ -25,19 +23,17 @@ internal class HealthCheck @Inject constructor(
     servingConfig: ServingConfig,
     private val healthCheckService: HealthCheckService,
     private val healthCheckMapper: HealthCheckMapper
-) : LimberApiEndpoint<HealthCheck.Command, HealthCheckRep.Complete>(
+) : LimberApiEndpoint<HealthCheckApi.Get, HealthCheckRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = HealthCheckApi.Get::class.template()
 ) {
 
     private val logger = LoggerFactory.getLogger(HealthCheck::class.java)
 
-    internal object Command : AbstractCommand()
+    override suspend fun determineCommand(call: ApplicationCall) = HealthCheckApi.Get
 
-    override suspend fun determineCommand(call: ApplicationCall) = Command
-
-    override suspend fun Handler.handle(command: Command): HealthCheckRep.Complete {
+    override suspend fun Handler.handle(command: HealthCheckApi.Get): HealthCheckRep.Complete {
         Authorization.Public.authorize()
         val model = healthCheckService.healthCheck()
         if (model is HealthCheckModel.UnhealthyHealthCheckModel) {
@@ -45,12 +41,5 @@ internal class HealthCheck @Inject constructor(
             responseCode = HttpStatusCode.InternalServerError
         }
         return healthCheckMapper.completeRep(model)
-    }
-
-    companion object {
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Get,
-            pathTemplate = listOf(StringComponent("health-check"))
-        )
     }
 }

@@ -1,12 +1,12 @@
 package com.piperframework.endpoint
 
 import com.piperframework.authorization.PiperAuthorization
-import com.piperframework.endpoint.command.AbstractCommand
 import com.piperframework.endpoint.exception.ParameterConversionException
 import com.piperframework.endpoint.exception.ValidationException
 import com.piperframework.exception.exception.badRequest.BodyRequired
 import com.piperframework.exception.exception.forbidden.ForbiddenException
 import com.piperframework.rep.ValidatedRep
+import com.piperframework.restInterface.PiperEndpoint
 import com.piperframework.restInterface.PiperEndpointTemplate
 import com.piperframework.restInterface.forKtor
 import io.ktor.application.Application
@@ -31,7 +31,7 @@ import kotlin.reflect.full.cast
  * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
  * called for each request.
  */
-abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseType : Any>(
+abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType : Any>(
     private val application: Application,
     private val pathPrefix: String,
     private val endpointTemplate: PiperEndpointTemplate
@@ -39,12 +39,12 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
 
     private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 
-    inner class Handler(private val command: Command, private val principal: P?) {
+    inner class Handler(private val endpoint: Endpoint, private val principal: P?) {
 
         private var authorized = false
 
         internal suspend fun handle(): Pair<HttpStatusCode?, ResponseType> {
-            val result = handle(command)
+            val result = handle(endpoint)
             check(authorized) {
                 "Every endpoint needs to implement authorization. ${this@ApiEndpoint::class.simpleName} does not."
             }
@@ -64,7 +64,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * parameters (if appropriate) and receive the body (if appropriate). This is the only time in the ApiEndpoint
      * lifecycle that a method will be given access to the Ktor ApplicationCall.
      */
-    abstract suspend fun determineCommand(call: ApplicationCall): Command
+    abstract suspend fun determineCommand(call: ApplicationCall): Endpoint
 
     /**
      * Called for each request to the endpoint, to handle the execution. This method is the meat and potatoes of the
@@ -73,7 +73,7 @@ abstract class ApiEndpoint<P : Principal, Command : AbstractCommand, ResponseTyp
      * architecture this method probably has very simple implementation and delegates most of the work to the service
      * layer.
      */
-    abstract suspend fun Handler.handle(command: Command): ResponseType
+    abstract suspend fun Handler.handle(command: Endpoint): ResponseType
 
     /**
      * Registers the endpoint with the application to bind requests to that endpoint to this

@@ -1,6 +1,5 @@
 package com.piperframework.testing
 
-import com.piperframework.endpoint.EndpointConfig
 import com.piperframework.error.PiperError
 import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
@@ -29,42 +28,10 @@ abstract class PiperTest(
 
     private val exceptionMapper = ExceptionMapper()
 
-    @Deprecated("API Transition")
-    fun setup(
-        endpointConfig: EndpointConfig,
-        pathParams: Map<String, Any> = emptyMap(),
-        queryParams: Map<String, Any> = emptyMap(),
-        body: Any? = null
-    ) = testInternal(
-        endpointConfig = endpointConfig,
-        pathParams = pathParams,
-        queryParams = queryParams,
-        body = body,
-        expectedStatusCode = HttpStatusCode.OK,
-        test = {}
-    )
-
     fun setup(endpoint: PiperEndpoint) = testInternal(
         endpoint = endpoint,
         expectedStatusCode = HttpStatusCode.OK,
         test = {}
-    )
-
-    @Deprecated("API Transition")
-    fun test(
-        endpointConfig: EndpointConfig,
-        pathParams: Map<String, Any> = emptyMap(),
-        queryParams: Map<String, Any> = emptyMap(),
-        body: Any? = null,
-        expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
-        test: TestApplicationCall.() -> Unit
-    ) = testInternal(
-        endpointConfig = endpointConfig,
-        pathParams = pathParams,
-        queryParams = queryParams,
-        body = body,
-        expectedStatusCode = expectedStatusCode,
-        test = test
     )
 
     fun test(
@@ -77,28 +44,6 @@ abstract class PiperTest(
         test = test
     )
 
-    @Deprecated("API Transition")
-    fun test(
-        endpointConfig: EndpointConfig,
-        pathParams: Map<String, Any> = emptyMap(),
-        queryParams: Map<String, Any> = emptyMap(),
-        body: Any? = null,
-        expectedException: PiperException
-    ) {
-        val expectedError = exceptionMapper.handle(expectedException)
-        testInternal(
-            endpointConfig = endpointConfig,
-            pathParams = pathParams,
-            queryParams = queryParams,
-            body = body,
-            expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
-            test = {
-                val actual = json.parse<PiperError>(response.content!!)
-                assertEquals(expectedError, actual)
-            }
-        )
-    }
-
     fun test(endpoint: PiperEndpoint, expectedException: PiperException) {
         val expectedError = exceptionMapper.handle(expectedException)
         testInternal(
@@ -109,23 +54,6 @@ abstract class PiperTest(
                 assertEquals(expectedError, actual)
             }
         )
-    }
-
-    @Deprecated("API Transition")
-    private fun testInternal(
-        endpointConfig: EndpointConfig,
-        pathParams: Map<String, Any>,
-        queryParams: Map<String, Any>,
-        body: Any?,
-        expectedStatusCode: HttpStatusCode,
-        test: TestApplicationCall.() -> Unit
-    ) = withPiperTestApp {
-        createCall(
-            endpointConfig = endpointConfig,
-            pathParams = pathParams.mapValues { it.value.toString() },
-            queryParams = queryParams.mapValues { it.value.toString() },
-            body = body
-        ).runTest(expectedStatusCode, test)
     }
 
     private fun testInternal(
@@ -163,20 +91,6 @@ abstract class PiperTest(
         } catch (e: Throwable) {
             stop()
             throw e
-        }
-    }
-
-    @Deprecated("API Transition")
-    private fun TestApplicationEngine.createCall(
-        endpointConfig: EndpointConfig,
-        pathParams: Map<String, String>,
-        queryParams: Map<String, String>,
-        body: Any?
-    ): TestApplicationCall {
-        return handleRequest(endpointConfig.httpMethod, endpointConfig.path(pathParams, queryParams)) {
-            addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-            createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
-            body?.let { setBody(json.stringify(it)) }
         }
     }
 
