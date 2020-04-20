@@ -2,15 +2,13 @@ package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -23,31 +21,20 @@ internal class PostOrg @Inject constructor(
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : LimberApiEndpoint<PostOrg.Command, OrgRep.Complete>(
+) : LimberApiEndpoint<OrgApi.Post, OrgRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = OrgApi.Post::class.template()
 ) {
 
-    internal data class Command(
-        val creationRep: OrgRep.Creation
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody<OrgRep.Creation>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Post(
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): OrgRep.Complete {
+    override suspend fun Handler.handle(command: OrgApi.Post): OrgRep.Complete {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val model = orgMapper.model(command.creationRep)
+        val model = orgMapper.model(command.rep.required())
         orgService.create(model)
         return orgMapper.completeRep(model)
-    }
-
-    companion object {
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
-            pathTemplate = listOf(StringComponent("orgs"))
-        )
     }
 }

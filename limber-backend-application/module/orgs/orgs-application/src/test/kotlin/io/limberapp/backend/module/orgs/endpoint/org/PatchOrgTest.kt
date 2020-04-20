@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -17,9 +18,7 @@ internal class PatchOrgTest : ResourceTest() {
 
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         piperTest.test(
-            endpointConfig = PatchOrg.endpointConfig,
-            pathParams = mapOf(PatchOrg.orgId to orgId),
-            body = orgUpdateRep,
+            endpoint = OrgApi.Patch(orgId, orgUpdateRep),
             expectedException = OrgNotFound()
         )
     }
@@ -28,26 +27,16 @@ internal class PatchOrgTest : ResourceTest() {
     fun happyPath() {
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         orgRep = orgRep.copy(name = orgUpdateRep.name!!)
-        piperTest.test(
-            endpointConfig = PatchOrg.endpointConfig,
-            pathParams = mapOf(PatchOrg.orgId to orgRep.id),
-            body = orgUpdateRep
-        ) {
+        piperTest.test(OrgApi.Patch(orgRep.id, orgUpdateRep)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(PatchOrg.orgId to orgRep.id)
-        ) {
+        piperTest.test(OrgApi.Get(orgRep.id)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }

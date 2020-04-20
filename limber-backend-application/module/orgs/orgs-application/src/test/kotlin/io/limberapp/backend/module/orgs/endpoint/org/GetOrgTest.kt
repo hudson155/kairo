@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -16,8 +17,7 @@ internal class GetOrgTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgId),
+            endpoint = OrgApi.Get(orgId),
             expectedException = OrgNotFound()
         )
     }
@@ -26,15 +26,9 @@ internal class GetOrgTest : ResourceTest() {
     fun happyPath() {
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
-        ) {
+        piperTest.test(OrgApi.Get(orgRep.id)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }

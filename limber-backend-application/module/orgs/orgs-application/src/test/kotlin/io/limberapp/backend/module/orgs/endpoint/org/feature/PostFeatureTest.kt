@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
-import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
+import io.limberapp.backend.module.orgs.api.org.OrgApi
+import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
@@ -21,9 +21,7 @@ internal class PostFeatureTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = PostFeature.endpointConfig,
-            pathParams = mapOf(PostFeature.orgId to orgId),
-            body = FeatureRepFixtures.formsFixture.creation(),
+            endpoint = OrgFeatureApi.Post(orgId, FeatureRepFixtures.formsFixture.creation()),
             expectedException = OrgNotFound()
         )
     }
@@ -32,22 +30,17 @@ internal class PostFeatureTest : ResourceTest() {
     fun duplicatePath() {
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
         piperTest.test(
-            endpointConfig = PostFeature.endpointConfig,
-            pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path),
+            endpoint = OrgFeatureApi.Post(
+                orgId = orgRep.id,
+                rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path)
+            ),
             expectedException = FeatureIsNotUnique()
         )
 
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
-        ) {
+        piperTest.test(OrgApi.Get(orgRep.id)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
@@ -57,26 +50,16 @@ internal class PostFeatureTest : ResourceTest() {
     fun happyPath() {
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
         val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
-        piperTest.test(
-            endpointConfig = PostFeature.endpointConfig,
-            pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures.formsFixture.creation()
-        ) {
+        piperTest.test(OrgFeatureApi.Post(orgRep.id, FeatureRepFixtures.formsFixture.creation())) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
-        ) {
+        piperTest.test(OrgApi.Get(orgRep.id)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -14,8 +15,7 @@ internal class DeleteOrgTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteOrg.endpointConfig,
-            pathParams = mapOf(DeleteOrg.orgId to orgId),
+            endpoint = OrgApi.Delete(orgId),
             expectedException = OrgNotFound()
         )
     }
@@ -24,19 +24,12 @@ internal class DeleteOrgTest : ResourceTest() {
     fun happyPath() {
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+
+        piperTest.test(OrgApi.Delete(orgRep.id)) {}
 
         piperTest.test(
-            endpointConfig = DeleteOrg.endpointConfig,
-            pathParams = mapOf(DeleteOrg.orgId to orgRep.id)
-        ) {}
-
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id),
+            endpoint = OrgApi.Get(orgRep.id),
             expectedException = OrgNotFound()
         )
     }
