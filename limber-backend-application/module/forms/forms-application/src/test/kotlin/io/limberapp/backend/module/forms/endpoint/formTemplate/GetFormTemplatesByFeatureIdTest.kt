@@ -13,10 +13,8 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
     @Test
     fun happyPathNoFormTemplates() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // GetFormTemplatesByFeatureId
         piperTest.test(
             endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)
@@ -29,24 +27,20 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
     @Test
     fun happyPathMultipleFormTemplates() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplate
         val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureId, 5)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureId)
         )
 
-        // GetFormTemplatesByFeatureId
         piperTest.test(
             endpointConfig = GetFormTemplatesByFeatureId.endpointConfig,
             queryParams = mapOf(GetFormTemplatesByFeatureId.featureId to featureId)

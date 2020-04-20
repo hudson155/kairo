@@ -15,10 +15,8 @@ internal class GetFormInstanceTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val formInstanceId = UUID.randomUUID()
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceId),
@@ -29,24 +27,20 @@ internal class GetFormInstanceTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)

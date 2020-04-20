@@ -14,10 +14,8 @@ internal class GetTenantByDomainTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val tenantDomain = "fakedomain.com"
 
-        // GetTenantByDomain
         piperTest.test(
             endpoint = TenantApi.GetByDomain(tenantDomain),
             expectedException = TenantNotFound()
@@ -27,14 +25,11 @@ internal class GetTenantByDomainTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostTenant
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
 
-        // GetTenantByDomain
         piperTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)

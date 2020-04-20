@@ -19,11 +19,9 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun formInstanceDoesNotExist() {
 
-        // Setup
         val formInstanceId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // DeleteFormInstanceQuestion
         piperTest.test(
             endpointConfig = DeleteFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
@@ -37,25 +35,21 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun formInstanceQuestionDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // PutFormInstanceQuestion
         val formInstanceQuestionRep =
             FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions.first().id)
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
@@ -68,7 +62,6 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
 
-        // DeleteFormInstanceQuestion
         piperTest.test(
             endpointConfig = DeleteFormInstanceQuestion.endpointConfig,
             pathParams = mapOf(
@@ -78,7 +71,6 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             expectedException = FormInstanceQuestionNotFound()
         )
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
@@ -91,24 +83,20 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
         piperTest.setup(
             endpointConfig = PostFormInstance.endpointConfig,
             body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
         )
 
-        // PutFormInstanceQuestion
         val formInstanceQuestionRep =
             FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions.first().id)
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
@@ -121,7 +109,6 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
 
-        // DeleteFormInstanceQuestion
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.minus(formInstanceQuestionRep))
         piperTest.test(
             endpointConfig = DeleteFormInstanceQuestion.endpointConfig,
@@ -131,7 +118,6 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
             )
         ) {}
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)

@@ -16,11 +16,9 @@ internal class PostFormInstanceTest : ResourceTest() {
     @Test
     fun formTemplateDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
         val formTemplateId = UUID.randomUUID()
 
-        // PostFormInstance
         FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateId, 5)
         piperTest.test(
             endpointConfig = PostFormInstance.endpointConfig,
@@ -32,18 +30,15 @@ internal class PostFormInstanceTest : ResourceTest() {
     @Test
     fun featureDoesNotMatchFormTemplate() {
 
-        // Setup
         val feature0Id = UUID.randomUUID()
         val feature1Id = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Id, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(feature0Id)
         )
 
-        // PostFormInstance
         FormInstanceRepFixtures.fixture.complete(this, feature1Id, formTemplateRep.id, 5)
         piperTest.test(
             endpointConfig = PostFormInstance.endpointConfig,
@@ -55,17 +50,14 @@ internal class PostFormInstanceTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormInstance
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
         piperTest.test(
             endpointConfig = PostFormInstance.endpointConfig,
@@ -75,7 +67,6 @@ internal class PostFormInstanceTest : ResourceTest() {
             assertEquals(formInstanceRep, actual)
         }
 
-        // GetFormInstance
         piperTest.test(
             endpointConfig = GetFormInstance.endpointConfig,
             pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)

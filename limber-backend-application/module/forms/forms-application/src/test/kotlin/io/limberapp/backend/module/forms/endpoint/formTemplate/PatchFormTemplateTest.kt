@@ -13,10 +13,8 @@ internal class PatchFormTemplateTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val formTemplateId = UUID.randomUUID()
 
-        // PatchFormTemplate
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         piperTest.test(
             endpointConfig = PatchFormTemplate.endpointConfig,
@@ -29,17 +27,14 @@ internal class PatchFormTemplateTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PatchFormTemplate
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
         piperTest.test(
@@ -51,7 +46,6 @@ internal class PatchFormTemplateTest : ResourceTest() {
             assertEquals(formTemplateRep, actual)
         }
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)

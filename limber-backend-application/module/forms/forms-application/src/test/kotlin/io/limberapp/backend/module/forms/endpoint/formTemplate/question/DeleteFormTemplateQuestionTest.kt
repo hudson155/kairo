@@ -17,11 +17,9 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun formTemplateDoesNotExist() {
 
-        // Setup
         val formTemplateId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // DeleteFormTemplateQuestion
         piperTest.test(
             endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
@@ -35,18 +33,15 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun formTemplateQuestionDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // DeleteFormTemplateQuestion
         piperTest.test(
             endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(
@@ -60,17 +55,14 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplateQuestion
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
@@ -82,7 +74,6 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
             body = FormTemplateQuestionRepFixtures.textFixture.creation()
         )
 
-        // DeleteFormTemplateQuestion
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.filter { it.id != formTemplateQuestionRep.id }
         )
@@ -94,7 +85,6 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
             )
         ) {}
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)

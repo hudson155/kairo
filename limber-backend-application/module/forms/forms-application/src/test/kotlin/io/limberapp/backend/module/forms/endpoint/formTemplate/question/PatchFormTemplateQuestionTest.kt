@@ -18,11 +18,9 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun formTemplateDoesNotExist() {
 
-        // Setup
         val formTemplateId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // PatchFormTemplateQuestion
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
             endpointConfig = PatchFormTemplateQuestion.endpointConfig,
@@ -38,18 +36,15 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun formTemplateQuestionDoesNotExist() {
 
-        // Setup
         val featureId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PatchFormTemplateQuestion
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
             endpointConfig = PatchFormTemplateQuestion.endpointConfig,
@@ -65,17 +60,14 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplateQuestion
         var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
                 as FormTemplateTextQuestionRep.Complete
         formTemplateRep = formTemplateRep.copy(
@@ -88,7 +80,6 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             body = FormTemplateQuestionRepFixtures.textFixture.creation()
         )
 
-        // PatchFormTemplateQuestion
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         formTemplateQuestionRep = formTemplateQuestionRep.copy(label = formTemplateQuestionUpdateRep.label!!)
         formTemplateRep = formTemplateRep.copy(
@@ -105,7 +96,6 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             body = formTemplateQuestionUpdateRep
         ) {}
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)

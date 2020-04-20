@@ -13,10 +13,8 @@ internal class PatchUserTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val userId = UUID.randomUUID()
 
-        // PatchUser
         val updateRep = UserRep.Update(firstName = "Gunner")
         piperTest.test(
             endpointConfig = PatchUser.endpointConfig,
@@ -29,17 +27,14 @@ internal class PatchUserTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PostUser
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
         piperTest.setup(
             endpointConfig = PostUser.endpointConfig,
             body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
         )
 
-        // PatchUser
         val updateRep = UserRep.Update(firstName = "Gunner")
         userRep = userRep.copy(firstName = updateRep.firstName!!)
         piperTest.test(
@@ -51,7 +46,6 @@ internal class PatchUserTest : ResourceTest() {
             assertEquals(userRep, actual)
         }
 
-        // GetUser
         piperTest.test(
             endpointConfig = GetUser.endpointConfig,
             pathParams = mapOf(GetUser.userId to userRep.id)

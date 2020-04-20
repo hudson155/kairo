@@ -13,10 +13,8 @@ internal class PatchOrgTest : ResourceTest() {
     @Test
     fun doesNotExist() {
 
-        // Setup
         val orgId = UUID.randomUUID()
 
-        // PatchOrg
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         piperTest.test(
             endpointConfig = PatchOrg.endpointConfig,
@@ -29,14 +27,12 @@ internal class PatchOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.setup(
             endpointConfig = PostOrg.endpointConfig,
             body = OrgRepFixtures.crankyPastaFixture.creation()
         )
 
-        // PatchOrg
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         orgRep = orgRep.copy(name = orgUpdateRep.name!!)
         piperTest.test(
@@ -48,7 +44,6 @@ internal class PatchOrgTest : ResourceTest() {
             assertEquals(orgRep, actual)
         }
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(PatchOrg.orgId to orgRep.id)

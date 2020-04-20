@@ -18,10 +18,8 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun formTemplateDoesNotExist() {
 
-        // Setup
         val formTemplateId = UUID.randomUUID()
 
-        // PostFormTemplateQuestion
         piperTest.test(
             endpointConfig = PostFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateId),
@@ -33,17 +31,14 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun rankOutOfBoundsLow() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplateQuestion
         piperTest.test(
             endpointConfig = PostFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
@@ -56,17 +51,14 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun rankOutOfBoundsHigh() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplateQuestion
         piperTest.test(
             endpointConfig = PostFormTemplateQuestion.endpointConfig,
             pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
@@ -79,17 +71,14 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun happyPathFirstRank() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplateQuestion
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
@@ -104,7 +93,6 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
             assertEquals(formTemplateQuestionRep, actual)
         }
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
@@ -117,17 +105,14 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun happyPathLastRank() {
 
-        // Setup
         val featureId = UUID.randomUUID()
 
-        // PostFormTemplate
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
         piperTest.setup(
             endpointConfig = PostFormTemplate.endpointConfig,
             body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
         )
 
-        // PostFormTemplateQuestion
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
@@ -141,7 +126,6 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
             assertEquals(formTemplateQuestionRep, actual)
         }
 
-        // GetFormTemplate
         piperTest.test(
             endpointConfig = GetFormTemplate.endpointConfig,
             pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)

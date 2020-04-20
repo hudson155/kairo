@@ -14,10 +14,8 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
     @Test
     fun happyPathNoneExist() {
 
-        // Setup
         val accountId = UUID.randomUUID()
 
-        // GetAccessTokensByAccountId
         piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertTrue(actual.isEmpty())
@@ -27,18 +25,14 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
     @Test
     fun happyPathSomeExist() {
 
-        // Setup
         val accountId = UUID.randomUUID()
 
-        // PostAccessToken
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
         piperTest.setup(AccessTokenApi.Post(accountId))
 
-        // PostAccessToken
         val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
         piperTest.setup(AccessTokenApi.Post(accountId))
 
-        // GetAccessTokensByAccountId
         piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)

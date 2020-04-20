@@ -11,7 +11,6 @@ internal class PostOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        // PostOrg
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
         piperTest.test(
             endpointConfig = PostOrg.endpointConfig,
@@ -21,7 +20,6 @@ internal class PostOrgTest : ResourceTest() {
             assertEquals(orgRep, actual)
         }
 
-        // GetOrg
         piperTest.test(
             endpointConfig = GetOrg.endpointConfig,
             pathParams = mapOf(GetOrg.orgId to orgRep.id)
