@@ -1,7 +1,9 @@
-package io.limberapp.web.app.pages.featurePage.pages.formFeature
+package io.limberapp.web.app.pages.featurePage.pages.formPage
 
 import io.limberapp.web.app.components.sideNav.SideNavLink
 import io.limberapp.web.app.components.sideNav.sideNav
+import io.limberapp.web.app.pages.featurePage.pages.formPage.formInstancesListPage.formInstancesListPage
+import io.limberapp.web.app.pages.featurePage.pages.formPage.formTemplatesListPage.formTemplatesListPage
 import kotlinx.css.Display
 import kotlinx.css.display
 import kotlinx.css.flexGrow
