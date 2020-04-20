@@ -21,7 +21,7 @@ private val defaultTheme = ThemeContext(
     white = Color("#FDFFFC")
 )
 
-internal data class Props(val theme: ThemeContext): RProps
+internal data class Props(val theme: ThemeContext) : RProps
 
 private val themeProvider = functionalComponent<Props> { props ->
     val configObject = ProviderValue(props.theme)
