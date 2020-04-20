@@ -10,21 +10,22 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
+import java.util.UUID
 import kotlin.reflect.KClass
 
 internal class FormInstanceQuestionMapper @Inject constructor(
     private val clock: Clock
 ) {
 
-    fun model(rep: FormInstanceQuestionRep.Creation) = when (rep) {
+    fun model(formTemplateQuestionId: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
         is FormInstanceDateQuestionRep.Creation -> FormInstanceDateQuestionModel(
             created = LocalDateTime.now(clock),
-            formTemplateQuestionId = rep.formTemplateQuestionId,
+            formTemplateQuestionId = formTemplateQuestionId,
             date = rep.date
         )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
             created = LocalDateTime.now(clock),
-            formTemplateQuestionId = rep.formTemplateQuestionId,
+            formTemplateQuestionId = formTemplateQuestionId,
             text = rep.text
         )
         else -> unknownFormInstanceQuestion(rep::class)

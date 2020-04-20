@@ -9,9 +9,6 @@ import com.piperframework.validation.RepValidation
 object FormInstanceQuestionRep {
 
     interface Creation : CreationRep {
-
-        val formTemplateQuestionId: UUID
-
         override fun validate() = RepValidation {}
     }
 

@@ -13,8 +13,6 @@ object FormInstanceTextQuestionRep {
     @Serializable
     @SerialName("TEXT")
     data class Creation(
-        @Serializable(with = UuidSerializer::class)
-        override val formTemplateQuestionId: UUID,
         val text: String
     ) : FormInstanceQuestionRep.Creation
 

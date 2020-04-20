@@ -61,8 +61,11 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+            ),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
 
         // DeleteFormInstanceQuestion
@@ -111,8 +114,11 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
         piperTest.setup(
             endpointConfig = PutFormInstanceQuestion.endpointConfig,
-            pathParams = mapOf(PutFormInstanceQuestion.formInstanceId to formInstanceRep.id),
-            body = FormInstanceQuestionRepFixtures.textFixture.creation(formTemplateRep.questions.first().id)
+            pathParams = mapOf(
+                PutFormInstanceQuestion.formInstanceId to formInstanceRep.id,
+                PutFormInstanceQuestion.formTemplateQuestionId to formTemplateRep.questions.first().id
+            ),
+            body = FormInstanceQuestionRepFixtures.textFixture.creation()
         )
 
         // DeleteFormInstanceQuestion
