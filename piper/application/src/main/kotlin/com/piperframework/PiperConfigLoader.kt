@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 /**
  * Loads the application configuration from a resource on the application classpath.
  */
-abstract class PiperConfigLoader<C : Config>(private val klass: KClass<C>) {
+abstract class PiperConfigLoader<C : Config>(private val kClass: KClass<C>) {
 
     /**
      * Abstract to allow for non-JSON data formats such as YAML.
@@ -18,6 +18,6 @@ abstract class PiperConfigLoader<C : Config>(private val klass: KClass<C>) {
 
     protected fun loadInternal(fileName: String): C? {
         val stream = this.javaClass.getResourceAsStream(fileName) ?: return null
-        return objectMapper.readValue(stream, klass.java)
+        return objectMapper.readValue(stream, kClass.java)
     }
 }

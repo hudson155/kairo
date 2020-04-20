@@ -10,7 +10,7 @@ import java.util.UUID
  */
 actual object UuidConversionService : DataConversionService<UUID> {
 
-    override val klass = UUID::class
+    override val kClass = UUID::class
 
     override fun isValid(value: String) = Validator.uuid(value) || Validator.base64EncodedUuid(value)
 

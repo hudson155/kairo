@@ -4,10 +4,10 @@ import kotlin.reflect.KClass
 
 interface DataConversionService<T : Any> {
 
-    val klass: KClass<T>
+    val kClass: KClass<T>
 
     fun assertValid(value: String, name: String?) {
-        if (!isValid(value)) throw DataConversionException(name, klass)
+        if (!isValid(value)) throw DataConversionException(name, kClass)
     }
 
     /**

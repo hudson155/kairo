@@ -9,7 +9,7 @@ import com.piperframework.validator.Validator
  */
 actual object UuidConversionService : DataConversionService<String> {
 
-    override val klass = String::class
+    override val kClass = String::class
 
     override fun isValid(value: String) = Validator.uuid(value) || Validator.base64EncodedUuid(value)
 

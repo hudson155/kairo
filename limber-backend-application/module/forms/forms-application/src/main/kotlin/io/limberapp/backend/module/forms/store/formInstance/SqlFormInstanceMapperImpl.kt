@@ -83,7 +83,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
             )
         }
 
-    private fun unknownFormInstanceQuestion(klass: KClass<*>) {
-        unknownType("form instance question", klass::class)
+    private fun unknownFormInstanceQuestion(kClass: KClass<*>) {
+        unknownType("form instance question", kClass::class)
     }
 }

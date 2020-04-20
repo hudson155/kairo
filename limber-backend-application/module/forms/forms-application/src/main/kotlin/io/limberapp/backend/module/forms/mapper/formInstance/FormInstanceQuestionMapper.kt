@@ -51,7 +51,7 @@ internal class FormInstanceQuestionMapper @Inject constructor(
         else -> unknownFormInstanceQuestion(model::class)
     }
 
-    private fun unknownFormInstanceQuestion(klass: KClass<*>): Nothing {
-        unknownType("form instance question", klass)
+    private fun unknownFormInstanceQuestion(kClass: KClass<*>): Nothing {
+        unknownType("form instance question", kClass)
     }
 }
