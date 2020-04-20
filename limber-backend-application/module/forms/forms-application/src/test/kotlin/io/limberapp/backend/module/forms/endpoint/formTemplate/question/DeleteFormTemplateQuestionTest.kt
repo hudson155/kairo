@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
-import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
+import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -21,11 +21,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val questionId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(
-                DeleteFormTemplateQuestion.formTemplateId to formTemplateId,
-                DeleteFormTemplateQuestion.questionId to questionId
-            ),
+            endpoint = FormTemplateQuestionApi.Delete(formTemplateId, questionId),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -37,17 +33,10 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val questionId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         piperTest.test(
-            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(
-                DeleteFormTemplateQuestion.formTemplateId to formTemplateRep.id,
-                DeleteFormTemplateQuestion.questionId to questionId
-            ),
+            endpoint = FormTemplateQuestionApi.Delete(formTemplateRep.id, questionId),
             expectedException = FormTemplateQuestionNotFound()
         )
     }
@@ -58,37 +47,26 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
         piperTest.setup(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(PostFormTemplateQuestion.rank to 0),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation()
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateRep.id,
+                rank = 0,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            )
         )
 
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.filter { it.id != formTemplateQuestionRep.id }
         )
-        piperTest.test(
-            endpointConfig = DeleteFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(
-                DeleteFormTemplateQuestion.formTemplateId to formTemplateRep.id,
-                DeleteFormTemplateQuestion.questionId to formTemplateQuestionRep.id
-            )
-        ) {}
+        piperTest.test(FormTemplateQuestionApi.Delete(formTemplateRep.id, formTemplateQuestionRep.id)) {}
 
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

@@ -2,14 +2,12 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -22,31 +20,21 @@ internal class PostFormTemplate @Inject constructor(
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
-) : LimberApiEndpoint<PostFormTemplate.Command, FormTemplateRep.Complete>(
+) : LimberApiEndpoint<FormTemplateApi.Post, FormTemplateRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = FormTemplateApi.Post::class.template()
 ) {
 
-    internal data class Command(
-        val creationRep: FormTemplateRep.Creation
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody<FormTemplateRep.Creation>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Post(
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
-        Authorization.HasAccessToFeature(command.creationRep.featureId).authorize()
-        val model = formTemplateMapper.model(command.creationRep)
+    override suspend fun Handler.handle(command: FormTemplateApi.Post): FormTemplateRep.Complete {
+        val rep = command.rep.required()
+        Authorization.HasAccessToFeature(rep.featureId).authorize()
+        val model = formTemplateMapper.model(rep)
         formTemplateService.create(model)
         return formTemplateMapper.completeRep(model)
-    }
-
-    companion object {
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
-            pathTemplate = listOf(StringComponent("form-templates"))
-        )
     }
 }

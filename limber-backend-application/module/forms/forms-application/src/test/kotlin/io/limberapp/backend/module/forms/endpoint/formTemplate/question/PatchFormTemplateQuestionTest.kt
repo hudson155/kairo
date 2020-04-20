@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
-import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
+import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -23,12 +23,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
 
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
-            endpointConfig = PatchFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(
-                PatchFormTemplateQuestion.formTemplateId to formTemplateId,
-                PatchFormTemplateQuestion.questionId to questionId
-            ),
-            body = formTemplateQuestionUpdateRep,
+            endpoint = FormTemplateQuestionApi.Patch(formTemplateId, questionId, formTemplateQuestionUpdateRep),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -40,19 +35,11 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         val questionId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
-            endpointConfig = PatchFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(
-                PatchFormTemplateQuestion.formTemplateId to formTemplateRep.id,
-                PatchFormTemplateQuestion.questionId to questionId
-            ),
-            body = formTemplateQuestionUpdateRep,
+            endpoint = FormTemplateQuestionApi.Patch(formTemplateRep.id, questionId, formTemplateQuestionUpdateRep),
             expectedException = FormTemplateQuestionNotFound()
         )
     }
@@ -63,10 +50,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
                 as FormTemplateTextQuestionRep.Complete
@@ -74,10 +58,11 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
         piperTest.setup(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(PostFormTemplateQuestion.rank to 0),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation()
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateRep.id,
+                rank = 0,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            )
         )
 
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
@@ -88,18 +73,14 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
             }
         )
         piperTest.test(
-            endpointConfig = PatchFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(
-                PatchFormTemplateQuestion.formTemplateId to formTemplateRep.id,
-                PatchFormTemplateQuestion.questionId to formTemplateQuestionRep.id
-            ),
-            body = formTemplateQuestionUpdateRep
+            endpoint = FormTemplateQuestionApi.Patch(
+                formTemplateId = formTemplateRep.id,
+                questionId = formTemplateQuestionRep.id,
+                rep = formTemplateQuestionUpdateRep
+            )
         ) {}
 
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

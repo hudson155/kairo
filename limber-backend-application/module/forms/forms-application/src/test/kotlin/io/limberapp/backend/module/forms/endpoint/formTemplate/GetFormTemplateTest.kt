@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
@@ -16,8 +17,7 @@ internal class GetFormTemplateTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateId),
+            endpoint = FormTemplateApi.Get(formTemplateId),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -28,15 +28,9 @@ internal class GetFormTemplateTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

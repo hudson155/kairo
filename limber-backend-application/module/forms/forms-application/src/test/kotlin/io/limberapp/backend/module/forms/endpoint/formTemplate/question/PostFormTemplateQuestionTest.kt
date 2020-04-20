@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
-import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
+import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -21,9 +21,10 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateId),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation(),
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateId,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            ),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -34,16 +35,14 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         piperTest.test(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(PostFormTemplateQuestion.rank to -1),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation(),
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateRep.id,
+                rank = -1,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            ),
             expectedException = RankOutOfBounds(-1)
         )
     }
@@ -54,16 +53,14 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         piperTest.test(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(PostFormTemplateQuestion.rank to FormTemplateQuestionRepFixtures.defaults.size + 1),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation(),
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateRep.id,
+                rank = FormTemplateQuestionRepFixtures.defaults.size + 1,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            ),
             expectedException = RankOutOfBounds((FormTemplateQuestionRepFixtures.defaults.size + 1))
         )
     }
@@ -74,29 +71,24 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
         )
         piperTest.test(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            queryParams = mapOf(PostFormTemplateQuestion.rank to 0),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation()
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateRep.id,
+                rank = 0,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            )
         ) {
             val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
             assertEquals(formTemplateQuestionRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
@@ -108,28 +100,23 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 4)
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
         )
         piperTest.test(
-            endpointConfig = PostFormTemplateQuestion.endpointConfig,
-            pathParams = mapOf(PostFormTemplateQuestion.formTemplateId to formTemplateRep.id),
-            body = FormTemplateQuestionRepFixtures.textFixture.creation()
+            endpoint = FormTemplateQuestionApi.Post(
+                formTemplateId = formTemplateRep.id,
+                rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+            )
         ) {
             val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
             assertEquals(formTemplateQuestionRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

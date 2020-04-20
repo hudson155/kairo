@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
@@ -17,9 +18,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
 
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         piperTest.test(
-            endpointConfig = PatchFormTemplate.endpointConfig,
-            pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateId),
-            body = formTemplateUpdateRep,
+            endpoint = FormTemplateApi.Patch(formTemplateId, formTemplateUpdateRep),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -30,26 +29,16 @@ internal class PatchFormTemplateTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
-        piperTest.test(
-            endpointConfig = PatchFormTemplate.endpointConfig,
-            pathParams = mapOf(PatchFormTemplate.formTemplateId to formTemplateRep.id),
-            body = formTemplateUpdateRep
-        ) {
+        piperTest.test(FormTemplateApi.Patch(formTemplateRep.id, formTemplateUpdateRep)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

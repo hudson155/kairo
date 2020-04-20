@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
@@ -14,8 +15,7 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         val formTemplateId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteFormTemplate.endpointConfig,
-            pathParams = mapOf(DeleteFormTemplate.formTemplateId to formTemplateId),
+            endpoint = FormTemplateApi.Delete(formTemplateId),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -26,19 +26,12 @@ internal class DeleteFormTemplateTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+
+        piperTest.test(FormTemplateApi.Delete(formTemplateRep.id)) {}
 
         piperTest.test(
-            endpointConfig = DeleteFormTemplate.endpointConfig,
-            pathParams = mapOf(DeleteFormTemplate.formTemplateId to formTemplateRep.id)
-        ) {}
-
-        piperTest.test(
-            endpointConfig = GetFormTemplate.endpointConfig,
-            pathParams = mapOf(GetFormTemplate.formTemplateId to formTemplateRep.id),
+            endpoint = FormTemplateApi.Get(formTemplateRep.id),
             expectedException = FormTemplateNotFound()
         )
     }
