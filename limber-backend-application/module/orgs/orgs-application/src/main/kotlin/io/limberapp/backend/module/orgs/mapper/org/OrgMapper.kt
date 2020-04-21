@@ -17,6 +17,7 @@ internal class OrgMapper @Inject constructor(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
         name = rep.name,
+        ownerAccountId = rep.ownerAccountId,
         features = setOf(featureMapper.defaultModel())
     )
 
@@ -24,6 +25,7 @@ internal class OrgMapper @Inject constructor(
         id = model.id,
         created = model.created,
         name = model.name,
+        ownerAccountId = model.ownerAccountId,
         features = model.features.map { featureMapper.completeRep(it) }
     )
 

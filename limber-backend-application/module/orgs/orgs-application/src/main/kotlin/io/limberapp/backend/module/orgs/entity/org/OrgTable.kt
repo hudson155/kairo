@@ -7,4 +7,6 @@ internal object OrgTable : SqlTable("orgs", "org") {
     val guid = uuid("guid")
 
     val name = text("name")
+
+    val ownerAccountGuid = uuid("owner_account_guid")
 }

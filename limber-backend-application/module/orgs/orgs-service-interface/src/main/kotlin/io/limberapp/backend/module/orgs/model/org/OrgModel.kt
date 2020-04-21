@@ -7,6 +7,7 @@ data class OrgModel(
     val id: UUID,
     val created: LocalDateTime,
     val name: String,
+    val ownerAccountId: UUID,
     val features: Set<FeatureModel>
 ) {
 

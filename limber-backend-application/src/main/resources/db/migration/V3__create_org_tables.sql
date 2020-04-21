@@ -1,9 +1,10 @@
 CREATE TABLE orgs.org
 (
-    id           BIGSERIAL PRIMARY KEY,
-    created_date TIMESTAMP   NOT NULL,
-    guid         UUID UNIQUE NOT NULL,
-    name         VARCHAR     NOT NULL
+    id                 BIGSERIAL PRIMARY KEY,
+    created_date       TIMESTAMP   NOT NULL,
+    guid               UUID UNIQUE NOT NULL,
+    name               VARCHAR     NOT NULL,
+    owner_account_guid UUID        NOT NULL
 );
 
 CREATE TABLE orgs.feature
