@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
+import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormTemplateCannotBeInstantiatedInAnotherFeature
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -21,8 +22,7 @@ internal class PostFormInstanceTest : ResourceTest() {
 
         FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateId, 5)
         piperTest.test(
-            endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateId),
+            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateId)),
             expectedException = FormTemplateNotFound()
         )
     }
@@ -34,15 +34,11 @@ internal class PostFormInstanceTest : ResourceTest() {
         val feature1Id = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Id, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(feature0Id)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(feature0Id)))
 
         FormInstanceRepFixtures.fixture.complete(this, feature1Id, formTemplateRep.id, 5)
         piperTest.test(
-            endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(feature1Id, formTemplateRep.id),
+            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(feature1Id, formTemplateRep.id)),
             expectedException = FormTemplateCannotBeInstantiatedInAnotherFeature()
         )
     }
@@ -53,24 +49,15 @@ internal class PostFormInstanceTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
-        piperTest.test(
-            endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
-        ) {
+        piperTest.test(FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id))) {
             val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }
 
-        piperTest.test(
-            endpointConfig = GetFormInstance.endpointConfig,
-            pathParams = mapOf(GetFormInstance.formInstanceId to formInstanceRep.id)
-        ) {
+        piperTest.test(FormInstanceApi.Get(formInstanceRep.id)) {
             val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }

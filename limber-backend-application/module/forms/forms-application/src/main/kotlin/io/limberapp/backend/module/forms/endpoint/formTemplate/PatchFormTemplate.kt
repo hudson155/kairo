@@ -2,14 +2,11 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -24,34 +21,21 @@ internal class PatchFormTemplate @Inject constructor(
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
-) : LimberApiEndpoint<PatchFormTemplate.Command, FormTemplateRep.Complete>(
+) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = FormTemplateApi.Patch::class.template()
 ) {
 
-    internal data class Command(
-        val formTemplateId: UUID,
-        val updateRep: FormTemplateRep.Update
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        updateRep = call.getAndValidateBody<FormTemplateRep.Update>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Patch(
+        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): FormTemplateRep.Complete {
+    override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Complete {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
-        val update = formTemplateMapper.update(command.updateRep)
+        val update = formTemplateMapper.update(command.rep.required())
         val model = formTemplateService.update(command.formTemplateId, update)
         return formTemplateMapper.completeRep(model)
-    }
-
-    companion object {
-        const val formTemplateId = "formTemplateId"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Patch,
-            pathTemplate = listOf(StringComponent("form-templates"), VariableComponent(formTemplateId))
-        )
     }
 }

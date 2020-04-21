@@ -2,13 +2,11 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -24,31 +22,21 @@ internal class PostFormInstance @Inject constructor(
     private val formInstanceService: FormInstanceService,
     private val formInstanceMapper: FormInstanceMapper,
     private val formTemplateService: FormTemplateService
-) : LimberApiEndpoint<PostFormInstance.Command, FormInstanceRep.Complete>(
+) : LimberApiEndpoint<FormInstanceApi.Post, FormInstanceRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = FormInstanceApi.Post::class.template()
 ) {
 
-    internal data class Command(
-        val creationRep: FormInstanceRep.Creation
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        creationRep = call.getAndValidateBody<FormInstanceRep.Creation>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): FormInstanceRep.Complete {
-        HasAccessToFormTemplate(formTemplateService, command.creationRep.formTemplateId).authorize()
-        val model = formInstanceMapper.model(command.creationRep)
+    override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
+        val rep = command.rep.required()
+        HasAccessToFormTemplate(formTemplateService, rep.formTemplateId).authorize()
+        val model = formInstanceMapper.model(rep)
         formInstanceService.create(model)
         return formInstanceMapper.completeRep(model)
-    }
-
-    companion object {
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
-            pathTemplate = listOf(StringComponent("form-instances"))
-        )
     }
 }

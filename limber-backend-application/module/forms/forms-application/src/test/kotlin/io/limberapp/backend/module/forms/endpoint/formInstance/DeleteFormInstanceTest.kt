@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
-import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
+import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
+import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
@@ -16,8 +17,7 @@ internal class DeleteFormInstanceTest : ResourceTest() {
         val formInstanceId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteFormInstance.endpointConfig,
-            pathParams = mapOf(DeleteFormInstance.formInstanceId to formInstanceId),
+            endpoint = FormInstanceApi.Delete(formInstanceId),
             expectedException = FormInstanceNotFound()
         )
     }
@@ -28,25 +28,15 @@ internal class DeleteFormInstanceTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(
-            endpointConfig = PostFormTemplate.endpointConfig,
-            body = FormTemplateRepFixtures.exampleFormFixture.creation(featureId)
-        )
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
 
         val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
-        piperTest.setup(
-            endpointConfig = PostFormInstance.endpointConfig,
-            body = FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)
-        )
+        piperTest.setup(FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)))
+
+        piperTest.test(FormInstanceApi.Delete(formInstanceRep.id)) {}
 
         piperTest.test(
-            endpointConfig = DeleteFormInstance.endpointConfig,
-            pathParams = mapOf(DeleteFormInstance.formInstanceId to formInstanceRep.id)
-        ) {}
-
-        piperTest.test(
-            endpointConfig = GetFormInstance.endpointConfig,
-            pathParams = mapOf(GetFormInstance.formInstanceId to formTemplateRep.id),
+            endpoint = FormInstanceApi.Get(formTemplateRep.id),
             expectedException = FormInstanceNotFound()
         )
     }

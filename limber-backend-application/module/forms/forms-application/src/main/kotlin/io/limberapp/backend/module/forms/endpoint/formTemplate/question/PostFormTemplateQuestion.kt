@@ -2,14 +2,11 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
@@ -26,45 +23,26 @@ internal class PostFormTemplateQuestion @Inject constructor(
     private val formTemplateService: FormTemplateService,
     private val formTemplateQuestionService: FormTemplateQuestionService,
     private val formTemplateQuestionMapper: FormTemplateQuestionMapper
-) : LimberApiEndpoint<PostFormTemplateQuestion.Command, FormTemplateQuestionRep.Complete>(
+) : LimberApiEndpoint<FormTemplateQuestionApi.Post, FormTemplateQuestionRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = FormTemplateQuestionApi.Post::class.template()
 ) {
 
-    internal data class Command(
-        val formTemplateId: UUID,
-        val rank: Int?,
-        val creationRep: FormTemplateQuestionRep.Creation
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        rank = call.parameters.getAsType(Int::class, rank, optional = true),
-        creationRep = call.getAndValidateBody<FormTemplateQuestionRep.Creation>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Post(
+        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
+        rank = call.parameters.getAsType(Int::class, "rank", optional = true),
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): FormTemplateQuestionRep.Complete {
+    override suspend fun Handler.handle(command: FormTemplateQuestionApi.Post): FormTemplateQuestionRep.Complete {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
-        val model = formTemplateQuestionMapper.model(command.creationRep)
+        val model = formTemplateQuestionMapper.model(command.rep.required())
         formTemplateQuestionService.create(
             formTemplateId = command.formTemplateId,
             model = model,
             rank = command.rank
         )
         return formTemplateQuestionMapper.completeRep(model)
-    }
-
-    companion object {
-        const val formTemplateId = "formTemplateId"
-        const val rank = "rank"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Post,
-            pathTemplate = listOf(
-                StringComponent("form-templates"),
-                VariableComponent(formTemplateId),
-                StringComponent("questions")
-            )
-        )
     }
 }

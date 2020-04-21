@@ -2,14 +2,11 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -23,38 +20,19 @@ internal class DeleteFormTemplateQuestion @Inject constructor(
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
     private val formTemplateQuestionService: FormTemplateQuestionService
-) : LimberApiEndpoint<DeleteFormTemplateQuestion.Command, Unit>(
+) : LimberApiEndpoint<FormTemplateQuestionApi.Delete, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = FormTemplateQuestionApi.Delete::class.template()
 ) {
 
-    internal data class Command(
-        val formTemplateId: UUID,
-        val questionId: UUID
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        formTemplateId = call.parameters.getAsType(UUID::class, formTemplateId),
-        questionId = call.parameters.getAsType(UUID::class, questionId)
+    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Delete(
+        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
+        questionId = call.parameters.getAsType(UUID::class, "questionId")
     )
 
-    override suspend fun Handler.handle(command: Command) {
+    override suspend fun Handler.handle(command: FormTemplateQuestionApi.Delete) {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
         formTemplateQuestionService.delete(command.formTemplateId, command.questionId)
-    }
-
-    companion object {
-        const val formTemplateId = "formTemplateId"
-        const val questionId = "questionId"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Delete,
-            pathTemplate = listOf(
-                StringComponent("form-templates"),
-                VariableComponent(formTemplateId),
-                StringComponent("questions"),
-                VariableComponent(questionId)
-            )
-        )
     }
 }
