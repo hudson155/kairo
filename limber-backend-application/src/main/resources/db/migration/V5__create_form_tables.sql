@@ -24,7 +24,8 @@ CREATE TABLE forms.form_template_question
     placeholder        VARCHAR,
     validator          VARCHAR,
     earliest           DATE,
-    latest             DATE
+    latest             DATE,
+    options            TEXT[]
 );
 
 CREATE TABLE forms.form_instance
@@ -45,5 +46,6 @@ CREATE TABLE forms.form_instance_question
     type                        VARCHAR   NOT NULL,
     text                        VARCHAR,
     date                        DATE,
+    selections                  TEXT[],
     UNIQUE (form_instance_guid, form_template_question_guid)
 );
