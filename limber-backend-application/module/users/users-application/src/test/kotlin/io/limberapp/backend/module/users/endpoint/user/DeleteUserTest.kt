@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
@@ -14,8 +15,7 @@ internal class DeleteUserTest : ResourceTest() {
         val userId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteUser.endpointConfig,
-            pathParams = mapOf(DeleteUser.userId to userId),
+            endpoint = UserApi.Delete(userId),
             expectedException = UserNotFound()
         )
     }
@@ -26,19 +26,12 @@ internal class DeleteUserTest : ResourceTest() {
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(
-            endpointConfig = PostUser.endpointConfig,
-            body = UserRepFixtures.jeffHudsonFixture.creation(orgId)
-        )
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
+
+        piperTest.test(UserApi.Delete(userRep.id)) {}
 
         piperTest.test(
-            endpointConfig = DeleteUser.endpointConfig,
-            pathParams = mapOf(DeleteUser.userId to userRep.id)
-        ) {}
-
-        piperTest.test(
-            endpointConfig = GetUser.endpointConfig,
-            pathParams = mapOf(GetUser.userId to userRep.id),
+            endpoint = UserApi.Get(userRep.id),
             expectedException = UserNotFound()
         )
     }
