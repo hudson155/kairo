@@ -12,30 +12,21 @@ class StringListColumnType : ColumnType() {
 
     override fun sqlType() = "TEXT[]"
 
-    override fun valueFromDB(value: Any): List<String> = when (value) {
-        is Iterable<*> -> value.map{it.toString()}
-        is PgArray -> {
-            val array = value.array
-            if (array is Array<*>) array.map{ it.toString() }
-            else unexpectedValue(array)
-        }
-        else -> unexpectedValue(value)
+    override fun nonNullValueToString(value: Any): String {
+        if (value !is String) unexpectedValue(value)
+        return value
     }
 
-    override fun valueToString(value: Any?): String = when (value) {
-        null -> if (nullable) "NULL" else error("NULL in non-nullable column")
-        is Iterable<*> -> "'{${value.joinToString()}}'"
-        else -> nonNullValueToString(value)
+    override fun valueFromDB(value: Any): Any {
+        if (value !is PgArray) unexpectedValue(value)
+        val array = value.array
+        if (array !is Array<*>) unexpectedValue(array)
+        return array.map { it.toString() }
     }
 
     override fun setParameter(stmt: PreparedStatement, index: Int, value: Any?) {
-        if (value is List<*>) {
-            stmt.setArray(index, stmt.connection.createArrayOf("text", value.toTypedArray()))
-        } else {
-            super.setParameter(stmt, index, value)
-        }
+        value ?: return super.setParameter(stmt, index, value)
+        if (value !is List<*>) unexpectedValue(value)
+        stmt.setArray(index, stmt.connection.createArrayOf("text", value.toTypedArray()))
     }
-
-    private fun unexpectedValue(value: Any): Nothing =
-        error("Unexpected value: $value of ${value::class.qualifiedName}")
 }

@@ -25,12 +25,4 @@ class LocalDateColumnType : ColumnType() {
         if (value !is Date) unexpectedValue(value)
         return value.toLocalDate()
     }
-
-    override fun notNullValueToDB(value: Any): Any {
-        if (value !is LocalDate) unexpectedValue(value)
-        return Date.valueOf(value)
-    }
-
-    private fun unexpectedValue(value: Any): Nothing =
-        error("Unexpected value: $value of ${value::class.qualifiedName}")
 }
