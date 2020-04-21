@@ -2,15 +2,12 @@ package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
-import com.piperframework.endpoint.EndpointConfig
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.StringComponent
-import com.piperframework.endpoint.EndpointConfig.PathTemplateComponent.VariableComponent
-import com.piperframework.endpoint.command.AbstractCommand
+import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.ktor.http.HttpMethod
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -24,34 +21,21 @@ internal class PatchOrg @Inject constructor(
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : LimberApiEndpoint<PatchOrg.Command, OrgRep.Complete>(
+) : LimberApiEndpoint<OrgApi.Patch, OrgRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointConfig = endpointConfig
+    endpointTemplate = OrgApi.Patch::class.template()
 ) {
 
-    internal data class Command(
-        val orgId: UUID,
-        val updateRep: OrgRep.Update
-    ) : AbstractCommand()
-
-    override suspend fun determineCommand(call: ApplicationCall) = Command(
-        orgId = call.parameters.getAsType(UUID::class, orgId),
-        updateRep = call.getAndValidateBody<OrgRep.Update>().required()
+    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Patch(
+        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: Command): OrgRep.Complete {
+    override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {
         Authorization.OrgMember(command.orgId).authorize()
-        val update = orgMapper.update(command.updateRep)
+        val update = orgMapper.update(command.rep.required())
         val model = orgService.update(command.orgId, update)
         return orgMapper.completeRep(model)
-    }
-
-    companion object {
-        const val orgId = "orgId"
-        val endpointConfig = EndpointConfig(
-            httpMethod = HttpMethod.Patch,
-            pathTemplate = listOf(StringComponent("orgs"), VariableComponent(orgId))
-        )
     }
 }

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
-import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
-import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
+import io.limberapp.backend.module.orgs.api.org.OrgApi
+import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -20,11 +20,7 @@ internal class DeleteFeatureTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         piperTest.test(
-            endpointConfig = DeleteFeature.endpointConfig,
-            pathParams = mapOf(
-                DeleteFeature.orgId to orgId,
-                DeleteFeature.featureId to featureId
-            ),
+            endpoint = OrgFeatureApi.Delete(orgId, featureId),
             expectedException = FeatureNotFound()
         )
     }
@@ -35,24 +31,14 @@ internal class DeleteFeatureTest : ResourceTest() {
         val featureId = UUID.randomUUID()
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
         piperTest.test(
-            endpointConfig = DeleteFeature.endpointConfig,
-            pathParams = mapOf(
-                DeleteFeature.orgId to orgRep.id,
-                DeleteFeature.featureId to featureId
-            ),
+            endpoint = OrgFeatureApi.Delete(orgRep.id, featureId),
             expectedException = FeatureNotFound()
         )
 
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
-        ) {
+        piperTest.test(OrgApi.Get(orgRep.id)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
@@ -62,32 +48,16 @@ internal class DeleteFeatureTest : ResourceTest() {
     fun happyPath() {
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(
-            endpointConfig = PostOrg.endpointConfig,
-            body = OrgRepFixtures.crankyPastaFixture.creation()
-        )
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
         val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
         orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
-        piperTest.setup(
-            endpointConfig = PostFeature.endpointConfig,
-            pathParams = mapOf(PostFeature.orgId to orgRep.id),
-            body = FeatureRepFixtures.formsFixture.creation()
-        )
+        piperTest.setup(OrgFeatureApi.Post(orgRep.id, FeatureRepFixtures.formsFixture.creation()))
 
         orgRep = orgRep.copy(features = orgRep.features.filter { it.id != featureRep.id })
-        piperTest.test(
-            endpointConfig = DeleteFeature.endpointConfig,
-            pathParams = mapOf(
-                DeleteFeature.orgId to orgRep.id,
-                DeleteFeature.featureId to featureRep.id
-            )
-        ) {}
+        piperTest.test(OrgFeatureApi.Delete(orgRep.id, featureRep.id)) {}
 
-        piperTest.test(
-            endpointConfig = GetOrg.endpointConfig,
-            pathParams = mapOf(GetOrg.orgId to orgRep.id)
-        ) {
+        piperTest.test(OrgApi.Get(orgRep.id)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
