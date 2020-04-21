@@ -5,6 +5,7 @@ import com.piperframework.rep.ValidatedRep
 /**
  * Instances represent parameterized requests to an HTTP endpoint.
  */
+@Suppress("UnnecessaryAbstractClass")
 abstract class PiperEndpoint(
     val httpMethod: HttpMethod,
     val path: String,
