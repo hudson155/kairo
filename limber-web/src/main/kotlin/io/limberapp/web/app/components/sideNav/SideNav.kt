@@ -23,7 +23,7 @@ private val sideNav = functionalComponent<RProps> { props ->
     val theme = useTheme()
 
     // TODO (259): Improve default css'ing
-    val styles = object : StyleSheet("SideNavBarStyles", isStatic = true) {
+    val styles = object : StyleSheet("SideNavStyles", isStatic = true) {
         val root by css {
             backgroundColor = theme.backgroundLight
             display = Display.flex

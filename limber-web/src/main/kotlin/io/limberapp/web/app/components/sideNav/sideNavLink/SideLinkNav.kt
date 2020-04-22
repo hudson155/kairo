@@ -21,7 +21,7 @@ private val sideNavLink = functionalComponent<Props> { props ->
     val theme = useTheme()
 
     // TODO (259): Improve default css'ing
-    val styles = object : StyleSheet("SideNavBarStyles", isStatic = true) {
+    val styles = object : StyleSheet("SideNavLinkStyles", isStatic = true) {
         val activeNavLink by css {
             backgroundColor = theme.backgroundAccent
             color = theme.white
