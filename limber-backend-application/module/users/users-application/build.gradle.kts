@@ -8,6 +8,7 @@ dependencies {
     implementation(project(":limber-backend-application:common:module"))
     implementation(project(":limber-backend-application:module:users:users-rest-interface"))
     api(project(":limber-backend-application:module:users:users-service-interface"))
+    implementation(project(":limber-backend-application:module:orgs:orgs-service-interface"))
     implementation(project(":piper:serialization"))
     implementation(project(":piper:sql"))
     testImplementation(project(":limber-backend-application:common:testing"))
