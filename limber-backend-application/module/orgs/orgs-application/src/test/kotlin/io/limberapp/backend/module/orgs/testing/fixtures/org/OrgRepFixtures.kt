@@ -24,4 +24,16 @@ internal object OrgRepFixtures {
             features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
         )
     })
+
+    val dynamicTennisFixture = Fixture({ ownerAccountId ->
+        OrgRep.Creation("Dynamic Tennis", ownerAccountId)
+    }, { ownerAccountId, idSeed ->
+        OrgRep.Complete(
+            id = deterministicUuidGenerator[idSeed],
+            created = LocalDateTime.now(fixedClock),
+            name = "Dynamic Tennis",
+            ownerAccountId = ownerAccountId,
+            features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
+        )
+    })
 }
