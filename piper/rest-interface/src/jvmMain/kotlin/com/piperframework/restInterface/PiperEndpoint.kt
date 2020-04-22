@@ -23,6 +23,15 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
     @Suppress("TooGenericExceptionCaught")
     try {
 
+        // Trivial case for singleton objects.
+        val objectInstance = objectInstance
+        if (objectInstance != null) {
+            return PiperEndpointTemplate(
+                httpMethod = objectInstance.httpMethod,
+                pathTemplate = objectInstance.path
+            )
+        }
+
         // Find the default constructor and ensure we can access it even.
         val constructor = checkNotNull(primaryConstructor)
 

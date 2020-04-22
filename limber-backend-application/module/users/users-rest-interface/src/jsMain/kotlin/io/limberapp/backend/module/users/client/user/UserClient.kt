@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.user
+package io.limberapp.backend.module.users.client.user
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json

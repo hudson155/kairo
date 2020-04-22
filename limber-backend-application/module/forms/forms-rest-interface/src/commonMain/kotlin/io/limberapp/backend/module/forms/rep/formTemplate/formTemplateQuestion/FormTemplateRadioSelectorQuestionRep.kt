@@ -22,7 +22,7 @@ object FormTemplateRadioSelectorQuestionRep {
     ) : FormTemplateQuestionRep.Creation {
         override fun validate() = RepValidation {
             validate(super.validate())
-            validate(Creation::options) inner@ {
+            validate(Creation::options) inner@{
                 if (value.isEmpty()) return@inner false
                 if (value.any { !Validator.length1hundred(it, allowEmpty = false) }) return@inner false
                 return@inner value.distinct().size == value.size // All values must be distinct

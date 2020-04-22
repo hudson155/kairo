@@ -2,12 +2,12 @@ package io.limberapp.web.context.api
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json
-import io.limberapp.backend.module.auth.tenant.TenantClient
-import io.limberapp.backend.module.forms.formInstance.FormInstanceClient
-import io.limberapp.backend.module.forms.formTemplate.FormTemplateClient
+import io.limberapp.backend.module.auth.client.tenant.TenantClient
+import io.limberapp.backend.module.forms.client.formInstance.FormInstanceClient
+import io.limberapp.backend.module.forms.client.formTemplate.FormTemplateClient
 import io.limberapp.backend.module.forms.rep.formsSerialModule
-import io.limberapp.backend.module.orgs.org.OrgClient
-import io.limberapp.backend.module.users.user.UserClient
+import io.limberapp.backend.module.orgs.client.org.OrgClient
+import io.limberapp.backend.module.users.client.user.UserClient
 
 private val json = Json(context = formsSerialModule)
 

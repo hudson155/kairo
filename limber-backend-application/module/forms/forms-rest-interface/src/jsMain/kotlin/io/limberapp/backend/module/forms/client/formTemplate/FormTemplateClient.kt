@@ -1,9 +1,9 @@
-package io.limberapp.backend.module.forms.formTemplate
+package io.limberapp.backend.module.forms.client.formTemplate
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
-import io.limberapp.backend.module.forms.formTemplate.question.FormTemplateQuestionClient
+import io.limberapp.backend.module.forms.client.formTemplate.question.FormTemplateQuestionClient
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 
 class FormTemplateClient(private val fetch: Fetch, private val json: Json) {
