@@ -26,8 +26,10 @@ internal class PatchOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
 
-        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+        val orgOwnerAccountId = UUID.randomUUID()
+
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountId)))
 
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         orgRep = orgRep.copy(name = orgUpdateRep.name!!)

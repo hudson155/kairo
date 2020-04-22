@@ -29,6 +29,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
+            ownerAccountId = UUID.randomUUID(),
             features = emptySet()
         )
         every { mockedServices[AccountService::class].get(userId) } returns AccountModel(
@@ -76,6 +77,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
+            ownerAccountId = UUID.randomUUID(),
             features = emptySet()
         )
         val existingAccount = AccountModel(

@@ -18,6 +18,7 @@ internal class SqlOrgMapperImpl @Inject constructor(
         insertStatement[OrgTable.createdDate] = model.created
         insertStatement[OrgTable.guid] = model.id
         insertStatement[OrgTable.name] = model.name
+        insertStatement[OrgTable.ownerAccountGuid] = model.ownerAccountId
     }
 
     override fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update) {
@@ -46,6 +47,7 @@ internal class SqlOrgMapperImpl @Inject constructor(
             id = guid,
             created = resultRow[OrgTable.createdDate],
             name = resultRow[OrgTable.name],
+            ownerAccountId = resultRow[OrgTable.ownerAccountGuid],
             features = featureStore.getByOrgId(guid)
         )
     }
