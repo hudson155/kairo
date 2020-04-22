@@ -24,8 +24,8 @@ dependencies {
     implementation("org.jetbrains:kotlin-react-dom:16.13.0-pre.94-kotlin-1.3.70")
     implementation(npm("react-dom", "16.13.0"))
 
-    implementation("org.jetbrains:kotlin-react-router-dom:4.3.1-pre.94-kotlin-1.3.70")
-    implementation(npm("react-router-dom", "4.3.1"))
+    implementation("org.jetbrains:kotlin-react-router-dom:5.1.2-pre.102-kotlin-1.3.72")
+    implementation(npm("react-router-dom", "5.1.2"))
 
     implementation("org.jetbrains:kotlin-styled:1.0.0-pre.94-kotlin-1.3.70")
     implementation(npm("styled-components", "5.1.0"))
