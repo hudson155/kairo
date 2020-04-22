@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.featurePage.pages.formPage.formTemplatesListPage
+package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formTemplatesListPage
 
 import react.RBuilder
 import react.RProps

@@ -1,9 +1,9 @@
-package io.limberapp.web.app.pages.featurePage.pages.formPage
+package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage
 
-import io.limberapp.web.app.components.sideNav.SideNavLink
 import io.limberapp.web.app.components.sideNav.sideNav
-import io.limberapp.web.app.pages.featurePage.pages.formPage.formInstancesListPage.formInstancesListPage
-import io.limberapp.web.app.pages.featurePage.pages.formPage.formTemplatesListPage.formTemplatesListPage
+import io.limberapp.web.app.components.sideNav.sideNavLink.sideNavLink
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formInstancesListPage.formInstancesListPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formTemplatesListPage.formTemplatesListPage
 import kotlinx.css.Display
 import kotlinx.css.display
 import kotlinx.css.flexGrow
@@ -26,29 +26,26 @@ private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
     }
 }
 
-private val formPage = functionalComponent<RProps> {
+private val formsFeaturePage = functionalComponent<RProps> {
     styledDiv {
         css { +Styles.root }
         // TODO (263) : Once we have access to the hooks, we can fix the routing here see:
         //  https://reacttraining.com/react-router/web/example/nesting
-        sideNav(
-            links = listOf(
-                SideNavLink("/forms", "Home"),
-                SideNavLink("/forms/templates", "Templates"),
-                SideNavLink("/forms/instances", "Instances")
-
-            )
-        )
+        sideNav {
+            sideNavLink("/forms", "Home")
+            sideNavLink("/forms/templates", "Templates")
+            sideNavLink("/forms/instances", "Instances")
+        }
         styledDiv {
             switch {
                 route(path = "/forms", exact = true) { styledH1 { +"Welcome to Forms" } }
-                route(path = "/forms/instances") { buildElement { formInstancesListPage() } }
-                route(path = "/forms/templates") { buildElement { formTemplatesListPage() } }
+                route(path = "/forms/instances", exact = true) { buildElement { formInstancesListPage() } }
+                route(path = "/forms/templates", exact = true) { buildElement { formTemplatesListPage() } }
             }
         }
     }
 }
 
-internal fun RBuilder.formPage() {
-    child(formPage)
+internal fun RBuilder.formsFeaturePage() {
+    child(formsFeaturePage)
 }
