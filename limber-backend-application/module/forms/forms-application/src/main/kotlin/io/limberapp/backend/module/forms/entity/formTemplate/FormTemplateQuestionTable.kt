@@ -1,12 +1,7 @@
 package io.limberapp.backend.module.forms.entity.formTemplate
 
-<<<<<<< Updated upstream
 import com.piperframework.sql.columnTypes.localDate
-import com.piperframework.sql.columnTypes.stringList
-=======
-import com.piperframework.sql.columnTypes.localdate
 import com.piperframework.sql.columnTypes.stringArray
->>>>>>> Stashed changes
 import com.piperframework.store.SqlTable
 
 internal object FormTemplateQuestionTable : SqlTable("forms", "form_template_question") {
