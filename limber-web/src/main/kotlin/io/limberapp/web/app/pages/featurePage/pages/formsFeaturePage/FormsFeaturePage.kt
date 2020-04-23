@@ -29,18 +29,16 @@ private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
 private val formsFeaturePage = functionalComponent<RProps> {
     styledDiv {
         css { +Styles.root }
-        // TODO (263) : Once we have access to the hooks, we can fix the routing here see:
-        //  https://reacttraining.com/react-router/web/example/nesting
         sideNav {
-            sideNavLink("/forms", "Home")
-            sideNavLink("/forms/templates", "Templates")
-            sideNavLink("/forms/instances", "Instances")
+            sideNavLink("/", "Home")
+            sideNavLink("/templates", "Templates")
+            sideNavLink("/instances", "Instances")
         }
         styledDiv {
             switch {
-                route(path = "/forms", exact = true) { styledH1 { +"Welcome to Forms" } }
-                route(path = "/forms/instances", exact = true) { buildElement { formInstancesListPage() } }
-                route(path = "/forms/templates", exact = true) { buildElement { formTemplatesListPage() } }
+                route(path = "/", exact = true) { styledH1 { +"Welcome to Forms" } }
+                route(path = "/instances", exact = true) { buildElement { formInstancesListPage() } }
+                route(path = "/templates", exact = true) { buildElement { formTemplatesListPage() } }
             }
         }
     }
