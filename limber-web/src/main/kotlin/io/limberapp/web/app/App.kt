@@ -17,6 +17,7 @@ import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.context.theme.themeProvider
 import io.limberapp.web.util.AppState
 import io.limberapp.web.util.async
 import io.limberapp.web.util.process
@@ -37,7 +38,9 @@ import kotlin.browser.window
 
 private val app = functionalComponent<RProps> {
     globalStateProvider {
-        child(appWithAuth)
+        themeProvider {
+            child(appWithAuth)
+        }
     }
 }
 
@@ -109,7 +112,7 @@ private val appFeatureRouter = functionalComponent<RProps> {
         switch {
             features.default?.let { route(path = "/", exact = true) { redirect(from = "/", to = it.path) } }
             features.map { feature ->
-                route(path = feature.path, exact = true) { buildElement { featurePage(feature) } }
+                route(path = feature.path) { buildElement { featurePage(feature) } }
             }
             route(path = "/") { buildElement { notFoundPage() } }
         }
