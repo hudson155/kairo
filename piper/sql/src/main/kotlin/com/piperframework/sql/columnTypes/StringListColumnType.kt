@@ -6,7 +6,8 @@ import org.jetbrains.exposed.sql.Table
 import org.postgresql.jdbc.PgArray
 import java.sql.PreparedStatement
 
-fun Table.stringList(name: String): Column<List<String>> = registerColumn(name, StringListColumnType())
+fun Table.stringList(name: String): Column<List<String>> =
+    registerColumn(name, StringListColumnType())
 
 class StringListColumnType : ColumnType() {
 
