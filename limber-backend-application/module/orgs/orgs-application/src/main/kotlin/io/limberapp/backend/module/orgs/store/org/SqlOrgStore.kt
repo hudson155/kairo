@@ -29,6 +29,13 @@ internal class SqlOrgStore @Inject constructor(
         return@transaction sqlOrgMapper.orgModel(entity)
     }
 
+    override fun getByOwnerAccountId(ownerAccountId: UUID) = transaction {
+        return@transaction OrgTable
+            .select { OrgTable.ownerAccountGuid eq ownerAccountId }
+            .map { sqlOrgMapper.orgModel(it) }
+            .toSet()
+    }
+
     override fun update(orgId: UUID, update: OrgModel.Update) = transaction {
         OrgTable
             .updateExactlyOne(
