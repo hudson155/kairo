@@ -36,8 +36,11 @@ private val sideNavLink = functionalComponent<Props> { props ->
         }
     }
 
-    // Manually add the css to style sheet
-    // https://github.com/JetBrains/kotlin-wrappers/issues/179
+    // Manually adding the css to style sheet because classes are added by name, not invoked.
+    // We should not have to do this elsewhere in the app unless we need to pass a className to a 3rd-party component.
+    // Please don't copy this pattern unless you know what you're doing.
+    // How to pass by class name: https://github.com/JetBrains/kotlin-wrappers/issues/179
+    // Why pass by class name: https://github.com/JetBrains/kotlin-wrappers/issues/62
     styles.activeNavLink.invoke(CSSBuilder())
     styles.navLink.invoke(CSSBuilder())
 
