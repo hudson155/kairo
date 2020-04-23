@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-fun Table.localdatetime(name: String): Column<LocalDateTime> = registerColumn(name, LocalDateTimeColumnType())
+fun Table.localDateTime(name: String): Column<LocalDateTime> = registerColumn(name, LocalDateTimeColumnType())
 
 class LocalDateTimeColumnType : ColumnType() {
 
