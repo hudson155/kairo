@@ -19,6 +19,7 @@ internal data class Props(val to: String, val name: String) : RProps
 
 private val sideNavLink = functionalComponent<Props> { props ->
     val theme = useTheme()
+//    val matchRoute = matchRouteuseMatchRoute()
 
     // TODO (259): Improve default css'ing
     val styles = object : StyleSheet("SideNavLinkStyles", isStatic = true) {
