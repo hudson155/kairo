@@ -33,7 +33,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 update.date?.let { updateStatement[FormInstanceQuestionTable.date] = it }
             }
             is FormInstanceRadioSelectorQuestionModel.Update -> {
-                update.selection?.let { updateStatement[FormInstanceQuestionTable.selections] = listOf(it) }
+                update.selection?.let { updateStatement[FormInstanceQuestionTable.selections] = arrayOf(it) }
             }
             is FormInstanceTextQuestionModel.Update -> {
                 update.text?.let { updateStatement[FormInstanceQuestionTable.text] = it }
@@ -56,7 +56,7 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
                 insertStatement[FormInstanceQuestionTable.date] = model.date
             }
             is FormInstanceRadioSelectorQuestionModel -> {
-                insertStatement[FormInstanceQuestionTable.selections] = listOf(model.selection)
+                insertStatement[FormInstanceQuestionTable.selections] = arrayOf(model.selection)
             }
             is FormInstanceTextQuestionModel -> {
                 insertStatement[FormInstanceQuestionTable.text] = model.text

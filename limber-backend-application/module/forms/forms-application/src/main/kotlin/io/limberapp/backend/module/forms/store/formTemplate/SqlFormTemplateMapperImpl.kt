@@ -51,7 +51,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 insertStatement[FormTemplateQuestionTable.latest] = model.latest
             }
             is FormTemplateRadioSelectorQuestionModel -> {
-                insertStatement[FormTemplateQuestionTable.options] = model.options
+                insertStatement[FormTemplateQuestionTable.options] = model.options.toTypedArray()
             }
             is FormTemplateTextQuestionModel -> {
                 insertStatement[FormTemplateQuestionTable.multiLine] = model.multiLine
@@ -74,7 +74,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 update.latest?.let { updateStatement[FormTemplateQuestionTable.latest] = it }
             }
             is FormTemplateRadioSelectorQuestionModel.Update -> {
-                update.options?.let { updateStatement[FormTemplateQuestionTable.options] = it }
+                update.options?.let { updateStatement[FormTemplateQuestionTable.options] = it.toTypedArray() }
             }
             is FormTemplateTextQuestionModel.Update -> {
                 update.multiLine?.let { updateStatement[FormTemplateQuestionTable.multiLine] = it }
@@ -112,7 +112,7 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
                 created = resultRow[FormTemplateQuestionTable.createdDate],
                 label = resultRow[FormTemplateQuestionTable.label],
                 helpText = resultRow[FormTemplateQuestionTable.helpText],
-                options = checkNotNull(resultRow[FormTemplateQuestionTable.options])
+                options = checkNotNull(resultRow[FormTemplateQuestionTable.options]).toList()
             )
             FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel(
                 id = resultRow[FormTemplateQuestionTable.guid],
