@@ -29,7 +29,7 @@ private val headerLink = functionalComponent<Props> { props ->
             color = Color.white
             fontWeight = FontWeight.bold
         }
-        navLink(to = props.to, exact = true) {
+        navLink<RProps>(to = props.to, exact = true) {
             props.children()
         }
     }
