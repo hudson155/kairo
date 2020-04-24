@@ -9,7 +9,6 @@ import java.time.LocalDateTime
 internal class HealthCheckMapper @Inject constructor(
     private val clock: Clock
 ) {
-
     fun completeRep(model: HealthCheckModel) = HealthCheckRep.Complete(
         created = LocalDateTime.now(clock),
         state = when (model) {

@@ -13,7 +13,6 @@ data class FormTemplateDateQuestionModel(
     val earliest: LocalDate?,
     val latest: LocalDate?
 ) : FormTemplateQuestionModel {
-
     override val type = FormTemplateQuestionModel.Type.DATE
 
     data class Update(

@@ -11,7 +11,6 @@ open class TestSqlModule : SqlModule(
         password = System.getenv("LIMBER_PROD_POSTGRES_PASSWORD")?.let { ConfigString(ConfigString.Type.PLAINTEXT, it) }
     )
 ) {
-
     fun dropDatabase() {
         val connection = dataSource.connection
         val customSchemas = listOf("auth", "forms", "orgs", "users")

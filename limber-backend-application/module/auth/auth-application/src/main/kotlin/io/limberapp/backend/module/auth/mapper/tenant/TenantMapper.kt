@@ -10,7 +10,6 @@ internal class TenantMapper @Inject constructor(
     private val clock: Clock,
     private val tenantDomainMapper: TenantDomainMapper
 ) {
-
     fun model(rep: TenantRep.Creation) = TenantModel(
         created = LocalDateTime.now(clock),
         orgId = rep.orgId,

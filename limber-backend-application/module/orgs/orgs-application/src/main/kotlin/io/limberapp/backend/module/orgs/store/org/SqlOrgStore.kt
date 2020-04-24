@@ -16,7 +16,6 @@ internal class SqlOrgStore @Inject constructor(
     private val featureStore: FeatureStore,
     private val sqlOrgMapper: SqlOrgMapper
 ) : OrgStore, SqlStore(database) {
-
     override fun create(model: OrgModel) = transaction {
         OrgTable.insert { sqlOrgMapper.orgEntity(it, model) }
         featureStore.create(model.id, model.features)

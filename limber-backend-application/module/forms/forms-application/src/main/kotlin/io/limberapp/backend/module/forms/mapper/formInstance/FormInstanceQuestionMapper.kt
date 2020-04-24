@@ -18,7 +18,6 @@ import kotlin.reflect.KClass
 internal class FormInstanceQuestionMapper @Inject constructor(
     private val clock: Clock
 ) {
-
     fun model(questionId: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
         is FormInstanceDateQuestionRep.Creation -> FormInstanceDateQuestionModel(
             created = LocalDateTime.now(clock),

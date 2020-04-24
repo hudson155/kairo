@@ -33,7 +33,6 @@ import io.limberapp.backend.module.auth.store.tenant.TenantStore
 import kotlinx.serialization.modules.EmptyModule
 
 class AuthModule : Module() {
-
     override val serialModule = EmptyModule
 
     override val endpoints = listOf(
@@ -54,7 +53,6 @@ class AuthModule : Module() {
     )
 
     override fun bindServices() {
-
         bind(TenantService::class, TenantServiceImpl::class)
         bind(TenantDomainService::class, TenantDomainServiceImpl::class)
 
@@ -64,7 +62,6 @@ class AuthModule : Module() {
     }
 
     override fun bindStores() {
-
         bind(SqlTenantMapper::class, SqlTenantMapperImpl::class)
         bind(TenantStore::class, SqlTenantStore::class)
         bind(TenantDomainStore::class, SqlTenantDomainStore::class)

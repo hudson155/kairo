@@ -12,7 +12,6 @@ internal class SqlAccountStore @Inject constructor(
     database: Database,
     private val sqlAccountMapper: SqlAccountMapperImpl
 ) : AccountStore, SqlStore(database) {
-
     override fun get(accountId: UUID) = transaction {
         val entity = AccountTable
             .select { AccountTable.guid eq accountId }

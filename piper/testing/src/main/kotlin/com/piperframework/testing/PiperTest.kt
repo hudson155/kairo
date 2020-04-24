@@ -25,7 +25,6 @@ abstract class PiperTest(
     protected val json: Json,
     private val moduleFunction: Application.() -> Unit
 ) {
-
     private val exceptionMapper = ExceptionMapper()
 
     fun setup(endpoint: PiperEndpoint) = testInternal(

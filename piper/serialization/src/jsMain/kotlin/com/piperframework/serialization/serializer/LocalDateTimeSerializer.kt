@@ -10,7 +10,6 @@ import kotlinx.serialization.PrimitiveKind
  * In JS, LocalDateTimes use the [String] class instead of an actual LocalDateTime class.
  */
 actual object LocalDateTimeSerializer : KSerializer<String> {
-
     override val descriptor = PrimitiveDescriptor("LocalDateTime", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: String) =

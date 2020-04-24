@@ -14,7 +14,6 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import kotlinx.serialization.Serializable
 
 object UserRep {
-
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)

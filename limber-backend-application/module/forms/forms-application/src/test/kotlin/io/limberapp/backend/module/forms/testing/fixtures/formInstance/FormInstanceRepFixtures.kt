@@ -6,7 +6,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FormInstanceRepFixtures {
-
     data class Fixture(
         val creation: (featureId: UUID, formTemplateId: UUID) -> FormInstanceRep.Creation,
         val complete: ResourceTest.(featureId: UUID, formTemplateId: UUID, idSeed: Int) -> FormInstanceRep.Complete

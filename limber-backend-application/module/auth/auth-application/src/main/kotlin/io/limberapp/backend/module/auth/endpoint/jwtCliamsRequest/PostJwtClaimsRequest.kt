@@ -28,7 +28,6 @@ internal class PostJwtClaimsRequest @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = JwtClaimsRequestApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = JwtClaimsRequestApi.Post(
         rep = call.getAndValidateBody()
     )

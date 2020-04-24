@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory
 internal class PiperAuthProvider<P : Principal> internal constructor(
     private val config: PiperAuthConfig<P>
 ) : AuthenticationProvider(config) {
-
     private val logger = LoggerFactory.getLogger(PiperAuthProvider::class.java)
 
     init {
@@ -30,7 +29,6 @@ internal class PiperAuthProvider<P : Principal> internal constructor(
     }
 
     private fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(context: AuthenticationContext) {
-
         val token = call.request.parseAuthorizationHeaderOrNull()
             ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
 

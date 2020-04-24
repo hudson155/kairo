@@ -19,7 +19,6 @@ class TokenAuthVerifier(
     private val jwtClaimsRequestService: JwtClaimsRequestService,
     private val accessTokenService: AccessTokenService
 ) : PiperAuthVerifier<Jwt> {
-
     private val json = Json()
 
     override fun verify(blob: String): Jwt? {

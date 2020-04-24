@@ -17,10 +17,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PutFormInstanceQuestionTest : ResourceTest() {
-
     @Test
     fun formInstanceDoesNotExist() {
-
         val questionId = UUID.randomUUID()
         val formInstanceId = UUID.randomUUID()
 
@@ -36,7 +34,6 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
     @Test
     fun formTemplateQuestionDoesNotExist() {
-
         val featureId = UUID.randomUUID()
         val questionId = UUID.randomUUID()
 
@@ -58,7 +55,6 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
@@ -89,7 +85,6 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
     @Test
     fun happyPathIdempotent() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)

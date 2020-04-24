@@ -26,7 +26,6 @@ internal class GetFormTemplatesByFeatureId @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormTemplateApi.GetByFeatureId::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.GetByFeatureId(
         featureId = call.parameters.getAsType(UUID::class, "featureId")
     )

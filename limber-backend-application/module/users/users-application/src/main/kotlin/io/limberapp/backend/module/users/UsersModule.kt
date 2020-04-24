@@ -21,7 +21,6 @@ import io.limberapp.backend.module.users.store.account.UserStore
 import kotlinx.serialization.modules.EmptyModule
 
 class UsersModule : Module() {
-
     override val serialModule = EmptyModule
 
     override val endpoints = listOf(

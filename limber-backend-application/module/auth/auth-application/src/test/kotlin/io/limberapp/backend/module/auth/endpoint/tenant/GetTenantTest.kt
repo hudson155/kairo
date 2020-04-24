@@ -10,10 +10,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetTenantTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         piperTest.test(
@@ -24,7 +22,6 @@ internal class GetTenantTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)

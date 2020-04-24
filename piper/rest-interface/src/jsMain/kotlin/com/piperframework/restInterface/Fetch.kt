@@ -6,7 +6,6 @@ import org.w3c.fetch.RequestInit
 import kotlin.browser.window
 
 open class Fetch(private val rootUrl: String) {
-
     suspend operator fun invoke(request: PiperEndpoint): String {
         val url = request.url
         val headers = headers(request.body != null)

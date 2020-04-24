@@ -1,5 +1,4 @@
 object Versions {
-
     // https://github.com/auth0/java-jwt/releases
     const val auth0JavaJwt = "3.9.0"
 

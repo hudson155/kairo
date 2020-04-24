@@ -24,7 +24,6 @@ internal class DeleteUserRole @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = UserRoleApi.Delete::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Delete(
         userId = call.parameters.getAsType(UUID::class, "userId"),
         role = call.parameters.getAsType(JwtRole::class, "role")

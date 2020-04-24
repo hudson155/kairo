@@ -13,10 +13,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class DeleteUserRoleTest : ResourceTest() {
-
     @Test
     fun userDoesNotExist() {
-
         val userId = UUID.randomUUID()
 
         piperTest.test(
@@ -27,7 +25,6 @@ internal class DeleteUserRoleTest : ResourceTest() {
 
     @Test
     fun roleDoesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
@@ -46,7 +43,6 @@ internal class DeleteUserRoleTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)

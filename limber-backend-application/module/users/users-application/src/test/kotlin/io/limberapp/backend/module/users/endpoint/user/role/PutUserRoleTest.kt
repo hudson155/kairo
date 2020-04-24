@@ -12,10 +12,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PutUserRoleTest : ResourceTest() {
-
     @Test
     fun userDoesNotExist() {
-
         val userId = UUID.randomUUID()
 
         piperTest.test(
@@ -26,7 +24,6 @@ internal class PutUserRoleTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
@@ -43,7 +40,6 @@ internal class PutUserRoleTest : ResourceTest() {
 
     @Test
     fun happyPathIdempotent() {
-
         val orgId = UUID.randomUUID()
 
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)

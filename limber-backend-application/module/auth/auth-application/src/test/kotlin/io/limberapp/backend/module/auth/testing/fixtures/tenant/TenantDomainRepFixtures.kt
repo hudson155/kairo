@@ -5,7 +5,6 @@ import io.limberapp.backend.module.auth.testing.ResourceTest
 import java.time.LocalDateTime
 
 internal object TenantDomainRepFixtures {
-
     data class Fixture(
         val creation: () -> TenantDomainRep.Creation,
         val complete: ResourceTest.() -> TenantDomainRep.Complete

@@ -10,7 +10,6 @@ data class FormInstanceRadioSelectorQuestionModel(
     override val questionId: UUID?,
     val selection: String
 ) : FormInstanceQuestionModel {
-
     override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
 
     data class Update(

@@ -22,7 +22,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) {
-
     fun defaultModels() = listOf(
         FormTemplateTextQuestionModel(
             id = uuidGenerator.generate(),

@@ -10,10 +10,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetOrgsByOwnerAccountIdTest : ResourceTest() {
-
     @Test
     fun happyPathNoOrgs() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         piperTest.test(OrgApi.GetByOwnerAccountId(orgOwnerAccountId)) {
@@ -24,7 +22,6 @@ internal class GetOrgsByOwnerAccountIdTest : ResourceTest() {
 
     @Test
     fun happyPathMultipleOrgs() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)

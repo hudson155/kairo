@@ -10,10 +10,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetOrgTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         piperTest.test(
@@ -24,7 +22,6 @@ internal class GetOrgTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)

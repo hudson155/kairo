@@ -9,7 +9,6 @@ import java.util.UUID
  * In the JVM, UUIDs use the [java.util.UUID] class.
  */
 actual object UuidConversionService : DataConversionService<UUID> {
-
     override val kClass = UUID::class
 
     override fun isValid(value: String) = Validator.uuid(value) || Validator.base64EncodedUuid(value)

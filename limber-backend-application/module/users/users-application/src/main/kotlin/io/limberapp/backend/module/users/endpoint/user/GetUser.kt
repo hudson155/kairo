@@ -27,7 +27,6 @@ internal class GetUser @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = UserApi.Get::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.Get(
         userId = call.parameters.getAsType(UUID::class, "userId")
     )

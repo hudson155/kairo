@@ -11,7 +11,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 object FormTemplateDateQuestionRep {
-
     @Serializable
     @SerialName("DATE")
     data class Creation(

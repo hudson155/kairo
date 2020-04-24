@@ -7,7 +7,6 @@ import com.piperframework.util.enc
 
 @Suppress("StringLiteralDuplication")
 object AccessTokenApi {
-
     data class Post(val accountId: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
         path = "/accounts/${enc(accountId)}/access-tokens"

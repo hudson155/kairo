@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteFormTemplateTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val formTemplateId = UUID.randomUUID()
 
         piperTest.test(
@@ -22,7 +20,6 @@ internal class DeleteFormTemplateTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)

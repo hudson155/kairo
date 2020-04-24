@@ -8,7 +8,6 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 
 @Suppress("StringLiteralDuplication")
 object UserApi {
-
     data class Post(val rep: UserRep.Creation?) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
         path = "/users",

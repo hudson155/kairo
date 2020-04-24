@@ -24,7 +24,6 @@ internal class DeleteOrg @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.Delete::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Delete(
         orgId = call.parameters.getAsType(UUID::class, "orgId")
     )

@@ -6,7 +6,6 @@ import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
 
 class UserClient(private val fetch: Fetch, private val json: Json) {
-
     suspend operator fun invoke(endpoint: UserApi.Get): UserRep.Complete {
         val string = fetch(endpoint)
         return json.parse(string)

@@ -10,7 +10,6 @@ internal class HasAccessToFormTemplate(
     private val formTemplateService: FormTemplateService,
     private val formTemplateId: UUID?
 ) : Authorization() {
-
     override fun authorizeInternal(principal: Jwt?): Boolean {
         principal ?: return false
         formTemplateId ?: return false

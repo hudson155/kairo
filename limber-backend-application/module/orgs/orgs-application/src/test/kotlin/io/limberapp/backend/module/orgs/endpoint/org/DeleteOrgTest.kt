@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteOrgTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         piperTest.test(
@@ -22,7 +20,6 @@ internal class DeleteOrgTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)

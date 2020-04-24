@@ -21,7 +21,6 @@ internal class SqlUserStore @Inject constructor(
     database: Database,
     private val sqlAccountMapper: SqlAccountMapperImpl
 ) : UserStore, SqlStore(database) {
-
     override fun create(model: UserModel) = transaction {
         AccountTable.insert { sqlAccountMapper.accountEntity(it, model) }
         doOperation { UserTable.insert { sqlAccountMapper.userEntity(it, model) } } andHandleError {

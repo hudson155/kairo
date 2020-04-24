@@ -5,7 +5,6 @@ import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.test.LimberResourceTest
 
 abstract class ResourceTest : LimberResourceTest() {
-
     override val module = OrgsModule()
 
     private val testSqlModule = TestSqlModule()

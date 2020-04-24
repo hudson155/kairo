@@ -18,7 +18,6 @@ import kotlin.reflect.KClass
 internal class SqlFormTemplateMapperImpl @Inject constructor(
     private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : SqlFormTemplateMapper {
-
     override fun formTemplateEntity(insertStatement: InsertStatement<*>, model: FormTemplateModel) {
         insertStatement[FormTemplateTable.createdDate] = model.created
         insertStatement[FormTemplateTable.guid] = model.id

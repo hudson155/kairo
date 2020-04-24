@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal interface SqlFormTemplateMapper {
-
     fun formTemplateEntity(insertStatement: InsertStatement<*>, model: FormTemplateModel)
 
     fun formTemplateEntity(updateStatement: UpdateStatement, update: FormTemplateModel.Update)

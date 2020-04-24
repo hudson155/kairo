@@ -13,7 +13,6 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object OrgRep {
-
     @Serializable
     data class Creation(
         val name: String,

@@ -22,34 +22,27 @@ import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 import kotlinx.serialization.modules.EmptyModule
 
 class OrgsModule : Module() {
-
     override val serialModule = EmptyModule
 
     override val endpoints = listOf(
-
         PostOrg::class.java,
         GetOrg::class.java,
         GetOrgsByOwnerAccountId::class.java,
         PatchOrg::class.java,
         DeleteOrg::class.java,
-
         PostFeature::class.java,
         PatchFeature::class.java,
         DeleteFeature::class.java
     )
 
     override fun bindServices() {
-
         bind(OrgService::class, OrgServiceImpl::class)
-
         bind(FeatureService::class, FeatureServiceImpl::class)
     }
 
     override fun bindStores() {
-
         bind(SqlOrgMapper::class, SqlOrgMapperImpl::class)
         bind(OrgStore::class, SqlOrgStore::class)
-
         bind(FeatureStore::class, SqlFeatureStore::class)
     }
 }

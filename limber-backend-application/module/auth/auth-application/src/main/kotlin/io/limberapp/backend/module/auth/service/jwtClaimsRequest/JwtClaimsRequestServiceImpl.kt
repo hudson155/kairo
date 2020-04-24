@@ -27,7 +27,6 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
-
     private val json = Json()
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
@@ -49,7 +48,6 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     }
 
     private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
-
         val existingUser = userService.getByEmailAddress(request.emailAddress)
         if (existingUser != null) return existingUser
 

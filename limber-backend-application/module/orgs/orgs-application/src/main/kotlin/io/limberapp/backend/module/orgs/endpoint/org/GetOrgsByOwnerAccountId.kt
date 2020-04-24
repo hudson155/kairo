@@ -26,7 +26,6 @@ internal class GetOrgsByOwnerAccountId @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.GetByOwnerAccountId::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerAccountId(
         ownerAccountId = call.parameters.getAsType(UUID::class, "ownerAccountId")
     )

@@ -14,10 +14,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostFormTemplateQuestionTest : ResourceTest() {
-
     @Test
     fun formTemplateDoesNotExist() {
-
         val formTemplateId = UUID.randomUUID()
 
         piperTest.test(
@@ -31,7 +29,6 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
 
     @Test
     fun rankOutOfBoundsLow() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
@@ -49,7 +46,6 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
 
     @Test
     fun rankOutOfBoundsHigh() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
@@ -67,7 +63,6 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
 
     @Test
     fun happyPathFirstRank() {
-
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
@@ -96,7 +91,6 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
 
     @Test
     fun happyPathLastRank() {
-
         val featureId = UUID.randomUUID()
 
         var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)

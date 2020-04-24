@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal interface SqlTenantMapper {
-
     fun tenantEntity(insertStatement: InsertStatement<*>, model: TenantModel)
 
     fun tenantEntity(updateStatement: UpdateStatement, update: TenantModel.Update)

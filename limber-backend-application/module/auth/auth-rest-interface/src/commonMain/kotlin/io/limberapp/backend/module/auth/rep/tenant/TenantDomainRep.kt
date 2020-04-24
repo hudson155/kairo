@@ -9,7 +9,6 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object TenantDomainRep {
-
     @Serializable
     data class Creation(
         val domain: String

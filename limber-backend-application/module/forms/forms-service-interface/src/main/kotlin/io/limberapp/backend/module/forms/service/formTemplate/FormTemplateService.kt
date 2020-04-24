@@ -4,7 +4,6 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import java.util.UUID
 
 interface FormTemplateService {
-
     fun create(model: FormTemplateModel)
 
     fun get(formTemplateId: UUID): FormTemplateModel?

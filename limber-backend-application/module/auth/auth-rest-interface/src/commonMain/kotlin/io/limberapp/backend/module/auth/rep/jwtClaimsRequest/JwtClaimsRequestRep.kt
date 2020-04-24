@@ -7,7 +7,6 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object JwtClaimsRequestRep {
-
     @Serializable
     data class Creation(
         val auth0ClientId: String,

@@ -10,10 +10,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class DeleteAccessTokenTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val accountId = UUID.randomUUID()
         val accessTokenId = UUID.randomUUID()
 
@@ -25,7 +23,6 @@ internal class DeleteAccessTokenTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val accountId = UUID.randomUUID()
 
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)

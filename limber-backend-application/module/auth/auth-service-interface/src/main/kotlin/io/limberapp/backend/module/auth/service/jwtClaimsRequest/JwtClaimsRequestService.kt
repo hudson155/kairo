@@ -5,7 +5,6 @@ import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestM
 import java.util.UUID
 
 interface JwtClaimsRequestService {
-
     /**
      * Generates JWT claims. If a user with the same email address does not exist, it creates a user.
      */

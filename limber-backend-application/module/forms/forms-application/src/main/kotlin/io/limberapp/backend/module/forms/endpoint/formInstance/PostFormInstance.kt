@@ -27,7 +27,6 @@ internal class PostFormInstance @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormInstanceApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(
         rep = call.getAndValidateBody()
     )

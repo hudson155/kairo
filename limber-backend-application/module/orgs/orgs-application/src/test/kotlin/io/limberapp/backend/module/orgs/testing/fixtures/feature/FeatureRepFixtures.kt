@@ -5,7 +5,6 @@ import io.limberapp.backend.module.orgs.testing.ResourceTest
 import java.time.LocalDateTime
 
 internal object FeatureRepFixtures {
-
     data class Fixture(
         val creation: () -> FeatureRep.Creation,
         val complete: ResourceTest.(idSeed: Int) -> FeatureRep.Complete

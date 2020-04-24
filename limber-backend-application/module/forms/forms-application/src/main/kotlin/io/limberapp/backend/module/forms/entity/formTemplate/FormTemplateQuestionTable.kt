@@ -5,7 +5,6 @@ import com.piperframework.sql.columnTypes.stringArray
 import com.piperframework.store.SqlTable
 
 internal object FormTemplateQuestionTable : SqlTable("forms", "form_template_question") {
-
     val guid = uuid("guid")
 
     val formTemplateGuid = uuid("form_template_guid")

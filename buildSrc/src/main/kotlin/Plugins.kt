@@ -1,5 +1,4 @@
 object Plugins {
-
     // https://github.com/arturbosch/detekt/releases
     const val detekt = "io.gitlab.arturbosch.detekt"
 

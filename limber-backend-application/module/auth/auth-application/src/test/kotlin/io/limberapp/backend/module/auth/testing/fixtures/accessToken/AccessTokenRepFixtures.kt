@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object AccessTokenRepFixtures {
-
     data class Fixture(
         val oneTimeUse: ResourceTest.(userId: UUID, idSeed: Int) -> AccessTokenRep.OneTimeUse,
         val complete: ResourceTest.(userId: UUID, idSeed: Int) -> AccessTokenRep.Complete

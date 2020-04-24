@@ -13,7 +13,6 @@ import java.util.UUID
 internal class SqlTenantMapperImpl @Inject constructor(
     private val tenantDomainStore: TenantDomainStore
 ) : SqlTenantMapper {
-
     override fun tenantEntity(insertStatement: InsertStatement<*>, model: TenantModel) {
         insertStatement[TenantTable.createdDate] = model.created
         insertStatement[TenantTable.orgGuid] = model.orgId

@@ -8,9 +8,7 @@ import kotlin.reflect.KProperty1
  * Validation class for [ValidatedRep]s.
  */
 class RepValidation(validation: Builder.() -> Unit) {
-
     class Builder internal constructor() {
-
         val validations = mutableListOf<Pair<ValueValidation<*>, Boolean>>()
 
         fun validate(validate: RepValidation) {

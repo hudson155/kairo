@@ -8,7 +8,6 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 
 @Suppress("StringLiteralDuplication")
 object FormTemplateApi {
-
     data class Post(val rep: FormTemplateRep.Creation?) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
         path = "/form-templates",

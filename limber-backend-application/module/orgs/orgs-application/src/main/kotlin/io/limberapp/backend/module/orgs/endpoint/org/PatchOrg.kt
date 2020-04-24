@@ -26,7 +26,6 @@ internal class PatchOrg @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.Patch::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Patch(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         rep = call.getAndValidateBody()

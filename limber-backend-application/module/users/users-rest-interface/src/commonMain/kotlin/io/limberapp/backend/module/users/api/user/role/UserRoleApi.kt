@@ -8,7 +8,6 @@ import io.limberapp.backend.authorization.principal.JwtRole
 
 @Suppress("StringLiteralDuplication")
 object UserRoleApi {
-
     data class Put(val userId: UUID, val role: JwtRole) : PiperEndpoint(
         httpMethod = HttpMethod.PUT,
         path = "/users/${enc(userId)}/roles/${enc(role)}"

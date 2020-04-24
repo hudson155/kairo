@@ -11,7 +11,6 @@ internal class FeatureMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) {
-
     fun defaultModel() = FeatureModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),

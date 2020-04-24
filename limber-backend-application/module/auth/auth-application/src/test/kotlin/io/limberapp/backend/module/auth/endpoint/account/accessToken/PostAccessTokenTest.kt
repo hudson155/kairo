@@ -9,10 +9,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostAccessTokenTest : ResourceTest() {
-
     @Test
     fun happyPath() {
-
         val accountId = UUID.randomUUID()
 
         val accessTokenRep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)

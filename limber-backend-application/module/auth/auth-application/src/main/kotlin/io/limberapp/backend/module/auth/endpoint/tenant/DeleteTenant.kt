@@ -23,7 +23,6 @@ internal class DeleteTenant @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = TenantApi.Delete::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Delete(
         orgId = call.parameters.getAsType(UUID::class, "orgId")
     )

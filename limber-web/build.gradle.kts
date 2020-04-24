@@ -7,7 +7,6 @@ group = "io.limberapp.web"
 version = "0.1.0-SNAPSHOT"
 
 dependencies {
-
     implementation(kotlin("stdlib-js"))
 
     implementation(project(":limber-backend-application:module:auth:auth-rest-interface"))

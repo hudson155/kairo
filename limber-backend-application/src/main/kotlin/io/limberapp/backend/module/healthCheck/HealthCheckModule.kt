@@ -13,7 +13,6 @@ import kotlinx.serialization.modules.SerializersModule
  * in its own module module.
  */
 internal class HealthCheckModule : Module() {
-
     override val serialModule = SerializersModule { }
 
     override val endpoints: List<Class<out ApiEndpoint<*, *, *>>> = listOf(HealthCheck::class.java)

@@ -13,7 +13,6 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object FeatureRep {
-
     enum class Type {
         FORMS,
         HOME;

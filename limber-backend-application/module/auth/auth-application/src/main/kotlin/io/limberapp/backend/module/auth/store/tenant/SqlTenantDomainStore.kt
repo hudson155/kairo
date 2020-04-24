@@ -20,7 +20,6 @@ internal class SqlTenantDomainStore @Inject constructor(
     database: Database,
     private val sqlTenantMapper: SqlTenantMapper
 ) : TenantDomainStore, SqlStore(database) {
-
     override fun create(orgId: UUID, models: Set<TenantDomainModel>) = transaction {
         doOperation {
             TenantDomainTable.batchInsert(models) { model -> sqlTenantMapper.tenantDomainEntity(this, orgId, model) }

@@ -10,10 +10,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetAccessTokensByAccountIdTest : ResourceTest() {
-
     @Test
     fun happyPathNoneExist() {
-
         val accountId = UUID.randomUUID()
 
         piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
@@ -24,7 +22,6 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
 
     @Test
     fun happyPathSomeExist() {
-
         val accountId = UUID.randomUUID()
 
         val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)

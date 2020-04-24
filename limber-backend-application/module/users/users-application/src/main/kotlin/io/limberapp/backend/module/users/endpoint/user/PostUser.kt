@@ -26,7 +26,6 @@ internal class PostUser @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = UserApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.Post(
         rep = call.getAndValidateBody()
     )

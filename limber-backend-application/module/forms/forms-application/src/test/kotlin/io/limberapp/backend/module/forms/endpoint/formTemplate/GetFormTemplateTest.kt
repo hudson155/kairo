@@ -10,10 +10,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetFormTemplateTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val formTemplateId = UUID.randomUUID()
 
         piperTest.test(
@@ -24,7 +22,6 @@ internal class GetFormTemplateTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)

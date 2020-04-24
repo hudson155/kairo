@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 
 internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
-
     override fun accountEntity(insertStatement: InsertStatement<*>, model: UserModel) {
         insertStatement[AccountTable.createdDate] = model.created
         insertStatement[AccountTable.guid] = model.id

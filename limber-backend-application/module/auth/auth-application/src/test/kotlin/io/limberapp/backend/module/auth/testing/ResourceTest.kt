@@ -9,7 +9,6 @@ import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.test.LimberResourceTest
 
 abstract class ResourceTest : LimberResourceTest() {
-
     override val module = AuthModule()
 
     private val testSqlModule = TestSqlModule()

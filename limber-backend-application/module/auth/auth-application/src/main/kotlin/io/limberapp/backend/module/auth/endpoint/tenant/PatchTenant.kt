@@ -26,7 +26,6 @@ internal class PatchTenant @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = TenantApi.Patch::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Patch(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         rep = call.getAndValidateBody()

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory
 import java.util.UUID
 
 abstract class Authorization : PiperAuthorization<Jwt> {
-
     private val logger = LoggerFactory.getLogger(Authorization::class.java)
 
     override fun authorize(principal: Jwt?): Boolean {

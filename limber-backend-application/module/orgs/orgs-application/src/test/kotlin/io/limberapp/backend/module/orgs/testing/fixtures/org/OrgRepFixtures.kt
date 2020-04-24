@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object OrgRepFixtures {
-
     data class Fixture(
         val creation: (ownerAccountId: UUID) -> OrgRep.Creation,
         val complete: ResourceTest.(ownerAccountId: UUID, idSeed: Int) -> OrgRep.Complete

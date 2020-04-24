@@ -8,7 +8,6 @@ import org.jetbrains.exposed.sql.statements.UpdateStatement
 import java.util.UUID
 
 internal interface SqlOrgMapper {
-
     fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel)
 
     fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update)

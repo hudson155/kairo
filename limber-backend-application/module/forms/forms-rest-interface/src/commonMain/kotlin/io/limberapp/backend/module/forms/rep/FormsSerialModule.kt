@@ -12,7 +12,6 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import kotlinx.serialization.modules.SerializersModule
 
 val formsSerialModule = SerializersModule {
-
     baseClass(FormTemplateQuestionRep.Creation::class) {
         subclass(FormTemplateDateQuestionRep.Creation::class)
         subclass(FormTemplateRadioSelectorQuestionRep.Creation::class)

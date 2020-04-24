@@ -24,7 +24,6 @@ internal class DeleteFeature @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgFeatureApi.Delete::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Delete(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         featureId = call.parameters.getAsType(UUID::class, "featureId")

@@ -10,7 +10,6 @@ import com.piperframework.validation.RepValidation
 import kotlinx.serialization.Serializable
 
 object FormInstanceRep {
-
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)

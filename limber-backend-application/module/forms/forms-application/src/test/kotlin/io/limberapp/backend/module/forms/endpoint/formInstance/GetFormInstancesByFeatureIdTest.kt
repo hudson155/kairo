@@ -12,10 +12,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
-
     @Test
     fun happyPathNoFormInstances() {
-
         val featureId = UUID.randomUUID()
 
         piperTest.test(FormInstanceApi.GetByFeatureId(featureId)) {
@@ -26,7 +24,6 @@ internal class GetFormInstancesByFeatureIdTest : ResourceTest() {
 
     @Test
     fun happyPathMultipleFormInstances() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)

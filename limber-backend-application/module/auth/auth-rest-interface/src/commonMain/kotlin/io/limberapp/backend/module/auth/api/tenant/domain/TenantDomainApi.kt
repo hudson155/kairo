@@ -8,7 +8,6 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 
 @Suppress("StringLiteralDuplication")
 object TenantDomainApi {
-
     data class Post(val orgId: UUID, val rep: TenantDomainRep.Creation?) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
         path = "/tenants/${enc(orgId)}/domains",

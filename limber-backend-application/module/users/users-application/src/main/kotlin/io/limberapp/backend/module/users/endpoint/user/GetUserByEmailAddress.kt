@@ -26,7 +26,6 @@ internal class GetUserByEmailAddress @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = UserApi.GetByEmailAddress::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.GetByEmailAddress(
         emailAddress = call.parameters.getAsType(String::class, "emailAddress")
     )

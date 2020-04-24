@@ -23,7 +23,6 @@ internal class DeleteFormInstance @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormInstanceApi.Delete::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Delete(
         formInstanceId = call.parameters.getAsType(UUID::class, "formInstanceId")
     )

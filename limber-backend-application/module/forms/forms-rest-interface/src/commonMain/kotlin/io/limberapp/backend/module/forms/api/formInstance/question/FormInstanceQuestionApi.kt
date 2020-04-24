@@ -8,7 +8,6 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRe
 
 @Suppress("StringLiteralDuplication")
 object FormInstanceQuestionApi {
-
     data class Put(
         val formInstanceId: UUID,
         val questionId: UUID,

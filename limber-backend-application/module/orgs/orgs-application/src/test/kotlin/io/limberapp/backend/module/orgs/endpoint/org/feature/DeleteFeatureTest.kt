@@ -12,10 +12,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class DeleteFeatureTest : ResourceTest() {
-
     @Test
     fun orgDoesNotExist() {
-
         val orgId = UUID.randomUUID()
         val featureId = UUID.randomUUID()
 
@@ -27,7 +25,6 @@ internal class DeleteFeatureTest : ResourceTest() {
 
     @Test
     fun featureDoesNotExist() {
-
         val orgOwnerAccountId = UUID.randomUUID()
         val featureId = UUID.randomUUID()
 
@@ -47,7 +44,6 @@ internal class DeleteFeatureTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)

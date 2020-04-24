@@ -7,7 +7,6 @@ import java.util.UUID
  * This is a deterministic way of generating UUIDs that's useful for tests.
  */
 class DeterministicUuidGenerator : UuidGenerator {
-
     private var seed = 0
 
     fun reset() {

@@ -7,7 +7,6 @@ import org.jetbrains.exposed.sql.statements.InsertStatement
 import org.jetbrains.exposed.sql.statements.UpdateStatement
 
 internal interface SqlAccountMapper {
-
     fun accountEntity(insertStatement: InsertStatement<*>, model: UserModel)
 
     fun accountEntity(

@@ -14,7 +14,6 @@ abstract class ConversionServiceSerializer<T : Any>(
     serialName: String,
     private val conversionService: DataConversionService<T>
 ) : KSerializer<T> {
-
     override val descriptor = PrimitiveDescriptor(serialName, PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: T) =

@@ -11,7 +11,6 @@ data class FeatureModel(
     val type: Type,
     val isDefaultFeature: Boolean
 ) {
-
     enum class Type {
         FORMS,
         HOME;

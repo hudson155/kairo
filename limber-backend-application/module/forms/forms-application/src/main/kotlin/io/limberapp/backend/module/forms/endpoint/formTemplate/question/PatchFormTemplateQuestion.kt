@@ -28,7 +28,6 @@ internal class PatchFormTemplateQuestion @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormTemplateQuestionApi.Patch::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Patch(
         formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
         questionId = call.parameters.getAsType(UUID::class, "questionId"),
