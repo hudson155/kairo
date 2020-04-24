@@ -70,7 +70,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
      * Called for each request to the endpoint, to handle the authorization and execution. This method is the meat and
      * potatoes of the ApiEndpoint instance. By this point, the command has been determined and the user has been
      * authenticated. All that's left is for authorization to be performend and for the "actual work" to be done.
-     * However, even though this is the meat and potatoes, in a good architecture this method probably has very simple
+     * However, even though this is the meat and potatoes, in a good architecture this method probably has a very simple
      * implementation and delegates most of the work to the service layer.
      *
      * Note: If authorization is not performed in the implementation of this method, a 500 error will be thrown every
