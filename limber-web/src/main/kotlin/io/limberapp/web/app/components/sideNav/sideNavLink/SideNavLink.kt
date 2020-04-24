@@ -44,7 +44,7 @@ private val sideNavLink = functionalComponent<Props> { props ->
     styles.activeNavLink.invoke(CSSBuilder())
     styles.navLink.invoke(CSSBuilder())
 
-    navLink(
+    navLink<RProps>(
         to = props.to,
         exact = true,
         className = styles.getClassName { it::navLink },
