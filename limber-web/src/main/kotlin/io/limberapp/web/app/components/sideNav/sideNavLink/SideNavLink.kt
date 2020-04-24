@@ -48,7 +48,7 @@ private val sideNavLink = functionalComponent<Props> { props ->
     styles.navLink.invoke(CSSBuilder())
 
     navLink<RProps>(
-        to = "${routeMatch?.path ?: ""}${props.to}",
+        to = "${routeMatch?.path.orEmpty()}${props.to}",
         exact = true,
         className = styles.getClassName { it::navLink },
         activeClassName = styles.getClassName { it::activeNavLink }
