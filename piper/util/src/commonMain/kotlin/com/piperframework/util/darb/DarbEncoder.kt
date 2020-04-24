@@ -8,10 +8,12 @@ package com.piperframework.util.darb
  */
 object DarbEncoder {
 
+    private const val CHUNK_SIZE = 4 // Warning, changing this alone will break the code.
+
     fun encode(booleanList: List<Boolean>): String {
 
         // Chunk by 4 because each hex represents 4 bits.
-        val chunkedBooleanList = booleanList.chunked(4)
+        val chunkedBooleanList = booleanList.chunked(CHUNK_SIZE)
 
         // Map each chunk of 4 bits to a hex character, then join the characters together.
         val hex = chunkedBooleanList.joinToString("") {
@@ -49,7 +51,7 @@ object DarbEncoder {
 
         // The second component is the hex, the length of which must correlate with the size.
         val hex = components[1]
-        require(hex.length == (size + 3) / 4)
+        require(hex.length == (size + CHUNK_SIZE - 1) / CHUNK_SIZE)
 
         // Map each hex to a list of 4 digits representing the hex in binary.
         val booleanList = hex.flatMap {
