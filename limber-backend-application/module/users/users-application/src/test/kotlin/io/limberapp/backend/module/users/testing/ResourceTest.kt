@@ -4,8 +4,6 @@ import com.piperframework.module.TestSqlModule
 import com.piperframework.testing.MockedServices
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.UsersModule
-import io.limberapp.backend.module.users.service.account.AccountService
-import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.test.LimberResourceTest
 
 abstract class ResourceTest : LimberResourceTest() {
