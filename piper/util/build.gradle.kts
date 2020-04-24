@@ -10,11 +10,23 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
             }
         }
+        commonTest {
+            dependencies {
+                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin("test-common"))
+            }
+        }
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
                     implementation(kotlin("stdlib-jdk8"))
                     implementation(kotlin("reflect"))
+                }
+            }
+            compilations["test"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("test-junit5"))
+                    runtimeOnly(Dependencies.JUnit.engine)
                 }
             }
         }
@@ -25,7 +37,19 @@ kotlin {
                     implementation(kotlin("stdlib-js"))
                 }
             }
+            compilations["test"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("test-js"))
+                }
+            }
         }
+    }
+}
+
+tasks.named<Test>("jvmTest") {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
     }
 }
 
