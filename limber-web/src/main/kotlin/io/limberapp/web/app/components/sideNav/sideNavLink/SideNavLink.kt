@@ -7,17 +7,20 @@ import kotlinx.css.backgroundColor
 import kotlinx.css.color
 import kotlinx.css.padding
 import kotlinx.css.pointerEvents
+import kotlinx.css.px
 import react.RBuilder
 import react.RProps
 import react.child
 import react.functionalComponent
 import react.router.dom.navLink
+import react.router.dom.useRouteMatch
 import styled.StyleSheet
 import styled.getClassName
 
 internal data class Props(val to: String, val name: String) : RProps
 
 private val sideNavLink = functionalComponent<Props> { props ->
+    val routeMatch = useRouteMatch<RProps>()
     val theme = useTheme()
 
     // TODO (259): Improve default css'ing
@@ -32,7 +35,7 @@ private val sideNavLink = functionalComponent<Props> { props ->
                 backgroundColor = theme.backgroundDark
                 color = theme.white
             }
-            padding = "4px 8px 4px 8px"
+            padding(vertical = 4.px, horizontal = 8.px)
         }
     }
 
@@ -45,7 +48,7 @@ private val sideNavLink = functionalComponent<Props> { props ->
     styles.navLink.invoke(CSSBuilder())
 
     navLink<RProps>(
-        to = props.to,
+        to = "${routeMatch?.path.orEmpty()}${props.to}",
         exact = true,
         className = styles.getClassName { it::navLink },
         activeClassName = styles.getClassName { it::activeNavLink }
