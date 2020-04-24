@@ -11,7 +11,7 @@ plugins {
 group = "io.limberapp.backend"
 version = "0.1.0-SNAPSHOT"
 application {
-    mainClassName = "io.limberapp.backend.ApplicationKt"
+    mainClassName = project.properties.getOrDefault("mainClass", "io.limberapp.backend.ApplicationKt") as String
 }
 
 dependencies {
