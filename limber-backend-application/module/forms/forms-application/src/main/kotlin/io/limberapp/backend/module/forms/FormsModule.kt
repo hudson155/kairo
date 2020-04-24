@@ -41,7 +41,6 @@ class FormsModule : Module() {
     override val serialModule = formsSerialModule
 
     override val endpoints = listOf(
-
         PostFormTemplate::class.java,
         GetFormTemplate::class.java,
         GetFormTemplatesByFeatureId::class.java,

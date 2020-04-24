@@ -36,7 +36,6 @@ class AuthModule : Module() {
     override val serialModule = EmptyModule
 
     override val endpoints = listOf(
-
         PostTenant::class.java,
         GetTenant::class.java,
         GetTenantByDomain::class.java,

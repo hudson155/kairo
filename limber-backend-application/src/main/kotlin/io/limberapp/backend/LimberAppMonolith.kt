@@ -47,7 +47,6 @@ internal class LimberAppMonolith(application: Application) : SimplePiperApp<Limb
     )
 
     override val modules = listOf(
-
         HealthCheckModule(),
 
         AuthModule(),
