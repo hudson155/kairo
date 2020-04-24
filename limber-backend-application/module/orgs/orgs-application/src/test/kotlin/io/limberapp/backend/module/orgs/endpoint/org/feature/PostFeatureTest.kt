@@ -7,7 +7,7 @@ import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
-import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
+import io.limberapp.backend.module.orgs.testing.fixtures.org.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.jupiter.api.Test
 import java.util.UUID

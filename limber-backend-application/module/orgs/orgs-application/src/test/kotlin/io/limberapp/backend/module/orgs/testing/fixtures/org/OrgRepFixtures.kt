@@ -2,7 +2,6 @@ package io.limberapp.backend.module.orgs.testing.fixtures.org
 
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
-import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import java.time.LocalDateTime
 import java.util.UUID
 

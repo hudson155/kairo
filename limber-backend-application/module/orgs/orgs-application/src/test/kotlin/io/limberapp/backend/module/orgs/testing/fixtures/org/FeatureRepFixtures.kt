@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.testing.fixtures.feature
+package io.limberapp.backend.module.orgs.testing.fixtures.org
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -27,19 +27,20 @@ internal object FeatureRepFixtures {
         }
     )
 
-    val formsFixture = Fixture(
-        {
-            FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS)
-        },
-        { idSeed ->
-            FeatureRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
-                name = "Forms",
-                path = "/forms",
-                type = FeatureRep.Type.FORMS,
-                isDefaultFeature = false
-            )
-        }
-    )
+    val formsFixture =
+        Fixture(
+            {
+                FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS)
+            },
+            { idSeed ->
+                FeatureRep.Complete(
+                    id = deterministicUuidGenerator[idSeed],
+                    created = LocalDateTime.now(fixedClock),
+                    name = "Forms",
+                    path = "/forms",
+                    type = FeatureRep.Type.FORMS,
+                    isDefaultFeature = false
+                )
+            }
+        )
 }

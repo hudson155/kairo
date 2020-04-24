@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.testing.fixtures.user
+package io.limberapp.backend.module.users.testing.fixtures.account
 
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
