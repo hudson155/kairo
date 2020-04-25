@@ -19,16 +19,16 @@ internal class UserStore @Inject constructor(
     database: Database,
     private val jdbi: Jdbi
 ) : SqlStore(database) {
+    @Suppress("OptionalUnit") // Required to avoid recursive type checking
     fun create(model: UserModel): Unit = jdbi.useHandle<Exception> {
         try {
             it.createUpdate(sqlResource(this::create.name)).bindKotlin(model).execute()
         } catch (e: UnableToExecuteStatementException) {
             val error = e.serverErrorMessage ?: throw e
-            when {
-                error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT) ->
-                    throw EmailAddressAlreadyTaken(model.emailAddress)
-                else -> throw e
+            if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) {
+                throw EmailAddressAlreadyTaken(model.emailAddress)
             }
+            throw e
         }
     }
 
