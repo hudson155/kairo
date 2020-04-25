@@ -1,5 +1,6 @@
 package com.piperframework.store
 
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Op
@@ -17,8 +18,22 @@ import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
 
-@Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
+    private val resourceCache = ResourceCache()
+
+    /**
+     * Fetches the given SQL resource, throwing an exception if it does not exist. The implementation uses a cache that
+     * never evicts.
+     */
+    protected fun sqlResource(name: String): String {
+        val classResourcePath = checkNotNull(this::class.qualifiedName).replace('.', '/')
+        val resourceName = "/$classResourcePath/$name.sql"
+        return resourceCache.get(resourceName)
+    }
+
+    protected val UnableToExecuteStatementException.serverErrorMessage: ServerErrorMessage?
+        get() = (cause as? PSQLException)?.serverErrorMessage
+
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
 
     protected data class Operation(val operation: () -> Unit)
@@ -38,6 +53,15 @@ abstract class SqlStore(private val database: Database) {
                     else -> null
                 }
             }?.let { OperationError(it.serverErrorMessage).onError() }
+            throw e
+        } catch (e: UnableToExecuteStatementException) {
+            e.cause?.let {
+                return@let when (it) {
+                    is PSQLException -> it
+                    else -> null
+                }
+            }?.let { OperationError(it.serverErrorMessage).onError() }
+            throw e
         }
     }
 
@@ -68,5 +92,5 @@ abstract class SqlStore(private val database: Database) {
 
     private inline fun Int.ifEq(int: Int, function: () -> Nothing): Int = if (this == int) function() else this
 
-    private fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
+    protected fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
 }
