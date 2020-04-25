@@ -28,7 +28,6 @@ internal class DeleteUserTest : ResourceTest() {
 
     @Test
     fun userIsOwnerOfOrg() {
-
         val orgGuid = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
