@@ -28,12 +28,12 @@ internal class UserMapper @Inject constructor(
     fun completeRep(model: UserModel) = UserRep.Complete(
         id = model.id,
         created = model.created,
+        roles = JwtRole.values().filter { model.hasRole(it) },
         orgId = model.orgId,
         firstName = model.firstName,
         lastName = model.lastName,
         emailAddress = model.emailAddress,
-        profilePhotoUrl = model.profilePhotoUrl,
-        roles = JwtRole.values().filter { model.hasRole(it) }
+        profilePhotoUrl = model.profilePhotoUrl
     )
 
     fun update(rep: UserRep.Update) = UserModel.Update(
