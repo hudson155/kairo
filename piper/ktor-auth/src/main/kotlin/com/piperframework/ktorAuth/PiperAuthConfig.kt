@@ -49,7 +49,7 @@ class PiperAuthConfig<P : Principal> private constructor(
          */
         fun verifier(scheme: String, verifier: PiperAuthVerifier<P>, default: Boolean = false) {
             if (default) require(defaultScheme == null) { "Can't set multiple default verifiers." }
-            require(!verifiers.containsKey(scheme)) { "Can't set multiple verifiers with the same scheme." }
+            require(scheme !in verifiers) { "Can't set multiple verifiers with the same scheme." }
             if (default) defaultScheme = scheme
             verifiers[scheme] = verifier
         }

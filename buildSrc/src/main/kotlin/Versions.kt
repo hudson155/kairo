@@ -26,6 +26,9 @@ object Versions {
     // https://mvnrepository.com/artifact/org.mindrot/jbcrypt
     const val jbcrypt = "0.4"
 
+    // https://github.com/jdbi/jdbi/releases
+    const val jdbi3 = "3.13.0"
+
     // https://github.com/junit-team/junit5/releases
     const val junit = "5.5.2"
 
