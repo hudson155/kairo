@@ -5,6 +5,7 @@ import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
@@ -56,12 +57,13 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         val newUser = UserModel(
             id = uuidGenerator.generate(),
             created = LocalDateTime.now(clock),
+            identityProvider = false,
+            superuser = false,
             orgId = tenant.orgId,
             firstName = request.firstName,
             lastName = request.lastName,
             emailAddress = request.emailAddress,
-            profilePhotoUrl = request.profilePhotoUrl,
-            roles = emptySet()
+            profilePhotoUrl = request.profilePhotoUrl
         )
         userService.create(newUser)
 
@@ -71,7 +73,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
         return Jwt(
             org = org?.let { JwtOrg(it.id, it.name, it.features.map { it.id }) },
-            roles = account.roles.toList(),
+            roles = JwtRole.values().filter { account.hasRole(it) },
             user = JwtUser(account.id, user?.firstName, user?.lastName)
         )
     }

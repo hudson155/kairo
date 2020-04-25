@@ -37,13 +37,13 @@ object UserRep {
         val id: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
         override val created: LocalDateTime,
+        val roles: List<JwtRole>,
         @Serializable(with = UuidSerializer::class)
         val orgId: UUID,
         val firstName: String,
         val lastName: String,
         val emailAddress: String,
-        val profilePhotoUrl: String?,
-        val roles: List<JwtRole>
+        val profilePhotoUrl: String?
     ) : CompleteRep
 
     @Serializable

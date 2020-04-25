@@ -9,12 +9,6 @@ import org.jetbrains.exposed.sql.statements.UpdateStatement
 internal interface SqlAccountMapper {
     fun accountEntity(insertStatement: InsertStatement<*>, model: UserModel)
 
-    fun accountEntity(
-        updateStatement: UpdateStatement,
-        identityProvider: Boolean? = null,
-        superuser: Boolean? = null
-    )
-
     fun userEntity(insertStatement: InsertStatement<*>, model: UserModel)
 
     fun userEntity(updateStatement: UpdateStatement, update: UserModel.Update)

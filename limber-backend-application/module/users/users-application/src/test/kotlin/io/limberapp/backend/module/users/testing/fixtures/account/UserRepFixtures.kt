@@ -23,12 +23,12 @@ internal object UserRepFixtures {
         UserRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
+            roles = emptyList(),
             orgId = orgId,
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
-            profilePhotoUrl = null,
-            roles = emptyList()
+            profilePhotoUrl = null
         )
     })
 
@@ -44,12 +44,12 @@ internal object UserRepFixtures {
         UserRep.Complete(
             id = deterministicUuidGenerator[idSeed],
             created = LocalDateTime.now(fixedClock),
+            roles = emptyList(),
             orgId = orgId,
             firstName = "Bill",
             lastName = "Gates",
             emailAddress = "bill.gates@microsoft.com",
-            profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg",
-            roles = emptyList()
+            profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg"
         )
     })
 }

@@ -7,6 +7,12 @@ import java.util.UUID
 data class AccountModel(
     val id: UUID,
     val created: LocalDateTime,
-    val name: String,
-    val roles: Set<JwtRole>
-)
+    val identityProvider: Boolean,
+    val superuser: Boolean,
+    val name: String
+) {
+    fun hasRole(role: JwtRole) = when (role) {
+        JwtRole.IDENTITY_PROVIDER -> identityProvider
+        JwtRole.SUPERUSER -> superuser
+    }
+}
