@@ -10,6 +10,7 @@ import kotlinx.css.justifyContent
 import kotlinx.css.padding
 import kotlinx.css.px
 import react.RBuilder
+import react.RHandler
 import react.RProps
 import react.ReactElement
 import react.child
@@ -33,6 +34,7 @@ private val navbar = functionalComponent<Props> { props ->
         styledDiv {
             css { display = Display.flex }
             props.left?.let { child(it) }
+            props.children()
         }
         styledDiv {
             css { display = Display.flex }
@@ -41,6 +43,6 @@ private val navbar = functionalComponent<Props> { props ->
     }
 }
 
-internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?) {
-    child(navbar, Props(left, right))
+internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?, children: RHandler<Props> = {}) {
+    child(navbar, Props(left, right), handler = children)
 }

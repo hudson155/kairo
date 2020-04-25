@@ -22,9 +22,6 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
             headerLinkGroup {
                 props.features.default?.let { headerLink(to = it.path) { +"Limber" } } ?: headerText { +"Limber" }
             }
-            headerLinkGroup {
-                props.features.forEach { headerLink(to = it.path) { +it.name } }
-            }
         },
         right = buildElements {
             headerLinkGroup {
@@ -36,7 +33,11 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
                 }
             }
         }
-    )
+    ) {
+        headerLinkGroup {
+            props.features.forEach { headerLink(to = it.path) { +it.name } }
+        }
+    }
 }
 
 internal fun RBuilder.mainAppNavbar(features: List<FeatureRep.Complete>, name: String?) {
