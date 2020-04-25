@@ -48,14 +48,14 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
     )
 
     override fun userModel(resultRow: ResultRow) = UserModel(
-        id = resultRow[AccountTable.guid],
+        id = resultRow[UserTable.guid],
         created = resultRow[UserTable.createdDate],
         orgId = resultRow[UserTable.orgGuid],
         firstName = resultRow[UserTable.firstName],
         lastName = resultRow[UserTable.lastName],
         emailAddress = resultRow[UserTable.emailAddress],
         profilePhotoUrl = resultRow[UserTable.profilePhotoUrl],
-        identityProvider = resultRow[AccountTable.identityProvider],
-        superuser = resultRow[AccountTable.superuser]
+        identityProvider = resultRow[UserTable.identityProvider],
+        superuser = resultRow[UserTable.superuser]
     )
 }

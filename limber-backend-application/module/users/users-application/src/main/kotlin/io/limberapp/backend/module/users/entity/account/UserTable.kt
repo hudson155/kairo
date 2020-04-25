@@ -4,13 +4,13 @@ import com.piperframework.store.SqlTable
 
 internal object UserTable : SqlTable("users", "user") {
 
-    val guid = AccountTable.uuid("guid")
+    val guid = uuid("guid")
 
-    val name = AccountTable.text("name")
+    val name = text("name")
 
-    val identityProvider = AccountTable.bool("identity_provider")
+    val identityProvider = bool("identity_provider")
 
-    val superuser = AccountTable.bool("superuser")
+    val superuser = bool("superuser")
 
     val orgGuid = uuid("org_guid")
 
