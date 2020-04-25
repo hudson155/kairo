@@ -3,9 +3,9 @@ CREATE TABLE users.account
     id                BIGSERIAL PRIMARY KEY,
     created_date      TIMESTAMP   NOT NULL,
     guid              UUID UNIQUE NOT NULL,
-    name              VARCHAR     NOT NULL,
     identity_provider BOOLEAN     NOT NULL,
-    superuser         BOOLEAN     NOT NULL
+    superuser         BOOLEAN     NOT NULL,
+    name              VARCHAR     NOT NULL
 );
 
 CREATE TABLE users.user

@@ -23,18 +23,15 @@ VALUES (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'localhost:3000'),
        (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'limberapp.io');
 
 -- Create user accounts.
-INSERT INTO users.account (created_date, guid, name, identity_provider, superuser)
-VALUES (NOW(), '3e2d1681-a666-456e-a168-647d8c3a3150', 'Jeff Hudson', FALSE, TRUE),
-       (NOW(), '71fe66b2-f115-43b9-a993-cbeb51c1b46a', 'Noah Guld', FALSE, TRUE);
-INSERT INTO users.user (created_date, account_guid, email_address, first_name, last_name,
-                        profile_photo_url,
-                        org_guid)
-VALUES (NOW(), '3e2d1681-a666-456e-a168-647d8c3a3150', 'jeff.hudson@limberapp.io', 'Jeff', 'Hudson',
-        'https://lh6.googleusercontent.com/-FW2t5iZWAcg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rczJ7skwxHKEbvhG5MiQXYnamb0eg/photo.jpg',
-        '5761db85-7701-4ce4-9162-ab0fb4149b0d'),
-       (NOW(), '71fe66b2-f115-43b9-a993-cbeb51c1b46a', 'nguld12@gmail.com', 'Noah', 'Guld',
-        'https://avatars0.githubusercontent.com/u/8917186?s=460&u=364b0d5270cb9657b4222c0816713831805957c9&v=4',
-        '5761db85-7701-4ce4-9162-ab0fb4149b0d');
+INSERT INTO users.user (created_date, guid, identity_provider, superuser, org_guid,
+                        name, first_name, last_name, email_address,
+                        profile_photo_url)
+VALUES (NOW(), '3e2d1681-a666-456e-a168-647d8c3a3150', FALSE, TRUE, '5761db85-7701-4ce4-9162-ab0fb4149b0d',
+        'Jeff Hudson', 'Jeff', 'Hudson', 'jeff.hudson@limberapp.io',
+        'https://lh6.googleusercontent.com/-FW2t5iZWAcg/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rczJ7skwxHKEbvhG5MiQXYnamb0eg/photo.jpg'),
+       (NOW(), '71fe66b2-f115-43b9-a993-cbeb51c1b46a', FALSE, TRUE, '5761db85-7701-4ce4-9162-ab0fb4149b0d',
+        'Noah Guld', 'Noah', 'Guld', 'nguld12@gmail.com',
+        'https://avatars0.githubusercontent.com/u/8917186?s=460&u=364b0d5270cb9657b4222c0816713831805957c9&v=4');
 
 -- Create vehicle inspection form.
 INSERT INTO forms.form_template (created_date, guid, feature_guid,
