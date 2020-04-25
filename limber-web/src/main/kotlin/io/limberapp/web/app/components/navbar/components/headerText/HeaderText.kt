@@ -3,9 +3,11 @@ package io.limberapp.web.app.components.navbar.components.headerText
 import kotlinx.css.Align
 import kotlinx.css.Color
 import kotlinx.css.Display
+import kotlinx.css.FontWeight
 import kotlinx.css.alignItems
 import kotlinx.css.color
 import kotlinx.css.display
+import kotlinx.css.fontWeight
 import kotlinx.css.marginRight
 import kotlinx.css.px
 import react.RBuilder
@@ -23,6 +25,7 @@ private val headerText = functionalComponent<RProps> { props ->
             alignItems = Align.center
             marginRight = 16.px
             color = Color.white
+            fontWeight = FontWeight.bold
         }
         props.children()
     }
