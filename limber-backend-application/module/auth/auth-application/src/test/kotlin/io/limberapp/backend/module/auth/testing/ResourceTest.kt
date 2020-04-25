@@ -27,6 +27,6 @@ abstract class ResourceTest : LimberResourceTest() {
     }
 
     override fun after() {
-        testSqlModule.close()
+        testSqlModule.unconfigure()
     }
 }
