@@ -14,7 +14,6 @@ import io.limberapp.backend.authorization.principal.JwtUser
 import java.util.UUID
 
 class LimberTest(json: Json, moduleFunction: Application.() -> Unit) : PiperTest(json, moduleFunction) {
-
     override fun createAuthHeader(): HttpAuthHeader? {
         val jwt = JWT.create().withJwt(
             jwt = Jwt(

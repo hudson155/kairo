@@ -25,7 +25,6 @@ internal class PutUserRole @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = UserRoleApi.Put::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Put(
         userId = call.parameters.getAsType(UUID::class, "userId"),
         role = call.parameters.getAsType(JwtRole::class, "role")

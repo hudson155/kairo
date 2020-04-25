@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object TenantRepFixtures {
-
     data class Fixture(
         val creation: (orgId: UUID) -> TenantRep.Creation,
         val complete: ResourceTest.(orgId: UUID) -> TenantRep.Complete

@@ -22,7 +22,6 @@ import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 import kotlinx.serialization.modules.EmptyModule
 
 class OrgsModule : Module() {
-
     override val serialModule = EmptyModule
 
     override val endpoints = listOf(

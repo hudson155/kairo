@@ -29,7 +29,6 @@ internal class GetAccessTokensByAccountId @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = AccessTokenApi.GetByAccountId::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.GetByAccountId(
         accountId = call.parameters.getAsType(UUID::class, "accountId")
     )

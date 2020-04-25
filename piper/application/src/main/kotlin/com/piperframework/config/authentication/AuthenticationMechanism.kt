@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     JsonSubTypes.Type(value = AuthenticationMechanism.UnsignedJwt::class, name = "UNSIGNED_JWT")
 )
 sealed class AuthenticationMechanism {
-
     abstract val issuer: String?
 
     data class Jwk(

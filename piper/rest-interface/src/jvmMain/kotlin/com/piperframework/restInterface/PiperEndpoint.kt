@@ -19,10 +19,8 @@ private val logger = LoggerFactory.getLogger(PiperEndpoint::class.java)
  * parameters.
  */
 fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
-
     @Suppress("TooGenericExceptionCaught")
     try {
-
         // Trivial case for singleton objects.
         val objectInstance = objectInstance
         if (objectInstance != null) {
@@ -41,7 +39,6 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
         // Map each arg to a temporary placeholder value.
         // At the same time, record those temporary placeholder values and the corresponding Ktor template values.
         val args = constructor.parameters.associateWith {
-
             // The template value is simply the parameter name surrounded by braces. Ktor expects this.
             val templateValue = "{${it.name}}"
 

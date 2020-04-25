@@ -19,7 +19,6 @@ import java.sql.BatchUpdateException
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
-
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
 
     protected data class Operation(val operation: () -> Unit)

@@ -10,7 +10,6 @@ import com.piperframework.util.unknownType
 import io.ktor.http.HttpStatusCode
 
 class ExceptionMapper {
-
     fun handle(e: PiperException): PiperError {
         val httpStatusCode = when (e) {
             is BadRequestException -> HttpStatusCode.BadRequest

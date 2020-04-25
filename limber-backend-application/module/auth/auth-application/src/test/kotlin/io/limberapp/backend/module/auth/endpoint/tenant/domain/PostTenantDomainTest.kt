@@ -14,10 +14,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostTenantDomainTest : ResourceTest() {
-
     @Test
     fun orgDoesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         piperTest.test(
@@ -28,7 +26,6 @@ internal class PostTenantDomainTest : ResourceTest() {
 
     @Test
     fun duplicateDomain() {
-
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
@@ -51,7 +48,6 @@ internal class PostTenantDomainTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)

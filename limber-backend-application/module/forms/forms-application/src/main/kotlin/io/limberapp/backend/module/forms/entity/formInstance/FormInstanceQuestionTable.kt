@@ -6,7 +6,6 @@ import com.piperframework.store.SqlTable
 import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionTable
 
 internal object FormInstanceQuestionTable : SqlTable("forms", "form_instance_question") {
-
     val formInstanceGuid = uuid("form_instance_guid").references(FormInstanceTable.guid)
     const val formInstanceGuidForeignKey = "form_instance_question_form_instance_guid_fkey"
 

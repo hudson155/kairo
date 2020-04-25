@@ -18,7 +18,6 @@ class MainModule(
     private val config: Config,
     private val uuidGenerator: UuidGenerator
 ) : ModuleWithLifecycle() {
-
     override fun configure() {
         bind(Application::class.java).toInstance(application)
         bind(Clock::class.java).toInstance(clock)
@@ -31,7 +30,6 @@ class MainModule(
     override fun unconfigure() = Unit
 
     companion object {
-
         fun forProduction(application: Application, config: Config) = MainModule(
             application = application,
             config = config,

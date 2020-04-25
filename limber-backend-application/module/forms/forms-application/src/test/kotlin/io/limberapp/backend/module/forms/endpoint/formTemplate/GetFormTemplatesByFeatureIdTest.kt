@@ -10,10 +10,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
-
     @Test
     fun happyPathNoFormTemplates() {
-
         val featureId = UUID.randomUUID()
 
         piperTest.test(FormTemplateApi.GetByFeatureId(featureId)) {
@@ -24,7 +22,6 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
 
     @Test
     fun happyPathMultipleFormTemplates() {
-
         val featureId = UUID.randomUUID()
 
         val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)

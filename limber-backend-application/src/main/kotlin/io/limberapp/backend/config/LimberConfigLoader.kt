@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory
 private const val LIMBER_CONFIG = "LIMBER_CONFIG"
 
 internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(LimberAppMonolithConfig::class) {
-
     private val logger = LoggerFactory.getLogger(LimberConfigLoader::class.java)
 
     override val objectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule()

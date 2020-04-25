@@ -5,7 +5,6 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuesti
 import java.util.UUID
 
 internal interface FormInstanceQuestionStore : FormInstanceQuestionService {
-
     fun create(formInstanceId: UUID, models: Set<FormInstanceQuestionModel>)
 
     fun get(formInstanceId: UUID, questionId: UUID): FormInstanceQuestionModel?

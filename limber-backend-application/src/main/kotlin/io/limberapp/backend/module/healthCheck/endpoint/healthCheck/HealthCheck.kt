@@ -28,7 +28,6 @@ internal class HealthCheck @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = HealthCheckApi.Get::class.template()
 ) {
-
     private val logger = LoggerFactory.getLogger(HealthCheck::class.java)
 
     override suspend fun determineCommand(call: ApplicationCall) = HealthCheckApi.Get

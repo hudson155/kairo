@@ -19,7 +19,6 @@ import kotlin.reflect.KClass
 @Suppress("UNCHECKED_CAST")
 @OptIn(ImplicitReflectionSerializer::class)
 class Json(prettyPrint: Boolean = false, context: SerialModule = EmptyModule) {
-
     /**
      * Most functionality is delegated to this class (which has the same name). It must be public due to the inline
      * functions.

@@ -26,7 +26,6 @@ internal class PostTenantDomain @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = TenantDomainApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Post(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         rep = call.getAndValidateBody()

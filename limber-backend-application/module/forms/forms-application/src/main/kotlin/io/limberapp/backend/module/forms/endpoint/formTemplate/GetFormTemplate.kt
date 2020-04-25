@@ -27,7 +27,6 @@ internal class GetFormTemplate @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormTemplateApi.Get::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Get(
         formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId")
     )

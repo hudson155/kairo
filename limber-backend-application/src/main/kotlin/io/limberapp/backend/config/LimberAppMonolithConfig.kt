@@ -16,7 +16,6 @@ internal data class LimberAppMonolithConfig(
     override val hashing: HashingConfig,
     override val serving: ServingConfig
 ) : Config {
-
     fun decrypt() = copy(sqlDatabase = sqlDatabase.decrypt())
 
     private fun SqlDatabaseConfig.decrypt() = copy(jdbcUrl = jdbcUrl.decrypt(), password = password?.decrypt())

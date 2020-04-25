@@ -14,10 +14,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PatchFeatureTest : ResourceTest() {
-
     @Test
     fun orgDoesNotExist() {
-
         val orgId = UUID.randomUUID()
         val featureId = UUID.randomUUID()
 
@@ -30,7 +28,6 @@ internal class PatchFeatureTest : ResourceTest() {
 
     @Test
     fun featureDoesNotExist() {
-
         val orgOwnerAccountId = UUID.randomUUID()
         val featureId = UUID.randomUUID()
 
@@ -51,7 +48,6 @@ internal class PatchFeatureTest : ResourceTest() {
 
     @Test
     fun pathConflict() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
@@ -75,7 +71,6 @@ internal class PatchFeatureTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
@@ -101,7 +96,6 @@ internal class PatchFeatureTest : ResourceTest() {
 
     @Test
     fun happyPathSetAndRemoveDefault() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)

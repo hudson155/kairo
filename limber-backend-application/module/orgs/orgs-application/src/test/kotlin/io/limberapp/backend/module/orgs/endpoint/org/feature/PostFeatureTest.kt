@@ -14,10 +14,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostFeatureTest : ResourceTest() {
-
     @Test
     fun orgDoesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         piperTest.test(
@@ -28,7 +26,6 @@ internal class PostFeatureTest : ResourceTest() {
 
     @Test
     fun duplicatePath() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
@@ -50,7 +47,6 @@ internal class PostFeatureTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgOwnerAccountId = UUID.randomUUID()
 
         var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)

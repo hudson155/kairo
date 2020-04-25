@@ -25,7 +25,6 @@ internal class GetTenantByDomain @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = TenantApi.GetByDomain::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = TenantApi.GetByDomain(
         domain = call.parameters.getAsType(String::class, "domain")
     )

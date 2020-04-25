@@ -16,7 +16,6 @@ internal class AccessTokenMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val hashingConfig: HashingConfig
 ) {
-
     fun model(userId: UUID): Pair<AccessTokenModel, UUID> {
         val id = uuidGenerator.generate()
         val rawSecretAsUuid = uuidGenerator.generate()

@@ -4,7 +4,6 @@ import com.piperframework.rep.CompleteRep
 import java.time.LocalDateTime
 
 internal object HealthCheckRep {
-
     enum class State {
         HEALTHY,
         UNHEALTHY;

@@ -26,7 +26,6 @@ internal class PostOrg @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Post(
         rep = call.getAndValidateBody()
     )

@@ -8,7 +8,6 @@ import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 
 @Suppress("StringLiteralDuplication")
 object OrgFeatureApi {
-
     data class Post(val orgId: UUID, val rep: FeatureRep.Creation?) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
         path = "/orgs/${enc(orgId)}/features",

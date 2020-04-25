@@ -8,7 +8,6 @@ import kotlin.reflect.KClass
  * Loads the application configuration from a resource on the application classpath.
  */
 abstract class PiperConfigLoader<C : Config>(private val kClass: KClass<C>) {
-
     /**
      * Abstract to allow for non-JSON data formats such as YAML.
      */

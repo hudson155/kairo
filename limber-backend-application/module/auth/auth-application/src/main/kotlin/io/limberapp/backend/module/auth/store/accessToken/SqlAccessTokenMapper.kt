@@ -5,7 +5,6 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.InsertStatement
 
 internal interface SqlAccessTokenMapper {
-
     fun accessTokenEntity(insertStatement: InsertStatement<*>, model: AccessTokenModel)
 
     fun accessTokenModel(resultRow: ResultRow): AccessTokenModel

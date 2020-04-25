@@ -14,7 +14,6 @@ data class UserModel(
     val profilePhotoUrl: String?,
     val roles: Set<JwtRole>
 ) {
-
     data class Update(
         val firstName: String?,
         val lastName: String?

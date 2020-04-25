@@ -8,7 +8,6 @@ import com.piperframework.types.UUID
 import kotlinx.serialization.Serializable
 
 object AccessTokenRep {
-
     @Serializable
     data class OneTimeUse(
         @Serializable(with = UuidSerializer::class)

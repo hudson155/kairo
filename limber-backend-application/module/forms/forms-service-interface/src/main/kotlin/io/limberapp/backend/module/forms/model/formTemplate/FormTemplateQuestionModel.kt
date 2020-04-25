@@ -4,7 +4,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 interface FormTemplateQuestionModel {
-
     val id: UUID
     val created: LocalDateTime
     val label: String

@@ -17,7 +17,6 @@ import kotlin.system.exitProcess
  * [SimplePiperApp] this rather than this.
  */
 abstract class PiperApp<Context : Any>(application: Application) {
-
     private val logger = LoggerFactory.getLogger(PiperApp::class.java)
 
     private var context: Context? = null

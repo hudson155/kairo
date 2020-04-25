@@ -23,7 +23,6 @@ internal class DeleteAccessToken @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = AccessTokenApi.Delete::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.Delete(
         accountId = call.parameters.getAsType(UUID::class, "accountId"),
         accessTokenId = call.parameters.getAsType(UUID::class, "accessTokenId")

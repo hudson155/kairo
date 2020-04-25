@@ -12,7 +12,6 @@ fun Table.localDateTime(name: String): Column<LocalDateTime> =
     registerColumn(name, LocalDateTimeColumnType())
 
 class LocalDateTimeColumnType : ColumnType() {
-
     private val formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss.SSSSSS").withLocale(Locale.ROOT)
 
     override fun sqlType() = "TIMESTAMP"

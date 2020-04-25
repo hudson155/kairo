@@ -26,7 +26,6 @@ internal class PatchFeature @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgFeatureApi.Patch::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Patch(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         featureId = call.parameters.getAsType(UUID::class, "featureId"),

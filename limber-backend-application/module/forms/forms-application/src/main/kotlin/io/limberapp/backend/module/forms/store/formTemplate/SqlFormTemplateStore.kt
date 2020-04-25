@@ -16,7 +16,6 @@ internal class SqlFormTemplateStore @Inject constructor(
     private val formTemplateQuestionStore: FormTemplateQuestionStore,
     private val sqlFormTemplateMapper: SqlFormTemplateMapper
 ) : FormTemplateStore, SqlStore(database) {
-
     override fun create(model: FormTemplateModel) = transaction {
         FormTemplateTable.insert { sqlFormTemplateMapper.formTemplateEntity(it, model) }
         formTemplateQuestionStore.create(model.id, model.questions)

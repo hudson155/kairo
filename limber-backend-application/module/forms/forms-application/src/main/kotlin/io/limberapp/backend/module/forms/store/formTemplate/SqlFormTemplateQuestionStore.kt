@@ -20,7 +20,6 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
     database: Database,
     private val sqlFormTemplateMapper: SqlFormTemplateMapper
 ) : FormTemplateQuestionStore, SqlStore(database) {
-
     override fun create(
         formTemplateId: UUID,
         models: List<FormTemplateQuestionModel>,

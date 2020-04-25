@@ -9,7 +9,6 @@ fun Table.stringArray(name: String): Column<Array<String>> =
     registerColumn(name, StringArrayColumnType())
 
 class StringArrayColumnType : ColumnType() {
-
     override fun sqlType() = "TEXT[]"
 
     override fun valueToString(value: Any?): String {

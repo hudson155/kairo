@@ -12,7 +12,6 @@ internal class OrgMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val featureMapper: FeatureMapper
 ) {
-
     fun model(rep: OrgRep.Creation) = OrgModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),

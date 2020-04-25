@@ -27,7 +27,6 @@ internal class PostFeature @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgFeatureApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Post(
         orgId = call.parameters.getAsType(UUID::class, "orgId"),
         rep = call.getAndValidateBody()

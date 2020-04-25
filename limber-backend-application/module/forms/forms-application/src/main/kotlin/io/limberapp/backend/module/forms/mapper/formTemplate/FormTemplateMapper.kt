@@ -12,7 +12,6 @@ internal class FormTemplateMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val formTemplateQuestionMapper: FormTemplateQuestionMapper
 ) {
-
     fun model(rep: FormTemplateRep.Creation) = FormTemplateModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),

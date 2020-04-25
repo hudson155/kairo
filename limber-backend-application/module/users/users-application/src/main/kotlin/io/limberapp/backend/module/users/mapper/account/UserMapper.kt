@@ -11,7 +11,6 @@ internal class UserMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) {
-
     fun model(rep: UserRep.Creation) = UserModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),

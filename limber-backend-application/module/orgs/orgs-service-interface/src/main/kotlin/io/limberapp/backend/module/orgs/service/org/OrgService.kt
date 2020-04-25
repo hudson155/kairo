@@ -4,7 +4,6 @@ import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.UUID
 
 interface OrgService {
-
     fun create(model: OrgModel)
 
     fun get(orgId: UUID): OrgModel?

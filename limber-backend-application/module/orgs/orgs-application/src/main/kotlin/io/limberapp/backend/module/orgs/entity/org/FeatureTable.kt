@@ -3,7 +3,6 @@ package io.limberapp.backend.module.orgs.entity.org
 import com.piperframework.store.SqlTable
 
 internal object FeatureTable : SqlTable("orgs", "feature") {
-
     val guid = uuid("guid")
 
     val orgGuid = uuid("org_guid").references(OrgTable.guid)

@@ -16,7 +16,6 @@ internal class StaticJwtVerifierProvider(private val jwtVerifier: JWTVerifier) :
 }
 
 internal class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
-
     private val jwkProvider = UrlJwkProvider(domain)
 
     override fun get(keyId: String?): JWTVerifier {

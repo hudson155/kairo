@@ -17,7 +17,6 @@ internal class SqlAccessTokenStore @Inject constructor(
     database: Database,
     private val sqlAccessTokenMapper: SqlAccessTokenMapper
 ) : AccessTokenStore, SqlStore(database) {
-
     override fun create(model: AccessTokenModel) = transaction<Unit> {
         AccessTokenTable.insert { sqlAccessTokenMapper.accessTokenEntity(it, model) }
     }

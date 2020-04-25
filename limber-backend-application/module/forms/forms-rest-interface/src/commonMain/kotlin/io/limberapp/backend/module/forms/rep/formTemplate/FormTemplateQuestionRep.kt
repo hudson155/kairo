@@ -9,9 +9,7 @@ import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
 
 object FormTemplateQuestionRep {
-
     interface Creation : CreationRep {
-
         val label: String
         val helpText: String?
 
@@ -28,7 +26,6 @@ object FormTemplateQuestionRep {
     }
 
     interface Update : UpdateRep {
-
         val label: String?
         val helpText: String?
 

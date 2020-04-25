@@ -10,10 +10,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PatchUserTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val userId = UUID.randomUUID()
 
         val updateRep = UserRep.Update(firstName = "Gunner")
@@ -25,7 +23,6 @@ internal class PatchUserTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)

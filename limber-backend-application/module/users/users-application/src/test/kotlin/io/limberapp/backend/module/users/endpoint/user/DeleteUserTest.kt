@@ -14,10 +14,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class DeleteUserTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val userId = UUID.randomUUID()
 
         every { mockedServices[OrgService::class].getByOwnerAccountId(userId) } returns emptySet()
@@ -51,7 +49,6 @@ internal class DeleteUserTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)

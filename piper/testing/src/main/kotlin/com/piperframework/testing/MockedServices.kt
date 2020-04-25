@@ -5,7 +5,6 @@ import io.mockk.mockkClass
 import kotlin.reflect.KClass
 
 class MockedServices(servicesToMock: List<KClass<*>>) : ModuleWithLifecycle() {
-
     constructor(vararg servicesToMock: KClass<*>) : this(servicesToMock.toList())
 
     private val mocks = servicesToMock.associateWith { mockkClass(it) }

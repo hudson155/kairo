@@ -13,7 +13,6 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object TenantRep {
-
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)

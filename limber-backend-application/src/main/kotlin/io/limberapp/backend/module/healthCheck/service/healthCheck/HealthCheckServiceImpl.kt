@@ -9,7 +9,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 internal class HealthCheckServiceImpl @Inject constructor(
     private val database: Database
 ) : HealthCheckService {
-
     override fun healthCheck(): HealthCheckModel {
         checkDatabase()?.let { return it }
         return HealthCheckModel.HealthyHealthCheckModel

@@ -29,7 +29,6 @@ internal class PostAccessToken @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = AccessTokenApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.Post(
         accountId = call.parameters.getAsType(UUID::class, "accountId")
     )

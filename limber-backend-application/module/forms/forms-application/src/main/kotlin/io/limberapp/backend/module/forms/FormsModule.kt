@@ -38,11 +38,9 @@ import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateQuest
 import io.limberapp.backend.module.forms.store.formTemplate.SqlFormTemplateStore
 
 class FormsModule : Module() {
-
     override val serialModule = formsSerialModule
 
     override val endpoints = listOf(
-
         PostFormTemplate::class.java,
         GetFormTemplate::class.java,
         GetFormTemplatesByFeatureId::class.java,
@@ -61,7 +59,6 @@ class FormsModule : Module() {
     )
 
     override fun bindServices() {
-
         bind(FormTemplateService::class, FormTemplateServiceImpl::class)
         bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
 
@@ -70,7 +67,6 @@ class FormsModule : Module() {
     }
 
     override fun bindStores() {
-
         bind(SqlFormTemplateMapper::class, SqlFormTemplateMapperImpl::class)
         bind(FormTemplateStore::class, SqlFormTemplateStore::class)
         bind(FormTemplateQuestionStore::class, SqlFormTemplateQuestionStore::class)

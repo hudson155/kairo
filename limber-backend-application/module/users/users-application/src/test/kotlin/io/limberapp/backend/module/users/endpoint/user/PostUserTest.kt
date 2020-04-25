@@ -10,10 +10,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostUserTest : ResourceTest() {
-
     @Test
     fun duplicateEmailAddress() {
-
         val orgId = UUID.randomUUID()
 
         val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
@@ -30,7 +28,6 @@ internal class PostUserTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)

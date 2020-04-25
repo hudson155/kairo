@@ -10,7 +10,6 @@ data class FormInstanceTextQuestionModel(
     override val questionId: UUID?,
     val text: String
 ) : FormInstanceQuestionModel {
-
     override val type = FormTemplateQuestionModel.Type.TEXT
 
     data class Update(

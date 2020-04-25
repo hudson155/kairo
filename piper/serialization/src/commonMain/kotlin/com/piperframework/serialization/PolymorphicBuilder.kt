@@ -14,9 +14,7 @@ import kotlin.reflect.KClass
  */
 @OptIn(ImplicitReflectionSerializer::class)
 class PolymorphicBuilder<T : Any> internal constructor(private val baseClass: KClass<T>) {
-
     private class ClassAndSerializer<U : Any>(private val kClass: KClass<U>, private val serializer: KSerializer<U>) {
-
         fun applyTo(moduleBuilder: SerializersModuleBuilder) {
             moduleBuilder.contextual(kClass, serializer)
         }

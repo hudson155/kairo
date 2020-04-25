@@ -5,7 +5,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.UUID
 
 internal interface FeatureStore : FeatureService {
-
     fun create(orgId: UUID, models: Set<FeatureModel>)
 
     fun get(orgId: UUID, featureId: UUID): FeatureModel?

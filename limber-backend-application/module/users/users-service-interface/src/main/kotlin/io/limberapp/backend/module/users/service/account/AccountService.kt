@@ -4,6 +4,5 @@ import io.limberapp.backend.module.users.model.account.AccountModel
 import java.util.UUID
 
 interface AccountService {
-
     fun get(accountId: UUID): AccountModel?
 }

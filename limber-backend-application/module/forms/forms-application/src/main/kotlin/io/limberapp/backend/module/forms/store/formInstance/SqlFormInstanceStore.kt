@@ -17,7 +17,6 @@ internal class SqlFormInstanceStore @Inject constructor(
     private val formInstanceQuestionStore: FormInstanceQuestionStore,
     private val sqlFormInstanceMapper: SqlFormInstanceMapper
 ) : FormInstanceStore, SqlStore(database) {
-
     override fun create(model: FormInstanceModel) = transaction {
         FormInstanceTable.insert { sqlFormInstanceMapper.formInstanceEntity(it, model) }
         formInstanceQuestionStore.create(model.id, model.questions.toSet())

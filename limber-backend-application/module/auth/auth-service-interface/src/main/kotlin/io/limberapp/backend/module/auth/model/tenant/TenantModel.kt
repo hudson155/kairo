@@ -9,7 +9,6 @@ data class TenantModel(
     val auth0ClientId: String,
     val domains: Set<TenantDomainModel>
 ) {
-
     data class Update(
         val auth0ClientId: String?
     )

@@ -17,7 +17,6 @@ import kotlinx.serialization.parseList
 import org.slf4j.LoggerFactory
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVerifier<Jwt> {
-
     private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
 
     private val json = Json()

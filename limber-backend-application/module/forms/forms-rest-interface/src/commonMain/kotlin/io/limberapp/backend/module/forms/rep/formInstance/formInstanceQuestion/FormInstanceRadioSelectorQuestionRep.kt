@@ -11,7 +11,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 object FormInstanceRadioSelectorQuestionRep {
-
     @Serializable
     @SerialName("RADIO_SELECTOR")
     data class Creation(

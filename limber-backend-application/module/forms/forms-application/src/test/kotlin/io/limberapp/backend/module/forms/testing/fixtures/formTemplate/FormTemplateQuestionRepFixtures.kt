@@ -8,7 +8,6 @@ import io.limberapp.backend.module.forms.testing.ResourceTest
 import java.time.LocalDateTime
 
 internal object FormTemplateQuestionRepFixtures {
-
     data class Fixture(
         val creation: () -> FormTemplateQuestionRep.Creation,
         val complete: ResourceTest.(idSeed: Int) -> FormTemplateQuestionRep.Complete

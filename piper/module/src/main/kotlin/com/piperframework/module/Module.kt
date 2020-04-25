@@ -11,7 +11,6 @@ import kotlin.reflect.KClass
  * stores that are bound in other modules, as long as both modules are included in the same application.
  */
 abstract class Module : ModuleWithLifecycle() {
-
     private val logger = LoggerFactory.getLogger(Module::class.java)
 
     /**

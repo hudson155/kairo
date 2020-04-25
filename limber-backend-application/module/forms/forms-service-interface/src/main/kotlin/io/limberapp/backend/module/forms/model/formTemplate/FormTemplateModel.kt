@@ -11,7 +11,6 @@ data class FormTemplateModel(
     val description: String?,
     val questions: List<FormTemplateQuestionModel>
 ) {
-
     data class Update(
         val title: String?,
         val description: String?

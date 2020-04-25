@@ -15,9 +15,7 @@ import java.time.Instant
 import java.time.ZoneId
 
 abstract class AbstractResourceTest {
-
     protected val config = object : Config {
-
         override val authentication =
             AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt))
 

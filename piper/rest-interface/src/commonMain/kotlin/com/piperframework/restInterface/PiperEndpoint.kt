@@ -12,7 +12,6 @@ abstract class PiperEndpoint(
     val queryParams: List<Pair<String, String>> = emptyList(),
     val body: ValidatedRep? = null
 ) {
-
     val href = run {
         val queryString = queryParams.joinToString("&") { "${it.first}=${it.second}" }
         var href = path

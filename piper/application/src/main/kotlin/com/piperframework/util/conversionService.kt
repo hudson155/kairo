@@ -6,7 +6,6 @@ import io.ktor.util.ConversionService
 import java.lang.reflect.Type
 
 fun <T : Any> conversionService(dataConversionService: DataConversionService<T>) = object : ConversionService {
-
     override fun fromValues(values: List<String>, type: Type): Any? {
         return when (values.size) {
             0 -> null

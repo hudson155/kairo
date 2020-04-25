@@ -10,7 +10,6 @@ internal class HasAccessToFormInstance(
     private val formInstanceService: FormInstanceService,
     private val formInstanceId: UUID?
 ) : Authorization() {
-
     override fun authorizeInternal(principal: Jwt?): Boolean {
         principal ?: return false
         formInstanceId ?: return false

@@ -11,10 +11,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PatchTenantTest : ResourceTest() {
-
     @Test
     fun doesNotExist() {
-
         val orgId = UUID.randomUUID()
 
         val tenantUpdateRep = TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
@@ -26,7 +24,6 @@ internal class PatchTenantTest : ResourceTest() {
 
     @Test
     fun duplicateAuth0ClientId() {
-
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
@@ -44,7 +41,6 @@ internal class PatchTenantTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val orgId = UUID.randomUUID()
 
         val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)

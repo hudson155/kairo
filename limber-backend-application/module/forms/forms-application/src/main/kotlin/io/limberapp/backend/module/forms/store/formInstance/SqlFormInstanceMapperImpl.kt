@@ -19,7 +19,6 @@ import kotlin.reflect.KClass
 internal class SqlFormInstanceMapperImpl @Inject constructor(
     private val formInstanceQuestionStore: FormInstanceQuestionStore
 ) : SqlFormInstanceMapper {
-
     override fun formInstanceEntity(insertStatement: InsertStatement<*>, model: FormInstanceModel) {
         insertStatement[FormInstanceTable.createdDate] = model.created
         insertStatement[FormInstanceTable.guid] = model.id

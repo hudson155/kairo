@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FormInstanceQuestionRepFixtures {
-
     data class Fixture(
         val creation: () -> FormInstanceQuestionRep.Creation,
         val complete: ResourceTest.(questionId: UUID) -> FormInstanceQuestionRep.Complete

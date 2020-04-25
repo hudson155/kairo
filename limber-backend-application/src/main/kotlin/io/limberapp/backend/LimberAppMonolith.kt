@@ -24,7 +24,6 @@ internal class LimberAppMonolith(application: Application) : SimplePiperApp<Limb
     application = application,
     config = LimberConfigLoader().load()
 ) {
-
     override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
         piperAuth<Jwt> {
             verifier(
@@ -48,7 +47,6 @@ internal class LimberAppMonolith(application: Application) : SimplePiperApp<Limb
     )
 
     override val modules = listOf(
-
         HealthCheckModule(),
 
         AuthModule(),

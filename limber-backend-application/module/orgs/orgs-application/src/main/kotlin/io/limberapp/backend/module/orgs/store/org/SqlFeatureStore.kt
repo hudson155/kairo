@@ -22,7 +22,6 @@ internal class SqlFeatureStore @Inject constructor(
     database: Database,
     private val sqlOrgMapper: SqlOrgMapper
 ) : FeatureStore, SqlStore(database) {
-
     override fun create(orgId: UUID, models: Set<FeatureModel>) = transaction {
         doOperation {
             FeatureTable.batchInsert(models) { model -> sqlOrgMapper.featureEntity(this, orgId, model) }
@@ -59,7 +58,6 @@ internal class SqlFeatureStore @Inject constructor(
     }
 
     override fun update(orgId: UUID, featureId: UUID, update: FeatureModel.Update) = transaction {
-
         if (update.isDefaultFeature == true) {
             FeatureTable
                 .update(

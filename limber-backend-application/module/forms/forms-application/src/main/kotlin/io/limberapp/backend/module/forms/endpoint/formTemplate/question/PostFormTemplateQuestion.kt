@@ -28,7 +28,6 @@ internal class PostFormTemplateQuestion @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormTemplateQuestionApi.Post::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Post(
         formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
         rank = call.parameters.getAsType(Int::class, "rank", optional = true),

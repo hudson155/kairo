@@ -12,10 +12,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostTenantTest : ResourceTest() {
-
     @Test
     fun duplicateOrgId() {
-
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
@@ -33,7 +31,6 @@ internal class PostTenantTest : ResourceTest() {
 
     @Test
     fun duplicateAuth0ClientId() {
-
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
@@ -51,7 +48,6 @@ internal class PostTenantTest : ResourceTest() {
 
     @Test
     fun duplicateDomain() {
-
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 
@@ -69,7 +65,6 @@ internal class PostTenantTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-
         val limberappOrgId = UUID.randomUUID()
         val someclientOrgId = UUID.randomUUID()
 

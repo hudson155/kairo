@@ -13,7 +13,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 object FormTemplateTextQuestionRep {
-
     @Serializable
     @SerialName("TEXT")
     data class Creation(

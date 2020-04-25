@@ -26,7 +26,6 @@ internal class GetTenant @Inject constructor(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = TenantApi.Get::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Get(
         orgId = call.parameters.getAsType(UUID::class, "orgId")
     )

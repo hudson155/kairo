@@ -10,7 +10,6 @@ internal class FormInstanceServiceImpl @Inject constructor(
     private val formTemplateService: FormTemplateService,
     private val formInstanceStore: FormInstanceStore
 ) : FormInstanceService by formInstanceStore {
-
     override fun create(model: FormInstanceModel) {
         if (model.featureId != formTemplateService.get(model.formTemplateId)?.featureId) {
             throw FormTemplateCannotBeInstantiatedInAnotherFeature()

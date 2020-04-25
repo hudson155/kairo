@@ -13,7 +13,6 @@ import java.util.UUID
 internal class SqlOrgMapperImpl @Inject constructor(
     private val featureStore: FeatureStore
 ) : SqlOrgMapper {
-
     override fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel) {
         insertStatement[OrgTable.createdDate] = model.created
         insertStatement[OrgTable.guid] = model.id

@@ -20,7 +20,6 @@ tasks.create("downloadDependencies") {
 }
 
 subprojects {
-
     buildscript {
         repositories {
             jcenter()

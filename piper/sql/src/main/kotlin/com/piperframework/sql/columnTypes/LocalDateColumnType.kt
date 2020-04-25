@@ -12,7 +12,6 @@ fun Table.localDate(name: String): Column<LocalDate> =
     registerColumn(name, LocalDateColumnType())
 
 class LocalDateColumnType : ColumnType() {
-
     private val formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd").withLocale(Locale.ROOT)
 
     override fun sqlType() = "DATE"

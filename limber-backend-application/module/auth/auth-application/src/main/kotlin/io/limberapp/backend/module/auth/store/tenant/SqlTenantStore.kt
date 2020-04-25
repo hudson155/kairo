@@ -20,7 +20,6 @@ internal class SqlTenantStore @Inject constructor(
     private val tenantDomainStore: TenantDomainStore,
     private val sqlTenantMapper: SqlTenantMapper
 ) : TenantStore, SqlStore(database) {
-
     override fun create(model: TenantModel) = transaction {
         doOperation {
             TenantTable.insert { sqlTenantMapper.tenantEntity(it, model) }

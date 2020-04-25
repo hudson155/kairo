@@ -10,7 +10,6 @@ data class OrgModel(
     val ownerAccountId: UUID,
     val features: Set<FeatureModel>
 ) {
-
     data class Update(
         val name: String?
     )

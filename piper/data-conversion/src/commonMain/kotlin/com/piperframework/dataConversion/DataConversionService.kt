@@ -3,7 +3,6 @@ package com.piperframework.dataConversion
 import kotlin.reflect.KClass
 
 interface DataConversionService<T : Any> {
-
     val kClass: KClass<T>
 
     fun assertValid(value: String, name: String?) {

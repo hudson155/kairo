@@ -28,7 +28,6 @@ internal class PutFormInstanceQuestion @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormInstanceQuestionApi.Put::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Put(
         formInstanceId = call.parameters.getAsType(UUID::class, "formInstanceId"),
         questionId = call.parameters.getAsType(UUID::class, "questionId"),

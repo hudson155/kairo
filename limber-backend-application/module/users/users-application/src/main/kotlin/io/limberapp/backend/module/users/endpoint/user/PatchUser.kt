@@ -26,7 +26,6 @@ internal class PatchUser @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = UserApi.Patch::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.Patch(
         userId = call.parameters.getAsType(UUID::class, "userId"),
         rep = call.getAndValidateBody()

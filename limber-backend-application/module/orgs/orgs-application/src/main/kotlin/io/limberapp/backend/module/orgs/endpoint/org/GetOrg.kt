@@ -27,7 +27,6 @@ internal class GetOrg @Inject constructor(
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.Get::class.template()
 ) {
-
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Get(
         orgId = call.parameters.getAsType(UUID::class, "orgId")
     )

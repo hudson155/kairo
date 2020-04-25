@@ -1,5 +1,4 @@
 object Dependencies {
-
     object Bcrypt {
         const val jbcrypt = "org.mindrot:jbcrypt:${Versions.jbcrypt}"
     }

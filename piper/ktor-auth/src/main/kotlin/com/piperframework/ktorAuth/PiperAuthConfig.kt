@@ -13,9 +13,7 @@ class PiperAuthConfig<P : Principal> private constructor(
     val authKey: String,
     val realm: String
 ) : AuthenticationProvider.Configuration(name) {
-
     class Builder<P : Principal>(private val name: String?) {
-
         /**
          * The default scheme, used for challenge responses.
          *

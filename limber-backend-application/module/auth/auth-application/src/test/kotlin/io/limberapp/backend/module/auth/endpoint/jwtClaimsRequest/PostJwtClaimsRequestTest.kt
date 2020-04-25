@@ -19,10 +19,8 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostJwtClaimsRequestTest : ResourceTest() {
-
     @Test
     fun happyPathUserDoesNotExist() {
-
         val userId = deterministicUuidGenerator[0]
         val emailAddress = "jhudson@jhudson.ca"
         val existingOrg = OrgModel(
@@ -72,7 +70,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
 
     @Test
     fun happyPathUserExists() {
-
         val existingOrg = OrgModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),

@@ -13,7 +13,6 @@ data class FormTemplateTextQuestionModel(
     val placeholder: String?,
     val validator: Regex?
 ) : FormTemplateQuestionModel {
-
     override val type = FormTemplateQuestionModel.Type.TEXT
 
     data class Update(

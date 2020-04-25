@@ -12,7 +12,6 @@ internal class FormInstanceMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val formInstanceQuestionMapper: FormInstanceQuestionMapper
 ) {
-
     fun model(rep: FormInstanceRep.Creation) = FormInstanceModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),

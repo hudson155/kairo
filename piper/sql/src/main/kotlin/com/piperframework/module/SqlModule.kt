@@ -13,13 +13,11 @@ import javax.sql.DataSource
  */
 @Suppress("LateinitUsage")
 open class SqlModule(private val sqlDatabaseConfig: SqlDatabaseConfig) : ModuleWithLifecycle() {
-
     private val logger = LoggerFactory.getLogger(SqlModule::class.java)
 
     protected lateinit var dataSource: HikariDataSource
 
     override fun configure() {
-
         logger.info("Creating SQL data source...")
         dataSource = sqlDatabaseConfig.createDataSource()
         logger.info("Running SQL migrations...")

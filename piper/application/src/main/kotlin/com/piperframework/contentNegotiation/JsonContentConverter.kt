@@ -13,7 +13,6 @@ import io.ktor.utils.io.jvm.javaio.toInputStream
 import kotlin.reflect.full.isSuperclassOf
 
 class JsonContentConverter(private val json: Json) : ContentConverter {
-
     override suspend fun convertForReceive(context: PipelineContext<ApplicationReceiveRequest, ApplicationCall>): Any? {
         val request = context.subject
         val type = request.type
