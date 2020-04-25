@@ -1,18 +1,10 @@
 package io.limberapp.backend.adhoc
 
-import com.piperframework.config.ConfigString
-import com.piperframework.config.database.SqlDatabaseConfig
 import com.piperframework.module.SqlWrapper
+import io.limberapp.backend.adhoc.helper.dbConfig
 
 fun main(args: Array<String>) {
-    val config = SqlDatabaseConfig(
-        jdbcUrl = ConfigString(
-            type = ConfigString.Type.PLAINTEXT,
-            value = "jdbc:postgresql://localhost/${args.singleOrNull() ?: "limber"}"
-        ),
-        username = "postgres",
-        password = null
-    )
+    val config = dbConfig(args.single())
     with(SqlWrapper(config)) {
         connect()
         runMigrations()
