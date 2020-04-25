@@ -10,15 +10,12 @@ CREATE TABLE users.account
 
 CREATE TABLE users.user
 (
-    id                BIGSERIAL PRIMARY KEY,
-    created_date      TIMESTAMP      NOT NULL,
-    account_guid      UUID UNIQUE    NOT NULL REFERENCES users.account (guid) ON DELETE CASCADE,
     org_guid          UUID           NOT NULL,
     email_address     VARCHAR UNIQUE NOT NULL,
     first_name        VARCHAR        NOT NULL,
     last_name         VARCHAR        NOT NULL,
     profile_photo_url VARCHAR
-);
+) INHERITS (users.account);
 
 CREATE TABLE auth.access_token
 (

@@ -2,6 +2,7 @@ package io.limberapp.backend.module.users.mapper.account
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.rep.account.UserRep
 import java.time.Clock
@@ -20,7 +21,8 @@ internal class UserMapper @Inject constructor(
         lastName = rep.lastName,
         emailAddress = rep.emailAddress,
         profilePhotoUrl = rep.profilePhotoUrl,
-        roles = emptySet()
+        identityProvider = false,
+        superuser = false
     )
 
     fun completeRep(model: UserModel) = UserRep.Complete(
@@ -31,10 +33,14 @@ internal class UserMapper @Inject constructor(
         lastName = model.lastName,
         emailAddress = model.emailAddress,
         profilePhotoUrl = model.profilePhotoUrl,
-        roles = model.roles.toList()
+        roles = JwtRole.values().filter { model.hasRole(it) }
     )
 
     fun update(rep: UserRep.Update) = UserModel.Update(
+        // Roles (identityProvider and superuser) are updated by role endpoints, not by the user update rep.
+        identityProvider = null,
+        superuser = null,
+
         firstName = rep.firstName,
         lastName = rep.lastName
     )
