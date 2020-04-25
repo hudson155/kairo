@@ -5,6 +5,8 @@ import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.uuidFromBase64Encoded
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
+import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 
@@ -29,8 +31,8 @@ class TokenAuthVerifier(
         val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.userGuid) ?: return null
         return Jwt(
             org = claims.org?.let { json.parse<JwtOrg>(it) },
-            roles = json.parse(claims.roles),
-            user = json.parse(claims.user)
+            roles = json.parseList<JwtRole>(claims.roles),
+            user = json.parse<JwtUser>(claims.user)
         )
     }
 
