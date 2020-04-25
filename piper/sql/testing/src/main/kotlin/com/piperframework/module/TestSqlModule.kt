@@ -12,7 +12,7 @@ open class TestSqlModule : SqlModule(
     )
 ) {
     fun dropDatabase() {
-        val connection = dataSource.connection
+        val connection = checkNotNull(wrapper.dataSource).connection
         val customSchemas = listOf("auth", "forms", "orgs", "users")
         connection.truncateAllTables(customSchemas)
     }
