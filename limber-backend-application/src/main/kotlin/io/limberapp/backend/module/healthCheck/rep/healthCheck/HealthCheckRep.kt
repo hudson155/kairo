@@ -10,7 +10,7 @@ internal object HealthCheckRep {
     }
 
     data class Complete(
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         val state: State
     ) : CompleteRep
 }

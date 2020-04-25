@@ -29,16 +29,16 @@ internal class PostFormTemplateQuestion @Inject constructor(
     endpointTemplate = FormTemplateQuestionApi.Post::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Post(
-        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
+        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
         rank = call.parameters.getAsType(Int::class, "rank", optional = true),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: FormTemplateQuestionApi.Post): FormTemplateQuestionRep.Complete {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val model = formTemplateQuestionMapper.model(command.rep.required())
         formTemplateQuestionService.create(
-            formTemplateId = command.formTemplateId,
+            formTemplateGuid = command.formTemplateGuid,
             model = model,
             rank = command.rank
         )

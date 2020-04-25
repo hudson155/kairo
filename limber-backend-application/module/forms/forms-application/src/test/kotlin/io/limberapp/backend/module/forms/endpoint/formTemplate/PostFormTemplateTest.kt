@@ -11,15 +11,15 @@ import kotlin.test.assertEquals
 internal class PostFormTemplateTest : ResourceTest() {
     @Test
     fun happyPath() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.test(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId))) {
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.test(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid))) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
 
-        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

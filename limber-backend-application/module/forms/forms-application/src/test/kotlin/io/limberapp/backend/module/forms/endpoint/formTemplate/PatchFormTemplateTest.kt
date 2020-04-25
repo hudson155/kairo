@@ -12,30 +12,30 @@ import kotlin.test.assertEquals
 internal class PatchFormTemplateTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val formTemplateId = UUID.randomUUID()
+        val formTemplateGuid = UUID.randomUUID()
 
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         piperTest.test(
-            endpoint = FormTemplateApi.Patch(formTemplateId, formTemplateUpdateRep),
+            endpoint = FormTemplateApi.Patch(formTemplateGuid, formTemplateUpdateRep),
             expectedException = FormTemplateNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
-        piperTest.test(FormTemplateApi.Patch(formTemplateRep.id, formTemplateUpdateRep)) {
+        piperTest.test(FormTemplateApi.Patch(formTemplateRep.guid, formTemplateUpdateRep)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }
 
-        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

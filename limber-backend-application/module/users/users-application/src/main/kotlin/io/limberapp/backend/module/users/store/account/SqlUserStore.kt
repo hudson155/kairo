@@ -26,9 +26,9 @@ internal class SqlUserStore @Inject constructor(
         }
     }
 
-    override fun get(userId: UUID) = transaction {
+    override fun get(userGuid: UUID) = transaction {
         val entity = UserTable
-            .select { UserTable.guid eq userId }
+            .select { UserTable.guid eq userGuid }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlAccountMapper.userModel(entity)
     }
@@ -40,17 +40,17 @@ internal class SqlUserStore @Inject constructor(
         return@transaction sqlAccountMapper.userModel(entity)
     }
 
-    override fun update(userId: UUID, update: UserModel.Update) = transaction {
+    override fun update(userGuid: UUID, update: UserModel.Update) = transaction {
         UserTable
             .updateExactlyOne(
-                where = { UserTable.guid eq userId },
+                where = { UserTable.guid eq userGuid },
                 body = { sqlAccountMapper.userEntity(it, update) },
                 notFound = { throw UserNotFound() }
             )
-        return@transaction checkNotNull(get(userId))
+        return@transaction checkNotNull(get(userGuid))
     }
 
-    override fun delete(userId: UUID) = transaction<Unit> {
-        UserTable.deleteExactlyOne(where = { UserTable.guid eq userId }, notFound = { throw UserNotFound() })
+    override fun delete(userGuid: UUID) = transaction<Unit> {
+        UserTable.deleteExactlyOne(where = { UserTable.guid eq userGuid }, notFound = { throw UserNotFound() })
     }
 }

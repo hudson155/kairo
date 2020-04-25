@@ -8,13 +8,13 @@ import java.util.UUID
 
 internal class HasAccessToFormInstance(
     private val formInstanceService: FormInstanceService,
-    private val formInstanceId: UUID?
+    private val formInstanceGuid: UUID?
 ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
         principal ?: return false
-        formInstanceId ?: return false
+        formInstanceGuid ?: return false
         if (!AnyJwt.authorize(principal)) return false
-        val existingModel = formInstanceService.get(formInstanceId) ?: throw FormInstanceNotFound()
-        return HasAccessToFeature(existingModel.featureId).authorize(principal)
+        val existingModel = formInstanceService.get(formInstanceGuid) ?: throw FormInstanceNotFound()
+        return HasAccessToFeature(existingModel.featureGuid).authorize(principal)
     }
 }

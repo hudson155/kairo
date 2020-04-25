@@ -6,11 +6,11 @@ import java.util.UUID
 interface OrgService {
     fun create(model: OrgModel)
 
-    fun get(orgId: UUID): OrgModel?
+    fun get(orgGuid: UUID): OrgModel?
 
-    fun getByOwnerAccountId(ownerAccountId: UUID): Set<OrgModel>
+    fun getByOwnerAccountGuid(ownerAccountGuid: UUID): Set<OrgModel>
 
-    fun update(orgId: UUID, update: OrgModel.Update): OrgModel
+    fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel
 
-    fun delete(orgId: UUID)
+    fun delete(orgGuid: UUID)
 }

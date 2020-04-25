@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.DeleteAccessToken
-import io.limberapp.backend.module.auth.endpoint.account.accessToken.GetAccessTokensByAccountId
+import io.limberapp.backend.module.auth.endpoint.account.accessToken.GetAccessTokensByAccountGuid
 import io.limberapp.backend.module.auth.endpoint.account.accessToken.PostAccessToken
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.tenant.DeleteTenant
@@ -47,7 +47,7 @@ class AuthModule : Module() {
         PostJwtClaimsRequest::class.java,
 
         PostAccessToken::class.java,
-        GetAccessTokensByAccountId::class.java,
+        GetAccessTokensByAccountGuid::class.java,
         DeleteAccessToken::class.java
     )
 

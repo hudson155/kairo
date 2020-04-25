@@ -21,26 +21,26 @@ internal class SqlAccessTokenStore @Inject constructor(
         AccessTokenTable.insert { sqlAccessTokenMapper.accessTokenEntity(it, model) }
     }
 
-    override fun getIfValid(accessTokenId: UUID, accessTokenSecret: String) = transaction {
+    override fun getIfValid(accessTokenGuid: UUID, accessTokenSecret: String) = transaction {
         val entity = AccessTokenTable
-            .select { AccessTokenTable.guid eq accessTokenId }
+            .select { AccessTokenTable.guid eq accessTokenGuid }
             .singleNullOrThrow() ?: return@transaction null
         val model = sqlAccessTokenMapper.accessTokenModel(entity)
         if (!BCrypt.checkpw(accessTokenSecret, model.encryptedSecret)) return@transaction null
         return@transaction model
     }
 
-    override fun getByAccountId(userId: UUID) = transaction {
+    override fun getByAccountGuid(userGuid: UUID) = transaction {
         return@transaction AccessTokenTable
-            .select { AccessTokenTable.accountGuid eq userId }
+            .select { AccessTokenTable.accountGuid eq userGuid }
             .map { sqlAccessTokenMapper.accessTokenModel(it) }
             .toSet()
     }
 
-    override fun delete(userId: UUID, accessTokenId: UUID) = transaction<Unit> {
+    override fun delete(userGuid: UUID, accessTokenGuid: UUID) = transaction<Unit> {
         AccessTokenTable
             .deleteExactlyOne(
-                where = { (AccessTokenTable.accountGuid eq userId) and (AccessTokenTable.guid eq accessTokenId) },
+                where = { (AccessTokenTable.accountGuid eq userGuid) and (AccessTokenTable.guid eq accessTokenGuid) },
                 notFound = { throw AccessTokenNotFound() }
             )
     }

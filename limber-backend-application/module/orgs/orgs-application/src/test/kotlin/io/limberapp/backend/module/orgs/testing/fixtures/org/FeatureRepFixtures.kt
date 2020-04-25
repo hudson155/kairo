@@ -16,8 +16,8 @@ internal object FeatureRepFixtures {
         },
         { idSeed ->
             FeatureRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
                 name = "Home",
                 path = "/home",
                 type = FeatureRep.Type.HOME,
@@ -32,8 +32,8 @@ internal object FeatureRepFixtures {
         },
         { idSeed ->
             FeatureRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
                 name = "Forms",
                 path = "/forms",
                 type = FeatureRep.Type.FORMS,

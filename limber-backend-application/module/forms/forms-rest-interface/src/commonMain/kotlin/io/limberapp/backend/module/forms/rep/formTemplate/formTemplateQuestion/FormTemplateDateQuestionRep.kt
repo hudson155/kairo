@@ -26,9 +26,9 @@ object FormTemplateDateQuestionRep {
     @SerialName("DATE")
     data class Complete(
         @Serializable(with = UuidSerializer::class)
-        override val id: UUID,
+        override val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         override val label: String,
         override val helpText: String?,
         @Serializable(with = LocalDateSerializer::class)

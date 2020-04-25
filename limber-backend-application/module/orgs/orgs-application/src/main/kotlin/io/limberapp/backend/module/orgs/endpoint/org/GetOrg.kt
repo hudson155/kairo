@@ -28,12 +28,12 @@ internal class GetOrg @Inject constructor(
     endpointTemplate = OrgApi.Get::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Get(
-        orgId = call.parameters.getAsType(UUID::class, "orgId")
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
     )
 
     override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {
-        Authorization.OrgMember(command.orgId).authorize()
-        val model = orgService.get(command.orgId) ?: throw OrgNotFound()
+        Authorization.OrgMember(command.orgGuid).authorize()
+        val model = orgService.get(command.orgGuid) ?: throw OrgNotFound()
         return orgMapper.completeRep(model)
     }
 }

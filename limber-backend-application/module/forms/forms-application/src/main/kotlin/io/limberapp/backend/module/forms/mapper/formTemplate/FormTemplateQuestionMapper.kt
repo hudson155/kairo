@@ -24,8 +24,8 @@ internal class FormTemplateQuestionMapper @Inject constructor(
 ) {
     fun defaultModels() = listOf(
         FormTemplateTextQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = "Worker name",
             helpText = null,
             multiLine = false,
@@ -33,16 +33,16 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             validator = null
         ),
         FormTemplateDateQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = "Date",
             helpText = null,
             earliest = null,
             latest = null
         ),
         FormTemplateTextQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = "Description",
             helpText = null,
             multiLine = true,
@@ -50,8 +50,8 @@ internal class FormTemplateQuestionMapper @Inject constructor(
             validator = null
         ),
         FormTemplateRadioSelectorQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = "Two options",
             helpText = null,
             options = listOf("test_option_one", "test_option_two")
@@ -60,23 +60,23 @@ internal class FormTemplateQuestionMapper @Inject constructor(
 
     fun model(rep: FormTemplateQuestionRep.Creation) = when (rep) {
         is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = rep.label,
             helpText = rep.helpText,
             earliest = rep.earliest,
             latest = rep.latest
         )
         is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = rep.label,
             helpText = rep.helpText,
             options = rep.options
         )
         is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             label = rep.label,
             helpText = rep.helpText,
             multiLine = rep.multiLine,
@@ -88,23 +88,23 @@ internal class FormTemplateQuestionMapper @Inject constructor(
 
     fun completeRep(model: FormTemplateQuestionModel) = when (model) {
         is FormTemplateDateQuestionModel -> FormTemplateDateQuestionRep.Complete(
-            id = model.id,
-            created = model.created,
+            guid = model.guid,
+            createdDate = model.createdDate,
             label = model.label,
             helpText = model.helpText,
             earliest = model.earliest,
             latest = model.latest
         )
         is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
-            id = model.id,
-            created = model.created,
+            guid = model.guid,
+            createdDate = model.createdDate,
             label = model.label,
             helpText = model.helpText,
             options = model.options
         )
         is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
-            id = model.id,
-            created = model.created,
+            guid = model.guid,
+            createdDate = model.createdDate,
             label = model.label,
             helpText = model.helpText,
             maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,

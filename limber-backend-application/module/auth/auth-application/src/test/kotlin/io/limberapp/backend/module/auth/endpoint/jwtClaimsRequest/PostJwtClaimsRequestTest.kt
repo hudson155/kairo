@@ -21,28 +21,28 @@ import kotlin.test.assertEquals
 internal class PostJwtClaimsRequestTest : ResourceTest() {
     @Test
     fun happyPathUserDoesNotExist() {
-        val userId = deterministicUuidGenerator[0]
+        val userGuid = deterministicUuidGenerator[0]
         val emailAddress = "jhudson@jhudson.ca"
         val existingOrg = OrgModel(
-            id = UUID.randomUUID(),
-            created = LocalDateTime.now(fixedClock),
+            guid = UUID.randomUUID(),
+            createdDate = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            ownerAccountId = UUID.randomUUID(),
+            ownerAccountGuid = UUID.randomUUID(),
             features = emptySet()
         )
-        every { mockedServices[AccountService::class].get(userId) } returns AccountModel(
-            id = userId,
-            created = LocalDateTime.now(fixedClock),
+        every { mockedServices[AccountService::class].get(userGuid) } returns AccountModel(
+            guid = userGuid,
+            createdDate = LocalDateTime.now(fixedClock),
             identityProvider = false,
             superuser = false,
             name = "Jeff Hudson"
         )
         every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
         every { mockedServices[UserService::class].create(any()) } returns Unit
-        every { mockedServices[OrgService::class].get(existingOrg.id) } returns existingOrg
+        every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
 
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.id)))
+        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
         val jwtRequest = JwtClaimsRequestRep.Creation(
             auth0ClientId = tenantRep.auth0ClientId,
@@ -55,13 +55,13 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             val actual = response.content!!
             val expected = "{\n" +
                     "    \"org\": \"{" +
-                    "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
+                    "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-                    "\\\"featureIds\\\":[]" +
+                    "\\\"featureGuids\\\":[]" +
                     "}\",\n" +
                     "    \"roles\": \"[]\",\n" +
                     "    \"user\": \"{" +
-                    "\\\"id\\\":\\\"$userId\\\"," +
+                    "\\\"guid\\\":\\\"$userGuid\\\"," +
                     "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
                     "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
                     "}"
@@ -72,36 +72,36 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     @Test
     fun happyPathUserExists() {
         val existingOrg = OrgModel(
-            id = UUID.randomUUID(),
-            created = LocalDateTime.now(fixedClock),
+            guid = UUID.randomUUID(),
+            createdDate = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            ownerAccountId = UUID.randomUUID(),
+            ownerAccountGuid = UUID.randomUUID(),
             features = emptySet()
         )
         val existingAccount = AccountModel(
-            id = UUID.randomUUID(),
-            created = LocalDateTime.now(fixedClock),
+            guid = UUID.randomUUID(),
+            createdDate = LocalDateTime.now(fixedClock),
             identityProvider = false,
             superuser = true,
             name = "Summer Kavan"
         )
         val existingUser = UserModel(
-            id = existingAccount.id,
-            created = existingAccount.created,
+            guid = existingAccount.guid,
+            createdDate = existingAccount.createdDate,
             identityProvider = existingAccount.identityProvider,
             superuser = existingAccount.superuser,
-            orgId = existingOrg.id,
+            orgGuid = existingOrg.guid,
             firstName = existingAccount.name.split(' ')[0],
             lastName = existingAccount.name.split(' ')[1],
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-        every { mockedServices[AccountService::class].get(existingAccount.id) } returns existingAccount
+        every { mockedServices[AccountService::class].get(existingAccount.guid) } returns existingAccount
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
-        every { mockedServices[OrgService::class].get(existingOrg.id) } returns existingOrg
+        every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
 
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.id)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.id)))
+        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
         val jwtRequest = JwtClaimsRequestRep.Creation(
             auth0ClientId = tenantRep.auth0ClientId,
@@ -114,13 +114,13 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             val actual = response.content!!
             val expected = "{\n" +
                     "    \"org\": \"{" +
-                    "\\\"id\\\":\\\"${existingOrg.id}\\\"," +
+                    "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-                    "\\\"featureIds\\\":[]" +
+                    "\\\"featureGuids\\\":[]" +
                     "}\",\n" +
                     "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
                     "    \"user\": \"{" +
-                    "\\\"id\\\":\\\"${existingUser.id}\\\"," +
+                    "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
                     "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
                     "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
                     "}"

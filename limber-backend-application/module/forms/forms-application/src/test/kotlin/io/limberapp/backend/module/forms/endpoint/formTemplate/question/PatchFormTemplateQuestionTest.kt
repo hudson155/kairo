@@ -16,37 +16,37 @@ import kotlin.test.assertEquals
 internal class PatchFormTemplateQuestionTest : ResourceTest() {
     @Test
     fun formTemplateDoesNotExist() {
-        val formTemplateId = UUID.randomUUID()
-        val questionId = UUID.randomUUID()
+        val formTemplateGuid = UUID.randomUUID()
+        val questionGuid = UUID.randomUUID()
 
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
-            endpoint = FormTemplateQuestionApi.Patch(formTemplateId, questionId, formTemplateQuestionUpdateRep),
+            endpoint = FormTemplateQuestionApi.Patch(formTemplateGuid, questionGuid, formTemplateQuestionUpdateRep),
             expectedException = FormTemplateNotFound()
         )
     }
 
     @Test
     fun formTemplateQuestionDoesNotExist() {
-        val featureId = UUID.randomUUID()
-        val questionId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
+        val questionGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
         val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
         piperTest.test(
-            endpoint = FormTemplateQuestionApi.Patch(formTemplateRep.id, questionId, formTemplateQuestionUpdateRep),
+            endpoint = FormTemplateQuestionApi.Patch(formTemplateRep.guid, questionGuid, formTemplateQuestionUpdateRep),
             expectedException = FormTemplateQuestionNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
         var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
                 as FormTemplateTextQuestionRep.Complete
@@ -55,7 +55,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         )
         piperTest.setup(
             endpoint = FormTemplateQuestionApi.Post(
-                formTemplateId = formTemplateRep.id,
+                formTemplateGuid = formTemplateRep.guid,
                 rank = 0,
                 rep = FormTemplateQuestionRepFixtures.textFixture.creation()
             )
@@ -65,18 +65,18 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         formTemplateQuestionRep = formTemplateQuestionRep.copy(label = formTemplateQuestionUpdateRep.label!!)
         formTemplateRep = formTemplateRep.copy(
             questions = formTemplateRep.questions.map {
-                if (it.id == formTemplateQuestionRep.id) formTemplateQuestionRep else it
+                if (it.guid == formTemplateQuestionRep.guid) formTemplateQuestionRep else it
             }
         )
         piperTest.test(
             endpoint = FormTemplateQuestionApi.Patch(
-                formTemplateId = formTemplateRep.id,
-                questionId = formTemplateQuestionRep.id,
+                formTemplateGuid = formTemplateRep.guid,
+                questionGuid = formTemplateQuestionRep.guid,
                 rep = formTemplateQuestionUpdateRep
             )
         ) {}
 
-        piperTest.test(FormTemplateApi.Get(formTemplateRep.id)) {
+        piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
             val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
             assertEquals(formTemplateRep, actual)
         }

@@ -21,7 +21,7 @@ object TenantDomainRep {
     @Serializable
     data class Complete(
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         val domain: String
     ) : CompleteRep
 }

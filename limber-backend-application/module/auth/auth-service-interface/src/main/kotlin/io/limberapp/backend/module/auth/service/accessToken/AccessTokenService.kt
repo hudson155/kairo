@@ -6,9 +6,9 @@ import java.util.UUID
 interface AccessTokenService {
     fun create(model: AccessTokenModel)
 
-    fun getIfValid(accessTokenId: UUID, accessTokenSecret: String): AccessTokenModel?
+    fun getIfValid(accessTokenGuid: UUID, accessTokenSecret: String): AccessTokenModel?
 
-    fun getByAccountId(userId: UUID): Set<AccessTokenModel>
+    fun getByAccountGuid(userGuid: UUID): Set<AccessTokenModel>
 
-    fun delete(userId: UUID, accessTokenId: UUID)
+    fun delete(userGuid: UUID, accessTokenGuid: UUID)
 }

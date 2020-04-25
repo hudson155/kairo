@@ -12,28 +12,30 @@ import java.util.UUID
 internal class DeleteFormInstanceTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val formInstanceId = UUID.randomUUID()
+        val formInstanceGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = FormInstanceApi.Delete(formInstanceId),
+            endpoint = FormInstanceApi.Delete(formInstanceGuid),
             expectedException = FormInstanceNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
-        piperTest.setup(FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)))
+        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
+        piperTest.setup(
+            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+        )
 
-        piperTest.test(FormInstanceApi.Delete(formInstanceRep.id)) {}
+        piperTest.test(FormInstanceApi.Delete(formInstanceRep.guid)) {}
 
         piperTest.test(
-            endpoint = FormInstanceApi.Get(formTemplateRep.id),
+            endpoint = FormInstanceApi.Get(formTemplateRep.guid),
             expectedException = FormInstanceNotFound()
         )
     }

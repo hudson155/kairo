@@ -22,10 +22,10 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId))) {}
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
 
         piperTest.test(UserApi.GetByEmailAddress(userRep.emailAddress)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)

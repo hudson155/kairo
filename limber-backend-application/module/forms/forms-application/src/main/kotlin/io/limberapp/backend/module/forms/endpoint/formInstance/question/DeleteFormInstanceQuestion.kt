@@ -26,12 +26,12 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
     endpointTemplate = FormInstanceQuestionApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Delete(
-        formInstanceId = call.parameters.getAsType(UUID::class, "formInstanceId"),
-        questionId = call.parameters.getAsType(UUID::class, "questionId")
+        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
+        questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
     )
 
     override suspend fun Handler.handle(command: FormInstanceQuestionApi.Delete) {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()
-        formInstanceQuestionService.delete(command.formInstanceId, command.questionId)
+        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+        formInstanceQuestionService.delete(command.formInstanceGuid, command.questionGuid)
     }
 }

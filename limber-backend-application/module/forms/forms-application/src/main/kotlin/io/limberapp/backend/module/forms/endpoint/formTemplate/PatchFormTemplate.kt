@@ -27,14 +27,14 @@ internal class PatchFormTemplate @Inject constructor(
     endpointTemplate = FormTemplateApi.Patch::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Patch(
-        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
+        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Complete {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val update = formTemplateMapper.update(command.rep.required())
-        val model = formTemplateService.update(command.formTemplateId, update)
+        val model = formTemplateService.update(command.formTemplateGuid, update)
         return formTemplateMapper.completeRep(model)
     }
 }

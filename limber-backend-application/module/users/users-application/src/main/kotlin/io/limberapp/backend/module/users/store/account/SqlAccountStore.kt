@@ -12,9 +12,9 @@ internal class SqlAccountStore @Inject constructor(
     database: Database,
     private val sqlAccountMapper: SqlAccountMapperImpl
 ) : AccountStore, SqlStore(database) {
-    override fun get(accountId: UUID) = transaction {
+    override fun get(accountGuid: UUID) = transaction {
         val entity = AccountTable
-            .select { AccountTable.guid eq accountId }
+            .select { AccountTable.guid eq accountGuid }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlAccountMapper.accountModel(entity)
     }

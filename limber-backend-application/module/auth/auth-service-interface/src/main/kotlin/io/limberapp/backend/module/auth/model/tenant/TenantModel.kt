@@ -4,8 +4,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class TenantModel(
-    val created: LocalDateTime,
-    val orgId: UUID,
+    val createdDate: LocalDateTime,
+    val orgGuid: UUID,
     val auth0ClientId: String,
     val domains: Set<TenantDomainModel>
 ) {

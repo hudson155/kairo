@@ -13,9 +13,9 @@ object FormInstanceRep {
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)
-        val featureId: UUID,
+        val featureGuid: UUID,
         @Serializable(with = UuidSerializer::class)
-        val formTemplateId: UUID
+        val formTemplateGuid: UUID
     ) : CreationRep {
         override fun validate() = RepValidation {}
     }
@@ -23,13 +23,13 @@ object FormInstanceRep {
     @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
-        val id: UUID,
+        val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val featureId: UUID,
+        val featureGuid: UUID,
         @Serializable(with = UuidSerializer::class)
-        val formTemplateId: UUID,
+        val formTemplateGuid: UUID,
         val questions: List<FormInstanceQuestionRep.Complete>
     ) : CompleteRep
 }

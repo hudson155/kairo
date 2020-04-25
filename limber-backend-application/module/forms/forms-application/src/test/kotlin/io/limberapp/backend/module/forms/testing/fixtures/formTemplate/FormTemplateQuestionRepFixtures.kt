@@ -24,8 +24,8 @@ internal object FormTemplateQuestionRepFixtures {
             )
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
                 label = "Worker name",
                 helpText = null,
                 maxLength = 200,
@@ -43,8 +43,8 @@ internal object FormTemplateQuestionRepFixtures {
             )
         }, { idSeed ->
             FormTemplateDateQuestionRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
                 label = "Date",
                 helpText = null,
                 earliest = null,
@@ -61,8 +61,8 @@ internal object FormTemplateQuestionRepFixtures {
             )
         }, { idSeed ->
             FormTemplateTextQuestionRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
                 label = "Description",
                 helpText = null,
                 maxLength = 10_000,
@@ -79,8 +79,8 @@ internal object FormTemplateQuestionRepFixtures {
             )
         }, { idSeed ->
             FormTemplateRadioSelectorQuestionRep.Complete(
-                id = deterministicUuidGenerator[idSeed],
-                created = LocalDateTime.now(fixedClock),
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
                 label = "Two options",
                 helpText = null,
                 options = listOf("test_option_one", "test_option_two")
@@ -98,8 +98,8 @@ internal object FormTemplateQuestionRepFixtures {
         )
     }, { idSeed ->
         FormTemplateTextQuestionRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
             label = "Additional Information",
             helpText = null,
             maxLength = 10_000,

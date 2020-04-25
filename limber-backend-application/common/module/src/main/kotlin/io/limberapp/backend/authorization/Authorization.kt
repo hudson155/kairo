@@ -13,7 +13,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         val authorized = authorizeInternal(principal)
         if (authorized) return true
         if (principal?.isSuperuser == true) {
-            logger.info("Overriding Authorization access for user with ID ${principal.user.id}.")
+            logger.info("Overriding Authorization access for user with UUID ${principal.user.guid}.")
             return true
         }
         return false
@@ -39,28 +39,28 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         }
     }
 
-    class User(private val userId: UUID?) : Authorization() {
+    class User(private val userGuid: UUID?) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            userId ?: return false
-            return principal.user.id == userId
+            userGuid ?: return false
+            return principal.user.guid == userGuid
         }
     }
 
-    class OrgMember(private val orgId: UUID?) : Authorization() {
+    class OrgMember(private val orgGuid: UUID?) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            orgId ?: return false
-            return principal.org?.id == orgId
+            orgGuid ?: return false
+            return principal.org?.guid == orgGuid
         }
     }
 
-    class HasAccessToFeature(private val featureId: UUID?) : Authorization() {
+    class HasAccessToFeature(private val featureGuid: UUID?) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            featureId ?: return false
+            featureGuid ?: return false
             principal.org ?: return false
-            return featureId in principal.org.featureIds
+            return featureGuid in principal.org.featureGuids
         }
     }
 }

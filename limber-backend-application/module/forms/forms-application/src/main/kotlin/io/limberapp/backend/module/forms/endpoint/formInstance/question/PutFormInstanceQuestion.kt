@@ -29,16 +29,16 @@ internal class PutFormInstanceQuestion @Inject constructor(
     endpointTemplate = FormInstanceQuestionApi.Put::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Put(
-        formInstanceId = call.parameters.getAsType(UUID::class, "formInstanceId"),
-        questionId = call.parameters.getAsType(UUID::class, "questionId"),
+        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
+        questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()
-        val model = formInstanceQuestionMapper.model(command.questionId, command.rep.required())
+        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+        val model = formInstanceQuestionMapper.model(command.questionGuid, command.rep.required())
         formInstanceQuestionService.upsert(
-            formInstanceId = command.formInstanceId,
+            formInstanceGuid = command.formInstanceGuid,
             model = model
         )
         return formInstanceQuestionMapper.completeRep(model)

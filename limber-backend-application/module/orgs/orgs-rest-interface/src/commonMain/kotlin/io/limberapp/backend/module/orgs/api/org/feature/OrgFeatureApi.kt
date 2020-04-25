@@ -8,20 +8,20 @@ import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 
 @Suppress("StringLiteralDuplication")
 object OrgFeatureApi {
-    data class Post(val orgId: UUID, val rep: FeatureRep.Creation?) : PiperEndpoint(
+    data class Post(val orgGuid: UUID, val rep: FeatureRep.Creation?) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
-        path = "/orgs/${enc(orgId)}/features",
+        path = "/orgs/${enc(orgGuid)}/features",
         body = rep
     )
 
-    data class Patch(val orgId: UUID, val featureId: UUID, val rep: FeatureRep.Update?) : PiperEndpoint(
+    data class Patch(val orgGuid: UUID, val featureGuid: UUID, val rep: FeatureRep.Update?) : PiperEndpoint(
         httpMethod = HttpMethod.PATCH,
-        path = "/orgs/${enc(orgId)}/features/${enc(featureId)}",
+        path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}",
         body = rep
     )
 
-    data class Delete(val orgId: UUID, val featureId: UUID) : PiperEndpoint(
+    data class Delete(val orgGuid: UUID, val featureGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/orgs/${enc(orgId)}/features/${enc(featureId)}"
+        path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}"
     )
 }

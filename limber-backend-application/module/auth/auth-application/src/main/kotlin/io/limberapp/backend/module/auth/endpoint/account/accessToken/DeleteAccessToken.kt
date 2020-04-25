@@ -24,12 +24,12 @@ internal class DeleteAccessToken @Inject constructor(
     endpointTemplate = AccessTokenApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.Delete(
-        accountId = call.parameters.getAsType(UUID::class, "accountId"),
-        accessTokenId = call.parameters.getAsType(UUID::class, "accessTokenId")
+        accountGuid = call.parameters.getAsType(UUID::class, "accountGuid"),
+        accessTokenGuid = call.parameters.getAsType(UUID::class, "accessTokenGuid")
     )
 
     override suspend fun Handler.handle(command: AccessTokenApi.Delete) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        accessTokenService.delete(command.accountId, command.accessTokenId)
+        accessTokenService.delete(command.accountGuid, command.accessTokenGuid)
     }
 }

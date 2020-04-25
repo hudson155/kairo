@@ -24,11 +24,11 @@ internal class DeleteUser @Inject constructor(
     endpointTemplate = UserApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.Delete(
-        userId = call.parameters.getAsType(UUID::class, "userId")
+        userGuid = call.parameters.getAsType(UUID::class, "userGuid")
     )
 
     override suspend fun Handler.handle(command: UserApi.Delete) {
-        Authorization.User(command.userId).authorize()
-        userService.delete(command.userId)
+        Authorization.User(command.userGuid).authorize()
+        userService.delete(command.userGuid)
     }
 }

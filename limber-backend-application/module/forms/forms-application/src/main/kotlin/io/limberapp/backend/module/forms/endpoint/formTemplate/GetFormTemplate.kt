@@ -28,12 +28,12 @@ internal class GetFormTemplate @Inject constructor(
     endpointTemplate = FormTemplateApi.Get::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Get(
-        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId")
+        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
     )
 
     override suspend fun Handler.handle(command: FormTemplateApi.Get): FormTemplateRep.Complete {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
-        val model = formTemplateService.get(command.formTemplateId) ?: throw FormTemplateNotFound()
+        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
+        val model = formTemplateService.get(command.formTemplateGuid) ?: throw FormTemplateNotFound()
         return formTemplateMapper.completeRep(model)
     }
 }

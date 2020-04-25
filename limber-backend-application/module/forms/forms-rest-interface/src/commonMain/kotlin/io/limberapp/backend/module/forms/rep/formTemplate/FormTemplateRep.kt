@@ -16,7 +16,7 @@ object FormTemplateRep {
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)
-        val featureId: UUID,
+        val featureGuid: UUID,
         val title: String,
         val description: String? = null
     ) : CreationRep {
@@ -29,11 +29,11 @@ object FormTemplateRep {
     @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
-        val id: UUID,
+        val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val featureId: UUID,
+        val featureGuid: UUID,
         val title: String,
         val description: String?,
         val questions: List<FormTemplateQuestionRep.Complete>

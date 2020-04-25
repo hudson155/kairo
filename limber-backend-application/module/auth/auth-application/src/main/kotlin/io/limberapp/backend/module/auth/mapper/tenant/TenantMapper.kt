@@ -11,15 +11,15 @@ internal class TenantMapper @Inject constructor(
     private val tenantDomainMapper: TenantDomainMapper
 ) {
     fun model(rep: TenantRep.Creation) = TenantModel(
-        created = LocalDateTime.now(clock),
-        orgId = rep.orgId,
+        createdDate = LocalDateTime.now(clock),
+        orgGuid = rep.orgGuid,
         auth0ClientId = rep.auth0ClientId,
         domains = setOf(tenantDomainMapper.model(rep.domain))
     )
 
     fun completeRep(model: TenantModel) = TenantRep.Complete(
-        created = model.created,
-        orgId = model.orgId,
+        createdDate = model.createdDate,
+        orgGuid = model.orgGuid,
         auth0ClientId = model.auth0ClientId,
         domains = model.domains.map { tenantDomainMapper.completeRep(it) }
     )

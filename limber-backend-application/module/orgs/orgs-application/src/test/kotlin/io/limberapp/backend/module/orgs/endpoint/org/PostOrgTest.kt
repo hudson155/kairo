@@ -11,15 +11,15 @@ import kotlin.test.assertEquals
 internal class PostOrgTest : ResourceTest() {
     @Test
     fun happyPath() {
-        val orgOwnerAccountId = UUID.randomUUID()
+        val orgOwnerAccountGuid = UUID.randomUUID()
 
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
-        piperTest.test(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountId))) {
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+        piperTest.test(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid))) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
 
-        piperTest.test(OrgApi.Get(orgRep.id)) {
+        piperTest.test(OrgApi.Get(orgRep.guid)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }

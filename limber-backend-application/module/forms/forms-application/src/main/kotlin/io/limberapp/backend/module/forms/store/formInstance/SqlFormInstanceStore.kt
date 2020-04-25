@@ -19,27 +19,27 @@ internal class SqlFormInstanceStore @Inject constructor(
 ) : FormInstanceStore, SqlStore(database) {
     override fun create(model: FormInstanceModel) = transaction {
         FormInstanceTable.insert { sqlFormInstanceMapper.formInstanceEntity(it, model) }
-        formInstanceQuestionStore.create(model.id, model.questions.toSet())
+        formInstanceQuestionStore.create(model.guid, model.questions.toSet())
     }
 
-    override fun get(formInstanceId: UUID) = transaction {
+    override fun get(formInstanceGuid: UUID) = transaction {
         val entity = FormInstanceTable
-            .select { FormInstanceTable.guid eq formInstanceId }
+            .select { FormInstanceTable.guid eq formInstanceGuid }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormInstanceMapper.formInstanceModel(entity)
     }
 
-    override fun getByFeatureId(featureId: UUID) = transaction {
+    override fun getByFeatureGuid(featureGuid: UUID) = transaction {
         return@transaction (FormInstanceTable innerJoin FormTemplateTable)
-            .select { FormTemplateTable.featureGuid eq featureId }
+            .select { FormTemplateTable.featureGuid eq featureGuid }
             .map { sqlFormInstanceMapper.formInstanceModel(it) }
             .toSet()
     }
 
-    override fun delete(formInstanceId: UUID) = transaction<Unit> {
+    override fun delete(formInstanceGuid: UUID) = transaction<Unit> {
         FormInstanceTable
             .deleteExactlyOne(
-                where = { FormInstanceTable.guid eq formInstanceId },
+                where = { FormInstanceTable.guid eq formInstanceGuid },
                 notFound = { throw FormInstanceNotFound() }
             )
     }

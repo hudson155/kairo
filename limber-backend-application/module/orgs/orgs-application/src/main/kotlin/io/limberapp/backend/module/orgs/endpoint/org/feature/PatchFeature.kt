@@ -27,15 +27,15 @@ internal class PatchFeature @Inject constructor(
     endpointTemplate = OrgFeatureApi.Patch::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Patch(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
-        featureId = call.parameters.getAsType(UUID::class, "featureId"),
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+        featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: OrgFeatureApi.Patch): FeatureRep.Complete {
-        Authorization.OrgMember(command.orgId).authorize()
+        Authorization.OrgMember(command.orgGuid).authorize()
         val update = featureMapper.update(command.rep.required())
-        val model = featureService.update(command.orgId, command.featureId, update)
+        val model = featureService.update(command.orgGuid, command.featureGuid, update)
         return featureMapper.completeRep(model)
     }
 }

@@ -25,11 +25,11 @@ internal class DeleteOrg @Inject constructor(
     endpointTemplate = OrgApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Delete(
-        orgId = call.parameters.getAsType(UUID::class, "orgId")
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
     )
 
     override suspend fun Handler.handle(command: OrgApi.Delete) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        orgService.delete(command.orgId)
+        orgService.delete(command.orgGuid)
     }
 }

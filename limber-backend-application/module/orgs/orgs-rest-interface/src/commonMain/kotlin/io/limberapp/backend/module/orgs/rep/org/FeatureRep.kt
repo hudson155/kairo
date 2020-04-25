@@ -33,9 +33,9 @@ object FeatureRep {
     @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
-        val id: UUID,
+        val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         val name: String,
         val path: String,
         val type: Type,

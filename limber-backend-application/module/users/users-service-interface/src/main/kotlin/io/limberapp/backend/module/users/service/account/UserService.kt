@@ -6,11 +6,11 @@ import java.util.UUID
 interface UserService {
     fun create(model: UserModel)
 
-    fun get(userId: UUID): UserModel?
+    fun get(userGuid: UUID): UserModel?
 
     fun getByEmailAddress(emailAddress: String): UserModel?
 
-    fun update(userId: UUID, update: UserModel.Update): UserModel
+    fun update(userGuid: UUID, update: UserModel.Update): UserModel
 
-    fun delete(userId: UUID)
+    fun delete(userGuid: UUID)
 }

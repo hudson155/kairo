@@ -4,9 +4,9 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class FormTemplateModel(
-    val id: UUID,
-    val created: LocalDateTime,
-    val featureId: UUID,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
+    val featureGuid: UUID,
     val title: String,
     val description: String?,
     val questions: List<FormTemplateQuestionModel>

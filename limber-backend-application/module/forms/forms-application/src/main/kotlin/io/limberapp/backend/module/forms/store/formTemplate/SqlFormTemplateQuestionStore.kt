@@ -21,33 +21,33 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
     private val sqlFormTemplateMapper: SqlFormTemplateMapper
 ) : FormTemplateQuestionStore, SqlStore(database) {
     override fun create(
-        formTemplateId: UUID,
+        formTemplateGuid: UUID,
         models: List<FormTemplateQuestionModel>,
         rank: Int?
     ) = transaction<Unit> {
-        val insertionRank = validateInsertionRank(formTemplateId, rank)
-        incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = models.size)
+        val insertionRank = validateInsertionRank(formTemplateGuid, rank)
+        incrementExistingRanks(formTemplateGuid, atLeast = insertionRank, incrementBy = models.size)
         FormTemplateQuestionTable
             .batchInsertIndexed(models) { i, model ->
-                sqlFormTemplateMapper.formTemplateQuestionEntity(this, formTemplateId, model, insertionRank + i)
+                sqlFormTemplateMapper.formTemplateQuestionEntity(this, formTemplateGuid, model, insertionRank + i)
             }
     }
 
-    override fun create(formTemplateId: UUID, model: FormTemplateQuestionModel, rank: Int?) = transaction<Unit> {
-        val insertionRank = validateInsertionRank(formTemplateId, rank)
-        incrementExistingRanks(formTemplateId, atLeast = insertionRank, incrementBy = 1)
+    override fun create(formTemplateGuid: UUID, model: FormTemplateQuestionModel, rank: Int?) = transaction<Unit> {
+        val insertionRank = validateInsertionRank(formTemplateGuid, rank)
+        incrementExistingRanks(formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
         FormTemplateQuestionTable
-            .insert { sqlFormTemplateMapper.formTemplateQuestionEntity(it, formTemplateId, model, insertionRank) }
+            .insert { sqlFormTemplateMapper.formTemplateQuestionEntity(it, formTemplateGuid, model, insertionRank) }
     }
 
-    private fun validateInsertionRank(formTemplateId: UUID, rank: Int?): Int {
+    private fun validateInsertionRank(formTemplateGuid: UUID, rank: Int?): Int {
         rank?.let { if (it < 0) throw RankOutOfBounds(it) }
         val resultRow = FormTemplateQuestionTable
             .slice(
                 FormTemplateQuestionTable.formTemplateGuid,
                 FormTemplateQuestionTable.rank.max()
             )
-            .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
+            .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateGuid }
             .groupBy(FormTemplateQuestionTable.formTemplateGuid)
             .singleNullOrThrow()
         val maxExistingRank = resultRow?.get(FormTemplateQuestionTable.rank.max()) ?: -1
@@ -55,57 +55,57 @@ internal class SqlFormTemplateQuestionStore @Inject constructor(
         return rank ?: maxExistingRank + 1
     }
 
-    private fun incrementExistingRanks(formTemplateId: UUID, atLeast: Int, incrementBy: Int) {
+    private fun incrementExistingRanks(formTemplateGuid: UUID, atLeast: Int, incrementBy: Int) {
         FormTemplateQuestionTable
             .update(
                 where = {
-                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
+                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateGuid) and
                             (FormTemplateQuestionTable.rank greaterEq atLeast)
                 },
                 body = { with(SqlExpressionBuilder) { it.update(rank, rank + incrementBy) } }
             )
     }
 
-    override fun get(formTemplateId: UUID, questionId: UUID) = transaction {
+    override fun get(formTemplateGuid: UUID, questionGuid: UUID) = transaction {
         val entity = FormTemplateQuestionTable
             .select {
-                (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                        (FormTemplateQuestionTable.guid eq questionId)
+                (FormTemplateQuestionTable.formTemplateGuid eq formTemplateGuid) and
+                        (FormTemplateQuestionTable.guid eq questionGuid)
             }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormTemplateMapper.formTemplateQuestionModel(entity)
     }
 
-    override fun getByFormTemplateId(formTemplateId: UUID) = transaction {
+    override fun getByFormTemplateGuid(formTemplateGuid: UUID) = transaction {
         return@transaction FormTemplateQuestionTable
-            .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateId }
+            .select { FormTemplateQuestionTable.formTemplateGuid eq formTemplateGuid }
             .orderBy(FormTemplateQuestionTable.rank)
             .map { sqlFormTemplateMapper.formTemplateQuestionModel(it) }
     }
 
     override fun update(
-        formTemplateId: UUID,
-        questionId: UUID,
+        formTemplateGuid: UUID,
+        questionGuid: UUID,
         update: FormTemplateQuestionModel.Update
     ) = transaction {
         FormTemplateQuestionTable
             .updateExactlyOne(
                 where = {
-                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                            (FormTemplateQuestionTable.guid eq questionId)
+                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateGuid) and
+                            (FormTemplateQuestionTable.guid eq questionGuid)
                 },
                 body = { sqlFormTemplateMapper.formTemplateQuestionEntity(it, update) },
                 notFound = { throw FormTemplateQuestionNotFound() }
             )
-        return@transaction checkNotNull(get(formTemplateId, questionId))
+        return@transaction checkNotNull(get(formTemplateGuid, questionGuid))
     }
 
-    override fun delete(formTemplateId: UUID, questionId: UUID) = transaction<Unit> {
+    override fun delete(formTemplateGuid: UUID, questionGuid: UUID) = transaction<Unit> {
         FormTemplateQuestionTable
             .deleteExactlyOne(
                 where = {
-                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateId) and
-                            (FormTemplateQuestionTable.guid eq questionId)
+                    (FormTemplateQuestionTable.formTemplateGuid eq formTemplateGuid) and
+                            (FormTemplateQuestionTable.guid eq questionGuid)
                 },
                 notFound = { throw FormTemplateQuestionNotFound() }
             )

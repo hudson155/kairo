@@ -7,5 +7,5 @@ import com.piperframework.types.LocalDateTime
  * e.g. HTTP response bodies.
  */
 interface CompleteRep {
-    val created: LocalDateTime
+    val createdDate: LocalDateTime
 }

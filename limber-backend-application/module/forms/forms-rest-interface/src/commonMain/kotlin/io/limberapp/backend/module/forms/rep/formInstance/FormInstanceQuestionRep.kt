@@ -12,7 +12,7 @@ object FormInstanceQuestionRep {
     }
 
     interface Complete : CompleteRep {
-        override val created: LocalDateTime
-        val questionId: UUID?
+        override val createdDate: LocalDateTime
+        val questionGuid: UUID?
     }
 }

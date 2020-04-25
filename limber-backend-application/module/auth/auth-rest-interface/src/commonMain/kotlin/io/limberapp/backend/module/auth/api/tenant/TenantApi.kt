@@ -14,9 +14,9 @@ object TenantApi {
         body = rep
     )
 
-    data class Get(val orgId: UUID) : PiperEndpoint(
+    data class Get(val orgGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
-        path = "/tenants/${enc(orgId)}"
+        path = "/tenants/${enc(orgGuid)}"
     )
 
     data class GetByDomain(val domain: String) : PiperEndpoint(
@@ -25,14 +25,14 @@ object TenantApi {
         queryParams = listOf("domain" to enc(domain))
     )
 
-    data class Patch(val orgId: UUID, val rep: TenantRep.Update?) : PiperEndpoint(
+    data class Patch(val orgGuid: UUID, val rep: TenantRep.Update?) : PiperEndpoint(
         httpMethod = HttpMethod.PATCH,
-        path = "/tenants/${enc(orgId)}",
+        path = "/tenants/${enc(orgGuid)}",
         body = rep
     )
 
-    data class Delete(val orgId: UUID) : PiperEndpoint(
+    data class Delete(val orgGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/tenants/${enc(orgId)}"
+        path = "/tenants/${enc(orgGuid)}"
     )
 }

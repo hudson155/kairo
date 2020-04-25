@@ -33,7 +33,7 @@ internal class PostFormInstance @Inject constructor(
 
     override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
         val rep = command.rep.required()
-        HasAccessToFormTemplate(formTemplateService, rep.formTemplateId).authorize()
+        HasAccessToFormTemplate(formTemplateService, rep.formTemplateGuid).authorize()
         val model = formInstanceMapper.model(rep)
         formInstanceService.create(model)
         return formInstanceMapper.completeRep(model)

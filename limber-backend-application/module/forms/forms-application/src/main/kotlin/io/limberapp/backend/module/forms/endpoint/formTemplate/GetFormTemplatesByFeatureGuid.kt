@@ -16,23 +16,23 @@ import java.util.UUID
 /**
  * Returns all form templates within the feature.
  */
-internal class GetFormTemplatesByFeatureId @Inject constructor(
+internal class GetFormTemplatesByFeatureGuid @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
-) : LimberApiEndpoint<FormTemplateApi.GetByFeatureId, List<FormTemplateRep.Complete>>(
+) : LimberApiEndpoint<FormTemplateApi.GetByFeatureGuid, List<FormTemplateRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormTemplateApi.GetByFeatureId::class.template()
+    endpointTemplate = FormTemplateApi.GetByFeatureGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.GetByFeatureId(
-        featureId = call.parameters.getAsType(UUID::class, "featureId")
+    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.GetByFeatureGuid(
+        featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
     )
 
-    override suspend fun Handler.handle(command: FormTemplateApi.GetByFeatureId): List<FormTemplateRep.Complete> {
-        Authorization.HasAccessToFeature(command.featureId).authorize()
-        val models = formTemplateService.getByFeatureId(command.featureId)
+    override suspend fun Handler.handle(command: FormTemplateApi.GetByFeatureGuid): List<FormTemplateRep.Complete> {
+        Authorization.HasAccessToFeature(command.featureGuid).authorize()
+        val models = formTemplateService.getByFeatureGuid(command.featureGuid)
         return models.map { formTemplateMapper.completeRep(it) }
     }
 }

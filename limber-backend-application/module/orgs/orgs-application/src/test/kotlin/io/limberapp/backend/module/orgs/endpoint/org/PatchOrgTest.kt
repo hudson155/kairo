@@ -12,30 +12,30 @@ import kotlin.test.assertEquals
 internal class PatchOrgTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         piperTest.test(
-            endpoint = OrgApi.Patch(orgId, orgUpdateRep),
+            endpoint = OrgApi.Patch(orgGuid, orgUpdateRep),
             expectedException = OrgNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val orgOwnerAccountId = UUID.randomUUID()
+        val orgOwnerAccountGuid = UUID.randomUUID()
 
-        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountId)))
+        var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
         val orgUpdateRep = OrgRep.Update("Standing Teeth")
         orgRep = orgRep.copy(name = orgUpdateRep.name!!)
-        piperTest.test(OrgApi.Patch(orgRep.id, orgUpdateRep)) {
+        piperTest.test(OrgApi.Patch(orgRep.guid, orgUpdateRep)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }
 
-        piperTest.test(OrgApi.Get(orgRep.id)) {
+        piperTest.test(OrgApi.Get(orgRep.guid)) {
             val actual = json.parse<OrgRep.Complete>(response.content!!)
             assertEquals(orgRep, actual)
         }

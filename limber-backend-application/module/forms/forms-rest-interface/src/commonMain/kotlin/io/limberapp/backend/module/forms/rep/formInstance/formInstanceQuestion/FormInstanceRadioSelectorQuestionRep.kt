@@ -26,9 +26,9 @@ object FormInstanceRadioSelectorQuestionRep {
     @SerialName("RADIO_SELECTOR")
     data class Complete(
         @Serializable(with = LocalDateSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        override val questionId: UUID?,
+        override val questionGuid: UUID?,
         val selection: String
     ) : FormInstanceQuestionRep.Complete
 }

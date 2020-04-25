@@ -27,13 +27,13 @@ internal class DeleteUserRole @Inject constructor(
     endpointTemplate = UserRoleApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Delete(
-        userId = call.parameters.getAsType(UUID::class, "userId"),
+        userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
         role = call.parameters.getAsType(JwtRole::class, "role")
     )
 
     override suspend fun Handler.handle(command: UserRoleApi.Delete) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        if (userService.get(command.userId)?.hasRole(command.role) == false) throw UserDoesNotHaveRole(command.role)
-        userService.update(command.userId, UserModel.Update.fromRole(command.role, false))
+        if (userService.get(command.userGuid)?.hasRole(command.role) == false) throw UserDoesNotHaveRole(command.role)
+        userService.update(command.userGuid, UserModel.Update.fromRole(command.role, false))
     }
 }

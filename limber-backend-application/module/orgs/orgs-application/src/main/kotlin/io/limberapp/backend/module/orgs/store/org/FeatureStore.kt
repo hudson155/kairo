@@ -5,9 +5,9 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.UUID
 
 internal interface FeatureStore : FeatureService {
-    fun create(orgId: UUID, models: Set<FeatureModel>)
+    fun create(orgGuid: UUID, models: Set<FeatureModel>)
 
-    fun get(orgId: UUID, featureId: UUID): FeatureModel?
+    fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel?
 
-    fun getByOrgId(orgId: UUID): Set<FeatureModel>
+    fun getByOrgGuid(orgGuid: UUID): Set<FeatureModel>
 }

@@ -17,7 +17,7 @@ object UserRep {
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)
-        val orgId: UUID,
+        val orgGuid: UUID,
         val firstName: String,
         val lastName: String,
         val emailAddress: String,
@@ -34,12 +34,12 @@ object UserRep {
     @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
-        val id: UUID,
+        val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         val roles: List<JwtRole>,
         @Serializable(with = UuidSerializer::class)
-        val orgId: UUID,
+        val orgGuid: UUID,
         val firstName: String,
         val lastName: String,
         val emailAddress: String,

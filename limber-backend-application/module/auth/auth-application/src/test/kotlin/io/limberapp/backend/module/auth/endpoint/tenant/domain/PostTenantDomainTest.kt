@@ -16,31 +16,31 @@ import kotlin.test.assertEquals
 internal class PostTenantDomainTest : ResourceTest() {
     @Test
     fun orgDoesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = TenantDomainApi.Post(orgId, TenantDomainRepFixtures.limberappFixture.creation()),
+            endpoint = TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.limberappFixture.creation()),
             expectedException = TenantNotFound()
         )
     }
 
     @Test
     fun duplicateDomain() {
-        val limberappOrgId = UUID.randomUUID()
-        val someclientOrgId = UUID.randomUUID()
+        val limberappOrgGuid = UUID.randomUUID()
+        val someclientOrgGuid = UUID.randomUUID()
 
-        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId)))
+        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
 
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgId)))
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
         val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         piperTest.test(
-            endpoint = TenantDomainApi.Post(limberappOrgId, TenantDomainRepFixtures.someclientFixture.creation()),
+            endpoint = TenantDomainApi.Post(limberappOrgGuid, TenantDomainRepFixtures.someclientFixture.creation()),
             expectedException = TenantDomainAlreadyRegistered(tenantDomainRep.domain)
         )
 
-        piperTest.test(TenantApi.Get(limberappOrgId)) {
+        piperTest.test(TenantApi.Get(limberappOrgGuid)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(limberappTenantRep, actual)
         }
@@ -48,19 +48,19 @@ internal class PostTenantDomainTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
+        var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
         val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         tenantRep = tenantRep.copy(domains = tenantRep.domains.plus(tenantDomainRep))
-        piperTest.test(TenantDomainApi.Post(orgId, TenantDomainRepFixtures.someclientFixture.creation())) {
+        piperTest.test(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation())) {
             val actual = json.parse<TenantDomainRep.Complete>(response.content!!)
             assertEquals(tenantDomainRep, actual)
         }
 
-        piperTest.test(TenantApi.Get(orgId)) {
+        piperTest.test(TenantApi.Get(orgGuid)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }

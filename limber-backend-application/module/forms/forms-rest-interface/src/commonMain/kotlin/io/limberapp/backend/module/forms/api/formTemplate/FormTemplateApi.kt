@@ -14,25 +14,25 @@ object FormTemplateApi {
         body = rep
     )
 
-    data class Patch(val formTemplateId: UUID, val rep: FormTemplateRep.Update?) : PiperEndpoint(
+    data class Patch(val formTemplateGuid: UUID, val rep: FormTemplateRep.Update?) : PiperEndpoint(
         httpMethod = HttpMethod.PATCH,
-        path = "/form-templates/${enc(formTemplateId)}",
+        path = "/form-templates/${enc(formTemplateGuid)}",
         body = rep
     )
 
-    data class Get(val formTemplateId: UUID) : PiperEndpoint(
+    data class Get(val formTemplateGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
-        path = "/form-templates/${enc(formTemplateId)}"
+        path = "/form-templates/${enc(formTemplateGuid)}"
     )
 
-    data class GetByFeatureId(val featureId: UUID) : PiperEndpoint(
+    data class GetByFeatureGuid(val featureGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
         path = "/form-templates",
-        queryParams = listOf("featureId" to enc(featureId))
+        queryParams = listOf("featureGuid" to enc(featureGuid))
     )
 
-    data class Delete(val formTemplateId: UUID) : PiperEndpoint(
+    data class Delete(val formTemplateGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/form-templates/${enc(formTemplateId)}"
+        path = "/form-templates/${enc(formTemplateGuid)}"
     )
 }

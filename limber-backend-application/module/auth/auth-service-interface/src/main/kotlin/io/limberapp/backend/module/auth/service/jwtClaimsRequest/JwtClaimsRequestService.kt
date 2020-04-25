@@ -13,5 +13,5 @@ interface JwtClaimsRequestService {
     /**
      * Generates JWT claims. If the account does not exist, it returns null.
      */
-    fun requestJwtClaimsForExistingUser(accountId: UUID): JwtClaimsModel?
+    fun requestJwtClaimsForExistingUser(accountGuid: UUID): JwtClaimsModel?
 }

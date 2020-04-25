@@ -28,14 +28,14 @@ internal class PostFeature @Inject constructor(
     endpointTemplate = OrgFeatureApi.Post::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Post(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: OrgFeatureApi.Post): FeatureRep.Complete {
-        Authorization.OrgMember(command.orgId).authorize()
+        Authorization.OrgMember(command.orgGuid).authorize()
         val model = featureMapper.model(command.rep.required())
-        featureService.create(command.orgId, model)
+        featureService.create(command.orgGuid, model)
         return featureMapper.completeRep(model)
     }
 }
