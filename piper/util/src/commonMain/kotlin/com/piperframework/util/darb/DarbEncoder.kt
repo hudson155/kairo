@@ -51,7 +51,7 @@ object DarbEncoder {
 
         // The second component is the hex, the length of which must correlate with the size.
         val hex = components[1]
-        require(hex.length == (size + CHUNK_SIZE - 1) / CHUNK_SIZE)
+        require(hex.length == (size + CHUNK_SIZE - 1) / CHUNK_SIZE) // This math works due to integer rounding.
 
         // Map each hex to a list of 4 digits representing the hex in binary.
         val booleanList = hex.flatMap {
