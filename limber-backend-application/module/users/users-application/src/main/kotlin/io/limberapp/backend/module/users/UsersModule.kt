@@ -12,12 +12,6 @@ import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.AccountServiceImpl
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.module.users.service.account.UserServiceImpl
-import io.limberapp.backend.module.users.store.account.AccountStore
-import io.limberapp.backend.module.users.store.account.SqlAccountMapper
-import io.limberapp.backend.module.users.store.account.SqlAccountMapperImpl
-import io.limberapp.backend.module.users.store.account.SqlAccountStore
-import io.limberapp.backend.module.users.store.account.SqlUserStore
-import io.limberapp.backend.module.users.store.account.UserStore
 import kotlinx.serialization.modules.EmptyModule
 
 class UsersModule : Module() {
@@ -38,9 +32,5 @@ class UsersModule : Module() {
         bind(UserService::class, UserServiceImpl::class)
     }
 
-    override fun bindStores() {
-        bind(SqlAccountMapper::class, SqlAccountMapperImpl::class)
-        bind(AccountStore::class, SqlAccountStore::class)
-        bind(UserStore::class, SqlUserStore::class)
-    }
+    override fun bindStores() = Unit
 }
