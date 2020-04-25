@@ -27,20 +27,19 @@ internal object FeatureRepFixtures {
         }
     )
 
-    val formsFixture =
-        Fixture(
-            {
-                FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS)
-            },
-            { idSeed ->
-                FeatureRep.Complete(
-                    id = deterministicUuidGenerator[idSeed],
-                    created = LocalDateTime.now(fixedClock),
-                    name = "Forms",
-                    path = "/forms",
-                    type = FeatureRep.Type.FORMS,
-                    isDefaultFeature = false
-                )
-            }
-        )
+    val formsFixture = Fixture(
+        {
+            FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS)
+        },
+        { idSeed ->
+            FeatureRep.Complete(
+                id = deterministicUuidGenerator[idSeed],
+                created = LocalDateTime.now(fixedClock),
+                name = "Forms",
+                path = "/forms",
+                type = FeatureRep.Type.FORMS,
+                isDefaultFeature = false
+            )
+        }
+    )
 }
