@@ -48,7 +48,6 @@ class FormsModule : Module() {
         GetFormTemplatesByFeatureId::class.java,
         PatchFormTemplate::class.java,
         DeleteFormTemplate::class.java,
-
         PostFormTemplateQuestion::class.java,
         PatchFormTemplateQuestion::class.java,
         DeleteFormTemplateQuestion::class.java,
@@ -57,7 +56,6 @@ class FormsModule : Module() {
         GetFormInstance::class.java,
         GetFormInstancesByFeatureId::class.java,
         DeleteFormInstance::class.java,
-
         PutFormInstanceQuestion::class.java,
         DeleteFormInstanceQuestion::class.java
     )
