@@ -72,16 +72,10 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         return newUser
     }
 
-    private val AccountModel.roles: List<JwtRole>
-        get() = listOfNotNull(
-            if (identityProvider) JwtRole.IDENTITY_PROVIDER else null,
-            if (superuser) JwtRole.SUPERUSER else null
-        )
-
     private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
         return Jwt(
             org = org?.let { JwtOrg(it.id, it.name, it.features.map { it.id }) },
-            roles = account.roles.toList(),
+            roles = JwtRole.values().filter { account.hasRole(it) },
             user = JwtUser(account.id, user?.firstName, user?.lastName)
         )
     }
