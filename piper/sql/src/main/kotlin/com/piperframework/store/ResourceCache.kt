@@ -13,7 +13,7 @@ internal class ResourceCache {
             return@getOrPut this::class.java.getResourceAsStream(resourceName)
                 .bufferedReader().use { it.readText() }
         } catch (e: IllegalStateException) {
-            throw IllegalStateException("Could not load $resourceName")
+            throw IllegalStateException("Could not load $resourceName", e)
         }
     }
 }
