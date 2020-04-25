@@ -18,6 +18,7 @@ import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val database: Database) {
     private val resourceCache = ResourceCache()
 
@@ -50,14 +51,6 @@ abstract class SqlStore(private val database: Database) {
                 return@let when (it) {
                     is PSQLException -> it
                     is BatchUpdateException -> it.cause as? PSQLException
-                    else -> null
-                }
-            }?.let { OperationError(it.serverErrorMessage).onError() }
-            throw e
-        } catch (e: UnableToExecuteStatementException) {
-            e.cause?.let {
-                return@let when (it) {
-                    is PSQLException -> it
                     else -> null
                 }
             }?.let { OperationError(it.serverErrorMessage).onError() }
