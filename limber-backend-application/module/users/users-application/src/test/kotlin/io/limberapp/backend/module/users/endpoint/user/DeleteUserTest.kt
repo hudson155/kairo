@@ -6,7 +6,7 @@ import io.limberapp.backend.module.users.exception.account.CannotDeleteUserWithO
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
-import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
+import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test

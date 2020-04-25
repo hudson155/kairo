@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.testing.fixtures.feature
+package io.limberapp.backend.module.orgs.testing.fixtures.org
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest

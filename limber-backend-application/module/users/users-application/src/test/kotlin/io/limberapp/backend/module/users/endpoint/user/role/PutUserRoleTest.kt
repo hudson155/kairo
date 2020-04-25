@@ -6,7 +6,7 @@ import io.limberapp.backend.module.users.api.user.role.UserRoleApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
-import io.limberapp.backend.module.users.testing.fixtures.user.UserRepFixtures
+import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
