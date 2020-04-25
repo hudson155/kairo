@@ -37,7 +37,7 @@ jobs:
       - run: ./gradlew --info --stacktrace downloadDependencies
       - run: ./gradlew --info --stacktrace classes
       - run: ./gradlew --info --stacktrace testClasses
-      - run: ./gradlew --info --stacktrace test
+      - run: ./gradlew --info --stacktrace jvmTest jsTest test
         env:
           LIMBER_PROD_POSTGRES_PASSWORD: postgres
       - run: ./gradlew --info --stacktrace detekt
