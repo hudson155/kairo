@@ -7,17 +7,14 @@ package com.piperframework.util.darb
  * For examples, see this class's tests.
  */
 object DarbEncoder {
-
     private const val CHUNK_SIZE = 4 // Warning, changing this alone will break the code.
 
     fun encode(booleanList: List<Boolean>): String {
-
         // Chunk by 4 because each hex represents 4 bits.
         val chunkedBooleanList = booleanList.chunked(CHUNK_SIZE)
 
         // Map each chunk of 4 bits to a hex character, then join the characters together.
         val hex = chunkedBooleanList.joinToString("") {
-
             // intValue is the value of the hex character from 0 to 15 (inclusive).
             var intValue = 0
             if (it.getOrNull(0) == true) intValue += 8
@@ -40,7 +37,6 @@ object DarbEncoder {
     }
 
     fun decode(darb: String): List<Boolean> {
-
         // DARB always has 2 components separated by a dot, and no dots elsewhere in the syntax.
         val components = darb.split('.')
         require(components.size == 2)
@@ -55,7 +51,6 @@ object DarbEncoder {
 
         // Map each hex to a list of 4 digits representing the hex in binary.
         val booleanList = hex.flatMap {
-
             // intValue is the value of the hex character from 0 to 15 (inclusive).
             val intValue = when (it) {
                 // 0 through 9 are represented by digits.

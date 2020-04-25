@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DarbEncoderTest {
-
     @Test
     fun encode() {
         assertEquals("0.", DarbEncoder.encode(emptyList()))
