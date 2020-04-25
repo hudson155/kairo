@@ -111,7 +111,17 @@ private val appRouter = functionalComponent<RProps> {
         switch {
             route(path = "/signin", exact = true) { buildElement { signInPage() } }
             route(path = "/signout", exact = true) { buildElement { signOutPage() } }
-            route(path = "/") { buildElement { child(appFeatureRouter) } }
+            if (auth.isAuthenticated) {
+                route(path = "/") { buildElement { child(appFeatureRouter) } }
+            } else {
+                route(path = "/") {
+                    buildElement {
+                        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+                            signInPage()
+                        }
+                    }
+                }
+            }
         }
     }
 }
