@@ -4,8 +4,8 @@ import com.piperframework.restInterface.Fetch
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.footer.footer
-import io.limberapp.web.app.components.landingPageNavbar.landingPageNavbar
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
+import io.limberapp.web.app.components.mainAppNavbar.minimalNavbar
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
@@ -75,7 +75,7 @@ private val appWithAuth = functionalComponent<RProps> {
     }
 
     if (!global.state.tenant.isLoaded) {
-        page(header = buildElement { landingPageNavbar() }, footer = buildElement { footer() }) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Loading tenant...")
         }
         return@functionalComponent
@@ -98,7 +98,7 @@ private val appWithApi = functionalComponent<RProps> {
 private val appRouter = functionalComponent<RProps> {
     val auth = useAuth()
     if (auth.isLoading) {
-        page(header = buildElement { landingPageNavbar() }, footer = buildElement { footer() }) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Identifying you...")
         }
         return@functionalComponent
