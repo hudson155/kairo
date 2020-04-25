@@ -12,7 +12,7 @@ import io.limberapp.backend.module.users.service.account.UserService
 import java.util.UUID
 
 /**
- * Deletes an existing user.
+ * Deletes an existing user. This will fail if the user is the owner of any orgs.
  */
 internal class DeleteUser @Inject constructor(
     application: Application,
