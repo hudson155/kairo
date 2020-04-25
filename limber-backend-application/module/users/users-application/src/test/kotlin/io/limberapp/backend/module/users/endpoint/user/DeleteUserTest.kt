@@ -16,12 +16,12 @@ import kotlin.test.assertEquals
 internal class DeleteUserTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val userId = UUID.randomUUID()
+        val userGuid = UUID.randomUUID()
 
-        every { mockedServices[OrgService::class].getByOwnerAccountId(userId) } returns emptySet()
+        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userGuid) } returns emptySet()
 
         piperTest.test(
-            endpoint = UserApi.Delete(userId),
+            endpoint = UserApi.Delete(userGuid),
             expectedException = UserNotFound()
         )
     }
@@ -29,19 +29,19 @@ internal class DeleteUserTest : ResourceTest() {
     @Test
     fun userIsOwnerOfOrg() {
 
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        every { mockedServices[OrgService::class].getByOwnerAccountId(userRep.id) } returns setOf(mockk())
+        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns setOf(mockk())
 
         piperTest.test(
-            endpoint = UserApi.Delete(userRep.id),
+            endpoint = UserApi.Delete(userRep.guid),
             expectedException = CannotDeleteUserWithOrgs()
         )
 
-        piperTest.test(UserApi.Get(userRep.id)) {
+        piperTest.test(UserApi.Get(userRep.guid)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
@@ -49,17 +49,17 @@ internal class DeleteUserTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        every { mockedServices[OrgService::class].getByOwnerAccountId(userRep.id) } returns emptySet()
+        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns emptySet()
 
-        piperTest.test(UserApi.Delete(userRep.id)) {}
+        piperTest.test(UserApi.Delete(userRep.guid)) {}
 
         piperTest.test(
-            endpoint = UserApi.Get(userRep.id),
+            endpoint = UserApi.Get(userRep.guid),
             expectedException = UserNotFound()
         )
     }

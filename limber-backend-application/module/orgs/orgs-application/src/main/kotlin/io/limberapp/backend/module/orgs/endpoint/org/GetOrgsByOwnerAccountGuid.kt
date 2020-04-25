@@ -16,23 +16,23 @@ import java.util.UUID
 /**
  * Returns all orgs with the given owner.
  */
-internal class GetOrgsByOwnerAccountId @Inject constructor(
+internal class GetOrgsByOwnerAccountGuid @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : LimberApiEndpoint<OrgApi.GetByOwnerAccountId, List<OrgRep.Complete>>(
+) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, List<OrgRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgApi.GetByOwnerAccountId::class.template()
+    endpointTemplate = OrgApi.GetByOwnerAccountGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerAccountId(
-        ownerAccountId = call.parameters.getAsType(UUID::class, "ownerAccountId")
+    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerAccountGuid(
+        ownerAccountGuid = call.parameters.getAsType(UUID::class, "ownerAccountGuid")
     )
 
-    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountId): List<OrgRep.Complete> {
-        Authorization.User(command.ownerAccountId).authorize()
-        val models = orgService.getByOwnerAccountId(command.ownerAccountId)
+    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): List<OrgRep.Complete> {
+        Authorization.User(command.ownerAccountGuid).authorize()
+        val models = orgService.getByOwnerAccountGuid(command.ownerAccountGuid)
         return models.map { orgMapper.completeRep(it) }
     }
 }

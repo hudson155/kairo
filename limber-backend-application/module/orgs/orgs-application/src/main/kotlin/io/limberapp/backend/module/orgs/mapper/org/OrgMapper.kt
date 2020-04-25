@@ -13,18 +13,18 @@ internal class OrgMapper @Inject constructor(
     private val featureMapper: FeatureMapper
 ) {
     fun model(rep: OrgRep.Creation) = OrgModel(
-        id = uuidGenerator.generate(),
-        created = LocalDateTime.now(clock),
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
         name = rep.name,
-        ownerAccountId = rep.ownerAccountId,
+        ownerAccountGuid = rep.ownerAccountGuid,
         features = setOf(featureMapper.defaultModel())
     )
 
     fun completeRep(model: OrgModel) = OrgRep.Complete(
-        id = model.id,
-        created = model.created,
+        guid = model.guid,
+        createdDate = model.createdDate,
         name = model.name,
-        ownerAccountId = model.ownerAccountId,
+        ownerAccountGuid = model.ownerAccountGuid,
         features = model.features.map { featureMapper.completeRep(it) }
     )
 

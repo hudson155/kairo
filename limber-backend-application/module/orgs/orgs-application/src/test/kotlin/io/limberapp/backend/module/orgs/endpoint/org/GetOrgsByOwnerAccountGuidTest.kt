@@ -9,12 +9,12 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class GetOrgsByOwnerAccountIdTest : ResourceTest() {
+internal class GetOrgsByOwnerAccountGuidTest : ResourceTest() {
     @Test
     fun happyPathNoOrgs() {
-        val orgOwnerAccountId = UUID.randomUUID()
+        val orgOwnerAccountGuid = UUID.randomUUID()
 
-        piperTest.test(OrgApi.GetByOwnerAccountId(orgOwnerAccountId)) {
+        piperTest.test(OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid)) {
             val actual = json.parseList<OrgRep.Complete>(response.content!!)
             assertTrue(actual.isEmpty())
         }
@@ -22,15 +22,15 @@ internal class GetOrgsByOwnerAccountIdTest : ResourceTest() {
 
     @Test
     fun happyPathMultipleOrgs() {
-        val orgOwnerAccountId = UUID.randomUUID()
+        val orgOwnerAccountGuid = UUID.randomUUID()
 
-        val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountId)))
+        val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
-        val dynamicTennisOrgRep = OrgRepFixtures.dynamicTennisFixture.complete(this, orgOwnerAccountId, 2)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.dynamicTennisFixture.creation(orgOwnerAccountId)))
+        val dynamicTennisOrgRep = OrgRepFixtures.dynamicTennisFixture.complete(this, orgOwnerAccountGuid, 2)
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.dynamicTennisFixture.creation(orgOwnerAccountGuid)))
 
-        piperTest.test(OrgApi.GetByOwnerAccountId(orgOwnerAccountId)) {
+        piperTest.test(OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid)) {
             val actual = json.parseList<OrgRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(crankyPastaOrgRep, dynamicTennisOrgRep), actual)
         }

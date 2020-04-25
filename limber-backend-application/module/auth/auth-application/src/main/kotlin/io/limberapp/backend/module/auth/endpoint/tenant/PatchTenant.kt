@@ -27,14 +27,14 @@ internal class PatchTenant @Inject constructor(
     endpointTemplate = TenantApi.Patch::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Patch(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: TenantApi.Patch): TenantRep.Complete {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val update = tenantMapper.update(command.rep.required())
-        val model = tenantService.update(command.orgId, update)
+        val model = tenantService.update(command.orgGuid, update)
         return tenantMapper.completeRep(model)
     }
 }

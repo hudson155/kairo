@@ -14,25 +14,25 @@ import kotlin.test.assertEquals
 internal class PutUserRoleTest : ResourceTest() {
     @Test
     fun userDoesNotExist() {
-        val userId = UUID.randomUUID()
+        val userGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = UserRoleApi.Put(userId, JwtRole.SUPERUSER),
+            endpoint = UserRoleApi.Put(userGuid, JwtRole.SUPERUSER),
             expectedException = UserNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
+        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.test(UserRoleApi.Put(userRep.id, JwtRole.SUPERUSER)) {}
+        piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
 
-        piperTest.test(UserApi.Get(userRep.id)) {
+        piperTest.test(UserApi.Get(userRep.guid)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
@@ -40,17 +40,17 @@ internal class PutUserRoleTest : ResourceTest() {
 
     @Test
     fun happyPathIdempotent() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
+        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.setup(UserRoleApi.Put(userRep.id, JwtRole.SUPERUSER))
+        piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
 
-        piperTest.test(UserRoleApi.Put(userRep.id, JwtRole.SUPERUSER)) {}
+        piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
 
-        piperTest.test(UserApi.Get(userRep.id)) {
+        piperTest.test(UserApi.Get(userRep.guid)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }

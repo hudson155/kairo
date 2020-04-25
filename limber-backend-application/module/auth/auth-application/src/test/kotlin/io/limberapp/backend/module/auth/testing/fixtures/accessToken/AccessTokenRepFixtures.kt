@@ -8,23 +8,23 @@ import java.util.UUID
 
 internal object AccessTokenRepFixtures {
     data class Fixture(
-        val oneTimeUse: ResourceTest.(userId: UUID, idSeed: Int) -> AccessTokenRep.OneTimeUse,
-        val complete: ResourceTest.(userId: UUID, idSeed: Int) -> AccessTokenRep.Complete
+        val oneTimeUse: ResourceTest.(userGuid: UUID, idSeed: Int) -> AccessTokenRep.OneTimeUse,
+        val complete: ResourceTest.(userGuid: UUID, idSeed: Int) -> AccessTokenRep.Complete
     )
 
-    val fixture = Fixture({ userId, idSeed ->
+    val fixture = Fixture({ userGuid, idSeed ->
         AccessTokenRep.OneTimeUse(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
-            userId = userId,
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
+            userGuid = userGuid,
             token = deterministicUuidGenerator[idSeed].base64Encode().dropLast(2)
                     + deterministicUuidGenerator[idSeed + 1].base64Encode().dropLast(2)
         )
-    }, { userId, idSeed ->
+    }, { userGuid, idSeed ->
         AccessTokenRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
-            userId = userId
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
+            userGuid = userGuid
         )
     })
 }

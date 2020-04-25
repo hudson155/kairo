@@ -27,12 +27,12 @@ internal class GetTenant @Inject constructor(
     endpointTemplate = TenantApi.Get::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Get(
-        orgId = call.parameters.getAsType(UUID::class, "orgId")
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
     )
 
     override suspend fun Handler.handle(command: TenantApi.Get): TenantRep.Complete {
         Authorization.Public.authorize()
-        val model = tenantService.get(command.orgId) ?: throw TenantNotFound()
+        val model = tenantService.get(command.orgGuid) ?: throw TenantNotFound()
         return tenantMapper.completeRep(model)
     }
 }

@@ -13,48 +13,48 @@ import kotlin.test.assertEquals
 internal class PatchTenantTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
         val tenantUpdateRep = TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
         piperTest.test(
-            endpoint = TenantApi.Patch(orgId, tenantUpdateRep),
+            endpoint = TenantApi.Patch(orgGuid, tenantUpdateRep),
             expectedException = TenantNotFound()
         )
     }
 
     @Test
     fun duplicateAuth0ClientId() {
-        val limberappOrgId = UUID.randomUUID()
-        val someclientOrgId = UUID.randomUUID()
+        val limberappOrgGuid = UUID.randomUUID()
+        val someclientOrgGuid = UUID.randomUUID()
 
-        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgId)))
+        val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
 
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgId)))
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
         val tenantUpdateRep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
         piperTest.test(
-            endpoint = TenantApi.Patch(someclientOrgId, tenantUpdateRep),
+            endpoint = TenantApi.Patch(someclientOrgGuid, tenantUpdateRep),
             expectedException = Auth0ClientIdAlreadyRegistered(limberappTenantRep.auth0ClientId)
         )
     }
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
+        val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
         val tenantUpdateRep = TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
         tenantRep = tenantRep.copy(auth0ClientId = tenantUpdateRep.auth0ClientId!!)
-        piperTest.test(TenantApi.Patch(originalTenantRep.orgId, tenantUpdateRep)) {
+        piperTest.test(TenantApi.Patch(originalTenantRep.orgGuid, tenantUpdateRep)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
 
-        piperTest.test(TenantApi.Get(orgId)) {
+        piperTest.test(TenantApi.Get(orgGuid)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }

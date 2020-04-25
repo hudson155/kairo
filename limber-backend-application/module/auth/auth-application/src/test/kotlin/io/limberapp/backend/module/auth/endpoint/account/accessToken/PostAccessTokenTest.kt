@@ -11,16 +11,16 @@ import kotlin.test.assertEquals
 internal class PostAccessTokenTest : ResourceTest() {
     @Test
     fun happyPath() {
-        val accountId = UUID.randomUUID()
+        val accountGuid = UUID.randomUUID()
 
-        val accessTokenRep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
-        val accessTokenOneTimeUseRep = AccessTokenRepFixtures.fixture.oneTimeUse(this, accountId, 0)
-        piperTest.test(AccessTokenApi.Post(accountId)) {
+        val accessTokenRep = AccessTokenRepFixtures.fixture.complete(this, accountGuid, 0)
+        val accessTokenOneTimeUseRep = AccessTokenRepFixtures.fixture.oneTimeUse(this, accountGuid, 0)
+        piperTest.test(AccessTokenApi.Post(accountGuid)) {
             val actual = json.parse<AccessTokenRep.OneTimeUse>(response.content!!)
             assertEquals(accessTokenOneTimeUseRep, actual)
         }
 
-        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
+        piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessTokenRep), actual)
         }

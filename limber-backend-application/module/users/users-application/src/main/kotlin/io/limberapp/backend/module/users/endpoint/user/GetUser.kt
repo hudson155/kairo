@@ -28,12 +28,12 @@ internal class GetUser @Inject constructor(
     endpointTemplate = UserApi.Get::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.Get(
-        userId = call.parameters.getAsType(UUID::class, "userId")
+        userGuid = call.parameters.getAsType(UUID::class, "userGuid")
     )
 
     override suspend fun Handler.handle(command: UserApi.Get): UserRep.Complete {
-        Authorization.User(command.userId).authorize()
-        val model = userService.get(command.userId) ?: throw UserNotFound()
+        Authorization.User(command.userGuid).authorize()
+        val model = userService.get(command.userGuid) ?: throw UserNotFound()
         return userMapper.completeRep(model)
     }
 }

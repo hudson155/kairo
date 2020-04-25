@@ -6,13 +6,13 @@ import java.util.UUID
 interface TenantService {
     fun create(model: TenantModel)
 
-    fun get(orgId: UUID): TenantModel?
+    fun get(orgGuid: UUID): TenantModel?
 
     fun getByDomain(domain: String): TenantModel?
 
     fun getByAuth0ClientId(auth0ClientId: String): TenantModel?
 
-    fun update(orgId: UUID, update: TenantModel.Update): TenantModel
+    fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel
 
-    fun delete(orgId: UUID)
+    fun delete(orgGuid: UUID)
 }

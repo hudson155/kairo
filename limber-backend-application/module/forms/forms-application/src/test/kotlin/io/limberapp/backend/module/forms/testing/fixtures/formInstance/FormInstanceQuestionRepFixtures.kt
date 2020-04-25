@@ -9,17 +9,17 @@ import java.util.UUID
 internal object FormInstanceQuestionRepFixtures {
     data class Fixture(
         val creation: () -> FormInstanceQuestionRep.Creation,
-        val complete: ResourceTest.(questionId: UUID) -> FormInstanceQuestionRep.Complete
+        val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete
     )
 
     val textFixture = Fixture({
         FormInstanceTextQuestionRep.Creation(
             text = "Nothing significant to add."
         )
-    }, { questionId ->
+    }, { questionGuid ->
         FormInstanceTextQuestionRep.Complete(
-            created = LocalDateTime.now(fixedClock),
-            questionId = questionId,
+            createdDate = LocalDateTime.now(fixedClock),
+            questionGuid = questionGuid,
             text = "Nothing significant to add."
         )
     })

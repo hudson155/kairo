@@ -27,14 +27,14 @@ internal class PutUserRole @Inject constructor(
     endpointTemplate = UserRoleApi.Put::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Put(
-        userId = call.parameters.getAsType(UUID::class, "userId"),
+        userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
         role = call.parameters.getAsType(JwtRole::class, "role")
     )
 
     override suspend fun Handler.handle(command: UserRoleApi.Put) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         try {
-            userService.update(command.userId, UserModel.Update.fromRole(command.role, true))
+            userService.update(command.userGuid, UserModel.Update.fromRole(command.role, true))
         } catch (_: UserAlreadyHasRole) {
             return
         }

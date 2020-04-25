@@ -27,22 +27,22 @@ internal fun useGlobalState() = useContext(globalState)
 private val initialState = GlobalStateContext(
     org = LoadableState(
         LoadableState.LoadingStatus.LOADED, OrgRep.Complete(
-            id = "",
-            created = "",
+            guid = "",
+            createdDate = "",
             name = "",
-            ownerAccountId = "",
+            ownerAccountGuid = "",
             features = listOf(
                 FeatureRep.Complete(
-                    id = "75a2ed7a-4247-4e63-ab10-a60df3d9aeee",
-                    created = Date().toISOString(),
+                    guid = "75a2ed7a-4247-4e63-ab10-a60df3d9aeee",
+                    createdDate = Date().toISOString(),
                     name = "Home",
                     path = "/home",
                     type = FeatureRep.Type.HOME,
                     isDefaultFeature = true
                 ),
                 FeatureRep.Complete(
-                    id = "3dc95c5d-767c-4b29-9c50-a6f93edd0c06",
-                    created = Date().toISOString(),
+                    guid = "3dc95c5d-767c-4b29-9c50-a6f93edd0c06",
+                    createdDate = Date().toISOString(),
                     name = "Forms",
                     path = "/forms",
                     type = FeatureRep.Type.FORMS,

@@ -3,13 +3,13 @@ package io.limberapp.backend.module.forms
 import com.piperframework.module.Module
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
-import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureId
+import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureGuid
 import io.limberapp.backend.module.forms.endpoint.formInstance.PostFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.question.DeleteFormInstanceQuestion
 import io.limberapp.backend.module.forms.endpoint.formInstance.question.PutFormInstanceQuestion
 import io.limberapp.backend.module.forms.endpoint.formTemplate.DeleteFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplate
-import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByFeatureId
+import io.limberapp.backend.module.forms.endpoint.formTemplate.GetFormTemplatesByFeatureGuid
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PatchFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.PostFormTemplate
 import io.limberapp.backend.module.forms.endpoint.formTemplate.question.DeleteFormTemplateQuestion
@@ -43,7 +43,7 @@ class FormsModule : Module() {
     override val endpoints = listOf(
         PostFormTemplate::class.java,
         GetFormTemplate::class.java,
-        GetFormTemplatesByFeatureId::class.java,
+        GetFormTemplatesByFeatureGuid::class.java,
         PatchFormTemplate::class.java,
         DeleteFormTemplate::class.java,
         PostFormTemplateQuestion::class.java,
@@ -52,7 +52,7 @@ class FormsModule : Module() {
 
         PostFormInstance::class.java,
         GetFormInstance::class.java,
-        GetFormInstancesByFeatureId::class.java,
+        GetFormInstancesByFeatureGuid::class.java,
         DeleteFormInstance::class.java,
         PutFormInstanceQuestion::class.java,
         DeleteFormInstanceQuestion::class.java

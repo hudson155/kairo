@@ -26,17 +26,17 @@ internal class SqlTenantStore @Inject constructor(
         } andHandleError {
             when {
                 error.isUniqueConstraintViolation(TenantTable.orgGuidUniqueConstraint) ->
-                    throw OrgAlreadyHasTenant(model.orgId)
+                    throw OrgAlreadyHasTenant(model.orgGuid)
                 error.isUniqueConstraintViolation(TenantTable.auth0ClientIdUniqueConstraint) ->
                     throw Auth0ClientIdAlreadyRegistered(model.auth0ClientId)
             }
         }
-        tenantDomainStore.create(model.orgId, model.domains)
+        tenantDomainStore.create(model.orgGuid, model.domains)
     }
 
-    override fun get(orgId: UUID) = transaction {
+    override fun get(orgGuid: UUID) = transaction {
         val entity = TenantTable
-            .select { TenantTable.orgGuid eq orgId }
+            .select { TenantTable.orgGuid eq orgGuid }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlTenantMapper.tenantModel(entity)
     }
@@ -55,11 +55,11 @@ internal class SqlTenantStore @Inject constructor(
         return@transaction sqlTenantMapper.tenantModel(entity)
     }
 
-    override fun update(orgId: UUID, update: TenantModel.Update) = transaction {
+    override fun update(orgGuid: UUID, update: TenantModel.Update) = transaction {
         doOperation {
             TenantTable
                 .updateExactlyOne(
-                    where = { TenantTable.orgGuid eq orgId },
+                    where = { TenantTable.orgGuid eq orgGuid },
                     body = { sqlTenantMapper.tenantEntity(it, update) },
                     notFound = { throw TenantNotFound() }
                 )
@@ -69,12 +69,12 @@ internal class SqlTenantStore @Inject constructor(
                     throw Auth0ClientIdAlreadyRegistered(checkNotNull(update.auth0ClientId))
             }
         }
-        return@transaction checkNotNull(get(orgId))
+        return@transaction checkNotNull(get(orgGuid))
     }
 
-    override fun delete(orgId: UUID) = transaction<Unit> {
+    override fun delete(orgGuid: UUID) = transaction<Unit> {
         TenantTable.deleteExactlyOne(
-            where = { TenantTable.orgGuid eq orgId },
+            where = { TenantTable.orgGuid eq orgGuid },
             notFound = { throw TenantNotFound() }
         )
     }

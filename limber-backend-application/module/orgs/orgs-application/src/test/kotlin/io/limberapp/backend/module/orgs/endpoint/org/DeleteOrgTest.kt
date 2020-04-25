@@ -10,25 +10,25 @@ import java.util.UUID
 internal class DeleteOrgTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = OrgApi.Delete(orgId),
+            endpoint = OrgApi.Delete(orgGuid),
             expectedException = OrgNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val orgOwnerAccountId = UUID.randomUUID()
+        val orgOwnerAccountGuid = UUID.randomUUID()
 
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountId, 0)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountId)))
+        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
-        piperTest.test(OrgApi.Delete(orgRep.id)) {}
+        piperTest.test(OrgApi.Delete(orgRep.guid)) {}
 
         piperTest.test(
-            endpoint = OrgApi.Get(orgRep.id),
+            endpoint = OrgApi.Get(orgRep.guid),
             expectedException = OrgNotFound()
         )
     }

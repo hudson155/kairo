@@ -7,7 +7,7 @@ import java.util.UUID
 @Serializable
 data class JwtOrg(
     @Serializable(with = UuidSerializer::class)
-    val id: UUID,
+    val guid: UUID,
     val name: String,
-    val featureIds: List<@Serializable(with = UuidSerializer::class) UUID>
+    val featureGuids: List<@Serializable(with = UuidSerializer::class) UUID>
 )

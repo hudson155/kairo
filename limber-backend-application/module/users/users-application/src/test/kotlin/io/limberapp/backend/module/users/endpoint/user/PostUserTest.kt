@@ -12,14 +12,14 @@ import kotlin.test.assertEquals
 internal class PostUserTest : ResourceTest() {
     @Test
     fun duplicateEmailAddress() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId)))
+        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
         piperTest.test(
             endpoint = UserApi.Post(
-                rep = UserRepFixtures.billGatesFixture.creation(orgId)
+                rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
                     .copy(emailAddress = jeffHudsonUserRep.emailAddress)
             ),
             expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
@@ -28,15 +28,15 @@ internal class PostUserTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgId, 0)
-        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgId))) {
+        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }
 
-        piperTest.test(UserApi.Get(userRep.id)) {
+        piperTest.test(UserApi.Get(userRep.guid)) {
             val actual = json.parse<UserRep.Complete>(response.content!!)
             assertEquals(userRep, actual)
         }

@@ -7,24 +7,24 @@ import java.util.UUID
 
 internal object UserRepFixtures {
     data class Fixture(
-        val creation: (orgId: UUID) -> UserRep.Creation,
-        val complete: ResourceTest.(orgId: UUID, idSeed: Int) -> UserRep.Complete
+        val creation: (orgGuid: UUID) -> UserRep.Creation,
+        val complete: ResourceTest.(orgGuid: UUID, idSeed: Int) -> UserRep.Complete
     )
 
-    val jeffHudsonFixture = Fixture({ orgId ->
+    val jeffHudsonFixture = Fixture({ orgGuid ->
         UserRep.Creation(
-            orgId = orgId,
+            orgGuid = orgGuid,
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
             profilePhotoUrl = null
         )
-    }, { orgId, idSeed ->
+    }, { orgGuid, idSeed ->
         UserRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
             roles = emptyList(),
-            orgId = orgId,
+            orgGuid = orgGuid,
             firstName = "Jeff",
             lastName = "Hudson",
             emailAddress = "jhudson@jhudson.ca",
@@ -32,20 +32,20 @@ internal object UserRepFixtures {
         )
     })
 
-    val billGatesFixture = Fixture({ orgId ->
+    val billGatesFixture = Fixture({ orgGuid ->
         UserRep.Creation(
-            orgId = orgId,
+            orgGuid = orgGuid,
             firstName = "Bill",
             lastName = "Gates",
             emailAddress = "bill.gates@microsoft.com",
             profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg"
         )
-    }, { orgId, idSeed ->
+    }, { orgGuid, idSeed ->
         UserRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
             roles = emptyList(),
-            orgId = orgId,
+            orgGuid = orgGuid,
             firstName = "Bill",
             lastName = "Gates",
             emailAddress = "bill.gates@microsoft.com",

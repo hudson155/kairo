@@ -20,7 +20,7 @@ object FormTemplateQuestionRep {
     }
 
     interface Complete : CompleteRep {
-        val id: UUID
+        val guid: UUID
         val label: String
         val helpText: String?
     }

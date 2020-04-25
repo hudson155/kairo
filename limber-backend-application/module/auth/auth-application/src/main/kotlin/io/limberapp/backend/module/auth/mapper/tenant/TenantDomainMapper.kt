@@ -10,12 +10,12 @@ internal class TenantDomainMapper @Inject constructor(
     private val clock: Clock
 ) {
     fun model(rep: TenantDomainRep.Creation) = TenantDomainModel(
-        created = LocalDateTime.now(clock),
+        createdDate = LocalDateTime.now(clock),
         domain = rep.domain
     )
 
     fun completeRep(model: TenantDomainModel) = TenantDomainRep.Complete(
-        created = model.created,
+        createdDate = model.createdDate,
         domain = model.domain
     )
 }

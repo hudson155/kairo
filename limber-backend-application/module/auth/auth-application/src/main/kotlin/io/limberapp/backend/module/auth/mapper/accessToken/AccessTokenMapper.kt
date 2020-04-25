@@ -16,13 +16,13 @@ internal class AccessTokenMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val hashingConfig: HashingConfig
 ) {
-    fun model(userId: UUID): Pair<AccessTokenModel, UUID> {
-        val id = uuidGenerator.generate()
+    fun model(userGuid: UUID): Pair<AccessTokenModel, UUID> {
+        val guid = uuidGenerator.generate()
         val rawSecretAsUuid = uuidGenerator.generate()
         val model = AccessTokenModel(
-            id = id,
-            created = LocalDateTime.now(clock),
-            userId = userId,
+            guid = guid,
+            createdDate = LocalDateTime.now(clock),
+            userGuid = userGuid,
             encryptedSecret = run {
                 val salt = BCrypt.gensalt(hashingConfig.logRounds)
                 return@run BCrypt.hashpw(rawSecretAsUuid.base64Encode().dropLast(2), salt)
@@ -32,15 +32,15 @@ internal class AccessTokenMapper @Inject constructor(
     }
 
     fun oneTimeUseRep(model: AccessTokenModel, rawSecretAsUuid: UUID) = AccessTokenRep.OneTimeUse(
-        id = model.id,
-        created = model.created,
-        userId = model.userId,
-        token = model.id.base64Encode().dropLast(2) + rawSecretAsUuid.base64Encode().dropLast(2)
+        guid = model.guid,
+        createdDate = model.createdDate,
+        userGuid = model.userGuid,
+        token = model.guid.base64Encode().dropLast(2) + rawSecretAsUuid.base64Encode().dropLast(2)
     )
 
     fun completeRep(model: AccessTokenModel) = AccessTokenRep.Complete(
-        id = model.id,
-        created = model.created,
-        userId = model.userId
+        guid = model.guid,
+        createdDate = model.createdDate,
+        userGuid = model.userGuid
     )
 }

@@ -24,12 +24,12 @@ internal class DeleteTenantDomain @Inject constructor(
     endpointTemplate = TenantDomainApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Delete(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
         domain = call.parameters.getAsType(String::class, "domain")
     )
 
     override suspend fun Handler.handle(command: TenantDomainApi.Delete) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        tenantDomainService.delete(command.orgId, command.domain)
+        tenantDomainService.delete(command.orgGuid, command.domain)
     }
 }

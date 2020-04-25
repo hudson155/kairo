@@ -18,34 +18,34 @@ internal class SqlOrgStore @Inject constructor(
 ) : OrgStore, SqlStore(database) {
     override fun create(model: OrgModel) = transaction {
         OrgTable.insert { sqlOrgMapper.orgEntity(it, model) }
-        featureStore.create(model.id, model.features)
+        featureStore.create(model.guid, model.features)
     }
 
-    override fun get(orgId: UUID) = transaction {
+    override fun get(orgGuid: UUID) = transaction {
         val entity = OrgTable
-            .select { OrgTable.guid eq orgId }
+            .select { OrgTable.guid eq orgGuid }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlOrgMapper.orgModel(entity)
     }
 
-    override fun getByOwnerAccountId(ownerAccountId: UUID) = transaction {
+    override fun getByOwnerAccountGuid(ownerAccountGuid: UUID) = transaction {
         return@transaction OrgTable
-            .select { OrgTable.ownerAccountGuid eq ownerAccountId }
+            .select { OrgTable.ownerAccountGuid eq ownerAccountGuid }
             .map { sqlOrgMapper.orgModel(it) }
             .toSet()
     }
 
-    override fun update(orgId: UUID, update: OrgModel.Update) = transaction {
+    override fun update(orgGuid: UUID, update: OrgModel.Update) = transaction {
         OrgTable
             .updateExactlyOne(
-                where = { OrgTable.guid eq orgId },
+                where = { OrgTable.guid eq orgGuid },
                 body = { sqlOrgMapper.orgEntity(it, update) },
                 notFound = { throw OrgNotFound() }
             )
-        return@transaction checkNotNull(get(orgId))
+        return@transaction checkNotNull(get(orgGuid))
     }
 
-    override fun delete(orgId: UUID) = transaction<Unit> {
-        OrgTable.deleteExactlyOne(where = { OrgTable.guid eq orgId }, notFound = { throw OrgNotFound() })
+    override fun delete(orgGuid: UUID) = transaction<Unit> {
+        OrgTable.deleteExactlyOne(where = { OrgTable.guid eq orgGuid }, notFound = { throw OrgNotFound() })
     }
 }

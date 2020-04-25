@@ -13,12 +13,12 @@ internal object TenantDomainRepFixtures {
     val limberappFixture = Fixture({
         TenantDomainRep.Creation("limberapp.io")
     }, {
-        TenantDomainRep.Complete(created = LocalDateTime.now(fixedClock), domain = "limberapp.io")
+        TenantDomainRep.Complete(createdDate = LocalDateTime.now(fixedClock), domain = "limberapp.io")
     })
 
     val someclientFixture = Fixture({
         TenantDomainRep.Creation("limber.someclient.com")
     }, {
-        TenantDomainRep.Complete(created = LocalDateTime.now(fixedClock), domain = "limber.someclient.com")
+        TenantDomainRep.Complete(createdDate = LocalDateTime.now(fixedClock), domain = "limber.someclient.com")
     })
 }

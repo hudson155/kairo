@@ -5,8 +5,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class FormTemplateRadioSelectorQuestionModel(
-    override val id: UUID,
-    override val created: LocalDateTime,
+    override val guid: UUID,
+    override val createdDate: LocalDateTime,
     override val label: String,
     override val helpText: String?,
     val options: List<String>

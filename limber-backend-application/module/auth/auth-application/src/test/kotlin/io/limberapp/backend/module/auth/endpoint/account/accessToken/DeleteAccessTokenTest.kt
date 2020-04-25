@@ -12,28 +12,28 @@ import kotlin.test.assertEquals
 internal class DeleteAccessTokenTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val accountId = UUID.randomUUID()
-        val accessTokenId = UUID.randomUUID()
+        val accountGuid = UUID.randomUUID()
+        val accessTokenGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = AccessTokenApi.Delete(accountId, accessTokenId),
+            endpoint = AccessTokenApi.Delete(accountGuid, accessTokenGuid),
             expectedException = AccessTokenNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val accountId = UUID.randomUUID()
+        val accountGuid = UUID.randomUUID()
 
-        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
-        piperTest.setup(AccessTokenApi.Post(accountId))
+        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountGuid, 0)
+        piperTest.setup(AccessTokenApi.Post(accountGuid))
 
-        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
-        piperTest.setup(AccessTokenApi.Post(accountId))
+        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountGuid, 2)
+        piperTest.setup(AccessTokenApi.Post(accountGuid))
 
-        piperTest.test(AccessTokenApi.Delete(accountId, accessToken0Rep.id)) {}
+        piperTest.test(AccessTokenApi.Delete(accountGuid, accessToken0Rep.guid)) {}
 
-        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
+        piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken1Rep), actual)
         }

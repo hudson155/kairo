@@ -4,9 +4,9 @@ import com.piperframework.types.UUID
 import io.limberapp.web.util.decodeJwt
 
 internal data class Jwt(val raw: String) {
-    internal data class Org(val id: UUID, val name: String)
+    internal data class Org(val guid: UUID, val name: String)
 
-    internal data class User(val id: UUID, val firstName: String, val lastName: String)
+    internal data class User(val guid: UUID, val firstName: String, val lastName: String)
 
     private val decoded = decodeJwt(raw)
 

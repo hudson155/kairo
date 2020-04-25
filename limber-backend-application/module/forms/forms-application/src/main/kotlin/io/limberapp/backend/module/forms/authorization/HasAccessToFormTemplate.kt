@@ -8,13 +8,13 @@ import java.util.UUID
 
 internal class HasAccessToFormTemplate(
     private val formTemplateService: FormTemplateService,
-    private val formTemplateId: UUID?
+    private val formTemplateGuid: UUID?
 ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
         principal ?: return false
-        formTemplateId ?: return false
+        formTemplateGuid ?: return false
         if (!AnyJwt.authorize(principal)) return false
-        val existingModel = formTemplateService.get(formTemplateId) ?: throw FormTemplateNotFound()
-        return HasAccessToFeature(existingModel.featureId).authorize(principal)
+        val existingModel = formTemplateService.get(formTemplateGuid) ?: throw FormTemplateNotFound()
+        return HasAccessToFeature(existingModel.featureGuid).authorize(principal)
     }
 }

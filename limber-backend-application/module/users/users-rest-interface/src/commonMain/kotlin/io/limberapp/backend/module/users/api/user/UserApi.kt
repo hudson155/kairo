@@ -14,9 +14,9 @@ object UserApi {
         body = rep
     )
 
-    data class Get(val userId: UUID) : PiperEndpoint(
+    data class Get(val userGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
-        path = "/users/${enc(userId)}"
+        path = "/users/${enc(userGuid)}"
     )
 
     data class GetByEmailAddress(val emailAddress: String) : PiperEndpoint(
@@ -25,14 +25,14 @@ object UserApi {
         queryParams = listOf("emailAddress" to enc(emailAddress))
     )
 
-    data class Patch(val userId: UUID, val rep: UserRep.Update?) : PiperEndpoint(
+    data class Patch(val userGuid: UUID, val rep: UserRep.Update?) : PiperEndpoint(
         httpMethod = HttpMethod.PATCH,
-        path = "/users/${enc(userId)}",
+        path = "/users/${enc(userGuid)}",
         body = rep
     )
 
-    data class Delete(val userId: UUID) : PiperEndpoint(
+    data class Delete(val userGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/users/${enc(userId)}"
+        path = "/users/${enc(userGuid)}"
     )
 }

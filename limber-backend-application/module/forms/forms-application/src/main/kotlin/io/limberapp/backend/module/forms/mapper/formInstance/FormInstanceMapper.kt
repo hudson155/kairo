@@ -13,18 +13,18 @@ internal class FormInstanceMapper @Inject constructor(
     private val formInstanceQuestionMapper: FormInstanceQuestionMapper
 ) {
     fun model(rep: FormInstanceRep.Creation) = FormInstanceModel(
-        id = uuidGenerator.generate(),
-        created = LocalDateTime.now(clock),
-        featureId = rep.featureId,
-        formTemplateId = rep.formTemplateId,
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
+        featureGuid = rep.featureGuid,
+        formTemplateGuid = rep.formTemplateGuid,
         questions = emptyList()
     )
 
     fun completeRep(model: FormInstanceModel) = FormInstanceRep.Complete(
-        id = model.id,
-        created = model.created,
-        featureId = model.featureId,
-        formTemplateId = model.formTemplateId,
+        guid = model.guid,
+        createdDate = model.createdDate,
+        featureGuid = model.featureGuid,
+        formTemplateGuid = model.formTemplateGuid,
         questions = model.questions.map { formInstanceQuestionMapper.completeRep(it) }
     )
 }

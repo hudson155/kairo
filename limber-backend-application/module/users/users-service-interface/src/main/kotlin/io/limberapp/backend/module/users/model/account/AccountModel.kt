@@ -5,8 +5,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class AccountModel(
-    val id: UUID,
-    val created: LocalDateTime,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
     val identityProvider: Boolean,
     val superuser: Boolean,
     val name: String

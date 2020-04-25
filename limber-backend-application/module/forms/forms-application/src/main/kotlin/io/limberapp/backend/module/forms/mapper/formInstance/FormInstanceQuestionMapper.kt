@@ -18,20 +18,20 @@ import kotlin.reflect.KClass
 internal class FormInstanceQuestionMapper @Inject constructor(
     private val clock: Clock
 ) {
-    fun model(questionId: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
+    fun model(questionGuid: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
         is FormInstanceDateQuestionRep.Creation -> FormInstanceDateQuestionModel(
-            created = LocalDateTime.now(clock),
-            questionId = questionId,
+            createdDate = LocalDateTime.now(clock),
+            questionGuid = questionGuid,
             date = rep.date
         )
         is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
-            created = LocalDateTime.now(clock),
-            questionId = questionId,
+            createdDate = LocalDateTime.now(clock),
+            questionGuid = questionGuid,
             selection = rep.selection
         )
         is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
-            created = LocalDateTime.now(clock),
-            questionId = questionId,
+            createdDate = LocalDateTime.now(clock),
+            questionGuid = questionGuid,
             text = rep.text
         )
         else -> unknownFormInstanceQuestion(rep::class)
@@ -39,18 +39,18 @@ internal class FormInstanceQuestionMapper @Inject constructor(
 
     fun completeRep(model: FormInstanceQuestionModel) = when (model) {
         is FormInstanceDateQuestionModel -> FormInstanceDateQuestionRep.Complete(
-            created = model.created,
-            questionId = model.questionId,
+            createdDate = model.createdDate,
+            questionGuid = model.questionGuid,
             date = model.date
         )
         is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
-            created = model.created,
-            questionId = model.questionId,
+            createdDate = model.createdDate,
+            questionGuid = model.questionGuid,
             selection = model.selection
         )
         is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(
-            created = model.created,
-            questionId = model.questionId,
+            createdDate = model.createdDate,
+            questionGuid = model.questionGuid,
             text = model.text
         )
         else -> unknownFormInstanceQuestion(model::class)

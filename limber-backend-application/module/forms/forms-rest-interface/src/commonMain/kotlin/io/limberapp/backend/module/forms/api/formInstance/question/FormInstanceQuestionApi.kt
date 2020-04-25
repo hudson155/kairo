@@ -9,17 +9,17 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRe
 @Suppress("StringLiteralDuplication")
 object FormInstanceQuestionApi {
     data class Put(
-        val formInstanceId: UUID,
-        val questionId: UUID,
+        val formInstanceGuid: UUID,
+        val questionGuid: UUID,
         val rep: FormInstanceQuestionRep.Creation?
     ) : PiperEndpoint(
         httpMethod = HttpMethod.PUT,
-        path = "/form-instances/${enc(formInstanceId)}/questions/${enc(questionId)}",
+        path = "/form-instances/${enc(formInstanceGuid)}/questions/${enc(questionGuid)}",
         body = rep
     )
 
-    data class Delete(val formInstanceId: UUID, val questionId: UUID) : PiperEndpoint(
+    data class Delete(val formInstanceGuid: UUID, val questionGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/form-instances/${enc(formInstanceId)}/questions/${enc(questionId)}"
+        path = "/form-instances/${enc(formInstanceGuid)}/questions/${enc(questionGuid)}"
     )
 }

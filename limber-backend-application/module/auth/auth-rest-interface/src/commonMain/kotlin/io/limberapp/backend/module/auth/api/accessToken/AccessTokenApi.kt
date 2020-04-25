@@ -7,18 +7,18 @@ import com.piperframework.util.enc
 
 @Suppress("StringLiteralDuplication")
 object AccessTokenApi {
-    data class Post(val accountId: UUID) : PiperEndpoint(
+    data class Post(val accountGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
-        path = "/accounts/${enc(accountId)}/access-tokens"
+        path = "/accounts/${enc(accountGuid)}/access-tokens"
     )
 
-    data class GetByAccountId(val accountId: UUID) : PiperEndpoint(
+    data class GetByAccountGuid(val accountGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
-        path = "/accounts/${enc(accountId)}/access-tokens"
+        path = "/accounts/${enc(accountGuid)}/access-tokens"
     )
 
-    data class Delete(val accountId: UUID, val accessTokenId: UUID) : PiperEndpoint(
+    data class Delete(val accountGuid: UUID, val accessTokenGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/accounts/${enc(accountId)}/access-tokens/${enc(accessTokenId)}"
+        path = "/accounts/${enc(accountGuid)}/access-tokens/${enc(accessTokenGuid)}"
     )
 }

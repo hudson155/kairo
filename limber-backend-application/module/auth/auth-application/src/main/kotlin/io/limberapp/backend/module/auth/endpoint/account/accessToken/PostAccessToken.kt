@@ -30,12 +30,12 @@ internal class PostAccessToken @Inject constructor(
     endpointTemplate = AccessTokenApi.Post::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.Post(
-        accountId = call.parameters.getAsType(UUID::class, "accountId")
+        accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
     )
 
     override suspend fun Handler.handle(command: AccessTokenApi.Post): AccessTokenRep.OneTimeUse {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val (model, rawSecretAsUuid) = accessTokenMapper.model(command.accountId)
+        val (model, rawSecretAsUuid) = accessTokenMapper.model(command.accountGuid)
         accessTokenService.create(model)
         return accessTokenMapper.oneTimeUseRep(model, rawSecretAsUuid)
     }

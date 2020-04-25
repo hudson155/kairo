@@ -16,26 +16,26 @@ import java.util.UUID
 
 /**
  * Returns all access tokens for the given account. Note that this endpoint does not actually return the token itself,
- * just its ID. The token itself is only returned once, immediately after it is created. The account must record the
+ * just its UUID. The token itself is only returned once, immediately after it is created. The account must record the
  * token appropriately, because it cannot be returned again. If a new token is needed, the account can always delete the
  * existing token and create another.
  */
-internal class GetAccessTokensByAccountId @Inject constructor(
+internal class GetAccessTokensByAccountGuid @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val accessTokenService: AccessTokenService,
     private val accessTokenMapper: AccessTokenMapper
-) : LimberApiEndpoint<AccessTokenApi.GetByAccountId, List<AccessTokenRep.Complete>>(
+) : LimberApiEndpoint<AccessTokenApi.GetByAccountGuid, List<AccessTokenRep.Complete>>(
     application, servingConfig.apiPathPrefix,
-    endpointTemplate = AccessTokenApi.GetByAccountId::class.template()
+    endpointTemplate = AccessTokenApi.GetByAccountGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.GetByAccountId(
-        accountId = call.parameters.getAsType(UUID::class, "accountId")
+    override suspend fun determineCommand(call: ApplicationCall) = AccessTokenApi.GetByAccountGuid(
+        accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
     )
 
-    override suspend fun Handler.handle(command: AccessTokenApi.GetByAccountId): List<AccessTokenRep.Complete> {
+    override suspend fun Handler.handle(command: AccessTokenApi.GetByAccountGuid): List<AccessTokenRep.Complete> {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val models = accessTokenService.getByAccountId(command.accountId)
+        val models = accessTokenService.getByAccountGuid(command.accountGuid)
         return models.map { accessTokenMapper.completeRep(it) }
     }
 }

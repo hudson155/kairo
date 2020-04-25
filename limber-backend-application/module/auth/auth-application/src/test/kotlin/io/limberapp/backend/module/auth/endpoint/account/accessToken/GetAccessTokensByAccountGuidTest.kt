@@ -9,12 +9,12 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class GetAccessTokensByAccountIdTest : ResourceTest() {
+internal class GetAccessTokensByAccountGuidTest : ResourceTest() {
     @Test
     fun happyPathNoneExist() {
-        val accountId = UUID.randomUUID()
+        val accountGuid = UUID.randomUUID()
 
-        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
+        piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertTrue(actual.isEmpty())
         }
@@ -22,15 +22,15 @@ internal class GetAccessTokensByAccountIdTest : ResourceTest() {
 
     @Test
     fun happyPathSomeExist() {
-        val accountId = UUID.randomUUID()
+        val accountGuid = UUID.randomUUID()
 
-        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 0)
-        piperTest.setup(AccessTokenApi.Post(accountId))
+        val accessToken0Rep = AccessTokenRepFixtures.fixture.complete(this, accountGuid, 0)
+        piperTest.setup(AccessTokenApi.Post(accountGuid))
 
-        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountId, 2)
-        piperTest.setup(AccessTokenApi.Post(accountId))
+        val accessToken1Rep = AccessTokenRepFixtures.fixture.complete(this, accountGuid, 2)
+        piperTest.setup(AccessTokenApi.Post(accountGuid))
 
-        piperTest.test(AccessTokenApi.GetByAccountId(accountId)) {
+        piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
             val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)
         }

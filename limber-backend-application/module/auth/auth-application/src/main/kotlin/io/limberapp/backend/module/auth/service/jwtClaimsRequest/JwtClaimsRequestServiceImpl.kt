@@ -32,18 +32,18 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getAccountOrCreateUser(request)
-        val account = checkNotNull(accountService.get(user.id))
+        val account = checkNotNull(accountService.get(user.guid))
         return requestJwtClaimsForUser(account, user)
     }
 
-    override fun requestJwtClaimsForExistingUser(accountId: UUID): JwtClaimsModel? {
-        val account = accountService.get(accountId) ?: return null
-        val user = userService.get(accountId)
+    override fun requestJwtClaimsForExistingUser(accountGuid: UUID): JwtClaimsModel? {
+        val account = accountService.get(accountGuid) ?: return null
+        val user = userService.get(accountGuid)
         return requestJwtClaimsForUser(account, user)
     }
 
     private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
-        val org = user?.let { checkNotNull(orgService.get(it.orgId)) }
+        val org = user?.let { checkNotNull(orgService.get(it.orgGuid)) }
         val jwt = createJwt(account, user, org)
         return convertJwtToModel(jwt)
     }
@@ -55,11 +55,11 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
 
         val newUser = UserModel(
-            id = uuidGenerator.generate(),
-            created = LocalDateTime.now(clock),
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
             identityProvider = false,
             superuser = false,
-            orgId = tenant.orgId,
+            orgGuid = tenant.orgGuid,
             firstName = request.firstName,
             lastName = request.lastName,
             emailAddress = request.emailAddress,
@@ -72,9 +72,9 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
         return Jwt(
-            org = org?.let { JwtOrg(it.id, it.name, it.features.map { it.id }) },
+            org = org?.let { JwtOrg(it.guid, it.name, it.features.map { it.guid }) },
             roles = JwtRole.values().filter { account.hasRole(it) },
-            user = JwtUser(account.id, user?.firstName, user?.lastName)
+            user = JwtUser(account.guid, user?.firstName, user?.lastName)
         )
     }
 

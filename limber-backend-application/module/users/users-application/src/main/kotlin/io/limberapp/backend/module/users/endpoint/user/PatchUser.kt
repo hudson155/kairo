@@ -27,14 +27,14 @@ internal class PatchUser @Inject constructor(
     endpointTemplate = UserApi.Patch::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = UserApi.Patch(
-        userId = call.parameters.getAsType(UUID::class, "userId"),
+        userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: UserApi.Patch): UserRep.Complete {
-        Authorization.User(command.userId).authorize()
+        Authorization.User(command.userGuid).authorize()
         val update = userMapper.update(command.rep.required())
-        val model = userService.update(command.userId, update)
+        val model = userService.update(command.userGuid, update)
         return userMapper.completeRep(model)
     }
 }

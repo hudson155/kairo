@@ -19,9 +19,9 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
     private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : SqlFormTemplateMapper {
     override fun formTemplateEntity(insertStatement: InsertStatement<*>, model: FormTemplateModel) {
-        insertStatement[FormTemplateTable.createdDate] = model.created
-        insertStatement[FormTemplateTable.guid] = model.id
-        insertStatement[FormTemplateTable.featureGuid] = model.featureId
+        insertStatement[FormTemplateTable.createdDate] = model.createdDate
+        insertStatement[FormTemplateTable.guid] = model.guid
+        insertStatement[FormTemplateTable.featureGuid] = model.featureGuid
         insertStatement[FormTemplateTable.title] = model.title
         insertStatement[FormTemplateTable.description] = model.description
     }
@@ -33,13 +33,13 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
 
     override fun formTemplateQuestionEntity(
         insertStatement: InsertStatement<*>,
-        formTemplateId: UUID,
+        formTemplateGuid: UUID,
         model: FormTemplateQuestionModel,
         rank: Int
     ) {
-        insertStatement[FormTemplateQuestionTable.createdDate] = model.created
-        insertStatement[FormTemplateQuestionTable.guid] = model.id
-        insertStatement[FormTemplateQuestionTable.formTemplateGuid] = formTemplateId
+        insertStatement[FormTemplateQuestionTable.createdDate] = model.createdDate
+        insertStatement[FormTemplateQuestionTable.guid] = model.guid
+        insertStatement[FormTemplateQuestionTable.formTemplateGuid] = formTemplateGuid
         insertStatement[FormTemplateQuestionTable.rank] = rank
         insertStatement[FormTemplateQuestionTable.label] = model.label
         insertStatement[FormTemplateQuestionTable.helpText] = model.helpText
@@ -87,35 +87,35 @@ internal class SqlFormTemplateMapperImpl @Inject constructor(
     override fun formTemplateModel(resultRow: ResultRow): FormTemplateModel {
         val guid = resultRow[FormTemplateTable.guid]
         return FormTemplateModel(
-            id = guid,
-            created = resultRow[FormTemplateTable.createdDate],
-            featureId = resultRow[FormTemplateTable.featureGuid],
+            guid = guid,
+            createdDate = resultRow[FormTemplateTable.createdDate],
+            featureGuid = resultRow[FormTemplateTable.featureGuid],
             title = resultRow[FormTemplateTable.title],
             description = resultRow[FormTemplateTable.description],
-            questions = formTemplateQuestionStore.getByFormTemplateId(guid)
+            questions = formTemplateQuestionStore.getByFormTemplateGuid(guid)
         )
     }
 
     override fun formTemplateQuestionModel(resultRow: ResultRow) =
         when (FormTemplateQuestionModel.Type.valueOf(resultRow[FormTemplateQuestionTable.type])) {
             FormTemplateQuestionModel.Type.DATE -> FormTemplateDateQuestionModel(
-                id = resultRow[FormTemplateQuestionTable.guid],
-                created = resultRow[FormTemplateQuestionTable.createdDate],
+                guid = resultRow[FormTemplateQuestionTable.guid],
+                createdDate = resultRow[FormTemplateQuestionTable.createdDate],
                 label = resultRow[FormTemplateQuestionTable.label],
                 helpText = resultRow[FormTemplateQuestionTable.helpText],
                 earliest = resultRow[FormTemplateQuestionTable.earliest],
                 latest = resultRow[FormTemplateQuestionTable.latest]
             )
             FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel(
-                id = resultRow[FormTemplateQuestionTable.guid],
-                created = resultRow[FormTemplateQuestionTable.createdDate],
+                guid = resultRow[FormTemplateQuestionTable.guid],
+                createdDate = resultRow[FormTemplateQuestionTable.createdDate],
                 label = resultRow[FormTemplateQuestionTable.label],
                 helpText = resultRow[FormTemplateQuestionTable.helpText],
                 options = checkNotNull(resultRow[FormTemplateQuestionTable.options]).toList()
             )
             FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel(
-                id = resultRow[FormTemplateQuestionTable.guid],
-                created = resultRow[FormTemplateQuestionTable.createdDate],
+                guid = resultRow[FormTemplateQuestionTable.guid],
+                createdDate = resultRow[FormTemplateQuestionTable.createdDate],
                 label = resultRow[FormTemplateQuestionTable.label],
                 helpText = resultRow[FormTemplateQuestionTable.helpText],
                 multiLine = checkNotNull(resultRow[FormTemplateQuestionTable.multiLine]),

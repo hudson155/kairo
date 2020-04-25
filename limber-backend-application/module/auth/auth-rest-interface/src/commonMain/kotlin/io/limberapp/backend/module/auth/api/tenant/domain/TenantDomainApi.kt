@@ -8,14 +8,14 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 
 @Suppress("StringLiteralDuplication")
 object TenantDomainApi {
-    data class Post(val orgId: UUID, val rep: TenantDomainRep.Creation?) : PiperEndpoint(
+    data class Post(val orgGuid: UUID, val rep: TenantDomainRep.Creation?) : PiperEndpoint(
         httpMethod = HttpMethod.POST,
-        path = "/tenants/${enc(orgId)}/domains",
+        path = "/tenants/${enc(orgGuid)}/domains",
         body = rep
     )
 
-    data class Delete(val orgId: UUID, val domain: String) : PiperEndpoint(
+    data class Delete(val orgGuid: UUID, val domain: String) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/tenants/${enc(orgId)}/domains/${enc(domain)}"
+        path = "/tenants/${enc(orgGuid)}/domains/${enc(domain)}"
     )
 }

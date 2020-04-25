@@ -12,7 +12,7 @@ internal interface SqlOrgMapper {
 
     fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update)
 
-    fun featureEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: FeatureModel)
+    fun featureEntity(insertStatement: InsertStatement<*>, orgGuid: UUID, model: FeatureModel)
 
     fun featureEntity(updateStatement: UpdateStatement, update: FeatureModel.Update)
 

@@ -16,7 +16,7 @@ Java, Postgres, and IntelliJ
 1. From IntelliJ, run the `[web] Run` config.
 1. In the browser console, run the following
     ```javascript
-   localStorage.setItem('jwt', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwczovL2xpbWJlcmFwcC5pby9vcmciOiJ7XCJpZFwiOlwiNTc2MWRiODUtNzcwMS00Y2U0LTkxNjItYWIwZmI0MTQ5YjBkXCIsXCJuYW1lXCI6XCJMaW1iZXJcIixcImZlYXR1cmVJZHNcIjpbXCI3NWEyZWQ3YS00MjQ3LTRlNjMtYWIxMC1hNjBkZjNkOWFlZWVcIl19IiwiaHR0cHM6Ly9saW1iZXJhcHAuaW8vcm9sZXMiOiJbXSIsImh0dHBzOi8vbGltYmVyYXBwLmlvL3VzZXIiOiJ7XCJpZFwiOlwiM2UyZDE2ODEtYTY2Ni00NTZlLWExNjgtNjQ3ZDhjM2EzMTUwXCIsXCJmaXJzdE5hbWVcIjpcIkplZmZcIixcImxhc3ROYW1lXCI6XCJIdWRzb25cIn0iLCJpc3MiOiJodHRwczovL2xpbWJlcmFwcC5pby8iLCJpYXQiOjE1ODAwMDAwMDAsImV4cCI6MjAwMDAwMDAwMH0.dr7913iBz-EYmj295okdiL5IFdnStiZLrAzoMlevOk8')
+   localStorage.setItem('jwt', {jwt})
     ```
 
 ## Modules
@@ -51,7 +51,7 @@ Java, Postgres, and IntelliJ
         Remember that operations that create subentities are U-Update operations,
         not U-Update operations.
     1. Get operations, from most to least specific.
-        First, the identity get operation (usually `getById`).
+        First, the identity get operation (usually `getByGuid`).
         Then, any other get operations that return single instances.
         Then, any other get operations.
     1. Update operations, from widest to narrowest.
@@ -71,7 +71,7 @@ Java, Postgres, and IntelliJ
     ```kotlin
    // No
    return makeSomething()?.let { transform(it) }
-   
+
    // Yes
    val something = makeSomething() ?: return null
    return transform(something)

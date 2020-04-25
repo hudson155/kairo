@@ -11,21 +11,21 @@ object AccessTokenRep {
     @Serializable
     data class OneTimeUse(
         @Serializable(with = UuidSerializer::class)
-        val id: UUID,
+        val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val userId: UUID,
+        val userGuid: UUID,
         val token: String
     ) : CompleteRep
 
     @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
-        val id: UUID,
+        val guid: UUID,
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val userId: UUID
+        val userGuid: UUID
     ) : CompleteRep
 }

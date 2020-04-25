@@ -14,8 +14,8 @@ internal class SqlTenantMapperImpl @Inject constructor(
     private val tenantDomainStore: TenantDomainStore
 ) : SqlTenantMapper {
     override fun tenantEntity(insertStatement: InsertStatement<*>, model: TenantModel) {
-        insertStatement[TenantTable.createdDate] = model.created
-        insertStatement[TenantTable.orgGuid] = model.orgId
+        insertStatement[TenantTable.createdDate] = model.createdDate
+        insertStatement[TenantTable.orgGuid] = model.orgGuid
         insertStatement[TenantTable.auth0ClientId] = model.auth0ClientId
     }
 
@@ -23,24 +23,24 @@ internal class SqlTenantMapperImpl @Inject constructor(
         update.auth0ClientId?.let { updateStatement[TenantTable.auth0ClientId] = it }
     }
 
-    override fun tenantDomainEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: TenantDomainModel) {
-        insertStatement[TenantDomainTable.createdDate] = model.created
-        insertStatement[TenantDomainTable.orgGuid] = orgId
+    override fun tenantDomainEntity(insertStatement: InsertStatement<*>, orgGuid: UUID, model: TenantDomainModel) {
+        insertStatement[TenantDomainTable.createdDate] = model.createdDate
+        insertStatement[TenantDomainTable.orgGuid] = orgGuid
         insertStatement[TenantDomainTable.domain] = model.domain
     }
 
     override fun tenantModel(resultRow: ResultRow): TenantModel {
-        val orgId = resultRow[TenantTable.orgGuid]
+        val orgGuid = resultRow[TenantTable.orgGuid]
         return TenantModel(
-            created = resultRow[TenantTable.createdDate],
-            orgId = orgId,
+            createdDate = resultRow[TenantTable.createdDate],
+            orgGuid = orgGuid,
             auth0ClientId = resultRow[TenantTable.auth0ClientId],
-            domains = tenantDomainStore.getByOrgId(orgId)
+            domains = tenantDomainStore.getByOrgGuid(orgGuid)
         )
     }
 
     override fun tenantDomainModel(resultRow: ResultRow) = TenantDomainModel(
-        created = resultRow[TenantDomainTable.createdDate],
+        createdDate = resultRow[TenantDomainTable.createdDate],
         domain = resultRow[TenantDomainTable.domain]
     )
 }

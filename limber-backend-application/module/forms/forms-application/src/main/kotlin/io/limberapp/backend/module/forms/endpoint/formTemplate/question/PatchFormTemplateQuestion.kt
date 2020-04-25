@@ -29,15 +29,15 @@ internal class PatchFormTemplateQuestion @Inject constructor(
     endpointTemplate = FormTemplateQuestionApi.Patch::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Patch(
-        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId"),
-        questionId = call.parameters.getAsType(UUID::class, "questionId"),
+        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
+        questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: FormTemplateQuestionApi.Patch): FormTemplateQuestionRep.Complete {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
+        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val update = formTemplateQuestionMapper.update(command.rep.required())
-        val model = formTemplateQuestionService.update(command.formTemplateId, command.questionId, update)
+        val model = formTemplateQuestionService.update(command.formTemplateGuid, command.questionGuid, update)
         return formTemplateQuestionMapper.completeRep(model)
     }
 }

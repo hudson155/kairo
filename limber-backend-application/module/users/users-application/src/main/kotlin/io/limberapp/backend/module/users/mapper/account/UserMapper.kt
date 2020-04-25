@@ -13,11 +13,11 @@ internal class UserMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator
 ) {
     fun model(rep: UserRep.Creation) = UserModel(
-        id = uuidGenerator.generate(),
-        created = LocalDateTime.now(clock),
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
         identityProvider = false,
         superuser = false,
-        orgId = rep.orgId,
+        orgGuid = rep.orgGuid,
         firstName = rep.firstName,
         lastName = rep.lastName,
         emailAddress = rep.emailAddress,
@@ -25,10 +25,10 @@ internal class UserMapper @Inject constructor(
     )
 
     fun completeRep(model: UserModel) = UserRep.Complete(
-        id = model.id,
-        created = model.created,
+        guid = model.guid,
+        createdDate = model.createdDate,
         roles = JwtRole.values().filter { model.hasRole(it) },
-        orgId = model.orgId,
+        orgGuid = model.orgGuid,
         firstName = model.firstName,
         lastName = model.lastName,
         emailAddress = model.emailAddress,

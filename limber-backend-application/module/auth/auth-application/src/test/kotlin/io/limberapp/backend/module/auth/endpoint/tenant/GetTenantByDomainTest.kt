@@ -22,10 +22,10 @@ internal class GetTenantByDomainTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
+        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
         piperTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)

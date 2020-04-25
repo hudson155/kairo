@@ -16,7 +16,7 @@ object TenantRep {
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)
-        val orgId: UUID,
+        val orgGuid: UUID,
         val auth0ClientId: String,
         val domain: TenantDomainRep.Creation
     ) : CreationRep {
@@ -29,9 +29,9 @@ object TenantRep {
     @Serializable
     data class Complete(
         @Serializable(with = LocalDateTimeSerializer::class)
-        override val created: LocalDateTime,
+        override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val orgId: UUID,
+        val orgGuid: UUID,
         val auth0ClientId: String,
         val domains: List<TenantDomainRep.Complete>
     ) : CompleteRep

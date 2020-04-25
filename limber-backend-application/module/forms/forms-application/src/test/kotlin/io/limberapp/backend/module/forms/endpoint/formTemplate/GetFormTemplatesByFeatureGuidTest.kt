@@ -9,12 +9,12 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
+internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
     @Test
     fun happyPathNoFormTemplates() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        piperTest.test(FormTemplateApi.GetByFeatureId(featureId)) {
+        piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
             val actual = json.parseList<FormTemplateRep.Complete>(response.content!!).toSet()
             assertTrue(actual.isEmpty())
         }
@@ -22,15 +22,15 @@ internal class GetFormTemplatesByFeatureIdTest : ResourceTest() {
 
     @Test
     fun happyPathMultipleFormTemplates() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+        val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureId, 5)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureId)))
+        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureGuid, 5)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureGuid)))
 
-        piperTest.test(FormTemplateApi.GetByFeatureId(featureId)) {
+        piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
             val actual = json.parseList<FormTemplateRep.Complete>(response.content!!).toSet()
             assertEquals(setOf(formTemplate0Rep, formTemplate1Rep), actual)
         }

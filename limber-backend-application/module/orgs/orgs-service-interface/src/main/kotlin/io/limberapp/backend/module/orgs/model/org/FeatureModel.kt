@@ -4,8 +4,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class FeatureModel(
-    val id: UUID,
-    val created: LocalDateTime,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
     val name: String,
     val path: String,
     val type: Type,

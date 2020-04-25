@@ -14,25 +14,25 @@ object OrgApi {
         body = rep
     )
 
-    data class Get(val orgId: UUID) : PiperEndpoint(
+    data class Get(val orgGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
-        path = "/orgs/${enc(orgId)}"
+        path = "/orgs/${enc(orgGuid)}"
     )
 
-    data class GetByOwnerAccountId(val ownerAccountId: UUID) : PiperEndpoint(
+    data class GetByOwnerAccountGuid(val ownerAccountGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
         path = "/orgs",
-        queryParams = listOf("ownerAccountId" to enc(ownerAccountId))
+        queryParams = listOf("ownerAccountGuid" to enc(ownerAccountGuid))
     )
 
-    data class Patch(val orgId: UUID, val rep: OrgRep.Update?) : PiperEndpoint(
+    data class Patch(val orgGuid: UUID, val rep: OrgRep.Update?) : PiperEndpoint(
         httpMethod = HttpMethod.PATCH,
-        path = "/orgs/${enc(orgId)}",
+        path = "/orgs/${enc(orgGuid)}",
         body = rep
     )
 
-    data class Delete(val orgId: UUID) : PiperEndpoint(
+    data class Delete(val orgGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/orgs/${enc(orgId)}"
+        path = "/orgs/${enc(orgGuid)}"
     )
 }

@@ -24,11 +24,11 @@ internal class DeleteFormTemplate @Inject constructor(
     endpointTemplate = FormTemplateApi.Delete::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Delete(
-        formTemplateId = call.parameters.getAsType(UUID::class, "formTemplateId")
+        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
     )
 
     override suspend fun Handler.handle(command: FormTemplateApi.Delete) {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateId).authorize()
-        formTemplateService.delete(command.formTemplateId)
+        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
+        formTemplateService.delete(command.formTemplateGuid)
     }
 }

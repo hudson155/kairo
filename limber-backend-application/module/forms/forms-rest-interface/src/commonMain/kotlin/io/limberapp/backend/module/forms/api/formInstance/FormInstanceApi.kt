@@ -14,19 +14,19 @@ object FormInstanceApi {
         body = rep
     )
 
-    data class Get(val formInstanceId: UUID) : PiperEndpoint(
+    data class Get(val formInstanceGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
-        path = "/form-instances/${enc(formInstanceId)}"
+        path = "/form-instances/${enc(formInstanceGuid)}"
     )
 
-    data class GetByFeatureId(val featureId: UUID) : PiperEndpoint(
+    data class GetByFeatureGuid(val featureGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.GET,
         path = "/form-instances",
-        queryParams = listOf("featureId" to enc(featureId))
+        queryParams = listOf("featureGuid" to enc(featureGuid))
     )
 
-    data class Delete(val formInstanceId: UUID) : PiperEndpoint(
+    data class Delete(val formInstanceGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
-        path = "/form-instances/${enc(formInstanceId)}"
+        path = "/form-instances/${enc(formInstanceGuid)}"
     )
 }

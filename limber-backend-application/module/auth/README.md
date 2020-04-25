@@ -18,4 +18,4 @@ Well, since I've already told you what it doesn't do, here's what it does do.
     The last 2 characters are always '='.
     Access tokens are comprised of back-to-back base64 encoded UUIDs, with these '=' characters removed.
     Therefore the length is always 44 characters.
-    The first portion is the token ID, and the second portion is the token secret.
+    The first portion is the token UUID, and the second portion is the token secret.

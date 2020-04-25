@@ -12,7 +12,7 @@ internal interface SqlTenantMapper {
 
     fun tenantEntity(updateStatement: UpdateStatement, update: TenantModel.Update)
 
-    fun tenantDomainEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: TenantDomainModel)
+    fun tenantDomainEntity(insertStatement: InsertStatement<*>, orgGuid: UUID, model: TenantDomainModel)
 
     fun tenantModel(resultRow: ResultRow): TenantModel
 

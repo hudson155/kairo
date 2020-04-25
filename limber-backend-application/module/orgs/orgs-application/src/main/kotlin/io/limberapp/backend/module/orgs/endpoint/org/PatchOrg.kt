@@ -27,14 +27,14 @@ internal class PatchOrg @Inject constructor(
     endpointTemplate = OrgApi.Patch::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Patch(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {
-        Authorization.OrgMember(command.orgId).authorize()
+        Authorization.OrgMember(command.orgGuid).authorize()
         val update = orgMapper.update(command.rep.required())
-        val model = orgService.update(command.orgId, update)
+        val model = orgService.update(command.orgGuid, update)
         return orgMapper.completeRep(model)
     }
 }

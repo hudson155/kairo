@@ -11,8 +11,8 @@ internal class UserServiceImpl @Inject constructor(
     private val userStore: UserStore
 ) : UserService by userStore {
 
-    override fun delete(userId: UUID) {
-        if (orgService.getByOwnerAccountId(userId).isNotEmpty()) throw CannotDeleteUserWithOrgs()
-        userStore.delete(userId)
+    override fun delete(userGuid: UUID) {
+        if (orgService.getByOwnerAccountGuid(userGuid).isNotEmpty()) throw CannotDeleteUserWithOrgs()
+        userStore.delete(userGuid)
     }
 }

@@ -14,7 +14,7 @@ internal interface SqlFormInstanceMapper {
 
     fun formInstanceQuestionEntity(
         insertStatement: InsertStatement<*>,
-        formInstanceId: UUID,
+        formInstanceGuid: UUID,
         model: FormInstanceQuestionModel
     )
 

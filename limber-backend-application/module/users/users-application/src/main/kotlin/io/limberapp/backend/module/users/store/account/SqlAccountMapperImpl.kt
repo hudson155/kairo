@@ -11,20 +11,20 @@ import org.jetbrains.exposed.sql.statements.UpdateStatement
 
 internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
     override fun accountEntity(insertStatement: InsertStatement<*>, model: UserModel) {
-        insertStatement[AccountTable.createdDate] = model.created
-        insertStatement[AccountTable.guid] = model.id
+        insertStatement[AccountTable.createdDate] = model.createdDate
+        insertStatement[AccountTable.guid] = model.guid
         insertStatement[AccountTable.identityProvider] = model.identityProvider
         insertStatement[AccountTable.superuser] = model.superuser
         insertStatement[AccountTable.name] = "${model.firstName} ${model.lastName}"
     }
 
     override fun userEntity(insertStatement: InsertStatement<*>, model: UserModel) {
-        insertStatement[UserTable.createdDate] = model.created
-        insertStatement[UserTable.guid] = model.id
+        insertStatement[UserTable.createdDate] = model.createdDate
+        insertStatement[UserTable.guid] = model.guid
         insertStatement[UserTable.identityProvider] = model.identityProvider
         insertStatement[UserTable.superuser] = model.superuser
         insertStatement[UserTable.name] = "${model.firstName} ${model.lastName}"
-        insertStatement[UserTable.orgGuid] = model.orgId
+        insertStatement[UserTable.orgGuid] = model.orgGuid
         insertStatement[UserTable.emailAddress] = model.emailAddress
         insertStatement[UserTable.firstName] = model.firstName
         insertStatement[UserTable.lastName] = model.lastName
@@ -39,19 +39,19 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
     }
 
     override fun accountModel(resultRow: ResultRow) = AccountModel(
-        id = resultRow[AccountTable.guid],
-        created = resultRow[AccountTable.createdDate],
+        guid = resultRow[AccountTable.guid],
+        createdDate = resultRow[AccountTable.createdDate],
         identityProvider = resultRow[AccountTable.identityProvider],
         superuser = resultRow[AccountTable.superuser],
         name = resultRow[AccountTable.name]
     )
 
     override fun userModel(resultRow: ResultRow) = UserModel(
-        id = resultRow[UserTable.guid],
-        created = resultRow[UserTable.createdDate],
+        guid = resultRow[UserTable.guid],
+        createdDate = resultRow[UserTable.createdDate],
         identityProvider = resultRow[UserTable.identityProvider],
         superuser = resultRow[UserTable.superuser],
-        orgId = resultRow[UserTable.orgGuid],
+        orgGuid = resultRow[UserTable.orgGuid],
         firstName = resultRow[UserTable.firstName],
         lastName = resultRow[UserTable.lastName],
         emailAddress = resultRow[UserTable.emailAddress],

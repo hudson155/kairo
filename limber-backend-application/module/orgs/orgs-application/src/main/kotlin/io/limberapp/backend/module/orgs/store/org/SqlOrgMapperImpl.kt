@@ -14,20 +14,20 @@ internal class SqlOrgMapperImpl @Inject constructor(
     private val featureStore: FeatureStore
 ) : SqlOrgMapper {
     override fun orgEntity(insertStatement: InsertStatement<*>, model: OrgModel) {
-        insertStatement[OrgTable.createdDate] = model.created
-        insertStatement[OrgTable.guid] = model.id
+        insertStatement[OrgTable.createdDate] = model.createdDate
+        insertStatement[OrgTable.guid] = model.guid
         insertStatement[OrgTable.name] = model.name
-        insertStatement[OrgTable.ownerAccountGuid] = model.ownerAccountId
+        insertStatement[OrgTable.ownerAccountGuid] = model.ownerAccountGuid
     }
 
     override fun orgEntity(updateStatement: UpdateStatement, update: OrgModel.Update) {
         update.name?.let { updateStatement[OrgTable.name] = it }
     }
 
-    override fun featureEntity(insertStatement: InsertStatement<*>, orgId: UUID, model: FeatureModel) {
-        insertStatement[FeatureTable.createdDate] = model.created
-        insertStatement[FeatureTable.guid] = model.id
-        insertStatement[FeatureTable.orgGuid] = orgId
+    override fun featureEntity(insertStatement: InsertStatement<*>, orgGuid: UUID, model: FeatureModel) {
+        insertStatement[FeatureTable.createdDate] = model.createdDate
+        insertStatement[FeatureTable.guid] = model.guid
+        insertStatement[FeatureTable.orgGuid] = orgGuid
         insertStatement[FeatureTable.name] = model.name
         insertStatement[FeatureTable.path] = model.path
         insertStatement[FeatureTable.type] = model.type.name
@@ -43,17 +43,17 @@ internal class SqlOrgMapperImpl @Inject constructor(
     override fun orgModel(resultRow: ResultRow): OrgModel {
         val guid = resultRow[OrgTable.guid]
         return OrgModel(
-            id = guid,
-            created = resultRow[OrgTable.createdDate],
+            guid = guid,
+            createdDate = resultRow[OrgTable.createdDate],
             name = resultRow[OrgTable.name],
-            ownerAccountId = resultRow[OrgTable.ownerAccountGuid],
-            features = featureStore.getByOrgId(guid)
+            ownerAccountGuid = resultRow[OrgTable.ownerAccountGuid],
+            features = featureStore.getByOrgGuid(guid)
         )
     }
 
     override fun featureModel(resultRow: ResultRow) = FeatureModel(
-        id = resultRow[FeatureTable.guid],
-        created = resultRow[FeatureTable.createdDate],
+        guid = resultRow[FeatureTable.guid],
+        createdDate = resultRow[FeatureTable.createdDate],
         name = resultRow[FeatureTable.name],
         path = resultRow[FeatureTable.path],
         type = FeatureModel.Type.valueOf(resultRow[FeatureTable.type]),

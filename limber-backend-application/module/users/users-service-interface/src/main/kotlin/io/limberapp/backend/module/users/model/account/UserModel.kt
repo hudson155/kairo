@@ -5,11 +5,11 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class UserModel(
-    val id: UUID,
-    val created: LocalDateTime,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
     val identityProvider: Boolean,
     val superuser: Boolean,
-    val orgId: UUID,
+    val orgGuid: UUID,
     val firstName: String,
     val lastName: String,
     val emailAddress: String,

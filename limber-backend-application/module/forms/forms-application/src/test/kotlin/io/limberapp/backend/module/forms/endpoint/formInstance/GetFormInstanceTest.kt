@@ -14,25 +14,27 @@ import kotlin.test.assertEquals
 internal class GetFormInstanceTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val formInstanceId = UUID.randomUUID()
+        val formInstanceGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = FormInstanceApi.Get(formInstanceId),
+            endpoint = FormInstanceApi.Get(formInstanceGuid),
             expectedException = FormInstanceNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val featureId = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureId, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureId)))
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureId, formTemplateRep.id, 5)
-        piperTest.setup(FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureId, formTemplateRep.id)))
+        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
+        piperTest.setup(
+            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+        )
 
-        piperTest.test(FormInstanceApi.Get(formInstanceRep.id)) {
+        piperTest.test(FormInstanceApi.Get(formInstanceRep.guid)) {
             val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
             assertEquals(formInstanceRep, actual)
         }

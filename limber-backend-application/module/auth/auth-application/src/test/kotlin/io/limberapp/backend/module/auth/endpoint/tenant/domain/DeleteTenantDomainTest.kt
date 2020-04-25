@@ -15,29 +15,29 @@ import kotlin.test.assertEquals
 internal class DeleteTenantDomainTest : ResourceTest() {
     @Test
     fun orgDoesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
         val tenantDomain = "fakedomain.com"
 
         piperTest.test(
-            endpoint = TenantDomainApi.Delete(orgId, tenantDomain),
+            endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
             expectedException = TenantDomainNotFound()
         )
     }
 
     @Test
     fun domainDoesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
         val tenantDomain = "fakedomain.com"
 
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
+        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
         piperTest.test(
-            endpoint = TenantDomainApi.Delete(orgId, tenantDomain),
+            endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
             expectedException = TenantDomainNotFound()
         )
 
-        piperTest.test(TenantApi.Get(orgId)) {
+        piperTest.test(TenantApi.Get(orgGuid)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }
@@ -45,22 +45,22 @@ internal class DeleteTenantDomainTest : ResourceTest() {
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
+        var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
         val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         tenantRep = tenantRep.copy(domains = tenantRep.domains.plus(tenantDomainRep))
-        piperTest.test(TenantDomainApi.Post(orgId, TenantDomainRepFixtures.someclientFixture.creation())) {
+        piperTest.test(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation())) {
             val actual = json.parse<TenantDomainRep.Complete>(response.content!!)
             assertEquals(tenantDomainRep, actual)
         }
 
         tenantRep = tenantRep.copy(domains = tenantRep.domains.minus(tenantDomainRep))
-        piperTest.test(TenantDomainApi.Delete(orgId, tenantDomainRep.domain)) {}
+        piperTest.test(TenantDomainApi.Delete(orgGuid, tenantDomainRep.domain)) {}
 
-        piperTest.test(TenantApi.Get(orgId)) {
+        piperTest.test(TenantApi.Get(orgGuid)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }

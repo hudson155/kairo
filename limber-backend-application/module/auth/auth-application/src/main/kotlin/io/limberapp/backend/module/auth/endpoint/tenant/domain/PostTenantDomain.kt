@@ -27,14 +27,14 @@ internal class PostTenantDomain @Inject constructor(
     endpointTemplate = TenantDomainApi.Post::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Post(
-        orgId = call.parameters.getAsType(UUID::class, "orgId"),
+        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
         rep = call.getAndValidateBody()
     )
 
     override suspend fun Handler.handle(command: TenantDomainApi.Post): TenantDomainRep.Complete {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val model = tenantDomainMapper.model(command.rep.required())
-        tenantDomainService.create(command.orgId, model)
+        tenantDomainService.create(command.orgGuid, model)
         return tenantDomainMapper.completeRep(model)
     }
 }

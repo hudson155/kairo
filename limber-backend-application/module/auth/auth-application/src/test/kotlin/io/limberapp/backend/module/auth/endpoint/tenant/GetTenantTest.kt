@@ -12,22 +12,22 @@ import kotlin.test.assertEquals
 internal class GetTenantTest : ResourceTest() {
     @Test
     fun doesNotExist() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
         piperTest.test(
-            endpoint = TenantApi.Get(orgId),
+            endpoint = TenantApi.Get(orgGuid),
             expectedException = TenantNotFound()
         )
     }
 
     @Test
     fun happyPath() {
-        val orgId = UUID.randomUUID()
+        val orgGuid = UUID.randomUUID()
 
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgId)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgId)))
+        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
-        piperTest.test(TenantApi.Get(orgId)) {
+        piperTest.test(TenantApi.Get(orgGuid)) {
             val actual = json.parse<TenantRep.Complete>(response.content!!)
             assertEquals(tenantRep, actual)
         }

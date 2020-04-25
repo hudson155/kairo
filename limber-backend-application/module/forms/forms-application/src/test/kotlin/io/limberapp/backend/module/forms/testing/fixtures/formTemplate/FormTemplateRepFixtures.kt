@@ -7,20 +7,20 @@ import java.util.UUID
 
 internal object FormTemplateRepFixtures {
     data class Fixture(
-        val creation: (featureId: UUID) -> FormTemplateRep.Creation,
-        val complete: ResourceTest.(featureId: UUID, idSeed: Int) -> FormTemplateRep.Complete
+        val creation: (featureGuid: UUID) -> FormTemplateRep.Creation,
+        val complete: ResourceTest.(featureGuid: UUID, idSeed: Int) -> FormTemplateRep.Complete
     )
 
-    val exampleFormFixture = Fixture({ featureId ->
+    val exampleFormFixture = Fixture({ featureGuid ->
         FormTemplateRep.Creation(
-            featureId = featureId,
+            featureGuid = featureGuid,
             title = "Example form"
         )
-    }, { featureId, idSeed ->
+    }, { featureGuid, idSeed ->
         FormTemplateRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
-            featureId = featureId,
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
+            featureGuid = featureGuid,
             title = "Example form",
             description = null,
             questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
@@ -29,16 +29,16 @@ internal object FormTemplateRepFixtures {
         )
     })
 
-    val vehicleInspectionFixture = Fixture({ featureId ->
+    val vehicleInspectionFixture = Fixture({ featureGuid ->
         FormTemplateRep.Creation(
-            featureId = featureId,
+            featureGuid = featureGuid,
             title = "Vehicle Inspection"
         )
-    }, { featureId, idSeed ->
+    }, { featureGuid, idSeed ->
         FormTemplateRep.Complete(
-            id = deterministicUuidGenerator[idSeed],
-            created = LocalDateTime.now(fixedClock),
-            featureId = featureId,
+            guid = deterministicUuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(fixedClock),
+            featureGuid = featureGuid,
             title = "Vehicle Inspection",
             description = null,
             questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->

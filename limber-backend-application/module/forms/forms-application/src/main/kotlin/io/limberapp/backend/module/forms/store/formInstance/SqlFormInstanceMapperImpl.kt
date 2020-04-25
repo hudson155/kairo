@@ -20,10 +20,10 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
     private val formInstanceQuestionStore: FormInstanceQuestionStore
 ) : SqlFormInstanceMapper {
     override fun formInstanceEntity(insertStatement: InsertStatement<*>, model: FormInstanceModel) {
-        insertStatement[FormInstanceTable.createdDate] = model.created
-        insertStatement[FormInstanceTable.guid] = model.id
-        insertStatement[FormInstanceTable.featureGuid] = model.featureId
-        insertStatement[FormInstanceTable.formTemplateGuid] = model.formTemplateId
+        insertStatement[FormInstanceTable.createdDate] = model.createdDate
+        insertStatement[FormInstanceTable.guid] = model.guid
+        insertStatement[FormInstanceTable.featureGuid] = model.featureGuid
+        insertStatement[FormInstanceTable.formTemplateGuid] = model.formTemplateGuid
     }
 
     override fun formInstanceEntity(updateStatement: UpdateStatement, update: FormInstanceQuestionModel.Update) {
@@ -43,12 +43,12 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
 
     override fun formInstanceQuestionEntity(
         insertStatement: InsertStatement<*>,
-        formInstanceId: UUID,
+        formInstanceGuid: UUID,
         model: FormInstanceQuestionModel
     ) {
-        insertStatement[FormInstanceQuestionTable.createdDate] = model.created
-        insertStatement[FormInstanceQuestionTable.formInstanceGuid] = formInstanceId
-        insertStatement[FormInstanceQuestionTable.formTemplateQuestionGuid] = model.questionId
+        insertStatement[FormInstanceQuestionTable.createdDate] = model.createdDate
+        insertStatement[FormInstanceQuestionTable.formInstanceGuid] = formInstanceGuid
+        insertStatement[FormInstanceQuestionTable.formTemplateQuestionGuid] = model.questionGuid
         insertStatement[FormInstanceQuestionTable.type] = model.type.name
         when (model) {
             is FormInstanceDateQuestionModel -> {
@@ -67,29 +67,29 @@ internal class SqlFormInstanceMapperImpl @Inject constructor(
     override fun formInstanceModel(resultRow: ResultRow): FormInstanceModel {
         val guid = resultRow[FormInstanceTable.guid]
         return FormInstanceModel(
-            id = guid,
-            created = resultRow[FormInstanceTable.createdDate],
-            featureId = resultRow[FormInstanceTable.featureGuid],
-            formTemplateId = resultRow[FormInstanceTable.formTemplateGuid],
-            questions = formInstanceQuestionStore.getByFormInstanceId(guid)
+            guid = guid,
+            createdDate = resultRow[FormInstanceTable.createdDate],
+            featureGuid = resultRow[FormInstanceTable.featureGuid],
+            formTemplateGuid = resultRow[FormInstanceTable.formTemplateGuid],
+            questions = formInstanceQuestionStore.getByFormInstanceGuid(guid)
         )
     }
 
     override fun formInstanceQuestionModel(resultRow: ResultRow) =
         when (FormTemplateQuestionModel.Type.valueOf(resultRow[FormInstanceQuestionTable.type])) {
             FormTemplateQuestionModel.Type.DATE -> FormInstanceDateQuestionModel(
-                created = resultRow[FormInstanceQuestionTable.createdDate],
-                questionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                createdDate = resultRow[FormInstanceQuestionTable.createdDate],
+                questionGuid = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 date = checkNotNull(resultRow[FormInstanceQuestionTable.date])
             )
             FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
-                created = resultRow[FormInstanceQuestionTable.createdDate],
-                questionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                createdDate = resultRow[FormInstanceQuestionTable.createdDate],
+                questionGuid = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 selection = checkNotNull(resultRow[FormInstanceQuestionTable.selections]).single()
             )
             FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
-                created = resultRow[FormInstanceQuestionTable.createdDate],
-                questionId = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
+                createdDate = resultRow[FormInstanceQuestionTable.createdDate],
+                questionGuid = resultRow[FormInstanceQuestionTable.formTemplateQuestionGuid],
                 text = checkNotNull(resultRow[FormInstanceQuestionTable.text])
             )
         }

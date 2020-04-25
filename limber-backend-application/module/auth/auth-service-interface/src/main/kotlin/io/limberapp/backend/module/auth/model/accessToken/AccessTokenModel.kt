@@ -4,8 +4,8 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class AccessTokenModel(
-    val id: UUID,
-    val created: LocalDateTime,
-    val userId: UUID,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
+    val userGuid: UUID,
     val encryptedSecret: String
 )

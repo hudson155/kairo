@@ -18,37 +18,37 @@ internal class SqlFormTemplateStore @Inject constructor(
 ) : FormTemplateStore, SqlStore(database) {
     override fun create(model: FormTemplateModel) = transaction {
         FormTemplateTable.insert { sqlFormTemplateMapper.formTemplateEntity(it, model) }
-        formTemplateQuestionStore.create(model.id, model.questions)
+        formTemplateQuestionStore.create(model.guid, model.questions)
     }
 
-    override fun get(formTemplateId: UUID) = transaction {
+    override fun get(formTemplateGuid: UUID) = transaction {
         val entity = FormTemplateTable
-            .select { FormTemplateTable.guid eq formTemplateId }
+            .select { FormTemplateTable.guid eq formTemplateGuid }
             .singleNullOrThrow() ?: return@transaction null
         return@transaction sqlFormTemplateMapper.formTemplateModel(entity)
     }
 
-    override fun getByFeatureId(featureId: UUID) = transaction {
+    override fun getByFeatureGuid(featureGuid: UUID) = transaction {
         return@transaction FormTemplateTable
-            .select { FormTemplateTable.featureGuid eq featureId }
+            .select { FormTemplateTable.featureGuid eq featureGuid }
             .map { sqlFormTemplateMapper.formTemplateModel(it) }
             .toSet()
     }
 
-    override fun update(formTemplateId: UUID, update: FormTemplateModel.Update) = transaction {
+    override fun update(formTemplateGuid: UUID, update: FormTemplateModel.Update) = transaction {
         FormTemplateTable
             .updateExactlyOne(
-                where = { FormTemplateTable.guid eq formTemplateId },
+                where = { FormTemplateTable.guid eq formTemplateGuid },
                 body = { sqlFormTemplateMapper.formTemplateEntity(it, update) },
                 notFound = { throw FormTemplateNotFound() }
             )
-        return@transaction checkNotNull(get(formTemplateId))
+        return@transaction checkNotNull(get(formTemplateGuid))
     }
 
-    override fun delete(formTemplateId: UUID) = transaction<Unit> {
+    override fun delete(formTemplateGuid: UUID) = transaction<Unit> {
         FormTemplateTable
             .deleteExactlyOne(
-                where = { FormTemplateTable.guid eq formTemplateId },
+                where = { FormTemplateTable.guid eq formTemplateGuid },
                 notFound = { throw FormTemplateNotFound() }
             )
     }

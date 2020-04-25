@@ -28,12 +28,12 @@ internal class GetFormInstance @Inject constructor(
     endpointTemplate = FormInstanceApi.Get::class.template()
 ) {
     override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Get(
-        formInstanceId = call.parameters.getAsType(UUID::class, "formInstanceId")
+        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
     )
 
     override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceId).authorize()
-        val model = formInstanceService.get(command.formInstanceId) ?: throw FormInstanceNotFound()
+        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+        val model = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
         return formInstanceMapper.completeRep(model)
     }
 }

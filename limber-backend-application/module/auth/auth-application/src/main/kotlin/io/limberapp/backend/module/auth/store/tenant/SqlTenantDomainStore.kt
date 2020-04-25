@@ -20,9 +20,9 @@ internal class SqlTenantDomainStore @Inject constructor(
     database: Database,
     private val sqlTenantMapper: SqlTenantMapper
 ) : TenantDomainStore, SqlStore(database) {
-    override fun create(orgId: UUID, models: Set<TenantDomainModel>) = transaction {
+    override fun create(orgGuid: UUID, models: Set<TenantDomainModel>) = transaction {
         doOperation {
-            TenantDomainTable.batchInsert(models) { model -> sqlTenantMapper.tenantDomainEntity(this, orgId, model) }
+            TenantDomainTable.batchInsert(models) { model -> sqlTenantMapper.tenantDomainEntity(this, orgGuid, model) }
         } andHandleError {
             when {
                 error.isForeignKeyViolation(TenantDomainTable.orgGuidForeignKey) ->
@@ -33,9 +33,9 @@ internal class SqlTenantDomainStore @Inject constructor(
         }
     }
 
-    override fun create(orgId: UUID, model: TenantDomainModel) = transaction {
+    override fun create(orgGuid: UUID, model: TenantDomainModel) = transaction {
         doOperation {
-            TenantDomainTable.insert { sqlTenantMapper.tenantDomainEntity(it, orgId, model) }
+            TenantDomainTable.insert { sqlTenantMapper.tenantDomainEntity(it, orgGuid, model) }
         } andHandleError {
             when {
                 error.isForeignKeyViolation(TenantDomainTable.orgGuidForeignKey) ->
@@ -46,17 +46,17 @@ internal class SqlTenantDomainStore @Inject constructor(
         }
     }
 
-    override fun getByOrgId(orgId: UUID) = transaction {
+    override fun getByOrgGuid(orgGuid: UUID) = transaction {
         return@transaction TenantDomainTable
-            .select { (TenantDomainTable.orgGuid eq orgId) }
+            .select { (TenantDomainTable.orgGuid eq orgGuid) }
             .map { sqlTenantMapper.tenantDomainModel(it) }
             .toSet()
     }
 
-    override fun delete(orgId: UUID, domain: String) = transaction<Unit> {
+    override fun delete(orgGuid: UUID, domain: String) = transaction<Unit> {
         TenantDomainTable
             .deleteExactlyOne(
-                where = { (TenantDomainTable.orgGuid eq orgId) and (TenantDomainTable.domain eq domain) },
+                where = { (TenantDomainTable.orgGuid eq orgGuid) and (TenantDomainTable.domain eq domain) },
                 notFound = { throw TenantDomainNotFound() }
             )
     }
