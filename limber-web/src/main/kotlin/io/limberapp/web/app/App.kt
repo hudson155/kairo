@@ -2,6 +2,7 @@ package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
@@ -14,8 +15,10 @@ import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.apiProvider
+import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.authProvider
 import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.context.globalState.action.org.OrgAction
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState
@@ -114,8 +117,28 @@ private val appRouter = functionalComponent<RProps> {
 }
 
 private val appFeatureRouter = functionalComponent<RProps> {
+    val api = useApi()
+    val auth = useAuth()
     val global = useGlobalState()
-    val features = global.state.org.state!!.features.toList()
+
+    useEffect {
+        if (global.state.org.hasBegunLoading) return@useEffect
+        global.dispatch(OrgAction.BeginLoading)
+        async {
+            println("jwt org: ${JSON.stringify(checkNotNull(auth.jwt).org)}")
+            val org = api.orgs(OrgApi.Get(checkNotNull(auth.jwt).org.guid))
+            global.dispatch(OrgAction.Set(org))
+        }
+    }
+
+    if (!global.state.org.isLoaded) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+            loadingPage("Loading org...")
+        }
+        return@functionalComponent
+    }
+
+    val features = checkNotNull(global.state.org.state).features
 
     page(header = buildElement { mainAppNavbar(features, "Firstname Lastname") }, footer = buildElement { footer() }) {
         switch {
