@@ -16,13 +16,13 @@ internal class UserMapper @Inject constructor(
     fun model(rep: UserRep.Creation) = UserModel(
         id = uuidGenerator.generate(),
         created = LocalDateTime.now(clock),
+        identityProvider = false,
+        superuser = false,
         orgId = rep.orgId,
         firstName = rep.firstName,
         lastName = rep.lastName,
         emailAddress = rep.emailAddress,
-        profilePhotoUrl = rep.profilePhotoUrl,
-        identityProvider = false,
-        superuser = false
+        profilePhotoUrl = rep.profilePhotoUrl
     )
 
     fun completeRep(model: UserModel) = UserRep.Complete(

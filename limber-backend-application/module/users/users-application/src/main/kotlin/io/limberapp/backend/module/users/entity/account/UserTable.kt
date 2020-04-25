@@ -6,11 +6,11 @@ internal object UserTable : SqlTable("users", "user") {
 
     val guid = uuid("guid")
 
-    val name = text("name")
-
     val identityProvider = bool("identity_provider")
 
     val superuser = bool("superuser")
+
+    val name = text("name")
 
     val orgGuid = uuid("org_guid")
 

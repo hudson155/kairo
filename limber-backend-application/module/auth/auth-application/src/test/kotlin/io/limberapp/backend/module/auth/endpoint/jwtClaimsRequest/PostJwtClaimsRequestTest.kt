@@ -35,9 +35,9 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         every { mockedServices[AccountService::class].get(userId) } returns AccountModel(
             id = userId,
             created = LocalDateTime.now(fixedClock),
-            name = "Jeff Hudson",
             identityProvider = false,
-            superuser = false
+            superuser = false,
+            name = "Jeff Hudson"
         )
         every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
         every { mockedServices[UserService::class].create(any()) } returns Unit
@@ -84,20 +84,20 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val existingAccount = AccountModel(
             id = UUID.randomUUID(),
             created = LocalDateTime.now(fixedClock),
-            name = "Summer Kavan",
             identityProvider = false,
-            superuser = true
+            superuser = true,
+            name = "Summer Kavan"
         )
         val existingUser = UserModel(
             id = existingAccount.id,
             created = existingAccount.created,
+            identityProvider = existingAccount.identityProvider,
+            superuser = existingAccount.superuser,
             orgId = existingOrg.id,
             firstName = existingAccount.name.split(' ')[0],
             lastName = existingAccount.name.split(' ')[1],
             emailAddress = "jhudson@jhudson.ca",
-            profilePhotoUrl = null,
-            identityProvider = existingAccount.identityProvider,
-            superuser = existingAccount.superuser
+            profilePhotoUrl = null
         )
         every { mockedServices[AccountService::class].get(existingAccount.id) } returns existingAccount
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser

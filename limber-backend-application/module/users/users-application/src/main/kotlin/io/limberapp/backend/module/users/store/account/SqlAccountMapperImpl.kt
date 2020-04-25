@@ -42,9 +42,9 @@ internal class SqlAccountMapperImpl @Inject constructor() : SqlAccountMapper {
     override fun accountModel(resultRow: ResultRow) = AccountModel(
         id = resultRow[AccountTable.guid],
         created = resultRow[AccountTable.createdDate],
-        name = resultRow[AccountTable.name],
         identityProvider = resultRow[AccountTable.identityProvider],
-        superuser = resultRow[AccountTable.superuser]
+        superuser = resultRow[AccountTable.superuser],
+        name = resultRow[AccountTable.name]
     )
 
     override fun userModel(resultRow: ResultRow) = UserModel(
