@@ -2,6 +2,8 @@
 
 Limber is a highly dynamic application built on Ktor and React.
 
+![Build](https://github.com/hudson155/limber/workflows/Release%20(prod)/badge.svg)
+
 ## Setup
 
 Prerequisites:
