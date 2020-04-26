@@ -3,10 +3,6 @@ package com.piperframework.dataConversion.conversionService
 import com.piperframework.dataConversion.DataConversionService
 import com.piperframework.validator.Validator
 
-/**
- * In JS, UUIDs use the [String] class instead of an actual UUID class. UUID validation is still performed by the
- * conversion service.
- */
 actual object UuidConversionService : DataConversionService<String> {
     override val kClass = String::class
 
