@@ -22,7 +22,7 @@ internal class UserStore @Inject constructor(
     fun create(model: UserModel) {
         jdbi.useHandle<Exception> {
             try {
-                it.createUpdate(sqlResource(this::create.name)).bindKotlin(model).execute()
+                it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
                 val error = e.serverErrorMessage ?: throw e
                 if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) {
@@ -53,7 +53,7 @@ internal class UserStore @Inject constructor(
 
     fun update(userGuid: UUID, update: UserModel.Update): UserModel {
         return jdbi.inTransaction<UserModel, Exception> {
-            val updateCount = it.createUpdate(sqlResource(this::update.name))
+            val updateCount = it.createUpdate(sqlResource("update"))
                 .bind("guid", userGuid)
                 .bindKotlin(update)
                 .execute()
