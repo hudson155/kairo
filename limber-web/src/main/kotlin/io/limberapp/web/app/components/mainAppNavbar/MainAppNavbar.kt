@@ -14,7 +14,7 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
-internal data class Props(val features: List<FeatureRep.Complete>, val name: String?, val photoUrl: String?) : RProps
+internal data class Props(val features: Set<FeatureRep.Complete>, val name: String?, val photoUrl: String?) : RProps
 
 private val mainAppNavbar = functionalComponent<Props> { props ->
     val auth = useAuth()
@@ -45,8 +45,8 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
     }
 }
 
-internal fun RBuilder.mainAppNavbar(features: List<FeatureRep.Complete>, name: String?, photoUrl: String?) {
+internal fun RBuilder.mainAppNavbar(features: Set<FeatureRep.Complete>, name: String?, photoUrl: String?) {
     child(mainAppNavbar, Props(features, name, photoUrl))
 }
 
-internal fun RBuilder.minimalNavbar() = mainAppNavbar(features = emptyList(), name = null, photoUrl = null)
+internal fun RBuilder.minimalNavbar() = mainAppNavbar(features = emptySet(), name = null, photoUrl = null)
