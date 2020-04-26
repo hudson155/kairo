@@ -17,7 +17,7 @@ internal data class FormInstanceQuestionEntity(
     val date: LocalDate?,
     val selections: Set<String>?
 ) {
-    data class Update(
+    internal data class Update(
         val text: String?,
         val date: LocalDate?,
         val selections: Set<String>?

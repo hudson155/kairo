@@ -21,7 +21,7 @@ internal data class FormTemplateQuestionEntity(
     val latest: LocalDate?,
     val options: List<String>?
 ) {
-    data class Update(
+    internal data class Update(
         val label: String?,
         val helpText: String?,
         val multiLine: Boolean?,

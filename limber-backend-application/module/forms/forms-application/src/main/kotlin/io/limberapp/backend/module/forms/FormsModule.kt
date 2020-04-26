@@ -24,10 +24,6 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
-import io.limberapp.backend.module.forms.store.formInstance.FormInstanceQuestionStore
-import io.limberapp.backend.module.forms.store.formInstance.FormInstanceStore
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
-import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 
 class FormsModule : Module() {
     override val serialModule = formsSerialModule
