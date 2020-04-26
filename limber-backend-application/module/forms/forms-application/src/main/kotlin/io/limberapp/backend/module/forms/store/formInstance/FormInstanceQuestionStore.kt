@@ -24,44 +24,27 @@ internal class FormInstanceQuestionStore @Inject constructor(
 ) : SqlStore(database) {
     fun create(formInstanceGuid: UUID, models: Set<FormInstanceQuestionModel>) {
         jdbi.useTransaction<Exception> {
-            it.prepareBatch(sqlResource("create")).apply {
-                models.forEach {
-                    this
-                        .bind("formInstanceGuid", formInstanceGuid)
-                        .bindKotlin(
-                            FormInstanceQuestionEntity(
-                                it
-                            )
-                        )
-                        .add()
-                }
-            }.execute()
-        }
-    }
-
-    fun upsert(formInstanceGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel {
-        val questionGuid = checkNotNull(model.questionGuid)
-        return jdbi.inTransaction<FormInstanceQuestionModel, Exception> {
-            val existingFormInstanceQuestionModel = get(formInstanceGuid, questionGuid)
-            if (existingFormInstanceQuestionModel == null) {
-                create(formInstanceGuid, model)
-                return@inTransaction model
-            } else {
-                return@inTransaction update(formInstanceGuid, questionGuid, FormInstanceQuestionEntity.Update(model))
+            try {
+                it.prepareBatch(sqlResource("create")).apply {
+                    models.forEach {
+                        this
+                            .bind("formInstanceGuid", formInstanceGuid)
+                            .bindKotlin(FormInstanceQuestionEntity(it))
+                            .add()
+                    }
+                }.execute()
+            } catch (e: UnableToExecuteStatementException) {
+                handleCreateError(e)
             }
         }
     }
 
-    private fun create(formInstanceGuid: UUID, model: FormInstanceQuestionModel) {
+    fun create(formInstanceGuid: UUID, model: FormInstanceQuestionModel) {
         jdbi.useTransaction<Exception> {
             try {
                 it.createUpdate(sqlResource("create"))
                     .bind("formInstanceGuid", formInstanceGuid)
-                    .bindKotlin(
-                        FormInstanceQuestionEntity(
-                            model
-                        )
-                    )
+                    .bindKotlin(FormInstanceQuestionEntity(model))
                     .execute()
             } catch (e: UnableToExecuteStatementException) {
                 handleCreateError(e)
@@ -101,16 +84,16 @@ internal class FormInstanceQuestionStore @Inject constructor(
         }
     }
 
-    private fun update(
+    fun update(
         formInstanceGuid: UUID,
         questionGuid: UUID,
-        update: FormInstanceQuestionEntity.Update
+        update: FormInstanceQuestionModel.Update
     ): FormInstanceQuestionModel {
         return jdbi.inTransaction<FormInstanceQuestionModel, Exception> {
             val updateCount = it.createUpdate(sqlResource("update"))
                 .bind("formInstanceGuid", formInstanceGuid)
                 .bind("questionGuid", questionGuid)
-                .bindKotlin(update)
+                .bindKotlin(FormInstanceQuestionEntity.Update(update))
                 .execute()
             when (updateCount) {
                 0 -> throw FormInstanceQuestionNotFound()
