@@ -4,6 +4,6 @@ import io.ktor.auth.Principal
 
 data class Jwt(
     val org: JwtOrg?,
-    val roles: List<JwtRole>,
+    val roles: Set<JwtRole>,
     val user: JwtUser
 ) : Principal

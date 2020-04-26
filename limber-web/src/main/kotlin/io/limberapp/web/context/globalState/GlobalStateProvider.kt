@@ -31,7 +31,7 @@ private val initialState = GlobalStateContext(
             createdDate = "",
             name = "",
             ownerAccountGuid = "",
-            features = listOf(
+            features = setOf(
                 FeatureRep.Complete(
                     guid = "75a2ed7a-4247-4e63-ab10-a60df3d9aeee",
                     createdDate = Date().toISOString(),

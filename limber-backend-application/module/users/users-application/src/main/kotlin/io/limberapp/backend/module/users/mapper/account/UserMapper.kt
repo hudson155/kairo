@@ -27,7 +27,7 @@ internal class UserMapper @Inject constructor(
     fun completeRep(model: UserModel) = UserRep.Complete(
         guid = model.guid,
         createdDate = model.createdDate,
-        roles = JwtRole.values().filter { model.hasRole(it) },
+        roles = JwtRole.values().filter { model.hasRole(it) }.toSet(),
         orgGuid = model.orgGuid,
         firstName = model.firstName,
         lastName = model.lastName,

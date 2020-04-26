@@ -19,7 +19,7 @@ internal object OrgRepFixtures {
             createdDate = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
             ownerAccountGuid = ownerAccountGuid,
-            features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
         )
     })
 
@@ -31,7 +31,7 @@ internal object OrgRepFixtures {
             createdDate = LocalDateTime.now(fixedClock),
             name = "Dynamic Tennis",
             ownerAccountGuid = ownerAccountGuid,
-            features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
+            features = setOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
         )
     })
 }

@@ -51,7 +51,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
         userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
         piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
 
-        userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER })
+        userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
         piperTest.test(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER)) {}
 
         piperTest.test(UserApi.Get(userRep.guid)) {

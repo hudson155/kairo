@@ -23,7 +23,7 @@ internal object UserRepFixtures {
         UserRep.Complete(
             guid = deterministicUuidGenerator[idSeed],
             createdDate = LocalDateTime.now(fixedClock),
-            roles = emptyList(),
+            roles = emptySet(),
             orgGuid = orgGuid,
             firstName = "Jeff",
             lastName = "Hudson",
@@ -44,7 +44,7 @@ internal object UserRepFixtures {
         UserRep.Complete(
             guid = deterministicUuidGenerator[idSeed],
             createdDate = LocalDateTime.now(fixedClock),
-            roles = emptyList(),
+            roles = emptySet(),
             orgGuid = orgGuid,
             firstName = "Bill",
             lastName = "Gates",

@@ -33,7 +33,7 @@ object TenantRep {
         @Serializable(with = UuidSerializer::class)
         val orgGuid: UUID,
         val auth0ClientId: String,
-        val domains: List<TenantDomainRep.Complete>
+        val domains: Set<TenantDomainRep.Complete>
     ) : CompleteRep
 
     @Serializable
