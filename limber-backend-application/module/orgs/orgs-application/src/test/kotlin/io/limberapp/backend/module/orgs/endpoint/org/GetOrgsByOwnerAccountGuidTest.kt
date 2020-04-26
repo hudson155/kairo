@@ -15,7 +15,7 @@ internal class GetOrgsByOwnerAccountGuidTest : ResourceTest() {
         val orgOwnerAccountGuid = UUID.randomUUID()
 
         piperTest.test(OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid)) {
-            val actual = json.parseList<OrgRep.Complete>(response.content!!)
+            val actual = json.parseSet<OrgRep.Complete>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -31,7 +31,7 @@ internal class GetOrgsByOwnerAccountGuidTest : ResourceTest() {
         piperTest.setup(OrgApi.Post(OrgRepFixtures.dynamicTennisFixture.creation(orgOwnerAccountGuid)))
 
         piperTest.test(OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid)) {
-            val actual = json.parseList<OrgRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<OrgRep.Complete>(response.content!!)
             assertEquals(setOf(crankyPastaOrgRep, dynamicTennisOrgRep), actual)
         }
     }

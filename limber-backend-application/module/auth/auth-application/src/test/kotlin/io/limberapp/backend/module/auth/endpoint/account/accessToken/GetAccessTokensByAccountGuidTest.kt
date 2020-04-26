@@ -15,7 +15,7 @@ internal class GetAccessTokensByAccountGuidTest : ResourceTest() {
         val accountGuid = UUID.randomUUID()
 
         piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
-            val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<AccessTokenRep.Complete>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -31,7 +31,7 @@ internal class GetAccessTokensByAccountGuidTest : ResourceTest() {
         piperTest.setup(AccessTokenApi.Post(accountGuid))
 
         piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
-            val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<AccessTokenRep.Complete>(response.content!!)
             assertEquals(setOf(accessToken0Rep, accessToken1Rep), actual)
         }
     }

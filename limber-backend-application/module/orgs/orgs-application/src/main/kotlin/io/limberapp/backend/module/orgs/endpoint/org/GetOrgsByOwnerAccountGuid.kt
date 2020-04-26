@@ -21,7 +21,7 @@ internal class GetOrgsByOwnerAccountGuid @Inject constructor(
     servingConfig: ServingConfig,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, List<OrgRep.Complete>>(
+) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, Set<OrgRep.Complete>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.GetByOwnerAccountGuid::class.template()
@@ -30,9 +30,9 @@ internal class GetOrgsByOwnerAccountGuid @Inject constructor(
         ownerAccountGuid = call.parameters.getAsType(UUID::class, "ownerAccountGuid")
     )
 
-    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): List<OrgRep.Complete> {
+    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): Set<OrgRep.Complete> {
         Authorization.User(command.ownerAccountGuid).authorize()
         val models = orgService.getByOwnerAccountGuid(command.ownerAccountGuid)
-        return models.map { orgMapper.completeRep(it) }
+        return models.map { orgMapper.completeRep(it) }.toSet()
     }
 }
