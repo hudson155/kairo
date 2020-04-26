@@ -1,6 +1,8 @@
 package com.piperframework.serialization.serializer
 
+import com.piperframework.dataConversion.conversionService.LocalDateConversionService
+import com.piperframework.serialization.ConversionServiceSerializer
 import com.piperframework.types.LocalDate
-import kotlinx.serialization.KSerializer
 
-expect object LocalDateSerializer : KSerializer<LocalDate>
+object LocalDateSerializer
+    : ConversionServiceSerializer<LocalDate>("LocalDate", LocalDateConversionService)
