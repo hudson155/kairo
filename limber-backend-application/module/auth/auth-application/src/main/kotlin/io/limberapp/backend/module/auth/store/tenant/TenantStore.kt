@@ -27,16 +27,20 @@ internal class TenantStore @Inject constructor(
             try {
                 it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                when {
-                    error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
-                        throw OrgAlreadyHasTenant()
-                    error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
-                        throw Auth0ClientIdAlreadyRegistered()
-                    else -> throw e
-                }
+                handleCreateError(e)
             }
             tenantDomainStore.create(model.orgGuid, model.domains)
+        }
+    }
+
+    private fun handleCreateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        when {
+            error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
+                throw OrgAlreadyHasTenant()
+            error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
+                throw Auth0ClientIdAlreadyRegistered()
+            else -> throw e
         }
     }
 
@@ -79,11 +83,7 @@ internal class TenantStore @Inject constructor(
                     .bindKotlin(update)
                     .execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                if (error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT)) {
-                    throw Auth0ClientIdAlreadyRegistered()
-                }
-                throw e
+                handleUpdateError(e)
             }
             when (updateCount) {
                 0 -> throw TenantNotFound()
@@ -91,6 +91,14 @@ internal class TenantStore @Inject constructor(
                 else -> badSql()
             }
         }
+    }
+
+    private fun handleUpdateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        if (error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT)) {
+            throw Auth0ClientIdAlreadyRegistered()
+        }
+        throw e
     }
 
     fun delete(orgGuid: UUID) {

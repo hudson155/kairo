@@ -29,12 +29,7 @@ internal class FeatureStore @Inject constructor(
                     models.forEach { bind("orgGuid", orgGuid).bindKotlin(it).add() }
                 }.execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                when {
-                    error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
-                    error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT) -> throw FeatureIsNotUnique()
-                    else -> throw e
-                }
+                handleCreateError(e)
             }
         }
     }
@@ -44,13 +39,17 @@ internal class FeatureStore @Inject constructor(
             try {
                 it.createUpdate(sqlResource("create")).bind("orgGuid", orgGuid).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                when {
-                    error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
-                    error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT) -> throw FeatureIsNotUnique()
-                    else -> throw e
-                }
+                handleCreateError(e)
             }
+        }
+    }
+
+    private fun handleCreateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        when {
+            error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
+            error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT) -> throw FeatureIsNotUnique()
+            else -> throw e
         }
     }
 
@@ -87,9 +86,7 @@ internal class FeatureStore @Inject constructor(
                     .bindKotlin(update)
                     .execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                if (error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT)) throw FeatureIsNotUnique()
-                throw e
+                handleUpdateError(e)
             }
             when (updateCount) {
                 0 -> throw FeatureNotFound()
@@ -97,6 +94,12 @@ internal class FeatureStore @Inject constructor(
                 else -> badSql()
             }
         }
+    }
+
+    private fun handleUpdateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        if (error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT)) throw FeatureIsNotUnique()
+        throw e
     }
 
     fun delete(orgGuid: UUID, featureGuid: UUID) {
