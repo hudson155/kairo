@@ -25,7 +25,7 @@ internal class PostTenantTest : ResourceTest() {
                 TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
                     .copy(orgGuid = limberappTenantRep.orgGuid)
             ),
-            expectedException = OrgAlreadyHasTenant(limberappTenantRep.orgGuid)
+            expectedException = OrgAlreadyHasTenant()
         )
     }
 
@@ -42,7 +42,7 @@ internal class PostTenantTest : ResourceTest() {
                 TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
                     .copy(auth0ClientId = limberappTenantRep.auth0ClientId)
             ),
-            expectedException = Auth0ClientIdAlreadyRegistered(limberappTenantRep.auth0ClientId)
+            expectedException = Auth0ClientIdAlreadyRegistered()
         )
     }
 
@@ -59,7 +59,7 @@ internal class PostTenantTest : ResourceTest() {
                 TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
                     .copy(domain = duplicateDomain)
             ),
-            expectedException = TenantDomainAlreadyRegistered(duplicateDomain.domain)
+            expectedException = TenantDomainAlreadyRegistered()
         )
     }
 

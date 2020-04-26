@@ -31,9 +31,7 @@ internal class TenantDomainStore @Inject constructor(
                 val error = e.serverErrorMessage ?: throw e
                 when {
                     error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
-                    error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> {
-                        throw TenantDomainAlreadyRegistered(models.singleOrNull()?.domain)
-                    }
+                    error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
                     else -> throw e
                 }
             }
@@ -48,9 +46,7 @@ internal class TenantDomainStore @Inject constructor(
                 val error = e.serverErrorMessage ?: throw e
                 when {
                     error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
-                    error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> {
-                        throw TenantDomainAlreadyRegistered(model.domain)
-                    }
+                    error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
                     else -> throw e
                 }
             }

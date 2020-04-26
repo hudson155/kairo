@@ -35,7 +35,7 @@ internal class PatchTenantTest : ResourceTest() {
         val tenantUpdateRep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
         piperTest.test(
             endpoint = TenantApi.Patch(someclientOrgGuid, tenantUpdateRep),
-            expectedException = Auth0ClientIdAlreadyRegistered(limberappTenantRep.auth0ClientId)
+            expectedException = Auth0ClientIdAlreadyRegistered()
         )
     }
 

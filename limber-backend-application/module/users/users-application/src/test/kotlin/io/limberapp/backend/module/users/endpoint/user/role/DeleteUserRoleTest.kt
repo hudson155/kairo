@@ -32,7 +32,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
 
         piperTest.test(
             endpoint = UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER),
-            expectedException = UserDoesNotHaveRole(JwtRole.SUPERUSER)
+            expectedException = UserDoesNotHaveRole()
         )
 
         piperTest.test(UserApi.Get(userRep.guid)) {

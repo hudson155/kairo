@@ -30,9 +30,9 @@ internal class TenantStore @Inject constructor(
                 val error = e.serverErrorMessage ?: throw e
                 when {
                     error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
-                        throw OrgAlreadyHasTenant(model.orgGuid)
+                        throw OrgAlreadyHasTenant()
                     error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
-                        throw Auth0ClientIdAlreadyRegistered(model.auth0ClientId)
+                        throw Auth0ClientIdAlreadyRegistered()
                     else -> throw e
                 }
             }
@@ -81,7 +81,7 @@ internal class TenantStore @Inject constructor(
             } catch (e: UnableToExecuteStatementException) {
                 val error = e.serverErrorMessage ?: throw e
                 if (error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT)) {
-                    throw Auth0ClientIdAlreadyRegistered(checkNotNull(update.auth0ClientId))
+                    throw Auth0ClientIdAlreadyRegistered()
                 }
                 throw e
             }
