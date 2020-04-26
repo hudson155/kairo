@@ -9,6 +9,7 @@ fun main(args: Array<String>) {
         connect()
         dbReset()
         runMigrations()
+        insertFixtures()
         disconnect()
     }
 }

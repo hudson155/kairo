@@ -1,6 +1,7 @@
 # Resets the database
 #   - Drops all schemas and the migration log
 #   - Runs migrations
+#   - Inserts fixtures
 #
 # For local database:
 #   adhoc/dbReset.sh localhost/limber
