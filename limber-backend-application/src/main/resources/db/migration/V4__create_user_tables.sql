@@ -10,12 +10,14 @@ CREATE TABLE users.account
 
 CREATE TABLE users.user
 (
-    org_guid          UUID           NOT NULL,
-    email_address     VARCHAR UNIQUE NOT NULL,
-    first_name        VARCHAR        NOT NULL,
-    last_name         VARCHAR        NOT NULL,
+    org_guid          UUID    NOT NULL,
+    email_address     VARCHAR NOT NULL,
+    first_name        VARCHAR NOT NULL,
+    last_name         VARCHAR NOT NULL,
     profile_photo_url VARCHAR
 ) INHERITS (users.account);
+
+CREATE UNIQUE INDEX ON users.user (LOWER(email_address));
 
 CREATE TABLE auth.access_token
 (

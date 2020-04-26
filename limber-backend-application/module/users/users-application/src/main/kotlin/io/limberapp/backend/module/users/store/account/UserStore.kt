@@ -13,7 +13,7 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
-private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_email_address_key"
+private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_lower_idx"
 
 internal class UserStore @Inject constructor(
     database: Database,
@@ -44,7 +44,7 @@ internal class UserStore @Inject constructor(
 
     fun getByEmailAddress(emailAddress: String): UserModel? {
         return jdbi.withHandle<UserModel?, Exception> {
-            it.createQuery("SELECT * FROM users.user WHERE email_address = :emailAddress")
+            it.createQuery("SELECT * FROM users.user WHERE LOWER(email_address) = LOWER(:emailAddress)")
                 .bind("emailAddress", emailAddress)
                 .mapTo(UserModel::class.java)
                 .singleNullOrThrow()
