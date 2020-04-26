@@ -4,6 +4,7 @@ import com.piperframework.restInterface.Fetch
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
 import io.limberapp.web.app.components.mainAppNavbar.minimalNavbar
@@ -20,6 +21,7 @@ import io.limberapp.web.context.auth.authProvider
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.OrgAction
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
+import io.limberapp.web.context.globalState.action.user.UserAction
 import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.context.theme.themeProvider
@@ -131,6 +133,7 @@ private val appFeatureRouter = functionalComponent<RProps> {
     val auth = useAuth()
     val global = useGlobalState()
 
+    // Load org asynchronously
     useEffect {
         if (global.state.org.hasBegunLoading) return@useEffect
         global.dispatch(OrgAction.BeginLoading)
@@ -140,9 +143,28 @@ private val appFeatureRouter = functionalComponent<RProps> {
         }
     }
 
+    // Load user asynchronously
+    useEffect {
+        if (global.state.user.hasBegunLoading) return@useEffect
+        global.dispatch(UserAction.BeginLoading)
+        async {
+            val user = api.users(UserApi.Get(checkNotNull(auth.jwt).user.guid))
+            global.dispatch(UserAction.Set(user))
+        }
+    }
+
+    // Render loading state if org isn't loaded yet
     if (!global.state.org.isLoaded) {
         page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Loading org...")
+        }
+        return@functionalComponent
+    }
+
+    // Render loading state if user isn't loaded yet
+    if (!global.state.user.isLoaded) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+            loadingPage("Loading user...")
         }
         return@functionalComponent
     }
