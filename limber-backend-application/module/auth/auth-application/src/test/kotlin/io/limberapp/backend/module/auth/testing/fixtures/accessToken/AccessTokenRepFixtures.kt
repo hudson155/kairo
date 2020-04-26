@@ -16,7 +16,7 @@ internal object AccessTokenRepFixtures {
         AccessTokenRep.OneTimeUse(
             guid = deterministicUuidGenerator[idSeed],
             createdDate = LocalDateTime.now(fixedClock),
-            userGuid = userGuid,
+            accountGuid = userGuid,
             token = deterministicUuidGenerator[idSeed].base64Encode().dropLast(2)
                     + deterministicUuidGenerator[idSeed + 1].base64Encode().dropLast(2)
         )
@@ -24,7 +24,7 @@ internal object AccessTokenRepFixtures {
         AccessTokenRep.Complete(
             guid = deterministicUuidGenerator[idSeed],
             createdDate = LocalDateTime.now(fixedClock),
-            userGuid = userGuid
+            accountGuid = userGuid
         )
     })
 }

@@ -15,7 +15,7 @@ object AccessTokenRep {
         @Serializable(with = LocalDateTimeSerializer::class)
         override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val userGuid: UUID,
+        val accountGuid: UUID,
         val token: String
     ) : CompleteRep
 
@@ -26,6 +26,6 @@ object AccessTokenRep {
         @Serializable(with = LocalDateTimeSerializer::class)
         override val createdDate: LocalDateTime,
         @Serializable(with = UuidSerializer::class)
-        val userGuid: UUID
+        val accountGuid: UUID
     ) : CompleteRep
 }

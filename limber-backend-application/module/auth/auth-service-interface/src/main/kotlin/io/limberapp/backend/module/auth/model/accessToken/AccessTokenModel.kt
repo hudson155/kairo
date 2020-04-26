@@ -6,6 +6,6 @@ import java.util.UUID
 data class AccessTokenModel(
     val guid: UUID,
     val createdDate: LocalDateTime,
-    val userGuid: UUID,
+    val accountGuid: UUID,
     val encryptedSecret: String
 )

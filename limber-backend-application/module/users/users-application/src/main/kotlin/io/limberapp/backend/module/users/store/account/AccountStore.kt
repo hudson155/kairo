@@ -12,10 +12,12 @@ internal class AccountStore @Inject constructor(
     database: Database,
     private val jdbi: Jdbi
 ) : SqlStore(database) {
-    fun get(accountGuid: UUID) = jdbi.withHandle<AccountModel?, Exception> {
-        it.createQuery("SELECT * FROM users.account WHERE guid = :guid")
-            .bind("guid", accountGuid)
-            .mapTo(AccountModel::class.java)
-            .singleNullOrThrow()
+    fun get(accountGuid: UUID): AccountModel? {
+        return jdbi.withHandle<AccountModel?, Exception> {
+            it.createQuery("SELECT * FROM users.account WHERE guid = :guid")
+                .bind("guid", accountGuid)
+                .mapTo(AccountModel::class.java)
+                .singleNullOrThrow()
+        }
     }
 }
