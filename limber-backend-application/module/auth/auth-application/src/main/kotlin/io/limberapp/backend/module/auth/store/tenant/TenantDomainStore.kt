@@ -28,12 +28,7 @@ internal class TenantDomainStore @Inject constructor(
                     models.forEach { bind("orgGuid", orgGuid).bindKotlin(it).add() }
                 }.execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                when {
-                    error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
-                    error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
-                    else -> throw e
-                }
+                handleCreateError(e)
             }
         }
     }
@@ -43,13 +38,17 @@ internal class TenantDomainStore @Inject constructor(
             try {
                 it.createUpdate(sqlResource("create")).bind("orgGuid", orgGuid).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                when {
-                    error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
-                    error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
-                    else -> throw e
-                }
+                handleCreateError(e)
             }
+        }
+    }
+
+    private fun handleCreateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        when {
+            error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
+            error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
+            else -> throw e
         }
     }
 

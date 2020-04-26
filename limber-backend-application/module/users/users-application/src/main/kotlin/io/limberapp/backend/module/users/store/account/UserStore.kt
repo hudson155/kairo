@@ -24,11 +24,15 @@ internal class UserStore @Inject constructor(
             try {
                 it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
-                val error = e.serverErrorMessage ?: throw e
-                if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) throw EmailAddressAlreadyTaken()
-                throw e
+                handleCreateError(e)
             }
         }
+    }
+
+    private fun handleCreateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) throw EmailAddressAlreadyTaken()
+        throw e
     }
 
     fun get(userGuid: UUID): UserModel? {
