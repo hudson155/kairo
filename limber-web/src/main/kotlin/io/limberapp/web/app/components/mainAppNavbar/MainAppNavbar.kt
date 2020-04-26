@@ -17,6 +17,7 @@ internal data class Props(val features: List<FeatureRep.Complete>, val name: Str
 
 private val mainAppNavbar = functionalComponent<Props> { props ->
     val auth = useAuth()
+
     navbar(
         left = buildElements {
             headerLinkGroup {
@@ -24,6 +25,8 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
             }
         },
         right = buildElements {
+            // Auth is undefined if the navbar is rendered outside of an auth provider.
+            if (auth == undefined || auth.isLoading) return@buildElements
             headerLinkGroup {
                 props.name?.let { headerText { +it } }
                 if (auth.isAuthenticated) {
@@ -43,3 +46,5 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
 internal fun RBuilder.mainAppNavbar(features: List<FeatureRep.Complete>, name: String?) {
     child(mainAppNavbar, Props(features, name))
 }
+
+internal fun RBuilder.minimalNavbar() = mainAppNavbar(features = emptyList(), name = null)

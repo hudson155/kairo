@@ -2,10 +2,11 @@ package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
+import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.footer.footer
-import io.limberapp.web.app.components.landingPageNavbar.landingPageNavbar
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
+import io.limberapp.web.app.components.mainAppNavbar.minimalNavbar
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
@@ -14,8 +15,10 @@ import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.apiProvider
+import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.authProvider
 import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.context.globalState.action.org.OrgAction
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.context.globalState.useGlobalState
@@ -75,7 +78,7 @@ private val appWithAuth = functionalComponent<RProps> {
     }
 
     if (!global.state.tenant.isLoaded) {
-        page(header = buildElement { landingPageNavbar() }, footer = buildElement { footer() }) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Loading tenant...")
         }
         return@functionalComponent
@@ -98,7 +101,7 @@ private val appWithApi = functionalComponent<RProps> {
 private val appRouter = functionalComponent<RProps> {
     val auth = useAuth()
     if (auth.isLoading) {
-        page(header = buildElement { landingPageNavbar() }, footer = buildElement { footer() }) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Identifying you...")
         }
         return@functionalComponent
@@ -108,14 +111,43 @@ private val appRouter = functionalComponent<RProps> {
         switch {
             route(path = "/signin", exact = true) { buildElement { signInPage() } }
             route(path = "/signout", exact = true) { buildElement { signOutPage() } }
-            route(path = "/") { buildElement { child(appFeatureRouter) } }
+            if (auth.isAuthenticated) {
+                route(path = "/") { buildElement { child(appFeatureRouter) } }
+            } else {
+                route(path = "/") {
+                    buildElement {
+                        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+                            signInPage()
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 private val appFeatureRouter = functionalComponent<RProps> {
+    val api = useApi()
+    val auth = useAuth()
     val global = useGlobalState()
-    val features = global.state.org.state!!.features.toList()
+
+    useEffect {
+        if (global.state.org.hasBegunLoading) return@useEffect
+        global.dispatch(OrgAction.BeginLoading)
+        async {
+            val org = api.orgs(OrgApi.Get(checkNotNull(auth.jwt).org.guid))
+            global.dispatch(OrgAction.Set(org))
+        }
+    }
+
+    if (!global.state.org.isLoaded) {
+        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+            loadingPage("Loading org...")
+        }
+        return@functionalComponent
+    }
+
+    val features = checkNotNull(global.state.org.state).features
 
     page(header = buildElement { mainAppNavbar(features, "Firstname Lastname") }, footer = buildElement { footer() }) {
         switch {
