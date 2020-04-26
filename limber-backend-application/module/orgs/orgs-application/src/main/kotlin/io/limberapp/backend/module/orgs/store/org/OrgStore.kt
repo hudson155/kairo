@@ -1,5 +1,71 @@
 package io.limberapp.backend.module.orgs.store.org
 
-import io.limberapp.backend.module.orgs.service.org.OrgService
+import com.google.inject.Inject
+import com.piperframework.store.SqlStore
+import com.piperframework.util.singleNullOrThrow
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
+import io.limberapp.backend.module.orgs.model.org.OrgModel
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.kotlin.bindKotlin
+import org.jetbrains.exposed.sql.Database
+import java.util.UUID
 
-internal interface OrgStore : OrgService
+internal class OrgStore @Inject constructor(
+    database: Database,
+    private val jdbi: Jdbi,
+    private val featureStore: FeatureStore
+) : SqlStore(database) {
+    fun create(model: OrgModel) {
+        jdbi.useTransaction<Exception> {
+            it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+            featureStore.create(model.guid, model.features)
+        }
+    }
+
+    fun get(orgGuid: UUID): OrgModel? {
+        return jdbi.withHandle<OrgModel?, Exception> {
+            it.createQuery("SELECT * FROM orgs.org WHERE guid = :guid")
+                .bind("guid", orgGuid)
+                .mapTo(OrgModel::class.java)
+                .singleNullOrThrow()
+                ?.copy(features = featureStore.getByOrgGuid(orgGuid))
+        }
+    }
+
+    fun getByOwnerAccountGuid(ownerAccountGuid: UUID): Set<OrgModel> {
+        return jdbi.withHandle<Set<OrgModel>, Exception> {
+            it.createQuery("SELECT * FROM orgs.org WHERE owner_account_guid = :ownerAccountGuid")
+                .bind("ownerAccountGuid", ownerAccountGuid)
+                .mapTo(OrgModel::class.java)
+                .map { it.copy(features = featureStore.getByOrgGuid(it.guid)) }
+                .toSet()
+        }
+    }
+
+    fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel {
+        return jdbi.inTransaction<OrgModel, Exception> {
+            val updateCount = it.createUpdate(sqlResource("update"))
+                .bind("guid", orgGuid)
+                .bindKotlin(update)
+                .execute()
+            when (updateCount) {
+                0 -> throw OrgNotFound()
+                1 -> return@inTransaction checkNotNull(get(orgGuid))
+                else -> badSql()
+            }
+        }
+    }
+
+    fun delete(orgGuid: UUID) {
+        jdbi.useTransaction<Exception> {
+            val updateCount = it.createUpdate("DELETE FROM orgs.org WHERE guid = :guid")
+                .bind("guid", orgGuid)
+                .execute()
+            when (updateCount) {
+                0 -> throw OrgNotFound()
+                1 -> return@useTransaction
+                else -> badSql()
+            }
+        }
+    }
+}
