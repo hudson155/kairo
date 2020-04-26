@@ -135,7 +135,6 @@ private val appFeatureRouter = functionalComponent<RProps> {
         if (global.state.org.hasBegunLoading) return@useEffect
         global.dispatch(OrgAction.BeginLoading)
         async {
-            println("jwt org: ${JSON.stringify(checkNotNull(auth.jwt).org)}")
             val org = api.orgs(OrgApi.Get(checkNotNull(auth.jwt).org.guid))
             global.dispatch(OrgAction.Set(org))
         }
