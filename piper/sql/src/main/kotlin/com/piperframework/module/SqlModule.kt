@@ -1,6 +1,8 @@
 package com.piperframework.module
 
 import com.piperframework.config.database.SqlDatabaseConfig
+import com.piperframework.sql.registerJdbiType
+import com.piperframework.sql.type.JdbiRegexType
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin
@@ -25,6 +27,7 @@ open class SqlModule(config: SqlDatabaseConfig) : ModuleWithLifecycle() {
         .installPlugin(KotlinPlugin())
         .installPlugin(KotlinSqlObjectPlugin())
         .installPlugin(PostgresPlugin())
+        .registerJdbiType(JdbiRegexType)
 
     override fun unconfigure() {
         wrapper.disconnect()
