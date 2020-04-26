@@ -1,5 +1,7 @@
 package com.piperframework.store
 
+import com.piperframework.util.singleNullOrThrow
+import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
@@ -31,6 +33,10 @@ abstract class SqlStore(private val database: Database) {
         val resourceName = "/$classResourcePath/$name.sql"
         return resourceCache.get(resourceName)
     }
+
+    protected fun Query.asInt() = map { rs, _ ->
+        rs.getInt(1).let { if (rs.wasNull()) null else it }
+    }.singleNullOrThrow()
 
     protected val UnableToExecuteStatementException.serverErrorMessage: ServerErrorMessage?
         get() {

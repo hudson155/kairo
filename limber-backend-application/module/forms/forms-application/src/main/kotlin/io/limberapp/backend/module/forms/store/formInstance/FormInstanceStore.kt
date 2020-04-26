@@ -1,5 +1,56 @@
 package io.limberapp.backend.module.forms.store.formInstance
 
-import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
+import com.google.inject.Inject
+import com.piperframework.store.SqlStore
+import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
+import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.kotlin.bindKotlin
+import org.jetbrains.exposed.sql.Database
+import java.util.UUID
 
-internal interface FormInstanceStore : FormInstanceService
+internal class FormInstanceStore @Inject constructor(
+    database: Database,
+    private val jdbi: Jdbi,
+    private val formInstanceQuestionStore: FormInstanceQuestionStore
+) : SqlStore(database) {
+    fun create(model: FormInstanceModel) {
+        jdbi.useTransaction<Exception> {
+            it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+            formInstanceQuestionStore.create(model.guid, model.questions.toSet())
+        }
+    }
+
+    fun get(formInstanceGuid: UUID): FormInstanceModel? {
+        return jdbi.withHandle<FormInstanceModel?, Exception> {
+            it.createQuery("SELECT * FROM forms.form_instance WHERE guid = :guid")
+                .bind("guid", formInstanceGuid)
+                .mapTo(FormInstanceModel::class.java)
+                .singleOrNull()
+                ?.copy(questions = formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid))
+        }
+    }
+
+    fun getByFeatureGuid(featureGuid: UUID): Set<FormInstanceModel> {
+        return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
+            it.createQuery("SELECT * FROM forms.form_instance WHERE feature_guid = :featureGuid")
+                .bind("featureGuid", featureGuid)
+                .mapTo(FormInstanceModel::class.java)
+                .map { it.copy(questions = formInstanceQuestionStore.getByFormInstanceGuid(it.guid)) }
+                .toSet()
+        }
+    }
+
+    fun delete(formInstanceGuid: UUID) {
+        jdbi.useTransaction<Exception> {
+            val updateCount = it.createUpdate("DELETE FROM forms.form_instance WHERE guid = :guid")
+                .bind("guid", formInstanceGuid)
+                .execute()
+            when (updateCount) {
+                0 -> throw FormInstanceNotFound()
+                1 -> return@useTransaction
+                else -> badSql()
+            }
+        }
+    }
+}

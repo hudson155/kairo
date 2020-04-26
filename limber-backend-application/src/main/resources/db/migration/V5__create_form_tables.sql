@@ -39,13 +39,13 @@ CREATE TABLE forms.form_instance
 
 CREATE TABLE forms.form_instance_question
 (
-    id                          BIGSERIAL PRIMARY KEY,
-    created_date                TIMESTAMP NOT NULL,
-    form_instance_guid          UUID      NOT NULL REFERENCES forms.form_instance (guid) ON DELETE CASCADE,
-    form_template_question_guid UUID      REFERENCES forms.form_template_question (guid) ON DELETE SET NULL,
-    type                        VARCHAR   NOT NULL,
-    text                        VARCHAR,
-    date                        DATE,
-    selections                  TEXT[],
-    UNIQUE (form_instance_guid, form_template_question_guid)
+    id                 BIGSERIAL PRIMARY KEY,
+    created_date       TIMESTAMP NOT NULL,
+    form_instance_guid UUID      NOT NULL REFERENCES forms.form_instance (guid) ON DELETE CASCADE,
+    question_guid      UUID      REFERENCES forms.form_template_question (guid) ON DELETE SET NULL,
+    type               VARCHAR   NOT NULL,
+    text               VARCHAR,
+    date               DATE,
+    selections         TEXT[],
+    UNIQUE (form_instance_guid, question_guid)
 );
