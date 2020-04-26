@@ -12,9 +12,9 @@ class FormInstanceClient(private val fetch: Fetch, private val json: Json) {
         return json.parse(string)
     }
 
-    suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): List<FormInstanceRep.Complete> {
+    suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Complete> {
         val string = fetch(endpoint)
-        return json.parseList(string)
+        return json.parseSet(string)
     }
 
     suspend operator fun invoke(endpoint: FormInstanceApi.Delete) {

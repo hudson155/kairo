@@ -25,7 +25,7 @@ internal class GetAccessTokensByAccountGuid @Inject constructor(
     servingConfig: ServingConfig,
     private val accessTokenService: AccessTokenService,
     private val accessTokenMapper: AccessTokenMapper
-) : LimberApiEndpoint<AccessTokenApi.GetByAccountGuid, List<AccessTokenRep.Complete>>(
+) : LimberApiEndpoint<AccessTokenApi.GetByAccountGuid, Set<AccessTokenRep.Complete>>(
     application, servingConfig.apiPathPrefix,
     endpointTemplate = AccessTokenApi.GetByAccountGuid::class.template()
 ) {
@@ -33,9 +33,9 @@ internal class GetAccessTokensByAccountGuid @Inject constructor(
         accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
     )
 
-    override suspend fun Handler.handle(command: AccessTokenApi.GetByAccountGuid): List<AccessTokenRep.Complete> {
+    override suspend fun Handler.handle(command: AccessTokenApi.GetByAccountGuid): Set<AccessTokenRep.Complete> {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val models = accessTokenService.getByAccountGuid(command.accountGuid)
-        return models.map { accessTokenMapper.completeRep(it) }
+        return models.map { accessTokenMapper.completeRep(it) }.toSet()
     }
 }

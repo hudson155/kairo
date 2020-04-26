@@ -4,6 +4,7 @@ import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -40,6 +41,13 @@ class Json(prettyPrint: Boolean = false, context: SerialModule = EmptyModule) {
         json.parse(getSerializer(kClass), string)
 
     /**
+     * Parse string to arbitrary set of classes.
+     * Cleaner interface used when the class is available at compile time.
+     */
+    inline fun <reified T : Any> parseSet(string: String): Set<T> =
+        json.parse(SetSerializer(getSerializer()), string)
+
+    /**
      * Parse string to arbitrary list of classes.
      * Cleaner interface used when the class is available at compile time.
      */
@@ -53,6 +61,14 @@ class Json(prettyPrint: Boolean = false, context: SerialModule = EmptyModule) {
         json.stringify(getSerializer(model::class) as SerializationStrategy<Any>, model)
 
     /**
+     * Stringify arbitrary set of classes to string.
+     * Faster implementation used when the class is available at compile time.
+     */
+    @JvmName("stringifySetDynamically")
+    inline fun <reified T : Any> stringifySet(model: Set<T>): String =
+        json.stringify(SetSerializer(getSerializer()), model)
+
+    /**
      * Stringify arbitrary list of classes to string.
      * Faster implementation used when the class is available at compile time.
      */
@@ -61,19 +77,33 @@ class Json(prettyPrint: Boolean = false, context: SerialModule = EmptyModule) {
         json.stringify(ListSerializer(getSerializer()), model)
 
     /**
+     * Stringify arbitrary set of classes to string.
+     * Slower implementation used when the class is available at compile time.
+     */
+    @JvmName("stringifySetStatically")
+    fun stringifySet(model: Set<*>): String {
+        val serializer = elementSerializer(model)
+        return json.stringify(SetSerializer(serializer), model as Set<Any>)
+    }
+
+    /**
      * Stringify arbitrary list of classes to string.
      * Slower implementation used when the class is available at compile time.
      */
     @JvmName("stringifyListStatically")
     fun stringifyList(model: List<*>): String {
+        val serializer = elementSerializer(model)
+        return json.stringify(ListSerializer(serializer), model as List<Any>)
+    }
+
+    private fun elementSerializer(model: Collection<*>): KSerializer<Any> {
         val serializers = model.mapNotNull { it?.let { getSerializer(it::class) } }
-        val serializer = if (serializers.isEmpty()) {
+        return if (serializers.isEmpty()) {
             String.serializer()
         } else {
             if (serializers.distinct().size > 1) throw UnsupportedOperationException()
             serializers.first()
         } as KSerializer<Any>
-        return json.stringify(ListSerializer(serializer), model as List<Any>)
     }
 
     inline fun <reified T : Any> getSerializer(): KSerializer<T> =

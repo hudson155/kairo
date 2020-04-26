@@ -31,7 +31,7 @@ class TokenAuthVerifier(
         val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.userGuid) ?: return null
         return Jwt(
             org = claims.org?.let { json.parse<JwtOrg>(it) },
-            roles = json.parseList<JwtRole>(claims.roles).toSet(),
+            roles = json.parseSet<JwtRole>(claims.roles).toSet(),
             user = json.parse<JwtUser>(claims.user)
         )
     }

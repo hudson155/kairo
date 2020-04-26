@@ -15,7 +15,7 @@ internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
         val featureGuid = UUID.randomUUID()
 
         piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseList<FormTemplateRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<FormTemplateRep.Complete>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -31,7 +31,7 @@ internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
         piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureGuid)))
 
         piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseList<FormTemplateRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<FormTemplateRep.Complete>(response.content!!)
             assertEquals(setOf(formTemplate0Rep, formTemplate1Rep), actual)
         }
     }

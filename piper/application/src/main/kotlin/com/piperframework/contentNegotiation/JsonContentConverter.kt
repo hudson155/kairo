@@ -34,6 +34,7 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
     ): Any? {
         @Suppress("UseIfInsteadOfWhen")
         return when (value) {
+            is Set<*> -> json.stringifySet(value)
             is List<*> -> json.stringifyList(value)
             else -> json.stringify(value)
         }

@@ -17,7 +17,7 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
         val featureGuid = UUID.randomUUID()
 
         piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseList<FormInstanceRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<FormInstanceRep.Complete>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -40,7 +40,7 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
         )
 
         piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseList<FormInstanceRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<FormInstanceRep.Complete>(response.content!!)
             assertEquals(setOf(formInstance0Rep, formInstance1Rep), actual)
         }
     }

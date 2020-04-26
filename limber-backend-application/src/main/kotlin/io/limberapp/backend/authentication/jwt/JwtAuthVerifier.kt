@@ -13,7 +13,6 @@ import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import kotlinx.serialization.parseList
 import org.slf4j.LoggerFactory
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVerifier<Jwt> {
@@ -44,7 +43,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
             org = decodedJwt.getClaim(Claims.org).asString()
                 ?.let { json.parse<JwtOrg>(it) },
             roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString())
-                .let { json.json.parseList<JwtRole>(it).toSet() },
+                .let { json.parseSet<JwtRole>(it) },
             user = requireNotNull(decodedJwt.getClaim(Claims.user).asString())
                 .let { json.parse<JwtUser>(it) }
         )

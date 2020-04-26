@@ -21,7 +21,7 @@ internal class PostAccessTokenTest : ResourceTest() {
         }
 
         piperTest.test(AccessTokenApi.GetByAccountGuid(accountGuid)) {
-            val actual = json.parseList<AccessTokenRep.Complete>(response.content!!).toSet()
+            val actual = json.parseSet<AccessTokenRep.Complete>(response.content!!)
             assertEquals(setOf(accessTokenRep), actual)
         }
     }
