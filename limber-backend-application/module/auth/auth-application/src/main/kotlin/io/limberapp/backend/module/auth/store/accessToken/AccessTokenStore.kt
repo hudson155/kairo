@@ -8,7 +8,6 @@ import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jetbrains.exposed.sql.Database
-import org.mindrot.jbcrypt.BCrypt
 import java.util.UUID
 
 internal class AccessTokenStore @Inject constructor(
@@ -21,14 +20,12 @@ internal class AccessTokenStore @Inject constructor(
         }
     }
 
-    fun getIfValid(accessTokenGuid: UUID, accessTokenSecret: String): AccessTokenModel? {
+    fun get(accessTokenGuid: UUID): AccessTokenModel? {
         return jdbi.withHandle<AccessTokenModel?, Exception> {
-            val model = it.createQuery("SELECT * FROM auth.access_token WHERE guid = :guid")
+            it.createQuery("SELECT * FROM auth.access_token WHERE guid = :guid")
                 .bind("guid", accessTokenGuid)
                 .mapTo(AccessTokenModel::class.java)
                 .singleNullOrThrow() ?: return@withHandle null
-            if (!BCrypt.checkpw(accessTokenSecret, model.encryptedSecret)) return@withHandle null
-            return@withHandle model
         }
     }
 
