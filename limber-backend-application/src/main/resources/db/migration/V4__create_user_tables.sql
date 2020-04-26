@@ -1,8 +1,8 @@
 CREATE TABLE users.account
 (
     id                BIGSERIAL PRIMARY KEY,
-    created_date      TIMESTAMP   NOT NULL,
     guid              UUID UNIQUE NOT NULL,
+    created_date      TIMESTAMP   NOT NULL,
     identity_provider BOOLEAN     NOT NULL,
     superuser         BOOLEAN     NOT NULL,
     name              VARCHAR     NOT NULL
@@ -20,8 +20,8 @@ CREATE TABLE users.user
 CREATE TABLE auth.access_token
 (
     id               BIGSERIAL PRIMARY KEY,
-    created_date     TIMESTAMP      NOT NULL,
     guid             UUID UNIQUE    NOT NULL,
+    created_date     TIMESTAMP      NOT NULL,
     account_guid     UUID           NOT NULL,
     encrypted_secret VARCHAR UNIQUE NOT NULL
 );

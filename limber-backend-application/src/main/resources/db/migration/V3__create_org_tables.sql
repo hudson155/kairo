@@ -1,8 +1,8 @@
 CREATE TABLE orgs.org
 (
     id                 BIGSERIAL PRIMARY KEY,
-    created_date       TIMESTAMP   NOT NULL,
     guid               UUID UNIQUE NOT NULL,
+    created_date       TIMESTAMP   NOT NULL,
     name               VARCHAR     NOT NULL,
     owner_account_guid UUID        NOT NULL
 );
@@ -10,8 +10,8 @@ CREATE TABLE orgs.org
 CREATE TABLE orgs.feature
 (
     id                 BIGSERIAL PRIMARY KEY,
-    created_date       TIMESTAMP   NOT NULL,
     guid               UUID UNIQUE NOT NULL,
+    created_date       TIMESTAMP   NOT NULL,
     org_guid           UUID        NOT NULL REFERENCES orgs.org (guid) ON DELETE CASCADE,
     name               VARCHAR     NOT NULL,
     path               VARCHAR     NOT NULL,
