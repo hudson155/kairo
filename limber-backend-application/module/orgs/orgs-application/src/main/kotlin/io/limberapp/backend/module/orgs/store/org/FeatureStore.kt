@@ -80,21 +80,21 @@ internal class FeatureStore @Inject constructor(
                     .bind("orgGuid", orgGuid)
                     .execute()
             }
-            try {
-                val updateCount = it.createUpdate(sqlResource("update"))
+            val updateCount = try {
+                it.createUpdate(sqlResource("update"))
                     .bind("orgGuid", orgGuid)
                     .bind("featureGuid", featureGuid)
                     .bindKotlin(update)
                     .execute()
-                when (updateCount) {
-                    0 -> throw FeatureNotFound()
-                    1 -> return@inTransaction checkNotNull(get(orgGuid, featureGuid))
-                    else -> badSql()
-                }
             } catch (e: UnableToExecuteStatementException) {
                 val error = e.serverErrorMessage ?: throw e
                 if (error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT)) throw FeatureIsNotUnique()
                 throw e
+            }
+            when (updateCount) {
+                0 -> throw FeatureNotFound()
+                1 -> return@inTransaction checkNotNull(get(orgGuid, featureGuid))
+                else -> badSql()
             }
         }
     }
