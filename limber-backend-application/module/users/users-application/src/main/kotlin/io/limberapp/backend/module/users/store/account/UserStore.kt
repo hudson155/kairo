@@ -57,7 +57,6 @@ internal class UserStore @Inject constructor(
                 .bind("guid", userGuid)
                 .bindKotlin(update)
                 .execute()
-
             when (updateCount) {
                 0 -> throw UserNotFound()
                 1 -> return@inTransaction checkNotNull(get(userGuid))
@@ -71,7 +70,6 @@ internal class UserStore @Inject constructor(
             val updateCount = it.createUpdate("DELETE FROM users.user WHERE guid = :guid")
                 .bind("guid", userGuid)
                 .execute()
-
             when (updateCount) {
                 0 -> throw UserNotFound()
                 1 -> return@useTransaction
