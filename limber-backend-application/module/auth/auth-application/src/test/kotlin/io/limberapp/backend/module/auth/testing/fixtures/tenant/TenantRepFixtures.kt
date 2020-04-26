@@ -23,7 +23,7 @@ internal object TenantRepFixtures {
             orgGuid = orgGuid,
             createdDate = LocalDateTime.now(fixedClock),
             auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
-            domains = listOf(
+            domains = setOf(
                 TenantDomainRep.Complete(
                     createdDate = LocalDateTime.now(fixedClock),
                     domain = "limberapp.io"
@@ -43,7 +43,7 @@ internal object TenantRepFixtures {
             orgGuid = orgGuid,
             createdDate = LocalDateTime.now(fixedClock),
             auth0ClientId = "01234567890123456789012345678901",
-            domains = listOf(
+            domains = setOf(
                 TenantDomainRep.Complete(
                     createdDate = LocalDateTime.now(fixedClock),
                     domain = "limber.someclient.com"

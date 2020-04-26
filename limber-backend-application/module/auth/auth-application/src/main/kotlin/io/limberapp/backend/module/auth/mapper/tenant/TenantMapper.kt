@@ -21,7 +21,7 @@ internal class TenantMapper @Inject constructor(
         createdDate = model.createdDate,
         orgGuid = model.orgGuid,
         auth0ClientId = model.auth0ClientId,
-        domains = model.domains.map { tenantDomainMapper.completeRep(it) }
+        domains = model.domains.map { tenantDomainMapper.completeRep(it) }.toSet()
     )
 
     fun update(rep: TenantRep.Update) = TenantModel.Update(

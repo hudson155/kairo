@@ -82,7 +82,9 @@ internal class PatchFeatureTest : ResourceTest() {
 
         val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
         featureRep = featureRep.copy(name = featureUpdateRep.name!!)
-        orgRep = orgRep.copy(features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it })
+        orgRep = orgRep.copy(
+            features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }.toSet()
+        )
         piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep)) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
@@ -110,7 +112,7 @@ internal class PatchFeatureTest : ResourceTest() {
         orgRep = orgRep.copy(
             features = orgRep.features.map {
                 if (it.guid == featureRep.guid) featureRep else it.copy(isDefaultFeature = false)
-            }
+            }.toSet()
         )
         piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep0)) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
@@ -119,7 +121,9 @@ internal class PatchFeatureTest : ResourceTest() {
 
         val featureUpdateRep1 = FeatureRep.Update(isDefaultFeature = false)
         featureRep = featureRep.copy(isDefaultFeature = false)
-        orgRep = orgRep.copy(features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it })
+        orgRep = orgRep.copy(
+            features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }.toSet()
+        )
         piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep1)) {
             val actual = json.parse<FeatureRep.Complete>(response.content!!)
             assertEquals(featureRep, actual)
