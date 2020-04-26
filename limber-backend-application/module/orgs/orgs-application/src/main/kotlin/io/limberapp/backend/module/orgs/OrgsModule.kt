@@ -13,12 +13,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.FeatureServiceImpl
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
-import io.limberapp.backend.module.orgs.store.org.FeatureStore
-import io.limberapp.backend.module.orgs.store.org.OrgStore
-import io.limberapp.backend.module.orgs.store.org.SqlFeatureStore
-import io.limberapp.backend.module.orgs.store.org.SqlOrgMapper
-import io.limberapp.backend.module.orgs.store.org.SqlOrgMapperImpl
-import io.limberapp.backend.module.orgs.store.org.SqlOrgStore
 import kotlinx.serialization.modules.EmptyModule
 
 class OrgsModule : Module() {
@@ -40,9 +34,5 @@ class OrgsModule : Module() {
         bind(FeatureService::class, FeatureServiceImpl::class)
     }
 
-    override fun bindStores() {
-        bind(SqlOrgMapper::class, SqlOrgMapperImpl::class)
-        bind(OrgStore::class, SqlOrgStore::class)
-        bind(FeatureStore::class, SqlFeatureStore::class)
-    }
+    override fun bindStores() = Unit
 }

@@ -16,9 +16,11 @@ CREATE TABLE orgs.feature
     name               VARCHAR     NOT NULL,
     path               VARCHAR     NOT NULL,
     type               VARCHAR     NOT NULL,
-    is_default_feature BOOLEAN     NOT NULL,
-    UNIQUE (org_guid, path)
+    is_default_feature BOOLEAN     NOT NULL
 );
+
+CREATE UNIQUE INDEX
+    ON orgs.feature (org_guid, LOWER(path));
 
 CREATE UNIQUE INDEX
     ON orgs.feature (org_guid)
