@@ -185,4 +185,4 @@ private val appFeatureRouter = functionalComponent<RProps> {
     }
 }
 
-internal val List<FeatureRep.Complete>.default get() = singleOrNull { it.isDefaultFeature }
+internal val Set<FeatureRep.Complete>.default get() = singleOrNull { it.isDefaultFeature }
