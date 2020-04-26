@@ -19,31 +19,36 @@ internal class UserStore @Inject constructor(
     database: Database,
     private val jdbi: Jdbi
 ) : SqlStore(database) {
-    @Suppress("OptionalUnit") // Required to avoid recursive type checking
-    fun create(model: UserModel): Unit = jdbi.useHandle<Exception> {
-        try {
-            it.createUpdate(sqlResource(this::create.name)).bindKotlin(model).execute()
-        } catch (e: UnableToExecuteStatementException) {
-            val error = e.serverErrorMessage ?: throw e
-            if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) {
-                throw EmailAddressAlreadyTaken(model.emailAddress)
+    fun create(model: UserModel) {
+        jdbi.useHandle<Exception> {
+            try {
+                it.createUpdate(sqlResource(this::create.name)).bindKotlin(model).execute()
+            } catch (e: UnableToExecuteStatementException) {
+                val error = e.serverErrorMessage ?: throw e
+                if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) {
+                    throw EmailAddressAlreadyTaken(model.emailAddress)
+                }
+                throw e
             }
-            throw e
         }
     }
 
-    fun get(userGuid: UUID) = jdbi.withHandle<UserModel?, Exception> {
-        it.createQuery("SELECT * FROM users.user WHERE guid = :guid")
-            .bind("guid", userGuid)
-            .mapTo(UserModel::class.java)
-            .singleNullOrThrow()
+    fun get(userGuid: UUID): UserModel? {
+        return jdbi.withHandle<UserModel?, Exception> {
+            it.createQuery("SELECT * FROM users.user WHERE guid = :guid")
+                .bind("guid", userGuid)
+                .mapTo(UserModel::class.java)
+                .singleNullOrThrow()
+        }
     }
 
-    fun getByEmailAddress(emailAddress: String) = jdbi.withHandle<UserModel?, Exception> {
-        it.createQuery("SELECT * FROM users.user WHERE email_address = :emailAddress")
-            .bind("emailAddress", emailAddress)
-            .mapTo(UserModel::class.java)
-            .singleNullOrThrow()
+    fun getByEmailAddress(emailAddress: String): UserModel? {
+        return jdbi.withHandle<UserModel?, Exception> {
+            it.createQuery("SELECT * FROM users.user WHERE email_address = :emailAddress")
+                .bind("emailAddress", emailAddress)
+                .mapTo(UserModel::class.java)
+                .singleNullOrThrow()
+        }
     }
 
     fun update(userGuid: UUID, update: UserModel.Update): UserModel {
@@ -61,15 +66,17 @@ internal class UserStore @Inject constructor(
         }
     }
 
-    fun delete(userGuid: UUID) = jdbi.useTransaction<Exception> {
-        val updateCount = it.createUpdate("DELETE FROM users.user WHERE guid = :guid")
-            .bind("guid", userGuid)
-            .execute()
+    fun delete(userGuid: UUID) {
+        jdbi.useTransaction<Exception> {
+            val updateCount = it.createUpdate("DELETE FROM users.user WHERE guid = :guid")
+                .bind("guid", userGuid)
+                .execute()
 
-        when (updateCount) {
-            0 -> throw UserNotFound()
-            1 -> return@useTransaction
-            else -> badSql()
+            when (updateCount) {
+                0 -> throw UserNotFound()
+                1 -> return@useTransaction
+                else -> badSql()
+            }
         }
     }
 }
