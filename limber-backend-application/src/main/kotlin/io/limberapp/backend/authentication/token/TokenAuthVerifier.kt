@@ -28,7 +28,7 @@ class TokenAuthVerifier(
         val accessTokenGuid = uuidFromBase64Encoded("${blob.substring(0, TOKEN_PART_LENGTH)}==")
         val accessTokenSecret = blob.substring(TOKEN_PART_LENGTH, TOKEN_PART_LENGTH * 2)
         val accessToken = accessTokenService.getIfValid(accessTokenGuid, accessTokenSecret) ?: return null
-        val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.userGuid) ?: return null
+        val claims = jwtClaimsRequestService.requestJwtClaimsForExistingUser(accessToken.accountGuid) ?: return null
         return Jwt(
             org = claims.org?.let { json.parse<JwtOrg>(it) },
             roles = json.parseSet<JwtRole>(claims.roles).toSet(),

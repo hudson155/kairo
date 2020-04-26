@@ -20,16 +20,6 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainServiceImpl
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.auth.service.tenant.TenantServiceImpl
-import io.limberapp.backend.module.auth.store.accessToken.AccessTokenStore
-import io.limberapp.backend.module.auth.store.accessToken.SqlAccessTokenMapper
-import io.limberapp.backend.module.auth.store.accessToken.SqlAccessTokenMapperImpl
-import io.limberapp.backend.module.auth.store.accessToken.SqlAccessTokenStore
-import io.limberapp.backend.module.auth.store.tenant.SqlTenantDomainStore
-import io.limberapp.backend.module.auth.store.tenant.SqlTenantMapper
-import io.limberapp.backend.module.auth.store.tenant.SqlTenantMapperImpl
-import io.limberapp.backend.module.auth.store.tenant.SqlTenantStore
-import io.limberapp.backend.module.auth.store.tenant.TenantDomainStore
-import io.limberapp.backend.module.auth.store.tenant.TenantStore
 import kotlinx.serialization.modules.EmptyModule
 
 class AuthModule : Module() {
@@ -60,12 +50,5 @@ class AuthModule : Module() {
         bind(AccessTokenService::class, AccessTokenServiceImpl::class)
     }
 
-    override fun bindStores() {
-        bind(SqlTenantMapper::class, SqlTenantMapperImpl::class)
-        bind(TenantStore::class, SqlTenantStore::class)
-        bind(TenantDomainStore::class, SqlTenantDomainStore::class)
-
-        bind(SqlAccessTokenMapper::class, SqlAccessTokenMapperImpl::class)
-        bind(AccessTokenStore::class, SqlAccessTokenStore::class)
-    }
+    override fun bindStores() = Unit
 }

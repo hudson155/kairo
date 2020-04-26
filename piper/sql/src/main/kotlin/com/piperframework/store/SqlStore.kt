@@ -33,7 +33,14 @@ abstract class SqlStore(private val database: Database) {
     }
 
     protected val UnableToExecuteStatementException.serverErrorMessage: ServerErrorMessage?
-        get() = (cause as? PSQLException)?.serverErrorMessage
+        get() {
+            val cause = cause
+            return when (cause) {
+                is BatchUpdateException -> cause.cause as? PSQLException
+                is PSQLException -> cause
+                else -> null
+            }?.serverErrorMessage
+        }
 
     protected fun <T> transaction(function: Transaction.() -> T) = transaction(database) { function() }
 

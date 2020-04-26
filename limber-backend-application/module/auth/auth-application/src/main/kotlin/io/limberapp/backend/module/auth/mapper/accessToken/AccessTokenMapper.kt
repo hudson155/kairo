@@ -16,13 +16,13 @@ internal class AccessTokenMapper @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val hashingConfig: HashingConfig
 ) {
-    fun model(userGuid: UUID): Pair<AccessTokenModel, UUID> {
+    fun model(accountGuid: UUID): Pair<AccessTokenModel, UUID> {
         val guid = uuidGenerator.generate()
         val rawSecretAsUuid = uuidGenerator.generate()
         val model = AccessTokenModel(
             guid = guid,
             createdDate = LocalDateTime.now(clock),
-            userGuid = userGuid,
+            accountGuid = accountGuid,
             encryptedSecret = run {
                 val salt = BCrypt.gensalt(hashingConfig.logRounds)
                 return@run BCrypt.hashpw(rawSecretAsUuid.base64Encode().dropLast(2), salt)
@@ -34,13 +34,13 @@ internal class AccessTokenMapper @Inject constructor(
     fun oneTimeUseRep(model: AccessTokenModel, rawSecretAsUuid: UUID) = AccessTokenRep.OneTimeUse(
         guid = model.guid,
         createdDate = model.createdDate,
-        userGuid = model.userGuid,
+        accountGuid = model.accountGuid,
         token = model.guid.base64Encode().dropLast(2) + rawSecretAsUuid.base64Encode().dropLast(2)
     )
 
     fun completeRep(model: AccessTokenModel) = AccessTokenRep.Complete(
         guid = model.guid,
         createdDate = model.createdDate,
-        userGuid = model.userGuid
+        accountGuid = model.accountGuid
     )
 }

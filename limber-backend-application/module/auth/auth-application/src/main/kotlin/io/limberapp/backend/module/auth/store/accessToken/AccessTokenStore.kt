@@ -1,5 +1,58 @@
 package io.limberapp.backend.module.auth.store.accessToken
 
-import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
+import com.google.inject.Inject
+import com.piperframework.store.SqlStore
+import com.piperframework.util.singleNullOrThrow
+import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFound
+import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.core.kotlin.bindKotlin
+import org.jetbrains.exposed.sql.Database
+import org.mindrot.jbcrypt.BCrypt
+import java.util.UUID
 
-internal interface AccessTokenStore : AccessTokenService
+internal class AccessTokenStore @Inject constructor(
+    database: Database,
+    private val jdbi: Jdbi
+) : SqlStore(database) {
+    fun create(model: AccessTokenModel) {
+        jdbi.useHandle<Exception> {
+            it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+        }
+    }
+
+    fun getIfValid(accessTokenGuid: UUID, accessTokenSecret: String): AccessTokenModel? {
+        return jdbi.withHandle<AccessTokenModel?, Exception> {
+            val model = it.createQuery("SELECT * FROM auth.access_token WHERE guid = :guid")
+                .bind("guid", accessTokenGuid)
+                .mapTo(AccessTokenModel::class.java)
+                .singleNullOrThrow() ?: return@withHandle null
+            if (!BCrypt.checkpw(accessTokenSecret, model.encryptedSecret)) return@withHandle null
+            return@withHandle model
+        }
+    }
+
+    fun getByAccountGuid(accountGuid: UUID): Set<AccessTokenModel> {
+        return jdbi.withHandle<Set<AccessTokenModel>, Exception> {
+            it.createQuery("SELECT * FROM auth.access_token WHERE account_guid = :accountGuid")
+                .bind("accountGuid", accountGuid)
+                .mapTo(AccessTokenModel::class.java)
+                .toSet()
+        }
+    }
+
+    fun delete(accountGuid: UUID, accessTokenGuid: UUID) {
+        jdbi.useTransaction<Exception> {
+            val updateCount =
+                it.createUpdate("DELETE FROM auth.access_token WHERE account_guid = :accountGuid AND guid = :guid")
+                    .bind("accountGuid", accountGuid)
+                    .bind("guid", accessTokenGuid)
+                    .execute()
+            when (updateCount) {
+                0 -> throw AccessTokenNotFound()
+                1 -> return@useTransaction
+                else -> badSql()
+            }
+        }
+    }
+}

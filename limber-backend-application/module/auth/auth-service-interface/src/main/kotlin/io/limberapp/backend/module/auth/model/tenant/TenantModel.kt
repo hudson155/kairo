@@ -7,7 +7,7 @@ data class TenantModel(
     val createdDate: LocalDateTime,
     val orgGuid: UUID,
     val auth0ClientId: String,
-    val domains: Set<TenantDomainModel>
+    val domains: Set<TenantDomainModel> = emptySet()
 ) {
     data class Update(
         val auth0ClientId: String?

@@ -8,7 +8,7 @@ interface AccessTokenService {
 
     fun getIfValid(accessTokenGuid: UUID, accessTokenSecret: String): AccessTokenModel?
 
-    fun getByAccountGuid(userGuid: UUID): Set<AccessTokenModel>
+    fun getByAccountGuid(accountGuid: UUID): Set<AccessTokenModel>
 
-    fun delete(userGuid: UUID, accessTokenGuid: UUID)
+    fun delete(accountGuid: UUID, accessTokenGuid: UUID)
 }
