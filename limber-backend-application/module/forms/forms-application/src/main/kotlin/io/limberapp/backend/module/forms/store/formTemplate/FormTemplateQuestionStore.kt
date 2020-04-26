@@ -9,13 +9,9 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQues
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
-internal class FormTemplateQuestionStore @Inject constructor(
-    database: Database,
-    private val jdbi: Jdbi
-) : SqlStore(database) {
+internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(formTemplateGuid: UUID, models: List<FormTemplateQuestionModel>, rank: Int? = null) {
         jdbi.useTransaction<Exception> {
             val insertionRank = validateInsertionRank(formTemplateGuid, rank)

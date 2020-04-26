@@ -53,6 +53,4 @@ class FormsModule : Module() {
         bind(FormInstanceService::class, FormInstanceServiceImpl::class)
         bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
     }
-
-    override fun bindStores() = Unit
 }

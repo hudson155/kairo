@@ -31,6 +31,4 @@ class UsersModule : Module() {
         bind(AccountService::class, AccountServiceImpl::class)
         bind(UserService::class, UserServiceImpl::class)
     }
-
-    override fun bindStores() = Unit
 }

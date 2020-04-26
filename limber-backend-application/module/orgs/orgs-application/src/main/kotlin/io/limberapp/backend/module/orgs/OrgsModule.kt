@@ -33,6 +33,4 @@ class OrgsModule : Module() {
         bind(OrgService::class, OrgServiceImpl::class)
         bind(FeatureService::class, FeatureServiceImpl::class)
     }
-
-    override fun bindStores() = Unit
 }

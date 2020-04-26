@@ -7,14 +7,12 @@ import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
 internal class OrgStore @Inject constructor(
-    database: Database,
     private val jdbi: Jdbi,
     private val featureStore: FeatureStore
-) : SqlStore(database) {
+) : SqlStore() {
     fun create(model: OrgModel) {
         jdbi.useTransaction<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()

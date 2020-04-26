@@ -8,7 +8,6 @@ dependencies {
     api(project(":piper:config")) // Uses ConfigString in the interface
     implementation(project(":piper:data-conversion"))
     api(project(":piper:module")) // This artifact implements a module
-    api(Dependencies.Sql.exposed) // Provides Exposed SQL DSL
     implementation(Dependencies.Sql.flyway)
     api(Dependencies.Sql.hikari) // Uses Hikari in the interface
     api(Dependencies.Sql.jdbi3Kotlin) // Provides JDBI3 interface

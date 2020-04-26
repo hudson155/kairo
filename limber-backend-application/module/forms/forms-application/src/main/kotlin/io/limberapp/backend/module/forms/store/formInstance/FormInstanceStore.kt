@@ -6,14 +6,12 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotF
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
 internal class FormInstanceStore @Inject constructor(
-    database: Database,
     private val jdbi: Jdbi,
     private val formInstanceQuestionStore: FormInstanceQuestionStore
-) : SqlStore(database) {
+) : SqlStore() {
     fun create(model: FormInstanceModel) {
         jdbi.useTransaction<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
