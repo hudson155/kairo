@@ -22,7 +22,7 @@ internal class PostUserTest : ResourceTest() {
                 rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
                     .copy(emailAddress = jeffHudsonUserRep.emailAddress)
             ),
-            expectedException = EmailAddressAlreadyTaken(jeffHudsonUserRep.emailAddress)
+            expectedException = EmailAddressAlreadyTaken()
         )
     }
 

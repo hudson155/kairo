@@ -34,10 +34,9 @@ internal class PostTenantDomainTest : ResourceTest() {
 
         piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
-        val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
         piperTest.test(
             endpoint = TenantDomainApi.Post(limberappOrgGuid, TenantDomainRepFixtures.someclientFixture.creation()),
-            expectedException = TenantDomainAlreadyRegistered(tenantDomainRep.domain)
+            expectedException = TenantDomainAlreadyRegistered()
         )
 
         piperTest.test(TenantApi.Get(limberappOrgGuid)) {
