@@ -9,7 +9,7 @@ data class FormTemplateModel(
     val featureGuid: UUID,
     val title: String,
     val description: String?,
-    val questions: List<FormTemplateQuestionModel>
+    val questions: List<FormTemplateQuestionModel> = emptyList()
 ) {
     data class Update(
         val title: String?,

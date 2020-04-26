@@ -67,7 +67,7 @@ VALUES (NOW(), '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '3dc95c5d-767c-4b29-9c50-
         '85ae9d91-2666-4174-bdfe-1f7cd868869c'),
        (NOW(), '168af0c7-1ab1-40f6-9715-c9e8c241442f', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
         '85ae9d91-2666-4174-bdfe-1f7cd868869c');
-INSERT INTO forms.form_instance_question (created_date, form_instance_guid, form_template_question_guid,
+INSERT INTO forms.form_instance_question (created_date, form_instance_guid, question_guid,
                                           type, text, date)
 VALUES (NOW(), '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '59c0b82c-57d3-4d29-b7ef-0bbf90084d7d',
         'TEXT', 'Summer Kavan', NULL),
