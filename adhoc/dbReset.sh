@@ -1,5 +1,12 @@
-if [ -z "$1" ]; then
-    echo "No database name"
-    exit
-fi
-./gradlew "-PmainClass=io.limberapp.backend.adhoc.DbResetKt" limber-backend-application:run --args="$1"
+# Resets the database
+#   - Drops all schemas and the migration log
+#   - Runs migrations
+#
+# For local database:
+#   adhoc/dbReset.sh localhost/limber
+# For local test database:
+#   adhoc/dbReset.sh localhost/limber_test
+# For production database:
+#   adhoc/dbReset.sh "db-limber-prod-do-user-7022079-0.a.db.ondigitalocean.com:25060/limber?sslmode=require" limber $LIMBER_PROD_POSTGRES_PASSWORD
+
+./gradlew "-PmainClass=io.limberapp.backend.adhoc.DbResetKt" limber-backend-application:run --args="$*"
