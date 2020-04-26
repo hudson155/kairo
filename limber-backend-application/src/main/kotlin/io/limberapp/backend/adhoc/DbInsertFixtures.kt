@@ -1,3 +1,18 @@
+package io.limberapp.backend.adhoc
+
+import com.piperframework.module.SqlWrapper
+import io.limberapp.backend.adhoc.helper.dbConfig
+
+fun main(args: Array<String>) {
+    val config = dbConfig(args[0], args.getOrNull(1), args.getOrNull(2))
+    with(SqlWrapper(config)) {
+        connect()
+        insertFixtures()
+        disconnect()
+    }
+}
+
+private const val SQL = """
 -- Create Auth0 account and access token.
 INSERT INTO users.account (created_date, guid, name, identity_provider, superuser)
 VALUES (NOW(), 'fcef16c1-d994-4dd5-b2ea-b972d817a29d', 'Auth0', TRUE, FALSE);
@@ -66,3 +81,10 @@ VALUES (NOW(), '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '59c0b82c-57d3-4d29-b7ef-
         'DATE', NULL, '2020-02-01'),
        (NOW(), '168af0c7-1ab1-40f6-9715-c9e8c241442f', '43f20f0d-03c0-4477-808d-8cfefefb46bc',
         'TEXT', 'Serious vehicle inspection. No jokes here.', NULL);
+"""
+
+internal fun SqlWrapper.insertFixtures() {
+    with(checkNotNull(dataSource).connection) {
+        createStatement().execute(SQL)
+    }
+}
