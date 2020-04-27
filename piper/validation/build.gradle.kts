@@ -8,6 +8,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation(project(":piper:util"))
             }
         }
         jvm {
