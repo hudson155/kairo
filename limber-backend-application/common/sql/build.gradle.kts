@@ -5,7 +5,8 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":piper:sql"))
+    implementation(project(":limber-backend-application:common"))
+    api(project(":piper:sql"))
 }
 
 detekt {

@@ -1,10 +1,10 @@
-package com.piperframework.module
+package io.limberapp.backend.module
 
 import com.piperframework.config.ConfigString
 import com.piperframework.config.database.SqlDatabaseConfig
 import java.sql.Connection
 
-open class TestSqlModule : SqlModule(
+open class TestSqlModule : LimberSqlModule(
     SqlDatabaseConfig(
         jdbcUrl = ConfigString(type = ConfigString.Type.PLAINTEXT, value = "jdbc:postgresql://localhost/limber_test"),
         username = "postgres",

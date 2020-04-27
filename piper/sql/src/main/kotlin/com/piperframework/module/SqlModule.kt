@@ -26,6 +26,9 @@ open class SqlModule(config: SqlDatabaseConfig) : ModuleWithLifecycle() {
         .installPlugin(KotlinSqlObjectPlugin())
         .installPlugin(PostgresPlugin())
         .registerJdbiType(JdbiRegexType)
+        .apply { configureJdbi() }
+
+    protected open fun Jdbi.configureJdbi() {}
 
     override fun unconfigure() {
         wrapper.disconnect()
