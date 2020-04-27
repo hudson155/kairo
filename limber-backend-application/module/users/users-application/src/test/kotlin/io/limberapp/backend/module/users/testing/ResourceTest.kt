@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.testing
 
-import com.piperframework.module.TestSqlModule
 import com.piperframework.testing.MockedServices
+import io.limberapp.backend.module.TestSqlModule
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.backend.test.LimberResourceTest

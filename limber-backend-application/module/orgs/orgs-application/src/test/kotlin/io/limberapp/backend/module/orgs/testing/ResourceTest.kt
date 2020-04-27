@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.orgs.testing
 
-import com.piperframework.module.TestSqlModule
+import io.limberapp.backend.module.TestSqlModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.test.LimberResourceTest
 

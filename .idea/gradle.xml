@@ -16,6 +16,8 @@
             <option value="$PROJECT_DIR$/limber-backend-application" />
             <option value="$PROJECT_DIR$/limber-backend-application/common" />
             <option value="$PROJECT_DIR$/limber-backend-application/common/module" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common/sql" />
+            <option value="$PROJECT_DIR$/limber-backend-application/common/sql/testing" />
             <option value="$PROJECT_DIR$/limber-backend-application/common/testing" />
             <option value="$PROJECT_DIR$/limber-backend-application/module" />
             <option value="$PROJECT_DIR$/limber-backend-application/module/auth" />
@@ -48,7 +50,6 @@
             <option value="$PROJECT_DIR$/piper/rest-interface" />
             <option value="$PROJECT_DIR$/piper/serialization" />
             <option value="$PROJECT_DIR$/piper/sql" />
-            <option value="$PROJECT_DIR$/piper/sql/testing" />
             <option value="$PROJECT_DIR$/piper/testing" />
             <option value="$PROJECT_DIR$/piper/types" />
             <option value="$PROJECT_DIR$/piper/util" />
