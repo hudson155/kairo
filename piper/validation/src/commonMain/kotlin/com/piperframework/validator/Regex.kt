@@ -15,6 +15,10 @@ internal object Regex {
         return@run Regex("${portion.pattern}?(?:\\.${portion.pattern}?)+")
     }
 
+    private val hex = Regex("[A-Fa-f0-9]")
+
+    val darb = Regex("[0-9]+\\.${hex.pattern}*")
+
     val emailAddress = Regex("[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@${hostname.pattern}")
 
     private val urlChar = Regex("[A-Za-z0-9\\-_.]")
@@ -28,8 +32,6 @@ internal object Regex {
         val hash = Regex("(?:#${urlChar.pattern}*)?")
         return@run Regex(listOf(protocol, hostname, path, queryString, hash).joinToString(""))
     }
-
-    private val hex = Regex("[A-Fa-f0-9]")
 
     val uuid = Regex("${hex.pattern}{8}-?${hex.pattern}{4}-?${hex.pattern}{4}-?${hex.pattern}{4}-?${hex.pattern}{12}")
 }
