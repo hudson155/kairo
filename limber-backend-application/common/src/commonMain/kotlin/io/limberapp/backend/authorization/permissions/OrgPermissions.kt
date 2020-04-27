@@ -16,21 +16,21 @@ import kotlinx.serialization.Serializable
  */
 private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
     sortedBy { it.bit }
-        .apply {
-            check(this@apply.map { it.bit } == this@with.indices.map { it })
-        }
+        .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
 }
 
 @Serializable(with = OrgPermissionsSerializer::class)
 data class OrgPermissions(private val booleanList: List<Boolean>) {
     private val permissions = ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet()
 
+    fun hasPermission(permission: OrgPermission) = permission in permissions
+
     fun asDarb() = DarbEncoder.encode(booleanList)
 
     fun asBitString() = BitStringEncoder.encode(booleanList)
 
     companion object {
-        fun none() = OrgPermissions(ALL_ORG_PERMISSIONS.map { false })
+        fun none() = OrgPermissions(emptyList())
 
         fun fromDarb(darb: String) = OrgPermissions(DarbEncoder.decode(darb))
 
