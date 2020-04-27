@@ -31,9 +31,15 @@ internal class OrgStore @Inject constructor(
     }
 
     fun getByOwnerAccountGuid(ownerAccountGuid: UUID): Set<OrgModel> {
-        val sql = "SELECT * FROM orgs.org WHERE owner_account_guid = :ownerAccountGuid AND archived_date IS NULL"
         return jdbi.withHandle<Set<OrgModel>, Exception> {
-            it.createQuery(sql)
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM orgs.org
+                    WHERE owner_account_guid = :ownerAccountGuid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("ownerAccountGuid", ownerAccountGuid)
                 .mapTo(OrgModel::class.java)
                 .map { it.copy(features = featureStore.getByOrgGuid(it.guid)) }
@@ -56,9 +62,15 @@ internal class OrgStore @Inject constructor(
     }
 
     fun delete(orgGuid: UUID) {
-        val sql = "UPDATE orgs.org SET archived_date = NOW() WHERE guid = :guid AND archived_date IS NULL"
         jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate(sql)
+            val updateCount = it.createUpdate(
+                    """
+                    UPDATE orgs.org
+                    SET archived_date = NOW()
+                    WHERE guid = :guid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("guid", orgGuid)
                 .execute()
             when (updateCount) {
