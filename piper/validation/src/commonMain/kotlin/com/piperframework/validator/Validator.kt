@@ -1,5 +1,7 @@
 package com.piperframework.validator
 
+import com.piperframework.util.darb.DarbEncoder
+
 /**
  * This object contains methods to validate primitive inputs.
  */
@@ -8,6 +10,8 @@ object Validator {
     fun auth0ClientId(value: String) = Regex.auth0ClientId.matches(value)
 
     fun base64EncodedUuid(value: String) = Regex.base64EncodedUuid.matches(value)
+
+    fun darb(value: String) = DarbEncoder.getComponentsOrNull(value) != null
 
     fun emailAddress(value: String) = Regex.emailAddress.matches(value)
 
@@ -22,6 +26,8 @@ object Validator {
     fun length10thousand(value: String, allowEmpty: Boolean) = value.length in (if (allowEmpty) 0 else 1)..10_000
 
     fun orgName(value: String) = value.length in 3..40
+
+    fun orgRoleName(value: String) = value.length in 3..40
 
     fun path(value: String) = Regex.path.matches(value)
 

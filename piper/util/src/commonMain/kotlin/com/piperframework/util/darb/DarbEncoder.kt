@@ -37,17 +37,7 @@ object DarbEncoder {
     }
 
     fun decode(darb: String): List<Boolean> {
-        // DARB always has 2 components separated by a dot, and no dots elsewhere in the syntax.
-        val components = darb.split('.')
-        require(components.size == 2)
-
-        // The first component is the size (positive).
-        val size = components[0].toInt()
-        require(size >= 0)
-
-        // The second component is the hex, the length of which must correlate with the size.
-        val hex = components[1]
-        require(hex.length == (size + CHUNK_SIZE - 1) / CHUNK_SIZE) // This math works due to integer rounding.
+        val (size, hex) = getComponentsOrNull(darb) ?: error("Invalid DARB: $darb")
 
         // Map each hex to a list of 4 digits representing the hex in binary.
         val booleanList = hex.flatMap {
@@ -57,6 +47,7 @@ object DarbEncoder {
                 in CharRange('0', '9') -> it.toInt() - '0'.toInt()
                 // 10 through 15 are represented by capital letters A through F.
                 in CharRange('A', 'F') -> it.toInt() - 'A'.toInt() + 10
+                in CharRange('a', 'f') -> it.toInt() - 'a'.toInt() + 10
                 // No other characters are supported.
                 else -> throw IllegalArgumentException()
             }
@@ -72,5 +63,23 @@ object DarbEncoder {
         // Take the size into account to return a list of the correct length.
         // This will omit between 0 and 3 booleans from the end.
         return booleanList.subList(0, size)
+    }
+
+    /**
+     * Returns the size and the hex as a pair, or null if the input is invalid.
+     */
+    fun getComponentsOrNull(darb: String): Pair<Int, String>? {
+        // DARB always has 2 components separated by a dot, and no dots elsewhere in the syntax.
+        val components = darb.split('.')
+        if (components.size != 2) return null
+
+        // The first component is the size (positive).
+        val size = components[0].toInt()
+        if (size < 0) return null
+
+        // The second component is the hex, the length of which must correlate with the size.
+        val hex = components[1]
+        if (hex.length != (size + CHUNK_SIZE - 1) / CHUNK_SIZE) return null // This math works due to integer rounding.
+        return Pair(size, hex)
     }
 }
