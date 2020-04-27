@@ -9,8 +9,6 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
-import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
-import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.UUID
 
@@ -33,7 +31,6 @@ internal class DeleteUserRole @Inject constructor(
 
     override suspend fun Handler.handle(command: UserRoleApi.Delete) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        if (userService.get(command.userGuid)?.hasRole(command.role) == false) throw UserDoesNotHaveRole()
-        userService.update(command.userGuid, UserModel.Update.fromRole(command.role, false))
+        userService.deleteRole(command.userGuid, command.role)
     }
 }

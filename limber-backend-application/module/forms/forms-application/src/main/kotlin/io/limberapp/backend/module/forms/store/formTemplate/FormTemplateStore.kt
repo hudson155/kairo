@@ -7,14 +7,12 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
 internal class FormTemplateStore @Inject constructor(
-    database: Database,
     private val jdbi: Jdbi,
     private val formTemplateQuestionStore: FormTemplateQuestionStore
-) : SqlStore(database) {
+) : SqlStore() {
     fun create(model: FormTemplateModel) {
         jdbi.useTransaction<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()

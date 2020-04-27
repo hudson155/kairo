@@ -26,7 +26,6 @@ abstract class Module : ModuleWithLifecycle() {
     final override fun configure() {
         configureEndpoints()
         bindServices()
-        bindStores()
     }
 
     final override fun unconfigure() = Unit
@@ -41,12 +40,6 @@ abstract class Module : ModuleWithLifecycle() {
      * the bind() method provided.
      */
     protected abstract fun bindServices()
-
-    /**
-     * The implementation of this method should bind all necessary stores. It's best to bind them as singletons using
-     * the bind() method provided.
-     */
-    protected abstract fun bindStores()
 
     /**
      * This method should be used to bind services and stores.

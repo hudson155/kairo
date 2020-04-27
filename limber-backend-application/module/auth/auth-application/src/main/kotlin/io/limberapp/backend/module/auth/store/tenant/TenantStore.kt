@@ -11,17 +11,15 @@ import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
 private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
 private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
 
 internal class TenantStore @Inject constructor(
-    database: Database,
     private val jdbi: Jdbi,
     private val tenantDomainStore: TenantDomainStore
-) : SqlStore(database) {
+) : SqlStore() {
     fun create(model: TenantModel) {
         jdbi.useTransaction<Exception> {
             try {

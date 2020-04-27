@@ -10,15 +10,11 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_lower_idx"
 
-internal class UserStore @Inject constructor(
-    database: Database,
-    private val jdbi: Jdbi
-) : SqlStore(database) {
+internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: UserModel) {
         jdbi.useHandle<Exception> {
             try {

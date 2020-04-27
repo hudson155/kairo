@@ -20,6 +20,4 @@ internal class HealthCheckModule : Module() {
     override fun bindServices() {
         bind(HealthCheckService::class, HealthCheckServiceImpl::class)
     }
-
-    override fun bindStores() = Unit
 }

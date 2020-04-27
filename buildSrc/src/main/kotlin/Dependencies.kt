@@ -55,7 +55,6 @@ object Dependencies {
     }
 
     object Sql {
-        const val exposed = "org.jetbrains.exposed:exposed:${Versions.exposed}"
         const val flyway = "org.flywaydb:flyway-core:${Versions.flyway}"
         const val hikari = "com.zaxxer:HikariCP:${Versions.hikari}"
         const val jdbi3Kotlin = "org.jdbi:jdbi3-kotlin:${Versions.jdbi3}"

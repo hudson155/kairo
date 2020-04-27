@@ -8,9 +8,6 @@ object Versions {
     // https://github.com/arturbosch/detekt/releases
     const val detekt = "1.3.1"
 
-    // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed
-    const val exposed = "0.17.7"
-
     // https://github.com/flyway/flyway/releases
     const val flyway = "6.1.4"
 

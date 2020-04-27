@@ -7,13 +7,9 @@ import io.limberapp.backend.module.auth.exception.accessToken.AccessTokenNotFoun
 import io.limberapp.backend.module.auth.model.accessToken.AccessTokenModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import org.jetbrains.exposed.sql.Database
 import java.util.UUID
 
-internal class AccessTokenStore @Inject constructor(
-    database: Database,
-    private val jdbi: Jdbi
-) : SqlStore(database) {
+internal class AccessTokenStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: AccessTokenModel) {
         jdbi.useHandle<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()

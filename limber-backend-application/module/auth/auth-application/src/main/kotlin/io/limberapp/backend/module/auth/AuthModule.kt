@@ -49,6 +49,4 @@ class AuthModule : Module() {
 
         bind(AccessTokenService::class, AccessTokenServiceImpl::class)
     }
-
-    override fun bindStores() = Unit
 }

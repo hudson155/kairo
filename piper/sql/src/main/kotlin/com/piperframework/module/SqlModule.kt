@@ -7,7 +7,6 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin
 import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
-import org.jetbrains.exposed.sql.Database
 
 /**
  * SqlModule configures bindings for an SQL database.
@@ -19,7 +18,6 @@ open class SqlModule(config: SqlDatabaseConfig) : ModuleWithLifecycle() {
     override fun configure() {
         wrapper.connect()
         wrapper.runMigrations()
-        bind(Database::class.java).toInstance(Database.connect(checkNotNull(wrapper.dataSource)))
         bind(Jdbi::class.java).toInstance(createJdbi())
     }
 
