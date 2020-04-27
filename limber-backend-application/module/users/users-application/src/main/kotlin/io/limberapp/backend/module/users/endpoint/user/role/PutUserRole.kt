@@ -9,7 +9,6 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
-import io.limberapp.backend.module.users.exception.account.UserAlreadyHasRole
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.UUID
@@ -33,10 +32,6 @@ internal class PutUserRole @Inject constructor(
 
     override suspend fun Handler.handle(command: UserRoleApi.Put) {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        try {
-            userService.update(command.userGuid, UserModel.Update.fromRole(command.role, true))
-        } catch (_: UserAlreadyHasRole) {
-            return
-        }
+        userService.update(command.userGuid, UserModel.Update.fromRole(command.role, true))
     }
 }
