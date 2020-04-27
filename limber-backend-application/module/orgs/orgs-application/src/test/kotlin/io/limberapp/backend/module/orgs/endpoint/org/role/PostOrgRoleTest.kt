@@ -30,10 +30,14 @@ internal class PostOrgRoleTest : ResourceTest() {
         val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
         piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
+        val memberFixtureRep = OrgRoleRepFixtures.memberFixture.complete(this, 2)
         piperTest.setup(OrgRoleApi.Post(orgRep.guid, OrgRoleRepFixtures.memberFixture.creation()))
 
         piperTest.test(
-            endpoint = OrgRoleApi.Post(orgRep.guid, OrgRoleRepFixtures.memberFixture.creation()),
+            endpoint = OrgRoleApi.Post(
+                orgGuid = orgRep.guid,
+                rep = OrgRoleRepFixtures.adminFixture.creation().copy(name = memberFixtureRep.name)
+            ),
             expectedException = OrgRoleIsNotUnique()
         )
     }
