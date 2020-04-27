@@ -11,9 +11,8 @@ Java, Postgres, and IntelliJ
 (all can be installed through Homebrew).
 
 1. Clone the repo and `cd` into it.
-1. `psql limber -f db/reset.sql`.
+1. `adhoc/dbReset.sh localhost/limber`.
 1. From IntelliJ, run the `[backend] Run (dev)` config.
-1. `psql limber -f db/insert_fixtures.sql`.
 1. `echo "REACT_APP_AUTH_MECHANISM=LOCAL_STORAGE_JWT" > limber-web/.env.local`
 1. From IntelliJ, run the `[web] Run` config.
 1. In the browser console, run the following
