@@ -3,6 +3,7 @@ package io.limberapp.backend.module.auth.testing
 import com.piperframework.module.TestSqlModule
 import com.piperframework.testing.MockedServices
 import io.limberapp.backend.module.auth.AuthModule
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
@@ -15,6 +16,7 @@ abstract class ResourceTest : LimberResourceTest() {
 
     protected val mockedServices: MockedServices = MockedServices(
         AccountService::class,
+        FeatureService::class,
         OrgService::class,
         UserService::class
     )

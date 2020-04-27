@@ -11,6 +11,7 @@ import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.UUID
 
@@ -20,6 +21,7 @@ import java.util.UUID
 internal class GetOrg @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
+    private val featureService: FeatureService,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.Get, OrgRep.Complete>(
@@ -34,6 +36,7 @@ internal class GetOrg @Inject constructor(
     override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {
         Authorization.OrgMember(command.orgGuid).authorize()
         val model = orgService.get(command.orgGuid) ?: throw OrgNotFound()
-        return orgMapper.completeRep(model)
+        val features = featureService.getByOrgGuid(command.orgGuid)
+        return orgMapper.completeRep(model, features)
     }
 }

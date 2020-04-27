@@ -10,6 +10,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.UUID
 
@@ -19,6 +20,7 @@ import java.util.UUID
 internal class GetOrgsByOwnerAccountGuid @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
+    private val featureService: FeatureService,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, Set<OrgRep.Complete>>(
@@ -33,6 +35,9 @@ internal class GetOrgsByOwnerAccountGuid @Inject constructor(
     override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): Set<OrgRep.Complete> {
         Authorization.User(command.ownerAccountGuid).authorize()
         val models = orgService.getByOwnerAccountGuid(command.ownerAccountGuid)
-        return models.map { orgMapper.completeRep(it) }.toSet()
+        check(models.size <= 1) // Accounts can't be part of multiple orgs.
+        val model = models.singleOrNull() ?: return emptySet()
+        val features = featureService.getByOrgGuid(model.guid)
+        return setOf(orgMapper.completeRep(model, features))
     }
 }

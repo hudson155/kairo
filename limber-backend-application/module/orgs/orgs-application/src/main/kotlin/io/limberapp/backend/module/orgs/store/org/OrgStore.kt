@@ -9,14 +9,10 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
-internal class OrgStore @Inject constructor(
-    private val jdbi: Jdbi,
-    private val featureStore: FeatureStore
-) : SqlStore() {
+internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: OrgModel) {
         jdbi.useTransaction<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
-            featureStore.create(model.guid, model.features)
         }
     }
 
@@ -26,7 +22,6 @@ internal class OrgStore @Inject constructor(
                 .bind("guid", orgGuid)
                 .mapTo(OrgModel::class.java)
                 .singleNullOrThrow()
-                ?.copy(features = featureStore.getByOrgGuid(orgGuid))
         }
     }
 
@@ -35,7 +30,6 @@ internal class OrgStore @Inject constructor(
             it.createQuery("SELECT * FROM orgs.org WHERE owner_account_guid = :ownerAccountGuid")
                 .bind("ownerAccountGuid", ownerAccountGuid)
                 .mapTo(OrgModel::class.java)
-                .map { it.copy(features = featureStore.getByOrgGuid(it.guid)) }
                 .toSet()
         }
     }

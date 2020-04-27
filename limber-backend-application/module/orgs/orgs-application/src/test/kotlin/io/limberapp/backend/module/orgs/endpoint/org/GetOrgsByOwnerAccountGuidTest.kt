@@ -21,18 +21,15 @@ internal class GetOrgsByOwnerAccountGuidTest : ResourceTest() {
     }
 
     @Test
-    fun happyPathMultipleOrgs() {
+    fun happyPathOneOrg() {
         val orgOwnerAccountGuid = UUID.randomUUID()
 
         val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
         piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
-        val dynamicTennisOrgRep = OrgRepFixtures.dynamicTennisFixture.complete(this, orgOwnerAccountGuid, 2)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.dynamicTennisFixture.creation(orgOwnerAccountGuid)))
-
         piperTest.test(OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid)) {
             val actual = json.parseSet<OrgRep.Complete>(response.content!!)
-            assertEquals(setOf(crankyPastaOrgRep, dynamicTennisOrgRep), actual)
+            assertEquals(setOf(crankyPastaOrgRep), actual)
         }
     }
 }
