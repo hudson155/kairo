@@ -14,7 +14,7 @@ internal abstract class ConversionServiceJdbiType<T : Any>(override val kClass: 
     internal abstract class ConversionServiceColumnMapper<T : Any>(
         private val conversionService: DataConversionService<T>
     ) : ColumnMapper<T?> {
-        override fun map(r: ResultSet, columnNumber: Int, ctx: StatementContext): T? =
+        final override fun map(r: ResultSet, columnNumber: Int, ctx: StatementContext): T? =
             r.getString(columnNumber)?.let { conversionService.fromString(it) }
     }
 
