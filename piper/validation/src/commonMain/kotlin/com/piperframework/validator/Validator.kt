@@ -23,6 +23,8 @@ object Validator {
 
     fun orgName(value: String) = value.length in 3..40
 
+    fun orgRoleName(value: String) = value.length in 3..40
+
     fun path(value: String) = Regex.path.matches(value)
 
     /**
