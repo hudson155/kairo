@@ -57,6 +57,7 @@ object DarbEncoder {
                 in CharRange('0', '9') -> it.toInt() - '0'.toInt()
                 // 10 through 15 are represented by capital letters A through F.
                 in CharRange('A', 'F') -> it.toInt() - 'A'.toInt() + 10
+                in CharRange('a', 'f') -> it.toInt() - 'a'.toInt() + 10
                 // No other characters are supported.
                 else -> throw IllegalArgumentException()
             }

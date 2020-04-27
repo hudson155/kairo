@@ -28,9 +28,11 @@ class DarbEncoderTest {
         assertEquals(listOf(false, false, false, true), DarbEncoder.decode("4.1"))
         assertEquals(listOf(true, false, false, false), DarbEncoder.decode("4.8"))
         assertEquals(listOf(true, true, true, true), DarbEncoder.decode("4.F"))
+        assertEquals(listOf(true, true, true, true), DarbEncoder.decode("4.f"))
         assertEquals(listOf(false, false, false, false, false), DarbEncoder.decode("5.00"))
         assertEquals(listOf(false, false, false, false, true), DarbEncoder.decode("5.08"))
         assertEquals(listOf(true, false, false, false, false), DarbEncoder.decode("5.80"))
         assertEquals(listOf(true, true, true, true, true), DarbEncoder.decode("5.F8"))
+        assertEquals(listOf(true, true, true, true, true), DarbEncoder.decode("5.f8"))
     }
 }
