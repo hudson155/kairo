@@ -11,7 +11,7 @@ import java.util.UUID
 
 internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: OrgModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
         }
     }

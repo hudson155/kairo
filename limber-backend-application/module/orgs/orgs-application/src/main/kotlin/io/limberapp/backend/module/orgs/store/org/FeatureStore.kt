@@ -31,7 +31,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     }
 
     fun create(orgGuid: UUID, model: FeatureModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             try {
                 it.createUpdate(sqlResource("create")).bind("orgGuid", orgGuid).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
