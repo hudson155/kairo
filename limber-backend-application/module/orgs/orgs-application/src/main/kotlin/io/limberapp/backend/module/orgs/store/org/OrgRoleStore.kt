@@ -42,7 +42,15 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun get(orgGuid: UUID, orgRoleGuid: UUID): OrgRoleModel? {
         return jdbi.withHandle<OrgRoleModel?, Exception> {
-            it.createQuery("SELECT * FROM orgs.org_role WHERE org_guid = :orgGuid AND guid = :guid")
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM orgs.org_role
+                    WHERE org_guid = :orgGuid
+                      AND guid = :guid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("orgGuid", orgGuid)
                 .bind("guid", orgRoleGuid)
                 .mapTo(OrgRoleModel::class.java)
@@ -52,7 +60,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
         return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
-            it.createQuery("SELECT * FROM orgs.org_role WHERE org_guid = :orgGuid")
+            it.createQuery("SELECT * FROM orgs.org_role WHERE org_guid = :orgGuid AND archived_date IS NULL")
                 .bind("orgGuid", orgGuid)
                 .mapTo(OrgRoleModel::class.java)
                 .toSet()
@@ -86,7 +94,15 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun delete(orgGuid: UUID, orgRoleGuid: UUID) {
         jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate("DELETE FROM orgs.org_role WHERE org_guid = :orgGuid AND guid = :guid")
+            val updateCount = it.createUpdate(
+                    """
+                    UPDATE orgs.org_role
+                    SET archived_date = NOW()
+                    WHERE org_guid = :orgGuid
+                      AND guid = :guid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("orgGuid", orgGuid)
                 .bind("guid", orgRoleGuid)
                 .execute()
