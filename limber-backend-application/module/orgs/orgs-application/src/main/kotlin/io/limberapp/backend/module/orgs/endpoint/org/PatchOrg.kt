@@ -10,6 +10,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.UUID
 
@@ -19,6 +20,7 @@ import java.util.UUID
 internal class PatchOrg @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
+    private val featureService: FeatureService,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.Patch, OrgRep.Complete>(
@@ -35,6 +37,7 @@ internal class PatchOrg @Inject constructor(
         Authorization.OrgMember(command.orgGuid).authorize()
         val update = orgMapper.update(command.rep.required())
         val model = orgService.update(command.orgGuid, update)
-        return orgMapper.completeRep(model)
+        val features = featureService.getByOrgGuid(model.guid)
+        return orgMapper.completeRep(model, features)
     }
 }

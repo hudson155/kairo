@@ -11,6 +11,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 
 /**
@@ -19,6 +20,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 internal class PostOrg @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
+    private val featureService: FeatureService,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.Post, OrgRep.Complete>(
@@ -34,6 +36,7 @@ internal class PostOrg @Inject constructor(
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val model = orgMapper.model(command.rep.required())
         orgService.create(model)
-        return orgMapper.completeRep(model)
+        val features = featureService.createDefault(model.guid)
+        return orgMapper.completeRep(model, features)
     }
 }

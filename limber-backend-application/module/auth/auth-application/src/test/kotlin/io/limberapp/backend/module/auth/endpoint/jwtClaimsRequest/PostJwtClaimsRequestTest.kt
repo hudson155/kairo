@@ -7,6 +7,7 @@ import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
@@ -27,8 +28,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             guid = UUID.randomUUID(),
             createdDate = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            ownerAccountGuid = UUID.randomUUID(),
-            features = emptySet()
+            ownerAccountGuid = UUID.randomUUID()
         )
         every { mockedServices[AccountService::class].get(userGuid) } returns AccountModel(
             guid = userGuid,
@@ -40,6 +40,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
         every { mockedServices[UserService::class].create(any()) } returns Unit
         every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
+        every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptySet()
 
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
@@ -75,8 +76,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             guid = UUID.randomUUID(),
             createdDate = LocalDateTime.now(fixedClock),
             name = "Cranky Pasta",
-            ownerAccountGuid = UUID.randomUUID(),
-            features = emptySet()
+            ownerAccountGuid = UUID.randomUUID()
         )
         val existingAccount = AccountModel(
             guid = UUID.randomUUID(),
@@ -99,6 +99,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         every { mockedServices[AccountService::class].get(existingAccount.guid) } returns existingAccount
         every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
         every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
+        every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptySet()
 
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))

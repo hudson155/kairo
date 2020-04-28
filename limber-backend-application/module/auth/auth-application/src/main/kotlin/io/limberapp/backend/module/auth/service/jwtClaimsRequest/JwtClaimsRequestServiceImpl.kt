@@ -10,7 +10,9 @@ import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
@@ -22,6 +24,7 @@ import java.util.UUID
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val accountService: AccountService,
+    private val featureService: FeatureService,
     private val orgService: OrgService,
     private val tenantService: TenantService,
     private val userService: UserService,
@@ -44,7 +47,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
         val org = user?.let { checkNotNull(orgService.get(it.orgGuid)) }
-        val jwt = createJwt(account, user, org)
+        val features = user?.let { checkNotNull(featureService.getByOrgGuid(it.orgGuid)) }.orEmpty()
+        val jwt = createJwt(account, user, org, features)
         return convertJwtToModel(jwt)
     }
 
@@ -70,9 +74,9 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         return newUser
     }
 
-    private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?): Jwt {
+    private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?, features: Set<FeatureModel>): Jwt {
         return Jwt(
-            org = org?.let { JwtOrg(it.guid, it.name, it.features.map { it.guid }) },
+            org = org?.let { JwtOrg(it.guid, it.name, features.map { it.guid }) },
             roles = JwtRole.values().filter { account.hasRole(it) }.toSet(),
             user = JwtUser(account.guid, user?.firstName, user?.lastName)
         )
