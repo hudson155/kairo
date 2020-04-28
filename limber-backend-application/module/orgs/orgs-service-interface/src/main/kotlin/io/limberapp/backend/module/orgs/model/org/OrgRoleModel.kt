@@ -9,4 +9,9 @@ data class OrgRoleModel(
     val createdDate: LocalDateTime,
     val name: String,
     val permissions: OrgPermissions
-)
+) {
+    data class Update(
+        val name: String?,
+        val permissions: OrgPermissions?
+    )
+}

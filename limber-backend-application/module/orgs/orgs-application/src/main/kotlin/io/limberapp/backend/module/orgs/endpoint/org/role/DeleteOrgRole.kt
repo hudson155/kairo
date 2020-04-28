@@ -8,7 +8,6 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.orgs.mapper.org.OrgRoleMapper
 import io.limberapp.backend.module.orgs.service.org.OrgRoleService
 import java.util.UUID
 
@@ -18,8 +17,7 @@ import java.util.UUID
 internal class DeleteOrgRole @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
-    private val orgRoleService: OrgRoleService,
-    private val orgRoleMapper: OrgRoleMapper
+    private val orgRoleService: OrgRoleService
 ) : LimberApiEndpoint<OrgRoleApi.Delete, Unit>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,

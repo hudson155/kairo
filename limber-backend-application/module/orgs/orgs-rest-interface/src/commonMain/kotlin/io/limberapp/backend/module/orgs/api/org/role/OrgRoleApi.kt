@@ -19,6 +19,12 @@ object OrgRoleApi {
         path = "/orgs/${enc(orgGuid)}/roles"
     )
 
+    data class Patch(val orgGuid: UUID, val orgRoleGuid: UUID, val rep: OrgRoleRep.Update?) : PiperEndpoint(
+        httpMethod = HttpMethod.PATCH,
+        path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}",
+        body = rep
+    )
+
     data class Delete(val orgGuid: UUID, val orgRoleGuid: UUID) : PiperEndpoint(
         httpMethod = HttpMethod.DELETE,
         path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}"

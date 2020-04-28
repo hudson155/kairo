@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.exception.org.OrgRoleIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgRoleNotFound
@@ -39,6 +40,16 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
+    fun get(orgGuid: UUID, orgRoleGuid: UUID): OrgRoleModel? {
+        return jdbi.withHandle<OrgRoleModel?, Exception> {
+            it.createQuery("SELECT * FROM orgs.org_role WHERE org_guid = :orgGuid AND guid = :guid")
+                .bind("orgGuid", orgGuid)
+                .bind("guid", orgRoleGuid)
+                .mapTo(OrgRoleModel::class.java)
+                .singleNullOrThrow()
+        }
+    }
+
     fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
         return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
             it.createQuery("SELECT * FROM orgs.org_role WHERE org_guid = :orgGuid")
@@ -46,6 +57,31 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
                 .mapTo(OrgRoleModel::class.java)
                 .toSet()
         }
+    }
+
+    fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
+        return jdbi.inTransaction<OrgRoleModel, Exception> {
+            val updateCount = try {
+                it.createUpdate(sqlResource("update"))
+                    .bind("orgGuid", orgGuid)
+                    .bind("guid", orgRoleGuid)
+                    .bindKotlin(update)
+                    .execute()
+            } catch (e: UnableToExecuteStatementException) {
+                handleUpdateError(e)
+            }
+            when (updateCount) {
+                0 -> throw OrgRoleNotFound()
+                1 -> return@inTransaction checkNotNull(get(orgGuid, orgRoleGuid))
+                else -> badSql()
+            }
+        }
+    }
+
+    private fun handleUpdateError(e: UnableToExecuteStatementException) {
+        val error = e.serverErrorMessage ?: throw e
+        if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleIsNotUnique()
+        else throw e
     }
 
     fun delete(orgGuid: UUID, orgRoleGuid: UUID) {
