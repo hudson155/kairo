@@ -3,6 +3,7 @@ CREATE TABLE users.account
     id                BIGSERIAL PRIMARY KEY,
     guid              UUID UNIQUE NOT NULL,
     created_date      TIMESTAMP   NOT NULL,
+    archived_date     TIMESTAMP DEFAULT NULL,
     identity_provider BOOLEAN     NOT NULL,
     superuser         BOOLEAN     NOT NULL,
     name              VARCHAR     NOT NULL
@@ -17,7 +18,9 @@ CREATE TABLE users.user
     profile_photo_url VARCHAR
 ) INHERITS (users.account);
 
-CREATE UNIQUE INDEX ON users.user (LOWER(email_address));
+CREATE UNIQUE INDEX
+    ON users.user (LOWER(email_address))
+    WHERE archived_date IS NULL;
 
 CREATE TABLE auth.access_token
 (

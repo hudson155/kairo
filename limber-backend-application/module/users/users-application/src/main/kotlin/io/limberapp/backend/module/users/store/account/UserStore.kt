@@ -33,7 +33,7 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
 
     fun get(userGuid: UUID): UserModel? {
         return jdbi.withHandle<UserModel?, Exception> {
-            it.createQuery("SELECT * FROM users.user WHERE guid = :guid")
+            it.createQuery("SELECT * FROM users.user WHERE guid = :guid AND archived_date IS NULL")
                 .bind("guid", userGuid)
                 .mapTo(UserModel::class.java)
                 .singleNullOrThrow()
@@ -42,7 +42,14 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
 
     fun getByEmailAddress(emailAddress: String): UserModel? {
         return jdbi.withHandle<UserModel?, Exception> {
-            it.createQuery("SELECT * FROM users.user WHERE LOWER(email_address) = LOWER(:emailAddress)")
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM users.user
+                    WHERE LOWER(email_address) = LOWER(:emailAddress)
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("emailAddress", emailAddress)
                 .mapTo(UserModel::class.java)
                 .singleNullOrThrow()
@@ -65,7 +72,14 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
 
     fun delete(userGuid: UUID) {
         jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate("DELETE FROM users.user WHERE guid = :guid")
+            val updateCount = it.createUpdate(
+                    """
+                    UPDATE users.user
+                    SET archived_date = NOW()
+                    WHERE guid = :guid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("guid", userGuid)
                 .execute()
             return@useTransaction when (updateCount) {
