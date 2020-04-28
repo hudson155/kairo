@@ -6,6 +6,7 @@ import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.exception.org.OrgRoleIsNotUnique
+import io.limberapp.backend.module.orgs.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgRoleModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -44,6 +45,20 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
                 .bind("orgGuid", orgGuid)
                 .mapTo(OrgRoleModel::class.java)
                 .toSet()
+        }
+    }
+
+    fun delete(orgGuid: UUID, orgRoleGuid: UUID) {
+        jdbi.useTransaction<Exception> {
+            val updateCount = it.createUpdate("DELETE FROM orgs.org_role WHERE org_guid = :orgGuid AND guid = :guid")
+                .bind("orgGuid", orgGuid)
+                .bind("guid", orgRoleGuid)
+                .execute()
+            when (updateCount) {
+                0 -> throw OrgRoleNotFound()
+                1 -> return@useTransaction
+                else -> badSql()
+            }
         }
     }
 }

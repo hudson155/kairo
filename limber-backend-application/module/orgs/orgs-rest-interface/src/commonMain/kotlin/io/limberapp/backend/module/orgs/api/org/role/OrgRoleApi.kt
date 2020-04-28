@@ -18,4 +18,9 @@ object OrgRoleApi {
         httpMethod = HttpMethod.GET,
         path = "/orgs/${enc(orgGuid)}/roles"
     )
+
+    data class Delete(val orgGuid: UUID, val orgRoleGuid: UUID) : PiperEndpoint(
+        httpMethod = HttpMethod.DELETE,
+        path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}"
+    )
 }

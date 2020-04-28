@@ -7,4 +7,6 @@ interface OrgRoleService {
     fun create(orgGuid: UUID, model: OrgRoleModel)
 
     fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel>
+
+    fun delete(orgGuid: UUID, orgRoleGuid: UUID)
 }

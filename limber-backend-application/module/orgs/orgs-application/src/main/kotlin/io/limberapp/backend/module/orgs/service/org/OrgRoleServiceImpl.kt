@@ -16,4 +16,6 @@ internal class OrgRoleServiceImpl @Inject constructor(
         orgService.get(orgGuid) ?: throw OrgNotFound()
         return orgRoleStore.getByOrgGuid(orgGuid)
     }
+
+    override fun delete(orgGuid: UUID, orgRoleGuid: UUID) = orgRoleStore.delete(orgGuid, orgRoleGuid)
 }
