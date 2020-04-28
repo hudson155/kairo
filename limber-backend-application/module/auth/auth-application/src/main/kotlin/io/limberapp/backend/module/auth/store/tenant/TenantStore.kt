@@ -31,7 +31,7 @@ internal class TenantStore @Inject constructor(
         }
     }
 
-    private fun handleCreateError(e: UnableToExecuteStatementException) {
+    private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
         val error = e.serverErrorMessage ?: throw e
         when {
             error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
@@ -83,15 +83,15 @@ internal class TenantStore @Inject constructor(
             } catch (e: UnableToExecuteStatementException) {
                 handleUpdateError(e)
             }
-            when (updateCount) {
+            return@inTransaction when (updateCount) {
                 0 -> throw TenantNotFound()
-                1 -> return@inTransaction checkNotNull(get(orgGuid))
+                1 -> checkNotNull(get(orgGuid))
                 else -> badSql()
             }
         }
     }
 
-    private fun handleUpdateError(e: UnableToExecuteStatementException) {
+    private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
         val error = e.serverErrorMessage ?: throw e
         if (error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT)) {
             throw Auth0ClientIdAlreadyRegistered()
@@ -104,9 +104,9 @@ internal class TenantStore @Inject constructor(
             val updateCount = it.createUpdate("DELETE FROM auth.tenant WHERE org_guid = :orgGuid")
                 .bind("orgGuid", orgGuid)
                 .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw TenantNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }

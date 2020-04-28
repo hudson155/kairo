@@ -44,9 +44,9 @@ internal class FormInstanceStore @Inject constructor(
             val updateCount = it.createUpdate("DELETE FROM forms.form_instance WHERE guid = :guid")
                 .bind("guid", formInstanceGuid)
                 .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw FormInstanceNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }

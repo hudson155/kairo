@@ -39,7 +39,7 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
         }
     }
 
-    private fun handleCreateError(e: UnableToExecuteStatementException) {
+    private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
         val error = e.serverErrorMessage ?: throw e
         when {
             error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
@@ -64,9 +64,9 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
                     .bind("orgGuid", orgGuid)
                     .bind("domain", domain)
                     .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw TenantDomainNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }

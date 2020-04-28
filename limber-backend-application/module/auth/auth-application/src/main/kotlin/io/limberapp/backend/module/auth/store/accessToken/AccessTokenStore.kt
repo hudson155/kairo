@@ -41,9 +41,9 @@ internal class AccessTokenStore @Inject constructor(private val jdbi: Jdbi) : Sq
                     .bind("accountGuid", accountGuid)
                     .bind("guid", accessTokenGuid)
                     .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw AccessTokenNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }

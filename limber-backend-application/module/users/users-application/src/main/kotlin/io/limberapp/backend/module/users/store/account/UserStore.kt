@@ -25,7 +25,7 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
         }
     }
 
-    private fun handleCreateError(e: UnableToExecuteStatementException) {
+    private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
         val error = e.serverErrorMessage ?: throw e
         if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) throw EmailAddressAlreadyTaken()
         throw e
@@ -55,9 +55,9 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
                 .bind("guid", userGuid)
                 .bindKotlin(update)
                 .execute()
-            when (updateCount) {
+            return@inTransaction when (updateCount) {
                 0 -> throw UserNotFound()
-                1 -> return@inTransaction checkNotNull(get(userGuid))
+                1 -> checkNotNull(get(userGuid))
                 else -> badSql()
             }
         }
@@ -68,9 +68,9 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
             val updateCount = it.createUpdate("DELETE FROM users.user WHERE guid = :guid")
                 .bind("guid", userGuid)
                 .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw UserNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }
