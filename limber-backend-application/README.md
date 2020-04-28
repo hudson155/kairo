@@ -14,7 +14,7 @@ Limber is a highly dynamic application built on Ktor and React.
 This is a list of soft deleted entities, kept here for reasons of data retention.
 Entities in this list should be hard-deleted after some retention period.
 
-* `users.account`
 * `orgs.feature`
 * `orgs.org`
 * `orgs.org_role`
+* `users.account`
