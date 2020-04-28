@@ -17,3 +17,4 @@ Entities in this list should be hard-deleted after some retention period.
 * `orgs.feature`
 * `orgs.org`
 * `orgs.org_role`
+* `users.account`
