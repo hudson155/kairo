@@ -30,7 +30,7 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
     }
 
     fun create(orgGuid: UUID, model: TenantDomainModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             try {
                 it.createUpdate(sqlResource("create")).bind("orgGuid", orgGuid).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {

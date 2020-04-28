@@ -36,7 +36,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
     }
 
     fun create(formInstanceGuid: UUID, model: FormInstanceQuestionModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             try {
                 it.createUpdate(sqlResource("create"))
                     .bind("formInstanceGuid", formInstanceGuid)
