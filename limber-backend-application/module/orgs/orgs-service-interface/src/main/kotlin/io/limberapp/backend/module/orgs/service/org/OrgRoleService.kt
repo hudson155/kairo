@@ -5,4 +5,10 @@ import java.util.UUID
 
 interface OrgRoleService {
     fun create(orgGuid: UUID, model: OrgRoleModel)
+
+    fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel>
+
+    fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel
+
+    fun delete(orgGuid: UUID, orgRoleGuid: UUID)
 }

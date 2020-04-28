@@ -26,4 +26,9 @@ internal class OrgRoleMapper @Inject constructor(
         name = model.name,
         permissions = model.permissions
     )
+
+    fun update(rep: OrgRoleRep.Update) = OrgRoleModel.Update(
+        name = rep.name,
+        permissions = rep.permissions
+    )
 }
