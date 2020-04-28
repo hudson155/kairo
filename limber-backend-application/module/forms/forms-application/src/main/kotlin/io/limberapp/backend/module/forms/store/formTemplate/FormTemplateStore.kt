@@ -22,7 +22,7 @@ internal class FormTemplateStore @Inject constructor(
 
     fun get(formTemplateGuid: UUID): FormTemplateModel? {
         return jdbi.withHandle<FormTemplateModel?, Exception> {
-            it.createQuery("SELECT * FROM forms.form_template WHERE guid = :guid")
+            it.createQuery("SELECT * FROM forms.form_template WHERE guid = :guid AND archived_date IS NULL")
                 .bind("guid", formTemplateGuid)
                 .mapTo(FormTemplateModel::class.java)
                 .singleNullOrThrow()
@@ -32,7 +32,14 @@ internal class FormTemplateStore @Inject constructor(
 
     fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel> {
         return jdbi.withHandle<Set<FormTemplateModel>, Exception> {
-            it.createQuery("SELECT * FROM forms.form_template WHERE feature_guid = :featureGuid")
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM forms.form_template
+                    WHERE feature_guid = :featureGuid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("featureGuid", featureGuid)
                 .mapTo(FormTemplateModel::class.java)
                 .map { it.copy(questions = formTemplateQuestionStore.getByFormTemplateGuid(it.guid)) }
@@ -56,7 +63,14 @@ internal class FormTemplateStore @Inject constructor(
 
     fun delete(formTemplateGuid: UUID) {
         jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate("DELETE FROM forms.form_template WHERE guid = :guid")
+            val updateCount = it.createUpdate(
+                    """
+                    UPDATE forms.form_template
+                    SET archived_date = NOW()
+                    WHERE guid = :guid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("guid", formTemplateGuid)
                 .execute()
             return@useTransaction when (updateCount) {
