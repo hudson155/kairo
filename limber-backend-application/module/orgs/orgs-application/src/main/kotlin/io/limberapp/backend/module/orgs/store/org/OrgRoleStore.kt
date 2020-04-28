@@ -31,7 +31,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
-    private fun handleCreateError(e: UnableToExecuteStatementException) {
+    private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
         val error = e.serverErrorMessage ?: throw e
         when {
             error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
@@ -70,15 +70,15 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
             } catch (e: UnableToExecuteStatementException) {
                 handleUpdateError(e)
             }
-            when (updateCount) {
+            return@inTransaction when (updateCount) {
                 0 -> throw OrgRoleNotFound()
-                1 -> return@inTransaction checkNotNull(get(orgGuid, orgRoleGuid))
+                1 -> checkNotNull(get(orgGuid, orgRoleGuid))
                 else -> badSql()
             }
         }
     }
 
-    private fun handleUpdateError(e: UnableToExecuteStatementException) {
+    private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
         val error = e.serverErrorMessage ?: throw e
         if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleIsNotUnique()
         else throw e
@@ -90,9 +90,9 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
                 .bind("orgGuid", orgGuid)
                 .bind("guid", orgRoleGuid)
                 .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw OrgRoleNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }

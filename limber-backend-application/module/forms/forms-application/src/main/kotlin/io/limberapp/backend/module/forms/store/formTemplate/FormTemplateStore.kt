@@ -46,9 +46,9 @@ internal class FormTemplateStore @Inject constructor(
                 .bind("guid", formTemplateGuid)
                 .bindKotlin(update)
                 .execute()
-            when (updateCount) {
+            return@inTransaction when (updateCount) {
                 0 -> throw FormTemplateNotFound()
-                1 -> return@inTransaction get(formTemplateGuid)
+                1 -> get(formTemplateGuid)
                 else -> badSql()
             }
         }
@@ -59,9 +59,9 @@ internal class FormTemplateStore @Inject constructor(
             val updateCount = it.createUpdate("DELETE FROM forms.form_template WHERE guid = :guid")
                 .bind("guid", formTemplateGuid)
                 .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw FormTemplateNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }

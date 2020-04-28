@@ -93,9 +93,9 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
                 .bind("questionGuid", questionGuid)
                 .bindKotlin(FormTemplateQuestionEntity.Update(update))
                 .execute()
-            when (updateCount) {
+            return@inTransaction when (updateCount) {
                 0 -> throw FormTemplateQuestionNotFound()
-                1 -> return@inTransaction checkNotNull(get(formTemplateGuid, questionGuid))
+                1 -> checkNotNull(get(formTemplateGuid, questionGuid))
                 else -> badSql()
             }
         }
@@ -107,9 +107,9 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
                 .bind("formTemplateGuid", formTemplateGuid)
                 .bind("questionGuid", questionGuid)
                 .execute()
-            when (updateCount) {
+            return@useTransaction when (updateCount) {
                 0 -> throw FormTemplateQuestionNotFound()
-                1 -> return@useTransaction
+                1 -> Unit
                 else -> badSql()
             }
         }
