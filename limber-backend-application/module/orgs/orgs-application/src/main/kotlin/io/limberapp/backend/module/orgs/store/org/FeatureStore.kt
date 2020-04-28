@@ -115,19 +115,18 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun delete(orgGuid: UUID, featureGuid: UUID) {
         jdbi.useTransaction<Exception> {
-            val updateCount =
-                it.createUpdate(
-                        """
-                        UPDATE orgs.feature
-                        SET archived_date = NOW()
-                        WHERE org_guid = :orgGuid
-                          AND guid = :featureGuid
-                          AND archived_date IS NULL
-                        """.trimIndent()
-                    )
-                    .bind("orgGuid", orgGuid)
-                    .bind("featureGuid", featureGuid)
-                    .execute()
+            val updateCount = it.createUpdate(
+                    """
+                    UPDATE orgs.feature
+                    SET archived_date = NOW()
+                    WHERE org_guid = :orgGuid
+                      AND guid = :featureGuid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
+                .bind("orgGuid", orgGuid)
+                .bind("featureGuid", featureGuid)
+                .execute()
             return@useTransaction when (updateCount) {
                 0 -> throw FeatureNotFound()
                 1 -> Unit
