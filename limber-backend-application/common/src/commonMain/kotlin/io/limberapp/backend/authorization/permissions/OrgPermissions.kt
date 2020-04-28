@@ -20,8 +20,8 @@ private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
 }
 
 @Serializable(with = OrgPermissionsSerializer::class)
-data class OrgPermissions(private val booleanList: List<Boolean>) {
-    private val permissions = ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet()
+data class OrgPermissions(private val permissions: Set<OrgPermission>) {
+    private val booleanList = ALL_ORG_PERMISSIONS.map { it in permissions }
 
     fun hasPermission(permission: OrgPermission) = permission in permissions
 
@@ -30,11 +30,14 @@ data class OrgPermissions(private val booleanList: List<Boolean>) {
     fun asBitString() = BitStringEncoder.encode(booleanList)
 
     companion object {
-        fun none() = OrgPermissions(emptyList())
+        fun none() = OrgPermissions(emptySet())
 
-        fun fromDarb(darb: String) = OrgPermissions(DarbEncoder.decode(darb))
+        fun fromDarb(darb: String) = fromBooleanList(DarbEncoder.decode(darb))
 
-        fun fromBitString(bitString: String) = OrgPermissions(BitStringEncoder.decode(bitString))
+        fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
+
+        private fun fromBooleanList(booleanList: List<Boolean>) =
+            OrgPermissions(ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet())
     }
 }
 

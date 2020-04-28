@@ -37,4 +37,13 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
             else -> throw e
         }
     }
+
+    fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
+        return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
+            it.createQuery("SELECT * FROM orgs.org_role WHERE org_guid = :orgGuid")
+                .bind("orgGuid", orgGuid)
+                .mapTo(OrgRoleModel::class.java)
+                .toSet()
+        }
+    }
 }

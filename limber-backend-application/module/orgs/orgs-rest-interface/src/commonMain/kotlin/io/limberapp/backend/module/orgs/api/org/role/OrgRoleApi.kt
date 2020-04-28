@@ -13,4 +13,9 @@ object OrgRoleApi {
         path = "/orgs/${enc(orgGuid)}/roles",
         body = rep
     )
+
+    data class GetByOrgGuid(val orgGuid: UUID) : PiperEndpoint(
+        httpMethod = HttpMethod.GET,
+        path = "/orgs/${enc(orgGuid)}/roles"
+    )
 }
