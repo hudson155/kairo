@@ -51,7 +51,15 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel? {
         return jdbi.withHandle<FeatureModel?, Exception> {
-            it.createQuery("SELECT * FROM orgs.feature WHERE org_guid = :orgGuid AND guid = :featureGuid")
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM orgs.feature
+                    WHERE org_guid = :orgGuid
+                      AND guid = :featureGuid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("orgGuid", orgGuid)
                 .bind("featureGuid", featureGuid)
                 .mapTo(FeatureModel::class.java)
@@ -61,7 +69,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun getByOrgGuid(orgGuid: UUID): Set<FeatureModel> {
         return jdbi.withHandle<Set<FeatureModel>, Exception> {
-            it.createQuery("SELECT * FROM orgs.feature WHERE org_guid = :orgGuid")
+            it.createQuery("SELECT * FROM orgs.feature WHERE org_guid = :orgGuid AND archived_date IS NULL")
                 .bind("orgGuid", orgGuid)
                 .mapTo(FeatureModel::class.java)
                 .toSet()
@@ -71,7 +79,14 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
         return jdbi.inTransaction<FeatureModel, Exception> {
             if (update.isDefaultFeature == true) {
-                it.createUpdate("UPDATE orgs.feature SET is_default_feature = FALSE WHERE org_guid = :orgGuid")
+                it.createUpdate(
+                        """
+                        UPDATE orgs.feature
+                        SET is_default_feature = FALSE
+                        WHERE org_guid = :orgGuid
+                          AND archived_date IS NULL
+                        """.trimIndent()
+                    )
                     .bind("orgGuid", orgGuid)
                     .execute()
             }
@@ -101,7 +116,15 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     fun delete(orgGuid: UUID, featureGuid: UUID) {
         jdbi.useTransaction<Exception> {
             val updateCount =
-                it.createUpdate("DELETE FROM orgs.feature WHERE org_guid = :orgGuid AND guid = :featureGuid")
+                it.createUpdate(
+                        """
+                        DELETE
+                        FROM orgs.feature
+                        WHERE org_guid = :orgGuid
+                          AND guid = :featureGuid
+                          AND archived_date IS NULL
+                        """.trimIndent()
+                    )
                     .bind("orgGuid", orgGuid)
                     .bind("featureGuid", featureGuid)
                     .execute()
