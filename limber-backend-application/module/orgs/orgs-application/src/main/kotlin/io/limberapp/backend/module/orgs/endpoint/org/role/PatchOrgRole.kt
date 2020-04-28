@@ -14,7 +14,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgRoleService
 import java.util.UUID
 
 /**
- * Deletes a role from an org.
+ * Deletes an org role's information.
  */
 internal class PatchOrgRole @Inject constructor(
     application: Application,
