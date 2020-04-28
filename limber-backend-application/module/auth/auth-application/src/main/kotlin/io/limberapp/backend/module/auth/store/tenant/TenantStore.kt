@@ -44,7 +44,7 @@ internal class TenantStore @Inject constructor(
 
     fun get(orgGuid: UUID): TenantModel? {
         return jdbi.withHandle<TenantModel?, Exception> {
-            it.createQuery("SELECT * FROM auth.tenant WHERE org_guid = :orgGuid")
+            it.createQuery("SELECT * FROM auth.tenant WHERE org_guid = :orgGuid AND archived_date IS NULL")
                 .bind("orgGuid", orgGuid)
                 .mapTo(TenantModel::class.java)
                 .singleNullOrThrow()
@@ -54,8 +54,16 @@ internal class TenantStore @Inject constructor(
 
     fun getByDomain(domain: String): TenantModel? {
         return jdbi.withHandle<TenantModel?, Exception> {
-            val orgGuidSubquery = "(SELECT org_guid FROM auth.tenant_domain WHERE LOWER(domain) = LOWER(:domain))"
-            it.createQuery("SELECT * FROM auth.tenant WHERE org_guid = $orgGuidSubquery")
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM auth.tenant
+                    WHERE org_guid = (SELECT org_guid
+                                      FROM auth.tenant_domain
+                                      WHERE LOWER(domain) = LOWER(:domain))
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("domain", domain)
                 .mapTo(TenantModel::class.java)
                 .singleNullOrThrow()
@@ -65,7 +73,7 @@ internal class TenantStore @Inject constructor(
 
     fun getByAuth0ClientId(auth0ClientId: String): TenantModel? {
         return jdbi.withHandle<TenantModel?, Exception> {
-            it.createQuery("SELECT * FROM auth.tenant WHERE auth0_client_id = :auth0ClientId")
+            it.createQuery("SELECT * FROM auth.tenant WHERE auth0_client_id = :auth0ClientId AND archived_date IS NULL")
                 .bind("auth0ClientId", auth0ClientId)
                 .mapTo(TenantModel::class.java)
                 .singleNullOrThrow()
@@ -101,7 +109,14 @@ internal class TenantStore @Inject constructor(
 
     fun delete(orgGuid: UUID) {
         jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate("DELETE FROM auth.tenant WHERE org_guid = :orgGuid")
+            val updateCount = it.createUpdate(
+                    """
+                    UPDATE auth.tenant
+                    SET archived_date = NOW()
+                    WHERE org_guid = :orgGuid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
                 .bind("orgGuid", orgGuid)
                 .execute()
             return@useTransaction when (updateCount) {
