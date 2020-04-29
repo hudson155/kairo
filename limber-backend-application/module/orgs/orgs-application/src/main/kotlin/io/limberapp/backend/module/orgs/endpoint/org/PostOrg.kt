@@ -36,7 +36,7 @@ internal class PostOrg @Inject constructor(
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val model = orgMapper.model(command.rep.required())
         orgService.create(model)
-        val features = featureService.createDefault(model.guid)
+        val features = featureService.createDefaults(model.guid)
         return orgMapper.completeRep(model, features)
     }
 }

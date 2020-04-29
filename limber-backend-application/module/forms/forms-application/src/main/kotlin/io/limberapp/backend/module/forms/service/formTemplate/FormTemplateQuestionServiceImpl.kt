@@ -17,7 +17,8 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     private val uuidGenerator: UuidGenerator,
     private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService {
-    override fun createDefault(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
+    override fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
+        require(formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid).isEmpty())
         val questions = listOf(
             FormTemplateTextQuestionModel(
                 guid = uuidGenerator.generate(),
@@ -57,12 +58,9 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
                 options = listOf("test_option_one", "test_option_two")
             )
         )
-        create(questions)
+        formTemplateQuestionStore.create(questions)
         return questions
     }
-
-    override fun create(models: List<FormTemplateQuestionModel>, rank: Int?) =
-        formTemplateQuestionStore.create(models, rank)
 
     override fun create(model: FormTemplateQuestionModel, rank: Int?) =
         formTemplateQuestionStore.create(model, rank)

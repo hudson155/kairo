@@ -11,7 +11,7 @@ internal class FormTemplateServiceImpl @Inject constructor(
 ) : FormTemplateService {
     override fun create(model: FormTemplateModel) {
         formTemplateStore.create(model)
-        formTemplateQuestionService.createDefault(model.guid)
+        formTemplateQuestionService.createDefaults(model.guid)
     }
 
     override fun get(formTemplateGuid: UUID) = formTemplateStore.get(formTemplateGuid)
