@@ -25,6 +25,9 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
         }
     }
 
+    override fun getByFormInstanceGuid(formInstanceGuid: UUID) =
+        formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid)
+
     override fun delete(formInstanceGuid: UUID, questionGuid: UUID) =
         formInstanceQuestionStore.delete(formInstanceGuid, questionGuid)
 }

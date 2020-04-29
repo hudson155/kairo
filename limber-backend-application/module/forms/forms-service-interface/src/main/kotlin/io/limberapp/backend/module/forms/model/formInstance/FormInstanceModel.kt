@@ -7,6 +7,5 @@ data class FormInstanceModel(
     val guid: UUID,
     val createdDate: LocalDateTime,
     val featureGuid: UUID,
-    val formTemplateGuid: UUID,
-    val questions: List<FormInstanceQuestionModel> = emptyList()
+    val formTemplateGuid: UUID
 )
