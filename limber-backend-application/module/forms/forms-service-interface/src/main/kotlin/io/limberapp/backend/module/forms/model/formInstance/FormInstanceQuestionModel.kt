@@ -6,6 +6,7 @@ import java.util.UUID
 
 interface FormInstanceQuestionModel {
     val createdDate: LocalDateTime
+    val formInstanceGuid: UUID
     val questionGuid: UUID?
     val type: FormTemplateQuestionModel.Type
 

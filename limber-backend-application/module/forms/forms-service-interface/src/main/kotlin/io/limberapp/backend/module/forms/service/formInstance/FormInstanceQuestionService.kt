@@ -4,7 +4,7 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestion
 import java.util.UUID
 
 interface FormInstanceQuestionService {
-    fun upsert(formInstanceGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel
+    fun upsert(model: FormInstanceQuestionModel): FormInstanceQuestionModel
 
     fun delete(formInstanceGuid: UUID, questionGuid: UUID)
 }

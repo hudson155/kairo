@@ -11,6 +11,7 @@ import java.util.UUID
 
 internal data class FormInstanceQuestionEntity(
     val createdDate: LocalDateTime,
+    val formInstanceGuid: UUID,
     val questionGuid: UUID?,
     val type: FormTemplateQuestionModel.Type,
     val text: String?,
@@ -37,6 +38,7 @@ internal data class FormInstanceQuestionEntity(
 
     constructor(model: FormInstanceQuestionModel) : this(
         createdDate = model.createdDate,
+        formInstanceGuid = model.formInstanceGuid,
         questionGuid = model.questionGuid,
         type = model.type,
         text = (model as? FormInstanceTextQuestionModel)?.text,
@@ -47,16 +49,19 @@ internal data class FormInstanceQuestionEntity(
     fun asModel() = when (type) {
         FormTemplateQuestionModel.Type.DATE -> FormInstanceDateQuestionModel(
             createdDate = createdDate,
+            formInstanceGuid = formInstanceGuid,
             questionGuid = questionGuid,
             date = checkNotNull(date)
         )
         FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel(
             createdDate = createdDate,
+            formInstanceGuid = formInstanceGuid,
             questionGuid = questionGuid,
             selection = checkNotNull(selections).single()
         )
         FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel(
             createdDate = createdDate,
+            formInstanceGuid = formInstanceGuid,
             questionGuid = questionGuid,
             text = checkNotNull(text)
         )

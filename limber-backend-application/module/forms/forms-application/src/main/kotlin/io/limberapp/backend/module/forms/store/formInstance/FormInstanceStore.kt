@@ -15,7 +15,7 @@ internal class FormInstanceStore @Inject constructor(
     fun create(model: FormInstanceModel) {
         jdbi.useTransaction<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
-            formInstanceQuestionStore.create(model.guid, model.questions.toSet())
+            formInstanceQuestionStore.create(model.questions.toSet())
         }
     }
 

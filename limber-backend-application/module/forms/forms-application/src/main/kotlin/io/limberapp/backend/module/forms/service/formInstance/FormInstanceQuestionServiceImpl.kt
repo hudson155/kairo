@@ -10,15 +10,15 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
     private val formInstanceQuestionStore: FormInstanceQuestionStore,
     private val formInstanceQuestionMapper: FormInstanceQuestionMapper
 ) : FormInstanceQuestionService {
-    override fun upsert(formInstanceGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel {
+    override fun upsert(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
         val questionGuid = requireNotNull(model.questionGuid)
-        val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(formInstanceGuid, questionGuid)
+        val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(model.formInstanceGuid, questionGuid)
         return if (existingFormInstanceQuestionModel == null) {
-            formInstanceQuestionStore.create(formInstanceGuid, model)
+            formInstanceQuestionStore.create(model)
             model
         } else {
             formInstanceQuestionStore.update(
-                formInstanceGuid = formInstanceGuid,
+                formInstanceGuid = model.formInstanceGuid,
                 questionGuid = questionGuid,
                 update = formInstanceQuestionMapper.update(model)
             )
