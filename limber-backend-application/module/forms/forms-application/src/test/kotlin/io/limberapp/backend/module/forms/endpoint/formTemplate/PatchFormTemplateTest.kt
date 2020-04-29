@@ -5,6 +5,7 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.summary
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -31,8 +32,8 @@ internal class PatchFormTemplateTest : ResourceTest() {
         val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
         formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
         piperTest.test(FormTemplateApi.Patch(formTemplateRep.guid, formTemplateUpdateRep)) {
-            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
-            assertEquals(formTemplateRep, actual)
+            val actual = json.parse<FormTemplateRep.Summary>(response.content!!)
+            assertEquals(formTemplateRep.summary(), actual)
         }
 
         piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {

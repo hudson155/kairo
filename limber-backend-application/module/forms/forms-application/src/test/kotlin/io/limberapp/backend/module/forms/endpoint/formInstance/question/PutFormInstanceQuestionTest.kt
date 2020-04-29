@@ -19,13 +19,16 @@ import kotlin.test.assertEquals
 internal class PutFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun formInstanceDoesNotExist() {
-        val questionGuid = UUID.randomUUID()
+        val featureGuid = UUID.randomUUID()
         val formInstanceGuid = UUID.randomUUID()
+
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
         piperTest.test(
             endpoint = FormInstanceQuestionApi.Put(
                 formInstanceGuid = formInstanceGuid,
-                questionGuid = questionGuid,
+                questionGuid = formTemplateRep.questions.first().guid,
                 rep = FormInstanceQuestionRepFixtures.textFixture.creation()
             ),
             expectedException = FormInstanceNotFound()
