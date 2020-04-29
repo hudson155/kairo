@@ -11,6 +11,7 @@ import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
@@ -21,6 +22,7 @@ internal class GetFormTemplate @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
+    private val formTemplateQuestionService: FormTemplateQuestionService,
     private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<FormTemplateApi.Get, FormTemplateRep.Complete>(
     application = application,
@@ -34,6 +36,7 @@ internal class GetFormTemplate @Inject constructor(
     override suspend fun Handler.handle(command: FormTemplateApi.Get): FormTemplateRep.Complete {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val model = formTemplateService.get(command.formTemplateGuid) ?: throw FormTemplateNotFound()
-        return formTemplateMapper.completeRep(model)
+        val questions = formTemplateQuestionService.getByFormTemplateGuid(command.formTemplateGuid)
+        return formTemplateMapper.completeRep(model, questions)
     }
 }

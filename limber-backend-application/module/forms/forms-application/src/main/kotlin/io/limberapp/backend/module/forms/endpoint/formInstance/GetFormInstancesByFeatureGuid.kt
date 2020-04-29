@@ -21,7 +21,7 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
     servingConfig: ServingConfig,
     private val formInstanceService: FormInstanceService,
     private val formInstanceMapper: FormInstanceMapper
-) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, Set<FormInstanceRep.Complete>>(
+) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, Set<FormInstanceRep.Summary>>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
@@ -30,9 +30,9 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
         featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
     )
 
-    override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Complete> {
+    override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
         Authorization.HasAccessToFeature(command.featureGuid).authorize()
         val models = formInstanceService.getByFeatureGuid(command.featureGuid)
-        return models.map { formInstanceMapper.completeRep(it) }.toSet()
+        return models.map { formInstanceMapper.summaryRep(it) }.toSet()
     }
 }

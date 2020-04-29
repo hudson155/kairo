@@ -9,14 +9,10 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
-internal class FormTemplateStore @Inject constructor(
-    private val jdbi: Jdbi,
-    private val formTemplateQuestionStore: FormTemplateQuestionStore
-) : SqlStore() {
+internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: FormTemplateModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
-            formTemplateQuestionStore.create(model.guid, model.questions)
         }
     }
 
@@ -26,7 +22,6 @@ internal class FormTemplateStore @Inject constructor(
                 .bind("guid", formTemplateGuid)
                 .mapTo(FormTemplateModel::class.java)
                 .singleNullOrThrow()
-                ?.copy(questions = formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid))
         }
     }
 
@@ -42,7 +37,6 @@ internal class FormTemplateStore @Inject constructor(
                 )
                 .bind("featureGuid", featureGuid)
                 .mapTo(FormTemplateModel::class.java)
-                .map { it.copy(questions = formTemplateQuestionStore.getByFormTemplateGuid(it.guid)) }
                 .toSet()
         }
     }

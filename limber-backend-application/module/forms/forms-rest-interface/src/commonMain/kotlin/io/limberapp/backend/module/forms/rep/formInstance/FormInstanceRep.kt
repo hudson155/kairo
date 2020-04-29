@@ -21,6 +21,18 @@ object FormInstanceRep {
     }
 
     @Serializable
+    data class Summary(
+        @Serializable(with = UuidSerializer::class)
+        val guid: UUID,
+        @Serializable(with = LocalDateTimeSerializer::class)
+        override val createdDate: LocalDateTime,
+        @Serializable(with = UuidSerializer::class)
+        val featureGuid: UUID,
+        @Serializable(with = UuidSerializer::class)
+        val formTemplateGuid: UUID
+    ) : CompleteRep
+
+    @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
         val guid: UUID,

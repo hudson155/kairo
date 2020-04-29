@@ -36,11 +36,12 @@ internal class PutFormInstanceQuestion @Inject constructor(
 
     override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
         HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-        val model = formInstanceQuestionMapper.model(command.questionGuid, command.rep.required())
-        formInstanceQuestionService.upsert(
+        val model = formInstanceQuestionMapper.model(
             formInstanceGuid = command.formInstanceGuid,
-            model = model
+            questionGuid = command.questionGuid,
+            rep = command.rep.required()
         )
+        formInstanceQuestionService.upsert(model)
         return formInstanceQuestionMapper.completeRep(model)
     }
 }

@@ -11,6 +11,7 @@ import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
+import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.UUID
 
@@ -21,6 +22,7 @@ internal class GetFormInstance @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formInstanceService: FormInstanceService,
+    private val formInstanceQuestionService: FormInstanceQuestionService,
     private val formInstanceMapper: FormInstanceMapper
 ) : LimberApiEndpoint<FormInstanceApi.Get, FormInstanceRep.Complete>(
     application = application,
@@ -34,6 +36,7 @@ internal class GetFormInstance @Inject constructor(
     override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
         HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
         val model = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
-        return formInstanceMapper.completeRep(model)
+        val questions = formInstanceQuestionService.getByFormInstanceGuid(command.formInstanceGuid)
+        return formInstanceMapper.completeRep(model, questions)
     }
 }

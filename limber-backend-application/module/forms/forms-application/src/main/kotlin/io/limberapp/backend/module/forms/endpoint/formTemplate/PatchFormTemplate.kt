@@ -21,7 +21,7 @@ internal class PatchFormTemplate @Inject constructor(
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
     private val formTemplateMapper: FormTemplateMapper
-) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Complete>(
+) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Summary>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormTemplateApi.Patch::class.template()
@@ -31,10 +31,10 @@ internal class PatchFormTemplate @Inject constructor(
         rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Complete {
+    override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val update = formTemplateMapper.update(command.rep.required())
         val model = formTemplateService.update(command.formTemplateGuid, update)
-        return formTemplateMapper.completeRep(model)
+        return formTemplateMapper.summaryRep(model)
     }
 }

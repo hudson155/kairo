@@ -3,6 +3,7 @@ package io.limberapp.backend.module.forms.mapper.formTemplate
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import java.time.Clock
 import java.time.LocalDateTime
@@ -17,17 +18,24 @@ internal class FormTemplateMapper @Inject constructor(
         createdDate = LocalDateTime.now(clock),
         featureGuid = rep.featureGuid,
         title = rep.title,
-        description = rep.description,
-        questions = formTemplateQuestionMapper.defaultModels()
+        description = rep.description
     )
 
-    fun completeRep(model: FormTemplateModel) = FormTemplateRep.Complete(
+    fun summaryRep(model: FormTemplateModel) = FormTemplateRep.Summary(
+        guid = model.guid,
+        createdDate = model.createdDate,
+        featureGuid = model.featureGuid,
+        title = model.title,
+        description = model.description
+    )
+
+    fun completeRep(model: FormTemplateModel, questions: List<FormTemplateQuestionModel>) = FormTemplateRep.Complete(
         guid = model.guid,
         createdDate = model.createdDate,
         featureGuid = model.featureGuid,
         title = model.title,
         description = model.description,
-        questions = model.questions.map { formTemplateQuestionMapper.completeRep(it) }
+        questions = questions.map { formTemplateQuestionMapper.completeRep(it) }
     )
 
     fun update(rep: FormTemplateRep.Update) = FormTemplateModel.Update(

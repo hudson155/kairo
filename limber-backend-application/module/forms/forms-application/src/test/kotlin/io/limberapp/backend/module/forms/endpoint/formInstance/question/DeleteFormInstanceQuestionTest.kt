@@ -17,11 +17,14 @@ import kotlin.test.assertEquals
 internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     @Test
     fun formInstanceDoesNotExist() {
+        val featureGuid = UUID.randomUUID()
         val formInstanceGuid = UUID.randomUUID()
-        val questionGuid = UUID.randomUUID()
+
+        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
         piperTest.test(
-            endpoint = FormInstanceQuestionApi.Delete(formInstanceGuid, questionGuid),
+            endpoint = FormInstanceQuestionApi.Delete(formInstanceGuid, formTemplateRep.questions.first().guid),
             expectedException = FormInstanceNotFound()
         )
     }

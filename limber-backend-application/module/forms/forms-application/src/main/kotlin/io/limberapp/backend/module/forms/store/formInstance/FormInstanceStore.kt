@@ -8,14 +8,10 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
-internal class FormInstanceStore @Inject constructor(
-    private val jdbi: Jdbi,
-    private val formInstanceQuestionStore: FormInstanceQuestionStore
-) : SqlStore() {
+internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: FormInstanceModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
-            formInstanceQuestionStore.create(model.guid, model.questions.toSet())
         }
     }
 
@@ -25,7 +21,6 @@ internal class FormInstanceStore @Inject constructor(
                 .bind("guid", formInstanceGuid)
                 .mapTo(FormInstanceModel::class.java)
                 .singleOrNull()
-                ?.copy(questions = formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid))
         }
     }
 
@@ -41,7 +36,6 @@ internal class FormInstanceStore @Inject constructor(
                 )
                 .bind("featureGuid", featureGuid)
                 .mapTo(FormInstanceModel::class.java)
-                .map { it.copy(questions = formInstanceQuestionStore.getByFormInstanceGuid(it.guid)) }
                 .toSet()
         }
     }

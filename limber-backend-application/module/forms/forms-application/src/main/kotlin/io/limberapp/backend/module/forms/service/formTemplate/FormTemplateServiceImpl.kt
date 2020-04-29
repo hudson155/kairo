@@ -6,9 +6,13 @@ import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import java.util.UUID
 
 internal class FormTemplateServiceImpl @Inject constructor(
+    private val formTemplateQuestionService: FormTemplateQuestionService,
     private val formTemplateStore: FormTemplateStore
 ) : FormTemplateService {
-    override fun create(model: FormTemplateModel) = formTemplateStore.create(model)
+    override fun create(model: FormTemplateModel) {
+        formTemplateStore.create(model)
+        formTemplateQuestionService.createDefaults(model.guid)
+    }
 
     override fun get(formTemplateGuid: UUID) = formTemplateStore.get(formTemplateGuid)
 

@@ -4,6 +4,7 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.summary
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
@@ -15,7 +16,7 @@ internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
         val featureGuid = UUID.randomUUID()
 
         piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormTemplateRep.Complete>(response.content!!)
+            val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -31,8 +32,8 @@ internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
         piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureGuid)))
 
         piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormTemplateRep.Complete>(response.content!!)
-            assertEquals(setOf(formTemplate0Rep, formTemplate1Rep), actual)
+            val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
+            assertEquals(setOf(formTemplate0Rep.summary(), formTemplate1Rep.summary()), actual)
         }
     }
 }

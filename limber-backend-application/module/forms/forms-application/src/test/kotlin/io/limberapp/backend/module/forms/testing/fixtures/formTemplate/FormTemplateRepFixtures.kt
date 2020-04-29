@@ -47,3 +47,11 @@ internal object FormTemplateRepFixtures {
         )
     })
 }
+
+internal fun FormTemplateRep.Complete.summary() = FormTemplateRep.Summary(
+    guid = guid,
+    createdDate = createdDate,
+    featureGuid = featureGuid,
+    title = title,
+    description = description
+)

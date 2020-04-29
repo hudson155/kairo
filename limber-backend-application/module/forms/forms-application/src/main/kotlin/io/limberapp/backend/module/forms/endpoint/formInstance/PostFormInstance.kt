@@ -10,6 +10,7 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
+import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 
@@ -19,9 +20,10 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 internal class PostFormInstance @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
+    private val formTemplateService: FormTemplateService,
     private val formInstanceService: FormInstanceService,
-    private val formInstanceMapper: FormInstanceMapper,
-    private val formTemplateService: FormTemplateService
+    private val formInstanceQuestionService: FormInstanceQuestionService,
+    private val formInstanceMapper: FormInstanceMapper
 ) : LimberApiEndpoint<FormInstanceApi.Post, FormInstanceRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
@@ -36,6 +38,7 @@ internal class PostFormInstance @Inject constructor(
         HasAccessToFormTemplate(formTemplateService, rep.formTemplateGuid).authorize()
         val model = formInstanceMapper.model(rep)
         formInstanceService.create(model)
-        return formInstanceMapper.completeRep(model)
+        val questions = formInstanceQuestionService.getByFormInstanceGuid(model.guid)
+        return formInstanceMapper.completeRep(model, questions)
     }
 }

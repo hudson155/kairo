@@ -12,12 +12,12 @@ class FormTemplateClient(private val fetch: Fetch, private val json: Json) {
         return json.parse(string)
     }
 
-    suspend operator fun invoke(endpoint: FormTemplateApi.GetByFeatureGuid): Set<FormTemplateRep.Complete> {
+    suspend operator fun invoke(endpoint: FormTemplateApi.GetByFeatureGuid): Set<FormTemplateRep.Summary> {
         val string = fetch(endpoint)
         return json.parseSet(string)
     }
 
-    suspend operator fun invoke(endpoint: FormTemplateApi.Patch): FormTemplateRep.Complete {
+    suspend operator fun invoke(endpoint: FormTemplateApi.Patch): FormTemplateRep.Summary {
         val string = fetch(endpoint)
         return json.parse(string)
     }

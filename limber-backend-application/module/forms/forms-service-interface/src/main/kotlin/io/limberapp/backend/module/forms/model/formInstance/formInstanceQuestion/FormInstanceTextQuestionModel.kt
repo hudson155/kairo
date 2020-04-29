@@ -7,6 +7,7 @@ import java.util.UUID
 
 data class FormInstanceTextQuestionModel(
     override val createdDate: LocalDateTime,
+    override val formInstanceGuid: UUID,
     override val questionGuid: UUID?,
     val text: String
 ) : FormInstanceQuestionModel {

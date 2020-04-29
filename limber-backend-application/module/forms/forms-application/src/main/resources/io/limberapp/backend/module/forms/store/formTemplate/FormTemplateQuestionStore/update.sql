@@ -7,5 +7,4 @@ SET label       = COALESCE(:label, label),
     earliest    = COALESCE(:earliest, earliest),
     latest      = COALESCE(:latest, latest),
     options     = COALESCE(:options, options)
-WHERE form_template_guid = :formTemplateGuid
-  AND guid = :questionGuid
+WHERE guid = :questionGuid
