@@ -43,7 +43,13 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     private fun validateInsertionRank(formTemplateGuid: UUID, rank: Int?): Int {
         rank?.let { if (it < 0) throw RankOutOfBounds(it) }
         val maxExistingRank = jdbi.withHandle<Int, Exception> {
-            it.createQuery(sqlResource("getMaxRank"))
+            it.createQuery(
+                    """
+                    SELECT MAX(rank)
+                    FROM forms.form_template_question
+                    WHERE form_template_guid = :formTemplateGuid
+                    """.trimIndent()
+                )
                 .bind("formTemplateGuid", formTemplateGuid)
                 .asInt()
         } ?: -1
@@ -53,7 +59,14 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
 
     private fun incrementExistingRanks(formTemplateGuid: UUID, atLeast: Int, incrementBy: Int) {
         jdbi.useHandle<Exception> {
-            it.createUpdate(sqlResource("incrementExistingRanks"))
+            it.createUpdate(
+                    """
+                    UPDATE forms.form_template_question
+                    SET rank = rank + :incrementBy
+                    WHERE form_template_guid = :formTemplateGuid
+                      AND rank >= :atLeast
+                    """.trimIndent()
+                )
                 .bind("formTemplateGuid", formTemplateGuid)
                 .bind("atLeast", atLeast)
                 .bind("incrementBy", incrementBy)
@@ -63,7 +76,14 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
 
     fun get(formTemplateGuid: UUID, questionGuid: UUID): FormTemplateQuestionModel? {
         return jdbi.withHandle<FormTemplateQuestionModel?, Exception> {
-            it.createQuery(sqlResource("get"))
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM forms.form_template_question
+                    WHERE form_template_guid = :formTemplateGuid
+                      AND guid = :guid
+                    """.trimIndent()
+                )
                 .bind("formTemplateGuid", formTemplateGuid)
                 .bind("guid", questionGuid)
                 .mapTo(FormTemplateQuestionEntity::class.java)
@@ -74,7 +94,14 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
 
     fun getByFormTemplateGuid(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
         return jdbi.withHandle<List<FormTemplateQuestionModel>, Exception> {
-            it.createQuery(sqlResource("getByFormTemplateGuid"))
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM forms.form_template_question
+                    WHERE form_template_guid = :formTemplateGuid
+                    ORDER BY rank
+                    """.trimIndent()
+                )
                 .bind("formTemplateGuid", formTemplateGuid)
                 .mapTo(FormTemplateQuestionEntity::class.java)
                 .map { it.asModel() }
@@ -103,7 +130,14 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
 
     fun delete(formTemplateGuid: UUID, questionGuid: UUID) {
         jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate(sqlResource("delete"))
+            val updateCount = it.createUpdate(
+                    """
+                    DELETE
+                    FROM forms.form_template_question
+                    WHERE form_template_guid = :formTemplateGuid
+                      AND guid = :questionGuid
+                    """.trimIndent()
+                )
                 .bind("formTemplateGuid", formTemplateGuid)
                 .bind("questionGuid", questionGuid)
                 .execute()
