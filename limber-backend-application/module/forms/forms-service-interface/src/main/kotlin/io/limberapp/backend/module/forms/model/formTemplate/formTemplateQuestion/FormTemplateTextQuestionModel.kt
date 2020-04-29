@@ -7,6 +7,7 @@ import java.util.UUID
 data class FormTemplateTextQuestionModel(
     override val guid: UUID,
     override val createdDate: LocalDateTime,
+    override val formTemplateGuid: UUID,
     override val label: String,
     override val helpText: String?,
     val multiLine: Boolean,

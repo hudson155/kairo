@@ -12,14 +12,15 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
 internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun create(formTemplateGuid: UUID, models: List<FormTemplateQuestionModel>, rank: Int? = null) {
+    fun create(models: List<FormTemplateQuestionModel>, rank: Int? = null) {
+        // Batch creation is only supported for questions in the same form template.
+        val formTemplateGuid = models.map { it.formTemplateGuid }.distinct().singleOrNull() ?: return
         jdbi.useTransaction<Exception> {
             val insertionRank = validateInsertionRank(formTemplateGuid, rank)
             incrementExistingRanks(formTemplateGuid, atLeast = insertionRank, incrementBy = models.size)
             it.prepareBatch(sqlResource("create")).apply {
                 models.forEachIndexed { i, model ->
                     this
-                        .bind("formTemplateGuid", formTemplateGuid)
                         .bind("rank", insertionRank + i)
                         .bindKotlin(FormTemplateQuestionEntity(model))
                         .add()
@@ -28,12 +29,11 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         }
     }
 
-    fun create(formTemplateGuid: UUID, model: FormTemplateQuestionModel, rank: Int? = null) {
+    fun create(model: FormTemplateQuestionModel, rank: Int? = null) {
         jdbi.useTransaction<Exception> {
-            val insertionRank = validateInsertionRank(formTemplateGuid, rank)
-            incrementExistingRanks(formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
+            val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
+            incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
             it.createUpdate(sqlResource("create"))
-                .bind("formTemplateGuid", formTemplateGuid)
                 .bind("rank", insertionRank)
                 .bindKotlin(FormTemplateQuestionEntity(model))
                 .execute()
@@ -74,17 +74,15 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         }
     }
 
-    fun get(formTemplateGuid: UUID, questionGuid: UUID): FormTemplateQuestionModel? {
+    fun get(questionGuid: UUID): FormTemplateQuestionModel? {
         return jdbi.withHandle<FormTemplateQuestionModel?, Exception> {
             it.createQuery(
                     """
                     SELECT *
                     FROM forms.form_template_question
-                    WHERE form_template_guid = :formTemplateGuid
-                      AND guid = :guid
+                    WHERE guid = :guid
                     """.trimIndent()
                 )
-                .bind("formTemplateGuid", formTemplateGuid)
                 .bind("guid", questionGuid)
                 .mapTo(FormTemplateQuestionEntity::class.java)
                 .singleNullOrThrow()
@@ -109,36 +107,29 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         }
     }
 
-    fun update(
-        formTemplateGuid: UUID,
-        questionGuid: UUID,
-        update: FormTemplateQuestionModel.Update
-    ): FormTemplateQuestionModel {
+    fun update(questionGuid: UUID, update: FormTemplateQuestionModel.Update): FormTemplateQuestionModel {
         return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
             val updateCount = it.createUpdate(sqlResource("update"))
-                .bind("formTemplateGuid", formTemplateGuid)
                 .bind("questionGuid", questionGuid)
                 .bindKotlin(FormTemplateQuestionEntity.Update(update))
                 .execute()
             return@inTransaction when (updateCount) {
                 0 -> throw FormTemplateQuestionNotFound()
-                1 -> checkNotNull(get(formTemplateGuid, questionGuid))
+                1 -> checkNotNull(get(questionGuid))
                 else -> badSql()
             }
         }
     }
 
-    fun delete(formTemplateGuid: UUID, questionGuid: UUID) {
+    fun delete(questionGuid: UUID) {
         jdbi.useTransaction<Exception> {
             val updateCount = it.createUpdate(
                     """
                     DELETE
                     FROM forms.form_template_question
-                    WHERE form_template_guid = :formTemplateGuid
-                      AND guid = :questionGuid
+                    WHERE guid = :questionGuid
                     """.trimIndent()
                 )
-                .bind("formTemplateGuid", formTemplateGuid)
                 .bind("questionGuid", questionGuid)
                 .execute()
             return@useTransaction when (updateCount) {

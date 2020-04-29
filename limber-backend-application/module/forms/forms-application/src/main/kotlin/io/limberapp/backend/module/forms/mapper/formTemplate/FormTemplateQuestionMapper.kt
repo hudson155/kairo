@@ -13,6 +13,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
+import java.util.UUID
 import kotlin.reflect.KClass
 
 private const val TEXT_QUESTION_MAX_LENGTH_MULTILINE = 10_000
@@ -22,10 +23,11 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) {
-    fun model(rep: FormTemplateQuestionRep.Creation) = when (rep) {
+    fun model(formTemplateGuid: UUID, rep: FormTemplateQuestionRep.Creation) = when (rep) {
         is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(
             guid = uuidGenerator.generate(),
             createdDate = LocalDateTime.now(clock),
+            formTemplateGuid = formTemplateGuid,
             label = rep.label,
             helpText = rep.helpText,
             earliest = rep.earliest,
@@ -34,6 +36,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
             guid = uuidGenerator.generate(),
             createdDate = LocalDateTime.now(clock),
+            formTemplateGuid = formTemplateGuid,
             label = rep.label,
             helpText = rep.helpText,
             options = rep.options
@@ -41,6 +44,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
         is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
             guid = uuidGenerator.generate(),
             createdDate = LocalDateTime.now(clock),
+            formTemplateGuid = formTemplateGuid,
             label = rep.label,
             helpText = rep.helpText,
             multiLine = rep.multiLine,

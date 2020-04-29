@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
@@ -21,6 +22,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
             FormTemplateTextQuestionModel(
                 guid = uuidGenerator.generate(),
                 createdDate = LocalDateTime.now(clock),
+                formTemplateGuid = formTemplateGuid,
                 label = "Worker name",
                 helpText = null,
                 multiLine = false,
@@ -30,6 +32,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
             FormTemplateDateQuestionModel(
                 guid = uuidGenerator.generate(),
                 createdDate = LocalDateTime.now(clock),
+                formTemplateGuid = formTemplateGuid,
                 label = "Date",
                 helpText = null,
                 earliest = null,
@@ -38,6 +41,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
             FormTemplateTextQuestionModel(
                 guid = uuidGenerator.generate(),
                 createdDate = LocalDateTime.now(clock),
+                formTemplateGuid = formTemplateGuid,
                 label = "Description",
                 helpText = null,
                 multiLine = true,
@@ -47,27 +51,36 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
             FormTemplateRadioSelectorQuestionModel(
                 guid = uuidGenerator.generate(),
                 createdDate = LocalDateTime.now(clock),
+                formTemplateGuid = formTemplateGuid,
                 label = "Two options",
                 helpText = null,
                 options = listOf("test_option_one", "test_option_two")
             )
         )
-        create(formTemplateGuid, questions)
+        create(questions)
         return questions
     }
 
-    override fun create(formTemplateGuid: UUID, models: List<FormTemplateQuestionModel>, rank: Int?) =
-        formTemplateQuestionStore.create(formTemplateGuid, models, rank)
+    override fun create(models: List<FormTemplateQuestionModel>, rank: Int?) =
+        formTemplateQuestionStore.create(models, rank)
 
-    override fun create(formTemplateGuid: UUID, model: FormTemplateQuestionModel, rank: Int?) =
-        formTemplateQuestionStore.create(formTemplateGuid, model, rank)
+    override fun create(model: FormTemplateQuestionModel, rank: Int?) =
+        formTemplateQuestionStore.create(model, rank)
 
     override fun getByFormTemplateGuid(formTemplateGuid: UUID) =
         formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
 
-    override fun update(formTemplateGuid: UUID, questionGuid: UUID, update: FormTemplateQuestionModel.Update) =
-        formTemplateQuestionStore.update(formTemplateGuid, questionGuid, update)
+    override fun update(
+        formTemplateGuid: UUID,
+        questionGuid: UUID,
+        update: FormTemplateQuestionModel.Update
+    ): FormTemplateQuestionModel {
+        if (formTemplateQuestionStore.get(questionGuid)?.formTemplateGuid != formTemplateGuid) {
+            throw FormTemplateQuestionNotFound()
+        }
+        return formTemplateQuestionStore.update(questionGuid, update)
+    }
 
     override fun delete(formTemplateGuid: UUID, questionGuid: UUID) =
-        formTemplateQuestionStore.delete(formTemplateGuid, questionGuid)
+        formTemplateQuestionStore.delete(questionGuid)
 }
