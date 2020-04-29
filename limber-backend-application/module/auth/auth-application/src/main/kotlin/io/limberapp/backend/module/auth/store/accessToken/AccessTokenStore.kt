@@ -34,11 +34,10 @@ internal class AccessTokenStore @Inject constructor(private val jdbi: Jdbi) : Sq
         }
     }
 
-    fun delete(accountGuid: UUID, accessTokenGuid: UUID) {
+    fun delete(accessTokenGuid: UUID) {
         jdbi.useTransaction<Exception> {
             val updateCount =
-                it.createUpdate("DELETE FROM auth.access_token WHERE account_guid = :accountGuid AND guid = :guid")
-                    .bind("accountGuid", accountGuid)
+                it.createUpdate("DELETE FROM auth.access_token WHERE guid = :guid")
                     .bind("guid", accessTokenGuid)
                     .execute()
             return@useTransaction when (updateCount) {
