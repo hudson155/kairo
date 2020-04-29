@@ -5,6 +5,7 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
+import io.limberapp.backend.module.forms.testing.fixtures.formInstance.summary
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import org.junit.jupiter.api.Test
 import java.util.UUID
@@ -17,7 +18,7 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
         val featureGuid = UUID.randomUUID()
 
         piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormInstanceRep.Complete>(response.content!!)
+            val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
             assertTrue(actual.isEmpty())
         }
     }
@@ -40,8 +41,8 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
         )
 
         piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormInstanceRep.Complete>(response.content!!)
-            assertEquals(setOf(formInstance0Rep, formInstance1Rep), actual)
+            val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+            assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
         }
     }
 }
