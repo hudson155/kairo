@@ -73,12 +73,18 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         questionGuid: UUID,
         update: FormTemplateQuestionModel.Update
     ): FormTemplateQuestionModel {
-        if (formTemplateQuestionStore.get(questionGuid)?.formTemplateGuid != formTemplateGuid) {
-            throw FormTemplateQuestionNotFound()
-        }
+        checkFormTemplateGuid(formTemplateGuid, questionGuid)
         return formTemplateQuestionStore.update(questionGuid, update)
     }
 
-    override fun delete(formTemplateGuid: UUID, questionGuid: UUID) =
+    override fun delete(formTemplateGuid: UUID, questionGuid: UUID) {
+        checkFormTemplateGuid(formTemplateGuid, questionGuid)
         formTemplateQuestionStore.delete(questionGuid)
+    }
+
+    private fun checkFormTemplateGuid(formTemplateGuid: UUID, questionGuid: UUID) {
+        if (formTemplateQuestionStore.get(questionGuid)?.formTemplateGuid != formTemplateGuid) {
+            throw FormTemplateQuestionNotFound()
+        }
+    }
 }
