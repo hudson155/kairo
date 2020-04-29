@@ -10,7 +10,6 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.UUID
 
@@ -21,9 +20,8 @@ internal class PatchFormTemplate @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val formTemplateService: FormTemplateService,
-    private val formTemplateQuestionService: FormTemplateQuestionService,
     private val formTemplateMapper: FormTemplateMapper
-) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Complete>(
+) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Summary>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = FormTemplateApi.Patch::class.template()
@@ -33,11 +31,10 @@ internal class PatchFormTemplate @Inject constructor(
         rep = call.getAndValidateBody()
     )
 
-    override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Complete {
+    override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val update = formTemplateMapper.update(command.rep.required())
         val model = formTemplateService.update(command.formTemplateGuid, update)
-        val questions = formTemplateQuestionService.getByFormTemplateGuid(command.formTemplateGuid)
-        return formTemplateMapper.completeRep(model, questions)
+        return formTemplateMapper.summaryRep(model)
     }
 }
