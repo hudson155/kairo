@@ -22,42 +22,6 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) {
-    fun defaultModels() = listOf(
-        FormTemplateTextQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            label = "Worker name",
-            helpText = null,
-            multiLine = false,
-            placeholder = null,
-            validator = null
-        ),
-        FormTemplateDateQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            label = "Date",
-            helpText = null,
-            earliest = null,
-            latest = null
-        ),
-        FormTemplateTextQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            label = "Description",
-            helpText = null,
-            multiLine = true,
-            placeholder = null,
-            validator = null
-        ),
-        FormTemplateRadioSelectorQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            label = "Two options",
-            helpText = null,
-            options = listOf("test_option_one", "test_option_two")
-        )
-    )
-
     fun model(rep: FormTemplateQuestionRep.Creation) = when (rep) {
         is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(
             guid = uuidGenerator.generate(),
