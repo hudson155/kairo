@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.endpoint.org.role
+package io.limberapp.backend.module.auth.endpoint.org.role
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
@@ -7,8 +7,8 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.orgs.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.orgs.service.org.OrgRoleService
+import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
+import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import java.util.UUID
 
 /**

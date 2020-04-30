@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.rep.org
+package io.limberapp.backend.module.auth.rep.org
 
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
