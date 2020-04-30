@@ -18,11 +18,10 @@ private const val ORG_GUID_FOREIGN_KEY = "org_role_org_guid_fkey"
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
 internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun create(orgGuid: UUID, model: OrgRoleModel) {
+    fun create(model: OrgRoleModel) {
         jdbi.useHandle<Exception> {
             try {
                 it.createUpdate(sqlResource("create"))
-                    .bind("orgGuid", orgGuid)
                     .bindKotlin(model)
                     .execute()
             } catch (e: UnableToExecuteStatementException) {

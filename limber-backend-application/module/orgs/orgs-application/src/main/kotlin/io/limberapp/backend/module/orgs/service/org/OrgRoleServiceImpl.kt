@@ -10,7 +10,7 @@ internal class OrgRoleServiceImpl @Inject constructor(
     private val orgService: OrgService,
     private val orgRoleStore: OrgRoleStore
 ) : OrgRoleService {
-    override fun create(orgGuid: UUID, model: OrgRoleModel) = orgRoleStore.create(orgGuid, model)
+    override fun create(model: OrgRoleModel) = orgRoleStore.create(model)
 
     override fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
         orgService.get(orgGuid) ?: throw OrgNotFound()
