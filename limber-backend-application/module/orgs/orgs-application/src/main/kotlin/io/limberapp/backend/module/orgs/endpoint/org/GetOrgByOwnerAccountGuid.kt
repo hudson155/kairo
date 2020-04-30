@@ -8,6 +8,7 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
+import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.FeatureService
@@ -15,15 +16,15 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.UUID
 
 /**
- * Returns all orgs with the given owner.
+ * Returns the org with the given owner.
  */
-internal class GetOrgsByOwnerAccountGuid @Inject constructor(
+internal class GetOrgByOwnerAccountGuid @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val featureService: FeatureService,
     private val orgService: OrgService,
     private val orgMapper: OrgMapper
-) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, Set<OrgRep.Complete>>(
+) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, OrgRep.Complete>(
     application = application,
     pathPrefix = servingConfig.apiPathPrefix,
     endpointTemplate = OrgApi.GetByOwnerAccountGuid::class.template()
@@ -32,12 +33,10 @@ internal class GetOrgsByOwnerAccountGuid @Inject constructor(
         ownerAccountGuid = call.parameters.getAsType(UUID::class, "ownerAccountGuid")
     )
 
-    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): Set<OrgRep.Complete> {
+    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): OrgRep.Complete {
         Authorization.User(command.ownerAccountGuid).authorize()
-        val orgs = orgService.getByOwnerAccountGuid(command.ownerAccountGuid)
-        check(orgs.size <= 1) // Accounts can't be part of multiple orgs.
-        val org = orgs.singleOrNull() ?: return emptySet()
+        val org = orgService.getByOwnerAccountGuid(command.ownerAccountGuid) ?: throw OrgNotFound()
         val features = featureService.getByOrgGuid(org.guid)
-        return setOf(orgMapper.completeRep(org, features))
+        return orgMapper.completeRep(org, features)
     }
 }

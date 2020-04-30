@@ -8,7 +8,7 @@ interface OrgService {
 
     fun get(orgGuid: UUID): OrgModel?
 
-    fun getByOwnerAccountGuid(ownerAccountGuid: UUID): Set<OrgModel>
+    fun getByOwnerAccountGuid(ownerAccountGuid: UUID): OrgModel?
 
     fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel
 
