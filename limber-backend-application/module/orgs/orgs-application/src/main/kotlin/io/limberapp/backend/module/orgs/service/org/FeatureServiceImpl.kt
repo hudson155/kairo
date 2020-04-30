@@ -2,6 +2,7 @@ package io.limberapp.backend.module.orgs.service.org
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.store.org.FeatureStore
 import java.time.Clock
@@ -32,8 +33,17 @@ internal class FeatureServiceImpl @Inject constructor(
 
     override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
 
-    override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update) =
-        featureStore.update(orgGuid, featureGuid, update)
+    override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
+        checkFeatureGuid(orgGuid, featureGuid)
+        return featureStore.update(orgGuid, featureGuid, update)
+    }
 
-    override fun delete(orgGuid: UUID, featureGuid: UUID) = featureStore.delete(orgGuid, featureGuid)
+    override fun delete(orgGuid: UUID, featureGuid: UUID) {
+        checkFeatureGuid(orgGuid, featureGuid)
+        featureStore.delete(featureGuid)
+    }
+
+    private fun checkFeatureGuid(orgGuid: UUID, featureGuid: UUID) {
+        if (featureStore.get(featureGuid)?.orgGuid != orgGuid) throw FeatureNotFound()
+    }
 }

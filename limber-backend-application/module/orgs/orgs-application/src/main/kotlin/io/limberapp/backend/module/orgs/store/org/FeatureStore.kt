@@ -37,18 +37,16 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
-    fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel? {
+    fun get(featureGuid: UUID): FeatureModel? {
         return jdbi.withHandle<FeatureModel?, Exception> {
             it.createQuery(
                     """
                     SELECT *
                     FROM orgs.feature
-                    WHERE org_guid = :orgGuid
-                      AND guid = :featureGuid
+                    WHERE guid = :featureGuid
                       AND archived_date IS NULL
                     """.trimIndent()
                 )
-                .bind("orgGuid", orgGuid)
                 .bind("featureGuid", featureGuid)
                 .mapTo(FeatureModel::class.java)
                 .singleNullOrThrow()
@@ -89,7 +87,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
             }
             return@inTransaction when (updateCount) {
                 0 -> throw FeatureNotFound()
-                1 -> checkNotNull(get(orgGuid, featureGuid))
+                1 -> checkNotNull(get(featureGuid))
                 else -> badSql()
             }
         }
@@ -101,18 +99,16 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         throw e
     }
 
-    fun delete(orgGuid: UUID, featureGuid: UUID) {
+    fun delete(featureGuid: UUID) {
         jdbi.useTransaction<Exception> {
             val updateCount = it.createUpdate(
                     """
                     UPDATE orgs.feature
                     SET archived_date = NOW()
-                    WHERE org_guid = :orgGuid
-                      AND guid = :featureGuid
+                    WHERE guid = :featureGuid
                       AND archived_date IS NULL
                     """.trimIndent()
                 )
-                .bind("orgGuid", orgGuid)
                 .bind("featureGuid", featureGuid)
                 .execute()
             return@useTransaction when (updateCount) {
