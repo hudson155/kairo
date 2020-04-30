@@ -7,6 +7,7 @@ import java.util.UUID
 data class OrgRoleModel(
     val guid: UUID,
     val createdDate: LocalDateTime,
+    val orgGuid: UUID,
     val name: String,
     val permissions: OrgPermissions
 ) {

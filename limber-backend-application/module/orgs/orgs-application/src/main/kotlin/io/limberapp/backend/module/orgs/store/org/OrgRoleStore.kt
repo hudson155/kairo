@@ -18,11 +18,10 @@ private const val ORG_GUID_FOREIGN_KEY = "org_role_org_guid_fkey"
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
 internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun create(orgGuid: UUID, model: OrgRoleModel) {
+    fun create(model: OrgRoleModel) {
         jdbi.useHandle<Exception> {
             try {
                 it.createUpdate(sqlResource("create"))
-                    .bind("orgGuid", orgGuid)
                     .bindKotlin(model)
                     .execute()
             } catch (e: UnableToExecuteStatementException) {
@@ -40,18 +39,16 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
-    fun get(orgGuid: UUID, orgRoleGuid: UUID): OrgRoleModel? {
+    fun get(orgRoleGuid: UUID): OrgRoleModel? {
         return jdbi.withHandle<OrgRoleModel?, Exception> {
             it.createQuery(
                     """
                     SELECT *
                     FROM orgs.org_role
-                    WHERE org_guid = :orgGuid
-                      AND guid = :guid
+                    WHERE guid = :guid
                       AND archived_date IS NULL
                     """.trimIndent()
                 )
-                .bind("orgGuid", orgGuid)
                 .bind("guid", orgRoleGuid)
                 .mapTo(OrgRoleModel::class.java)
                 .singleNullOrThrow()
@@ -67,11 +64,10 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
-    fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
+    fun update(orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
         return jdbi.inTransaction<OrgRoleModel, Exception> {
             val updateCount = try {
                 it.createUpdate(sqlResource("update"))
-                    .bind("orgGuid", orgGuid)
                     .bind("guid", orgRoleGuid)
                     .bindKotlin(update)
                     .execute()
@@ -80,7 +76,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
             }
             return@inTransaction when (updateCount) {
                 0 -> throw OrgRoleNotFound()
-                1 -> checkNotNull(get(orgGuid, orgRoleGuid))
+                1 -> checkNotNull(get(orgRoleGuid))
                 else -> badSql()
             }
         }
@@ -92,7 +88,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         else throw e
     }
 
-    fun delete(orgGuid: UUID, orgRoleGuid: UUID) {
+    fun delete(orgRoleGuid: UUID) {
         jdbi.useTransaction<Exception> {
             val updateCount = it.createUpdate(
                     """
@@ -103,7 +99,6 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
                       AND archived_date IS NULL
                     """.trimIndent()
                 )
-                .bind("orgGuid", orgGuid)
                 .bind("guid", orgRoleGuid)
                 .execute()
             return@useTransaction when (updateCount) {

@@ -18,22 +18,10 @@ private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
 private const val ORG_PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
 
 internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun create(orgGuid: UUID, models: Set<FeatureModel>) {
-        jdbi.useTransaction<Exception> {
-            try {
-                it.prepareBatch(sqlResource("create")).apply {
-                    models.forEach { bind("orgGuid", orgGuid).bindKotlin(it).add() }
-                }.execute()
-            } catch (e: UnableToExecuteStatementException) {
-                handleCreateError(e)
-            }
-        }
-    }
-
-    fun create(orgGuid: UUID, model: FeatureModel) {
+    fun create(model: FeatureModel) {
         jdbi.useHandle<Exception> {
             try {
-                it.createUpdate(sqlResource("create")).bind("orgGuid", orgGuid).bindKotlin(model).execute()
+                it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
                 handleCreateError(e)
             }
@@ -49,18 +37,16 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
-    fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel? {
+    fun get(featureGuid: UUID): FeatureModel? {
         return jdbi.withHandle<FeatureModel?, Exception> {
             it.createQuery(
                     """
                     SELECT *
                     FROM orgs.feature
-                    WHERE org_guid = :orgGuid
-                      AND guid = :featureGuid
+                    WHERE guid = :featureGuid
                       AND archived_date IS NULL
                     """.trimIndent()
                 )
-                .bind("orgGuid", orgGuid)
                 .bind("featureGuid", featureGuid)
                 .mapTo(FeatureModel::class.java)
                 .singleNullOrThrow()
@@ -101,7 +87,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
             }
             return@inTransaction when (updateCount) {
                 0 -> throw FeatureNotFound()
-                1 -> checkNotNull(get(orgGuid, featureGuid))
+                1 -> checkNotNull(get(featureGuid))
                 else -> badSql()
             }
         }
@@ -113,18 +99,16 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         throw e
     }
 
-    fun delete(orgGuid: UUID, featureGuid: UUID) {
+    fun delete(featureGuid: UUID) {
         jdbi.useTransaction<Exception> {
             val updateCount = it.createUpdate(
                     """
                     UPDATE orgs.feature
                     SET archived_date = NOW()
-                    WHERE org_guid = :orgGuid
-                      AND guid = :featureGuid
+                    WHERE guid = :featureGuid
                       AND archived_date IS NULL
                     """.trimIndent()
                 )
-                .bind("orgGuid", orgGuid)
                 .bind("featureGuid", featureGuid)
                 .execute()
             return@useTransaction when (updateCount) {
