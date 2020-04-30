@@ -25,8 +25,8 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
         }
     }
 
-    fun getByOwnerAccountGuid(ownerAccountGuid: UUID): Set<OrgModel> {
-        return jdbi.withHandle<Set<OrgModel>, Exception> {
+    fun getByOwnerAccountGuid(ownerAccountGuid: UUID): OrgModel? {
+        return jdbi.withHandle<OrgModel?, Exception> {
             it.createQuery(
                     """
                     SELECT *
@@ -37,7 +37,7 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
                 )
                 .bind("ownerAccountGuid", ownerAccountGuid)
                 .mapTo(OrgModel::class.java)
-                .toSet()
+                .singleNullOrThrow()
         }
     }
 

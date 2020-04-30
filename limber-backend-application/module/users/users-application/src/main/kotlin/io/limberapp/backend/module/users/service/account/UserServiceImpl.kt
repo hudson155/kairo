@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.service.account
 import com.google.inject.Inject
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.backend.module.users.exception.account.CannotDeleteUserWithOrgs
+import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserModel
@@ -28,7 +28,7 @@ internal class UserServiceImpl @Inject constructor(
     }
 
     override fun delete(userGuid: UUID) {
-        if (orgService.getByOwnerAccountGuid(userGuid).isNotEmpty()) throw CannotDeleteUserWithOrgs()
+        if (orgService.getByOwnerAccountGuid(userGuid) != null) throw CannotDeleteOrgOwner()
         userStore.delete(userGuid)
     }
 }

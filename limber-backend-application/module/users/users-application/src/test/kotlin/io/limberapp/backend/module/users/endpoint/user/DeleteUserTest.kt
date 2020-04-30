@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.endpoint.user
 
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.api.user.UserApi
-import io.limberapp.backend.module.users.exception.account.CannotDeleteUserWithOrgs
+import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -37,7 +37,7 @@ internal class DeleteUserTest : ResourceTest() {
 
         piperTest.test(
             endpoint = UserApi.Delete(userRep.guid),
-            expectedException = CannotDeleteUserWithOrgs()
+            expectedException = CannotDeleteOrgOwner()
         )
 
         piperTest.test(UserApi.Get(userRep.guid)) {
