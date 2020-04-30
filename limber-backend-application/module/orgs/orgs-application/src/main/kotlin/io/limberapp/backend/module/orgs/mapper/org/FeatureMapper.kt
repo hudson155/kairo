@@ -6,14 +6,16 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import java.time.Clock
 import java.time.LocalDateTime
+import java.util.UUID
 
 internal class FeatureMapper @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator
 ) {
-    fun model(rep: FeatureRep.Creation) = FeatureModel(
+    fun model(orgGuid: UUID, rep: FeatureRep.Creation) = FeatureModel(
         guid = uuidGenerator.generate(),
         createdDate = LocalDateTime.now(clock),
+        orgGuid = orgGuid,
         name = rep.name,
         path = rep.path,
         type = type(rep.type),

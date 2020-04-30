@@ -18,6 +18,7 @@ internal class FeatureServiceImpl @Inject constructor(
         val feature = FeatureModel(
             guid = uuidGenerator.generate(),
             createdDate = LocalDateTime.now(clock),
+            orgGuid = orgGuid,
             name = "Home",
             path = "/home",
             type = FeatureModel.Type.HOME,

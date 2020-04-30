@@ -6,6 +6,7 @@ import java.util.UUID
 data class FeatureModel(
     val guid: UUID,
     val createdDate: LocalDateTime,
+    val orgGuid: UUID,
     val name: String,
     val path: String,
     val type: Type,
