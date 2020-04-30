@@ -1,22 +1,17 @@
-package io.limberapp.backend.module.orgs.service.org
+package io.limberapp.backend.module.auth.service.org
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
-import io.limberapp.backend.module.orgs.exception.org.OrgRoleNotFound
-import io.limberapp.backend.module.orgs.model.org.OrgRoleModel
-import io.limberapp.backend.module.orgs.store.org.OrgRoleStore
+import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
+import io.limberapp.backend.module.auth.model.org.OrgRoleModel
+import io.limberapp.backend.module.auth.store.org.OrgRoleStore
 import java.util.UUID
 
 internal class OrgRoleServiceImpl @Inject constructor(
-    private val orgService: OrgService,
     private val orgRoleStore: OrgRoleStore
 ) : OrgRoleService {
     override fun create(model: OrgRoleModel) = orgRoleStore.create(model)
 
-    override fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
-        orgService.get(orgGuid) ?: throw OrgNotFound()
-        return orgRoleStore.getByOrgGuid(orgGuid)
-    }
+    override fun getByOrgGuid(orgGuid: UUID) = orgRoleStore.getByOrgGuid(orgGuid)
 
     override fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
         checkOrgRoleGuid(orgGuid, orgRoleGuid)

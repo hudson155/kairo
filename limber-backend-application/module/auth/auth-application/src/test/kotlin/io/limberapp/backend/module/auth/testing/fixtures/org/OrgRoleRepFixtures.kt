@@ -1,8 +1,8 @@
-package io.limberapp.backend.module.orgs.testing.fixtures.orgRole
+package io.limberapp.backend.module.auth.testing.fixtures.org
 
 import io.limberapp.backend.authorization.permissions.OrgPermissions
-import io.limberapp.backend.module.orgs.rep.org.OrgRoleRep
-import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
+import io.limberapp.backend.module.auth.testing.ResourceTest
 import java.time.LocalDateTime
 
 internal object OrgRoleRepFixtures {

@@ -1,6 +1,6 @@
-package io.limberapp.backend.module.orgs.service.org
+package io.limberapp.backend.module.auth.service.org
 
-import io.limberapp.backend.module.orgs.model.org.OrgRoleModel
+import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import java.util.UUID
 
 interface OrgRoleService {
