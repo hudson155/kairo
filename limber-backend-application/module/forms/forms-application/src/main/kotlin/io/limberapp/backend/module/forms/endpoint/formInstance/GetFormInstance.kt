@@ -35,8 +35,8 @@ internal class GetFormInstance @Inject constructor(
 
     override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
         HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-        val model = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
+        val formInstance = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
         val questions = formInstanceQuestionService.getByFormInstanceGuid(command.formInstanceGuid)
-        return formInstanceMapper.completeRep(model, questions)
+        return formInstanceMapper.completeRep(formInstance, questions)
     }
 }

@@ -34,8 +34,8 @@ internal class PostFeature @Inject constructor(
 
     override suspend fun Handler.handle(command: OrgFeatureApi.Post): FeatureRep.Complete {
         Authorization.OrgMember(command.orgGuid).authorize()
-        val model = featureMapper.model(command.rep.required())
-        featureService.create(command.orgGuid, model)
-        return featureMapper.completeRep(model)
+        val feature = featureMapper.model(command.rep.required())
+        featureService.create(command.orgGuid, feature)
+        return featureMapper.completeRep(feature)
     }
 }

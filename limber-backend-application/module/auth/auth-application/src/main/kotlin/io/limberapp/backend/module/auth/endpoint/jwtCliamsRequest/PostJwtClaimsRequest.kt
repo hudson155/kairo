@@ -34,8 +34,8 @@ internal class PostJwtClaimsRequest @Inject constructor(
 
     override suspend fun Handler.handle(command: JwtClaimsRequestApi.Post): JwtClaimsRequestRep.Complete {
         Authorization.Role(JwtRole.IDENTITY_PROVIDER).authorize()
-        val requestModel = jwtClaimsRequestMapper.model(command.rep.required())
-        val claimsModel = jwtClaimsRequestService.requestJwtClaims(requestModel)
-        return jwtClaimsRequestMapper.completeRep(claimsModel)
+        val request = jwtClaimsRequestMapper.model(command.rep.required())
+        val claims = jwtClaimsRequestService.requestJwtClaims(request)
+        return jwtClaimsRequestMapper.completeRep(claims)
     }
 }

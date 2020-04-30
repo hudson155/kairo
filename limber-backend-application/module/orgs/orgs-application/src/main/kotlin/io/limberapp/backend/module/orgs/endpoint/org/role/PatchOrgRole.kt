@@ -35,7 +35,7 @@ internal class PatchOrgRole @Inject constructor(
     override suspend fun Handler.handle(command: OrgRoleApi.Patch): OrgRoleRep.Complete {
         Authorization.OrgMember(command.orgGuid).authorize()
         val update = orgRoleMapper.update(command.rep.required())
-        val model = orgRoleService.update(command.orgGuid, command.orgRoleGuid, update)
-        return orgRoleMapper.completeRep(model)
+        val orgRole = orgRoleService.update(command.orgGuid, command.orgRoleGuid, update)
+        return orgRoleMapper.completeRep(orgRole)
     }
 }

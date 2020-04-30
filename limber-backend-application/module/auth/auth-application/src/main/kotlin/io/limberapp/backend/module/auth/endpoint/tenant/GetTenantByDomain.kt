@@ -33,8 +33,8 @@ internal class GetTenantByDomain @Inject constructor(
 
     override suspend fun Handler.handle(command: TenantApi.GetByDomain): TenantRep.Complete {
         Authorization.Public.authorize()
-        val model = tenantService.getByDomain(command.domain) ?: throw TenantNotFound()
-        val domains = tenantDomainService.getByOrgGuid(model.orgGuid)
-        return tenantMapper.completeRep(model, domains)
+        val tenant = tenantService.getByDomain(command.domain) ?: throw TenantNotFound()
+        val domains = tenantDomainService.getByOrgGuid(tenant.orgGuid)
+        return tenantMapper.completeRep(tenant, domains)
     }
 }

@@ -35,7 +35,7 @@ internal class PatchFeature @Inject constructor(
     override suspend fun Handler.handle(command: OrgFeatureApi.Patch): FeatureRep.Complete {
         Authorization.OrgMember(command.orgGuid).authorize()
         val update = featureMapper.update(command.rep.required())
-        val model = featureService.update(command.orgGuid, command.featureGuid, update)
-        return featureMapper.completeRep(model)
+        val feature = featureService.update(command.orgGuid, command.featureGuid, update)
+        return featureMapper.completeRep(feature)
     }
 }

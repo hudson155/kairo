@@ -35,7 +35,7 @@ internal class GetAccessTokensByAccountGuid @Inject constructor(
 
     override suspend fun Handler.handle(command: AccessTokenApi.GetByAccountGuid): Set<AccessTokenRep.Complete> {
         Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val models = accessTokenService.getByAccountGuid(command.accountGuid)
-        return models.map { accessTokenMapper.completeRep(it) }.toSet()
+        val accessTokens = accessTokenService.getByAccountGuid(command.accountGuid)
+        return accessTokens.map { accessTokenMapper.completeRep(it) }.toSet()
     }
 }

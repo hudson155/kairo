@@ -32,8 +32,8 @@ internal class GetUserByEmailAddress @Inject constructor(
 
     override suspend fun Handler.handle(command: UserApi.GetByEmailAddress): UserRep.Complete {
         Authorization.AnyJwt.authorize()
-        val model = userService.getByEmailAddress(command.emailAddress) ?: throw UserNotFound()
-        Authorization.User(model.guid).authorize()
-        return userMapper.completeRep(model)
+        val user = userService.getByEmailAddress(command.emailAddress) ?: throw UserNotFound()
+        Authorization.User(user.guid).authorize()
+        return userMapper.completeRep(user)
     }
 }

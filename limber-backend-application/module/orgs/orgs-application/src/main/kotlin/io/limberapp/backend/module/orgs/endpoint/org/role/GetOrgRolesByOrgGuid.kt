@@ -32,7 +32,7 @@ internal class GetOrgRolesByOrgGuid @Inject constructor(
 
     override suspend fun Handler.handle(command: OrgRoleApi.GetByOrgGuid): Set<OrgRoleRep.Complete> {
         Authorization.OrgMember(command.orgGuid).authorize()
-        val models = orgRoleService.getByOrgGuid(command.orgGuid)
-        return models.map { orgRoleMapper.completeRep(it) }.toSet()
+        val orgRoles = orgRoleService.getByOrgGuid(command.orgGuid)
+        return orgRoles.map { orgRoleMapper.completeRep(it) }.toSet()
     }
 }
