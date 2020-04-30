@@ -9,6 +9,9 @@ import io.limberapp.backend.module.auth.endpoint.org.role.DeleteOrgRole
 import io.limberapp.backend.module.auth.endpoint.org.role.GetOrgRolesByOrgGuid
 import io.limberapp.backend.module.auth.endpoint.org.role.PatchOrgRole
 import io.limberapp.backend.module.auth.endpoint.org.role.PostOrgRole
+import io.limberapp.backend.module.auth.endpoint.org.role.membership.DeleteOrgRoleMembership
+import io.limberapp.backend.module.auth.endpoint.org.role.membership.GetOrgRoleMembershipsByOrgRoleGuid
+import io.limberapp.backend.module.auth.endpoint.org.role.membership.PostOrgRoleMembership
 import io.limberapp.backend.module.auth.endpoint.tenant.DeleteTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.GetTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.GetTenantByDomain
@@ -20,6 +23,8 @@ import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
 import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestServiceImpl
+import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
+import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipServiceImpl
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import io.limberapp.backend.module.auth.service.org.OrgRoleServiceImpl
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
@@ -43,6 +48,9 @@ class AuthModule : Module() {
         GetOrgRolesByOrgGuid::class.java,
         PatchOrgRole::class.java,
         DeleteOrgRole::class.java,
+        PostOrgRoleMembership::class.java,
+        GetOrgRoleMembershipsByOrgRoleGuid::class.java,
+        DeleteOrgRoleMembership::class.java,
 
         PostTenant::class.java,
         GetTenant::class.java,
@@ -59,6 +67,7 @@ class AuthModule : Module() {
         bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
 
         bind(OrgRoleService::class, OrgRoleServiceImpl::class)
+        bind(OrgRoleMembershipService::class, OrgRoleMembershipServiceImpl::class)
 
         bind(TenantService::class, TenantServiceImpl::class)
         bind(TenantDomainService::class, TenantDomainServiceImpl::class)
