@@ -14,6 +14,7 @@ import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.apiProvider
 import io.limberapp.web.context.api.useApi
@@ -119,7 +120,7 @@ private val appRouter = functionalComponent<RProps> {
                 route(path = "/") {
                     buildElement {
                         page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
-                            signInPage()
+                            unauthenticatedPage()
                         }
                     }
                 }
