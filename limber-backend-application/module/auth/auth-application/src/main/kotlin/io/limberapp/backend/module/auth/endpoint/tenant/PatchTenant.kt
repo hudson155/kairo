@@ -11,6 +11,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
+import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import java.util.UUID
 
@@ -21,6 +22,7 @@ internal class PatchTenant @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val tenantService: TenantService,
+    private val tenantDomainService: TenantDomainService,
     private val tenantMapper: TenantMapper
 ) : LimberApiEndpoint<TenantApi.Patch, TenantRep.Complete>(
     application, servingConfig.apiPathPrefix,
@@ -35,6 +37,7 @@ internal class PatchTenant @Inject constructor(
         Authorization.Role(JwtRole.SUPERUSER).authorize()
         val update = tenantMapper.update(command.rep.required())
         val model = tenantService.update(command.orgGuid, update)
-        return tenantMapper.completeRep(model)
+        val domains = tenantDomainService.getByOrgGuid(model.orgGuid)
+        return tenantMapper.completeRep(model, domains)
     }
 }

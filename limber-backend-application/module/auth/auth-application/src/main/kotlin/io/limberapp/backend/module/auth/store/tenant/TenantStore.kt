@@ -16,18 +16,14 @@ import java.util.UUID
 private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
 private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
 
-internal class TenantStore @Inject constructor(
-    private val jdbi: Jdbi,
-    private val tenantDomainStore: TenantDomainStore
-) : SqlStore() {
+internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
     fun create(model: TenantModel) {
-        jdbi.useTransaction<Exception> {
+        jdbi.useHandle<Exception> {
             try {
                 it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
                 handleCreateError(e)
             }
-            tenantDomainStore.create(model.orgGuid, model.domains)
         }
     }
 
@@ -48,7 +44,6 @@ internal class TenantStore @Inject constructor(
                 .bind("orgGuid", orgGuid)
                 .mapTo(TenantModel::class.java)
                 .singleNullOrThrow()
-                ?.copy(domains = tenantDomainStore.getByOrgGuid(orgGuid))
         }
     }
 
@@ -67,7 +62,6 @@ internal class TenantStore @Inject constructor(
                 .bind("domain", domain)
                 .mapTo(TenantModel::class.java)
                 .singleNullOrThrow()
-                ?.let { it.copy(domains = tenantDomainStore.getByOrgGuid(it.orgGuid)) }
         }
     }
 
@@ -77,7 +71,6 @@ internal class TenantStore @Inject constructor(
                 .bind("auth0ClientId", auth0ClientId)
                 .mapTo(TenantModel::class.java)
                 .singleNullOrThrow()
-                ?.let { it.copy(domains = tenantDomainStore.getByOrgGuid(it.orgGuid)) }
         }
     }
 

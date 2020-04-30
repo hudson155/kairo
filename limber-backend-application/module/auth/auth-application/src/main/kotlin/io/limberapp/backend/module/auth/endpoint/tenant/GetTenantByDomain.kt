@@ -11,6 +11,7 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
+import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 
 /**
@@ -20,6 +21,7 @@ internal class GetTenantByDomain @Inject constructor(
     application: Application,
     servingConfig: ServingConfig,
     private val tenantService: TenantService,
+    private val tenantDomainService: TenantDomainService,
     private val tenantMapper: TenantMapper
 ) : LimberApiEndpoint<TenantApi.GetByDomain, TenantRep.Complete>(
     application, servingConfig.apiPathPrefix,
@@ -32,6 +34,7 @@ internal class GetTenantByDomain @Inject constructor(
     override suspend fun Handler.handle(command: TenantApi.GetByDomain): TenantRep.Complete {
         Authorization.Public.authorize()
         val model = tenantService.getByDomain(command.domain) ?: throw TenantNotFound()
-        return tenantMapper.completeRep(model)
+        val domains = tenantDomainService.getByOrgGuid(model.orgGuid)
+        return tenantMapper.completeRep(model, domains)
     }
 }
