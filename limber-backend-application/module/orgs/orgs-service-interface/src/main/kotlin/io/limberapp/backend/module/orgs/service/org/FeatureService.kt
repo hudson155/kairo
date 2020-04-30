@@ -6,7 +6,7 @@ import java.util.UUID
 interface FeatureService {
     fun createDefaults(orgGuid: UUID): Set<FeatureModel>
 
-    fun create(orgGuid: UUID, model: FeatureModel)
+    fun create(model: FeatureModel)
 
     fun getByOrgGuid(orgGuid: UUID): Set<FeatureModel>
 

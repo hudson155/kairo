@@ -18,22 +18,10 @@ private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
 private const val ORG_PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
 
 internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun create(orgGuid: UUID, models: Set<FeatureModel>) {
-        jdbi.useTransaction<Exception> {
-            try {
-                it.prepareBatch(sqlResource("create")).apply {
-                    models.forEach { bind("orgGuid", orgGuid).bindKotlin(it).add() }
-                }.execute()
-            } catch (e: UnableToExecuteStatementException) {
-                handleCreateError(e)
-            }
-        }
-    }
-
-    fun create(orgGuid: UUID, model: FeatureModel) {
+    fun create(model: FeatureModel) {
         jdbi.useHandle<Exception> {
             try {
-                it.createUpdate(sqlResource("create")).bind("orgGuid", orgGuid).bindKotlin(model).execute()
+                it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
             } catch (e: UnableToExecuteStatementException) {
                 handleCreateError(e)
             }

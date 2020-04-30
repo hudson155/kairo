@@ -24,11 +24,11 @@ internal class FeatureServiceImpl @Inject constructor(
             type = FeatureModel.Type.HOME,
             isDefaultFeature = true
         )
-        featureStore.create(orgGuid, feature)
+        featureStore.create(feature)
         return setOf(feature)
     }
 
-    override fun create(orgGuid: UUID, model: FeatureModel) = featureStore.create(orgGuid, model)
+    override fun create(model: FeatureModel) = featureStore.create(model)
 
     override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
 
