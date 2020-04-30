@@ -32,7 +32,7 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
 
     override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
         Authorization.HasAccessToFeature(command.featureGuid).authorize()
-        val models = formInstanceService.getByFeatureGuid(command.featureGuid)
-        return models.map { formInstanceMapper.summaryRep(it) }.toSet()
+        val formInstances = formInstanceService.getByFeatureGuid(command.featureGuid)
+        return formInstances.map { formInstanceMapper.summaryRep(it) }.toSet()
     }
 }

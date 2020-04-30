@@ -33,7 +33,7 @@ internal class GetUser @Inject constructor(
 
     override suspend fun Handler.handle(command: UserApi.Get): UserRep.Complete {
         Authorization.User(command.userGuid).authorize()
-        val model = userService.get(command.userGuid) ?: throw UserNotFound()
-        return userMapper.completeRep(model)
+        val user = userService.get(command.userGuid) ?: throw UserNotFound()
+        return userMapper.completeRep(user)
     }
 }

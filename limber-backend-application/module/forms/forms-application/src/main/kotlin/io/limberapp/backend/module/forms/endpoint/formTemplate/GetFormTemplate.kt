@@ -35,8 +35,8 @@ internal class GetFormTemplate @Inject constructor(
 
     override suspend fun Handler.handle(command: FormTemplateApi.Get): FormTemplateRep.Complete {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
-        val model = formTemplateService.get(command.formTemplateGuid) ?: throw FormTemplateNotFound()
+        val formTemplate = formTemplateService.get(command.formTemplateGuid) ?: throw FormTemplateNotFound()
         val questions = formTemplateQuestionService.getByFormTemplateGuid(command.formTemplateGuid)
-        return formTemplateMapper.completeRep(model, questions)
+        return formTemplateMapper.completeRep(formTemplate, questions)
     }
 }

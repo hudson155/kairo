@@ -34,10 +34,10 @@ internal class GetOrgsByOwnerAccountGuid @Inject constructor(
 
     override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): Set<OrgRep.Complete> {
         Authorization.User(command.ownerAccountGuid).authorize()
-        val models = orgService.getByOwnerAccountGuid(command.ownerAccountGuid)
-        check(models.size <= 1) // Accounts can't be part of multiple orgs.
-        val model = models.singleOrNull() ?: return emptySet()
-        val features = featureService.getByOrgGuid(model.guid)
-        return setOf(orgMapper.completeRep(model, features))
+        val orgs = orgService.getByOwnerAccountGuid(command.ownerAccountGuid)
+        check(orgs.size <= 1) // Accounts can't be part of multiple orgs.
+        val org = orgs.singleOrNull() ?: return emptySet()
+        val features = featureService.getByOrgGuid(org.guid)
+        return setOf(orgMapper.completeRep(org, features))
     }
 }

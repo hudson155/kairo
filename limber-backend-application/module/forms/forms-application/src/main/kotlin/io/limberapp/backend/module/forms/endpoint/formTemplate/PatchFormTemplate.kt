@@ -34,7 +34,7 @@ internal class PatchFormTemplate @Inject constructor(
     override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
         HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
         val update = formTemplateMapper.update(command.rep.required())
-        val model = formTemplateService.update(command.formTemplateGuid, update)
-        return formTemplateMapper.summaryRep(model)
+        val formTemplate = formTemplateService.update(command.formTemplateGuid, update)
+        return formTemplateMapper.summaryRep(formTemplate)
     }
 }
