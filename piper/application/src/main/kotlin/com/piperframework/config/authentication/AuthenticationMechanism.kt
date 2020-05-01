@@ -2,6 +2,7 @@ package com.piperframework.config.authentication
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.piperframework.config.ConfigString
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
@@ -19,7 +20,7 @@ sealed class AuthenticationMechanism {
 
     data class Jwt(
         override val issuer: String,
-        val secret: String
+        val secret: ConfigString
     ) : AuthenticationMechanism()
 
     object UnsignedJwt : AuthenticationMechanism() {

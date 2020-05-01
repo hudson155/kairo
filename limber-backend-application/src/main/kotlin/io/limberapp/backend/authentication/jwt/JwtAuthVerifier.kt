@@ -25,7 +25,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
             is AuthenticationMechanism.Jwk ->
                 UrlJwtVerifierProvider(mechanism.domain)
             is AuthenticationMechanism.Jwt ->
-                StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret)).build())
+                StaticJwtVerifierProvider(JWT.require(Algorithm.HMAC256(mechanism.secret.value)).build())
             is AuthenticationMechanism.UnsignedJwt ->
                 StaticJwtVerifierProvider(JWT.require(Algorithm.none()).build())
         }
