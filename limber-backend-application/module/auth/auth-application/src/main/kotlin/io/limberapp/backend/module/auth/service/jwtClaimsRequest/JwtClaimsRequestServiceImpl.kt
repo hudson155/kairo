@@ -85,6 +85,6 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private fun convertJwtToModel(jwt: Jwt): JwtClaimsModel = JwtClaimsModel(
         org = jwt.org?.let { json.stringify(it) },
         roles = json.stringifySet(jwt.roles),
-        user = json.stringify(jwt.user)
+        user = json.stringify(checkNotNull(jwt.user))
     )
 }
