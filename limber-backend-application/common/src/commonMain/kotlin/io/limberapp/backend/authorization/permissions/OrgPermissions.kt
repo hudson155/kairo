@@ -29,6 +29,8 @@ data class OrgPermissions(private val permissions: Set<OrgPermission>) {
 
     fun asBitString() = BitStringEncoder.encode(booleanList)
 
+    override fun toString() = asDarb()
+
     companion object {
         fun none() = OrgPermissions(emptySet())
 
@@ -38,6 +40,10 @@ data class OrgPermissions(private val permissions: Set<OrgPermission>) {
 
         private fun fromBooleanList(booleanList: List<Boolean>) =
             OrgPermissions(ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet())
+
+        fun Collection<OrgPermissions>.union() = OrgPermissions(
+            permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+        )
     }
 }
 

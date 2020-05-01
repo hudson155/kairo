@@ -58,6 +58,16 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         }
     }
 
+    fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID): Set<OrgRoleModel> {
+        return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
+            it.createQuery(sqlResource("getByAccountGuid"))
+                .bind("orgGuid", orgGuid)
+                .bind("accountGuid", accountGuid)
+                .mapTo(OrgRoleModel::class.java)
+                .toSet()
+        }
+    }
+
     fun update(orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
         return jdbi.inTransaction<OrgRoleModel, Exception> {
             val updateCount = try {

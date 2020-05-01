@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.testing.fixtures.org
 
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -20,6 +21,20 @@ internal object OrgRoleRepFixtures {
                 guid = deterministicUuidGenerator[idSeed],
                 createdDate = LocalDateTime.now(fixedClock),
                 name = "Admin",
+                permissions = OrgPermissions.none()
+            )
+        }
+    )
+
+    val maintainerFixture = Fixture(
+        {
+            OrgRoleRep.Creation("Maintainer")
+        },
+        { idSeed ->
+            OrgRoleRep.Complete(
+                guid = deterministicUuidGenerator[idSeed],
+                createdDate = LocalDateTime.now(fixedClock),
+                name = "Maintainer",
                 permissions = OrgPermissions.none()
             )
         }

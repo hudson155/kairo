@@ -13,6 +13,9 @@ internal class OrgRoleServiceImpl @Inject constructor(
 
     override fun getByOrgGuid(orgGuid: UUID) = orgRoleStore.getByOrgGuid(orgGuid)
 
+    override fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID) =
+        orgRoleStore.getByAccountGuid(orgGuid, accountGuid)
+
     override fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
         checkOrgRoleGuid(orgGuid, orgRoleGuid)
         return orgRoleStore.update(orgRoleGuid, update)
