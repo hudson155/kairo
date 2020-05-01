@@ -57,6 +57,11 @@ items:
                     secretKeyRef:
                       name: limber-prod-postgres-credentials
                       key: password
+                - name: LIMBER_PROD_JWT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: limber-prod-auth
+                      key: jwt-secret
               livenessProbe:
                 httpGet:
                   path: /health-check
