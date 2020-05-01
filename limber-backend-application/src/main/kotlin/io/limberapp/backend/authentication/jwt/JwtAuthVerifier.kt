@@ -44,8 +44,8 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVer
                 ?.let { json.parse<JwtOrg>(it) },
             roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString())
                 .let { json.parseSet<JwtRole>(it) },
-            user = requireNotNull(decodedJwt.getClaim(Claims.user).asString())
-                .let { json.parse<JwtUser>(it) }
+            user = decodedJwt.getClaim(Claims.user).asString()
+                ?.let { json.parse<JwtUser>(it) }
         )
     }
 
