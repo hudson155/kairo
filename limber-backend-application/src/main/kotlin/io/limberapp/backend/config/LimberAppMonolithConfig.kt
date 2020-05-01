@@ -3,6 +3,7 @@ package io.limberapp.backend.config
 import com.piperframework.config.Config
 import com.piperframework.config.ConfigString
 import com.piperframework.config.authentication.AuthenticationConfig
+import com.piperframework.config.authentication.AuthenticationMechanism
 import com.piperframework.config.database.SqlDatabaseConfig
 import com.piperframework.config.hashing.HashingConfig
 import com.piperframework.config.serving.ServingConfig
@@ -16,9 +17,14 @@ internal data class LimberAppMonolithConfig(
     override val hashing: HashingConfig,
     override val serving: ServingConfig
 ) : Config {
-    fun decrypt() = copy(sqlDatabase = sqlDatabase.decrypt())
+    fun decrypt() = copy(sqlDatabase = sqlDatabase.decrypt(), authentication = authentication.decrypt())
 
     private fun SqlDatabaseConfig.decrypt() = copy(jdbcUrl = jdbcUrl.decrypt(), password = password?.decrypt())
+
+    private fun AuthenticationConfig.decrypt() = copy(mechanisms = mechanisms.map { it.decrypt() })
+
+    private fun AuthenticationMechanism.decrypt() =
+        if (this is AuthenticationMechanism.Jwt) copy(secret = secret.decrypt()) else this
 
     private fun ConfigString.decrypt(): ConfigString {
         return when (type) {

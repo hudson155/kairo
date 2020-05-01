@@ -10,7 +10,9 @@ authentication:
   mechanisms:
     - type: JWT
       issuer: https://limberapp.io/
-      secret: limber
+      secret:
+        type: PLAINTEXT
+        value: limber
     - type: JWK
       issuer: https://limber.auth0.com/
       domain: limber.auth0.com

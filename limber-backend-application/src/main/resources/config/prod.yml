@@ -11,6 +11,11 @@ sqlDatabase:
 
 authentication:
   mechanisms:
+    - type: JWT
+      issuer: https://limberapp.io/
+      secret:
+        type: ENVIRONMENT_VARIABLE
+        value: LIMBER_PROD_JWT_SECRET
     - type: JWK
       issuer: https://limber.auth0.com/
       domain: limber.auth0.com
