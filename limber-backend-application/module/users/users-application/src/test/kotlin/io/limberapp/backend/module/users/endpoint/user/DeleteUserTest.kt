@@ -18,7 +18,7 @@ internal class DeleteUserTest : ResourceTest() {
     fun doesNotExist() {
         val userGuid = UUID.randomUUID()
 
-        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userGuid) } returns emptySet()
+        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userGuid) } returns null
 
         piperTest.test(
             endpoint = UserApi.Delete(userGuid),
@@ -33,7 +33,7 @@ internal class DeleteUserTest : ResourceTest() {
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
         piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns setOf(mockk())
+        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns mockk()
 
         piperTest.test(
             endpoint = UserApi.Delete(userRep.guid),
@@ -53,7 +53,7 @@ internal class DeleteUserTest : ResourceTest() {
         val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
         piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns emptySet()
+        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns null
 
         piperTest.test(UserApi.Delete(userRep.guid)) {}
 
