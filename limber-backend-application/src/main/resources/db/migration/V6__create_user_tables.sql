@@ -21,12 +21,3 @@ CREATE TABLE users.user
 CREATE UNIQUE INDEX
     ON users.user (LOWER(email_address))
     WHERE archived_date IS NULL;
-
-CREATE TABLE auth.access_token
-(
-    id               BIGSERIAL PRIMARY KEY,
-    guid             UUID UNIQUE    NOT NULL,
-    created_date     TIMESTAMP      NOT NULL,
-    account_guid     UUID           NOT NULL,
-    encrypted_secret VARCHAR UNIQUE NOT NULL
-);

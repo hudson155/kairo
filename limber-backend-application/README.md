@@ -13,9 +13,6 @@ Limber is a highly dynamic application built on Ktor and React.
 
 | Name                           | Path Template                                               |
 | :----------------------------- | :---------------------------------------------------------- |
-| AccessTokenApi.Post            | /accounts/{accountGuid}/access-tokens                       |
-| AccessTokenApi.Get             | /accounts/{accountGuid}/access-tokens                       |
-| AccessTokenApi.Delete          | /accounts/{accountGuid}/access-tokens/{accessTokenGuid}     |
 | FormInstanceApi.Post           | /form-instances                                             |
 | FormInstanceApi.GetByFeatureId | /form-instances?featureGuid={featureGuid}                   |
 | FormInstanceApi.Get            | /form-instances/{formInstanceGuid}                          |

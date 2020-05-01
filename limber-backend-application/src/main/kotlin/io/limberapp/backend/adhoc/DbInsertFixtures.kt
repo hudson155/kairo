@@ -13,14 +13,6 @@ fun main(args: Array<String>) {
 }
 
 private const val SQL = """
--- Create Auth0 account and access token.
-INSERT INTO users.account (created_date, guid, name, identity_provider, superuser)
-VALUES (NOW(), 'fcef16c1-d994-4dd5-b2ea-b972d817a29d', 'Auth0', TRUE, FALSE);
-INSERT INTO auth.access_token (created_date, guid, account_guid,
-                               encrypted_secret)
-VALUES (NOW(), 'd92d4629-1286-450a-9e89-cccebed3b373', 'fcef16c1-d994-4dd5-b2ea-b972d817a29d',
-        '$2a$12$3O4rmdax7Ai8Qe30YXCFi.jhAE7IqY1AcgMQWil/hke0RWUUUgWsy');
-
 -- Create Limber org and tenants.
 INSERT INTO orgs.org (created_date, guid, name, owner_account_guid)
 VALUES (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'Limber', '3e2d1681-a666-456e-a168-647d8c3a3150');

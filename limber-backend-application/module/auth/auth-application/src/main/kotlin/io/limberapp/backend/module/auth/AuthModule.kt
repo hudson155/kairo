@@ -1,9 +1,6 @@
 package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
-import io.limberapp.backend.module.auth.endpoint.account.accessToken.DeleteAccessToken
-import io.limberapp.backend.module.auth.endpoint.account.accessToken.GetAccessTokensByAccountGuid
-import io.limberapp.backend.module.auth.endpoint.account.accessToken.PostAccessToken
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.org.role.DeleteOrgRole
 import io.limberapp.backend.module.auth.endpoint.org.role.GetOrgRolesByOrgGuid
@@ -19,8 +16,6 @@ import io.limberapp.backend.module.auth.endpoint.tenant.PatchTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.domain.DeleteTenantDomain
 import io.limberapp.backend.module.auth.endpoint.tenant.domain.PostTenantDomain
-import io.limberapp.backend.module.auth.service.accessToken.AccessTokenService
-import io.limberapp.backend.module.auth.service.accessToken.AccessTokenServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestServiceImpl
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
@@ -37,11 +32,6 @@ class AuthModule : Module() {
     override val serialModule = EmptyModule
 
     override val endpoints = listOf(
-
-        PostAccessToken::class.java,
-        GetAccessTokensByAccountGuid::class.java,
-        DeleteAccessToken::class.java,
-
         PostJwtClaimsRequest::class.java,
 
         PostOrgRole::class.java,
@@ -62,8 +52,6 @@ class AuthModule : Module() {
     )
 
     override fun bindServices() {
-        bind(AccessTokenService::class, AccessTokenServiceImpl::class)
-
         bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
 
         bind(OrgRoleService::class, OrgRoleServiceImpl::class)

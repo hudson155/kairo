@@ -3,7 +3,7 @@ function customizeJwt(user, context, callback) {
     url: 'https://api.limberapp.io/jwt-claims-request',
     method: 'POST',
     headers: {
-      'Authorization': `Token ${configuration.accessToken}`,
+      'Authorization': `Bearer ${configuration.limberApiJwt}`,
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
