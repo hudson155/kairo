@@ -8,6 +8,6 @@ import java.util.UUID
 data class JwtUser(
     @Serializable(with = UuidSerializer::class)
     val guid: UUID,
-    val firstName: String?,
-    val lastName: String?
+    val firstName: String,
+    val lastName: String
 )

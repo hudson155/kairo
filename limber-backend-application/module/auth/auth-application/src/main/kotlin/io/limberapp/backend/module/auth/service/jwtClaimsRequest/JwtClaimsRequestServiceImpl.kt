@@ -14,16 +14,12 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
-import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
 import java.time.Clock
 import java.time.LocalDateTime
-import java.util.UUID
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
-    private val accountService: AccountService,
     private val featureService: FeatureService,
     private val orgService: OrgService,
     private val tenantService: TenantService,
@@ -35,20 +31,13 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
         val user = getAccountOrCreateUser(request)
-        val account = checkNotNull(accountService.get(user.guid))
-        return requestJwtClaimsForUser(account, user)
+        return requestJwtClaimsForUser(user)
     }
 
-    override fun requestJwtClaimsForExistingUser(accountGuid: UUID): JwtClaimsModel? {
-        val account = accountService.get(accountGuid) ?: return null
-        val user = userService.get(accountGuid)
-        return requestJwtClaimsForUser(account, user)
-    }
-
-    private fun requestJwtClaimsForUser(account: AccountModel, user: UserModel?): JwtClaimsModel {
-        val org = user?.let { checkNotNull(orgService.get(it.orgGuid)) }
-        val features = user?.let { checkNotNull(featureService.getByOrgGuid(it.orgGuid)) }.orEmpty()
-        val jwt = createJwt(account, user, org, features)
+    private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
+        val org = checkNotNull(orgService.get(user.orgGuid))
+        val features = featureService.getByOrgGuid(user.orgGuid)
+        val jwt = createJwt(user, org, features)
         return convertJwtToModel(jwt)
     }
 
@@ -74,16 +63,16 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         return newUser
     }
 
-    private fun createJwt(account: AccountModel, user: UserModel?, org: OrgModel?, features: Set<FeatureModel>): Jwt {
+    private fun createJwt(user: UserModel, org: OrgModel, features: Set<FeatureModel>): Jwt {
         return Jwt(
-            org = org?.let { JwtOrg(it.guid, it.name, features.map { it.guid }) },
-            roles = JwtRole.values().filter { account.hasRole(it) }.toSet(),
-            user = JwtUser(account.guid, user?.firstName, user?.lastName)
+            org = JwtOrg(org.guid, org.name, features.map { it.guid }),
+            roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
+            user = JwtUser(user.guid, user.firstName, user.lastName)
         )
     }
 
     private fun convertJwtToModel(jwt: Jwt): JwtClaimsModel = JwtClaimsModel(
-        org = jwt.org?.let { json.stringify(it) },
+        org = json.stringify(checkNotNull(jwt.org)),
         roles = json.stringifySet(jwt.roles),
         user = json.stringify(checkNotNull(jwt.user))
     )
