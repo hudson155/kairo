@@ -30,7 +30,8 @@ internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi
         val error = e.serverErrorMessage ?: throw e
         if (error.isUniqueConstraintViolation(ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT)) {
             throw AccountIsAlreadyMemberOfOrgRole()
-        } else throw e
+        }
+        throw e
     }
 
     fun getByOrgRoleGuid(orgRoleGuid: UUID): Set<OrgRoleMembershipModel> {
