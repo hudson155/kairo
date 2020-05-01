@@ -28,7 +28,7 @@ class LimberTest(json: Json, moduleFunction: Application.() -> Unit) : PiperTest
     private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
         withClaim(Claims.org, jwt.org?.let { json.stringify(it) })
         withClaim(Claims.roles, json.stringifySet(jwt.roles))
-        withClaim(Claims.user, json.stringify(jwt.user))
+        withClaim(Claims.user, jwt.user?.let { json.stringify(it) })
         return this
     }
 }

@@ -13,6 +13,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         val authorized = authorizeInternal(principal)
         if (authorized) return true
         if (principal?.isSuperuser == true) {
+            if (principal.user == null) error("Cannot override Authorization access for a user with no UUID.")
             logger.info("Overriding Authorization access for user with UUID ${principal.user.guid}.")
             return true
         }
@@ -43,7 +44,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
             userGuid ?: return false
-            return principal.user.guid == userGuid
+            return principal.user?.guid == userGuid
         }
     }
 
