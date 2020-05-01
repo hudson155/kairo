@@ -1,10 +1,17 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
+import io.limberapp.backend.authorization.permissions.OrgPermission
+import io.limberapp.backend.authorization.permissions.OrgPermissions
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
+import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
+import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
+import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
+import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
@@ -58,6 +65,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
                     "    \"org\": \"{" +
                     "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+                    "\\\"permissions\\\":\\\"${OrgPermissions.none()}\\\"," +
                     "\\\"featureGuids\\\":[]" +
                     "}\",\n" +
                     "    \"roles\": \"[]\",\n" +
@@ -104,6 +112,48 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
         piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
+        val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
+        piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+
+        piperTest.setup(
+            endpoint = OrgRoleApi.Patch(
+                orgGuid = existingOrg.guid,
+                orgRoleGuid = membershipOrgRoleRep.guid,
+                rep = OrgRoleRep.Update(permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES)))
+            )
+        )
+
+        val maintainerOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 1)
+        piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+
+        piperTest.setup(
+            endpoint = OrgRoleApi.Patch(
+                orgGuid = existingOrg.guid,
+                orgRoleGuid = maintainerOrgRoleRep.guid,
+                rep = OrgRoleRep.Update(permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_METADATA)))
+            )
+        )
+
+        piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+
+        piperTest.setup(
+            endpoint = OrgRoleMembershipApi.Post(
+                orgGuid = existingOrg.guid,
+                orgRoleGuid = membershipOrgRoleRep.guid,
+                rep = OrgRoleMembershipRepFixtures.fixture.creation(existingUser.guid)
+            )
+        )
+
+        piperTest.setup(
+            endpoint = OrgRoleMembershipApi.Post(
+                orgGuid = existingOrg.guid,
+                orgRoleGuid = maintainerOrgRoleRep.guid,
+                rep = OrgRoleMembershipRepFixtures.fixture.creation(existingUser.guid)
+            )
+        )
+
+        val orgPermissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES, OrgPermission.MANAGE_ORG_METADATA))
+
         val jwtRequest = JwtClaimsRequestRep.Creation(
             auth0ClientId = tenantRep.auth0ClientId,
             firstName = "Jeff",
@@ -117,6 +167,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
                     "    \"org\": \"{" +
                     "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
                     "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+                    "\\\"permissions\\\":\\\"${orgPermissions}\\\"," +
                     "\\\"featureGuids\\\":[]" +
                     "}\",\n" +
                     "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +

@@ -8,6 +8,8 @@ interface OrgRoleService {
 
     fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel>
 
+    fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID): Set<OrgRoleModel>
+
     fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel
 
     fun delete(orgGuid: UUID, orgRoleGuid: UUID)
