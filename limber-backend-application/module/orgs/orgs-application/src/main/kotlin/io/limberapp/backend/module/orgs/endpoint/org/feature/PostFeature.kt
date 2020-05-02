@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.mapper.org.FeatureMapper
@@ -33,7 +34,7 @@ internal class PostFeature @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: OrgFeatureApi.Post): FeatureRep.Complete {
-        Authorization.OrgMember(command.orgGuid).authorize()
+        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
         val feature = featureMapper.model(command.orgGuid, command.rep.required())
         featureService.create(feature)
         return featureMapper.completeRep(feature)
