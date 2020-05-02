@@ -32,34 +32,30 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?) = principal != null
     }
 
-    class Role(private val role: JwtRole?) : Authorization() {
+    class Role(private val role: JwtRole) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            role ?: return false
             return role in principal.roles
         }
     }
 
-    class User(private val userGuid: UUID?) : Authorization() {
+    class User(private val userGuid: UUID) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            userGuid ?: return false
             return principal.user?.guid == userGuid
         }
     }
 
-    class OrgMember(private val orgGuid: UUID?) : Authorization() {
+    class OrgMember(private val orgGuid: UUID) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            orgGuid ?: return false
             return principal.org?.guid == orgGuid
         }
     }
 
-    class HasAccessToFeature(private val featureGuid: UUID?) : Authorization() {
+    class HasAccessToFeature(private val featureGuid: UUID) : Authorization() {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
-            featureGuid ?: return false
             principal.org ?: return false
             return featureGuid in principal.org.featureGuids
         }
