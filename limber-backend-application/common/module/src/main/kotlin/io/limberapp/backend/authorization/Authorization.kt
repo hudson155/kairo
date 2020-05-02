@@ -1,6 +1,7 @@
 package io.limberapp.backend.authorization
 
 import com.piperframework.authorization.PiperAuthorization
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import org.slf4j.LoggerFactory
@@ -50,6 +51,17 @@ abstract class Authorization : PiperAuthorization<Jwt> {
         override fun authorizeInternal(principal: Jwt?): Boolean {
             principal ?: return false
             return principal.org?.guid == orgGuid
+        }
+    }
+
+    class OrgMemberWithPermission(
+        private val orgGuid: UUID,
+        private val orgPermission: OrgPermission
+    ) : Authorization() {
+        override fun authorizeInternal(principal: Jwt?): Boolean {
+            principal ?: return false
+            if (principal.org?.guid != orgGuid) return false
+            return principal.org.permissions.hasPermission(orgPermission)
         }
     }
 
