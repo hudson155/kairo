@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
@@ -29,7 +30,7 @@ internal class DeleteOrgRole @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: OrgRoleApi.Delete) {
-        Authorization.OrgMember(command.orgGuid).authorize()
+        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
         orgRoleService.delete(command.orgGuid, command.orgRoleGuid)
     }
 }

@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.mapper.org.OrgRoleMembershipMapper
@@ -34,7 +35,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(
     override suspend fun Handler.handle(
         command: OrgRoleMembershipApi.GetByOrgRoleGuid
     ): Set<OrgRoleMembershipRep.Complete> {
-        Authorization.OrgMember(command.orgGuid).authorize()
+        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
         val orgRoleMemberships = orgRoleMembershipService.getByOrgRoleGuid(command.orgGuid, command.orgRoleGuid)
         return orgRoleMemberships.map { orgRoleMembershipMapper.completeRep(it) }.toSet()
     }
