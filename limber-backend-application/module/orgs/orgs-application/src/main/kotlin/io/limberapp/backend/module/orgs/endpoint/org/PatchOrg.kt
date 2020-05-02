@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
@@ -34,7 +35,7 @@ internal class PatchOrg @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {
-        Authorization.OrgMember(command.orgGuid).authorize()
+        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_METADATA).authorize()
         val update = orgMapper.update(command.rep.required())
         val org = orgService.update(command.orgGuid, update)
         val features = featureService.getByOrgGuid(org.guid)
