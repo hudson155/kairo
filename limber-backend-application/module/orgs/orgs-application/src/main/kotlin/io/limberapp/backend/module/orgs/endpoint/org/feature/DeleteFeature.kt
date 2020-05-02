@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.service.org.FeatureService
@@ -30,7 +31,7 @@ internal class DeleteFeature @Inject constructor(
     )
 
     override suspend fun Handler.handle(command: OrgFeatureApi.Delete) {
-        Authorization.OrgMember(command.orgGuid).authorize()
+        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
         featureService.delete(
             orgGuid = command.orgGuid,
             featureGuid = command.featureGuid
