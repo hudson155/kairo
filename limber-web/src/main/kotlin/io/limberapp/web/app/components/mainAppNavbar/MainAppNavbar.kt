@@ -7,7 +7,6 @@ import io.limberapp.web.app.components.navbar.components.headerPhoto.headerPhoto
 import io.limberapp.web.app.components.navbar.components.headerText.headerText
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.default
-import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.util.buildElements
 import react.RBuilder
 import react.RProps
@@ -17,8 +16,6 @@ import react.functionalComponent
 internal data class Props(val features: Set<FeatureRep.Complete>, val name: String?, val photoUrl: String?) : RProps
 
 private val mainAppNavbar = functionalComponent<Props> { props ->
-    val auth = useAuth()
-
     navbar(
         left = buildElements {
             headerLinkGroup {
@@ -26,16 +23,10 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
             }
         },
         right = buildElements {
-            // Auth is undefined if the navbar is rendered outside of an auth provider.
-            if (auth == undefined || auth.isLoading) return@buildElements
             headerLinkGroup {
                 props.name?.let { headerText { +it } }
-                if (auth.isAuthenticated) {
-                    props.photoUrl?.let { headerPhoto(it) }
-                    headerLink(to = "/signout") { +"Sign Out" }
-                } else {
-                    headerLink(to = "/signin") { +"Sign In" }
-                }
+                props.photoUrl?.let { headerPhoto(it) }
+                headerLink(to = "/signout") { +"Sign Out" }
             }
         }
     ) {
@@ -48,5 +39,3 @@ private val mainAppNavbar = functionalComponent<Props> { props ->
 internal fun RBuilder.mainAppNavbar(features: Set<FeatureRep.Complete>, name: String?, photoUrl: String?) {
     child(mainAppNavbar, Props(features, name, photoUrl))
 }
-
-internal fun RBuilder.minimalNavbar() = mainAppNavbar(features = emptySet(), name = null, photoUrl = null)

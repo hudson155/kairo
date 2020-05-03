@@ -5,9 +5,10 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.web.app.components.basicNavbar.basicNavbar
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
-import io.limberapp.web.app.components.mainAppNavbar.minimalNavbar
+import io.limberapp.web.app.components.navbar.components.headerLink.headerLink
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
@@ -81,7 +82,7 @@ private val appWithAuth = functionalComponent<RProps> {
     }
 
     if (!global.state.tenant.isLoaded) {
-        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+        page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Loading tenant...")
         }
         return@functionalComponent
@@ -104,7 +105,7 @@ private val appWithApi = functionalComponent<RProps> {
 private val appRouter = functionalComponent<RProps> {
     val auth = useAuth()
     if (auth.isLoading) {
-        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+        page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Identifying you...")
         }
         return@functionalComponent
@@ -119,7 +120,10 @@ private val appRouter = functionalComponent<RProps> {
             } else {
                 route(path = "/") {
                     buildElement {
-                        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+                        page(
+                            header = buildElement { basicNavbar { headerLink(to = "/signin") { +"Sign In" } } },
+                            footer = buildElement { footer() }
+                        ) {
                             unauthenticatedPage()
                         }
                     }
@@ -156,7 +160,10 @@ private val appFeatureRouter = functionalComponent<RProps> {
 
     // Render loading state if org isn't loaded yet
     if (!global.state.org.isLoaded) {
-        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+        page(
+            header = buildElement { basicNavbar { headerLink(to = "/signout") { +"Sign Out" } } },
+            footer = buildElement { footer() }
+        ) {
             loadingPage("Loading org...")
         }
         return@functionalComponent
@@ -164,7 +171,10 @@ private val appFeatureRouter = functionalComponent<RProps> {
 
     // Render loading state if user isn't loaded yet
     if (!global.state.user.isLoaded) {
-        page(header = buildElement { minimalNavbar() }, footer = buildElement { footer() }) {
+        page(
+            header = buildElement { basicNavbar { headerLink(to = "/signout") { +"Sign Out" } } },
+            footer = buildElement { footer() }
+        ) {
             loadingPage("Loading user...")
         }
         return@functionalComponent
