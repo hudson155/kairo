@@ -8,7 +8,7 @@ import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.web.app.components.basicNavbar.basicNavbar
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
-import io.limberapp.web.app.components.navbar.components.headerLink.headerLink
+import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
@@ -38,6 +38,7 @@ import react.buildElement
 import react.child
 import react.functionalComponent
 import react.router.dom.browserRouter
+import react.router.dom.navLink
 import react.router.dom.redirect
 import react.router.dom.route
 import react.router.dom.switch
@@ -121,7 +122,11 @@ private val appRouter = functionalComponent<RProps> {
                 route(path = "/") {
                     buildElement {
                         page(
-                            header = buildElement { basicNavbar { headerLink(to = "/signin") { +"Sign In" } } },
+                            header = buildElement {
+                                basicNavbar {
+                                    navLink<RProps>(to = "/signin", exact = true) { headerItem { +"Sign In" } }
+                                }
+                            },
                             footer = buildElement { footer() }
                         ) {
                             unauthenticatedPage()
@@ -161,7 +166,11 @@ private val appFeatureRouter = functionalComponent<RProps> {
     // Render loading state if org isn't loaded yet
     if (!global.state.org.isLoaded) {
         page(
-            header = buildElement { basicNavbar { headerLink(to = "/signout") { +"Sign Out" } } },
+            header = buildElement {
+                basicNavbar {
+                    navLink<RProps>(to = "/signout", exact = true) { headerItem { +"Sign Out" } }
+                }
+            },
             footer = buildElement { footer() }
         ) {
             loadingPage("Loading org...")
@@ -172,7 +181,11 @@ private val appFeatureRouter = functionalComponent<RProps> {
     // Render loading state if user isn't loaded yet
     if (!global.state.user.isLoaded) {
         page(
-            header = buildElement { basicNavbar { headerLink(to = "/signout") { +"Sign Out" } } },
+            header = buildElement {
+                basicNavbar {
+                    navLink<RProps>(to = "/signout", exact = true) { headerItem { +"Sign Out" } }
+                }
+            },
             footer = buildElement { footer() }
         ) {
             loadingPage("Loading user...")

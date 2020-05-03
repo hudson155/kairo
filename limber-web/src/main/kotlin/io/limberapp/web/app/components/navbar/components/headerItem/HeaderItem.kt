@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.navbar.components.headerText
+package io.limberapp.web.app.components.navbar.components.headerItem
 
 import kotlinx.css.Align
 import kotlinx.css.Color
@@ -18,7 +18,7 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
-private val headerText = functionalComponent<RProps> { props ->
+private val headerItem = functionalComponent<RProps> { props ->
     styledDiv {
         css {
             display = Display.flex
@@ -31,6 +31,6 @@ private val headerText = functionalComponent<RProps> { props ->
     }
 }
 
-internal fun RBuilder.headerText(children: RHandler<RProps>) {
-    child(headerText, handler = children)
+internal fun RBuilder.headerItem(children: RHandler<RProps>) {
+    child(headerItem, handler = children)
 }
