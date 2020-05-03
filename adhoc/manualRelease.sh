@@ -2,6 +2,8 @@
 #
 # adhoc/manualRelease.sh
 
+set -e
+
 ./gradlew clean
 ./gradlew build
 docker build -t registry.digitalocean.com/limber/limber-backend:master limber-backend-application
