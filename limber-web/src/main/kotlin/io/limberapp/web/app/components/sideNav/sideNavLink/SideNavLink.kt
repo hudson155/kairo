@@ -2,6 +2,7 @@ package io.limberapp.web.app.components.sideNav.sideNavLink
 
 import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.CSSBuilder
+import kotlinx.css.Color
 import kotlinx.css.PointerEvents
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
@@ -27,13 +28,13 @@ private val sideNavLink = functionalComponent<Props> { props ->
     val styles = object : StyleSheet("SideNavLinkStyles", isStatic = true) {
         val activeNavLink by css {
             backgroundColor = theme.backgroundAccent
-            color = theme.white
+            color = Color.white
             pointerEvents = PointerEvents.none
         }
         val navLink by css {
             hover {
                 backgroundColor = theme.backgroundDark
-                color = theme.white
+                color = Color.white
             }
             padding(vertical = 4.px, horizontal = 8.px)
         }

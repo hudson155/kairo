@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.basicNavbar
 
-import io.limberapp.web.app.components.navbar.components.headerLinkGroup.headerLinkGroup
+import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.util.buildElements
@@ -13,12 +13,12 @@ import react.functionalComponent
 private val basicNavbar = functionalComponent<RProps> { props ->
     navbar(
         left = buildElements {
-            headerLinkGroup {
+            headerGroup {
                 headerItem { +"Limber" }
             }
         },
         right = buildElements {
-            headerLinkGroup {
+            headerGroup {
                 props.children()
             }
         }

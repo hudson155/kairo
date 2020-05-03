@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.navbar.components.headerLinkGroup
+package io.limberapp.web.app.components.navbar.components.headerGroup
 
 import kotlinx.css.Align
 import kotlinx.css.Display
@@ -16,7 +16,7 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
-private val headerLinkGroup = functionalComponent<RProps> { props ->
+private val headerGroup = functionalComponent<RProps> { props ->
     styledDiv {
         css {
             display = Display.flex
@@ -28,6 +28,6 @@ private val headerLinkGroup = functionalComponent<RProps> { props ->
     }
 }
 
-internal fun RBuilder.headerLinkGroup(children: RHandler<RProps>) {
-    child(headerLinkGroup, handler = children)
+internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
+    child(headerGroup, handler = children)
 }

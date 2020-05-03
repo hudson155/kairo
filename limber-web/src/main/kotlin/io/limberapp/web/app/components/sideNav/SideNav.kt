@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.sideNav
 
-import io.limberapp.web.context.theme.useTheme
+import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.LinearDimension
@@ -20,12 +20,10 @@ import styled.css
 import styled.styledDiv
 
 private val sideNav = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
     // TODO (259): Improve default css'ing
     val styles = object : StyleSheet("SideNavStyles", isStatic = true) {
         val root by css {
-            backgroundColor = theme.backgroundLight
+            backgroundColor = Color.white
             display = Display.flex
             flexDirection = FlexDirection.column
             height = LinearDimension.fitContent

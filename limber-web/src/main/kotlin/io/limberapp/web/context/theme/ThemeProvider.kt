@@ -17,8 +17,7 @@ internal fun useTheme() = useContext(themeContext)
 private val defaultTheme = ThemeContext(
     backgroundAccent = Color("#1098F7"),
     backgroundDark = Color("#24292E"),
-    backgroundLight = Color("#f1f1f1"),
-    white = Color("#FDFFFC")
+    borderLight = Color("#EAEAEA")
 )
 
 internal data class Props(val theme: ThemeContext) : RProps

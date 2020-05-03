@@ -193,9 +193,7 @@ private val appFeatureRouter = functionalComponent<RProps> {
         return@functionalComponent
     }
 
-    val (name, photoUrl) = checkNotNull(global.state.user.state).let {
-        Pair("${it.firstName} ${it.lastName}", it.profilePhotoUrl)
-    }
+    val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
     val features = checkNotNull(global.state.org.state).features
 
     page(header = buildElement { mainAppNavbar(features, name, photoUrl) }, footer = buildElement { footer() }) {

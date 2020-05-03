@@ -44,7 +44,9 @@ object UserRep {
         val lastName: String,
         val emailAddress: String,
         val profilePhotoUrl: String?
-    ) : CompleteRep
+    ) : CompleteRep {
+        val fullName = "$firstName $lastName"
+    }
 
     @Serializable
     data class Update(
