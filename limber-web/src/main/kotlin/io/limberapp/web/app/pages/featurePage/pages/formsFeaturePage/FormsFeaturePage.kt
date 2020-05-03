@@ -1,7 +1,7 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage
 
 import io.limberapp.web.app.components.sideNav.sideNav
-import io.limberapp.web.app.components.sideNav.sideNavLink.sideNavLink
+import io.limberapp.web.app.components.sideNav.sideNavItem.sideNavItem
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formInstancesListPage.formInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formTemplatesListPage.formTemplatesListPage
 import kotlinx.css.Display
@@ -30,9 +30,9 @@ private val formsFeaturePage = functionalComponent<RProps> {
     styledDiv {
         css { +Styles.root }
         sideNav {
-            sideNavLink("/", "Home")
-            sideNavLink("/templates", "Templates")
-            sideNavLink("/instances", "Instances")
+            sideNavItem("/", "Home")
+            sideNavItem("/templates", "Templates")
+            sideNavItem("/instances", "Instances")
         }
         styledDiv {
             switch {

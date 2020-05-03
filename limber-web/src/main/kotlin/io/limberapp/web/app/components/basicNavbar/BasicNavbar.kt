@@ -10,21 +10,16 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
-private val basicNavbar = functionalComponent<RProps> { props ->
-    navbar(
-        left = buildElements {
-            headerGroup {
-                headerItem { +"Limber" }
-            }
-        },
-        right = buildElements {
-            headerGroup {
-                props.children()
-            }
-        }
-    )
-}
-
+/**
+ * Top-of-page nav for use in an unauthenticated or partially loaded state.
+ */
 internal fun RBuilder.basicNavbar(children: RHandler<RProps> = {}) {
     child(basicNavbar, handler = children)
+}
+
+private val basicNavbar = functionalComponent<RProps> { props ->
+    navbar(
+        left = buildElements { headerGroup { headerItem { +"Limber" } } },
+        right = buildElements { headerGroup { props.children() } }
+    ) {}
 }

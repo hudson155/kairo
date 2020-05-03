@@ -14,11 +14,26 @@ import react.useContext
 private val themeContext = createContext<ThemeContext>();
 internal fun useTheme() = useContext(themeContext)
 
-private val defaultTheme = ThemeContext(
-    backgroundAccent = Color("#1098F7"),
-    backgroundDark = Color("#24292E"),
-    borderLight = Color("#EAEAEA")
-)
+private val defaultTheme = run {
+    // https://coolors.co/303030-fcfcfc-c49890-2898f0-606470
+    val jet = Color("#303030")
+    val jetLighter20 = Color("#636363")
+    val babyPowder = Color("#FCFCFC")
+    val babyPowderDarker20 = Color("#C9C9C9")
+    val tuscany = Color("#C49890")
+    val dodgerBlue = Color("#2898F0")
+    val blackCoral = Color("#606470")
+
+    return@run ThemeContext(
+        textDark = jet,
+        textLight = babyPowder,
+        backgroundDark = jet,
+        backgroundLight = babyPowder,
+        backgroundAccent = dodgerBlue,
+        borderDark = jetLighter20,
+        borderLight = babyPowderDarker20
+    )
+}
 
 internal data class Props(val theme: ThemeContext) : RProps
 

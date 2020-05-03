@@ -1,8 +1,7 @@
-package io.limberapp.web.app.components.sideNav.sideNavLink
+package io.limberapp.web.app.components.sideNav.sideNavItem
 
 import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.CSSBuilder
-import kotlinx.css.Color
 import kotlinx.css.PointerEvents
 import kotlinx.css.backgroundColor
 import kotlinx.css.color
@@ -18,23 +17,30 @@ import react.router.dom.useRouteMatch
 import styled.StyleSheet
 import styled.getClassName
 
+/**
+ * A single item on a side nav.
+ */
+internal fun RBuilder.sideNavItem(to: String, name: String) {
+    child(sideNavItem, Props(to, name))
+}
+
 internal data class Props(val to: String, val name: String) : RProps
 
-private val sideNavLink = functionalComponent<Props> { props ->
+private val sideNavItem = functionalComponent<Props> { props ->
     val routeMatch = useRouteMatch<RProps>()
     val theme = useTheme()
 
-    // TODO (259): Improve default css'ing
+    // TODO (259): Improve default styling
     val styles = object : StyleSheet("SideNavLinkStyles", isStatic = true) {
         val activeNavLink by css {
             backgroundColor = theme.backgroundAccent
-            color = Color.white
+            color = theme.textLight
             pointerEvents = PointerEvents.none
         }
         val navLink by css {
             hover {
                 backgroundColor = theme.backgroundDark
-                color = Color.white
+                color = theme.textLight
             }
             padding(vertical = 4.px, horizontal = 8.px)
         }
@@ -54,8 +60,4 @@ private val sideNavLink = functionalComponent<Props> { props ->
         className = styles.getClassName { it::navLink },
         activeClassName = styles.getClassName { it::activeNavLink }
     ) { +props.name }
-}
-
-internal fun RBuilder.sideNavLink(to: String, name: String) {
-    child(sideNavLink, Props(to, name))
 }

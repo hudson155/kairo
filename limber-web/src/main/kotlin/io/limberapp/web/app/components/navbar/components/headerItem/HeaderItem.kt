@@ -1,7 +1,7 @@
 package io.limberapp.web.app.components.navbar.components.headerItem
 
+import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.Align
-import kotlinx.css.Color
 import kotlinx.css.Display
 import kotlinx.css.FontWeight
 import kotlinx.css.alignItems
@@ -18,19 +18,24 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
+/**
+ * A single item on a top-of-page navbar.
+ */
+internal fun RBuilder.headerItem(children: RHandler<RProps>) {
+    child(headerItem, handler = children)
+}
+
 private val headerItem = functionalComponent<RProps> { props ->
+    val theme = useTheme()
+
     styledDiv {
         css {
             display = Display.flex
             alignItems = Align.center
             marginRight = 16.px
-            color = Color.white
+            color = theme.textLight
             fontWeight = FontWeight.bold
         }
         props.children()
     }
-}
-
-internal fun RBuilder.headerItem(children: RHandler<RProps>) {
-    child(headerItem, handler = children)
 }

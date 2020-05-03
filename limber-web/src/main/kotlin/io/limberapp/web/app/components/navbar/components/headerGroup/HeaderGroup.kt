@@ -16,6 +16,14 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
+/**
+ * A group of items on a top-of-page navbar. Items in the same group should be conceptually grouped. The physical
+ * spacing between them will be less.
+ */
+internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
+    child(headerGroup, handler = children)
+}
+
 private val headerGroup = functionalComponent<RProps> { props ->
     styledDiv {
         css {
@@ -26,8 +34,4 @@ private val headerGroup = functionalComponent<RProps> { props ->
         }
         props.children()
     }
-}
-
-internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
-    child(headerGroup, handler = children)
 }

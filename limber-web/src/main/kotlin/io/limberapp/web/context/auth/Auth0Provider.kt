@@ -1,11 +1,11 @@
 package io.limberapp.web.context.auth
 
 import io.limberapp.web.context.ProviderValue
-import io.limberapp.web.util.AppState
-import io.limberapp.web.util.Auth0Client
-import io.limberapp.web.util.Auth0LogoutRequestProps
 import io.limberapp.web.util.async
-import io.limberapp.web.util.createAuth0Client
+import io.limberapp.web.util.external.AppState
+import io.limberapp.web.util.external.Auth0Client
+import io.limberapp.web.util.external.Auth0LogoutRequestProps
+import io.limberapp.web.util.external.createAuth0Client
 import io.limberapp.web.util.process
 import io.limberapp.web.util.rootUrl
 import kotlinext.js.asJsObject

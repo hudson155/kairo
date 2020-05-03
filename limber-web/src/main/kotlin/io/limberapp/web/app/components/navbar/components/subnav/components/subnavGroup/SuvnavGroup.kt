@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.mainAppNavbar.components.mainAppNavbarUserDropdown.components.mainAppNavbarUserDropdownGroup
+package io.limberapp.web.app.components.navbar.components.subnav.components.subnavGroup
 
 import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.BorderStyle
@@ -7,7 +7,6 @@ import kotlinx.css.FlexDirection
 import kotlinx.css.borderBottomStyle
 import kotlinx.css.display
 import kotlinx.css.flexDirection
-import kotlinx.css.padding
 import kotlinx.css.properties.borderBottom
 import kotlinx.css.px
 import react.RBuilder
@@ -18,7 +17,15 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
-private val mainAppNavbarUserDropdownGroup = functionalComponent<RProps> { props ->
+/**
+ * A group of items on a subnav. Items in the same group should be conceptually grouped. The physical spacing between
+ * them will be less.
+ */
+internal fun RBuilder.subnavGroup(children: RHandler<RProps>) {
+    child(subnavGroup, handler = children)
+}
+
+private val subnavGroup = functionalComponent<RProps> { props ->
     val theme = useTheme()
 
     styledDiv {
@@ -29,12 +36,7 @@ private val mainAppNavbarUserDropdownGroup = functionalComponent<RProps> { props
             lastOfType {
                 borderBottomStyle = BorderStyle.none
             }
-            padding(8.px)
         }
         props.children()
     }
-}
-
-internal fun RBuilder.mainAppNavbarUserDropdownGroup(children: RHandler<RProps>) {
-    child(mainAppNavbarUserDropdownGroup, handler = children)
 }

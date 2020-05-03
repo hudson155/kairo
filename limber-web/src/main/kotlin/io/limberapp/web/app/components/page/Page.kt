@@ -8,18 +8,23 @@ import react.dom.footer
 import react.dom.header
 import react.functionalComponent
 
-internal data class Props(val header: ReactElement?, val footer: ReactElement?) : RProps
-
-private val page = functionalComponent<Props> { props ->
-    props.header?.let { header { child(it) } }
-    main { props.children() }
-    props.footer?.let { footer { child(it) } }
-}
-
+/**
+ * Outline for a generic page in the app. The [header] should be some kind of navbar. The [footer] usually contains
+ * copyright and/or some links. The [children] is the main page content. Each of these is put into a
+ * semantically-appropriate HTML element (<header>, <main>, <footer>).
+ */
 internal fun RBuilder.page(
     header: ReactElement? = null,
     footer: ReactElement? = null,
     children: RBuilder.() -> Unit
 ) {
     child(page, Props(header, footer), handler = children)
+}
+
+internal data class Props(val header: ReactElement?, val footer: ReactElement?) : RProps
+
+private val page = functionalComponent<Props> { props ->
+    props.header?.let { header { child(it) } }
+    main { props.children() }
+    props.footer?.let { footer { child(it) } }
 }

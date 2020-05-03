@@ -1,7 +1,7 @@
 package io.limberapp.web.context.auth
 
 import com.piperframework.types.UUID
-import io.limberapp.web.util.decodeJwt
+import io.limberapp.web.util.external.decodeJwt
 
 internal data class Jwt(val raw: String) {
     internal data class Org(val guid: UUID, val name: String)

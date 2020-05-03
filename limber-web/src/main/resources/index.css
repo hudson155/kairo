@@ -23,7 +23,6 @@ code {
 
 main {
     flex-grow: 1;
-    padding: 16px;
     display: flex;
     flex-direction: column;
 }

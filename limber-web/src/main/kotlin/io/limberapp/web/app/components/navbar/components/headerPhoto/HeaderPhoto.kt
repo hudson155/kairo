@@ -11,6 +11,13 @@ import react.functionalComponent
 import styled.css
 import styled.styledImg
 
+/**
+ * A photo on a top-of-page navbar. A common use case is for a profile photo.
+ */
+internal fun RBuilder.headerPhoto(url: String) {
+    child(headerPhoto, Props(url))
+}
+
 internal data class Props(val url: String) : RProps
 
 private val headerPhoto = functionalComponent<Props> { props ->
@@ -21,8 +28,4 @@ private val headerPhoto = functionalComponent<Props> { props ->
             maxWidth = 32.px
         }
     }
-}
-
-internal fun RBuilder.headerPhoto(url: String) {
-    child(headerPhoto, Props(url))
 }
