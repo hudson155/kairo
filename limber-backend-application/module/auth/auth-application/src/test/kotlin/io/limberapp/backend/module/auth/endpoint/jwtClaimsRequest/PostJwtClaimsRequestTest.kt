@@ -152,10 +152,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
             )
         )
 
-        val orgPermissions = OrgPermissions(setOf(
-            OrgPermission.MANAGE_ORG_FEATURES,
-            OrgPermission.MANAGE_ORG_METADATA
-        ))
+        val orgPermissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES, OrgPermission.MANAGE_ORG_METADATA))
 
         val jwtRequest = JwtClaimsRequestRep.Creation(
             auth0ClientId = tenantRep.auth0ClientId,
