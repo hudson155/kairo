@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.testing.fixtures.org
 
-import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest

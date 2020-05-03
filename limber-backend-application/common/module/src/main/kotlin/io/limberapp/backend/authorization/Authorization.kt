@@ -7,6 +7,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import org.slf4j.LoggerFactory
 import java.util.UUID
 
+@Suppress("MethodOverloading")
 abstract class Authorization : PiperAuthorization<Jwt> {
     private val logger = LoggerFactory.getLogger(Authorization::class.java)
 
