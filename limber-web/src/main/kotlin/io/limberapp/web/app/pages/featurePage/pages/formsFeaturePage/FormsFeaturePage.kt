@@ -11,13 +11,14 @@ import react.RBuilder
 import react.RProps
 import react.buildElement
 import react.child
+import react.dom.div
+import react.dom.h1
 import react.functionalComponent
 import react.router.dom.route
 import react.router.dom.switch
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
-import styled.styledH1
 
 /**
  * Parent page for forms module pages.
@@ -41,9 +42,9 @@ private val formsFeaturePage = functionalComponent<RProps> {
             sideNavItem("/templates", "Templates")
             sideNavItem("/instances", "Instances")
         }
-        styledDiv {
+        div {
             switch {
-                route(path = "/", exact = true) { styledH1 { +"Welcome to Forms" } }
+                route(path = "/", exact = true) { h1 { +"Welcome to Forms" } }
                 route(path = "/instances", exact = true) { buildElement { formInstancesListPage() } }
                 route(path = "/templates", exact = true) { buildElement { formTemplatesListPage() } }
             }

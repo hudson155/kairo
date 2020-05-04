@@ -3,9 +3,9 @@ package io.limberapp.web.app.pages.featurePage.pages.homePage
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.h1
+import react.dom.p
 import react.functionalComponent
-import styled.styledH1
-import styled.styledP
 
 /**
  * Placeholder homepage.
@@ -15,6 +15,6 @@ internal fun RBuilder.homePage() {
 }
 
 private val homePage = functionalComponent<RProps> {
-    styledH1 { +"Home" }
-    styledP { +"This is the homepage." }
+    h1 { +"Home" }
+    p { +"This is the homepage." }
 }

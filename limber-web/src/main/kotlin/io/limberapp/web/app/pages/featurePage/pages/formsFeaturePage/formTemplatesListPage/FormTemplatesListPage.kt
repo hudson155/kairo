@@ -3,9 +3,9 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formTempla
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.h1
+import react.dom.p
 import react.functionalComponent
-import styled.styledH1
-import styled.styledP
 
 /**
  * Lists all form templates within the feature.
@@ -15,6 +15,6 @@ internal fun RBuilder.formTemplatesListPage() {
 }
 
 private val formTemplatesListPage = functionalComponent<RProps> {
-    styledH1 { +"Forms" }
-    styledP { +"Here's a list of form templates." }
+    h1 { +"Forms" }
+    p { +"Here's a list of form templates." }
 }
