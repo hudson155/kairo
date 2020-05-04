@@ -40,7 +40,6 @@ private val mainAppNavbar = functionalComponent<RProps> {
 
     // Only 1 item on the navbar can be open at a time.
     val (openItem, setOpenItem) = useState<OpenItem?>(null)
-    val toggleOpenItem: (OpenItem) -> Unit = { setOpenItem(if (openItem == null) it else null) }
 
     val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
     val features = checkNotNull(global.state.org.state).features
@@ -58,12 +57,12 @@ private val mainAppNavbar = functionalComponent<RProps> {
                         alignItems = Align.center
                         if (openItem != OpenItem.USER_DROPDOWN) cursor = Cursor.pointer
                     }
-                    attrs.onClickFunction = { toggleOpenItem(OpenItem.USER_DROPDOWN) }
+                    attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
                     headerItem { +name }
                     photoUrl?.let { headerPhoto(it) }
                 }
                 if (openItem == OpenItem.USER_DROPDOWN) {
-                    userSubnav()
+                    userSubnav(onUnfocus = { setOpenItem(null) })
                 }
             }
         }

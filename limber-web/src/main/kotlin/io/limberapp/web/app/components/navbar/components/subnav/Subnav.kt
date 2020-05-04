@@ -22,10 +22,11 @@ import kotlinx.css.px
 import kotlinx.css.right
 import kotlinx.css.top
 import kotlinx.css.width
+import org.w3c.dom.Element
 import react.RBuilder
 import react.RHandler
+import react.RMutableRef
 import react.RProps
-import react.child
 import react.functionalComponent
 import styled.css
 import styled.styledDiv
@@ -34,11 +35,13 @@ import styled.styledDiv
  * Generic navigational component that drops down from a top-of-page navbar. It's generally only visible when a nav link
  * is active, but that functionality must be managed outside the scope of this component.
  */
-internal fun RBuilder.subnav(children: RHandler<RProps>) {
-    child(subnav, handler = children)
+internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RProps>) {
+    child(subnav, Props(node), handler = children)
 }
 
-private val subnav = functionalComponent<RProps> { props ->
+internal data class Props(val node: RMutableRef<Element?>) : RProps
+
+private val subnav = functionalComponent<Props> { props ->
     val theme = useTheme()
 
     // TODO: In order for this to be truly reusable the positioning likely needs to be altered.
@@ -67,6 +70,7 @@ private val subnav = functionalComponent<RProps> { props ->
                 content = QuotedString("")
             }
         }
+        ref = props.node
         props.children()
     }
 }
