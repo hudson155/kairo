@@ -1,7 +1,7 @@
 package io.limberapp.web.app.pages.orgSettingsPage
 
-import io.limberapp.web.app.components.layoutTitle.layoutTitle
-import io.limberapp.web.app.components.layouts.standardLayoutWithLeftPane.standardLayoutWithLeftPane
+import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
+import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import io.limberapp.web.context.globalState.useGlobalState
 import react.RBuilder
 import react.RProps
@@ -17,10 +17,7 @@ private val orgSettingsPage = functionalComponent<RProps> {
 
     val orgName = checkNotNull(global.state.org.state).name
 
-    standardLayoutWithLeftPane(
-        title = "$orgName Settings",
-        leftPane = null
-    ) {
+    standardLayout(leftPane = null) {
         layoutTitle("$orgName Settings")
     }
 }

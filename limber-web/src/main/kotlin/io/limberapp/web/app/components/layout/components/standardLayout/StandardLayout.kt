@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.layouts.standardLayoutWithLeftPane
+package io.limberapp.web.app.components.layout.components.standardLayout
 
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -21,13 +21,13 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
-internal fun RBuilder.standardLayoutWithLeftPane(title: String, leftPane: ReactElement?, children: RHandler<Props>) {
-    child(standardLayoutWithLeftPane, Props(title, leftPane), handler = children)
+internal fun RBuilder.standardLayout(leftPane: ReactElement? = null, children: RHandler<Props>) {
+    child(standardLayout, Props(leftPane), handler = children)
 }
 
-internal data class Props(val title: String, val leftPane: ReactElement?) : RProps
+internal data class Props(val leftPane: ReactElement?) : RProps
 
-private val standardLayoutWithLeftPane = functionalComponent<Props> { props ->
+private val standardLayout = functionalComponent<Props> { props ->
     styledDiv {
         css {
             flexGrow = 1.0
@@ -43,14 +43,16 @@ private val standardLayoutWithLeftPane = functionalComponent<Props> { props ->
                 display = Display.flex
                 flexDirection = FlexDirection.row
             }
-            styledDiv {
-                css {
-                    flexBasis = 256.px.basis
-                    display = Display.flex
-                    flexDirection = FlexDirection.column
-                    marginRight = 16.px
+            props.leftPane?.let {
+                styledDiv {
+                    css {
+                        flexBasis = 256.px.basis
+                        display = Display.flex
+                        flexDirection = FlexDirection.column
+                        marginRight = 16.px
+                    }
+                    child(it)
                 }
-                props.leftPane?.let { child(it) }
             }
             styledDiv {
                 css {

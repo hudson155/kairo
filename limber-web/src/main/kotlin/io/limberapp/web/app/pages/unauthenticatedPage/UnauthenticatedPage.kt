@@ -1,13 +1,7 @@
 package io.limberapp.web.app.pages.unauthenticatedPage
 
-import kotlinx.css.Align
-import kotlinx.css.Display
-import kotlinx.css.JustifyContent
+import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import kotlinx.css.TextAlign
-import kotlinx.css.alignItems
-import kotlinx.css.display
-import kotlinx.css.flexGrow
-import kotlinx.css.justifyContent
 import kotlinx.css.properties.TextDecorationLine
 import kotlinx.css.properties.textDecoration
 import kotlinx.css.textAlign
@@ -29,13 +23,7 @@ internal fun RBuilder.unauthenticatedPage() {
 }
 
 private val unauthenticatedPage = functionalComponent<RProps> {
-    styledDiv {
-        css {
-            flexGrow = 1.0
-            display = Display.flex
-            alignItems = Align.center
-            justifyContent = JustifyContent.center
-        }
+    centeredContentLayout {
         styledDiv {
             css { textAlign = TextAlign.center }
             h1 { +"Welcome to Limber" }
