@@ -8,6 +8,9 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
+/**
+ * Page for managing organization-level settings.
+ */
 internal fun RBuilder.orgSettingsPage() {
     child(orgSettingsPage)
 }

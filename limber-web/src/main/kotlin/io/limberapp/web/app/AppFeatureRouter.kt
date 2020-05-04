@@ -29,6 +29,11 @@ import react.router.dom.route
 import react.router.dom.switch
 import react.useEffect
 
+/**
+ * Part of the application root.
+ *   - Loads the org and user.
+ *   - Handles routing for the authenticated application.
+ */
 internal fun RBuilder.appFeatureRouter() {
     child(appFeatureRouter)
 }

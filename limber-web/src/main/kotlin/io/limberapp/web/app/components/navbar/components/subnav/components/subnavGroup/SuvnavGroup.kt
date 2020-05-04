@@ -19,7 +19,7 @@ import styled.styledDiv
 
 /**
  * A group of items on a subnav. Items in the same group should be conceptually grouped. The physical spacing between
- * them will be less.
+ * them will be less for items in the same group than for items in different groups.
  */
 internal fun RBuilder.subnavGroup(children: RHandler<RProps>) {
     child(subnavGroup, handler = children)

@@ -18,7 +18,7 @@ import styled.styledDiv
 
 /**
  * A group of items on a top-of-page navbar. Items in the same group should be conceptually grouped. The physical
- * spacing between them will be less.
+ * spacing between them will be less for items in the same group than for items in different groups.
  */
 internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
     child(headerGroup, handler = children)

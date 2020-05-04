@@ -25,6 +25,11 @@ import react.useEffect
 import kotlin.browser.document
 import kotlin.browser.window
 
+/**
+ * Part of the application root.
+ *   - Loads the tenant.
+ *   - Provides auth, but doesn't guarantee that auth is loaded.
+ */
 internal fun RBuilder.appWithAuth() {
     child(appWithAuth)
 }
