@@ -41,6 +41,13 @@ import styled.css
 import styled.styledDiv
 import styled.styledP
 
+/**
+ * Page to show while things are loading.
+ */
+internal fun RBuilder.loadingPage(loadingText: String) {
+    child(loadingPage, Props(loadingText))
+}
+
 internal data class Props(val loadingText: String) : RProps
 
 private val loadingPage = functionalComponent<Props> { props ->
@@ -87,8 +94,4 @@ private val loadingPage = functionalComponent<Props> { props ->
         }
         styledP { +props.loadingText }
     }
-}
-
-internal fun RBuilder.loadingPage(loadingText: String) {
-    child(loadingPage, Props(loadingText))
 }

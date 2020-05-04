@@ -19,6 +19,13 @@ import styled.css
 import styled.styledDiv
 import styled.styledH1
 
+/**
+ * Parent page for forms module pages.
+ */
+internal fun RBuilder.formsFeaturePage() {
+    child(formsFeaturePage)
+}
+
 private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
     val root by css {
         display = Display.flex
@@ -42,8 +49,4 @@ private val formsFeaturePage = functionalComponent<RProps> {
             }
         }
     }
-}
-
-internal fun RBuilder.formsFeaturePage() {
-    child(formsFeaturePage)
 }

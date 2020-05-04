@@ -7,11 +7,14 @@ import react.functionalComponent
 import styled.styledH1
 import styled.styledP
 
+/**
+ * Lists all form templates within the feature.
+ */
+internal fun RBuilder.formTemplatesListPage() {
+    child(formTemplatesListPage)
+}
+
 private val formTemplatesListPage = functionalComponent<RProps> {
     styledH1 { +"Forms" }
     styledP { +"Here's a list of form templates." }
-}
-
-internal fun RBuilder.formTemplatesListPage() {
-    child(formTemplatesListPage)
 }

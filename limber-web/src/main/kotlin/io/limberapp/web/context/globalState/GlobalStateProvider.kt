@@ -21,6 +21,10 @@ import react.functionalComponent
 import react.useContext
 import react.useReducer
 
+internal fun RBuilder.globalStateProvider(children: RHandler<RProps>) {
+    child(globalStateProvider, handler = children)
+}
+
 private val globalState = createContext<StateAndDispatch<GlobalStateContext, Action>>()
 internal fun useGlobalState() = useContext(globalState)
 
@@ -41,8 +45,4 @@ private val globalStateProvider = functionalComponent<RProps> { props ->
     }, initialState)
     val configObject = ProviderValue(StateAndDispatch(state, dispatch))
     child(createElement(globalState.Provider, configObject, props.children))
-}
-
-internal fun RBuilder.globalStateProvider(children: RHandler<RProps>) {
-    child(globalStateProvider, handler = children)
 }

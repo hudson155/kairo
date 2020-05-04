@@ -7,11 +7,14 @@ import react.functionalComponent
 import styled.styledH1
 import styled.styledP
 
+/**
+ * Placeholder homepage.
+ */
+internal fun RBuilder.homePage() {
+    child(homePage)
+}
+
 private val homePage = functionalComponent<RProps> {
     styledH1 { +"Home" }
     styledP { +"This is the homepage." }
-}
-
-internal fun RBuilder.homePage() {
-    child(homePage)
 }

@@ -9,6 +9,13 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
+/**
+ * Parent page for feature-specific pages.
+ */
+internal fun RBuilder.featurePage(feature: FeatureRep.Complete) {
+    child(featurePage, Props(feature))
+}
+
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
 private val featurePage = functionalComponent<Props> { props ->
@@ -17,8 +24,4 @@ private val featurePage = functionalComponent<Props> { props ->
         FeatureRep.Type.HOME -> homePage()
         else -> notFoundPage()
     }
-}
-
-internal fun RBuilder.featurePage(feature: FeatureRep.Complete) {
-    child(featurePage, Props(feature))
 }
