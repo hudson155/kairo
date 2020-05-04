@@ -19,6 +19,11 @@ import react.router.dom.navLink
 import react.router.dom.route
 import react.router.dom.switch
 
+/**
+ * Part of the application root.
+ *   - Handles auth loading state.
+ *   - Handles routing for the unauthenticated application.
+ */
 internal fun RBuilder.appRouter() {
     child(appRouter)
 }

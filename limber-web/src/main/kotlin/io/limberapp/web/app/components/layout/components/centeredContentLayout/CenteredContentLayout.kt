@@ -17,6 +17,10 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
+/**
+ * A layout that supports a single element or vertical group of elements, centered on the page both vertically and
+ * horizontally. Content is provided by [children]. Content should be kept small; behaviour is undefined upon overflow.
+ */
 internal fun RBuilder.centeredContentLayout(children: RHandler<RProps>) {
     child(centeredContentLayout, handler = children)
 }

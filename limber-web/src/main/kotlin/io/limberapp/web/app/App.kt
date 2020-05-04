@@ -7,6 +7,11 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
+/**
+ * Part of the application root.
+ *   - Provides global state.
+ *   - Provides theme.
+ */
 internal fun RBuilder.app() {
     child(app)
 }

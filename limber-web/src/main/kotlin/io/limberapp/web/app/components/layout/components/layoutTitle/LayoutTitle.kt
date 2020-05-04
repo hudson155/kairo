@@ -11,6 +11,9 @@ import react.functionalComponent
 import styled.css
 import styled.styledH1
 
+/**
+ * The title at the top of a layout. All pages should have one of these.
+ */
 internal fun RBuilder.layoutTitle(title: String) {
     child(layoutTitle, Props(title))
 }

@@ -33,7 +33,8 @@ import styled.styledDiv
 
 /**
  * Generic navigational component that drops down from a top-of-page navbar. It's generally only visible when a nav link
- * is active, but that functionality must be managed outside the scope of this component.
+ * is active, but that functionality must be managed outside the scope of this component. The [node] is a [RMutableRef]
+ * that will be assigned to the subnav div, allowing the parent component to detect clicks outside of it.
  */
 internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RProps>) {
     child(subnav, Props(node), handler = children)

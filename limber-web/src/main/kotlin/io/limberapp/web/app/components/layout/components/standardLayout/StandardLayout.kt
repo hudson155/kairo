@@ -21,6 +21,10 @@ import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
+/**
+ * The layout for most pages, supporting a vertical group of elements as the main body ([children]), and an optional
+ * [leftPane] which is intended for side navigation.
+ */
 internal fun RBuilder.standardLayout(leftPane: ReactElement? = null, children: RHandler<Props>) {
     child(standardLayout, Props(leftPane), handler = children)
 }

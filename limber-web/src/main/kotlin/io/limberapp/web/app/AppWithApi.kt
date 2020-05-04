@@ -6,6 +6,10 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
+/**
+ * Part of the application root.
+ *   - Provides API.
+ */
 internal fun RBuilder.appWithApi() {
     child(appWithApi)
 }
