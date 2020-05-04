@@ -22,6 +22,14 @@ import react.useEffect
 import react.useState
 import kotlin.browser.window
 
+internal fun RBuilder.authProvider(
+    clientId: String,
+    onRedirectCallback: (AppState?) -> Unit,
+    children: RHandler<Props>
+) {
+    child(authProvider, Props(clientId, onRedirectCallback), handler = children)
+}
+
 private val authContext = createContext<Auth0Context>()
 internal fun useAuth() = useContext(authContext)
 
@@ -65,13 +73,5 @@ private val authProvider = functionalComponent<Props> { props ->
         )
     )
     child(createElement(authContext.Provider, configObject, props.children))
-}
-
-internal fun RBuilder.authProvider(
-    clientId: String,
-    onRedirectCallback: (AppState?) -> Unit,
-    children: RHandler<Props>
-) {
-    child(authProvider, Props(clientId, onRedirectCallback), handler = children)
 }
 

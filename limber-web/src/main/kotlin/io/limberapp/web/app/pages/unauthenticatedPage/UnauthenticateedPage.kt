@@ -21,6 +21,13 @@ import styled.css
 import styled.styledDiv
 import styled.styledSpan
 
+/**
+ * The only page shown when in an unauthenticated statee
+ */
+internal fun RBuilder.unauthenticatedPage() {
+    child(unauthenticatedPage)
+}
+
 private val unauthenticatedPage = functionalComponent<RProps> {
     styledDiv {
         css {
@@ -40,8 +47,4 @@ private val unauthenticatedPage = functionalComponent<RProps> {
             }
         }
     }
-}
-
-internal fun RBuilder.unauthenticatedPage() {
-    child(unauthenticatedPage)
 }

@@ -11,6 +11,10 @@ import react.createElement
 import react.functionalComponent
 import react.useContext
 
+internal fun RBuilder.themeProvider(theme: ThemeContext = defaultTheme, children: RHandler<Props>) {
+    child(themeProvider, Props(theme), handler = children)
+}
+
 private val themeContext = createContext<ThemeContext>();
 internal fun useTheme() = useContext(themeContext)
 
@@ -40,9 +44,5 @@ internal data class Props(val theme: ThemeContext) : RProps
 private val themeProvider = functionalComponent<Props> { props ->
     val configObject = ProviderValue(props.theme)
     child(createElement(themeContext.Provider, configObject, props.children))
-}
-
-internal fun RBuilder.themeProvider(theme: ThemeContext = defaultTheme, children: RHandler<Props>) {
-    child(themeProvider, Props(theme), handler = children)
 }
 

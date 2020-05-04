@@ -14,6 +14,10 @@ import react.createElement
 import react.functionalComponent
 import react.useContext
 
+internal fun RBuilder.apiProvider(children: RHandler<RProps>) {
+    this.child(apiProvider, handler = children)
+}
+
 private val api = createContext<Api>()
 internal fun useApi() = useContext(api)
 
@@ -31,8 +35,4 @@ private val apiProvider = functionalComponent<RProps> { props ->
 
     val configObject = ProviderValue(Api(fetch))
     child(createElement(api.Provider, configObject, props.children))
-}
-
-internal fun RBuilder.apiProvider(children: RHandler<RProps>) {
-    this.child(apiProvider, handler = children)
 }
