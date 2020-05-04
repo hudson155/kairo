@@ -22,7 +22,6 @@ private val api = createContext<Api>()
 internal fun useApi() = useContext(api)
 
 private val apiProvider = functionalComponent<RProps> { props ->
-
     val auth = useAuth()
 
     val fetch = object : Fetch(process.env.API_ROOT_URL) {

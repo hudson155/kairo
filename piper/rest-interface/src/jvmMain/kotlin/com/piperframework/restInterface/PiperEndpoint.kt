@@ -65,7 +65,6 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
 
         // Replace each temporary placeholder value with the corresponding Ktor template value.
         val pathTemplate = argReplacements.fold(endpoint.path) { acc, pair ->
-
             // Splitting the path template by the temporary placeholder value counts the number of occurrences.
             val split = acc.split(pair.first)
 
