@@ -35,11 +35,11 @@ import kotlinx.css.width
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.p
 import react.functionalComponent
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
-import styled.styledP
 
 /**
  * Page to show while things are loading.
@@ -51,7 +51,6 @@ internal fun RBuilder.loadingPage(loadingText: String) {
 internal data class Props(val loadingText: String) : RProps
 
 private val loadingPage = functionalComponent<Props> { props ->
-
     val theme = useTheme()
 
     val styles = object : StyleSheet("LoadingPageStyles", isStatic = true) {
@@ -92,6 +91,6 @@ private val loadingPage = functionalComponent<Props> { props ->
         styledDiv {
             css { +styles.spinner }
         }
-        styledP { +props.loadingText }
+        p { +props.loadingText }
     }
 }

@@ -6,7 +6,6 @@ import io.limberapp.web.app.components.navbar.components.subnav.subnav
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.EventType
 import org.w3c.dom.Element
-import org.w3c.dom.Node
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RProps
@@ -34,11 +33,7 @@ private val userSubnav = functionalComponent<Props> { props ->
 
     val name = checkNotNull(global.state.user.state).fullName
 
-    val handleClick: (Event) -> Unit = {
-        if (!checkNotNull(node.current).contains(it.target as Node)) {
-            props.onUnfocus()
-        }
-    }
+    val handleClick: (Event) -> Unit = { props.onUnfocus() }
 
     useEffectWithCleanup(emptyList()) {
         document.addEventListener(EventType.click, handleClick)
@@ -51,6 +46,9 @@ private val userSubnav = functionalComponent<Props> { props ->
                 +"Signed in as"
                 b { +name }
             }
+        }
+        subnavGroup {
+            navLink<RProps>(to = "/settings/org", exact = true) { subnavItem { +"Organization Settings" } }
         }
         subnavGroup {
             navLink<RProps>(to = "/signout", exact = true) { subnavItem { +"Sign Out" } }
