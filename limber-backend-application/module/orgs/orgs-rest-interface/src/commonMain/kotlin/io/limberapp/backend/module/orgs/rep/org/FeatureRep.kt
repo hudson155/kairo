@@ -54,3 +54,5 @@ object FeatureRep {
         }
     }
 }
+
+val Set<FeatureRep.Complete>.default get() = singleOrNull { it.isDefaultFeature }

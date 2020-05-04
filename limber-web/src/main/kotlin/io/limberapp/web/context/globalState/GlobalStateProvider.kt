@@ -1,6 +1,5 @@
 package io.limberapp.web.context.globalState
 
-import io.limberapp.web.app.components.navbar.components.headerLink.Props
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.context.StateAndDispatch
@@ -44,6 +43,6 @@ private val globalStateProvider = functionalComponent<RProps> { props ->
     child(createElement(globalState.Provider, configObject, props.children))
 }
 
-internal fun RBuilder.globalStateProvider(children: RHandler<Props>) {
+internal fun RBuilder.globalStateProvider(children: RHandler<RProps>) {
     child(globalStateProvider, handler = children)
 }

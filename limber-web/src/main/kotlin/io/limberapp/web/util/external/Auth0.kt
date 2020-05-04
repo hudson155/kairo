@@ -1,4 +1,4 @@
-package io.limberapp.web.util
+package io.limberapp.web.util.external
 
 import kotlinext.js.JsObject
 import kotlin.js.Promise
