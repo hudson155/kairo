@@ -18,6 +18,7 @@ internal fun RBuilder.themeProvider(theme: ThemeContext = defaultTheme, children
 private val themeContext = createContext<ThemeContext>();
 internal fun useTheme() = useContext(themeContext)
 
+@Suppress("UnusedPrivateMember")
 private val defaultTheme = run {
     // https://coolors.co/303030-fcfcfc-c49890-2898f0-606470
     val jet = Color("#303030")

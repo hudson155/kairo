@@ -16,7 +16,7 @@ import styled.styledDiv
 import styled.styledSpan
 
 /**
- * The only page shown when in an unauthenticated statee
+ * The only page shown when in an unauthenticated state.
  */
 internal fun RBuilder.unauthenticatedPage() {
     child(unauthenticatedPage)
