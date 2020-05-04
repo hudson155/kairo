@@ -28,6 +28,10 @@ import react.router.dom.route
 import react.router.dom.switch
 import react.useEffect
 
+internal fun RBuilder.appFeatureRouter() {
+    child(appFeatureRouter)
+}
+
 private val appFeatureRouter = functionalComponent<RProps> {
     val api = useApi()
     val auth = useAuth()
@@ -96,8 +100,4 @@ private val appFeatureRouter = functionalComponent<RProps> {
             route(path = "/") { buildElement { notFoundPage() } }
         }
     }
-}
-
-internal fun RBuilder.appFeatureRouter() {
-    child(appFeatureRouter)
 }

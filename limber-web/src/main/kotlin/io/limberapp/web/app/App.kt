@@ -7,14 +7,14 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
+internal fun RBuilder.app() {
+    child(app)
+}
+
 private val app = functionalComponent<RProps> {
     globalStateProvider {
         themeProvider {
             appWithAuth()
         }
     }
-}
-
-internal fun RBuilder.app() {
-    child(app)
 }

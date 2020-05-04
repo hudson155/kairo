@@ -19,6 +19,10 @@ import react.router.dom.navLink
 import react.router.dom.route
 import react.router.dom.switch
 
+internal fun RBuilder.appRouter() {
+    child(appRouter)
+}
+
 private val appRouter = functionalComponent<RProps> {
     val auth = useAuth()
 
@@ -54,8 +58,4 @@ private val appRouter = functionalComponent<RProps> {
             }
         }
     }
-}
-
-internal fun RBuilder.appRouter() {
-    child(appRouter)
 }

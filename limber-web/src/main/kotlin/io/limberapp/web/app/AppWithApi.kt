@@ -6,12 +6,12 @@ import react.RProps
 import react.child
 import react.functionalComponent
 
+internal fun RBuilder.appWithApi() {
+    child(appWithApi)
+}
+
 private val appWithApi = functionalComponent<RProps> {
     apiProvider {
         appRouter()
     }
-}
-
-internal fun RBuilder.appWithApi() {
-    child(appWithApi)
 }

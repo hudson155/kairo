@@ -25,6 +25,10 @@ import react.useEffect
 import kotlin.browser.document
 import kotlin.browser.window
 
+internal fun RBuilder.appWithAuth() {
+    child(appWithAuth)
+}
+
 private val onRedirectCallback: (AppState?) -> Unit = {
     window.history.replaceState(
         data = jsObject {},
@@ -71,8 +75,4 @@ private val appWithAuth = functionalComponent<RProps> {
     ) {
         appWithApi()
     }
-}
-
-internal fun RBuilder.appWithAuth() {
-    child(appWithAuth)
 }
