@@ -11,6 +11,7 @@ import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
+import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.OrgAction
@@ -94,6 +95,7 @@ private val appFeatureRouter = functionalComponent<RProps> {
     page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
         switch {
             features.default?.let { route(path = "/", exact = true) { redirect(from = "/", to = it.path) } }
+            route(path = "/settings/org") { buildElement { orgSettingsPage() } }
             features.map { feature ->
                 route(path = feature.path) { buildElement { featurePage(feature) } }
             }
