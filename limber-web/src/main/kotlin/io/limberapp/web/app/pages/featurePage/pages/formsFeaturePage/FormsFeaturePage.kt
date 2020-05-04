@@ -16,7 +16,6 @@ import react.dom.h1
 import react.functionalComponent
 import react.router.dom.route
 import react.router.dom.switch
-import styled.StyleSheet
 import styled.css
 import styled.styledDiv
 
@@ -27,16 +26,12 @@ internal fun RBuilder.formsFeaturePage() {
     child(formsFeaturePage)
 }
 
-private object Styles : StyleSheet("FormPageStyles", isStatic = true) {
-    val root by css {
-        display = Display.flex
-        flexGrow = 1.0
-    }
-}
-
 private val formsFeaturePage = functionalComponent<RProps> {
     styledDiv {
-        css { +Styles.root }
+        css {
+            display = Display.flex
+            flexGrow = 1.0
+        }
         sideNav {
             sideNavItem("/", "Home")
             sideNavItem("/templates", "Templates")

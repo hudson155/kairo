@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.layoutTitle
+package io.limberapp.web.app.components.layout.components.layoutTitle
 
 import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.BorderStyle
