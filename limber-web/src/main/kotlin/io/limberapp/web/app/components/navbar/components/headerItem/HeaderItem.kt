@@ -3,17 +3,16 @@ package io.limberapp.web.app.components.navbar.components.headerItem
 import io.limberapp.web.context.theme.useTheme
 import kotlinx.css.Align
 import kotlinx.css.Display
-import kotlinx.css.FontWeight
 import kotlinx.css.alignItems
 import kotlinx.css.color
 import kotlinx.css.display
-import kotlinx.css.fontWeight
 import kotlinx.css.marginRight
 import kotlinx.css.px
 import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.child
+import react.dom.b
 import react.functionalComponent
 import styled.css
 import styled.styledDiv
@@ -34,8 +33,7 @@ private val headerItem = functionalComponent<RProps> { props ->
             alignItems = Align.center
             marginRight = 16.px
             color = theme.textLight
-            fontWeight = FontWeight.bold
         }
-        props.children()
+        b { props.children() }
     }
 }
