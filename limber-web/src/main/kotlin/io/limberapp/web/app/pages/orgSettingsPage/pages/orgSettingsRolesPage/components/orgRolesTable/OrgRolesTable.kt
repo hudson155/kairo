@@ -4,6 +4,7 @@ import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.pluralize
 import io.limberapp.web.util.withContext
 import kotlinx.css.BorderStyle
 import kotlinx.css.RuleSet
@@ -73,7 +74,7 @@ private val orgRolesTable = functionalComponent<RProps> {
             }
         }
         tbody {
-            orgRoles.forEach {
+            orgRoles.forEach { orgRole ->
                 styledTr {
                     css {
                         +cellStyle
@@ -87,15 +88,15 @@ private val orgRolesTable = functionalComponent<RProps> {
                     }
                     styledTd {
                         css { +cellStyle }
-                        +it.name
+                        +orgRole.name
                     }
                     styledTd {
                         css { +cellStyle }
-                        +"${it.permissions.permissions.size} permissions"
+                        +orgRole.permissions.permissions.size.let { "$it ${pluralize("permissions", it)}" }
                     }
                     styledTd {
                         css { +cellStyle }
-                        +"${it.memberCount} members"
+                        +orgRole.memberCount.let { "$it ${pluralize("members", it)}" }
                     }
                 }
             }
