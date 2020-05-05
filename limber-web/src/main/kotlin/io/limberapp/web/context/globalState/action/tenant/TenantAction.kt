@@ -10,7 +10,7 @@ import react.useEffect
 internal sealed class TenantAction : Action() {
     internal object BeginLoading : TenantAction()
 
-    internal data class Set(val tenant: TenantRep.Complete) : TenantAction()
+    internal data class SetValue(val tenant: TenantRep.Complete) : TenantAction()
 }
 
 internal fun EnsureLoadedContext.ensureTenantLoaded(domain: String) {
@@ -19,7 +19,7 @@ internal fun EnsureLoadedContext.ensureTenantLoaded(domain: String) {
         global.dispatch(TenantAction.BeginLoading)
         async {
             val tenant = api.tenants(TenantApi.GetByDomain(domain))
-            global.dispatch(TenantAction.Set(tenant))
+            global.dispatch(TenantAction.SetValue(tenant))
         }
     }
 }

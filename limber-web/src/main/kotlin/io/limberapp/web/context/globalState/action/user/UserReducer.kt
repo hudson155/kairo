@@ -10,7 +10,7 @@ internal fun userReducer(state: GlobalStateContext, action: UserAction): GlobalS
                 loadingStatus = LoadableState.LoadingStatus.LOADING
             )
         )
-        is UserAction.Set -> state.copy(
+        is UserAction.SetValue -> state.copy(
             user = state.user.copy(
                 loadingStatus = LoadableState.LoadingStatus.LOADED,
                 state = action.user
