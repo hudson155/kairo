@@ -1,20 +1,19 @@
 package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
-import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.web.app.components.basicNavbar.basicNavbar
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.auth.authProvider
-import io.limberapp.web.context.globalState.action.tenant.TenantAction
+import io.limberapp.web.context.globalState.action.tenant.ensureTenantLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.context.theme.useTheme
-import io.limberapp.web.util.async
 import io.limberapp.web.util.external.AppState
 import io.limberapp.web.util.process
 import io.limberapp.web.util.rootDomain
+import io.limberapp.web.util.withContext
 import kotlinext.js.jsObject
 import react.RBuilder
 import react.RProps
@@ -56,15 +55,7 @@ private val appWithAuth = functionalComponent<RProps> {
         checkNotNull(document.body).style.backgroundColor = theme.backgroundLight.value
     }
 
-    // Load tenant asynchronously.
-    useEffect(emptyList()) {
-        if (global.state.tenant.hasBegunLoading) return@useEffect
-        global.dispatch(TenantAction.BeginLoading)
-        async {
-            val tenant = nonAuthenticatedApi.tenants(TenantApi.GetByDomain(rootDomain))
-            global.dispatch(TenantAction.Set(tenant))
-        }
-    }
+    withContext(global, nonAuthenticatedApi) { ensureTenantLoaded(rootDomain) }
 
     // While the tenant is loading, show the loading page.
     if (!global.state.tenant.isLoaded) {

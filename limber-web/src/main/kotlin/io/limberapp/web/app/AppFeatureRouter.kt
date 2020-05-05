@@ -1,8 +1,6 @@
 package io.limberapp.web.app
 
-import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.default
-import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.web.app.components.basicNavbar.basicNavbar
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
@@ -14,10 +12,10 @@ import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.useAuth
-import io.limberapp.web.context.globalState.action.org.OrgAction
-import io.limberapp.web.context.globalState.action.user.UserAction
+import io.limberapp.web.context.globalState.action.org.ensureOrgLoaded
+import io.limberapp.web.context.globalState.action.user.ensureUserLoaded
 import io.limberapp.web.context.globalState.useGlobalState
-import io.limberapp.web.util.async
+import io.limberapp.web.util.withContext
 import react.RBuilder
 import react.RProps
 import react.buildElement
@@ -27,7 +25,6 @@ import react.router.dom.navLink
 import react.router.dom.redirect
 import react.router.dom.route
 import react.router.dom.switch
-import react.useEffect
 
 /**
  * Part of the application root.
@@ -43,27 +40,9 @@ private val appFeatureRouter = functionalComponent<RProps> {
     val auth = useAuth()
     val global = useGlobalState()
 
-    // Load org asynchronously.
-    val orgGuid = OrgApi.Get(checkNotNull(auth.jwt).org.guid)
-    useEffect(listOf(orgGuid)) {
-        if (global.state.org.hasBegunLoading) return@useEffect
-        global.dispatch(OrgAction.BeginLoading)
-        async {
-            val org = api.orgs(orgGuid)
-            global.dispatch(OrgAction.Set(org))
-        }
-    }
+    withContext(global, api) { ensureOrgLoaded(checkNotNull(auth.jwt).org.guid) }
 
-    // Load user asynchronously.
-    val userGuid = UserApi.Get(checkNotNull(auth.jwt).user.guid)
-    useEffect(listOf(userGuid)) {
-        if (global.state.user.hasBegunLoading) return@useEffect
-        global.dispatch(UserAction.BeginLoading)
-        async {
-            val user = api.users(userGuid)
-            global.dispatch(UserAction.Set(user))
-        }
-    }
+    withContext(global, api) { ensureUserLoaded(checkNotNull(auth.jwt).user.guid) }
 
     // While the org is loading, show the loading page.
     if (!global.state.org.isLoaded) {
