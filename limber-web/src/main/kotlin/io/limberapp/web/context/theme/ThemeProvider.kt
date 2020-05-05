@@ -20,21 +20,30 @@ internal fun useTheme() = useContext(themeContext)
 
 @Suppress("UnusedPrivateMember")
 private val defaultTheme = run {
-    // https://coolors.co/303030-fcfcfc-c49890-2898f0-606470
+    // https://coolors.co/303030-fcfcfc-c49890-1078d8-606470
     val jet = Color("#303030")
+    val jetLighter5 = Color("#3D3D3D")
+    val jetLighter10 = Color("#4A4A4A")
     val jetLighter20 = Color("#636363")
     val babyPowder = Color("#FCFCFC")
+    val babyPowderDarker5 = Color("#EFEFEF")
+    val babyPowderDarker10 = Color("#E3E3E3")
     val babyPowderDarker20 = Color("#C9C9C9")
-    val tuscany = Color("#C49890")
-    val dodgerBlue = Color("#2898F0")
+    val copperCrayola = Color("#CC8C70")
+    val brightNavyBlue = Color("#1078D8")
     val blackCoral = Color("#606470")
 
     return@run ThemeContext(
+        link = brightNavyBlue,
+        smallActiveIndicator = copperCrayola,
         textDark = jet,
         textLight = babyPowder,
         backgroundDark = jet,
         backgroundLight = babyPowder,
-        backgroundAccent = dodgerBlue,
+        backgroundDarkSubtleAccent = jetLighter5,
+        backgroundLightSubtleAccent = babyPowderDarker5,
+        backgroundDarkImportant = jetLighter10,
+        backgroundLightImportant = babyPowderDarker10,
         borderDark = jetLighter20,
         borderLight = babyPowderDarker20
     )
