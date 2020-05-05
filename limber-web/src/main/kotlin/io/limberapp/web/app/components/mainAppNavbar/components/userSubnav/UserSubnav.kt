@@ -44,16 +44,16 @@ private val userSubnav = functionalComponent<Props> { props ->
 
     subnav(node) {
         subnavGroup {
-            subnavItem {
+            subnavItem(hoverable = false) {
                 +"Signed in as"
                 b { +name }
             }
         }
         subnavGroup {
-            navLink<RProps>(to = "/settings/org", exact = true) { subnavItem { +"Organization Settings" } }
+            navLink<RProps>(to = "/settings/org", exact = true) { subnavItem { +"Organization settings" } }
         }
         subnavGroup {
-            navLink<RProps>(to = "/signout", exact = true) { subnavItem { +"Sign Out" } }
+            navLink<RProps>(to = "/signout", exact = true) { subnavItem { +"Sign out" } }
         }
     }
 }

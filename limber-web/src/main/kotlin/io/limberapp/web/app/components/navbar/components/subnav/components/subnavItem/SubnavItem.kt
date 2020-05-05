@@ -16,19 +16,20 @@ import kotlinx.css.px
 import react.RBuilder
 import react.RHandler
 import react.RProps
-import react.child
 import react.functionalComponent
 import styled.css
 import styled.styledDiv
 
 /**
- * A single item on a subnav.
+ * A single item on a subnav. If [hoverable] is true, it will become accented when hovered.
  */
-internal fun RBuilder.subnavItem(children: RHandler<RProps>) {
-    child(subnavItem, handler = children)
+internal fun RBuilder.subnavItem(hoverable: Boolean = true, children: RHandler<Props>) {
+    child(subnavItem, Props(hoverable), handler = children)
 }
 
-private val subnavItem = functionalComponent<RProps> { props ->
+internal data class Props(val hoverable: Boolean) : RProps
+
+private val subnavItem = functionalComponent<Props> { props ->
     val theme = useTheme()
 
     styledDiv {
@@ -41,9 +42,11 @@ private val subnavItem = functionalComponent<RProps> { props ->
             lastOfType {
                 marginBottom = 4.px
             }
-            hover {
-                color = theme.textLight
-                backgroundColor = theme.backgroundAccent
+            if (props.hoverable) {
+                hover {
+                    color = theme.textLight
+                    backgroundColor = theme.link
+                }
             }
         }
         props.children()

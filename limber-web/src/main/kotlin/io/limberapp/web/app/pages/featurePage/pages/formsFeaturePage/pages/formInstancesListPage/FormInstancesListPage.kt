@@ -1,11 +1,9 @@
-package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formInstancesListPage
+package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
-import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import react.RBuilder
 import react.RProps
 import react.child
-import react.dom.p
 import react.functionalComponent
 
 /**
@@ -15,9 +13,8 @@ internal fun RBuilder.formInstancesListPage() {
     child(formInstancesListPage)
 }
 
+internal const val FORM_INSTANCES_LIST_PAGE_NAME = "Instances"
+
 private val formInstancesListPage = functionalComponent<RProps> {
-    standardLayout {
-        layoutTitle("Forms")
-        p { +"Here's a list of form instances." }
-    }
+    layoutTitle(FORM_INSTANCES_LIST_PAGE_NAME)
 }
