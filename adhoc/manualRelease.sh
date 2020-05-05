@@ -5,7 +5,7 @@
 set -e
 
 ./gradlew clean
-./gradlew build
+ENV=production ./gradlew build
 docker build -t registry.digitalocean.com/limber/limber-backend:master limber-backend-application
 docker tag registry.digitalocean.com/limber/limber-backend:master registry.digitalocean.com/limber/limber-backend:$(git rev-parse HEAD)
 docker push registry.digitalocean.com/limber/limber-backend:master
