@@ -20,7 +20,8 @@ internal object OrgRoleRepFixtures {
                 guid = deterministicUuidGenerator[idSeed],
                 createdDate = LocalDateTime.now(fixedClock),
                 name = "Admin",
-                permissions = OrgPermissions.none()
+                permissions = OrgPermissions.none(),
+                memberCount = 0
             )
         }
     )
@@ -34,7 +35,8 @@ internal object OrgRoleRepFixtures {
                 guid = deterministicUuidGenerator[idSeed],
                 createdDate = LocalDateTime.now(fixedClock),
                 name = "Maintainer",
-                permissions = OrgPermissions.none()
+                permissions = OrgPermissions.none(),
+                memberCount = 0
             )
         }
     )
@@ -48,7 +50,8 @@ internal object OrgRoleRepFixtures {
                 guid = deterministicUuidGenerator[idSeed],
                 createdDate = LocalDateTime.now(fixedClock),
                 name = "Member",
-                permissions = OrgPermissions.none()
+                permissions = OrgPermissions.none(),
+                memberCount = 0
             )
         }
     )

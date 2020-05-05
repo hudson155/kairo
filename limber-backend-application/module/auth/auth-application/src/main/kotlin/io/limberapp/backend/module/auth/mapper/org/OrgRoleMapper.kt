@@ -19,14 +19,16 @@ internal class OrgRoleMapper @Inject constructor(
         createdDate = LocalDateTime.now(clock),
         orgGuid = orgGuid,
         name = rep.name,
-        permissions = OrgPermissions.none()
+        permissions = OrgPermissions.none(),
+        memberCount = 0
     )
 
     fun completeRep(model: OrgRoleModel) = OrgRoleRep.Complete(
         guid = model.guid,
         createdDate = model.createdDate,
         name = model.name,
-        permissions = model.permissions
+        permissions = model.permissions,
+        memberCount = model.memberCount
     )
 
     fun update(rep: OrgRoleRep.Update) = OrgRoleModel.Update(
