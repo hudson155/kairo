@@ -10,7 +10,7 @@ internal fun tenantReducer(state: GlobalStateContext, action: TenantAction): Glo
                 loadingStatus = LoadableState.LoadingStatus.LOADING
             )
         )
-        is TenantAction.Set -> state.copy(
+        is TenantAction.SetValue -> state.copy(
             tenant = state.tenant.copy(
                 loadingStatus = LoadableState.LoadingStatus.LOADED,
                 state = action.tenant

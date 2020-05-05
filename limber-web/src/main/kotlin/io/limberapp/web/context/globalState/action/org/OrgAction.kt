@@ -11,7 +11,7 @@ import react.useEffect
 internal sealed class OrgAction : Action() {
     internal object BeginLoading : OrgAction()
 
-    internal data class Set(val org: OrgRep.Complete) : OrgAction()
+    internal data class SetValue(val org: OrgRep.Complete) : OrgAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgLoaded(orgGuid: UUID) {
@@ -20,7 +20,7 @@ internal fun EnsureLoadedContext.ensureOrgLoaded(orgGuid: UUID) {
         global.dispatch(OrgAction.BeginLoading)
         async {
             val org = api.orgs(OrgApi.Get(orgGuid))
-            global.dispatch(OrgAction.Set(org))
+            global.dispatch(OrgAction.SetValue(org))
         }
     }
 }

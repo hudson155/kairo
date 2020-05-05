@@ -10,7 +10,7 @@ internal fun orgReducer(state: GlobalStateContext, action: OrgAction): GlobalSta
                 loadingStatus = LoadableState.LoadingStatus.LOADING
             )
         )
-        is OrgAction.Set -> state.copy(
+        is OrgAction.SetValue -> state.copy(
             org = state.org.copy(
                 loadingStatus = LoadableState.LoadingStatus.LOADED,
                 state = action.org

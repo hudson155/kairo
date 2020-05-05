@@ -11,7 +11,7 @@ import react.useEffect
 internal sealed class UserAction : Action() {
     internal object BeginLoading : UserAction()
 
-    internal data class Set(val user: UserRep.Complete) : UserAction()
+    internal data class SetValue(val user: UserRep.Complete) : UserAction()
 }
 
 internal fun EnsureLoadedContext.ensureUserLoaded(userGuid: UUID) {
@@ -20,7 +20,7 @@ internal fun EnsureLoadedContext.ensureUserLoaded(userGuid: UUID) {
         global.dispatch(UserAction.BeginLoading)
         async {
             val user = api.users(UserApi.Get(userGuid))
-            global.dispatch(UserAction.Set(user))
+            global.dispatch(UserAction.SetValue(user))
         }
     }
 }
