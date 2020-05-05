@@ -2,6 +2,7 @@ package io.limberapp.web.context.api
 
 import com.piperframework.restInterface.Fetch
 import com.piperframework.serialization.Json
+import io.limberapp.backend.module.auth.client.org.role.OrgRoleClient
 import io.limberapp.backend.module.auth.client.tenant.TenantClient
 import io.limberapp.backend.module.forms.client.formInstance.FormInstanceClient
 import io.limberapp.backend.module.forms.client.formTemplate.FormTemplateClient
@@ -15,6 +16,7 @@ internal class Api(fetch: Fetch) {
     val formInstances = FormInstanceClient(fetch, json)
     val formTemplates = FormTemplateClient(fetch, json)
     val orgs = OrgClient(fetch, json)
+    val orgRoles = OrgRoleClient(fetch, json)
     val tenants = TenantClient(fetch, json)
     val users = UserClient(fetch, json)
 }

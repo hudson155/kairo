@@ -6,6 +6,8 @@ import io.limberapp.web.context.StateAndDispatch
 import io.limberapp.web.context.globalState.action.Action
 import io.limberapp.web.context.globalState.action.org.OrgAction
 import io.limberapp.web.context.globalState.action.org.orgReducer
+import io.limberapp.web.context.globalState.action.orgRole.OrgRoleAction
+import io.limberapp.web.context.globalState.action.orgRole.orgRoleReducer
 import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.action.tenant.tenantReducer
 import io.limberapp.web.context.globalState.action.user.UserAction
@@ -30,6 +32,7 @@ internal fun useGlobalState() = useContext(globalState)
 
 private val initialState = GlobalStateContext(
     org = LoadableState.initial(),
+    orgRoles = LoadableState.initial(),
     tenant = LoadableState.initial(),
     user = LoadableState.initial()
 )
@@ -38,6 +41,7 @@ private val globalStateProvider = functionalComponent<RProps> { props ->
     val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
         return@useReducer when (action) {
             is OrgAction -> orgReducer(state, action)
+            is OrgRoleAction -> orgRoleReducer(state, action)
             is TenantAction -> tenantReducer(state, action)
             is UserAction -> userReducer(state, action)
             else -> error("Unhandled action: $action.")
