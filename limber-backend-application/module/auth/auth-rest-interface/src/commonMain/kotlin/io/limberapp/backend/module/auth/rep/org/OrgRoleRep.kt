@@ -31,7 +31,8 @@ object OrgRoleRep {
         @Serializable(with = LocalDateTimeSerializer::class)
         override val createdDate: LocalDateTime,
         val name: String,
-        val permissions: OrgPermissions
+        val permissions: OrgPermissions,
+        val memberCount: Int
     ) : CompleteRep
 
     @Serializable

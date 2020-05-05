@@ -35,14 +35,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun get(orgRoleGuid: UUID): OrgRoleModel? {
         return jdbi.withHandle<OrgRoleModel?, Exception> {
-            it.createQuery(
-                    """
-                    SELECT *
-                    FROM auth.org_role
-                    WHERE guid = :guid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-                )
+            it.createQuery(sqlResource("get"))
                 .bind("guid", orgRoleGuid)
                 .mapTo(OrgRoleModel::class.java)
                 .singleNullOrThrow()
@@ -51,7 +44,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
     fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
         return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
-            it.createQuery("SELECT * FROM auth.org_role WHERE org_guid = :orgGuid AND archived_date IS NULL")
+            it.createQuery(sqlResource("getByOrgGuid"))
                 .bind("orgGuid", orgGuid)
                 .mapTo(OrgRoleModel::class.java)
                 .toSet()
