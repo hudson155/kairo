@@ -38,7 +38,7 @@ private val standardLayout = functionalComponent<Props> { props ->
             display = Display.flex
             flexDirection = FlexDirection.row
             justifyContent = JustifyContent.center
-            margin(8.px)
+            margin(16.px)
             paddingTop = 32.px
         }
         styledDiv {
@@ -53,7 +53,7 @@ private val standardLayout = functionalComponent<Props> { props ->
                         flexBasis = 256.px.basis
                         display = Display.flex
                         flexDirection = FlexDirection.column
-                        marginRight = 16.px
+                        marginRight = 48.px
                     }
                     child(it)
                 }

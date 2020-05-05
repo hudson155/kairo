@@ -15,6 +15,14 @@ code {
     font-family: 'Courier New', monospace;
 }
 
+table {
+    border-collapse: collapse;
+}
+
+th {
+    text-align: initial;
+}
+
 #root {
     display: flex;
     flex-direction: column;

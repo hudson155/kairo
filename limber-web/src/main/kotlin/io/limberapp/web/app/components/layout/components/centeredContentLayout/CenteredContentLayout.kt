@@ -9,6 +9,8 @@ import kotlinx.css.display
 import kotlinx.css.flexDirection
 import kotlinx.css.flexGrow
 import kotlinx.css.justifyContent
+import kotlinx.css.margin
+import kotlinx.css.px
 import react.RBuilder
 import react.RHandler
 import react.RProps
@@ -33,6 +35,7 @@ private val centeredContentLayout = functionalComponent<RProps> { props ->
             flexDirection = FlexDirection.column
             alignItems = Align.center
             justifyContent = JustifyContent.center
+            margin(16.px)
         }
         props.children()
     }
