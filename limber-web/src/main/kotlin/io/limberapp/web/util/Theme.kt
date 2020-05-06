@@ -2,6 +2,7 @@ package io.limberapp.web.util
 
 import kotlinx.css.Color
 
+@Suppress("UnusedPrivateMember")
 internal object Theme {
     // https://coolors.co/303030-fcfcfc-c49890-1078d8-606470
     private val jet = Color("#303030")
