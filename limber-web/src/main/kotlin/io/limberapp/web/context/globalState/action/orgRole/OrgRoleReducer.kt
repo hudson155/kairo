@@ -16,5 +16,10 @@ internal fun orgRoleReducer(state: GlobalStateContext, action: OrgRoleAction): G
                 state = action.orgRoles.associateBy { it.guid }
             )
         )
+        is OrgRoleAction.UpdateValue -> state.copy(
+            orgRoles = state.orgRoles.copy(
+                state = state.orgRoles.state.orEmpty().plus(action.orgRole.guid to action.orgRole)
+            )
+        )
     }
 }

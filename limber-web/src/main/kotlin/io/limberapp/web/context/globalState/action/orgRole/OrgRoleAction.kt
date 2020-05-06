@@ -12,6 +12,8 @@ internal sealed class OrgRoleAction : Action() {
     internal object BeginLoading : OrgRoleAction()
 
     internal data class SetValue(val orgRoles: Set<OrgRoleRep.Complete>) : OrgRoleAction()
+
+    internal data class UpdateValue(val orgRole: OrgRoleRep.Complete) : OrgRoleAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgRolesLoaded(orgGuid: UUID) {

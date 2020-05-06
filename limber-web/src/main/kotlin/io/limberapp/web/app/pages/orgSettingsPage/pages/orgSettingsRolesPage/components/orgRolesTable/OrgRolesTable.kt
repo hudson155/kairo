@@ -9,9 +9,13 @@ import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.withContext
+import kotlinx.css.TableLayout
+import kotlinx.css.height
 import kotlinx.css.maxWidth
 import kotlinx.css.padding
 import kotlinx.css.px
+import kotlinx.css.tableLayout
+import kotlinx.css.width
 import react.RBuilder
 import react.RProps
 import react.child
@@ -31,12 +35,19 @@ internal fun RBuilder.orgRolesTable() {
 
 private val styles = object : Styles("OrgRolesTable") {
     val table by css {
+        tableLayout = TableLayout.fixed
         maxWidth = 768.px
         kotlinx.css.th {
+            height = 24.px
             padding(4.px)
+            nthChild("2") { width = 160.px }
+            nthChild("3") { width = 160.px }
         }
         kotlinx.css.td {
+            height = 24.px
             padding(4.px)
+            nthChild("2") { width = 160.px }
+            nthChild("3") { width = 160.px }
         }
     }
 }.apply { inject() }
