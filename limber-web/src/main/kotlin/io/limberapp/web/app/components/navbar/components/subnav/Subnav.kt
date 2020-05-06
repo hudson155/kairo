@@ -1,6 +1,8 @@
 package io.limberapp.web.app.components.navbar.components.subnav
 
+import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Color
@@ -27,9 +29,9 @@ import react.RBuilder
 import react.RHandler
 import react.RMutableRef
 import react.RProps
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * Generic navigational component that drops down from a top-of-page navbar. It's generally only visible when a nav link
@@ -42,33 +44,38 @@ internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RPr
 
 internal data class Props(val node: RMutableRef<Element?>) : RProps
 
-private val subnav = functionalComponent<Props> { props ->
-    // TODO: In order for this to be truly reusable the positioning likely needs to be altered.
-    styledDiv {
-        css {
-            val widthPx = 192 // The width of this component.
-            val afterOffsetPx = 22 // How far in the caret ::after element is.
-            val centeringWidth = 32 // Center the caret under a component of this width.
-            alignSelf = Align.flexStart
-            position = Position.relative
-            top = 44.px
-            right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
-            width = widthPx.px
-            marginRight = (-widthPx - 2 * 1).px
-            backgroundColor = Theme.backgroundLight
-            border(1.px, BorderStyle.solid, Theme.borderLight)
-            borderRadius = 4.px
-            after {
-                top = (-14).px
-                right = afterOffsetPx.px
-                left = LinearDimension.auto
-                border(7.px, BorderStyle.solid, Color.transparent)
-                borderBottomColor = Theme.backgroundLight
-                position = Position.absolute
-                display = Display.inlineBlock
-                content = QuotedString("")
-            }
+// TODO: In order for this to be truly reusable the positioning likely needs to be altered.
+private val styles = object : Styles("Subnav") {
+    val container by css {
+        val widthPx = 192 // The width of this component.
+        val afterOffsetPx = 22 // How far in the caret ::after element is.
+        val centeringWidth = 32 // Center the caret under a component of this width.
+        alignSelf = Align.flexStart
+        position = Position.relative
+        top = 44.px
+        right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
+        width = widthPx.px
+        marginRight = (-widthPx - 2 * 1).px
+        backgroundColor = Theme.backgroundLight
+        border(1.px, BorderStyle.solid, Theme.borderLight)
+        borderRadius = 4.px
+        after {
+            top = (-14).px
+            right = afterOffsetPx.px
+            left = LinearDimension.auto
+            border(7.px, BorderStyle.solid, Color.transparent)
+            borderBottomColor = Theme.backgroundLight
+            position = Position.absolute
+            display = Display.inlineBlock
+            content = QuotedString("")
         }
+    }
+}
+
+private val subnav = functionalComponent<Props> { props ->
+    injectStyles(styles)
+
+    div(classes = styles.getClassName { it::container }) {
         ref = props.node
         props.children()
     }
