@@ -1,6 +1,8 @@
 package io.limberapp.web.app.components.navbar.components.subnav.components.subnavItem
 
+import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -16,9 +18,9 @@ import kotlinx.css.px
 import react.RBuilder
 import react.RHandler
 import react.RProps
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * A single item on a subnav. If [hoverable] is true, it will become accented when hovered.
@@ -29,24 +31,34 @@ internal fun RBuilder.subnavItem(hoverable: Boolean = true, children: RHandler<P
 
 internal data class Props(val hoverable: Boolean) : RProps
 
-private val subnavItem = functionalComponent<Props> { props ->
-    styledDiv {
-        css {
-            display = Display.flex
-            flexDirection = FlexDirection.column
-            alignItems = Align.flexStart
-            marginTop = 4.px
-            padding(vertical = 4.px, horizontal = 8.px)
-            lastOfType {
-                marginBottom = 4.px
-            }
-            if (props.hoverable) {
-                hover {
-                    color = Theme.textLight
-                    backgroundColor = Theme.link
-                }
-            }
+private val styles = object : Styles("SubnavItem") {
+    val container by css {
+        display = Display.flex
+        flexDirection = FlexDirection.column
+        alignItems = Align.flexStart
+        marginTop = 4.px
+        padding(vertical = 4.px, horizontal = 8.px)
+        lastOfType {
+            marginBottom = 4.px
         }
+    }
+    val hoverableContainer by css {
+        hover {
+            color = Theme.textLight
+            backgroundColor = Theme.link
+        }
+    }
+}
+
+private val subnavItem = functionalComponent<Props> { props ->
+    injectStyles(styles)
+
+    div(
+        classes = listOfNotNull(
+            styles.getClassName { it::container },
+            if (props.hoverable) styles.getClassName { it::hoverableContainer } else null
+        ).joinToString(" ")
+    ) {
         props.children()
     }
 }
