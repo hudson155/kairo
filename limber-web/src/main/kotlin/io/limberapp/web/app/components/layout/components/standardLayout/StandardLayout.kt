@@ -1,5 +1,7 @@
 package io.limberapp.web.app.components.layout.components.standardLayout
 
+import io.limberapp.web.util.Styles
+import io.limberapp.web.util.injectStyles
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.JustifyContent
@@ -17,9 +19,9 @@ import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.ReactElement
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * The layout for most pages, supporting a vertical group of elements as the main body ([children]), and an optional
@@ -31,39 +33,44 @@ internal fun RBuilder.standardLayout(leftPane: ReactElement? = null, children: R
 
 internal data class Props(val leftPane: ReactElement?) : RProps
 
+private val styles = object : Styles("StandardLayout") {
+    val outerContainer by css {
+        flexGrow = 1.0
+        display = Display.flex
+        flexDirection = FlexDirection.row
+        justifyContent = JustifyContent.center
+        margin(16.px)
+        paddingTop = 32.px
+    }
+    val innerContainer by css {
+        flexBasis = 1200.px.basis
+        display = Display.flex
+        flexDirection = FlexDirection.row
+    }
+    val leftPane by css {
+        flexBasis = 256.px.basis
+        display = Display.flex
+        flexDirection = FlexDirection.column
+        marginRight = 48.px
+    }
+    val mainContent by css {
+        flexGrow = 1.0
+        display = Display.flex
+        flexDirection = FlexDirection.column
+    }
+}
+
 private val standardLayout = functionalComponent<Props> { props ->
-    styledDiv {
-        css {
-            flexGrow = 1.0
-            display = Display.flex
-            flexDirection = FlexDirection.row
-            justifyContent = JustifyContent.center
-            margin(16.px)
-            paddingTop = 32.px
-        }
-        styledDiv {
-            css {
-                flexBasis = 1200.px.basis
-                display = Display.flex
-                flexDirection = FlexDirection.row
-            }
+    injectStyles(styles)
+
+    div(classes = styles.getClassName { it::outerContainer }) {
+        div(classes = styles.getClassName { it::innerContainer }) {
             props.leftPane?.let {
-                styledDiv {
-                    css {
-                        flexBasis = 256.px.basis
-                        display = Display.flex
-                        flexDirection = FlexDirection.column
-                        marginRight = 48.px
-                    }
+                div(classes = styles.getClassName { it::leftPane }) {
                     child(it)
                 }
             }
-            styledDiv {
-                css {
-                    flexGrow = 1.0
-                    display = Display.flex
-                    flexDirection = FlexDirection.column
-                }
+            div(classes = styles.getClassName { it::mainContent }) {
                 props.children()
             }
         }
