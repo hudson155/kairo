@@ -15,7 +15,7 @@ import react.functionalComponent
 import react.useContext
 
 internal fun RBuilder.apiProvider(children: RHandler<RProps>) {
-    this.child(apiProvider, handler = children)
+    child(apiProvider, handler = children)
 }
 
 private val api = createContext<Api>()
