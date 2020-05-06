@@ -4,8 +4,8 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.td
 import react.functionalComponent
-import styled.styledTd
 
 internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
     child(orgRolesTableRoleName, Props(orgRole))
@@ -14,7 +14,7 @@ internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val orgRolesTableRoleName = functionalComponent<Props> { props ->
-    styledTd {
+    td {
         +props.orgRole.name
     }
 }

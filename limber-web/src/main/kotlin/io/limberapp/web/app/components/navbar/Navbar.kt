@@ -1,6 +1,7 @@
 package io.limberapp.web.app.components.navbar
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.backgroundColor
@@ -13,9 +14,9 @@ import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.ReactElement
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * Generic top-of-page navbar that supports a [left] section, [right] section, and [children] as a left-aligned section
@@ -28,24 +29,26 @@ internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?, children
 
 internal data class Props(val left: ReactElement?, val right: ReactElement?) : RProps
 
-private val navbar = functionalComponent<Props> { props ->
-    val theme = useTheme()
+private val styles = object : Styles("Navbar") {
+    val container by css {
+        display = Display.flex
+        justifyContent = JustifyContent.spaceBetween
+        height = 32.px
+        backgroundColor = Theme.backgroundDark
+        padding(vertical = 16.px, horizontal = 0.px)
+    }
+    val section by css {
+        display = Display.flex
+    }
+}.apply { inject() }
 
-    styledDiv {
-        css {
-            display = Display.flex
-            justifyContent = JustifyContent.spaceBetween
-            height = 32.px
-            backgroundColor = theme.backgroundDark
-            padding(vertical = 16.px, horizontal = 0.px)
-        }
-        styledDiv {
-            css { display = Display.flex }
+private val navbar = functionalComponent<Props> { props ->
+    div(classes = styles.getClassName { it::container }) {
+        div(classes = styles.getClassName { it::section }) {
             props.left?.let { child(it) }
             props.children()
         }
-        styledDiv {
-            css { display = Display.flex }
+        div(classes = styles.getClassName { it::section }) {
             props.right?.let { child(it) }
         }
     }

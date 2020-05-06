@@ -1,6 +1,7 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavItem
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
@@ -17,9 +18,9 @@ import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.child
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * A single non-link item on a sidenav.
@@ -28,21 +29,22 @@ internal fun RBuilder.sidenavItem(children: RHandler<RProps>) {
     child(sidenavItem, handler = children)
 }
 
-private val sidenavItem = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
-    styledDiv {
-        css {
-            display = Display.flex
-            flexDirection = FlexDirection.column
-            alignItems = Align.flexStart
-            backgroundColor = theme.backgroundLightImportant
-            padding(8.px)
-            borderBottom(1.px, BorderStyle.solid, theme.borderLight)
-            lastOfType {
-                borderBottomStyle = BorderStyle.none
-            }
+private val styles = object : Styles("SidenavItem") {
+    val container by css {
+        display = Display.flex
+        flexDirection = FlexDirection.column
+        alignItems = Align.flexStart
+        backgroundColor = Theme.backgroundLightImportant
+        padding(8.px)
+        borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
+        lastOfType {
+            borderBottomStyle = BorderStyle.none
         }
+    }
+}.apply { inject() }
+
+private val sidenavItem = functionalComponent<RProps> { props ->
+    div(classes = styles.getClassName { it::container }) {
         props.children()
     }
 }

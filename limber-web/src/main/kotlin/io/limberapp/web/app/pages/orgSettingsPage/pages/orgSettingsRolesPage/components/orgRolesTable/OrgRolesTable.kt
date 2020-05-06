@@ -7,6 +7,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.util.Styles
 import io.limberapp.web.util.withContext
 import kotlinx.css.maxWidth
 import kotlinx.css.padding
@@ -15,17 +16,29 @@ import react.RBuilder
 import react.RProps
 import react.child
 import react.dom.p
+import react.dom.table
 import react.dom.tbody
+import react.dom.th
 import react.dom.thead
 import react.dom.tr
 import react.functionalComponent
-import styled.css
-import styled.styledTable
-import styled.styledTh
+import styled.getClassName
 
 internal fun RBuilder.orgRolesTable() {
     child(orgRolesTable)
 }
+
+private val styles = object : Styles("OrgRolesTable") {
+    val table by css {
+        maxWidth = 768.px
+        kotlinx.css.th {
+            padding(4.px)
+        }
+        kotlinx.css.td {
+            padding(4.px)
+        }
+    }
+}.apply { inject() }
 
 private val orgRolesTable = functionalComponent<RProps> {
     val api = useApi()
@@ -43,21 +56,12 @@ private val orgRolesTable = functionalComponent<RProps> {
         return@functionalComponent
     }
 
-    styledTable {
-        css {
-            maxWidth = 768.px
-            kotlinx.css.th {
-                padding(4.px)
-            }
-            kotlinx.css.td {
-                padding(4.px)
-            }
-        }
+    table(classes = styles.getClassName { it::table }) {
         thead {
             tr {
-                styledTh { +"Name" }
-                styledTh { +"Permissions" }
-                styledTh { +"Members" }
+                th { +"Name" }
+                th { +"Permissions" }
+                th { +"Members" }
             }
         }
         tbody {

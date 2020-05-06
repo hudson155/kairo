@@ -7,6 +7,7 @@ import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.navbar.components.headerPhoto.headerPhoto
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import kotlinx.css.Align
 import kotlinx.css.Cursor
@@ -20,11 +21,11 @@ import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.a
 import react.functionalComponent
 import react.router.dom.navLink
 import react.useState
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * Top-of-page nav for use on most pages in the main app when in an authenticated state.
@@ -34,6 +35,18 @@ internal fun RBuilder.mainAppNavbar() {
 }
 
 private enum class OpenItem { USER_DROPDOWN }
+
+private val styles = object : Styles("MainAppNavbar") {
+    val right by css {
+        display = Display.flex
+        flexDirection = FlexDirection.row
+        alignItems = Align.center
+        cursor = Cursor.pointer
+    }
+    val openRight by css {
+        cursor = Cursor.initial
+    }
+}.apply { inject() }
 
 private val mainAppNavbar = functionalComponent<RProps> {
     val global = useGlobalState()
@@ -50,13 +63,12 @@ private val mainAppNavbar = functionalComponent<RProps> {
         },
         right = buildElements {
             headerGroup {
-                styledDiv { // This should semantically be a styledA but it breaks the app for some reason.
-                    css {
-                        display = Display.flex
-                        flexDirection = FlexDirection.row
-                        alignItems = Align.center
-                        if (openItem != OpenItem.USER_DROPDOWN) cursor = Cursor.pointer
-                    }
+                a(
+                    classes = listOfNotNull(
+                        styles.getClassName { it::right },
+                        if (openItem == OpenItem.USER_DROPDOWN) styles.getClassName { it::openRight } else null
+                    ).joinToString(" ")
+                ) {
                     attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
                     headerItem { +name }
                     photoUrl?.let { headerPhoto(it) }

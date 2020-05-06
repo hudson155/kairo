@@ -5,8 +5,8 @@ import io.limberapp.web.util.pluralize
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.td
 import react.functionalComponent
-import styled.styledTd
 
 internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete) {
     child(orgRolesTableRolePermissions, Props(orgRole))
@@ -15,7 +15,7 @@ internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete)
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val orgRolesTableRolePermissions = functionalComponent<Props> { props ->
-    styledTd {
+    td {
         +props.orgRole.permissions.permissions.size.let {
             "$it ${pluralize("permissions", it)}"
         }

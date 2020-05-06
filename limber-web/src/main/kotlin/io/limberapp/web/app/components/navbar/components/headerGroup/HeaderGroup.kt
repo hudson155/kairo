@@ -1,5 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.headerGroup
 
+import io.limberapp.web.util.Styles
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -12,9 +13,9 @@ import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.child
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * A group of items on a top-of-page navbar. Items in the same group should be conceptually grouped. The physical
@@ -24,14 +25,17 @@ internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
     child(headerGroup, handler = children)
 }
 
+private val styles = object : Styles("HeaderGroup") {
+    val container by css {
+        display = Display.flex
+        flexDirection = FlexDirection.row
+        alignItems = Align.center
+        margin(vertical = 0.px, horizontal = 16.px)
+    }
+}.apply { inject() }
+
 private val headerGroup = functionalComponent<RProps> { props ->
-    styledDiv {
-        css {
-            display = Display.flex
-            flexDirection = FlexDirection.row
-            alignItems = Align.center
-            margin(vertical = 0.px, horizontal = 16.px)
-        }
+    div(classes = styles.getClassName { it::container }) {
         props.children()
     }
 }

@@ -10,7 +10,6 @@ import com.piperframework.validation.RepValidation
 import kotlinx.serialization.Serializable
 
 object OrgRoleMembershipRep {
-
     @Serializable
     data class Creation(
         @Serializable(with = UuidSerializer::class)

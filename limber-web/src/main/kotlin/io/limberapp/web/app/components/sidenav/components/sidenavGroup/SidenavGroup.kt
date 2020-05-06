@@ -1,6 +1,7 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavGroup
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -16,9 +17,9 @@ import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.child
+import react.dom.div
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * A group of items on a sidenav. Items in the same group should be conceptually grouped. The physical spacing between
@@ -28,21 +29,22 @@ internal fun RBuilder.sidenavGroup(children: RHandler<RProps>) {
     child(sidenavGroup, handler = children)
 }
 
-private val sidenavGroup = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
-    styledDiv {
-        css {
-            display = Display.flex
-            flexDirection = FlexDirection.column
-            border(1.px, BorderStyle.solid, theme.borderLight)
-            borderRadius = 4.px
-            marginBottom = 16.px
-            overflow = Overflow.hidden // Avoid background color overflow.
-            lastOfType {
-                marginBottom = 0.px
-            }
+private val styles = object : Styles("SidenavGroup") {
+    val container by css {
+        display = Display.flex
+        flexDirection = FlexDirection.column
+        border(1.px, BorderStyle.solid, Theme.borderLight)
+        borderRadius = 4.px
+        marginBottom = 16.px
+        overflow = Overflow.hidden // Avoid background color overflow.
+        lastOfType {
+            marginBottom = 0.px
         }
+    }
+}.apply { inject() }
+
+private val sidenavGroup = functionalComponent<RProps> { props ->
+    div(classes = styles.getClassName { it::container }) {
         props.children()
     }
 }
