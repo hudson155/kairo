@@ -34,7 +34,7 @@ private val styles = object : Styles("LayoutTitle") {
         marginTop = 0.px
         marginBottom = 8.px
     }
-    val subtitle by css {
+    val description by css {
         marginTop = 0.px
         marginBottom = 8.px
     }
@@ -44,6 +44,6 @@ private val layoutTitle = functionalComponent<Props> { props ->
 
     div(classes = styles.getClassName { it::container }) {
         h1(classes = styles.getClassName { it::title }) { +props.title }
-        props.description?.let { p(classes = styles.getClassName { it::subtitle }) { +it } }
+        props.description?.let { p(classes = styles.getClassName { it::description }) { +it } }
     }
 }
