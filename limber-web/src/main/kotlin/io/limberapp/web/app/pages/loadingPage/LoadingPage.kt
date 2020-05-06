@@ -1,7 +1,9 @@
 package io.limberapp.web.app.pages.loadingPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
+import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.injectStyles
 import kotlinx.css.BorderStyle
 import kotlinx.css.BoxSizing
 import kotlinx.css.Color
@@ -29,10 +31,10 @@ import kotlinx.css.width
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.div
 import react.dom.p
 import react.functionalComponent
-import styled.css
-import styled.styledDiv
+import styled.getClassName
 
 /**
  * Page to show while things are loading.
@@ -43,31 +45,35 @@ internal fun RBuilder.loadingPage(loadingText: String) {
 
 internal data class Props(val loadingText: String) : RProps
 
-private val loadingPage = functionalComponent<Props> { props ->
-    centeredContentLayout {
-        styledDiv {
-            css {
-                display = Display.inlineBlock
-                position = Position.relative
-                width = 80.px
-                height = 80.px
-                after {
-                    content = "".quoted
-                    display = Display.block
-                    borderRadius = 50.pct
-                    width = 0.px
-                    height = 0.px
-                    margin(8.px)
-                    boxSizing = BoxSizing.borderBox
-                    border(width = 32.px, style = BorderStyle.solid, color = Theme.backgroundDark)
-                    borderTopColor = Theme.backgroundDark
-                    borderRightColor = Color.transparent
-                    borderBottomColor = Theme.backgroundDark
-                    borderLeftColor = Color.transparent
-                    animation("loading-spinner", duration = 1.2.s, iterationCount = IterationCount.infinite)
-                }
-            }
+private val styles = object : Styles("LoadingPage") {
+    val spinner by css {
+        display = Display.inlineBlock
+        position = Position.relative
+        width = 80.px
+        height = 80.px
+        after {
+            content = "".quoted
+            display = Display.block
+            borderRadius = 50.pct
+            width = 0.px
+            height = 0.px
+            margin(8.px)
+            boxSizing = BoxSizing.borderBox
+            border(width = 32.px, style = BorderStyle.solid, color = Theme.backgroundDark)
+            borderTopColor = Theme.backgroundDark
+            borderRightColor = Color.transparent
+            borderBottomColor = Theme.backgroundDark
+            borderLeftColor = Color.transparent
+            animation("loading-spinner", duration = 1.2.s, iterationCount = IterationCount.infinite)
         }
+    }
+}
+
+private val loadingPage = functionalComponent<Props> { props ->
+    injectStyles(styles)
+
+    centeredContentLayout {
+        div(classes = styles.getClassName { it::spinner }) {}
         p { +props.loadingText }
     }
 }
