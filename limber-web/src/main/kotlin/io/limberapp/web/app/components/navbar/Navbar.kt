@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.navbar
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.backgroundColor
@@ -29,14 +29,12 @@ internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?, children
 internal data class Props(val left: ReactElement?, val right: ReactElement?) : RProps
 
 private val navbar = functionalComponent<Props> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             display = Display.flex
             justifyContent = JustifyContent.spaceBetween
             height = 32.px
-            backgroundColor = theme.backgroundDark
+            backgroundColor = Theme.backgroundDark
             padding(vertical = 16.px, horizontal = 0.px)
         }
         styledDiv {

@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavItem
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
@@ -29,16 +29,14 @@ internal fun RBuilder.sidenavItem(children: RHandler<RProps>) {
 }
 
 private val sidenavItem = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             display = Display.flex
             flexDirection = FlexDirection.column
             alignItems = Align.flexStart
-            backgroundColor = theme.backgroundLightImportant
+            backgroundColor = Theme.backgroundLightImportant
             padding(8.px)
-            borderBottom(1.px, BorderStyle.solid, theme.borderLight)
+            borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
             lastOfType {
                 borderBottomStyle = BorderStyle.none
             }

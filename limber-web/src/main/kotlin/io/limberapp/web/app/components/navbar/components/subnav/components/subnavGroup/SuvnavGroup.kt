@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.subnav.components.subnavGroup
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -26,13 +26,11 @@ internal fun RBuilder.subnavGroup(children: RHandler<RProps>) {
 }
 
 private val subnavGroup = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             display = Display.flex
             flexDirection = FlexDirection.column
-            borderBottom(1.px, BorderStyle.solid, theme.borderLight)
+            borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
             lastOfType {
                 borderBottomStyle = BorderStyle.none
             }

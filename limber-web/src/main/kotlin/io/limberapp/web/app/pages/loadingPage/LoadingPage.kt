@@ -1,7 +1,7 @@
 package io.limberapp.web.app.pages.loadingPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.BorderStyle
 import kotlinx.css.BoxSizing
 import kotlinx.css.Color
@@ -44,8 +44,6 @@ internal fun RBuilder.loadingPage(loadingText: String) {
 internal data class Props(val loadingText: String) : RProps
 
 private val loadingPage = functionalComponent<Props> { props ->
-    val theme = useTheme()
-
     centeredContentLayout {
         styledDiv {
             css {
@@ -61,10 +59,10 @@ private val loadingPage = functionalComponent<Props> { props ->
                     height = 0.px
                     margin(8.px)
                     boxSizing = BoxSizing.borderBox
-                    border(width = 32.px, style = BorderStyle.solid, color = theme.backgroundDark)
-                    borderTopColor = theme.backgroundDark
+                    border(width = 32.px, style = BorderStyle.solid, color = Theme.backgroundDark)
+                    borderTopColor = Theme.backgroundDark
                     borderRightColor = Color.transparent
-                    borderBottomColor = theme.backgroundDark
+                    borderBottomColor = Theme.backgroundDark
                     borderLeftColor = Color.transparent
                     animation("loading-spinner", duration = 1.2.s, iterationCount = IterationCount.infinite)
                 }

@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.subnav
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Color
@@ -43,8 +43,6 @@ internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RPr
 internal data class Props(val node: RMutableRef<Element?>) : RProps
 
 private val subnav = functionalComponent<Props> { props ->
-    val theme = useTheme()
-
     // TODO: In order for this to be truly reusable the positioning likely needs to be altered.
     styledDiv {
         css {
@@ -57,15 +55,15 @@ private val subnav = functionalComponent<Props> { props ->
             right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
             width = widthPx.px
             marginRight = (-widthPx - 2 * 1).px
-            backgroundColor = theme.backgroundLight
-            border(1.px, BorderStyle.solid, theme.borderLight)
+            backgroundColor = Theme.backgroundLight
+            border(1.px, BorderStyle.solid, Theme.borderLight)
             borderRadius = 4.px
             after {
                 top = (-14).px
                 right = afterOffsetPx.px
                 left = LinearDimension.auto
                 border(7.px, BorderStyle.solid, Color.transparent)
-                borderBottomColor = theme.backgroundLight
+                borderBottomColor = Theme.backgroundLight
                 position = Position.absolute
                 display = Display.inlineBlock
                 content = QuotedString("")

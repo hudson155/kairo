@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.layout.components.layoutTitle
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.BorderStyle
 import kotlinx.css.marginBottom
 import kotlinx.css.marginTop
@@ -25,12 +25,10 @@ internal fun RBuilder.layoutTitle(title: String, description: String? = null) {
 internal data class Props(val title: String, val description: String?) : RProps
 
 private val layoutTitle = functionalComponent<Props> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             marginBottom = 48.px
-            borderBottom(1.px, BorderStyle.solid, theme.borderLight)
+            borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
         }
         styledH1 {
             css {

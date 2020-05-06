@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavGroup
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -29,13 +29,11 @@ internal fun RBuilder.sidenavGroup(children: RHandler<RProps>) {
 }
 
 private val sidenavGroup = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             display = Display.flex
             flexDirection = FlexDirection.column
-            border(1.px, BorderStyle.solid, theme.borderLight)
+            border(1.px, BorderStyle.solid, Theme.borderLight)
             borderRadius = 4.px
             marginBottom = 16.px
             overflow = Overflow.hidden // Avoid background color overflow.

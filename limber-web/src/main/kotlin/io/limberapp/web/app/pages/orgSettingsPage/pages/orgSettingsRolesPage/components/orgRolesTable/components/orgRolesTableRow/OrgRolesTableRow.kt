@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.BorderStyle
 import kotlinx.css.backgroundColor
 import kotlinx.css.properties.borderBottom
@@ -19,16 +19,14 @@ internal fun RBuilder.orgRolesTableRow(children: RHandler<RProps>) {
 }
 
 private val orgRolesTableRow = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
     styledTr {
         css {
-            borderTop(1.px, BorderStyle.solid, theme.borderLight)
+            borderTop(1.px, BorderStyle.solid, Theme.borderLight)
             lastOfType {
-                borderBottom(1.px, BorderStyle.solid, theme.borderLight)
+                borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
             }
             hover {
-                backgroundColor = theme.backgroundLightSubtleAccent
+                backgroundColor = Theme.backgroundLightSubtleAccent
             }
         }
         props.children()

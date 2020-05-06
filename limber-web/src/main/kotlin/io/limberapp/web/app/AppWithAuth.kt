@@ -9,7 +9,7 @@ import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.auth.authProvider
 import io.limberapp.web.context.globalState.action.tenant.ensureTenantLoaded
 import io.limberapp.web.context.globalState.useGlobalState
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import io.limberapp.web.util.external.AppState
 import io.limberapp.web.util.process
 import io.limberapp.web.util.rootDomain
@@ -47,12 +47,11 @@ private val appWithAuth = functionalComponent<RProps> {
     // the ApiProvider.
     val nonAuthenticatedApi = Api(Fetch(process.env.API_ROOT_URL))
     val global = useGlobalState()
-    val theme = useTheme()
 
     // Set theme elements
-    useEffect(listOf(theme.backgroundLight)) {
-        checkNotNull(document.body).style.color = theme.textDark.value
-        checkNotNull(document.body).style.backgroundColor = theme.backgroundLight.value
+    useEffect(listOf(Theme.backgroundLight)) {
+        checkNotNull(document.body).style.color = Theme.textDark.value
+        checkNotNull(document.body).style.backgroundColor = Theme.backgroundLight.value
     }
 
     withContext(global, nonAuthenticatedApi) { ensureTenantLoaded(rootDomain) }

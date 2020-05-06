@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavLink
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.CSSBuilder
@@ -39,27 +39,25 @@ internal data class Props(val to: String) : RProps
 private var stylesSet = false
 
 private val sidenavLink = functionalComponent<Props> { props ->
-    val theme = useTheme()
-
     val styles = object : StyleSheet("SideNavLinkStyles", isStatic = true) {
         val navLink by css {
             display = Display.flex
             flexDirection = FlexDirection.column
             alignItems = Align.flexStart
-            color = theme.link
-            backgroundColor = theme.backgroundLight
+            color = Theme.link
+            backgroundColor = Theme.backgroundLight
             padding(8.px)
             borderLeft(2.px, BorderStyle.solid, Color.transparent)
-            borderBottom(1.px, BorderStyle.solid, theme.borderLight)
+            borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
             lastOfType {
                 borderBottomStyle = BorderStyle.none
             }
             hover {
-                backgroundColor = theme.backgroundLightSubtleAccent
+                backgroundColor = Theme.backgroundLightSubtleAccent
             }
         }
         val activeNavLink by css {
-            borderLeftColor = theme.smallActiveIndicator
+            borderLeftColor = Theme.smallActiveIndicator
         }
     }
 

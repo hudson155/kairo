@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.headerItem
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.alignItems
@@ -25,14 +25,12 @@ internal fun RBuilder.headerItem(children: RHandler<RProps>) {
 }
 
 private val headerItem = functionalComponent<RProps> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             display = Display.flex
             alignItems = Align.center
             marginRight = 16.px
-            color = theme.textLight
+            color = Theme.textLight
         }
         b { props.children() }
     }

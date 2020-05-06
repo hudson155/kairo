@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.subnav.components.subnavItem
 
-import io.limberapp.web.context.theme.useTheme
+import io.limberapp.web.util.Theme
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -30,8 +30,6 @@ internal fun RBuilder.subnavItem(hoverable: Boolean = true, children: RHandler<P
 internal data class Props(val hoverable: Boolean) : RProps
 
 private val subnavItem = functionalComponent<Props> { props ->
-    val theme = useTheme()
-
     styledDiv {
         css {
             display = Display.flex
@@ -44,8 +42,8 @@ private val subnavItem = functionalComponent<Props> { props ->
             }
             if (props.hoverable) {
                 hover {
-                    color = theme.textLight
-                    backgroundColor = theme.link
+                    color = Theme.textLight
+                    backgroundColor = Theme.link
                 }
             }
         }
