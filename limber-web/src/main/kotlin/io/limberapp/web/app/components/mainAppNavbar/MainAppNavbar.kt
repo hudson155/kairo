@@ -41,9 +41,10 @@ private val styles = object : Styles("MainAppNavbar") {
         display = Display.flex
         flexDirection = FlexDirection.row
         alignItems = Align.center
-    }
-    val closedRight by css {
         cursor = Cursor.pointer
+    }
+    val openRight by css {
+        cursor = Cursor.initial
     }
 }.apply { inject() }
 
@@ -65,7 +66,7 @@ private val mainAppNavbar = functionalComponent<RProps> {
                 a(
                     classes = listOfNotNull(
                         styles.getClassName { it::right },
-                        if (openItem != OpenItem.USER_DROPDOWN) styles.getClassName { it::closedRight } else null
+                        if (openItem == OpenItem.USER_DROPDOWN) styles.getClassName { it::openRight } else null
                     ).joinToString(" ")
                 ) {
                     attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
