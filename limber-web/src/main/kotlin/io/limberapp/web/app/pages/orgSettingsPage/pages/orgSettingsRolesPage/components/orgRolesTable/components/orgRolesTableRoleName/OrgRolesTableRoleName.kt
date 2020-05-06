@@ -16,7 +16,6 @@ import kotlinx.css.Cursor
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.LinearDimension
-import kotlinx.css.TableLayout
 import kotlinx.css.alignItems
 import kotlinx.css.cursor
 import kotlinx.css.display
@@ -24,9 +23,7 @@ import kotlinx.css.flexDirection
 import kotlinx.css.flexGrow
 import kotlinx.css.fontSize
 import kotlinx.css.marginRight
-import kotlinx.css.maxWidth
 import kotlinx.css.px
-import kotlinx.css.tableLayout
 import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
@@ -78,7 +75,12 @@ private val orgRolesTableRoleName = functionalComponent<Props> { props ->
 
     val orgGuid = checkNotNull(global.state.org.state).guid
 
-    val handleSubmit: (Event) -> Unit = {
+    val onEditClicked: (Event) -> Unit = { setState(State.EDITING) }
+    val onCancelEdit: (Event) -> Unit = {
+        setValue(props.orgRole.name)
+        setState(State.DISPLAYING)
+    }
+    val onSubmit: (Event) -> Unit = {
         it.preventDefault()
         setState(State.SAVING)
         async {
@@ -96,7 +98,7 @@ private val orgRolesTableRoleName = functionalComponent<Props> { props ->
 
     td {
         form(classes = styles.getClassName { it::form }) {
-            attrs.onSubmitFunction = handleSubmit
+            attrs.onSubmitFunction = onSubmit
             when (state) {
                 State.DISPLAYING -> +props.orgRole.name
                 State.EDITING, State.SAVING -> {
@@ -109,20 +111,19 @@ private val orgRolesTableRoleName = functionalComponent<Props> { props ->
                 }
             }
             when (state) {
-                State.DISPLAYING -> a(classes = styles.getClassName { it::icon }) {
-                    attrs.onClickFunction = { setState(State.EDITING) }
-                    inlineIcon("edit")
+                State.DISPLAYING -> {
+                    a(classes = styles.getClassName { it::icon }) {
+                        attrs.onClickFunction = onEditClicked
+                        inlineIcon("edit")
+                    }
                 }
                 State.EDITING -> {
                     a(classes = styles.getClassName { it::icon }) {
-                        attrs.onClickFunction = {
-                            setValue(props.orgRole.name)
-                            setState(State.DISPLAYING)
-                        }
+                        attrs.onClickFunction = onCancelEdit
                         inlineIcon("times-circle")
                     }
                     a(classes = styles.getClassName { it::icon }) {
-                        attrs.onClickFunction = handleSubmit
+                        attrs.onClickFunction = onSubmit
                         inlineIcon("save")
                     }
                 }
