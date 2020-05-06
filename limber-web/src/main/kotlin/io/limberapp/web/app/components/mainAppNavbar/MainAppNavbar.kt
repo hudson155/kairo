@@ -23,6 +23,7 @@ import react.RProps
 import react.child
 import react.dom.a
 import react.functionalComponent
+import react.key
 import react.router.dom.navLink
 import react.useState
 import styled.getClassName
@@ -81,7 +82,10 @@ private val mainAppNavbar = functionalComponent<RProps> {
     ) {
         headerGroup {
             features.forEach {
-                navLink<RProps>(to = it.path) { headerItem { +it.name } }
+                navLink<RProps>(to = it.path) {
+                    attrs.key = it.guid
+                    headerItem { +it.name }
+                }
             }
         }
     }
