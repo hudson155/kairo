@@ -22,6 +22,7 @@ import react.dom.th
 import react.dom.thead
 import react.dom.tr
 import react.functionalComponent
+import react.key
 import styled.getClassName
 
 internal fun RBuilder.orgRolesTable() {
@@ -67,6 +68,7 @@ private val orgRolesTable = functionalComponent<RProps> {
         tbody {
             orgRoles.forEach {
                 orgRolesTableRow {
+                    attrs.key = it.guid
                     orgRolesTableRoleName(it)
                     orgRolesTableRolePermissions(it)
                     orgRolesTableRoleMemberCount(it)
