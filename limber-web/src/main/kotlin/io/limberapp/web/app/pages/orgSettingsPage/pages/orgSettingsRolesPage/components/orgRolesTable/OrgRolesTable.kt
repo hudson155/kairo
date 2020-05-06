@@ -66,7 +66,7 @@ private val orgRolesTable = functionalComponent<RProps> {
             }
         }
         tbody {
-            orgRoles.forEach {
+            orgRoles.values.forEach {
                 orgRolesTableRow {
                     attrs.key = it.guid
                     orgRolesTableRoleName(it)
