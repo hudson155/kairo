@@ -2,7 +2,6 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.BorderStyle
 import kotlinx.css.backgroundColor
 import kotlinx.css.properties.borderBottom
@@ -30,10 +29,9 @@ private val styles = object : Styles("OrgRolesTableRow") {
             backgroundColor = Theme.backgroundLightSubtleAccent
         }
     }
-}
+}.apply { inject() }
 
 private val orgRolesTableRow = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     tr(classes = styles.getClassName { it::row }) {
         props.children()

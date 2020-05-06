@@ -9,7 +9,6 @@ import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.Cursor
 import kotlinx.css.Display
@@ -46,10 +45,9 @@ private val styles = object : Styles("MainAppNavbar") {
     val closedRight by css {
         cursor = Cursor.pointer
     }
-}
+}.apply { inject() }
 
 private val mainAppNavbar = functionalComponent<RProps> {
-    injectStyles(styles)
 
     val global = useGlobalState()
 

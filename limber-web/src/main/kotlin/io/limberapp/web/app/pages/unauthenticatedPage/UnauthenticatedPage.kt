@@ -2,7 +2,6 @@ package io.limberapp.web.app.pages.unauthenticatedPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.TextAlign
 import kotlinx.css.properties.TextDecorationLine
 import kotlinx.css.properties.textDecoration
@@ -31,10 +30,9 @@ private val styles = object : Styles("UnauthenticatedPage") {
     val signInLink by css {
         textDecoration(TextDecorationLine.underline)
     }
-}
+}.apply { inject() }
 
 private val unauthenticatedPage = functionalComponent<RProps> {
-    injectStyles(styles)
 
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {

@@ -1,7 +1,6 @@
 package io.limberapp.web.app.components.footer
 
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import io.limberapp.web.util.process
 import kotlinx.css.Display
 import kotlinx.css.display
@@ -29,10 +28,9 @@ private val styles = object : Styles("Footer") {
         display = Display.flex
         padding(vertical = 8.px, horizontal = 16.px)
     }
-}
+}.apply { inject() }
 
 private val footer = functionalComponent<RProps> {
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }

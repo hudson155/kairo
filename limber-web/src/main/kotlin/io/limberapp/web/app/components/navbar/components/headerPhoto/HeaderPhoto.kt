@@ -1,7 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.headerPhoto
 
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.height
 import kotlinx.css.marginRight
 import kotlinx.css.maxWidth
@@ -28,10 +27,9 @@ private val styles = object : Styles("HeaderPhoto") {
         height = 32.px
         maxWidth = 32.px
     }
-}
+}.apply { inject() }
 
 private val headerPhoto = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     img(src = props.url, classes = styles.getClassName { it::img }) {}
 }

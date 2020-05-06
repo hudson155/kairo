@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.sidenav.components.sidenavLink
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Color
@@ -55,10 +54,9 @@ private val styles = object : Styles("SidenavLink") {
     val activeNavLink by css {
         borderLeftColor = Theme.smallActiveIndicator
     }
-}
+}.apply { inject() }
 
 private val sidenavLink = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     navLink<RProps>(
         to = props.to,

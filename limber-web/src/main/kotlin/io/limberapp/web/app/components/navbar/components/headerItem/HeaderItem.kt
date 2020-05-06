@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.navbar.components.headerItem
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.alignItems
@@ -33,10 +32,9 @@ private val styles = object : Styles("HeaderItem") {
         marginRight = 16.px
         color = Theme.textLight
     }
-}
+}.apply { inject() }
 
 private val headerItem = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         b { props.children() }

@@ -2,7 +2,6 @@ package io.limberapp.web.app.pages.notFoundPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.TextAlign
 import kotlinx.css.textAlign
 import react.RBuilder
@@ -25,10 +24,9 @@ private val styles = object : Styles("NotFoundPage") {
     val container by css {
         textAlign = TextAlign.center
     }
-}
+}.apply { inject() }
 
 private val notFoundPage = functionalComponent<RProps> {
-    injectStyles(styles)
 
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {

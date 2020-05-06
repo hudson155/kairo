@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.layout.components.layoutTitle
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.BorderStyle
 import kotlinx.css.marginBottom
 import kotlinx.css.marginTop
@@ -39,10 +38,9 @@ private val styles = object : Styles("LayoutTitle") {
         marginTop = 0.px
         marginBottom = 8.px
     }
-}
+}.apply { inject() }
 
 private val layoutTitle = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         h1(classes = styles.getClassName { it::title }) { +props.title }

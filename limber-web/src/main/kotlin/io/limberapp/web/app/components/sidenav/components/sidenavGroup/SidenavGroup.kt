@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.sidenav.components.sidenavGroup
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -42,10 +41,9 @@ private val styles = object : Styles("SidenavGroup") {
             marginBottom = 0.px
         }
     }
-}
+}.apply { inject() }
 
 private val sidenavGroup = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         props.children()

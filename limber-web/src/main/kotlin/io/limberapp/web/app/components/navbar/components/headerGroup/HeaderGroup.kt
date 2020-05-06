@@ -1,7 +1,6 @@
 package io.limberapp.web.app.components.navbar.components.headerGroup
 
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -33,10 +32,9 @@ private val styles = object : Styles("HeaderGroup") {
         alignItems = Align.center
         margin(vertical = 0.px, horizontal = 16.px)
     }
-}
+}.apply { inject() }
 
 private val headerGroup = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         props.children()

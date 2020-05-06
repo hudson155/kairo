@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.navbar.components.subnav
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Color
@@ -70,10 +69,9 @@ private val styles = object : Styles("Subnav") {
             content = QuotedString("")
         }
     }
-}
+}.apply { inject() }
 
 private val subnav = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         ref = props.node

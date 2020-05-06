@@ -1,7 +1,6 @@
 package io.limberapp.web.app.components.layout.components.standardLayout
 
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.JustifyContent
@@ -58,10 +57,9 @@ private val styles = object : Styles("StandardLayout") {
         display = Display.flex
         flexDirection = FlexDirection.column
     }
-}
+}.apply { inject() }
 
 private val standardLayout = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::outerContainer }) {
         div(classes = styles.getClassName { it::innerContainer }) {

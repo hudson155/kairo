@@ -3,7 +3,6 @@ package io.limberapp.web.app.components.sidenav
 import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.app.components.sidenav.components.sidenavItem.sidenavItem
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.display
@@ -30,10 +29,9 @@ private val styles = object : Styles("Sidenav") {
         display = Display.flex
         flexDirection = FlexDirection.column
     }
-}
+}.apply { inject() }
 
 private val sidenav = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         sidenavGroup { sidenavItem { b { +props.title } } }

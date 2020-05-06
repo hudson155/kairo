@@ -1,7 +1,6 @@
 package io.limberapp.web.app.components.layout.components.centeredContentLayout
 
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -38,10 +37,9 @@ private val styles = object : Styles("CenteredContentLayout") {
         justifyContent = JustifyContent.center
         margin(16.px)
     }
-}
+}.apply { inject() }
 
 private val centeredContentLayout = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         props.children()

@@ -3,7 +3,6 @@ package io.limberapp.web.app.pages.loadingPage
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.BorderStyle
 import kotlinx.css.BoxSizing
 import kotlinx.css.Color
@@ -67,10 +66,9 @@ private val styles = object : Styles("LoadingPage") {
             animation("loading-spinner", duration = 1.2.s, iterationCount = IterationCount.infinite)
         }
     }
-}
+}.apply { inject() }
 
 private val loadingPage = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     centeredContentLayout {
         div(classes = styles.getClassName { it::spinner }) {}

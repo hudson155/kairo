@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.navbar.components.subnav.components.subn
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -36,10 +35,9 @@ private val styles = object : Styles("SubnavGroup") {
             borderBottomStyle = BorderStyle.none
         }
     }
-}
+}.apply { inject() }
 
 private val subnavGroup = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         props.children()

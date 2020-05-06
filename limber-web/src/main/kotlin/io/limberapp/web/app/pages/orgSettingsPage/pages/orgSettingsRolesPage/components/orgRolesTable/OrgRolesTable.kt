@@ -8,7 +8,6 @@ import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.injectStyles
 import io.limberapp.web.util.withContext
 import kotlinx.css.maxWidth
 import kotlinx.css.padding
@@ -39,10 +38,9 @@ private val styles = object : Styles("OrgRolesTable") {
             padding(4.px)
         }
     }
-}
+}.apply { inject() }
 
 private val orgRolesTable = functionalComponent<RProps> {
-    injectStyles(styles)
 
     val api = useApi()
     val global = useGlobalState()

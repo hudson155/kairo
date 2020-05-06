@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.sidenav.components.sidenavItem
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
@@ -42,10 +41,9 @@ private val styles = object : Styles("SidenavItem") {
             borderBottomStyle = BorderStyle.none
         }
     }
-}
+}.apply { inject() }
 
 private val sidenavItem = functionalComponent<RProps> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         props.children()

@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.navbar
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.injectStyles
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.backgroundColor
@@ -41,10 +40,9 @@ private val styles = object : Styles("Navbar") {
     val section by css {
         display = Display.flex
     }
-}
+}.apply { inject() }
 
 private val navbar = functionalComponent<Props> { props ->
-    injectStyles(styles)
 
     div(classes = styles.getClassName { it::container }) {
         div(classes = styles.getClassName { it::section }) {
