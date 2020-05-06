@@ -13,7 +13,12 @@ internal fun orgRoleReducer(state: GlobalStateContext, action: OrgRoleAction): G
         is OrgRoleAction.SetValue -> state.copy(
             orgRoles = state.orgRoles.copy(
                 loadingStatus = LoadableState.LoadingStatus.LOADED,
-                state = action.orgRoles
+                state = action.orgRoles.associateBy { it.guid }
+            )
+        )
+        is OrgRoleAction.UpdateValue -> state.copy(
+            orgRoles = state.orgRoles.copy(
+                state = state.orgRoles.state.orEmpty().plus(action.orgRole.guid to action.orgRole)
             )
         )
     }
