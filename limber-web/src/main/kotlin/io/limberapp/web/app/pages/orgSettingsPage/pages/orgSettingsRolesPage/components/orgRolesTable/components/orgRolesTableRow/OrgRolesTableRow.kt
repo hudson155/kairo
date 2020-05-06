@@ -32,7 +32,6 @@ private val styles = object : Styles("OrgRolesTableRow") {
 }.apply { inject() }
 
 private val orgRolesTableRow = functionalComponent<RProps> { props ->
-
     tr(classes = styles.getClassName { it::row }) {
         props.children()
     }

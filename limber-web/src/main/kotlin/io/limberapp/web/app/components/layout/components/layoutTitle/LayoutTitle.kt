@@ -41,7 +41,6 @@ private val styles = object : Styles("LayoutTitle") {
 }.apply { inject() }
 
 private val layoutTitle = functionalComponent<Props> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         h1(classes = styles.getClassName { it::title }) { +props.title }
         props.description?.let { p(classes = styles.getClassName { it::description }) { +it } }

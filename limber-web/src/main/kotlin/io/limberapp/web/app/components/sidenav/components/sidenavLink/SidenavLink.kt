@@ -57,7 +57,6 @@ private val styles = object : Styles("SidenavLink") {
 }.apply { inject() }
 
 private val sidenavLink = functionalComponent<Props> { props ->
-
     navLink<RProps>(
         to = props.to,
         exact = true,

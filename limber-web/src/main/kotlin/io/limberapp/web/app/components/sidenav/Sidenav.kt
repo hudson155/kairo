@@ -32,7 +32,6 @@ private val styles = object : Styles("Sidenav") {
 }.apply { inject() }
 
 private val sidenav = functionalComponent<Props> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         sidenavGroup { sidenavItem { b { +props.title } } }
         props.children()

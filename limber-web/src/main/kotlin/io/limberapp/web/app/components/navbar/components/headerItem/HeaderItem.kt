@@ -35,7 +35,6 @@ private val styles = object : Styles("HeaderItem") {
 }.apply { inject() }
 
 private val headerItem = functionalComponent<RProps> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         b { props.children() }
     }

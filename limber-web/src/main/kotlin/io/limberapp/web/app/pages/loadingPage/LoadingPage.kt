@@ -69,7 +69,6 @@ private val styles = object : Styles("LoadingPage") {
 }.apply { inject() }
 
 private val loadingPage = functionalComponent<Props> { props ->
-
     centeredContentLayout {
         div(classes = styles.getClassName { it::spinner }) {}
         p { +props.loadingText }

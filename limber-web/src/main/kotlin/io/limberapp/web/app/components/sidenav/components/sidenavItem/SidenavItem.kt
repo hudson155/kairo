@@ -44,7 +44,6 @@ private val styles = object : Styles("SidenavItem") {
 }.apply { inject() }
 
 private val sidenavItem = functionalComponent<RProps> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }

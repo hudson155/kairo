@@ -60,7 +60,6 @@ private val styles = object : Styles("StandardLayout") {
 }.apply { inject() }
 
 private val standardLayout = functionalComponent<Props> { props ->
-
     div(classes = styles.getClassName { it::outerContainer }) {
         div(classes = styles.getClassName { it::innerContainer }) {
             props.leftPane?.let {

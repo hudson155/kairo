@@ -72,7 +72,6 @@ private val styles = object : Styles("Subnav") {
 }.apply { inject() }
 
 private val subnav = functionalComponent<Props> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         ref = props.node
         props.children()

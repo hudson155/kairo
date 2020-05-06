@@ -44,7 +44,6 @@ private val styles = object : Styles("SidenavGroup") {
 }.apply { inject() }
 
 private val sidenavGroup = functionalComponent<RProps> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }

@@ -30,6 +30,5 @@ private val styles = object : Styles("HeaderPhoto") {
 }.apply { inject() }
 
 private val headerPhoto = functionalComponent<Props> { props ->
-
     img(src = props.url, classes = styles.getClassName { it::img }) {}
 }

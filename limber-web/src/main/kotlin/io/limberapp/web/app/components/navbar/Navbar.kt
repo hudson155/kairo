@@ -43,7 +43,6 @@ private val styles = object : Styles("Navbar") {
 }.apply { inject() }
 
 private val navbar = functionalComponent<Props> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         div(classes = styles.getClassName { it::section }) {
             props.left?.let { child(it) }

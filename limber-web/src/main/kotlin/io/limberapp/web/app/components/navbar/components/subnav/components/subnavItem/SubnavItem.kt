@@ -50,7 +50,6 @@ private val styles = object : Styles("SubnavItem") {
 }.apply { inject() }
 
 private val subnavItem = functionalComponent<Props> { props ->
-
     div(
         classes = listOfNotNull(
             styles.getClassName { it::container },

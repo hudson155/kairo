@@ -38,7 +38,6 @@ private val styles = object : Styles("SubnavGroup") {
 }.apply { inject() }
 
 private val subnavGroup = functionalComponent<RProps> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }

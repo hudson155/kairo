@@ -40,7 +40,6 @@ private val styles = object : Styles("CenteredContentLayout") {
 }.apply { inject() }
 
 private val centeredContentLayout = functionalComponent<RProps> { props ->
-
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }
