@@ -11,6 +11,8 @@ import com.piperframework.exception.PiperException
 import com.piperframework.exceptionMapping.ExceptionMapper
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
+import com.piperframework.restInterface.HttpMethod
+import com.piperframework.restInterface.forKtor
 import com.piperframework.serialization.Json
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
@@ -98,9 +100,11 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
     protected open fun Application.cors() {
         install(CORS) {
+            HttpMethod.values().forEach { method(it.forKtor()) }
             allowSameOrigin = false
             anyHost()
             header(HttpHeaders.Authorization)
+            header(HttpHeaders.ContentType)
         }
     }
 
