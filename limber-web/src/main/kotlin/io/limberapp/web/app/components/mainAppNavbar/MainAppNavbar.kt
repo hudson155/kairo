@@ -21,7 +21,7 @@ import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RProps
 import react.child
-import react.dom.div
+import react.dom.a
 import react.functionalComponent
 import react.router.dom.navLink
 import react.useState
@@ -63,7 +63,7 @@ private val mainAppNavbar = functionalComponent<RProps> {
         },
         right = buildElements {
             headerGroup {
-                div(
+                a(
                     classes = listOfNotNull(
                         styles.getClassName { it::right },
                         if (openItem != OpenItem.USER_DROPDOWN) styles.getClassName { it::closedRight } else null
