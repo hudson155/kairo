@@ -33,7 +33,6 @@ private val styles = object : Styles("UnauthenticatedPage") {
 }.apply { inject() }
 
 private val unauthenticatedPage = functionalComponent<RProps> {
-
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {
             h1 { +"Welcome to Limber" }

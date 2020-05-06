@@ -48,7 +48,6 @@ private val styles = object : Styles("MainAppNavbar") {
 }.apply { inject() }
 
 private val mainAppNavbar = functionalComponent<RProps> {
-
     val global = useGlobalState()
 
     // Only 1 item on the navbar can be open at a time.

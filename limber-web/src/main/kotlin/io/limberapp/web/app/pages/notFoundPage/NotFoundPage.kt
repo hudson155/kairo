@@ -27,7 +27,6 @@ private val styles = object : Styles("NotFoundPage") {
 }.apply { inject() }
 
 private val notFoundPage = functionalComponent<RProps> {
-
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {
             h1 { +"Not Found" }

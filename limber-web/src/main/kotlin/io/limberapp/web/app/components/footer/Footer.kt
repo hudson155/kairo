@@ -31,7 +31,6 @@ private val styles = object : Styles("Footer") {
 }.apply { inject() }
 
 private val footer = functionalComponent<RProps> {
-
     div(classes = styles.getClassName { it::container }) {
         p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
     }

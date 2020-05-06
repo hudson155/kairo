@@ -14,7 +14,6 @@ import io.limberapp.backend.authorization.permissions.OrgPermissions
 import kotlinx.serialization.Serializable
 
 object OrgRoleRep {
-
     @Serializable
     data class Creation(
         val name: String

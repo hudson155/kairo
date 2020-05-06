@@ -41,7 +41,6 @@ private val styles = object : Styles("OrgRolesTable") {
 }.apply { inject() }
 
 private val orgRolesTable = functionalComponent<RProps> {
-
     val api = useApi()
     val global = useGlobalState()
 

@@ -10,7 +10,6 @@ import java.util.UUID
 internal class OrgRoleMembershipMapper @Inject constructor(
     private val clock: Clock
 ) {
-
     fun model(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) = OrgRoleMembershipModel(
         createdDate = LocalDateTime.now(clock),
         orgRoleGuid = orgRoleGuid,
