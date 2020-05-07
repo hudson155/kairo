@@ -39,20 +39,20 @@ private val styles = object : Styles("SidenavLink") {
         display = Display.flex
         flexDirection = FlexDirection.column
         alignItems = Align.flexStart
-        color = Theme.link
-        backgroundColor = Theme.backgroundLight
+        color = Theme.Color.link
+        backgroundColor = Theme.Color.backgroundLight
         padding(8.px)
         borderLeft(2.px, BorderStyle.solid, Color.transparent)
-        borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
         lastOfType {
             borderBottomStyle = BorderStyle.none
         }
         hover {
-            backgroundColor = Theme.backgroundLightSubtleAccent
+            backgroundColor = Theme.Color.backgroundLightSubtleAccent
         }
     }
     val activeNavLink by css {
-        borderLeftColor = Theme.smallActiveIndicator
+        borderLeftColor = Theme.Color.smallActiveIndicator
     }
 }.apply { inject() }
 

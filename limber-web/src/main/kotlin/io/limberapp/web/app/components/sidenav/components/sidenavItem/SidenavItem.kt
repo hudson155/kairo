@@ -34,9 +34,9 @@ private val styles = object : Styles("SidenavItem") {
         display = Display.flex
         flexDirection = FlexDirection.column
         alignItems = Align.flexStart
-        backgroundColor = Theme.backgroundLightImportant
+        backgroundColor = Theme.Color.backgroundLightImportant
         padding(8.px)
-        borderBottom(1.px, BorderStyle.solid, Theme.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
         lastOfType {
             borderBottomStyle = BorderStyle.none
         }
