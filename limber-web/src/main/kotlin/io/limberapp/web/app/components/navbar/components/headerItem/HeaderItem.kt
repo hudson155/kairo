@@ -30,7 +30,7 @@ private val styles = object : Styles("HeaderItem") {
         display = Display.flex
         alignItems = Align.center
         marginRight = 16.px
-        color = Theme.textLight
+        color = Theme.Color.textLight
     }
 }.apply { inject() }
 

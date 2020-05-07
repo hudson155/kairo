@@ -43,8 +43,8 @@ private val styles = object : Styles("SubnavItem") {
     }
     val hoverableContainer by css {
         hover {
-            color = Theme.textLight
-            backgroundColor = Theme.link
+            color = Theme.Color.textLight
+            backgroundColor = Theme.Color.link
         }
     }
 }.apply { inject() }
