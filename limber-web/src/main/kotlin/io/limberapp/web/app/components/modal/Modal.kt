@@ -1,10 +1,9 @@
 package io.limberapp.web.app.components.modal
 
-import io.limberapp.web.util.EventType
+import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.classes
-import io.limberapp.web.util.keyCode
 import kotlinx.css.Align
 import kotlinx.css.Cursor
 import kotlinx.css.Display
@@ -39,9 +38,7 @@ import react.dom.div
 import react.functionalComponent
 import react.router.dom.useHistory
 import react.useCallback
-import react.useEffectWithCleanup
 import styled.getClassName
-import kotlin.browser.document
 
 internal fun RBuilder.modal(children: RHandler<RProps>) {
     child(component, handler = children)
@@ -82,14 +79,8 @@ private val component = functionalComponent<RProps> { props ->
     val goBack = useCallback<(Event) -> Unit>({
         history.goBack()
     }, emptyArray())
-    val onEscape = useCallback<(Event) -> Unit>({ event ->
-        if (event.keyCode == 27) {
-            goBack(event)
-        }
-    }, emptyArray())
-    useEffectWithCleanup(emptyList()) {
-        document.addEventListener(EventType.keydown, onEscape)
-        return@useEffectWithCleanup { document.removeEventListener(EventType.keydown, onEscape) }
+    useEscapeKeyListener(emptyList()) { event ->
+        goBack(event)
     }
 
     div(

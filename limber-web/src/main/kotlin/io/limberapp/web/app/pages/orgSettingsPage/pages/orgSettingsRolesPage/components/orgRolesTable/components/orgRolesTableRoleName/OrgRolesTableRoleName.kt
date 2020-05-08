@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.OrgRoleAction
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.globalStyles
@@ -101,6 +102,9 @@ private val component = functionalComponent<Props> { props ->
             if (isMounted.current) setState(State.DISPLAYING)
         }
     }, arrayOf(props.orgRole.guid, editValue))
+    useEscapeKeyListener(listOf(state)) { event ->
+        if (state == State.EDITING) onCancelEdit(event)
+    }
 
     td {
         form(classes = styles.getClassName { it::form }) {
