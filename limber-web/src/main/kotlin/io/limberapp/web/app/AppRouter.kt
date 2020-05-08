@@ -6,7 +6,9 @@ import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.signInPage.signInPage
+import io.limberapp.web.app.pages.signInPage.SignInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.util.Strings
@@ -43,8 +45,8 @@ private val component = functionalComponent<RProps> {
 
     browserRouter {
         switch {
-            route(path = signInPage.path, exact = true) { buildElement { signInPage() } }
-            route(path = signOutPage.path, exact = true) { buildElement { signOutPage() } }
+            route(path = SignInPage.path, exact = true) { buildElement { signInPage() } }
+            route(path = SignOutPage.path, exact = true) { buildElement { signOutPage() } }
             if (auth.isAuthenticated) {
                 route(path = rootPath) { buildElement { appFeatureRouter() } }
             } else {
@@ -54,7 +56,7 @@ private val component = functionalComponent<RProps> {
                             header = buildElement {
                                 basicNavbar {
                                     navLink<RProps>(
-                                        to = signInPage.path,
+                                        to = SignInPage.path,
                                         exact = true
                                     ) { headerItem { +Strings.signIn } }
                                 }

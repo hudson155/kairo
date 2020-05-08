@@ -3,8 +3,8 @@ package io.limberapp.web.app.components.mainAppNavbar.components.userSubnav
 import io.limberapp.web.app.components.navbar.components.subnav.components.subnavGroup.subnavGroup
 import io.limberapp.web.app.components.navbar.components.subnav.components.subnavItem.subnavItem
 import io.limberapp.web.app.components.navbar.components.subnav.subnav
-import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
-import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
+import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.EventType
 import io.limberapp.web.util.Strings
@@ -53,10 +53,10 @@ private val component = functionalComponent<Props> { props ->
             }
         }
         subnavGroup {
-            navLink<RProps>(to = orgSettingsPage.path, exact = true) { subnavItem { +Strings.orgSettings } }
+            navLink<RProps>(to = OrgSettingsPage.path, exact = true) { subnavItem { +Strings.orgSettings } }
         }
         subnavGroup {
-            navLink<RProps>(to = signOutPage.path, exact = true) { subnavItem { +Strings.signOut } }
+            navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +Strings.signOut } }
         }
     }
 }
