@@ -52,7 +52,7 @@ private val component = functionalComponent<Props> { props ->
             }
         }
         subnavGroup {
-            navLink<RProps>(to = OrgSettingsPage.path, exact = true) { subnavItem { +Strings.orgSettings } }
+            navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +Strings.orgSettings } }
         }
         subnavGroup {
             navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +Strings.signOut } }
