@@ -20,7 +20,7 @@ internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val component = functionalComponent<Props> { props ->
     td {
-        +props.orgRole.permissions.permissions.size.let {
+        +props.orgRole.permissions.size.let {
             "$it ${Strings.orgRolePermissions.pluralize(it)}"
         }
     }

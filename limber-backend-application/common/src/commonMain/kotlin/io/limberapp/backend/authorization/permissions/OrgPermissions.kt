@@ -20,8 +20,10 @@ private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
 }
 
 @Serializable(with = OrgPermissionsSerializer::class)
-data class OrgPermissions(val permissions: Set<OrgPermission>) {
+data class OrgPermissions(private val permissions: Set<OrgPermission>) {
     private val booleanList = ALL_ORG_PERMISSIONS.map { it in permissions }
+
+    val size = permissions.size
 
     fun hasPermission(permission: OrgPermission) = permission in permissions
 
