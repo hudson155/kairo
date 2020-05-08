@@ -16,6 +16,7 @@ import react.child
 import react.dom.b
 import react.functionalComponent
 import react.router.dom.navLink
+import react.useCallback
 import react.useEffectWithCleanup
 import react.useRef
 import kotlin.browser.document
@@ -33,13 +34,11 @@ internal data class Props(val onUnfocus: () -> Unit) : RProps
 
 private val component = functionalComponent<Props> { props ->
     val global = useGlobalState()
-
     val node = useRef<Element?>(null)
 
     val name = checkNotNull(global.state.user.state).fullName
 
-    val handleClick: (Event) -> Unit = { props.onUnfocus() }
-
+    val handleClick = useCallback<(Event) -> Unit>({ props.onUnfocus() }, arrayOf(props.onUnfocus))
     useEffectWithCleanup(emptyList()) {
         document.addEventListener(EventType.click, handleClick)
         return@useEffectWithCleanup { document.removeEventListener(EventType.click, handleClick) }
