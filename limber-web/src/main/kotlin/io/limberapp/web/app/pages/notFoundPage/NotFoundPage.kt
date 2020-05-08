@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.notFoundPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
+import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import kotlinx.css.TextAlign
 import kotlinx.css.textAlign
@@ -17,7 +18,7 @@ import styled.getClassName
  * "Not found" error message page when no page is found.
  */
 internal fun RBuilder.notFoundPage() {
-    child(notFoundPage)
+    child(component)
 }
 
 private val styles = object : Styles("NotFoundPage") {
@@ -26,11 +27,11 @@ private val styles = object : Styles("NotFoundPage") {
     }
 }.apply { inject() }
 
-private val notFoundPage = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {
-            h1 { +"Not Found" }
-            p { +"We looked everywhere, but we couldn't find the page you were looking for." }
+            h1 { +Strings.notFoundTitle }
+            p { +Strings.pageNotFoundDescription }
         }
     }
 }

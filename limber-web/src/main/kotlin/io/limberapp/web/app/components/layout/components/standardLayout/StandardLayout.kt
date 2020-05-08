@@ -27,7 +27,7 @@ import styled.getClassName
  * [leftPane] which is intended for side navigation.
  */
 internal fun RBuilder.standardLayout(leftPane: ReactElement? = null, children: RHandler<Props>) {
-    child(standardLayout, Props(leftPane), handler = children)
+    child(component, Props(leftPane), handler = children)
 }
 
 internal data class Props(val leftPane: ReactElement?) : RProps
@@ -59,7 +59,7 @@ private val styles = object : Styles("StandardLayout") {
     }
 }.apply { inject() }
 
-private val standardLayout = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     div(classes = styles.getClassName { it::outerContainer }) {
         div(classes = styles.getClassName { it::innerContainer }) {
             props.leftPane?.let {

@@ -9,6 +9,8 @@ import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
 import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.util.Strings
+import io.limberapp.web.util.rootPath
 import react.RBuilder
 import react.RProps
 import react.buildElement
@@ -25,33 +27,36 @@ import react.router.dom.switch
  *   - Handles routing for the unauthenticated application.
  */
 internal fun RBuilder.appRouter() {
-    child(appRouter)
+    child(component)
 }
 
-private val appRouter = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     val auth = useAuth()
 
     // While auth is loading, show the loading page.
     if (auth.isLoading) {
         page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
-            loadingPage("Identifying you...")
+            loadingPage(Strings.identifyingYou)
         }
         return@functionalComponent
     }
 
     browserRouter {
         switch {
-            route(path = "/signin", exact = true) { buildElement { signInPage() } }
-            route(path = "/signout", exact = true) { buildElement { signOutPage() } }
+            route(path = signInPage.path, exact = true) { buildElement { signInPage() } }
+            route(path = signOutPage.path, exact = true) { buildElement { signOutPage() } }
             if (auth.isAuthenticated) {
-                route(path = "/") { buildElement { appFeatureRouter() } }
+                route(path = rootPath) { buildElement { appFeatureRouter() } }
             } else {
-                route(path = "/") {
+                route(path = rootPath) {
                     buildElement {
                         page(
                             header = buildElement {
                                 basicNavbar {
-                                    navLink<RProps>(to = "/signin", exact = true) { headerItem { +"Sign In" } }
+                                    navLink<RProps>(
+                                        to = signInPage.path,
+                                        exact = true
+                                    ) { headerItem { +Strings.signIn } }
                                 }
                             },
                             footer = buildElement { footer() }

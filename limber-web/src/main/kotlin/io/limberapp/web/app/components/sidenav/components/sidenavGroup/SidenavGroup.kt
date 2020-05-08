@@ -26,7 +26,7 @@ import styled.getClassName
  * them will be less for items in the same group than for items in different groups.
  */
 internal fun RBuilder.sidenavGroup(children: RHandler<RProps>) {
-    child(sidenavGroup, handler = children)
+    child(component, handler = children)
 }
 
 private val styles = object : Styles("SidenavGroup") {
@@ -43,7 +43,7 @@ private val styles = object : Styles("SidenavGroup") {
     }
 }.apply { inject() }
 
-private val sidenavGroup = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }

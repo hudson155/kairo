@@ -11,10 +11,10 @@ import react.functionalComponent
  *   - Provides API.
  */
 internal fun RBuilder.appWithApi() {
-    child(appWithApi)
+    child(component)
 }
 
-private val appWithApi = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     apiProvider {
         appRouter()
     }

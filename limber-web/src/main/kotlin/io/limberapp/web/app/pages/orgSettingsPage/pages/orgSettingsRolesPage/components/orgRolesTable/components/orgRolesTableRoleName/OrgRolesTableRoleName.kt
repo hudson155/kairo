@@ -41,8 +41,11 @@ import react.functionalComponent
 import react.useState
 import styled.getClassName
 
+/**
+ * Portion of org roles table that shows the name of the org role.
+ */
 internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
-    child(orgRolesTableRoleName, Props(orgRole))
+    child(component, Props(orgRole))
 }
 
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
@@ -65,7 +68,7 @@ private val styles = object : Styles("OrgRolesTableRoleName") {
 
 private enum class State { DISPLAYING, EDITING, SAVING }
 
-private val orgRolesTableRoleName = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     val api = useApi()
     val global = useGlobalState()
     val isMounted = useIsMounted()

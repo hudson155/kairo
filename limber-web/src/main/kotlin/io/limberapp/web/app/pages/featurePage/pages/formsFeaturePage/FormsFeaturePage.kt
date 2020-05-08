@@ -18,18 +18,24 @@ import react.router.dom.useRouteMatch
  * Parent page for forms module pages.
  */
 internal fun RBuilder.formsFeaturePage() {
-    child(formsFeaturePage)
+    child(component)
 }
 
-private val formsFeaturePage = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     val routeMatch = useRouteMatch<RProps>()
 
     standardLayout(leftPane = buildElement { formsFeatureSidenav() }) {
         switch {
             val root = checkNotNull(routeMatch).path
-            route(path = root, exact = true) { redirect(from = "/", to = "$root/instances") }
-            route(path = "$root/instances", exact = true) { buildElement { formInstancesListPage() } }
-            route(path = "$root/templates", exact = true) { buildElement { formTemplatesListPage() } }
+            route(path = root, exact = true) {
+                redirect(to = root + formInstancesListPage.path)
+            }
+            route(path = root + formInstancesListPage.path, exact = true) {
+                buildElement { formInstancesListPage() }
+            }
+            route(path = root + formTemplatesListPage.path, exact = true) {
+                buildElement { formTemplatesListPage() }
+            }
         }
     }
 }

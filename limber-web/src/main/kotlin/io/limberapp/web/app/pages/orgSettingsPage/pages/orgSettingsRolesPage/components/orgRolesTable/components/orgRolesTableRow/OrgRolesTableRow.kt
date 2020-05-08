@@ -15,8 +15,11 @@ import react.dom.tr
 import react.functionalComponent
 import styled.getClassName
 
+/**
+ * An individual row for an org role in the org roles table.
+ */
 internal fun RBuilder.orgRolesTableRow(children: RHandler<RProps>) {
-    child(orgRolesTableRow, handler = children)
+    child(component, handler = children)
 }
 
 private val styles = object : Styles("OrgRolesTableRow") {
@@ -31,7 +34,7 @@ private val styles = object : Styles("OrgRolesTableRow") {
     }
 }.apply { inject() }
 
-private val orgRolesTableRow = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     tr(classes = styles.getClassName { it::row }) {
         props.children()
     }

@@ -12,3 +12,5 @@ internal class GlobalStyles : Styles("Global") {
         animation("spinner", duration = 1.2.s, timing = Timing.linear, iterationCount = IterationCount.infinite)
     }
 }
+
+internal fun classes(vararg classes: String?) = classes.filterNotNull().joinToString(" ")

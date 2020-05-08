@@ -10,11 +10,14 @@ import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
+import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.ensureOrgLoaded
 import io.limberapp.web.context.globalState.action.user.ensureUserLoaded
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.util.Strings
+import io.limberapp.web.util.rootPath
 import io.limberapp.web.util.withContext
 import react.RBuilder
 import react.RProps
@@ -32,10 +35,10 @@ import react.router.dom.switch
  *   - Handles routing for the authenticated application.
  */
 internal fun RBuilder.appFeatureRouter() {
-    child(appFeatureRouter)
+    child(component)
 }
 
-private val appFeatureRouter = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     val api = useApi()
     val auth = useAuth()
     val global = useGlobalState()
@@ -49,12 +52,12 @@ private val appFeatureRouter = functionalComponent<RProps> {
         page(
             header = buildElement {
                 basicNavbar {
-                    navLink<RProps>(to = "/signout", exact = true) { headerItem { +"Sign Out" } }
+                    navLink<RProps>(to = signOutPage.path, exact = true) { headerItem { +Strings.signOut } }
                 }
             },
             footer = buildElement { footer() }
         ) {
-            loadingPage("Loading org...")
+            loadingPage(Strings.loadingOrg)
         }
         return@functionalComponent
     }
@@ -64,12 +67,12 @@ private val appFeatureRouter = functionalComponent<RProps> {
         page(
             header = buildElement {
                 basicNavbar {
-                    navLink<RProps>(to = "/signout", exact = true) { headerItem { +"Sign Out" } }
+                    navLink<RProps>(to = signOutPage.path, exact = true) { headerItem { +Strings.signOut } }
                 }
             },
             footer = buildElement { footer() }
         ) {
-            loadingPage("Loading user...")
+            loadingPage(Strings.loadingUser)
         }
         return@functionalComponent
     }
@@ -78,12 +81,12 @@ private val appFeatureRouter = functionalComponent<RProps> {
 
     page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
         switch {
-            features.default?.let { route(path = "/", exact = true) { redirect(from = "/", to = it.path) } }
-            route(path = "/settings/org") { buildElement { orgSettingsPage() } }
+            features.default?.let { route(path = rootPath, exact = true) { redirect(to = it.path) } }
+            route(path = orgSettingsPage.path) { buildElement { orgSettingsPage() } }
             features.map { feature ->
                 route(path = feature.path) { buildElement { featurePage(feature) } }
             }
-            route(path = "/") { buildElement { notFoundPage() } }
+            route(path = rootPath) { buildElement { notFoundPage() } }
         }
     }
 }

@@ -3,8 +3,11 @@ package io.limberapp.web.app.components.mainAppNavbar.components.userSubnav
 import io.limberapp.web.app.components.navbar.components.subnav.components.subnavGroup.subnavGroup
 import io.limberapp.web.app.components.navbar.components.subnav.components.subnavItem.subnavItem
 import io.limberapp.web.app.components.navbar.components.subnav.subnav
+import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
+import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.EventType
+import io.limberapp.web.util.Strings
 import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import react.RBuilder
@@ -23,12 +26,12 @@ import kotlin.browser.document
  * subnav.
  */
 internal fun RBuilder.userSubnav(onUnfocus: () -> Unit) {
-    child(userSubnav, Props(onUnfocus))
+    child(component, Props(onUnfocus))
 }
 
 internal data class Props(val onUnfocus: () -> Unit) : RProps
 
-private val userSubnav = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     val global = useGlobalState()
 
     val node = useRef<Element?>(null)
@@ -45,15 +48,15 @@ private val userSubnav = functionalComponent<Props> { props ->
     subnav(node) {
         subnavGroup {
             subnavItem(hoverable = false) {
-                +"Signed in as"
+                +Strings.signedInAs
                 b { +name }
             }
         }
         subnavGroup {
-            navLink<RProps>(to = "/settings/org", exact = true) { subnavItem { +"Organization settings" } }
+            navLink<RProps>(to = orgSettingsPage.path, exact = true) { subnavItem { +Strings.orgSettings } }
         }
         subnavGroup {
-            navLink<RProps>(to = "/signout", exact = true) { subnavItem { +"Sign out" } }
+            navLink<RProps>(to = signOutPage.path, exact = true) { subnavItem { +Strings.signOut } }
         }
     }
 }
