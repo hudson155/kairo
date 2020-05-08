@@ -20,7 +20,7 @@ import styled.getClassName
  * The title at the top of a layout, plus an optional description. All pages should have one of these.
  */
 internal fun RBuilder.layoutTitle(title: String, description: String? = null) {
-    child(layoutTitle, Props(title, description))
+    child(component, Props(title, description))
 }
 
 internal data class Props(val title: String, val description: String?) : RProps
@@ -40,7 +40,7 @@ private val styles = object : Styles("LayoutTitle") {
     }
 }.apply { inject() }
 
-private val layoutTitle = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     div(classes = styles.getClassName { it::container }) {
         h1(classes = styles.getClassName { it::title }) { +props.title }
         props.description?.let { p(classes = styles.getClassName { it::description }) { +it } }

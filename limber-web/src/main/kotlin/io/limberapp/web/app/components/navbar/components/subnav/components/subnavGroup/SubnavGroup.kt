@@ -23,7 +23,7 @@ import styled.getClassName
  * them will be less for items in the same group than for items in different groups.
  */
 internal fun RBuilder.subnavGroup(children: RHandler<RProps>) {
-    child(subnavGroup, handler = children)
+    child(component, handler = children)
 }
 
 private val styles = object : Styles("SubnavGroup") {
@@ -37,7 +37,7 @@ private val styles = object : Styles("SubnavGroup") {
     }
 }.apply { inject() }
 
-private val subnavGroup = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }

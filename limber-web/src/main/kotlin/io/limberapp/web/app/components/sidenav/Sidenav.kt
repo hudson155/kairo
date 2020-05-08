@@ -19,7 +19,7 @@ import styled.getClassName
  * Sidenav for navigation within a feature.
  */
 internal fun RBuilder.sidenav(title: String, children: RHandler<RProps>) {
-    child(sidenav, Props(title), handler = children)
+    child(component, Props(title), handler = children)
 }
 
 internal data class Props(val title: String) : RProps
@@ -31,7 +31,7 @@ private val styles = object : Styles("Sidenav") {
     }
 }.apply { inject() }
 
-private val sidenav = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     div(classes = styles.getClassName { it::container }) {
         sidenavGroup { sidenavItem { b { +props.title } } }
         props.children()

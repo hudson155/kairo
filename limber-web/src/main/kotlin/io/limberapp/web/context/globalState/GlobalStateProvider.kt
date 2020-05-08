@@ -23,8 +23,11 @@ import react.functionalComponent
 import react.useContext
 import react.useReducer
 
+/**
+ * Provides global state, like Redux.
+ */
 internal fun RBuilder.globalStateProvider(children: RHandler<RProps>) {
-    child(globalStateProvider, handler = children)
+    child(component, handler = children)
 }
 
 private val globalState = createContext<StateAndDispatch<GlobalStateContext, Action>>()
@@ -37,7 +40,7 @@ private val initialState = GlobalStateContext(
     user = LoadableState.initial()
 )
 
-private val globalStateProvider = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
         return@useReducer when (action) {
             is OrgAction -> orgReducer(state, action)

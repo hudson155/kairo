@@ -24,7 +24,7 @@ import styled.getClassName
  * used for actual navigation links.
  */
 internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?, children: RHandler<Props>) {
-    child(navbar, Props(left, right), handler = children)
+    child(component, Props(left, right), handler = children)
 }
 
 internal data class Props(val left: ReactElement?, val right: ReactElement?) : RProps
@@ -42,7 +42,7 @@ private val styles = object : Styles("Navbar") {
     }
 }.apply { inject() }
 
-private val navbar = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     div(classes = styles.getClassName { it::container }) {
         div(classes = styles.getClassName { it::section }) {
             props.left?.let { child(it) }

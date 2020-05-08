@@ -1,6 +1,8 @@
 package io.limberapp.web.app.pages.unauthenticatedPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
+import io.limberapp.web.app.pages.signInPage.signInPage
+import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import kotlinx.css.TextAlign
 import kotlinx.css.properties.TextDecorationLine
@@ -20,7 +22,7 @@ import styled.getClassName
  * The only page shown when in an unauthenticated state.
  */
 internal fun RBuilder.unauthenticatedPage() {
-    child(unauthenticatedPage)
+    child(component)
 }
 
 private val styles = object : Styles("UnauthenticatedPage") {
@@ -32,12 +34,12 @@ private val styles = object : Styles("UnauthenticatedPage") {
     }
 }.apply { inject() }
 
-private val unauthenticatedPage = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {
-            h1 { +"Welcome to Limber" }
-            navLink<RProps>(to = "/signin", exact = true) {
-                span(classes = styles.getClassName { it::signInLink }) { +"Click here to sign in" }
+            h1 { +Strings.welcomeTitle }
+            navLink<RProps>(to = signInPage.path, exact = true) {
+                span(classes = styles.getClassName { it::signInLink }) { +Strings.clickHereToSignIn }
             }
         }
     }

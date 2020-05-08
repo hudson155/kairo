@@ -22,7 +22,7 @@ import styled.getClassName
  * spacing between them will be less for items in the same group than for items in different groups.
  */
 internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
-    child(headerGroup, handler = children)
+    child(component, handler = children)
 }
 
 private val styles = object : Styles("HeaderGroup") {
@@ -34,7 +34,7 @@ private val styles = object : Styles("HeaderGroup") {
     }
 }.apply { inject() }
 
-private val headerGroup = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }

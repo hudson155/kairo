@@ -22,20 +22,23 @@ import react.useEffect
 import react.useState
 import kotlin.browser.window
 
+/**
+ * Provides auth information from Auth0.
+ */
 internal fun RBuilder.authProvider(
     clientId: String,
     onRedirectCallback: (AppState?) -> Unit,
     children: RHandler<Props>
 ) {
-    child(authProvider, Props(clientId, onRedirectCallback), handler = children)
+    child(component, Props(clientId, onRedirectCallback), handler = children)
 }
 
-private val authContext = createContext<Auth0Context>()
+private val authContext = createContext<AuthContext>()
 internal fun useAuth() = useContext(authContext)
 
 internal data class Props(val clientId: String, val onRedirectCallback: (AppState?) -> Unit) : RProps
 
-private val authProvider = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     val (isLoading, setIsLoading) = useState(true)
     val (auth0Client, setAuth0Client) = useState<Auth0Client?>(null)
     val (isAuthenticated, setIsAuthenticated) = useState(false)
@@ -63,7 +66,7 @@ private val authProvider = functionalComponent<Props> { props ->
     }
 
     val configObject = ProviderValue(
-        Auth0Context(
+        AuthContext(
             isLoading = isLoading,
             isAuthenticated = isAuthenticated,
             signIn = { checkNotNull(auth0Client).loginWithRedirect() },

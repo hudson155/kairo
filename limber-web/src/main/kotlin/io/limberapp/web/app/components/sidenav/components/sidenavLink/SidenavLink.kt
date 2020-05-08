@@ -29,7 +29,7 @@ import styled.getClassName
  * A single link on a sidenav.
  */
 internal fun RBuilder.sidenavLink(to: String, children: RHandler<Props>) {
-    child(sidenavLink, Props(to), handler = children)
+    child(component, Props(to), handler = children)
 }
 
 internal data class Props(val to: String) : RProps
@@ -56,7 +56,7 @@ private val styles = object : Styles("SidenavLink") {
     }
 }.apply { inject() }
 
-private val sidenavLink = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     navLink<RProps>(
         to = props.to,
         exact = true,

@@ -2,6 +2,7 @@ package io.limberapp.web.app.pages.featurePage.pages.homePage
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
+import io.limberapp.web.util.Strings
 import react.RBuilder
 import react.RProps
 import react.child
@@ -12,12 +13,12 @@ import react.functionalComponent
  * Placeholder homepage.
  */
 internal fun RBuilder.homePage() {
-    child(homePage)
+    child(component)
 }
 
-private val homePage = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     standardLayout {
-        layoutTitle("Home")
-        p { +"This is the homepage." }
+        layoutTitle(Strings.homepageTitle)
+        p { +Strings.homepageDescription }
     }
 }

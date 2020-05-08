@@ -14,14 +14,17 @@ import react.createElement
 import react.functionalComponent
 import react.useContext
 
+/**
+ * Provides the API for interaction with the backend.
+ */
 internal fun RBuilder.apiProvider(children: RHandler<RProps>) {
-    child(apiProvider, handler = children)
+    child(component, handler = children)
 }
 
 private val api = createContext<Api>()
 internal fun useApi() = useContext(api)
 
-private val apiProvider = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     val auth = useAuth()
 
     val fetch = object : Fetch(process.env.API_ROOT_URL) {

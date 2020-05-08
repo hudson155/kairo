@@ -7,6 +7,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.withContext
 import kotlinx.css.TableLayout
@@ -29,8 +30,11 @@ import react.functionalComponent
 import react.key
 import styled.getClassName
 
+/**
+ * A table showing org roles.
+ */
 internal fun RBuilder.orgRolesTable() {
-    child(orgRolesTable)
+    child(component)
 }
 
 private val styles = object : Styles("OrgRolesTable") {
@@ -52,7 +56,7 @@ private val styles = object : Styles("OrgRolesTable") {
     }
 }.apply { inject() }
 
-private val orgRolesTable = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     val api = useApi()
     val global = useGlobalState()
 
@@ -64,16 +68,16 @@ private val orgRolesTable = functionalComponent<RProps> {
     val orgRoles = checkNotNull(global.state.orgRoles.state)
 
     if (orgRoles.isEmpty()) {
-        p { +"No roles are defined." }
+        p { +Strings.noRolesAreDefined }
         return@functionalComponent
     }
 
     table(classes = styles.getClassName { it::table }) {
         thead {
             tr {
-                th { +"Name" }
-                th { +"Permissions" }
-                th { +"Members" }
+                th { +Strings.orgRoleNameTitle }
+                th { +Strings.orgRolePermissionsTitle }
+                th { +Strings.orgRoleMembersTitle }
             }
         }
         tbody {

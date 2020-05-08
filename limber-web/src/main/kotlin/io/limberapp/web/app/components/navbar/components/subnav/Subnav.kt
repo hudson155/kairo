@@ -38,7 +38,7 @@ import styled.getClassName
  * that will be assigned to the subnav div, allowing the parent component to detect clicks outside of it.
  */
 internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RProps>) {
-    child(subnav, Props(node), handler = children)
+    child(component, Props(node), handler = children)
 }
 
 internal data class Props(val node: RMutableRef<Element?>) : RProps
@@ -71,7 +71,7 @@ private val styles = object : Styles("Subnav") {
     }
 }.apply { inject() }
 
-private val subnav = functionalComponent<Props> { props ->
+private val component = functionalComponent<Props> { props ->
     div(classes = styles.getClassName { it::container }) {
         ref = props.node
         props.children()

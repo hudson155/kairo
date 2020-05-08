@@ -26,7 +26,7 @@ import styled.getClassName
  * A single non-link item on a sidenav.
  */
 internal fun RBuilder.sidenavItem(children: RHandler<RProps>) {
-    child(sidenavItem, handler = children)
+    child(component, handler = children)
 }
 
 private val styles = object : Styles("SidenavItem") {
@@ -43,7 +43,7 @@ private val styles = object : Styles("SidenavItem") {
     }
 }.apply { inject() }
 
-private val sidenavItem = functionalComponent<RProps> { props ->
+private val component = functionalComponent<RProps> { props ->
     div(classes = styles.getClassName { it::container }) {
         props.children()
     }
