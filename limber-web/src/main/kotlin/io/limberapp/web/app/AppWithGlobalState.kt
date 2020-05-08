@@ -11,10 +11,10 @@ import react.functionalComponent
  *   - Provides global state.
  */
 internal fun RBuilder.appWithGlobalState() {
-    child(appWithGlobalState)
+    child(component)
 }
 
-private val appWithGlobalState = functionalComponent<RProps> {
+private val component = functionalComponent<RProps> {
     globalStateProvider {
         appWithAuth()
     }

@@ -33,6 +33,7 @@ private val component = functionalComponent<RProps> {
             route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }
             route(path = OrgSettingsInfoPage.path, exact = true) { buildElement { orgSettingsInfoPage() } }
             route(path = OrgSettingsRolesPage.path, exact = true) { buildElement { orgSettingsRolesPage() } }
+            route(path = OrgSettingsRolesPage.pathWithParam, exact = true) { buildElement { orgSettingsRolesPage() } }
         }
     }
 }

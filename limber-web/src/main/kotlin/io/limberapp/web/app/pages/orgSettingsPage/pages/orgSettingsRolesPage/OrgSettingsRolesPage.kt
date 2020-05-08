@@ -8,6 +8,7 @@ import react.RBuilder
 import react.RProps
 import react.child
 import react.functionalComponent
+import react.router.dom.useParams
 
 /**
  * Page for managing organization roles and organization role memberships.
@@ -16,12 +17,17 @@ internal fun RBuilder.orgSettingsRolesPage() {
     child(component)
 }
 
+internal data class PageParams(val roleName: String?) : RProps
+
 internal object OrgSettingsRolesPage {
     const val name = "Roles & permissions"
+    private val roleName = PageParams::roleName.name
     const val path = "${OrgSettingsPage.path}/roles"
+    val pathWithParam = "$path/:$roleName"
 }
 
 private val component = functionalComponent<RProps> {
+    val params = useParams<PageParams>()
     layoutTitle(OrgSettingsRolesPage.name, Strings.orgSettingsRolesPageDescription)
-    orgRolesTable()
+    orgRolesTable(params?.roleName)
 }

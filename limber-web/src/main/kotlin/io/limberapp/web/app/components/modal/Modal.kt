@@ -1,0 +1,113 @@
+package io.limberapp.web.app.components.modal
+
+import io.limberapp.web.util.EventType
+import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
+import io.limberapp.web.util.classes
+import io.limberapp.web.util.keyCode
+import kotlinx.css.Align
+import kotlinx.css.Cursor
+import kotlinx.css.Display
+import kotlinx.css.FlexDirection
+import kotlinx.css.JustifyContent
+import kotlinx.css.Position
+import kotlinx.css.alignItems
+import kotlinx.css.backgroundColor
+import kotlinx.css.borderRadius
+import kotlinx.css.cursor
+import kotlinx.css.display
+import kotlinx.css.flexDirection
+import kotlinx.css.height
+import kotlinx.css.justifyContent
+import kotlinx.css.left
+import kotlinx.css.margin
+import kotlinx.css.padding
+import kotlinx.css.pct
+import kotlinx.css.position
+import kotlinx.css.px
+import kotlinx.css.top
+import kotlinx.css.width
+import kotlinx.css.zIndex
+import kotlinx.html.js.onClickFunction
+import org.w3c.dom.events.Event
+import react.RBuilder
+import react.RHandler
+import react.RProps
+import react.child
+import react.dom.a
+import react.dom.div
+import react.functionalComponent
+import react.router.dom.useHistory
+import react.useCallback
+import react.useEffectWithCleanup
+import styled.getClassName
+import kotlin.browser.document
+
+internal fun RBuilder.modal(children: RHandler<RProps>) {
+    child(component, handler = children)
+}
+
+private val styles = object : Styles("Modal") {
+    val fullScreen by css {
+        position = Position.absolute
+        top = 0.px
+        left = 0.px
+        height = 100.pct
+        width = 100.pct
+    }
+    val container by css {
+        display = Display.flex
+        flexDirection = FlexDirection.column
+        alignItems = Align.center
+        justifyContent = JustifyContent.center
+    }
+    val fader by css {
+        zIndex = Theme.ZIndex.modalFader
+        backgroundColor = Theme.Color.backgroundDark.withAlpha(0.5)
+        cursor = Cursor.default
+    }
+    val modal by css {
+        zIndex = Theme.ZIndex.modalModal
+        width = 768.px
+        borderRadius = Theme.Sizing.borderRadius
+        margin(16.px)
+        padding(24.px)
+        backgroundColor = Theme.Color.backgroundLight
+    }
+}.apply { inject() }
+
+private val component = functionalComponent<RProps> { props ->
+    val history = useHistory()
+
+    val goBack = useCallback<(Event) -> Unit>({
+        history.goBack()
+    }, emptyArray())
+    val onEscape = useCallback<(Event) -> Unit>({ event ->
+        if (event.keyCode == 27) {
+            goBack(event)
+        }
+    }, emptyArray())
+    useEffectWithCleanup(emptyList()) {
+        document.addEventListener(EventType.keydown, onEscape)
+        return@useEffectWithCleanup { document.removeEventListener(EventType.keydown, onEscape) }
+    }
+
+    div(
+        classes = classes(
+            styles.getClassName { it::fullScreen },
+            styles.getClassName { it::container }
+        )
+    ) {
+        a(
+            classes = classes(
+                styles.getClassName { it::fullScreen },
+                styles.getClassName { it::fader }
+            )
+        ) {
+            attrs.onClickFunction = goBack
+        }
+        div(classes = styles.getClassName { it::modal }) {
+            props.children()
+        }
+    }
+}
