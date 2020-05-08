@@ -38,6 +38,7 @@ import react.dom.form
 import react.dom.input
 import react.dom.td
 import react.functionalComponent
+import react.useCallback
 import react.useState
 import styled.getClassName
 
@@ -78,13 +79,15 @@ private val component = functionalComponent<Props> { props ->
 
     val orgGuid = checkNotNull(global.state.org.state).guid
 
-    val onEditClicked: (Event) -> Unit = { setState(State.EDITING) }
-    val onCancelEdit: (Event) -> Unit = {
+    val onEditClicked = useCallback<(Event) -> Unit>({
+        setState(State.EDITING)
+    }, emptyArray())
+    val onCancelEdit = useCallback<(Event) -> Unit>({
         setValue(props.orgRole.name)
         setState(State.DISPLAYING)
-    }
-    val onSubmit: (Event) -> Unit = {
-        it.preventDefault()
+    }, arrayOf(props.orgRole.name))
+    val onSubmit = useCallback<(Event) -> Unit>({ event ->
+        event.preventDefault()
         setState(State.SAVING)
         async {
             val orgRole = api.orgRoles(
@@ -97,7 +100,7 @@ private val component = functionalComponent<Props> { props ->
             global.dispatch(OrgRoleAction.UpdateValue(orgRole))
             if (isMounted.current) setState(State.DISPLAYING)
         }
-    }
+    }, arrayOf(props.orgRole.guid, editValue))
 
     td {
         form(classes = styles.getClassName { it::form }) {

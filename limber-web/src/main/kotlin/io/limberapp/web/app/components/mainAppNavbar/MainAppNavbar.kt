@@ -85,10 +85,10 @@ private val component = functionalComponent<RProps> {
         }
     ) {
         headerGroup {
-            features.forEach {
-                navLink<RProps>(to = it.path) {
-                    attrs.key = it.guid
-                    headerItem { +it.name }
+            features.forEach { feature ->
+                navLink<RProps>(to = feature.path) {
+                    attrs.key = feature.guid
+                    headerItem { +feature.name }
                 }
             }
         }

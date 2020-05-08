@@ -9,8 +9,9 @@ import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
+import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
-import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.ensureOrgLoaded
@@ -52,7 +53,7 @@ private val component = functionalComponent<RProps> {
         page(
             header = buildElement {
                 basicNavbar {
-                    navLink<RProps>(to = signOutPage.path, exact = true) { headerItem { +Strings.signOut } }
+                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +Strings.signOut } }
                 }
             },
             footer = buildElement { footer() }
@@ -67,7 +68,7 @@ private val component = functionalComponent<RProps> {
         page(
             header = buildElement {
                 basicNavbar {
-                    navLink<RProps>(to = signOutPage.path, exact = true) { headerItem { +Strings.signOut } }
+                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +Strings.signOut } }
                 }
             },
             footer = buildElement { footer() }
@@ -82,8 +83,8 @@ private val component = functionalComponent<RProps> {
     page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
         switch {
             features.default?.let { route(path = rootPath, exact = true) { redirect(to = it.path) } }
-            route(path = orgSettingsPage.path) { buildElement { orgSettingsPage() } }
-            features.map { feature ->
+            route(path = OrgSettingsPage.path) { buildElement { orgSettingsPage() } }
+            features.forEach { feature ->
                 route(path = feature.path) { buildElement { featurePage(feature) } }
             }
             route(path = rootPath) { buildElement { notFoundPage() } }

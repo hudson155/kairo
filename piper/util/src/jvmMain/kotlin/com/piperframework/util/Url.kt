@@ -1,3 +1,5 @@
+@file:JvmName("UrlJvmKt")
+
 package com.piperframework.util
 
 import java.net.URLEncoder

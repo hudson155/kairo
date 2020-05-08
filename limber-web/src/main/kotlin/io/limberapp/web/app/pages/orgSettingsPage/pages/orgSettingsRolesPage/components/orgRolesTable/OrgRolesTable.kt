@@ -1,5 +1,7 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable
 
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleEditModal.orgRoleEditModal
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName.orgRolesTableRoleName
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
@@ -28,14 +30,17 @@ import react.dom.thead
 import react.dom.tr
 import react.functionalComponent
 import react.key
+import react.router.dom.redirect
 import styled.getClassName
 
 /**
  * A table showing org roles.
  */
-internal fun RBuilder.orgRolesTable() {
-    child(component)
+internal fun RBuilder.orgRolesTable(selectedRoleName: String?) {
+    child(component, Props(selectedRoleName))
 }
+
+internal data class Props(val selectedRoleName: String?) : RProps
 
 private val styles = object : Styles("OrgRolesTable") {
     val table by css {
@@ -56,7 +61,7 @@ private val styles = object : Styles("OrgRolesTable") {
     }
 }.apply { inject() }
 
-private val component = functionalComponent<RProps> {
+private val component = functionalComponent<Props> { props ->
     val api = useApi()
     val global = useGlobalState()
 
@@ -72,6 +77,15 @@ private val component = functionalComponent<RProps> {
         return@functionalComponent
     }
 
+    props.selectedRoleName?.let { selectedRoleName ->
+        val orgRole = orgRoles.entries.singleOrNull { it.value.name == selectedRoleName }?.value
+        if (orgRole == null) {
+            redirect(to = OrgSettingsRolesPage.path)
+            return@functionalComponent
+        }
+        orgRoleEditModal(orgRole)
+    }
+
     table(classes = styles.getClassName { it::table }) {
         thead {
             tr {
@@ -81,12 +95,12 @@ private val component = functionalComponent<RProps> {
             }
         }
         tbody {
-            orgRoles.values.sortedByDescending { it.createdDate }.forEach {
+            orgRoles.values.sortedByDescending { it.createdDate + it.guid }.forEach { orgRole ->
                 orgRolesTableRow {
-                    attrs.key = it.guid
-                    orgRolesTableRoleName(it)
-                    orgRolesTableRolePermissions(it)
-                    orgRolesTableRoleMemberCount(it)
+                    attrs.key = orgRole.guid
+                    orgRolesTableRoleName(orgRole)
+                    orgRolesTableRolePermissions(orgRole)
+                    orgRolesTableRoleMemberCount(orgRole)
                 }
             }
         }

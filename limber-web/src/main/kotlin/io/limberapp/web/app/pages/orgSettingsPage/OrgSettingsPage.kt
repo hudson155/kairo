@@ -2,9 +2,10 @@ package io.limberapp.web.app.pages.orgSettingsPage
 
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import io.limberapp.web.app.pages.orgSettingsPage.components.orgSettingsSidenav.orgSettingsSidenav
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.OrgSettingsInfoPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.orgSettingsInfoPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.orgSettingsRolesPage
-import io.limberapp.web.util.Page
 import react.RBuilder
 import react.RProps
 import react.buildElement
@@ -21,17 +22,18 @@ internal fun RBuilder.orgSettingsPage() {
     child(component)
 }
 
-internal val orgSettingsPage = Page(
-    name = "Organization settings",
-    path = "/settings/org"
-)
+internal object OrgSettingsPage {
+    const val name = "Organization settings"
+    const val path = "/settings/org"
+}
 
 private val component = functionalComponent<RProps> {
     standardLayout(leftPane = buildElement { orgSettingsSidenav() }) {
         switch {
-            route(path = orgSettingsPage.path, exact = true) { redirect(to = orgSettingsInfoPage.path) }
-            route(path = orgSettingsInfoPage.path, exact = true) { buildElement { orgSettingsInfoPage() } }
-            route(path = orgSettingsRolesPage.path, exact = true) { buildElement { orgSettingsRolesPage() } }
+            route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }
+            route(path = OrgSettingsInfoPage.path, exact = true) { buildElement { orgSettingsInfoPage() } }
+            route(path = OrgSettingsRolesPage.path, exact = true) { buildElement { orgSettingsRolesPage() } }
+            route(path = OrgSettingsRolesPage.pathWithParam, exact = true) { buildElement { orgSettingsRolesPage() } }
         }
     }
 }

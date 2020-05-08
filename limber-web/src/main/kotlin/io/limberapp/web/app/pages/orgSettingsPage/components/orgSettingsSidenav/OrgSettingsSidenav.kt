@@ -3,8 +3,8 @@ package io.limberapp.web.app.pages.orgSettingsPage.components.orgSettingsSidenav
 import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.app.components.sidenav.components.sidenavLink.sidenavLink
 import io.limberapp.web.app.components.sidenav.sidenav
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.orgSettingsInfoPage
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.orgSettingsRolesPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.OrgSettingsInfoPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.util.Strings
 import react.RBuilder
 import react.RProps
@@ -21,8 +21,8 @@ internal fun RBuilder.orgSettingsSidenav() {
 private val component = functionalComponent<RProps> {
     sidenav(Strings.orgSettings) {
         sidenavGroup {
-            sidenavLink(to = orgSettingsInfoPage.path) { +orgSettingsInfoPage.name }
-            sidenavLink(to = orgSettingsRolesPage.path) { +orgSettingsRolesPage.name }
+            sidenavLink(to = OrgSettingsInfoPage.path) { +OrgSettingsInfoPage.name }
+            sidenavLink(to = OrgSettingsRolesPage.path) { +OrgSettingsRolesPage.name }
         }
     }
 }

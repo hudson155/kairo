@@ -2,7 +2,9 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage
 
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.components.formsFeatureSidenav.formsFeatureSidenav
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.formInstancesListPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.formTemplatesListPage
 import react.RBuilder
 import react.RProps
@@ -28,12 +30,12 @@ private val component = functionalComponent<RProps> {
         switch {
             val root = checkNotNull(routeMatch).path
             route(path = root, exact = true) {
-                redirect(to = root + formInstancesListPage.path)
+                redirect(to = root + FormInstancesListPage.subpath)
             }
-            route(path = root + formInstancesListPage.path, exact = true) {
+            route(path = root + FormInstancesListPage.subpath, exact = true) {
                 buildElement { formInstancesListPage() }
             }
-            route(path = root + formTemplatesListPage.path, exact = true) {
+            route(path = root + FormTemplatesListPage.subpath, exact = true) {
                 buildElement { formTemplatesListPage() }
             }
         }
