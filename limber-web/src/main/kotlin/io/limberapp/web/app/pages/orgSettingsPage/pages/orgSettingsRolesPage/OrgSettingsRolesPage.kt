@@ -27,15 +27,13 @@ internal data class PageParams(val roleName: String) : RProps
 
 internal object OrgSettingsRolesPage {
     const val name = "Roles & permissions"
-    private val roleName = PageParams::roleName.name
     const val path = "${OrgSettingsPage.path}/roles"
-    val pathWithParam = "$path/:$roleName"
 }
 
 private val component = functionalComponent<RProps> {
     val api = useApi()
     val global = useGlobalState()
-    val match = useRouteMatch<PageParams>(OrgSettingsRolesPage.pathWithParam)
+    val match = useRouteMatch<PageParams>("${OrgSettingsRolesPage.path}/:${PageParams::roleName.name}")
 
     withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
 
@@ -44,7 +42,7 @@ private val component = functionalComponent<RProps> {
     // While the org roles are loading, show nothing else.
     if (!global.state.orgRoles.isLoaded) return@functionalComponent
 
-    val orgRoles = checkNotNull(global.state.orgRoles.state)
+    val orgRoles = checkNotNull(global.state.orgRoles.state).values.toSet()
 
     match?.let {
         val roleName = it.params.roleName
