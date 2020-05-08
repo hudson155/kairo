@@ -24,18 +24,17 @@ internal fun RBuilder.formsFeaturePage() {
 }
 
 private val component = functionalComponent<RProps> {
-    val routeMatch = useRouteMatch<RProps>()
+    val match = checkNotNull(useRouteMatch<RProps>())
 
     standardLayout(leftPane = buildElement { formsFeatureSidenav() }) {
         switch {
-            val root = checkNotNull(routeMatch).path
-            route(path = root, exact = true) {
-                redirect(to = root + FormInstancesListPage.subpath)
+            route(path = match.path, exact = true) {
+                redirect(to = match.path + FormInstancesListPage.subpath)
             }
-            route(path = root + FormInstancesListPage.subpath, exact = true) {
+            route(path = match.path + FormInstancesListPage.subpath, exact = true) {
                 buildElement { formInstancesListPage() }
             }
-            route(path = root + FormTemplatesListPage.subpath, exact = true) {
+            route(path = match.path + FormTemplatesListPage.subpath, exact = true) {
                 buildElement { formTemplatesListPage() }
             }
         }
