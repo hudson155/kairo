@@ -81,7 +81,7 @@ private val component = functionalComponent<RProps> {
             }
         }
         tbody {
-            orgRoles.values.sortedByDescending { it.createdDate }.forEach { orgRole ->
+            orgRoles.values.sortedByDescending { it.createdDate + it.guid }.forEach { orgRole ->
                 orgRolesTableRow {
                     attrs.key = orgRole.guid
                     orgRolesTableRoleName(orgRole)
