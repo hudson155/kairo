@@ -1,6 +1,8 @@
 package io.limberapp.web.app.components.navbar.components.headerPhoto
 
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
+import kotlinx.css.borderRadius
 import kotlinx.css.height
 import kotlinx.css.marginRight
 import kotlinx.css.maxWidth
@@ -21,5 +23,6 @@ private val styles = object : Styles("HeaderPhoto") {
         marginRight = 16.px
         height = 32.px
         maxWidth = 32.px
+        borderRadius = Theme.Sizing.borderRadius
     }
 }.apply { inject() }
