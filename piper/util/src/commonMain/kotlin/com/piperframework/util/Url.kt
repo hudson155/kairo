@@ -11,6 +11,11 @@ import kotlin.jvm.JvmName
 expect fun enc(value: Any): String
 
 /**
+ * Makes a string appropriate for URL usage.
+ */
+fun String.slugify() = enc(toLowerCase())
+
+/**
  * Creates an href. The [path] and [queryParams] must be already encoded.
  */
 @Suppress("UnusedPrivateMember") // False positive - Detekt bug?

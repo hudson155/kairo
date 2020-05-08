@@ -23,7 +23,7 @@ internal fun RBuilder.orgSettingsRolesPage() {
     child(component)
 }
 
-internal data class PageParams(val roleName: String) : RProps
+internal data class PageParams(val roleSlug: String) : RProps
 
 internal object OrgSettingsRolesPage {
     const val name = "Roles & permissions"
@@ -33,7 +33,7 @@ internal object OrgSettingsRolesPage {
 private val component = functionalComponent<RProps> {
     val api = useApi()
     val global = useGlobalState()
-    val match = useRouteMatch<PageParams>("${OrgSettingsRolesPage.path}/:${PageParams::roleName.name}")
+    val match = useRouteMatch<PageParams>("${OrgSettingsRolesPage.path}/:${PageParams::roleSlug.name}")
 
     withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
 
@@ -45,8 +45,8 @@ private val component = functionalComponent<RProps> {
     val orgRoles = checkNotNull(global.state.orgRoles.state).values.toSet()
 
     match?.let {
-        val roleName = it.params.roleName
-        val orgRole = orgRoles.singleOrNull { it.name == roleName }
+        val roleSlug = it.params.roleSlug
+        val orgRole = orgRoles.singleOrNull { it.slug == roleSlug }
         if (orgRole == null) {
             redirect(to = OrgSettingsRolesPage.path)
             return@functionalComponent

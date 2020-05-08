@@ -1,6 +1,5 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount
 
-import com.piperframework.util.enc
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.util.Strings
 import io.limberapp.web.util.globalStyles
@@ -27,7 +26,7 @@ private val component = functionalComponent<Props> { props ->
     val match = checkNotNull(useRouteMatch<RProps>())
     td {
         navLink<RProps>(
-            to = "${match.url}/${enc(props.orgRole.name)}",
+            to = "${match.url}/${props.orgRole.slug}",
             className = globalStyles.getClassName { it::link }
         ) {
             +props.orgRole.memberCount.let {
