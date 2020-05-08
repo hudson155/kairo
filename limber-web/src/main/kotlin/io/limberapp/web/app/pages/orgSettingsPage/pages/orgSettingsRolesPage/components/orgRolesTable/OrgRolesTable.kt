@@ -81,12 +81,12 @@ private val component = functionalComponent<RProps> {
             }
         }
         tbody {
-            orgRoles.values.sortedByDescending { it.createdDate }.forEach {
+            orgRoles.values.sortedByDescending { it.createdDate }.forEach { orgRole ->
                 orgRolesTableRow {
-                    attrs.key = it.guid
-                    orgRolesTableRoleName(it)
-                    orgRolesTableRolePermissions(it)
-                    orgRolesTableRoleMemberCount(it)
+                    attrs.key = orgRole.guid
+                    orgRolesTableRoleName(orgRole)
+                    orgRolesTableRolePermissions(orgRole)
+                    orgRolesTableRoleMemberCount(orgRole)
                 }
             }
         }

@@ -9,8 +9,8 @@ import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
-import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
+import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.useAuth
@@ -84,7 +84,7 @@ private val component = functionalComponent<RProps> {
         switch {
             features.default?.let { route(path = rootPath, exact = true) { redirect(to = it.path) } }
             route(path = OrgSettingsPage.path) { buildElement { orgSettingsPage() } }
-            features.map { feature ->
+            features.forEach { feature ->
                 route(path = feature.path) { buildElement { featurePage(feature) } }
             }
             route(path = rootPath) { buildElement { notFoundPage() } }

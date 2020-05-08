@@ -83,8 +83,8 @@ private val component = functionalComponent<Props> { props ->
         setValue(props.orgRole.name)
         setState(State.DISPLAYING)
     }
-    val onSubmit: (Event) -> Unit = {
-        it.preventDefault()
+    val onSubmit: (Event) -> Unit = { event ->
+        event.preventDefault()
         setState(State.SAVING)
         async {
             val orgRole = api.orgRoles(
