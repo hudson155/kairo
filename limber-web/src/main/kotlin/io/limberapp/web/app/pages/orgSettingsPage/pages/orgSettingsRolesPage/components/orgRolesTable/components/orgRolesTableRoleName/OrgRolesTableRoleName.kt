@@ -6,9 +6,13 @@ import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.OrgRoleAction
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.hook.useEscapeKeyListener
+import io.limberapp.web.util.EventType
+import io.limberapp.web.util.KeyCode
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.globalStyles
+import io.limberapp.web.util.keyCode
 import io.limberapp.web.util.targetValue
 import io.limberapp.web.util.useIsMounted
 import kotlinx.css.Align
@@ -30,6 +34,7 @@ import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onSubmitFunction
 import org.w3c.dom.events.Event
 import react.RBuilder
+import react.RDependenciesList
 import react.RProps
 import react.child
 import react.dom.a
@@ -39,8 +44,10 @@ import react.dom.input
 import react.dom.td
 import react.functionalComponent
 import react.useCallback
+import react.useEffectWithCleanup
 import react.useState
 import styled.getClassName
+import kotlin.browser.document
 
 /**
  * Portion of org roles table that shows the name of the org role.
@@ -101,6 +108,9 @@ private val component = functionalComponent<Props> { props ->
             if (isMounted.current) setState(State.DISPLAYING)
         }
     }, arrayOf(props.orgRole.guid, editValue))
+    useEscapeKeyListener(listOf(state)) { event ->
+        if (state == State.EDITING) onCancelEdit(event)
+    }
 
     td {
         form(classes = styles.getClassName { it::form }) {
