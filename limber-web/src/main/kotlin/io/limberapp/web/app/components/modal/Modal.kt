@@ -32,7 +32,6 @@ import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RHandler
 import react.RProps
-import react.child
 import react.dom.a
 import react.dom.div
 import react.functionalComponent
@@ -40,9 +39,11 @@ import react.router.dom.useHistory
 import react.useCallback
 import styled.getClassName
 
-internal fun RBuilder.modal(children: RHandler<RProps>) {
-    child(component, handler = children)
+internal fun RBuilder.modal(blank: Boolean = false, children: RHandler<RProps>) {
+    child(component, Props(blank), handler = children)
 }
+
+internal data class Props(val blank: Boolean) : RProps
 
 private val styles = object : Styles("Modal") {
     val fullScreen by css {
@@ -73,7 +74,7 @@ private val styles = object : Styles("Modal") {
     }
 }.apply { inject() }
 
-private val component = functionalComponent<RProps> { props ->
+private val component = functionalComponent<Props> { props ->
     val history = useHistory()
 
     val goBack = useCallback<(Event) -> Unit>({
@@ -97,8 +98,10 @@ private val component = functionalComponent<RProps> { props ->
         ) {
             attrs.onClickFunction = goBack
         }
-        div(classes = styles.getClassName { it::modal }) {
-            props.children()
+        if (!props.blank) {
+            div(classes = styles.getClassName { it::modal }) {
+                props.children()
+            }
         }
     }
 }
