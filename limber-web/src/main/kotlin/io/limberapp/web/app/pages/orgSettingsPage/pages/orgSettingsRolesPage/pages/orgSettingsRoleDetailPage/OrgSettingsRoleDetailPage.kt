@@ -33,7 +33,7 @@ private val component = functionalComponent<RProps> {
 
     withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
 
-    orgSettingsRolesListPage()
+    orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 
     // While the org roles are loading, show a blank modal.
     if (!global.state.orgRoles.isLoaded) {
