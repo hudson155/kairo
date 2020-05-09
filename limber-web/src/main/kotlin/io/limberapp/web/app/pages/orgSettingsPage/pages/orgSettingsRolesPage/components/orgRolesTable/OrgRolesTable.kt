@@ -1,17 +1,12 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable
 
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleEditModal.orgRoleEditModal
+import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName.orgRolesTableRoleName
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
-import io.limberapp.web.context.api.useApi
-import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
-import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.withContext
 import kotlinx.css.TableLayout
 import kotlinx.css.height
 import kotlinx.css.maxWidth
@@ -30,17 +25,16 @@ import react.dom.thead
 import react.dom.tr
 import react.functionalComponent
 import react.key
-import react.router.dom.redirect
 import styled.getClassName
 
 /**
  * A table showing org roles.
  */
-internal fun RBuilder.orgRolesTable(selectedRoleName: String?) {
-    child(component, Props(selectedRoleName))
+internal fun RBuilder.orgRolesTable(orgRoles: Set<OrgRoleRep.Complete>) {
+    child(component, Props(orgRoles))
 }
 
-internal data class Props(val selectedRoleName: String?) : RProps
+internal data class Props(val orgRoles: Set<OrgRoleRep.Complete>) : RProps
 
 private val styles = object : Styles("OrgRolesTable") {
     val table by css {
@@ -62,28 +56,9 @@ private val styles = object : Styles("OrgRolesTable") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    val api = useApi()
-    val global = useGlobalState()
-
-    withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
-
-    // While the org roles are loading, show nothing.
-    if (!global.state.orgRoles.isLoaded) return@functionalComponent
-
-    val orgRoles = checkNotNull(global.state.orgRoles.state)
-
-    if (orgRoles.isEmpty()) {
+    if (props.orgRoles.isEmpty()) {
         p { +Strings.noRolesAreDefined }
         return@functionalComponent
-    }
-
-    props.selectedRoleName?.let { selectedRoleName ->
-        val orgRole = orgRoles.entries.singleOrNull { it.value.name == selectedRoleName }?.value
-        if (orgRole == null) {
-            redirect(to = OrgSettingsRolesPage.path)
-            return@functionalComponent
-        }
-        orgRoleEditModal(orgRole)
     }
 
     table(classes = styles.getClassName { it::table }) {
@@ -95,7 +70,7 @@ private val component = functionalComponent<Props> { props ->
             }
         }
         tbody {
-            orgRoles.values.sortedByDescending { it.createdDate + it.guid }.forEach { orgRole ->
+            props.orgRoles.sortedByDescending { it.createdDate + it.guid }.forEach { orgRole ->
                 orgRolesTableRow {
                     attrs.key = orgRole.guid
                     orgRolesTableRoleName(orgRole)

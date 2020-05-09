@@ -20,13 +20,12 @@ internal fun RBuilder.formsFeatureSidenav() {
 }
 
 private val component = functionalComponent<RProps> {
-    val routeMatch = useRouteMatch<RProps>()
+    val match = checkNotNull(useRouteMatch<RProps>())
 
     sidenav(Strings.formsTitle) {
         sidenavGroup {
-            val root = checkNotNull(routeMatch).path
-            sidenavLink(to = root + FormInstancesListPage.subpath) { +FormInstancesListPage.name }
-            sidenavLink(to = root + FormTemplatesListPage.subpath) { +FormTemplatesListPage.name }
+            sidenavLink(to = match.path + FormInstancesListPage.subpath) { +FormInstancesListPage.name }
+            sidenavLink(to = match.path + FormTemplatesListPage.subpath) { +FormTemplatesListPage.name }
         }
     }
 }

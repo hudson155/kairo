@@ -2,7 +2,6 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 
 import com.piperframework.util.enc
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.util.Strings
 import io.limberapp.web.util.globalStyles
 import io.limberapp.web.util.pluralize
@@ -12,6 +11,7 @@ import react.child
 import react.dom.td
 import react.functionalComponent
 import react.router.dom.navLink
+import react.router.dom.useRouteMatch
 import styled.getClassName
 
 /**
@@ -24,9 +24,10 @@ internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete)
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val component = functionalComponent<Props> { props ->
+    val match = checkNotNull(useRouteMatch<RProps>())
     td {
         navLink<RProps>(
-            to = "${OrgSettingsRolesPage.path}/${enc(props.orgRole.name)}",
+            to = "${match.url}/${enc(props.orgRole.name)}",
             className = globalStyles.getClassName { it::link }
         ) {
             +props.orgRole.permissions.size.let {
