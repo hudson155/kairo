@@ -70,7 +70,7 @@ private val component = functionalComponent<Props> { props ->
             }
         }
         tbody {
-            props.orgRoles.sortedByDescending { it.uniqueSortKey }.forEach { orgRole ->
+            props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
                 orgRolesTableRow {
                     attrs.key = orgRole.guid
                     orgRolesTableRoleName(orgRole)
