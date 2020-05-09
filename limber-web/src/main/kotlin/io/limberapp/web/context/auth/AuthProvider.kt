@@ -8,7 +8,6 @@ import io.limberapp.web.util.external.Auth0LogoutRequestProps
 import io.limberapp.web.util.external.createAuth0Client
 import io.limberapp.web.util.process
 import io.limberapp.web.util.rootUrl
-import kotlinext.js.asJsObject
 import kotlinx.coroutines.await
 import react.RBuilder
 import react.RHandler
@@ -52,7 +51,7 @@ private val component = functionalComponent<Props> { props ->
                 redirect_uri = rootUrl,
                 audience = "https://${process.env.AUTH0_DOMAIN}/api/v2/"
             )
-            val client = createAuth0Client(config.asJsObject()).await()
+            val client = createAuth0Client(config).await()
             setAuth0Client(client)
             if (window.location.search.contains("code=")) {
                 val appState = client.handleRedirectCallback().await().appState
@@ -71,7 +70,7 @@ private val component = functionalComponent<Props> { props ->
             isAuthenticated = isAuthenticated,
             signIn = { checkNotNull(auth0Client).loginWithRedirect() },
             jwt = jwt,
-            signOut = { checkNotNull(auth0Client).logout(Auth0LogoutRequestProps(rootUrl).asJsObject()) }
+            signOut = { checkNotNull(auth0Client).logout(Auth0LogoutRequestProps(rootUrl)) }
         )
     )
     child(createElement(authContext.Provider, configObject, props.children))
