@@ -1,6 +1,6 @@
 package io.limberapp.web.util.external
 
-import kotlinext.js.JsObject
+import io.limberapp.web.context.auth.Auth0Config
 import kotlin.js.Promise
 
 internal external interface Auth0Client {
@@ -8,7 +8,7 @@ internal external interface Auth0Client {
     fun isAuthenticated(): Promise<Boolean>
     fun loginWithRedirect()
     fun getTokenSilently(): Promise<String>
-    fun logout(request: JsObject)
+    fun logout(request: Auth0LogoutRequestProps)
 }
 
 internal external interface AppState {
@@ -23,4 +23,4 @@ internal data class Auth0LogoutRequestProps(val returnTo: String)
 
 @JsModule("@auth0/auth0-spa-js")
 @JsNonModule
-internal external fun createAuth0Client(auth0Config: JsObject): Promise<Auth0Client>
+internal external fun createAuth0Client(auth0Config: Auth0Config): Promise<Auth0Client>

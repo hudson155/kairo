@@ -1,29 +1,24 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage
 
-import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleEditModal.orgRoleEditModal
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.orgRolesTable
-import io.limberapp.web.context.api.useApi
-import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
-import io.limberapp.web.context.globalState.useGlobalState
-import io.limberapp.web.util.Strings
-import io.limberapp.web.util.withContext
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.orgSettingsRoleDetailPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import react.RBuilder
 import react.RProps
+import react.buildElement
 import react.child
 import react.functionalComponent
-import react.router.dom.redirect
+import react.router.dom.route
+import react.router.dom.switch
 import react.router.dom.useRouteMatch
 
 /**
- * Page for managing organization roles and organization role memberships.
+ * Parent page for organization role and organization role membership settings.
  */
 internal fun RBuilder.orgSettingsRolesPage() {
     child(component)
 }
-
-internal data class PageParams(val roleName: String) : RProps
 
 internal object OrgSettingsRolesPage {
     const val name = "Roles & permissions"
@@ -31,27 +26,14 @@ internal object OrgSettingsRolesPage {
 }
 
 private val component = functionalComponent<RProps> {
-    val api = useApi()
-    val global = useGlobalState()
-    val match = useRouteMatch<PageParams>("${OrgSettingsRolesPage.path}/:${PageParams::roleName.name}")
+    val match = checkNotNull(useRouteMatch<RProps>())
 
-    withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
-
-    layoutTitle(OrgSettingsRolesPage.name, Strings.orgSettingsRolesPageDescription)
-
-    // While the org roles are loading, show nothing else.
-    if (!global.state.orgRoles.isLoaded) return@functionalComponent
-
-    val orgRoles = checkNotNull(global.state.orgRoles.state).values.toSet()
-
-    match?.let {
-        val roleName = it.params.roleName
-        val orgRole = orgRoles.singleOrNull { it.name == roleName }
-        if (orgRole == null) {
-            redirect(to = OrgSettingsRolesPage.path)
-            return@functionalComponent
+    switch {
+        route(path = match.path, exact = true) {
+            buildElement { orgSettingsRolesListPage() }
         }
-        orgRoleEditModal(orgRole)
+        route(path = "${match.path}/:${OrgSettingsRoleDetailPage.PageParams::roleSlug.name}", exact = true) {
+            buildElement { orgSettingsRoleDetailPage() }
+        }
     }
-    orgRolesTable(orgRoles)
 }
