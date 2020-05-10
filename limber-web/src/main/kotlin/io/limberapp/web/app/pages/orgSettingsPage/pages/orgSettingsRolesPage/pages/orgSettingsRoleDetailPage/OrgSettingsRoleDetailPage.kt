@@ -1,8 +1,10 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage
 
+import com.piperframework.util.slugify
+import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
+import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleEditModal.orgRoleEditModal
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
@@ -11,6 +13,7 @@ import io.limberapp.web.util.withContext
 import react.RBuilder
 import react.RProps
 import react.child
+import react.dom.div
 import react.functionalComponent
 import react.router.dom.redirect
 import react.router.dom.useRouteMatch
@@ -23,7 +26,11 @@ internal fun RBuilder.orgSettingsRoleDetailPage() {
 }
 
 internal object OrgSettingsRoleDetailPage {
-    internal data class PageParams(val roleSlug: String) : RProps
+    internal data class PageParams(val roleSlug: String, val tabName: String) : RProps
+    internal object TabName {
+        const val permissions = "Permissions"
+        const val members = "Members"
+    }
 }
 
 private val component = functionalComponent<RProps> {
@@ -49,5 +56,19 @@ private val component = functionalComponent<RProps> {
         redirect(to = OrgSettingsRolesPage.path)
         return@functionalComponent
     }
-    orgRoleEditModal(orgRole)
+
+    modal {
+        modalTitle(
+            title = "Edit role: ${orgRole.name}",
+            description = "Update role info, including the permissions it grants and members of the role."
+        )
+        tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
+        div {
+            when (match.params.tabName) {
+                OrgSettingsRoleDetailPage.TabName.permissions.slugify() -> Unit // TODO
+                OrgSettingsRoleDetailPage.TabName.members.slugify() -> Unit // TODO
+                else -> redirect(to = OrgSettingsRolesPage.path)
+            }
+        }
+    }
 }
