@@ -43,9 +43,6 @@ private val styles = object : Styles("TabbedViewLink") {
 private val component = functionalComponent<Props> { props ->
     val match = checkNotNull(useRouteMatch<RProps>())
 
-    println(props.name)
-    println(props.subpath)
-
     navLink<RProps>(
         to = match.url.replaceLastPathComponentWith(props.subpath),
         replace = true,
