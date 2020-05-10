@@ -25,3 +25,9 @@ fun href(path: String, queryParams: List<Pair<String, String>> = emptyList()): S
     if (queryString.isNotEmpty()) href += "?$queryString"
     return href
 }
+
+/**
+ * Replaces the last component of a path (where components are separated by slashes) with the given value.
+ */
+fun String.replaceLastPathComponentWith(value: String) =
+    "${split('/').dropLastWhile { it.isEmpty() }.dropLast(1).joinToString("/")}/$value"

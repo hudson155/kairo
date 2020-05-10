@@ -23,6 +23,10 @@ internal fun RBuilder.formsFeaturePage() {
     child(component)
 }
 
+internal object FormsFeaturePage {
+    const val name = "Forms"
+}
+
 private val component = functionalComponent<RProps> {
     val match = checkNotNull(useRouteMatch<RProps>())
 

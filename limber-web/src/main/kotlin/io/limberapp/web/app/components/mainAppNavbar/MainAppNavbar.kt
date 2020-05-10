@@ -7,7 +7,6 @@ import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.navbar.components.headerPhoto.headerPhoto
 import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.context.globalState.useGlobalState
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import io.limberapp.web.util.classes
@@ -63,7 +62,7 @@ private val component = functionalComponent<RProps> {
     navbar(
         left = buildElements {
             headerGroup {
-                features.default?.let { navLink<RProps>(to = it.path) { headerItem { +Strings.limber } } }
+                features.default?.let { navLink<RProps>(to = it.path) { headerItem { +"Limber" } } }
             }
         },
         right = buildElements {

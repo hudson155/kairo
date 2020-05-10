@@ -5,13 +5,12 @@ import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.loadingPage.loadingPage
-import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signInPage.SignInPage
-import io.limberapp.web.app.pages.signOutPage.signOutPage
+import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
+import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
 import io.limberapp.web.context.auth.useAuth
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.rootPath
 import react.RBuilder
 import react.RProps
@@ -38,7 +37,7 @@ private val component = functionalComponent<RProps> {
     // While auth is loading, show the loading page.
     if (auth.isLoading) {
         page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
-            loadingPage(Strings.identifyingYou)
+            loadingPage("Identifying you...")
         }
         return@functionalComponent
     }
@@ -58,7 +57,7 @@ private val component = functionalComponent<RProps> {
                                     navLink<RProps>(
                                         to = SignInPage.path,
                                         exact = true
-                                    ) { headerItem { +Strings.signIn } }
+                                    ) { headerItem { +SignInPage.name } }
                                 }
                             },
                             footer = buildElement { footer() }

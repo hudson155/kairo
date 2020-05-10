@@ -1,7 +1,7 @@
 package io.limberapp.web.app.components.footer
 
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.process
 import kotlinx.css.Display
 import kotlinx.css.display
 import kotlinx.css.padding
@@ -11,13 +11,14 @@ import react.dom.div
 import react.dom.p
 import react.dom.small
 import styled.getClassName
+import kotlin.js.Date
 
 /**
  * Footer present on all pages.
  */
 internal fun RBuilder.footer() {
     div(classes = styles.getClassName { it::container }) {
-        p { small { +Strings.copyright } }
+        p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
     }
 }
 
