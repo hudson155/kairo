@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.globalStyles
 import io.limberapp.web.util.pluralize
 import react.RBuilder
@@ -30,7 +29,7 @@ private val component = functionalComponent<Props> { props ->
             className = globalStyles.getClassName { it::link }
         ) {
             +props.orgRole.memberCount.let {
-                "$it ${Strings.members.pluralize(it)}"
+                "$it ${"members".pluralize(it)}"
             }
         }
     }

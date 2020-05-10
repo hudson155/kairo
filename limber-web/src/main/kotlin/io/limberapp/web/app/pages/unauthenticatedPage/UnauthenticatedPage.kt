@@ -2,7 +2,6 @@ package io.limberapp.web.app.pages.unauthenticatedPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.app.pages.signInPage.SignInPage
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import kotlinx.css.TextAlign
 import kotlinx.css.properties.TextDecorationLine
@@ -37,9 +36,9 @@ private val styles = object : Styles("UnauthenticatedPage") {
 private val component = functionalComponent<RProps> {
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {
-            h1 { +Strings.welcomeTitle }
+            h1 { +"Welcome to Limber" }
             navLink<RProps>(to = SignInPage.path, exact = true) {
-                span(classes = styles.getClassName { it::signInLink }) { +Strings.clickHereToSignIn }
+                span(classes = styles.getClassName { it::signInLink }) { +"Click here to sign in" }
             }
         }
     }

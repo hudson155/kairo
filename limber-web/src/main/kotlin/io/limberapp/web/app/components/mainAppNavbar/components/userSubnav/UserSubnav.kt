@@ -7,7 +7,6 @@ import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.EventType
-import io.limberapp.web.util.Strings
 import org.w3c.dom.Element
 import org.w3c.dom.events.Event
 import react.RBuilder
@@ -47,15 +46,15 @@ private val component = functionalComponent<Props> { props ->
     subnav(node) {
         subnavGroup {
             subnavItem(hoverable = false) {
-                +Strings.signedInAs
+                +"Signed in as"
                 b { +name }
             }
         }
         subnavGroup {
-            navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +Strings.orgSettings } }
+            navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +OrgSettingsPage.name } }
         }
         subnavGroup {
-            navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +Strings.signOut } }
+            navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +SignOutPage.name } }
         }
     }
 }

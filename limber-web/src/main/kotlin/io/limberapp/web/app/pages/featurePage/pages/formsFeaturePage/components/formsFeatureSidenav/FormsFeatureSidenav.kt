@@ -3,9 +3,9 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.components
 import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.app.components.sidenav.components.sidenavLink.sidenavLink
 import io.limberapp.web.app.components.sidenav.sidenav
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.FormsFeaturePage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
-import io.limberapp.web.util.Strings
 import react.RBuilder
 import react.RProps
 import react.child
@@ -22,7 +22,7 @@ internal fun RBuilder.formsFeatureSidenav() {
 private val component = functionalComponent<RProps> {
     val match = checkNotNull(useRouteMatch<RProps>())
 
-    sidenav(Strings.formsTitle) {
+    sidenav(FormsFeaturePage.name) {
         sidenavGroup {
             sidenavLink(to = match.path + FormInstancesListPage.subpath) { +FormInstancesListPage.name }
             sidenavLink(to = match.path + FormTemplatesListPage.subpath) { +FormTemplatesListPage.name }

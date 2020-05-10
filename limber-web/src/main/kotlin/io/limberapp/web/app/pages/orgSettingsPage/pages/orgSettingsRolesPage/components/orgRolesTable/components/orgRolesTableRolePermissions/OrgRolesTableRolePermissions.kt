@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.globalStyles
 import io.limberapp.web.util.pluralize
 import react.RBuilder
@@ -30,7 +29,7 @@ private val component = functionalComponent<Props> { props ->
             className = globalStyles.getClassName { it::link }
         ) {
             +props.orgRole.permissions.size.let {
-                "$it ${Strings.orgRolePermissions.pluralize(it)}"
+                "$it ${"permissions".pluralize(it)}"
             }
         }
     }

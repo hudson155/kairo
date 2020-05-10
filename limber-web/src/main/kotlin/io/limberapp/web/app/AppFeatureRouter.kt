@@ -17,7 +17,6 @@ import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.ensureOrgLoaded
 import io.limberapp.web.context.globalState.action.user.ensureUserLoaded
 import io.limberapp.web.context.globalState.useGlobalState
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.rootPath
 import io.limberapp.web.util.withContext
 import react.RBuilder
@@ -53,12 +52,12 @@ private val component = functionalComponent<RProps> {
         page(
             header = buildElement {
                 basicNavbar {
-                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +Strings.signOut } }
+                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
                 }
             },
             footer = buildElement { footer() }
         ) {
-            loadingPage(Strings.loadingOrg)
+            loadingPage("Loading org...")
         }
         return@functionalComponent
     }
@@ -68,12 +67,12 @@ private val component = functionalComponent<RProps> {
         page(
             header = buildElement {
                 basicNavbar {
-                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +Strings.signOut } }
+                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
                 }
             },
             footer = buildElement { footer() }
         ) {
-            loadingPage(Strings.loadingUser)
+            loadingPage("Loading user...")
         }
         return@functionalComponent
     }

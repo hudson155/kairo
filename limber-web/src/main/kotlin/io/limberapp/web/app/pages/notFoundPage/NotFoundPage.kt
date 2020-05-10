@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.notFoundPage
 
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import kotlinx.css.TextAlign
 import kotlinx.css.textAlign
@@ -21,6 +20,10 @@ internal fun RBuilder.notFoundPage() {
     child(component)
 }
 
+internal object NotFoundPage {
+    const val name = "Not Found"
+}
+
 private val styles = object : Styles("NotFoundPage") {
     val container by css {
         textAlign = TextAlign.center
@@ -30,8 +33,8 @@ private val styles = object : Styles("NotFoundPage") {
 private val component = functionalComponent<RProps> {
     centeredContentLayout {
         div(classes = styles.getClassName { it::container }) {
-            h1 { +Strings.notFoundTitle }
-            p { +Strings.pageNotFoundDescription }
+            h1 { +NotFoundPage.name }
+            p { +"We looked everywhere, but we couldn't find the page you were looking for." }
         }
     }
 }

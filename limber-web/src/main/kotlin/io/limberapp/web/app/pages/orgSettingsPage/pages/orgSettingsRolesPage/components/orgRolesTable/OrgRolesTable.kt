@@ -5,7 +5,6 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName.orgRolesTableRoleName
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
-import io.limberapp.web.util.Strings
 import io.limberapp.web.util.Styles
 import kotlinx.css.TableLayout
 import kotlinx.css.height
@@ -57,16 +56,16 @@ private val styles = object : Styles("OrgRolesTable") {
 
 private val component = functionalComponent<Props> { props ->
     if (props.orgRoles.isEmpty()) {
-        p { +Strings.noRolesAreDefined }
+        p { +"No roles are defined." }
         return@functionalComponent
     }
 
     table(classes = styles.getClassName { it::table }) {
         thead {
             tr {
-                th { +Strings.orgRoleNameTitle }
-                th { +Strings.orgRolePermissionsTitle }
-                th { +Strings.orgRoleMembersTitle }
+                th { +"Name" }
+                th { +"Permissions" }
+                th { +"Members" }
             }
         }
         tbody {
