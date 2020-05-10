@@ -32,7 +32,14 @@ private val component = functionalComponent<RProps> {
         route(path = match.path, exact = true) {
             buildElement { orgSettingsRolesListPage() }
         }
-        route(path = "${match.path}/:${OrgSettingsRoleDetailPage.PageParams::roleSlug.name}", exact = true) {
+        route(
+            path = listOf(
+                match.path,
+                ":${OrgSettingsRoleDetailPage.PageParams::roleSlug.name}",
+                ":${OrgSettingsRoleDetailPage.PageParams::tabName.name}"
+            ).joinToString("/"),
+            exact = true
+        ) {
             buildElement { orgSettingsRoleDetailPage() }
         }
     }
