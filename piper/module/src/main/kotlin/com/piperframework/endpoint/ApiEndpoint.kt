@@ -20,9 +20,13 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.request.receiveOrNull
 import io.ktor.response.respond
+import io.ktor.routing.HttpMethodRouteSelector
+import io.ktor.routing.ParameterRouteSelector
 import io.ktor.routing.Route
+import io.ktor.routing.createRouteFromPath
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.ktor.util.pipeline.ContextDsl
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
@@ -81,7 +85,14 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
      * ApiEndpoint instance.
      */
     fun register() {
-        logger.info("Registering ${endpointTemplate.httpMethod} ${endpointTemplate.pathTemplate}")
+        logger.info(
+            listOfNotNull(
+                "Registering",
+                endpointTemplate.httpMethod,
+                endpointTemplate.pathTemplate,
+                with(endpointTemplate.requiredQueryParams) { if (isNotEmpty()) "(${joinToString()})" else null }
+            ).joinToString(" ")
+        )
         application.routing {
             authenticate(optional = true) {
                 route(pathPrefix) { routeEndpoint() }
@@ -90,7 +101,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
     }
 
     private fun Route.routeEndpoint() {
-        route(endpointTemplate.pathTemplate, endpointTemplate.httpMethod.forKtor()) {
+        route(endpointTemplate) {
             handle {
                 val command = determineCommand(call)
 
@@ -100,6 +111,17 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
                 call.respond(result.first ?: HttpStatusCode.OK, result.second)
             }
         }
+    }
+
+    /**
+     * Builds a route to match specified [endpointTemplate].
+     */
+    @ContextDsl
+    private fun Route.route(endpointTemplate: PiperEndpointTemplate, build: Route.() -> Unit): Route {
+        var route = createRouteFromPath(endpointTemplate.pathTemplate)
+        route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod.forKtor()))
+        endpointTemplate.requiredQueryParams.forEach { route = route.createChild(ParameterRouteSelector(it)) }
+        return route.apply(build)
     }
 
     protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T? {

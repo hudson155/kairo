@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory
 import java.util.UUID
 import kotlin.random.Random
 import kotlin.reflect.KClass
+import kotlin.reflect.KFunction
+import kotlin.reflect.KParameter
 import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.primaryConstructor
 
@@ -18,69 +20,101 @@ private val logger = LoggerFactory.getLogger(PiperEndpoint::class.java)
  * detected by string matching and replaced by Ktor template values according to the names of the [PiperEndpoint]
  * parameters.
  */
+@Suppress("NestedBlockDepth")
 fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
     @Suppress("TooGenericExceptionCaught")
     try {
         // Trivial case for singleton objects.
         val objectInstance = objectInstance
-        if (objectInstance != null) {
-            return PiperEndpointTemplate(
-                httpMethod = objectInstance.httpMethod,
-                pathTemplate = objectInstance.path
-            )
-        }
+        if (objectInstance != null) return objectInstance.toTemplate()
 
-        // Find the default constructor and ensure we can access it even.
+        // Find the primary constructor.
         val constructor = checkNotNull(primaryConstructor)
 
-        // The first of each pair is a temporary placeholder argument, the second is the Ktor template value.
-        val argReplacements = mutableListOf<Pair<String, String>>()
-
-        // Map each arg to a temporary placeholder value.
-        // At the same time, record those temporary placeholder values and the corresponding Ktor template values.
-        val args = constructor.parameters.associateWith {
-            // The template value is simply the parameter name surrounded by braces. Ktor expects this.
-            val templateValue = "{${it.name}}"
-
-            // Depending on the type of the parameter, generate a temporary placeholder value differently.
-            val type = it.type
-            val kClass = it.type.classifier as KClass<*>
-            val placeholderValue = when {
-                type.isMarkedNullable -> null
-                kClass == Int::class -> Random.nextInt()
-                kClass == String::class -> UUID.randomUUID().toString()
-                kClass == UUID::class -> UUID.randomUUID()
-                kClass.isSubclassOf(Enum::class) -> kClass.java.enumConstants.first()
-                kClass.isSubclassOf(ValidatedRep::class) -> null
-                else -> unknownType(it.type)
-            }
-
-            // Record the temporary placeholder value and corresponding Ktor template value in argReplacements.
-            argReplacements.add(placeholderValue.toString() to templateValue)
-            return@associateWith placeholderValue
-        }
+        // Determine what arguments to use to invoke the constructor, and generate temporary placeholder values.
+        val (args, argReplacements) = generateArgsAndReplacements(constructor)
 
         // Instantiate an instance of the endpoint using the temporary placeholder values and the primary constructor.
         val endpoint = constructor.callBy(args)
 
-        // Replace each temporary placeholder value with the corresponding Ktor template value.
-        val pathTemplate = argReplacements.fold(endpoint.path) { acc, pair ->
+        // Generate the path template and deteremine query parameter names.
+        var pathTemplate = endpoint.path
+        val requiredQueryParams = mutableSetOf<String>()
+        argReplacements.forEach { (name, value) ->
             // Splitting the path template by the temporary placeholder value counts the number of occurrences.
-            val split = acc.split(pair.first)
+            val split = pathTemplate.split(value)
 
-            // If and only if there is 1 occurrence, the split size will be 2.
-            if (split.size > 2) error("$acc contains more than 1 matches of ${pair.first}.")
-
-            // Joining using the Ktor template value as the delimiter completes the replacement process.
-            return@fold split.joinToString(pair.second)
+            // The number of matches is 1 fewer than the size of the split.
+            when (split.size - 1) {
+                // This must be a query param. If it's not nullable, add it to the set.
+                0 -> if (!args.withName(name).isOptional) requiredQueryParams.add(name)
+                // Perform the path replacement.
+                1 -> pathTemplate = split.joinToString("{${name}}")
+                // Multiple matches indicate an error.
+                else -> error("${endpoint.path} contains more than 1 match of $value.")
+            }
         }
 
         return PiperEndpointTemplate(
             httpMethod = endpoint.httpMethod,
-            pathTemplate = pathTemplate
+            pathTemplate = pathTemplate,
+            requiredQueryParams = requiredQueryParams
         )
     } catch (e: Exception) {
         logger.error("Unable to construct template.", e)
         throw e
     }
 }
+
+private fun PiperEndpoint.toTemplate(): PiperEndpointTemplate {
+    return PiperEndpointTemplate(
+        httpMethod = httpMethod,
+        pathTemplate = path,
+        requiredQueryParams = queryParams.map { it.first }.toSet()
+    )
+}
+
+private fun generateArgsAndReplacements(
+    constructor: KFunction<PiperEndpoint>
+): Pair<Map<KParameter, Any?>, MutableMap<String, String>> {
+    // The key is the arg name, and the value is the temporary placeholder value.
+    val argReplacements = mutableMapOf<String, String>()
+
+    // Determine what arguments to use to invoke the constructor.
+    // At the same time, record any generated temporary placeholder values and the corresponding arg names.
+    val args = constructor.parameters.associateWith { arg ->
+        val argName = checkNotNull(arg.name)
+
+        val kClass = arg.type.classifier as KClass<*>
+        return@associateWith when {
+            // Generate a random integer.
+            kClass == Int::class -> Random.nextInt().also {
+                // Integers should also go into arg replacements.
+                argReplacements[argName] = it.toString()
+            }
+            // Generate a random string.
+            kClass == String::class -> UUID.randomUUID().toString().also {
+                // Strings should also go into arg replacements.
+                argReplacements[argName] = it
+            }
+            // Generate a random UUID.
+            kClass == UUID::class -> UUID.randomUUID().also {
+                // UUIDs should also go into arg replacements.
+                argReplacements[argName] = it.toString()
+            }
+            // Just use the first value in the enum.
+            // This will cause code below to break if there are multiple args with the same enum type,
+            // but we can cross that bridge if and when we come to it.
+            kClass.isSubclassOf(Enum::class) -> kClass.java.enumConstants.first().also {
+                // Enums should also go into arg replacements.
+                argReplacements[argName] = it.toString()
+            }
+            // Rep args must be nullable for this to work, so we'll just pass null.
+            kClass.isSubclassOf(ValidatedRep::class) -> null
+            else -> unknownType(arg.type)
+        }
+    }
+    return Pair(args, argReplacements)
+}
+
+private fun Map<KParameter, Any?>.withName(name: String): KParameter = entries.single { it.key.name == name }.key
