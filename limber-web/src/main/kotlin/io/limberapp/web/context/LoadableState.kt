@@ -7,6 +7,15 @@ internal data class LoadableState<State : Any>(val loadingStatus: LoadingStatus,
 
     val isLoaded = loadingStatus == LoadingStatus.LOADED
 
+    fun loading() = copy(loadingStatus = LoadingStatus.LOADING)
+
+    fun loaded(state: State) = copy(
+        loadingStatus = LoadingStatus.LOADED,
+        state = state
+    )
+
+    fun update(function: (State?) -> State) = copy(state = function(state))
+
     companion object {
         fun <State : Any> initial() = LoadableState<State>(LoadingStatus.INITIAL, null)
     }
