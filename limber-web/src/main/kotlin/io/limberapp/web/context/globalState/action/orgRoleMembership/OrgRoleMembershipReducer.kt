@@ -1,0 +1,18 @@
+package io.limberapp.web.context.globalState.action.orgRoleMembership
+
+import io.limberapp.web.context.LoadableState
+import io.limberapp.web.context.globalState.GlobalStateContext
+
+internal fun orgRoleMembershipReducer(state: GlobalStateContext, action: OrgRoleMembershipAction): GlobalStateContext {
+    return when (action) {
+        is OrgRoleMembershipAction.BeginLoading -> state.copy(
+            orgRoleMemberships = state.orgRoleMemberships.plus(action.orgRoleGuid to LoadableState.loading())
+        )
+        is OrgRoleMembershipAction.SetValue -> state.copy(
+            orgRoleMemberships = state.orgRoleMemberships.plus(
+                action.orgRoleGuid to checkNotNull(state.orgRoleMemberships[action.orgRoleGuid])
+                    .loaded(action.orgRoleMemberships)
+            )
+        )
+    }
+}
