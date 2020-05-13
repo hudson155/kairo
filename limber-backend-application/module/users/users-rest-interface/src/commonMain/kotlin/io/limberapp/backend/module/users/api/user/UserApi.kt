@@ -25,6 +25,12 @@ object UserApi {
         queryParams = listOf("emailAddress" to enc(emailAddress))
     )
 
+    data class GetByOrgGuid(val orgGuid: UUID) : PiperEndpoint(
+        httpMethod = HttpMethod.GET,
+        path = "/users",
+        queryParams = listOf("orgGuid" to enc(orgGuid))
+    )
+
     data class Patch(val userGuid: UUID, val rep: UserRep.Update?) : PiperEndpoint(
         httpMethod = HttpMethod.PATCH,
         path = "/users/${enc(userGuid)}",

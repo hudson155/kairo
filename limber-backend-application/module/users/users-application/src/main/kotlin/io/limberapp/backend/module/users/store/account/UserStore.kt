@@ -56,6 +56,22 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
         }
     }
 
+    fun getByOrgGuid(orgGuid: UUID): Set<UserModel> {
+        return jdbi.withHandle<Set<UserModel>, Exception> {
+            it.createQuery(
+                    """
+                    SELECT *
+                    FROM users.user
+                    WHERE org_guid = :orgGuid
+                      AND archived_date IS NULL
+                    """.trimIndent()
+                )
+                .bind("orgGuid", orgGuid)
+                .mapTo(UserModel::class.java)
+                .toSet()
+        }
+    }
+
     fun update(userGuid: UUID, update: UserModel.Update): UserModel {
         return jdbi.inTransaction<UserModel, Exception> {
             val updateCount = it.createUpdate(sqlResource("update"))

@@ -20,6 +20,8 @@ internal class UserServiceImpl @Inject constructor(
 
     override fun getByEmailAddress(emailAddress: String) = userStore.getByEmailAddress(emailAddress)
 
+    override fun getByOrgGuid(orgGuid: UUID) = userStore.getByOrgGuid(orgGuid)
+
     override fun update(userGuid: UUID, update: UserModel.Update) = userStore.update(userGuid, update)
 
     override fun deleteRole(userGuid: UUID, role: JwtRole) {

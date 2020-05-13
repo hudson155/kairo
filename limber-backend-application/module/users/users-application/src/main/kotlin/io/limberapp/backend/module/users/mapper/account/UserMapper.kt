@@ -24,6 +24,15 @@ internal class UserMapper @Inject constructor(
         profilePhotoUrl = rep.profilePhotoUrl
     )
 
+    fun summaryRep(model: UserModel) = UserRep.Summary(
+        guid = model.guid,
+        createdDate = model.createdDate,
+        orgGuid = model.orgGuid,
+        firstName = model.firstName,
+        lastName = model.lastName,
+        profilePhotoUrl = model.profilePhotoUrl
+    )
+
     fun completeRep(model: UserModel) = UserRep.Complete(
         guid = model.guid,
         createdDate = model.createdDate,
