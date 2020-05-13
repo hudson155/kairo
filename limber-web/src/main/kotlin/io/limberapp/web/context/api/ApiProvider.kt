@@ -27,7 +27,7 @@ internal fun useApi() = useContext(api)
 private val component = functionalComponent<RProps> { props ->
     val auth = useAuth()
 
-    val fetch = object : Fetch(process.env.API_ROOT_URL) {
+    val fetch = object : Fetch(process.env.API_ROOT_URL, json) {
         override suspend fun headers(body: Boolean): dynamic {
             val headers = super.headers(body)
             if (auth.isAuthenticated) headers["Authorization"] = "Bearer ${checkNotNull(auth.jwt).raw}"
