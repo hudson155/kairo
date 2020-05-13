@@ -36,7 +36,6 @@ import react.dom.a
 import react.dom.div
 import react.functionalComponent
 import react.router.dom.useHistory
-import react.useCallback
 import styled.getClassName
 
 internal fun RBuilder.modal(blank: Boolean = false, children: RHandler<RProps>) {
@@ -77,9 +76,7 @@ private val styles = object : Styles("Modal") {
 private val component = functionalComponent<Props> { props ->
     val history = useHistory()
 
-    val goBack = useCallback<(Event) -> Unit>({
-        history.goBack()
-    }, emptyArray())
+    val goBack = { _: Event -> history.goBack() }
     useEscapeKeyListener(emptyList()) { event ->
         goBack(event)
     }

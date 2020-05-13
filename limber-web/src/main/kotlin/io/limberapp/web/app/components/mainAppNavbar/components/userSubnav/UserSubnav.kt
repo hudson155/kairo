@@ -15,7 +15,6 @@ import react.child
 import react.dom.b
 import react.functionalComponent
 import react.router.dom.navLink
-import react.useCallback
 import react.useEffectWithCleanup
 import react.useRef
 import kotlin.browser.document
@@ -37,7 +36,7 @@ private val component = functionalComponent<Props> { props ->
 
     val name = checkNotNull(global.state.user.state).fullName
 
-    val handleClick = useCallback<(Event) -> Unit>({ props.onUnfocus() }, arrayOf(props.onUnfocus))
+    val handleClick = { _: Event -> props.onUnfocus() }
     useEffectWithCleanup(emptyList()) {
         document.addEventListener(EventType.click, handleClick)
         return@useEffectWithCleanup { document.removeEventListener(EventType.click, handleClick) }
