@@ -18,5 +18,6 @@ internal data class LoadableState<State : Any>(val loadingStatus: LoadingStatus,
 
     companion object {
         fun <State : Any> initial() = LoadableState<State>(LoadingStatus.INITIAL, null)
+        fun <State : Any> loading() = LoadableState<State>(LoadingStatus.LOADING, null)
     }
 }

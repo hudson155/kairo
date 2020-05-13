@@ -57,7 +57,8 @@ private val component = functionalComponent<RProps> {
     withContext(global, nonAuthenticatedApi) { ensureTenantLoaded(rootDomain) }
 
     // While the tenant is loading, show the loading page.
-    if (!global.state.tenant.isLoaded) {
+    val loadableState = global.state.tenant
+    if (!loadableState.isLoaded) {
         page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
             loadingPage("Loading tenant...")
         }
@@ -65,7 +66,7 @@ private val component = functionalComponent<RProps> {
     }
 
     authProvider(
-        clientId = checkNotNull(global.state.tenant.state).auth0ClientId,
+        clientId = checkNotNull(loadableState.state).auth0ClientId,
         onRedirectCallback = onRedirectCallback
     ) {
         appWithApi()
