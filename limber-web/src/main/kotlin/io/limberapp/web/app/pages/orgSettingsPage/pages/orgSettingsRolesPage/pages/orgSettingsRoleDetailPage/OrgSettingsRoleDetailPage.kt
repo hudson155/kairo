@@ -53,13 +53,13 @@ private val component = functionalComponent<RProps> {
     orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 
     // While the org roles are loading, show a blank modal.
-    val loadableState = global.state.orgRoles
-    if (!loadableState.isLoaded) {
-        modal(blank = true) {}
-        return@functionalComponent
+    val orgRoles = global.state.orgRoles.let { loadableState ->
+        if (!loadableState.isLoaded) {
+            modal(blank = true) {}
+            return@functionalComponent
+        }
+        return@let checkNotNull(loadableState.state).values.toSet()
     }
-
-    val orgRoles = checkNotNull(loadableState.state).values.toSet()
 
     val roleSlug = match.params.roleSlug
     val orgRole = orgRoles.singleOrNull { it.slug == roleSlug }
