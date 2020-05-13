@@ -32,6 +32,21 @@ object UserRep {
     }
 
     @Serializable
+    data class Summary(
+        @Serializable(with = UuidSerializer::class)
+        val guid: UUID,
+        @Serializable(with = LocalDateTimeSerializer::class)
+        override val createdDate: LocalDateTime,
+        @Serializable(with = UuidSerializer::class)
+        val orgGuid: UUID,
+        val firstName: String,
+        val lastName: String,
+        val profilePhotoUrl: String?
+    ) : CompleteRep {
+        val fullName = "$firstName $lastName"
+    }
+
+    @Serializable
     data class Complete(
         @Serializable(with = UuidSerializer::class)
         val guid: UUID,

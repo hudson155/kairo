@@ -11,6 +11,8 @@ interface UserService {
 
     fun getByEmailAddress(emailAddress: String): UserModel?
 
+    fun getByOrgGuid(orgGuid: UUID): Set<UserModel>
+
     fun update(userGuid: UUID, update: UserModel.Update): UserModel
 
     fun deleteRole(userGuid: UUID, role: JwtRole)

@@ -4,6 +4,7 @@ import com.piperframework.module.Module
 import io.limberapp.backend.module.users.endpoint.user.DeleteUser
 import io.limberapp.backend.module.users.endpoint.user.GetUser
 import io.limberapp.backend.module.users.endpoint.user.GetUserByEmailAddress
+import io.limberapp.backend.module.users.endpoint.user.GetUsersByOrgGuid
 import io.limberapp.backend.module.users.endpoint.user.PatchUser
 import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.endpoint.user.role.DeleteUserRole
@@ -20,6 +21,7 @@ class UsersModule : Module() {
     override val endpoints = listOf(
         PostUser::class.java,
         GetUser::class.java,
+        GetUsersByOrgGuid::class.java,
         GetUserByEmailAddress::class.java,
         PatchUser::class.java,
         PutUserRole::class.java,

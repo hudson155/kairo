@@ -53,3 +53,12 @@ internal object UserRepFixtures {
         )
     })
 }
+
+internal fun UserRep.Complete.summary() = UserRep.Summary(
+    guid = guid,
+    createdDate = createdDate,
+    orgGuid = orgGuid,
+    firstName = firstName,
+    lastName = lastName,
+    profilePhotoUrl = profilePhotoUrl
+)
