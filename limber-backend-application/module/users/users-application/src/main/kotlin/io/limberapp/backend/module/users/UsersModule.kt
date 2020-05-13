@@ -21,8 +21,8 @@ class UsersModule : Module() {
     override val endpoints = listOf(
         PostUser::class.java,
         GetUser::class.java,
-        GetUsersByOrgGuid::class.java,
         GetUserByEmailAddress::class.java,
+        GetUsersByOrgGuid::class.java,
         PatchUser::class.java,
         PutUserRole::class.java,
         DeleteUserRole::class.java,
