@@ -36,11 +36,11 @@ import react.dom.div
 import react.functionalComponent
 import styled.getClassName
 
-internal fun RBuilder.modal(blank: Boolean = false, close: () -> Unit, children: RHandler<Props>) {
-    child(component, Props(blank, close), handler = children)
+internal fun RBuilder.modal(blank: Boolean = false, onClose: () -> Unit, children: RHandler<Props>) {
+    child(component, Props(blank, onClose), handler = children)
 }
 
-internal data class Props(val blank: Boolean, val close: () -> Unit) : RProps
+internal data class Props(val blank: Boolean, val onClose: () -> Unit) : RProps
 
 private val styles = object : Styles("Modal") {
     val fullScreen by css {
@@ -72,7 +72,7 @@ private val styles = object : Styles("Modal") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    useEscapeKeyListener(emptyList()) { props.close() }
+    useEscapeKeyListener(emptyList()) { props.onClose() }
 
     div(
         classes = classes(
@@ -86,7 +86,7 @@ private val component = functionalComponent<Props> { props ->
                 styles.getClassName { it::fader }
             )
         ) {
-            attrs.onClickFunction = { props.close() }
+            attrs.onClickFunction = { props.onClose() }
         }
         if (!props.blank) {
             div(classes = styles.getClassName { it::modal }) {

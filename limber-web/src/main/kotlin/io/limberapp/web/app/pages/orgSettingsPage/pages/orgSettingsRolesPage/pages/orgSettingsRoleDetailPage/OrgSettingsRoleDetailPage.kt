@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector.orgRolePermissionsSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
@@ -59,7 +60,7 @@ private val component = functionalComponent<RProps> {
     // While the org roles are loading, show a blank modal.
     val orgRoles = global.state.orgRoles.let { loadableState ->
         if (!loadableState.isLoaded) {
-            modal(blank = true, close = goBack) {}
+            modal(blank = true, onClose = goBack) {}
             return@functionalComponent
         }
         return@let checkNotNull(loadableState.state).values.toSet()
@@ -72,7 +73,7 @@ private val component = functionalComponent<RProps> {
         return@functionalComponent
     }
 
-    modal(close = goBack) {
+    modal(onClose = goBack) {
         modalTitle(
             title = "Edit role: ${orgRole.name}",
             description = "Update role info, including the permissions it grants and members of the role."
@@ -82,7 +83,7 @@ private val component = functionalComponent<RProps> {
             div {
                 when (match.params.tabName) {
                     OrgSettingsRoleDetailPage.TabName.permissions.slugify() ->
-                        Unit // TODO
+                        orgRolePermissionsSelector(orgRole, onClose = goBack)
                     OrgSettingsRoleDetailPage.TabName.members.slugify() ->
                         Unit // TODO
                     else -> redirect(to = OrgSettingsRolesPage.path)
