@@ -31,6 +31,12 @@ data class OrgPermissions(private val permissions: Set<OrgPermission>) {
 
     fun asBitString() = BitStringEncoder.encode(booleanList)
 
+    fun withPermission(permission: OrgPermission, value: Boolean): OrgPermissions {
+        val permissions = permissions.toMutableSet()
+        if (value) permissions.add(permission) else permissions.remove(permission)
+        return copy(permissions = permissions)
+    }
+
     override fun toString() = asDarb()
 
     companion object {

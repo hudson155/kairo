@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector.orgRolePermissionsSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
@@ -19,6 +20,7 @@ import react.child
 import react.dom.div
 import react.functionalComponent
 import react.router.dom.redirect
+import react.router.dom.useHistory
 import react.router.dom.useRouteMatch
 import styled.getClassName
 
@@ -46,7 +48,10 @@ private val styles = object : Styles("OrgSettingsRoleDetailPage") {
 private val component = functionalComponent<RProps> {
     val api = useApi()
     val global = useGlobalState()
+    val history = useHistory()
     val match = checkNotNull(useRouteMatch<OrgSettingsRoleDetailPage.PageParams>())
+
+    val goBack = { history.goBack() }
 
     withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
 
@@ -55,7 +60,7 @@ private val component = functionalComponent<RProps> {
     // While the org roles are loading, show a blank modal.
     val orgRoles = global.state.orgRoles.let { loadableState ->
         if (!loadableState.isLoaded) {
-            modal(blank = true) {}
+            modal(blank = true, onClose = goBack) {}
             return@functionalComponent
         }
         return@let checkNotNull(loadableState.state).values.toSet()
@@ -68,7 +73,7 @@ private val component = functionalComponent<RProps> {
         return@functionalComponent
     }
 
-    modal {
+    modal(onClose = goBack) {
         modalTitle(
             title = "Edit role: ${orgRole.name}",
             description = "Update role info, including the permissions it grants and members of the role."
@@ -77,8 +82,10 @@ private val component = functionalComponent<RProps> {
             tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
             div {
                 when (match.params.tabName) {
-                    OrgSettingsRoleDetailPage.TabName.permissions.slugify() -> Unit // TODO
-                    OrgSettingsRoleDetailPage.TabName.members.slugify() -> Unit // TODO
+                    OrgSettingsRoleDetailPage.TabName.permissions.slugify() ->
+                        orgRolePermissionsSelector(orgRole, onClose = goBack)
+                    OrgSettingsRoleDetailPage.TabName.members.slugify() ->
+                        Unit // TODO
                     else -> redirect(to = OrgSettingsRolesPage.path)
                 }
             }
