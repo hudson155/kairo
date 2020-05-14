@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.context.api.Api
+import io.limberapp.web.context.api.json
 import io.limberapp.web.context.auth.authProvider
 import io.limberapp.web.context.globalState.action.tenant.ensureTenantLoaded
 import io.limberapp.web.context.globalState.useGlobalState
@@ -45,7 +46,7 @@ private val component = functionalComponent<RProps> {
     // We use a non-authenticated API here rather than calling the useApi() hook which we should do everywhere else
     // because the tenant must be fetched before we can create the AuthProvider, and the AuthProvider is required for
     // the ApiProvider.
-    val nonAuthenticatedApi = Api(Fetch(process.env.API_ROOT_URL))
+    val nonAuthenticatedApi = Api(Fetch(process.env.API_ROOT_URL, json))
     val global = useGlobalState()
 
     // Set theme elements
@@ -57,16 +58,18 @@ private val component = functionalComponent<RProps> {
     withContext(global, nonAuthenticatedApi) { ensureTenantLoaded(rootDomain) }
 
     // While the tenant is loading, show the loading page.
-    val loadableState = global.state.tenant
-    if (!loadableState.isLoaded) {
-        page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
-            loadingPage("Loading tenant...")
+    val tenant = global.state.tenant.let { loadableState ->
+        if (!loadableState.isLoaded) {
+            page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
+                loadingPage("Loading tenant...")
+            }
+            return@functionalComponent
         }
-        return@functionalComponent
+        return@let checkNotNull(loadableState.state)
     }
 
     authProvider(
-        clientId = checkNotNull(loadableState.state).auth0ClientId,
+        clientId = tenant.auth0ClientId,
         onRedirectCallback = onRedirectCallback
     ) {
         appWithApi()

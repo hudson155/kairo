@@ -9,7 +9,10 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.util.Styles
 import io.limberapp.web.util.withContext
+import kotlinx.css.margin
+import kotlinx.css.px
 import react.RBuilder
 import react.RProps
 import react.child
@@ -17,6 +20,7 @@ import react.dom.div
 import react.functionalComponent
 import react.router.dom.redirect
 import react.router.dom.useRouteMatch
+import styled.getClassName
 
 /**
  * Page for managing a single organization role and its memberships.
@@ -33,6 +37,12 @@ internal object OrgSettingsRoleDetailPage {
     }
 }
 
+private val styles = object : Styles("OrgSettingsRoleDetailPage") {
+    val tabbedViewContainer by css {
+        margin(horizontal = 24.px)
+    }
+}.apply { inject() }
+
 private val component = functionalComponent<RProps> {
     val api = useApi()
     val global = useGlobalState()
@@ -43,13 +53,13 @@ private val component = functionalComponent<RProps> {
     orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 
     // While the org roles are loading, show a blank modal.
-    val loadableState = global.state.orgRoles
-    if (!loadableState.isLoaded) {
-        modal(blank = true) {}
-        return@functionalComponent
+    val orgRoles = global.state.orgRoles.let { loadableState ->
+        if (!loadableState.isLoaded) {
+            modal(blank = true) {}
+            return@functionalComponent
+        }
+        return@let checkNotNull(loadableState.state).values.toSet()
     }
-
-    val orgRoles = checkNotNull(loadableState.state).values.toSet()
 
     val roleSlug = match.params.roleSlug
     val orgRole = orgRoles.singleOrNull { it.slug == roleSlug }
@@ -63,12 +73,14 @@ private val component = functionalComponent<RProps> {
             title = "Edit role: ${orgRole.name}",
             description = "Update role info, including the permissions it grants and members of the role."
         )
-        tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
-        div {
-            when (match.params.tabName) {
-                OrgSettingsRoleDetailPage.TabName.permissions.slugify() -> Unit // TODO
-                OrgSettingsRoleDetailPage.TabName.members.slugify() -> Unit // TODO
-                else -> redirect(to = OrgSettingsRolesPage.path)
+        div(classes = styles.getClassName { it::tabbedViewContainer }) {
+            tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
+            div {
+                when (match.params.tabName) {
+                    OrgSettingsRoleDetailPage.TabName.permissions.slugify() -> Unit // TODO
+                    OrgSettingsRoleDetailPage.TabName.members.slugify() -> Unit // TODO
+                    else -> redirect(to = OrgSettingsRolesPage.path)
+                }
             }
         }
     }

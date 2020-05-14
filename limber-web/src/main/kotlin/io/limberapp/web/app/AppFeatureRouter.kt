@@ -48,33 +48,37 @@ private val component = functionalComponent<RProps> {
     withContext(global, api) { ensureUserLoaded(checkNotNull(auth.jwt).user.guid) }
 
     // While the org is loading, show the loading page.
-    if (!global.state.org.isLoaded) {
-        page(
-            header = buildElement {
-                basicNavbar {
-                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
-                }
-            },
-            footer = buildElement { footer() }
-        ) {
-            loadingPage("Loading org...")
+    global.state.org.let { loadableState ->
+        if (!loadableState.isLoaded) {
+            page(
+                header = buildElement {
+                    basicNavbar {
+                        navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
+                    }
+                },
+                footer = buildElement { footer() }
+            ) {
+                loadingPage("Loading org...")
+            }
+            return@functionalComponent
         }
-        return@functionalComponent
     }
 
     // While the user is loading, show the loading page.
-    if (!global.state.user.isLoaded) {
-        page(
-            header = buildElement {
-                basicNavbar {
-                    navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
-                }
-            },
-            footer = buildElement { footer() }
-        ) {
-            loadingPage("Loading user...")
+    global.state.user.let { loadableState ->
+        if (!loadableState.isLoaded) {
+            page(
+                header = buildElement {
+                    basicNavbar {
+                        navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
+                    }
+                },
+                footer = buildElement { footer() }
+            ) {
+                loadingPage("Loading user...")
+            }
+            return@functionalComponent
         }
-        return@functionalComponent
     }
 
     val features = checkNotNull(global.state.org.state).features

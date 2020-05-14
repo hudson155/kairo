@@ -11,7 +11,7 @@ import io.limberapp.backend.module.forms.rep.formsSerialModule
 import io.limberapp.backend.module.orgs.client.org.OrgClient
 import io.limberapp.backend.module.users.client.user.UserClient
 
-private val json = Json(context = formsSerialModule)
+internal val json = Json(context = formsSerialModule)
 
 internal class Api(fetch: Fetch) {
     val formInstances = FormInstanceClient(fetch, json)

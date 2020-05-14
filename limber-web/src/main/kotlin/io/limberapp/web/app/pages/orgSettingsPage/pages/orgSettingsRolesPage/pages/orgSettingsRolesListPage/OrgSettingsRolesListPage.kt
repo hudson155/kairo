@@ -28,10 +28,10 @@ private val component = functionalComponent<RProps> {
     layoutTitle(OrgSettingsRolesPage.name, "Roles grant users permissions within your organization.")
 
     // While the org roles are loading, show nothing else.
-    val loadableState = global.state.orgRoles
-    if (!loadableState.isLoaded) return@functionalComponent
-
-    val orgRoles = checkNotNull(loadableState.state).values.toSet()
+    val orgRoles = global.state.orgRoles.let { loadableState ->
+        if (!loadableState.isLoaded) return@functionalComponent
+        return@let checkNotNull(loadableState.state).values.toSet()
+    }
 
     orgRolesTable(orgRoles)
 }

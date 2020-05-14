@@ -26,6 +26,7 @@ kotlin {
             compilations["main"].defaultSourceSet {
                 dependencies {
                     implementation(kotlin("stdlib-js"))
+                    implementation(project(":piper:serialization"))
                     implementation(Dependencies.Kotlin.extensions)
                     implementation(Dependencies.Kotlinx.coroutinesJs)
                 }
