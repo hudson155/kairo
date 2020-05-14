@@ -17,7 +17,7 @@ internal class GlobalStyles : Styles("Global") {
         animation("spinner", duration = 1.2.s, timing = Timing.linear, iterationCount = IterationCount.infinite)
     }
     val link by css {
-        color = Theme.Color.link
+        color = Theme.Color.Text.link
         cursor = Cursor.pointer
         hover {
             textDecoration(TextDecorationLine.underline)

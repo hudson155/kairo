@@ -24,12 +24,12 @@ internal fun RBuilder.orgRolesTableRow(children: RHandler<RProps>) {
 
 private val styles = object : Styles("OrgRolesTableRow") {
     val row by css {
-        borderTop(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
         lastOfType {
-            borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
+            borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
         }
         hover {
-            backgroundColor = Theme.Color.backgroundLightSubtleAccent
+            backgroundColor = Theme.Color.Background.lightActive
         }
     }
 }.apply { inject() }

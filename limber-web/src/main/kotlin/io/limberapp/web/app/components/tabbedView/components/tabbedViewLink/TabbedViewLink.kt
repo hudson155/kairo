@@ -27,12 +27,12 @@ internal data class Props(val name: String, val subpath: String) : RProps
 private val styles = object : Styles("TabbedViewLink") {
     val navLink by css {
         marginRight = 12.px
-        borderBottom(2.px, BorderStyle.solid, Theme.Color.borderDark)
+        borderBottom(2.px, BorderStyle.solid, Theme.Color.Border.dark)
         lastOfType {
             marginRight = 0.px
         }
         hover {
-            color = Theme.Color.link
+            color = Theme.Color.Text.link
         }
     }
     val activeNavLink by css {

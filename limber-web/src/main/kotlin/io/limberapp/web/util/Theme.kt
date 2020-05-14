@@ -6,54 +6,67 @@ import kotlinx.css.px
 @Suppress("UnusedPrivateMember")
 internal object Theme {
     object Color {
-        // https://coolors.co/303030-fcfcfc-c49890-1078d8-606470
         private val jet = Color("#303030")
-        private val jetLighter5 = Color("#3D3D3D")
+        private val jetLighter05 = Color("#3D3D3D")
         private val jetLighter10 = Color("#4A4A4A")
         private val jetLighter20 = Color("#636363")
+
         private val babyPowder = Color("#FCFCFC")
-        private val babyPowderDarker5 = Color("#EFEFEF")
+        private val babyPowderDarker05 = Color("#EFEFEF")
         private val babyPowderDarker10 = Color("#E3E3E3")
         private val babyPowderDarker20 = Color("#C9C9C9")
-        private val copperCrayola = Color("#CC8C70")
-        private val brightNavyBlue = Color("#1078D8")
-        private val blackCoral = Color("#606470")
 
-        // Color used as a background or text color to indicate a link.
-        val link = brightNavyBlue
+        private val nickel = Color("#707070")
+        private val nickelDarker10 = Color("#575757")
+        private val nickelDarker20 = Color("#3D3D3D")
 
-        // Color used for small elements that indicate something is "active".
-        val smallActiveIndicator = copperCrayola
+        private val copper = Color("#CC8C70")
 
-        // Standard dark colored text.
-        val textDark = jet
+        private val blue = Color("#1078D8")
+        private val blueDarker10 = Color("#005FBF")
+        private val blueDarker20 = Color("#0045A5")
+        private val blueDarker50 = Color("#000059")
 
-        // Standard light colored text.
-        val textLight = babyPowder
+        object Button {
+            object Primary {
+                val backgroundDefault = blue
+                val backgroundActive = blueDarker10
+                val backgroundDisabled = blueDarker50
+            }
 
-        // Standard black-ish background.
-        val backgroundDark = jet
+            object Secondary {
+                val backgroundDefault = nickel
+                val backgroundActive = nickelDarker10
+                val backgroundDisabled = nickelDarker20
+            }
+        }
 
-        // Standard black-ish background.
-        val backgroundLight = babyPowder
+        object Link {
+            val default = blue
+            val active = blueDarker10
+            val disabled = blueDarker50
+        }
 
-        // Subtle background used to indicate a light element is "active".
-        val backgroundDarkSubtleAccent = jetLighter5
+        val smallActiveIndicator = copper
 
-        // Subtle background used to indicate a dark element is "active".
-        val backgroundLightSubtleAccent = babyPowderDarker5
+        object Text {
+            val dark = jet
+            val light = babyPowder
+            val link = blue
+        }
 
-        // Subtle background used to indicate a light element is important.
-        val backgroundDarkImportant = jetLighter10
+        object Background {
+            val dark = jet
+            val light = babyPowder
+            val lightActive = babyPowderDarker05
+            val lightDisabled = babyPowderDarker10
+            val link = blue
+        }
 
-        // Subtle background used to indicate a dark element is important
-        val backgroundLightImportant = babyPowderDarker10
-
-        // Standard black-ish border. Lighter than backgroundDark.
-        val borderDark = jetLighter20
-
-        // Standard white-ish border. Darker than backgroundLight.
-        val borderLight = babyPowderDarker20
+        object Border {
+            val dark = jetLighter20
+            val light = babyPowderDarker20
+        }
     }
 
     object ZIndex {

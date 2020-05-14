@@ -61,7 +61,7 @@ private val styles = object : Styles("Modal") {
     }
     val fader by css {
         zIndex = Theme.ZIndex.modalFader
-        backgroundColor = Theme.Color.backgroundDark.withAlpha(0.5)
+        backgroundColor = Theme.Color.Background.dark.withAlpha(0.5)
         cursor = Cursor.default
     }
     val modal by css {
@@ -70,7 +70,7 @@ private val styles = object : Styles("Modal") {
         borderRadius = Theme.Sizing.borderRadius
         margin(16.px)
         padding(24.px)
-        backgroundColor = Theme.Color.backgroundLight
+        backgroundColor = Theme.Color.Background.light
     }
 }.apply { inject() }
 

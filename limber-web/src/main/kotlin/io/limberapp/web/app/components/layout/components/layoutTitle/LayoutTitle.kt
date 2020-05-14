@@ -28,7 +28,7 @@ internal data class Props(val title: String, val description: String?) : RProps
 private val styles = object : Styles("LayoutTitle") {
     val container by css {
         marginBottom = 48.px
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     }
     val title by css {
         marginTop = 0.px

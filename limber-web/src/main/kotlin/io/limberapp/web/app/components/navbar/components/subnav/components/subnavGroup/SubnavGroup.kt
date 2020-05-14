@@ -30,7 +30,7 @@ private val styles = object : Styles("SubnavGroup") {
     val container by css {
         display = Display.flex
         flexDirection = FlexDirection.column
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
         lastOfType {
             borderBottomStyle = BorderStyle.none
         }
