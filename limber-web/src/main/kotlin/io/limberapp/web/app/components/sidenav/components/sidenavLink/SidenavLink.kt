@@ -30,16 +30,16 @@ internal data class Props(val to: String) : RProps
 
 private val styles = object : Styles("SidenavLink") {
     val navLink by css {
-        color = Theme.Color.link
-        backgroundColor = Theme.Color.backgroundLight
+        color = Theme.Color.Text.link
+        backgroundColor = Theme.Color.Background.light
         padding(8.px)
         borderLeft(2.px, BorderStyle.solid, Color.transparent)
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
         lastOfType {
             borderBottomStyle = BorderStyle.none
         }
         hover {
-            backgroundColor = Theme.Color.backgroundLightSubtleAccent
+            backgroundColor = Theme.Color.Background.lightActive
         }
     }
     val activeNavLink by css {

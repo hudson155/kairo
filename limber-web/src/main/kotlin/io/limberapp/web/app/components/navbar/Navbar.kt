@@ -34,7 +34,7 @@ private val styles = object : Styles("Navbar") {
         display = Display.flex
         justifyContent = JustifyContent.spaceBetween
         height = 32.px
-        backgroundColor = Theme.Color.backgroundDark
+        backgroundColor = Theme.Color.Background.dark
         padding(vertical = 16.px, horizontal = 0.px)
     }
     val section by css {

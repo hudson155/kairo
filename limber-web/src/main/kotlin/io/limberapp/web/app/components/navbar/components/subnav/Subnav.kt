@@ -55,15 +55,15 @@ private val styles = object : Styles("Subnav") {
         right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
         width = widthPx.px
         marginRight = (-widthPx - 2 * 1).px
-        backgroundColor = Theme.Color.backgroundLight
-        border(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        backgroundColor = Theme.Color.Background.light
+        border(1.px, BorderStyle.solid, Theme.Color.Border.light)
         borderRadius = Theme.Sizing.borderRadius
         after {
             top = (-14).px
             right = afterOffsetPx.px
             left = LinearDimension.auto
             border(7.px, BorderStyle.solid, Color.transparent)
-            borderBottomColor = Theme.Color.backgroundLight
+            borderBottomColor = Theme.Color.Background.light
             position = Position.absolute
             display = Display.inlineBlock
             content = QuotedString("")

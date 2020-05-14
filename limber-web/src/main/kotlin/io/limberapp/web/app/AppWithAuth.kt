@@ -49,9 +49,9 @@ private val component = functionalComponent<RProps> {
     val global = useGlobalState()
 
     // Set theme elements
-    useEffect(listOf(Theme.Color.backgroundLight)) {
-        checkNotNull(document.body).style.color = Theme.Color.textDark.value
-        checkNotNull(document.body).style.backgroundColor = Theme.Color.backgroundLight.value
+    useEffect(listOf(Theme.Color.Background.light)) {
+        checkNotNull(document.body).style.color = Theme.Color.Text.dark.value
+        checkNotNull(document.body).style.backgroundColor = Theme.Color.Background.light.value
     }
 
     withContext(global, nonAuthenticatedApi) { ensureTenantLoaded(rootDomain) }

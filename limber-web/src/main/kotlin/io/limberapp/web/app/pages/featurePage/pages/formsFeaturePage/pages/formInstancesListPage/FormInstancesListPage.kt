@@ -19,5 +19,5 @@ internal object FormInstancesListPage {
 }
 
 private val component = functionalComponent<RProps> {
-    layoutTitle(FormInstancesListPage.subpath)
+    layoutTitle(FormInstancesListPage.name)
 }

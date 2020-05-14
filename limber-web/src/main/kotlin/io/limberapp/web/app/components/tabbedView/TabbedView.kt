@@ -33,7 +33,7 @@ private val styles = object : Styles("TabbedView") {
         flexDirection = FlexDirection.row
         justifyContent = JustifyContent.center
         paddingBottom = 8.px
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     }
 }.apply { inject() }
 

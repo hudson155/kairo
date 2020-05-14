@@ -33,7 +33,7 @@ private val styles = object : Styles("SidenavGroup") {
     val container by css {
         display = Display.flex
         flexDirection = FlexDirection.column
-        border(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        border(1.px, BorderStyle.solid, Theme.Color.Border.light)
         borderRadius = Theme.Sizing.borderRadius
         marginBottom = 16.px
         overflow = Overflow.hidden // Avoid background color overflow.

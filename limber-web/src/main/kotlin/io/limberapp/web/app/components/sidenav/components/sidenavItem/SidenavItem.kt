@@ -25,9 +25,9 @@ internal fun RBuilder.sidenavItem(children: RHandler<RProps>) {
 
 private val styles = object : Styles("SidenavItem") {
     val container by css {
-        backgroundColor = Theme.Color.backgroundLightImportant
+        backgroundColor = Theme.Color.Background.lightDisabled
         padding(8.px)
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.borderLight)
+        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
         lastOfType {
             borderBottomStyle = BorderStyle.none
         }
