@@ -28,21 +28,19 @@ import kotlinx.css.top
 import kotlinx.css.width
 import kotlinx.css.zIndex
 import kotlinx.html.js.onClickFunction
-import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RHandler
 import react.RProps
 import react.dom.a
 import react.dom.div
 import react.functionalComponent
-import react.router.dom.useHistory
 import styled.getClassName
 
-internal fun RBuilder.modal(blank: Boolean = false, children: RHandler<RProps>) {
-    child(component, Props(blank), handler = children)
+internal fun RBuilder.modal(blank: Boolean = false, close: () -> Unit, children: RHandler<Props>) {
+    child(component, Props(blank, close), handler = children)
 }
 
-internal data class Props(val blank: Boolean) : RProps
+internal data class Props(val blank: Boolean, val close: () -> Unit) : RProps
 
 private val styles = object : Styles("Modal") {
     val fullScreen by css {
@@ -74,12 +72,7 @@ private val styles = object : Styles("Modal") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    val history = useHistory()
-
-    val goBack = { _: Event -> history.goBack() }
-    useEscapeKeyListener(emptyList()) { event ->
-        goBack(event)
-    }
+    useEscapeKeyListener(emptyList()) { props.close() }
 
     div(
         classes = classes(
@@ -93,7 +86,7 @@ private val component = functionalComponent<Props> { props ->
                 styles.getClassName { it::fader }
             )
         ) {
-            attrs.onClickFunction = goBack
+            attrs.onClickFunction = { props.close() }
         }
         if (!props.blank) {
             div(classes = styles.getClassName { it::modal }) {
