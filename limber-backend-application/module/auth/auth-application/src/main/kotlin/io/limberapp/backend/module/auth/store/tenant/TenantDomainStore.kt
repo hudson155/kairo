@@ -31,9 +31,9 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-        error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
-        error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
-        else -> throw e
+      error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
+      error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
+      else -> throw e
     }
   }
 
@@ -62,9 +62,9 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
           .bind("domain", domain)
           .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw TenantDomainNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw TenantDomainNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

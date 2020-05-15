@@ -57,9 +57,9 @@ internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi
         .bind("accountGuid", accountGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw OrgRoleMembershipNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw OrgRoleMembershipNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

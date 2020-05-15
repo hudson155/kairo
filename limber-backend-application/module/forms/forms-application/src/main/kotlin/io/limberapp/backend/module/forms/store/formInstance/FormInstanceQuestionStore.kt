@@ -33,11 +33,11 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-        error.isForeignKeyViolation(FORM_INSTANCE_GUID_FOREIGN_KEY) ->
-            throw FormInstanceNotFound()
-        error.isForeignKeyViolation(QUESTION_GUID_FOREIGN_KEY) ->
-            throw FormTemplateQuestionNotFound()
-        else -> throw e
+      error.isForeignKeyViolation(FORM_INSTANCE_GUID_FOREIGN_KEY) ->
+        throw FormInstanceNotFound()
+      error.isForeignKeyViolation(QUESTION_GUID_FOREIGN_KEY) ->
+        throw FormTemplateQuestionNotFound()
+      else -> throw e
     }
   }
 
@@ -81,9 +81,9 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
         .bindKotlin(FormInstanceQuestionEntity.Update(update))
         .execute()
       return@inTransaction when (updateCount) {
-          0 -> throw FormInstanceQuestionNotFound()
-          1 -> checkNotNull(get(formInstanceGuid, questionGuid))
-          else -> badSql()
+        0 -> throw FormInstanceQuestionNotFound()
+        1 -> checkNotNull(get(formInstanceGuid, questionGuid))
+        else -> badSql()
       }
     }
   }
@@ -102,9 +102,9 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
         .bind("questionGuid", questionGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw FormInstanceQuestionNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw FormInstanceQuestionNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

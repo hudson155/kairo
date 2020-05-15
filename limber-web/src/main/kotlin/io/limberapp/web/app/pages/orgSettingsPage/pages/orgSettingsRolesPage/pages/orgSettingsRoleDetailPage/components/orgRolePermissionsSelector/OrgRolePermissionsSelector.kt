@@ -84,8 +84,8 @@ private val component = functionalComponent<Props> { props ->
   val global = useGlobalState()
   val isMounted = useIsMounted()
 
-    val (state, setState) = useState(State.DEFAULT)
-    val (permissions, setPermissions) = useState(props.orgRole.permissions)
+  val (state, setState) = useState(State.DEFAULT)
+  val (permissions, setPermissions) = useState(props.orgRole.permissions)
 
   val orgGuid = checkNotNull(global.state.org.state).guid
 

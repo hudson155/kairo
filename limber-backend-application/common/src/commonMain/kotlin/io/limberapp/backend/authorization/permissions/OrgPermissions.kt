@@ -8,6 +8,8 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.PrimitiveDescriptor
 import kotlinx.serialization.PrimitiveKind
 import kotlinx.serialization.Serializable
+import kotlin.collections.indices
+import kotlin.collections.map
 
 /**
  * All permissions, in the correct order, with a quick sanity check on the digits. If this sanity check fails, double

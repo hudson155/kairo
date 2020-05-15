@@ -49,7 +49,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
     var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
-        as FormTemplateTextQuestionRep.Complete
+      as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
     )

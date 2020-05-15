@@ -31,9 +31,9 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-        error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
-        error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT) -> throw FeatureIsNotUnique()
-        else -> throw e
+      error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
+      error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT) -> throw FeatureIsNotUnique()
+      else -> throw e
     }
   }
 
@@ -86,9 +86,9 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         handleUpdateError(e)
       }
       return@inTransaction when (updateCount) {
-          0 -> throw FeatureNotFound()
-          1 -> checkNotNull(get(featureGuid))
-          else -> badSql()
+        0 -> throw FeatureNotFound()
+        1 -> checkNotNull(get(featureGuid))
+        else -> badSql()
       }
     }
   }
@@ -112,9 +112,9 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         .bind("featureGuid", featureGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw FeatureNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw FeatureNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

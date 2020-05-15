@@ -11,7 +11,7 @@ internal class ResourceCache {
   fun get(resourceName: String): String = cache.getOrPut(resourceName) {
     try {
       return@getOrPut this::class.java.getResourceAsStream(resourceName)
-        .bufferedReader().use { it.readText() }
+          .bufferedReader().use { it.readText() }
     } catch (e: IllegalStateException) {
       throw IllegalStateException("Could not load $resourceName", e)
     }

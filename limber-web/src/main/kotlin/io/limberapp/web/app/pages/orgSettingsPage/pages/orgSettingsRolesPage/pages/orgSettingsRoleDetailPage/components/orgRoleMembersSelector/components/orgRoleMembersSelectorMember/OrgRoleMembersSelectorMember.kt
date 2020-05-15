@@ -104,15 +104,15 @@ private enum class State { DEFAULT, ADDING, ADD_SAVING, REMOVING, REMOVE_SAVING 
 
 private val component = functionalComponent<Props> { props ->
 
-    val (state, setState) = useState(State.DEFAULT)
+  val (state, setState) = useState(State.DEFAULT)
 
   div(
     classes = classes(
       styles.getClassName { it::container },
       when (state) {
-          State.DEFAULT -> null
-          State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
-          State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
+        State.DEFAULT -> null
+        State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
+        State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
       }
     )
   ) {

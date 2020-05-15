@@ -62,18 +62,18 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = response.content!!
       val expected = "{\n" +
-          "    \"org\": \"{" +
-          "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
-          "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-          "\\\"permissions\\\":\\\"${OrgPermissions.none()}\\\"," +
-          "\\\"featureGuids\\\":[]" +
-          "}\",\n" +
-          "    \"roles\": \"[]\",\n" +
-          "    \"user\": \"{" +
-          "\\\"guid\\\":\\\"$userGuid\\\"," +
-          "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
-          "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
-          "}"
+        "    \"org\": \"{" +
+        "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
+        "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+        "\\\"permissions\\\":\\\"${OrgPermissions.none()}\\\"," +
+        "\\\"featureGuids\\\":[]" +
+        "}\",\n" +
+        "    \"roles\": \"[]\",\n" +
+        "    \"user\": \"{" +
+        "\\\"guid\\\":\\\"$userGuid\\\"," +
+        "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
+        "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
+        "}"
       assertEquals(expected, actual)
     }
   }
@@ -164,18 +164,18 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = response.content!!
       val expected = "{\n" +
-          "    \"org\": \"{" +
-          "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
-          "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-          "\\\"permissions\\\":\\\"${orgPermissions}\\\"," +
-          "\\\"featureGuids\\\":[]" +
-          "}\",\n" +
-          "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
-          "    \"user\": \"{" +
-          "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
-          "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
-          "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
-          "}"
+        "    \"org\": \"{" +
+        "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
+        "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+        "\\\"permissions\\\":\\\"${orgPermissions}\\\"," +
+        "\\\"featureGuids\\\":[]" +
+        "}\",\n" +
+        "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
+        "    \"user\": \"{" +
+        "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
+        "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
+        "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
+        "}"
       assertEquals(expected, actual)
     }
   }

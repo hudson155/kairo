@@ -8,9 +8,9 @@ object BitStringEncoder {
 
   fun decode(bitString: String): List<Boolean> = bitString.map {
     return@map when (it) {
-        '0' -> false
-        '1' -> true
-        else -> throw IllegalArgumentException()
+      '0' -> false
+      '1' -> true
+      else -> throw IllegalArgumentException()
     }
   }
 }

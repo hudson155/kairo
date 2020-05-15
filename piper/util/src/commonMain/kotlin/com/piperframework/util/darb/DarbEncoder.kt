@@ -37,19 +37,19 @@ object DarbEncoder {
   }
 
   fun decode(darb: String): List<Boolean> {
-      val (size, hex) = getComponentsOrNull(darb) ?: error("Invalid DARB: $darb")
+    val (size, hex) = getComponentsOrNull(darb) ?: error("Invalid DARB: $darb")
 
     // Map each hex to a list of 4 digits representing the hex in binary.
     val booleanList = hex.flatMap {
       // intValue is the value of the hex character from 0 to 15 (inclusive).
       val intValue = when (it) {
         // 0 through 9 are represented by digits.
-          in CharRange('0', '9') -> it.toInt() - '0'.toInt()
+        in CharRange('0', '9') -> it.toInt() - '0'.toInt()
         // 10 through 15 are represented by capital letters A through F.
-          in CharRange('A', 'F') -> it.toInt() - 'A'.toInt() + 10
-          in CharRange('a', 'f') -> it.toInt() - 'a'.toInt() + 10
+        in CharRange('A', 'F') -> it.toInt() - 'A'.toInt() + 10
+        in CharRange('a', 'f') -> it.toInt() - 'a'.toInt() + 10
         // No other characters are supported.
-          else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException()
       }
 
       return@flatMap listOf(

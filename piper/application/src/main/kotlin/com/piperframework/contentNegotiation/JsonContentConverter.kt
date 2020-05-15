@@ -28,9 +28,9 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
   }
 
   override suspend fun convertForSend(
-    context: PipelineContext<Any, ApplicationCall>,
-    contentType: ContentType,
-    value: Any
+      context: PipelineContext<Any, ApplicationCall>,
+      contentType: ContentType,
+      value: Any
   ): Any? {
     @Suppress("UseIfInsteadOfWhen")
     return when (value) {
