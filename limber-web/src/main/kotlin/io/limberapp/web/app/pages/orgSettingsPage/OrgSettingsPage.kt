@@ -19,20 +19,20 @@ import react.router.dom.switch
  * Parent page for organization-level settings.
  */
 internal fun RBuilder.orgSettingsPage() {
-    child(component)
+  child(component)
 }
 
 internal object OrgSettingsPage {
-    const val name = "Organization settings"
-    const val path = "/settings/org"
+  const val name = "Organization settings"
+  const val path = "/settings/org"
 }
 
 private val component = functionalComponent<RProps> {
-    standardLayout(leftPane = buildElement { orgSettingsSidenav() }) {
-        switch {
-            route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }
-            route(path = OrgSettingsInfoPage.path, exact = true) { buildElement { orgSettingsInfoPage() } }
-            route(path = OrgSettingsRolesPage.path) { buildElement { orgSettingsRolesPage() } }
-        }
+  standardLayout(leftPane = buildElement { orgSettingsSidenav() }) {
+    switch {
+      route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }
+      route(path = OrgSettingsInfoPage.path, exact = true) { buildElement { orgSettingsInfoPage() } }
+      route(path = OrgSettingsRolesPage.path) { buildElement { orgSettingsRolesPage() } }
     }
+  }
 }

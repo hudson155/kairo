@@ -4,19 +4,19 @@ import io.limberapp.web.context.auth.Auth0Config
 import kotlin.js.Promise
 
 internal external interface Auth0Client {
-    fun handleRedirectCallback(): Promise<RedirectCallbackResponse>
-    fun isAuthenticated(): Promise<Boolean>
-    fun loginWithRedirect()
-    fun getTokenSilently(): Promise<String>
-    fun logout(request: Auth0LogoutRequestProps)
+  fun handleRedirectCallback(): Promise<RedirectCallbackResponse>
+  fun isAuthenticated(): Promise<Boolean>
+  fun loginWithRedirect()
+  fun getTokenSilently(): Promise<String>
+  fun logout(request: Auth0LogoutRequestProps)
 }
 
 internal external interface AppState {
-    val targetUrl: String?
+  val targetUrl: String?
 }
 
 internal external interface RedirectCallbackResponse {
-    val appState: AppState?
+  val appState: AppState?
 }
 
 internal data class Auth0LogoutRequestProps(val returnTo: String)

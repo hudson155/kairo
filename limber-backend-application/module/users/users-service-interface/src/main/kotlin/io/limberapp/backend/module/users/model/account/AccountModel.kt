@@ -5,14 +5,14 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class AccountModel(
-    val guid: UUID,
-    val createdDate: LocalDateTime,
-    val identityProvider: Boolean,
-    val superuser: Boolean,
-    val name: String
+  val guid: UUID,
+  val createdDate: LocalDateTime,
+  val identityProvider: Boolean,
+  val superuser: Boolean,
+  val name: String
 ) {
-    fun hasRole(role: JwtRole) = when (role) {
-        JwtRole.IDENTITY_PROVIDER -> identityProvider
-        JwtRole.SUPERUSER -> superuser
-    }
+  fun hasRole(role: JwtRole) = when (role) {
+    JwtRole.IDENTITY_PROVIDER -> identityProvider
+    JwtRole.SUPERUSER -> superuser
+  }
 }

@@ -10,15 +10,15 @@ import react.functionalComponent
  * Redirects to sign out.
  */
 internal fun RBuilder.signOutPage() {
-    child(component)
+  child(component)
 }
 
 internal object SignOutPage {
-    const val name = "Sign out"
-    const val path = "/signout"
+  const val name = "Sign out"
+  const val path = "/signout"
 }
 
 private val component = functionalComponent<RProps> {
-    val auth = useAuth()
-    auth.signOut()
+  val auth = useAuth()
+  auth.signOut()
 }

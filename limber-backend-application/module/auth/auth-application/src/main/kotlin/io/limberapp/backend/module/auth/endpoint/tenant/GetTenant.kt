@@ -19,23 +19,23 @@ import java.util.UUID
  * Returns a single tenant.
  */
 internal class GetTenant @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val tenantService: TenantService,
-    private val tenantDomainService: TenantDomainService,
-    private val tenantMapper: TenantMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val tenantService: TenantService,
+  private val tenantDomainService: TenantDomainService,
+  private val tenantMapper: TenantMapper
 ) : LimberApiEndpoint<TenantApi.Get, TenantRep.Complete>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = TenantApi.Get::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = TenantApi.Get::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Get(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Get(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+  )
 
-    override suspend fun Handler.handle(command: TenantApi.Get): TenantRep.Complete {
-        Authorization.Public.authorize()
-        val tenant = tenantService.get(command.orgGuid) ?: throw TenantNotFound()
-        val domains = tenantDomainService.getByOrgGuid(command.orgGuid)
-        return tenantMapper.completeRep(tenant, domains)
-    }
+  override suspend fun Handler.handle(command: TenantApi.Get): TenantRep.Complete {
+    Authorization.Public.authorize()
+    val tenant = tenantService.get(command.orgGuid) ?: throw TenantNotFound()
+    val domains = tenantDomainService.getByOrgGuid(command.orgGuid)
+    return tenantMapper.completeRep(tenant, domains)
+  }
 }

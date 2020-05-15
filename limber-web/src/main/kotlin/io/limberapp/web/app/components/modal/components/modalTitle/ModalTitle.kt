@@ -10,11 +10,11 @@ import react.functionalComponent
  * The title at the top of a modal, plus an optional description. All modals should have one of these.
  */
 internal fun RBuilder.modalTitle(title: String, description: String? = null) {
-    child(component, Props(title, description))
+  child(component, Props(title, description))
 }
 
 internal data class Props(val title: String, val description: String?) : RProps
 
 private val component = functionalComponent<Props> { props ->
-    layoutSectionTitle(props.title, props.description)
+  layoutSectionTitle(props.title, props.description)
 }

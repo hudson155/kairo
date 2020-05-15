@@ -14,17 +14,17 @@ import react.functionalComponent
  * semantically-appropriate HTML element (<header>, <main>, <footer>).
  */
 internal fun RBuilder.page(
-    header: ReactElement? = null,
-    footer: ReactElement? = null,
-    children: RBuilder.() -> Unit
+  header: ReactElement? = null,
+  footer: ReactElement? = null,
+  children: RBuilder.() -> Unit
 ) {
-    child(component, Props(header, footer), handler = children)
+  child(component, Props(header, footer), handler = children)
 }
 
 internal data class Props(val header: ReactElement?, val footer: ReactElement?) : RProps
 
 private val component = functionalComponent<Props> { props ->
-    props.header?.let { header { child(it) } }
-    main { props.children() }
-    props.footer?.let { footer { child(it) } }
+  props.header?.let { header { child(it) } }
+  main { props.children() }
+  props.footer?.let { footer { child(it) } }
 }

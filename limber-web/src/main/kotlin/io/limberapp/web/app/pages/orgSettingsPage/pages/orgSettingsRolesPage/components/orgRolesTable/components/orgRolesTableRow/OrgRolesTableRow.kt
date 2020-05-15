@@ -19,23 +19,23 @@ import styled.getClassName
  * An individual row for an org role in the org roles table.
  */
 internal fun RBuilder.orgRolesTableRow(children: RHandler<RProps>) {
-    child(component, handler = children)
+  child(component, handler = children)
 }
 
 private val styles = object : Styles("OrgRolesTableRow") {
-    val row by css {
-        borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
-        lastOfType {
-            borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
-        }
-        hover {
-            backgroundColor = Theme.Color.Background.lightActive
-        }
+  val row by css {
+    borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    lastOfType {
+      borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     }
+    hover {
+      backgroundColor = Theme.Color.Background.lightActive
+    }
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
-    tr(classes = styles.getClassName { it::row }) {
-        props.children()
-    }
+  tr(classes = styles.getClassName { it::row }) {
+    props.children()
+  }
 }

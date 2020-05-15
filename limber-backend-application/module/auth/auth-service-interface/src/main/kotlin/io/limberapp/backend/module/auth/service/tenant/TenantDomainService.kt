@@ -4,9 +4,9 @@ import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import java.util.UUID
 
 interface TenantDomainService {
-    fun create(model: TenantDomainModel)
+  fun create(model: TenantDomainModel)
 
-    fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel>
+  fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel>
 
-    fun delete(orgGuid: UUID, domain: String)
+  fun delete(orgGuid: UUID, domain: String)
 }

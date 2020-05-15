@@ -17,22 +17,22 @@ import java.util.UUID
  * Returns all form instances within the feature.
  */
 internal class GetFormInstancesByFeatureGuid @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formInstanceService: FormInstanceService,
-    private val formInstanceMapper: FormInstanceMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formInstanceService: FormInstanceService,
+  private val formInstanceMapper: FormInstanceMapper
 ) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, Set<FormInstanceRep.Summary>>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.GetByFeatureGuid(
-        featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.GetByFeatureGuid(
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
+  )
 
-    override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
-        Authorization.HasAccessToFeature(command.featureGuid).authorize()
-        val formInstances = formInstanceService.getByFeatureGuid(command.featureGuid)
-        return formInstances.map { formInstanceMapper.summaryRep(it) }.toSet()
-    }
+  override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
+    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    val formInstances = formInstanceService.getByFeatureGuid(command.featureGuid)
+    return formInstances.map { formInstanceMapper.summaryRep(it) }.toSet()
+  }
 }

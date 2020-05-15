@@ -1,23 +1,23 @@
 package io.limberapp.web.context
 
 internal data class LoadableState<State : Any>(val loadingStatus: LoadingStatus, val state: State?) {
-    enum class LoadingStatus { INITIAL, LOADING, LOADED }
+  enum class LoadingStatus { INITIAL, LOADING, LOADED }
 
-    val hasBegunLoading = loadingStatus != LoadingStatus.INITIAL
+  val hasBegunLoading = loadingStatus != LoadingStatus.INITIAL
 
-    val isLoaded = loadingStatus == LoadingStatus.LOADED
+  val isLoaded = loadingStatus == LoadingStatus.LOADED
 
-    fun loading() = copy(loadingStatus = LoadingStatus.LOADING)
+  fun loading() = copy(loadingStatus = LoadingStatus.LOADING)
 
-    fun loaded(state: State) = copy(
-        loadingStatus = LoadingStatus.LOADED,
-        state = state
-    )
+  fun loaded(state: State) = copy(
+    loadingStatus = LoadingStatus.LOADED,
+    state = state
+  )
 
-    fun update(function: (State?) -> State) = copy(state = function(state))
+  fun update(function: (State?) -> State) = copy(state = function(state))
 
-    companion object {
-        fun <State : Any> initial() = LoadableState<State>(LoadingStatus.INITIAL, null)
-        fun <State : Any> loading() = LoadableState<State>(LoadingStatus.LOADING, null)
-    }
+  companion object {
+    fun <State : Any> initial() = LoadableState<State>(LoadingStatus.INITIAL, null)
+    fun <State : Any> loading() = LoadableState<State>(LoadingStatus.LOADING, null)
+  }
 }

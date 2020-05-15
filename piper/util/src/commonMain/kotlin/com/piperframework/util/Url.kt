@@ -20,14 +20,14 @@ fun String.slugify() = enc(toLowerCase())
  */
 @Suppress("UnusedPrivateMember") // False positive - Detekt bug?
 fun href(path: String, queryParams: List<Pair<String, String>> = emptyList()): String {
-    val queryString = queryParams.joinToString("&") { "${it.first}=${it.second}" }
-    var href = path
-    if (queryString.isNotEmpty()) href += "?$queryString"
-    return href
+  val queryString = queryParams.joinToString("&") { "${it.first}=${it.second}" }
+  var href = path
+  if (queryString.isNotEmpty()) href += "?$queryString"
+  return href
 }
 
 /**
  * Replaces the last component of a path (where components are separated by slashes) with the given value.
  */
 fun String.replaceLastPathComponentWith(value: String) =
-    "${split('/').dropLastWhile { it.isEmpty() }.dropLast(1).joinToString("/")}/$value"
+  "${split('/').dropLastWhile { it.isEmpty() }.dropLast(1).joinToString("/")}/$value"

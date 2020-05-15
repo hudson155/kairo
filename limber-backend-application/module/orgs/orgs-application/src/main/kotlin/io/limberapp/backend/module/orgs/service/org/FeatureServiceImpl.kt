@@ -10,40 +10,40 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal class FeatureServiceImpl @Inject constructor(
-    private val clock: Clock,
-    private val uuidGenerator: UuidGenerator,
-    private val featureStore: FeatureStore
+  private val clock: Clock,
+  private val uuidGenerator: UuidGenerator,
+  private val featureStore: FeatureStore
 ) : FeatureService {
-    override fun createDefaults(orgGuid: UUID): Set<FeatureModel> {
-        require(featureStore.getByOrgGuid(orgGuid).isEmpty())
-        val feature = FeatureModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            orgGuid = orgGuid,
-            name = "Home",
-            path = "/home",
-            type = FeatureModel.Type.HOME,
-            isDefaultFeature = true
-        )
-        featureStore.create(feature)
-        return setOf(feature)
-    }
+  override fun createDefaults(orgGuid: UUID): Set<FeatureModel> {
+    require(featureStore.getByOrgGuid(orgGuid).isEmpty())
+    val feature = FeatureModel(
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      orgGuid = orgGuid,
+      name = "Home",
+      path = "/home",
+      type = FeatureModel.Type.HOME,
+      isDefaultFeature = true
+    )
+    featureStore.create(feature)
+    return setOf(feature)
+  }
 
-    override fun create(model: FeatureModel) = featureStore.create(model)
+  override fun create(model: FeatureModel) = featureStore.create(model)
 
-    override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
+  override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
 
-    override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
-        checkFeatureGuid(orgGuid, featureGuid)
-        return featureStore.update(orgGuid, featureGuid, update)
-    }
+  override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
+    checkFeatureGuid(orgGuid, featureGuid)
+    return featureStore.update(orgGuid, featureGuid, update)
+  }
 
-    override fun delete(orgGuid: UUID, featureGuid: UUID) {
-        checkFeatureGuid(orgGuid, featureGuid)
-        featureStore.delete(featureGuid)
-    }
+  override fun delete(orgGuid: UUID, featureGuid: UUID) {
+    checkFeatureGuid(orgGuid, featureGuid)
+    featureStore.delete(featureGuid)
+  }
 
-    private fun checkFeatureGuid(orgGuid: UUID, featureGuid: UUID) {
-        if (featureStore.get(featureGuid)?.orgGuid != orgGuid) throw FeatureNotFound()
-    }
+  private fun checkFeatureGuid(orgGuid: UUID, featureGuid: UUID) {
+    if (featureStore.get(featureGuid)?.orgGuid != orgGuid) throw FeatureNotFound()
+  }
 }

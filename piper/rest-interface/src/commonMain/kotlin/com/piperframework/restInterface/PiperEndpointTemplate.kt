@@ -5,7 +5,7 @@ package com.piperframework.restInterface
  * the required query parameters.
  */
 data class PiperEndpointTemplate(
-    val httpMethod: HttpMethod,
-    val pathTemplate: String,
-    val requiredQueryParams: Set<String>
+  val httpMethod: HttpMethod,
+  val pathTemplate: String,
+  val requiredQueryParams: Set<String>
 )

@@ -17,23 +17,23 @@ import io.limberapp.backend.module.users.service.account.UserService
  * Creates a new user.
  */
 internal class PostUser @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val userService: UserService,
-    private val userMapper: UserMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val userService: UserService,
+  private val userMapper: UserMapper
 ) : LimberApiEndpoint<UserApi.Post, UserRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = UserApi.Post::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = UserApi.Post::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = UserApi.Post(
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = UserApi.Post(
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: UserApi.Post): UserRep.Complete {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val user = userMapper.model(command.rep.required())
-        userService.create(user)
-        return userMapper.completeRep(user)
-    }
+  override suspend fun Handler.handle(command: UserApi.Post): UserRep.Complete {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    val user = userMapper.model(command.rep.required())
+    userService.create(user)
+    return userMapper.completeRep(user)
+  }
 }

@@ -5,8 +5,8 @@ import com.piperframework.restInterface.PiperEndpoint
 
 @Suppress("StringLiteralDuplication")
 object HealthCheckApi {
-    object Get : PiperEndpoint(
-        httpMethod = HttpMethod.GET,
-        path = "/health-check"
-    )
+  object Get : PiperEndpoint(
+    httpMethod = HttpMethod.GET,
+    path = "/health-check"
+  )
 }

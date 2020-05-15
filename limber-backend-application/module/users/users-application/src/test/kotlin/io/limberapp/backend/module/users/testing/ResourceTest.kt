@@ -7,19 +7,19 @@ import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.backend.test.LimberResourceTest
 
 abstract class ResourceTest : LimberResourceTest() {
-    override val module = UsersModule()
+  override val module = UsersModule()
 
-    private val testSqlModule = TestSqlModule()
+  private val testSqlModule = TestSqlModule()
 
-    protected val mockedServices: MockedServices = MockedServices(OrgService::class)
+  protected val mockedServices: MockedServices = MockedServices(OrgService::class)
 
-    override val additionalModules = setOf(mockedServices, testSqlModule)
+  override val additionalModules = setOf(mockedServices, testSqlModule)
 
-    override fun before() {
-        testSqlModule.dropDatabase()
-    }
+  override fun before() {
+    testSqlModule.dropDatabase()
+  }
 
-    override fun after() {
-        testSqlModule.unconfigure()
-    }
+  override fun after() {
+    testSqlModule.unconfigure()
+  }
 }

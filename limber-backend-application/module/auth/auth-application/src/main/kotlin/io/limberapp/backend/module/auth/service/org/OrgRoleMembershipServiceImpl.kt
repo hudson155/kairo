@@ -8,25 +8,25 @@ import io.limberapp.backend.module.auth.store.org.OrgRoleStore
 import java.util.UUID
 
 internal class OrgRoleMembershipServiceImpl @Inject constructor(
-    private val orgRoleStore: OrgRoleStore,
-    private val orgRoleMembershipStore: OrgRoleMembershipStore
+  private val orgRoleStore: OrgRoleStore,
+  private val orgRoleMembershipStore: OrgRoleMembershipStore
 ) : OrgRoleMembershipService {
-    override fun create(orgGuid: UUID, model: OrgRoleMembershipModel) {
-        checkOrgRoleGuid(orgGuid, model.orgRoleGuid)
-        orgRoleMembershipStore.create(model)
-    }
+  override fun create(orgGuid: UUID, model: OrgRoleMembershipModel) {
+    checkOrgRoleGuid(orgGuid, model.orgRoleGuid)
+    orgRoleMembershipStore.create(model)
+  }
 
-    override fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel> {
-        checkOrgRoleGuid(orgGuid, orgRoleGuid)
-        return orgRoleMembershipStore.getByOrgRoleGuid(orgRoleGuid)
-    }
+  override fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel> {
+    checkOrgRoleGuid(orgGuid, orgRoleGuid)
+    return orgRoleMembershipStore.getByOrgRoleGuid(orgRoleGuid)
+  }
 
-    override fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID) {
-        checkOrgRoleGuid(orgGuid, orgRoleGuid)
-        orgRoleMembershipStore.delete(orgRoleGuid, accountGuid)
-    }
+  override fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID) {
+    checkOrgRoleGuid(orgGuid, orgRoleGuid)
+    orgRoleMembershipStore.delete(orgRoleGuid, accountGuid)
+  }
 
-    private fun checkOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID) {
-        if (orgRoleStore.get(orgRoleGuid)?.orgGuid != orgGuid) throw OrgRoleNotFound()
-    }
+  private fun checkOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID) {
+    if (orgRoleStore.get(orgRoleGuid)?.orgGuid != orgGuid) throw OrgRoleNotFound()
+  }
 }

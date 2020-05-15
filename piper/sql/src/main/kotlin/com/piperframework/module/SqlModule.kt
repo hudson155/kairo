@@ -13,24 +13,24 @@ import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
  */
 @Suppress("LateinitUsage")
 open class SqlModule(config: SqlDatabaseConfig) : ModuleWithLifecycle() {
-    protected val wrapper = SqlWrapper(config)
+  protected val wrapper = SqlWrapper(config)
 
-    override fun configure() {
-        wrapper.connect()
-        wrapper.runMigrations()
-        bind(Jdbi::class.java).toInstance(createJdbi())
-    }
+  override fun configure() {
+    wrapper.connect()
+    wrapper.runMigrations()
+    bind(Jdbi::class.java).toInstance(createJdbi())
+  }
 
-    private fun createJdbi() = Jdbi.create(checkNotNull(wrapper.dataSource))
-        .installPlugin(KotlinPlugin())
-        .installPlugin(KotlinSqlObjectPlugin())
-        .installPlugin(PostgresPlugin())
-        .registerJdbiType(JdbiRegexType)
-        .apply { configureJdbi() }
+  private fun createJdbi() = Jdbi.create(checkNotNull(wrapper.dataSource))
+    .installPlugin(KotlinPlugin())
+    .installPlugin(KotlinSqlObjectPlugin())
+    .installPlugin(PostgresPlugin())
+    .registerJdbiType(JdbiRegexType)
+    .apply { configureJdbi() }
 
-    protected open fun Jdbi.configureJdbi() {}
+  protected open fun Jdbi.configureJdbi() {}
 
-    override fun unconfigure() {
-        wrapper.disconnect()
-    }
+  override fun unconfigure() {
+    wrapper.disconnect()
+  }
 }

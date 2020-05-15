@@ -10,35 +10,35 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostUserTest : ResourceTest() {
-    @Test
-    fun duplicateEmailAddress() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun duplicateEmailAddress() {
+    val orgGuid = UUID.randomUUID()
 
-        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        piperTest.test(
-            endpoint = UserApi.Post(
-                rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
-                    .copy(emailAddress = jeffHudsonUserRep.emailAddress)
-            ),
-            expectedException = EmailAddressAlreadyTaken()
-        )
+    piperTest.test(
+      endpoint = UserApi.Post(
+        rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
+          .copy(emailAddress = jeffHudsonUserRep.emailAddress)
+      ),
+      expectedException = EmailAddressAlreadyTaken()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
+
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
 
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
-
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
+  }
 }

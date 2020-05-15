@@ -9,9 +9,9 @@ import react.functionalComponent
  * Delegate for the application root.
  */
 internal fun RBuilder.app() {
-    child(component)
+  child(component)
 }
 
 private val component = functionalComponent<RProps> {
-    appWithGlobalState()
+  appWithGlobalState()
 }

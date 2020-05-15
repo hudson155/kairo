@@ -18,25 +18,25 @@ import java.util.UUID
  * Deletes an org role's information.
  */
 internal class PatchOrgRole @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val orgRoleService: OrgRoleService,
-    private val orgRoleMapper: OrgRoleMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val orgRoleService: OrgRoleService,
+  private val orgRoleMapper: OrgRoleMapper
 ) : LimberApiEndpoint<OrgRoleApi.Patch, OrgRoleRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgRoleApi.Patch::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgRoleApi.Patch::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgRoleApi.Patch(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgRoleApi.Patch(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: OrgRoleApi.Patch): OrgRoleRep.Complete {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
-        val update = orgRoleMapper.update(command.rep.required())
-        val orgRole = orgRoleService.update(command.orgGuid, command.orgRoleGuid, update)
-        return orgRoleMapper.completeRep(orgRole)
-    }
+  override suspend fun Handler.handle(command: OrgRoleApi.Patch): OrgRoleRep.Complete {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
+    val update = orgRoleMapper.update(command.rep.required())
+    val orgRole = orgRoleService.update(command.orgGuid, command.orgRoleGuid, update)
+    return orgRoleMapper.completeRep(orgRole)
+  }
 }

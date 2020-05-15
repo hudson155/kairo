@@ -8,10 +8,10 @@ import com.piperframework.util.href
  */
 @Suppress("UnnecessaryAbstractClass")
 abstract class PiperEndpoint(
-    val httpMethod: HttpMethod,
-    val path: String,
-    val queryParams: List<Pair<String, String>> = emptyList(),
-    val body: ValidatedRep? = null
+  val httpMethod: HttpMethod,
+  val path: String,
+  val queryParams: List<Pair<String, String>> = emptyList(),
+  val body: ValidatedRep? = null
 ) {
-    val href = href(path, queryParams)
+  val href = href(path, queryParams)
 }

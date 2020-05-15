@@ -10,38 +10,38 @@ import com.piperframework.validation.RepValidation
 import kotlinx.serialization.Serializable
 
 object FormInstanceRep {
-    @Serializable
-    data class Creation(
-        @Serializable(with = UuidSerializer::class)
-        val featureGuid: UUID,
-        @Serializable(with = UuidSerializer::class)
-        val formTemplateGuid: UUID
-    ) : CreationRep {
-        override fun validate() = RepValidation {}
-    }
+  @Serializable
+  data class Creation(
+    @Serializable(with = UuidSerializer::class)
+    val featureGuid: UUID,
+    @Serializable(with = UuidSerializer::class)
+    val formTemplateGuid: UUID
+  ) : CreationRep {
+    override fun validate() = RepValidation {}
+  }
 
-    @Serializable
-    data class Summary(
-        @Serializable(with = UuidSerializer::class)
-        val guid: UUID,
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        val featureGuid: UUID,
-        @Serializable(with = UuidSerializer::class)
-        val formTemplateGuid: UUID
-    ) : CompleteRep
+  @Serializable
+  data class Summary(
+    @Serializable(with = UuidSerializer::class)
+    val guid: UUID,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    val featureGuid: UUID,
+    @Serializable(with = UuidSerializer::class)
+    val formTemplateGuid: UUID
+  ) : CompleteRep
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = UuidSerializer::class)
-        val guid: UUID,
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        val featureGuid: UUID,
-        @Serializable(with = UuidSerializer::class)
-        val formTemplateGuid: UUID,
-        val questions: List<FormInstanceQuestionRep.Complete>
-    ) : CompleteRep
+  @Serializable
+  data class Complete(
+    @Serializable(with = UuidSerializer::class)
+    val guid: UUID,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    val featureGuid: UUID,
+    @Serializable(with = UuidSerializer::class)
+    val formTemplateGuid: UUID,
+    val questions: List<FormInstanceQuestionRep.Complete>
+  ) : CompleteRep
 }

@@ -13,35 +13,35 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object TenantRep {
-    @Serializable
-    data class Creation(
-        @Serializable(with = UuidSerializer::class)
-        val orgGuid: UUID,
-        val auth0ClientId: String,
-        val domain: TenantDomainRep.Creation
-    ) : CreationRep {
-        override fun validate() = RepValidation {
-            validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
-            validate(Creation::domain)
-        }
+  @Serializable
+  data class Creation(
+    @Serializable(with = UuidSerializer::class)
+    val orgGuid: UUID,
+    val auth0ClientId: String,
+    val domain: TenantDomainRep.Creation
+  ) : CreationRep {
+    override fun validate() = RepValidation {
+      validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
+      validate(Creation::domain)
     }
+  }
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        val orgGuid: UUID,
-        val auth0ClientId: String,
-        val domains: Set<TenantDomainRep.Complete>
-    ) : CompleteRep
+  @Serializable
+  data class Complete(
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    val orgGuid: UUID,
+    val auth0ClientId: String,
+    val domains: Set<TenantDomainRep.Complete>
+  ) : CompleteRep
 
-    @Serializable
-    data class Update(
-        val auth0ClientId: String? = null
-    ) : UpdateRep {
-        override fun validate() = RepValidation {
-            validate(Update::auth0ClientId) { ifPresent { Validator.auth0ClientId(value) } }
-        }
+  @Serializable
+  data class Update(
+    val auth0ClientId: String? = null
+  ) : UpdateRep {
+    override fun validate() = RepValidation {
+      validate(Update::auth0ClientId) { ifPresent { Validator.auth0ClientId(value) } }
     }
+  }
 }

@@ -7,14 +7,14 @@ import io.limberapp.backend.module.auth.store.tenant.TenantDomainStore
 import java.util.UUID
 
 internal class TenantDomainServiceImpl @Inject constructor(
-    private val tenantDomainStore: TenantDomainStore
+  private val tenantDomainStore: TenantDomainStore
 ) : TenantDomainService {
-    override fun create(model: TenantDomainModel) = tenantDomainStore.create(model)
+  override fun create(model: TenantDomainModel) = tenantDomainStore.create(model)
 
-    override fun getByOrgGuid(orgGuid: UUID) = tenantDomainStore.getByOrgGuid(orgGuid)
+  override fun getByOrgGuid(orgGuid: UUID) = tenantDomainStore.getByOrgGuid(orgGuid)
 
-    override fun delete(orgGuid: UUID, domain: String) {
-        if (tenantDomainStore.get(domain)?.orgGuid != orgGuid) throw TenantDomainNotFound()
-        tenantDomainStore.delete(domain)
-    }
+  override fun delete(orgGuid: UUID, domain: String) {
+    if (tenantDomainStore.get(domain)?.orgGuid != orgGuid) throw TenantDomainNotFound()
+    tenantDomainStore.delete(domain)
+  }
 }

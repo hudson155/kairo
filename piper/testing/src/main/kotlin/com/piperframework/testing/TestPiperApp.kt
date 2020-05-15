@@ -10,15 +10,15 @@ import io.ktor.application.Application
 import java.time.Clock
 
 abstract class TestPiperApp(
-    application: Application,
-    config: Config,
-    module: Module,
-    private val additionalModules: Set<ModuleWithLifecycle>,
-    private val fixedClock: Clock,
-    private val deterministicUuidGenerator: UuidGenerator
+  application: Application,
+  config: Config,
+  module: Module,
+  private val additionalModules: Set<ModuleWithLifecycle>,
+  private val fixedClock: Clock,
+  private val deterministicUuidGenerator: UuidGenerator
 ) : SimplePiperApp<Config>(application, config) {
-    final override fun getMainModules(application: Application) =
-        listOf(MainModule(application, fixedClock, config, deterministicUuidGenerator)).plus(additionalModules)
+  final override fun getMainModules(application: Application) =
+    listOf(MainModule(application, fixedClock, config, deterministicUuidGenerator)).plus(additionalModules)
 
-    final override val modules = listOf(module)
+  final override val modules = listOf(module)
 }

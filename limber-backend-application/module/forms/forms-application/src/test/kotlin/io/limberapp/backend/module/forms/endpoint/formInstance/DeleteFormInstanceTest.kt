@@ -10,33 +10,33 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteFormInstanceTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val formInstanceGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val formInstanceGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = FormInstanceApi.Delete(formInstanceGuid),
-            expectedException = FormInstanceNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = FormInstanceApi.Delete(formInstanceGuid),
+      expectedException = FormInstanceNotFound()
+    )
+  }
 
-    @Test
-    fun happyPath() {
-        val featureGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val featureGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
-        piperTest.setup(
-            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
-        )
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+    )
 
-        piperTest.test(FormInstanceApi.Delete(formInstanceRep.guid)) {}
+    piperTest.test(FormInstanceApi.Delete(formInstanceRep.guid)) {}
 
-        piperTest.test(
-            endpoint = FormInstanceApi.Get(formTemplateRep.guid),
-            expectedException = FormInstanceNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = FormInstanceApi.Get(formTemplateRep.guid),
+      expectedException = FormInstanceNotFound()
+    )
+  }
 }

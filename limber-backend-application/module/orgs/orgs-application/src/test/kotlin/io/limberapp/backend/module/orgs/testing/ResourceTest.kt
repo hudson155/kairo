@@ -5,17 +5,17 @@ import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.test.LimberResourceTest
 
 abstract class ResourceTest : LimberResourceTest() {
-    override val module = OrgsModule()
+  override val module = OrgsModule()
 
-    private val testSqlModule = TestSqlModule()
+  private val testSqlModule = TestSqlModule()
 
-    override val additionalModules = setOf(testSqlModule)
+  override val additionalModules = setOf(testSqlModule)
 
-    override fun before() {
-        testSqlModule.dropDatabase()
-    }
+  override fun before() {
+    testSqlModule.dropDatabase()
+  }
 
-    override fun after() {
-        testSqlModule.unconfigure()
-    }
+  override fun after() {
+    testSqlModule.unconfigure()
+  }
 }

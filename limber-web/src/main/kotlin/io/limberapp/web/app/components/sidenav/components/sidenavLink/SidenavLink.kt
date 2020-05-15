@@ -23,35 +23,35 @@ import styled.getClassName
  * A single link on a sidenav.
  */
 internal fun RBuilder.sidenavLink(to: String, children: RHandler<Props>) {
-    child(component, Props(to), handler = children)
+  child(component, Props(to), handler = children)
 }
 
 internal data class Props(val to: String) : RProps
 
 private val styles = object : Styles("SidenavLink") {
-    val navLink by css {
-        color = Theme.Color.Text.link
-        backgroundColor = Theme.Color.Background.light
-        padding(8.px)
-        borderLeft(2.px, BorderStyle.solid, Color.transparent)
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
-        lastOfType {
-            borderBottomStyle = BorderStyle.none
-        }
-        hover {
-            backgroundColor = Theme.Color.Background.lightActive
-        }
+  val navLink by css {
+    color = Theme.Color.Text.link
+    backgroundColor = Theme.Color.Background.light
+    padding(8.px)
+    borderLeft(2.px, BorderStyle.solid, Color.transparent)
+    borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    lastOfType {
+      borderBottomStyle = BorderStyle.none
     }
-    val activeNavLink by css {
-        borderLeftColor = Theme.Color.smallActiveIndicator
+    hover {
+      backgroundColor = Theme.Color.Background.lightActive
     }
+  }
+  val activeNavLink by css {
+    borderLeftColor = Theme.Color.smallActiveIndicator
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    navLink<RProps>(
-        to = props.to,
-        className = styles.getClassName { it::navLink },
-        activeClassName = styles.getClassName { it::activeNavLink }) {
-        props.children()
-    }
+  navLink<RProps>(
+    to = props.to,
+    className = styles.getClassName { it::navLink },
+    activeClassName = styles.getClassName { it::activeNavLink }) {
+    props.children()
+  }
 }

@@ -22,25 +22,25 @@ import react.functionalComponent
 import styled.getClassName
 
 internal fun RBuilder.tabbedView(vararg tabNames: String) {
-    child(component, Props(tabNames.toList()))
+  child(component, Props(tabNames.toList()))
 }
 
 internal data class Props(val tabNames: List<String>) : RProps
 
 private val styles = object : Styles("TabbedView") {
-    val tabsSection by css {
-        display = Display.flex
-        flexDirection = FlexDirection.row
-        justifyContent = JustifyContent.center
-        paddingBottom = 8.px
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
-    }
+  val tabsSection by css {
+    display = Display.flex
+    flexDirection = FlexDirection.row
+    justifyContent = JustifyContent.center
+    paddingBottom = 8.px
+    borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    div(classes = styles.getClassName { it::tabsSection }) {
-        props.tabNames.forEach {
-            tabbedViewLink(it, it.slugify())
-        }
+  div(classes = styles.getClassName { it::tabsSection }) {
+    props.tabNames.forEach {
+      tabbedViewLink(it, it.slugify())
     }
+  }
 }

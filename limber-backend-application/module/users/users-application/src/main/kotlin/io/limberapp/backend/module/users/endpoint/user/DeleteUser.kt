@@ -15,20 +15,20 @@ import java.util.UUID
  * Deletes an existing user. This will fail if the user is the owner of any orgs.
  */
 internal class DeleteUser @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val userService: UserService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val userService: UserService
 ) : LimberApiEndpoint<UserApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = UserApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = UserApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = UserApi.Delete(
-        userGuid = call.parameters.getAsType(UUID::class, "userGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = UserApi.Delete(
+    userGuid = call.parameters.getAsType(UUID::class, "userGuid")
+  )
 
-    override suspend fun Handler.handle(command: UserApi.Delete) {
-        Authorization.User(command.userGuid).authorize()
-        userService.delete(command.userGuid)
-    }
+  override suspend fun Handler.handle(command: UserApi.Delete) {
+    Authorization.User(command.userGuid).authorize()
+    userService.delete(command.userGuid)
+  }
 }

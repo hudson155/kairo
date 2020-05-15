@@ -13,36 +13,36 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
-    @Test
-    fun happyPathNoFormInstances() {
-        val featureGuid = UUID.randomUUID()
+  @Test
+  fun happyPathNoFormInstances() {
+    val featureGuid = UUID.randomUUID()
 
-        piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
-            assertTrue(actual.isEmpty())
-        }
+    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
+      val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+      assertTrue(actual.isEmpty())
     }
+  }
 
-    @Test
-    fun happyPathMultipleFormInstances() {
-        val featureGuid = UUID.randomUUID()
+  @Test
+  fun happyPathMultipleFormInstances() {
+    val featureGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
-        piperTest.setup(
-            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
-        )
+    val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+    )
 
-        val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 6)
-        piperTest.setup(
-            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
-        )
+    val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 6)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+    )
 
-        piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
-            assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
-        }
+    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
+      val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+      assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
     }
+  }
 }

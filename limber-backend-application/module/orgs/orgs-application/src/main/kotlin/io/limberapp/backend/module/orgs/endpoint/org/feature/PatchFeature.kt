@@ -18,25 +18,25 @@ import java.util.UUID
  * Updates a feature's information.
  */
 internal class PatchFeature @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val featureService: FeatureService,
-    private val featureMapper: FeatureMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val featureService: FeatureService,
+  private val featureMapper: FeatureMapper
 ) : LimberApiEndpoint<OrgFeatureApi.Patch, FeatureRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgFeatureApi.Patch::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgFeatureApi.Patch::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Patch(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Patch(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: OrgFeatureApi.Patch): FeatureRep.Complete {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
-        val update = featureMapper.update(command.rep.required())
-        val feature = featureService.update(command.orgGuid, command.featureGuid, update)
-        return featureMapper.completeRep(feature)
-    }
+  override suspend fun Handler.handle(command: OrgFeatureApi.Patch): FeatureRep.Complete {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
+    val update = featureMapper.update(command.rep.required())
+    val feature = featureService.update(command.orgGuid, command.featureGuid, update)
+    return featureMapper.completeRep(feature)
+  }
 }

@@ -38,42 +38,42 @@ import styled.getClassName
  * that will be assigned to the subnav div, allowing the parent component to detect clicks outside of it.
  */
 internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RProps>) {
-    child(component, Props(node), handler = children)
+  child(component, Props(node), handler = children)
 }
 
 internal data class Props(val node: RMutableRef<Element?>) : RProps
 
 // TODO: In order for this to be truly reusable the positioning likely needs to be altered.
 private val styles = object : Styles("Subnav") {
-    val container by css {
-        val widthPx = 192 // The width of this component.
-        val afterOffsetPx = 22 // How far in the caret ::after element is.
-        val centeringWidth = 32 // Center the caret under a component of this width.
-        alignSelf = Align.flexStart
-        position = Position.relative
-        top = 44.px
-        right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
-        width = widthPx.px
-        marginRight = (-widthPx - 2 * 1).px
-        backgroundColor = Theme.Color.Background.light
-        border(1.px, BorderStyle.solid, Theme.Color.Border.light)
-        borderRadius = Theme.Sizing.borderRadius
-        after {
-            top = (-14).px
-            right = afterOffsetPx.px
-            left = LinearDimension.auto
-            border(7.px, BorderStyle.solid, Color.transparent)
-            borderBottomColor = Theme.Color.Background.light
-            position = Position.absolute
-            display = Display.inlineBlock
-            content = QuotedString("")
-        }
+  val container by css {
+    val widthPx = 192 // The width of this component.
+    val afterOffsetPx = 22 // How far in the caret ::after element is.
+    val centeringWidth = 32 // Center the caret under a component of this width.
+    alignSelf = Align.flexStart
+    position = Position.relative
+    top = 44.px
+    right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
+    width = widthPx.px
+    marginRight = (-widthPx - 2 * 1).px
+    backgroundColor = Theme.Color.Background.light
+    border(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    borderRadius = Theme.Sizing.borderRadius
+    after {
+      top = (-14).px
+      right = afterOffsetPx.px
+      left = LinearDimension.auto
+      border(7.px, BorderStyle.solid, Color.transparent)
+      borderBottomColor = Theme.Color.Background.light
+      position = Position.absolute
+      display = Display.inlineBlock
+      content = QuotedString("")
     }
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    div(classes = styles.getClassName { it::container }) {
-        ref = props.node
-        props.children()
-    }
+  div(classes = styles.getClassName { it::container }) {
+    ref = props.node
+    props.children()
+  }
 }

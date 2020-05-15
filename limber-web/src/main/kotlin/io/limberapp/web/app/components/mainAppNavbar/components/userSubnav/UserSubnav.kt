@@ -25,35 +25,35 @@ import kotlin.browser.document
  * subnav.
  */
 internal fun RBuilder.userSubnav(onUnfocus: () -> Unit) {
-    child(component, Props(onUnfocus))
+  child(component, Props(onUnfocus))
 }
 
 internal data class Props(val onUnfocus: () -> Unit) : RProps
 
 private val component = functionalComponent<Props> { props ->
-    val global = useGlobalState()
-    val node = useRef<Element?>(null)
+  val global = useGlobalState()
+  val node = useRef<Element?>(null)
 
-    val name = checkNotNull(global.state.user.state).fullName
+  val name = checkNotNull(global.state.user.state).fullName
 
-    val handleClick = { _: Event -> props.onUnfocus() }
-    useEffectWithCleanup(emptyList()) {
-        document.addEventListener(EventType.click, handleClick)
-        return@useEffectWithCleanup { document.removeEventListener(EventType.click, handleClick) }
+  val handleClick = { _: Event -> props.onUnfocus() }
+  useEffectWithCleanup(emptyList()) {
+    document.addEventListener(EventType.click, handleClick)
+    return@useEffectWithCleanup { document.removeEventListener(EventType.click, handleClick) }
+  }
+
+  subnav(node) {
+    subnavGroup {
+      subnavItem(hoverable = false) {
+        +"Signed in as"
+        b { +name }
+      }
     }
-
-    subnav(node) {
-        subnavGroup {
-            subnavItem(hoverable = false) {
-                +"Signed in as"
-                b { +name }
-            }
-        }
-        subnavGroup {
-            navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +OrgSettingsPage.name } }
-        }
-        subnavGroup {
-            navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +SignOutPage.name } }
-        }
+    subnavGroup {
+      navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +OrgSettingsPage.name } }
     }
+    subnavGroup {
+      navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +SignOutPage.name } }
+    }
+  }
 }

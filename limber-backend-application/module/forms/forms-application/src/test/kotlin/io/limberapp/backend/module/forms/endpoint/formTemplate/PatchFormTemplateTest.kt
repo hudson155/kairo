@@ -11,34 +11,34 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PatchFormTemplateTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val formTemplateGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val formTemplateGuid = UUID.randomUUID()
 
-        val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
-        piperTest.test(
-            endpoint = FormTemplateApi.Patch(formTemplateGuid, formTemplateUpdateRep),
-            expectedException = FormTemplateNotFound()
-        )
+    val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
+    piperTest.test(
+      endpoint = FormTemplateApi.Patch(formTemplateGuid, formTemplateUpdateRep),
+      expectedException = FormTemplateNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val featureGuid = UUID.randomUUID()
+
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+
+    val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
+    formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
+    piperTest.test(FormTemplateApi.Patch(formTemplateRep.guid, formTemplateUpdateRep)) {
+      val actual = json.parse<FormTemplateRep.Summary>(response.content!!)
+      assertEquals(formTemplateRep.summary(), actual)
     }
 
-    @Test
-    fun happyPath() {
-        val featureGuid = UUID.randomUUID()
-
-        var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
-
-        val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
-        formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
-        piperTest.test(FormTemplateApi.Patch(formTemplateRep.guid, formTemplateUpdateRep)) {
-            val actual = json.parse<FormTemplateRep.Summary>(response.content!!)
-            assertEquals(formTemplateRep.summary(), actual)
-        }
-
-        piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
-            val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
-            assertEquals(formTemplateRep, actual)
-        }
+    piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
+      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      assertEquals(formTemplateRep, actual)
     }
+  }
 }

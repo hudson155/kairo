@@ -12,16 +12,16 @@ import react.functionalComponent
  * Placeholder homepage.
  */
 internal fun RBuilder.homePage() {
-    child(component)
+  child(component)
 }
 
 internal object HomePage {
-    const val name = "Home"
+  const val name = "Home"
 }
 
 private val component = functionalComponent<RProps> {
-    standardLayout {
-        layoutTitle(HomePage.name)
-        p { +"This is the homepage." }
-    }
+  standardLayout {
+    layoutTitle(HomePage.name)
+    p { +"This is the homepage." }
+  }
 }

@@ -16,21 +16,21 @@ import io.limberapp.backend.module.users.service.account.UserServiceImpl
 import kotlinx.serialization.modules.EmptyModule
 
 class UsersModule : Module() {
-    override val serialModule = EmptyModule
+  override val serialModule = EmptyModule
 
-    override val endpoints = listOf(
-        PostUser::class.java,
-        GetUser::class.java,
-        GetUserByEmailAddress::class.java,
-        GetUsersByOrgGuid::class.java,
-        PatchUser::class.java,
-        PutUserRole::class.java,
-        DeleteUserRole::class.java,
-        DeleteUser::class.java
-    )
+  override val endpoints = listOf(
+    PostUser::class.java,
+    GetUser::class.java,
+    GetUserByEmailAddress::class.java,
+    GetUsersByOrgGuid::class.java,
+    PatchUser::class.java,
+    PutUserRole::class.java,
+    DeleteUserRole::class.java,
+    DeleteUser::class.java
+  )
 
-    override fun bindServices() {
-        bind(AccountService::class, AccountServiceImpl::class)
-        bind(UserService::class, UserServiceImpl::class)
-    }
+  override fun bindServices() {
+    bind(AccountService::class, AccountServiceImpl::class)
+    bind(UserService::class, UserServiceImpl::class)
+  }
 }

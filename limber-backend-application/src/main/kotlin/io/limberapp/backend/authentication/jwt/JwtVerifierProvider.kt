@@ -8,24 +8,24 @@ import com.auth0.jwt.algorithms.Algorithm
 import java.security.interfaces.RSAPublicKey
 
 internal sealed class JwtVerifierProvider {
-    abstract operator fun get(keyId: String?): JWTVerifier
+  abstract operator fun get(keyId: String?): JWTVerifier
 }
 
 internal class StaticJwtVerifierProvider(private val jwtVerifier: JWTVerifier) : JwtVerifierProvider() {
-    override fun get(keyId: String?) = jwtVerifier
+  override fun get(keyId: String?) = jwtVerifier
 }
 
 internal class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
-    private val jwkProvider = UrlJwkProvider(domain)
+  private val jwkProvider = UrlJwkProvider(domain)
 
-    override fun get(keyId: String?): JWTVerifier {
-        val algorithm = jwkProvider.get(keyId).makeAlgorithm()
-        return JWT.require(algorithm).build()
-    }
+  override fun get(keyId: String?): JWTVerifier {
+    val algorithm = jwkProvider.get(keyId).makeAlgorithm()
+    return JWT.require(algorithm).build()
+  }
 }
 
 @Suppress("UseIfInsteadOfWhen", "UnsafeCast")
 private fun Jwk.makeAlgorithm(): Algorithm = when (algorithm) {
-    "RS256" -> Algorithm.RSA256(publicKey as RSAPublicKey, null)
-    else -> error("Unsupported algorithm $algorithm")
+  "RS256" -> Algorithm.RSA256(publicKey as RSAPublicKey, null)
+  else -> error("Unsupported algorithm $algorithm")
 }

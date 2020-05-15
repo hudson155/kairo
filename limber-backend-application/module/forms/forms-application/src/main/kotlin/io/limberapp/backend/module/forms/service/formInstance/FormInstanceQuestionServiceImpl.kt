@@ -7,27 +7,27 @@ import io.limberapp.backend.module.forms.store.formInstance.FormInstanceQuestion
 import java.util.UUID
 
 internal class FormInstanceQuestionServiceImpl @Inject constructor(
-    private val formInstanceQuestionStore: FormInstanceQuestionStore,
-    private val formInstanceQuestionMapper: FormInstanceQuestionMapper
+  private val formInstanceQuestionStore: FormInstanceQuestionStore,
+  private val formInstanceQuestionMapper: FormInstanceQuestionMapper
 ) : FormInstanceQuestionService {
-    override fun upsert(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
-        val questionGuid = requireNotNull(model.questionGuid)
-        val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(model.formInstanceGuid, questionGuid)
-        return if (existingFormInstanceQuestionModel == null) {
-            formInstanceQuestionStore.create(model)
-            model
-        } else {
-            formInstanceQuestionStore.update(
-                formInstanceGuid = model.formInstanceGuid,
-                questionGuid = questionGuid,
-                update = formInstanceQuestionMapper.update(model)
-            )
-        }
+  override fun upsert(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
+    val questionGuid = requireNotNull(model.questionGuid)
+    val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(model.formInstanceGuid, questionGuid)
+    return if (existingFormInstanceQuestionModel == null) {
+      formInstanceQuestionStore.create(model)
+      model
+    } else {
+      formInstanceQuestionStore.update(
+        formInstanceGuid = model.formInstanceGuid,
+        questionGuid = questionGuid,
+        update = formInstanceQuestionMapper.update(model)
+      )
     }
+  }
 
-    override fun getByFormInstanceGuid(formInstanceGuid: UUID) =
-        formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid)
+  override fun getByFormInstanceGuid(formInstanceGuid: UUID) =
+    formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid)
 
-    override fun delete(formInstanceGuid: UUID, questionGuid: UUID) =
-        formInstanceQuestionStore.delete(formInstanceGuid, questionGuid)
+  override fun delete(formInstanceGuid: UUID, questionGuid: UUID) =
+    formInstanceQuestionStore.delete(formInstanceGuid, questionGuid)
 }

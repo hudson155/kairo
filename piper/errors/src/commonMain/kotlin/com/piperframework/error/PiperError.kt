@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PiperError(
-    val statusCode: Int,
-    val statusCodeDescription: String,
-    val message: String?
+  val statusCode: Int,
+  val statusCodeDescription: String,
+  val message: String?
 )

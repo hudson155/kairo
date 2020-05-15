@@ -11,21 +11,21 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 object FormInstanceDateQuestionRep {
-    @Serializable
-    @SerialName("DATE")
-    data class Creation(
-        @Serializable(with = LocalDateSerializer::class)
-        val date: LocalDate
-    ) : FormInstanceQuestionRep.Creation
+  @Serializable
+  @SerialName("DATE")
+  data class Creation(
+    @Serializable(with = LocalDateSerializer::class)
+    val date: LocalDate
+  ) : FormInstanceQuestionRep.Creation
 
-    @Serializable
-    @SerialName("DATE")
-    data class Complete(
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        override val questionGuid: UUID?,
-        @Serializable(with = LocalDateSerializer::class)
-        val date: LocalDate
-    ) : FormInstanceQuestionRep.Complete
+  @Serializable
+  @SerialName("DATE")
+  data class Complete(
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    override val questionGuid: UUID?,
+    @Serializable(with = LocalDateSerializer::class)
+    val date: LocalDate
+  ) : FormInstanceQuestionRep.Complete
 }

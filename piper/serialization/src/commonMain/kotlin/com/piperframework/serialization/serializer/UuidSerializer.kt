@@ -5,4 +5,4 @@ import com.piperframework.serialization.ConversionServiceSerializer
 import com.piperframework.types.UUID
 
 object UuidSerializer
-    : ConversionServiceSerializer<UUID>("UUID", UuidConversionService)
+  : ConversionServiceSerializer<UUID>("UUID", UuidConversionService)

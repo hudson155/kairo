@@ -14,52 +14,52 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class DeleteUserTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val userGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val userGuid = UUID.randomUUID()
 
-        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userGuid) } returns null
+    every { mockedServices[OrgService::class].getByOwnerAccountGuid(userGuid) } returns null
 
-        piperTest.test(
-            endpoint = UserApi.Delete(userGuid),
-            expectedException = UserNotFound()
-        )
+    piperTest.test(
+      endpoint = UserApi.Delete(userGuid),
+      expectedException = UserNotFound()
+    )
+  }
+
+  @Test
+  fun userIsOwnerOfOrg() {
+    val orgGuid = UUID.randomUUID()
+
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+
+    every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns mockk()
+
+    piperTest.test(
+      endpoint = UserApi.Delete(userRep.guid),
+      expectedException = CannotDeleteOrgOwner()
+    )
+
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
+  }
 
-    @Test
-    fun userIsOwnerOfOrg() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
 
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns mockk()
+    every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns null
 
-        piperTest.test(
-            endpoint = UserApi.Delete(userRep.guid),
-            expectedException = CannotDeleteOrgOwner()
-        )
+    piperTest.test(UserApi.Delete(userRep.guid)) {}
 
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-    }
-
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
-
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-
-        every { mockedServices[OrgService::class].getByOwnerAccountGuid(userRep.guid) } returns null
-
-        piperTest.test(UserApi.Delete(userRep.guid)) {}
-
-        piperTest.test(
-            endpoint = UserApi.Get(userRep.guid),
-            expectedException = UserNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = UserApi.Get(userRep.guid),
+      expectedException = UserNotFound()
+    )
+  }
 }

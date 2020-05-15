@@ -36,129 +36,129 @@ import kotlin.reflect.full.cast
  * called for each request.
  */
 abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType : Any>(
-    private val application: Application,
-    private val pathPrefix: String,
-    private val endpointTemplate: PiperEndpointTemplate
+  private val application: Application,
+  private val pathPrefix: String,
+  private val endpointTemplate: PiperEndpointTemplate
 ) {
-    private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
+  private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 
-    inner class Handler(private val endpoint: Endpoint, private val principal: P?) {
-        private var authorized = false
+  inner class Handler(private val endpoint: Endpoint, private val principal: P?) {
+    private var authorized = false
 
-        internal suspend fun handle(): Pair<HttpStatusCode?, ResponseType> {
-            val result = handle(endpoint)
-            check(authorized) {
-                "Every endpoint needs to implement authorization. ${this@ApiEndpoint::class.simpleName} does not."
-            }
-            return Pair(responseCode, result)
-        }
-
-        fun PiperAuthorization<P>.authorize() {
-            if (!authorize(principal)) throw ForbiddenException()
-            authorized = true
-        }
-
-        var responseCode: HttpStatusCode? = null
+    internal suspend fun handle(): Pair<HttpStatusCode?, ResponseType> {
+      val result = handle(endpoint)
+      check(authorized) {
+        "Every endpoint needs to implement authorization. ${this@ApiEndpoint::class.simpleName} does not."
+      }
+      return Pair(responseCode, result)
     }
 
-    /**
-     * Called for each request to the endpoint, to determine the command. The implementation should get all request
-     * parameters (if appropriate) and receive the body (if appropriate). This is the only time in the ApiEndpoint
-     * lifecycle that a method will be given access to the Ktor ApplicationCall.
-     */
-    abstract suspend fun determineCommand(call: ApplicationCall): Endpoint
-
-    /**
-     * Called for each request to the endpoint, to handle the authorization and execution. This method is the meat and
-     * potatoes of the ApiEndpoint instance. By this point, the command has been determined and the user has been
-     * authenticated. All that's left is for authorization to be performend and for the "actual work" to be done.
-     * However, even though this is the meat and potatoes, in a good architecture this method probably has a very simple
-     * implementation and delegates most of the work to the service layer.
-     *
-     * Note: If authorization is not performed in the implementation of this method, a 500 error will be thrown every
-     * single time the endpoint is called. Nice.
-     */
-    abstract suspend fun Handler.handle(command: Endpoint): ResponseType
-
-    /**
-     * Registers the endpoint with the application to bind requests to that endpoint to this
-     * ApiEndpoint instance.
-     */
-    fun register() {
-        logger.info(
-            listOfNotNull(
-                "Registering",
-                endpointTemplate.httpMethod,
-                endpointTemplate.pathTemplate,
-                with(endpointTemplate.requiredQueryParams) { if (isNotEmpty()) "(${joinToString()})" else null }
-            ).joinToString(" ")
-        )
-        application.routing {
-            authenticate(optional = true) {
-                route(pathPrefix) { routeEndpoint() }
-            }
-        }
+    fun PiperAuthorization<P>.authorize() {
+      if (!authorize(principal)) throw ForbiddenException()
+      authorized = true
     }
 
-    private fun Route.routeEndpoint() {
-        route(endpointTemplate) {
-            handle {
-                val command = determineCommand(call)
+    var responseCode: HttpStatusCode? = null
+  }
 
-                @Suppress("UNCHECKED_CAST")
-                val principal = call.authentication.principal as? P
-                val result = Handler(command, principal).handle()
-                call.respond(result.first ?: HttpStatusCode.OK, result.second)
-            }
-        }
-    }
+  /**
+   * Called for each request to the endpoint, to determine the command. The implementation should get all request
+   * parameters (if appropriate) and receive the body (if appropriate). This is the only time in the ApiEndpoint
+   * lifecycle that a method will be given access to the Ktor ApplicationCall.
+   */
+  abstract suspend fun determineCommand(call: ApplicationCall): Endpoint
 
-    /**
-     * Builds a route to match specified [endpointTemplate].
-     */
-    @ContextDsl
-    private fun Route.route(endpointTemplate: PiperEndpointTemplate, build: Route.() -> Unit): Route {
-        var route = createRouteFromPath(endpointTemplate.pathTemplate)
-        route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod.forKtor()))
-        endpointTemplate.requiredQueryParams.forEach { route = route.createChild(ParameterRouteSelector(it)) }
-        return route.apply(build)
-    }
+  /**
+   * Called for each request to the endpoint, to handle the authorization and execution. This method is the meat and
+   * potatoes of the ApiEndpoint instance. By this point, the command has been determined and the user has been
+   * authenticated. All that's left is for authorization to be performend and for the "actual work" to be done.
+   * However, even though this is the meat and potatoes, in a good architecture this method probably has a very simple
+   * implementation and delegates most of the work to the service layer.
+   *
+   * Note: If authorization is not performed in the implementation of this method, a 500 error will be thrown every
+   * single time the endpoint is called. Nice.
+   */
+  abstract suspend fun Handler.handle(command: Endpoint): ResponseType
 
-    protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T? {
-        @Suppress("TooGenericExceptionCaught")
-        val result = try {
-            receiveOrNull<T>()
-        } catch (e: Exception) {
-            throw ParameterConversionException(cause = e)
-        } ?: return null
-        return result.apply {
-            val validation = validate()
-            if (!validation.isValid) throw ValidationException(validation.firstInvalidPropertyName)
-        }
+  /**
+   * Registers the endpoint with the application to bind requests to that endpoint to this
+   * ApiEndpoint instance.
+   */
+  fun register() {
+    logger.info(
+      listOfNotNull(
+        "Registering",
+        endpointTemplate.httpMethod,
+        endpointTemplate.pathTemplate,
+        with(endpointTemplate.requiredQueryParams) { if (isNotEmpty()) "(${joinToString()})" else null }
+      ).joinToString(" ")
+    )
+    application.routing {
+      authenticate(optional = true) {
+        route(pathPrefix) { routeEndpoint() }
+      }
     }
+  }
 
-    protected fun <T : ValidatedRep> T?.required(): T {
-        this ?: throw BodyRequired()
-        return this
-    }
+  private fun Route.routeEndpoint() {
+    route(endpointTemplate) {
+      handle {
+        val command = determineCommand(call)
 
-    protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String): T {
-        return getAsType(kClass, name, optional = true)
-            ?: throw ParameterConversionException("Missing required parameter: $name.")
+        @Suppress("UNCHECKED_CAST")
+        val principal = call.authentication.principal as? P
+        val result = Handler(command, principal).handle()
+        call.respond(result.first ?: HttpStatusCode.OK, result.second)
+      }
     }
+  }
 
-    /**
-     * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast to that type using
-     * the application's ConversionService.
-     */
-    protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String, optional: Boolean = false): T? {
-        check(optional)
-        val values = getAll(name) ?: return null
-        @Suppress("TooGenericExceptionCaught")
-        return try {
-            kClass.cast(application.conversionService.fromValues(values, kClass.java))
-        } catch (e: Exception) {
-            throw ParameterConversionException(cause = e)
-        }
+  /**
+   * Builds a route to match specified [endpointTemplate].
+   */
+  @ContextDsl
+  private fun Route.route(endpointTemplate: PiperEndpointTemplate, build: Route.() -> Unit): Route {
+    var route = createRouteFromPath(endpointTemplate.pathTemplate)
+    route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod.forKtor()))
+    endpointTemplate.requiredQueryParams.forEach { route = route.createChild(ParameterRouteSelector(it)) }
+    return route.apply(build)
+  }
+
+  protected suspend inline fun <reified T : ValidatedRep> ApplicationCall.getAndValidateBody(): T? {
+    @Suppress("TooGenericExceptionCaught")
+    val result = try {
+      receiveOrNull<T>()
+    } catch (e: Exception) {
+      throw ParameterConversionException(cause = e)
+    } ?: return null
+    return result.apply {
+      val validation = validate()
+      if (!validation.isValid) throw ValidationException(validation.firstInvalidPropertyName)
     }
+  }
+
+  protected fun <T : ValidatedRep> T?.required(): T {
+    this ?: throw BodyRequired()
+    return this
+  }
+
+  protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String): T {
+    return getAsType(kClass, name, optional = true)
+      ?: throw ParameterConversionException("Missing required parameter: $name.")
+  }
+
+  /**
+   * Gets a parameter from the URL as the given type, throwing an exception if it cannot be cast to that type using
+   * the application's ConversionService.
+   */
+  protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String, optional: Boolean = false): T? {
+    check(optional)
+    val values = getAll(name) ?: return null
+    @Suppress("TooGenericExceptionCaught")
+    return try {
+      kClass.cast(application.conversionService.fromValues(values, kClass.java))
+    } catch (e: Exception) {
+      throw ParameterConversionException(cause = e)
+    }
+  }
 }

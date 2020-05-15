@@ -19,27 +19,27 @@ import io.limberapp.backend.module.auth.service.tenant.TenantService
  * Creates a new tenant.
  */
 internal class PostTenant @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val tenantService: TenantService,
-    private val tenantDomainService: TenantDomainService,
-    private val tenantMapper: TenantMapper,
-    private val tenantDomainMapper: TenantDomainMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val tenantService: TenantService,
+  private val tenantDomainService: TenantDomainService,
+  private val tenantMapper: TenantMapper,
+  private val tenantDomainMapper: TenantDomainMapper
 ) : LimberApiEndpoint<TenantApi.Post, TenantRep.Complete>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = TenantApi.Post::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = TenantApi.Post::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Post(
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Post(
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: TenantApi.Post): TenantRep.Complete {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val rep = command.rep.required()
-        val tenant = tenantMapper.model(rep)
-        tenantService.create(tenant)
-        val domain = tenantDomainMapper.model(tenant.orgGuid, rep.domain)
-        tenantDomainService.create(domain)
-        return tenantMapper.completeRep(tenant, setOf(domain))
-    }
+  override suspend fun Handler.handle(command: TenantApi.Post): TenantRep.Complete {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    val rep = command.rep.required()
+    val tenant = tenantMapper.model(rep)
+    tenantService.create(tenant)
+    val domain = tenantDomainMapper.model(tenant.orgGuid, rep.domain)
+    tenantDomainService.create(domain)
+    return tenantMapper.completeRep(tenant, setOf(domain))
+  }
 }

@@ -10,14 +10,14 @@ import react.functionalComponent
  * Lists all form templates within the feature.
  */
 internal fun RBuilder.formTemplatesListPage() {
-    child(component)
+  child(component)
 }
 
 internal object FormTemplatesListPage {
-    const val name = "Templates"
-    const val subpath = "/templates"
+  const val name = "Templates"
+  const val subpath = "/templates"
 }
 
 private val component = functionalComponent<RProps> {
-    layoutTitle(FormTemplatesListPage.name)
+  layoutTitle(FormTemplatesListPage.name)
 }

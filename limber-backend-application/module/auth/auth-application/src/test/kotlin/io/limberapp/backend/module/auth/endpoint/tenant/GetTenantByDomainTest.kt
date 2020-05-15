@@ -10,26 +10,26 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetTenantByDomainTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val tenantDomain = "fakedomain.com"
+  @Test
+  fun doesNotExist() {
+    val tenantDomain = "fakedomain.com"
 
-        piperTest.test(
-            endpoint = TenantApi.GetByDomain(tenantDomain),
-            expectedException = TenantNotFound()
-        )
+    piperTest.test(
+      endpoint = TenantApi.GetByDomain(tenantDomain),
+      expectedException = TenantNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
+
+    val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+    piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+
+    piperTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
+      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      assertEquals(tenantRep, actual)
     }
-
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
-
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-
-        piperTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
-            val actual = json.parse<TenantRep.Complete>(response.content!!)
-            assertEquals(tenantRep, actual)
-        }
-    }
+  }
 }

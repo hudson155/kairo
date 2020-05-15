@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class JwtRole {
-    IDENTITY_PROVIDER,
-    SUPERUSER;
+  IDENTITY_PROVIDER,
+  SUPERUSER;
 }

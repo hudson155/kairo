@@ -29,35 +29,35 @@ import io.limberapp.backend.module.auth.service.tenant.TenantServiceImpl
 import kotlinx.serialization.modules.EmptyModule
 
 class AuthModule : Module() {
-    override val serialModule = EmptyModule
+  override val serialModule = EmptyModule
 
-    override val endpoints = listOf(
-        PostJwtClaimsRequest::class.java,
+  override val endpoints = listOf(
+    PostJwtClaimsRequest::class.java,
 
-        PostOrgRole::class.java,
-        GetOrgRolesByOrgGuid::class.java,
-        PatchOrgRole::class.java,
-        DeleteOrgRole::class.java,
-        PostOrgRoleMembership::class.java,
-        GetOrgRoleMembershipsByOrgRoleGuid::class.java,
-        DeleteOrgRoleMembership::class.java,
+    PostOrgRole::class.java,
+    GetOrgRolesByOrgGuid::class.java,
+    PatchOrgRole::class.java,
+    DeleteOrgRole::class.java,
+    PostOrgRoleMembership::class.java,
+    GetOrgRoleMembershipsByOrgRoleGuid::class.java,
+    DeleteOrgRoleMembership::class.java,
 
-        PostTenant::class.java,
-        GetTenant::class.java,
-        GetTenantByDomain::class.java,
-        PatchTenant::class.java,
-        DeleteTenant::class.java,
-        PostTenantDomain::class.java,
-        DeleteTenantDomain::class.java
-    )
+    PostTenant::class.java,
+    GetTenant::class.java,
+    GetTenantByDomain::class.java,
+    PatchTenant::class.java,
+    DeleteTenant::class.java,
+    PostTenantDomain::class.java,
+    DeleteTenantDomain::class.java
+  )
 
-    override fun bindServices() {
-        bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
+  override fun bindServices() {
+    bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
 
-        bind(OrgRoleService::class, OrgRoleServiceImpl::class)
-        bind(OrgRoleMembershipService::class, OrgRoleMembershipServiceImpl::class)
+    bind(OrgRoleService::class, OrgRoleServiceImpl::class)
+    bind(OrgRoleMembershipService::class, OrgRoleMembershipServiceImpl::class)
 
-        bind(TenantService::class, TenantServiceImpl::class)
-        bind(TenantDomainService::class, TenantDomainServiceImpl::class)
-    }
+    bind(TenantService::class, TenantServiceImpl::class)
+    bind(TenantDomainService::class, TenantDomainServiceImpl::class)
+  }
 }

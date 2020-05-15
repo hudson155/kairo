@@ -30,53 +30,53 @@ import styled.getClassName
  * A table showing org roles.
  */
 internal fun RBuilder.orgRolesTable(orgRoles: Set<OrgRoleRep.Complete>) {
-    child(component, Props(orgRoles))
+  child(component, Props(orgRoles))
 }
 
 internal data class Props(val orgRoles: Set<OrgRoleRep.Complete>) : RProps
 
 private val styles = object : Styles("OrgRolesTable") {
-    val table by css {
-        tableLayout = TableLayout.fixed
-        maxWidth = 768.px
-        kotlinx.css.th {
-            height = 24.px
-            padding(4.px)
-            nthChild("2") { width = 160.px }
-            nthChild("3") { width = 160.px }
-        }
-        kotlinx.css.td {
-            height = 24.px
-            padding(4.px)
-            nthChild("2") { width = 160.px }
-            nthChild("3") { width = 160.px }
-        }
+  val table by css {
+    tableLayout = TableLayout.fixed
+    maxWidth = 768.px
+    kotlinx.css.th {
+      height = 24.px
+      padding(4.px)
+      nthChild("2") { width = 160.px }
+      nthChild("3") { width = 160.px }
     }
+    kotlinx.css.td {
+      height = 24.px
+      padding(4.px)
+      nthChild("2") { width = 160.px }
+      nthChild("3") { width = 160.px }
+    }
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    if (props.orgRoles.isEmpty()) {
-        p { +"No roles are defined." }
-        return@functionalComponent
-    }
+  if (props.orgRoles.isEmpty()) {
+    p { +"No roles are defined." }
+    return@functionalComponent
+  }
 
-    table(classes = styles.getClassName { it::table }) {
-        thead {
-            tr {
-                th { +"Name" }
-                th { +"Permissions" }
-                th { +"Members" }
-            }
-        }
-        tbody {
-            props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
-                orgRolesTableRow {
-                    attrs.key = orgRole.guid
-                    orgRolesTableRoleName(orgRole)
-                    orgRolesTableRolePermissions(orgRole)
-                    orgRolesTableRoleMemberCount(orgRole)
-                }
-            }
-        }
+  table(classes = styles.getClassName { it::table }) {
+    thead {
+      tr {
+        th { +"Name" }
+        th { +"Permissions" }
+        th { +"Members" }
+      }
     }
+    tbody {
+      props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
+        orgRolesTableRow {
+          attrs.key = orgRole.guid
+          orgRolesTableRoleName(orgRole)
+          orgRolesTableRolePermissions(orgRole)
+          orgRolesTableRoleMemberCount(orgRole)
+        }
+      }
+    }
+  }
 }

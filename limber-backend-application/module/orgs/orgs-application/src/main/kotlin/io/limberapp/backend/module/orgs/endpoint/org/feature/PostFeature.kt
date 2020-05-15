@@ -19,24 +19,24 @@ import java.util.UUID
  * corresponding module.
  */
 internal class PostFeature @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val featureService: FeatureService,
-    private val featureMapper: FeatureMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val featureService: FeatureService,
+  private val featureMapper: FeatureMapper
 ) : LimberApiEndpoint<OrgFeatureApi.Post, FeatureRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgFeatureApi.Post::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgFeatureApi.Post::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Post(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Post(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: OrgFeatureApi.Post): FeatureRep.Complete {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
-        val feature = featureMapper.model(command.orgGuid, command.rep.required())
-        featureService.create(feature)
-        return featureMapper.completeRep(feature)
-    }
+  override suspend fun Handler.handle(command: OrgFeatureApi.Post): FeatureRep.Complete {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
+    val feature = featureMapper.model(command.orgGuid, command.rep.required())
+    featureService.create(feature)
+    return featureMapper.completeRep(feature)
+  }
 }

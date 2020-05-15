@@ -19,24 +19,24 @@ import java.util.UUID
  * Returns the org with the given owner.
  */
 internal class GetOrgByOwnerAccountGuid @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val featureService: FeatureService,
-    private val orgService: OrgService,
-    private val orgMapper: OrgMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val featureService: FeatureService,
+  private val orgService: OrgService,
+  private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, OrgRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgApi.GetByOwnerAccountGuid::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgApi.GetByOwnerAccountGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerAccountGuid(
-        ownerAccountGuid = call.parameters.getAsType(UUID::class, "ownerAccountGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerAccountGuid(
+    ownerAccountGuid = call.parameters.getAsType(UUID::class, "ownerAccountGuid")
+  )
 
-    override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): OrgRep.Complete {
-        Authorization.User(command.ownerAccountGuid).authorize()
-        val org = orgService.getByOwnerAccountGuid(command.ownerAccountGuid) ?: throw OrgNotFound()
-        val features = featureService.getByOrgGuid(org.guid)
-        return orgMapper.completeRep(org, features)
-    }
+  override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): OrgRep.Complete {
+    Authorization.User(command.ownerAccountGuid).authorize()
+    val org = orgService.getByOwnerAccountGuid(command.ownerAccountGuid) ?: throw OrgNotFound()
+    val features = featureService.getByOrgGuid(org.guid)
+    return orgMapper.completeRep(org, features)
+  }
 }

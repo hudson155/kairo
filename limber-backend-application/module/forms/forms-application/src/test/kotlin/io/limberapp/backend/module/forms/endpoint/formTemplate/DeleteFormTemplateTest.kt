@@ -8,28 +8,28 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteFormTemplateTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val formTemplateGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val formTemplateGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = FormTemplateApi.Delete(formTemplateGuid),
-            expectedException = FormTemplateNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = FormTemplateApi.Delete(formTemplateGuid),
+      expectedException = FormTemplateNotFound()
+    )
+  }
 
-    @Test
-    fun happyPath() {
-        val featureGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val featureGuid = UUID.randomUUID()
 
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        piperTest.test(FormTemplateApi.Delete(formTemplateRep.guid)) {}
+    piperTest.test(FormTemplateApi.Delete(formTemplateRep.guid)) {}
 
-        piperTest.test(
-            endpoint = FormTemplateApi.Get(formTemplateRep.guid),
-            expectedException = FormTemplateNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = FormTemplateApi.Get(formTemplateRep.guid),
+      expectedException = FormTemplateNotFound()
+    )
+  }
 }

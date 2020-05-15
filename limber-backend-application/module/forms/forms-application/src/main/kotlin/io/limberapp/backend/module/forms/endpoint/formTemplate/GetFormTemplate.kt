@@ -19,24 +19,24 @@ import java.util.UUID
  * Returns a single form template.
  */
 internal class GetFormTemplate @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formTemplateService: FormTemplateService,
-    private val formTemplateQuestionService: FormTemplateQuestionService,
-    private val formTemplateMapper: FormTemplateMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formTemplateService: FormTemplateService,
+  private val formTemplateQuestionService: FormTemplateQuestionService,
+  private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<FormTemplateApi.Get, FormTemplateRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormTemplateApi.Get::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormTemplateApi.Get::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Get(
-        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Get(
+    formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
+  )
 
-    override suspend fun Handler.handle(command: FormTemplateApi.Get): FormTemplateRep.Complete {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
-        val formTemplate = formTemplateService.get(command.formTemplateGuid) ?: throw FormTemplateNotFound()
-        val questions = formTemplateQuestionService.getByFormTemplateGuid(command.formTemplateGuid)
-        return formTemplateMapper.completeRep(formTemplate, questions)
-    }
+  override suspend fun Handler.handle(command: FormTemplateApi.Get): FormTemplateRep.Complete {
+    HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
+    val formTemplate = formTemplateService.get(command.formTemplateGuid) ?: throw FormTemplateNotFound()
+    val questions = formTemplateQuestionService.getByFormTemplateGuid(command.formTemplateGuid)
+    return formTemplateMapper.completeRep(formTemplate, questions)
+  }
 }

@@ -7,7 +7,7 @@ import io.limberapp.backend.sql.type.JdbiOrgPermissionsType
 import org.jdbi.v3.core.Jdbi
 
 open class LimberSqlModule(config: SqlDatabaseConfig) : SqlModule(config) {
-    override fun Jdbi.configureJdbi() {
-        registerJdbiType(JdbiOrgPermissionsType)
-    }
+  override fun Jdbi.configureJdbi() {
+    registerJdbiType(JdbiOrgPermissionsType)
+  }
 }

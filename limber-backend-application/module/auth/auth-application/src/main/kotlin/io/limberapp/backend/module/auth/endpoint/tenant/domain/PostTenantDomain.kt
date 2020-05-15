@@ -18,23 +18,23 @@ import java.util.UUID
  * Creates a new domain within a tenant.
  */
 internal class PostTenantDomain @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val tenantDomainService: TenantDomainService,
-    private val tenantDomainMapper: TenantDomainMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val tenantDomainService: TenantDomainService,
+  private val tenantDomainMapper: TenantDomainMapper
 ) : LimberApiEndpoint<TenantDomainApi.Post, TenantDomainRep.Complete>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = TenantDomainApi.Post::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = TenantDomainApi.Post::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Post(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Post(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: TenantDomainApi.Post): TenantDomainRep.Complete {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val tenantDomain = tenantDomainMapper.model(command.orgGuid, command.rep.required())
-        tenantDomainService.create(tenantDomain)
-        return tenantDomainMapper.completeRep(tenantDomain)
-    }
+  override suspend fun Handler.handle(command: TenantDomainApi.Post): TenantDomainRep.Complete {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    val tenantDomain = tenantDomainMapper.model(command.orgGuid, command.rep.required())
+    tenantDomainService.create(tenantDomain)
+    return tenantDomainMapper.completeRep(tenantDomain)
+  }
 }

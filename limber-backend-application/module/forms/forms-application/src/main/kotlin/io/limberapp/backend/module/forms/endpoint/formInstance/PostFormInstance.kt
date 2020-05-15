@@ -18,27 +18,27 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
  * Creates a new form instance.
  */
 internal class PostFormInstance @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formTemplateService: FormTemplateService,
-    private val formInstanceService: FormInstanceService,
-    private val formInstanceQuestionService: FormInstanceQuestionService,
-    private val formInstanceMapper: FormInstanceMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formTemplateService: FormTemplateService,
+  private val formInstanceService: FormInstanceService,
+  private val formInstanceQuestionService: FormInstanceQuestionService,
+  private val formInstanceMapper: FormInstanceMapper
 ) : LimberApiEndpoint<FormInstanceApi.Post, FormInstanceRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormInstanceApi.Post::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormInstanceApi.Post::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
-        val rep = command.rep.required()
-        HasAccessToFormTemplate(formTemplateService, rep.formTemplateGuid).authorize()
-        val formInstance = formInstanceMapper.model(rep)
-        formInstanceService.create(formInstance)
-        val questions = formInstanceQuestionService.getByFormInstanceGuid(formInstance.guid)
-        return formInstanceMapper.completeRep(formInstance, questions)
-    }
+  override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
+    val rep = command.rep.required()
+    HasAccessToFormTemplate(formTemplateService, rep.formTemplateGuid).authorize()
+    val formInstance = formInstanceMapper.model(rep)
+    formInstanceService.create(formInstance)
+    val questions = formInstanceQuestionService.getByFormInstanceGuid(formInstance.guid)
+    return formInstanceMapper.completeRep(formInstance, questions)
+  }
 }

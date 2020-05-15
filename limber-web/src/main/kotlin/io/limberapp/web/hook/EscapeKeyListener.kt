@@ -9,14 +9,14 @@ import react.useEffectWithCleanup
 import kotlin.browser.document
 
 internal fun useEscapeKeyListener(dependencies: RDependenciesList, callback: (Event) -> Unit) {
-    val onEscape = { event: Event ->
-        if (event.keyCode == KeyCode.escape) {
-            callback(event)
-        }
+  val onEscape = { event: Event ->
+    if (event.keyCode == KeyCode.escape) {
+      callback(event)
     }
+  }
 
-    useEffectWithCleanup(dependencies) {
-        document.addEventListener(EventType.keydown, onEscape)
-        return@useEffectWithCleanup { document.removeEventListener(EventType.keydown, onEscape) }
-    }
+  useEffectWithCleanup(dependencies) {
+    document.addEventListener(EventType.keydown, onEscape)
+    return@useEffectWithCleanup { document.removeEventListener(EventType.keydown, onEscape) }
+  }
 }

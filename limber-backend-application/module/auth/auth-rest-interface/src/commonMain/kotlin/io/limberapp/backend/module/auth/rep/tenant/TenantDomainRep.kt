@@ -9,19 +9,19 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object TenantDomainRep {
-    @Serializable
-    data class Creation(
-        val domain: String
-    ) : CreationRep {
-        override fun validate() = RepValidation {
-            validate(Creation::domain) { Validator.hostname(value) }
-        }
+  @Serializable
+  data class Creation(
+    val domain: String
+  ) : CreationRep {
+    override fun validate() = RepValidation {
+      validate(Creation::domain) { Validator.hostname(value) }
     }
+  }
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        val domain: String
-    ) : CompleteRep
+  @Serializable
+  data class Complete(
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    val domain: String
+  ) : CompleteRep
 }

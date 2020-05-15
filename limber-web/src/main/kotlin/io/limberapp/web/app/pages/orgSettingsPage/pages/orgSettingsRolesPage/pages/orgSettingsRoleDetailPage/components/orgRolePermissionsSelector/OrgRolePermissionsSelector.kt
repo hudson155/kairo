@@ -47,111 +47,111 @@ import styled.getClassName
  * Selector for choosing permissions from a list for an org role.
  */
 internal fun RBuilder.orgRolePermissionsSelector(orgRole: OrgRoleRep.Complete, onClose: () -> Unit) {
-    child(component, Props(orgRole, onClose))
+  child(component, Props(orgRole, onClose))
 }
 
 internal data class Props(val orgRole: OrgRoleRep.Complete, val onClose: () -> Unit) : RProps
 
 private val styles = object : Styles("OrgRolePermissionsSelector") {
-    val rowsContainer by css {
-        padding(vertical = 8.px)
-        borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+  val rowsContainer by css {
+    padding(vertical = 8.px)
+    borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+  }
+  val row by css {
+    marginBottom = 8.px
+    lastOfType {
+      marginBottom = 0.px
     }
-    val row by css {
-        marginBottom = 8.px
-        lastOfType {
-            marginBottom = 0.px
-        }
-    }
-    val label by css {
-        display = Display.flex
-        flexDirection = FlexDirection.row
-    }
-    val saveButtonContainer by css {
-        display = Display.flex
-        flexDirection = FlexDirection.rowReverse
-        paddingTop = 8.px
-    }
-    val saveButton by css {
-        marginRight = 12.px
-    }
+  }
+  val label by css {
+    display = Display.flex
+    flexDirection = FlexDirection.row
+  }
+  val saveButtonContainer by css {
+    display = Display.flex
+    flexDirection = FlexDirection.rowReverse
+    paddingTop = 8.px
+  }
+  val saveButton by css {
+    marginRight = 12.px
+  }
 }.apply { inject() }
 
 private enum class State { DEFAULT, SAVING }
 
 private val component = functionalComponent<Props> { props ->
-    val api = useApi()
-    val global = useGlobalState()
-    val isMounted = useIsMounted()
+  val api = useApi()
+  val global = useGlobalState()
+  val isMounted = useIsMounted()
 
     val (state, setState) = useState(State.DEFAULT)
     val (permissions, setPermissions) = useState(props.orgRole.permissions)
 
-    val orgGuid = checkNotNull(global.state.org.state).guid
+  val orgGuid = checkNotNull(global.state.org.state).guid
 
-    val setPermissionValue = { permission: OrgPermission, value: Boolean ->
-        setPermissions(permissions.withPermission(permission, value))
+  val setPermissionValue = { permission: OrgPermission, value: Boolean ->
+    setPermissions(permissions.withPermission(permission, value))
+  }
+
+  val onSave = { _: Event ->
+    setState(State.SAVING)
+    async {
+      val orgRole = api.orgRoles(
+        endpoint = OrgRoleApi.Patch(
+          orgGuid = orgGuid,
+          orgRoleGuid = props.orgRole.guid,
+          rep = OrgRoleRep.Update(permissions = permissions)
+        )
+      )
+      global.dispatch(OrgRoleAction.UpdateValue(orgRole))
+      if (isMounted.current) {
+        setState(State.DEFAULT)
+        props.onClose()
+      }
     }
+  }
 
-    val onSave = { _: Event ->
-        setState(State.SAVING)
-        async {
-            val orgRole = api.orgRoles(
-                endpoint = OrgRoleApi.Patch(
-                    orgGuid = orgGuid,
-                    orgRoleGuid = props.orgRole.guid,
-                    rep = OrgRoleRep.Update(permissions = permissions)
-                )
-            )
-            global.dispatch(OrgRoleAction.UpdateValue(orgRole))
-            if (isMounted.current) {
-                setState(State.DEFAULT)
-                props.onClose()
+  div(classes = styles.getClassName { it::rowsContainer }) {
+    OrgPermission.values().sortedBy { it.bit }.forEach { permission ->
+      div(classes = styles.getClassName { it::row }) {
+        label(classes = styles.getClassName { it::label }) {
+          span {
+            input(type = InputType.checkBox) {
+              attrs.defaultChecked = props.orgRole.permissions.hasPermission(permission)
+              attrs.disabled = state == State.SAVING
+              attrs.onChangeFunction = { setPermissionValue(permission, it.targetChecked) }
             }
+          }
+          span {
+            b { +permission.title }
+            br { }
+            small { +permission.description }
+          }
         }
+      }
     }
-
-    div(classes = styles.getClassName { it::rowsContainer }) {
-        OrgPermission.values().sortedBy { it.bit }.forEach { permission ->
-            div(classes = styles.getClassName { it::row }) {
-                label(classes = styles.getClassName { it::label }) {
-                    span {
-                        input(type = InputType.checkBox) {
-                            attrs.defaultChecked = props.orgRole.permissions.hasPermission(permission)
-                            attrs.disabled = state == State.SAVING
-                            attrs.onChangeFunction = { setPermissionValue(permission, it.targetChecked) }
-                        }
-                    }
-                    span {
-                        b { +permission.title }
-                        br { }
-                        small { +permission.description }
-                    }
-                }
-            }
-        }
+  }
+  div(classes = styles.getClassName { it::saveButtonContainer }) {
+    button(
+      classes = classes(
+        globalStyles.getClassName { it::primaryButton },
+        styles.getClassName { it::saveButton }
+      )
+    ) {
+      +"Save"
+      attrs.disabled = state == State.SAVING
+      attrs.onClickFunction = onSave
     }
-    div(classes = styles.getClassName { it::saveButtonContainer }) {
-        button(
-            classes = classes(
-                globalStyles.getClassName { it::primaryButton },
-                styles.getClassName { it::saveButton }
-            )
-        ) {
-            +"Save"
-            attrs.disabled = state == State.SAVING
-            attrs.onClickFunction = onSave
-        }
-        button(
-            classes = classes(
-                globalStyles.getClassName { it::secondaryButton },
-                styles.getClassName { it::saveButton }
-            )
-        ) {
-            +"Cancel"
-            attrs.disabled = state == State.SAVING
-            attrs.onClickFunction = { props.onClose() }
-        }
+    button(
+      classes = classes(
+        globalStyles.getClassName { it::secondaryButton },
+        styles.getClassName { it::saveButton }
+      )
+    ) {
+      +"Cancel"
+      attrs.disabled = state == State.SAVING
+      attrs.onClickFunction = { props.onClose() }
     }
+  }
 }
 

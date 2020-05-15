@@ -10,15 +10,15 @@ import react.functionalComponent
  * Redirects to sign in.
  */
 internal fun RBuilder.signInPage() {
-    child(component)
+  child(component)
 }
 
 internal object SignInPage {
-    const val name = "Sign in"
-    const val path = "/signin"
+  const val name = "Sign in"
+  const val path = "/signin"
 }
 
 private val component = functionalComponent<RProps> {
-    val auth = useAuth()
-    auth.signIn()
+  val auth = useAuth()
+  auth.signIn()
 }

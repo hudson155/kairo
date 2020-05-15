@@ -7,20 +7,20 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal object FormInstanceQuestionRepFixtures {
-    data class Fixture(
-        val creation: () -> FormInstanceQuestionRep.Creation,
-        val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete
-    )
+  data class Fixture(
+    val creation: () -> FormInstanceQuestionRep.Creation,
+    val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete
+  )
 
-    val textFixture = Fixture({
-        FormInstanceTextQuestionRep.Creation(
-            text = "Nothing significant to add."
-        )
-    }, { questionGuid ->
-        FormInstanceTextQuestionRep.Complete(
-            createdDate = LocalDateTime.now(fixedClock),
-            questionGuid = questionGuid,
-            text = "Nothing significant to add."
-        )
-    })
+  val textFixture = Fixture({
+    FormInstanceTextQuestionRep.Creation(
+      text = "Nothing significant to add."
+    )
+  }, { questionGuid ->
+    FormInstanceTextQuestionRep.Complete(
+      createdDate = LocalDateTime.now(fixedClock),
+      questionGuid = questionGuid,
+      text = "Nothing significant to add."
+    )
+  })
 }

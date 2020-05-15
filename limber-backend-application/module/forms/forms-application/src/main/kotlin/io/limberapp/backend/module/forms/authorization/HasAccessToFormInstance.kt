@@ -7,14 +7,14 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceServic
 import java.util.UUID
 
 internal class HasAccessToFormInstance(
-    private val formInstanceService: FormInstanceService,
-    private val formInstanceGuid: UUID?
+  private val formInstanceService: FormInstanceService,
+  private val formInstanceGuid: UUID?
 ) : Authorization() {
-    override fun authorizeInternal(principal: Jwt?): Boolean {
-        principal ?: return false
-        formInstanceGuid ?: return false
-        if (!AnyJwt.authorize(principal)) return false
-        val existingModel = formInstanceService.get(formInstanceGuid) ?: throw FormInstanceNotFound()
-        return HasAccessToFeature(existingModel.featureGuid).authorize(principal)
-    }
+  override fun authorizeInternal(principal: Jwt?): Boolean {
+    principal ?: return false
+    formInstanceGuid ?: return false
+    if (!AnyJwt.authorize(principal)) return false
+    val existingModel = formInstanceService.get(formInstanceGuid) ?: throw FormInstanceNotFound()
+    return HasAccessToFeature(existingModel.featureGuid).authorize(principal)
+  }
 }

@@ -10,26 +10,26 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetUserTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val userGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val userGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = UserApi.Get(userGuid),
-            expectedException = UserNotFound()
-        )
+    piperTest.test(
+      endpoint = UserApi.Get(userGuid),
+      expectedException = UserNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
+
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
-
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
-
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-    }
+  }
 }

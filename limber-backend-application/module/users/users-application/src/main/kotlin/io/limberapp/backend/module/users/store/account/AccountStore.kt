@@ -8,12 +8,12 @@ import org.jdbi.v3.core.Jdbi
 import java.util.UUID
 
 internal class AccountStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun get(accountGuid: UUID): AccountModel? {
-        return jdbi.withHandle<AccountModel?, Exception> {
-            it.createQuery("SELECT * FROM users.account WHERE guid = :guid AND archived_date IS NULL")
-                .bind("guid", accountGuid)
-                .mapTo(AccountModel::class.java)
-                .singleNullOrThrow()
-        }
+  fun get(accountGuid: UUID): AccountModel? {
+    return jdbi.withHandle<AccountModel?, Exception> {
+      it.createQuery("SELECT * FROM users.account WHERE guid = :guid AND archived_date IS NULL")
+        .bind("guid", accountGuid)
+        .mapTo(AccountModel::class.java)
+        .singleNullOrThrow()
     }
+  }
 }

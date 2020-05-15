@@ -22,20 +22,20 @@ import styled.getClassName
  * A single item on a top-of-page navbar.
  */
 internal fun RBuilder.headerItem(children: RHandler<RProps>) {
-    child(component, handler = children)
+  child(component, handler = children)
 }
 
 private val styles = object : Styles("HeaderItem") {
-    val container by css {
-        display = Display.flex
-        alignItems = Align.center
-        marginRight = 16.px
-        color = Theme.Color.Text.light
-    }
+  val container by css {
+    display = Display.flex
+    alignItems = Align.center
+    marginRight = 16.px
+    color = Theme.Color.Text.light
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
-    div(classes = styles.getClassName { it::container }) {
-        b { props.children() }
-    }
+  div(classes = styles.getClassName { it::container }) {
+    b { props.children() }
+  }
 }

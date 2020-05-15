@@ -8,28 +8,28 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteOrgTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val orgGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = OrgApi.Delete(orgGuid),
-            expectedException = OrgNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = OrgApi.Delete(orgGuid),
+      expectedException = OrgNotFound()
+    )
+  }
 
-    @Test
-    fun happyPath() {
-        val orgOwnerAccountGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
 
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
-        piperTest.test(OrgApi.Delete(orgRep.guid)) {}
+    piperTest.test(OrgApi.Delete(orgRep.guid)) {}
 
-        piperTest.test(
-            endpoint = OrgApi.Get(orgRep.guid),
-            expectedException = OrgNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = OrgApi.Get(orgRep.guid),
+      expectedException = OrgNotFound()
+    )
+  }
 }

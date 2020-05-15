@@ -6,20 +6,20 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 data class FormTemplateDateQuestionModel(
-    override val guid: UUID,
-    override val createdDate: LocalDateTime,
-    override val formTemplateGuid: UUID,
-    override val label: String,
+  override val guid: UUID,
+  override val createdDate: LocalDateTime,
+  override val formTemplateGuid: UUID,
+  override val label: String,
+  override val helpText: String?,
+  val earliest: LocalDate?,
+  val latest: LocalDate?
+) : FormTemplateQuestionModel {
+  override val type = FormTemplateQuestionModel.Type.DATE
+
+  data class Update(
+    override val label: String?,
     override val helpText: String?,
     val earliest: LocalDate?,
     val latest: LocalDate?
-) : FormTemplateQuestionModel {
-    override val type = FormTemplateQuestionModel.Type.DATE
-
-    data class Update(
-        override val label: String?,
-        override val helpText: String?,
-        val earliest: LocalDate?,
-        val latest: LocalDate?
-    ) : FormTemplateQuestionModel.Update
+  ) : FormTemplateQuestionModel.Update
 }

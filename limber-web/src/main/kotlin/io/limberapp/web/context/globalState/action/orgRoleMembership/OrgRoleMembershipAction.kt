@@ -9,26 +9,26 @@ import io.limberapp.web.util.async
 import react.useEffect
 
 internal sealed class OrgRoleMembershipAction : Action() {
-    internal data class BeginLoading(val orgRoleGuid: UUID) : OrgRoleMembershipAction()
+  internal data class BeginLoading(val orgRoleGuid: UUID) : OrgRoleMembershipAction()
 
-    internal data class SetValue(
-        val orgRoleGuid: UUID,
-        val orgRoleMemberships: Set<OrgRoleMembershipRep.Complete>
-    ) : OrgRoleMembershipAction()
+  internal data class SetValue(
+    val orgRoleGuid: UUID,
+    val orgRoleMemberships: Set<OrgRoleMembershipRep.Complete>
+  ) : OrgRoleMembershipAction()
 
-    internal data class DeleteValue(
-        val orgRoleGuid: UUID,
-        val accountGuid: UUID
-    ) : OrgRoleMembershipAction()
+  internal data class DeleteValue(
+    val orgRoleGuid: UUID,
+    val accountGuid: UUID
+  ) : OrgRoleMembershipAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgRoleMembershipsLoaded(orgGuid: UUID, orgRoleGuid: UUID) {
-    useEffect(listOf(orgRoleGuid)) {
-        if (global.state.orgRoleMemberships[orgRoleGuid]?.hasBegunLoading == true) return@useEffect
-        global.dispatch(OrgRoleMembershipAction.BeginLoading(orgRoleGuid))
-        async {
-            val orgRoleMemberships = api.orgRoleMemberships(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid))
-            global.dispatch(OrgRoleMembershipAction.SetValue(orgRoleGuid, orgRoleMemberships))
-        }
+  useEffect(listOf(orgRoleGuid)) {
+    if (global.state.orgRoleMemberships[orgRoleGuid]?.hasBegunLoading == true) return@useEffect
+    global.dispatch(OrgRoleMembershipAction.BeginLoading(orgRoleGuid))
+    async {
+      val orgRoleMemberships = api.orgRoleMemberships(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid))
+      global.dispatch(OrgRoleMembershipAction.SetValue(orgRoleGuid, orgRoleMemberships))
     }
+  }
 }

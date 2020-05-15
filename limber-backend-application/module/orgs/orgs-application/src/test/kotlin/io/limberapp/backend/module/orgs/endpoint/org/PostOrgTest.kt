@@ -9,19 +9,19 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PostOrgTest : ResourceTest() {
-    @Test
-    fun happyPath() {
-        val orgOwnerAccountGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
 
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-        piperTest.test(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid))) {
-            val actual = json.parse<OrgRep.Complete>(response.content!!)
-            assertEquals(orgRep, actual)
-        }
-
-        piperTest.test(OrgApi.Get(orgRep.guid)) {
-            val actual = json.parse<OrgRep.Complete>(response.content!!)
-            assertEquals(orgRep, actual)
-        }
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.test(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid))) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
     }
+
+    piperTest.test(OrgApi.Get(orgRep.guid)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
+    }
+  }
 }

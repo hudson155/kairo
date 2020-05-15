@@ -9,18 +9,18 @@ import io.limberapp.web.util.async
 import react.useEffect
 
 internal sealed class OrgAction : Action() {
-    internal object BeginLoading : OrgAction()
+  internal object BeginLoading : OrgAction()
 
-    internal data class SetValue(val org: OrgRep.Complete) : OrgAction()
+  internal data class SetValue(val org: OrgRep.Complete) : OrgAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgLoaded(orgGuid: UUID) {
-    useEffect(listOf(orgGuid)) {
-        if (global.state.org.hasBegunLoading) return@useEffect
-        global.dispatch(OrgAction.BeginLoading)
-        async {
-            val org = api.orgs(OrgApi.Get(orgGuid))
-            global.dispatch(OrgAction.SetValue(org))
-        }
+  useEffect(listOf(orgGuid)) {
+    if (global.state.org.hasBegunLoading) return@useEffect
+    global.dispatch(OrgAction.BeginLoading)
+    async {
+      val org = api.orgs(OrgApi.Get(orgGuid))
+      global.dispatch(OrgAction.SetValue(org))
     }
+  }
 }

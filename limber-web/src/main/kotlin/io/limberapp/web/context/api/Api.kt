@@ -14,11 +14,11 @@ import io.limberapp.backend.module.users.client.user.UserClient
 internal val json = Json(context = formsSerialModule)
 
 internal class Api(fetch: Fetch) {
-    val formInstances = FormInstanceClient(fetch, json)
-    val formTemplates = FormTemplateClient(fetch, json)
-    val orgs = OrgClient(fetch, json)
-    val orgRoleMemberships = OrgRoleMembershipClient(fetch, json)
-    val orgRoles = OrgRoleClient(fetch, json)
-    val tenants = TenantClient(fetch, json)
-    val users = UserClient(fetch, json)
+  val formInstances = FormInstanceClient(fetch, json)
+  val formTemplates = FormTemplateClient(fetch, json)
+  val orgs = OrgClient(fetch, json)
+  val orgRoleMemberships = OrgRoleMembershipClient(fetch, json)
+  val orgRoles = OrgRoleClient(fetch, json)
+  val tenants = TenantClient(fetch, json)
+  val users = UserClient(fetch, json)
 }

@@ -11,14 +11,14 @@ import react.functionalComponent
  * Page for managing organization metadata.
  */
 internal fun RBuilder.orgSettingsInfoPage() {
-    child(component)
+  child(component)
 }
 
 internal object OrgSettingsInfoPage {
-    const val name = "Organization info"
-    const val path = "${OrgSettingsPage.path}/info"
+  const val name = "Organization info"
+  const val path = "${OrgSettingsPage.path}/info"
 }
 
 private val component = functionalComponent<RProps> {
-    layoutTitle(OrgSettingsInfoPage.name)
+  layoutTitle(OrgSettingsInfoPage.name)
 }

@@ -16,19 +16,19 @@ import java.util.UUID
  * Deletes an existing tenant.
  */
 internal class DeleteTenant @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val tenantService: TenantService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val tenantService: TenantService
 ) : LimberApiEndpoint<TenantApi.Delete, Unit>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = TenantApi.Delete::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = TenantApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Delete(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Delete(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+  )
 
-    override suspend fun Handler.handle(command: TenantApi.Delete) {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        tenantService.delete(command.orgGuid)
-    }
+  override suspend fun Handler.handle(command: TenantApi.Delete) {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    tenantService.delete(command.orgGuid)
+  }
 }

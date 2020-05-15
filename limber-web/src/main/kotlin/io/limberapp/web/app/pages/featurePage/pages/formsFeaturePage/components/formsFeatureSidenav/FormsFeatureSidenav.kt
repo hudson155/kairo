@@ -16,16 +16,16 @@ import react.router.dom.useRouteMatch
  * Sidenav for navigation within forms feature.
  */
 internal fun RBuilder.formsFeatureSidenav() {
-    child(component)
+  child(component)
 }
 
 private val component = functionalComponent<RProps> {
-    val match = checkNotNull(useRouteMatch<RProps>())
+  val match = checkNotNull(useRouteMatch<RProps>())
 
-    sidenav(FormsFeaturePage.name) {
-        sidenavGroup {
-            sidenavLink(to = match.path + FormInstancesListPage.subpath) { +FormInstancesListPage.name }
-            sidenavLink(to = match.path + FormTemplatesListPage.subpath) { +FormTemplatesListPage.name }
-        }
+  sidenav(FormsFeaturePage.name) {
+    sidenavGroup {
+      sidenavLink(to = match.path + FormInstancesListPage.subpath) { +FormInstancesListPage.name }
+      sidenavLink(to = match.path + FormTemplatesListPage.subpath) { +FormTemplatesListPage.name }
     }
+  }
 }

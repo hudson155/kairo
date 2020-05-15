@@ -10,14 +10,14 @@ import react.functionalComponent
  * Lists all form instances within the feature.
  */
 internal fun RBuilder.formInstancesListPage() {
-    child(component)
+  child(component)
 }
 
 internal object FormInstancesListPage {
-    const val name = "Instances"
-    const val subpath = "/instances"
+  const val name = "Instances"
+  const val subpath = "/instances"
 }
 
 private val component = functionalComponent<RProps> {
-    layoutTitle(FormInstancesListPage.name)
+  layoutTitle(FormInstancesListPage.name)
 }

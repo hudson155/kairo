@@ -13,15 +13,15 @@ import react.functionalComponent
  * Parent page for feature-specific pages.
  */
 internal fun RBuilder.featurePage(feature: FeatureRep.Complete) {
-    child(component, Props(feature))
+  child(component, Props(feature))
 }
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
 private val component = functionalComponent<Props> { props ->
-    when (props.feature.type) {
-        FeatureRep.Type.FORMS -> formsFeaturePage()
-        FeatureRep.Type.HOME -> homePage()
-        else -> notFoundPage()
-    }
+  when (props.feature.type) {
+      FeatureRep.Type.FORMS -> formsFeaturePage()
+      FeatureRep.Type.HOME -> homePage()
+      else -> notFoundPage()
+  }
 }

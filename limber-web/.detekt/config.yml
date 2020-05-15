@@ -172,8 +172,8 @@ formatting:
     active: true
   Indentation:
     active: true
-    indentSize: 4
-    continuationIndentSize: 4
+    indentSize: 2
+    continuationIndentSize: 2
   MaximumLineLength:
     active: true
     maxLineLength: 120
@@ -207,7 +207,7 @@ formatting:
     active: true
   ParameterListWrapping:
     active: true
-    indentSize: 4
+    indentSize: 2
   SpacingAroundColon:
     active: true
   SpacingAroundComma:

@@ -28,45 +28,45 @@ import react.router.dom.switch
  *   - Handles routing for the unauthenticated application.
  */
 internal fun RBuilder.appRouter() {
-    child(component)
+  child(component)
 }
 
 private val component = functionalComponent<RProps> {
-    val auth = useAuth()
+  val auth = useAuth()
 
-    // While auth is loading, show the loading page.
-    if (auth.isLoading) {
-        page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
-            loadingPage("Identifying you...")
-        }
-        return@functionalComponent
+  // While auth is loading, show the loading page.
+  if (auth.isLoading) {
+    page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
+      loadingPage("Identifying you...")
     }
+    return@functionalComponent
+  }
 
-    browserRouter {
-        switch {
-            route(path = SignInPage.path, exact = true) { buildElement { signInPage() } }
-            route(path = SignOutPage.path, exact = true) { buildElement { signOutPage() } }
-            if (auth.isAuthenticated) {
-                route(path = rootPath) { buildElement { appFeatureRouter() } }
-            } else {
-                route(path = rootPath) {
-                    buildElement {
-                        page(
-                            header = buildElement {
-                                basicNavbar {
-                                    navLink<RProps>(
-                                        to = SignInPage.path,
-                                        exact = true
-                                    ) { headerItem { +SignInPage.name } }
-                                }
-                            },
-                            footer = buildElement { footer() }
-                        ) {
-                            unauthenticatedPage()
-                        }
-                    }
+  browserRouter {
+    switch {
+      route(path = SignInPage.path, exact = true) { buildElement { signInPage() } }
+      route(path = SignOutPage.path, exact = true) { buildElement { signOutPage() } }
+      if (auth.isAuthenticated) {
+        route(path = rootPath) { buildElement { appFeatureRouter() } }
+      } else {
+        route(path = rootPath) {
+          buildElement {
+            page(
+              header = buildElement {
+                basicNavbar {
+                  navLink<RProps>(
+                    to = SignInPage.path,
+                    exact = true
+                  ) { headerItem { +SignInPage.name } }
                 }
+              },
+              footer = buildElement { footer() }
+            ) {
+              unauthenticatedPage()
             }
+          }
         }
+      }
     }
+  }
 }

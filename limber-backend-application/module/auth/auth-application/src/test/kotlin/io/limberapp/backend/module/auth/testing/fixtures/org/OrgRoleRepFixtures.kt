@@ -6,53 +6,53 @@ import io.limberapp.backend.module.auth.testing.ResourceTest
 import java.time.LocalDateTime
 
 internal object OrgRoleRepFixtures {
-    data class Fixture(
-        val creation: () -> OrgRoleRep.Creation,
-        val complete: ResourceTest.(idSeed: Int) -> OrgRoleRep.Complete
-    )
+  data class Fixture(
+    val creation: () -> OrgRoleRep.Creation,
+    val complete: ResourceTest.(idSeed: Int) -> OrgRoleRep.Complete
+  )
 
-    val adminFixture = Fixture(
-        {
-            OrgRoleRep.Creation("Admin")
-        },
-        { idSeed ->
-            OrgRoleRep.Complete(
-                guid = deterministicUuidGenerator[idSeed],
-                createdDate = LocalDateTime.now(fixedClock),
-                name = "Admin",
-                permissions = OrgPermissions.none(),
-                memberCount = 0
-            )
-        }
-    )
+  val adminFixture = Fixture(
+    {
+      OrgRoleRep.Creation("Admin")
+    },
+    { idSeed ->
+      OrgRoleRep.Complete(
+        guid = deterministicUuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(fixedClock),
+        name = "Admin",
+        permissions = OrgPermissions.none(),
+        memberCount = 0
+      )
+    }
+  )
 
-    val maintainerFixture = Fixture(
-        {
-            OrgRoleRep.Creation("Maintainer")
-        },
-        { idSeed ->
-            OrgRoleRep.Complete(
-                guid = deterministicUuidGenerator[idSeed],
-                createdDate = LocalDateTime.now(fixedClock),
-                name = "Maintainer",
-                permissions = OrgPermissions.none(),
-                memberCount = 0
-            )
-        }
-    )
+  val maintainerFixture = Fixture(
+    {
+      OrgRoleRep.Creation("Maintainer")
+    },
+    { idSeed ->
+      OrgRoleRep.Complete(
+        guid = deterministicUuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(fixedClock),
+        name = "Maintainer",
+        permissions = OrgPermissions.none(),
+        memberCount = 0
+      )
+    }
+  )
 
-    val memberFixture = Fixture(
-        {
-            OrgRoleRep.Creation("Member")
-        },
-        { idSeed ->
-            OrgRoleRep.Complete(
-                guid = deterministicUuidGenerator[idSeed],
-                createdDate = LocalDateTime.now(fixedClock),
-                name = "Member",
-                permissions = OrgPermissions.none(),
-                memberCount = 0
-            )
-        }
-    )
+  val memberFixture = Fixture(
+    {
+      OrgRoleRep.Creation("Member")
+    },
+    { idSeed ->
+      OrgRoleRep.Complete(
+        guid = deterministicUuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(fixedClock),
+        name = "Member",
+        permissions = OrgPermissions.none(),
+        memberCount = 0
+      )
+    }
+  )
 }

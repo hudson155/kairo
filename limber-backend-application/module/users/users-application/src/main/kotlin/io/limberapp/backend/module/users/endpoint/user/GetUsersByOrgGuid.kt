@@ -17,22 +17,22 @@ import java.util.UUID
  * Returns all users that are a member of the given org.
  */
 internal class GetUsersByOrgGuid @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val userService: UserService,
-    private val userMapper: UserMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val userService: UserService,
+  private val userMapper: UserMapper
 ) : LimberApiEndpoint<UserApi.GetByOrgGuid, Set<UserRep.Summary>>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = UserApi.GetByOrgGuid::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = UserApi.GetByOrgGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = UserApi.GetByOrgGuid(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = UserApi.GetByOrgGuid(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+  )
 
-    override suspend fun Handler.handle(command: UserApi.GetByOrgGuid): Set<UserRep.Summary> {
-        Authorization.OrgMember(command.orgGuid).authorize()
-        val users = userService.getByOrgGuid(command.orgGuid)
-        return users.map { userMapper.summaryRep(it) }.toSet()
-    }
+  override suspend fun Handler.handle(command: UserApi.GetByOrgGuid): Set<UserRep.Summary> {
+    Authorization.OrgMember(command.orgGuid).authorize()
+    val users = userService.getByOrgGuid(command.orgGuid)
+    return users.map { userMapper.summaryRep(it) }.toSet()
+  }
 }

@@ -13,78 +13,78 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal class FormTemplateQuestionServiceImpl @Inject constructor(
-    private val clock: Clock,
-    private val uuidGenerator: UuidGenerator,
-    private val formTemplateQuestionStore: FormTemplateQuestionStore
+  private val clock: Clock,
+  private val uuidGenerator: UuidGenerator,
+  private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService {
-    override fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-        require(formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid).isEmpty())
-        val questions = listOf(
-            FormTemplateTextQuestionModel(
-                guid = uuidGenerator.generate(),
-                createdDate = LocalDateTime.now(clock),
-                formTemplateGuid = formTemplateGuid,
-                label = "Worker name",
-                helpText = null,
-                multiLine = false,
-                placeholder = null,
-                validator = null
-            ),
-            FormTemplateDateQuestionModel(
-                guid = uuidGenerator.generate(),
-                createdDate = LocalDateTime.now(clock),
-                formTemplateGuid = formTemplateGuid,
-                label = "Date",
-                helpText = null,
-                earliest = null,
-                latest = null
-            ),
-            FormTemplateTextQuestionModel(
-                guid = uuidGenerator.generate(),
-                createdDate = LocalDateTime.now(clock),
-                formTemplateGuid = formTemplateGuid,
-                label = "Description",
-                helpText = null,
-                multiLine = true,
-                placeholder = null,
-                validator = null
-            ),
-            FormTemplateRadioSelectorQuestionModel(
-                guid = uuidGenerator.generate(),
-                createdDate = LocalDateTime.now(clock),
-                formTemplateGuid = formTemplateGuid,
-                label = "Two options",
-                helpText = null,
-                options = listOf("test_option_one", "test_option_two")
-            )
-        )
-        formTemplateQuestionStore.create(questions)
-        return questions
+  override fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
+    require(formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid).isEmpty())
+    val questions = listOf(
+      FormTemplateTextQuestionModel(
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
+        formTemplateGuid = formTemplateGuid,
+        label = "Worker name",
+        helpText = null,
+        multiLine = false,
+        placeholder = null,
+        validator = null
+      ),
+      FormTemplateDateQuestionModel(
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
+        formTemplateGuid = formTemplateGuid,
+        label = "Date",
+        helpText = null,
+        earliest = null,
+        latest = null
+      ),
+      FormTemplateTextQuestionModel(
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
+        formTemplateGuid = formTemplateGuid,
+        label = "Description",
+        helpText = null,
+        multiLine = true,
+        placeholder = null,
+        validator = null
+      ),
+      FormTemplateRadioSelectorQuestionModel(
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
+        formTemplateGuid = formTemplateGuid,
+        label = "Two options",
+        helpText = null,
+        options = listOf("test_option_one", "test_option_two")
+      )
+    )
+    formTemplateQuestionStore.create(questions)
+    return questions
+  }
+
+  override fun create(model: FormTemplateQuestionModel, rank: Int?) =
+    formTemplateQuestionStore.create(model, rank)
+
+  override fun getByFormTemplateGuid(formTemplateGuid: UUID) =
+    formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
+
+  override fun update(
+    formTemplateGuid: UUID,
+    questionGuid: UUID,
+    update: FormTemplateQuestionModel.Update
+  ): FormTemplateQuestionModel {
+    checkFormTemplateGuid(formTemplateGuid, questionGuid)
+    return formTemplateQuestionStore.update(questionGuid, update)
+  }
+
+  override fun delete(formTemplateGuid: UUID, questionGuid: UUID) {
+    checkFormTemplateGuid(formTemplateGuid, questionGuid)
+    formTemplateQuestionStore.delete(questionGuid)
+  }
+
+  private fun checkFormTemplateGuid(formTemplateGuid: UUID, questionGuid: UUID) {
+    if (formTemplateQuestionStore.get(questionGuid)?.formTemplateGuid != formTemplateGuid) {
+      throw FormTemplateQuestionNotFound()
     }
-
-    override fun create(model: FormTemplateQuestionModel, rank: Int?) =
-        formTemplateQuestionStore.create(model, rank)
-
-    override fun getByFormTemplateGuid(formTemplateGuid: UUID) =
-        formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
-
-    override fun update(
-        formTemplateGuid: UUID,
-        questionGuid: UUID,
-        update: FormTemplateQuestionModel.Update
-    ): FormTemplateQuestionModel {
-        checkFormTemplateGuid(formTemplateGuid, questionGuid)
-        return formTemplateQuestionStore.update(questionGuid, update)
-    }
-
-    override fun delete(formTemplateGuid: UUID, questionGuid: UUID) {
-        checkFormTemplateGuid(formTemplateGuid, questionGuid)
-        formTemplateQuestionStore.delete(questionGuid)
-    }
-
-    private fun checkFormTemplateGuid(formTemplateGuid: UUID, questionGuid: UUID) {
-        if (formTemplateQuestionStore.get(questionGuid)?.formTemplateGuid != formTemplateGuid) {
-            throw FormTemplateQuestionNotFound()
-        }
-    }
+  }
 }

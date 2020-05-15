@@ -4,12 +4,12 @@ import com.piperframework.module.SqlWrapper
 import io.limberapp.backend.adhoc.helper.dbConfig
 
 fun main(args: Array<String>) {
-    val config = dbConfig(args[0], args.getOrNull(1), args.getOrNull(2))
-    with(SqlWrapper(config)) {
-        connect()
-        insertFixtures()
-        disconnect()
-    }
+  val config = dbConfig(args[0], args.getOrNull(1), args.getOrNull(2))
+  with(SqlWrapper(config)) {
+    connect()
+    insertFixtures()
+    disconnect()
+  }
 }
 
 private const val SQL = """
@@ -83,7 +83,7 @@ VALUES (NOW(), '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '59c0b82c-57d3-4d29-b7ef-
 """
 
 internal fun SqlWrapper.insertFixtures() {
-    with(checkNotNull(dataSource).connection) {
-        createStatement().execute(SQL)
-    }
+  with(checkNotNull(dataSource).connection) {
+    createStatement().execute(SQL)
+  }
 }

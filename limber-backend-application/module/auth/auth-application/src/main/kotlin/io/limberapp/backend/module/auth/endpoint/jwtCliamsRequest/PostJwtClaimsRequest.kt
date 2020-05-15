@@ -20,22 +20,22 @@ import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsReques
  * uses the results every time it issues a JWT.
  */
 internal class PostJwtClaimsRequest @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val jwtClaimsRequestService: JwtClaimsRequestService,
-    private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val jwtClaimsRequestService: JwtClaimsRequestService,
+  private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
 ) : LimberApiEndpoint<JwtClaimsRequestApi.Post, JwtClaimsRequestRep.Complete>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = JwtClaimsRequestApi.Post::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = JwtClaimsRequestApi.Post::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = JwtClaimsRequestApi.Post(
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = JwtClaimsRequestApi.Post(
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: JwtClaimsRequestApi.Post): JwtClaimsRequestRep.Complete {
-        Authorization.Role(JwtRole.IDENTITY_PROVIDER).authorize()
-        val request = jwtClaimsRequestMapper.model(command.rep.required())
-        val claims = jwtClaimsRequestService.requestJwtClaims(request)
-        return jwtClaimsRequestMapper.completeRep(claims)
-    }
+  override suspend fun Handler.handle(command: JwtClaimsRequestApi.Post): JwtClaimsRequestRep.Complete {
+    Authorization.Role(JwtRole.IDENTITY_PROVIDER).authorize()
+    val request = jwtClaimsRequestMapper.model(command.rep.required())
+    val claims = jwtClaimsRequestService.requestJwtClaims(request)
+    return jwtClaimsRequestMapper.completeRep(claims)
+  }
 }

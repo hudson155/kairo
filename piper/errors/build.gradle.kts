@@ -1,45 +1,45 @@
 plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.serialization")
-    id(Plugins.detekt)
+  kotlin("multiplatform")
+  kotlin("plugin.serialization")
+  id(Plugins.detekt)
 }
 
 kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(kotlin("stdlib-common"))
-                implementation(Dependencies.Serialization.common)
-            }
-        }
-        jvm {
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    implementation(kotlin("stdlib-jdk8"))
-                    implementation(Dependencies.Serialization.jvm)
-                }
-            }
-        }
-        js {
-            browser { }
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    implementation(kotlin("stdlib-js"))
-                    implementation(Dependencies.Serialization.js)
-                }
-            }
-        }
+  sourceSets {
+    commonMain {
+      dependencies {
+        implementation(kotlin("stdlib-common"))
+        implementation(Dependencies.Serialization.common)
+      }
     }
+    jvm {
+      compilations["main"].defaultSourceSet {
+        dependencies {
+          implementation(kotlin("stdlib-jdk8"))
+          implementation(Dependencies.Serialization.jvm)
+        }
+      }
+    }
+    js {
+      browser { }
+      compilations["main"].defaultSourceSet {
+        dependencies {
+          implementation(kotlin("stdlib-js"))
+          implementation(Dependencies.Serialization.js)
+        }
+      }
+    }
+  }
 }
 
 detekt {
-    config = files("$rootDir/.detekt/config.yml")
-    input = files(
-        "src/commonMain/kotlin",
-        "src/commonTest/kotlin",
-        "src/jsMain/kotlin",
-        "src/jsTest/kotlin",
-        "src/jvmMain/kotlin",
-        "src/jvmTest/kotlin"
-    )
+  config = files("$rootDir/.detekt/config.yml")
+  input = files(
+    "src/commonMain/kotlin",
+    "src/commonTest/kotlin",
+    "src/jsMain/kotlin",
+    "src/jsTest/kotlin",
+    "src/jvmMain/kotlin",
+    "src/jvmTest/kotlin"
+  )
 }

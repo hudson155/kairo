@@ -5,17 +5,17 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import java.util.UUID
 
 interface UserService {
-    fun create(model: UserModel)
+  fun create(model: UserModel)
 
-    fun get(userGuid: UUID): UserModel?
+  fun get(userGuid: UUID): UserModel?
 
-    fun getByEmailAddress(emailAddress: String): UserModel?
+  fun getByEmailAddress(emailAddress: String): UserModel?
 
-    fun getByOrgGuid(orgGuid: UUID): Set<UserModel>
+  fun getByOrgGuid(orgGuid: UUID): Set<UserModel>
 
-    fun update(userGuid: UUID, update: UserModel.Update): UserModel
+  fun update(userGuid: UUID, update: UserModel.Update): UserModel
 
-    fun deleteRole(userGuid: UUID, role: JwtRole)
+  fun deleteRole(userGuid: UUID, role: JwtRole)
 
-    fun delete(userGuid: UUID)
+  fun delete(userGuid: UUID)
 }

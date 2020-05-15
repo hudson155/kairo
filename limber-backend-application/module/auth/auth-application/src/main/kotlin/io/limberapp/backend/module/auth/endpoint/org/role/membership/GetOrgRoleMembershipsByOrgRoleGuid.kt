@@ -18,25 +18,25 @@ import java.util.UUID
  * Returns all members of the given org role.
  */
 internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val orgRoleMembershipService: OrgRoleMembershipService,
-    private val orgRoleMembershipMapper: OrgRoleMembershipMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val orgRoleMembershipService: OrgRoleMembershipService,
+  private val orgRoleMembershipMapper: OrgRoleMembershipMapper
 ) : LimberApiEndpoint<OrgRoleMembershipApi.GetByOrgRoleGuid, Set<OrgRoleMembershipRep.Complete>>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgRoleMembershipApi.GetByOrgRoleGuid::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgRoleMembershipApi.GetByOrgRoleGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgRoleMembershipApi.GetByOrgRoleGuid(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgRoleMembershipApi.GetByOrgRoleGuid(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid")
+  )
 
-    override suspend fun Handler.handle(
-        command: OrgRoleMembershipApi.GetByOrgRoleGuid
-    ): Set<OrgRoleMembershipRep.Complete> {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
-        val orgRoleMemberships = orgRoleMembershipService.getByOrgRoleGuid(command.orgGuid, command.orgRoleGuid)
-        return orgRoleMemberships.map { orgRoleMembershipMapper.completeRep(it) }.toSet()
-    }
+  override suspend fun Handler.handle(
+    command: OrgRoleMembershipApi.GetByOrgRoleGuid
+  ): Set<OrgRoleMembershipRep.Complete> {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
+    val orgRoleMemberships = orgRoleMembershipService.getByOrgRoleGuid(command.orgGuid, command.orgRoleGuid)
+    return orgRoleMemberships.map { orgRoleMembershipMapper.completeRep(it) }.toSet()
+  }
 }
