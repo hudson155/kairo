@@ -4,7 +4,7 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 internal object TenantRepFixtures {
   data class Fixture(

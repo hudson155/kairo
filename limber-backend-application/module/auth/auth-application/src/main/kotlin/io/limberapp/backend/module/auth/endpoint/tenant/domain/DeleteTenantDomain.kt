@@ -10,7 +10,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes a domain from a tenant.

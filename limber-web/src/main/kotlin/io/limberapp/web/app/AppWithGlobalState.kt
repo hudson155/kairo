@@ -1,10 +1,7 @@
 package io.limberapp.web.app
 
 import io.limberapp.web.context.globalState.globalStateProvider
-import react.RBuilder
-import react.RProps
-import react.child
-import react.functionalComponent
+import react.*
 
 /**
  * Part of the application root.

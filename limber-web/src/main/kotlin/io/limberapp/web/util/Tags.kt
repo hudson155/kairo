@@ -4,10 +4,8 @@ import kotlinx.html.HTMLTag
 import kotlinx.html.HtmlBlockTag
 import kotlinx.html.TagConsumer
 import kotlinx.html.attributesMapOf
-import react.RBuilder
-import react.ReactElement
-import react.dom.RDOMBuilder
-import react.dom.tag
+import react.*
+import react.dom.*
 
 internal inline fun RBuilder.main(classes: String? = null, block: RDOMBuilder<MAIN>.() -> Unit): ReactElement =
   tag(block) {

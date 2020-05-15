@@ -13,17 +13,8 @@ import kotlinx.css.padding
 import kotlinx.css.px
 import kotlinx.css.tableLayout
 import kotlinx.css.width
-import react.RBuilder
-import react.RProps
-import react.child
-import react.dom.p
-import react.dom.table
-import react.dom.tbody
-import react.dom.th
-import react.dom.thead
-import react.dom.tr
-import react.functionalComponent
-import react.key
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

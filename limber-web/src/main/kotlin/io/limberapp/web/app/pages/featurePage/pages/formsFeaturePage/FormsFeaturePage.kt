@@ -6,15 +6,8 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formI
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.formInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.formTemplatesListPage
-import react.RBuilder
-import react.RProps
-import react.buildElement
-import react.child
-import react.functionalComponent
-import react.router.dom.redirect
-import react.router.dom.route
-import react.router.dom.switch
-import react.router.dom.useRouteMatch
+import react.*
+import react.router.dom.*
 
 /**
  * Parent page for forms module pages.

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.service.account
 
 import com.google.inject.Inject
 import io.limberapp.backend.module.users.store.account.AccountStore
-import java.util.UUID
+import java.util.*
 
 internal class AccountServiceImpl @Inject constructor(
   private val accountStore: AccountStore

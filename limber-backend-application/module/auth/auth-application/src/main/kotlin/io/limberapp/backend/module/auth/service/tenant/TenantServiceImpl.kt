@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.service.tenant
 import com.google.inject.Inject
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import io.limberapp.backend.module.auth.store.tenant.TenantStore
-import java.util.UUID
+import java.util.*
 
 internal class TenantServiceImpl @Inject constructor(
   private val tenantStore: TenantStore

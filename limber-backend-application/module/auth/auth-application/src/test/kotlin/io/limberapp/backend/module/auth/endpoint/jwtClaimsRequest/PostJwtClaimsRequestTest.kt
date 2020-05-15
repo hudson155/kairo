@@ -23,7 +23,7 @@ import io.limberapp.backend.module.users.service.account.UserService
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 import kotlin.test.assertEquals
 
 internal class PostJwtClaimsRequestTest : ResourceTest() {

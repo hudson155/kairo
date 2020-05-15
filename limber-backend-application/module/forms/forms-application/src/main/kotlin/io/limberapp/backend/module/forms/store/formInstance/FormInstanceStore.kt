@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotF
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import java.util.UUID
+import java.util.*
 
 internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: FormInstanceModel) {

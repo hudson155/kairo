@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.testing.fixtures.account
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 internal object UserRepFixtures {
   data class Fixture(

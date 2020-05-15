@@ -6,11 +6,8 @@ import io.limberapp.web.app.components.sidenav.sidenav
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.FormsFeaturePage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
-import react.RBuilder
-import react.RProps
-import react.child
-import react.functionalComponent
-import react.router.dom.useRouteMatch
+import react.*
+import react.router.dom.*
 
 /**
  * Sidenav for navigation within forms feature.

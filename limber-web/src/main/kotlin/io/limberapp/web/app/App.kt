@@ -1,9 +1,6 @@
 package io.limberapp.web.app
 
-import react.RBuilder
-import react.RProps
-import react.child
-import react.functionalComponent
+import react.*
 
 /**
  * Delegate for the application root.

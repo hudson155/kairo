@@ -202,7 +202,7 @@ formatting:
   NoUnusedImports:
     active: true
   NoWildcardImports:
-    active: true
+    active: false
   PackageName:
     active: true
   ParameterListWrapping:
@@ -462,3 +462,4 @@ style:
     active: true
   WildcardImport:
     active: true
+    excludeImports: 'kotlinx.css.*,react.*'

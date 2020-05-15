@@ -3,13 +3,9 @@ package io.limberapp.web.app.components.loadingSpinner
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.globalStyles
-import kotlinx.css.TextAlign
-import kotlinx.css.fontSize
-import kotlinx.css.padding
-import kotlinx.css.px
-import kotlinx.css.textAlign
-import react.RBuilder
-import react.dom.div
+import kotlinx.css.*
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

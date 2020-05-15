@@ -9,7 +9,7 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQues
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import java.util.UUID
+import java.util.*
 
 internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(models: List<FormTemplateQuestionModel>, rank: Int? = null) {

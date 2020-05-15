@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.model.org
 
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 data class OrgRoleModel(
   val guid: UUID,

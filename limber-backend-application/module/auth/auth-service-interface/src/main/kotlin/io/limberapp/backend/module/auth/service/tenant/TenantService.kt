@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.service.tenant
 
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
-import java.util.UUID
+import java.util.*
 
 interface TenantService {
   fun create(model: TenantModel)

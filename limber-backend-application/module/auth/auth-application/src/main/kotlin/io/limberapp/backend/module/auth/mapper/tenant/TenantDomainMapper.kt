@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import java.time.Clock
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 internal class TenantDomainMapper @Inject constructor(
   private val clock: Clock

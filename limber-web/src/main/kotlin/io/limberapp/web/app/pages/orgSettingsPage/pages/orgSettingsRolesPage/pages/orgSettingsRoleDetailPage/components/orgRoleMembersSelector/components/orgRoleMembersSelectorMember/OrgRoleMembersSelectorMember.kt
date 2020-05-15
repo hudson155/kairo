@@ -26,23 +26,17 @@ import kotlinx.css.justifyContent
 import kotlinx.css.marginRight
 import kotlinx.css.maxWidth
 import kotlinx.css.padding
-import kotlinx.css.properties.borderBottom
+import kotlinx.css.properties.*
 import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
-import react.RBuilder
-import react.RHandler
-import react.RProps
-import react.dom.button
-import react.dom.div
-import react.dom.img
-import react.functionalComponent
-import react.useState
+import react.*
+import react.dom.*
 import styled.getClassName
 
 internal fun RBuilder.orgRoleMembersSelectorMember(
-        user: UserRep.Summary?,
-        onRemove: (() -> Unit)?,
-        children: RHandler<Props> = {}
+  user: UserRep.Summary?,
+  onRemove: (() -> Unit)?,
+  children: RHandler<Props> = {}
 ) {
   child(component, Props(user, onRemove), handler = children)
 }

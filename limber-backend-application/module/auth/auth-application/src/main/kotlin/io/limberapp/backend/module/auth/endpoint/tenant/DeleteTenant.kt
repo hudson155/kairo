@@ -10,7 +10,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.service.tenant.TenantService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes an existing tenant.

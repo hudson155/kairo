@@ -9,7 +9,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes an existing form instance.

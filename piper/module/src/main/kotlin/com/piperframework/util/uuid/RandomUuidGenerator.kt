@@ -1,6 +1,6 @@
 package com.piperframework.util.uuid
 
-import java.util.UUID
+import java.util.*
 
 /**
  * This is the default/production way of generating UUIDs.

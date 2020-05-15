@@ -4,21 +4,10 @@ import com.piperframework.util.slugify
 import io.limberapp.web.app.components.tabbedView.components.tabbedViewLink.tabbedViewLink
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import kotlinx.css.BorderStyle
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
-import kotlinx.css.JustifyContent
-import kotlinx.css.display
-import kotlinx.css.flexDirection
-import kotlinx.css.justifyContent
-import kotlinx.css.paddingBottom
-import kotlinx.css.properties.borderBottom
-import kotlinx.css.px
-import react.RBuilder
-import react.RProps
-import react.child
-import react.dom.div
-import react.functionalComponent
+import kotlinx.css.*
+import kotlinx.css.properties.*
+import react.*
+import react.dom.*
 import styled.getClassName
 
 internal fun RBuilder.tabbedView(vararg tabNames: String) {

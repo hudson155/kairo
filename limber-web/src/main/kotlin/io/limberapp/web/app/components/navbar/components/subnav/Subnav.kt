@@ -2,34 +2,11 @@ package io.limberapp.web.app.components.navbar.components.subnav
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import kotlinx.css.Align
-import kotlinx.css.BorderStyle
-import kotlinx.css.Color
-import kotlinx.css.Display
-import kotlinx.css.LinearDimension
-import kotlinx.css.Position
-import kotlinx.css.QuotedString
-import kotlinx.css.alignSelf
-import kotlinx.css.backgroundColor
-import kotlinx.css.borderBottomColor
-import kotlinx.css.borderRadius
-import kotlinx.css.content
-import kotlinx.css.display
-import kotlinx.css.left
-import kotlinx.css.marginRight
-import kotlinx.css.position
-import kotlinx.css.properties.border
-import kotlinx.css.px
-import kotlinx.css.right
-import kotlinx.css.top
-import kotlinx.css.width
+import kotlinx.css.*
+import kotlinx.css.properties.*
 import org.w3c.dom.Element
-import react.RBuilder
-import react.RHandler
-import react.RMutableRef
-import react.RProps
-import react.dom.div
-import react.functionalComponent
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

@@ -9,7 +9,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes an existing form template.

@@ -7,7 +7,7 @@ import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import java.util.UUID
+import java.util.*
 
 internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: OrgModel) {

@@ -11,7 +11,7 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
-import java.util.UUID
+import java.util.*
 
 /**
  * Gives the user a certain role. Roles are system-wide, NOT org-wide.

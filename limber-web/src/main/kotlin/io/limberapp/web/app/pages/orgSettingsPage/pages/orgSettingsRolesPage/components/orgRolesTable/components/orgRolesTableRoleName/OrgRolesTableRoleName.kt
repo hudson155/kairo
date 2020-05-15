@@ -30,16 +30,8 @@ import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import kotlinx.html.js.onSubmitFunction
 import org.w3c.dom.events.Event
-import react.RBuilder
-import react.RProps
-import react.child
-import react.dom.a
-import react.dom.defaultValue
-import react.dom.form
-import react.dom.input
-import react.dom.td
-import react.functionalComponent
-import react.useState
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

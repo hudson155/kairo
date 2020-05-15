@@ -13,7 +13,7 @@ import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
-import java.util.UUID
+import java.util.*
 
 /**
  * Returns a single tenant.

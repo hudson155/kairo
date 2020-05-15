@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.testing.fixtures.org
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 internal object OrgRoleMembershipRepFixtures {
   data class Fixture(

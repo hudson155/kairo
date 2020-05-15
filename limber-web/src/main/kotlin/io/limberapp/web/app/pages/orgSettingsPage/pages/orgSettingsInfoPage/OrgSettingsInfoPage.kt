@@ -2,10 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
-import react.RBuilder
-import react.RProps
-import react.child
-import react.functionalComponent
+import react.*
 
 /**
  * Page for managing organization metadata.

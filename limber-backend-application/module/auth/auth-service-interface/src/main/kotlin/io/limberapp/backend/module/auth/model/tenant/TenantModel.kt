@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.model.tenant
 
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 data class TenantModel(
   val createdDate: LocalDateTime,

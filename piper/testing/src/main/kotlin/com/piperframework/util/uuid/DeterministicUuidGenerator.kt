@@ -1,7 +1,7 @@
 package com.piperframework.util.uuid
 
 import java.nio.ByteBuffer
-import java.util.UUID
+import java.util.*
 
 /**
  * This is a deterministic way of generating UUIDs that's useful for tests.

@@ -11,7 +11,7 @@ import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
-import java.util.UUID
+import java.util.*
 
 /**
  * Updates a user's information.

@@ -3,7 +3,7 @@ package io.limberapp.backend.module.orgs.testing.fixtures.org
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 internal object OrgRepFixtures {
   data class Fixture(

@@ -10,7 +10,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes an existing org.

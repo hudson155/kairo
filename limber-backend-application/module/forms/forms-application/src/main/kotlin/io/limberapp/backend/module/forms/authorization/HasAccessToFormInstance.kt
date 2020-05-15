@@ -4,7 +4,7 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
-import java.util.UUID
+import java.util.*
 
 internal class HasAccessToFormInstance(
   private val formInstanceService: FormInstanceService,

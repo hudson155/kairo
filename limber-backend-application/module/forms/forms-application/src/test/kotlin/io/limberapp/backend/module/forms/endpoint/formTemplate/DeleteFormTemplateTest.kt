@@ -5,7 +5,7 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
 internal class DeleteFormTemplateTest : ResourceTest() {
   @Test

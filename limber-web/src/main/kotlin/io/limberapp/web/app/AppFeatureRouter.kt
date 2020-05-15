@@ -19,15 +19,8 @@ import io.limberapp.web.context.globalState.action.user.ensureUserLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.rootPath
 import io.limberapp.web.util.withContext
-import react.RBuilder
-import react.RProps
-import react.buildElement
-import react.child
-import react.functionalComponent
-import react.router.dom.navLink
-import react.router.dom.redirect
-import react.router.dom.route
-import react.router.dom.switch
+import react.*
+import react.router.dom.*
 
 /**
  * Part of the application root.

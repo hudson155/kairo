@@ -10,12 +10,8 @@ import kotlinx.css.height
 import kotlinx.css.justifyContent
 import kotlinx.css.padding
 import kotlinx.css.px
-import react.RBuilder
-import react.RHandler
-import react.RProps
-import react.ReactElement
+import react.*
 import react.dom.div
-import react.functionalComponent
 import styled.getClassName
 
 /**

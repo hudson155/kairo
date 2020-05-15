@@ -12,15 +12,8 @@ import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.util.rootPath
-import react.RBuilder
-import react.RProps
-import react.buildElement
-import react.child
-import react.functionalComponent
-import react.router.dom.browserRouter
-import react.router.dom.navLink
-import react.router.dom.route
-import react.router.dom.switch
+import react.*
+import react.router.dom.*
 
 /**
  * Part of the application root.

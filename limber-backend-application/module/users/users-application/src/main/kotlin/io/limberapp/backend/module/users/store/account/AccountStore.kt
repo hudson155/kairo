@@ -5,7 +5,7 @@ import com.piperframework.store.SqlStore
 import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.users.model.account.AccountModel
 import org.jdbi.v3.core.Jdbi
-import java.util.UUID
+import java.util.*
 
 internal class AccountStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun get(accountGuid: UUID): AccountModel? {

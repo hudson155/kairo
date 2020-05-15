@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.web.context.globalState.action.Action
 import io.limberapp.web.util.EnsureLoadedContext
 import io.limberapp.web.util.async
-import react.useEffect
+import react.*
 
 internal sealed class TenantAction : Action() {
   internal object BeginLoading : TenantAction()

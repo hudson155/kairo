@@ -1,24 +1,7 @@
 package io.limberapp.web.util
 
-import kotlinx.css.BorderStyle
-import kotlinx.css.Cursor
-import kotlinx.css.FontWeight
-import kotlinx.css.LinearDimension
-import kotlinx.css.backgroundColor
-import kotlinx.css.borderRadius
-import kotlinx.css.color
-import kotlinx.css.cursor
-import kotlinx.css.fontSize
-import kotlinx.css.fontWeight
-import kotlinx.css.padding
-import kotlinx.css.properties.IterationCount
-import kotlinx.css.properties.TextDecorationLine
-import kotlinx.css.properties.Timing
-import kotlinx.css.properties.animation
-import kotlinx.css.properties.border
-import kotlinx.css.properties.s
-import kotlinx.css.properties.textDecoration
-import kotlinx.css.px
+import kotlinx.css.*
+import kotlinx.css.properties.*
 
 internal val globalStyles = GlobalStyles().apply { inject() }
 

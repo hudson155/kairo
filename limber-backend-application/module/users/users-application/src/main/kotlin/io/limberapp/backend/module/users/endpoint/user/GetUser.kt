@@ -12,7 +12,7 @@ import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
-import java.util.UUID
+import java.util.*
 
 /**
  * Returns a single user.
