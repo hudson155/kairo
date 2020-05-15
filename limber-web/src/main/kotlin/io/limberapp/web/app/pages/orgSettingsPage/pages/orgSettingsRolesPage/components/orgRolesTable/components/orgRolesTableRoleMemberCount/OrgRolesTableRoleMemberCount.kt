@@ -27,8 +27,8 @@ private val component = functionalComponent<Props> { props ->
   val match = checkNotNull(useRouteMatch<RProps>())
   td {
     navLink<RProps>(
-        to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.members.slugify()}",
-        className = globalStyles.getClassName { it::link }
+      to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.members.slugify()}",
+      className = globalStyles.getClassName { it::link }
     ) {
       +props.orgRole.memberCount.let {
         "$it ${"members".pluralize(it)}"

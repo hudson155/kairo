@@ -110,7 +110,7 @@ abstract class PiperTest(
     assertTrue(
       actual = requestHandled,
       message = "The HTTP request was not handled." +
-          " Is the path wrong or did you forget to register the ApiEndpoint?"
+        " Is the path wrong or did you forget to register the ApiEndpoint?"
     )
     assertEquals(
       expectedStatusCode,

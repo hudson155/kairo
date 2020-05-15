@@ -40,9 +40,9 @@ import react.useState
 import styled.getClassName
 
 internal fun RBuilder.orgRoleMembersSelectorMember(
-  user: UserRep.Summary?,
-  onRemove: (() -> Unit)?,
-  children: RHandler<Props> = {}
+        user: UserRep.Summary?,
+        onRemove: (() -> Unit)?,
+        children: RHandler<Props> = {}
 ) {
   child(component, Props(user, onRemove), handler = children)
 }
@@ -104,15 +104,15 @@ private enum class State { DEFAULT, ADDING, ADD_SAVING, REMOVING, REMOVE_SAVING 
 
 private val component = functionalComponent<Props> { props ->
 
-  val (state, setState) = useState(State.DEFAULT)
+    val (state, setState) = useState(State.DEFAULT)
 
   div(
     classes = classes(
       styles.getClassName { it::container },
       when (state) {
-        State.DEFAULT -> null
-        State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
-        State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
+          State.DEFAULT -> null
+          State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
+          State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
       }
     )
   ) {
@@ -138,20 +138,20 @@ private val component = functionalComponent<Props> { props ->
           State.DEFAULT -> {
               if (props.user != null) {
                   button(
-                      classes = classes(
-                          globalStyles.getClassName { it::redButton },
-                          styles.getClassName { it::removeButton }
-                      )
+                          classes = classes(
+                                  globalStyles.getClassName { it::redButton },
+                                  styles.getClassName { it::removeButton }
+                          )
                   ) {
                       attrs.onClickFunction = { setState(State.REMOVING) }
                       +"Remove"
                   }
               } else {
                   button(
-                      classes = classes(
-                          globalStyles.getClassName { it::primaryButton },
-                          styles.getClassName { it::removeButton }
-                      )
+                          classes = classes(
+                                  globalStyles.getClassName { it::primaryButton },
+                                  styles.getClassName { it::removeButton }
+                          )
                   ) {
                       attrs.onClickFunction = { setState(State.ADDING) }
                       +"Add"
@@ -161,10 +161,10 @@ private val component = functionalComponent<Props> { props ->
           State.ADDING, State.ADD_SAVING -> Unit
           State.REMOVING -> {
               button(
-                  classes = classes(
-                      globalStyles.getClassName { it::redButton },
-                      styles.getClassName { it::removeButton }
-                  )
+                      classes = classes(
+                              globalStyles.getClassName { it::redButton },
+                              styles.getClassName { it::removeButton }
+                      )
               ) {
                   attrs.onClickFunction = {
                       setState(State.REMOVE_SAVING)
@@ -173,10 +173,10 @@ private val component = functionalComponent<Props> { props ->
                   +"Confirm"
               }
               button(
-                  classes = classes(
-                      globalStyles.getClassName { it::secondaryButton },
-                      styles.getClassName { it::removeButton }
-                  )
+                      classes = classes(
+                              globalStyles.getClassName { it::secondaryButton },
+                              styles.getClassName { it::removeButton }
+                      )
               ) {
                   attrs.onClickFunction = { setState(State.DEFAULT) }
                   +"Cancel"

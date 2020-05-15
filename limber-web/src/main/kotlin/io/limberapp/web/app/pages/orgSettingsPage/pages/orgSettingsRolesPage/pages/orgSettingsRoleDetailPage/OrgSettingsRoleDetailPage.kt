@@ -75,8 +75,8 @@ private val component = functionalComponent<RProps> {
 
   modal(onClose = goBack) {
     modalTitle(
-        title = "Edit role: ${orgRole.name}",
-        description = "Update role info, including the permissions it grants and members of the role."
+      title = "Edit role: ${orgRole.name}",
+      description = "Update role info, including the permissions it grants and members of the role."
     )
     div(classes = styles.getClassName { it::tabbedViewContainer }) {
       tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)

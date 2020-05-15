@@ -89,11 +89,11 @@ private val component = functionalComponent<Props> { props ->
     setState(State.SAVING)
     async {
       val orgRole = api.orgRoles(
-          endpoint = OrgRoleApi.Patch(
-              orgGuid = orgGuid,
-              orgRoleGuid = props.orgRole.guid,
-              rep = OrgRoleRep.Update(name = editValue)
-          )
+        endpoint = OrgRoleApi.Patch(
+          orgGuid = orgGuid,
+          orgRoleGuid = props.orgRole.guid,
+          rep = OrgRoleRep.Update(name = editValue)
+        )
       )
       global.dispatch(OrgRoleAction.UpdateValue(orgRole))
       if (isMounted.current) setState(State.DISPLAYING)
