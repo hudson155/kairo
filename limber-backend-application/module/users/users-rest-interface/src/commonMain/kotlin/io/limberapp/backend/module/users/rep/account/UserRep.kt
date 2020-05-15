@@ -43,7 +43,8 @@ object UserRep {
         val lastName: String,
         val profilePhotoUrl: String?
     ) : CompleteRep {
-        val fullName = "$firstName $lastName"
+        val fullName get() = "$firstName $lastName"
+        val uniqueSortKey get() = "$fullName-$guid"
     }
 
     @Serializable
@@ -60,7 +61,7 @@ object UserRep {
         val emailAddress: String,
         val profilePhotoUrl: String?
     ) : CompleteRep {
-        val fullName = "$firstName $lastName"
+        val fullName get() = "$firstName $lastName"
     }
 
     @Serializable

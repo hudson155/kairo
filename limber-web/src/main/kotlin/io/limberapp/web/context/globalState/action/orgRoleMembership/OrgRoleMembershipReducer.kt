@@ -11,7 +11,13 @@ internal fun orgRoleMembershipReducer(state: GlobalStateContext, action: OrgRole
         is OrgRoleMembershipAction.SetValue -> state.copy(
             orgRoleMemberships = state.orgRoleMemberships.plus(
                 action.orgRoleGuid to checkNotNull(state.orgRoleMemberships[action.orgRoleGuid])
-                    .loaded(action.orgRoleMemberships)
+                    .loaded(action.orgRoleMemberships.associateBy { it.accountGuid })
+            )
+        )
+        is OrgRoleMembershipAction.DeleteValue -> state.copy(
+            orgRoleMemberships = state.orgRoleMemberships.plus(
+                action.orgRoleGuid to checkNotNull(state.orgRoleMemberships[action.orgRoleGuid])
+                    .update { it.orEmpty().minus(action.accountGuid) }
             )
         )
     }

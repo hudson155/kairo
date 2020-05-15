@@ -14,6 +14,8 @@ import io.limberapp.web.context.globalState.action.tenant.TenantAction
 import io.limberapp.web.context.globalState.action.tenant.tenantReducer
 import io.limberapp.web.context.globalState.action.user.UserAction
 import io.limberapp.web.context.globalState.action.user.userReducer
+import io.limberapp.web.context.globalState.action.users.UsersAction
+import io.limberapp.web.context.globalState.action.users.usersReducer
 import react.RBuilder
 import react.RHandler
 import react.RProps
@@ -40,7 +42,8 @@ private val initialState = GlobalStateContext(
     orgRoleMemberships = emptyMap(),
     orgRoles = LoadableState.initial(),
     tenant = LoadableState.initial(),
-    user = LoadableState.initial()
+    user = LoadableState.initial(),
+    users = LoadableState.initial()
 )
 
 private val component = functionalComponent<RProps> { props ->
@@ -51,6 +54,7 @@ private val component = functionalComponent<RProps> { props ->
             is OrgRoleAction -> orgRoleReducer(state, action)
             is TenantAction -> tenantReducer(state, action)
             is UserAction -> userReducer(state, action)
+            is UsersAction -> usersReducer(state, action)
             else -> error("Unhandled action: $action.")
         }
     }, initialState)
