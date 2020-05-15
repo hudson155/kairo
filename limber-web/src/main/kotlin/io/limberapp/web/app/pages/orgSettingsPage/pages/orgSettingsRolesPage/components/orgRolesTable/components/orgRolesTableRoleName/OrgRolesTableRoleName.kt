@@ -74,8 +74,8 @@ private val component = functionalComponent<Props> { props ->
   val global = useGlobalState()
   val isMounted = useIsMounted()
 
-    val (state, setState) = useState(State.DISPLAYING)
-    val (editValue, setValue) = useState(props.orgRole.name)
+  val (state, setState) = useState(State.DISPLAYING)
+  val (editValue, setValue) = useState(props.orgRole.name)
 
   val orgGuid = checkNotNull(global.state.org.state).guid
 
@@ -89,11 +89,11 @@ private val component = functionalComponent<Props> { props ->
     setState(State.SAVING)
     async {
       val orgRole = api.orgRoles(
-        endpoint = OrgRoleApi.Patch(
-          orgGuid = orgGuid,
-          orgRoleGuid = props.orgRole.guid,
-          rep = OrgRoleRep.Update(name = editValue)
-        )
+          endpoint = OrgRoleApi.Patch(
+              orgGuid = orgGuid,
+              orgRoleGuid = props.orgRole.guid,
+              rep = OrgRoleRep.Update(name = editValue)
+          )
       )
       global.dispatch(OrgRoleAction.UpdateValue(orgRole))
       if (isMounted.current) setState(State.DISPLAYING)
@@ -107,34 +107,34 @@ private val component = functionalComponent<Props> { props ->
     form(classes = styles.getClassName { it::form }) {
       attrs.onSubmitFunction = onSubmit
       when (state) {
-          State.DISPLAYING -> +props.orgRole.name
-          State.EDITING, State.SAVING -> {
-              input(type = InputType.text, classes = styles.getClassName { it::input }) {
-                  attrs.autoFocus = true
-                  attrs.defaultValue = editValue
-                  attrs.onChangeFunction = { setValue(it.targetValue) }
-                  attrs.disabled = state == State.SAVING
-              }
+        State.DISPLAYING -> +props.orgRole.name
+        State.EDITING, State.SAVING -> {
+          input(type = InputType.text, classes = styles.getClassName { it::input }) {
+            attrs.autoFocus = true
+            attrs.defaultValue = editValue
+            attrs.onChangeFunction = { setValue(it.targetValue) }
+            attrs.disabled = state == State.SAVING
           }
+        }
       }
       when (state) {
-          State.DISPLAYING -> {
-              a(classes = styles.getClassName { it::icon }) {
-                  attrs.onClickFunction = onEditClicked
-                  inlineIcon("edit")
-              }
+        State.DISPLAYING -> {
+          a(classes = styles.getClassName { it::icon }) {
+            attrs.onClickFunction = onEditClicked
+            inlineIcon("edit")
           }
-          State.EDITING -> {
-              a(classes = styles.getClassName { it::icon }) {
-                  attrs.onClickFunction = onCancelEdit
-                  inlineIcon("times-circle")
-              }
-              a(classes = styles.getClassName { it::icon }) {
-                  attrs.onClickFunction = onSubmit
-                  inlineIcon("save")
-              }
+        }
+        State.EDITING -> {
+          a(classes = styles.getClassName { it::icon }) {
+            attrs.onClickFunction = onCancelEdit
+            inlineIcon("times-circle")
           }
-          State.SAVING -> inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+          a(classes = styles.getClassName { it::icon }) {
+            attrs.onClickFunction = onSubmit
+            inlineIcon("save")
+          }
+        }
+        State.SAVING -> inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
       }
     }
   }

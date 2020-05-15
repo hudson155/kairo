@@ -30,11 +30,11 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-        error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
-            throw OrgAlreadyHasTenant()
-        error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
-            throw Auth0ClientIdAlreadyRegistered()
-        else -> throw e
+      error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
+        throw OrgAlreadyHasTenant()
+      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
+        throw Auth0ClientIdAlreadyRegistered()
+      else -> throw e
     }
   }
 
@@ -85,9 +85,9 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
         handleUpdateError(e)
       }
       return@inTransaction when (updateCount) {
-          0 -> throw TenantNotFound()
-          1 -> checkNotNull(get(orgGuid))
-          else -> badSql()
+        0 -> throw TenantNotFound()
+        1 -> checkNotNull(get(orgGuid))
+        else -> badSql()
       }
     }
   }
@@ -113,9 +113,9 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
         .bind("orgGuid", orgGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw TenantNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw TenantNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

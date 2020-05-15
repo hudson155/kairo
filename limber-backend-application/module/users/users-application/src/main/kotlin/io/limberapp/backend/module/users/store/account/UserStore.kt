@@ -79,9 +79,9 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
         .bindKotlin(update)
         .execute()
       return@inTransaction when (updateCount) {
-          0 -> throw UserNotFound()
-          1 -> checkNotNull(get(userGuid))
-          else -> badSql()
+        0 -> throw UserNotFound()
+        1 -> checkNotNull(get(userGuid))
+        else -> badSql()
       }
     }
   }
@@ -99,9 +99,9 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
         .bind("guid", userGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw UserNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw UserNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

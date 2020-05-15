@@ -49,9 +49,9 @@ private val styles = object : Styles("SidenavLink") {
 
 private val component = functionalComponent<Props> { props ->
   navLink<RProps>(
-    to = props.to,
-    className = styles.getClassName { it::navLink },
-    activeClassName = styles.getClassName { it::activeNavLink }) {
+      to = props.to,
+      className = styles.getClassName { it::navLink },
+      activeClassName = styles.getClassName { it::activeNavLink }) {
     props.children()
   }
 }

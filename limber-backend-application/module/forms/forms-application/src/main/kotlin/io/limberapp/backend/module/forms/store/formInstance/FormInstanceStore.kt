@@ -53,9 +53,9 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
         .bind("guid", formInstanceGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw FormInstanceNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw FormInstanceNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

@@ -28,8 +28,8 @@ internal data class LimberAppMonolithConfig(
 
   private fun ConfigString.decrypt(): ConfigString {
     return when (type) {
-        ConfigString.Type.PLAINTEXT -> this
-        ConfigString.Type.ENVIRONMENT_VARIABLE -> copy(value = checkNotNull(System.getenv(this.value)))
+      ConfigString.Type.PLAINTEXT -> this
+      ConfigString.Type.ENVIRONMENT_VARIABLE -> copy(value = checkNotNull(System.getenv(this.value)))
     }
   }
 }

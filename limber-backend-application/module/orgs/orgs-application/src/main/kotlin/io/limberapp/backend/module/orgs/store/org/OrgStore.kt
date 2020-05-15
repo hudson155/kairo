@@ -48,9 +48,9 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
         .bindKotlin(update)
         .execute()
       return@inTransaction when (updateCount) {
-          0 -> throw OrgNotFound()
-          1 -> checkNotNull(get(orgGuid))
-          else -> badSql()
+        0 -> throw OrgNotFound()
+        1 -> checkNotNull(get(orgGuid))
+        else -> badSql()
       }
     }
   }
@@ -68,9 +68,9 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
         .bind("guid", orgGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw OrgNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw OrgNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

@@ -54,9 +54,9 @@ private val component = functionalComponent<RProps> {
   val global = useGlobalState()
 
   // Only 1 item on the navbar can be open at a time.
-    val (openItem, setOpenItem) = useState<OpenItem?>(null)
+  val (openItem, setOpenItem) = useState<OpenItem?>(null)
 
-    val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
+  val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
   val features = checkNotNull(global.state.org.state).features
 
   navbar(

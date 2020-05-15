@@ -72,9 +72,9 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         handleUpdateError(e)
       }
       return@inTransaction when (updateCount) {
-          0 -> throw OrgRoleNotFound()
-          1 -> checkNotNull(get(orgRoleGuid))
-          else -> badSql()
+        0 -> throw OrgRoleNotFound()
+        1 -> checkNotNull(get(orgRoleGuid))
+        else -> badSql()
       }
     }
   }
@@ -98,9 +98,9 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
         .bind("guid", orgRoleGuid)
         .execute()
       return@useTransaction when (updateCount) {
-          0 -> throw OrgRoleNotFound()
-          1 -> Unit
-          else -> badSql()
+        0 -> throw OrgRoleNotFound()
+        1 -> Unit
+        else -> badSql()
       }
     }
   }

@@ -115,7 +115,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
     val formInstanceQuestion1Rep =
       (FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions.first().guid)
-          as FormInstanceTextQuestionRep.Complete)
+        as FormInstanceTextQuestionRep.Complete)
         .copy(text = "completely new text")
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.minus(formInstanceQuestion0Rep))
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestion1Rep))

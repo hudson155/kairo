@@ -29,9 +29,9 @@ abstract class SqlStore {
     get() {
       val cause = cause
       return when (cause) {
-          is BatchUpdateException -> cause.cause as? PSQLException
-          is PSQLException -> cause
-          else -> null
+        is BatchUpdateException -> cause.cause as? PSQLException
+        is PSQLException -> cause
+        else -> null
       }?.serverErrorMessage
     }
 
