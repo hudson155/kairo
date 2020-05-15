@@ -12,7 +12,7 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestion
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
-import java.util.UUID
+import java.util.*
 
 private const val FORM_INSTANCE_GUID_FOREIGN_KEY = "form_instance_question_form_instance_guid_fkey"
 private const val QUESTION_GUID_FOREIGN_KEY = "form_instance_question_question_guid_fkey"

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
-import java.util.UUID
+import java.util.*
 
 interface FormTemplateService {
   fun create(model: FormTemplateModel)

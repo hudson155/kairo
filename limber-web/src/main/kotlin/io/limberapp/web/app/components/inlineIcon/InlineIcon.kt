@@ -4,8 +4,8 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.classes
 import kotlinx.css.marginLeft
 import kotlinx.css.px
-import react.RBuilder
-import react.dom.i
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

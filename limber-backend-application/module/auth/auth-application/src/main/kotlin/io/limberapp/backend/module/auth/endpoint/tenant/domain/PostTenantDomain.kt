@@ -12,7 +12,7 @@ import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.mapper.tenant.TenantDomainMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
-import java.util.UUID
+import java.util.*
 
 /**
  * Creates a new domain within a tenant.

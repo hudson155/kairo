@@ -10,7 +10,7 @@ import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixture
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 import kotlin.test.assertEquals
 
 internal class DeleteUserTest : ResourceTest() {

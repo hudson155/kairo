@@ -67,7 +67,11 @@
     </JSCodeStyleSettings>
     <JetCodeStyleSettings>
       <option name="PACKAGES_TO_USE_STAR_IMPORTS">
-        <value />
+        <value>
+          <package name="java.util" withSubpackages="true" static="false" />
+          <package name="kotlinx.css" withSubpackages="true" static="false" />
+          <package name="react" withSubpackages="true" static="false" />
+        </value>
       </option>
       <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2147483647" />
       <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="2147483647" />

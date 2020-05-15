@@ -3,18 +3,11 @@ package io.limberapp.web.app.pages.unauthenticatedPage
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.app.pages.signInPage.SignInPage
 import io.limberapp.web.util.Styles
-import kotlinx.css.TextAlign
-import kotlinx.css.properties.TextDecorationLine
-import kotlinx.css.properties.textDecoration
-import kotlinx.css.textAlign
-import react.RBuilder
-import react.RProps
-import react.child
-import react.dom.div
-import react.dom.h1
-import react.dom.span
-import react.functionalComponent
-import react.router.dom.navLink
+import kotlinx.css.*
+import kotlinx.css.properties.*
+import react.*
+import react.dom.*
+import react.router.dom.*
 import styled.getClassName
 
 /**

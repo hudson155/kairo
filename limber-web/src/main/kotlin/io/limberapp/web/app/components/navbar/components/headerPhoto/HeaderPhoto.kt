@@ -7,8 +7,8 @@ import kotlinx.css.height
 import kotlinx.css.marginRight
 import kotlinx.css.maxWidth
 import kotlinx.css.px
-import react.RBuilder
-import react.dom.img
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

@@ -12,7 +12,7 @@ import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.mapper.org.FeatureMapper
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.service.org.FeatureService
-import java.util.UUID
+import java.util.*
 
 /**
  * Updates a feature's information.

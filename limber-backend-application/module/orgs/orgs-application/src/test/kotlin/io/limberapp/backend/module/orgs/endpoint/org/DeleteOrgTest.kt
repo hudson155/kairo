@@ -5,7 +5,7 @@ import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
 internal class DeleteOrgTest : ResourceTest() {
   @Test

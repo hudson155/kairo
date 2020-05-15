@@ -10,7 +10,7 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
 import io.limberapp.backend.module.users.service.account.UserService
-import java.util.UUID
+import java.util.*
 
 /**
  * Revokes a certain role from the user. Roles are system-wide, NOT org-wide.

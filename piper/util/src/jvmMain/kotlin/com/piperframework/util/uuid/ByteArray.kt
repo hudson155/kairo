@@ -1,7 +1,7 @@
 package com.piperframework.util.uuid
 
 import java.nio.ByteBuffer
-import java.util.UUID
+import java.util.*
 
 const val UUID_BYTES = 16
 

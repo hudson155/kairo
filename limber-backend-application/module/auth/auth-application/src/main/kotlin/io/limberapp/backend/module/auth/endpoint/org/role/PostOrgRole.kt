@@ -12,7 +12,7 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.mapper.org.OrgRoleMapper
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
-import java.util.UUID
+import java.util.*
 
 /**
  * Creates a new role within an org.

@@ -4,10 +4,7 @@ import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formsFeaturePage
 import io.limberapp.web.app.pages.featurePage.pages.homePage.homePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
-import react.RBuilder
-import react.RProps
-import react.child
-import react.functionalComponent
+import react.*
 
 /**
  * Parent page for feature-specific pages.

@@ -10,7 +10,7 @@ import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQ
 import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes a existing question from a form template.

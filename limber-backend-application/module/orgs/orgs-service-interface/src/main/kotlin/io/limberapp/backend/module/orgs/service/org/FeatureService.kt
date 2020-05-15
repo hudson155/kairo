@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.service.org
 
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import java.util.UUID
+import java.util.*
 
 interface FeatureService {
   fun createDefaults(orgGuid: UUID): Set<FeatureModel>

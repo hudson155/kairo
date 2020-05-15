@@ -1,7 +1,6 @@
 package io.limberapp.web.util
 
-import kotlinx.css.Color
-import kotlinx.css.px
+import kotlinx.css.*
 
 @Suppress("UnusedPrivateMember")
 internal object Theme {

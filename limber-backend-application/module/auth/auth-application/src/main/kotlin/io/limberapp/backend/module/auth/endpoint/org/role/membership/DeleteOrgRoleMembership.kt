@@ -10,7 +10,7 @@ import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
-import java.util.UUID
+import java.util.*
 
 /**
  * Revokes the account's membership in the given org role.

@@ -7,7 +7,7 @@ import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotF
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
-import java.util.UUID
+import java.util.*
 
 internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: FormTemplateModel) {

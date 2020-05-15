@@ -22,25 +22,14 @@ import kotlinx.css.marginBottom
 import kotlinx.css.marginRight
 import kotlinx.css.padding
 import kotlinx.css.paddingTop
-import kotlinx.css.properties.borderBottom
+import kotlinx.css.properties.*
 import kotlinx.css.px
 import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.events.Event
-import react.RBuilder
-import react.RProps
-import react.child
-import react.dom.b
-import react.dom.br
-import react.dom.button
-import react.dom.div
-import react.dom.input
-import react.dom.label
-import react.dom.small
-import react.dom.span
-import react.functionalComponent
-import react.useState
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

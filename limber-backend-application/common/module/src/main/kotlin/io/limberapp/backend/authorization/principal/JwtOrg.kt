@@ -3,7 +3,7 @@ package io.limberapp.backend.authorization.principal
 import com.piperframework.serialization.serializer.UuidSerializer
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import kotlinx.serialization.Serializable
-import java.util.UUID
+import java.util.*
 
 @Serializable
 data class JwtOrg(

@@ -6,14 +6,8 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.OrgS
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.orgSettingsInfoPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.orgSettingsRolesPage
-import react.RBuilder
-import react.RProps
-import react.buildElement
-import react.child
-import react.functionalComponent
-import react.router.dom.redirect
-import react.router.dom.route
-import react.router.dom.switch
+import react.*
+import react.router.dom.*
 
 /**
  * Parent page for organization-level settings.

@@ -10,7 +10,7 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
-import java.util.UUID
+import java.util.*
 
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_lower_idx"
 

@@ -6,7 +6,7 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import java.time.Clock
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 internal class FeatureMapper @Inject constructor(
   private val clock: Clock,

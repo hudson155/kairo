@@ -12,7 +12,7 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
-import java.util.UUID
+import java.util.*
 
 private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
 private const val ORG_PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"

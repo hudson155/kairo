@@ -1,23 +1,9 @@
 package io.limberapp.web.app.components.layout.components.centeredContentLayout
 
 import io.limberapp.web.util.Styles
-import kotlinx.css.Align
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
-import kotlinx.css.JustifyContent
-import kotlinx.css.alignItems
-import kotlinx.css.display
-import kotlinx.css.flexDirection
-import kotlinx.css.flexGrow
-import kotlinx.css.justifyContent
-import kotlinx.css.margin
-import kotlinx.css.px
-import react.RBuilder
-import react.RHandler
-import react.RProps
-import react.child
-import react.dom.div
-import react.functionalComponent
+import kotlinx.css.*
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

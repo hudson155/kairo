@@ -13,7 +13,7 @@ import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import java.util.UUID
+import java.util.*
 
 /**
  * Updates an org's information.

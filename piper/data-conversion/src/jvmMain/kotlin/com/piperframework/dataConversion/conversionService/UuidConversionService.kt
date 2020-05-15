@@ -3,7 +3,7 @@ package com.piperframework.dataConversion.conversionService
 import com.piperframework.dataConversion.DataConversionService
 import com.piperframework.util.uuid.uuidFromBase64Encoded
 import com.piperframework.validator.Validator
-import java.util.UUID
+import java.util.*
 
 actual object UuidConversionService : DataConversionService<UUID> {
   override val kClass = UUID::class

@@ -1,12 +1,8 @@
 package io.limberapp.web.app.components.page
 
 import io.limberapp.web.util.main
-import react.RBuilder
-import react.RProps
-import react.ReactElement
-import react.dom.footer
-import react.dom.header
-import react.functionalComponent
+import react.*
+import react.dom.*
 
 /**
  * Outline for a generic page in the app. The [header] should be some kind of navbar. The [footer] usually contains

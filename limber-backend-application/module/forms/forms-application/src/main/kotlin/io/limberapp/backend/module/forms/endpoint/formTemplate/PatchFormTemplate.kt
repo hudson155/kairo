@@ -11,7 +11,7 @@ import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
-import java.util.UUID
+import java.util.*
 
 /**
  * Updates an form template's information.

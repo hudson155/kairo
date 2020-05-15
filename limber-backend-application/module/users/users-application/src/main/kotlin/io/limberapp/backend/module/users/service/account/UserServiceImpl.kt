@@ -8,7 +8,7 @@ import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.store.account.UserStore
-import java.util.UUID
+import java.util.*
 
 internal class UserServiceImpl @Inject constructor(
   private val orgService: OrgService,

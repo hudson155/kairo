@@ -2,20 +2,9 @@ package io.limberapp.web.app.components.navbar.components.headerItem
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import kotlinx.css.Align
-import kotlinx.css.Display
-import kotlinx.css.alignItems
-import kotlinx.css.color
-import kotlinx.css.display
-import kotlinx.css.marginRight
-import kotlinx.css.px
-import react.RBuilder
-import react.RHandler
-import react.RProps
-import react.child
-import react.dom.b
-import react.dom.div
-import react.functionalComponent
+import kotlinx.css.*
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

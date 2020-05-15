@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.model.formTemplate
 
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 interface FormTemplateQuestionModel {
   val guid: UUID

@@ -2,20 +2,10 @@ package io.limberapp.web.app.components.navbar.components.subnav.components.subn
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import kotlinx.css.BorderStyle
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
-import kotlinx.css.borderBottomStyle
-import kotlinx.css.display
-import kotlinx.css.flexDirection
-import kotlinx.css.properties.borderBottom
-import kotlinx.css.px
-import react.RBuilder
-import react.RHandler
-import react.RProps
-import react.child
-import react.dom.div
-import react.functionalComponent
+import kotlinx.css.*
+import kotlinx.css.properties.*
+import react.*
+import react.dom.*
 import styled.getClassName
 
 /**

@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipModel
 import io.limberapp.backend.module.auth.store.org.OrgRoleMembershipStore
 import io.limberapp.backend.module.auth.store.org.OrgRoleStore
-import java.util.UUID
+import java.util.*
 
 internal class OrgRoleMembershipServiceImpl @Inject constructor(
   private val orgRoleStore: OrgRoleStore,

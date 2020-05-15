@@ -10,7 +10,7 @@ import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
-import java.util.UUID
+import java.util.*
 
 /**
  * Deletes a role from an org.

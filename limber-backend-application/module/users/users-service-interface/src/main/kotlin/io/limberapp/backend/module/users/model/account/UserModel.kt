@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.model.account
 
 import io.limberapp.backend.authorization.principal.JwtRole
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 data class UserModel(
   val guid: UUID,

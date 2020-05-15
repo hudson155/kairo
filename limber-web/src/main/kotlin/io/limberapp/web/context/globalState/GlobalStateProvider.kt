@@ -16,16 +16,7 @@ import io.limberapp.web.context.globalState.action.user.UserAction
 import io.limberapp.web.context.globalState.action.user.userReducer
 import io.limberapp.web.context.globalState.action.users.UsersAction
 import io.limberapp.web.context.globalState.action.users.usersReducer
-import react.RBuilder
-import react.RHandler
-import react.RProps
-import react.child
-import react.children
-import react.createContext
-import react.createElement
-import react.functionalComponent
-import react.useContext
-import react.useReducer
+import react.*
 
 /**
  * Provides global state, like Redux.

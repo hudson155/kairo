@@ -5,7 +5,7 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 import kotlin.test.assertEquals
 
 internal class PostOrgTest : ResourceTest() {

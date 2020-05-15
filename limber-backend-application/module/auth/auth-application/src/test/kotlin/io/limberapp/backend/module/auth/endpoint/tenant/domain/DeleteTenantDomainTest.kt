@@ -9,7 +9,7 @@ import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantDomainRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 import kotlin.test.assertEquals
 
 internal class DeleteTenantDomainTest : ResourceTest() {

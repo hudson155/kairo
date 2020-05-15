@@ -1,6 +1,6 @@
 package com.piperframework.util.uuid
 
-import java.util.UUID
+import java.util.*
 
 /**
  * The UuidGenerator should be used to generate UUIDs, rather than using UUID.randomUUID(). This helps make testing a

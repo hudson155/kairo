@@ -6,7 +6,7 @@ import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.backend.module.users.testing.fixtures.account.summary
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 

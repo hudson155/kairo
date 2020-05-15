@@ -1,7 +1,7 @@
 package io.limberapp.web
 
 import io.limberapp.web.app.app
-import react.dom.render
+import react.dom.*
 import kotlin.browser.document
 
 internal fun main() {

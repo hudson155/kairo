@@ -2,18 +2,12 @@ package io.limberapp.web.app.components.layout.components.layoutTitle
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import kotlinx.css.BorderStyle
-import kotlinx.css.marginBottom
-import kotlinx.css.marginTop
-import kotlinx.css.properties.borderBottom
-import kotlinx.css.px
-import react.RBuilder
-import react.RProps
-import react.child
+import kotlinx.css.*
+import kotlinx.css.properties.*
+import react.*
 import react.dom.div
 import react.dom.h1
 import react.dom.p
-import react.functionalComponent
 import styled.getClassName
 
 /**

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.service.account
 
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.model.account.UserModel
-import java.util.UUID
+import java.util.*
 
 interface UserService {
   fun create(model: UserModel)

@@ -37,7 +37,7 @@ import io.ktor.routing.route
 import io.ktor.routing.routing
 import kotlinx.serialization.modules.plus
 import org.slf4j.event.Level
-import java.util.UUID
+import java.util.*
 
 /**
  * A basic Piper app that implements most things by default. Unless an application needs heavy customization, it's

@@ -10,7 +10,7 @@ import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
-import java.util.UUID
+import java.util.*
 
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
