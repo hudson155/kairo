@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.orgRoleMembersSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector.orgRolePermissionsSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.api.useApi
@@ -79,7 +80,7 @@ private val component = functionalComponent<RProps> {
           OrgSettingsRoleDetailPage.TabName.permissions.slugify() ->
             orgRolePermissionsSelector(orgRole, onClose = goBack)
           OrgSettingsRoleDetailPage.TabName.members.slugify() ->
-            Unit // TODO
+            orgRoleMembersSelector(orgRole)
           else -> redirect(to = OrgSettingsRolesPage.path)
         }
       }

@@ -98,15 +98,15 @@ private enum class State { DEFAULT, ADDING, ADD_SAVING, REMOVING, REMOVE_SAVING 
 
 private val component = functionalComponent<Props> { props ->
 
-    val (state, setState) = useState(State.DEFAULT)
+  val (state, setState) = useState(State.DEFAULT)
 
   div(
     classes = classes(
       styles.getClassName { it::container },
       when (state) {
-          State.DEFAULT -> null
-          State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
-          State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
+        State.DEFAULT -> null
+        State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
+        State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
       }
     )
   ) {
@@ -118,8 +118,8 @@ private val component = functionalComponent<Props> { props ->
             classes = classes(
               styles.getClassName { it::img },
               when (state) {
-                  State.DEFAULT, State.ADDING, State.ADD_SAVING -> null
-                  State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::imgGrayscale }
+                State.DEFAULT, State.ADDING, State.ADD_SAVING -> null
+                State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::imgGrayscale }
               }
             )
           ) {}
@@ -129,56 +129,56 @@ private val component = functionalComponent<Props> { props ->
     }
     div(classes = styles.getClassName { it::right }) {
       when (state) {
-          State.DEFAULT -> {
-              if (props.user != null) {
-                  button(
-                          classes = classes(
-                                  globalStyles.getClassName { it::redButton },
-                                  styles.getClassName { it::removeButton }
-                          )
-                  ) {
-                      attrs.onClickFunction = { setState(State.REMOVING) }
-                      +"Remove"
-                  }
-              } else {
-                  button(
-                          classes = classes(
-                                  globalStyles.getClassName { it::primaryButton },
-                                  styles.getClassName { it::removeButton }
-                          )
-                  ) {
-                      attrs.onClickFunction = { setState(State.ADDING) }
-                      +"Add"
-                  }
-              }
+        State.DEFAULT -> {
+          if (props.user != null) {
+            button(
+              classes = classes(
+                globalStyles.getClassName { it::redButton },
+                styles.getClassName { it::removeButton }
+              )
+            ) {
+              attrs.onClickFunction = { setState(State.REMOVING) }
+              +"Remove"
+            }
+          } else {
+            button(
+              classes = classes(
+                globalStyles.getClassName { it::primaryButton },
+                styles.getClassName { it::removeButton }
+              )
+            ) {
+              attrs.onClickFunction = { setState(State.ADDING) }
+              +"Add"
+            }
           }
-          State.ADDING, State.ADD_SAVING -> Unit
-          State.REMOVING -> {
-              button(
-                      classes = classes(
-                              globalStyles.getClassName { it::redButton },
-                              styles.getClassName { it::removeButton }
-                      )
-              ) {
-                  attrs.onClickFunction = {
-                      setState(State.REMOVE_SAVING)
-                      checkNotNull(props.onRemove)()
-                  }
-                  +"Confirm"
-              }
-              button(
-                      classes = classes(
-                              globalStyles.getClassName { it::secondaryButton },
-                              styles.getClassName { it::removeButton }
-                      )
-              ) {
-                  attrs.onClickFunction = { setState(State.DEFAULT) }
-                  +"Cancel"
-              }
+        }
+        State.ADDING, State.ADD_SAVING -> Unit
+        State.REMOVING -> {
+          button(
+            classes = classes(
+              globalStyles.getClassName { it::redButton },
+              styles.getClassName { it::removeButton }
+            )
+          ) {
+            attrs.onClickFunction = {
+              setState(State.REMOVE_SAVING)
+              checkNotNull(props.onRemove)()
+            }
+            +"Confirm"
           }
-          State.REMOVE_SAVING -> {
-              inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+          button(
+            classes = classes(
+              globalStyles.getClassName { it::secondaryButton },
+              styles.getClassName { it::removeButton }
+            )
+          ) {
+            attrs.onClickFunction = { setState(State.DEFAULT) }
+            +"Cancel"
           }
+        }
+        State.REMOVE_SAVING -> {
+          inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+        }
       }
     }
   }
