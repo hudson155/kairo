@@ -31,33 +31,33 @@ import react.useReducer
  * Provides global state, like Redux.
  */
 internal fun RBuilder.globalStateProvider(children: RHandler<RProps>) {
-    child(component, handler = children)
+  child(component, handler = children)
 }
 
 private val globalState = createContext<StateAndDispatch<GlobalStateContext, Action>>()
 internal fun useGlobalState() = useContext(globalState)
 
 private val initialState = GlobalStateContext(
-    org = LoadableState.initial(),
-    orgRoleMemberships = emptyMap(),
-    orgRoles = LoadableState.initial(),
-    tenant = LoadableState.initial(),
-    user = LoadableState.initial(),
-    users = LoadableState.initial()
+  org = LoadableState.initial(),
+  orgRoleMemberships = emptyMap(),
+  orgRoles = LoadableState.initial(),
+  tenant = LoadableState.initial(),
+  user = LoadableState.initial(),
+  users = LoadableState.initial()
 )
 
 private val component = functionalComponent<RProps> { props ->
-    val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
-        return@useReducer when (action) {
-            is OrgAction -> orgReducer(state, action)
-            is OrgRoleMembershipAction -> orgRoleMembershipReducer(state, action)
-            is OrgRoleAction -> orgRoleReducer(state, action)
-            is TenantAction -> tenantReducer(state, action)
-            is UserAction -> userReducer(state, action)
-            is UsersAction -> usersReducer(state, action)
-            else -> error("Unhandled action: $action.")
-        }
-    }, initialState)
-    val configObject = ProviderValue(StateAndDispatch(state, dispatch))
-    child(createElement(globalState.Provider, configObject, props.children))
+  val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
+    return@useReducer when (action) {
+      is OrgAction -> orgReducer(state, action)
+      is OrgRoleMembershipAction -> orgRoleMembershipReducer(state, action)
+      is OrgRoleAction -> orgRoleReducer(state, action)
+      is TenantAction -> tenantReducer(state, action)
+      is UserAction -> userReducer(state, action)
+      is UsersAction -> usersReducer(state, action)
+      else -> error("Unhandled action: $action.")
+    }
+  }, initialState)
+  val configObject = ProviderValue(StateAndDispatch(state, dispatch))
+  child(createElement(globalState.Provider, configObject, props.children))
 }

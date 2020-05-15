@@ -10,26 +10,26 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetUserByEmailAddressTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val emailAddress = "jhudson@jhudson.ca"
+  @Test
+  fun doesNotExist() {
+    val emailAddress = "jhudson@jhudson.ca"
 
-        piperTest.test(
-            endpoint = UserApi.GetByEmailAddress(emailAddress),
-            expectedException = UserNotFound()
-        )
+    piperTest.test(
+      endpoint = UserApi.GetByEmailAddress(emailAddress),
+      expectedException = UserNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
+
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
+
+    piperTest.test(UserApi.GetByEmailAddress(userRep.emailAddress)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
-
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
-
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
-
-        piperTest.test(UserApi.GetByEmailAddress(userRep.emailAddress)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-    }
+  }
 }

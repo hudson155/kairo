@@ -18,22 +18,22 @@ import java.util.UUID
  * Returns a single user.
  */
 internal class GetUser @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val userService: UserService,
-    private val userMapper: UserMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val userService: UserService,
+  private val userMapper: UserMapper
 ) : LimberApiEndpoint<UserApi.Get, UserRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = UserApi.Get::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = UserApi.Get::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = UserApi.Get(
-        userGuid = call.parameters.getAsType(UUID::class, "userGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = UserApi.Get(
+    userGuid = call.parameters.getAsType(UUID::class, "userGuid")
+  )
 
-    override suspend fun Handler.handle(command: UserApi.Get): UserRep.Complete {
-        Authorization.User(command.userGuid).authorize()
-        val user = userService.get(command.userGuid) ?: throw UserNotFound()
-        return userMapper.completeRep(user)
-    }
+  override suspend fun Handler.handle(command: UserApi.Get): UserRep.Complete {
+    Authorization.User(command.userGuid).authorize()
+    val user = userService.get(command.userGuid) ?: throw UserNotFound()
+    return userMapper.completeRep(user)
+  }
 }

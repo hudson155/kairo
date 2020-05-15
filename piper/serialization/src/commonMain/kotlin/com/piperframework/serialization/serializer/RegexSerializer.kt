@@ -4,4 +4,4 @@ import com.piperframework.dataConversion.conversionService.RegexConversionServic
 import com.piperframework.serialization.ConversionServiceSerializer
 
 object RegexSerializer
-    : ConversionServiceSerializer<Regex>("Regex", RegexConversionService)
+  : ConversionServiceSerializer<Regex>("Regex", RegexConversionService)

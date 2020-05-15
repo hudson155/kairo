@@ -4,6 +4,6 @@ import com.piperframework.dataConversion.conversionService.RegexConversionServic
 import com.piperframework.sql.ConversionServiceJdbiType
 
 internal object JdbiRegexType : ConversionServiceJdbiType<Regex>(Regex::class) {
-    override val columnMapper = object : ConversionServiceColumnMapper<Regex>(RegexConversionService) {}
-    override val argumentFactory = object : ConversionServiceArgumentFactory<Regex>(RegexConversionService) {}
+  override val columnMapper = object : ConversionServiceColumnMapper<Regex>(RegexConversionService) {}
+  override val argumentFactory = object : ConversionServiceArgumentFactory<Regex>(RegexConversionService) {}
 }

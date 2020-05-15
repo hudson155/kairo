@@ -7,12 +7,12 @@ import com.piperframework.types.UUID
 import com.piperframework.validation.RepValidation
 
 object FormInstanceQuestionRep {
-    interface Creation : CreationRep {
-        override fun validate() = RepValidation {}
-    }
+  interface Creation : CreationRep {
+    override fun validate() = RepValidation {}
+  }
 
-    interface Complete : CompleteRep {
-        override val createdDate: LocalDateTime
-        val questionGuid: UUID?
-    }
+  interface Complete : CompleteRep {
+    override val createdDate: LocalDateTime
+    val questionGuid: UUID?
+  }
 }

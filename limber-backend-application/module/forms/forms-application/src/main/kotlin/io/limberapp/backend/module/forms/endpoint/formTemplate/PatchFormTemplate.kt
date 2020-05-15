@@ -17,24 +17,24 @@ import java.util.UUID
  * Updates an form template's information.
  */
 internal class PatchFormTemplate @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formTemplateService: FormTemplateService,
-    private val formTemplateMapper: FormTemplateMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formTemplateService: FormTemplateService,
+  private val formTemplateMapper: FormTemplateMapper
 ) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Summary>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormTemplateApi.Patch::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormTemplateApi.Patch::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Patch(
-        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Patch(
+    formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
-        val update = formTemplateMapper.update(command.rep.required())
-        val formTemplate = formTemplateService.update(command.formTemplateGuid, update)
-        return formTemplateMapper.summaryRep(formTemplate)
-    }
+  override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
+    HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
+    val update = formTemplateMapper.update(command.rep.required())
+    val formTemplate = formTemplateService.update(command.formTemplateGuid, update)
+    return formTemplateMapper.summaryRep(formTemplate)
+  }
 }

@@ -6,24 +6,24 @@ import com.piperframework.config.ConfigString
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
-    JsonSubTypes.Type(value = AuthenticationMechanism.Jwk::class, name = "JWK"),
-    JsonSubTypes.Type(value = AuthenticationMechanism.Jwt::class, name = "JWT"),
-    JsonSubTypes.Type(value = AuthenticationMechanism.UnsignedJwt::class, name = "UNSIGNED_JWT")
+  JsonSubTypes.Type(value = AuthenticationMechanism.Jwk::class, name = "JWK"),
+  JsonSubTypes.Type(value = AuthenticationMechanism.Jwt::class, name = "JWT"),
+  JsonSubTypes.Type(value = AuthenticationMechanism.UnsignedJwt::class, name = "UNSIGNED_JWT")
 )
 sealed class AuthenticationMechanism {
-    abstract val issuer: String?
+  abstract val issuer: String?
 
-    data class Jwk(
-        override val issuer: String,
-        val domain: String
-    ) : AuthenticationMechanism()
+  data class Jwk(
+    override val issuer: String,
+    val domain: String
+  ) : AuthenticationMechanism()
 
-    data class Jwt(
-        override val issuer: String,
-        val secret: ConfigString
-    ) : AuthenticationMechanism()
+  data class Jwt(
+    override val issuer: String,
+    val secret: ConfigString
+  ) : AuthenticationMechanism()
 
-    object UnsignedJwt : AuthenticationMechanism() {
-        override val issuer: Nothing? = null
-    }
+  object UnsignedJwt : AuthenticationMechanism() {
+    override val issuer: Nothing? = null
+  }
 }

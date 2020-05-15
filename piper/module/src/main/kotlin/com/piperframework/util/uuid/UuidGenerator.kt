@@ -7,5 +7,5 @@ import java.util.UUID
  * lot easier.
  */
 interface UuidGenerator {
-    fun generate(): UUID
+  fun generate(): UUID
 }

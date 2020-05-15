@@ -11,29 +11,29 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
-    @Test
-    fun happyPathNoFormTemplates() {
-        val featureGuid = UUID.randomUUID()
+  @Test
+  fun happyPathNoFormTemplates() {
+    val featureGuid = UUID.randomUUID()
 
-        piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
-            assertTrue(actual.isEmpty())
-        }
+    piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
+      val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
+      assertTrue(actual.isEmpty())
     }
+  }
 
-    @Test
-    fun happyPathMultipleFormTemplates() {
-        val featureGuid = UUID.randomUUID()
+  @Test
+  fun happyPathMultipleFormTemplates() {
+    val featureGuid = UUID.randomUUID()
 
-        val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-        val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureGuid, 5)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureGuid)))
+    val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureGuid, 5)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.vehicleInspectionFixture.creation(featureGuid)))
 
-        piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
-            val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
-            assertEquals(setOf(formTemplate0Rep.summary(), formTemplate1Rep.summary()), actual)
-        }
+    piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
+      val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
+      assertEquals(setOf(formTemplate0Rep.summary(), formTemplate1Rep.summary()), actual)
     }
+  }
 }

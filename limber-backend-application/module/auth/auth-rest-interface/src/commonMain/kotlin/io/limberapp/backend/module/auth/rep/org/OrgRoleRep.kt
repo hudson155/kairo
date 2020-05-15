@@ -15,36 +15,36 @@ import io.limberapp.backend.authorization.permissions.OrgPermissions
 import kotlinx.serialization.Serializable
 
 object OrgRoleRep {
-    @Serializable
-    data class Creation(
-        val name: String
-    ) : CreationRep {
-        override fun validate() = RepValidation {
-            validate(Creation::name) { Validator.orgRoleName(value) }
-        }
+  @Serializable
+  data class Creation(
+    val name: String
+  ) : CreationRep {
+    override fun validate() = RepValidation {
+      validate(Creation::name) { Validator.orgRoleName(value) }
     }
+  }
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = UuidSerializer::class)
-        val guid: UUID,
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        val name: String,
-        val permissions: OrgPermissions,
-        val memberCount: Int
-    ) : CompleteRep {
-        val slug get() = name.slugify()
-        val uniqueSortKey get() = "$createdDate-$guid"
-    }
+  @Serializable
+  data class Complete(
+    @Serializable(with = UuidSerializer::class)
+    val guid: UUID,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    val name: String,
+    val permissions: OrgPermissions,
+    val memberCount: Int
+  ) : CompleteRep {
+    val slug get() = name.slugify()
+    val uniqueSortKey get() = "$createdDate-$guid"
+  }
 
-    @Serializable
-    data class Update(
-        val name: String? = null,
-        val permissions: OrgPermissions? = null
-    ) : UpdateRep {
-        override fun validate() = RepValidation {
-            validate(Update::name) { ifPresent { Validator.featureName(value) } }
-        }
+  @Serializable
+  data class Update(
+    val name: String? = null,
+    val permissions: OrgPermissions? = null
+  ) : UpdateRep {
+    override fun validate() = RepValidation {
+      validate(Update::name) { ifPresent { Validator.featureName(value) } }
     }
+  }
 }

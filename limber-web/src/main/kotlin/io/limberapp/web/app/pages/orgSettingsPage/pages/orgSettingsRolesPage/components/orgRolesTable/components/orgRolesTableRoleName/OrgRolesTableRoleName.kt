@@ -46,96 +46,96 @@ import styled.getClassName
  * Portion of org roles table that shows the name of the org role.
  */
 internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
-    child(component, Props(orgRole))
+  child(component, Props(orgRole))
 }
 
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val styles = object : Styles("OrgRolesTableRoleName") {
-    val form by css {
-        display = Display.flex
-        flexDirection = FlexDirection.row
-        alignItems = Align.center
-        marginRight = 16.px
-    }
-    val input by css {
-        flexGrow = 1.0
-        fontSize = LinearDimension.initial
-    }
-    val icon by css {
-        cursor = Cursor.pointer
-    }
+  val form by css {
+    display = Display.flex
+    flexDirection = FlexDirection.row
+    alignItems = Align.center
+    marginRight = 16.px
+  }
+  val input by css {
+    flexGrow = 1.0
+    fontSize = LinearDimension.initial
+  }
+  val icon by css {
+    cursor = Cursor.pointer
+  }
 }.apply { inject() }
 
 private enum class State { DISPLAYING, EDITING, SAVING }
 
 private val component = functionalComponent<Props> { props ->
-    val api = useApi()
-    val global = useGlobalState()
-    val isMounted = useIsMounted()
+  val api = useApi()
+  val global = useGlobalState()
+  val isMounted = useIsMounted()
 
     val (state, setState) = useState(State.DISPLAYING)
     val (editValue, setValue) = useState(props.orgRole.name)
 
-    val orgGuid = checkNotNull(global.state.org.state).guid
+  val orgGuid = checkNotNull(global.state.org.state).guid
 
-    val onEditClicked = { _: Event -> setState(State.EDITING) }
-    val onCancelEdit = { _: Event ->
-        setValue(props.orgRole.name)
-        setState(State.DISPLAYING)
+  val onEditClicked = { _: Event -> setState(State.EDITING) }
+  val onCancelEdit = { _: Event ->
+    setValue(props.orgRole.name)
+    setState(State.DISPLAYING)
+  }
+  val onSubmit = { event: Event ->
+    event.preventDefault()
+    setState(State.SAVING)
+    async {
+      val orgRole = api.orgRoles(
+        endpoint = OrgRoleApi.Patch(
+          orgGuid = orgGuid,
+          orgRoleGuid = props.orgRole.guid,
+          rep = OrgRoleRep.Update(name = editValue)
+        )
+      )
+      global.dispatch(OrgRoleAction.UpdateValue(orgRole))
+      if (isMounted.current) setState(State.DISPLAYING)
     }
-    val onSubmit = { event: Event ->
-        event.preventDefault()
-        setState(State.SAVING)
-        async {
-            val orgRole = api.orgRoles(
-                endpoint = OrgRoleApi.Patch(
-                    orgGuid = orgGuid,
-                    orgRoleGuid = props.orgRole.guid,
-                    rep = OrgRoleRep.Update(name = editValue)
-                )
-            )
-            global.dispatch(OrgRoleAction.UpdateValue(orgRole))
-            if (isMounted.current) setState(State.DISPLAYING)
-        }
-    }
-    useEscapeKeyListener(listOf(state)) { event ->
-        if (state == State.EDITING) onCancelEdit(event)
-    }
+  }
+  useEscapeKeyListener(listOf(state)) { event ->
+    if (state == State.EDITING) onCancelEdit(event)
+  }
 
-    td {
-        form(classes = styles.getClassName { it::form }) {
-            attrs.onSubmitFunction = onSubmit
-            when (state) {
-                State.DISPLAYING -> +props.orgRole.name
-                State.EDITING, State.SAVING -> {
-                    input(type = InputType.text, classes = styles.getClassName { it::input }) {
-                        attrs.autoFocus = true
-                        attrs.defaultValue = editValue
-                        attrs.onChangeFunction = { setValue(it.targetValue) }
-                        attrs.disabled = state == State.SAVING
-                    }
-                }
-            }
-            when (state) {
-                State.DISPLAYING -> {
-                    a(classes = styles.getClassName { it::icon }) {
-                        attrs.onClickFunction = onEditClicked
-                        inlineIcon("edit")
-                    }
-                }
-                State.EDITING -> {
-                    a(classes = styles.getClassName { it::icon }) {
-                        attrs.onClickFunction = onCancelEdit
-                        inlineIcon("times-circle")
-                    }
-                    a(classes = styles.getClassName { it::icon }) {
-                        attrs.onClickFunction = onSubmit
-                        inlineIcon("save")
-                    }
-                }
-                State.SAVING -> inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
-            }
-        }
+  td {
+    form(classes = styles.getClassName { it::form }) {
+      attrs.onSubmitFunction = onSubmit
+      when (state) {
+          State.DISPLAYING -> +props.orgRole.name
+          State.EDITING, State.SAVING -> {
+              input(type = InputType.text, classes = styles.getClassName { it::input }) {
+                  attrs.autoFocus = true
+                  attrs.defaultValue = editValue
+                  attrs.onChangeFunction = { setValue(it.targetValue) }
+                  attrs.disabled = state == State.SAVING
+              }
+          }
+      }
+      when (state) {
+          State.DISPLAYING -> {
+              a(classes = styles.getClassName { it::icon }) {
+                  attrs.onClickFunction = onEditClicked
+                  inlineIcon("edit")
+              }
+          }
+          State.EDITING -> {
+              a(classes = styles.getClassName { it::icon }) {
+                  attrs.onClickFunction = onCancelEdit
+                  inlineIcon("times-circle")
+              }
+              a(classes = styles.getClassName { it::icon }) {
+                  attrs.onClickFunction = onSubmit
+                  inlineIcon("save")
+              }
+          }
+          State.SAVING -> inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+      }
     }
+  }
 }

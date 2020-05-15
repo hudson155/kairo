@@ -11,26 +11,26 @@ import io.limberapp.backend.module.users.store.account.UserStore
 import java.util.UUID
 
 internal class UserServiceImpl @Inject constructor(
-    private val orgService: OrgService,
-    private val userStore: UserStore
+  private val orgService: OrgService,
+  private val userStore: UserStore
 ) : UserService {
-    override fun create(model: UserModel) = userStore.create(model)
+  override fun create(model: UserModel) = userStore.create(model)
 
-    override fun get(userGuid: UUID) = userStore.get(userGuid)
+  override fun get(userGuid: UUID) = userStore.get(userGuid)
 
-    override fun getByEmailAddress(emailAddress: String) = userStore.getByEmailAddress(emailAddress)
+  override fun getByEmailAddress(emailAddress: String) = userStore.getByEmailAddress(emailAddress)
 
-    override fun getByOrgGuid(orgGuid: UUID) = userStore.getByOrgGuid(orgGuid)
+  override fun getByOrgGuid(orgGuid: UUID) = userStore.getByOrgGuid(orgGuid)
 
-    override fun update(userGuid: UUID, update: UserModel.Update) = userStore.update(userGuid, update)
+  override fun update(userGuid: UUID, update: UserModel.Update) = userStore.update(userGuid, update)
 
-    override fun deleteRole(userGuid: UUID, role: JwtRole) {
-        if (!(userStore.get(userGuid) ?: throw UserNotFound()).hasRole(role)) throw UserDoesNotHaveRole()
-        userStore.update(userGuid, UserModel.Update.fromRole(role, false))
-    }
+  override fun deleteRole(userGuid: UUID, role: JwtRole) {
+    if (!(userStore.get(userGuid) ?: throw UserNotFound()).hasRole(role)) throw UserDoesNotHaveRole()
+    userStore.update(userGuid, UserModel.Update.fromRole(role, false))
+  }
 
-    override fun delete(userGuid: UUID) {
-        if (orgService.getByOwnerAccountGuid(userGuid) != null) throw CannotDeleteOrgOwner()
-        userStore.delete(userGuid)
-    }
+  override fun delete(userGuid: UUID) {
+    if (orgService.getByOwnerAccountGuid(userGuid) != null) throw CannotDeleteOrgOwner()
+    userStore.delete(userGuid)
+  }
 }

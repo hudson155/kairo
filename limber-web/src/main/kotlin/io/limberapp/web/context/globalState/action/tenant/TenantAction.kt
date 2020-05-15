@@ -8,18 +8,18 @@ import io.limberapp.web.util.async
 import react.useEffect
 
 internal sealed class TenantAction : Action() {
-    internal object BeginLoading : TenantAction()
+  internal object BeginLoading : TenantAction()
 
-    internal data class SetValue(val tenant: TenantRep.Complete) : TenantAction()
+  internal data class SetValue(val tenant: TenantRep.Complete) : TenantAction()
 }
 
 internal fun EnsureLoadedContext.ensureTenantLoaded(domain: String) {
-    useEffect(listOf(domain)) {
-        if (global.state.tenant.hasBegunLoading) return@useEffect
-        global.dispatch(TenantAction.BeginLoading)
-        async {
-            val tenant = api.tenants(TenantApi.GetByDomain(domain))
-            global.dispatch(TenantAction.SetValue(tenant))
-        }
+  useEffect(listOf(domain)) {
+    if (global.state.tenant.hasBegunLoading) return@useEffect
+    global.dispatch(TenantAction.BeginLoading)
+    async {
+      val tenant = api.tenants(TenantApi.GetByDomain(domain))
+      global.dispatch(TenantAction.SetValue(tenant))
     }
+  }
 }

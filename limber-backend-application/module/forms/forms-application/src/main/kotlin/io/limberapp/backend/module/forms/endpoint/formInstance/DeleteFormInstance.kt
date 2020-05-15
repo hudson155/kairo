@@ -15,20 +15,20 @@ import java.util.UUID
  * Deletes an existing form instance.
  */
 internal class DeleteFormInstance @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formInstanceService: FormInstanceService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formInstanceService: FormInstanceService
 ) : LimberApiEndpoint<FormInstanceApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormInstanceApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormInstanceApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Delete(
-        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Delete(
+    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
+  )
 
-    override suspend fun Handler.handle(command: FormInstanceApi.Delete) {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-        formInstanceService.delete(command.formInstanceGuid)
-    }
+  override suspend fun Handler.handle(command: FormInstanceApi.Delete) {
+    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+    formInstanceService.delete(command.formInstanceGuid)
+  }
 }

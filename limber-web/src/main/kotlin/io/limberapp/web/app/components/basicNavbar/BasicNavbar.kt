@@ -15,12 +15,12 @@ import react.functionalComponent
  * right section of the nav. There's no way to have a main section to this nav implementation.
  */
 internal fun RBuilder.basicNavbar(children: RHandler<RProps> = {}) {
-    child(component, handler = children)
+  child(component, handler = children)
 }
 
 private val component = functionalComponent<RProps> { props ->
-    navbar(
-        left = buildElements { headerGroup { headerItem { +"Limber" } } },
-        right = buildElements { headerGroup { props.children() } }
-    ) {}
+  navbar(
+    left = buildElements { headerGroup { headerItem { +"Limber" } } },
+    right = buildElements { headerGroup { props.children() } }
+  ) {}
 }

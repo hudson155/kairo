@@ -4,17 +4,17 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestion
 import java.util.UUID
 
 interface FormTemplateQuestionService {
-    fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel>
+  fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel>
 
-    fun create(model: FormTemplateQuestionModel, rank: Int? = null)
+  fun create(model: FormTemplateQuestionModel, rank: Int? = null)
 
-    fun getByFormTemplateGuid(formTemplateGuid: UUID): List<FormTemplateQuestionModel>
+  fun getByFormTemplateGuid(formTemplateGuid: UUID): List<FormTemplateQuestionModel>
 
-    fun update(
-        formTemplateGuid: UUID,
-        questionGuid: UUID,
-        update: FormTemplateQuestionModel.Update
-    ): FormTemplateQuestionModel
+  fun update(
+    formTemplateGuid: UUID,
+    questionGuid: UUID,
+    update: FormTemplateQuestionModel.Update
+  ): FormTemplateQuestionModel
 
-    fun delete(formTemplateGuid: UUID, questionGuid: UUID)
+  fun delete(formTemplateGuid: UUID, questionGuid: UUID)
 }

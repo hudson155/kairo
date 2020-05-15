@@ -19,24 +19,24 @@ import java.util.UUID
  * Returns a single form instance.
  */
 internal class GetFormInstance @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formInstanceService: FormInstanceService,
-    private val formInstanceQuestionService: FormInstanceQuestionService,
-    private val formInstanceMapper: FormInstanceMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formInstanceService: FormInstanceService,
+  private val formInstanceQuestionService: FormInstanceQuestionService,
+  private val formInstanceMapper: FormInstanceMapper
 ) : LimberApiEndpoint<FormInstanceApi.Get, FormInstanceRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormInstanceApi.Get::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormInstanceApi.Get::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Get(
-        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Get(
+    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
+  )
 
-    override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-        val formInstance = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
-        val questions = formInstanceQuestionService.getByFormInstanceGuid(command.formInstanceGuid)
-        return formInstanceMapper.completeRep(formInstance, questions)
-    }
+  override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
+    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+    val formInstance = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
+    val questions = formInstanceQuestionService.getByFormInstanceGuid(command.formInstanceGuid)
+    return formInstanceMapper.completeRep(formInstance, questions)
+  }
 }

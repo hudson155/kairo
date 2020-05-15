@@ -10,21 +10,21 @@ import com.piperframework.validation.RepValidation
 import kotlinx.serialization.Serializable
 
 object OrgRoleMembershipRep {
-    @Serializable
-    data class Creation(
-        @Serializable(with = UuidSerializer::class)
-        val accountGuid: UUID
-    ) : CreationRep {
-        override fun validate() = RepValidation {}
-    }
+  @Serializable
+  data class Creation(
+    @Serializable(with = UuidSerializer::class)
+    val accountGuid: UUID
+  ) : CreationRep {
+    override fun validate() = RepValidation {}
+  }
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        val orgRoleGuid: UUID,
-        @Serializable(with = UuidSerializer::class)
-        val accountGuid: UUID
-    ) : CompleteRep
+  @Serializable
+  data class Complete(
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    val orgRoleGuid: UUID,
+    @Serializable(with = UuidSerializer::class)
+    val accountGuid: UUID
+  ) : CompleteRep
 }

@@ -16,20 +16,20 @@ import java.util.UUID
  * Deletes a domain from a tenant.
  */
 internal class DeleteTenantDomain @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val tenantDomainService: TenantDomainService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val tenantDomainService: TenantDomainService
 ) : LimberApiEndpoint<TenantDomainApi.Delete, Unit>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = TenantDomainApi.Delete::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = TenantDomainApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Delete(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        domain = call.parameters.getAsType(String::class, "domain")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Delete(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    domain = call.parameters.getAsType(String::class, "domain")
+  )
 
-    override suspend fun Handler.handle(command: TenantDomainApi.Delete) {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        tenantDomainService.delete(command.orgGuid, command.domain)
-    }
+  override suspend fun Handler.handle(command: TenantDomainApi.Delete) {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    tenantDomainService.delete(command.orgGuid, command.domain)
+  }
 }

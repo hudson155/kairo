@@ -8,37 +8,37 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 
 @Suppress("StringLiteralDuplication")
 object UserApi {
-    data class Post(val rep: UserRep.Creation?) : PiperEndpoint(
-        httpMethod = HttpMethod.POST,
-        path = "/users",
-        body = rep
-    )
+  data class Post(val rep: UserRep.Creation?) : PiperEndpoint(
+    httpMethod = HttpMethod.POST,
+    path = "/users",
+    body = rep
+  )
 
-    data class Get(val userGuid: UUID) : PiperEndpoint(
-        httpMethod = HttpMethod.GET,
-        path = "/users/${enc(userGuid)}"
-    )
+  data class Get(val userGuid: UUID) : PiperEndpoint(
+    httpMethod = HttpMethod.GET,
+    path = "/users/${enc(userGuid)}"
+  )
 
-    data class GetByEmailAddress(val emailAddress: String) : PiperEndpoint(
-        httpMethod = HttpMethod.GET,
-        path = "/users",
-        queryParams = listOf("emailAddress" to enc(emailAddress))
-    )
+  data class GetByEmailAddress(val emailAddress: String) : PiperEndpoint(
+    httpMethod = HttpMethod.GET,
+    path = "/users",
+    queryParams = listOf("emailAddress" to enc(emailAddress))
+  )
 
-    data class GetByOrgGuid(val orgGuid: UUID) : PiperEndpoint(
-        httpMethod = HttpMethod.GET,
-        path = "/users",
-        queryParams = listOf("orgGuid" to enc(orgGuid))
-    )
+  data class GetByOrgGuid(val orgGuid: UUID) : PiperEndpoint(
+    httpMethod = HttpMethod.GET,
+    path = "/users",
+    queryParams = listOf("orgGuid" to enc(orgGuid))
+  )
 
-    data class Patch(val userGuid: UUID, val rep: UserRep.Update?) : PiperEndpoint(
-        httpMethod = HttpMethod.PATCH,
-        path = "/users/${enc(userGuid)}",
-        body = rep
-    )
+  data class Patch(val userGuid: UUID, val rep: UserRep.Update?) : PiperEndpoint(
+    httpMethod = HttpMethod.PATCH,
+    path = "/users/${enc(userGuid)}",
+    body = rep
+  )
 
-    data class Delete(val userGuid: UUID) : PiperEndpoint(
-        httpMethod = HttpMethod.DELETE,
-        path = "/users/${enc(userGuid)}"
-    )
+  data class Delete(val userGuid: UUID) : PiperEndpoint(
+    httpMethod = HttpMethod.DELETE,
+    path = "/users/${enc(userGuid)}"
+  )
 }

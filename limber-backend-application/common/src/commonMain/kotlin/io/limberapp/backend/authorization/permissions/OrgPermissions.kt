@@ -15,48 +15,48 @@ import kotlinx.serialization.Serializable
  * runs when the app starts.
  */
 private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
-    sortedBy { it.bit }
-        .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
+  sortedBy { it.bit }
+    .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
 }
 
 @Serializable(with = OrgPermissionsSerializer::class)
 data class OrgPermissions(private val permissions: Set<OrgPermission>) {
-    private val booleanList = ALL_ORG_PERMISSIONS.map { it in permissions }
+  private val booleanList = ALL_ORG_PERMISSIONS.map { it in permissions }
 
-    val size = permissions.size
+  val size = permissions.size
 
-    fun hasPermission(permission: OrgPermission) = permission in permissions
+  fun hasPermission(permission: OrgPermission) = permission in permissions
 
-    fun asDarb() = DarbEncoder.encode(booleanList)
+  fun asDarb() = DarbEncoder.encode(booleanList)
 
-    fun asBitString() = BitStringEncoder.encode(booleanList)
+  fun asBitString() = BitStringEncoder.encode(booleanList)
 
-    fun withPermission(permission: OrgPermission, value: Boolean): OrgPermissions {
-        val permissions = permissions.toMutableSet()
-        if (value) permissions.add(permission) else permissions.remove(permission)
-        return copy(permissions = permissions)
-    }
+  fun withPermission(permission: OrgPermission, value: Boolean): OrgPermissions {
+    val permissions = permissions.toMutableSet()
+    if (value) permissions.add(permission) else permissions.remove(permission)
+    return copy(permissions = permissions)
+  }
 
-    override fun toString() = asDarb()
+  override fun toString() = asDarb()
 
-    companion object {
-        fun none() = OrgPermissions(emptySet())
+  companion object {
+    fun none() = OrgPermissions(emptySet())
 
-        fun fromDarb(darb: String) = fromBooleanList(DarbEncoder.decode(darb))
+    fun fromDarb(darb: String) = fromBooleanList(DarbEncoder.decode(darb))
 
-        fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
+    fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
-        private fun fromBooleanList(booleanList: List<Boolean>) =
-            OrgPermissions(ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet())
+    private fun fromBooleanList(booleanList: List<Boolean>) =
+      OrgPermissions(ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet())
 
-        fun Collection<OrgPermissions>.union() = OrgPermissions(
-            permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
-        )
-    }
+    fun Collection<OrgPermissions>.union() = OrgPermissions(
+      permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+    )
+  }
 }
 
 object OrgPermissionsSerializer : KSerializer<OrgPermissions> {
-    override val descriptor = PrimitiveDescriptor("OrgPermissions", PrimitiveKind.STRING)
-    override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.asDarb())
-    override fun deserialize(decoder: Decoder) = OrgPermissions.fromDarb(decoder.decodeString())
+  override val descriptor = PrimitiveDescriptor("OrgPermissions", PrimitiveKind.STRING)
+  override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.asDarb())
+  override fun deserialize(decoder: Decoder) = OrgPermissions.fromDarb(decoder.decodeString())
 }

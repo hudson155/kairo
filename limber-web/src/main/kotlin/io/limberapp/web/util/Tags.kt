@@ -10,9 +10,9 @@ import react.dom.RDOMBuilder
 import react.dom.tag
 
 internal inline fun RBuilder.main(classes: String? = null, block: RDOMBuilder<MAIN>.() -> Unit): ReactElement =
-    tag(block) {
-        MAIN(attributesMapOf("class", classes), it)
-    }
+  tag(block) {
+    MAIN(attributesMapOf("class", classes), it)
+  }
 
 internal open class MAIN(initialAttributes: Map<String, String>, override val consumer: TagConsumer<*>) :
-    HTMLTag("main", consumer, initialAttributes, null, false, false), HtmlBlockTag
+  HTMLTag("main", consumer, initialAttributes, null, false, false), HtmlBlockTag

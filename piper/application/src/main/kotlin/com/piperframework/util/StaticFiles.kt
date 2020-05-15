@@ -11,19 +11,19 @@ import io.ktor.util.combineSafe
 import java.io.File
 
 internal fun Application.serveStaticFiles(rootPath: String, defaultFilePath: String) {
-    val path = "path"
-    routing {
-        route("/{$path...}") {
-            val root = File(rootPath)
-            get {
-                val filePath = call.parameters.getAll(path)!!.joinToString(File.separator)
-                val file = root.combineSafe(filePath)
-                if (file.isFile) {
-                    call.respond(LocalFileContent(file))
-                } else {
-                    call.respond(LocalFileContent(root.combineSafe(defaultFilePath)))
-                }
-            }
+  val path = "path"
+  routing {
+    route("/{$path...}") {
+      val root = File(rootPath)
+      get {
+        val filePath = call.parameters.getAll(path)!!.joinToString(File.separator)
+        val file = root.combineSafe(filePath)
+        if (file.isFile) {
+          call.respond(LocalFileContent(file))
+        } else {
+          call.respond(LocalFileContent(root.combineSafe(defaultFilePath)))
         }
+      }
     }
+  }
 }

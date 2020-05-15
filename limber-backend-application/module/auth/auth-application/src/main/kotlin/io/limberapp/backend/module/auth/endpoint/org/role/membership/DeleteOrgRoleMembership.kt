@@ -16,22 +16,22 @@ import java.util.UUID
  * Revokes the account's membership in the given org role.
  */
 internal class DeleteOrgRoleMembership @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val orgRoleMembershipService: OrgRoleMembershipService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val orgRoleMembershipService: OrgRoleMembershipService
 ) : LimberApiEndpoint<OrgRoleMembershipApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgRoleMembershipApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgRoleMembershipApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgRoleMembershipApi.Delete(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid"),
-        accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgRoleMembershipApi.Delete(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid"),
+    accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
+  )
 
-    override suspend fun Handler.handle(command: OrgRoleMembershipApi.Delete) {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
-        orgRoleMembershipService.delete(command.orgGuid, command.orgRoleGuid, command.accountGuid)
-    }
+  override suspend fun Handler.handle(command: OrgRoleMembershipApi.Delete) {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
+    orgRoleMembershipService.delete(command.orgGuid, command.orgRoleGuid, command.accountGuid)
+  }
 }

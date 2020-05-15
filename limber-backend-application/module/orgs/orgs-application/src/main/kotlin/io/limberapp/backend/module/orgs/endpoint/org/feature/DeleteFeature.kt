@@ -17,24 +17,24 @@ import java.util.UUID
  * implementation is not deleted, in case it needs to be recovered.
  */
 internal class DeleteFeature @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val featureService: FeatureService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val featureService: FeatureService
 ) : LimberApiEndpoint<OrgFeatureApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgFeatureApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgFeatureApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Delete(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Delete(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
+  )
 
-    override suspend fun Handler.handle(command: OrgFeatureApi.Delete) {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
-        featureService.delete(
-            orgGuid = command.orgGuid,
-            featureGuid = command.featureGuid
-        )
-    }
+  override suspend fun Handler.handle(command: OrgFeatureApi.Delete) {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_FEATURES).authorize()
+    featureService.delete(
+      orgGuid = command.orgGuid,
+      featureGuid = command.featureGuid
+    )
+  }
 }

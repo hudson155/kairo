@@ -47,130 +47,130 @@ import java.util.UUID
  */
 @Suppress("TooManyFunctions")
 abstract class SimplePiperApp<C : Config>(application: Application, protected val config: C) :
-    PiperApp<SimplePiperApp.Context>(application) {
-    data class Context(val modules: List<ModuleWithLifecycle>)
+  PiperApp<SimplePiperApp.Context>(application) {
+  data class Context(val modules: List<ModuleWithLifecycle>)
 
-    override fun onStart(application: Application): Context {
-        // First, create the injector.
-        val modules = getMainModules(application).plus(modules)
-        val injector = Guice.createInjector(Stage.PRODUCTION, modules)
+  override fun onStart(application: Application): Context {
+    // First, create the injector.
+    val modules = getMainModules(application).plus(modules)
+    val injector = Guice.createInjector(Stage.PRODUCTION, modules)
 
-        // Then, configure the application.
-        // Pass the injector because configuration may require services that are bound in the injector.
-        application.configure(injector)
+    // Then, configure the application.
+    // Pass the injector because configuration may require services that are bound in the injector.
+    application.configure(injector)
 
-        // Configure routing. Static files, dynamic endpoints, then 404.
-        if (config.serving.staticFiles.serve) {
-            application.serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
-        }
-        registerEndpoints(injector)
-        application.handle404()
-
-        // Return the context.
-        return Context(modules)
+    // Configure routing. Static files, dynamic endpoints, then 404.
+    if (config.serving.staticFiles.serve) {
+      application.serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
     }
+    registerEndpoints(injector)
+    application.handle404()
 
-    final override fun onStop(application: Application, context: Context) {
-        context.modules.forEach { it.unconfigure() }
+    // Return the context.
+    return Context(modules)
+  }
+
+  final override fun onStop(application: Application, context: Context) {
+    context.modules.forEach { it.unconfigure() }
+  }
+
+  private fun Application.configure(injector: Injector) {
+    httpsRedirect()
+    authentication(injector)
+    cors()
+    dataConversion()
+    defaultHeaders()
+    compression()
+    callLogging()
+    contentNegotiation()
+    statusPages()
+  }
+
+  protected fun Application.httpsRedirect() {
+    if (config.serving.redirectHttpToHttps) {
+      install(HttpsRedirect)
     }
+  }
 
-    private fun Application.configure(injector: Injector) {
-        httpsRedirect()
-        authentication(injector)
-        cors()
-        dataConversion()
-        defaultHeaders()
-        compression()
-        callLogging()
-        contentNegotiation()
-        statusPages()
+  protected fun Application.authentication(injector: Injector) {
+    install(Authentication) {
+      configureAuthentication(injector)
     }
+  }
 
-    protected fun Application.httpsRedirect() {
-        if (config.serving.redirectHttpToHttps) {
-            install(HttpsRedirect)
-        }
+  protected open fun Application.cors() {
+    install(CORS) {
+      HttpMethod.values().forEach { method(it.forKtor()) }
+      allowSameOrigin = false
+      anyHost()
+      header(HttpHeaders.Authorization)
+      header(HttpHeaders.ContentType)
     }
+  }
 
-    protected fun Application.authentication(injector: Injector) {
-        install(Authentication) {
-            configureAuthentication(injector)
-        }
+  protected open fun Application.dataConversion() {
+    install(DataConversion) {
+      convert(UUID::class, conversionService(UuidConversionService))
     }
+  }
 
-    protected open fun Application.cors() {
-        install(CORS) {
-            HttpMethod.values().forEach { method(it.forKtor()) }
-            allowSameOrigin = false
-            anyHost()
-            header(HttpHeaders.Authorization)
-            header(HttpHeaders.ContentType)
-        }
+  protected open fun Application.defaultHeaders() {
+    install(DefaultHeaders)
+  }
+
+  protected open fun Application.compression() {
+    install(Compression)
+  }
+
+  protected open fun Application.callLogging() {
+    install(CallLogging) {
+      level = Level.INFO
     }
+  }
 
-    protected open fun Application.dataConversion() {
-        install(DataConversion) {
-            convert(UUID::class, conversionService(UuidConversionService))
-        }
+  protected open fun Application.contentNegotiation() {
+    install(ContentNegotiation) {
+      val json = Json(
+        prettyPrint = true,
+        context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
+      )
+      register(
+        contentType = ContentType.Application.Json,
+        converter = JsonContentConverter(json)
+      )
     }
+  }
 
-    protected open fun Application.defaultHeaders() {
-        install(DefaultHeaders)
+  protected open fun Application.statusPages() {
+    install(StatusPages) {
+      val exceptionMapper = ExceptionMapper()
+      this.exception(PiperException::class.java) {
+        val error = exceptionMapper.handle(it)
+        call.respond(HttpStatusCode.fromValue(error.statusCode), error)
+      }
     }
+  }
 
-    protected open fun Application.compression() {
-        install(Compression)
+  private fun registerEndpoints(injector: Injector) {
+    modules.forEach { module ->
+      module.endpoints.forEach {
+        val endpoint = injector.getInstance(it)
+        endpoint.register()
+      }
     }
+  }
 
-    protected open fun Application.callLogging() {
-        install(CallLogging) {
-            level = Level.INFO
-        }
+  protected abstract fun Authentication.Configuration.configureAuthentication(injector: Injector)
+
+  protected abstract fun getMainModules(application: Application): List<ModuleWithLifecycle>
+
+  protected abstract val modules: List<Module>
+
+  private fun Application.handle404(): Routing {
+    return routing {
+      route("${config.serving.apiPathPrefix}/{...}") {
+        handle { throw EndpointNotFound() }
+      }
     }
-
-    protected open fun Application.contentNegotiation() {
-        install(ContentNegotiation) {
-            val json = Json(
-                prettyPrint = true,
-                context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
-            )
-            register(
-                contentType = ContentType.Application.Json,
-                converter = JsonContentConverter(json)
-            )
-        }
-    }
-
-    protected open fun Application.statusPages() {
-        install(StatusPages) {
-            val exceptionMapper = ExceptionMapper()
-            this.exception(PiperException::class.java) {
-                val error = exceptionMapper.handle(it)
-                call.respond(HttpStatusCode.fromValue(error.statusCode), error)
-            }
-        }
-    }
-
-    private fun registerEndpoints(injector: Injector) {
-        modules.forEach { module ->
-            module.endpoints.forEach {
-                val endpoint = injector.getInstance(it)
-                endpoint.register()
-            }
-        }
-    }
-
-    protected abstract fun Authentication.Configuration.configureAuthentication(injector: Injector)
-
-    protected abstract fun getMainModules(application: Application): List<ModuleWithLifecycle>
-
-    protected abstract val modules: List<Module>
-
-    private fun Application.handle404(): Routing {
-        return routing {
-            route("${config.serving.apiPathPrefix}/{...}") {
-                handle { throw EndpointNotFound() }
-            }
-        }
-    }
+  }
 }

@@ -25,22 +25,22 @@ import styled.getClassName
  * horizontally. Content is provided by [children]. Content should be kept small; behaviour is undefined upon overflow.
  */
 internal fun RBuilder.centeredContentLayout(children: RHandler<RProps>) {
-    child(component, handler = children)
+  child(component, handler = children)
 }
 
 private val styles = object : Styles("CenteredContentLayout") {
-    val container by css {
-        flexGrow = 1.0
-        display = Display.flex
-        flexDirection = FlexDirection.column
-        alignItems = Align.center
-        justifyContent = JustifyContent.center
-        margin(16.px)
-    }
+  val container by css {
+    flexGrow = 1.0
+    display = Display.flex
+    flexDirection = FlexDirection.column
+    alignItems = Align.center
+    justifyContent = JustifyContent.center
+    margin(16.px)
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
-    div(classes = styles.getClassName { it::container }) {
-        props.children()
-    }
+  div(classes = styles.getClassName { it::container }) {
+    props.children()
+  }
 }

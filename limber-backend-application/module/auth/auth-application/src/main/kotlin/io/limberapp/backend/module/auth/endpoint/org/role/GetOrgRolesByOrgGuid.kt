@@ -18,22 +18,22 @@ import java.util.UUID
  * Returns all roles within the given org.
  */
 internal class GetOrgRolesByOrgGuid @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val orgRoleService: OrgRoleService,
-    private val orgRoleMapper: OrgRoleMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val orgRoleService: OrgRoleService,
+  private val orgRoleMapper: OrgRoleMapper
 ) : LimberApiEndpoint<OrgRoleApi.GetByOrgGuid, Set<OrgRoleRep.Complete>>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgRoleApi.GetByOrgGuid::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgRoleApi.GetByOrgGuid::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgRoleApi.GetByOrgGuid(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgRoleApi.GetByOrgGuid(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+  )
 
-    override suspend fun Handler.handle(command: OrgRoleApi.GetByOrgGuid): Set<OrgRoleRep.Complete> {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
-        val orgRoles = orgRoleService.getByOrgGuid(command.orgGuid)
-        return orgRoles.map { orgRoleMapper.completeRep(it) }.toSet()
-    }
+  override suspend fun Handler.handle(command: OrgRoleApi.GetByOrgGuid): Set<OrgRoleRep.Complete> {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
+    val orgRoles = orgRoleService.getByOrgGuid(command.orgGuid)
+    return orgRoles.map { orgRoleMapper.completeRep(it) }.toSet()
+  }
 }

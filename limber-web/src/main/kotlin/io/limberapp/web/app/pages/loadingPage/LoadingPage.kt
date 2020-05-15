@@ -18,22 +18,22 @@ import styled.getClassName
  * Page to show while things are loading.
  */
 internal fun RBuilder.loadingPage(loadingText: String) {
-    child(component, Props(loadingText))
+  child(component, Props(loadingText))
 }
 
 internal data class Props(val loadingText: String) : RProps
 
 private val styles = object : Styles("LoadingPage") {
-    val spinnerContainer by css {
-        fontSize = 48.px
-    }
+  val spinnerContainer by css {
+    fontSize = 48.px
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    centeredContentLayout {
-        div(classes = styles.getClassName { it::spinnerContainer }) {
-            inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
-        }
-        p { +props.loadingText }
+  centeredContentLayout {
+    div(classes = styles.getClassName { it::spinnerContainer }) {
+      inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
     }
+    p { +props.loadingText }
+  }
 }

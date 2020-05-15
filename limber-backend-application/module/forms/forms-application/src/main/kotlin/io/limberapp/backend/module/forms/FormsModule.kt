@@ -26,31 +26,31 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
 
 class FormsModule : Module() {
-    override val serialModule = formsSerialModule
+  override val serialModule = formsSerialModule
 
-    override val endpoints = listOf(
-        PostFormTemplate::class.java,
-        GetFormTemplate::class.java,
-        GetFormTemplatesByFeatureGuid::class.java,
-        PatchFormTemplate::class.java,
-        DeleteFormTemplate::class.java,
-        PostFormTemplateQuestion::class.java,
-        PatchFormTemplateQuestion::class.java,
-        DeleteFormTemplateQuestion::class.java,
+  override val endpoints = listOf(
+    PostFormTemplate::class.java,
+    GetFormTemplate::class.java,
+    GetFormTemplatesByFeatureGuid::class.java,
+    PatchFormTemplate::class.java,
+    DeleteFormTemplate::class.java,
+    PostFormTemplateQuestion::class.java,
+    PatchFormTemplateQuestion::class.java,
+    DeleteFormTemplateQuestion::class.java,
 
-        PostFormInstance::class.java,
-        GetFormInstance::class.java,
-        GetFormInstancesByFeatureGuid::class.java,
-        DeleteFormInstance::class.java,
-        PutFormInstanceQuestion::class.java,
-        DeleteFormInstanceQuestion::class.java
-    )
+    PostFormInstance::class.java,
+    GetFormInstance::class.java,
+    GetFormInstancesByFeatureGuid::class.java,
+    DeleteFormInstance::class.java,
+    PutFormInstanceQuestion::class.java,
+    DeleteFormInstanceQuestion::class.java
+  )
 
-    override fun bindServices() {
-        bind(FormTemplateService::class, FormTemplateServiceImpl::class)
-        bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
+  override fun bindServices() {
+    bind(FormTemplateService::class, FormTemplateServiceImpl::class)
+    bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
 
-        bind(FormInstanceService::class, FormInstanceServiceImpl::class)
-        bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
-    }
+    bind(FormInstanceService::class, FormInstanceServiceImpl::class)
+    bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
+  }
 }

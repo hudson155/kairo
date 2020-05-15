@@ -17,30 +17,30 @@ import react.router.dom.useRouteMatch
  * Parent page for organization role and organization role membership settings.
  */
 internal fun RBuilder.orgSettingsRolesPage() {
-    child(component)
+  child(component)
 }
 
 internal object OrgSettingsRolesPage {
-    const val name = "Roles & permissions"
-    const val path = "${OrgSettingsPage.path}/roles"
+  const val name = "Roles & permissions"
+  const val path = "${OrgSettingsPage.path}/roles"
 }
 
 private val component = functionalComponent<RProps> {
-    val match = checkNotNull(useRouteMatch<RProps>())
+  val match = checkNotNull(useRouteMatch<RProps>())
 
-    switch {
-        route(path = match.path, exact = true) {
-            buildElement { orgSettingsRolesListPage() }
-        }
-        route(
-            path = listOf(
-                match.path,
-                ":${OrgSettingsRoleDetailPage.PageParams::roleSlug.name}",
-                ":${OrgSettingsRoleDetailPage.PageParams::tabName.name}"
-            ).joinToString("/"),
-            exact = true
-        ) {
-            buildElement { orgSettingsRoleDetailPage() }
-        }
+  switch {
+    route(path = match.path, exact = true) {
+      buildElement { orgSettingsRolesListPage() }
     }
+    route(
+      path = listOf(
+        match.path,
+        ":${OrgSettingsRoleDetailPage.PageParams::roleSlug.name}",
+        ":${OrgSettingsRoleDetailPage.PageParams::tabName.name}"
+      ).joinToString("/"),
+      exact = true
+    ) {
+      buildElement { orgSettingsRoleDetailPage() }
+    }
+  }
 }

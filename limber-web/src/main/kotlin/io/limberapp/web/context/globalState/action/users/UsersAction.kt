@@ -9,18 +9,18 @@ import io.limberapp.web.util.async
 import react.useEffect
 
 internal sealed class UsersAction : Action() {
-    internal object BeginLoading : UsersAction()
+  internal object BeginLoading : UsersAction()
 
-    internal data class SetValue(val users: Set<UserRep.Summary>) : UsersAction()
+  internal data class SetValue(val users: Set<UserRep.Summary>) : UsersAction()
 }
 
 internal fun EnsureLoadedContext.ensureUsersLoaded(orgGuid: UUID) {
-    useEffect(listOf(orgGuid)) {
-        if (global.state.users.hasBegunLoading) return@useEffect
-        global.dispatch(UsersAction.BeginLoading)
-        async {
-            val users = api.users(UserApi.GetByOrgGuid(orgGuid))
-            global.dispatch(UsersAction.SetValue(users))
-        }
+  useEffect(listOf(orgGuid)) {
+    if (global.state.users.hasBegunLoading) return@useEffect
+    global.dispatch(UsersAction.BeginLoading)
+    async {
+      val users = api.users(UserApi.GetByOrgGuid(orgGuid))
+      global.dispatch(UsersAction.SetValue(users))
     }
+  }
 }

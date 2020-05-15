@@ -13,52 +13,52 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object FormTemplateRep {
-    @Serializable
-    data class Creation(
-        @Serializable(with = UuidSerializer::class)
-        val featureGuid: UUID,
-        val title: String,
-        val description: String? = null
-    ) : CreationRep {
-        override fun validate() = RepValidation {
-            validate(Creation::title) { Validator.length1hundred(value, allowEmpty = false) }
-            validate(Creation::description) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
-        }
+  @Serializable
+  data class Creation(
+    @Serializable(with = UuidSerializer::class)
+    val featureGuid: UUID,
+    val title: String,
+    val description: String? = null
+  ) : CreationRep {
+    override fun validate() = RepValidation {
+      validate(Creation::title) { Validator.length1hundred(value, allowEmpty = false) }
+      validate(Creation::description) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
     }
+  }
 
-    @Serializable
-    data class Summary(
-        @Serializable(with = UuidSerializer::class)
-        val guid: UUID,
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        val featureGuid: UUID,
-        val title: String,
-        val description: String?
-    ) : CompleteRep
+  @Serializable
+  data class Summary(
+    @Serializable(with = UuidSerializer::class)
+    val guid: UUID,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    val featureGuid: UUID,
+    val title: String,
+    val description: String?
+  ) : CompleteRep
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = UuidSerializer::class)
-        val guid: UUID,
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        val featureGuid: UUID,
-        val title: String,
-        val description: String?,
-        val questions: List<FormTemplateQuestionRep.Complete>
-    ) : CompleteRep
+  @Serializable
+  data class Complete(
+    @Serializable(with = UuidSerializer::class)
+    val guid: UUID,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    val featureGuid: UUID,
+    val title: String,
+    val description: String?,
+    val questions: List<FormTemplateQuestionRep.Complete>
+  ) : CompleteRep
 
-    @Serializable
-    data class Update(
-        val title: String? = null,
-        val description: String? = null
-    ) : UpdateRep {
-        override fun validate() = RepValidation {
-            validate(Update::title) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
-            validate(Update::description) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
-        }
+  @Serializable
+  data class Update(
+    val title: String? = null,
+    val description: String? = null
+  ) : UpdateRep {
+    override fun validate() = RepValidation {
+      validate(Update::title) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
+      validate(Update::description) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
     }
+  }
 }

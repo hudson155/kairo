@@ -13,11 +13,11 @@ import kotlinx.serialization.modules.SerializersModule
  * in its own module module.
  */
 internal class HealthCheckModule : Module() {
-    override val serialModule = SerializersModule { }
+  override val serialModule = SerializersModule { }
 
-    override val endpoints: List<Class<out ApiEndpoint<*, *, *>>> = listOf(HealthCheck::class.java)
+  override val endpoints: List<Class<out ApiEndpoint<*, *, *>>> = listOf(HealthCheck::class.java)
 
-    override fun bindServices() {
-        bind(HealthCheckService::class, HealthCheckServiceImpl::class)
-    }
+  override fun bindServices() {
+    bind(HealthCheckService::class, HealthCheckServiceImpl::class)
+  }
 }

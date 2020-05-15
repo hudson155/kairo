@@ -18,30 +18,30 @@ import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 
 internal class LimberAppMonolith(application: Application) : SimplePiperApp<LimberAppMonolithConfig>(
-    application = application,
-    config = LimberConfigLoader().load()
+  application = application,
+  config = LimberConfigLoader().load()
 ) {
-    override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
-        piperAuth<Jwt> {
-            verifier(
-                scheme = JwtAuthVerifier.scheme,
-                verifier = JwtAuthVerifier(config.authentication),
-                default = true
-            )
-        }
+  override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
+    piperAuth<Jwt> {
+      verifier(
+        scheme = JwtAuthVerifier.scheme,
+        verifier = JwtAuthVerifier(config.authentication),
+        default = true
+      )
     }
+  }
 
-    override fun getMainModules(application: Application) = listOf(
-        MainModule.forProduction(application, config),
-        LimberSqlModule(config.sqlDatabase)
-    )
+  override fun getMainModules(application: Application) = listOf(
+    MainModule.forProduction(application, config),
+    LimberSqlModule(config.sqlDatabase)
+  )
 
-    override val modules = listOf(
-        HealthCheckModule(),
+  override val modules = listOf(
+    HealthCheckModule(),
 
-        AuthModule(),
-        FormsModule(),
-        OrgsModule(),
-        UsersModule()
-    )
+    AuthModule(),
+    FormsModule(),
+    OrgsModule(),
+    UsersModule()
+  )
 }

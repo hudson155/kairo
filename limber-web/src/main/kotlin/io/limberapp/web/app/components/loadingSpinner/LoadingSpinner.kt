@@ -16,15 +16,15 @@ import styled.getClassName
  * Spinner to show while something is loading. Automatically centers itself horizontally.
  */
 internal fun RBuilder.loadingSpinner() {
-    div(classes = styles.getClassName { it::container }) {
-        inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
-    }
+  div(classes = styles.getClassName { it::container }) {
+    inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+  }
 }
 
 private val styles = object : Styles("LoadingSpinner") {
-    val container by css {
-        padding(12.px)
-        fontSize = 24.px
-        textAlign = TextAlign.center
-    }
+  val container by css {
+    padding(12.px)
+    fontSize = 24.px
+    textAlign = TextAlign.center
+  }
 }.apply { inject() }

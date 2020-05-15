@@ -18,21 +18,21 @@ import styled.getClassName
  * Portion of org roles table that shows the number of permissions, with a modal link.
  */
 internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete) {
-    child(component, Props(orgRole))
+  child(component, Props(orgRole))
 }
 
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val component = functionalComponent<Props> { props ->
-    val match = checkNotNull(useRouteMatch<RProps>())
-    td {
-        navLink<RProps>(
-            to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.permissions.slugify()}",
-            className = globalStyles.getClassName { it::link }
-        ) {
-            +props.orgRole.permissions.size.let {
-                "$it ${"permissions".pluralize(it)}"
-            }
-        }
+  val match = checkNotNull(useRouteMatch<RProps>())
+  td {
+    navLink<RProps>(
+      to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.permissions.slugify()}",
+      className = globalStyles.getClassName { it::link }
+    ) {
+      +props.orgRole.permissions.size.let {
+        "$it ${"permissions".pluralize(it)}"
+      }
     }
+  }
 }

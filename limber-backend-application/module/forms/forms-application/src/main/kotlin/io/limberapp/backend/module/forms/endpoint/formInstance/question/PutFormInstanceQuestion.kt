@@ -18,30 +18,30 @@ import java.util.UUID
  * Creates a new question (answer) within a form instance.
  */
 internal class PutFormInstanceQuestion @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formInstanceService: FormInstanceService,
-    private val formInstanceQuestionService: FormInstanceQuestionService,
-    private val formInstanceQuestionMapper: FormInstanceQuestionMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formInstanceService: FormInstanceService,
+  private val formInstanceQuestionService: FormInstanceQuestionService,
+  private val formInstanceQuestionMapper: FormInstanceQuestionMapper
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Put, FormInstanceQuestionRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormInstanceQuestionApi.Put::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormInstanceQuestionApi.Put::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Put(
-        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
-        questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Put(
+    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
+    questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-        val formInstanceQuestion = formInstanceQuestionMapper.model(
-            formInstanceGuid = command.formInstanceGuid,
-            questionGuid = command.questionGuid,
-            rep = command.rep.required()
-        )
-        formInstanceQuestionService.upsert(formInstanceQuestion)
-        return formInstanceQuestionMapper.completeRep(formInstanceQuestion)
-    }
+  override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
+    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+    val formInstanceQuestion = formInstanceQuestionMapper.model(
+      formInstanceGuid = command.formInstanceGuid,
+      questionGuid = command.questionGuid,
+      rep = command.rep.required()
+    )
+    formInstanceQuestionService.upsert(formInstanceQuestion)
+    return formInstanceQuestionMapper.completeRep(formInstanceQuestion)
+  }
 }

@@ -8,28 +8,28 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class DeleteTenantTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val orgGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = TenantApi.Delete(orgGuid),
-            expectedException = TenantNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = TenantApi.Delete(orgGuid),
+      expectedException = TenantNotFound()
+    )
+  }
 
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
 
-        val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-        piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+    piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
-        piperTest.test(TenantApi.Delete(tenantRep.orgGuid)) {}
+    piperTest.test(TenantApi.Delete(tenantRep.orgGuid)) {}
 
-        piperTest.test(
-            endpoint = TenantApi.Get(orgGuid),
-            expectedException = TenantNotFound()
-        )
-    }
+    piperTest.test(
+      endpoint = TenantApi.Get(orgGuid),
+      expectedException = TenantNotFound()
+    )
+  }
 }

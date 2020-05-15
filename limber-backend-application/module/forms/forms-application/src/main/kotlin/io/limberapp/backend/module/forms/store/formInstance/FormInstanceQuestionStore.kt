@@ -18,94 +18,94 @@ private const val FORM_INSTANCE_GUID_FOREIGN_KEY = "form_instance_question_form_
 private const val QUESTION_GUID_FOREIGN_KEY = "form_instance_question_question_guid_fkey"
 
 internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-    fun create(model: FormInstanceQuestionModel) {
-        jdbi.useHandle<Exception> {
-            try {
-                it.createUpdate(sqlResource("create"))
-                    .bindKotlin(FormInstanceQuestionEntity(model))
-                    .execute()
-            } catch (e: UnableToExecuteStatementException) {
-                handleCreateError(e)
-            }
-        }
+  fun create(model: FormInstanceQuestionModel) {
+    jdbi.useHandle<Exception> {
+      try {
+        it.createUpdate(sqlResource("create"))
+          .bindKotlin(FormInstanceQuestionEntity(model))
+          .execute()
+      } catch (e: UnableToExecuteStatementException) {
+        handleCreateError(e)
+      }
     }
+  }
 
-    private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
-        val error = e.serverErrorMessage ?: throw e
-        when {
-            error.isForeignKeyViolation(FORM_INSTANCE_GUID_FOREIGN_KEY) ->
-                throw FormInstanceNotFound()
-            error.isForeignKeyViolation(QUESTION_GUID_FOREIGN_KEY) ->
-                throw FormTemplateQuestionNotFound()
-            else -> throw e
-        }
+  private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
+    val error = e.serverErrorMessage ?: throw e
+    when {
+        error.isForeignKeyViolation(FORM_INSTANCE_GUID_FOREIGN_KEY) ->
+            throw FormInstanceNotFound()
+        error.isForeignKeyViolation(QUESTION_GUID_FOREIGN_KEY) ->
+            throw FormTemplateQuestionNotFound()
+        else -> throw e
     }
+  }
 
-    fun get(formInstanceGuid: UUID, questionGuid: UUID): FormInstanceQuestionModel? {
-        return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
-            it.createQuery(
-                    """
+  fun get(formInstanceGuid: UUID, questionGuid: UUID): FormInstanceQuestionModel? {
+    return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
+      it.createQuery(
+          """
                     SELECT *
                     FROM forms.form_instance_question
                     WHERE form_instance_guid = :formInstanceGuid
                       AND question_guid = :questionGuid
                     """.trimIndent()
-                )
-                .bind("formInstanceGuid", formInstanceGuid)
-                .bind("questionGuid", questionGuid)
-                .mapTo(FormInstanceQuestionEntity::class.java)
-                .singleNullOrThrow()
-                ?.asModel()
-        }
+        )
+        .bind("formInstanceGuid", formInstanceGuid)
+        .bind("questionGuid", questionGuid)
+        .mapTo(FormInstanceQuestionEntity::class.java)
+        .singleNullOrThrow()
+        ?.asModel()
     }
+  }
 
-    fun getByFormInstanceGuid(formInstanceGuid: UUID): List<FormInstanceQuestionModel> {
-        return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
-            it.createQuery(sqlResource("getByFormInstanceGuid"))
-                .bind("formInstanceGuid", formInstanceGuid)
-                .mapTo(FormInstanceQuestionEntity::class.java)
-                .map { it.asModel() }
-                .toList()
-        }
+  fun getByFormInstanceGuid(formInstanceGuid: UUID): List<FormInstanceQuestionModel> {
+    return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
+      it.createQuery(sqlResource("getByFormInstanceGuid"))
+        .bind("formInstanceGuid", formInstanceGuid)
+        .mapTo(FormInstanceQuestionEntity::class.java)
+        .map { it.asModel() }
+        .toList()
     }
+  }
 
-    fun update(
-        formInstanceGuid: UUID,
-        questionGuid: UUID,
-        update: FormInstanceQuestionModel.Update
-    ): FormInstanceQuestionModel {
-        return jdbi.inTransaction<FormInstanceQuestionModel, Exception> {
-            val updateCount = it.createUpdate(sqlResource("update"))
-                .bind("formInstanceGuid", formInstanceGuid)
-                .bind("questionGuid", questionGuid)
-                .bindKotlin(FormInstanceQuestionEntity.Update(update))
-                .execute()
-            return@inTransaction when (updateCount) {
-                0 -> throw FormInstanceQuestionNotFound()
-                1 -> checkNotNull(get(formInstanceGuid, questionGuid))
-                else -> badSql()
-            }
-        }
+  fun update(
+    formInstanceGuid: UUID,
+    questionGuid: UUID,
+    update: FormInstanceQuestionModel.Update
+  ): FormInstanceQuestionModel {
+    return jdbi.inTransaction<FormInstanceQuestionModel, Exception> {
+      val updateCount = it.createUpdate(sqlResource("update"))
+        .bind("formInstanceGuid", formInstanceGuid)
+        .bind("questionGuid", questionGuid)
+        .bindKotlin(FormInstanceQuestionEntity.Update(update))
+        .execute()
+      return@inTransaction when (updateCount) {
+          0 -> throw FormInstanceQuestionNotFound()
+          1 -> checkNotNull(get(formInstanceGuid, questionGuid))
+          else -> badSql()
+      }
     }
+  }
 
-    fun delete(formInstanceGuid: UUID, questionGuid: UUID) {
-        jdbi.useTransaction<Exception> {
-            val updateCount = it.createUpdate(
-                    """
+  fun delete(formInstanceGuid: UUID, questionGuid: UUID) {
+    jdbi.useTransaction<Exception> {
+      val updateCount = it.createUpdate(
+          """
                     DELETE
                     FROM forms.form_instance_question
                     WHERE form_instance_guid = :formInstanceGuid
                       AND question_guid = :questionGuid
                     """.trimIndent()
-                )
-                .bind("formInstanceGuid", formInstanceGuid)
-                .bind("questionGuid", questionGuid)
-                .execute()
-            return@useTransaction when (updateCount) {
-                0 -> throw FormInstanceQuestionNotFound()
-                1 -> Unit
-                else -> badSql()
-            }
-        }
+        )
+        .bind("formInstanceGuid", formInstanceGuid)
+        .bind("questionGuid", questionGuid)
+        .execute()
+      return@useTransaction when (updateCount) {
+          0 -> throw FormInstanceQuestionNotFound()
+          1 -> Unit
+          else -> badSql()
+      }
     }
+  }
 }

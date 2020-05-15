@@ -17,21 +17,21 @@ import java.util.UUID
  * Gives the user a certain role. Roles are system-wide, NOT org-wide.
  */
 internal class PutUserRole @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val userService: UserService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val userService: UserService
 ) : LimberApiEndpoint<UserRoleApi.Put, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = UserRoleApi.Put::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = UserRoleApi.Put::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Put(
-        userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
-        role = call.parameters.getAsType(JwtRole::class, "role")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Put(
+    userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
+    role = call.parameters.getAsType(JwtRole::class, "role")
+  )
 
-    override suspend fun Handler.handle(command: UserRoleApi.Put) {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        userService.update(command.userGuid, UserModel.Update.fromRole(command.role, true))
-    }
+  override suspend fun Handler.handle(command: UserRoleApi.Put) {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    userService.update(command.userGuid, UserModel.Update.fromRole(command.role, true))
+  }
 }

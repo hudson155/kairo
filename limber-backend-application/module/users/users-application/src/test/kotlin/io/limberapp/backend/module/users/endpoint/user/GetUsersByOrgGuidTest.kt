@@ -11,29 +11,29 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetUsersByOrgGuidTest : ResourceTest() {
-    @Test
-    fun happyPathNoneFound() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun happyPathNoneFound() {
+    val orgGuid = UUID.randomUUID()
 
-        piperTest.test(UserApi.GetByOrgGuid(orgGuid)) {
-            val actual = json.parseSet<UserRep.Summary>(response.content!!)
-            assertTrue(actual.isEmpty())
-        }
+    piperTest.test(UserApi.GetByOrgGuid(orgGuid)) {
+      val actual = json.parseSet<UserRep.Summary>(response.content!!)
+      assertTrue(actual.isEmpty())
     }
+  }
 
-    @Test
-    fun happyPathMultipleFound() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun happyPathMultipleFound() {
+    val orgGuid = UUID.randomUUID()
 
-        val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
+    val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
 
-        val billGatesUserRep = UserRepFixtures.billGatesFixture.complete(this, orgGuid, 1)
-        piperTest.test(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) {}
+    val billGatesUserRep = UserRepFixtures.billGatesFixture.complete(this, orgGuid, 1)
+    piperTest.test(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) {}
 
-        piperTest.test(UserApi.GetByOrgGuid(orgGuid)) {
-            val actual = json.parseSet<UserRep.Summary>(response.content!!)
-            assertEquals(setOf(jeffHudsonUserRep.summary(), billGatesUserRep.summary()), actual)
-        }
+    piperTest.test(UserApi.GetByOrgGuid(orgGuid)) {
+      val actual = json.parseSet<UserRep.Summary>(response.content!!)
+      assertEquals(setOf(jeffHudsonUserRep.summary(), billGatesUserRep.summary()), actual)
     }
+  }
 }

@@ -19,25 +19,25 @@ import java.util.UUID
  * Updates a tenant's information.
  */
 internal class PatchTenant @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val tenantService: TenantService,
-    private val tenantDomainService: TenantDomainService,
-    private val tenantMapper: TenantMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val tenantService: TenantService,
+  private val tenantDomainService: TenantDomainService,
+  private val tenantMapper: TenantMapper
 ) : LimberApiEndpoint<TenantApi.Patch, TenantRep.Complete>(
-    application, servingConfig.apiPathPrefix,
-    endpointTemplate = TenantApi.Patch::class.template()
+  application, servingConfig.apiPathPrefix,
+  endpointTemplate = TenantApi.Patch::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Patch(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Patch(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: TenantApi.Patch): TenantRep.Complete {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        val update = tenantMapper.update(command.rep.required())
-        val tenant = tenantService.update(command.orgGuid, update)
-        val domains = tenantDomainService.getByOrgGuid(tenant.orgGuid)
-        return tenantMapper.completeRep(tenant, domains)
-    }
+  override suspend fun Handler.handle(command: TenantApi.Patch): TenantRep.Complete {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    val update = tenantMapper.update(command.rep.required())
+    val tenant = tenantService.update(command.orgGuid, update)
+    val domains = tenantDomainService.getByOrgGuid(tenant.orgGuid)
+    return tenantMapper.completeRep(tenant, domains)
+  }
 }

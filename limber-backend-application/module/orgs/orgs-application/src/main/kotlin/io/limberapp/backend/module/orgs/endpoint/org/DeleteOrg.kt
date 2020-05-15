@@ -16,20 +16,20 @@ import java.util.UUID
  * Deletes an existing org.
  */
 internal class DeleteOrg @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val orgService: OrgService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val orgService: OrgService
 ) : LimberApiEndpoint<OrgApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Delete(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Delete(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+  )
 
-    override suspend fun Handler.handle(command: OrgApi.Delete) {
-        Authorization.Role(JwtRole.SUPERUSER).authorize()
-        orgService.delete(command.orgGuid)
-    }
+  override suspend fun Handler.handle(command: OrgApi.Delete) {
+    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    orgService.delete(command.orgGuid)
+  }
 }

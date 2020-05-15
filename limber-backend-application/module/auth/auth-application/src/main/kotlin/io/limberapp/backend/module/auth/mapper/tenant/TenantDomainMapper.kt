@@ -8,16 +8,16 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal class TenantDomainMapper @Inject constructor(
-    private val clock: Clock
+  private val clock: Clock
 ) {
-    fun model(orgGuid: UUID, rep: TenantDomainRep.Creation) = TenantDomainModel(
-        createdDate = LocalDateTime.now(clock),
-        orgGuid = orgGuid,
-        domain = rep.domain
-    )
+  fun model(orgGuid: UUID, rep: TenantDomainRep.Creation) = TenantDomainModel(
+    createdDate = LocalDateTime.now(clock),
+    orgGuid = orgGuid,
+    domain = rep.domain
+  )
 
-    fun completeRep(model: TenantDomainModel) = TenantDomainRep.Complete(
-        createdDate = model.createdDate,
-        domain = model.domain
-    )
+  fun completeRep(model: TenantDomainModel) = TenantDomainRep.Complete(
+    createdDate = model.createdDate,
+    domain = model.domain
+  )
 }

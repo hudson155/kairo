@@ -20,92 +20,92 @@ private const val TEXT_QUESTION_MAX_LENGTH_MULTILINE = 10_000
 private const val TEXT_QUESTION_MAX_LENGTH_ONE_LINE = 200
 
 internal class FormTemplateQuestionMapper @Inject constructor(
-    private val clock: Clock,
-    private val uuidGenerator: UuidGenerator
+  private val clock: Clock,
+  private val uuidGenerator: UuidGenerator
 ) {
-    fun model(formTemplateGuid: UUID, rep: FormTemplateQuestionRep.Creation) = when (rep) {
-        is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            formTemplateGuid = formTemplateGuid,
-            label = rep.label,
-            helpText = rep.helpText,
-            earliest = rep.earliest,
-            latest = rep.latest
-        )
-        is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            formTemplateGuid = formTemplateGuid,
-            label = rep.label,
-            helpText = rep.helpText,
-            options = rep.options
-        )
-        is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            formTemplateGuid = formTemplateGuid,
-            label = rep.label,
-            helpText = rep.helpText,
-            multiLine = rep.multiLine,
-            placeholder = rep.placeholder,
-            validator = rep.validator
-        )
-        else -> unknownFormTemplateQuestion(rep::class)
-    }
+  fun model(formTemplateGuid: UUID, rep: FormTemplateQuestionRep.Creation) = when (rep) {
+    is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      formTemplateGuid = formTemplateGuid,
+      label = rep.label,
+      helpText = rep.helpText,
+      earliest = rep.earliest,
+      latest = rep.latest
+    )
+    is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      formTemplateGuid = formTemplateGuid,
+      label = rep.label,
+      helpText = rep.helpText,
+      options = rep.options
+    )
+    is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      formTemplateGuid = formTemplateGuid,
+      label = rep.label,
+      helpText = rep.helpText,
+      multiLine = rep.multiLine,
+      placeholder = rep.placeholder,
+      validator = rep.validator
+    )
+    else -> unknownFormTemplateQuestion(rep::class)
+  }
 
-    fun completeRep(model: FormTemplateQuestionModel) = when (model) {
-        is FormTemplateDateQuestionModel -> FormTemplateDateQuestionRep.Complete(
-            guid = model.guid,
-            createdDate = model.createdDate,
-            label = model.label,
-            helpText = model.helpText,
-            earliest = model.earliest,
-            latest = model.latest
-        )
-        is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
-            guid = model.guid,
-            createdDate = model.createdDate,
-            label = model.label,
-            helpText = model.helpText,
-            options = model.options
-        )
-        is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
-            guid = model.guid,
-            createdDate = model.createdDate,
-            label = model.label,
-            helpText = model.helpText,
-            maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,
-            multiLine = model.multiLine,
-            placeholder = model.placeholder,
-            validator = model.validator
-        )
-        else -> unknownFormTemplateQuestion(model::class)
-    }
+  fun completeRep(model: FormTemplateQuestionModel) = when (model) {
+    is FormTemplateDateQuestionModel -> FormTemplateDateQuestionRep.Complete(
+      guid = model.guid,
+      createdDate = model.createdDate,
+      label = model.label,
+      helpText = model.helpText,
+      earliest = model.earliest,
+      latest = model.latest
+    )
+    is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
+      guid = model.guid,
+      createdDate = model.createdDate,
+      label = model.label,
+      helpText = model.helpText,
+      options = model.options
+    )
+    is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
+      guid = model.guid,
+      createdDate = model.createdDate,
+      label = model.label,
+      helpText = model.helpText,
+      maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,
+      multiLine = model.multiLine,
+      placeholder = model.placeholder,
+      validator = model.validator
+    )
+    else -> unknownFormTemplateQuestion(model::class)
+  }
 
-    fun update(rep: FormTemplateQuestionRep.Update) = when (rep) {
-        is FormTemplateDateQuestionRep.Update -> FormTemplateDateQuestionModel.Update(
-            label = rep.label,
-            helpText = rep.helpText,
-            earliest = rep.earliest,
-            latest = rep.latest
-        )
-        is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
-            label = rep.label,
-            helpText = rep.helpText,
-            options = rep.options
-        )
-        is FormTemplateTextQuestionRep.Update -> FormTemplateTextQuestionModel.Update(
-            label = rep.label,
-            helpText = rep.helpText,
-            multiLine = rep.multiLine,
-            placeholder = rep.placeholder,
-            validator = rep.validator
-        )
-        else -> unknownFormTemplateQuestion(rep::class)
-    }
+  fun update(rep: FormTemplateQuestionRep.Update) = when (rep) {
+    is FormTemplateDateQuestionRep.Update -> FormTemplateDateQuestionModel.Update(
+      label = rep.label,
+      helpText = rep.helpText,
+      earliest = rep.earliest,
+      latest = rep.latest
+    )
+    is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
+      label = rep.label,
+      helpText = rep.helpText,
+      options = rep.options
+    )
+    is FormTemplateTextQuestionRep.Update -> FormTemplateTextQuestionModel.Update(
+      label = rep.label,
+      helpText = rep.helpText,
+      multiLine = rep.multiLine,
+      placeholder = rep.placeholder,
+      validator = rep.validator
+    )
+    else -> unknownFormTemplateQuestion(rep::class)
+  }
 
-    private fun unknownFormTemplateQuestion(kClass: KClass<*>): Nothing {
-        unknownType("form template question", kClass)
-    }
+  private fun unknownFormTemplateQuestion(kClass: KClass<*>): Nothing {
+    unknownType("form template question", kClass)
+  }
 }

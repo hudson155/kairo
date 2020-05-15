@@ -5,4 +5,4 @@ import com.piperframework.serialization.ConversionServiceSerializer
 import com.piperframework.types.LocalDate
 
 object LocalDateSerializer
-    : ConversionServiceSerializer<LocalDate>("LocalDate", LocalDateConversionService)
+  : ConversionServiceSerializer<LocalDate>("LocalDate", LocalDateConversionService)

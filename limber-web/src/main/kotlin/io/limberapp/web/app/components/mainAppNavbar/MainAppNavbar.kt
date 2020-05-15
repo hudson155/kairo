@@ -33,63 +33,63 @@ import styled.getClassName
  * Top-of-page nav for use on most pages in the main app when in an authenticated state.
  */
 internal fun RBuilder.mainAppNavbar() {
-    child(component)
+  child(component)
 }
 
 private enum class OpenItem { USER_DROPDOWN }
 
 private val styles = object : Styles("MainAppNavbar") {
-    val right by css {
-        display = Display.flex
-        flexDirection = FlexDirection.row
-        alignItems = Align.center
-        cursor = Cursor.pointer
-    }
-    val openRight by css {
-        cursor = Cursor.initial
-    }
+  val right by css {
+    display = Display.flex
+    flexDirection = FlexDirection.row
+    alignItems = Align.center
+    cursor = Cursor.pointer
+  }
+  val openRight by css {
+    cursor = Cursor.initial
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> {
-    val global = useGlobalState()
+  val global = useGlobalState()
 
-    // Only 1 item on the navbar can be open at a time.
+  // Only 1 item on the navbar can be open at a time.
     val (openItem, setOpenItem) = useState<OpenItem?>(null)
 
     val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
-    val features = checkNotNull(global.state.org.state).features
+  val features = checkNotNull(global.state.org.state).features
 
-    navbar(
-        left = buildElements {
-            headerGroup {
-                features.default?.let { navLink<RProps>(to = it.path) { headerItem { +"Limber" } } }
-            }
-        },
-        right = buildElements {
-            headerGroup {
-                a(
-                    classes = classes(
-                        styles.getClassName { it::right },
-                        if (openItem == OpenItem.USER_DROPDOWN) styles.getClassName { it::openRight } else null
-                    )
-                ) {
-                    attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
-                    headerItem { +name }
-                    photoUrl?.let { headerPhoto(it) }
-                }
-                if (openItem == OpenItem.USER_DROPDOWN) {
-                    userSubnav(onUnfocus = { setOpenItem(null) })
-                }
-            }
+  navbar(
+    left = buildElements {
+      headerGroup {
+        features.default?.let { navLink<RProps>(to = it.path) { headerItem { +"Limber" } } }
+      }
+    },
+    right = buildElements {
+      headerGroup {
+        a(
+          classes = classes(
+            styles.getClassName { it::right },
+            if (openItem == OpenItem.USER_DROPDOWN) styles.getClassName { it::openRight } else null
+          )
+        ) {
+          attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
+          headerItem { +name }
+          photoUrl?.let { headerPhoto(it) }
         }
-    ) {
-        headerGroup {
-            features.forEach { feature ->
-                navLink<RProps>(to = feature.path) {
-                    attrs.key = feature.guid
-                    headerItem { +feature.name }
-                }
-            }
+        if (openItem == OpenItem.USER_DROPDOWN) {
+          userSubnav(onUnfocus = { setOpenItem(null) })
         }
+      }
     }
+  ) {
+    headerGroup {
+      features.forEach { feature ->
+        navLink<RProps>(to = feature.path) {
+          attrs.key = feature.guid
+          headerItem { +feature.name }
+        }
+      }
+    }
+  }
 }

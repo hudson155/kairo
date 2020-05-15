@@ -12,31 +12,31 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetFormInstanceTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val formInstanceGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val formInstanceGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = FormInstanceApi.Get(formInstanceGuid),
-            expectedException = FormInstanceNotFound()
-        )
+    piperTest.test(
+      endpoint = FormInstanceApi.Get(formInstanceGuid),
+      expectedException = FormInstanceNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+    )
+
+    piperTest.test(FormInstanceApi.Get(formInstanceRep.guid)) {
+      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      assertEquals(formInstanceRep, actual)
     }
-
-    @Test
-    fun happyPath() {
-        val featureGuid = UUID.randomUUID()
-
-        val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-        piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
-
-        val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
-        piperTest.setup(
-            endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
-        )
-
-        piperTest.test(FormInstanceApi.Get(formInstanceRep.guid)) {
-            val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
-            assertEquals(formInstanceRep, actual)
-        }
-    }
+  }
 }

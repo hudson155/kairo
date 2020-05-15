@@ -16,22 +16,22 @@ import java.util.UUID
  * Deletes a existing question (answer) from a form instance.
  */
 internal class DeleteFormInstanceQuestion @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formInstanceService: FormInstanceService,
-    private val formInstanceQuestionService: FormInstanceQuestionService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formInstanceService: FormInstanceService,
+  private val formInstanceQuestionService: FormInstanceQuestionService
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormInstanceQuestionApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormInstanceQuestionApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Delete(
-        formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
-        questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Delete(
+    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
+    questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
+  )
 
-    override suspend fun Handler.handle(command: FormInstanceQuestionApi.Delete) {
-        HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-        formInstanceQuestionService.delete(command.formInstanceGuid, command.questionGuid)
-    }
+  override suspend fun Handler.handle(command: FormInstanceQuestionApi.Delete) {
+    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+    formInstanceQuestionService.delete(command.formInstanceGuid, command.questionGuid)
+  }
 }

@@ -19,24 +19,24 @@ import java.util.UUID
  * Returns a single org.
  */
 internal class GetOrg @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val featureService: FeatureService,
-    private val orgService: OrgService,
-    private val orgMapper: OrgMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val featureService: FeatureService,
+  private val orgService: OrgService,
+  private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.Get, OrgRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgApi.Get::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgApi.Get::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Get(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Get(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+  )
 
-    override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {
-        Authorization.OrgMember(command.orgGuid).authorize()
-        val org = orgService.get(command.orgGuid) ?: throw OrgNotFound()
-        val features = featureService.getByOrgGuid(command.orgGuid)
-        return orgMapper.completeRep(org, features)
-    }
+  override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {
+    Authorization.OrgMember(command.orgGuid).authorize()
+    val org = orgService.get(command.orgGuid) ?: throw OrgNotFound()
+    val features = featureService.getByOrgGuid(command.orgGuid)
+    return orgMapper.completeRep(org, features)
+  }
 }

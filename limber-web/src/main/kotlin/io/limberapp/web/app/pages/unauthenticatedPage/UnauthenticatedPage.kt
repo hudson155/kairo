@@ -21,25 +21,25 @@ import styled.getClassName
  * The only page shown when in an unauthenticated state.
  */
 internal fun RBuilder.unauthenticatedPage() {
-    child(component)
+  child(component)
 }
 
 private val styles = object : Styles("UnauthenticatedPage") {
-    val container by css {
-        textAlign = TextAlign.center
-    }
-    val signInLink by css {
-        textDecoration(TextDecorationLine.underline)
-    }
+  val container by css {
+    textAlign = TextAlign.center
+  }
+  val signInLink by css {
+    textDecoration(TextDecorationLine.underline)
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> {
-    centeredContentLayout {
-        div(classes = styles.getClassName { it::container }) {
-            h1 { +"Welcome to Limber" }
-            navLink<RProps>(to = SignInPage.path, exact = true) {
-                span(classes = styles.getClassName { it::signInLink }) { +"Click here to sign in" }
-            }
-        }
+  centeredContentLayout {
+    div(classes = styles.getClassName { it::container }) {
+      h1 { +"Welcome to Limber" }
+      navLink<RProps>(to = SignInPage.path, exact = true) {
+        span(classes = styles.getClassName { it::signInLink }) { +"Click here to sign in" }
+      }
     }
+  }
 }

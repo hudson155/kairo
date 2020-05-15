@@ -14,35 +14,35 @@ import kotlin.reflect.KClass
  */
 @OptIn(ImplicitReflectionSerializer::class)
 class PolymorphicBuilder<T : Any> internal constructor(private val baseClass: KClass<T>) {
-    private class ClassAndSerializer<U : Any>(private val kClass: KClass<U>, private val serializer: KSerializer<U>) {
-        fun applyTo(moduleBuilder: SerializersModuleBuilder) {
-            moduleBuilder.contextual(kClass, serializer)
-        }
-
-        fun applyTo(moduleBuilder: PolymorphicModuleBuilder<Any>) {
-            moduleBuilder.addSubclass(kClass, kClass.serializer())
-        }
+  private class ClassAndSerializer<U : Any>(private val kClass: KClass<U>, private val serializer: KSerializer<U>) {
+    fun applyTo(moduleBuilder: SerializersModuleBuilder) {
+      moduleBuilder.contextual(kClass, serializer)
     }
 
-    private val serializers = mutableListOf<ClassAndSerializer<out T>>()
-
-    fun <U : T> subclass(subclass: KClass<U>) {
-        @Suppress("UNCHECKED_CAST")
-        serializers.add(ClassAndSerializer(subclass, PolymorphicSerializer(baseClass) as KSerializer<U>))
+    fun applyTo(moduleBuilder: PolymorphicModuleBuilder<Any>) {
+      moduleBuilder.addSubclass(kClass, kClass.serializer())
     }
+  }
 
-    internal fun applyTo(moduleBuilder: SerializersModuleBuilder) {
-        moduleBuilder.contextual(baseClass, PolymorphicSerializer(baseClass))
-        serializers.forEach { it.applyTo(moduleBuilder) }
-        moduleBuilder.polymorphic(baseClass) {
-            serializers.forEach { it.applyTo(this) }
-        }
+  private val serializers = mutableListOf<ClassAndSerializer<out T>>()
+
+  fun <U : T> subclass(subclass: KClass<U>) {
+    @Suppress("UNCHECKED_CAST")
+    serializers.add(ClassAndSerializer(subclass, PolymorphicSerializer(baseClass) as KSerializer<U>))
+  }
+
+  internal fun applyTo(moduleBuilder: SerializersModuleBuilder) {
+    moduleBuilder.contextual(baseClass, PolymorphicSerializer(baseClass))
+    serializers.forEach { it.applyTo(moduleBuilder) }
+    moduleBuilder.polymorphic(baseClass) {
+      serializers.forEach { it.applyTo(this) }
     }
+  }
 }
 
 fun <T : Any> SerializersModuleBuilder.baseClass(
-    baseClass: KClass<T>,
-    buildAction: PolymorphicBuilder<T>.() -> Unit
+  baseClass: KClass<T>,
+  buildAction: PolymorphicBuilder<T>.() -> Unit
 ) {
-    PolymorphicBuilder(baseClass).apply(buildAction).applyTo(this)
+  PolymorphicBuilder(baseClass).apply(buildAction).applyTo(this)
 }

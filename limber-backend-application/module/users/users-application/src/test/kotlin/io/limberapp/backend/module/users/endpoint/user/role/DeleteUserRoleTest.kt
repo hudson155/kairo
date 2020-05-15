@@ -13,50 +13,50 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class DeleteUserRoleTest : ResourceTest() {
-    @Test
-    fun userDoesNotExist() {
-        val userGuid = UUID.randomUUID()
+  @Test
+  fun userDoesNotExist() {
+    val userGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = UserRoleApi.Delete(userGuid, JwtRole.SUPERUSER),
-            expectedException = UserNotFound()
-        )
+    piperTest.test(
+      endpoint = UserRoleApi.Delete(userGuid, JwtRole.SUPERUSER),
+      expectedException = UserNotFound()
+    )
+  }
+
+  @Test
+  fun roleDoesNotExist() {
+    val orgGuid = UUID.randomUUID()
+
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+
+    piperTest.test(
+      endpoint = UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER),
+      expectedException = UserDoesNotHaveRole()
+    )
+
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
+  }
 
-    @Test
-    fun roleDoesNotExist() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
 
-        val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        piperTest.test(
-            endpoint = UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER),
-            expectedException = UserDoesNotHaveRole()
-        )
+    userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
+    piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
 
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
+    userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
+    piperTest.test(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER)) {}
+
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
-
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
-
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-
-        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
-
-        userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
-        piperTest.test(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER)) {}
-
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-    }
+  }
 }

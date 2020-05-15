@@ -15,14 +15,14 @@ import react.functionalComponent
  * Sidenav for navigation within org settings pages.
  */
 internal fun RBuilder.orgSettingsSidenav() {
-    child(component)
+  child(component)
 }
 
 private val component = functionalComponent<RProps> {
-    sidenav(OrgSettingsPage.name) {
-        sidenavGroup {
-            sidenavLink(to = OrgSettingsInfoPage.path) { +OrgSettingsInfoPage.name }
-            sidenavLink(to = OrgSettingsRolesPage.path) { +OrgSettingsRolesPage.name }
-        }
+  sidenav(OrgSettingsPage.name) {
+    sidenavGroup {
+      sidenavLink(to = OrgSettingsInfoPage.path) { +OrgSettingsInfoPage.name }
+      sidenavLink(to = OrgSettingsRolesPage.path) { +OrgSettingsRolesPage.name }
     }
+  }
 }

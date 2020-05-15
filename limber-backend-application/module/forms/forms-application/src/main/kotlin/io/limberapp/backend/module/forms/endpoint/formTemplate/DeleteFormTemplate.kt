@@ -15,20 +15,20 @@ import java.util.UUID
  * Deletes an existing form template.
  */
 internal class DeleteFormTemplate @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val formTemplateService: FormTemplateService
+  application: Application,
+  servingConfig: ServingConfig,
+  private val formTemplateService: FormTemplateService
 ) : LimberApiEndpoint<FormTemplateApi.Delete, Unit>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = FormTemplateApi.Delete::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = FormTemplateApi.Delete::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Delete(
-        formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Delete(
+    formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
+  )
 
-    override suspend fun Handler.handle(command: FormTemplateApi.Delete) {
-        HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
-        formTemplateService.delete(command.formTemplateGuid)
-    }
+  override suspend fun Handler.handle(command: FormTemplateApi.Delete) {
+    HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
+    formTemplateService.delete(command.formTemplateGuid)
+  }
 }

@@ -19,26 +19,26 @@ import java.util.UUID
  * Updates an org's information.
  */
 internal class PatchOrg @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val featureService: FeatureService,
-    private val orgService: OrgService,
-    private val orgMapper: OrgMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val featureService: FeatureService,
+  private val orgService: OrgService,
+  private val orgMapper: OrgMapper
 ) : LimberApiEndpoint<OrgApi.Patch, OrgRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = OrgApi.Patch::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = OrgApi.Patch::class.template()
 ) {
-    override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Patch(
-        orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-        rep = call.getAndValidateBody()
-    )
+  override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Patch(
+    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+    rep = call.getAndValidateBody()
+  )
 
-    override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {
-        Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_METADATA).authorize()
-        val update = orgMapper.update(command.rep.required())
-        val org = orgService.update(command.orgGuid, update)
-        val features = featureService.getByOrgGuid(org.guid)
-        return orgMapper.completeRep(org, features)
-    }
+  override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {
+    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_METADATA).authorize()
+    val update = orgMapper.update(command.rep.required())
+    val org = orgService.update(command.orgGuid, update)
+    val features = featureService.getByOrgGuid(org.guid)
+    return orgMapper.completeRep(org, features)
+  }
 }

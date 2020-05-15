@@ -13,35 +13,35 @@ import com.piperframework.validator.Validator
 import kotlinx.serialization.Serializable
 
 object OrgRep {
-    @Serializable
-    data class Creation(
-        val name: String,
-        @Serializable(with = UuidSerializer::class)
-        val ownerAccountGuid: UUID
-    ) : CreationRep {
-        override fun validate() = RepValidation {
-            validate(Creation::name) { Validator.orgName(value) }
-        }
+  @Serializable
+  data class Creation(
+    val name: String,
+    @Serializable(with = UuidSerializer::class)
+    val ownerAccountGuid: UUID
+  ) : CreationRep {
+    override fun validate() = RepValidation {
+      validate(Creation::name) { Validator.orgName(value) }
     }
+  }
 
-    @Serializable
-    data class Complete(
-        @Serializable(with = UuidSerializer::class)
-        val guid: UUID,
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        val name: String,
-        @Serializable(with = UuidSerializer::class)
-        val ownerAccountGuid: UUID,
-        val features: Set<FeatureRep.Complete>
-    ) : CompleteRep
+  @Serializable
+  data class Complete(
+    @Serializable(with = UuidSerializer::class)
+    val guid: UUID,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    val name: String,
+    @Serializable(with = UuidSerializer::class)
+    val ownerAccountGuid: UUID,
+    val features: Set<FeatureRep.Complete>
+  ) : CompleteRep
 
-    @Serializable
-    data class Update(
-        val name: String? = null
-    ) : UpdateRep {
-        override fun validate() = RepValidation {
-            validate(Update::name) { ifPresent { Validator.orgName(value) } }
-        }
+  @Serializable
+  data class Update(
+    val name: String? = null
+  ) : UpdateRep {
+    override fun validate() = RepValidation {
+      validate(Update::name) { ifPresent { Validator.orgName(value) } }
     }
+  }
 }

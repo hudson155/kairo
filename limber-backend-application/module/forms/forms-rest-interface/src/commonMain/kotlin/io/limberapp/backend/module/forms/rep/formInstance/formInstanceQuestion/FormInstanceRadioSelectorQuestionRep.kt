@@ -11,24 +11,24 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 object FormInstanceRadioSelectorQuestionRep {
-    @Serializable
-    @SerialName("RADIO_SELECTOR")
-    data class Creation(
-        val selection: String
-    ) : FormInstanceQuestionRep.Creation {
-        override fun validate() = RepValidation {
-            validate(super.validate())
-            validate(Creation::selection) { Validator.length1hundred(value, allowEmpty = false) }
-        }
+  @Serializable
+  @SerialName("RADIO_SELECTOR")
+  data class Creation(
+    val selection: String
+  ) : FormInstanceQuestionRep.Creation {
+    override fun validate() = RepValidation {
+      validate(super.validate())
+      validate(Creation::selection) { Validator.length1hundred(value, allowEmpty = false) }
     }
+  }
 
-    @Serializable
-    @SerialName("RADIO_SELECTOR")
-    data class Complete(
-        @Serializable(with = LocalDateSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        override val questionGuid: UUID?,
-        val selection: String
-    ) : FormInstanceQuestionRep.Complete
+  @Serializable
+  @SerialName("RADIO_SELECTOR")
+  data class Complete(
+    @Serializable(with = LocalDateSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    override val questionGuid: UUID?,
+    val selection: String
+  ) : FormInstanceQuestionRep.Complete
 }

@@ -10,26 +10,26 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class GetOrgTest : ResourceTest() {
-    @Test
-    fun doesNotExist() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun doesNotExist() {
+    val orgGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = OrgApi.Get(orgGuid),
-            expectedException = OrgNotFound()
-        )
+    piperTest.test(
+      endpoint = OrgApi.Get(orgGuid),
+      expectedException = OrgNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
+
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+
+    piperTest.test(OrgApi.Get(orgRep.guid)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
     }
-
-    @Test
-    fun happyPath() {
-        val orgOwnerAccountGuid = UUID.randomUUID()
-
-        val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-        piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
-
-        piperTest.test(OrgApi.Get(orgRep.guid)) {
-            val actual = json.parse<OrgRep.Complete>(response.content!!)
-            assertEquals(orgRep, actual)
-        }
-    }
+  }
 }

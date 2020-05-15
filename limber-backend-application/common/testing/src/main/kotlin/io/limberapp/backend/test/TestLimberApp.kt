@@ -14,16 +14,16 @@ import io.limberapp.backend.authorization.principal.Jwt
 import java.time.Clock
 
 class TestLimberApp(
-    application: Application,
-    config: Config,
-    module: Module,
-    additionalModules: Set<ModuleWithLifecycle>,
-    fixedClock: Clock,
-    deterministicUuidGenerator: UuidGenerator
+  application: Application,
+  config: Config,
+  module: Module,
+  additionalModules: Set<ModuleWithLifecycle>,
+  fixedClock: Clock,
+  deterministicUuidGenerator: UuidGenerator
 ) : TestPiperApp(application, config, module, additionalModules, fixedClock, deterministicUuidGenerator) {
-    override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
-        piperAuth<Jwt> {
-            verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
-        }
+  override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
+    piperAuth<Jwt> {
+      verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
     }
+  }
 }

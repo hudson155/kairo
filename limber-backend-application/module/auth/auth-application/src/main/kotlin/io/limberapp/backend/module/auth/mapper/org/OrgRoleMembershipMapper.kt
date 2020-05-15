@@ -8,17 +8,17 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal class OrgRoleMembershipMapper @Inject constructor(
-    private val clock: Clock
+  private val clock: Clock
 ) {
-    fun model(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) = OrgRoleMembershipModel(
-        createdDate = LocalDateTime.now(clock),
-        orgRoleGuid = orgRoleGuid,
-        accountGuid = rep.accountGuid
-    )
+  fun model(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) = OrgRoleMembershipModel(
+    createdDate = LocalDateTime.now(clock),
+    orgRoleGuid = orgRoleGuid,
+    accountGuid = rep.accountGuid
+  )
 
-    fun completeRep(model: OrgRoleMembershipModel) = OrgRoleMembershipRep.Complete(
-        createdDate = model.createdDate,
-        orgRoleGuid = model.orgRoleGuid,
-        accountGuid = model.accountGuid
-    )
+  fun completeRep(model: OrgRoleMembershipModel) = OrgRoleMembershipRep.Complete(
+    createdDate = model.createdDate,
+    orgRoleGuid = model.orgRoleGuid,
+    accountGuid = model.accountGuid
+  )
 }

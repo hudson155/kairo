@@ -15,39 +15,39 @@ import java.time.Instant
 import java.time.ZoneId
 
 abstract class AbstractResourceTest {
-    protected val config = object : Config {
-        override val authentication =
-            AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt))
+  protected val config = object : Config {
+    override val authentication =
+      AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt))
 
-        override val hashing = HashingConfig(logRounds = 4)
+    override val hashing = HashingConfig(logRounds = 4)
 
-        override val serving = ServingConfig(
-            redirectHttpToHttps = false,
-            apiPathPrefix = "/",
-            staticFiles = StaticFiles(false)
-        )
-    }
+    override val serving = ServingConfig(
+      redirectHttpToHttps = false,
+      apiPathPrefix = "/",
+      staticFiles = StaticFiles(false)
+    )
+  }
 
-    protected abstract val piperTest: PiperTest
+  protected abstract val piperTest: PiperTest
 
-    val fixedClock: Clock = Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
+  val fixedClock: Clock = Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
 
-    val deterministicUuidGenerator = DeterministicUuidGenerator()
+  val deterministicUuidGenerator = DeterministicUuidGenerator()
 
-    @BeforeEach
-    fun beforeInternal() {
-        MockKAnnotations.init(this)
-        deterministicUuidGenerator.reset()
-        piperTest.start()
-        before()
-    }
+  @BeforeEach
+  fun beforeInternal() {
+    MockKAnnotations.init(this)
+    deterministicUuidGenerator.reset()
+    piperTest.start()
+    before()
+  }
 
-    open fun before() {}
+  open fun before() {}
 
-    @AfterEach
-    fun afterInternal() {
-        piperTest.stop()
-    }
+  @AfterEach
+  fun afterInternal() {
+    piperTest.stop()
+  }
 
-    open fun after() {}
+  open fun after() {}
 }

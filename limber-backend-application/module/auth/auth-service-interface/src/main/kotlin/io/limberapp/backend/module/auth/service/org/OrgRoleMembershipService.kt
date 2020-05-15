@@ -4,9 +4,9 @@ import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipModel
 import java.util.UUID
 
 interface OrgRoleMembershipService {
-    fun create(orgGuid: UUID, model: OrgRoleMembershipModel)
+  fun create(orgGuid: UUID, model: OrgRoleMembershipModel)
 
-    fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel>
+  fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel>
 
-    fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID)
+  fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID)
 }

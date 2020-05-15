@@ -9,29 +9,29 @@ import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
 
 object FormTemplateQuestionRep {
-    interface Creation : CreationRep {
-        val label: String
-        val helpText: String?
+  interface Creation : CreationRep {
+    val label: String
+    val helpText: String?
 
-        override fun validate() = RepValidation {
-            validate(Creation::label) { Validator.length1hundred(value, allowEmpty = false) }
-            validate(Creation::helpText) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
-        }
+    override fun validate() = RepValidation {
+      validate(Creation::label) { Validator.length1hundred(value, allowEmpty = false) }
+      validate(Creation::helpText) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
     }
+  }
 
-    interface Complete : CompleteRep {
-        val guid: UUID
-        val label: String
-        val helpText: String?
+  interface Complete : CompleteRep {
+    val guid: UUID
+    val label: String
+    val helpText: String?
+  }
+
+  interface Update : UpdateRep {
+    val label: String?
+    val helpText: String?
+
+    override fun validate() = RepValidation {
+      validate(Update::label) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
+      validate(Update::helpText) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
     }
-
-    interface Update : UpdateRep {
-        val label: String?
-        val helpText: String?
-
-        override fun validate() = RepValidation {
-            validate(Update::label) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }
-            validate(Update::helpText) { ifPresent { Validator.length10thousand(value, allowEmpty = false) } }
-        }
-    }
+  }
 }

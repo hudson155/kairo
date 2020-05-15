@@ -35,62 +35,62 @@ import react.router.dom.switch
  *   - Handles routing for the authenticated application.
  */
 internal fun RBuilder.appFeatureRouter() {
-    child(component)
+  child(component)
 }
 
 private val component = functionalComponent<RProps> {
-    val api = useApi()
-    val auth = useAuth()
-    val global = useGlobalState()
+  val api = useApi()
+  val auth = useAuth()
+  val global = useGlobalState()
 
-    withContext(global, api) { ensureOrgLoaded(checkNotNull(auth.jwt).org.guid) }
+  withContext(global, api) { ensureOrgLoaded(checkNotNull(auth.jwt).org.guid) }
 
-    withContext(global, api) { ensureUserLoaded(checkNotNull(auth.jwt).user.guid) }
+  withContext(global, api) { ensureUserLoaded(checkNotNull(auth.jwt).user.guid) }
 
-    // While the org is loading, show the loading page.
-    global.state.org.let { loadableState ->
-        if (!loadableState.isLoaded) {
-            page(
-                header = buildElement {
-                    basicNavbar {
-                        navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
-                    }
-                },
-                footer = buildElement { footer() }
-            ) {
-                loadingPage("Loading org...")
-            }
-            return@functionalComponent
-        }
+  // While the org is loading, show the loading page.
+  global.state.org.let { loadableState ->
+    if (!loadableState.isLoaded) {
+      page(
+        header = buildElement {
+          basicNavbar {
+            navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
+          }
+        },
+        footer = buildElement { footer() }
+      ) {
+        loadingPage("Loading org...")
+      }
+      return@functionalComponent
     }
+  }
 
-    // While the user is loading, show the loading page.
-    global.state.user.let { loadableState ->
-        if (!loadableState.isLoaded) {
-            page(
-                header = buildElement {
-                    basicNavbar {
-                        navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
-                    }
-                },
-                footer = buildElement { footer() }
-            ) {
-                loadingPage("Loading user...")
-            }
-            return@functionalComponent
-        }
+  // While the user is loading, show the loading page.
+  global.state.user.let { loadableState ->
+    if (!loadableState.isLoaded) {
+      page(
+        header = buildElement {
+          basicNavbar {
+            navLink<RProps>(to = SignOutPage.path, exact = true) { headerItem { +SignOutPage.name } }
+          }
+        },
+        footer = buildElement { footer() }
+      ) {
+        loadingPage("Loading user...")
+      }
+      return@functionalComponent
     }
+  }
 
-    val features = checkNotNull(global.state.org.state).features
+  val features = checkNotNull(global.state.org.state).features
 
-    page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
-        switch {
-            features.default?.let { route(path = rootPath, exact = true) { redirect(to = it.path) } }
-            route(path = OrgSettingsPage.path) { buildElement { orgSettingsPage() } }
-            features.forEach { feature ->
-                route(path = feature.path) { buildElement { featurePage(feature) } }
-            }
-            route(path = rootPath) { buildElement { notFoundPage() } }
-        }
+  page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
+    switch {
+      features.default?.let { route(path = rootPath, exact = true) { redirect(to = it.path) } }
+      route(path = OrgSettingsPage.path) { buildElement { orgSettingsPage() } }
+      features.forEach { feature ->
+        route(path = feature.path) { buildElement { featurePage(feature) } }
+      }
+      route(path = rootPath) { buildElement { notFoundPage() } }
     }
+  }
 }

@@ -5,7 +5,7 @@ import react.dom.render
 import kotlin.browser.document
 
 internal fun main() {
-    render(document.getElementById("root")) {
-        app()
-    }
+  render(document.getElementById("root")) {
+    app()
+  }
 }

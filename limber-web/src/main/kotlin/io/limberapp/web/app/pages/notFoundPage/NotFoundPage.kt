@@ -17,24 +17,24 @@ import styled.getClassName
  * "Not found" error message page when no page is found.
  */
 internal fun RBuilder.notFoundPage() {
-    child(component)
+  child(component)
 }
 
 internal object NotFoundPage {
-    const val name = "Not Found"
+  const val name = "Not Found"
 }
 
 private val styles = object : Styles("NotFoundPage") {
-    val container by css {
-        textAlign = TextAlign.center
-    }
+  val container by css {
+    textAlign = TextAlign.center
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> {
-    centeredContentLayout {
-        div(classes = styles.getClassName { it::container }) {
-            h1 { +NotFoundPage.name }
-            p { +"We looked everywhere, but we couldn't find the page you were looking for." }
-        }
+  centeredContentLayout {
+    div(classes = styles.getClassName { it::container }) {
+      h1 { +NotFoundPage.name }
+      p { +"We looked everywhere, but we couldn't find the page you were looking for." }
     }
+  }
 }

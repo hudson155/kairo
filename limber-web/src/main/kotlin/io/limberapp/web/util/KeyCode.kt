@@ -1,5 +1,5 @@
 package io.limberapp.web.util
 
 internal object KeyCode {
-    const val escape = 27
+  const val escape = 27
 }

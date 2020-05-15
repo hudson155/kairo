@@ -37,61 +37,61 @@ import react.functionalComponent
 import styled.getClassName
 
 internal fun RBuilder.modal(blank: Boolean = false, onClose: () -> Unit, children: RHandler<Props>) {
-    child(component, Props(blank, onClose), handler = children)
+  child(component, Props(blank, onClose), handler = children)
 }
 
 internal data class Props(val blank: Boolean, val onClose: () -> Unit) : RProps
 
 private val styles = object : Styles("Modal") {
-    val fullScreen by css {
-        position = Position.absolute
-        top = 0.px
-        left = 0.px
-        height = 100.pct
-        width = 100.pct
-    }
-    val container by css {
-        display = Display.flex
-        flexDirection = FlexDirection.column
-        alignItems = Align.center
-        justifyContent = JustifyContent.center
-    }
-    val fader by css {
-        zIndex = Theme.ZIndex.modalFader
-        backgroundColor = Theme.Color.Background.dark.withAlpha(0.5)
-        cursor = Cursor.default
-    }
-    val modal by css {
-        zIndex = Theme.ZIndex.modalModal
-        width = 768.px
-        borderRadius = Theme.Sizing.borderRadius
-        margin(16.px)
-        padding(24.px)
-        backgroundColor = Theme.Color.Background.light
-    }
+  val fullScreen by css {
+    position = Position.absolute
+    top = 0.px
+    left = 0.px
+    height = 100.pct
+    width = 100.pct
+  }
+  val container by css {
+    display = Display.flex
+    flexDirection = FlexDirection.column
+    alignItems = Align.center
+    justifyContent = JustifyContent.center
+  }
+  val fader by css {
+    zIndex = Theme.ZIndex.modalFader
+    backgroundColor = Theme.Color.Background.dark.withAlpha(0.5)
+    cursor = Cursor.default
+  }
+  val modal by css {
+    zIndex = Theme.ZIndex.modalModal
+    width = 768.px
+    borderRadius = Theme.Sizing.borderRadius
+    margin(16.px)
+    padding(24.px)
+    backgroundColor = Theme.Color.Background.light
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-    useEscapeKeyListener(emptyList()) { props.onClose() }
+  useEscapeKeyListener(emptyList()) { props.onClose() }
 
-    div(
-        classes = classes(
-            styles.getClassName { it::fullScreen },
-            styles.getClassName { it::container }
-        )
+  div(
+    classes = classes(
+      styles.getClassName { it::fullScreen },
+      styles.getClassName { it::container }
+    )
+  ) {
+    a(
+      classes = classes(
+        styles.getClassName { it::fullScreen },
+        styles.getClassName { it::fader }
+      )
     ) {
-        a(
-            classes = classes(
-                styles.getClassName { it::fullScreen },
-                styles.getClassName { it::fader }
-            )
-        ) {
-            attrs.onClickFunction = { props.onClose() }
-        }
-        if (!props.blank) {
-            div(classes = styles.getClassName { it::modal }) {
-                props.children()
-            }
-        }
+      attrs.onClickFunction = { props.onClose() }
     }
+    if (!props.blank) {
+      div(classes = styles.getClassName { it::modal }) {
+        props.children()
+      }
+    }
+  }
 }

@@ -9,19 +9,19 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 object FormInstanceTextQuestionRep {
-    @Serializable
-    @SerialName("TEXT")
-    data class Creation(
-        val text: String
-    ) : FormInstanceQuestionRep.Creation
+  @Serializable
+  @SerialName("TEXT")
+  data class Creation(
+    val text: String
+  ) : FormInstanceQuestionRep.Creation
 
-    @Serializable
-    @SerialName("TEXT")
-    data class Complete(
-        @Serializable(with = LocalDateTimeSerializer::class)
-        override val createdDate: LocalDateTime,
-        @Serializable(with = UuidSerializer::class)
-        override val questionGuid: UUID?,
-        val text: String
-    ) : FormInstanceQuestionRep.Complete
+  @Serializable
+  @SerialName("TEXT")
+  data class Complete(
+    @Serializable(with = LocalDateTimeSerializer::class)
+    override val createdDate: LocalDateTime,
+    @Serializable(with = UuidSerializer::class)
+    override val questionGuid: UUID?,
+    val text: String
+  ) : FormInstanceQuestionRep.Complete
 }

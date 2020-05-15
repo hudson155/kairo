@@ -12,47 +12,47 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class PutUserRoleTest : ResourceTest() {
-    @Test
-    fun userDoesNotExist() {
-        val userGuid = UUID.randomUUID()
+  @Test
+  fun userDoesNotExist() {
+    val userGuid = UUID.randomUUID()
 
-        piperTest.test(
-            endpoint = UserRoleApi.Put(userGuid, JwtRole.SUPERUSER),
-            expectedException = UserNotFound()
-        )
+    piperTest.test(
+      endpoint = UserRoleApi.Put(userGuid, JwtRole.SUPERUSER),
+      expectedException = UserNotFound()
+    )
+  }
+
+  @Test
+  fun happyPath() {
+    val orgGuid = UUID.randomUUID()
+
+    var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+
+    userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
+    piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
+
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
+  }
 
-    @Test
-    fun happyPath() {
-        val orgGuid = UUID.randomUUID()
+  @Test
+  fun happyPathIdempotent() {
+    val orgGuid = UUID.randomUUID()
 
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
+    userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
+    piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
 
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
+    piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
+
+    piperTest.test(UserApi.Get(userRep.guid)) {
+      val actual = json.parse<UserRep.Complete>(response.content!!)
+      assertEquals(userRep, actual)
     }
-
-    @Test
-    fun happyPathIdempotent() {
-        val orgGuid = UUID.randomUUID()
-
-        var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-        piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-
-        userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
-        piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
-
-        piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
-
-        piperTest.test(UserApi.Get(userRep.guid)) {
-            val actual = json.parse<UserRep.Complete>(response.content!!)
-            assertEquals(userRep, actual)
-        }
-    }
+  }
 }

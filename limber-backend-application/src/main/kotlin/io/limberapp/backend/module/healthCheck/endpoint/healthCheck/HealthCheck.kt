@@ -19,26 +19,26 @@ import org.slf4j.LoggerFactory
  * Performs a health check.
  */
 internal class HealthCheck @Inject constructor(
-    application: Application,
-    servingConfig: ServingConfig,
-    private val healthCheckService: HealthCheckService,
-    private val healthCheckMapper: HealthCheckMapper
+  application: Application,
+  servingConfig: ServingConfig,
+  private val healthCheckService: HealthCheckService,
+  private val healthCheckMapper: HealthCheckMapper
 ) : LimberApiEndpoint<HealthCheckApi.Get, HealthCheckRep.Complete>(
-    application = application,
-    pathPrefix = servingConfig.apiPathPrefix,
-    endpointTemplate = HealthCheckApi.Get::class.template()
+  application = application,
+  pathPrefix = servingConfig.apiPathPrefix,
+  endpointTemplate = HealthCheckApi.Get::class.template()
 ) {
-    private val logger = LoggerFactory.getLogger(HealthCheck::class.java)
+  private val logger = LoggerFactory.getLogger(HealthCheck::class.java)
 
-    override suspend fun determineCommand(call: ApplicationCall) = HealthCheckApi.Get
+  override suspend fun determineCommand(call: ApplicationCall) = HealthCheckApi.Get
 
-    override suspend fun Handler.handle(command: HealthCheckApi.Get): HealthCheckRep.Complete {
-        Authorization.Public.authorize()
-        val model = healthCheckService.healthCheck()
-        if (model is HealthCheckModel.UnhealthyHealthCheckModel) {
-            logger.error("Health check failed: ${model.reason}", model.e)
-            responseCode = HttpStatusCode.InternalServerError
-        }
-        return healthCheckMapper.completeRep(model)
+  override suspend fun Handler.handle(command: HealthCheckApi.Get): HealthCheckRep.Complete {
+    Authorization.Public.authorize()
+    val model = healthCheckService.healthCheck()
+    if (model is HealthCheckModel.UnhealthyHealthCheckModel) {
+      logger.error("Health check failed: ${model.reason}", model.e)
+      responseCode = HttpStatusCode.InternalServerError
     }
+    return healthCheckMapper.completeRep(model)
+  }
 }

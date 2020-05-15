@@ -28,67 +28,67 @@ import styled.getClassName
  * Page for managing a single organization role and its memberships.
  */
 internal fun RBuilder.orgSettingsRoleDetailPage() {
-    child(component)
+  child(component)
 }
 
 internal object OrgSettingsRoleDetailPage {
-    internal data class PageParams(val roleSlug: String, val tabName: String) : RProps
-    internal object TabName {
-        const val permissions = "Permissions"
-        const val members = "Members"
-    }
+  internal data class PageParams(val roleSlug: String, val tabName: String) : RProps
+  internal object TabName {
+    const val permissions = "Permissions"
+    const val members = "Members"
+  }
 }
 
 private val styles = object : Styles("OrgSettingsRoleDetailPage") {
-    val tabbedViewContainer by css {
-        margin(horizontal = 24.px)
-    }
+  val tabbedViewContainer by css {
+    margin(horizontal = 24.px)
+  }
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> {
-    val api = useApi()
-    val global = useGlobalState()
-    val history = useHistory()
-    val match = checkNotNull(useRouteMatch<OrgSettingsRoleDetailPage.PageParams>())
+  val api = useApi()
+  val global = useGlobalState()
+  val history = useHistory()
+  val match = checkNotNull(useRouteMatch<OrgSettingsRoleDetailPage.PageParams>())
 
-    val goBack = { history.goBack() }
+  val goBack = { history.goBack() }
 
-    withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
+  withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
 
-    orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
+  orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 
-    // While the org roles are loading, show a blank modal.
-    val orgRoles = global.state.orgRoles.let { loadableState ->
-        if (!loadableState.isLoaded) {
-            modal(blank = true, onClose = goBack) {}
-            return@functionalComponent
+  // While the org roles are loading, show a blank modal.
+  val orgRoles = global.state.orgRoles.let { loadableState ->
+    if (!loadableState.isLoaded) {
+      modal(blank = true, onClose = goBack) {}
+      return@functionalComponent
+    }
+    return@let checkNotNull(loadableState.state).values.toSet()
+  }
+
+  val roleSlug = match.params.roleSlug
+  val orgRole = orgRoles.singleOrNull { it.slug == roleSlug }
+  if (orgRole == null) {
+    redirect(to = OrgSettingsRolesPage.path)
+    return@functionalComponent
+  }
+
+  modal(onClose = goBack) {
+    modalTitle(
+      title = "Edit role: ${orgRole.name}",
+      description = "Update role info, including the permissions it grants and members of the role."
+    )
+    div(classes = styles.getClassName { it::tabbedViewContainer }) {
+      tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
+      div {
+        when (match.params.tabName) {
+            OrgSettingsRoleDetailPage.TabName.permissions.slugify() ->
+                orgRolePermissionsSelector(orgRole, onClose = goBack)
+            OrgSettingsRoleDetailPage.TabName.members.slugify() ->
+                Unit // TODO
+            else -> redirect(to = OrgSettingsRolesPage.path)
         }
-        return@let checkNotNull(loadableState.state).values.toSet()
+      }
     }
-
-    val roleSlug = match.params.roleSlug
-    val orgRole = orgRoles.singleOrNull { it.slug == roleSlug }
-    if (orgRole == null) {
-        redirect(to = OrgSettingsRolesPage.path)
-        return@functionalComponent
-    }
-
-    modal(onClose = goBack) {
-        modalTitle(
-            title = "Edit role: ${orgRole.name}",
-            description = "Update role info, including the permissions it grants and members of the role."
-        )
-        div(classes = styles.getClassName { it::tabbedViewContainer }) {
-            tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
-            div {
-                when (match.params.tabName) {
-                    OrgSettingsRoleDetailPage.TabName.permissions.slugify() ->
-                        orgRolePermissionsSelector(orgRole, onClose = goBack)
-                    OrgSettingsRoleDetailPage.TabName.members.slugify() ->
-                        Unit // TODO
-                    else -> redirect(to = OrgSettingsRolesPage.path)
-                }
-            }
-        }
-    }
+  }
 }
