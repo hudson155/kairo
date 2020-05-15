@@ -61,6 +61,19 @@ internal class GlobalStyles : Styles("Global") {
             }
         }
     }
+    val redButton by css {
+        +button
+        backgroundColor = Theme.Color.Button.Red.backgroundDefault
+        hover {
+            backgroundColor = Theme.Color.Button.Red.backgroundActive
+        }
+        disabled {
+            backgroundColor = Theme.Color.Button.Red.backgroundDisabled
+            hover {
+                backgroundColor = Theme.Color.Button.Red.backgroundDisabled
+            }
+        }
+    }
     val link by css {
         color = Theme.Color.Text.link
         cursor = Cursor.pointer

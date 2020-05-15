@@ -10,8 +10,9 @@ import io.limberapp.web.context.LoadableState
 
 internal data class GlobalStateContext(
     val org: LoadableState<OrgRep.Complete>,
-    val orgRoleMemberships: Map<UUID, LoadableState<Set<OrgRoleMembershipRep.Complete>>>,
+    val orgRoleMemberships: Map<UUID, LoadableState<Map<UUID, OrgRoleMembershipRep.Complete>>>,
     val orgRoles: LoadableState<Map<UUID, OrgRoleRep.Complete>>,
     val tenant: LoadableState<TenantRep.Complete>,
-    val user: LoadableState<UserRep.Complete>
+    val user: LoadableState<UserRep.Complete>,
+    val users: LoadableState<Map<UUID, UserRep.Summary>>
 )

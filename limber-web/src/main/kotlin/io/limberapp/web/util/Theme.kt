@@ -7,8 +7,6 @@ import kotlinx.css.px
 internal object Theme {
     object Color {
         private val jet = Color("#303030")
-        private val jetLighter05 = Color("#3D3D3D")
-        private val jetLighter10 = Color("#4A4A4A")
         private val jetLighter20 = Color("#636363")
 
         private val babyPowder = Color("#FCFCFC")
@@ -24,8 +22,10 @@ internal object Theme {
 
         private val blue = Color("#1078D8")
         private val blueDarker10 = Color("#005FBF")
-        private val blueDarker20 = Color("#0045A5")
         private val blueDarker50 = Color("#000059")
+
+        private val red = Color("#C81818")
+        private val redDarker10 = Color("#AF0000")
 
         object Button {
             object Primary {
@@ -37,6 +37,12 @@ internal object Theme {
             object Secondary {
                 val backgroundDefault = nickel
                 val backgroundActive = nickelDarker10
+                val backgroundDisabled = nickelDarker20
+            }
+
+            object Red {
+                val backgroundDefault = red
+                val backgroundActive = redDarker10
                 val backgroundDisabled = nickelDarker20
             }
         }
