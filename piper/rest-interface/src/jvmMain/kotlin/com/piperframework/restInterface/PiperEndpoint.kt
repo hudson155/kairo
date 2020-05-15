@@ -32,7 +32,7 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
     val constructor = checkNotNull(primaryConstructor)
 
     // Determine what arguments to use to invoke the constructor, and generate temporary placeholder values.
-      val (args, argReplacements) = generateArgsAndReplacements(constructor)
+    val (args, argReplacements) = generateArgsAndReplacements(constructor)
 
     // Instantiate an instance of the endpoint using the temporary placeholder values and the primary constructor.
     val endpoint = constructor.callBy(args)
@@ -47,11 +47,11 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
       // The number of matches is 1 fewer than the size of the split.
       when (split.size - 1) {
         // This must be a query param. If it's not nullable, add it to the set.
-          0 -> if (!args.withName(name).isOptional) requiredQueryParams.add(name)
+        0 -> if (!args.withName(name).isOptional) requiredQueryParams.add(name)
         // Perform the path replacement.
-          1 -> pathTemplate = split.joinToString("{${name}}")
+        1 -> pathTemplate = split.joinToString("{${name}}")
         // Multiple matches indicate an error.
-          else -> error("${endpoint.path} contains more than 1 match of $value.")
+        else -> error("${endpoint.path} contains more than 1 match of $value.")
       }
     }
 
@@ -88,30 +88,30 @@ private fun generateArgsAndReplacements(
     val kClass = arg.type.classifier as KClass<*>
     return@associateWith when {
       // Generate a random integer.
-        kClass == Int::class -> Random.nextInt().also {
-            // Integers should also go into arg replacements.
-            argReplacements[argName] = it.toString()
-        }
+      kClass == Int::class -> Random.nextInt().also {
+        // Integers should also go into arg replacements.
+        argReplacements[argName] = it.toString()
+      }
       // Generate a random string.
-        kClass == String::class -> UUID.randomUUID().toString().also {
-            // Strings should also go into arg replacements.
-            argReplacements[argName] = it
-        }
+      kClass == String::class -> UUID.randomUUID().toString().also {
+        // Strings should also go into arg replacements.
+        argReplacements[argName] = it
+      }
       // Generate a random UUID.
-        kClass == UUID::class -> UUID.randomUUID().also {
-            // UUIDs should also go into arg replacements.
-            argReplacements[argName] = it.toString()
-        }
+      kClass == UUID::class -> UUID.randomUUID().also {
+        // UUIDs should also go into arg replacements.
+        argReplacements[argName] = it.toString()
+      }
       // Just use the first value in the enum.
       // This will cause code below to break if there are multiple args with the same enum type,
       // but we can cross that bridge if and when we come to it.
-        kClass.isSubclassOf(Enum::class) -> kClass.java.enumConstants.first().also {
-            // Enums should also go into arg replacements.
-            argReplacements[argName] = it.toString()
-        }
+      kClass.isSubclassOf(Enum::class) -> kClass.java.enumConstants.first().also {
+        // Enums should also go into arg replacements.
+        argReplacements[argName] = it.toString()
+      }
       // Rep args must be nullable for this to work, so we'll just pass null.
-        kClass.isSubclassOf(ValidatedRep::class) -> null
-        else -> unknownType(arg.type)
+      kClass.isSubclassOf(ValidatedRep::class) -> null
+      else -> unknownType(arg.type)
     }
   }
   return Pair(args, argReplacements)
