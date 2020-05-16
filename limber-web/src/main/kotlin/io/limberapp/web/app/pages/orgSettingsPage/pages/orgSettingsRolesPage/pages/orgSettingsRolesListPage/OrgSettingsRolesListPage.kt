@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
+import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.orgRolesTable
 import io.limberapp.web.context.api.useApi
@@ -24,9 +25,9 @@ private val component = functionalComponent<RProps> {
 
   layoutTitle(OrgSettingsRolesPage.name, "Roles grant users permissions within your organization.")
 
-  // While the org roles are loading, show nothing else.
+  // While the org roles are loading, show a loading spinner.
   val orgRoles = global.state.orgRoles.let { loadableState ->
-    if (!loadableState.isLoaded) return@functionalComponent
+    if (!loadableState.isLoaded) return@functionalComponent loadingSpinner()
     return@let checkNotNull(loadableState.state).values.toSet()
   }
 
