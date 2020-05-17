@@ -2,11 +2,11 @@ package io.limberapp.web.app.components.navbar.components.subnav.components.subn
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.classes
+import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import kotlinx.css.*
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * A single item on a subnav. If [hoverable] is true, it will become accented when hovered.
@@ -17,7 +17,7 @@ internal fun RBuilder.subnavItem(hoverable: Boolean = true, children: RHandler<P
 
 internal data class Props(val hoverable: Boolean) : RProps
 
-private val styles = object : Styles("SubnavItem") {
+private val s = object : Styles("SubnavItem") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.column
@@ -37,12 +37,7 @@ private val styles = object : Styles("SubnavItem") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(
-    classes = classes(
-      styles.getClassName { it::container },
-      if (props.hoverable) styles.getClassName { it::hoverableContainer } else null
-    )
-  ) {
+  div(classes = cls(s.c { it::container }, if (props.hoverable) s.c { it::hoverableContainer } else null)) {
     props.children()
   }
 }

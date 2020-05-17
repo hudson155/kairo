@@ -2,8 +2,11 @@ package io.limberapp.web.util
 
 import kotlinx.css.*
 import kotlinx.css.properties.*
+import styled.StyleSheet
+import styled.getClassName
+import kotlin.reflect.KProperty0
 
-internal val globalStyles = GlobalStyles().apply { inject() }
+internal val gs = GlobalStyles().apply { inject() }
 
 internal class GlobalStyles : Styles("Global") {
   val spinner by css {
@@ -66,4 +69,7 @@ internal class GlobalStyles : Styles("Global") {
   }
 }
 
-internal fun classes(vararg classes: String?) = classes.filterNotNull().joinToString(" ")
+@Suppress("FunctionMinLength")
+internal fun <T : StyleSheet> T.c(getClass: (T) -> KProperty0<RuleSet>) = getClassName(getClass)
+
+internal fun cls(vararg classes: String?) = classes.filterNotNull().joinToString(" ")

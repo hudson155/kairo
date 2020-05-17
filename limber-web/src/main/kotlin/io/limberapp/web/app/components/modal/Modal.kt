@@ -3,12 +3,12 @@ package io.limberapp.web.app.components.modal
 import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.classes
+import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
-import styled.getClassName
 
 internal fun RBuilder.modal(blank: Boolean = false, onClose: () -> Unit, children: RHandler<Props>) {
   child(component, Props(blank, onClose), handler = children)
@@ -16,7 +16,7 @@ internal fun RBuilder.modal(blank: Boolean = false, onClose: () -> Unit, childre
 
 internal data class Props(val blank: Boolean, val onClose: () -> Unit) : RProps
 
-private val styles = object : Styles("Modal") {
+private val s = object : Styles("Modal") {
   val fullScreen by css {
     position = Position.absolute
     top = 0.px
@@ -48,22 +48,12 @@ private val styles = object : Styles("Modal") {
 private val component = functionalComponent<Props> { props ->
   useEscapeKeyListener(emptyList()) { props.onClose() }
 
-  div(
-    classes = classes(
-      styles.getClassName { it::fullScreen },
-      styles.getClassName { it::container }
-    )
-  ) {
-    a(
-      classes = classes(
-        styles.getClassName { it::fullScreen },
-        styles.getClassName { it::fader }
-      )
-    ) {
+  div(classes = cls(s.c { it::fullScreen }, s.c { it::container })) {
+    a(classes = cls(s.c { it::fullScreen }, s.c { it::fader })) {
       attrs.onClickFunction = { props.onClose() }
     }
     if (!props.blank) {
-      div(classes = styles.getClassName { it::modal }) {
+      div(classes = s.c { it::modal }) {
         props.children()
       }
     }

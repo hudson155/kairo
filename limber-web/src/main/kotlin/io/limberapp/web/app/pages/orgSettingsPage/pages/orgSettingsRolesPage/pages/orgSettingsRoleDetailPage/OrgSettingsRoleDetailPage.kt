@@ -12,12 +12,12 @@ import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.c
 import io.limberapp.web.util.withContext
 import kotlinx.css.*
 import react.*
 import react.dom.div
 import react.router.dom.*
-import styled.getClassName
 
 /**
  * Page for managing a single organization role and its memberships.
@@ -34,7 +34,7 @@ internal object OrgSettingsRoleDetailPage {
   }
 }
 
-private val styles = object : Styles("OrgSettingsRoleDetailPage") {
+private val s = object : Styles("OrgSettingsRoleDetailPage") {
   val tabbedViewContainer by css {
     margin(horizontal = 24.px)
   }
@@ -73,7 +73,7 @@ private val component = functionalComponent<RProps> {
       title = "Edit role: ${orgRole.name}",
       description = "Update role info, including the permissions it grants and members of the role."
     )
-    div(classes = styles.getClassName { it::tabbedViewContainer }) {
+    div(classes = s.c { it::tabbedViewContainer }) {
       tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
       div {
         when (match.params.tabName) {

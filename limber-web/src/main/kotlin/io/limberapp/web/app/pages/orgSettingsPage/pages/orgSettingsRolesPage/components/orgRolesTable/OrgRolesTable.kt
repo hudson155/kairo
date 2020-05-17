@@ -6,6 +6,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.c
 import kotlinx.css.TableLayout
 import kotlinx.css.height
 import kotlinx.css.maxWidth
@@ -15,7 +16,6 @@ import kotlinx.css.tableLayout
 import kotlinx.css.width
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * A table showing org roles.
@@ -26,7 +26,7 @@ internal fun RBuilder.orgRolesTable(orgRoles: Set<OrgRoleRep.Complete>) {
 
 internal data class Props(val orgRoles: Set<OrgRoleRep.Complete>) : RProps
 
-private val styles = object : Styles("OrgRolesTable") {
+private val s = object : Styles("OrgRolesTable") {
   val table by css {
     tableLayout = TableLayout.fixed
     maxWidth = 768.px
@@ -51,7 +51,7 @@ private val component = functionalComponent<Props> { props ->
     return@functionalComponent
   }
 
-  table(classes = styles.getClassName { it::table }) {
+  table(classes = s.c { it::table }) {
     thead {
       tr {
         th { +"Name" }

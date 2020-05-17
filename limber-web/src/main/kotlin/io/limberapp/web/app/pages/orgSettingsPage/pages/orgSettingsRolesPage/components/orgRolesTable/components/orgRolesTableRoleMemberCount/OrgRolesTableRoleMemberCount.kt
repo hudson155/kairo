@@ -3,12 +3,12 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 import com.piperframework.util.slugify
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
-import io.limberapp.web.util.globalStyles
+import io.limberapp.web.util.c
+import io.limberapp.web.util.gs
 import io.limberapp.web.util.pluralize
 import react.*
 import react.dom.td
 import react.router.dom.*
-import styled.getClassName
 
 /**
  * Portion of org roles table that shows the number of members, with a modal link.
@@ -24,7 +24,7 @@ private val component = functionalComponent<Props> { props ->
   td {
     navLink<RProps>(
       to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.members.slugify()}",
-      className = globalStyles.getClassName { it::link }
+      className = gs.c { it::link }
     ) {
       +props.orgRole.memberCount.let {
         "$it ${"members".pluralize(it)}"

@@ -1,10 +1,10 @@
 package io.limberapp.web.app.components.layout.components.centeredContentLayout
 
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.c
 import kotlinx.css.*
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * A layout that supports a single element or vertical group of elements, centered on the page both vertically and
@@ -14,7 +14,7 @@ internal fun RBuilder.centeredContentLayout(children: RHandler<RProps>) {
   child(component, handler = children)
 }
 
-private val styles = object : Styles("CenteredContentLayout") {
+private val s = object : Styles("CenteredContentLayout") {
   val container by css {
     flexGrow = 1.0
     display = Display.flex
@@ -26,7 +26,7 @@ private val styles = object : Styles("CenteredContentLayout") {
 }.apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
-  div(classes = styles.getClassName { it::container }) {
+  div(classes = s.c { it::container }) {
     props.children()
   }
 }

@@ -9,7 +9,8 @@ import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
-import io.limberapp.web.util.globalStyles
+import io.limberapp.web.util.c
+import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetValue
 import io.limberapp.web.util.useIsMounted
 import kotlinx.css.Align
@@ -32,7 +33,6 @@ import kotlinx.html.js.onSubmitFunction
 import org.w3c.dom.events.Event
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * Portion of org roles table that shows the name of the org role.
@@ -43,7 +43,7 @@ internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
 
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
-private val styles = object : Styles("OrgRolesTableRoleName") {
+private val s = object : Styles("OrgRolesTableRoleName") {
   val form by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -96,12 +96,12 @@ private val component = functionalComponent<Props> { props ->
   }
 
   td {
-    form(classes = styles.getClassName { it::form }) {
+    form(classes = s.c { it::form }) {
       attrs.onSubmitFunction = onSubmit
       when (state) {
         State.DISPLAYING -> +props.orgRole.name
         State.EDITING, State.SAVING -> {
-          input(type = InputType.text, classes = styles.getClassName { it::input }) {
+          input(type = InputType.text, classes = s.c { it::input }) {
             attrs.autoFocus = true
             attrs.defaultValue = editValue
             attrs.onChangeFunction = { setValue(it.targetValue) }
@@ -111,22 +111,22 @@ private val component = functionalComponent<Props> { props ->
       }
       when (state) {
         State.DISPLAYING -> {
-          a(classes = styles.getClassName { it::icon }) {
+          a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onEditClicked
             inlineIcon("edit")
           }
         }
         State.EDITING -> {
-          a(classes = styles.getClassName { it::icon }) {
+          a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onCancelEdit
             inlineIcon("times-circle")
           }
-          a(classes = styles.getClassName { it::icon }) {
+          a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onSubmit
             inlineIcon("save")
           }
         }
-        State.SAVING -> inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+        State.SAVING -> inlineIcon("spinner", classes = gs.c { it::spinner })
       }
     }
   }
