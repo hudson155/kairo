@@ -2,6 +2,7 @@ package io.limberapp.web.app.components.navbar
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.c
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.backgroundColor
@@ -12,7 +13,6 @@ import kotlinx.css.padding
 import kotlinx.css.px
 import react.*
 import react.dom.div
-import styled.getClassName
 
 /**
  * Generic top-of-page navbar that supports a [left] section, [right] section, and [children] as a left-aligned section
@@ -25,7 +25,7 @@ internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?, children
 
 internal data class Props(val left: ReactElement?, val right: ReactElement?) : RProps
 
-private val styles = object : Styles("Navbar") {
+private val s = object : Styles("Navbar") {
   val container by css {
     display = Display.flex
     justifyContent = JustifyContent.spaceBetween
@@ -39,12 +39,12 @@ private val styles = object : Styles("Navbar") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(classes = styles.getClassName { it::container }) {
-    div(classes = styles.getClassName { it::section }) {
+  div(classes = s.c { it::container }) {
+    div(classes = s.c { it::section }) {
       props.left?.let { child(it) }
       props.children()
     }
-    div(classes = styles.getClassName { it::section }) {
+    div(classes = s.c { it::section }) {
       props.right?.let { child(it) }
     }
   }

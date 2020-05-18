@@ -9,7 +9,8 @@ import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
-import io.limberapp.web.util.classes
+import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
@@ -20,7 +21,6 @@ import react.functionalComponent
 import react.key
 import react.router.dom.*
 import react.useState
-import styled.getClassName
 
 /**
  * Top-of-page nav for use on most pages in the main app when in an authenticated state.
@@ -31,7 +31,7 @@ internal fun RBuilder.mainAppNavbar() {
 
 private enum class OpenItem { USER_DROPDOWN }
 
-private val styles = object : Styles("MainAppNavbar") {
+private val s = object : Styles("MainAppNavbar") {
   val right by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -60,12 +60,7 @@ private val component = functionalComponent<RProps> {
     },
     right = buildElements {
       headerGroup {
-        a(
-          classes = classes(
-            styles.getClassName { it::right },
-            if (openItem == OpenItem.USER_DROPDOWN) styles.getClassName { it::openRight } else null
-          )
-        ) {
+        a(classes = cls(s.c { it::right }, if (openItem == OpenItem.USER_DROPDOWN) s.c { it::openRight } else null)) {
           attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
           headerItem { +name }
           photoUrl?.let { headerPhoto(it) }

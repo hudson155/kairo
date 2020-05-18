@@ -9,8 +9,9 @@ import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
-import io.limberapp.web.util.classes
-import io.limberapp.web.util.globalStyles
+import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
+import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetChecked
 import io.limberapp.web.util.useIsMounted
 import kotlinx.css.BorderStyle
@@ -30,7 +31,6 @@ import kotlinx.html.js.onClickFunction
 import org.w3c.dom.events.Event
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * Selector for choosing permissions from a list for an org role.
@@ -41,7 +41,7 @@ internal fun RBuilder.orgRolePermissionsSelector(orgRole: OrgRoleRep.Complete, o
 
 internal data class Props(val orgRole: OrgRoleRep.Complete, val onClose: () -> Unit) : RProps
 
-private val styles = object : Styles("OrgRolePermissionsSelector") {
+private val s = object : Styles("OrgRolePermissionsSelector") {
   val rowsContainer by css {
     padding(vertical = 8.px)
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
@@ -100,10 +100,10 @@ private val component = functionalComponent<Props> { props ->
     }
   }
 
-  div(classes = styles.getClassName { it::rowsContainer }) {
+  div(classes = s.c { it::rowsContainer }) {
     OrgPermission.values().sortedBy { it.bit }.forEach { permission ->
-      div(classes = styles.getClassName { it::row }) {
-        label(classes = styles.getClassName { it::label }) {
+      div(classes = s.c { it::row }) {
+        label(classes = s.c { it::label }) {
           span {
             input(type = InputType.checkBox) {
               attrs.defaultChecked = props.orgRole.permissions.hasPermission(permission)
@@ -120,23 +120,13 @@ private val component = functionalComponent<Props> { props ->
       }
     }
   }
-  div(classes = styles.getClassName { it::saveButtonContainer }) {
-    button(
-      classes = classes(
-        globalStyles.getClassName { it::primaryButton },
-        styles.getClassName { it::saveButton }
-      )
-    ) {
+  div(classes = s.c { it::saveButtonContainer }) {
+    button(classes = cls(gs.c { it::primaryButton }, s.c { it::saveButton })) {
       +"Save"
       attrs.disabled = state == State.SAVING
       attrs.onClickFunction = onSave
     }
-    button(
-      classes = classes(
-        globalStyles.getClassName { it::secondaryButton },
-        styles.getClassName { it::saveButton }
-      )
-    ) {
+    button(classes = cls(gs.c { it::secondaryButton }, s.c { it::saveButton })) {
       +"Cancel"
       attrs.disabled = state == State.SAVING
       attrs.onClickFunction = { props.onClose() }

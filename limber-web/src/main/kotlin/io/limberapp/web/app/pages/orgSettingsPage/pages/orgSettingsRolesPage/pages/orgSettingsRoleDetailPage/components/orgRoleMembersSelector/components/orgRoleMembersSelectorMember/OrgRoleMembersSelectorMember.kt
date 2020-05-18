@@ -4,8 +4,9 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
-import io.limberapp.web.util.classes
-import io.limberapp.web.util.globalStyles
+import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
+import io.limberapp.web.util.gs
 import kotlinx.css.Align
 import kotlinx.css.BorderStyle
 import kotlinx.css.Color
@@ -31,7 +32,6 @@ import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
-import styled.getClassName
 
 internal fun RBuilder.orgRoleMembersSelectorMember(
   user: UserRep.Summary?,
@@ -47,7 +47,7 @@ internal data class Props(val user: UserRep.Summary?, val onRemove: (() -> Unit)
   }
 }
 
-private val styles = object : Styles("OrgRoleMembersSelectorMember") {
+private val s = object : Styles("OrgRoleMembersSelectorMember") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -101,25 +101,25 @@ private val component = functionalComponent<Props> { props ->
   val (state, setState) = useState(State.DEFAULT)
 
   div(
-    classes = classes(
-      styles.getClassName { it::container },
+    classes = cls(
+      s.c { it::container },
       when (state) {
         State.DEFAULT -> null
-        State.ADDING, State.ADD_SAVING -> styles.getClassName { it::containerBlue }
-        State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::containerRed }
+        State.ADDING, State.ADD_SAVING -> s.c { it::containerBlue }
+        State.REMOVING, State.REMOVE_SAVING -> s.c { it::containerRed }
       }
     )
   ) {
-    div(classes = styles.getClassName { it::left }) {
+    div(classes = s.c { it::left }) {
       if (props.user != null) {
         props.user.profilePhotoUrl?.let {
           img(
             src = it,
-            classes = classes(
-              styles.getClassName { it::img },
+            classes = cls(
+              s.c { it::img },
               when (state) {
                 State.DEFAULT, State.ADDING, State.ADD_SAVING -> null
-                State.REMOVING, State.REMOVE_SAVING -> styles.getClassName { it::imgGrayscale }
+                State.REMOVING, State.REMOVE_SAVING -> s.c { it::imgGrayscale }
               }
             )
           ) {}
@@ -127,26 +127,16 @@ private val component = functionalComponent<Props> { props ->
         div { +props.user.fullName }
       }
     }
-    div(classes = styles.getClassName { it::right }) {
+    div(classes = s.c { it::right }) {
       when (state) {
         State.DEFAULT -> {
           if (props.user != null) {
-            button(
-              classes = classes(
-                globalStyles.getClassName { it::redButton },
-                styles.getClassName { it::removeButton }
-              )
-            ) {
+            button(classes = cls(gs.c { it::redButton }, s.c { it::removeButton })) {
               attrs.onClickFunction = { setState(State.REMOVING) }
               +"Remove"
             }
           } else {
-            button(
-              classes = classes(
-                globalStyles.getClassName { it::primaryButton },
-                styles.getClassName { it::removeButton }
-              )
-            ) {
+            button(classes = cls(gs.c { it::primaryButton }, s.c { it::removeButton })) {
               attrs.onClickFunction = { setState(State.ADDING) }
               +"Add"
             }
@@ -154,30 +144,20 @@ private val component = functionalComponent<Props> { props ->
         }
         State.ADDING, State.ADD_SAVING -> Unit
         State.REMOVING -> {
-          button(
-            classes = classes(
-              globalStyles.getClassName { it::redButton },
-              styles.getClassName { it::removeButton }
-            )
-          ) {
+          button(classes = cls(gs.c { it::redButton }, s.c { it::removeButton })) {
             attrs.onClickFunction = {
               setState(State.REMOVE_SAVING)
               checkNotNull(props.onRemove)()
             }
             +"Confirm"
           }
-          button(
-            classes = classes(
-              globalStyles.getClassName { it::secondaryButton },
-              styles.getClassName { it::removeButton }
-            )
-          ) {
+          button(classes = cls(gs.c { it::secondaryButton }, s.c { it::removeButton })) {
             attrs.onClickFunction = { setState(State.DEFAULT) }
             +"Cancel"
           }
         }
         State.REMOVE_SAVING -> {
-          inlineIcon("spinner", classes = globalStyles.getClassName { it::spinner })
+          inlineIcon("spinner", classes = gs.c { it::spinner })
         }
       }
     }

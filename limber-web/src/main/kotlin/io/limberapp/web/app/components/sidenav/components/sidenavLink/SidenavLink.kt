@@ -2,11 +2,11 @@ package io.limberapp.web.app.components.sidenav.components.sidenavLink
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.c
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
 import react.router.dom.*
-import styled.getClassName
 
 /**
  * A single link on a sidenav.
@@ -17,7 +17,7 @@ internal fun RBuilder.sidenavLink(to: String, children: RHandler<Props>) {
 
 internal data class Props(val to: String) : RProps
 
-private val styles = object : Styles("SidenavLink") {
+private val s = object : Styles("SidenavLink") {
   val navLink by css {
     color = Theme.Color.Text.link
     backgroundColor = Theme.Color.Background.light
@@ -39,8 +39,8 @@ private val styles = object : Styles("SidenavLink") {
 private val component = functionalComponent<Props> { props ->
   navLink<RProps>(
     to = props.to,
-    className = styles.getClassName { it::navLink },
-    activeClassName = styles.getClassName { it::activeNavLink }) {
+    className = s.c { it::navLink },
+    activeClassName = s.c { it::activeNavLink }) {
     props.children()
   }
 }

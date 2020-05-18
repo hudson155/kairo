@@ -2,12 +2,12 @@ package io.limberapp.web.app.components.navbar.components.subnav
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.c
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import org.w3c.dom.Element
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * Generic navigational component that drops down from a top-of-page navbar. It's generally only visible when a nav link
@@ -21,7 +21,7 @@ internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RPr
 internal data class Props(val node: RMutableRef<Element?>) : RProps
 
 // TODO: In order for this to be truly reusable the positioning likely needs to be altered.
-private val styles = object : Styles("Subnav") {
+private val s = object : Styles("Subnav") {
   val container by css {
     val widthPx = 192 // The width of this component.
     val afterOffsetPx = 22 // How far in the caret ::after element is.
@@ -49,7 +49,7 @@ private val styles = object : Styles("Subnav") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(classes = styles.getClassName { it::container }) {
+  div(classes = s.c { it::container }) {
     ref = props.node
     props.children()
   }
