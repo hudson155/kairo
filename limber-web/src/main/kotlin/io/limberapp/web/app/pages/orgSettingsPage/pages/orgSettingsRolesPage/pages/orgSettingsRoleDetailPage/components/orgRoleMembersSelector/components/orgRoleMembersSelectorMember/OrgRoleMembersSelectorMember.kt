@@ -2,33 +2,15 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pa
 
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
+import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
 import io.limberapp.web.util.gs
-import kotlinx.css.Align
-import kotlinx.css.BorderStyle
-import kotlinx.css.Color
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
-import kotlinx.css.JustifyContent
-import kotlinx.css.LinearDimension
-import kotlinx.css.alignItems
-import kotlinx.css.backgroundColor
-import kotlinx.css.borderRadius
-import kotlinx.css.display
-import kotlinx.css.filter
-import kotlinx.css.flexDirection
-import kotlinx.css.flexGrow
-import kotlinx.css.fontSize
-import kotlinx.css.height
-import kotlinx.css.justifyContent
-import kotlinx.css.marginRight
-import kotlinx.css.maxWidth
-import kotlinx.css.padding
+import io.limberapp.web.util.initials
+import kotlinx.css.*
 import kotlinx.css.properties.*
-import kotlinx.css.px
 import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
@@ -73,15 +55,6 @@ private val s = object : Styles("OrgRoleMembersSelectorMember") {
     flexDirection = FlexDirection.row
     alignItems = Align.center
   }
-  val img by css {
-    marginRight = 24.px
-    height = 48.px
-    maxWidth = 48.px
-    borderRadius = Theme.Sizing.borderRadius
-  }
-  val imgGrayscale by css {
-    filter = "grayscale(100%)"
-  }
   val input by css {
     flexGrow = 1.0
     fontSize = LinearDimension.initial
@@ -112,18 +85,11 @@ private val component = functionalComponent<Props> { props ->
   ) {
     div(classes = s.c { it::left }) {
       if (props.user != null) {
-        props.user.profilePhotoUrl?.let {
-          img(
-            src = it,
-            classes = cls(
-              s.c { it::img },
-              when (state) {
-                State.DEFAULT, State.ADDING, State.ADD_SAVING -> null
-                State.REMOVING, State.REMOVE_SAVING -> s.c { it::imgGrayscale }
-              }
-            )
-          ) {}
-        }
+        profilePhoto(
+          placeholder = props.user.fullName.initials,
+          url = props.user.profilePhotoUrl,
+          grayscale = state in setOf(State.REMOVING, State.REMOVE_SAVING)
+        )
         div { +props.user.fullName }
       }
     }
