@@ -61,7 +61,7 @@ private val component = functionalComponent<RProps> {
     },
     right = buildElements {
       headerGroup {
-        a(classes = cls(s.c { it::right }, if (openItem == OpenItem.USER_DROPDOWN) s.c { it::openRight } else null)) {
+        a(classes = cls(s.c { it::right }, s.c(openItem == OpenItem.USER_DROPDOWN) { it::openRight })) {
           attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
           headerItem { +name }
           profilePhoto(placeholder = name.initials, url = photoUrl, small = true)

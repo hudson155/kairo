@@ -37,7 +37,7 @@ private val s = object : Styles("SubnavItem") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(classes = cls(s.c { it::container }, if (props.hoverable) s.c { it::hoverableContainer } else null)) {
+  div(classes = cls(s.c { it::container }, s.c(props.hoverable) { it::hoverableContainer })) {
     props.children()
   }
 }

@@ -67,10 +67,10 @@ private val s = object : Styles("ProfilePhoto") {
 }.apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(classes = cls(s.c { it::container }, if (props.small) s.c { it::small } else null)) {
+  div(classes = cls(s.c { it::container }, s.c(props.small) { it::small })) {
     div(classes = s.c { it::inner }) { +props.placeholder }
     props.url?.let { url ->
-      img(src = url, classes = cls(s.c { it::img }, if (props.grayscale) s.c { it::imgGrayscale } else null)) {}
+      img(src = url, classes = cls(s.c { it::img }, s.c(props.grayscale) { it::imgGrayscale })) {}
     }
   }
 }
