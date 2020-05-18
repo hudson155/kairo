@@ -13,3 +13,5 @@ private fun pluralize(singular: String, plural: String, count: Int): String {
   if (abs(count) == 1) return singular
   return plural
 }
+
+internal val String.initials get() = split(' ').mapNotNull { it.firstOrNull() }.joinToString("")
