@@ -24,6 +24,7 @@ internal val String.initials get() = split(' ').mapNotNull { it.firstOrNull()?.t
  * which are searchable for a given element. The query will be searched on a word-by-word basis, and is not case
  * sensitive.
  */
+@Suppress("MagicNumber")
 internal fun <T> List<T>.search(query: String, searchableSelector: (T) -> Set<String>): List<T> {
   val queryWords = query.toLowerCase().split(Regex("\\s")).filter { it.isNotEmpty() }
   return this
