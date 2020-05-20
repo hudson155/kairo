@@ -16,6 +16,11 @@ internal sealed class OrgRoleMembershipAction : Action() {
     val orgRoleMemberships: Set<OrgRoleMembershipRep.Complete>
   ) : OrgRoleMembershipAction()
 
+  internal data class UpdateValue(
+    val orgRoleGuid: UUID,
+    val orgRoleMembership: OrgRoleMembershipRep.Complete
+  ) : OrgRoleMembershipAction()
+
   internal data class DeleteValue(
     val orgRoleGuid: UUID,
     val accountGuid: UUID
