@@ -36,6 +36,8 @@ import react.dom.*
 
 /**
  * Portion of org roles table that shows the name of the org role.
+ *
+ * [orgRole] is the role to be represented by this component.
  */
 internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
   child(component, Props(orgRole))
@@ -43,7 +45,7 @@ internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
 
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
-private val s = object : Styles("OrgRolesTableRoleName") {
+private class S : Styles("OrgRolesTableRoleName") {
   val form by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -57,8 +59,16 @@ private val s = object : Styles("OrgRolesTableRoleName") {
   val icon by css {
     cursor = Cursor.pointer
   }
-}.apply { inject() }
+}
 
+private val s = S().apply { inject() }
+
+/**
+ * The default state is [State.DISPLAYING], which means it's just displaying the role name. If the user clicks to edit
+ * the name, the state will change to [State.EDITING] and show an input. When the user hits save the state will change
+ * to [State.SAVING] and show a spinner until it's saved. At that point the state will change back to
+ * [State.DISPLAYING].
+ */
 private enum class State { DISPLAYING, EDITING, SAVING }
 
 private val component = functionalComponent<Props> { props ->

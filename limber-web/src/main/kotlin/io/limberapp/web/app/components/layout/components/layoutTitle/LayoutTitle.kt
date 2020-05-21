@@ -12,6 +12,10 @@ import react.dom.p
 
 /**
  * The title at the top of a layout, plus an optional description. All pages should have one of these.
+ *
+ * The [title] shows in an <h1>.
+ *
+ * The [description] just shows in a <p>.
  */
 internal fun RBuilder.layoutTitle(title: String, description: String? = null) {
   child(component, Props(title, description))
@@ -19,7 +23,7 @@ internal fun RBuilder.layoutTitle(title: String, description: String? = null) {
 
 internal data class Props(val title: String, val description: String?) : RProps
 
-private val s = object : Styles("LayoutTitle") {
+private class S : Styles("LayoutTitle") {
   val container by css {
     marginBottom = 48.px
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
@@ -32,7 +36,9 @@ private val s = object : Styles("LayoutTitle") {
     marginTop = 0.px
     marginBottom = 8.px
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = s.c { it::container }) {

@@ -16,8 +16,11 @@ import react.dom.*
  * members.
  *
  * The [user] is the user to represent.
+ *
  * [small] indicates that the size of the row should be on the smaller side. If false, it will be on the larger side.
+ *
  * [grayscale] makes the photo grey, representing a disabled state.
+ *
  * If [onSelect] is provided, the row will be clickable and the function will be called when the row is clicked.
  */
 internal fun RBuilder.memberRow(
@@ -36,7 +39,7 @@ internal data class Props(
   val onSelect: (() -> Unit)?
 ) : RProps
 
-private val s = object : Styles("MemberRow") {
+private class S : Styles("MemberRow") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -45,7 +48,9 @@ private val s = object : Styles("MemberRow") {
   val clickable by css {
     cursor = Cursor.pointer
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = cls(s.c { it::container }, s.c(props.onSelect != null) { it::clickable })) {

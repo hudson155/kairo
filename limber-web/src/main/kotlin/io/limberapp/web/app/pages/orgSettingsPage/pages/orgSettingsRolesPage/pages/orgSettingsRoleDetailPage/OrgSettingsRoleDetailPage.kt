@@ -34,11 +34,13 @@ internal object OrgSettingsRoleDetailPage {
   }
 }
 
-private val s = object : Styles("OrgSettingsRoleDetailPage") {
+private class S : Styles("OrgSettingsRoleDetailPage") {
   val tabbedViewContainer by css {
     margin(horizontal = 24.px)
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<RProps> {
   val api = useApi()

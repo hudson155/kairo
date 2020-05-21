@@ -33,7 +33,11 @@ import react.*
 import react.dom.*
 
 /**
- * Selector for choosing permissions from a list for an org role.
+ * Selector for showing the permissions an org role contains, allowing the user to choose and update the permissions.
+ *
+ * [orgRole] is the role whose permissions to represent.
+ *
+ * [onClose] is called when the permissions have been successfully updated.
  */
 internal fun RBuilder.orgRolePermissionsSelector(orgRole: OrgRoleRep.Complete, onClose: () -> Unit) {
   child(component, Props(orgRole, onClose))
@@ -41,7 +45,7 @@ internal fun RBuilder.orgRolePermissionsSelector(orgRole: OrgRoleRep.Complete, o
 
 internal data class Props(val orgRole: OrgRoleRep.Complete, val onClose: () -> Unit) : RProps
 
-private val s = object : Styles("OrgRolePermissionsSelector") {
+private class S : Styles("OrgRolePermissionsSelector") {
   val rowsContainer by css {
     padding(vertical = 8.px)
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
@@ -64,8 +68,16 @@ private val s = object : Styles("OrgRolePermissionsSelector") {
   val saveButton by css {
     marginRight = 12.px
   }
-}.apply { inject() }
+}
 
+private val s = S().apply { inject() }
+
+/**
+ * The default state is [State.DEFAULT]. This represents that the permissions are selectable. It does not suggest that
+ * the permission values displayed reflect the permission values actually saved with the org role, nor does it suggest
+ * the opposite. When the user saves the permissions, the state will change to [State.SAVING] while they are saved,
+ * before reverting to [State.DEFAULT].
+ */
 private enum class State { DEFAULT, SAVING }
 
 private val component = functionalComponent<Props> { props ->

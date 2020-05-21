@@ -10,13 +10,19 @@ import kotlinx.css.properties.*
 import react.*
 import react.dom.*
 
+/**
+ * A series of [tabbedViewLink]s that represent pages within some component. Each [tabbedViewLink] is its own page.
+ * Clicking on one of them will replace the last component of the URL with the subpath for that [tabbedViewLink].
+ *
+ * The [tabNames] are the of items to show. Subpaths are automatically generated from these names.
+ */
 internal fun RBuilder.tabbedView(vararg tabNames: String) {
   child(component, Props(tabNames.toList()))
 }
 
 internal data class Props(val tabNames: List<String>) : RProps
 
-private val s = object : Styles("TabbedView") {
+private class S : Styles("TabbedView") {
   val tabsSection by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -24,7 +30,9 @@ private val s = object : Styles("TabbedView") {
     paddingBottom = 8.px
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = s.c { it::tabsSection }) {

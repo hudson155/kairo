@@ -12,6 +12,10 @@ import react.dom.p
 
 /**
  * The title at the top of a section, plus an optional description.
+ *
+ * The [title] shows in an <h2>.
+ *
+ * The [description] just shows in a <p>.
  */
 internal fun RBuilder.layoutSectionTitle(title: String, description: String? = null) {
   child(component, Props(title, description))
@@ -19,7 +23,7 @@ internal fun RBuilder.layoutSectionTitle(title: String, description: String? = n
 
 internal data class Props(val title: String, val description: String?) : RProps
 
-private val s = object : Styles("LayoutSectionTitle") {
+private class S : Styles("LayoutSectionTitle") {
   val container by css {
     marginBottom = 24.px
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
@@ -32,7 +36,9 @@ private val s = object : Styles("LayoutSectionTitle") {
     marginTop = 0.px
     marginBottom = 6.px
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = s.c { it::container }) {

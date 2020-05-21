@@ -15,9 +15,10 @@ import react.router.dom.*
 import kotlin.browser.document
 
 /**
- * Subnav on the main app's top-of-page nav that shows up when the user's name/photo is clicked. [onUnfocus] is the
- * function to call when there's a click outside of this element. Normally, calling this function should hide the
- * subnav.
+ * Subnav on the main app's top-of-page nav that shows up when the user's name/photo is clicked.
+ *
+ * [onUnfocus] is the function to call when there's a click outside of this element. Normally, calling this function
+ * should hide the subnav.
  */
 internal fun RBuilder.userSubnav(onUnfocus: () -> Unit) {
   child(component, Props(onUnfocus))

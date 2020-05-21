@@ -10,12 +10,14 @@ import react.dom.*
 
 /**
  * An individual row for an org role in the org roles table.
+ *
+ * [children] should always be the same series of components that make up the row.
  */
 internal fun RBuilder.orgRolesTableRow(children: RHandler<RProps>) {
   child(component, handler = children)
 }
 
-private val s = object : Styles("OrgRolesTableRow") {
+private class S : Styles("OrgRolesTableRow") {
   val row by css {
     borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
     lastOfType {
@@ -25,7 +27,9 @@ private val s = object : Styles("OrgRolesTableRow") {
       backgroundColor = Theme.Color.Background.lightActive
     }
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
   tr(classes = s.c { it::row }) {

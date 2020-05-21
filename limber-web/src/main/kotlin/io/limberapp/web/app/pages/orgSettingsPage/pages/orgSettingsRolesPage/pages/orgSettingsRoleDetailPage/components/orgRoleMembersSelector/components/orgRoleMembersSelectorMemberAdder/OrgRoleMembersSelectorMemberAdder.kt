@@ -20,6 +20,7 @@ import react.dom.*
  *
  * [excludedUserGuids] should contain all existing org role members so that they won't show up if they're already a
  *  member.
+ *
  * [onAdd] is called to add a user to the org role.
  */
 internal fun RBuilder.orgRoleMembersSelectorMemberAdder(
@@ -31,7 +32,7 @@ internal fun RBuilder.orgRoleMembersSelectorMemberAdder(
 
 internal data class Props(val excludedUserGuids: Set<UUID>, val onAdd: (accountGuid: UUID) -> Unit) : RProps
 
-private val s = object : Styles("OrgRoleMembersSelectorMemberAdder") {
+private class S : Styles("OrgRoleMembersSelectorMemberAdder") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -55,7 +56,9 @@ private val s = object : Styles("OrgRoleMembersSelectorMemberAdder") {
       marginRight = 0.px
     }
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 /**
  * The default state is [State.DEFAULT]. When the add button is clicked, the state changes to [State.ADDING], which

@@ -30,9 +30,7 @@ internal fun RBuilder.mainAppNavbar() {
   child(component)
 }
 
-private enum class OpenItem { USER_DROPDOWN }
-
-private val s = object : Styles("MainAppNavbar") {
+private class S : Styles("MainAppNavbar") {
   val right by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -42,7 +40,11 @@ private val s = object : Styles("MainAppNavbar") {
   val openRight by css {
     cursor = Cursor.initial
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
+
+private enum class OpenItem { USER_DROPDOWN }
 
 private val component = functionalComponent<RProps> {
   val global = useGlobalState()

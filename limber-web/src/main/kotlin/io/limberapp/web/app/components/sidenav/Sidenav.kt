@@ -10,6 +10,10 @@ import react.dom.*
 
 /**
  * Sidenav for navigation within a feature.
+ *
+ * The [title] is shown in its own [sidenavGroup] above everything else.
+ *
+ * [children] should be a series of [sidenavGroup]s.
  */
 internal fun RBuilder.sidenav(title: String, children: RHandler<RProps>) {
   child(component, Props(title), handler = children)
@@ -17,12 +21,14 @@ internal fun RBuilder.sidenav(title: String, children: RHandler<RProps>) {
 
 internal data class Props(val title: String) : RProps
 
-private val s = object : Styles("Sidenav") {
+private class S : Styles("Sidenav") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.column
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = s.c { it::container }) {
