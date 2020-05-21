@@ -1,5 +1,6 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavLink
 
+import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -9,7 +10,9 @@ import react.*
 import react.router.dom.*
 
 /**
- * A single link on a sidenav.
+ * A single link on a sidenav. This goes inside a [sidenavGroup].
+ *
+ * [children] should just be some text.
  */
 internal fun RBuilder.sidenavLink(to: String, children: RHandler<Props>) {
   child(component, Props(to), handler = children)
@@ -17,7 +20,7 @@ internal fun RBuilder.sidenavLink(to: String, children: RHandler<Props>) {
 
 internal data class Props(val to: String) : RProps
 
-private val s = object : Styles("SidenavLink") {
+private class S : Styles("SidenavLink") {
   val navLink by css {
     color = Theme.Color.Text.link
     backgroundColor = Theme.Color.Background.light
@@ -34,7 +37,9 @@ private val s = object : Styles("SidenavLink") {
   val activeNavLink by css {
     borderLeftColor = Theme.Color.smallActiveIndicator
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   navLink<RProps>(

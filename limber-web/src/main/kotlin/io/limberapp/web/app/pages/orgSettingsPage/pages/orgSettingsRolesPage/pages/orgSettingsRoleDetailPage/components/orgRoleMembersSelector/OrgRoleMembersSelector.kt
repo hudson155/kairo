@@ -18,7 +18,8 @@ import react.*
 
 /**
  * Selector for choosing a member from a list for an org role. Displays a list of all of the org role's members,
- * allowing for the addition of new members and the removal of existing ones.
+ * allowing for the addition of new members and the removal of existing ones. At the bottom there's an extra row which
+ * is what lets the user add a new member.
  */
 internal fun RBuilder.orgRoleMembersSelector(orgRole: OrgRoleRep.Complete) {
   child(component, Props(orgRole))

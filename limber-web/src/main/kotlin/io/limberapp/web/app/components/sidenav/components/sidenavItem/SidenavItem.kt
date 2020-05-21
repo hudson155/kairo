@@ -1,5 +1,6 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavItem
 
+import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -9,13 +10,15 @@ import react.*
 import react.dom.*
 
 /**
- * A single non-link item on a sidenav.
+ * A single non-link item on a sidenav. This goes inside a [sidenavGroup].
+ *
+ * [children] should just be some text.
  */
 internal fun RBuilder.sidenavItem(children: RHandler<RProps>) {
   child(component, handler = children)
 }
 
-private val s = object : Styles("SidenavItem") {
+private class S : Styles("SidenavItem") {
   val container by css {
     backgroundColor = Theme.Color.Background.lightDisabled
     padding(8.px)
@@ -24,7 +27,9 @@ private val s = object : Styles("SidenavItem") {
       borderBottomStyle = BorderStyle.none
     }
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
   div(classes = s.c { it::container }) {

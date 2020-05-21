@@ -8,13 +8,15 @@ import react.dom.*
 
 /**
  * A layout that supports a single element or vertical group of elements, centered on the page both vertically and
- * horizontally. Content is provided by [children]. Content should be kept small; behaviour is undefined upon overflow.
+ * horizontally.
+ *
+ * Content is provided by [children]. Content should be kept small; behaviour is undefined upon overflow.
  */
 internal fun RBuilder.centeredContentLayout(children: RHandler<RProps>) {
   child(component, handler = children)
 }
 
-private val s = object : Styles("CenteredContentLayout") {
+private class S : Styles("CenteredContentLayout") {
   val container by css {
     flexGrow = 1.0
     display = Display.flex
@@ -23,7 +25,9 @@ private val s = object : Styles("CenteredContentLayout") {
     justifyContent = JustifyContent.center
     margin(16.px)
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<RProps> { props ->
   div(classes = s.c { it::container }) {

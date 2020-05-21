@@ -19,7 +19,10 @@ import react.dom.*
  * A single row in an [orgRoleMembersSelector]. Shows the profile photo and name. Allows removing the member.
  *
  * [user] is the member to represent.
+ *
  * [onRemove] is called to remove the user from the org role.
+ *
+ * [children] should only be used for attributes.
  */
 internal fun RBuilder.orgRoleMembersSelectorMember(
   user: UserRep.Summary,
@@ -31,7 +34,7 @@ internal fun RBuilder.orgRoleMembersSelectorMember(
 
 internal data class Props(val user: UserRep.Summary, val onRemove: () -> Unit) : RProps
 
-private val s = object : Styles("OrgRoleMembersSelectorMember") {
+private class S : Styles("OrgRoleMembersSelectorMember") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -55,7 +58,9 @@ private val s = object : Styles("OrgRoleMembersSelectorMember") {
       marginRight = 0.px
     }
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 /**
  * The default state is [State.DEFAULT]. When the remove button is clicked, the state changes to [State.REMOVING], which

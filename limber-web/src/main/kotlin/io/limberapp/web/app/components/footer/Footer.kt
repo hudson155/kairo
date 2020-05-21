@@ -12,14 +12,20 @@ import kotlin.js.Date
  * Footer present on all pages.
  */
 internal fun RBuilder.footer() {
-  div(classes = s.c { it::container }) {
-    p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
-  }
+  child(component)
 }
 
-private val s = object : Styles("Footer") {
+private class S : Styles("Footer") {
   val container by css {
     display = Display.flex
     padding(vertical = 8.px, horizontal = 16.px)
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
+
+private val component = functionalComponent<RProps> {
+  div(classes = s.c { it::container }) {
+    p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
+  }
+}

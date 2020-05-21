@@ -12,6 +12,8 @@ import react.router.dom.*
 
 /**
  * Portion of org roles table that shows the number of members, with a modal link.
+ *
+ * [orgRole] is the role to be represented by this component.
  */
 internal fun RBuilder.orgRolesTableRoleMemberCount(orgRole: OrgRoleRep.Complete) {
   child(component, Props(orgRole))

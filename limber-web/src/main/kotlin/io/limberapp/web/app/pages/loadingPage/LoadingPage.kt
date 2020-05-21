@@ -18,11 +18,13 @@ internal fun RBuilder.loadingPage(loadingText: String) {
 
 internal data class Props(val loadingText: String) : RProps
 
-private val s = object : Styles("LoadingPage") {
+private class S : Styles("LoadingPage") {
   val spinnerContainer by css {
     fontSize = 48.px
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   centeredContentLayout {

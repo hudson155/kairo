@@ -17,14 +17,16 @@ internal fun RBuilder.unauthenticatedPage() {
   child(component)
 }
 
-private val s = object : Styles("UnauthenticatedPage") {
+private class S : Styles("UnauthenticatedPage") {
   val container by css {
     textAlign = TextAlign.center
   }
   val signInLink by css {
     textDecoration(TextDecorationLine.underline)
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<RProps> {
   centeredContentLayout {

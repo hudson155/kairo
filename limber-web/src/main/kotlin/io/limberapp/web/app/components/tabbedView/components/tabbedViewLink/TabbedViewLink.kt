@@ -1,6 +1,7 @@
 package io.limberapp.web.app.components.tabbedView.components.tabbedViewLink
 
 import com.piperframework.util.replaceLastPathComponentWith
+import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -10,13 +11,22 @@ import react.*
 import react.dom.*
 import react.router.dom.*
 
+/**
+ * An item on a [tabbedView]. It's some text with an underline, where the underline changes color when the link is
+ * active.
+ *
+ * The [name] is the text to show.
+ *
+ * The [subpath] is the last path component for this specific [tabbedViewLink]. Clicking on it will replace the last
+ * component of the URL with the given value.
+ */
 internal fun RBuilder.tabbedViewLink(name: String, subpath: String) {
   child(component, Props(name, subpath))
 }
 
 internal data class Props(val name: String, val subpath: String) : RProps
 
-private val s = object : Styles("TabbedViewLink") {
+private class S : Styles("TabbedViewLink") {
   val navLink by css {
     marginRight = 12.px
     borderBottom(2.px, BorderStyle.solid, Theme.Color.Border.dark)
@@ -30,7 +40,9 @@ private val s = object : Styles("TabbedViewLink") {
   val activeNavLink by css {
     borderBottomColor = Theme.Color.smallActiveIndicator
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   val match = checkNotNull(useRouteMatch<RProps>())

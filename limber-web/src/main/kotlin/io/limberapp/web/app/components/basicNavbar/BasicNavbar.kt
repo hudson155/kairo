@@ -11,8 +11,10 @@ import react.child
 import react.functionalComponent
 
 /**
- * Top-of-page nav for use in an unauthenticated or partially loaded state. [children] should be [headerItem]s for the
- * right section of the nav. There's no way to have a main section to this nav implementation.
+ * Top-of-page nav for use in an unauthenticated or partially loaded state. There's no way to have a main section to
+ * this nav implementation.
+ *
+ * [children] should be [headerItem]s for the right section of the nav.
  */
 internal fun RBuilder.basicNavbar(children: RHandler<RProps> = {}) {
   child(component, handler = children)

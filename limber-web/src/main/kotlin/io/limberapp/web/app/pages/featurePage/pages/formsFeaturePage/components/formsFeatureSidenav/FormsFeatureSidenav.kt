@@ -10,7 +10,7 @@ import react.*
 import react.router.dom.*
 
 /**
- * Sidenav for navigation within forms feature.
+ * Sidenav for navigation within a forms feature.
  */
 internal fun RBuilder.formsFeatureSidenav() {
   child(component)

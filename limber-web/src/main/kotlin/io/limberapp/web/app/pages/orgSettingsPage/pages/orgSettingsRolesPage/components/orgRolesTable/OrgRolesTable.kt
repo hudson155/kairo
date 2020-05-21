@@ -18,7 +18,9 @@ import react.*
 import react.dom.*
 
 /**
- * A table showing org roles.
+ * A table showing org roles, and allowing them to be edited by clicking on different parts of them.
+ *
+ * [orgRoles] is the set of roles to show on the table. One row for each.
  */
 internal fun RBuilder.orgRolesTable(orgRoles: Set<OrgRoleRep.Complete>) {
   child(component, Props(orgRoles))
@@ -26,7 +28,7 @@ internal fun RBuilder.orgRolesTable(orgRoles: Set<OrgRoleRep.Complete>) {
 
 internal data class Props(val orgRoles: Set<OrgRoleRep.Complete>) : RProps
 
-private val s = object : Styles("OrgRolesTable") {
+private class S : Styles("OrgRolesTable") {
   val table by css {
     tableLayout = TableLayout.fixed
     maxWidth = 768.px
@@ -43,7 +45,9 @@ private val s = object : Styles("OrgRolesTable") {
       nthChild("3") { width = 160.px }
     }
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   if (props.orgRoles.isEmpty()) {

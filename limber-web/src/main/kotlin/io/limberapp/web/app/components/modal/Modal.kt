@@ -10,13 +10,25 @@ import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 
+/**
+ * An area that shows over top of the page, dimming the background and showing covering the center of the page. The
+ * dimmed background can be clicked to close the modal.
+ *
+ * If [blank] is set to true, no modal will be displayed, only the dimming background. This should only be used
+ * transiently as something is loading.
+ *
+ * [onClose] is called in order to close the modal. The modal can't remove itself from the DOM, so this is called to
+ * make the parent do so.
+ *
+ * [children] is the arbitrary content of the modal.
+ */
 internal fun RBuilder.modal(blank: Boolean = false, onClose: () -> Unit, children: RHandler<Props>) {
   child(component, Props(blank, onClose), handler = children)
 }
 
 internal data class Props(val blank: Boolean, val onClose: () -> Unit) : RProps
 
-private val s = object : Styles("Modal") {
+private class S : Styles("Modal") {
   val fullScreen by css {
     position = Position.absolute
     top = 0.px
@@ -43,7 +55,9 @@ private val s = object : Styles("Modal") {
     padding(24.px)
     backgroundColor = Theme.Color.Background.light
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   useEscapeKeyListener(emptyList()) { props.onClose() }

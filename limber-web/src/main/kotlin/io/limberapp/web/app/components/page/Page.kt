@@ -5,9 +5,14 @@ import react.*
 import react.dom.*
 
 /**
- * Outline for a generic page in the app. The [header] should be some kind of navbar. The [footer] usually contains
- * copyright and/or some links. The [children] is the main page content. Each of these is put into a
- * semantically-appropriate HTML element (<header>, <main>, <footer>).
+ * Outline for a generic page in the app.
+ *
+ * The [header] should be some kind of navbar.
+ *
+ * The [footer] usually contains copyright and/or some links.
+ *
+ * The [children] is the main page content. Each of these is put into a semantically-appropriate HTML element (<header>,
+ * <main>, <footer>).
  */
 internal fun RBuilder.page(
   header: ReactElement? = null,

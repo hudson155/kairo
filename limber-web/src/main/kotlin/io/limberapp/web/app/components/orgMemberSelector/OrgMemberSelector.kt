@@ -26,7 +26,9 @@ import react.dom.*
  * list.
  *
  * If [excludedUserGuids] is provided, the given users will be excluded from the list.
- * [onSelect] is called when the user selects one of the users from the list.
+ *
+ * [onSelect] is called when the user selects one of the users from the list. It's called with null if the selected user
+ * is deselected.
  */
 internal fun RBuilder.orgMemberSelector(excludedUserGuids: Set<UUID> = emptySet(), onSelect: (UUID?) -> Unit) {
   child(component, Props(excludedUserGuids, onSelect))
@@ -34,7 +36,7 @@ internal fun RBuilder.orgMemberSelector(excludedUserGuids: Set<UUID> = emptySet(
 
 internal data class Props(val excludedUserGuids: Set<UUID>, val onSelect: (UUID?) -> Unit) : RProps
 
-private val s = object : Styles("OrgMemberSelector") {
+private class S : Styles("OrgMemberSelector") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.row
@@ -65,7 +67,9 @@ private val s = object : Styles("OrgMemberSelector") {
       borderBottomStyle = BorderStyle.none
     }
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 /**
  * The default state is [State.DEFAULT], which means that the drop down is not shown. When a value is entered in the

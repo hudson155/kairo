@@ -7,8 +7,11 @@ import react.*
 import react.dom.*
 
 /**
- * The layout for most pages, supporting a vertical group of elements as the main body ([children]), and an optional
- * [leftPane] which is intended for side navigation.
+ * The layout for most pages.
+ *
+ * The [leftPane] is intended for side navigation, and is optional.
+ *
+ * The [children] is a vertical group of elements as the main body.
  */
 internal fun RBuilder.standardLayout(leftPane: ReactElement? = null, children: RHandler<Props>) {
   child(component, Props(leftPane), handler = children)
@@ -16,7 +19,7 @@ internal fun RBuilder.standardLayout(leftPane: ReactElement? = null, children: R
 
 internal data class Props(val leftPane: ReactElement?) : RProps
 
-private val s = object : Styles("StandardLayout") {
+private class S : Styles("StandardLayout") {
   val outerContainer by css {
     flexGrow = 1.0
     display = Display.flex
@@ -41,7 +44,9 @@ private val s = object : Styles("StandardLayout") {
     display = Display.flex
     flexDirection = FlexDirection.column
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = s.c { it::outerContainer }) {

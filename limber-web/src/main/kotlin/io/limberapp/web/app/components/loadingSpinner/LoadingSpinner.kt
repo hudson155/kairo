@@ -17,10 +17,12 @@ internal fun RBuilder.loadingSpinner() {
   }
 }
 
-private val s = object : Styles("LoadingSpinner") {
+private class S : Styles("LoadingSpinner") {
   val container by css {
     padding(12.px)
     fontSize = 24.px
     textAlign = TextAlign.center
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }

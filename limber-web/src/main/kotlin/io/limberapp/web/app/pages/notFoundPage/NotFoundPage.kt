@@ -18,11 +18,13 @@ internal object NotFoundPage {
   const val name = "Not Found"
 }
 
-private val s = object : Styles("NotFoundPage") {
+private class S : Styles("NotFoundPage") {
   val container by css {
     textAlign = TextAlign.center
   }
-}.apply { inject() }
+}
+
+private val s = S().apply { inject() }
 
 private val component = functionalComponent<RProps> {
   centeredContentLayout {
