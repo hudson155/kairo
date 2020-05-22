@@ -4,9 +4,9 @@ import io.limberapp.web.app.components.navbar.components.subnav.components.subna
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import kotlinx.css.*
 import kotlinx.css.properties.*
-import org.w3c.dom.Element
 import react.*
 import react.dom.*
 
@@ -14,41 +14,53 @@ import react.dom.*
  * Generic navigational component that drops down from a top-of-page navbar. It's generally only visible when a nav link
  * is active, but that functionality must be managed outside the scope of this component.
  *
- * The [node] is a [RMutableRef] that will be assigned to the subnav div, allowing the parent component to detect clicks
- * outside of it.
+ * By default, the subnav will be anchored on the left, with the caret on the left and extending outwards to the right.
+ * If [right] is true, the subnav will be anchored on the right instead, with the caret on the right an extending
+ * outwards to the left.
  *
  * [children] should be a series of [subnavGroup]s.
  */
-internal fun RBuilder.subnav(node: RMutableRef<Element?>, children: RHandler<RProps>) {
-  child(component, Props(node), handler = children)
+internal fun RBuilder.subnav(right: Boolean = false, children: RHandler<RProps>) {
+  child(component, Props(right), handler = children)
 }
 
-internal data class Props(val node: RMutableRef<Element?>) : RProps
+internal data class Props(val right: Boolean) : RProps
 
-// TODO: In order for this to be truly reusable the positioning likely needs to be altered.
 private class S : Styles("Subnav") {
   val container by css {
-    val widthPx = 192 // The width of this component.
-    val afterOffsetPx = 22 // How far in the caret ::after element is.
-    val centeringWidth = 32 // Center the caret under a component of this width.
-    alignSelf = Align.flexStart
+    height = 0.px
+    width = 0.px
+    alignSelf = Align.flexEnd
     position = Position.relative
-    top = 44.px
-    right = (widthPx - afterOffsetPx / 2 + centeringWidth / 2).px
+  }
+  private val centeringWidth = 32 // Center the caret under a component of this width.
+  private val caretSize = 14 // The width of the caret. Must be even.
+  private val widthPx = 224 // The width of this component.
+  val subnav by css {
+    position = Position.absolute
+    top = 12.px
+    left = 0.px
     width = widthPx.px
-    marginRight = (-widthPx - 2 * 1).px
     backgroundColor = Theme.Color.Background.light
     border(1.px, BorderStyle.solid, Theme.Color.Border.light)
     borderRadius = Theme.Sizing.borderRadius
     after {
-      top = (-14).px
-      right = afterOffsetPx.px
-      left = LinearDimension.auto
-      border(7.px, BorderStyle.solid, Color.transparent)
+      top = (-caretSize).px
+      left = ((centeringWidth - caretSize) / 2).px
+      right = LinearDimension.auto
+      border((caretSize / 2).px, BorderStyle.solid, Color.transparent)
       borderBottomColor = Theme.Color.Background.light
       position = Position.absolute
       display = Display.inlineBlock
       content = QuotedString("")
+    }
+  }
+  val subnavRight by css {
+    left = LinearDimension.initial
+    right = 0.px
+    after {
+      left = LinearDimension.auto
+      right = ((centeringWidth - caretSize) / 2).px
     }
   }
 }
@@ -57,7 +69,8 @@ private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
   div(classes = s.c { it::container }) {
-    ref = props.node
-    props.children()
+    div(classes = cls(s.c { it::subnav }, s.c(props.right) { it::subnavRight })) {
+      props.children()
+    }
   }
 }

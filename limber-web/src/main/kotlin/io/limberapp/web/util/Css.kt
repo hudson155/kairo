@@ -14,6 +14,11 @@ internal class GlobalStyles : Styles("Global") {
       display = Display.none
     }
   }
+  val visibleXs by css {
+    media("(min-width: 768px)") {
+      display = Display.none
+    }
+  }
   val spinner by css {
     animation("spinner", duration = 1.2.s, timing = Timing.linear, iterationCount = IterationCount.infinite)
   }

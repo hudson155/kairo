@@ -1,10 +1,10 @@
 package io.limberapp.web.app.components.mainAppNavbar
 
 import io.limberapp.backend.module.orgs.rep.org.default
+import io.limberapp.web.app.components.hamburgerableNavbar.hamburgerableNavbar
 import io.limberapp.web.app.components.mainAppNavbar.components.userSubnav.userSubnav
 import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
-import io.limberapp.web.app.components.navbar.navbar
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
@@ -20,7 +20,6 @@ import react.RProps
 import react.child
 import react.dom.*
 import react.functionalComponent
-import react.key
 import react.router.dom.*
 import react.useState
 
@@ -45,7 +44,7 @@ private class S : Styles("MainAppNavbar") {
 
 private val s = S().apply { inject() }
 
-private enum class OpenItem { USER_DROPDOWN }
+private enum class OpenItem { HAMBURGER, USER_DROPDOWN }
 
 private val component = functionalComponent<RProps> {
   val global = useGlobalState()
@@ -56,7 +55,7 @@ private val component = functionalComponent<RProps> {
   val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
   val features = checkNotNull(global.state.org.state).features
 
-  navbar(
+  hamburgerableNavbar(
     left = buildElements {
       headerGroup {
         features.default?.let { navLink<RProps>(to = it.path) { headerItem { +"Limber" } } }
@@ -73,15 +72,9 @@ private val component = functionalComponent<RProps> {
           userSubnav(onUnfocus = { setOpenItem(null) })
         }
       }
-    }
-  ) {
-    headerGroup {
-      features.forEach { feature ->
-        navLink<RProps>(to = feature.path) {
-          attrs.key = feature.guid
-          headerItem { +feature.name }
-        }
-      }
-    }
-  }
+    },
+    features = features,
+    hamburgerOpen = openItem == OpenItem.HAMBURGER,
+    onHamburger = { open -> setOpenItem(if (open) OpenItem.HAMBURGER else null) }
+  )
 }
