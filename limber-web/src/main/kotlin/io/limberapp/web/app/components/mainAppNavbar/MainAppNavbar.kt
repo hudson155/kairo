@@ -11,6 +11,7 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.gs
 import io.limberapp.web.util.initials
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
@@ -65,7 +66,7 @@ private val component = functionalComponent<RProps> {
       headerGroup {
         a(classes = cls(s.c { it::right }, s.c(openItem == OpenItem.USER_DROPDOWN) { it::openRight })) {
           attrs.onClickFunction = { setOpenItem(OpenItem.USER_DROPDOWN) }
-          headerItem { +name }
+          headerItem(classes = gs.c { it::hiddenXs }) { +name }
           profilePhoto(placeholder = name.initials, url = photoUrl, small = true)
         }
         if (openItem == OpenItem.USER_DROPDOWN) {

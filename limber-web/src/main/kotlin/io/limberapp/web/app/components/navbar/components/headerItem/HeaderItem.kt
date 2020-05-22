@@ -4,6 +4,7 @@ import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import kotlinx.css.*
 import react.*
 import react.dom.*
@@ -13,9 +14,11 @@ import react.dom.*
  *
  * [children] should just be some text.
  */
-internal fun RBuilder.headerItem(children: RHandler<RProps>) {
-  child(component, handler = children)
+internal fun RBuilder.headerItem(classes: String? = null, children: RHandler<RProps>) {
+  child(component, Props(classes), handler = children)
 }
+
+internal data class Props(val classes: String?) : RProps
 
 private class S : Styles("HeaderItem") {
   val container by css {
@@ -28,8 +31,8 @@ private class S : Styles("HeaderItem") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<RProps> { props ->
-  div(classes = s.c { it::container }) {
+private val component = functionalComponent<Props> { props ->
+  div(classes = cls(s.c { it::container }, props.classes)) {
     b { props.children() }
   }
 }
