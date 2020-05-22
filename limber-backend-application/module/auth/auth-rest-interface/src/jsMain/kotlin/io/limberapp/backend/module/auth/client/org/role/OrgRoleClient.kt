@@ -15,4 +15,8 @@ class OrgRoleClient(private val fetch: Fetch, private val json: Json) {
     val string = fetch(endpoint)
     return json.parse(string)
   }
+
+  suspend operator fun invoke(endpoint: OrgRoleApi.Delete) {
+    fetch(endpoint)
+  }
 }
