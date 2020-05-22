@@ -5,6 +5,11 @@ import org.w3c.dom.events.Event
 import react.*
 import kotlin.browser.document
 
+/**
+ * Listens for a click anywhere on the screen.
+ *
+ * [callback] is called when it occurs.
+ */
 internal fun useClickListener(dependencies: RDependenciesList, callback: (Event) -> Unit) {
   val handleClick = { event: Event -> callback(event) }
   useEffectWithCleanup(dependencies) {
