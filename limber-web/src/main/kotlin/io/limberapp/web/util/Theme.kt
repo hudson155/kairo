@@ -58,6 +58,7 @@ internal object Theme {
       val dark = jet
       val light = babyPowder
       val link = blue
+      val red = Color.red
     }
 
     object Background {

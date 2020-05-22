@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions
+package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleMemberCount
 
 import com.piperframework.util.slugify
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
@@ -11,11 +11,11 @@ import react.dom.td
 import react.router.dom.*
 
 /**
- * Portion of org roles table that shows the number of permissions, with a modal link.
+ * Portion of org roles table that shows the number of members, with a modal link.
  *
  * [orgRole] is the role to be represented by this component.
  */
-internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete) {
+internal fun RBuilder.orgRolesTableRoleMemberCount(orgRole: OrgRoleRep.Complete) {
   child(component, Props(orgRole))
 }
 
@@ -25,11 +25,11 @@ private val component = functionalComponent<Props> { props ->
   val match = checkNotNull(useRouteMatch<RProps>())
   td {
     navLink<RProps>(
-      to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.permissions.slugify()}",
+      to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.members.slugify()}",
       className = gs.c { it::link }
     ) {
-      +props.orgRole.permissions.size.let {
-        "$it ${"permissions".pluralize(it)}"
+      +props.orgRole.memberCount.let {
+        "$it ${"members".pluralize(it)}"
       }
     }
   }

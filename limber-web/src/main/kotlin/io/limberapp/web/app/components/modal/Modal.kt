@@ -17,16 +17,24 @@ import react.dom.*
  * If [blank] is set to true, no modal will be displayed, only the dimming background. This should only be used
  * transiently as something is loading.
  *
+ * If [narrow] is set to true, the modal will be barely wide enough to fit the content. Otherwise it will be a
+ * standardized width.
+ *
  * [onClose] is called in order to close the modal. The modal can't remove itself from the DOM, so this is called to
  * make the parent do so.
  *
  * [children] is the arbitrary content of the modal.
  */
-internal fun RBuilder.modal(blank: Boolean = false, onClose: () -> Unit, children: RHandler<Props>) {
-  child(component, Props(blank, onClose), handler = children)
+internal fun RBuilder.modal(
+  blank: Boolean = false,
+  narrow: Boolean = false,
+  onClose: () -> Unit,
+  children: RHandler<Props>
+) {
+  child(component, Props(blank, narrow, onClose), handler = children)
 }
 
-internal data class Props(val blank: Boolean, val onClose: () -> Unit) : RProps
+internal data class Props(val blank: Boolean, val narrow: Boolean, val onClose: () -> Unit) : RProps
 
 private class S : Styles("Modal") {
   val fullScreen by css {
@@ -49,11 +57,13 @@ private class S : Styles("Modal") {
   }
   val modal by css {
     zIndex = Theme.ZIndex.modalModal
-    width = 768.px
     borderRadius = Theme.Sizing.borderRadius
     margin(16.px)
     padding(24.px)
     backgroundColor = Theme.Color.Background.light
+  }
+  val fixedWidthModal by css {
+    width = 768.px
   }
 }
 
@@ -67,7 +77,7 @@ private val component = functionalComponent<Props> { props ->
       attrs.onClickFunction = { props.onClose() }
     }
     if (!props.blank) {
-      div(classes = s.c { it::modal }) {
+      div(classes = cls(s.c { it::modal }, if (!props.narrow) s.c { it::fixedWidthModal } else null)) {
         props.children()
       }
     }

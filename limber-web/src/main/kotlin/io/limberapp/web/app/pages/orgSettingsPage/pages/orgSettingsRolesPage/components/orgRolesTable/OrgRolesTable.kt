@@ -1,19 +1,14 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName.orgRolesTableRoleName
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter.orgRolesTableRoleDeleter
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleName.orgRolesTableRoleName
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
-import kotlinx.css.TableLayout
-import kotlinx.css.height
-import kotlinx.css.maxWidth
-import kotlinx.css.padding
-import kotlinx.css.px
-import kotlinx.css.tableLayout
-import kotlinx.css.width
+import kotlinx.css.*
 import react.*
 import react.dom.*
 
@@ -30,19 +25,20 @@ internal data class Props(val orgRoles: Set<OrgRoleRep.Complete>) : RProps
 
 private class S : Styles("OrgRolesTable") {
   val table by css {
-    tableLayout = TableLayout.fixed
     maxWidth = 768.px
-    kotlinx.css.th {
+    th {
       height = 24.px
       padding(4.px)
       nthChild("2") { width = 160.px }
       nthChild("3") { width = 160.px }
     }
-    kotlinx.css.td {
+    td {
       height = 24.px
       padding(4.px)
+      whiteSpace = WhiteSpace.nowrap
       nthChild("2") { width = 160.px }
       nthChild("3") { width = 160.px }
+      nthChild("4") { width = 32.px }
     }
   }
 }
@@ -61,6 +57,7 @@ private val component = functionalComponent<Props> { props ->
         th { +"Name" }
         th { +"Permissions" }
         th { +"Members" }
+        th {}
       }
     }
     tbody {
@@ -70,6 +67,7 @@ private val component = functionalComponent<Props> { props ->
           orgRolesTableRoleName(orgRole)
           orgRolesTableRolePermissions(orgRole)
           orgRolesTableRoleMemberCount(orgRole)
+          orgRolesTableRoleDeleter(orgRole)
         }
       }
     }
