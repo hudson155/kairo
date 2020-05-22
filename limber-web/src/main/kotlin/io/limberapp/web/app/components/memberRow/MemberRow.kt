@@ -48,6 +48,12 @@ private class S : Styles("MemberRow") {
   val clickable by css {
     cursor = Cursor.pointer
   }
+  val profilePhoto by css {
+    marginRight = 24.px
+  }
+  val profilePhotoSmall by css {
+    marginRight = 16.px
+  }
 }
 
 private val s = S().apply { inject() }
@@ -59,7 +65,8 @@ private val component = functionalComponent<Props> { props ->
       placeholder = props.user.fullName.initials,
       url = props.user.profilePhotoUrl,
       small = props.small,
-      grayscale = props.grayscale
+      grayscale = props.grayscale,
+      classes = cls(s.c { it::profilePhoto }, s.c(props.small) { it::profilePhotoSmall })
     )
     div { +props.user.fullName }
   }

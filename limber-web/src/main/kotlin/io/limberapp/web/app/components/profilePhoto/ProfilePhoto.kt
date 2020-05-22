@@ -21,34 +21,36 @@ import react.dom.*
  *
  * If [grayscale] is true, the profile photo will be shown in grayscale. This should be used to represent a disabled
  * state.
+ *
+ * [classes] is for CSS classes to apply.
  */
 internal fun RBuilder.profilePhoto(
   placeholder: String,
   url: String?,
   small: Boolean = false,
-  grayscale: Boolean = false
+  grayscale: Boolean = false,
+  classes: String? = null
 ) {
-  child(component, Props(placeholder, url, small, grayscale))
+  child(component, Props(placeholder, url, small, grayscale, classes))
 }
 
 internal data class Props(
   val placeholder: String,
   val url: String?,
   val small: Boolean,
-  val grayscale: Boolean
+  val grayscale: Boolean,
+  val classes: String?
 ) : RProps
 
 private class S : Styles("ProfilePhoto") {
   val container by css {
     position = Position.relative
-    marginRight = 24.px
     height = 48.px
     width = 48.px
     lineHeight = 48.px.lh
     textAlign = TextAlign.center
   }
   val small by css {
-    marginRight = 16.px
     height = 32.px
     width = 32.px
     lineHeight = 32.px.lh
@@ -79,7 +81,7 @@ private class S : Styles("ProfilePhoto") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(classes = cls(s.c { it::container }, s.c(props.small) { it::small })) {
+  div(classes = cls(s.c { it::container }, s.c(props.small) { it::small }, props.classes)) {
     div(classes = s.c { it::inner }) { +props.placeholder }
     props.url?.let { url ->
       img(src = url, classes = cls(s.c { it::img }, s.c(props.grayscale) { it::imgGrayscale })) {}

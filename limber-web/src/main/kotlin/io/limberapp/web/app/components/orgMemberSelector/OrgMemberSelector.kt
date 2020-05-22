@@ -67,6 +67,9 @@ private class S : Styles("OrgMemberSelector") {
       borderBottomStyle = BorderStyle.none
     }
   }
+  val profilePhoto by css {
+    marginRight = 24.px
+  }
 }
 
 private val s = S().apply { inject() }
@@ -120,7 +123,11 @@ private val component = functionalComponent<Props> { props ->
   val selectedUser = users[selectedUserGuid]
 
   div(classes = s.c { it::container }) {
-    profilePhoto(placeholder = selectedUser?.fullName?.initials ?: "", url = selectedUser?.profilePhotoUrl)
+    profilePhoto(
+      placeholder = selectedUser?.fullName?.initials ?: "",
+      url = selectedUser?.profilePhotoUrl,
+      classes = s.c { it::profilePhoto }
+    )
     div(classes = s.c { it::innerContainer }) {
       input(type = InputType.text, classes = s.c { it::input }) {
         attrs.autoFocus = true

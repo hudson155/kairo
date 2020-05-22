@@ -9,6 +9,11 @@ import kotlin.reflect.KProperty0
 internal val gs = GlobalStyles().apply { inject() }
 
 internal class GlobalStyles : Styles("Global") {
+  val hiddenXs by css {
+    media("(max-width: 767px)") {
+      display = Display.none
+    }
+  }
   val spinner by css {
     animation("spinner", duration = 1.2.s, timing = Timing.linear, iterationCount = IterationCount.infinite)
   }
