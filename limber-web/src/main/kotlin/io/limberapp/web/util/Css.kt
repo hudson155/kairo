@@ -8,9 +8,13 @@ import kotlin.reflect.KProperty0
 
 internal val gs = GlobalStyles().apply { inject() }
 
+internal fun CSSBuilder.xs(block: RuleSet) = media("(max-width: 767px)", block)
+
+internal fun CSSBuilder.notXs(block: RuleSet) = media("(min-width: 768px)", block)
+
 internal class GlobalStyles : Styles("Global") {
   val hiddenXs by css {
-    media("(max-width: 767px)") {
+    xs {
       display = Display.none
     }
   }
