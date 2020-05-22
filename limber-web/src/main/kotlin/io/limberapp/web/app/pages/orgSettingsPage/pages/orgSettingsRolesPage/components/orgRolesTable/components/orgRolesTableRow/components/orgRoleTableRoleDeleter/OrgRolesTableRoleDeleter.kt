@@ -64,7 +64,7 @@ private val component = functionalComponent<Props> { props ->
     }
     a(classes = s.c { it::icon }) {
       attrs.onClickFunction = { setState(State.CONFIRMING) }
-      inlineIcon("trash")
+      inlineIcon("trash-alt")
     }
   }
 }
