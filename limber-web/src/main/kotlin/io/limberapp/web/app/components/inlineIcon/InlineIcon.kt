@@ -3,8 +3,7 @@ package io.limberapp.web.app.components.inlineIcon
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
-import kotlinx.css.marginLeft
-import kotlinx.css.px
+import kotlinx.css.*
 import react.*
 import react.dom.*
 
@@ -13,17 +12,19 @@ import react.dom.*
  *
  * The [name] is any icon name (excluding the leading "fa-") https://fontawesome.com/icons?d=gallery&m=free.
  *
+ * If [withMargin] is true, the icon will have a small margin on the left side only. Otherwise it will have no margin.
+ *
  * [classes] are applied directly to the icon tag.
  *
  * Note that this isn't a component, it's actually just an extension function.
  */
-internal fun RBuilder.inlineIcon(name: String, classes: String? = null) {
+internal fun RBuilder.inlineIcon(name: String, withMargin: Boolean = false, classes: String? = null) {
   // TODO: It would be nice to use a less rough version of these icons than "fas", but "fas" is the only free version.
-  i(classes = cls(s.c { it::i }, "fas", "fa-$name", classes)) {}
+  i(classes = cls(s.c(withMargin) { it::margin }, "fas", "fa-$name", classes)) {}
 }
 
 private class S : Styles("InlineIcon") {
-  val i by css {
+  val margin by css {
     marginLeft = 6.px
   }
 }
