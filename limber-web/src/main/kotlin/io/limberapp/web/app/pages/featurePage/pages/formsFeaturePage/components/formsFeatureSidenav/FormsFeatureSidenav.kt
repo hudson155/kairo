@@ -21,8 +21,8 @@ private val component = functionalComponent<RProps> {
 
   sidenav(FormsFeaturePage.name) {
     sidenavGroup {
-      sidenavLink(to = match.path + FormInstancesListPage.subpath) { +FormInstancesListPage.name }
-      sidenavLink(to = match.path + FormTemplatesListPage.subpath) { +FormTemplatesListPage.name }
+      sidenavLink(FormInstancesListPage.name, to = match.path + FormInstancesListPage.subpath)
+      sidenavLink(FormTemplatesListPage.name, to = match.path + FormTemplatesListPage.subpath)
     }
   }
 }

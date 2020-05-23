@@ -21,7 +21,7 @@ internal class GlobalStyles : Styles("Global") {
     }
   }
   val visibleXs by css {
-    media("(min-width: 768px)") {
+    notXs {
       display = Display.none
     }
   }

@@ -7,18 +7,21 @@ import io.limberapp.web.util.c
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
+import react.dom.*
 import react.router.dom.*
 
 /**
  * A single link on a sidenav. This goes inside a [sidenavGroup].
  *
- * [children] should just be some text.
+ * [text] is the text to display.
+ *
+ * [to] is the path to link to, and is passed directly to the [navLink].
  */
-internal fun RBuilder.sidenavLink(to: String, children: RHandler<Props>) {
-  child(component, Props(to), handler = children)
+internal fun RBuilder.sidenavLink(text: String, to: String) {
+  child(component, Props(text, to))
 }
 
-internal data class Props(val to: String) : RProps
+internal data class Props(val text: String, val to: String) : RProps
 
 private class S : Styles("SidenavLink") {
   val navLink by css {
@@ -45,7 +48,8 @@ private val component = functionalComponent<Props> { props ->
   navLink<RProps>(
     to = props.to,
     className = s.c { it::navLink },
-    activeClassName = s.c { it::activeNavLink }) {
-    props.children()
+    activeClassName = s.c { it::activeNavLink }
+  ) {
+    span { +props.text }
   }
 }

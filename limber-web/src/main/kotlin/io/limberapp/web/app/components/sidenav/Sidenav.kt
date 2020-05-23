@@ -1,17 +1,19 @@
 package io.limberapp.web.app.components.sidenav
 
 import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
-import io.limberapp.web.app.components.sidenav.components.sidenavItem.sidenavItem
+import io.limberapp.web.app.components.sidenav.components.sidenavHeader.sidenavHeader
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import kotlinx.css.*
 import react.*
 import react.dom.*
+import react.router.dom.*
 
 /**
- * Sidenav for navigation within a feature.
+ * Sidenav for navigation within a feature. Sidenavs are not collapsable on large screen sizes, but are collapsable on
+ * small screen sizes.
  *
- * The [title] is shown in its own [sidenavGroup] above everything else.
+ * The [title] is shown in the header above everything else, and manages collapsibility.
  *
  * [children] should be a series of [sidenavGroup]s.
  */
@@ -31,8 +33,17 @@ private class S : Styles("Sidenav") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
+  val location = useLocation()
+
+  val (isOpen, setIsOpen) = useState(false)
+
+  // Closes the dropdown when the path changes.
+  useEffect(listOf(location.pathname)) {
+    setIsOpen(false)
+  }
+
   div(classes = s.c { it::container }) {
-    sidenavGroup { sidenavItem { b { +props.title } } }
-    props.children()
+    sidenavHeader(props.title, isOpen = isOpen, onClick = { setIsOpen(!isOpen) })
+    if (isOpen) props.children()
   }
 }

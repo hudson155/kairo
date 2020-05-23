@@ -18,8 +18,8 @@ internal fun RBuilder.orgSettingsSidenav() {
 private val component = functionalComponent<RProps> {
   sidenav(OrgSettingsPage.name) {
     sidenavGroup {
-      sidenavLink(to = OrgSettingsInfoPage.path) { +OrgSettingsInfoPage.name }
-      sidenavLink(to = OrgSettingsRolesPage.path) { +OrgSettingsRolesPage.name }
+      sidenavLink(OrgSettingsInfoPage.name, to = OrgSettingsInfoPage.path)
+      sidenavLink(OrgSettingsRolesPage.name, to = OrgSettingsRolesPage.path)
     }
   }
 }
