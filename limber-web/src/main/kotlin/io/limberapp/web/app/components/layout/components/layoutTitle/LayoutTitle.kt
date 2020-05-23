@@ -29,7 +29,7 @@ private class S : Styles("LayoutTitle") {
     marginBottom = 48.px
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     xs {
-      marginBottom = 24.px
+      marginBottom = 12.px
     }
   }
   val title by css {
