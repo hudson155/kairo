@@ -35,6 +35,33 @@ main {
     flex-direction: column;
 }
 
+h1 {
+    font-size: 2em;
+}
+@media (max-width: 767px) {
+    h1 {
+        font-size: 1.5em;
+    }
+}
+
+h2 {
+    font-size: 1.6em;
+}
+@media (max-width: 767px) {
+    h2 {
+        font-size: 1.3em;
+    }
+}
+
+h3 {
+    font-size: 1.2em;
+}
+@media (max-width: 767px) {
+    h3 {
+        font-size: 1.1em;
+    }
+}
+
 a {
     color: unset;
     text-decoration: unset;
