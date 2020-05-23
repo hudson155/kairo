@@ -3,6 +3,7 @@ package io.limberapp.web.app.components.layout.components.layoutTitle
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.xs
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -27,6 +28,9 @@ private class S : Styles("LayoutTitle") {
   val container by css {
     marginBottom = 48.px
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    xs {
+      marginBottom = 12.px
+    }
   }
   val title by css {
     marginTop = 0.px
