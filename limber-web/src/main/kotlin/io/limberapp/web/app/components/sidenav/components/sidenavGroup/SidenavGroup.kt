@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavGroup
 
-import io.limberapp.web.app.components.sidenav.components.sidenavItem.sidenavItem
+import io.limberapp.web.app.components.sidenav.components.sidenavLink.sidenavLink
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -13,7 +13,7 @@ import react.dom.*
  * A group of items on a sidenav. Items in the same group should be conceptually grouped. The physical spacing between
  * them will be less for items in the same group than for items in different groups.
  *
- * [children] should be a series of [sidenavItem]s, probably including some <a> tags.
+ * [children] should be a series of [sidenavLink]s, probably including some <a> tags.
  */
 internal fun RBuilder.sidenavGroup(children: RHandler<RProps>) {
   child(component, handler = children)
