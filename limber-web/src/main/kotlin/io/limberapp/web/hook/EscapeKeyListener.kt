@@ -7,6 +7,11 @@ import org.w3c.dom.events.Event
 import react.*
 import kotlin.browser.document
 
+/**
+ * Listens for the escape key to be pressed.
+ *
+ * [callback] is called when it occurs.
+ */
 internal fun useEscapeKeyListener(dependencies: RDependenciesList, callback: (Event) -> Unit) {
   val onEscape = { event: Event ->
     if (event.keyCode == KeyCode.escape) {

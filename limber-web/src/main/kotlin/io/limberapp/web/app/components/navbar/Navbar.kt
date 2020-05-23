@@ -5,17 +5,9 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
-import io.limberapp.web.util.gs
-import kotlinx.css.Display
-import kotlinx.css.JustifyContent
-import kotlinx.css.backgroundColor
-import kotlinx.css.display
-import kotlinx.css.height
-import kotlinx.css.justifyContent
-import kotlinx.css.padding
-import kotlinx.css.px
+import kotlinx.css.*
 import react.*
-import react.dom.div
+import react.dom.*
 
 /**
  * Generic top-of-page navbar that supports a [left] section, [right] section, and [children] as a left-aligned section
@@ -27,8 +19,7 @@ import react.dom.div
  * The [right] shows up on the far right side of the navbar. It always shows up, even on small screen sizes.
  *
  * Typically, [children] would be used for actual navigation links. On large screen sizes, it shows up just to the right
- * of [left]. It should be a series of [headerGroup]s. It does not show up by default on small screen sizes, and is
- * instead accessible in a hamburger menu.
+ * of [left]. It should be a series of [headerGroup]s.
  */
 internal fun RBuilder.navbar(left: ReactElement?, right: ReactElement?, children: RHandler<Props>) {
   child(component, Props(left, right), handler = children)
@@ -60,7 +51,7 @@ private val component = functionalComponent<Props> { props ->
       div(classes = s.c { it::subsection }) {
         props.left?.let { child(it) }
       }
-      div(classes = cls(s.c { it::subsection }, gs.c { it::hiddenXs })) {
+      div(classes = cls(s.c { it::subsection })) {
         props.children()
       }
     }

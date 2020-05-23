@@ -123,20 +123,20 @@ private val component = functionalComponent<Props> { props ->
         State.DISPLAYING -> {
           a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onEditClicked
-            inlineIcon("edit")
+            inlineIcon("edit", withMargin = true)
           }
         }
         State.EDITING -> {
           a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onCancelEdit
-            inlineIcon("times-circle")
+            inlineIcon("times-circle", withMargin = true)
           }
           a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onSubmit
-            inlineIcon("save")
+            inlineIcon("save", withMargin = true)
           }
         }
-        State.SAVING -> inlineIcon("spinner", classes = gs.c { it::spinner })
+        State.SAVING -> inlineIcon("spinner", withMargin = true, classes = gs.c { it::spinner })
       }
     }
   }
