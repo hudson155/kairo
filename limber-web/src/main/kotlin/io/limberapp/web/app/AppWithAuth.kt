@@ -1,9 +1,7 @@
 package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
-import io.limberapp.web.app.components.basicNavbar.basicNavbar
-import io.limberapp.web.app.components.footer.footer
-import io.limberapp.web.app.components.page.page
+import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.json
@@ -55,9 +53,7 @@ private val component = functionalComponent<RProps> {
   // While the tenant is loading, show the loading page.
   val tenant = global.state.tenant.let { loadableState ->
     if (!loadableState.isLoaded) {
-      page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
-        loadingPage("Loading tenant...")
-      }
+      minimalPage { loadingPage("Loading tenant...") }
       return@functionalComponent
     }
     return@let checkNotNull(loadableState.state)

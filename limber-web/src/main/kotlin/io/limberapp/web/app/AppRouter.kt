@@ -1,9 +1,6 @@
 package io.limberapp.web.app
 
-import io.limberapp.web.app.components.basicNavbar.basicNavbar
-import io.limberapp.web.app.components.footer.footer
-import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
-import io.limberapp.web.app.components.page.page
+import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.signInPage.SignInPage
 import io.limberapp.web.app.pages.signInPage.signInPage
@@ -29,9 +26,7 @@ private val component = functionalComponent<RProps> {
 
   // While auth is loading, show the loading page.
   if (auth.isLoading) {
-    page(header = buildElement { basicNavbar() }, footer = buildElement { footer() }) {
-      loadingPage("Identifying you...")
-    }
+    minimalPage { loadingPage("Identifying you...") }
     return@functionalComponent
   }
 
@@ -42,23 +37,7 @@ private val component = functionalComponent<RProps> {
       if (auth.isAuthenticated) {
         route(path = rootPath) { buildElement { appFeatureRouter() } }
       } else {
-        route(path = rootPath) {
-          buildElement {
-            page(
-              header = buildElement {
-                basicNavbar {
-                  navLink<RProps>(
-                    to = SignInPage.path,
-                    exact = true
-                  ) { headerItem { +SignInPage.name } }
-                }
-              },
-              footer = buildElement { footer() }
-            ) {
-              unauthenticatedPage()
-            }
-          }
-        }
+        route(path = rootPath) { buildElement { minimalPage(withSignInLink = true) { unauthenticatedPage() } } }
       }
     }
   }
