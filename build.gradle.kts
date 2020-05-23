@@ -34,5 +34,6 @@ subprojects {
   tasks.withType<KotlinCompile<*>>().configureEach {
     (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlinx.serialization.ImplicitReflectionSerializer"
+    kotlinOptions.freeCompilerArgs += "-Xallow-result-return-type"
   }
 }

@@ -8,12 +8,12 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 
 class FormInstanceClient(private val fetch: Fetch, private val json: Json) {
   suspend operator fun invoke(endpoint: FormInstanceApi.Post): FormInstanceRep.Complete {
-    val string = fetch(endpoint)
+    val string = fetch(endpoint).getOrThrow()
     return json.parse(string)
   }
 
   suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
-    val string = fetch(endpoint)
+    val string = fetch(endpoint).getOrThrow()
     return json.parseSet(string)
   }
 
