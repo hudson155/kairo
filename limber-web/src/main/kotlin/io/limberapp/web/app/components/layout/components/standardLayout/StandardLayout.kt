@@ -2,6 +2,8 @@ package io.limberapp.web.app.components.layout.components.standardLayout
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
+import io.limberapp.web.util.notXs
+import io.limberapp.web.util.xs
 import kotlinx.css.*
 import react.*
 import react.dom.*
@@ -26,18 +28,28 @@ private class S : Styles("StandardLayout") {
     flexDirection = FlexDirection.row
     justifyContent = JustifyContent.center
     margin(16.px)
-    paddingTop = 32.px
+    notXs {
+      paddingTop = 32.px
+    }
   }
   val innerContainer by css {
     flexBasis = 1200.px.basis
     display = Display.flex
     flexDirection = FlexDirection.row
+    xs {
+      flexDirection = FlexDirection.column
+    }
   }
   val leftPane by css {
-    flexBasis = 256.px.basis
     display = Display.flex
     flexDirection = FlexDirection.column
-    marginRight = 48.px
+    notXs {
+      flexBasis = 256.px.basis
+      marginRight = 48.px
+    }
+    xs {
+      marginBottom = 16.px
+    }
   }
   val mainContent by css {
     flexGrow = 1.0
