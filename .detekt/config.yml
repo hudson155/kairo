@@ -12,6 +12,8 @@ console-reports:
 
 comments:
   active: true
+  AbsentOrWrongFileLicense:
+    active: false
   CommentOverPrivateFunction:
     active: false
   CommentOverPrivateProperty:
@@ -34,6 +36,7 @@ complexity:
     active: true
     threshold: 10
     includeStaticDeclarations: false
+    includePrivateDeclarations: false
   ComplexMethod:
     active: true
     threshold: 16
@@ -50,9 +53,7 @@ complexity:
     excludes: "**/src/test/**/*Test.kt"
     threshold: 60
   LongParameterList:
-    active: true
-    threshold: 6
-    ignoreDefaultParameters: false
+    active: false
   MethodOverloading:
     active: true
     threshold: 8
@@ -77,6 +78,13 @@ complexity:
     ignorePrivate: false
     ignoreOverridden: false
 
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
+  RedundantSuspendModifier:
+    active: true
+
 empty-blocks:
   active: true
   EmptyCatchBlock:
@@ -96,7 +104,7 @@ empty-blocks:
     active: true
   EmptyFunctionBlock:
     active: true
-    ignoreOverriddenFunctions: false
+    ignoreOverridden: false
   EmptyIfBlock:
     active: true
   EmptyInitBlock:
@@ -104,6 +112,8 @@ empty-blocks:
   EmptyKtFile:
     active: true
   EmptySecondaryConstructor:
+    active: true
+  EmptyTryBlock:
     active: true
   EmptyWhenBlock:
     active: true
@@ -127,6 +137,7 @@ exceptions:
     ignoreLabeled: false
   SwallowedException:
     active: true
+    ignoredExceptionTypes: []
   ThrowingExceptionFromFinally:
     active: true
   ThrowingExceptionInMain:
@@ -138,22 +149,8 @@ exceptions:
   TooGenericExceptionCaught:
     active: true
     excludes: "**/src/test/**/*Test.kt"
-    exceptionNames:
-      - ArrayIndexOutOfBoundsException
-      - Error
-      - Exception
-      - IllegalMonitorStateException
-      - NullPointerException
-      - IndexOutOfBoundsException
-      - RuntimeException
-      - Throwable
   TooGenericExceptionThrown:
     active: true
-    exceptionNames:
-      - Error
-      - Exception
-      - Throwable
-      - RuntimeException
 
 formatting:
   active: true
@@ -164,10 +161,13 @@ formatting:
     active: true
   CommentSpacing:
     active: true
+  EnumEntryNameCase:
+    active: true
   Filename:
     active: true
   FinalNewline:
     active: true
+    insertFinalNewLine: false
   ImportOrdering:
     active: true
   Indentation:
@@ -186,6 +186,8 @@ formatting:
   NoConsecutiveBlankLines:
     active: true
   NoEmptyClassBody:
+    active: true
+  NoEmptyFirstLineInMethodBlock:
     active: true
   NoLineBreakAfterElse:
     active: true
@@ -249,11 +251,12 @@ naming:
     ignoreOverridden: true
   FunctionParameterNaming:
     active: true
-    ignoreOverriddenFunctions: true
+    ignoreOverridden: true
   InvalidPackageDeclaration:
     active: true
   MatchingDeclarationName:
     active: true
+    mustBeFirst: true
   MemberNameEqualsClassName:
     active: false
   ObjectPropertyNaming:
@@ -315,10 +318,14 @@ potential-bugs:
     active: true
   UnconditionalJumpStatementInLoop:
     active: true
+  UnnecessaryNotNullOperator:
+    active: true
+  UnnecessarySafeCall:
+    active: true
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
-    active: false
+    active: true
   UnsafeCast:
     active: true
     excludes: "**/src/test/**/*Test.kt"
@@ -338,6 +345,8 @@ style:
   EqualsNullCall:
     active: true
   EqualsOnSignatureLine:
+    active: true
+  ExplicitCollectionElementAccessMethod:
     active: true
   ExplicitItLambdaParameter:
     active: true
@@ -378,6 +387,8 @@ style:
     ignoreEnums: false
     ignoreRanges: false
   MandatoryBracesIfStatements:
+    active: false
+  MandatoryBracesLoops:
     active: false
   MaxLineLength:
     active: true
@@ -450,6 +461,7 @@ style:
     active: true
   UseDataClass:
     active: false
+    allowVars: false
   UseIfInsteadOfWhen:
     active: true
   UseRequire:
