@@ -1,3 +1,5 @@
+@file:Suppress("FunctionMinLength")
+
 package io.limberapp.web.util
 
 import kotlinx.css.*
@@ -78,11 +80,9 @@ internal class GlobalStyles : Styles("Global") {
   }
 }
 
-@Suppress("FunctionMinLength")
 internal fun <T : StyleSheet> T.c(condition: Boolean, getClass: (T) -> KProperty0<RuleSet>) =
   if (condition) c(getClass) else null
 
-@Suppress("FunctionMinLength")
 internal fun <T : StyleSheet> T.c(getClass: (T) -> KProperty0<RuleSet>) = getClassName(getClass)
 
 internal fun cls(vararg classes: String?) = classes.filterNotNull().joinToString(" ")
