@@ -7,7 +7,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRe
 
 class FormInstanceQuestionClient(private val fetch: Fetch, private val json: Json) {
   suspend operator fun invoke(endpoint: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
-    val string = fetch(endpoint)
+    val string = fetch(endpoint).getOrThrow()
     return json.parse(string)
   }
 
