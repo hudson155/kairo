@@ -11,6 +11,7 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
+import io.limberapp.web.util.gs
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.*
@@ -58,7 +59,7 @@ private val component = functionalComponent<Props> { props ->
     }
   }
 
-  td {
+  td(classes = gs.c { it::hiddenXs }) {
     if (state == State.CONFIRMING) {
       orgRolesTableRoleDeleterModal(props.orgRole.name, onDelete = onDelete, onCancel = { setState(State.DEFAULT) })
     }

@@ -8,6 +8,8 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
+import io.limberapp.web.util.gs
+import io.limberapp.web.util.notXs
 import kotlinx.css.*
 import react.*
 import react.dom.*
@@ -29,16 +31,19 @@ private class S : Styles("OrgRolesTable") {
     th {
       height = 24.px
       padding(4.px)
-      nthChild("2") { width = 160.px }
-      nthChild("3") { width = 160.px }
+      notXs {
+        nthChild("2") { width = 160.px }
+        nthChild("3") { width = 160.px }
+      }
     }
     td {
       height = 24.px
       padding(4.px)
-      whiteSpace = WhiteSpace.nowrap
-      nthChild("2") { width = 160.px }
-      nthChild("3") { width = 160.px }
-      nthChild("4") { width = 32.px }
+      notXs {
+        nthChild("2") { width = 160.px }
+        nthChild("3") { width = 160.px }
+        nthChild("4") { width = 32.px }
+      }
     }
   }
 }
@@ -51,8 +56,10 @@ private val component = functionalComponent<Props> { props ->
     return@functionalComponent
   }
 
+  p(classes = gs.c { it::visibleXs }) { +"Visit this page on a larger device to edit the roles." }
+
   table(classes = s.c { it::table }) {
-    thead {
+    thead(classes = gs.c { it::hiddenXs }) {
       tr {
         th { +"Name" }
         th { +"Permissions" }

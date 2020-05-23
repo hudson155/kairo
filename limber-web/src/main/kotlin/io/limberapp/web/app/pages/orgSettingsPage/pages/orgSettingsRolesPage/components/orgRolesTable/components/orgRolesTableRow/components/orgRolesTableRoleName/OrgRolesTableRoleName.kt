@@ -10,6 +10,7 @@ import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetValue
 import io.limberapp.web.util.useIsMounted
@@ -121,22 +122,22 @@ private val component = functionalComponent<Props> { props ->
       }
       when (state) {
         State.DISPLAYING -> {
-          a(classes = s.c { it::icon }) {
+          a(classes = cls(gs.c { it::hiddenXs }, s.c { it::icon })) {
             attrs.onClickFunction = onEditClicked
-            inlineIcon("edit", withMargin = true)
+            inlineIcon("edit", leftMargin = true)
           }
         }
         State.EDITING -> {
           a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onCancelEdit
-            inlineIcon("times-circle", withMargin = true)
+            inlineIcon("times-circle", leftMargin = true)
           }
           a(classes = s.c { it::icon }) {
             attrs.onClickFunction = onSubmit
-            inlineIcon("save", withMargin = true)
+            inlineIcon("save", leftMargin = true)
           }
         }
-        State.SAVING -> inlineIcon("spinner", withMargin = true, classes = gs.c { it::spinner })
+        State.SAVING -> inlineIcon("spinner", leftMargin = true, classes = gs.c { it::spinner })
       }
     }
   }
