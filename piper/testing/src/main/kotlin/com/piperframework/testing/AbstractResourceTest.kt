@@ -17,7 +17,7 @@ import java.time.ZoneId
 abstract class AbstractResourceTest {
   protected val config = object : Config {
     override val authentication =
-      AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt))
+      AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt(leeway = 0)))
 
     override val hashing = HashingConfig(logRounds = 4)
 
