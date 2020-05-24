@@ -1,6 +1,10 @@
 package io.limberapp.web.context
 
-internal data class LoadableState<State : Any>(val loadingStatus: LoadingStatus, val state: State?) {
+internal data class LoadableState<State : Any>(
+  val loadingStatus: LoadingStatus,
+  val state: State?,
+  val errorMessage: String? = null
+) {
   enum class LoadingStatus { INITIAL, LOADING, LOADED }
 
   val hasBegunLoading = loadingStatus != LoadingStatus.INITIAL
@@ -11,7 +15,13 @@ internal data class LoadableState<State : Any>(val loadingStatus: LoadingStatus,
 
   fun loaded(state: State) = copy(
     loadingStatus = LoadingStatus.LOADED,
-    state = state
+    state = state,
+    errorMessage = null
+  )
+
+  fun error(errorMessage: String?) = copy(
+    loadingStatus = LoadingStatus.LOADED,
+    errorMessage = errorMessage ?: "An unexpected error occurred."
   )
 
   fun update(function: (State?) -> State) = copy(state = function(state))
