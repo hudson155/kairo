@@ -12,18 +12,23 @@ import com.piperframework.config.ConfigString
 )
 sealed class AuthenticationMechanism {
   abstract val issuer: String?
+  abstract val leeway: Long
 
   data class Jwk(
     override val issuer: String,
+    override val leeway: Long,
     val domain: String
   ) : AuthenticationMechanism()
 
   data class Jwt(
     override val issuer: String,
+    override val leeway: Long,
     val secret: ConfigString
   ) : AuthenticationMechanism()
 
-  object UnsignedJwt : AuthenticationMechanism() {
+  data class UnsignedJwt(
+    override val leeway: Long
+  ) : AuthenticationMechanism() {
     override val issuer: Nothing? = null
   }
 }
