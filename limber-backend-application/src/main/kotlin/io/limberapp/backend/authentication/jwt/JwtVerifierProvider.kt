@@ -15,12 +15,12 @@ internal class StaticJwtVerifierProvider(private val jwtVerifier: JWTVerifier) :
   override fun get(keyId: String?) = jwtVerifier
 }
 
-internal class UrlJwtVerifierProvider(domain: String) : JwtVerifierProvider() {
+internal class UrlJwtVerifierProvider(domain: String, private val leeway: Long) : JwtVerifierProvider() {
   private val jwkProvider = UrlJwkProvider(domain)
 
   override fun get(keyId: String?): JWTVerifier {
     val algorithm = jwkProvider.get(keyId).makeAlgorithm()
-    return JWT.require(algorithm).build()
+    return JWT.require(algorithm).acceptLeeway(leeway).build()
   }
 }
 
