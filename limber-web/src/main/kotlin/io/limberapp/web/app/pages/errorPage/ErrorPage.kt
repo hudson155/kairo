@@ -25,6 +25,7 @@ private class S : Styles("ErrorPage") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
+  // TODO: Add error logging in this component, and in other places in the app.
   centeredContentLayout {
     div(classes = s.c { it::container }) {
       h1 { +props.title }
