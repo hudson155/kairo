@@ -3,6 +3,7 @@ package io.limberapp.web.app
 import io.limberapp.backend.module.orgs.rep.org.default
 import io.limberapp.web.app.components.footer.footer
 import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
+import io.limberapp.web.app.components.minimalPage.LinkType
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.featurePage.featurePage
@@ -41,7 +42,7 @@ private val component = functionalComponent<RProps> {
   // While the org is loading, show the loading page.
   global.state.org.let { loadableState ->
     if (!loadableState.isLoaded) {
-      minimalPage(withSignOutLink = true) { loadingPage("Loading org...") }
+      minimalPage(linkType = LinkType.SIGN_OUT) { loadingPage("Loading org...") }
       return@functionalComponent
     }
   }
@@ -49,7 +50,7 @@ private val component = functionalComponent<RProps> {
   // While the user is loading, show the loading page.
   global.state.user.let { loadableState ->
     if (!loadableState.isLoaded) {
-      minimalPage(withSignOutLink = true) { loadingPage("Loading user...") }
+      minimalPage(linkType = LinkType.SIGN_OUT) { loadingPage("Loading user...") }
       return@functionalComponent
     }
   }

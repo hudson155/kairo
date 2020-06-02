@@ -1,5 +1,6 @@
 package io.limberapp.web.app
 
+import io.limberapp.web.app.components.minimalPage.LinkType
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.signInPage.SignInPage
@@ -26,7 +27,7 @@ private val component = functionalComponent<RProps> {
 
   // While auth is loading, show the loading page.
   if (auth.isLoading) {
-    minimalPage { loadingPage("Identifying you...") }
+    minimalPage(linkType = null) { loadingPage("Identifying you...") }
     return@functionalComponent
   }
 
@@ -37,7 +38,7 @@ private val component = functionalComponent<RProps> {
       if (auth.isAuthenticated) {
         route(path = rootPath) { buildElement { appFeatureRouter() } }
       } else {
-        route(path = rootPath) { buildElement { minimalPage(withSignInLink = true) { unauthenticatedPage() } } }
+        route(path = rootPath) { buildElement { minimalPage(linkType = LinkType.SIGN_IN) { unauthenticatedPage() } } }
       }
     }
   }

@@ -53,7 +53,7 @@ private val component = functionalComponent<RProps> {
   // While the tenant is loading, show the loading page.
   val tenant = global.state.tenant.let { loadableState ->
     if (!loadableState.isLoaded) {
-      minimalPage { loadingPage("Loading tenant...") }
+      minimalPage(linkType = null) { loadingPage("Loading tenant...") }
       return@functionalComponent
     }
     return@let checkNotNull(loadableState.state)
