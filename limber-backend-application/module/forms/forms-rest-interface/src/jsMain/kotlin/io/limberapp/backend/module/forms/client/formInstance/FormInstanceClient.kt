@@ -7,19 +7,14 @@ import io.limberapp.backend.module.forms.client.formInstance.question.FormInstan
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 
 class FormInstanceClient(private val fetch: Fetch, private val json: Json) {
-  suspend operator fun invoke(endpoint: FormInstanceApi.Post): FormInstanceRep.Complete {
-    val string = fetch(endpoint) { it }.getOrThrow()
-    return json.parse(string)
-  }
+  suspend operator fun invoke(endpoint: FormInstanceApi.Post) =
+    fetch(endpoint) { json.parse<FormInstanceRep.Complete>(it) }
 
-  suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
-    val string = fetch(endpoint) { it }.getOrThrow()
-    return json.parseSet(string)
-  }
+  suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid) =
+    fetch(endpoint) { json.parseSet<FormInstanceRep.Summary>(it) }
 
-  suspend operator fun invoke(endpoint: FormInstanceApi.Delete) {
-    fetch(endpoint) { it }
-  }
+  suspend operator fun invoke(endpoint: FormInstanceApi.Delete) =
+    fetch(endpoint)
 
   val questions = FormInstanceQuestionClient(fetch, json)
 }
