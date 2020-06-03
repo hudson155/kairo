@@ -12,6 +12,8 @@ internal sealed class UsersAction : Action() {
   internal object BeginLoading : UsersAction()
 
   internal data class SetValue(val users: Set<UserRep.Summary>) : UsersAction()
+
+  internal data class SetError(val errorMessage: String?) : UsersAction()
 }
 
 internal fun EnsureLoadedContext.ensureUsersLoaded(orgGuid: UUID) {
@@ -19,8 +21,10 @@ internal fun EnsureLoadedContext.ensureUsersLoaded(orgGuid: UUID) {
     if (global.state.users.hasBegunLoading) return@useEffect
     global.dispatch(UsersAction.BeginLoading)
     async {
-      val users = api.users(UserApi.GetByOrgGuid(orgGuid))
-      global.dispatch(UsersAction.SetValue(users))
+      api.users(UserApi.GetByOrgGuid(orgGuid)).fold(
+        onSuccess = { users -> global.dispatch(UsersAction.SetValue(users)) },
+        onFailure = { global.dispatch(UsersAction.SetError(it.message)) }
+      )
     }
   }
 }

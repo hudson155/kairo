@@ -77,7 +77,7 @@ private val component = functionalComponent<Props> { props ->
   val users = global.state.users.let { loadableState ->
     when (loadableState) {
       is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
-      is LoadableState.Error -> TODO()
+      is LoadableState.Error -> return@functionalComponent failedToLoad("users")
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

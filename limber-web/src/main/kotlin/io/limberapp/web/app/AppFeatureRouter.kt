@@ -58,9 +58,16 @@ private val component = functionalComponent<RProps> {
 
   // While the user is loading, show the loading page.
   global.state.user.let { loadableState ->
-    if (!loadableState.isLoaded) {
-      minimalPage(linkType = LinkType.SIGN_OUT) { loadingPage("Loading user...") }
-      return@functionalComponent
+    when (loadableState) {
+      is LoadableState.Unloaded -> {
+        minimalPage(linkType = null) { loadingPage("Loading user...") }
+        return@functionalComponent
+      }
+      is LoadableState.Error -> {
+        minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("user") }
+        return@functionalComponent
+      }
+      is LoadableState.Loaded -> Unit
     }
   }
 
