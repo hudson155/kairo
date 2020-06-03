@@ -6,8 +6,6 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 
 class TenantClient(private val fetch: Fetch, private val json: Json) {
-  suspend operator fun invoke(endpoint: TenantApi.GetByDomain): TenantRep.Complete {
-    val string = fetch(endpoint) { it }.getOrThrow()
-    return json.parse(string)
-  }
+  suspend operator fun invoke(endpoint: TenantApi.GetByDomain) =
+    fetch(endpoint) { json.parse<TenantRep.Complete>(it) }
 }

@@ -11,6 +11,8 @@ internal sealed class TenantAction : Action() {
   internal object BeginLoading : TenantAction()
 
   internal data class SetValue(val tenant: TenantRep.Complete) : TenantAction()
+
+  internal data class SetError(val errorMessage: String?) : TenantAction()
 }
 
 internal fun EnsureLoadedContext.ensureTenantLoaded(domain: String) {
@@ -18,8 +20,10 @@ internal fun EnsureLoadedContext.ensureTenantLoaded(domain: String) {
     if (global.state.tenant.hasBegunLoading) return@useEffect
     global.dispatch(TenantAction.BeginLoading)
     async {
-      val tenant = api.tenants(TenantApi.GetByDomain(domain))
-      global.dispatch(TenantAction.SetValue(tenant))
+      api.tenants(TenantApi.GetByDomain(domain)).fold(
+        onSuccess = { tenant -> global.dispatch(TenantAction.SetValue(tenant)) },
+        onFailure = { global.dispatch(TenantAction.SetError(it.message)) }
+      )
     }
   }
 }

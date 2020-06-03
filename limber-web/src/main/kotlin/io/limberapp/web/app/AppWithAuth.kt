@@ -2,6 +2,7 @@ package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
 import io.limberapp.web.app.components.minimalPage.minimalPage
+import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.Api
@@ -58,7 +59,10 @@ private val component = functionalComponent<RProps> {
         minimalPage(linkType = null) { loadingPage("Loading tenant...") }
         return@functionalComponent
       }
-      is LoadableState.Error -> TODO()
+      is LoadableState.Error -> {
+        minimalPage(linkType = null) { failedToLoadPage("tenant") }
+        return@functionalComponent
+      }
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }
