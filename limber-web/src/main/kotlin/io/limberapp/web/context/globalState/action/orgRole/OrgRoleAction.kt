@@ -16,6 +16,8 @@ internal sealed class OrgRoleAction : Action() {
   internal data class UpdateValue(val orgRole: OrgRoleRep.Complete) : OrgRoleAction()
 
   internal data class DeleteValue(val orgRoleGuid: UUID) : OrgRoleAction()
+
+  internal data class SetError(val errorMessage: String?) : OrgRoleAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgRolesLoaded(orgGuid: UUID) {
@@ -23,8 +25,10 @@ internal fun EnsureLoadedContext.ensureOrgRolesLoaded(orgGuid: UUID) {
     if (global.state.orgRoles.hasBegunLoading) return@useEffect
     global.dispatch(OrgRoleAction.BeginLoading)
     async {
-      val orgRoles = api.orgRoles(OrgRoleApi.GetByOrgGuid(orgGuid))
-      global.dispatch(OrgRoleAction.SetValue(orgRoles))
+      api.orgRoles(OrgRoleApi.GetByOrgGuid(orgGuid)).fold(
+        onSuccess = { orgRoles -> global.dispatch(OrgRoleAction.SetValue(orgRoles)) },
+        onFailure = { global.dispatch(OrgRoleAction.SetError(it.message)) }
+      )
     }
   }
 }

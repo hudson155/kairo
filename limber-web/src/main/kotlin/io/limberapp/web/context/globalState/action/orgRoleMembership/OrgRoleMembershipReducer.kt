@@ -25,5 +25,10 @@ internal fun orgRoleMembershipReducer(state: GlobalStateContext, action: OrgRole
           .update { it.orEmpty().minus(action.accountGuid) }
       )
     )
+    is OrgRoleMembershipAction.SetError -> state.copy(
+      orgRoleMemberships = state.orgRoleMemberships.plus(
+        action.orgRoleGuid to LoadableState.Error(action.errorMessage)
+      )
+    )
   }
 }

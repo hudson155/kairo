@@ -91,14 +91,16 @@ private val component = functionalComponent<Props> { props ->
     event.preventDefault()
     setState(State.SAVING)
     async {
-      val orgRole = api.orgRoles(
+      api.orgRoles(
         endpoint = OrgRoleApi.Patch(
           orgGuid = orgGuid,
           orgRoleGuid = props.orgRole.guid,
           rep = OrgRoleRep.Update(name = editValue)
         )
+      ).fold(
+        onSuccess = { orgRole -> global.dispatch(OrgRoleAction.UpdateValue(orgRole)) },
+        onFailure = { global.dispatch(OrgRoleAction.SetError(it.message)) }
       )
-      global.dispatch(OrgRoleAction.UpdateValue(orgRole))
       if (isMounted.current) setState(State.DISPLAYING)
     }
   }

@@ -25,6 +25,11 @@ internal sealed class OrgRoleMembershipAction : Action() {
     val orgRoleGuid: UUID,
     val accountGuid: UUID
   ) : OrgRoleMembershipAction()
+
+  internal data class SetError(
+    val orgRoleGuid: UUID,
+    val errorMessage: String?
+  ) : OrgRoleMembershipAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgRoleMembershipsLoaded(orgGuid: UUID, orgRoleGuid: UUID) {
@@ -32,8 +37,12 @@ internal fun EnsureLoadedContext.ensureOrgRoleMembershipsLoaded(orgGuid: UUID, o
     if (global.state.orgRoleMemberships[orgRoleGuid]?.hasBegunLoading == true) return@useEffect
     global.dispatch(OrgRoleMembershipAction.BeginLoading(orgRoleGuid))
     async {
-      val orgRoleMemberships = api.orgRoleMemberships(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid))
-      global.dispatch(OrgRoleMembershipAction.SetValue(orgRoleGuid, orgRoleMemberships))
+      api.orgRoleMemberships(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid)).fold(
+        onSuccess = { orgRoleMemberships ->
+          global.dispatch(OrgRoleMembershipAction.SetValue(orgRoleGuid, orgRoleMemberships))
+        },
+        onFailure = { global.dispatch(OrgRoleMembershipAction.SetError(orgRoleGuid, it.message)) }
+      )
     }
   }
 }

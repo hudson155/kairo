@@ -4,6 +4,7 @@ import com.piperframework.util.slugify
 import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.app.components.tabbedView.tabbedView
+import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.orgRoleMembersSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector.orgRolePermissionsSelector
@@ -58,8 +59,14 @@ private val component = functionalComponent<RProps> {
   // While the org roles are loading, show a blank modal.
   val orgRoles = global.state.orgRoles.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@functionalComponent modal(blank = true, onClose = goBack) {}
-      is LoadableState.Error -> TODO()
+      is LoadableState.Unloaded -> {
+        modal(blank = true, onClose = goBack) {}
+        return@functionalComponent
+      }
+      is LoadableState.Error -> {
+        modal(onClose = goBack) { failedToLoad("roles") }
+        return@functionalComponent
+      }
       is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
   }

@@ -2,6 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pa
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
+import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.orgRolesTable
 import io.limberapp.web.context.LoadableState
@@ -30,7 +31,7 @@ private val component = functionalComponent<RProps> {
   val orgRoles = global.state.orgRoles.let { loadableState ->
     when (loadableState) {
       is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
-      is LoadableState.Error -> TODO()
+      is LoadableState.Error -> return@functionalComponent failedToLoad("roles")
       is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
   }

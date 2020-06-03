@@ -5,6 +5,7 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
+import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMember.orgRoleMembersSelectorMember
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMemberAdder.orgRoleMembersSelectorMemberAdder
 import io.limberapp.web.context.LoadableState
@@ -36,14 +37,18 @@ private val component = functionalComponent<Props> { props ->
 
   val onAdd = { accountGuid: UUID ->
     async {
-      val orgRoleMembership = api.orgRoleMemberships(
+      api.orgRoleMemberships(
         endpoint = OrgRoleMembershipApi.Post(
           orgGuid = orgGuid,
           orgRoleGuid = props.orgRole.guid,
           rep = OrgRoleMembershipRep.Creation(accountGuid = accountGuid)
         )
+      ).fold(
+        onSuccess = { orgRoleMembership ->
+          global.dispatch(OrgRoleMembershipAction.UpdateValue(props.orgRole.guid, orgRoleMembership))
+        },
+        onFailure = { global.dispatch(OrgRoleMembershipAction.SetError(props.orgRole.guid, it.message)) }
       )
-      global.dispatch(OrgRoleMembershipAction.UpdateValue(props.orgRole.guid, orgRoleMembership))
     }
   }
 
@@ -81,7 +86,7 @@ private val component = functionalComponent<Props> { props ->
   val orgRoleMemberships = global.state.orgRoleMemberships[props.orgRole.guid].let { loadableState ->
     when (loadableState) {
       null, is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
-      is LoadableState.Error -> TODO()
+      is LoadableState.Error -> return@functionalComponent failedToLoad("roles")
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }
