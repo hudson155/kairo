@@ -3,6 +3,7 @@ package io.limberapp.web.app
 import com.piperframework.restInterface.Fetch
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.json
 import io.limberapp.web.context.auth.authProvider
@@ -52,11 +53,14 @@ private val component = functionalComponent<RProps> {
 
   // While the tenant is loading, show the loading page.
   val tenant = global.state.tenant.let { loadableState ->
-    if (!loadableState.isLoaded) {
-      minimalPage(linkType = null) { loadingPage("Loading tenant...") }
-      return@functionalComponent
+    when (loadableState) {
+      is LoadableState.Unloaded -> {
+        minimalPage(linkType = null) { loadingPage("Loading tenant...") }
+        return@functionalComponent
+      }
+      is LoadableState.Error -> TODO()
+      is LoadableState.Loaded -> return@let loadableState.state
     }
-    return@let loadableState.loadedState
   }
 
   authProvider(

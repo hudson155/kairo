@@ -1,11 +1,14 @@
 package io.limberapp.web.app.pages.errorPage
 
+import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import kotlinx.css.*
 import react.*
 import react.dom.*
+import styled.getClassName
 
 /**
  * Generic error page.
@@ -20,6 +23,9 @@ private class S : Styles("ErrorPage") {
   val container by css {
     textAlign = TextAlign.center
   }
+  val icon by css {
+    color = Theme.Color.Text.red
+  }
 }
 
 private val s = S().apply { inject() }
@@ -28,6 +34,7 @@ private val component = functionalComponent<Props> { props ->
   // TODO: Add error logging in this component, and in other places in the app.
   centeredContentLayout {
     div(classes = s.c { it::container }) {
+      h1 { inlineIcon("exclamation-triangle", classes = s.getClassName { it::icon }) }
       h1 { +props.title }
       p { +props.description }
     }

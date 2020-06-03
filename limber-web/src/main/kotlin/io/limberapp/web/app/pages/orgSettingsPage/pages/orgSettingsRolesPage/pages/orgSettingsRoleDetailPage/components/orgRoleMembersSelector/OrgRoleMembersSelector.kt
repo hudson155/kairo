@@ -7,6 +7,7 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMember.orgRoleMembersSelectorMember
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMemberAdder.orgRoleMembersSelectorMemberAdder
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRoleMembership.OrgRoleMembershipAction
 import io.limberapp.web.context.globalState.action.orgRoleMembership.ensureOrgRoleMembershipsLoaded
@@ -69,14 +70,20 @@ private val component = functionalComponent<Props> { props ->
 
   // While the users are loading, show a loading spinner.
   val users = global.state.users.let { loadableState ->
-    if (!loadableState.isLoaded) return@functionalComponent loadingSpinner()
-    return@let loadableState.loadedState
+    when (loadableState) {
+      is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
+      is LoadableState.Error -> TODO()
+      is LoadableState.Loaded -> return@let loadableState.state
+    }
   }
 
   // While the users are loading, show a loading spinner.
   val orgRoleMemberships = global.state.orgRoleMemberships[props.orgRole.guid].let { loadableState ->
-    if (loadableState?.isLoaded != true) return@functionalComponent loadingSpinner()
-    return@let loadableState.loadedState
+    when (loadableState) {
+      null, is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
+      is LoadableState.Error -> TODO()
+      is LoadableState.Loaded -> return@let loadableState.state
+    }
   }
 
   val memberUsers = orgRoleMemberships

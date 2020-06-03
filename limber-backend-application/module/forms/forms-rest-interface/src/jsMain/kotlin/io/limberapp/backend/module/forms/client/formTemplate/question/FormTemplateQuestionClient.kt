@@ -7,16 +7,16 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 
 class FormTemplateQuestionClient(private val fetch: Fetch, private val json: Json) {
   suspend operator fun invoke(endpoint: FormTemplateQuestionApi.Post): FormTemplateQuestionRep.Complete {
-    val string = fetch(endpoint).getOrThrow()
+    val string = fetch(endpoint) { it }.getOrThrow()
     return json.parse(string)
   }
 
   suspend operator fun invoke(endpoint: FormTemplateQuestionApi.Patch): FormTemplateQuestionRep.Complete {
-    val string = fetch(endpoint).getOrThrow()
+    val string = fetch(endpoint) { it }.getOrThrow()
     return json.parse(string)
   }
 
   suspend operator fun invoke(endpoint: FormTemplateQuestionApi.Delete) {
-    fetch(endpoint)
+    fetch(endpoint) { it }
   }
 }

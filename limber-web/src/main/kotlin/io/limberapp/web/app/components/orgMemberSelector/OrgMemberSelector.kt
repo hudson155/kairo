@@ -4,6 +4,7 @@ import com.piperframework.types.UUID
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.components.memberRow.memberRow
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.users.ensureUsersLoaded
 import io.limberapp.web.context.globalState.useGlobalState
@@ -95,8 +96,11 @@ private val component = functionalComponent<Props> { props ->
 
   // While the users are loading, show a loading spinner.
   val users = global.state.users.let { loadableState ->
-    if (!loadableState.isLoaded) return@functionalComponent loadingSpinner()
-    return@let loadableState.loadedState
+    when (loadableState) {
+      is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
+      is LoadableState.Error -> TODO()
+      is LoadableState.Loaded -> return@let loadableState.state
+    }
   }
 
   val onSearchValue = onSelect@{ value: String ->

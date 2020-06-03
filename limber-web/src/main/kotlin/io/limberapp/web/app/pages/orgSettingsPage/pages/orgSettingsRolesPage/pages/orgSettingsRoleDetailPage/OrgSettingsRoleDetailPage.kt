@@ -8,6 +8,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.Org
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.orgRoleMembersSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector.orgRolePermissionsSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
 import io.limberapp.web.context.globalState.useGlobalState
@@ -56,11 +57,11 @@ private val component = functionalComponent<RProps> {
 
   // While the org roles are loading, show a blank modal.
   val orgRoles = global.state.orgRoles.let { loadableState ->
-    if (!loadableState.isLoaded) {
-      modal(blank = true, onClose = goBack) {}
-      return@functionalComponent
+    when (loadableState) {
+      is LoadableState.Unloaded -> return@functionalComponent modal(blank = true, onClose = goBack) {}
+      is LoadableState.Error -> TODO()
+      is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
-    return@let loadableState.loadedState.values.toSet()
   }
 
   val roleSlug = match.params.roleSlug
