@@ -6,11 +6,13 @@ import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
 import io.limberapp.web.app.components.minimalPage.LinkType
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.components.page.page
+import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.ensureOrgLoaded
@@ -41,9 +43,16 @@ private val component = functionalComponent<RProps> {
 
   // While the org is loading, show the loading page.
   global.state.org.let { loadableState ->
-    if (!loadableState.isLoaded) {
-      minimalPage(linkType = LinkType.SIGN_OUT) { loadingPage("Loading org...") }
-      return@functionalComponent
+    when (loadableState) {
+      is LoadableState.Unloaded -> {
+        minimalPage(linkType = null) { loadingPage("Loading org...") }
+        return@functionalComponent
+      }
+      is LoadableState.Error -> {
+        minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("org") }
+        return@functionalComponent
+      }
+      is LoadableState.Loaded -> Unit
     }
   }
 

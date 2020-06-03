@@ -12,6 +12,8 @@ internal sealed class OrgAction : Action() {
   internal object BeginLoading : OrgAction()
 
   internal data class SetValue(val org: OrgRep.Complete) : OrgAction()
+
+  internal data class SetError(val errorMessage: String?) : OrgAction()
 }
 
 internal fun EnsureLoadedContext.ensureOrgLoaded(orgGuid: UUID) {
@@ -19,8 +21,10 @@ internal fun EnsureLoadedContext.ensureOrgLoaded(orgGuid: UUID) {
     if (global.state.org.hasBegunLoading) return@useEffect
     global.dispatch(OrgAction.BeginLoading)
     async {
-      val org = api.orgs(OrgApi.Get(orgGuid))
-      global.dispatch(OrgAction.SetValue(org))
+      api.orgs(OrgApi.Get(orgGuid)).fold(
+        onSuccess = { org -> global.dispatch(OrgAction.SetValue(org)) },
+        onFailure = { global.dispatch(OrgAction.SetError(it.message)) }
+      )
     }
   }
 }

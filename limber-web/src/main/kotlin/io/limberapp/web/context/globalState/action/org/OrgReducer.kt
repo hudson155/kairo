@@ -11,5 +11,8 @@ internal fun orgReducer(state: GlobalStateContext, action: OrgAction): GlobalSta
     is OrgAction.SetValue -> state.copy(
       org = LoadableState.Loaded(action.org)
     )
+    is OrgAction.SetError -> state.copy(
+      org = LoadableState.Error(action.errorMessage)
+    )
   }
 }
