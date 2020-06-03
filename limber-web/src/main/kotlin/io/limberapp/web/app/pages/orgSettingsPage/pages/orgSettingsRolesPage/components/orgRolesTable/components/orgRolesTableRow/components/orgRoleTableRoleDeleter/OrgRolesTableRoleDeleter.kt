@@ -50,7 +50,7 @@ private val component = functionalComponent<Props> { props ->
 
   val (state, setState) = useState(State.DEFAULT)
 
-  val orgGuid = checkNotNull(global.state.org.state).guid
+  val orgGuid = global.state.org.loadedState.guid
 
   val onDelete = {
     async {

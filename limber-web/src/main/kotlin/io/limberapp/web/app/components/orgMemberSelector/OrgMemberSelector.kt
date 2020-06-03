@@ -90,13 +90,13 @@ private val component = functionalComponent<Props> { props ->
   val (selectedUserGuid, setSelectedUserGuid) = useState<UUID?>(null)
 
   withContext(global, api) {
-    ensureUsersLoaded(checkNotNull(global.state.org.state).guid)
+    ensureUsersLoaded(global.state.org.loadedState.guid)
   }
 
   // While the users are loading, show a loading spinner.
   val users = global.state.users.let { loadableState ->
     if (!loadableState.isLoaded) return@functionalComponent loadingSpinner()
-    return@let checkNotNull(loadableState.state)
+    return@let loadableState.loadedState
   }
 
   val onSearchValue = onSelect@{ value: String ->
