@@ -4,7 +4,7 @@ import com.piperframework.types.UUID
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.web.context.globalState.action.Action
-import io.limberapp.web.util.EnsureLoadedContext
+import io.limberapp.web.util.Context
 import io.limberapp.web.util.async
 import react.*
 
@@ -16,7 +16,7 @@ internal sealed class UsersAction : Action() {
   internal data class SetError(val errorMessage: String?) : UsersAction()
 }
 
-internal fun EnsureLoadedContext.ensureUsersLoaded(orgGuid: UUID) {
+internal fun Context.ensureUsersLoaded(orgGuid: UUID) {
   useEffect(listOf(orgGuid)) {
     if (global.state.users.hasBegunLoading) return@useEffect
     global.dispatch(UsersAction.BeginLoading)

@@ -52,7 +52,9 @@ private val component = functionalComponent<RProps> {
 
   val goBack = { history.goBack() }
 
-  withContext(global, api) { ensureOrgRolesLoaded(global.state.org.loadedState.guid) }
+  withContext(global, api) {
+    ensureOrgRolesLoaded(global.state.org.loadedState.guid)
+  }
 
   orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 

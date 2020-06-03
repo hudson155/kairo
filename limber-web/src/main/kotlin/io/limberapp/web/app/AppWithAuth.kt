@@ -50,7 +50,9 @@ private val component = functionalComponent<RProps> {
     checkNotNull(document.body).style.backgroundColor = Theme.Color.Background.light.value
   }
 
-  withContext(global, nonAuthenticatedApi) { ensureTenantLoaded(rootDomain) }
+  withContext(global, nonAuthenticatedApi) {
+    ensureTenantLoaded(rootDomain)
+  }
 
   // While the tenant is loading, show the loading page.
   val tenant = global.state.tenant.let { loadableState ->

@@ -23,7 +23,9 @@ private val component = functionalComponent<RProps> {
   val api = useApi()
   val global = useGlobalState()
 
-  withContext(global, api) { ensureOrgRolesLoaded(global.state.org.loadedState.guid) }
+  withContext(global, api) {
+    ensureOrgRolesLoaded(global.state.org.loadedState.guid)
+  }
 
   layoutTitle(OrgSettingsRolesPage.name, "Roles grant users permissions within your organization.")
 

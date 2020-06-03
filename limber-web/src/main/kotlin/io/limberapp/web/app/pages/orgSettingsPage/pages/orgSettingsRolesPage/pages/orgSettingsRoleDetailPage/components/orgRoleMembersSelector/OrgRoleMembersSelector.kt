@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector
 
 import com.piperframework.types.UUID
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
@@ -10,12 +9,14 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMemberAdder.orgRoleMembersSelectorMemberAdder
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.useApi
-import io.limberapp.web.context.globalState.action.orgRoleMembership.OrgRoleMembershipAction
+import io.limberapp.web.context.globalState.action.orgRoleMembership.createOrgRoleMembership
+import io.limberapp.web.context.globalState.action.orgRoleMembership.deleteOrgRoleMembership
 import io.limberapp.web.context.globalState.action.orgRoleMembership.ensureOrgRoleMembershipsLoaded
 import io.limberapp.web.context.globalState.action.users.ensureUsersLoaded
 import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.async
 import io.limberapp.web.util.withContext
+import io.limberapp.web.util.withContextAsync
 import react.*
 
 /**
@@ -33,35 +34,19 @@ private val component = functionalComponent<Props> { props ->
   val api = useApi()
   val global = useGlobalState()
 
-  val orgGuid = global.state.org.loadedState.guid
-
   val onAdd = { accountGuid: UUID ->
     async {
-      api.orgRoleMemberships(
-        endpoint = OrgRoleMembershipApi.Post(
-          orgGuid = orgGuid,
-          orgRoleGuid = props.orgRole.guid,
-          rep = OrgRoleMembershipRep.Creation(accountGuid = accountGuid)
-        )
-      ).fold(
-        onSuccess = { orgRoleMembership ->
-          global.dispatch(OrgRoleMembershipAction.UpdateValue(props.orgRole.guid, orgRoleMembership))
-        },
-        onFailure = { global.dispatch(OrgRoleMembershipAction.SetError(props.orgRole.guid, it.message)) }
-      )
+      withContextAsync(global, api) {
+        createOrgRoleMembership(props.orgRole.guid, OrgRoleMembershipRep.Creation(accountGuid = accountGuid))
+      }
     }
   }
 
   val onRemove = { accountGuid: UUID ->
     async {
-      api.orgRoleMemberships(
-        endpoint = OrgRoleMembershipApi.Delete(
-          orgGuid = orgGuid,
-          orgRoleGuid = props.orgRole.guid,
-          accountGuid = accountGuid
-        )
-      )
-      global.dispatch(OrgRoleMembershipAction.DeleteValue(props.orgRole.guid, accountGuid))
+      withContextAsync(global, api) {
+        deleteOrgRoleMembership(props.orgRole.guid, accountGuid)
+      }
     }
   }
 

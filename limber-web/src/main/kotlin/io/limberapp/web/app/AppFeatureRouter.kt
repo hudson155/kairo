@@ -37,9 +37,13 @@ private val component = functionalComponent<RProps> {
   val auth = useAuth()
   val global = useGlobalState()
 
-  withContext(global, api) { ensureOrgLoaded(checkNotNull(auth.jwt).org.guid) }
+  withContext(global, api) {
+    ensureOrgLoaded(checkNotNull(auth.jwt).org.guid)
+  }
 
-  withContext(global, api) { ensureUserLoaded(checkNotNull(auth.jwt).user.guid) }
+  withContext(global, api) {
+    ensureUserLoaded(checkNotNull(auth.jwt).user.guid)
+  }
 
   // While the org is loading, show the loading page.
   global.state.org.let { loadableState ->

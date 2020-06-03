@@ -4,7 +4,7 @@ import com.piperframework.types.UUID
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.web.context.globalState.action.Action
-import io.limberapp.web.util.EnsureLoadedContext
+import io.limberapp.web.util.Context
 import io.limberapp.web.util.async
 import react.*
 
@@ -32,7 +32,35 @@ internal sealed class OrgRoleMembershipAction : Action() {
   ) : OrgRoleMembershipAction()
 }
 
-internal fun EnsureLoadedContext.ensureOrgRoleMembershipsLoaded(orgGuid: UUID, orgRoleGuid: UUID) {
+internal suspend fun Context.createOrgRoleMembership(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) {
+  api.orgRoleMemberships(
+    endpoint = OrgRoleMembershipApi.Post(
+      orgGuid = global.state.org.loadedState.guid,
+      orgRoleGuid = orgRoleGuid,
+      rep = rep
+    )
+  ).fold(
+    onSuccess = { orgRoleMembership ->
+      global.dispatch(OrgRoleMembershipAction.UpdateValue(orgRoleGuid, orgRoleMembership))
+    },
+    onFailure = { global.dispatch(OrgRoleMembershipAction.SetError(orgRoleGuid, it.message)) }
+  )
+}
+
+internal suspend fun Context.deleteOrgRoleMembership(orgRoleGuid: UUID, accountGuid: UUID) {
+  api.orgRoleMemberships(
+    endpoint = OrgRoleMembershipApi.Delete(
+      orgGuid = global.state.org.loadedState.guid,
+      orgRoleGuid = orgRoleGuid,
+      accountGuid = accountGuid
+    )
+  ).fold(
+    onSuccess = { global.dispatch(OrgRoleMembershipAction.DeleteValue(orgRoleGuid, accountGuid)) },
+    onFailure = { global.dispatch(OrgRoleMembershipAction.SetError(orgRoleGuid, it.message)) }
+  )
+}
+
+internal fun Context.ensureOrgRoleMembershipsLoaded(orgGuid: UUID, orgRoleGuid: UUID) {
   useEffect(listOf(orgRoleGuid)) {
     if (global.state.orgRoleMemberships[orgRoleGuid]?.hasBegunLoading == true) return@useEffect
     global.dispatch(OrgRoleMembershipAction.BeginLoading(orgRoleGuid))

@@ -3,7 +3,7 @@ package io.limberapp.web.context.globalState.action.tenant
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.web.context.globalState.action.Action
-import io.limberapp.web.util.EnsureLoadedContext
+import io.limberapp.web.util.Context
 import io.limberapp.web.util.async
 import react.*
 
@@ -15,7 +15,7 @@ internal sealed class TenantAction : Action() {
   internal data class SetError(val errorMessage: String?) : TenantAction()
 }
 
-internal fun EnsureLoadedContext.ensureTenantLoaded(domain: String) {
+internal fun Context.ensureTenantLoaded(domain: String) {
   useEffect(listOf(domain)) {
     if (global.state.tenant.hasBegunLoading) return@useEffect
     global.dispatch(TenantAction.BeginLoading)
