@@ -21,14 +21,14 @@ private val component = functionalComponent<RProps> {
   val api = useApi()
   val global = useGlobalState()
 
-  withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
+  withContext(global, api) { ensureOrgRolesLoaded(global.state.org.loadedState.guid) }
 
   layoutTitle(OrgSettingsRolesPage.name, "Roles grant users permissions within your organization.")
 
   // While the org roles are loading, show a loading spinner.
   val orgRoles = global.state.orgRoles.let { loadableState ->
     if (!loadableState.isLoaded) return@functionalComponent loadingSpinner()
-    return@let checkNotNull(loadableState.state).values.toSet()
+    return@let loadableState.loadedState.values.toSet()
   }
 
   orgRolesTable(orgRoles)

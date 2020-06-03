@@ -55,7 +55,7 @@ private val component = functionalComponent<RProps> {
     }
   }
 
-  val features = checkNotNull(global.state.org.state).features
+  val features = global.state.org.loadedState.features
 
   page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
     switch {

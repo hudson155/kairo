@@ -31,7 +31,7 @@ private val component = functionalComponent<Props> { props ->
   val api = useApi()
   val global = useGlobalState()
 
-  val orgGuid = checkNotNull(global.state.org.state).guid
+  val orgGuid = global.state.org.loadedState.guid
 
   val onAdd = { accountGuid: UUID ->
     async {
@@ -60,23 +60,23 @@ private val component = functionalComponent<Props> { props ->
   }
 
   withContext(global, api) {
-    ensureUsersLoaded(checkNotNull(global.state.org.state).guid)
+    ensureUsersLoaded(global.state.org.loadedState.guid)
   }
 
   withContext(global, api) {
-    ensureOrgRoleMembershipsLoaded(checkNotNull(global.state.org.state).guid, props.orgRole.guid)
+    ensureOrgRoleMembershipsLoaded(global.state.org.loadedState.guid, props.orgRole.guid)
   }
 
   // While the users are loading, show a loading spinner.
   val users = global.state.users.let { loadableState ->
     if (!loadableState.isLoaded) return@functionalComponent loadingSpinner()
-    return@let checkNotNull(loadableState.state)
+    return@let loadableState.loadedState
   }
 
   // While the users are loading, show a loading spinner.
   val orgRoleMemberships = global.state.orgRoleMemberships[props.orgRole.guid].let { loadableState ->
     if (loadableState?.isLoaded != true) return@functionalComponent loadingSpinner()
-    return@let checkNotNull(loadableState.state)
+    return@let loadableState.loadedState
   }
 
   val memberUsers = orgRoleMemberships

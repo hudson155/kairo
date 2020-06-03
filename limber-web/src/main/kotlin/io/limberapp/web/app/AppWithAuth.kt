@@ -56,7 +56,7 @@ private val component = functionalComponent<RProps> {
       minimalPage(linkType = null) { loadingPage("Loading tenant...") }
       return@functionalComponent
     }
-    return@let checkNotNull(loadableState.state)
+    return@let loadableState.loadedState
   }
 
   authProvider(

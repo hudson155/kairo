@@ -50,7 +50,7 @@ private val component = functionalComponent<RProps> {
 
   val goBack = { history.goBack() }
 
-  withContext(global, api) { ensureOrgRolesLoaded(checkNotNull(global.state.org.state).guid) }
+  withContext(global, api) { ensureOrgRolesLoaded(global.state.org.loadedState.guid) }
 
   orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 
@@ -60,7 +60,7 @@ private val component = functionalComponent<RProps> {
       modal(blank = true, onClose = goBack) {}
       return@functionalComponent
     }
-    return@let checkNotNull(loadableState.state).values.toSet()
+    return@let loadableState.loadedState.values.toSet()
   }
 
   val roleSlug = match.params.roleSlug
