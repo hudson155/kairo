@@ -52,8 +52,8 @@ private val component = functionalComponent<RProps> {
   // Only 1 item on the navbar can be open at a time.
   val (openItem, setOpenItem) = useState<OpenItem?>(null)
 
-  val (name, photoUrl) = checkNotNull(global.state.user.state).let { Pair(it.fullName, it.profilePhotoUrl) }
-  val features = checkNotNull(global.state.org.state).features
+  val (name, photoUrl) = global.state.user.loadedState.let { Pair(it.fullName, it.profilePhotoUrl) }
+  val features = global.state.org.loadedState.features
 
   hamburgerableNavbar(
     left = buildElements {

@@ -80,7 +80,7 @@ private val component = functionalComponent<Props> { props ->
   val (state, setState) = useState(State.DISPLAYING)
   val (editValue, setValue) = useState(props.orgRole.name)
 
-  val orgGuid = checkNotNull(global.state.org.state).guid
+  val orgGuid = global.state.org.loadedState.guid
 
   val onEditClicked = { _: Event -> setState(State.EDITING) }
   val onCancelEdit = { _: Event ->

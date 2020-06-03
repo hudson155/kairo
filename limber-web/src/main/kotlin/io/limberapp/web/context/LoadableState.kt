@@ -1,33 +1,36 @@
 package io.limberapp.web.context
 
-internal data class LoadableState<State : Any>(
-  val loadingStatus: LoadingStatus,
-  val state: State?,
-  val errorMessage: String? = null
-) {
-  enum class LoadingStatus { INITIAL, LOADING, LOADED }
+internal sealed class LoadableState<State : Any> {
+  abstract val hasBegunLoading: Boolean
 
-  val hasBegunLoading = loadingStatus != LoadingStatus.INITIAL
+  abstract val isLoaded: Boolean
 
-  val isLoaded = loadingStatus == LoadingStatus.LOADED
+  /**
+   * [loadedState] is not safe to access unless the caller knows that the [LoadableState] instance is loaded.
+   */
+  abstract val loadedState: State
 
-  fun loading() = copy(loadingStatus = LoadingStatus.LOADING)
+  fun update(function: (State?) -> State) = (this as Loaded<State>).copy(state = function(state))
 
-  fun loaded(state: State) = copy(
-    loadingStatus = LoadingStatus.LOADED,
-    state = state,
-    errorMessage = null
-  )
+  internal data class Unloaded<State : Any>(override val hasBegunLoading: Boolean) : LoadableState<State>() {
+    override val isLoaded = false
+    override val loadedState = error(if (hasBegunLoading) "State is loading." else "State has not started loading.")
+  }
 
-  fun error(errorMessage: String?) = copy(
-    loadingStatus = LoadingStatus.LOADED,
-    errorMessage = errorMessage ?: "An unexpected error occurred."
-  )
+  internal data class Loaded<State : Any>(val state: State) : LoadableState<State>() {
+    override val hasBegunLoading = true
+    override val isLoaded = true
+    override val loadedState = state
+  }
 
-  fun update(function: (State?) -> State) = copy(state = function(state))
+  internal data class Error<State : Any>(val errorMessage: String) : LoadableState<State>() {
+    override val hasBegunLoading = true
+    override val isLoaded = true
+    override val loadedState = error(errorMessage)
+  }
 
   companion object {
-    fun <State : Any> initial() = LoadableState<State>(LoadingStatus.INITIAL, null)
-    fun <State : Any> loading() = LoadableState<State>(LoadingStatus.LOADING, null)
+    fun <State : Any> initial() = Unloaded<State>(hasBegunLoading = false)
+    fun <State : Any> loading() = Unloaded<State>(hasBegunLoading = true)
   }
 }

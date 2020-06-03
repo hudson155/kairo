@@ -60,7 +60,7 @@ private val component = functionalComponent<RProps> {
       }
       return@functionalComponent
     }
-    return@let checkNotNull(loadableState.state)
+    return@let loadableState.loadedState
   }
 
   authProvider(

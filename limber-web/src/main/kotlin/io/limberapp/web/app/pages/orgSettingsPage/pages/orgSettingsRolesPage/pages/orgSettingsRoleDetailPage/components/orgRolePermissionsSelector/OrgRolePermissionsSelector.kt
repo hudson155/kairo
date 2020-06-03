@@ -88,7 +88,7 @@ private val component = functionalComponent<Props> { props ->
   val (state, setState) = useState(State.DEFAULT)
   val (permissions, setPermissions) = useState(props.orgRole.permissions)
 
-  val orgGuid = checkNotNull(global.state.org.state).guid
+  val orgGuid = global.state.org.loadedState.guid
 
   val setPermissionValue = { permission: OrgPermission, value: Boolean ->
     setPermissions(permissions.withPermission(permission, value))

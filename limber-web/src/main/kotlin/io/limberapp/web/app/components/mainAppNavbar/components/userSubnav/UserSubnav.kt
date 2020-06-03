@@ -27,7 +27,7 @@ internal data class Props(val onUnfocus: () -> Unit) : RProps
 private val component = functionalComponent<Props> { props ->
   val global = useGlobalState()
 
-  val name = checkNotNull(global.state.user.state).fullName
+  val name = global.state.user.loadedState.fullName
 
   useClickListener(emptyList()) { props.onUnfocus() }
 
