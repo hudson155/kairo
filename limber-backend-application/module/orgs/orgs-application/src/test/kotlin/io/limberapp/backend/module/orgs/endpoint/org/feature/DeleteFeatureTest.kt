@@ -53,7 +53,7 @@ internal class DeleteFeatureTest : ResourceTest() {
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
     piperTest.setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
-    orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != featureRep.guid }.toSet())
+    orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != featureRep.guid })
     piperTest.test(OrgFeatureApi.Delete(orgRep.guid, featureRep.guid)) {}
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {

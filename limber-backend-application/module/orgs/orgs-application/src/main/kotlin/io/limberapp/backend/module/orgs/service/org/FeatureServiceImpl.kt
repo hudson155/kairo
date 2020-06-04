@@ -14,19 +14,20 @@ internal class FeatureServiceImpl @Inject constructor(
   private val uuidGenerator: UuidGenerator,
   private val featureStore: FeatureStore
 ) : FeatureService {
-  override fun createDefaults(orgGuid: UUID): Set<FeatureModel> {
+  override fun createDefaults(orgGuid: UUID): List<FeatureModel> {
     require(featureStore.getByOrgGuid(orgGuid).isEmpty())
     val feature = FeatureModel(
       guid = uuidGenerator.generate(),
       createdDate = LocalDateTime.now(clock),
       orgGuid = orgGuid,
+      rank = 0,
       name = "Home",
       path = "/home",
       type = FeatureModel.Type.HOME,
       isDefaultFeature = true
     )
     featureStore.create(feature)
-    return setOf(feature)
+    return listOf(feature)
   }
 
   override fun create(model: FeatureModel) = featureStore.create(model)

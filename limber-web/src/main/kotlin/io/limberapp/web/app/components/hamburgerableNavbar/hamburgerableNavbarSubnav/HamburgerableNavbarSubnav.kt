@@ -18,11 +18,11 @@ import react.router.dom.*
  * [onUnfocus] is the function to call when there's a click outside of this element. Normally, calling this function
  * should hide the subnav.
  */
-internal fun RBuilder.hamburgerableNavbarSubnav(features: Set<FeatureRep.Complete>, onUnfocus: () -> Unit) {
+internal fun RBuilder.hamburgerableNavbarSubnav(features: List<FeatureRep.Complete>, onUnfocus: () -> Unit) {
   child(component, Props(features, onUnfocus))
 }
 
-internal data class Props(val features: Set<FeatureRep.Complete>, val onUnfocus: () -> Unit) : RProps
+internal data class Props(val features: List<FeatureRep.Complete>, val onUnfocus: () -> Unit) : RProps
 
 private val component = component<Props> component@{ props ->
   useClickListener(emptyList()) { props.onUnfocus() }

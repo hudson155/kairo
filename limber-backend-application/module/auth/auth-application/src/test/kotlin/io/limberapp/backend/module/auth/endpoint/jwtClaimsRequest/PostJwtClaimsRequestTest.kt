@@ -47,7 +47,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
     every { mockedServices[UserService::class].create(any()) } returns Unit
     every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
-    every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptySet()
+    every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptyList()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
@@ -107,7 +107,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     every { mockedServices[AccountService::class].get(existingAccount.guid) } returns existingAccount
     every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
     every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
-    every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptySet()
+    every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptyList()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))

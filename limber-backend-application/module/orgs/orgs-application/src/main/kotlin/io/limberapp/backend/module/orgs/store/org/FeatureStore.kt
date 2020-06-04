@@ -5,8 +5,9 @@ import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
+import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.org.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import org.jdbi.v3.core.Jdbi
@@ -15,7 +16,8 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
 private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
-private const val ORG_PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
+private const val PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
+private const val RANK_UNIQUE_CONSTRAINT = "feature_org_guid_rank_key"
 
 internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: FeatureModel) {
@@ -32,7 +34,8 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     val error = e.serverErrorMessage ?: throw e
     when {
       error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
-      error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT) -> throw FeatureIsNotUnique()
+      error.isUniqueConstraintViolation(PATH_UNIQUE_CONSTRAINT) -> throw FeaturePathIsNotUnique()
+      error.isUniqueConstraintViolation(RANK_UNIQUE_CONSTRAINT) -> throw FeatureRankIsNotUnique()
       else -> throw e
     }
   }
@@ -53,12 +56,12 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     }
   }
 
-  fun getByOrgGuid(orgGuid: UUID): Set<FeatureModel> {
-    return jdbi.withHandle<Set<FeatureModel>, Exception> {
-      it.createQuery("SELECT * FROM orgs.feature WHERE org_guid = :orgGuid AND archived_date IS NULL")
+  fun getByOrgGuid(orgGuid: UUID): List<FeatureModel> {
+    return jdbi.withHandle<List<FeatureModel>, Exception> {
+      it.createQuery("SELECT * FROM orgs.feature WHERE org_guid = :orgGuid AND archived_date IS NULL ORDER BY rank")
         .bind("orgGuid", orgGuid)
         .mapTo(FeatureModel::class.java)
-        .toSet()
+        .toList()
     }
   }
 
@@ -95,8 +98,11 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(ORG_PATH_UNIQUE_CONSTRAINT)) throw FeatureIsNotUnique()
-    throw e
+    when {
+      error.isUniqueConstraintViolation(PATH_UNIQUE_CONSTRAINT) -> throw FeaturePathIsNotUnique()
+      error.isUniqueConstraintViolation(RANK_UNIQUE_CONSTRAINT) -> throw FeatureRankIsNotUnique()
+      else -> throw e
+    }
   }
 
   fun delete(featureGuid: UUID) {
