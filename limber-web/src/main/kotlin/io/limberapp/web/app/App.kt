@@ -10,6 +10,6 @@ internal fun RBuilder.app() {
   child(component)
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   appWithGlobalState()
 }

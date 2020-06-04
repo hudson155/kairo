@@ -21,7 +21,7 @@ internal object FormsFeaturePage {
   const val name = "Forms"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   val match = checkNotNull(useRouteMatch<RProps>())
 
   standardLayout(leftPane = buildElement { formsFeatureSidenav() }) {

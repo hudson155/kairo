@@ -12,7 +12,7 @@ internal fun RBuilder.appWithApi() {
   child(component)
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   apiProvider {
     appRouter()
   }

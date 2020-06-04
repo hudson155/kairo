@@ -29,7 +29,7 @@ private class S : Styles("UnauthenticatedPage") {
 
 private val s = S().apply { inject() }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   centeredContentLayout {
     div(classes = s.c { it::container }) {
       h1 { +"Welcome to Limber" }

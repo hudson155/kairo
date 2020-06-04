@@ -22,7 +22,7 @@ internal object OrgSettingsPage {
   const val path = "/settings/org"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   standardLayout(leftPane = buildElement { orgSettingsSidenav() }) {
     switch {
       route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }

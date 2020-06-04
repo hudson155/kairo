@@ -17,6 +17,6 @@ internal object OrgSettingsInfoPage {
   const val path = "${OrgSettingsPage.path}/info"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   layoutTitle(OrgSettingsInfoPage.name)
 }

@@ -12,7 +12,7 @@ internal fun RBuilder.appWithGlobalState() {
   child(component)
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   globalStateProvider {
     appWithAuth()
   }

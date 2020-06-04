@@ -16,6 +16,6 @@ internal object FormInstancesListPage {
   const val subpath = "/instances"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   layoutTitle(FormInstancesListPage.name)
 }

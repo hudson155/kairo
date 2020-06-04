@@ -17,7 +17,7 @@ internal object HomePage {
   const val name = "Home"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   standardLayout {
     layoutTitle(HomePage.name)
     p { +"This is the homepage." }
