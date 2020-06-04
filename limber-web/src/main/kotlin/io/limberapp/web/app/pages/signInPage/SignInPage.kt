@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.signInPage
 
 import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -15,7 +16,7 @@ internal object SignInPage {
   const val path = "/signin"
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   val auth = useAuth()
   auth.signIn()
 }

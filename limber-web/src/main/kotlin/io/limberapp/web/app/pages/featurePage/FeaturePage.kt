@@ -4,6 +4,7 @@ import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.formsFeaturePage
 import io.limberapp.web.app.pages.featurePage.pages.homePage.homePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
+import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -15,7 +16,7 @@ internal fun RBuilder.featurePage(feature: FeatureRep.Complete) {
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   when (props.feature.type) {
     FeatureRep.Type.FORMS -> formsFeaturePage()
     FeatureRep.Type.HOME -> homePage()

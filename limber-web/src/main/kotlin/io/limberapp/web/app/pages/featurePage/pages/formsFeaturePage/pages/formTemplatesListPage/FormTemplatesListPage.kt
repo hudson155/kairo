@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
+import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -15,6 +16,6 @@ internal object FormTemplatesListPage {
   const val subpath = "/templates"
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   layoutTitle(FormTemplatesListPage.name)
 }

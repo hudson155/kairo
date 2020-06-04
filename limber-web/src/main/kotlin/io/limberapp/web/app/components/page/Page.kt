@@ -1,5 +1,6 @@
 package io.limberapp.web.app.components.page
 
+import io.limberapp.web.util.component
 import io.limberapp.web.util.main
 import react.*
 import react.dom.*
@@ -24,7 +25,7 @@ internal fun RBuilder.page(
 
 internal data class Props(val header: ReactElement?, val footer: ReactElement?) : RProps
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   props.header?.let { header { child(it) } }
   main { props.children() }
   props.footer?.let { footer { child(it) } }

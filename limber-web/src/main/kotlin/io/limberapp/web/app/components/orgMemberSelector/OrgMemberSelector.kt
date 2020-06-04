@@ -6,16 +6,14 @@ import io.limberapp.web.app.components.memberRow.memberRow
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.api.useApi
-import io.limberapp.web.context.globalState.action.users.ensureUsersLoaded
-import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.context.globalState.action.users.load
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.initials
 import io.limberapp.web.util.search
 import io.limberapp.web.util.targetValue
-import io.limberapp.web.util.withContext
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import kotlinx.html.InputType
@@ -83,23 +81,18 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, SEARCHING }
 
-private val component = functionalComponent<Props> { props ->
-  val api = useApi()
-  val global = useGlobalState()
+private val component = componentWithApi<Props> component@{ self, props ->
+  self.load(self.gs.users)
 
   val (state, setState) = useState(State.DEFAULT)
   val (searchValue, setSearchValue) = useState("")
   val (selectedUserGuid, setSelectedUserGuid) = useState<UUID?>(null)
 
-  withContext(global, api) {
-    ensureUsersLoaded(global.state.org.loadedState.guid)
-  }
-
   // While the users are loading, show a loading spinner.
-  val users = global.state.users.let { loadableState ->
+  val users = self.gs.users.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@functionalComponent loadingSpinner()
-      is LoadableState.Error -> return@functionalComponent failedToLoad("users")
+      is LoadableState.Unloaded -> return@component loadingSpinner()
+      is LoadableState.Error -> return@component failedToLoad("users")
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

@@ -5,6 +5,7 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.component
 import kotlinx.css.*
 import react.*
 import react.dom.*
@@ -45,7 +46,7 @@ private class S : Styles("Navbar") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   div(classes = s.c { it::container }) {
     div(classes = s.c { it::section }) {
       div(classes = s.c { it::subsection }) {

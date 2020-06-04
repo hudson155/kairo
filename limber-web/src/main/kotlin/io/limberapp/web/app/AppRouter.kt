@@ -9,6 +9,7 @@ import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
 import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.util.component
 import io.limberapp.web.util.rootPath
 import react.*
 import react.router.dom.*
@@ -22,14 +23,11 @@ internal fun RBuilder.appRouter() {
   child(component)
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   val auth = useAuth()
 
   // While auth is loading, show the loading page.
-  if (auth.isLoading) {
-    minimalPage(linkType = null) { loadingPage("Identifying you...") }
-    return@functionalComponent
-  }
+  if (auth.isLoading) return@component minimalPage(linkType = null) { loadingPage("Identifying you...") }
 
   browserRouter {
     switch {

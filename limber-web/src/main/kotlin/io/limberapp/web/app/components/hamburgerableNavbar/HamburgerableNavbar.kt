@@ -11,6 +11,7 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import kotlinx.css.*
 import kotlinx.css.properties.*
@@ -78,7 +79,7 @@ private class S : Styles("HamburgerableNavbar") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   navbar(
     left = buildElements {
       div(classes = cls(gs.c { it::hiddenXs }, s.c { it::left })) { props.left?.let { child(it) } }

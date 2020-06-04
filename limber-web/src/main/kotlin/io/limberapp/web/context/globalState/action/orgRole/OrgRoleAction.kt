@@ -3,8 +3,9 @@ package io.limberapp.web.context.globalState.action.orgRole
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.Action
-import io.limberapp.web.util.Context
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import react.*
 
@@ -20,35 +21,39 @@ internal sealed class OrgRoleAction : Action() {
   internal data class SetError(val errorMessage: String?) : OrgRoleAction()
 }
 
-internal fun Context.ensureOrgRolesLoaded(orgGuid: UUID) {
+private typealias State = LoadableState<Map<UUID, OrgRoleRep.Complete>>
+
+internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: State) {
+  val orgGuid = gs.org.loadedState.guid
+
   useEffect(listOf(orgGuid)) {
-    if (global.state.orgRoles.hasBegunLoading) return@useEffect
-    global.dispatch(OrgRoleAction.BeginLoading)
+    if (gs.orgRoles.hasBegunLoading) return@useEffect
+    dispatch(OrgRoleAction.BeginLoading)
     async {
       api.orgRoles(OrgRoleApi.GetByOrgGuid(orgGuid)).fold(
-        onSuccess = { orgRoles -> global.dispatch(OrgRoleAction.SetValue(orgRoles)) },
-        onFailure = { global.dispatch(OrgRoleAction.SetError(it.message)) }
+        onSuccess = { orgRoles -> dispatch(OrgRoleAction.SetValue(orgRoles)) },
+        onFailure = { dispatch(OrgRoleAction.SetError(it.message)) }
       )
     }
   }
 }
 
-internal suspend fun Context.updateOrgRole(orgRoleGuid: UUID, rep: OrgRoleRep.Update) {
+internal suspend fun ComponentWithApi.updateOrgRole(orgRoleGuid: UUID, rep: OrgRoleRep.Update) {
   api.orgRoles(
     endpoint = OrgRoleApi.Patch(
-      orgGuid = global.state.org.loadedState.guid,
+      orgGuid = gs.org.loadedState.guid,
       orgRoleGuid = orgRoleGuid,
       rep = rep
     )
   ).fold(
-    onSuccess = { orgRole -> global.dispatch(OrgRoleAction.UpdateValue(orgRole)) },
-    onFailure = { global.dispatch(OrgRoleAction.SetError(it.message)) }
+    onSuccess = { orgRole -> dispatch(OrgRoleAction.UpdateValue(orgRole)) },
+    onFailure = { dispatch(OrgRoleAction.SetError(it.message)) }
   )
 }
 
-internal suspend fun Context.deleteOrgRole(orgRoleGuid: UUID) {
-  api.orgRoles(OrgRoleApi.Delete(orgGuid = global.state.org.loadedState.guid, orgRoleGuid = orgRoleGuid)).fold(
-    onSuccess = { global.dispatch(OrgRoleAction.DeleteValue(orgRoleGuid)) },
-    onFailure = { global.dispatch(OrgRoleAction.SetError(it.message)) }
+internal suspend fun ComponentWithApi.deleteOrgRole(orgRoleGuid: UUID) {
+  api.orgRoles(OrgRoleApi.Delete(orgGuid = gs.org.loadedState.guid, orgRoleGuid = orgRoleGuid)).fold(
+    onSuccess = { dispatch(OrgRoleAction.DeleteValue(orgRoleGuid)) },
+    onFailure = { dispatch(OrgRoleAction.SetError(it.message)) }
   )
 }

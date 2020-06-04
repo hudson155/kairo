@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.component
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -44,7 +45,7 @@ private class S : Styles("TabbedViewLink") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
 
   navLink<RProps>(

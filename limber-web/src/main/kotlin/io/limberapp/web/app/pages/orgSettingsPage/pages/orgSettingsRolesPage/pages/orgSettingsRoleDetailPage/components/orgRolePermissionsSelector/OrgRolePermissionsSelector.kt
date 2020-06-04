@@ -2,18 +2,16 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pa
 
 import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.updateOrgRole
-import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetChecked
 import io.limberapp.web.util.useIsMounted
-import io.limberapp.web.util.withContextAsync
 import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
@@ -80,9 +78,7 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, SAVING }
 
-private val component = functionalComponent<Props> { props ->
-  val api = useApi()
-  val global = useGlobalState()
+private val component = componentWithApi<Props> component@{ self, props ->
   val isMounted = useIsMounted()
 
   val (state, setState) = useState(State.DEFAULT)
@@ -95,9 +91,7 @@ private val component = functionalComponent<Props> { props ->
   val onSave = { _: Event ->
     setState(State.SAVING)
     async {
-      withContextAsync(global, api) {
-        updateOrgRole(props.orgRole.guid, OrgRoleRep.Update(permissions = permissions))
-      }
+      self.updateOrgRole(props.orgRole.guid, OrgRoleRep.Update(permissions = permissions))
       if (isMounted.current) {
         setState(State.DEFAULT)
         props.onClose()

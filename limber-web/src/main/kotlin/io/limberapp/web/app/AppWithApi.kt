@@ -1,6 +1,7 @@
 package io.limberapp.web.app
 
 import io.limberapp.web.context.api.apiProvider
+import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -11,7 +12,7 @@ internal fun RBuilder.appWithApi() {
   child(component)
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   apiProvider {
     appRouter()
   }

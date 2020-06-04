@@ -8,13 +8,12 @@ import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.json
 import io.limberapp.web.context.auth.authProvider
-import io.limberapp.web.context.globalState.action.tenant.ensureTenantLoaded
-import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.context.globalState.action.tenant.load
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.componentWithGlobalState
 import io.limberapp.web.util.external.AppState
 import io.limberapp.web.util.process
 import io.limberapp.web.util.rootDomain
-import io.limberapp.web.util.withContext
 import kotlinext.js.jsObject
 import react.*
 import kotlin.browser.document
@@ -37,12 +36,13 @@ private val onRedirectCallback: (AppState?) -> Unit = {
   )
 }
 
-private val component = functionalComponent<RProps> {
+private val component = componentWithGlobalState<RProps> component@{ self, _ ->
   // We use a non-authenticated API here rather than calling the useApi() hook which we should do everywhere else
   // because the tenant must be fetched before we can create the AuthProvider, and the AuthProvider is required for
   // the ApiProvider.
   val nonAuthenticatedApi = Api(Fetch(process.env.API_ROOT_URL, json))
-  val global = useGlobalState()
+
+  self.load(self.gs.tenant, nonAuthenticatedApi, rootDomain)
 
   // Set theme elements
   useEffect(listOf(Theme.Color.Background.light)) {
@@ -50,21 +50,11 @@ private val component = functionalComponent<RProps> {
     checkNotNull(document.body).style.backgroundColor = Theme.Color.Background.light.value
   }
 
-  withContext(global, nonAuthenticatedApi) {
-    ensureTenantLoaded(rootDomain)
-  }
-
   // While the tenant is loading, show the loading page.
-  val tenant = global.state.tenant.let { loadableState ->
+  val tenant = self.gs.tenant.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> {
-        minimalPage(linkType = null) { loadingPage("Loading tenant...") }
-        return@functionalComponent
-      }
-      is LoadableState.Error -> {
-        minimalPage(linkType = null) { failedToLoadPage("tenant") }
-        return@functionalComponent
-      }
+      is LoadableState.Unloaded -> return@component minimalPage(linkType = null) { loadingPage("Loading tenant...") }
+      is LoadableState.Error -> return@component minimalPage(linkType = null) { failedToLoadPage("tenant") }
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

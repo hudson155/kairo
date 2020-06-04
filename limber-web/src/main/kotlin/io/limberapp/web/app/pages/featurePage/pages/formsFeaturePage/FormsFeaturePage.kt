@@ -6,6 +6,7 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formI
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.formInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.formTemplatesListPage
+import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -20,7 +21,7 @@ internal object FormsFeaturePage {
   const val name = "Forms"
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   val match = checkNotNull(useRouteMatch<RProps>())
 
   standardLayout(leftPane = buildElement { formsFeatureSidenav() }) {

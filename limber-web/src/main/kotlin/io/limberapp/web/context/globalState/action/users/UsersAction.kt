@@ -3,8 +3,9 @@ package io.limberapp.web.context.globalState.action.users
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.Action
-import io.limberapp.web.util.Context
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import react.*
 
@@ -16,14 +17,18 @@ internal sealed class UsersAction : Action() {
   internal data class SetError(val errorMessage: String?) : UsersAction()
 }
 
-internal fun Context.ensureUsersLoaded(orgGuid: UUID) {
+private typealias State = LoadableState<Map<UUID, UserRep.Summary>>
+
+internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: State) {
+  val orgGuid = gs.org.loadedState.guid
+
   useEffect(listOf(orgGuid)) {
-    if (global.state.users.hasBegunLoading) return@useEffect
-    global.dispatch(UsersAction.BeginLoading)
+    if (gs.users.hasBegunLoading) return@useEffect
+    dispatch(UsersAction.BeginLoading)
     async {
       api.users(UserApi.GetByOrgGuid(orgGuid)).fold(
-        onSuccess = { users -> global.dispatch(UsersAction.SetValue(users)) },
-        onFailure = { global.dispatch(UsersAction.SetError(it.message)) }
+        onSuccess = { users -> dispatch(UsersAction.SetValue(users)) },
+        onFailure = { dispatch(UsersAction.SetError(it.message)) }
       )
     }
   }

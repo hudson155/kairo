@@ -8,6 +8,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
+import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.notXs
 import kotlinx.css.*
@@ -50,10 +51,10 @@ private class S : Styles("OrgRolesTable") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   if (props.orgRoles.isEmpty()) {
     p { +"No roles are defined." }
-    return@functionalComponent
+    return@component
   }
 
   p(classes = gs.c { it::visibleXs }) { +"Visit this page on a larger device to edit the roles." }

@@ -3,15 +3,13 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal.orgRolesTableRoleDeleterModal
-import io.limberapp.web.context.api.useApi
 import io.limberapp.web.context.globalState.action.orgRole.deleteOrgRole
-import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
+import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
-import io.limberapp.web.util.withContextAsync
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.*
@@ -44,18 +42,11 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, CONFIRMING }
 
-private val component = functionalComponent<Props> { props ->
-  val api = useApi()
-  val global = useGlobalState()
-
+private val component = componentWithApi<Props> component@{ self, props ->
   val (state, setState) = useState(State.DEFAULT)
 
   val onDelete = {
-    async {
-      withContextAsync(global, api) {
-        deleteOrgRole(props.orgRole.guid)
-      }
-    }
+    async { self.deleteOrgRole(props.orgRole.guid) }
   }
 
   td(classes = gs.c { it::hiddenXs }) {

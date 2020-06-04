@@ -10,12 +10,10 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector.orgRolePermissionsSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.api.useApi
-import io.limberapp.web.context.globalState.action.orgRole.ensureOrgRolesLoaded
-import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.context.globalState.action.orgRole.load
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
-import io.limberapp.web.util.withContext
+import io.limberapp.web.util.componentWithApi
 import kotlinx.css.*
 import react.*
 import react.dom.div
@@ -44,31 +42,21 @@ private class S : Styles("OrgSettingsRoleDetailPage") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<RProps> {
-  val api = useApi()
-  val global = useGlobalState()
+private val component = componentWithApi<RProps> component@{ self, _ ->
   val history = useHistory()
   val match = checkNotNull(useRouteMatch<OrgSettingsRoleDetailPage.PageParams>())
 
-  val goBack = { history.goBack() }
+  self.load(self.gs.orgRoles)
 
-  withContext(global, api) {
-    ensureOrgRolesLoaded(global.state.org.loadedState.guid)
-  }
+  val goBack = { history.goBack() }
 
   orgSettingsRolesListPage() // This page is a modal over the list page, so render the list page.
 
   // While the org roles are loading, show a blank modal.
-  val orgRoles = global.state.orgRoles.let { loadableState ->
+  val orgRoles = self.gs.orgRoles.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> {
-        modal(blank = true, onClose = goBack) {}
-        return@functionalComponent
-      }
-      is LoadableState.Error -> {
-        modal(onClose = goBack) { failedToLoad("roles") }
-        return@functionalComponent
-      }
+      is LoadableState.Unloaded -> return@component modal(blank = true, onClose = goBack) {}
+      is LoadableState.Error -> return@component modal(onClose = goBack) { failedToLoad("roles") }
       is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
   }
@@ -77,7 +65,7 @@ private val component = functionalComponent<RProps> {
   val orgRole = orgRoles.singleOrNull { it.slug == roleSlug }
   if (orgRole == null) {
     redirect(to = OrgSettingsRolesPage.path)
-    return@functionalComponent
+    return@component
   }
 
   modal(onClose = goBack) {

@@ -1,5 +1,6 @@
 package io.limberapp.web.app
 
+import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -9,6 +10,6 @@ internal fun RBuilder.app() {
   child(component)
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   appWithGlobalState()
 }

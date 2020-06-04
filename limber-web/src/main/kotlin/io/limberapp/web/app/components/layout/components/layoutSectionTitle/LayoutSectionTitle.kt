@@ -3,6 +3,7 @@ package io.limberapp.web.app.components.layout.components.layoutSectionTitle
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.component
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -40,7 +41,7 @@ private class S : Styles("LayoutSectionTitle") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   div(classes = s.c { it::container }) {
     h2(classes = s.c { it::title }) { +props.title }
     props.description?.let { p(classes = s.c { it::description }) { +it } }
