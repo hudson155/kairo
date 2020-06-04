@@ -12,12 +12,13 @@ internal object FeatureRepFixtures {
 
   val default = Fixture(
     {
-      FeatureRep.Creation("Home", "/home", FeatureRep.Type.HOME)
+      FeatureRep.Creation(0, "Home", "/home", FeatureRep.Type.HOME)
     },
     { idSeed ->
       FeatureRep.Complete(
         guid = deterministicUuidGenerator[idSeed],
         createdDate = LocalDateTime.now(fixedClock),
+        rank = 0,
         name = "Home",
         path = "/home",
         type = FeatureRep.Type.HOME,
@@ -28,12 +29,13 @@ internal object FeatureRepFixtures {
 
   val formsFixture = Fixture(
     {
-      FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS)
+      FeatureRep.Creation(1, "Forms", "/forms", FeatureRep.Type.FORMS)
     },
     { idSeed ->
       FeatureRep.Complete(
         guid = deterministicUuidGenerator[idSeed],
         createdDate = LocalDateTime.now(fixedClock),
+        rank = 1,
         name = "Forms",
         path = "/forms",
         type = FeatureRep.Type.FORMS,

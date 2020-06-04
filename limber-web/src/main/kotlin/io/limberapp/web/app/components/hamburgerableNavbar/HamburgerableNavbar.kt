@@ -43,7 +43,7 @@ import react.router.dom.*
 internal fun RBuilder.hamburgerableNavbar(
   left: ReactElement?,
   right: ReactElement?,
-  features: Set<FeatureRep.Complete>,
+  features: List<FeatureRep.Complete>,
   hamburgerOpen: Boolean,
   onHamburger: (open: Boolean) -> Unit
 ) {
@@ -53,7 +53,7 @@ internal fun RBuilder.hamburgerableNavbar(
 internal data class Props(
   val left: ReactElement?,
   val right: ReactElement?,
-  val features: Set<FeatureRep.Complete>,
+  val features: List<FeatureRep.Complete>,
   val hamburgerOpen: Boolean,
   val onHamburger: (open: Boolean) -> Unit
 ) : RProps

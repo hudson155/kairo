@@ -20,6 +20,7 @@ object FeatureRep {
 
   @Serializable
   data class Creation(
+    val rank: Int,
     val name: String,
     val path: String,
     val type: Type
@@ -36,6 +37,7 @@ object FeatureRep {
     val guid: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
+    val rank: Int,
     val name: String,
     val path: String,
     val type: Type,
@@ -44,6 +46,7 @@ object FeatureRep {
 
   @Serializable
   data class Update(
+    val rank: Int? = null,
     val name: String? = null,
     val path: String? = null,
     val isDefaultFeature: Boolean? = null
@@ -55,4 +58,4 @@ object FeatureRep {
   }
 }
 
-val Set<FeatureRep.Complete>.default get() = singleOrNull { it.isDefaultFeature }
+val List<FeatureRep.Complete>.default get() = singleOrNull { it.isDefaultFeature }

@@ -20,12 +20,12 @@ internal class OrgMapper @Inject constructor(
     ownerAccountGuid = rep.ownerAccountGuid
   )
 
-  fun completeRep(model: OrgModel, features: Set<FeatureModel>) = OrgRep.Complete(
+  fun completeRep(model: OrgModel, features: List<FeatureModel>) = OrgRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
     name = model.name,
     ownerAccountGuid = model.ownerAccountGuid,
-    features = features.map { featureMapper.completeRep(it) }.toSet()
+    features = features.map { featureMapper.completeRep(it) }
   )
 
   fun update(rep: OrgRep.Update) = OrgModel.Update(

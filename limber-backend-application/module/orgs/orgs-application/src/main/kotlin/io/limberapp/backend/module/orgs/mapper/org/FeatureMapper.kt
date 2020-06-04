@@ -16,6 +16,7 @@ internal class FeatureMapper @Inject constructor(
     guid = uuidGenerator.generate(),
     createdDate = LocalDateTime.now(clock),
     orgGuid = orgGuid,
+    rank = rep.rank,
     name = rep.name,
     path = rep.path,
     type = type(rep.type),
@@ -25,6 +26,7 @@ internal class FeatureMapper @Inject constructor(
   fun completeRep(model: FeatureModel) = FeatureRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
+    rank = model.rank,
     name = model.name,
     path = model.path,
     type = type(model.type),
@@ -32,6 +34,7 @@ internal class FeatureMapper @Inject constructor(
   )
 
   fun update(rep: FeatureRep.Update) = FeatureModel.Update(
+    rank = rep.rank,
     name = rep.name,
     path = rep.path,
     isDefaultFeature = rep.isDefaultFeature

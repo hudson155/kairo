@@ -2,7 +2,8 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
-import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
+import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
+import io.limberapp.backend.module.orgs.exception.org.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -25,6 +26,27 @@ internal class PostFeatureTest : ResourceTest() {
   }
 
   @Test
+  fun duplicateRank() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
+
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+
+    piperTest.test(
+      endpoint = OrgFeatureApi.Post(
+        orgGuid = orgRep.guid,
+        rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.default.creation().rank)
+      ),
+      expectedException = FeatureRankIsNotUnique()
+    )
+
+    piperTest.test(OrgApi.Get(orgRep.guid)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
+    }
+  }
+
+  @Test
   fun duplicatePath() {
     val orgOwnerAccountGuid = UUID.randomUUID()
 
@@ -36,7 +58,7 @@ internal class PostFeatureTest : ResourceTest() {
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path)
       ),
-      expectedException = FeatureIsNotUnique()
+      expectedException = FeaturePathIsNotUnique()
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {

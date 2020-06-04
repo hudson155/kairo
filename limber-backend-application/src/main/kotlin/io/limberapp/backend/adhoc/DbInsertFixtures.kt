@@ -20,11 +20,11 @@ INSERT INTO auth.org_role (guid, created_date, org_guid, name, permissions)
 VALUES ('b9ce1942-897d-470f-8b68-822d901005a6', NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'Admin', '1100'),
        ('e7b681af-812d-4999-a016-ebb3d6f23104', NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'Member', '0010');
 INSERT INTO orgs.feature (guid, created_date, org_guid,
-                          name, path, type, is_default_feature)
+                          rank, name, path, type, is_default_feature)
 VALUES ('75a2ed7a-4247-4e63-ab10-a60df3d9aeee', NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d',
-        'Home', '/home', 'HOME', TRUE),
+        0, 'Home', '/home', 'HOME', TRUE),
        ('3dc95c5d-767c-4b29-9c50-a6f93edd0c06', NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d',
-        'Forms', '/forms', 'FORMS', FALSE);
+        1, 'Forms', '/forms', 'FORMS', FALSE);
 INSERT INTO auth.tenant (created_date, org_guid, auth0_client_id)
 VALUES (NOW(), '5761db85-7701-4ce4-9162-ab0fb4149b0d', 'eXqVXnBUsRkvDv2nTv9hURTA2IHzNWDa');
 INSERT INTO auth.tenant_domain (created_date, org_guid, domain)

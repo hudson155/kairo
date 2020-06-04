@@ -5,10 +5,12 @@ CREATE TABLE orgs.feature
     created_date       TIMESTAMP   NOT NULL,
     archived_date      TIMESTAMP DEFAULT NULL,
     org_guid           UUID        NOT NULL REFERENCES orgs.org (guid) ON DELETE CASCADE,
+    rank               INT         NOT NULL,
     name               VARCHAR     NOT NULL,
     path               VARCHAR     NOT NULL,
     type               VARCHAR     NOT NULL,
-    is_default_feature BOOLEAN     NOT NULL
+    is_default_feature BOOLEAN     NOT NULL,
+    UNIQUE (org_guid, rank)
 );
 
 CREATE UNIQUE INDEX

@@ -4,11 +4,11 @@ import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import java.util.*
 
 interface FeatureService {
-  fun createDefaults(orgGuid: UUID): Set<FeatureModel>
+  fun createDefaults(orgGuid: UUID): List<FeatureModel>
 
   fun create(model: FeatureModel)
 
-  fun getByOrgGuid(orgGuid: UUID): Set<FeatureModel>
+  fun getByOrgGuid(orgGuid: UUID): List<FeatureModel>
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel
 

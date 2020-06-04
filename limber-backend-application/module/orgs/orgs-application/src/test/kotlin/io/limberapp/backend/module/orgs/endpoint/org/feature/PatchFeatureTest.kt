@@ -2,7 +2,7 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
-import io.limberapp.backend.module.orgs.exception.org.FeatureIsNotUnique
+import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -60,7 +60,7 @@ internal class PatchFeatureTest : ResourceTest() {
     val featureUpdateRep = FeatureRep.Update(path = orgRep.features.first().path)
     piperTest.test(
       endpoint = OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep),
-      expectedException = FeatureIsNotUnique()
+      expectedException = FeaturePathIsNotUnique()
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
@@ -70,7 +70,34 @@ internal class PatchFeatureTest : ResourceTest() {
   }
 
   @Test
-  fun happyPath() {
+  fun happyPathRank() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
+
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+
+    var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
+    piperTest.setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+
+    val featureUpdateRep = FeatureRep.Update(rank = 3)
+    featureRep = featureRep.copy(rank = featureUpdateRep.rank!!)
+    orgRep = orgRep.copy(
+      features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }
+    )
+    piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep)) {
+      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      assertEquals(featureRep, actual)
+    }
+
+    piperTest.test(OrgApi.Get(orgRep.guid)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
+    }
+  }
+
+  @Test
+  fun happyPathName() {
     val orgOwnerAccountGuid = UUID.randomUUID()
 
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
@@ -83,7 +110,34 @@ internal class PatchFeatureTest : ResourceTest() {
     val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
     featureRep = featureRep.copy(name = featureUpdateRep.name!!)
     orgRep = orgRep.copy(
-      features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }.toSet()
+      features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }
+    )
+    piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep)) {
+      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      assertEquals(featureRep, actual)
+    }
+
+    piperTest.test(OrgApi.Get(orgRep.guid)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
+    }
+  }
+
+  @Test
+  fun happyPathPath() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
+
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+
+    var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
+    piperTest.setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+
+    val featureUpdateRep = FeatureRep.Update(path = "/renamed")
+    featureRep = featureRep.copy(path = featureUpdateRep.path!!)
+    orgRep = orgRep.copy(
+      features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }
     )
     piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep)) {
       val actual = json.parse<FeatureRep.Complete>(response.content!!)
@@ -112,7 +166,7 @@ internal class PatchFeatureTest : ResourceTest() {
     orgRep = orgRep.copy(
       features = orgRep.features.map {
         if (it.guid == featureRep.guid) featureRep else it.copy(isDefaultFeature = false)
-      }.toSet()
+      }
     )
     piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep0)) {
       val actual = json.parse<FeatureRep.Complete>(response.content!!)
@@ -122,7 +176,7 @@ internal class PatchFeatureTest : ResourceTest() {
     val featureUpdateRep1 = FeatureRep.Update(isDefaultFeature = false)
     featureRep = featureRep.copy(isDefaultFeature = false)
     orgRep = orgRep.copy(
-      features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }.toSet()
+      features = orgRep.features.map { if (it.guid == featureRep.guid) featureRep else it }
     )
     piperTest.test(OrgFeatureApi.Patch(orgRep.guid, featureRep.guid, featureUpdateRep1)) {
       val actual = json.parse<FeatureRep.Complete>(response.content!!)

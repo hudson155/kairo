@@ -33,7 +33,7 @@ object OrgRep {
     val name: String,
     @Serializable(with = UuidSerializer::class)
     val ownerAccountGuid: UUID,
-    val features: Set<FeatureRep.Complete>
+    val features: List<FeatureRep.Complete>
   ) : CompleteRep
 
   @Serializable
