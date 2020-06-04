@@ -19,7 +19,7 @@ internal data class Props(val feature: FeatureRep.Complete) : RProps
 private val component = component<Props> component@{ props ->
   when (props.feature.type) {
     FeatureRep.Type.FORMS -> formsFeaturePage(props.feature)
-    FeatureRep.Type.HOME -> homePage()
+    FeatureRep.Type.HOME -> homePage(props.feature)
     else -> notFoundPage()
   }
 }
