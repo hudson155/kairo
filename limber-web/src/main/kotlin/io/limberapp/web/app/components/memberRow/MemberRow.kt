@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.component
 import io.limberapp.web.util.initials
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
@@ -58,7 +59,7 @@ private class S : Styles("MemberRow") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   div(classes = cls(s.c { it::container }, s.c(props.onSelect != null) { it::clickable })) {
     props.onSelect?.let { attrs.onClickFunction = { it() } }
     profilePhoto(

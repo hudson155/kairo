@@ -4,6 +4,7 @@ import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
+import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import kotlinx.css.*
 import react.*
@@ -26,7 +27,7 @@ private class S : Styles("LoadingPage") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   centeredContentLayout {
     div(classes = s.c { it::spinnerContainer }) {
       inlineIcon("spinner", classes = gs.c { it::spinner })

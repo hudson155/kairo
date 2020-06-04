@@ -4,6 +4,7 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.component
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -80,7 +81,7 @@ private class S : Styles("ProfilePhoto") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   div(classes = cls(s.c { it::container }, s.c(props.small) { it::small }, props.classes)) {
     div(classes = s.c { it::inner }) { +props.placeholder }
     props.url?.let { url ->

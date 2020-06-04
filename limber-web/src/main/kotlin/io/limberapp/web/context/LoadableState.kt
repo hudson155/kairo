@@ -14,7 +14,8 @@ internal sealed class LoadableState<State : Any> {
 
   internal data class Unloaded<State : Any>(override val hasBegunLoading: Boolean) : LoadableState<State>() {
     override val isLoaded = false
-    override val loadedState = error(if (hasBegunLoading) "State is loading." else "State has not started loading.")
+    override val loadedState: Nothing
+      get() = error(if (hasBegunLoading) "State is loading." else "State has not started loading.")
   }
 
   internal data class Loaded<State : Any>(val state: State) : LoadableState<State>() {
@@ -23,10 +24,11 @@ internal sealed class LoadableState<State : Any> {
     override val loadedState = state
   }
 
-  internal data class Error<State : Any>(val errorMessage: String) : LoadableState<State>() {
+  internal data class Error<State : Any>(private val errorMessage: String?) : LoadableState<State>() {
     override val hasBegunLoading = true
     override val isLoaded = true
-    override val loadedState = error(errorMessage)
+    override val loadedState: Nothing
+      get() = error(errorMessage ?: "An unexpected error occurred.")
   }
 
   companion object {

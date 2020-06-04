@@ -6,17 +6,12 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 
 class OrgRoleClient(private val fetch: Fetch, private val json: Json) {
-  suspend operator fun invoke(endpoint: OrgRoleApi.GetByOrgGuid): Set<OrgRoleRep.Complete> {
-    val string = fetch(endpoint).getOrThrow()
-    return json.parseSet(string)
-  }
+  suspend operator fun invoke(endpoint: OrgRoleApi.GetByOrgGuid) =
+    fetch(endpoint) { json.parseSet<OrgRoleRep.Complete>(it) }
 
-  suspend operator fun invoke(endpoint: OrgRoleApi.Patch): OrgRoleRep.Complete {
-    val string = fetch(endpoint).getOrThrow()
-    return json.parse(string)
-  }
+  suspend operator fun invoke(endpoint: OrgRoleApi.Patch) =
+    fetch(endpoint) { json.parse<OrgRoleRep.Complete>(it) }
 
-  suspend operator fun invoke(endpoint: OrgRoleApi.Delete) {
+  suspend operator fun invoke(endpoint: OrgRoleApi.Delete) =
     fetch(endpoint)
-  }
 }

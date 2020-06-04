@@ -17,5 +17,8 @@ internal fun orgRoleReducer(state: GlobalStateContext, action: OrgRoleAction): G
     is OrgRoleAction.DeleteValue -> state.copy(
       orgRoles = state.orgRoles.update { it.orEmpty().minus(action.orgRoleGuid) }
     )
+    is OrgRoleAction.SetError -> state.copy(
+      orgRoles = LoadableState.Error(action.errorMessage)
+    )
   }
 }

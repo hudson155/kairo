@@ -11,5 +11,8 @@ internal fun tenantReducer(state: GlobalStateContext, action: TenantAction): Glo
     is TenantAction.SetValue -> state.copy(
       tenant = LoadableState.Loaded(action.tenant)
     )
+    is TenantAction.SetError -> state.copy(
+      tenant = LoadableState.Error(action.errorMessage)
+    )
   }
 }

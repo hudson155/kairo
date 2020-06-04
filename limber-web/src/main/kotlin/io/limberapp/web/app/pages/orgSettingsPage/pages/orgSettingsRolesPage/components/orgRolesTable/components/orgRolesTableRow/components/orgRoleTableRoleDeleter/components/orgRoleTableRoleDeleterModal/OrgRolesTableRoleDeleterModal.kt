@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
@@ -44,7 +45,7 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, SAVING }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   val (state, setState) = useState(State.DEFAULT)
 
   modal(narrow = true, onClose = props.onCancel) {

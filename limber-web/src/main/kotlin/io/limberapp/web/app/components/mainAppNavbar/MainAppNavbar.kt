@@ -6,11 +6,11 @@ import io.limberapp.web.app.components.mainAppNavbar.components.userSubnav.userS
 import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
-import io.limberapp.web.context.globalState.useGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.componentWithGlobalState
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.initials
 import kotlinx.css.*
@@ -19,7 +19,6 @@ import react.RBuilder
 import react.RProps
 import react.child
 import react.dom.*
-import react.functionalComponent
 import react.router.dom.*
 import react.useState
 
@@ -46,14 +45,12 @@ private val s = S().apply { inject() }
 
 private enum class OpenItem { HAMBURGER, USER_DROPDOWN }
 
-private val component = functionalComponent<RProps> {
-  val global = useGlobalState()
-
+private val component = componentWithGlobalState<RProps> component@{ self, _ ->
   // Only 1 item on the navbar can be open at a time.
   val (openItem, setOpenItem) = useState<OpenItem?>(null)
 
-  val (name, photoUrl) = global.state.user.loadedState.let { Pair(it.fullName, it.profilePhotoUrl) }
-  val features = global.state.org.loadedState.features
+  val (name, photoUrl) = self.gs.user.loadedState.let { Pair(it.fullName, it.profilePhotoUrl) }
+  val features = self.gs.org.loadedState.features
 
   hamburgerableNavbar(
     left = buildElements {

@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.sidenav.sidenav
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.FormsFeaturePage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
+import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -16,7 +17,7 @@ internal fun RBuilder.formsFeatureSidenav() {
   child(component)
 }
 
-private val component = functionalComponent<RProps> {
+private val component = component<RProps> component@{ _ ->
   val match = checkNotNull(useRouteMatch<RProps>())
 
   sidenav(FormsFeaturePage.name) {

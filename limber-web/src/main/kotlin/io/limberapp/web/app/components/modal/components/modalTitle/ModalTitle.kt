@@ -1,6 +1,7 @@
 package io.limberapp.web.app.components.modal.components.modalTitle
 
 import io.limberapp.web.app.components.layout.components.layoutSectionTitle.layoutSectionTitle
+import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -16,6 +17,6 @@ internal fun RBuilder.modalTitle(title: String, description: String? = null) {
 
 internal data class Props(val title: String, val description: String?) : RProps
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   layoutSectionTitle(props.title, props.description)
 }

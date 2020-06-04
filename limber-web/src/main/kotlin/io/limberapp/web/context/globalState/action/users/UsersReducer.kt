@@ -11,5 +11,8 @@ internal fun usersReducer(state: GlobalStateContext, action: UsersAction): Globa
     is UsersAction.SetValue -> state.copy(
       users = LoadableState.Loaded(action.users.associateBy { it.guid })
     )
+    is UsersAction.SetError -> state.copy(
+      users = LoadableState.Error(action.errorMessage)
+    )
   }
 }

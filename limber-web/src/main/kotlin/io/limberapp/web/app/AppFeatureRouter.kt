@@ -6,18 +6,18 @@ import io.limberapp.web.app.components.mainAppNavbar.mainAppNavbar
 import io.limberapp.web.app.components.minimalPage.LinkType
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.components.page.page
+import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
-import io.limberapp.web.context.api.useApi
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.auth.useAuth
-import io.limberapp.web.context.globalState.action.org.ensureOrgLoaded
-import io.limberapp.web.context.globalState.action.user.ensureUserLoaded
-import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.context.globalState.action.org.load
+import io.limberapp.web.context.globalState.action.user.load
+import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.rootPath
-import io.limberapp.web.util.withContext
 import react.*
 import react.router.dom.*
 
@@ -30,32 +30,31 @@ internal fun RBuilder.appFeatureRouter() {
   child(component)
 }
 
-private val component = functionalComponent<RProps> {
-  val api = useApi()
+private val component = componentWithApi<RProps> component@{ self, _ ->
   val auth = useAuth()
-  val global = useGlobalState()
 
-  withContext(global, api) { ensureOrgLoaded(checkNotNull(auth.jwt).org.guid) }
-
-  withContext(global, api) { ensureUserLoaded(checkNotNull(auth.jwt).user.guid) }
+  self.load(self.gs.org, checkNotNull(auth.jwt).org.guid)
+  self.load(self.gs.user, checkNotNull(auth.jwt).user.guid)
 
   // While the org is loading, show the loading page.
-  global.state.org.let { loadableState ->
-    if (!loadableState.isLoaded) {
-      minimalPage(linkType = LinkType.SIGN_OUT) { loadingPage("Loading org...") }
-      return@functionalComponent
+  self.gs.org.let { loadableState ->
+    when (loadableState) {
+      is LoadableState.Unloaded -> return@component minimalPage(linkType = null) { loadingPage("Loading org...") }
+      is LoadableState.Error -> return@component minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("org") }
+      is LoadableState.Loaded -> Unit
     }
   }
 
   // While the user is loading, show the loading page.
-  global.state.user.let { loadableState ->
-    if (!loadableState.isLoaded) {
-      minimalPage(linkType = LinkType.SIGN_OUT) { loadingPage("Loading user...") }
-      return@functionalComponent
+  self.gs.user.let { loadableState ->
+    when (loadableState) {
+      is LoadableState.Unloaded -> return@component minimalPage(linkType = null) { loadingPage("Loading user...") }
+      is LoadableState.Error -> return@component minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("user") }
+      is LoadableState.Loaded -> Unit
     }
   }
 
-  val features = global.state.org.loadedState.features
+  val features = self.gs.org.loadedState.features
 
   page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
     switch {

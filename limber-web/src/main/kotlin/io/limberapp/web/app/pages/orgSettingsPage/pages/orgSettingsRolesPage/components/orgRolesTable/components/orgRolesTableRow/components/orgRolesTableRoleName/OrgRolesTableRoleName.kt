@@ -1,16 +1,14 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleName
 
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
-import io.limberapp.web.context.api.useApi
-import io.limberapp.web.context.globalState.action.orgRole.OrgRoleAction
-import io.limberapp.web.context.globalState.useGlobalState
+import io.limberapp.web.context.globalState.action.orgRole.updateOrgRole
 import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetValue
 import io.limberapp.web.util.useIsMounted
@@ -72,15 +70,11 @@ private val s = S().apply { inject() }
  */
 private enum class State { DISPLAYING, EDITING, SAVING }
 
-private val component = functionalComponent<Props> { props ->
-  val api = useApi()
-  val global = useGlobalState()
+private val component = componentWithApi<Props> component@{ self, props ->
   val isMounted = useIsMounted()
 
   val (state, setState) = useState(State.DISPLAYING)
   val (editValue, setValue) = useState(props.orgRole.name)
-
-  val orgGuid = global.state.org.loadedState.guid
 
   val onEditClicked = { _: Event -> setState(State.EDITING) }
   val onCancelEdit = { _: Event ->
@@ -91,14 +85,7 @@ private val component = functionalComponent<Props> { props ->
     event.preventDefault()
     setState(State.SAVING)
     async {
-      val orgRole = api.orgRoles(
-        endpoint = OrgRoleApi.Patch(
-          orgGuid = orgGuid,
-          orgRoleGuid = props.orgRole.guid,
-          rep = OrgRoleRep.Update(name = editValue)
-        )
-      )
-      global.dispatch(OrgRoleAction.UpdateValue(orgRole))
+      self.updateOrgRole(props.orgRole.guid, OrgRoleRep.Update(name = editValue))
       if (isMounted.current) setState(State.DISPLAYING)
     }
   }

@@ -4,6 +4,7 @@ import io.limberapp.web.app.components.navbar.components.subnav.components.subna
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.component
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -32,7 +33,7 @@ private class S : Styles("SubnavGroup") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<RProps> { props ->
+private val component = component<RProps> component@{ props ->
   div(classes = s.c { it::container }) {
     props.children()
   }

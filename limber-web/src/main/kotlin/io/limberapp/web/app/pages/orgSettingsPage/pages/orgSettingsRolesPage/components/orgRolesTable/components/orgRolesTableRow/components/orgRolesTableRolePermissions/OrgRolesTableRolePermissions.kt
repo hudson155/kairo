@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.pluralize
 import react.*
@@ -25,7 +26,7 @@ internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete,
 
 internal data class Props(val orgRole: OrgRoleRep.Complete, val classes: String?) : RProps
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
   td(classes = props.classes) {
     navLink<RProps>(

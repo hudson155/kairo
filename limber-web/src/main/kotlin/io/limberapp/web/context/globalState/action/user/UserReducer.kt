@@ -11,5 +11,8 @@ internal fun userReducer(state: GlobalStateContext, action: UserAction): GlobalS
     is UserAction.SetValue -> state.copy(
       user = LoadableState.Loaded(action.user)
     )
+    is UserAction.SetError -> state.copy(
+      user = LoadableState.Error(action.errorMessage)
+    )
   }
 }

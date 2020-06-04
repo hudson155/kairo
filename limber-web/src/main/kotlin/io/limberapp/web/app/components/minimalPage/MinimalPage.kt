@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.page.page
 import io.limberapp.web.app.pages.signInPage.SignInPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
+import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -25,7 +26,7 @@ internal data class Props(val linkType: LinkType?) : RProps
 
 internal enum class LinkType { SIGN_IN, SIGN_OUT }
 
-private val component = functionalComponent<Props> { props ->
+private val component = component<Props> component@{ props ->
   page(
     header = buildElement {
       basicNavbar {
