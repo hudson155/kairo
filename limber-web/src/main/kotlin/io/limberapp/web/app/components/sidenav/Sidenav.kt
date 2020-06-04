@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.sidenav.components.sidenavHeader.sidenavH
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.component
+import io.limberapp.web.util.gs
 import kotlinx.css.*
 import react.*
 import react.dom.*
@@ -45,6 +46,6 @@ private val component = component<Props> component@{ props ->
 
   div(classes = s.c { it::container }) {
     sidenavHeader(props.title, isOpen = isOpen, onClick = { setIsOpen(!isOpen) })
-    if (isOpen) props.children()
+    div(classes = gs.c(!isOpen) { it::hiddenXs }) { props.children() }
   }
 }

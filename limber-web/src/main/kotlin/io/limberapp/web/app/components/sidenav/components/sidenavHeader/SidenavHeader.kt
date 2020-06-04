@@ -8,6 +8,8 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.component
+import io.limberapp.web.util.gs
+import io.limberapp.web.util.xs
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import kotlinx.html.js.onClickFunction
@@ -37,7 +39,9 @@ private class S : Styles("SidenavHeader") {
     backgroundColor = Theme.Color.Background.lightDisabled
     padding(8.px)
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
-    cursor = Cursor.pointer
+    xs {
+      cursor = Cursor.pointer
+    }
     lastOfType {
       borderBottomStyle = BorderStyle.none
     }
@@ -51,7 +55,7 @@ private val component = component<Props> component@{ props ->
     a(classes = s.c { it::container }) {
       span { b { +props.text } }
       attrs.onClickFunction = { props.onClick() }
-      inlineIcon(name = if (!props.isOpen) "angle-down" else "angle-up")
+      inlineIcon(name = if (!props.isOpen) "angle-down" else "angle-up", classes = gs.c { it::visibleXs })
     }
   }
 }
