@@ -1,5 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage
 
+import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.components.formsFeatureSidenav.formsFeatureSidenav
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
@@ -13,18 +14,16 @@ import react.router.dom.*
 /**
  * Parent page for forms module pages.
  */
-internal fun RBuilder.formsFeaturePage() {
-  child(component)
+internal fun RBuilder.formsFeaturePage(feature: FeatureRep.Complete) {
+  child(component, Props(feature))
 }
 
-internal object FormsFeaturePage {
-  const val name = "Forms"
-}
+internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-private val component = component<RProps> component@{
+private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
 
-  standardLayout(leftPane = buildElement { formsFeatureSidenav() }) {
+  standardLayout(leftPane = buildElement { formsFeatureSidenav(props.feature.name) }) {
     switch {
       route(path = match.path, exact = true) {
         redirect(to = match.path + FormInstancesListPage.subpath)
