@@ -3,7 +3,6 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.components
 import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.app.components.sidenav.components.sidenavLink.sidenavLink
 import io.limberapp.web.app.components.sidenav.sidenav
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.FormsFeaturePage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
 import io.limberapp.web.util.component
@@ -13,14 +12,16 @@ import react.router.dom.*
 /**
  * Sidenav for navigation within a forms feature.
  */
-internal fun RBuilder.formsFeatureSidenav() {
-  child(component)
+internal fun RBuilder.formsFeatureSidenav(title: String) {
+  child(component, Props(title))
 }
 
-private val component = component<RProps> component@{
+internal data class Props(val title: String) : RProps
+
+private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
 
-  sidenav(FormsFeaturePage.name) {
+  sidenav(props.title) {
     sidenavGroup {
       sidenavLink(FormInstancesListPage.name, to = match.path + FormInstancesListPage.subpath)
       sidenavLink(FormTemplatesListPage.name, to = match.path + FormTemplatesListPage.subpath)
