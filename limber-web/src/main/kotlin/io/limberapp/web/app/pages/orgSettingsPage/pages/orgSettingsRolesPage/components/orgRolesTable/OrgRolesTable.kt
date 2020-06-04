@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
+import io.limberapp.web.app.components.limberTable.limberTable
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter.orgRolesTableRoleDeleter
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleName.orgRolesTableRoleName
@@ -30,16 +31,12 @@ private class S : Styles("OrgRolesTable") {
   val table by css {
     maxWidth = 768.px
     th {
-      height = 24.px
-      padding(4.px)
       notXs {
         nthChild("2") { width = 160.px }
         nthChild("3") { width = 160.px }
       }
     }
     td {
-      height = 24.px
-      padding(4.px)
       notXs {
         nthChild("2") { width = 160.px }
         nthChild("3") { width = 160.px }
@@ -59,24 +56,14 @@ private val component = component<Props> component@{ props ->
 
   p(classes = gs.c { it::visibleXs }) { +"Visit this page on a larger device to edit the roles." }
 
-  table(classes = s.c { it::table }) {
-    thead(classes = gs.c { it::hiddenXs }) {
-      tr {
-        th { +"Name" }
-        th { +"Permissions" }
-        th { +"Members" }
-        th {}
-      }
-    }
-    tbody {
-      props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
-        orgRolesTableRow {
-          attrs.key = orgRole.guid
-          orgRolesTableRoleName(orgRole)
-          orgRolesTableRolePermissions(orgRole)
-          orgRolesTableRoleMemberCount(orgRole)
-          orgRolesTableRoleDeleter(orgRole)
-        }
+  limberTable(headers = listOf("Name", "Permissions", "Members", null), classes = s.c { it::table }) {
+    props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
+      orgRolesTableRow {
+        attrs.key = orgRole.guid
+        orgRolesTableRoleName(orgRole)
+        orgRolesTableRolePermissions(orgRole)
+        orgRolesTableRoleMemberCount(orgRole)
+        orgRolesTableRoleDeleter(orgRole)
       }
     }
   }
