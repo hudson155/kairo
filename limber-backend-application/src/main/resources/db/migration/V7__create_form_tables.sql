@@ -27,7 +27,7 @@ CREATE TABLE forms.form_template_question
     earliest           DATE,
     latest             DATE,
     options            TEXT[],
-    UNIQUE (form_template_guid, rank)
+    UNIQUE (form_template_guid, rank) DEFERRABLE INITIALLY DEFERRED
 );
 
 CREATE TABLE forms.form_instance
