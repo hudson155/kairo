@@ -16,7 +16,7 @@ internal object SignOutPage {
   const val path = "/signout"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   val auth = useAuth()
   auth.signOut()
 }

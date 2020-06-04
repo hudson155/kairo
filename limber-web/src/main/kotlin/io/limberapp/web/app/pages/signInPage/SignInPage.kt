@@ -16,7 +16,7 @@ internal object SignInPage {
   const val path = "/signin"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   val auth = useAuth()
   auth.signIn()
 }

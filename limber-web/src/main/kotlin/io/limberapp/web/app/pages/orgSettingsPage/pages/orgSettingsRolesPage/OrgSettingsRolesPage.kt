@@ -20,7 +20,7 @@ internal object OrgSettingsRolesPage {
   const val path = "${OrgSettingsPage.path}/roles"
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   val match = checkNotNull(useRouteMatch<RProps>())
 
   switch {

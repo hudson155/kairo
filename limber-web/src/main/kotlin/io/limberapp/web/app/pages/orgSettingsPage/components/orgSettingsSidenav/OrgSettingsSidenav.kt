@@ -16,7 +16,7 @@ internal fun RBuilder.orgSettingsSidenav() {
   child(component)
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   sidenav(OrgSettingsPage.name) {
     sidenavGroup {
       sidenavLink(OrgSettingsInfoPage.name, to = OrgSettingsInfoPage.path)

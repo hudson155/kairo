@@ -23,7 +23,7 @@ internal fun RBuilder.appRouter() {
   child(component)
 }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   val auth = useAuth()
 
   // While auth is loading, show the loading page.

@@ -25,7 +25,7 @@ private class S : Styles("Footer") {
 
 private val s = S().apply { inject() }
 
-private val component = component<RProps> component@{ _ ->
+private val component = component<RProps> component@{
   div(classes = s.c { it::container }) {
     p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
   }
