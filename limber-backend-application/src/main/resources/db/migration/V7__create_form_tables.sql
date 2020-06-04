@@ -26,7 +26,8 @@ CREATE TABLE forms.form_template_question
     validator          VARCHAR,
     earliest           DATE,
     latest             DATE,
-    options            TEXT[]
+    options            TEXT[],
+    UNIQUE (form_template_guid, rank)
 );
 
 CREATE TABLE forms.form_instance
