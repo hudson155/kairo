@@ -3,7 +3,6 @@ package io.limberapp.web.context.globalState.action.orgRoleMembership
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
-import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.Action
 import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
@@ -33,9 +32,7 @@ internal sealed class OrgRoleMembershipAction : Action() {
   ) : OrgRoleMembershipAction()
 }
 
-private typealias State = Map<UUID, LoadableState<Map<UUID, OrgRoleMembershipRep.Complete>>>
-
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: State, orgRoleGuid: UUID) {
+internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: OrgRoleMembershipState, orgRoleGuid: UUID) {
   val orgGuid = gs.org.loadedState.guid
 
   useEffect(listOf(orgRoleGuid)) {

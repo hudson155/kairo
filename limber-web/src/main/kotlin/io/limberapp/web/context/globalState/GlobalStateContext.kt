@@ -1,18 +1,17 @@
 package io.limberapp.web.context.globalState
 
-import com.piperframework.types.UUID
-import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
-import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.backend.module.auth.rep.tenant.TenantRep
-import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.backend.module.users.rep.account.UserRep
-import io.limberapp.web.context.LoadableState
+import io.limberapp.web.context.globalState.action.org.OrgState
+import io.limberapp.web.context.globalState.action.orgRole.OrgRoleState
+import io.limberapp.web.context.globalState.action.orgRoleMembership.OrgRoleMembershipState
+import io.limberapp.web.context.globalState.action.tenant.TenantState
+import io.limberapp.web.context.globalState.action.user.UserState
+import io.limberapp.web.context.globalState.action.users.UsersState
 
 internal data class GlobalStateContext(
-  val org: LoadableState<OrgRep.Complete>,
-  val orgRoleMemberships: Map<UUID, LoadableState<Map<UUID, OrgRoleMembershipRep.Complete>>>,
-  val orgRoles: LoadableState<Map<UUID, OrgRoleRep.Complete>>,
-  val tenant: LoadableState<TenantRep.Complete>,
-  val user: LoadableState<UserRep.Complete>,
-  val users: LoadableState<Map<UUID, UserRep.Summary>>
+  val org: OrgState,
+  val orgRoleMemberships: OrgRoleMembershipState,
+  val orgRoles: OrgRoleState,
+  val tenant: TenantState,
+  val user: UserState,
+  val users: UsersState
 )
