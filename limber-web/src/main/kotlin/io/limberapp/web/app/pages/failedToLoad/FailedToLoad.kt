@@ -4,10 +4,10 @@ import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
+import io.limberapp.web.util.c
 import kotlinx.css.*
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * "Failed to load" error message. When some component's data fails to load, this should be rendered instead of throwing
@@ -18,8 +18,8 @@ import styled.getClassName
  * not be plural.
  */
 internal fun RBuilder.failedToLoad(entityName: String) {
-  div(classes = s.getClassName { it::container }) {
-    inlineIcon("exclamation-triangle", rightMargin = true, classes = s.getClassName { it::icon })
+  div(classes = s.c { it::container }) {
+    inlineIcon("exclamation-triangle", rightMargin = true, classes = s.c { it::icon })
     +"Something went wrong loading the $entityName. Please refresh the page to try again."
   }
 }
