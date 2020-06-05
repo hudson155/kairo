@@ -23,7 +23,7 @@ private val component = component<Props> component@{ props ->
 
   sidenav(props.title) {
     sidenavGroup {
-      sidenavLink(FormInstancesListPage.name, to = match.path + FormInstancesListPage.subpath)
+      sidenavLink(props.title, to = match.path + FormInstancesListPage.subpath)
       sidenavLink(FormTemplatesListPage.name, to = match.path + FormTemplatesListPage.subpath)
     }
   }

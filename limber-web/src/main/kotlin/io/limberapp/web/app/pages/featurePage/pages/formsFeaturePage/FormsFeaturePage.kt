@@ -31,10 +31,10 @@ private val component = component<Props> component@{ props ->
         redirect(to = match.path + FormInstancesListPage.subpath)
       }
       route(path = match.path + FormInstancesListPage.subpath, exact = true) {
-        buildElement { formInstancesListPage(props.feature.guid) }
+        buildElement { formInstancesListPage(props.feature) }
       }
       route(path = match.path + FormTemplatesListPage.subpath, exact = true) {
-        buildElement { formTemplatesListPage() }
+        buildElement { formTemplatesListPage(props.feature) }
       }
     }
   }

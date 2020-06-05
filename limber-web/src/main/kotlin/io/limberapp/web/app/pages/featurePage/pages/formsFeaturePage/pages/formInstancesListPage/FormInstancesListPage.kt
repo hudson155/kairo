@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage
 
-import com.piperframework.types.UUID
+import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
@@ -13,24 +13,23 @@ import react.*
 /**
  * Lists all form instances within the feature.
  */
-internal fun RBuilder.formInstancesListPage(featureGuid: UUID) {
-  child(component, Props(featureGuid))
+internal fun RBuilder.formInstancesListPage(feature: FeatureRep.Complete) {
+  child(component, Props(feature))
 }
 
-internal data class Props(val featureGuid: UUID) : RProps
+internal data class Props(val feature: FeatureRep.Complete) : RProps
 
 internal object FormInstancesListPage {
-  const val name = "Instances"
   const val subpath = "/instances"
 }
 
 private val component = componentWithApi<Props> component@{ self, props ->
-  self.loadFormInstances(props.featureGuid)
+  self.loadFormInstances(props.feature.guid)
 
-  layoutTitle(FormInstancesListPage.name)
+  layoutTitle(props.feature.name)
 
   // While the form instances are loading, show a loading spinner.
-  val formInstances = self.gs.formInstances[props.featureGuid].let { loadableState ->
+  val formInstances = self.gs.formInstances[props.feature.guid].let { loadableState ->
     when (loadableState) {
       null, is LoadableState.Unloaded -> return@component loadingSpinner()
       is LoadableState.Error -> return@component failedToLoad("forms")
