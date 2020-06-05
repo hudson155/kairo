@@ -13,7 +13,7 @@ internal fun tenantReducer(
       state.copy(tenant = LoadableState.loading())
     }
     is TenantAction.SetValue -> {
-      check(!isLoading)
+      check(isLoading)
       state.copy(tenant = LoadableState.Loaded(action.tenant))
     }
     is TenantAction.SetError -> {
