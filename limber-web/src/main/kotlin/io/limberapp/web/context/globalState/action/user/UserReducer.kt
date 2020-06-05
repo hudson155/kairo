@@ -3,14 +3,17 @@ package io.limberapp.web.context.globalState.action.user
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.GlobalStateContext
 
-internal fun userReducer(state: GlobalStateContext, action: UserAction): GlobalStateContext {
-  return when (action) {
+internal fun userReducer(
+  state: GlobalStateContext,
+  action: UserAction
+): GlobalStateContext = with(state.user) {
+  return@with when (action) {
     is UserAction.BeginLoading -> {
-      check(!state.user.hasBegunLoading)
+      check(!hasBegunLoading)
       state.copy(user = LoadableState.loading())
     }
     is UserAction.SetValue -> {
-      check(state.user.isLoading)
+      check(isLoading)
       state.copy(user = LoadableState.Loaded(action.user))
     }
     is UserAction.SetError -> {
