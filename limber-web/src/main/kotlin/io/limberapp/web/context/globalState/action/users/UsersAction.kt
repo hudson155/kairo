@@ -1,9 +1,7 @@
 package io.limberapp.web.context.globalState.action.users
 
-import com.piperframework.types.UUID
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
-import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.Action
 import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
@@ -17,9 +15,7 @@ internal sealed class UsersAction : Action() {
   internal data class SetError(val errorMessage: String?) : UsersAction()
 }
 
-private typealias State = LoadableState<Map<UUID, UserRep.Summary>>
-
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: State) {
+internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: UsersState) {
   val orgGuid = gs.org.loadedState.guid
 
   useEffect(listOf(orgGuid)) {
