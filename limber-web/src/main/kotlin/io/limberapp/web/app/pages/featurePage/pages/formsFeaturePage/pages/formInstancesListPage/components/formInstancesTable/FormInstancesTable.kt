@@ -24,11 +24,12 @@ private val component = component<Props> component@{ props ->
     return@component
   }
 
-  limberTable(headers = listOf("guid")) {
+  limberTable(headers = listOf("#", "guid")) {
     // TODO: Sort by unique sort key
     props.formInstances.forEach { formInstance ->
       limberTableRow {
         attrs.key = formInstance.guid
+        td { +formInstance.number.toString() }
         td { +formInstance.guid }
       }
     }

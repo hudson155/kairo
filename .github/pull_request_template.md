@@ -20,8 +20,9 @@ TODO
 - [ ] Each endpoint is documented using KDoc above the class.
 - [ ] Each endpoint has appropriate authorization checks.
 
-### Stores
+### DB and Stores
 
+- [ ] Unique constraints and indices are considered and created.
 - [ ] Unique constraint and index violations are handled.
 
 ### React components

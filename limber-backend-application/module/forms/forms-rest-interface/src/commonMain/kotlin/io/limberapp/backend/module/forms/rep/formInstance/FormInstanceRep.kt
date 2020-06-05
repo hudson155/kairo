@@ -29,7 +29,8 @@ object FormInstanceRep {
     @Serializable(with = UuidSerializer::class)
     val featureGuid: UUID,
     @Serializable(with = UuidSerializer::class)
-    val formTemplateGuid: UUID
+    val formTemplateGuid: UUID,
+    val number: Long
   ) : CompleteRep
 
   @Serializable
@@ -42,6 +43,7 @@ object FormInstanceRep {
     val featureGuid: UUID,
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
+    val number: Long,
     val questions: List<FormInstanceQuestionRep.Complete>
   ) : CompleteRep
 }

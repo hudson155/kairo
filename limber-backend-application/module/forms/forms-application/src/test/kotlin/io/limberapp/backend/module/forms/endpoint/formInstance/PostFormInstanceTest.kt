@@ -18,7 +18,7 @@ internal class PostFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateGuid, 5)
+    FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateGuid, 1, 5)
     piperTest.test(
       endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateGuid)),
       expectedException = FormTemplateNotFound()
@@ -33,7 +33,7 @@ internal class PostFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Guid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(feature0Guid)))
 
-    FormInstanceRepFixtures.fixture.complete(this, feature1Guid, formTemplateRep.guid, 5)
+    FormInstanceRepFixtures.fixture.complete(this, feature1Guid, formTemplateRep.guid, 1, 5)
     piperTest.test(
       endpoint = FormInstanceApi.Post(
         rep = FormInstanceRepFixtures.fixture.creation(feature1Guid, formTemplateRep.guid)
@@ -49,7 +49,7 @@ internal class PostFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 5)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 1, 5)
     piperTest.test(
       endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
     ) {
