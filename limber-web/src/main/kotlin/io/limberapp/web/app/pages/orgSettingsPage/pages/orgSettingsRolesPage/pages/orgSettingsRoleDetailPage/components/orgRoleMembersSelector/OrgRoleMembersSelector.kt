@@ -8,9 +8,9 @@ import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMember.orgRoleMembersSelectorMember
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMemberAdder.orgRoleMembersSelectorMemberAdder
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.action.orgRoleMembership.createOrgRoleMembership
-import io.limberapp.web.context.globalState.action.orgRoleMembership.deleteOrgRoleMembership
-import io.limberapp.web.context.globalState.action.orgRoleMembership.loadOrgRoleMemberships
+import io.limberapp.web.context.globalState.action.orgRoleMemberships.createOrgRoleMembership
+import io.limberapp.web.context.globalState.action.orgRoleMemberships.deleteOrgRoleMembership
+import io.limberapp.web.context.globalState.action.orgRoleMemberships.loadOrgRoleMemberships
 import io.limberapp.web.context.globalState.action.users.loadUsers
 import io.limberapp.web.util.async
 import io.limberapp.web.util.componentWithApi

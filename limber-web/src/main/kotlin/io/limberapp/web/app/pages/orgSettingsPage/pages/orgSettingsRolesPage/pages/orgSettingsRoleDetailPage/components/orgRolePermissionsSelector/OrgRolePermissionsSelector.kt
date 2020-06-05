@@ -2,7 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pa
 
 import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.web.context.globalState.action.orgRole.updateOrgRole
+import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async

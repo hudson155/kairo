@@ -6,7 +6,7 @@ import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.orgRolesTable
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.action.orgRole.loadOrgRoles
+import io.limberapp.web.context.globalState.action.orgRoles.loadOrgRoles
 import io.limberapp.web.util.componentWithApi
 import react.*
 
