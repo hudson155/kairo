@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleName
+package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon

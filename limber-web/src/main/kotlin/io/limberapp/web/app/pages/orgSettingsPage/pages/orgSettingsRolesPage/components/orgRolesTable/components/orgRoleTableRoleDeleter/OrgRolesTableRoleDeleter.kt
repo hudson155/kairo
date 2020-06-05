@@ -1,8 +1,8 @@
-package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter
+package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal.orgRolesTableRoleDeleterModal
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal.orgRolesTableRoleDeleterModal
 import io.limberapp.web.context.globalState.action.orgRoles.deleteOrgRole
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme

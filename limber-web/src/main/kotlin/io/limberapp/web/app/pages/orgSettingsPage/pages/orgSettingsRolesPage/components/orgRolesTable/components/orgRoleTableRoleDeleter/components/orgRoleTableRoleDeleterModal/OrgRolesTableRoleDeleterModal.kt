@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal
+package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal
 
 import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
