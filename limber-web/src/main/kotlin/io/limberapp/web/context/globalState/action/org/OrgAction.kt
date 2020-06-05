@@ -16,7 +16,7 @@ internal sealed class OrgAction : Action() {
   internal data class SetError(val errorMessage: String?) : OrgAction()
 }
 
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: OrgState, orgGuid: UUID) {
+internal fun ComponentWithApi.loadOrg(orgGuid: UUID) {
   useEffect(listOf(orgGuid)) {
     if (gs.org.hasBegunLoading) return@useEffect
     dispatch(OrgAction.BeginLoading)

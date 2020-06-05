@@ -2,8 +2,8 @@ package io.limberapp.web.context
 
 internal sealed class LoadableState<State : Any> {
   abstract val hasBegunLoading: Boolean
-
   abstract val isLoaded: Boolean
+  val isLoading get() = hasBegunLoading && !isLoaded
 
   /**
    * [loadedState] is not safe to access unless the caller knows that the [LoadableState] instance is loaded.

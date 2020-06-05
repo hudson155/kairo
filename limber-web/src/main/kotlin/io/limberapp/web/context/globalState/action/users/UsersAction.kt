@@ -15,7 +15,7 @@ internal sealed class UsersAction : Action() {
   internal data class SetError(val errorMessage: String?) : UsersAction()
 }
 
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: UsersState) {
+internal fun ComponentWithApi.loadUsers() {
   val orgGuid = gs.org.loadedState.guid
 
   useEffect(listOf(orgGuid)) {

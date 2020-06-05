@@ -8,15 +8,15 @@ import java.lang.reflect.Type
 fun <T : Any> conversionService(dataConversionService: DataConversionService<T>) = object : ConversionService {
   override fun fromValues(values: List<String>, type: Type): Any? {
     return when (values.size) {
-        0 -> null
-        1 -> {
-            val value = values.single()
-            if (!dataConversionService.isValid(value)) {
-                throw DataConversionException(null, dataConversionService.kClass)
-            }
-            dataConversionService.fromString(value)
+      0 -> null
+      1 -> {
+        val value = values.single()
+        if (!dataConversionService.isValid(value)) {
+          throw DataConversionException(null, dataConversionService.kClass)
         }
-        else -> throw DataConversionException(null, dataConversionService.kClass)
+        dataConversionService.fromString(value)
+      }
+      else -> throw DataConversionException(null, dataConversionService.kClass)
     }
   }
 

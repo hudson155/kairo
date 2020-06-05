@@ -22,21 +22,21 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
     val string = reader.readText()
     @Suppress("UseIfInsteadOfWhen")
     return when {
-        List::class.isSuperclassOf(type) -> throw UnsupportedOperationException() // Unsupported for now.
-        else -> json.parse(string, type)
+      List::class.isSuperclassOf(type) -> throw UnsupportedOperationException() // Unsupported for now.
+      else -> json.parse(string, type)
     }
   }
 
   override suspend fun convertForSend(
-          context: PipelineContext<Any, ApplicationCall>,
-          contentType: ContentType,
-          value: Any
+    context: PipelineContext<Any, ApplicationCall>,
+    contentType: ContentType,
+    value: Any
   ): Any? {
     @Suppress("UseIfInsteadOfWhen")
     return when (value) {
-        is Set<*> -> json.stringifySet(value)
-        is List<*> -> json.stringifyList(value)
-        else -> json.stringify(value)
+      is Set<*> -> json.stringifySet(value)
+      is List<*> -> json.stringifyList(value)
+      else -> json.stringify(value)
     }
   }
 }

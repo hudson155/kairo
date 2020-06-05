@@ -6,7 +6,7 @@ import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.orgRolesTable
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.action.orgRole.load
+import io.limberapp.web.context.globalState.action.orgRoles.loadOrgRoles
 import io.limberapp.web.util.componentWithApi
 import react.*
 
@@ -18,7 +18,7 @@ internal fun RBuilder.orgSettingsRolesListPage() {
 }
 
 private val component = componentWithApi<RProps> component@{ self, _ ->
-  self.load(self.gs.orgRoles)
+  self.loadOrgRoles()
 
   layoutTitle(OrgSettingsRolesPage.name, "Roles grant users permissions within your organization.")
 

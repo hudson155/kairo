@@ -2,7 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
-import io.limberapp.web.context.globalState.action.orgRole.updateOrgRole
+import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
 import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
