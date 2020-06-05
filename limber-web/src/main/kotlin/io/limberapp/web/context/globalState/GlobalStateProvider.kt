@@ -4,6 +4,8 @@ import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.context.StateAndDispatch
 import io.limberapp.web.context.globalState.action.Action
+import io.limberapp.web.context.globalState.action.formInstances.FormInstancesAction
+import io.limberapp.web.context.globalState.action.formInstances.formInstancesReducer
 import io.limberapp.web.context.globalState.action.org.OrgAction
 import io.limberapp.web.context.globalState.action.org.orgReducer
 import io.limberapp.web.context.globalState.action.orgRoleMemberships.OrgRoleMembershipsAction
@@ -29,6 +31,7 @@ private val globalState = createContext<StateAndDispatch<GlobalStateContext, Act
 internal fun useGlobalState() = useContext(globalState)
 
 private val initialState = GlobalStateContext(
+  formInstances = emptyMap(),
   org = LoadableState.initial(),
   orgRoleMemberships = emptyMap(),
   orgRoles = LoadableState.initial(),
@@ -40,6 +43,7 @@ private val initialState = GlobalStateContext(
 private val component = functionalComponent<RProps> { props ->
   val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
     return@useReducer when (action) {
+      is FormInstancesAction -> formInstancesReducer(state, action)
       is OrgAction -> orgReducer(state, action)
       is OrgRoleMembershipsAction -> orgRoleMembershipsReducer(state, action)
       is OrgRolesAction -> orgRolesReducer(state, action)

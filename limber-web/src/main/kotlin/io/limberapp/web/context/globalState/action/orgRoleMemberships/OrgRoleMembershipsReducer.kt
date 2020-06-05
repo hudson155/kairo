@@ -41,11 +41,7 @@ internal fun orgRoleMembershipsReducer(
       )
     }
     is OrgRoleMembershipsAction.SetError -> {
-      state.copy(
-        orgRoleMemberships = plus(
-          action.orgRoleGuid to LoadableState.Error(action.errorMessage)
-        )
-      )
+      state.copy(orgRoleMemberships = plus(action.orgRoleGuid to LoadableState.Error(action.errorMessage)))
     }
   }
 }
