@@ -11,11 +11,11 @@ internal class FormInstanceServiceImpl @Inject constructor(
   private val formTemplateService: FormTemplateService,
   private val formInstanceStore: FormInstanceStore
 ) : FormInstanceService {
-  override fun create(model: FormInstanceModel) {
+  override fun create(model: FormInstanceModel): FormInstanceModel {
     if (model.featureGuid != formTemplateService.get(model.formTemplateGuid)?.featureGuid) {
       throw FormTemplateCannotBeInstantiatedInAnotherFeature()
     }
-    formInstanceStore.create(model)
+    return formInstanceStore.create(model)
   }
 
   override fun get(formInstanceGuid: UUID) = formInstanceStore.get(formInstanceGuid)

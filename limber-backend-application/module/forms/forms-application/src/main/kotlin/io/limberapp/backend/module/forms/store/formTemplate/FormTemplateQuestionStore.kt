@@ -29,14 +29,16 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
-  fun create(model: FormTemplateQuestionModel, rank: Int? = null) {
-    jdbi.useTransaction<Exception> {
+  fun create(model: FormTemplateQuestionModel, rank: Int? = null): FormTemplateQuestionModel {
+    return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
       val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
       incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
-      it.createUpdate(sqlResource("create"))
+      it.createQuery(sqlResource("create"))
         .bind("rank", insertionRank)
         .bindKotlin(FormTemplateQuestionEntity(model))
-        .execute()
+        .mapTo(FormTemplateQuestionEntity::class.java)
+        .single()
+        ?.asModel()
     }
   }
 

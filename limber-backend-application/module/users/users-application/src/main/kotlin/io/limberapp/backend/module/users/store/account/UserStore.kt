@@ -15,10 +15,13 @@ import java.util.*
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_lower_idx"
 
 internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: UserModel) {
-    jdbi.useHandle<Exception> {
+  fun create(model: UserModel): UserModel {
+    return jdbi.withHandle<UserModel, Exception> {
       try {
-        it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+        it.createQuery(sqlResource("create"))
+          .bindKotlin(model)
+          .mapTo(UserModel::class.java)
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

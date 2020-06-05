@@ -34,8 +34,7 @@ internal class PostOrg @Inject constructor(
 
   override suspend fun Handler.handle(command: OrgApi.Post): OrgRep.Complete {
     Authorization.Role(JwtRole.SUPERUSER).authorize()
-    val org = orgMapper.model(command.rep.required())
-    orgService.create(org)
+    val org = orgService.create(orgMapper.model(command.rep.required()))
     val features = featureService.createDefaults(org.guid)
     return orgMapper.completeRep(org, features)
   }

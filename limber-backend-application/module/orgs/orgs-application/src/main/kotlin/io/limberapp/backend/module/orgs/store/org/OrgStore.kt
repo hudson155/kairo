@@ -10,9 +10,12 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
 internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: OrgModel) {
-    jdbi.useHandle<Exception> {
-      it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+  fun create(model: OrgModel): OrgModel {
+    return jdbi.withHandle<OrgModel, Exception> {
+      it.createQuery(sqlResource("create"))
+        .bindKotlin(model)
+        .mapTo(OrgModel::class.java)
+        .single()
     }
   }
 

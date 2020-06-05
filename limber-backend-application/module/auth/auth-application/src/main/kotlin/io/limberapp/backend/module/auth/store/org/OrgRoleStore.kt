@@ -15,12 +15,13 @@ import java.util.*
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
 internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: OrgRoleModel) {
-    jdbi.useHandle<Exception> {
+  fun create(model: OrgRoleModel): OrgRoleModel {
+    return jdbi.withHandle<OrgRoleModel, Exception> {
       try {
-        it.createUpdate(sqlResource("create"))
+        it.createQuery(sqlResource("create"))
           .bindKotlin(model)
-          .execute()
+          .mapTo(OrgRoleModel::class.java)
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

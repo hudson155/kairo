@@ -9,9 +9,10 @@ internal class FormTemplateServiceImpl @Inject constructor(
   private val formTemplateQuestionService: FormTemplateQuestionService,
   private val formTemplateStore: FormTemplateStore
 ) : FormTemplateService {
-  override fun create(model: FormTemplateModel) {
-    formTemplateStore.create(model)
+  override fun create(model: FormTemplateModel): FormTemplateModel {
+    val formTemplate = formTemplateStore.create(model)
     formTemplateQuestionService.createDefaults(model.guid)
+    return formTemplate
   }
 
   override fun get(formTemplateGuid: UUID) = formTemplateStore.get(formTemplateGuid)

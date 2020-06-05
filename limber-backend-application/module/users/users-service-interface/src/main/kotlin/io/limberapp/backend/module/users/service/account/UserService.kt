@@ -5,7 +5,7 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import java.util.*
 
 interface UserService {
-  fun create(model: UserModel)
+  fun create(model: UserModel): UserModel
 
   fun get(userGuid: UUID): UserModel?
 

@@ -11,9 +11,9 @@ internal class OrgRoleMembershipServiceImpl @Inject constructor(
   private val orgRoleStore: OrgRoleStore,
   private val orgRoleMembershipStore: OrgRoleMembershipStore
 ) : OrgRoleMembershipService {
-  override fun create(orgGuid: UUID, model: OrgRoleMembershipModel) {
+  override fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel {
     checkOrgRoleGuid(orgGuid, model.orgRoleGuid)
-    orgRoleMembershipStore.create(model)
+    return orgRoleMembershipStore.create(model)
   }
 
   override fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel> {

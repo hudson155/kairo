@@ -36,8 +36,10 @@ internal class PostFormTemplateQuestion @Inject constructor(
 
   override suspend fun Handler.handle(command: FormTemplateQuestionApi.Post): FormTemplateQuestionRep.Complete {
     HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
-    val formTemplateQuestion = formTemplateQuestionMapper.model(command.formTemplateGuid, command.rep.required())
-    formTemplateQuestionService.create(formTemplateQuestion, rank = command.rank)
+    val formTemplateQuestion = formTemplateQuestionService.create(
+      model = formTemplateQuestionMapper.model(command.formTemplateGuid, command.rep.required()),
+      rank = command.rank
+    )
     return formTemplateQuestionMapper.completeRep(formTemplateQuestion)
   }
 }

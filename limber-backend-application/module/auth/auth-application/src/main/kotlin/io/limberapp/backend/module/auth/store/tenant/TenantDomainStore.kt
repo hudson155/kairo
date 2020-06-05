@@ -18,10 +18,13 @@ private const val ORG_GUID_FOREIGN_KEY = "tenant_domain_org_guid_fkey"
 private const val DOMAIN_UNIQUE_CONSTRAINT = "tenant_domain_lower_idx"
 
 internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: TenantDomainModel) {
-    jdbi.useHandle<Exception> {
+  fun create(model: TenantDomainModel): TenantDomainModel {
+    return jdbi.withHandle<TenantDomainModel, Exception> {
       try {
-        it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+        it.createQuery(sqlResource("create"))
+          .bindKotlin(model)
+          .mapTo(TenantDomainModel::class.java)
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

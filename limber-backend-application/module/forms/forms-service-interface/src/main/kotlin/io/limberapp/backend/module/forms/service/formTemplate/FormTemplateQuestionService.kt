@@ -6,7 +6,7 @@ import java.util.*
 interface FormTemplateQuestionService {
   fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel>
 
-  fun create(model: FormTemplateQuestionModel, rank: Int? = null)
+  fun create(model: FormTemplateQuestionModel, rank: Int? = null): FormTemplateQuestionModel
 
   fun getByFormTemplateGuid(formTemplateGuid: UUID): List<FormTemplateQuestionModel>
 

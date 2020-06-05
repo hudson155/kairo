@@ -45,7 +45,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       name = "Jeff Hudson"
     )
     every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
-    every { mockedServices[UserService::class].create(any()) } returns Unit
+    every { mockedServices[UserService::class].create(any()) } answers { firstArg() }
     every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
     every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptyList()
 
