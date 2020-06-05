@@ -8,7 +8,7 @@ import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.api.Api
 import io.limberapp.web.context.api.json
 import io.limberapp.web.context.auth.authProvider
-import io.limberapp.web.context.globalState.action.tenant.load
+import io.limberapp.web.context.globalState.action.tenant.loadTenant
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.componentWithGlobalState
 import io.limberapp.web.util.external.AppState
@@ -42,7 +42,7 @@ private val component = componentWithGlobalState<RProps> component@{ self, _ ->
   // the ApiProvider.
   val nonAuthenticatedApi = Api(Fetch(process.env.API_ROOT_URL, json))
 
-  self.load(self.gs.tenant, nonAuthenticatedApi, rootDomain)
+  self.loadTenant(nonAuthenticatedApi, rootDomain)
 
   // Set theme elements
   useEffect(listOf(Theme.Color.Background.light)) {

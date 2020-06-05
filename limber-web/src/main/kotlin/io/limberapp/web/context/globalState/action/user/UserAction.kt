@@ -16,7 +16,7 @@ internal sealed class UserAction : Action() {
   internal data class SetError(val errorMessage: String?) : UserAction()
 }
 
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: UserState, userGuid: UUID) {
+internal fun ComponentWithApi.loadUser(userGuid: UUID) {
   useEffect(listOf(userGuid)) {
     if (gs.user.hasBegunLoading) return@useEffect
     dispatch(UserAction.BeginLoading)

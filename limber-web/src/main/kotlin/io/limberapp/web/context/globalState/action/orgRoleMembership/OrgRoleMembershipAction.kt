@@ -32,7 +32,7 @@ internal sealed class OrgRoleMembershipAction : Action() {
   ) : OrgRoleMembershipAction()
 }
 
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: OrgRoleMembershipState, orgRoleGuid: UUID) {
+internal fun ComponentWithApi.loadOrgRoleMemberships(orgRoleGuid: UUID) {
   val orgGuid = gs.org.loadedState.guid
 
   useEffect(listOf(orgRoleGuid)) {

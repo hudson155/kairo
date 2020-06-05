@@ -14,8 +14,8 @@ import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.auth.useAuth
-import io.limberapp.web.context.globalState.action.org.load
-import io.limberapp.web.context.globalState.action.user.load
+import io.limberapp.web.context.globalState.action.org.loadOrg
+import io.limberapp.web.context.globalState.action.user.loadUser
 import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.rootPath
 import react.*
@@ -33,8 +33,8 @@ internal fun RBuilder.appFeatureRouter() {
 private val component = componentWithApi<RProps> component@{ self, _ ->
   val auth = useAuth()
 
-  self.load(self.gs.org, checkNotNull(auth.jwt).org.guid)
-  self.load(self.gs.user, checkNotNull(auth.jwt).user.guid)
+  self.loadOrg(checkNotNull(auth.jwt).org.guid)
+  self.loadUser(checkNotNull(auth.jwt).user.guid)
 
   // While the org is loading, show the loading page.
   self.gs.org.let { loadableState ->

@@ -16,7 +16,7 @@ internal sealed class TenantAction : Action() {
   internal data class SetError(val errorMessage: String?) : TenantAction()
 }
 
-internal fun ComponentWithGlobalState.load(@Suppress("UNUSED_PARAMETER") state: TenantState, api: Api, domain: String) {
+internal fun ComponentWithGlobalState.loadTenant(api: Api, domain: String) {
   useEffect(listOf(domain)) {
     if (gs.tenant.hasBegunLoading) return@useEffect
     dispatch(TenantAction.BeginLoading)

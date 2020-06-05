@@ -10,8 +10,8 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.orgRoleMembership.createOrgRoleMembership
 import io.limberapp.web.context.globalState.action.orgRoleMembership.deleteOrgRoleMembership
-import io.limberapp.web.context.globalState.action.orgRoleMembership.load
-import io.limberapp.web.context.globalState.action.users.load
+import io.limberapp.web.context.globalState.action.orgRoleMembership.loadOrgRoleMemberships
+import io.limberapp.web.context.globalState.action.users.loadUsers
 import io.limberapp.web.util.async
 import io.limberapp.web.util.componentWithApi
 import react.*
@@ -28,8 +28,8 @@ internal fun RBuilder.orgRoleMembersSelector(orgRole: OrgRoleRep.Complete) {
 internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
 
 private val component = componentWithApi<Props> component@{ self, props ->
-  self.load(self.gs.users)
-  self.load(self.gs.orgRoleMemberships, props.orgRole.guid)
+  self.loadUsers()
+  self.loadOrgRoleMemberships(props.orgRole.guid)
 
   val onAdd = { accountGuid: UUID ->
     async { self.createOrgRoleMembership(props.orgRole.guid, OrgRoleMembershipRep.Creation(accountGuid = accountGuid)) }

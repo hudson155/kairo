@@ -20,7 +20,7 @@ internal sealed class OrgRoleAction : Action() {
   internal data class SetError(val errorMessage: String?) : OrgRoleAction()
 }
 
-internal fun ComponentWithApi.load(@Suppress("UNUSED_PARAMETER") state: OrgRoleState) {
+internal fun ComponentWithApi.loadOrgRoles() {
   val orgGuid = gs.org.loadedState.guid
 
   useEffect(listOf(orgGuid)) {
