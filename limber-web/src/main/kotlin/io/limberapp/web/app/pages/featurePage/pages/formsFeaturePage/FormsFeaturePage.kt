@@ -19,7 +19,7 @@ internal fun RBuilder.formsFeaturePage(feature: FeatureRep.Complete) {
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-private val component = component<Props> component@{
+private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
 
   // TODO: The line below is temporarily commented out to disable form templates.
@@ -31,7 +31,7 @@ private val component = component<Props> component@{
         redirect(to = match.path + FormInstancesListPage.subpath)
       }
       route(path = match.path + FormInstancesListPage.subpath, exact = true) {
-        buildElement { formInstancesListPage() }
+        buildElement { formInstancesListPage(props.feature.guid) }
       }
       route(path = match.path + FormTemplatesListPage.subpath, exact = true) {
         buildElement { formTemplatesListPage() }
