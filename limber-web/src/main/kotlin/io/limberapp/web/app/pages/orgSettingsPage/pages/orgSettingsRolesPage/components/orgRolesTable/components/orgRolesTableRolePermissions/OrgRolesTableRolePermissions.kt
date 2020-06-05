@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleMemberCount
+package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions
 
 import com.piperframework.util.slugify
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
@@ -14,13 +14,13 @@ import react.dom.*
 import react.router.dom.*
 
 /**
- * Portion of org roles table that shows the number of members, with a modal link.
+ * Portion of org roles table that shows the number of permissions, with a modal link.
  *
  * [orgRole] is the role to be represented by this component.
  *
  * [classes] is for CSS classes to apply.
  */
-internal fun RBuilder.orgRolesTableRoleMemberCount(orgRole: OrgRoleRep.Complete, classes: String? = null) {
+internal fun RBuilder.orgRolesTableRolePermissions(orgRole: OrgRoleRep.Complete, classes: String? = null) {
   child(component, Props(orgRole, classes))
 }
 
@@ -30,16 +30,16 @@ private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
   td(classes = props.classes) {
     navLink<RProps>(
-      to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.members.slugify()}",
+      to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.permissions.slugify()}",
       className = cls(gs.c { it::link }, gs.c { it::hiddenXs })
     ) {
-      +props.orgRole.memberCount.let {
-        "$it ${"members".pluralize(it)}"
+      +props.orgRole.permissions.size.let {
+        "$it ${"permissions".pluralize(it)}"
       }
     }
     span(classes = gs.c { it::visibleXs }) {
-      inlineIcon("users", rightMargin = true)
-      +props.orgRole.memberCount.toString()
+      inlineIcon("check-circle", rightMargin = true)
+      +props.orgRole.permissions.size.toString()
     }
   }
 }

@@ -1,12 +1,12 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
+import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
 import io.limberapp.web.app.components.limberTable.limberTable
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRoleTableRoleDeleter.orgRolesTableRoleDeleter
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRoleName.orgRolesTableRoleName
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
-import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow.orgRolesTableRow
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter.orgRolesTableRoleDeleter
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName.orgRolesTableRoleName
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.component
@@ -58,7 +58,7 @@ private val component = component<Props> component@{ props ->
 
   limberTable(headers = listOf("Name", "Permissions", "Members", null), classes = s.c { it::table }) {
     props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
-      orgRolesTableRow {
+      limberTableRow {
         attrs.key = orgRole.guid
         orgRolesTableRoleName(orgRole)
         orgRolesTableRolePermissions(orgRole)

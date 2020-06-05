@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRow
+package io.limberapp.web.app.components.limberTable.components.limberTableRow
 
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
@@ -10,15 +10,15 @@ import react.*
 import react.dom.*
 
 /**
- * An individual row for an org role in the org roles table.
+ * A thin wrapper for the HTML [tr] element.
  *
- * [children] should always be the same series of components that make up the row.
+ * [children] is the contents of the [tr].
  */
-internal fun RBuilder.orgRolesTableRow(children: RHandler<RProps>) {
+internal fun RBuilder.limberTableRow(children: RHandler<RProps>) {
   child(component, handler = children)
 }
 
-private class S : Styles("OrgRolesTableRow") {
+private class S : Styles("LimberTableRow") {
   val row by css {
     borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
     lastOfType {
