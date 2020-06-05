@@ -47,20 +47,19 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
     val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
 
-    val newUser = UserModel(
-      guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
-      identityProvider = false,
-      superuser = false,
-      orgGuid = tenant.orgGuid,
-      firstName = request.firstName,
-      lastName = request.lastName,
-      emailAddress = request.emailAddress,
-      profilePhotoUrl = request.profilePhotoUrl
+    return userService.create(
+      model = UserModel(
+        guid = uuidGenerator.generate(),
+        createdDate = LocalDateTime.now(clock),
+        identityProvider = false,
+        superuser = false,
+        orgGuid = tenant.orgGuid,
+        firstName = request.firstName,
+        lastName = request.lastName,
+        emailAddress = request.emailAddress,
+        profilePhotoUrl = request.profilePhotoUrl
+      )
     )
-    userService.create(newUser)
-
-    return newUser
   }
 
   private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {

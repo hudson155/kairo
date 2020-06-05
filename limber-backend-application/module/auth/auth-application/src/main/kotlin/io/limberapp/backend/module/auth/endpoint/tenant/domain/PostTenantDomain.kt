@@ -33,8 +33,7 @@ internal class PostTenantDomain @Inject constructor(
 
   override suspend fun Handler.handle(command: TenantDomainApi.Post): TenantDomainRep.Complete {
     Authorization.Role(JwtRole.SUPERUSER).authorize()
-    val tenantDomain = tenantDomainMapper.model(command.orgGuid, command.rep.required())
-    tenantDomainService.create(tenantDomain)
+    val tenantDomain = tenantDomainService.create(tenantDomainMapper.model(command.orgGuid, command.rep.required()))
     return tenantDomainMapper.completeRep(tenantDomain)
   }
 }

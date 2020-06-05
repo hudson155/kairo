@@ -4,7 +4,7 @@ import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import java.util.*
 
 interface TenantDomainService {
-  fun create(model: TenantDomainModel)
+  fun create(model: TenantDomainModel): TenantDomainModel
 
   fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel>
 

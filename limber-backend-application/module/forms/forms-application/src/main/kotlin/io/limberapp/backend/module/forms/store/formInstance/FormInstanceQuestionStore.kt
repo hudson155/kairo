@@ -18,12 +18,14 @@ private const val FORM_INSTANCE_GUID_FOREIGN_KEY = "form_instance_question_form_
 private const val QUESTION_GUID_FOREIGN_KEY = "form_instance_question_question_guid_fkey"
 
 internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: FormInstanceQuestionModel) {
-    jdbi.useHandle<Exception> {
+  fun create(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
+    return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
       try {
-        it.createUpdate(sqlResource("create"))
+        it.createQuery(sqlResource("create"))
           .bindKotlin(FormInstanceQuestionEntity(model))
-          .execute()
+          .mapTo(FormInstanceQuestionEntity::class.java)
+          .single()
+          .asModel()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

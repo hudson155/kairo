@@ -15,7 +15,6 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
     val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(model.formInstanceGuid, questionGuid)
     return if (existingFormInstanceQuestionModel == null) {
       formInstanceQuestionStore.create(model)
-      model
     } else {
       formInstanceQuestionStore.update(
         formInstanceGuid = model.formInstanceGuid,

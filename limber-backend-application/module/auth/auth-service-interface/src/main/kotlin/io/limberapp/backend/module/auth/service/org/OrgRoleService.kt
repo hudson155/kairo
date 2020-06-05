@@ -4,7 +4,7 @@ import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import java.util.*
 
 interface OrgRoleService {
-  fun create(model: OrgRoleModel)
+  fun create(model: OrgRoleModel): OrgRoleModel
 
   fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel>
 

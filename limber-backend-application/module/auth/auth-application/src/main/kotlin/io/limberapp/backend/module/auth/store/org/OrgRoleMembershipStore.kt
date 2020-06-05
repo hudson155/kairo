@@ -14,12 +14,13 @@ import java.util.*
 private const val ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT = "org_role_membership_org_role_guid_account_guid_key"
 
 internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: OrgRoleMembershipModel) {
-    jdbi.useHandle<Exception> {
+  fun create(model: OrgRoleMembershipModel): OrgRoleMembershipModel {
+    return jdbi.withHandle<OrgRoleMembershipModel, Exception> {
       try {
-        it.createUpdate(sqlResource("create"))
+        it.createQuery(sqlResource("create"))
           .bindKotlin(model)
-          .execute()
+          .mapTo(OrgRoleMembershipModel::class.java)
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

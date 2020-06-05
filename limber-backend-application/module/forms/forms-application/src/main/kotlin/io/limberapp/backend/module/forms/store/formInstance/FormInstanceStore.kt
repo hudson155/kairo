@@ -9,9 +9,12 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
 internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: FormInstanceModel) {
-    jdbi.useHandle<Exception> {
-      it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+  fun create(model: FormInstanceModel): FormInstanceModel {
+    return jdbi.withHandle<FormInstanceModel, Exception> {
+      it.createQuery(sqlResource("create"))
+        .bindKotlin(model)
+        .mapTo(FormInstanceModel::class.java)
+        .single()
     }
   }
 

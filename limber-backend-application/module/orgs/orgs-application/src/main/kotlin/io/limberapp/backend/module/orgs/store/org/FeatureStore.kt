@@ -20,10 +20,13 @@ private const val PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
 private const val RANK_UNIQUE_CONSTRAINT = "feature_org_guid_rank_key"
 
 internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
-  fun create(model: FeatureModel) {
-    jdbi.useHandle<Exception> {
+  fun create(model: FeatureModel): FeatureModel {
+    return jdbi.withHandle<FeatureModel, Exception> {
       try {
-        it.createUpdate(sqlResource("create")).bindKotlin(model).execute()
+        it.createQuery(sqlResource("create"))
+          .bindKotlin(model)
+          .mapTo(FeatureModel::class.java)
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

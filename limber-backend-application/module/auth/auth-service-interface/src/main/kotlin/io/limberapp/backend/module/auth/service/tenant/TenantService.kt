@@ -4,7 +4,7 @@ import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import java.util.*
 
 interface TenantService {
-  fun create(model: TenantModel)
+  fun create(model: TenantModel): TenantModel
 
   fun get(orgGuid: UUID): TenantModel?
 

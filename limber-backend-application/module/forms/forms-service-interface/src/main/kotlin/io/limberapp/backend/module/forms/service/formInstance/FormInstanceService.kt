@@ -4,7 +4,7 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import java.util.*
 
 interface FormInstanceService {
-  fun create(model: FormInstanceModel)
+  fun create(model: FormInstanceModel): FormInstanceModel
 
   fun get(formInstanceGuid: UUID): FormInstanceModel?
 
