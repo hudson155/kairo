@@ -17,14 +17,16 @@ internal class FormInstanceMapper @Inject constructor(
     guid = uuidGenerator.generate(),
     createdDate = LocalDateTime.now(clock),
     featureGuid = rep.featureGuid,
-    formTemplateGuid = rep.formTemplateGuid
+    formTemplateGuid = rep.formTemplateGuid,
+    number = 0
   )
 
   fun summaryRep(model: FormInstanceModel) = FormInstanceRep.Summary(
     guid = model.guid,
     createdDate = model.createdDate,
     featureGuid = model.featureGuid,
-    formTemplateGuid = model.formTemplateGuid
+    formTemplateGuid = model.formTemplateGuid,
+    number = model.number
   )
 
   fun completeRep(model: FormInstanceModel, questions: List<FormInstanceQuestionModel>) = FormInstanceRep.Complete(
@@ -32,6 +34,7 @@ internal class FormInstanceMapper @Inject constructor(
     createdDate = model.createdDate,
     featureGuid = model.featureGuid,
     formTemplateGuid = model.formTemplateGuid,
+    number = model.number,
     questions = questions.map { formInstanceQuestionMapper.completeRep(it) }
   )
 }

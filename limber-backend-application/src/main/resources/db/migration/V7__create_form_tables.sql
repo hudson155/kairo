@@ -37,7 +37,8 @@ CREATE TABLE forms.form_instance
     created_date       TIMESTAMP   NOT NULL,
     archived_date      TIMESTAMP DEFAULT NULL,
     feature_guid       UUID        NOT NULL,
-    form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT
+    form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT,
+    number             BIGINT      NOT NULL
 );
 
 CREATE TABLE forms.form_instance_question
