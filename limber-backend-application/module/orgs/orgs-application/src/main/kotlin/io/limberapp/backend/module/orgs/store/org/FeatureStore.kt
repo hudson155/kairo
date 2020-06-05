@@ -5,8 +5,8 @@ import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel

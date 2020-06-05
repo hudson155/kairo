@@ -2,8 +2,8 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
-import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.org.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
