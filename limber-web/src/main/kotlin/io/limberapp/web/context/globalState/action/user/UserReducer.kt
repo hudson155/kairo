@@ -9,11 +9,9 @@ internal fun userReducer(
 ): GlobalStateContext = with(state.user) {
   return@with when (action) {
     is UserAction.BeginLoading -> {
-      check(!hasBegunLoading)
       state.copy(user = LoadableState.loading())
     }
     is UserAction.SetValue -> {
-      check(isLoading)
       state.copy(user = LoadableState.Loaded(action.user))
     }
     is UserAction.SetError -> {

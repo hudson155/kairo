@@ -9,12 +9,9 @@ internal fun formTemplatesReducer(
 ): GlobalStateContext = with(state.formTemplates) {
   return@with when (action) {
     is FormTemplatesAction.BeginLoading -> {
-      check(get(action.featureGuid) == null)
       state.copy(formTemplates = plus(action.featureGuid to LoadableState.loading()))
     }
     is FormTemplatesAction.SetValue -> {
-      val formTemplates = checkNotNull(get(action.featureGuid))
-      check(formTemplates.isLoading)
       state.copy(
         formTemplates = plus(
           action.featureGuid to LoadableState.Loaded(action.formTemplates.associateBy { it.guid })

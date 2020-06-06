@@ -9,11 +9,9 @@ internal fun orgReducer(
 ): GlobalStateContext = with(state.org) {
   return@with when (action) {
     is OrgAction.BeginLoading -> {
-      check(!hasBegunLoading)
       state.copy(org = LoadableState.loading())
     }
     is OrgAction.SetValue -> {
-      check(isLoading)
       state.copy(org = LoadableState.Loaded(action.org))
     }
     is OrgAction.SetError -> {

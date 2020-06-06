@@ -9,11 +9,9 @@ internal fun orgRolesReducer(
 ): GlobalStateContext = with(state.orgRoles) {
   return@with when (action) {
     is OrgRolesAction.BeginLoading -> {
-      check(!hasBegunLoading)
       state.copy(orgRoles = LoadableState.loading())
     }
     is OrgRolesAction.SetValue -> {
-      check(isLoading)
       state.copy(orgRoles = LoadableState.Loaded(action.orgRoles.associateBy { it.guid }))
     }
     is OrgRolesAction.UpdateValue -> {

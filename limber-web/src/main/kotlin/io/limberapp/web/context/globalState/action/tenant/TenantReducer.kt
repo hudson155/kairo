@@ -9,11 +9,9 @@ internal fun tenantReducer(
 ): GlobalStateContext = with(state.tenant) {
   return@with when (action) {
     is TenantAction.BeginLoading -> {
-      check(!hasBegunLoading)
       state.copy(tenant = LoadableState.loading())
     }
     is TenantAction.SetValue -> {
-      check(isLoading)
       state.copy(tenant = LoadableState.Loaded(action.tenant))
     }
     is TenantAction.SetError -> {

@@ -9,11 +9,9 @@ internal fun usersReducer(
 ): GlobalStateContext = with(state.users) {
   return@with when (action) {
     is UsersAction.BeginLoading -> {
-      check(!hasBegunLoading)
       state.copy(users = LoadableState.loading())
     }
     is UsersAction.SetValue -> {
-      check(isLoading)
       state.copy(users = LoadableState.Loaded(action.users.associateBy { it.guid }))
     }
     is UsersAction.SetError -> {
