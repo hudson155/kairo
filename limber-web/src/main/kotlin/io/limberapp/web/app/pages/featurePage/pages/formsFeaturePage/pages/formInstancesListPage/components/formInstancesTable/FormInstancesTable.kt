@@ -25,7 +25,7 @@ private val component = component<Props> component@{ props ->
     return@component
   }
 
-  limberTable(headers = listOf("#", "created", "guid")) {
+  limberTable(headers = listOf("#", "Created", "guid")) {
     // TODO: Sort by unique sort key
     props.formInstances.forEach { formInstance ->
       limberTableRow {
