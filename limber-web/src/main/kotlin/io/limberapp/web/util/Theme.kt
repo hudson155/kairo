@@ -76,8 +76,9 @@ internal object Theme {
   }
 
   object ZIndex {
-    const val modalFader = 1
-    const val modalModal = 2
+    const val subnav = 1
+    const val modalFader = 2
+    const val modalModal = 3
   }
 
   object Sizing {
