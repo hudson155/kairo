@@ -2,7 +2,6 @@ package io.limberapp.web.context.globalState.action.tenant
 
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.GlobalStateContext
-import io.limberapp.web.context.globalState.warnIfDoubleLoading
 
 internal fun tenantReducer(
   state: GlobalStateContext,
@@ -10,11 +9,9 @@ internal fun tenantReducer(
 ): GlobalStateContext = with(state.tenant) {
   return@with when (action) {
     is TenantAction.BeginLoading -> {
-      warnIfDoubleLoading(GlobalStateContext::tenant)
       state.copy(tenant = LoadableState.loading())
     }
     is TenantAction.SetValue -> {
-      check(isLoading)
       state.copy(tenant = LoadableState.Loaded(action.tenant))
     }
     is TenantAction.SetError -> {

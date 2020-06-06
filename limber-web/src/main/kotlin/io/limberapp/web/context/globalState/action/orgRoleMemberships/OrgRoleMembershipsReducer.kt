@@ -9,12 +9,9 @@ internal fun orgRoleMembershipsReducer(
 ): GlobalStateContext = with(state.orgRoleMemberships) {
   return@with when (action) {
     is OrgRoleMembershipsAction.BeginLoading -> {
-      check(get(action.orgRoleGuid) == null)
       state.copy(orgRoleMemberships = plus(action.orgRoleGuid to LoadableState.loading()))
     }
     is OrgRoleMembershipsAction.SetValue -> {
-      val orgRoleMembership = checkNotNull(get(action.orgRoleGuid))
-      check(orgRoleMembership.isLoading)
       state.copy(
         orgRoleMemberships = plus(
           action.orgRoleGuid to LoadableState.Loaded(action.orgRoleMemberships.associateBy { it.accountGuid })

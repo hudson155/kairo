@@ -9,12 +9,9 @@ internal fun formInstancesReducer(
 ): GlobalStateContext = with(state.formInstances) {
   return@with when (action) {
     is FormInstancesAction.BeginLoading -> {
-      check(get(action.featureGuid) == null)
       state.copy(formInstances = plus(action.featureGuid to LoadableState.loading()))
     }
     is FormInstancesAction.SetValue -> {
-      val formInstances = checkNotNull(get(action.featureGuid))
-      check(formInstances.isLoading)
       state.copy(
         formInstances = plus(
           action.featureGuid to LoadableState.Loaded(action.formInstances.associateBy { it.guid })
