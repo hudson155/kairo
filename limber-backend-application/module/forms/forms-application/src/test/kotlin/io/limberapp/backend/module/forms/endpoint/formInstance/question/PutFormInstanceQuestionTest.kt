@@ -37,15 +37,20 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
   @Test
   fun formTemplateQuestionDoesNotExist() {
+    val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 1, 5)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(
+      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
     piperTest.setup(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+      )
     )
 
     piperTest.test(
@@ -60,14 +65,19 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
   @Test
   fun happyPath() {
+    val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 1, 5)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(
+      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
     piperTest.setup(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+      )
     )
 
     val formInstanceQuestionRep =
@@ -92,14 +102,19 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
 
   @Test
   fun happyPathIdempotent() {
+    val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 1, 5)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(
+      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
     piperTest.setup(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+      )
     )
 
     val formInstanceQuestion0Rep =

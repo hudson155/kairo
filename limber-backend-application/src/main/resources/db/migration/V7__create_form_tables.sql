@@ -32,13 +32,14 @@ CREATE TABLE forms.form_template_question
 
 CREATE TABLE forms.form_instance
 (
-    id                 BIGSERIAL PRIMARY KEY,
-    guid               UUID UNIQUE NOT NULL,
-    created_date       TIMESTAMP   NOT NULL,
-    archived_date      TIMESTAMP DEFAULT NULL,
-    feature_guid       UUID        NOT NULL,
-    form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT,
-    number             BIGINT      NOT NULL
+    id                   BIGSERIAL PRIMARY KEY,
+    guid                 UUID UNIQUE NOT NULL,
+    created_date         TIMESTAMP   NOT NULL,
+    archived_date        TIMESTAMP DEFAULT NULL,
+    feature_guid         UUID        NOT NULL,
+    form_template_guid   UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT,
+    number               BIGINT      NOT NULL,
+    creator_account_guid UUID        NOT NULL
 );
 
 CREATE TABLE forms.form_instance_question

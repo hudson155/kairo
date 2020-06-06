@@ -25,19 +25,28 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
 
   @Test
   fun happyPathMultipleFormInstances() {
+    val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-    val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 1, 5)
+    val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
+      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
     piperTest.setup(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+      )
     )
 
-    val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 2, 6)
+    val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
+      this, featureGuid, formTemplateRep.guid, 2, creatorAccountGuid, 6
+    )
     piperTest.setup(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+      )
     )
 
     piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {

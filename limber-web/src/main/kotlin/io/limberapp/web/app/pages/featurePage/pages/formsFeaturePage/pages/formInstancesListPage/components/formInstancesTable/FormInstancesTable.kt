@@ -6,7 +6,9 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
 import io.limberapp.web.app.components.limberTable.limberTable
-import io.limberapp.web.util.component
+import io.limberapp.web.app.components.memberRow.memberRow
+import io.limberapp.web.context.globalState.action.users.loadUsers
+import io.limberapp.web.util.componentWithApi
 import react.*
 import react.dom.*
 
@@ -32,13 +34,15 @@ internal data class Props(
   val formTemplates: Map<UUID, FormTemplateRep.Summary>?
 ) : RProps
 
-private val component = component<Props> component@{ props ->
+private val component = componentWithApi<Props> component@{ self, props ->
+  self.loadUsers()
+
   if (props.formInstances.isEmpty()) {
     p { +"No forms exist." }
     return@component
   }
 
-  limberTable(headers = listOf("#", "Created", "Type")) {
+  limberTable(headers = listOf("#", "Created", "Type", "Creator")) {
     // TODO: Sort by unique sort key
     props.formInstances.forEach { formInstance ->
       limberTableRow {
@@ -46,6 +50,7 @@ private val component = component<Props> component@{ props ->
         td { +formInstance.number.toString() }
         td { +formInstance.createdDate.prettyRelative() }
         td { props.formTemplates?.get(formInstance.formTemplateGuid)?.title?.let { +it } }
+        td { self.gs.users.stateOrNull?.get(formInstance.creatorAccountGuid)?.let { memberRow(it, small = true) } }
       }
     }
   }
