@@ -7,6 +7,7 @@ import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.components.formInstancesTable.formInstancesTable
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.formInstances.loadFormInstances
+import io.limberapp.web.context.globalState.action.formTemplates.loadFormTemplates
 import io.limberapp.web.util.componentWithApi
 import react.*
 
@@ -25,6 +26,7 @@ internal object FormInstancesListPage {
 
 private val component = componentWithApi<Props> component@{ self, props ->
   self.loadFormInstances(props.feature.guid)
+  self.loadFormTemplates(props.feature.guid)
 
   layoutTitle(props.feature.name)
 
@@ -37,5 +39,5 @@ private val component = componentWithApi<Props> component@{ self, props ->
     }
   }
 
-  formInstancesTable(formInstances)
+  formInstancesTable(formInstances, (self.gs.formTemplates[props.feature.guid] as? LoadableState.Loaded)?.state)
 }
