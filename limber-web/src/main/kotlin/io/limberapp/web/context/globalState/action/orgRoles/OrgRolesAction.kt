@@ -4,6 +4,7 @@ import com.piperframework.types.UUID
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.context.globalState.action.Action
+import io.limberapp.web.context.globalState.action.org.state
 import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import react.*
@@ -21,7 +22,7 @@ internal sealed class OrgRolesAction : Action() {
 }
 
 internal fun ComponentWithApi.loadOrgRoles() {
-  val orgGuid = gs.org.loadedState.guid
+  val orgGuid = gs.org.state.guid
 
   useEffect(listOf(orgGuid)) {
     if (gs.orgRoles.hasBegunLoading) return@useEffect
@@ -38,7 +39,7 @@ internal fun ComponentWithApi.loadOrgRoles() {
 internal suspend fun ComponentWithApi.updateOrgRole(orgRoleGuid: UUID, rep: OrgRoleRep.Update) {
   api.orgRoles(
     endpoint = OrgRoleApi.Patch(
-      orgGuid = gs.org.loadedState.guid,
+      orgGuid = gs.org.state.guid,
       orgRoleGuid = orgRoleGuid,
       rep = rep
     )
@@ -49,7 +50,7 @@ internal suspend fun ComponentWithApi.updateOrgRole(orgRoleGuid: UUID, rep: OrgR
 }
 
 internal suspend fun ComponentWithApi.deleteOrgRole(orgRoleGuid: UUID) {
-  api.orgRoles(OrgRoleApi.Delete(orgGuid = gs.org.loadedState.guid, orgRoleGuid = orgRoleGuid)).fold(
+  api.orgRoles(OrgRoleApi.Delete(orgGuid = gs.org.state.guid, orgRoleGuid = orgRoleGuid)).fold(
     onSuccess = { dispatch(OrgRolesAction.DeleteValue(orgRoleGuid)) },
     onFailure = { dispatch(OrgRolesAction.SetError(it.message)) }
   )
