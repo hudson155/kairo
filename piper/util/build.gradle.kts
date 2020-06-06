@@ -35,6 +35,7 @@ kotlin {
       compilations["main"].defaultSourceSet {
         dependencies {
           implementation(kotlin("stdlib-js"))
+          implementation(Dependencies.Kotlin.extensions)
         }
       }
       compilations["test"].defaultSourceSet {

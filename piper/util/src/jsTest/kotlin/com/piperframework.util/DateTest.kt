@@ -1,10 +1,13 @@
+@file:Suppress("InvalidPackageDeclaration") // Detekt false positive.
+
 package com.piperframework.util
 
 import kotlin.js.Date
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class DateTest {
+@Suppress("StringLiteralDuplication")
+internal class DateTest {
   private val startOfYear = Date(2020, 0, 1)
   private val endOfYear = Date(2020, 11, 31, 23, 59, 59)
 
