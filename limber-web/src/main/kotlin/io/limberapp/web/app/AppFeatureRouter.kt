@@ -15,6 +15,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.loadOrg
+import io.limberapp.web.context.globalState.action.org.state
 import io.limberapp.web.context.globalState.action.user.loadUser
 import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.rootPath
@@ -54,7 +55,7 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
     }
   }
 
-  val features = self.gs.org.loadedState.features
+  val features = self.gs.org.state.features
 
   page(header = buildElement { mainAppNavbar() }, footer = buildElement { footer() }) {
     switch {

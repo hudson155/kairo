@@ -39,5 +39,5 @@ private val component = componentWithApi<Props> component@{ self, props ->
     }
   }
 
-  formInstancesTable(formInstances, (self.gs.formTemplates[props.feature.guid] as? LoadableState.Loaded)?.state)
+  formInstancesTable(formInstances, self.gs.formTemplates[props.feature.guid]?.stateOrNull)
 }

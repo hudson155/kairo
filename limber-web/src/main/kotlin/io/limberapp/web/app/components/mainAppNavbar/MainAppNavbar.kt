@@ -6,6 +6,8 @@ import io.limberapp.web.app.components.mainAppNavbar.components.userSubnav.userS
 import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
+import io.limberapp.web.context.globalState.action.org.state
+import io.limberapp.web.context.globalState.action.user.state
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import io.limberapp.web.util.c
@@ -49,8 +51,8 @@ private val component = componentWithGlobalState<RProps> component@{ self, _ ->
   // Only 1 item on the navbar can be open at a time.
   val (openItem, setOpenItem) = useState<OpenItem?>(null)
 
-  val (name, photoUrl) = self.gs.user.loadedState.let { Pair(it.fullName, it.profilePhotoUrl) }
-  val features = self.gs.org.loadedState.features
+  val (name, photoUrl) = self.gs.user.state.let { Pair(it.fullName, it.profilePhotoUrl) }
+  val features = self.gs.org.state.features
 
   hamburgerableNavbar(
     left = buildElements {

@@ -4,6 +4,7 @@ import com.piperframework.types.UUID
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.web.context.globalState.action.Action
+import io.limberapp.web.context.globalState.action.org.state
 import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import react.*
@@ -33,7 +34,7 @@ internal sealed class OrgRoleMembershipsAction : Action() {
 }
 
 internal fun ComponentWithApi.loadOrgRoleMemberships(orgRoleGuid: UUID) {
-  val orgGuid = gs.org.loadedState.guid
+  val orgGuid = gs.org.state.guid
 
   useEffect(listOf(orgRoleGuid)) {
     if (gs.orgRoleMemberships[orgRoleGuid]?.hasBegunLoading == true) return@useEffect
@@ -54,7 +55,7 @@ internal fun ComponentWithApi.loadOrgRoleMemberships(orgRoleGuid: UUID) {
 internal suspend fun ComponentWithApi.createOrgRoleMembership(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) {
   api.orgRoleMemberships(
     endpoint = OrgRoleMembershipApi.Post(
-      orgGuid = gs.org.loadedState.guid,
+      orgGuid = gs.org.state.guid,
       orgRoleGuid = orgRoleGuid,
       rep = rep
     )
@@ -67,7 +68,7 @@ internal suspend fun ComponentWithApi.createOrgRoleMembership(orgRoleGuid: UUID,
 internal suspend fun ComponentWithApi.deleteOrgRoleMembership(orgRoleGuid: UUID, accountGuid: UUID) {
   api.orgRoleMemberships(
     endpoint = OrgRoleMembershipApi.Delete(
-      orgGuid = gs.org.loadedState.guid,
+      orgGuid = gs.org.state.guid,
       orgRoleGuid = orgRoleGuid,
       accountGuid = accountGuid
     )
