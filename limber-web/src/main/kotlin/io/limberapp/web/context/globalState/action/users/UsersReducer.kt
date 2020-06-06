@@ -2,6 +2,7 @@ package io.limberapp.web.context.globalState.action.users
 
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.GlobalStateContext
+import io.limberapp.web.context.globalState.warnIfDoubleLoading
 
 internal fun usersReducer(
   state: GlobalStateContext,
@@ -9,7 +10,7 @@ internal fun usersReducer(
 ): GlobalStateContext = with(state.users) {
   return@with when (action) {
     is UsersAction.BeginLoading -> {
-      check(!hasBegunLoading)
+      warnIfDoubleLoading(GlobalStateContext::users)
       state.copy(users = LoadableState.loading())
     }
     is UsersAction.SetValue -> {

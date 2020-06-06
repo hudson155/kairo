@@ -2,6 +2,7 @@ package io.limberapp.web.context.globalState.action.orgRoles
 
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.GlobalStateContext
+import io.limberapp.web.context.globalState.warnIfDoubleLoading
 
 internal fun orgRolesReducer(
   state: GlobalStateContext,
@@ -9,7 +10,7 @@ internal fun orgRolesReducer(
 ): GlobalStateContext = with(state.orgRoles) {
   return@with when (action) {
     is OrgRolesAction.BeginLoading -> {
-      check(!hasBegunLoading)
+      warnIfDoubleLoading(GlobalStateContext::orgRoles)
       state.copy(orgRoles = LoadableState.loading())
     }
     is OrgRolesAction.SetValue -> {
