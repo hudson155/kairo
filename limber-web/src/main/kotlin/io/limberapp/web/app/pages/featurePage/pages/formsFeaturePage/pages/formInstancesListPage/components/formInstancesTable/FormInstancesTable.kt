@@ -13,7 +13,12 @@ import react.dom.*
 /**
  * A table showing form instances, and allowing them to be viewed by clicking on them.
  *
- * [formInstances] is the set of roles to show on the table. One row for each.
+ * [formInstances] is the set of form instances to show on the table. One row for each.
+ *
+ * [formTemplates] is the form templates that [formInstances] are derived from. These are necessary in order to include
+ * information that only exists on the [FormTemplateRep.Summary] and not on the [FormInstanceRep.Summary]. If this is
+ * null, that data will be missing. However, it's recommended that [formTemplates] is only null if it's loading or if
+ * there's an error, since the table will look incomplete without this information.
  */
 internal fun RBuilder.formInstancesTable(
   formInstances: Set<FormInstanceRep.Summary>,
