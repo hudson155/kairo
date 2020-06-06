@@ -42,6 +42,7 @@ private class S : Styles("Subnav") {
     top = 12.px
     left = 0.px
     width = widthPx.px
+    zIndex = Theme.ZIndex.subnav
     backgroundColor = Theme.Color.Background.light
     border(1.px, BorderStyle.solid, Theme.Color.Border.light)
     borderRadius = Theme.Sizing.borderRadius
