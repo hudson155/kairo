@@ -15,28 +15,30 @@ import kotlin.test.assertEquals
 internal class PostFormInstanceTest : ResourceTest() {
   @Test
   fun formTemplateDoesNotExist() {
+    val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateGuid, 1, 5)
     piperTest.test(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateGuid)),
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateGuid, creatorAccountGuid)
+      ),
       expectedException = FormTemplateNotFound()
     )
   }
 
   @Test
   fun featureDoesNotMatchFormTemplate() {
+    val creatorAccountGuid = UUID.randomUUID()
     val feature0Guid = UUID.randomUUID()
     val feature1Guid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Guid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(feature0Guid)))
 
-    FormInstanceRepFixtures.fixture.complete(this, feature1Guid, formTemplateRep.guid, 1, 5)
     piperTest.test(
       endpoint = FormInstanceApi.Post(
-        rep = FormInstanceRepFixtures.fixture.creation(feature1Guid, formTemplateRep.guid)
+        rep = FormInstanceRepFixtures.fixture.creation(feature1Guid, formTemplateRep.guid, creatorAccountGuid)
       ),
       expectedException = FormTemplateCannotBeInstantiatedInAnotherFeature()
     )
@@ -44,14 +46,19 @@ internal class PostFormInstanceTest : ResourceTest() {
 
   @Test
   fun happyPath() {
+    val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
     piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, featureGuid, formTemplateRep.guid, 1, 5)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(
+      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
     piperTest.test(
-      endpoint = FormInstanceApi.Post(FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid))
+      endpoint = FormInstanceApi.Post(
+        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+      )
     ) {
       val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
       assertEquals(formInstanceRep, actual)
