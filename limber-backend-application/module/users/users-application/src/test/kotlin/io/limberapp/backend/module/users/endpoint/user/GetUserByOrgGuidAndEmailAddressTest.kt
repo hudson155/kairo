@@ -9,13 +9,29 @@ import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class GetUserByEmailAddressTest : ResourceTest() {
+internal class GetUserByOrgGuidAndEmailAddressTest : ResourceTest() {
   @Test
-  fun doesNotExist() {
-    val emailAddress = "jhudson@jhudson.ca"
+  fun emailAddressDoesNotExist() {
+    val orgGuid = UUID.randomUUID()
+
+    piperTest.test(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) {}
 
     piperTest.test(
-      endpoint = UserApi.GetByEmailAddress(emailAddress),
+      endpoint = UserApi.GetByOrgGuidAndEmailAddress(orgGuid, "jhudson@jhudson.ca"),
+      expectedException = UserNotFound()
+    )
+  }
+
+  @Test
+  fun emailAddressExistsInDifferentOrg() {
+    val org0Guid = UUID.randomUUID()
+    val org1Guid = UUID.randomUUID()
+
+    val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, org0Guid, 0)
+    piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid))) {}
+
+    piperTest.test(
+      endpoint = UserApi.GetByOrgGuidAndEmailAddress(org1Guid, userRep.emailAddress),
       expectedException = UserNotFound()
     )
   }
@@ -27,7 +43,7 @@ internal class GetUserByEmailAddressTest : ResourceTest() {
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
 
-    piperTest.test(UserApi.GetByEmailAddress(userRep.emailAddress)) {
+    piperTest.test(UserApi.GetByOrgGuidAndEmailAddress(orgGuid, userRep.emailAddress)) {
       val actual = json.parse<UserRep.Complete>(response.content!!)
       assertEquals(userRep, actual)
     }

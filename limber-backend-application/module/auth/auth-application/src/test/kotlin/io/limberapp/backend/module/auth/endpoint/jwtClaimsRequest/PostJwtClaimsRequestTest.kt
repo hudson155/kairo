@@ -44,10 +44,18 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       superuser = false,
       name = "Jeff Hudson"
     )
-    every { mockedServices[UserService::class].getByEmailAddress(emailAddress) } returns null
-    every { mockedServices[UserService::class].create(any()) } answers { firstArg() }
-    every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
-    every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptyList()
+    every {
+      mockedServices[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress)
+    } returns null
+    every {
+      mockedServices[UserService::class].create(any())
+    } answers { firstArg() }
+    every {
+      mockedServices[OrgService::class].get(existingOrg.guid)
+    } returns existingOrg
+    every {
+      mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid)
+    } returns emptyList()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
@@ -104,10 +112,18 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       emailAddress = "jhudson@jhudson.ca",
       profilePhotoUrl = null
     )
-    every { mockedServices[AccountService::class].get(existingAccount.guid) } returns existingAccount
-    every { mockedServices[UserService::class].getByEmailAddress(existingUser.emailAddress) } returns existingUser
-    every { mockedServices[OrgService::class].get(existingOrg.guid) } returns existingOrg
-    every { mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid) } returns emptyList()
+    every {
+      mockedServices[AccountService::class].get(existingAccount.guid)
+    } returns existingAccount
+    every {
+      mockedServices[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress)
+    } returns existingUser
+    every {
+      mockedServices[OrgService::class].get(existingOrg.guid)
+    } returns existingOrg
+    every {
+      mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid)
+    } returns emptyList()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))

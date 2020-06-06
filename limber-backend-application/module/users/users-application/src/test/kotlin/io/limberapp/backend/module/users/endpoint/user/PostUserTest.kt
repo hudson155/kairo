@@ -27,6 +27,23 @@ internal class PostUserTest : ResourceTest() {
   }
 
   @Test
+  fun duplicateEmailAddressDifferentOrg() {
+    val org0Guid = UUID.randomUUID()
+    val org1Guid = UUID.randomUUID()
+
+    val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, org0Guid, 0)
+    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid)))
+
+    // Just checking that this doesn't throw an exception. Not checking the response.
+    piperTest.test(
+      endpoint = UserApi.Post(
+        rep = UserRepFixtures.billGatesFixture.creation(org1Guid)
+          .copy(emailAddress = jeffHudsonUserRep.emailAddress)
+      )
+    ) {}
+  }
+
+  @Test
   fun happyPath() {
     val orgGuid = UUID.randomUUID()
 

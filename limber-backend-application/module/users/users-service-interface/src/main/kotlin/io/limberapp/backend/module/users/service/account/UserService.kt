@@ -9,7 +9,7 @@ interface UserService {
 
   fun get(userGuid: UUID): UserModel?
 
-  fun getByEmailAddress(emailAddress: String): UserModel?
+  fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel?
 
   fun getByOrgGuid(orgGuid: UUID): Set<UserModel>
 

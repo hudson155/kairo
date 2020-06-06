@@ -41,9 +41,10 @@ abstract class Authorization : PiperAuthorization<Jwt> {
     }
   }
 
-  class User(private val userGuid: UUID) : Authorization() {
+  class User(private val userGuid: UUID?) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
+      userGuid ?: return false
       return principal.user?.guid == userGuid
     }
   }

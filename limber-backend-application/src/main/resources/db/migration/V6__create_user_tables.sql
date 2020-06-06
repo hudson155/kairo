@@ -19,5 +19,5 @@ CREATE TABLE users.user
 ) INHERITS (users.account);
 
 CREATE UNIQUE INDEX
-    ON users.user (LOWER(email_address))
+    ON users.user (org_guid, LOWER(email_address))
     WHERE archived_date IS NULL;

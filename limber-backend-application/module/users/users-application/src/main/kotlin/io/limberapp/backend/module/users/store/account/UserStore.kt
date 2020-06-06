@@ -12,7 +12,7 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_lower_idx"
+private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_org_guid_lower_idx"
 
 internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: UserModel): UserModel {
@@ -43,16 +43,18 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
     }
   }
 
-  fun getByEmailAddress(emailAddress: String): UserModel? {
+  fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? {
     return jdbi.withHandle<UserModel?, Exception> {
       it.createQuery(
           """
                     SELECT *
                     FROM users.user
-                    WHERE LOWER(email_address) = LOWER(:emailAddress)
+                    WHERE org_guid = :orgGuid
+                      AND LOWER(email_address) = LOWER(:emailAddress)
                       AND archived_date IS NULL
                     """.trimIndent()
         )
+        .bind("orgGuid", orgGuid)
         .bind("emailAddress", emailAddress)
         .mapTo(UserModel::class.java)
         .singleNullOrThrow()

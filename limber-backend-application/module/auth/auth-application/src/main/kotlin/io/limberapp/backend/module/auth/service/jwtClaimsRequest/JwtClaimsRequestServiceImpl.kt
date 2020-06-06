@@ -42,10 +42,10 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   }
 
   private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
-    val existingUser = userService.getByEmailAddress(request.emailAddress)
-    if (existingUser != null) return existingUser
-
     val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
+
+    val existingUser = userService.getByOrgGuidAndEmailAddress(tenant.orgGuid, request.emailAddress)
+    if (existingUser != null) return existingUser
 
     return userService.create(
       model = UserModel(
