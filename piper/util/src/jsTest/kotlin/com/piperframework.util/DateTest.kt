@@ -153,6 +153,6 @@ internal class DateTest {
   }
 
   private fun testDiff(expected: String, date: Date, diffMs: Double) {
-    assertEquals(expected, diff(date, Date(date.getTime() + diffMs)))
+    assertEquals(expected, prettyRelativeTimeDifference(date, Date(date.getTime() + diffMs)))
   }
 }

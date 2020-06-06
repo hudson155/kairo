@@ -5,9 +5,14 @@ import kotlin.js.Date
 import kotlin.math.abs
 import kotlin.math.round
 
-val Date.prettyDate: String get() = diff(Date(), this)
+fun Date.prettyRelative() = prettyRelativeTimeDifference(reference = Date(), date = this)
 
-internal fun diff(reference: Date, date: Date): String {
+/**
+ * Calculates the difference between The [reference] date and the [date] provided, and outputs it as a string. Details
+ * about implementation should be understood from inline comments, but the gist of this function is that it's able to
+ * return something like "Just now", "45 minutes ago", "In 3 days", or "Mar 14, 1996".
+ */
+internal fun prettyRelativeTimeDifference(reference: Date, date: Date): String {
   val isAfter = date.getTime() >= reference.getTime()
   val secondsDiff = abs(reference.getTime() - date.getTime())
   val result = when {
