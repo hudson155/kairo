@@ -1,5 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.components.formInstancesTable
 
+import com.piperframework.util.prettyRelative
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
 import io.limberapp.web.app.components.limberTable.limberTable
@@ -24,12 +25,13 @@ private val component = component<Props> component@{ props ->
     return@component
   }
 
-  limberTable(headers = listOf("#", "guid")) {
+  limberTable(headers = listOf("#", "Created", "guid")) {
     // TODO: Sort by unique sort key
     props.formInstances.forEach { formInstance ->
       limberTableRow {
         attrs.key = formInstance.guid
         td { +formInstance.number.toString() }
+        td { +formInstance.createdDate.prettyRelative() }
         td { +formInstance.guid }
       }
     }

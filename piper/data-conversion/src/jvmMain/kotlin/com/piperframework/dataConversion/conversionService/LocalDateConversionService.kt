@@ -4,9 +4,6 @@ import com.piperframework.dataConversion.DataConversionService
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-/**
- * In the JVM, LocalDates use the [java.time.LocalDate] class.
- */
 actual object LocalDateConversionService : DataConversionService<LocalDate> {
   override val kClass = LocalDate::class
 

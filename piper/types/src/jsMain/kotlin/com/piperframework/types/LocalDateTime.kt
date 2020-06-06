@@ -1,6 +1,8 @@
 package com.piperframework.types
 
+import kotlin.js.Date
+
 /**
- * In JS, LocalDateTimes use the [String] class instead of an actual LocalDateTime class.
+ * In JS, LocalDateTimes use the [Date] class.
  */
-actual typealias LocalDateTime = String
+actual typealias LocalDateTime = Date
