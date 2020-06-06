@@ -20,6 +20,7 @@ internal sealed class LoadableState<State : Any> {
     override val stateOrNull: State = state
   }
 
+  @Suppress("UnusedPrivateMember") // TODO: Log this error.
   internal data class Error<State : Any>(private val errorMessage: String?) : LoadableState<State>() {
     override val hasBegunLoading = true
     override val isLoaded = true
