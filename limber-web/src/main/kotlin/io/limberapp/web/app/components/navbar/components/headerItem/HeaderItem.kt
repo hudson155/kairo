@@ -13,6 +13,8 @@ import react.dom.*
 /**
  * A single item on a top-of-page navbar. This goes inside a [headerGroup].
  *
+ * [classes] is for CSS classes to apply.
+ *
  * [children] should just be some text.
  */
 internal fun RBuilder.headerItem(classes: String? = null, children: RHandler<RProps>) {

@@ -3,6 +3,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 import com.piperframework.util.slugify
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
+import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
@@ -28,7 +29,7 @@ internal data class Props(val orgRole: OrgRoleRep.Complete, val classes: String?
 
 private val component = component<Props> component@{ props ->
   val match = checkNotNull(useRouteMatch<RProps>())
-  td(classes = props.classes) {
+  limberTableCell(classes = props.classes) {
     navLink<RProps>(
       to = "${match.url}/${props.orgRole.slug}/${OrgSettingsRoleDetailPage.TabName.members.slugify()}",
       className = cls(gs.c { it::link }, gs.c { it::hiddenXs })
