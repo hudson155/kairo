@@ -9,7 +9,7 @@ CREATE TABLE auth.org_role
     permissions   BIT(4)      NOT NULL
 );
 
-CREATE UNIQUE INDEX ON auth.org_role (org_guid, LOWER(name));
+CREATE UNIQUE INDEX ON auth.org_role (org_guid, LOWER(name)) WHERE archived_date IS NULL;
 
 CREATE TABLE auth.org_role_membership
 (
