@@ -7,5 +7,6 @@ internal val Window.segment: Segment
   get() = this.asDynamic().analytics as Segment
 
 internal external interface Segment {
+  fun load(writeKey: String)
   fun page()
 }

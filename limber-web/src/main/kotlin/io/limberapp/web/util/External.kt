@@ -6,6 +6,7 @@ internal interface Process {
     val API_ROOT_URL: String
     val AUTH0_DOMAIN: String
     val COPYRIGHT_HOLDER: String
+    val SEGMENT_WRITE_KEY: String?
   }
 
   val env: Env

@@ -2,6 +2,7 @@ package io.limberapp.web.app
 
 import io.limberapp.web.app.components.minimalPage.LinkType
 import io.limberapp.web.app.components.minimalPage.minimalPage
+import io.limberapp.web.app.components.pageTracker.pageTracker
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.signInPage.SignInPage
 import io.limberapp.web.app.pages.signInPage.signInPage
