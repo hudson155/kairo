@@ -38,7 +38,7 @@ items:
         spec:
           containers:
             - name: limber-web
-              image: registry.digitalocean.com/limber/limber-web:master
+              image: registry.digitalocean.com/limber-registry/limber-web:master
               imagePullPolicy: Always
               resources:
                 requests:

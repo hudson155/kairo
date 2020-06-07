@@ -38,7 +38,7 @@ items:
         spec:
           containers:
             - name: limber-backend
-              image: registry.digitalocean.com/limber/limber-backend:master
+              image: registry.digitalocean.com/limber-registry/limber-backend:master
               imagePullPolicy: Always
               resources:
                 requests:
