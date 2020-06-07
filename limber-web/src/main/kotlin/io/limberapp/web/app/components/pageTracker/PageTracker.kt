@@ -8,7 +8,7 @@ import react.router.dom.*
 import kotlin.browser.window
 
 /**
- * Segment.io page tracker. Listens for route changes and manually tracks pages, because this is an SPA sp automatic
+ * Segment.io page tracker. Listens for route changes and manually tracks pages, because this is an SPA so automatic
  * page tracking doesn't work
  */
 internal fun RBuilder.pageTracker() {
