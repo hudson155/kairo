@@ -19,10 +19,10 @@ object UserApi {
     path = "/users/${enc(userGuid)}"
   )
 
-  data class GetByEmailAddress(val emailAddress: String) : PiperEndpoint(
+  data class GetByOrgGuidAndEmailAddress(val orgGuid: UUID, val emailAddress: String) : PiperEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/users",
-    queryParams = listOf("emailAddress" to enc(emailAddress))
+    queryParams = listOf("orgGuid" to enc(orgGuid), "emailAddress" to enc(emailAddress))
   )
 
   data class GetByOrgGuid(val orgGuid: UUID) : PiperEndpoint(
