@@ -27,12 +27,14 @@ function getEnvironmentVariables() {
         API_ROOT_URL: JSON.stringify('http://localhost:55100'),
         AUTH0_DOMAIN: JSON.stringify('limber.auth0.com'),
         COPYRIGHT_HOLDER: JSON.stringify('Jeff Hudson'),
+        SEGMENT_WRITE_KEY: JSON.stringify(null),
       };
     case 'production':
       return {
         API_ROOT_URL: JSON.stringify('https://api.limberapp.io'),
         AUTH0_DOMAIN: JSON.stringify('limber.auth0.com'),
         COPYRIGHT_HOLDER: JSON.stringify('Jeff Hudson'),
+        SEGMENT_WRITE_KEY: JSON.stringify('llKAtlzOykmSneKOSTNgWJGoNUTuLpCH'),
       };
     default:
       throw new Error(`Unknown DEPLOYMENT_ENV: ${env}.`);
