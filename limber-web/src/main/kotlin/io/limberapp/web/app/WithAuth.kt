@@ -20,12 +20,10 @@ import kotlin.browser.document
 import kotlin.browser.window
 
 /**
- * Part of the application root.
- *   - Loads the tenant.
- *   - Provides auth, but doesn't guarantee that auth is loaded.
+ * Part of the application root. Loads the tenant and provides auth, but doesn't guarantee that auth is loaded.
  */
-internal fun RBuilder.appWithAuth() {
-  child(component)
+internal fun RBuilder.withAuth(children: RHandler<RProps>) {
+  child(component, handler = children)
 }
 
 private val onRedirectCallback: (AppState?) -> Unit = {
@@ -36,7 +34,7 @@ private val onRedirectCallback: (AppState?) -> Unit = {
   )
 }
 
-private val component = componentWithGlobalState<RProps> component@{ self, _ ->
+private val component = componentWithGlobalState<RProps> component@{ self, props ->
   // We use a non-authenticated API here rather than calling the useApi() hook which we should do everywhere else
   // because the tenant must be fetched before we can create the AuthProvider, and the AuthProvider is required for
   // the ApiProvider.
@@ -63,6 +61,6 @@ private val component = componentWithGlobalState<RProps> component@{ self, _ ->
     clientId = tenant.auth0ClientId,
     onRedirectCallback = onRedirectCallback
   ) {
-    appWithApi()
+    props.children()
   }
 }
