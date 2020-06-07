@@ -31,7 +31,7 @@ private val component = component<Props> component@{ props ->
       thead(classes = gs.c { it::hiddenXs }) {
         tr {
           headers.forEach { header ->
-            limberTableCell(header = true, isEmpty = header == null) { header?.let { +it } }
+            limberTableCell(header = true, hideContent = header == null) { header?.let { +it } }
           }
         }
       }

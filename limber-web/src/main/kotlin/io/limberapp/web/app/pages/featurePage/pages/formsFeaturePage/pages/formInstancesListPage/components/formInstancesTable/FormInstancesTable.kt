@@ -90,7 +90,7 @@ private val component = componentWithApi<Props> component@{ self, props ->
           span(classes = gs.getClassName { it::visibleXs }) { small { +createdDate } }
           span(classes = gs.getClassName { it::hiddenXs }) { +createdDate }
         }
-        limberTableCell(isEmpty = true, classes = s.c { it::cellBreak }) { }
+        limberTableCell(hideContent = true, classes = s.c { it::cellBreak }) { }
         limberTableCell(classes = s.c { it::cell }) {
           props.formTemplates?.get(formInstance.formTemplateGuid)?.title?.let { +it }
         }

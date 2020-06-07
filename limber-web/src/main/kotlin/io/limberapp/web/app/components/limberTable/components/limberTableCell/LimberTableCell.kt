@@ -21,14 +21,14 @@ import react.dom.*
  */
 internal fun RBuilder.limberTableCell(
   header: Boolean = false,
-  isEmpty: Boolean = false,
+  hideContent: Boolean = false,
   classes: String? = null,
   children: RHandler<RProps>
 ) {
-  child(component, Props(header, isEmpty, classes), handler = children)
+  child(component, Props(header, hideContent, classes), handler = children)
 }
 
-internal data class Props(val header: Boolean, val isEmpty: Boolean, val classes: String?) : RProps
+internal data class Props(val header: Boolean, val hideContent: Boolean, val classes: String?) : RProps
 
 private class S : Styles("LimberTableCell") {
   val cell by css {
@@ -42,14 +42,14 @@ private class S : Styles("LimberTableCell") {
 private val s = S().apply { inject() }
 
 private val component = component<Props> component@{ props ->
-  val classes = cls(s.c { it::cell }, s.c(props.isEmpty) { it::emptyCell }, props.classes)
+  val classes = cls(s.c { it::cell }, s.c(props.hideContent) { it::emptyCell }, props.classes)
   if (props.header) {
     th(classes = classes) {
-      if (!props.isEmpty) props.children()
+      if (!props.hideContent) props.children()
     }
   } else {
     td(classes = classes) {
-      if (!props.isEmpty) props.children()
+      if (!props.hideContent) props.children()
     }
   }
 }
