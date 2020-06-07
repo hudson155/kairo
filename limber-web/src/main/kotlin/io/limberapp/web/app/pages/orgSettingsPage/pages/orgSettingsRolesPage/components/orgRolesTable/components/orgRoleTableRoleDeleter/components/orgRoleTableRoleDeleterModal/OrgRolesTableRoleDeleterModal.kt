@@ -1,14 +1,13 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal
 
+import io.limberapp.web.app.components.limberButton.Style
+import io.limberapp.web.app.components.limberButton.limberButton
 import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
-import io.limberapp.web.util.cls
 import io.limberapp.web.util.component
-import io.limberapp.web.util.gs
 import kotlinx.css.*
-import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 
@@ -51,19 +50,21 @@ private val component = component<Props> component@{ props ->
   modal(narrow = true, onClose = props.onCancel) {
     modalTitle("Confirm deletion", "Are you sure you wish to delete ${props.orgRoleName}?")
     div(classes = s.c { it::buttons }) {
-      button(classes = cls(gs.c { it::secondaryButton }, s.c { it::button })) {
-        attrs.disabled = state == State.SAVING
-        attrs.onClickFunction = { props.onCancel() }
-        +"Cancel"
-      }
-      button(classes = cls(gs.c { it::redButton }, s.c { it::button })) {
-        attrs.disabled = state == State.SAVING
-        attrs.onClickFunction = {
+      limberButton(
+        style = Style.SECONDARY,
+        loading = state == State.SAVING,
+        onClick = props.onCancel,
+        classes = s.c { it::button }
+      ) { +"Cancel" }
+      limberButton(
+        style = Style.DANGER,
+        loading = state == State.SAVING,
+        onClick = {
           setState(State.SAVING)
           props.onDelete()
-        }
-        +"Delete"
-      }
+        },
+        classes = s.c { it::button }
+      ) { +"Delete" }
     }
   }
 }

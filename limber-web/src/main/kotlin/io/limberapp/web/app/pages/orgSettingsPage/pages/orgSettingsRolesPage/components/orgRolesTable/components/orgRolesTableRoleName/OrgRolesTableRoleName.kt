@@ -4,6 +4,7 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
+import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
@@ -13,19 +14,7 @@ import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetValue
 import io.limberapp.web.util.useIsMounted
-import kotlinx.css.Align
-import kotlinx.css.Cursor
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
-import kotlinx.css.LinearDimension
-import kotlinx.css.alignItems
-import kotlinx.css.cursor
-import kotlinx.css.display
-import kotlinx.css.flexDirection
-import kotlinx.css.flexGrow
-import kotlinx.css.fontSize
-import kotlinx.css.marginRight
-import kotlinx.css.px
+import kotlinx.css.*
 import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
@@ -58,6 +47,9 @@ private class S : Styles("OrgRolesTableRoleName") {
   }
   val icon by css {
     cursor = Cursor.pointer
+  }
+  val spinner by css {
+    marginLeft = 6.px
   }
 }
 
@@ -125,7 +117,7 @@ private val component = componentWithApi<Props> component@{ self, props ->
             inlineIcon("save", leftMargin = true)
           }
         }
-        State.SAVING -> inlineIcon("spinner", leftMargin = true, classes = gs.c { it::spinner })
+        State.SAVING -> loadingSpinner(classes = s.c { it::spinner })
       }
     }
   }

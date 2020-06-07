@@ -1,7 +1,9 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMemberAdder
 
 import com.piperframework.types.UUID
-import io.limberapp.web.app.components.inlineIcon.inlineIcon
+import io.limberapp.web.app.components.limberButton.Style
+import io.limberapp.web.app.components.limberButton.limberButton
+import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.components.orgMemberSelector.orgMemberSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.orgRoleMembersSelector
 import io.limberapp.web.util.Styles
@@ -9,10 +11,8 @@ import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
 import io.limberapp.web.util.component
-import io.limberapp.web.util.gs
 import kotlinx.css.*
 import kotlinx.css.properties.*
-import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 
@@ -85,28 +85,31 @@ private val component = component<Props> component@{ props ->
     div(classes = s.c { it::right }) {
       when (state) {
         State.DEFAULT -> {
-          button(classes = cls(gs.c { it::primaryButton }, s.c { it::button })) {
-            attrs.onClickFunction = { setState(State.ADDING) }
-            +"Add"
-          }
+          limberButton(
+            style = Style.PRIMARY,
+            onClick = { setState(State.ADDING) },
+            classes = s.c { it::button }
+          ) { +"Add" }
         }
         State.ADDING -> {
           if (selectedUserGuid != null) {
-            button(classes = cls(gs.c { it::primaryButton }, s.c { it::button })) {
-              attrs.onClickFunction = {
+            limberButton(
+              style = Style.PRIMARY,
+              onClick = {
                 setState(State.ADD_SAVING)
                 props.onAdd(selectedUserGuid)
-              }
-              +"Confirm"
-            }
+              },
+              classes = s.c { it::button }
+            ) { +"Confirm" }
           }
-          button(classes = cls(gs.c { it::secondaryButton }, s.c { it::button })) {
-            attrs.onClickFunction = { setState(State.DEFAULT) }
-            +"Cancel"
-          }
+          limberButton(
+            style = Style.SECONDARY,
+            onClick = { setState(State.DEFAULT) },
+            classes = s.c { it::button }
+          ) { +"Cancel" }
         }
         State.ADD_SAVING -> {
-          inlineIcon("spinner", classes = gs.c { it::spinner })
+          loadingSpinner()
         }
       }
     }
