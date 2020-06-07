@@ -27,6 +27,8 @@ private val component = component<RProps> component@{
   // While auth is loading, show the loading page.
   if (auth.isLoading) return@component minimalPage(linkType = null) { loadingPage("Identifying you...") }
 
+  pageTracker()
+
   switch {
     route(path = SignInPage.path, exact = true) { buildElement { signInPage() } }
     route(path = SignOutPage.path, exact = true) { buildElement { signOutPage() } }
