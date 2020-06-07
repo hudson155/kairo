@@ -18,9 +18,7 @@ private val component = component<RProps> component@{
     withAuth {
       apiProvider {
         browserRouter {
-          switch {
-            appRootRouter()
-          }
+          appRootRouter()
         }
       }
     }
