@@ -1,14 +1,12 @@
 package io.limberapp.web.app.components.limberTable
 
-import io.limberapp.web.util.Styles
+import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.util.c
-import io.limberapp.web.util.cls
 import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import kotlinx.css.*
 import react.*
 import react.dom.*
-import styled.getClassName
 
 /**
  * A thin wrapper for the HTML [table] element.
@@ -27,28 +25,13 @@ internal fun RBuilder.limberTable(headers: List<String?>?, classes: String? = nu
 
 internal data class Props(val headers: List<String?>?, val classes: String?) : RProps
 
-private class S : Styles("LimberTable") {
-  val table by css {
-    th {
-      height = 24.px
-      padding(4.px)
-    }
-    td {
-      height = 24.px
-      padding(4.px)
-    }
-  }
-}
-
-private val s = S().apply { inject() }
-
 private val component = component<Props> component@{ props ->
-  table(classes = cls(s.getClassName { it::table }, props.classes)) {
+  table(classes = props.classes) {
     props.headers?.let { headers ->
       thead(classes = gs.c { it::hiddenXs }) {
         tr {
           headers.forEach { header ->
-            header?.let { th { +it } }
+            limberTableCell(header = true, hideContent = header == null) { header?.let { +it } }
           }
         }
       }

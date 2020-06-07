@@ -2,6 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
+import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal.orgRolesTableRoleDeleterModal
 import io.limberapp.web.context.globalState.action.orgRoles.deleteOrgRole
 import io.limberapp.web.util.Styles
@@ -49,7 +50,7 @@ private val component = componentWithApi<Props> component@{ self, props ->
     async { self.deleteOrgRole(props.orgRole.guid) }
   }
 
-  td(classes = gs.c { it::hiddenXs }) {
+  limberTableCell(classes = gs.c { it::hiddenXs }) {
     if (state == State.CONFIRMING) {
       orgRolesTableRoleDeleterModal(props.orgRole.name, onDelete = onDelete, onCancel = { setState(State.DEFAULT) })
     }

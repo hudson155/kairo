@@ -2,6 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.co
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
+import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
 import io.limberapp.web.hook.useEscapeKeyListener
 import io.limberapp.web.util.Styles
@@ -93,7 +94,7 @@ private val component = componentWithApi<Props> component@{ self, props ->
     if (state == State.EDITING) onCancelEdit(event)
   }
 
-  td {
+  limberTableCell {
     form(classes = s.c { it::form }) {
       attrs.onSubmitFunction = onSubmit
       when (state) {

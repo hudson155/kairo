@@ -3,6 +3,7 @@ package io.limberapp.web.app.components.limberTable.components.limberTableRow
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import io.limberapp.web.util.component
 import kotlinx.css.*
 import kotlinx.css.properties.*
@@ -12,11 +13,15 @@ import react.dom.*
 /**
  * A thin wrapper for the HTML [tr] element.
  *
+ * [classes] is for CSS classes to apply.
+ *
  * [children] is the contents of the [tr].
  */
-internal fun RBuilder.limberTableRow(children: RHandler<RProps>) {
-  child(component, handler = children)
+internal fun RBuilder.limberTableRow(classes: String? = null, children: RHandler<RProps>) {
+  child(component, Props(classes), handler = children)
 }
+
+internal data class Props(val classes: String?) : RProps
 
 private class S : Styles("LimberTableRow") {
   val row by css {
@@ -32,8 +37,8 @@ private class S : Styles("LimberTableRow") {
 
 private val s = S().apply { inject() }
 
-private val component = component<RProps> component@{ props ->
-  tr(classes = s.c { it::row }) {
+private val component = component<Props> component@{ props ->
+  tr(classes = cls(s.c { it::row }, props.classes)) {
     props.children()
   }
 }
