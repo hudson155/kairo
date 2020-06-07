@@ -11,19 +11,28 @@ metadata:
 spec:
   tls:
     - hosts:
-        - limberapp.io
+        # The API goes first in the list.
         - api.limberapp.io
+        # Everything else should be alphabetical. Don't forget to also add a rule for the host.
+        - limberapp.io
+        - limber.limberapp.io
       secretName: limber-tls
   rules:
+    - host: api.limberapp.io
+      http:
+        paths:
+          - backend:
+              serviceName: limber-backend
+              servicePort: 80
     - host: limberapp.io
       http:
         paths:
           - backend:
               serviceName: limber-web
               servicePort: 80
-    - host: api.limberapp.io
+    - host: limber.limberapp.io
       http:
         paths:
           - backend:
-              serviceName: limber-backend
+              serviceName: limber-web
               servicePort: 80
