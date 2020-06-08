@@ -1,4 +1,4 @@
-package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.components.formInstancesTable
+package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable
 
 import com.piperframework.types.UUID
 import com.piperframework.util.prettyRelative

@@ -1,10 +1,10 @@
-package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage
+package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.components.formInstancesTable.formInstancesTable
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable.formInstancesTable
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.formInstances.loadFormInstances
 import io.limberapp.web.context.globalState.action.formTemplates.loadFormTemplates
@@ -19,10 +19,6 @@ internal fun RBuilder.formInstancesListPage(feature: FeatureRep.Complete) {
 }
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
-
-internal object FormInstancesListPage {
-  const val subpath = "/instances"
-}
 
 private val component = componentWithApi<Props> component@{ self, props ->
   self.loadFormInstances(props.feature.guid)

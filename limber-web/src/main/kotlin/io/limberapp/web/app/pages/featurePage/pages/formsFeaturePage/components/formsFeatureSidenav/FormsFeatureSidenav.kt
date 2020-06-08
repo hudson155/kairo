@@ -3,8 +3,8 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.components
 import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.app.components.sidenav.components.sidenavLink.sidenavLink
 import io.limberapp.web.app.components.sidenav.sidenav
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.FormInstancesPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.FormTemplatesPage
 import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
@@ -23,8 +23,8 @@ private val component = component<Props> component@{ props ->
 
   sidenav(props.title) {
     sidenavGroup {
-      sidenavLink(props.title, to = match.path + FormInstancesListPage.subpath)
-      sidenavLink(FormTemplatesListPage.name, to = match.path + FormTemplatesListPage.subpath)
+      sidenavLink(props.title, to = match.path + FormInstancesPage.subpath)
+      sidenavLink(FormTemplatesPage.name, to = match.path + FormTemplatesPage.subpath)
     }
   }
 }

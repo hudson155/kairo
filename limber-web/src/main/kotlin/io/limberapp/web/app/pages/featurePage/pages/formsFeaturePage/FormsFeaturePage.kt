@@ -2,10 +2,10 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.FormInstancesListPage
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesListPage.formInstancesListPage
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.FormTemplatesListPage
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesListPage.formTemplatesListPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.FormInstancesPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.formInstancesPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.FormTemplatesPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.formTemplatesPage
 import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
@@ -28,13 +28,13 @@ private val component = component<Props> component@{ props ->
   standardLayout {
     switch {
       route(path = match.path, exact = true) {
-        redirect(to = match.path + FormInstancesListPage.subpath)
+        redirect(to = match.path + FormInstancesPage.subpath)
       }
-      route(path = match.path + FormInstancesListPage.subpath, exact = true) {
-        buildElement { formInstancesListPage(props.feature) }
+      route(path = match.path + FormInstancesPage.subpath) {
+        buildElement { formInstancesPage(props.feature) }
       }
-      route(path = match.path + FormTemplatesListPage.subpath, exact = true) {
-        buildElement { formTemplatesListPage(props.feature) }
+      route(path = match.path + FormTemplatesPage.subpath, exact = true) {
+        buildElement { formTemplatesPage(props.feature) }
       }
     }
   }
