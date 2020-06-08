@@ -53,15 +53,15 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
   fun getByDomain(domain: String): TenantModel? {
     return jdbi.withHandle<TenantModel?, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM auth.tenant
-                    WHERE org_guid = (SELECT org_guid
-                                      FROM auth.tenant_domain
-                                      WHERE LOWER(domain) = LOWER(:domain))
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM auth.tenant
+        WHERE org_guid = (SELECT org_guid
+                          FROM auth.tenant_domain
+                          WHERE LOWER(domain) = LOWER(:domain))
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("domain", domain)
         .mapTo(TenantModel::class.java)
         .singleNullOrThrow()
@@ -106,13 +106,13 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
   fun delete(orgGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    UPDATE auth.tenant
-                    SET archived_date = NOW()
-                    WHERE org_guid = :orgGuid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        UPDATE auth.tenant
+        SET archived_date = NOW()
+        WHERE org_guid = :orgGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("orgGuid", orgGuid)
         .execute()
       return@useTransaction when (updateCount) {

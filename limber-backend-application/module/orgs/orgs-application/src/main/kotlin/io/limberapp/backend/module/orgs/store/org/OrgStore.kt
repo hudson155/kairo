@@ -31,13 +31,13 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
   fun getByOwnerAccountGuid(ownerAccountGuid: UUID): OrgModel? {
     return jdbi.withHandle<OrgModel?, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM orgs.org
-                    WHERE owner_account_guid = :ownerAccountGuid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM orgs.org
+        WHERE owner_account_guid = :ownerAccountGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("ownerAccountGuid", ownerAccountGuid)
         .mapTo(OrgModel::class.java)
         .singleNullOrThrow()
@@ -61,13 +61,13 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
   fun delete(orgGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    UPDATE orgs.org
-                    SET archived_date = NOW()
-                    WHERE guid = :guid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        UPDATE orgs.org
+        SET archived_date = NOW()
+        WHERE guid = :guid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("guid", orgGuid)
         .execute()
       return@useTransaction when (updateCount) {

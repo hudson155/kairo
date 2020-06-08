@@ -46,14 +46,14 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
   fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? {
     return jdbi.withHandle<UserModel?, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM users.user
-                    WHERE org_guid = :orgGuid
-                      AND LOWER(email_address) = LOWER(:emailAddress)
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM users.user
+        WHERE org_guid = :orgGuid
+          AND LOWER(email_address) = LOWER(:emailAddress)
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("orgGuid", orgGuid)
         .bind("emailAddress", emailAddress)
         .mapTo(UserModel::class.java)
@@ -64,13 +64,13 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
   fun getByOrgGuid(orgGuid: UUID): Set<UserModel> {
     return jdbi.withHandle<Set<UserModel>, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM users.user
-                    WHERE org_guid = :orgGuid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM users.user
+        WHERE org_guid = :orgGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("orgGuid", orgGuid)
         .mapTo(UserModel::class.java)
         .toSet()
@@ -94,13 +94,13 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
   fun delete(userGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    UPDATE users.user
-                    SET archived_date = NOW()
-                    WHERE guid = :guid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        UPDATE users.user
+        SET archived_date = NOW()
+        WHERE guid = :guid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("guid", userGuid)
         .execute()
       return@useTransaction when (updateCount) {

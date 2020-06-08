@@ -46,13 +46,13 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
   fun get(formInstanceGuid: UUID, questionGuid: UUID): FormInstanceQuestionModel? {
     return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM forms.form_instance_question
-                    WHERE form_instance_guid = :formInstanceGuid
-                      AND question_guid = :questionGuid
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM forms.form_instance_question
+        WHERE form_instance_guid = :formInstanceGuid
+          AND question_guid = :questionGuid
+        """.trimIndent()
+      )
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .mapTo(FormInstanceQuestionEntity::class.java)
@@ -93,13 +93,13 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
   fun delete(formInstanceGuid: UUID, questionGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    DELETE
-                    FROM forms.form_instance_question
-                    WHERE form_instance_guid = :formInstanceGuid
-                      AND question_guid = :questionGuid
-                    """.trimIndent()
-        )
+        """
+        DELETE
+        FROM forms.form_instance_question
+        WHERE form_instance_guid = :formInstanceGuid
+          AND question_guid = :questionGuid
+        """.trimIndent()
+      )
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .execute()

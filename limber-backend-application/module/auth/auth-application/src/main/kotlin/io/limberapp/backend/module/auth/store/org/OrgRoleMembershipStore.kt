@@ -47,13 +47,13 @@ internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi
   fun delete(orgRoleGuid: UUID, accountGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    DELETE
-                    FROM auth.org_role_membership
-                    WHERE org_role_guid = :orgRoleGuid
-                      AND account_guid = :accountGuid
-                    """.trimIndent()
-        )
+        """
+        DELETE
+        FROM auth.org_role_membership
+        WHERE org_role_guid = :orgRoleGuid
+          AND account_guid = :accountGuid
+        """.trimIndent()
+      )
         .bind("orgRoleGuid", orgRoleGuid)
         .bind("accountGuid", accountGuid)
         .execute()

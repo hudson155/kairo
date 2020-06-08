@@ -89,13 +89,13 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   fun delete(orgRoleGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    UPDATE auth.org_role
-                    SET archived_date = NOW()
-                    WHERE guid = :guid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        UPDATE auth.org_role
+        SET archived_date = NOW()
+        WHERE guid = :guid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("guid", orgRoleGuid)
         .execute()
       return@useTransaction when (updateCount) {

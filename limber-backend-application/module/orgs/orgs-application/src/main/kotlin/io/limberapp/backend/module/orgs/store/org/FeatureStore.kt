@@ -46,13 +46,13 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   fun get(featureGuid: UUID): FeatureModel? {
     return jdbi.withHandle<FeatureModel?, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM orgs.feature
-                    WHERE guid = :featureGuid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM orgs.feature
+        WHERE guid = :featureGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("featureGuid", featureGuid)
         .mapTo(FeatureModel::class.java)
         .singleNullOrThrow()
@@ -72,13 +72,13 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     return jdbi.inTransaction<FeatureModel, Exception> {
       if (update.isDefaultFeature == true) {
         it.createUpdate(
-            """
-                        UPDATE orgs.feature
-                        SET is_default_feature = FALSE
-                        WHERE org_guid = :orgGuid
-                          AND archived_date IS NULL
-                        """.trimIndent()
-          )
+          """
+          UPDATE orgs.feature
+          SET is_default_feature = FALSE
+          WHERE org_guid = :orgGuid
+            AND archived_date IS NULL
+          """.trimIndent()
+        )
           .bind("orgGuid", orgGuid)
           .execute()
       }
@@ -111,13 +111,13 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   fun delete(featureGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    UPDATE orgs.feature
-                    SET archived_date = NOW()
-                    WHERE guid = :featureGuid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        UPDATE orgs.feature
+        SET archived_date = NOW()
+        WHERE guid = :featureGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("featureGuid", featureGuid)
         .execute()
       return@useTransaction when (updateCount) {

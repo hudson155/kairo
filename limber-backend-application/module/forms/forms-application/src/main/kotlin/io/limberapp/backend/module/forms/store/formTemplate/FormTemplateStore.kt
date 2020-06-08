@@ -31,13 +31,13 @@ internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : S
   fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel> {
     return jdbi.withHandle<Set<FormTemplateModel>, Exception> {
       it.createQuery(
-          """
-                    SELECT *
-                    FROM forms.form_template
-                    WHERE feature_guid = :featureGuid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        SELECT *
+        FROM forms.form_template
+        WHERE feature_guid = :featureGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("featureGuid", featureGuid)
         .mapTo(FormTemplateModel::class.java)
         .toSet()
@@ -61,13 +61,13 @@ internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : S
   fun delete(formTemplateGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
-          """
-                    UPDATE forms.form_template
-                    SET archived_date = NOW()
-                    WHERE guid = :guid
-                      AND archived_date IS NULL
-                    """.trimIndent()
-        )
+        """
+        UPDATE forms.form_template
+        SET archived_date = NOW()
+        WHERE guid = :guid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
         .bind("guid", formTemplateGuid)
         .execute()
       return@useTransaction when (updateCount) {
