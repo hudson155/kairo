@@ -8,28 +8,57 @@ import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import react.*
 
-internal sealed class FormTemplatesAction : Action() {
-  internal data class BeginLoading(val featureGuid: UUID) : FormTemplatesAction()
+internal interface FormTemplatesAction
+
+internal sealed class FormTemplateSummariesAction : Action(), FormTemplatesAction {
+  internal data class Begin(val featureGuid: UUID) : FormTemplateSummariesAction()
 
   internal data class SetValue(
     val featureGuid: UUID,
     val formTemplates: Set<FormTemplateRep.Summary>
-  ) : FormTemplatesAction()
+  ) : FormTemplateSummariesAction()
 
   internal data class SetError(
     val featureGuid: UUID,
     val errorMessage: String?
-  ) : FormTemplatesAction()
+  ) : FormTemplateSummariesAction()
+}
+
+internal sealed class FormTemplateCompletesAction : Action(), FormTemplatesAction {
+  internal data class Begin(val templateGuid: UUID) : FormTemplateCompletesAction()
+
+  internal data class SetValue(
+    val templateGuid: UUID,
+    val formTemplate: FormTemplateRep.Complete
+  ) : FormTemplateCompletesAction()
+
+  internal data class SetError(
+    val featureGuid: UUID,
+    val errorMessage: String?
+  ) : FormTemplateCompletesAction()
+}
+
+internal fun ComponentWithApi.loadFormTemplate(templateGuid: UUID) {
+  useEffect(listOf(templateGuid)) {
+    if (gs.formTemplates.completes[templateGuid]?.hasBegunLoading == true) return@useEffect
+    dispatch(FormTemplateCompletesAction.Begin(templateGuid))
+    async {
+      api.formTemplates(FormTemplateApi.Get(templateGuid)).fold(
+        onSuccess = { formTemplate -> dispatch(FormTemplateCompletesAction.SetValue(templateGuid, formTemplate)) },
+        onFailure = { dispatch(FormTemplateCompletesAction.SetError(templateGuid, it.message)) }
+      )
+    }
+  }
 }
 
 internal fun ComponentWithApi.loadFormTemplates(featureGuid: UUID) {
   useEffect(listOf(featureGuid)) {
-    if (gs.formTemplates[featureGuid]?.hasBegunLoading == true) return@useEffect
-    dispatch(FormTemplatesAction.BeginLoading(featureGuid))
+    if (gs.formTemplates.summaries[featureGuid]?.hasBegunLoading == true) return@useEffect
+    dispatch(FormTemplateSummariesAction.Begin(featureGuid))
     async {
       api.formTemplates(FormTemplateApi.GetByFeatureGuid(featureGuid)).fold(
-        onSuccess = { formTemplates -> dispatch(FormTemplatesAction.SetValue(featureGuid, formTemplates)) },
-        onFailure = { dispatch(FormTemplatesAction.SetError(featureGuid, it.message)) }
+        onSuccess = { formTemplates -> dispatch(FormTemplateSummariesAction.SetValue(featureGuid, formTemplates)) },
+        onFailure = { dispatch(FormTemplateSummariesAction.SetError(featureGuid, it.message)) }
       )
     }
   }

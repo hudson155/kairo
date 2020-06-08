@@ -7,6 +7,7 @@ import io.limberapp.web.context.globalState.action.Action
 import io.limberapp.web.context.globalState.action.formInstances.FormInstancesAction
 import io.limberapp.web.context.globalState.action.formInstances.formInstancesReducer
 import io.limberapp.web.context.globalState.action.formTemplates.FormTemplatesAction
+import io.limberapp.web.context.globalState.action.formTemplates.FormTemplatesState
 import io.limberapp.web.context.globalState.action.formTemplates.formTemplatesReducer
 import io.limberapp.web.context.globalState.action.org.OrgAction
 import io.limberapp.web.context.globalState.action.org.orgReducer
@@ -34,7 +35,7 @@ internal fun useGlobalState() = useContext(globalState)
 
 private val initialState = GlobalStateContext(
   formInstances = emptyMap(),
-  formTemplates = emptyMap(),
+  formTemplates = FormTemplatesState(),
   org = LoadableState.initial(),
   orgRoleMemberships = emptyMap(),
   orgRoles = LoadableState.initial(),
