@@ -66,11 +66,11 @@ VALUES ('59c0b82c-57d3-4d29-b7ef-0bbf90084d7d', NOW() AT TIME ZONE 'UTC', '85ae9
        ('43f20f0d-03c0-4477-808d-8cfefefb46bc', NOW() AT TIME ZONE 'UTC', '85ae9d91-2666-4174-bdfe-1f7cd868869c', 2,
         'Description', NULL, 'TEXT', TRUE, NULL, NULL, NULL, NULL);
 INSERT INTO forms.form_instance (guid, created_date, feature_guid,
-                                 form_template_guid, number, creator_account_guid)
+                                 form_template_guid, number, submitted_date, creator_account_guid)
 VALUES ('8e6ff3f9-26a0-42e4-935b-100c0327ab79', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
-        '85ae9d91-2666-4174-bdfe-1f7cd868869c', 1, '3e2d1681-a666-456e-a168-647d8c3a3150'),
+        '85ae9d91-2666-4174-bdfe-1f7cd868869c', 1, NOW() AT TIME ZONE 'UTC', '3e2d1681-a666-456e-a168-647d8c3a3150'),
        ('168af0c7-1ab1-40f6-9715-c9e8c241442f', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
-        '85ae9d91-2666-4174-bdfe-1f7cd868869c', 2, '71fe66b2-f115-43b9-a993-cbeb51c1b46a');
+        '85ae9d91-2666-4174-bdfe-1f7cd868869c', 2, NOW() AT TIME ZONE 'UTC', '71fe66b2-f115-43b9-a993-cbeb51c1b46a');
 INSERT INTO forms.form_instance_question (created_date, form_instance_guid, question_guid,
                                           type, text, date)
 VALUES (NOW() AT TIME ZONE 'UTC', '8e6ff3f9-26a0-42e4-935b-100c0327ab79', '59c0b82c-57d3-4d29-b7ef-0bbf90084d7d',

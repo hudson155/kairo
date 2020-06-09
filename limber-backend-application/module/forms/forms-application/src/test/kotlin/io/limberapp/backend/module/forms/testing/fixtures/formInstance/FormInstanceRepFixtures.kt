@@ -30,6 +30,7 @@ internal object FormInstanceRepFixtures {
       featureGuid = featureGuid,
       formTemplateGuid = formTemplateGuid,
       number = number,
+      submittedDate = null,
       creatorAccountGuid = creatorAccountGuid,
       questions = emptyList()
     )
@@ -42,5 +43,6 @@ internal fun FormInstanceRep.Complete.summary() = FormInstanceRep.Summary(
   featureGuid = featureGuid,
   formTemplateGuid = formTemplateGuid,
   number = number,
+  submittedDate = submittedDate,
   creatorAccountGuid = creatorAccountGuid
 )

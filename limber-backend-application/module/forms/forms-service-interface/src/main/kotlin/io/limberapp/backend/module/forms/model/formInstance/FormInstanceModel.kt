@@ -9,5 +9,6 @@ data class FormInstanceModel(
   val featureGuid: UUID,
   val formTemplateGuid: UUID,
   val number: Long,
+  val submittedDate: LocalDateTime?,
   val creatorAccountGuid: UUID
 )

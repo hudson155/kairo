@@ -33,6 +33,8 @@ object FormInstanceRep {
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
     val number: Long,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
     val creatorAccountGuid: UUID
   ) : CompleteRep
@@ -48,6 +50,8 @@ object FormInstanceRep {
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
     val number: Long,
+    @Serializable(with = LocalDateTimeSerializer::class)
+    val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
     val creatorAccountGuid: UUID,
     val questions: List<FormInstanceQuestionRep.Complete>

@@ -39,6 +39,7 @@ CREATE TABLE forms.form_instance
     feature_guid         UUID        NOT NULL,
     form_template_guid   UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT,
     number               BIGINT      NOT NULL,
+    submitted_date       TIMESTAMP,
     creator_account_guid UUID        NOT NULL
 );
 

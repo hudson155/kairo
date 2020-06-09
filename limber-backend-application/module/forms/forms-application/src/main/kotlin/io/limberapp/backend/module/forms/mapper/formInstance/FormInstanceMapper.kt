@@ -19,6 +19,7 @@ internal class FormInstanceMapper @Inject constructor(
     featureGuid = rep.featureGuid,
     formTemplateGuid = rep.formTemplateGuid,
     number = 0,
+    submittedDate = null,
     creatorAccountGuid = rep.creatorAccountGuid
   )
 
@@ -28,6 +29,7 @@ internal class FormInstanceMapper @Inject constructor(
     featureGuid = model.featureGuid,
     formTemplateGuid = model.formTemplateGuid,
     number = model.number,
+    submittedDate = model.submittedDate,
     creatorAccountGuid = model.creatorAccountGuid
   )
 
@@ -37,6 +39,7 @@ internal class FormInstanceMapper @Inject constructor(
     featureGuid = model.featureGuid,
     formTemplateGuid = model.formTemplateGuid,
     number = model.number,
+    submittedDate = model.submittedDate,
     creatorAccountGuid = model.creatorAccountGuid,
     questions = questions.map { formInstanceQuestionMapper.completeRep(it) }
   )
