@@ -10,6 +10,7 @@ kotlin {
       dependencies {
         implementation(kotlin("stdlib-common"))
         implementation(project(":piper:serialization"))
+        implementation(project(":piper:types"))
         implementation(project(":piper:util"))
       }
     }

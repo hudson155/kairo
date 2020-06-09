@@ -1,9 +1,9 @@
 package io.limberapp.backend.authorization.principal
 
 import com.piperframework.serialization.serializer.UuidSerializer
+import com.piperframework.types.UUID
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
 data class JwtOrg(

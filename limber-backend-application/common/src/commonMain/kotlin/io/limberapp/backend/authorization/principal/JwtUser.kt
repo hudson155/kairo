@@ -1,8 +1,8 @@
 package io.limberapp.backend.authorization.principal
 
 import com.piperframework.serialization.serializer.UuidSerializer
+import com.piperframework.types.UUID
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
 data class JwtUser(
