@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
+import io.limberapp.backend.authorization.permissions.FeaturePermissions
 import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import io.limberapp.backend.authorization.principal.JwtRole
@@ -13,6 +14,7 @@ import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -74,7 +76,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"permissions\\\":\\\"${OrgPermissions.none()}\\\"," +
-        "\\\"featureGuids\\\":[]" +
+        "\\\"features\\\":{}" +
         "}\",\n" +
         "    \"roles\": \"[]\",\n" +
         "    \"user\": \"{" +
@@ -93,6 +95,16 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
       ownerAccountGuid = UUID.randomUUID()
+    )
+    val existingFeature = FeatureModel(
+      guid = UUID.randomUUID(),
+      createdDate = LocalDateTime.now(fixedClock),
+      orgGuid = existingOrg.guid,
+      rank = 0,
+      name = "Forms",
+      path = "/forms",
+      type = FeatureModel.Type.FORMS,
+      isDefaultFeature = true
     )
     val existingAccount = AccountModel(
       guid = UUID.randomUUID(),
@@ -123,7 +135,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     } returns existingOrg
     every {
       mockedServices[FeatureService::class].getByOrgGuid(existingOrg.guid)
-    } returns emptyList()
+    } returns listOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
@@ -170,6 +182,8 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
 
     val orgPermissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES, OrgPermission.MANAGE_ORG_METADATA))
 
+    val featurePermissions = FeaturePermissions.none()
+
     val jwtRequest = JwtClaimsRequestRep.Creation(
       auth0ClientId = tenantRep.auth0ClientId,
       firstName = "Jeff",
@@ -184,7 +198,11 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"permissions\\\":\\\"${orgPermissions}\\\"," +
-        "\\\"featureGuids\\\":[]" +
+        "\\\"features\\\":{" +
+        "\\\"${existingFeature.guid}\\\":{" +
+        "\\\"permissions\\\":\\\"${featurePermissions}\\\"" +
+        "}" +
+        "}" +
         "}\",\n" +
         "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
         "    \"user\": \"{" +

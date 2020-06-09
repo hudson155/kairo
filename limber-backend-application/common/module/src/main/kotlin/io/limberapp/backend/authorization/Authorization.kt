@@ -71,7 +71,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
       principal.org ?: return false
-      return featureGuid in principal.org.featureGuids
+      return featureGuid in principal.org.features
     }
   }
 }

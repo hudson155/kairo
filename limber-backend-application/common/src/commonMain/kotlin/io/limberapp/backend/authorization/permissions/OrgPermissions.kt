@@ -21,25 +21,18 @@ private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
     .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
 }
 
+/**
+ * Permissions that apply organization-wide.
+ */
 @Serializable(with = OrgPermissionsSerializer::class)
-data class OrgPermissions(private val permissions: Set<OrgPermission>) {
-  private val booleanList = ALL_ORG_PERMISSIONS.map { it in permissions }
-
-  val size = permissions.size
-
-  fun hasPermission(permission: OrgPermission) = permission in permissions
-
-  fun asDarb() = DarbEncoder.encode(booleanList)
-
-  fun asBitString() = BitStringEncoder.encode(booleanList)
+data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permissions<OrgPermission>() {
+  override fun allPermissions() = ALL_ORG_PERMISSIONS
 
   fun withPermission(permission: OrgPermission, value: Boolean): OrgPermissions {
     val permissions = permissions.toMutableSet()
     if (value) permissions.add(permission) else permissions.remove(permission)
     return copy(permissions = permissions)
   }
-
-  override fun toString() = asDarb()
 
   companion object {
     fun none() = OrgPermissions(emptySet())

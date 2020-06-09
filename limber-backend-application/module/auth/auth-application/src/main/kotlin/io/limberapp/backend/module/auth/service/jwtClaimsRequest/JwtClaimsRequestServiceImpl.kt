@@ -3,9 +3,11 @@ package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 import com.google.inject.Inject
 import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.authorization.permissions.FeaturePermissions
 import io.limberapp.backend.authorization.permissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.OrgPermissions
 import io.limberapp.backend.authorization.permissions.OrgPermissions.Companion.union
+import io.limberapp.backend.authorization.principal.JwtFeature
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
@@ -66,8 +68,10 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     val org = checkNotNull(orgService.get(user.orgGuid))
     val features = featureService.getByOrgGuid(user.orgGuid)
     val permissions = getPermissions(org, user.guid)
+
+    val jwtFeatures = features.associate { Pair(it.guid, JwtFeature(FeaturePermissions.none())) }
     return convertJwtToModel(
-      org = JwtOrg(org.guid, org.name, permissions, features.map { it.guid }),
+      org = JwtOrg(org.guid, org.name, permissions, jwtFeatures),
       roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
       user = JwtUser(user.guid, user.firstName, user.lastName)
     )
@@ -79,7 +83,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     return orgPermissions.union()
   }
 
-  private fun convertJwtToModel(org: JwtOrg, roles: Set<JwtRole>, user: JwtUser): JwtClaimsModel = JwtClaimsModel(
+  private fun convertJwtToModel(org: JwtOrg, roles: Set<JwtRole>, user: JwtUser) = JwtClaimsModel(
     org = json.stringify(org),
     roles = json.stringifySet(roles),
     user = json.stringify(user)
