@@ -1,9 +1,9 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage
 
 import com.piperframework.types.UUID
-import io.limberapp.web.app.components.minimalPage.minimalPage
-import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
-import io.limberapp.web.app.pages.loadingPage.loadingPage
+import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
+import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
+import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.formTemplates.loadFormTemplate
 import io.limberapp.web.util.componentWithApi
@@ -32,10 +32,8 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
 
   val template = self.gs.formTemplates.completes[templateGuid].let { loadableState ->
     when (loadableState) {
-      null, is LoadableState.Unloaded -> return@component minimalPage(linkType = null) {
-        loadingPage("Loading Form...")
-      }
-      is LoadableState.Error -> return@component minimalPage(linkType = null) { failedToLoadPage("form") }
+      null, is LoadableState.Unloaded -> return@component centeredContentLayout { loadingSpinner(large = true) }
+      is LoadableState.Error -> return@component centeredContentLayout { failedToLoad("form") }
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

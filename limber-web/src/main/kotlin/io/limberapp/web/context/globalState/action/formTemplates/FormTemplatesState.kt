@@ -12,6 +12,10 @@ internal typealias  FormTemplatesSummariesState =
   Map<FeatureGuid, LoadableState<Map<TemplateGuid, FormTemplateRep.Summary>>>
 
 internal data class FormTemplatesState(
-  val completes: FormTemplatesCompletesState = emptyMap(),
-  val summaries: FormTemplatesSummariesState = emptyMap()
-)
+  val completes: FormTemplatesCompletesState,
+  val summaries: FormTemplatesSummariesState
+) {
+  companion object {
+    fun initial() = FormTemplatesState(emptyMap(), emptyMap())
+  }
+}

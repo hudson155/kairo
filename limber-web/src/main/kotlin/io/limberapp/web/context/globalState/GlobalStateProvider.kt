@@ -35,7 +35,7 @@ internal fun useGlobalState() = useContext(globalState)
 
 private val initialState = GlobalStateContext(
   formInstances = emptyMap(),
-  formTemplates = FormTemplatesState(),
+  formTemplates = FormTemplatesState.initial(),
   org = LoadableState.initial(),
   orgRoleMemberships = emptyMap(),
   orgRoles = LoadableState.initial(),
