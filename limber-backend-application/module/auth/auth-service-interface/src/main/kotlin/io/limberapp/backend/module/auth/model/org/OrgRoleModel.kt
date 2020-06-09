@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.model.org
 
-import io.limberapp.backend.authorization.permissions.OrgPermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import java.time.LocalDateTime
 import java.util.*
 

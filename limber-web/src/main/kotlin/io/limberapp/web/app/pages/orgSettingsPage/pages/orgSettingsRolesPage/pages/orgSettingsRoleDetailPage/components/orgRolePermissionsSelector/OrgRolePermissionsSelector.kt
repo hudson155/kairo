@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRolePermissionsSelector
 
-import io.limberapp.backend.authorization.permissions.OrgPermission
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton

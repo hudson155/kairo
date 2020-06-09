@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role
 
-import io.limberapp.backend.authorization.permissions.OrgPermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleIsNotUnique
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound

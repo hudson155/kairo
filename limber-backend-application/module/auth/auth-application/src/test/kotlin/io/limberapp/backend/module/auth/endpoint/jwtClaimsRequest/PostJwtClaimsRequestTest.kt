@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
-import io.limberapp.backend.authorization.permissions.FeaturePermissions
-import io.limberapp.backend.authorization.permissions.OrgPermission
-import io.limberapp.backend.authorization.permissions.OrgPermissions
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
@@ -182,7 +182,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
 
     val orgPermissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES, OrgPermission.MANAGE_ORG_METADATA))
 
-    val featurePermissions = FeaturePermissions.none()
+    val featurePermissions = FormsFeaturePermissions.none()
 
     val jwtRequest = JwtClaimsRequestRep.Creation(
       auth0ClientId = tenantRep.auth0ClientId,
