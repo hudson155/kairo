@@ -1,6 +1,8 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage
 
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleCreationPage.OrgSettingsRoleCreationPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleCreationPage.orgSettingsRoleCreationPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.orgSettingsRoleDetailPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
@@ -36,6 +38,9 @@ private val component = component<RProps> component@{
       exact = true
     ) {
       buildElement { orgSettingsRoleDetailPage() }
+    }
+    route(path = OrgSettingsRoleCreationPage.path, exact = true) {
+      buildElement { orgSettingsRoleCreationPage() }
     }
   }
 }

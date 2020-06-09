@@ -3,7 +3,6 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pa
 import com.piperframework.util.slugify
 import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
-import io.limberapp.web.app.components.tabbedView.tabbedView
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.orgRoleMembersSelector
@@ -74,13 +73,12 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
       description = "Update role info, including the permissions it grants and members of the role."
     )
     div(classes = s.c { it::tabbedViewContainer }) {
-      tabbedView(OrgSettingsRoleDetailPage.TabName.permissions, OrgSettingsRoleDetailPage.TabName.members)
       div {
         when (match.params.tabName) {
           OrgSettingsRoleDetailPage.TabName.permissions.slugify() ->
             orgRolePermissionsSelector(orgRole, onClose = goBack)
           OrgSettingsRoleDetailPage.TabName.members.slugify() ->
-            orgRoleMembersSelector(orgRole)
+            orgRoleMembersSelector(orgRole, onClose = goBack)
           else -> redirect(to = OrgSettingsRolesPage.path)
         }
       }

@@ -25,6 +25,15 @@ internal class GlobalStyles : Styles("Global") {
       display = Display.none
     }
   }
+  val modalFooter by css {
+    borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    display = Display.flex
+    flexDirection = FlexDirection.rowReverse
+    paddingTop = 8.px
+    button {
+      marginRight = 12.px
+    }
+  }
   val link by css {
     color = Theme.Color.Text.link
     cursor = Cursor.pointer

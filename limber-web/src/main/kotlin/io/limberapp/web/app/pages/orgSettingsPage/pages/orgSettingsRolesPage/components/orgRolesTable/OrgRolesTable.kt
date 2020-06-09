@@ -29,7 +29,6 @@ internal data class Props(val orgRoles: Set<OrgRoleRep.Complete>) : RProps
 
 private class S : Styles("OrgRolesTable") {
   val table by css {
-    maxWidth = 768.px
     th {
       notXs {
         nthChild("2") { width = 160.px }

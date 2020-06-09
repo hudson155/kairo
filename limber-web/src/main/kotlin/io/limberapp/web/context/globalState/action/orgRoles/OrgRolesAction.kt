@@ -36,6 +36,18 @@ internal fun ComponentWithApi.loadOrgRoles() {
   }
 }
 
+internal suspend fun ComponentWithApi.createOrgRole(rep: OrgRoleRep.Creation) {
+  api.orgRoles(
+    endpoint = OrgRoleApi.Post(
+      orgGuid = gs.org.state.guid,
+      rep = rep
+    )
+  ).fold(
+    onSuccess = { orgRole -> dispatch(OrgRolesAction.UpdateValue(orgRole)) },
+    onFailure = { dispatch(OrgRolesAction.SetError(it.message)) }
+  )
+}
+
 internal suspend fun ComponentWithApi.updateOrgRole(orgRoleGuid: UUID, rep: OrgRoleRep.Update) {
   api.orgRoles(
     endpoint = OrgRoleApi.Patch(

@@ -6,22 +6,18 @@ import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
 import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
 import io.limberapp.web.util.componentWithApi
+import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetChecked
 import io.limberapp.web.util.useIsMounted
-import kotlinx.css.BorderStyle
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.display
 import kotlinx.css.flexDirection
 import kotlinx.css.marginBottom
-import kotlinx.css.marginRight
 import kotlinx.css.padding
-import kotlinx.css.paddingTop
-import kotlinx.css.properties.*
 import kotlinx.css.px
 import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
@@ -44,7 +40,6 @@ internal data class Props(val orgRole: OrgRoleRep.Complete, val onClose: () -> U
 private class S : Styles("OrgRolePermissionsSelector") {
   val rowsContainer by css {
     padding(vertical = 8.px)
-    borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
   }
   val row by css {
     marginBottom = 8.px
@@ -55,14 +50,6 @@ private class S : Styles("OrgRolePermissionsSelector") {
   val label by css {
     display = Display.flex
     flexDirection = FlexDirection.row
-  }
-  val saveButtonContainer by css {
-    display = Display.flex
-    flexDirection = FlexDirection.rowReverse
-    paddingTop = 8.px
-  }
-  val saveButton by css {
-    marginRight = 12.px
   }
 }
 
@@ -117,18 +104,16 @@ private val component = componentWithApi<Props> component@{ self, props ->
       }
     }
   }
-  div(classes = s.c { it::saveButtonContainer }) {
+  div(classes = gs.c { it::modalFooter }) {
     limberButton(
       style = Style.PRIMARY,
       loading = state == State.SAVING,
-      onClick = onSave,
-      classes = s.c { it::saveButton }
+      onClick = onSave
     ) { +"Save" }
     limberButton(
       style = Style.SECONDARY,
       loading = state == State.SAVING,
-      onClick = props.onClose,
-      classes = s.c { it::saveButton }
+      onClick = props.onClose
     ) { +"Cancel" }
   }
 }

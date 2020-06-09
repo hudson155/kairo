@@ -1,18 +1,17 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.components.orgRoleMembersSelectorMemberAdder
 
 import com.piperframework.types.UUID
+import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.components.orgMemberSelector.orgMemberSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.components.orgRoleMembersSelector.orgRoleMembersSelector
 import io.limberapp.web.util.Styles
-import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
 import io.limberapp.web.util.component
 import kotlinx.css.*
-import kotlinx.css.properties.*
 import react.*
 import react.dom.*
 
@@ -41,7 +40,6 @@ private class S : Styles("OrgRoleMembersSelectorMemberAdder") {
     justifyContent = JustifyContent.spaceBetween
     height = 48.px
     padding(12.px)
-    borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
   }
   val containerBlue by css {
     backgroundColor = Color.blue.withAlpha(0.1)
@@ -86,10 +84,10 @@ private val component = component<Props> component@{ props ->
       when (state) {
         State.DEFAULT -> {
           limberButton(
-            style = Style.PRIMARY,
+            style = Style.SECONDARY,
             onClick = { setState(State.ADDING) },
             classes = s.c { it::button }
-          ) { +"Add" }
+          ) { inlineIcon("plus") }
         }
         State.ADDING -> {
           if (selectedUserGuid != null) {
