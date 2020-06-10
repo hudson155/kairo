@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage
 
 import com.piperframework.types.UUID
+import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
@@ -14,9 +15,11 @@ import react.router.dom.*
 /**
  * Page for creating an instance of a template.
  */
-internal fun RBuilder.formInstanceCreationPage() {
-  child(component)
+internal fun RBuilder.formInstanceCreationPage(feature: FeatureRep.Complete) {
+  child(component, Props(feature))
 }
+
+internal data class Props(val feature: FeatureRep.Complete) : RProps
 
 internal object FormInstanceCreationPage {
   internal data class PageParams(val templateGuid: UUID) : RProps
@@ -24,11 +27,11 @@ internal object FormInstanceCreationPage {
   val subpath = "/create/:${PageParams::templateGuid.name}"
 }
 
-private val component = componentWithApi<RProps> component@{ self, _ ->
+private val component = componentWithApi<Props> component@{ self, props ->
   val match = checkNotNull(useRouteMatch<FormInstanceCreationPage.PageParams>())
   val templateGuid = match.params.templateGuid
 
-  self.loadFormTemplate(templateGuid)
+  self.loadFormTemplate(props.feature.guid, templateGuid)
 
   val template = self.gs.formTemplates.completes[templateGuid].let { loadableState ->
     when (loadableState) {

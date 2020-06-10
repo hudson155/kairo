@@ -7,29 +7,31 @@ internal fun formTemplatesReducer(
   action: FormTemplatesAction
 ): FormTemplatesState = with(state) {
   when (action) {
-    is FormTemplateCompletesAction -> copy(completes = templateCompletesReducer(completes, action))
-    is FormTemplateSummariesAction -> copy(summaries = templateSummariesReducer(summaries, action))
+    is FormTemplateCompletesAction -> copy(completes = formTemplateCompletesReducer(completes, action))
+    is FormTemplateSummariesAction -> copy(summaries = formTemplateSummariesReducer(summaries, action))
     else -> error("Unhandled action: $action.")
   }
 }
 
-private fun templateCompletesReducer(
+private fun formTemplateCompletesReducer(
   state: FormTemplatesCompletesState,
   action: FormTemplateCompletesAction
 ): FormTemplatesCompletesState = with(state) {
   return@with when (action) {
-    is FormTemplateCompletesAction.Begin -> plus(action.templateGuid to LoadableState.loading())
-    is FormTemplateCompletesAction.SetValue -> plus(action.templateGuid to LoadableState.Loaded(action.formTemplate))
-    is FormTemplateCompletesAction.SetError -> plus(action.featureGuid to LoadableState.Error(action.errorMessage))
+    is FormTemplateCompletesAction.BeginLoading -> plus(action.fromTemplateGuid to LoadableState.loading())
+    is FormTemplateCompletesAction.SetValue -> plus(
+      action.formTemplate.guid to LoadableState.Loaded(action.formTemplate)
+    )
+    is FormTemplateCompletesAction.SetError -> plus(action.formTemplateGuid to LoadableState.Error(action.errorMessage))
   }
 }
 
-private fun templateSummariesReducer(
+private fun formTemplateSummariesReducer(
   state: FormTemplatesSummariesState,
   action: FormTemplateSummariesAction
 ): FormTemplatesSummariesState = with(state) {
   when (action) {
-    is FormTemplateSummariesAction.Begin -> plus(action.featureGuid to LoadableState.loading())
+    is FormTemplateSummariesAction.BeginLoading -> plus(action.featureGuid to LoadableState.loading())
     is FormTemplateSummariesAction.SetValue -> plus(
       action.featureGuid to LoadableState.Loaded(action.formTemplates.associateBy { it.guid })
     )

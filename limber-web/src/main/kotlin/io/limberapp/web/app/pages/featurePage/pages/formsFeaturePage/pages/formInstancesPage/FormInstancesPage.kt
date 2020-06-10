@@ -29,7 +29,7 @@ private val component = component<Props> component@{ props ->
       buildElement { formInstancesListPage(props.feature) }
     }
     route(path = match.path + FormInstanceCreationPage.subpath, exact = true) {
-      buildElement { formInstanceCreationPage() }
+      buildElement { formInstanceCreationPage(props.feature) }
     }
   }
 }
