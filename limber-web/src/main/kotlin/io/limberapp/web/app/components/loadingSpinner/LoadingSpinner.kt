@@ -27,6 +27,10 @@ internal data class Props(
 
 /* Inspiration https://loading.io/spinner/eclipse/-eclipse-ring-circle-rotate */
 private class S : Styles("LoadingSpinner") {
+  val root by css {
+    textAlign = TextAlign.center
+    padding(12.px)
+  }
   val container by css {
     display = Display.inlineBlock
     height = 16.px
@@ -65,9 +69,11 @@ private class S : Styles("LoadingSpinner") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent<Props> { props ->
-  div(classes = cls(s.c { it::container }, s.c(props.large) { it::largeContainer }, props.classes)) {
-    div(classes = s.c { it::innerContainer }) {
-      div(classes = cls(s.c { it::spinner }, s.c(props.large) { it::largeSpinner })) {}
+  div(classes = cls(s.c { it::root }, props.classes)) {
+    div(classes = cls(s.c { it::container }, s.c(props.large) { it::largeContainer })) {
+      div(classes = s.c { it::innerContainer }) {
+        div(classes = cls(s.c { it::spinner }, s.c(props.large) { it::largeSpinner })) {}
+      }
     }
   }
 }
