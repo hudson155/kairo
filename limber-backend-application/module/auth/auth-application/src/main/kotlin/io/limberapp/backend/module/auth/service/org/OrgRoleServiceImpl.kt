@@ -17,16 +17,12 @@ internal class OrgRoleServiceImpl @Inject constructor(
     orgRoleStore.getByAccountGuid(orgGuid, accountGuid)
 
   override fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
-    checkOrgRoleGuid(orgGuid, orgRoleGuid)
+    if (!orgRoleStore.existsAndHasOrgGuid(orgRoleGuid, orgGuid = orgGuid)) throw OrgRoleNotFound()
     return orgRoleStore.update(orgRoleGuid, update)
   }
 
   override fun delete(orgGuid: UUID, orgRoleGuid: UUID) {
-    checkOrgRoleGuid(orgGuid, orgRoleGuid)
+    if (!orgRoleStore.existsAndHasOrgGuid(orgRoleGuid, orgGuid = orgGuid)) throw OrgRoleNotFound()
     orgRoleStore.delete(orgRoleGuid)
-  }
-
-  private fun checkOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID) {
-    if (orgRoleStore.get(orgRoleGuid)?.orgGuid != orgGuid) throw OrgRoleNotFound()
   }
 }

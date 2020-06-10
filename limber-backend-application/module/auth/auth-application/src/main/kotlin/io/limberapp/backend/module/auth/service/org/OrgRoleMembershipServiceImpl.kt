@@ -12,21 +12,17 @@ internal class OrgRoleMembershipServiceImpl @Inject constructor(
   private val orgRoleMembershipStore: OrgRoleMembershipStore
 ) : OrgRoleMembershipService {
   override fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel {
-    checkOrgRoleGuid(orgGuid, model.orgRoleGuid)
+    if (!orgRoleStore.existsAndHasOrgGuid(model.orgRoleGuid, orgGuid = orgGuid)) throw OrgRoleNotFound()
     return orgRoleMembershipStore.create(model)
   }
 
   override fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel> {
-    checkOrgRoleGuid(orgGuid, orgRoleGuid)
+    if (!orgRoleStore.existsAndHasOrgGuid(orgRoleGuid, orgGuid = orgGuid)) throw OrgRoleNotFound()
     return orgRoleMembershipStore.getByOrgRoleGuid(orgRoleGuid)
   }
 
   override fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID) {
-    checkOrgRoleGuid(orgGuid, orgRoleGuid)
+    if (!orgRoleStore.existsAndHasOrgGuid(orgRoleGuid, orgGuid = orgGuid)) throw OrgRoleNotFound()
     orgRoleMembershipStore.delete(orgRoleGuid, accountGuid)
-  }
-
-  private fun checkOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID) {
-    if (orgRoleStore.get(orgRoleGuid)?.orgGuid != orgGuid) throw OrgRoleNotFound()
   }
 }

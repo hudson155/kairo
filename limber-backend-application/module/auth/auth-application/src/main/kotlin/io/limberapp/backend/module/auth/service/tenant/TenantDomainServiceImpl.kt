@@ -14,7 +14,7 @@ internal class TenantDomainServiceImpl @Inject constructor(
   override fun getByOrgGuid(orgGuid: UUID) = tenantDomainStore.getByOrgGuid(orgGuid)
 
   override fun delete(orgGuid: UUID, domain: String) {
-    if (tenantDomainStore.get(domain)?.orgGuid != orgGuid) throw TenantDomainNotFound()
+    if (!tenantDomainStore.existsAndHasOrgGuid(domain, orgGuid = orgGuid)) throw TenantDomainNotFound()
     tenantDomainStore.delete(domain)
   }
 }

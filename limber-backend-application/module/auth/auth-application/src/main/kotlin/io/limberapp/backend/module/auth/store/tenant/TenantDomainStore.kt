@@ -40,6 +40,12 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
+  fun existsAndHasOrgGuid(domain: String, orgGuid: UUID): Boolean {
+    val model = get(domain) ?: return false
+    if (model.orgGuid != orgGuid) return false
+    return true
+  }
+
   fun get(domain: String): TenantDomainModel? {
     return jdbi.withHandle<TenantDomainModel?, Exception> {
       it.createQuery("SELECT * FROM auth.tenant_domain WHERE LOWER(domain) = LOWER(:domain)")

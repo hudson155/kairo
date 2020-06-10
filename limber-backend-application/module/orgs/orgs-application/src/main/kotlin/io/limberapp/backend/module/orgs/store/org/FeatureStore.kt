@@ -43,6 +43,12 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     }
   }
 
+  fun existsAndHasOrgGuid(featureGuid: UUID, orgGuid: UUID): Boolean {
+    val model = get(featureGuid) ?: return false
+    if (model.orgGuid != orgGuid) return false
+    return true
+  }
+
   fun get(featureGuid: UUID): FeatureModel? {
     return jdbi.withHandle<FeatureModel?, Exception> {
       it.createQuery(

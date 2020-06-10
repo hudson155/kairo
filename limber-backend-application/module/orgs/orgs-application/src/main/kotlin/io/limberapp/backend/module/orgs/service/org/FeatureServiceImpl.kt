@@ -35,16 +35,12 @@ internal class FeatureServiceImpl @Inject constructor(
   override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
 
   override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
-    checkFeatureGuid(orgGuid, featureGuid)
+    if (!featureStore.existsAndHasOrgGuid(featureGuid, orgGuid = orgGuid)) throw FeatureNotFound()
     return featureStore.update(orgGuid, featureGuid, update)
   }
 
   override fun delete(orgGuid: UUID, featureGuid: UUID) {
-    checkFeatureGuid(orgGuid, featureGuid)
+    if (!featureStore.existsAndHasOrgGuid(featureGuid, orgGuid = orgGuid)) throw FeatureNotFound()
     featureStore.delete(featureGuid)
-  }
-
-  private fun checkFeatureGuid(orgGuid: UUID, featureGuid: UUID) {
-    if (featureStore.get(featureGuid)?.orgGuid != orgGuid) throw FeatureNotFound()
   }
 }
