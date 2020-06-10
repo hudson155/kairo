@@ -20,9 +20,13 @@ import kotlinx.serialization.Serializable
 @Serializable(with = FeaturePermissionsSerializer::class)
 abstract class FeaturePermissions : Permissions<FeaturePermission>() {
   companion object {
-    fun fromDarb(prefix: Char, darb: String) = fromBooleanList(prefix, DarbEncoder.decode(darb))
+    fun fromDarb(darb: String) = darb.split('.', limit = 2).let {
+      return@let fromBooleanList(it[0].single(), DarbEncoder.decode(it[1]))
+    }
 
-    fun fromBitString(prefix: Char, bitString: String) = fromBooleanList(prefix, BitStringEncoder.decode(bitString))
+    fun fromBitString(bitString: String) = bitString.let {
+      return@let fromBooleanList(it.first(), BitStringEncoder.decode(it.drop(1)))
+    }
 
     private fun fromBooleanList(prefix: Char, booleanList: List<Boolean>) = when (prefix) {
       HOME_FEATURE_PREFIX -> HomeFeaturePermissions.fromBooleanList(booleanList)
@@ -35,10 +39,7 @@ abstract class FeaturePermissions : Permissions<FeaturePermission>() {
 object FeaturePermissionsSerializer : KSerializer<FeaturePermissions> {
   override val descriptor = PrimitiveDescriptor("FeaturePermissions", PrimitiveKind.STRING)
 
-  override fun serialize(encoder: Encoder, value: FeaturePermissions) =
-    encoder.encodeString(value.toString())
+  override fun serialize(encoder: Encoder, value: FeaturePermissions) = encoder.encodeString(value.asDarb())
 
-  override fun deserialize(decoder: Decoder) = decoder.decodeString().split('.').let {
-    return@let FeaturePermissions.fromDarb(it[0].single(), it[1])
-  }
+  override fun deserialize(decoder: Decoder) = FeaturePermissions.fromDarb(decoder.decodeString())
 }

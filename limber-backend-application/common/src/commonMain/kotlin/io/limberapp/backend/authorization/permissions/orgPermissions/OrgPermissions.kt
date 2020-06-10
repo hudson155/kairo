@@ -59,7 +59,7 @@ data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permis
 object OrgPermissionsSerializer : KSerializer<OrgPermissions> {
   override val descriptor = PrimitiveDescriptor("OrgPermissions", PrimitiveKind.STRING)
 
-  override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.toString())
+  override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.asDarb())
 
   override fun deserialize(decoder: Decoder) = OrgPermissions.fromDarb(decoder.decodeString())
 }

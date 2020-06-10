@@ -75,7 +75,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "    \"org\": \"{" +
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-        "\\\"permissions\\\":\\\"${OrgPermissions.none()}\\\"," +
+        "\\\"permissions\\\":\\\"${OrgPermissions.none().asDarb()}\\\"," +
         "\\\"features\\\":{}" +
         "}\",\n" +
         "    \"roles\": \"[]\",\n" +
@@ -197,10 +197,10 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "    \"org\": \"{" +
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-        "\\\"permissions\\\":\\\"${orgPermissions}\\\"," +
+        "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
         "\\\"features\\\":{" +
         "\\\"${existingFeature.guid}\\\":{" +
-        "\\\"permissions\\\":\\\"${featurePermissions}\\\"" +
+        "\\\"permissions\\\":\\\"${featurePermissions.asDarb()}\\\"" +
         "}" +
         "}" +
         "}\",\n" +
