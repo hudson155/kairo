@@ -5,13 +5,12 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
-import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceQuestionMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
-import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
 /**
@@ -20,7 +19,6 @@ import java.util.*
 internal class PutFormInstanceQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val formInstanceService: FormInstanceService,
   private val formInstanceQuestionService: FormInstanceQuestionService,
   private val formInstanceQuestionMapper: FormInstanceQuestionMapper
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Put, FormInstanceQuestionRep.Complete>(
@@ -29,14 +27,16 @@ internal class PutFormInstanceQuestion @Inject constructor(
   endpointTemplate = FormInstanceQuestionApi.Put::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Put(
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
     formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
     questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
     rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
-    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
+    Authorization.HasAccessToFeature(command.featureGuid).authorize()
     val formInstanceQuestion = formInstanceQuestionService.upsert(
+      featureGuid = command.featureGuid,
       model = formInstanceQuestionMapper.model(
         formInstanceGuid = command.formInstanceGuid,
         questionGuid = command.questionGuid,

@@ -8,12 +8,11 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
-import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
-import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
+import java.util.*
 
 /**
  * Creates a new form instance.
@@ -21,7 +20,6 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 internal class PostFormInstance @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val formTemplateService: FormTemplateService,
   private val formInstanceService: FormInstanceService,
   private val formInstanceQuestionService: FormInstanceQuestionService,
   private val formInstanceMapper: FormInstanceMapper
@@ -31,15 +29,16 @@ internal class PostFormInstance @Inject constructor(
   endpointTemplate = FormInstanceApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
     rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
     val rep = command.rep.required()
-    HasAccessToFormTemplate(formTemplateService, rep.formTemplateGuid).authorize()
+    Authorization.HasAccessToFeature(command.featureGuid).authorize()
     Authorization.User(rep.creatorAccountGuid).authorize()
-    val formInstance = formInstanceService.create(formInstanceMapper.model(rep))
-    val questions = formInstanceQuestionService.getByFormInstanceGuid(formInstance.guid)
+    val formInstance = formInstanceService.create(formInstanceMapper.model(command.featureGuid, rep))
+    val questions = formInstanceQuestionService.getByFormInstanceGuid(command.featureGuid, formInstance.guid)
     return formInstanceMapper.completeRep(formInstance, questions)
   }
 }

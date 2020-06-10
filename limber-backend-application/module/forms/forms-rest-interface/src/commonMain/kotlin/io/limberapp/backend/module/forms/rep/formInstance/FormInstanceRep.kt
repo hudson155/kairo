@@ -13,8 +13,6 @@ object FormInstanceRep {
   @Serializable
   data class Creation(
     @Serializable(with = UuidSerializer::class)
-    val featureGuid: UUID,
-    @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
     @Serializable(with = UuidSerializer::class)
     val creatorAccountGuid: UUID

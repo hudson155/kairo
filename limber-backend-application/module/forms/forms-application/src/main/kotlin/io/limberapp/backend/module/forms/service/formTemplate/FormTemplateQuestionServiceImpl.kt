@@ -2,12 +2,14 @@ package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
+import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*
@@ -15,9 +17,11 @@ import java.util.*
 internal class FormTemplateQuestionServiceImpl @Inject constructor(
   private val clock: Clock,
   private val uuidGenerator: UuidGenerator,
+  private val formTemplateStore: FormTemplateStore,
   private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService {
-  override fun createDefaults(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
+  override fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
+    checkFeatureGuid(featureGuid, formTemplateGuid)
     require(formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid).isEmpty())
     val questions = listOf(
       FormTemplateTextQuestionModel(
@@ -62,24 +66,35 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     return questions
   }
 
-  override fun create(model: FormTemplateQuestionModel, rank: Int?) =
-    formTemplateQuestionStore.create(model, rank)
+  override fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int?): FormTemplateQuestionModel {
+    checkFeatureGuid(featureGuid, model.formTemplateGuid)
+    return formTemplateQuestionStore.create(model, rank)
+  }
 
-  override fun getByFormTemplateGuid(formTemplateGuid: UUID) =
-    formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
+  override fun getByFormTemplateGuid(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
+    checkFeatureGuid(featureGuid, formTemplateGuid)
+    return formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
+  }
 
   override fun update(
+    featureGuid: UUID,
     formTemplateGuid: UUID,
     questionGuid: UUID,
     update: FormTemplateQuestionModel.Update
   ): FormTemplateQuestionModel {
+    checkFeatureGuid(featureGuid, formTemplateGuid)
     checkFormTemplateGuid(formTemplateGuid, questionGuid)
     return formTemplateQuestionStore.update(questionGuid, update)
   }
 
-  override fun delete(formTemplateGuid: UUID, questionGuid: UUID) {
+  override fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID) {
+    checkFeatureGuid(featureGuid, formTemplateGuid)
     checkFormTemplateGuid(formTemplateGuid, questionGuid)
     formTemplateQuestionStore.delete(questionGuid)
+  }
+
+  private fun checkFeatureGuid(featureGuid: UUID, formTemplateGuid: UUID) {
+    if (formTemplateStore.get(formTemplateGuid)?.featureGuid != featureGuid) throw FormTemplateNotFound()
   }
 
   private fun checkFormTemplateGuid(formTemplateGuid: UUID, questionGuid: UUID) {

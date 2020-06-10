@@ -5,9 +5,9 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
-import io.limberapp.backend.module.forms.authorization.HasAccessToFormTemplate
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.*
 
@@ -24,11 +24,12 @@ internal class DeleteFormTemplate @Inject constructor(
   endpointTemplate = FormTemplateApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Delete(
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
     formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid")
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.Delete) {
-    HasAccessToFormTemplate(formTemplateService, command.formTemplateGuid).authorize()
-    formTemplateService.delete(command.formTemplateGuid)
+    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    formTemplateService.delete(command.featureGuid, command.formTemplateGuid)
   }
 }

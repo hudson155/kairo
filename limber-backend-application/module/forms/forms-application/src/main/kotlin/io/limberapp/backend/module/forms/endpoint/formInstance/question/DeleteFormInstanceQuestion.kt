@@ -5,11 +5,10 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
-import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
-import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
 /**
@@ -18,7 +17,6 @@ import java.util.*
 internal class DeleteFormInstanceQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val formInstanceService: FormInstanceService,
   private val formInstanceQuestionService: FormInstanceQuestionService
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Delete, Unit>(
   application = application,
@@ -26,12 +24,13 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
   endpointTemplate = FormInstanceQuestionApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Delete(
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
     formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
     questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
   )
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Delete) {
-    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-    formInstanceQuestionService.delete(command.formInstanceGuid, command.questionGuid)
+    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    formInstanceQuestionService.delete(command.featureGuid, command.formInstanceGuid, command.questionGuid)
   }
 }

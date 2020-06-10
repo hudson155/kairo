@@ -14,12 +14,12 @@ internal class PostFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.test(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid))) {
+    piperTest.test(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation())) {
       val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
       assertEquals(formTemplateRep, actual)
     }
 
-    piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
       assertEquals(formTemplateRep, actual)
     }

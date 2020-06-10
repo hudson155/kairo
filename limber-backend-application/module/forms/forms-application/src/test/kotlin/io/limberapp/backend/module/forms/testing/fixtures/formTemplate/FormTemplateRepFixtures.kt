@@ -7,13 +7,12 @@ import java.util.*
 
 internal object FormTemplateRepFixtures {
   data class Fixture(
-    val creation: (featureGuid: UUID) -> FormTemplateRep.Creation,
+    val creation: () -> FormTemplateRep.Creation,
     val complete: ResourceTest.(featureGuid: UUID, idSeed: Int) -> FormTemplateRep.Complete
   )
 
-  val exampleFormFixture = Fixture({ featureGuid ->
+  val exampleFormFixture = Fixture({
     FormTemplateRep.Creation(
-      featureGuid = featureGuid,
       title = "Example form"
     )
   }, { featureGuid, idSeed ->
@@ -29,9 +28,8 @@ internal object FormTemplateRepFixtures {
     )
   })
 
-  val vehicleInspectionFixture = Fixture({ featureGuid ->
+  val vehicleInspectionFixture = Fixture({
     FormTemplateRep.Creation(
-      featureGuid = featureGuid,
       title = "Vehicle Inspection"
     )
   }, { featureGuid, idSeed ->

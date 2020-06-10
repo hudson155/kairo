@@ -16,10 +16,12 @@ import kotlin.test.assertEquals
 internal class PostFormTemplateQuestionTest : ResourceTest() {
   @Test
   fun formTemplateDoesNotExist() {
+    val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateGuid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ),
@@ -32,10 +34,11 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = -1,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
@@ -49,10 +52,11 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = FormTemplateQuestionRepFixtures.defaults.size + 1,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
@@ -66,7 +70,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
     formTemplateRep = formTemplateRep.copy(
@@ -74,6 +78,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     )
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
@@ -83,7 +88,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
       assertEquals(formTemplateQuestionRep, actual)
     }
 
-    piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
       assertEquals(formTemplateRep, actual)
     }
@@ -94,7 +99,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
     formTemplateRep = formTemplateRep.copy(
@@ -102,6 +107,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     )
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       )
@@ -110,7 +116,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
       assertEquals(formTemplateQuestionRep, actual)
     }
 
-    piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
       assertEquals(formTemplateRep, actual)
     }

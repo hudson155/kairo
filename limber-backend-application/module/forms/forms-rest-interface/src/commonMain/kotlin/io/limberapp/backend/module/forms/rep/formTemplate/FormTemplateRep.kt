@@ -15,8 +15,6 @@ import kotlinx.serialization.Serializable
 object FormTemplateRep {
   @Serializable
   data class Creation(
-    @Serializable(with = UuidSerializer::class)
-    val featureGuid: UUID,
     val title: String,
     val description: String? = null
   ) : CreationRep {

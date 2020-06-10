@@ -12,12 +12,40 @@ import java.util.*
 internal class DeleteFormInstanceTest : ResourceTest() {
   @Test
   fun doesNotExist() {
+    val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
     piperTest.test(
-      endpoint = FormInstanceApi.Delete(formInstanceGuid),
+      endpoint = FormInstanceApi.Delete(featureGuid, formInstanceGuid),
       expectedException = FormInstanceNotFound()
     )
+  }
+
+  @Test
+  fun existsInDifferentFeature() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val feature0Guid = UUID.randomUUID()
+    val feature1Guid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Guid, 0)
+    piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(
+      this, feature0Guid, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = feature0Guid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    piperTest.test(
+      endpoint = FormInstanceApi.Delete(feature1Guid, formInstanceRep.guid),
+      expectedException = FormInstanceNotFound()
+    )
+
+    piperTest.test(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid)) {}
   }
 
   @Test
@@ -26,21 +54,22 @@ internal class DeleteFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(
       this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
     )
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
-        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 
-    piperTest.test(FormInstanceApi.Delete(formInstanceRep.guid)) {}
+    piperTest.test(FormInstanceApi.Delete(featureGuid, formInstanceRep.guid)) {}
 
     piperTest.test(
-      endpoint = FormInstanceApi.Get(formTemplateRep.guid),
+      endpoint = FormInstanceApi.Get(featureGuid, formInstanceRep.guid),
       expectedException = FormInstanceNotFound()
     )
   }

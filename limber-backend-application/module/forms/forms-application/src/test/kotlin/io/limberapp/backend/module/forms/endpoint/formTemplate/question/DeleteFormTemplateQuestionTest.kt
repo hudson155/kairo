@@ -15,11 +15,12 @@ import kotlin.test.assertEquals
 internal class DeleteFormTemplateQuestionTest : ResourceTest() {
   @Test
   fun formTemplateDoesNotExist() {
+    val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
     piperTest.test(
-      endpoint = FormTemplateQuestionApi.Delete(formTemplateGuid, questionGuid),
+      endpoint = FormTemplateQuestionApi.Delete(featureGuid, formTemplateGuid, questionGuid),
       expectedException = FormTemplateNotFound()
     )
   }
@@ -30,10 +31,10 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val questionGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(
-      endpoint = FormTemplateQuestionApi.Delete(formTemplateRep.guid, questionGuid),
+      endpoint = FormTemplateQuestionApi.Delete(featureGuid, formTemplateRep.guid, questionGuid),
       expectedException = FormTemplateQuestionNotFound()
     )
   }
@@ -43,7 +44,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
     formTemplateRep = formTemplateRep.copy(
@@ -51,6 +52,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     )
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
@@ -60,9 +62,9 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     formTemplateRep = formTemplateRep.copy(
       questions = formTemplateRep.questions.filter { it.guid != formTemplateQuestionRep.guid }
     )
-    piperTest.test(FormTemplateQuestionApi.Delete(formTemplateRep.guid, formTemplateQuestionRep.guid)) {}
+    piperTest.test(FormTemplateQuestionApi.Delete(featureGuid, formTemplateRep.guid, formTemplateQuestionRep.guid)) {}
 
-    piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
       assertEquals(formTemplateRep, actual)
     }

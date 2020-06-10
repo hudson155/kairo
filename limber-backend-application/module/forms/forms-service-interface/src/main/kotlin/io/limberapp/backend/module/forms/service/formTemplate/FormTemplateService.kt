@@ -6,11 +6,11 @@ import java.util.*
 interface FormTemplateService {
   fun create(model: FormTemplateModel): FormTemplateModel
 
-  fun get(formTemplateGuid: UUID): FormTemplateModel?
+  fun get(featureGuid: UUID, formTemplateGuid: UUID): FormTemplateModel?
 
   fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel>
 
-  fun update(formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel
+  fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel
 
-  fun delete(formTemplateGuid: UUID)
+  fun delete(featureGuid: UUID, formTemplateGuid: UUID)
 }

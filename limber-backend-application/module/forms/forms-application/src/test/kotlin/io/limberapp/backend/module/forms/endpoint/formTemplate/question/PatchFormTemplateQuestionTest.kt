@@ -16,12 +16,18 @@ import kotlin.test.assertEquals
 internal class PatchFormTemplateQuestionTest : ResourceTest() {
   @Test
   fun formTemplateDoesNotExist() {
+    val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
     val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
     piperTest.test(
-      endpoint = FormTemplateQuestionApi.Patch(formTemplateGuid, questionGuid, formTemplateQuestionUpdateRep),
+      endpoint = FormTemplateQuestionApi.Patch(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateGuid,
+        questionGuid = questionGuid,
+        rep = formTemplateQuestionUpdateRep
+      ),
       expectedException = FormTemplateNotFound()
     )
   }
@@ -32,11 +38,16 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     val questionGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
     piperTest.test(
-      endpoint = FormTemplateQuestionApi.Patch(formTemplateRep.guid, questionGuid, formTemplateQuestionUpdateRep),
+      endpoint = FormTemplateQuestionApi.Patch(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateRep.guid,
+        questionGuid = questionGuid,
+        rep = formTemplateQuestionUpdateRep
+      ),
       expectedException = FormTemplateQuestionNotFound()
     )
   }
@@ -46,7 +57,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
       as FormTemplateTextQuestionRep.Complete
@@ -55,6 +66,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     )
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
@@ -70,13 +82,14 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     )
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Patch(
+        featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = formTemplateQuestionUpdateRep
       )
     ) {}
 
-    piperTest.test(FormTemplateApi.Get(formTemplateRep.guid)) {
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
       assertEquals(formTemplateRep, actual)
     }

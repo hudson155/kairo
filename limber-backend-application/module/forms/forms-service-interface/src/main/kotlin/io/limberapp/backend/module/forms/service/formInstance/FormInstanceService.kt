@@ -6,9 +6,9 @@ import java.util.*
 interface FormInstanceService {
   fun create(model: FormInstanceModel): FormInstanceModel
 
-  fun get(formInstanceGuid: UUID): FormInstanceModel?
+  fun get(featureGuid: UUID, formInstanceGuid: UUID): FormInstanceModel?
 
   fun getByFeatureGuid(featureGuid: UUID): Set<FormInstanceModel>
 
-  fun delete(formInstanceGuid: UUID)
+  fun delete(featureGuid: UUID, formInstanceGuid: UUID)
 }

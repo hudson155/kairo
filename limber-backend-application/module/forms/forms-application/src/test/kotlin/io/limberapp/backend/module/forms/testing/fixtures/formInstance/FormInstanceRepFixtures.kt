@@ -7,7 +7,7 @@ import java.util.*
 
 internal object FormInstanceRepFixtures {
   data class Fixture(
-    val creation: (featureGuid: UUID, formTemplateGuid: UUID, creatorAccountGuid: UUID) -> FormInstanceRep.Creation,
+    val creation: (formTemplateGuid: UUID, creatorAccountGuid: UUID) -> FormInstanceRep.Creation,
     val complete: ResourceTest.(
       featureGuid: UUID,
       formTemplateGuid: UUID,
@@ -17,9 +17,8 @@ internal object FormInstanceRepFixtures {
     ) -> FormInstanceRep.Complete
   )
 
-  val fixture = Fixture({ featureGuid, formTemplateGuid, creatorAccountGuid ->
+  val fixture = Fixture({ formTemplateGuid, creatorAccountGuid ->
     FormInstanceRep.Creation(
-      featureGuid = featureGuid,
       formTemplateGuid = formTemplateGuid,
       creatorAccountGuid = creatorAccountGuid
     )

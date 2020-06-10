@@ -29,14 +29,15 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
-    piperTest.setup(FormTemplateApi.Post(FormTemplateRepFixtures.exampleFormFixture.creation(featureGuid)))
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
       this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
     )
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
-        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 
@@ -45,7 +46,8 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
     )
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
-        rep = FormInstanceRepFixtures.fixture.creation(featureGuid, formTemplateRep.guid, creatorAccountGuid)
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 

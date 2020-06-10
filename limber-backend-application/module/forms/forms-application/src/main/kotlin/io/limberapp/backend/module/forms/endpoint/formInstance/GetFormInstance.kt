@@ -5,9 +5,9 @@ import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
-import io.limberapp.backend.module.forms.authorization.HasAccessToFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -30,13 +30,15 @@ internal class GetFormInstance @Inject constructor(
   endpointTemplate = FormInstanceApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Get(
+    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
     formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
-    HasAccessToFormInstance(formInstanceService, command.formInstanceGuid).authorize()
-    val formInstance = formInstanceService.get(command.formInstanceGuid) ?: throw FormInstanceNotFound()
-    val questions = formInstanceQuestionService.getByFormInstanceGuid(command.formInstanceGuid)
+    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
+      ?: throw FormInstanceNotFound()
+    val questions = formInstanceQuestionService.getByFormInstanceGuid(command.featureGuid, command.formInstanceGuid)
     return formInstanceMapper.completeRep(formInstance, questions)
   }
 }
