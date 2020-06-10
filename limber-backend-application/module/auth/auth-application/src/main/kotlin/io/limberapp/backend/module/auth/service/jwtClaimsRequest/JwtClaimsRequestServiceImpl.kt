@@ -3,10 +3,12 @@ package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 import com.google.inject.Inject
 import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.UuidGenerator
-import io.limberapp.backend.authorization.permissions.FeaturePermissions
-import io.limberapp.backend.authorization.permissions.OrgPermission
-import io.limberapp.backend.authorization.permissions.OrgPermissions
-import io.limberapp.backend.authorization.permissions.OrgPermissions.Companion.union
+import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.limberapp.backend.authorization.principal.JwtFeature
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtRole
@@ -15,6 +17,7 @@ import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -68,8 +71,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     val org = checkNotNull(orgService.get(user.orgGuid))
     val features = featureService.getByOrgGuid(user.orgGuid)
     val permissions = getPermissions(org, user.guid)
-
-    val jwtFeatures = features.associate { Pair(it.guid, JwtFeature(FeaturePermissions.none())) }
+    val jwtFeatures = features.associate { Pair(it.guid, JwtFeature(getPermissions(it))) }
     return convertJwtToModel(
       org = JwtOrg(org.guid, org.name, permissions, jwtFeatures),
       roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
@@ -81,6 +83,11 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     val orgPermissions = orgRoleService.getByAccountGuid(org.guid, userGuid).map { it.permissions }.toMutableSet()
     if (userGuid == org.ownerAccountGuid) orgPermissions.add(ORG_OWNER_ORG_ROLE)
     return orgPermissions.union()
+  }
+
+  private fun getPermissions(feature: FeatureModel): FeaturePermissions = when (feature.type) {
+    FeatureModel.Type.FORMS -> FormsFeaturePermissions.none()
+    FeatureModel.Type.HOME -> HomeFeaturePermissions.none()
   }
 
   private fun convertJwtToModel(org: JwtOrg, roles: Set<JwtRole>, user: JwtUser) = JwtClaimsModel(

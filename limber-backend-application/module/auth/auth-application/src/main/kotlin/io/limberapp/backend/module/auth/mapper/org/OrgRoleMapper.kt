@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.mapper.org
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
-import io.limberapp.backend.authorization.permissions.OrgPermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import java.time.Clock

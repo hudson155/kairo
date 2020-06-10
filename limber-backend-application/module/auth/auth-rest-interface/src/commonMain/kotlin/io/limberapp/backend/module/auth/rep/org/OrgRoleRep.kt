@@ -11,7 +11,7 @@ import com.piperframework.util.slugify
 import com.piperframework.validation.RepValidation
 import com.piperframework.validation.ifPresent
 import com.piperframework.validator.Validator
-import io.limberapp.backend.authorization.permissions.OrgPermissions
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import kotlinx.serialization.Serializable
 
 object OrgRoleRep {

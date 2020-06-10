@@ -1,7 +1,7 @@
 package io.limberapp.backend.authorization
 
 import com.piperframework.authorization.PiperAuthorization
-import io.limberapp.backend.authorization.permissions.OrgPermission
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import org.slf4j.LoggerFactory

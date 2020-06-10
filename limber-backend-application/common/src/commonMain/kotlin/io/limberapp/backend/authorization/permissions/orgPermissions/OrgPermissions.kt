@@ -1,7 +1,8 @@
-package io.limberapp.backend.authorization.permissions
+package io.limberapp.backend.authorization.permissions.orgPermissions
 
 import com.piperframework.util.darb.BitStringEncoder
 import com.piperframework.util.darb.DarbEncoder
+import io.limberapp.backend.authorization.permissions.Permissions
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
@@ -26,6 +27,8 @@ private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
  */
 @Serializable(with = OrgPermissionsSerializer::class)
 data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permissions<OrgPermission>() {
+  override val prefix: Char? = null // OrgPermissions is not prefixed.
+
   override fun allPermissions() = ALL_ORG_PERMISSIONS
 
   fun withPermission(permission: OrgPermission, value: Boolean): OrgPermissions {
@@ -41,8 +44,11 @@ data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permis
 
     fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
-    private fun fromBooleanList(booleanList: List<Boolean>) =
-      OrgPermissions(ALL_ORG_PERMISSIONS.filterIndexed { i, _ -> booleanList.getOrNull(i) == true }.toSet())
+    private fun fromBooleanList(booleanList: List<Boolean>) = OrgPermissions(
+      permissions = ALL_ORG_PERMISSIONS
+        .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
+        .toSet()
+    )
 
     fun Collection<OrgPermissions>.union() = OrgPermissions(
       permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
@@ -52,6 +58,8 @@ data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permis
 
 object OrgPermissionsSerializer : KSerializer<OrgPermissions> {
   override val descriptor = PrimitiveDescriptor("OrgPermissions", PrimitiveKind.STRING)
-  override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.asDarb())
+
+  override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.toString())
+
   override fun deserialize(decoder: Decoder) = OrgPermissions.fromDarb(decoder.decodeString())
 }

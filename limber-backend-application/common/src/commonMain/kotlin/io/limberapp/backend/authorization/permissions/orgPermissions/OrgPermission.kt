@@ -1,7 +1,13 @@
-package io.limberapp.backend.authorization.permissions
+package io.limberapp.backend.authorization.permissions.orgPermissions
+
+import io.limberapp.backend.authorization.permissions.Permission
 
 @Suppress("MagicNumber")
-enum class OrgPermission(val bit: Int, val title: String, val description: String) {
+enum class OrgPermission(
+  override val bit: Int,
+  override val title: String,
+  override val description: String
+) : Permission {
   MANAGE_ORG_ROLES(
     bit = 0,
     title = "Manage organization roles",
