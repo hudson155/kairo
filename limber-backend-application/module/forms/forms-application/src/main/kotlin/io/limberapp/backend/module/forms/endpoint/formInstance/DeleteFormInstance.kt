@@ -29,7 +29,7 @@ internal class DeleteFormInstance @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Delete) {
-    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    Authorization.FeatureMember(command.featureGuid).authorize()
     formInstanceService.delete(command.featureGuid, command.formInstanceGuid)
   }
 }
