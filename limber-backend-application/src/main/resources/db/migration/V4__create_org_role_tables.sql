@@ -6,7 +6,7 @@ CREATE TABLE auth.org_role
     archived_date TIMESTAMP DEFAULT NULL,
     org_guid      UUID        NOT NULL,
     name          VARCHAR     NOT NULL,
-    permissions   BIT(4)      NOT NULL
+    permissions   VARCHAR     NOT NULL
 );
 
 CREATE UNIQUE INDEX ON auth.org_role (org_guid, LOWER(name)) WHERE archived_date IS NULL;

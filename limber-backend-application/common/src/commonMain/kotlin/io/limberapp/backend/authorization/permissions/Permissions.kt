@@ -26,11 +26,7 @@ abstract class Permissions<P : Permission> {
 
   fun hasPermission(permission: P) = permission in permissions
 
-  private fun asDarbWithPrefix() = listOfNotNull(prefix, asDarb()).joinToString(".")
+  fun asDarb() = listOfNotNull(prefix, DarbEncoder.encode(asBooleanList())).joinToString(".")
 
-  private fun asDarb() = DarbEncoder.encode(asBooleanList())
-
-  fun asBitString() = BitStringEncoder.encode(asBooleanList())
-
-  final override fun toString() = asDarbWithPrefix()
+  fun asBitString() = listOfNotNull(prefix, BitStringEncoder.encode(asBooleanList())).joinToString("")
 }
