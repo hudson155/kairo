@@ -1,10 +1,11 @@
-package io.limberapp.backend.module.orgs.service.org
+package io.limberapp.backend.module.orgs.service.feature
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
-import io.limberapp.backend.module.orgs.exception.org.FeatureNotFound
+import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.store.org.FeatureStore
+import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.store.feature.FeatureStore
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*

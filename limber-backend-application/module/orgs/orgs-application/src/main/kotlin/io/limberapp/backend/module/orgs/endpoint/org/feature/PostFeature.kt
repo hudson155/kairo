@@ -9,7 +9,7 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
-import io.limberapp.backend.module.orgs.mapper.org.FeatureMapper
+import io.limberapp.backend.module.orgs.mapper.feature.FeatureMapper
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.*
