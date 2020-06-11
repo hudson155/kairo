@@ -35,9 +35,9 @@ internal class PatchOrg @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {
+    val rep = command.rep.required()
     Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_METADATA).authorize()
-    val update = orgMapper.update(command.rep.required())
-    val org = orgService.update(command.orgGuid, update)
+    val org = orgService.update(command.orgGuid, orgMapper.update(rep))
     val features = featureService.getByOrgGuid(org.guid)
     return orgMapper.completeRep(org, features)
   }
