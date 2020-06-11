@@ -79,7 +79,22 @@ abstract class Authorization : PiperAuthorization<Jwt> {
     }
   }
 
-  class FeatureMemberWithPermission(
+  class FeatureMemberWithOrgPermission(
+    private val featureGuid: UUID,
+    private val orgPermission: OrgPermission
+  ) : Authorization() {
+    override fun authorizeInternal(principal: Jwt?): Boolean {
+      principal ?: return false
+      val org = principal.org ?: return false
+      org.features[featureGuid] ?: return false
+      // After making sure the feature exists on the org, we blindly check the org permission without checking the org
+      // guid. This is ok because features are owned by orgs and users are members of a single org, so if the user has
+      // access to the feature, the org GUID must be correct.
+      return org.permissions.hasPermission(orgPermission)
+    }
+  }
+
+  class FeatureMemberWithFeaturePermission(
     private val featureGuid: UUID,
     private val featurePermission: FeaturePermission
   ) : Authorization() {
