@@ -18,7 +18,6 @@ internal class OrgRoleMembershipMapper @Inject constructor(
 
   fun completeRep(model: OrgRoleMembershipModel) = OrgRoleMembershipRep.Complete(
     createdDate = model.createdDate,
-    orgRoleGuid = model.orgRoleGuid,
     accountGuid = model.accountGuid
   )
 }

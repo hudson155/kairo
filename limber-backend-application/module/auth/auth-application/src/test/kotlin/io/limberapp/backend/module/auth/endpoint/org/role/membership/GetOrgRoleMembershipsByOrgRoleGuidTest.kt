@@ -49,7 +49,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest : ResourceTest() {
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    val orgRoleMembershipRep0 = OrgRoleMembershipRepFixtures.fixture.complete(this, orgRoleRep.guid, account0Guid)
+    val orgRoleMembershipRep0 = OrgRoleMembershipRepFixtures.fixture.complete(this, account0Guid)
     piperTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
@@ -58,7 +58,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest : ResourceTest() {
       )
     )
 
-    val orgRoleMembershipRep1 = OrgRoleMembershipRepFixtures.fixture.complete(this, orgRoleRep.guid, account1Guid)
+    val orgRoleMembershipRep1 = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
     piperTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,

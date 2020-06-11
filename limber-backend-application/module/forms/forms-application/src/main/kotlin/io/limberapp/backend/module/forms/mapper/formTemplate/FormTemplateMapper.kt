@@ -25,7 +25,6 @@ internal class FormTemplateMapper @Inject constructor(
   fun summaryRep(model: FormTemplateModel) = FormTemplateRep.Summary(
     guid = model.guid,
     createdDate = model.createdDate,
-    featureGuid = model.featureGuid,
     title = model.title,
     description = model.description
   )
@@ -33,7 +32,6 @@ internal class FormTemplateMapper @Inject constructor(
   fun completeRep(model: FormTemplateModel, questions: List<FormTemplateQuestionModel>) = FormTemplateRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
-    featureGuid = model.featureGuid,
     title = model.title,
     description = model.description,
     questions = questions.map { formTemplateQuestionMapper.completeRep(it) }

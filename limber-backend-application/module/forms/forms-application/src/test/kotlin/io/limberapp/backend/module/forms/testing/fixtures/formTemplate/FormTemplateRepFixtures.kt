@@ -8,18 +8,17 @@ import java.util.*
 internal object FormTemplateRepFixtures {
   data class Fixture(
     val creation: () -> FormTemplateRep.Creation,
-    val complete: ResourceTest.(featureGuid: UUID, idSeed: Int) -> FormTemplateRep.Complete
+    val complete: ResourceTest.(idSeed: Int) -> FormTemplateRep.Complete
   )
 
   val exampleFormFixture = Fixture({
     FormTemplateRep.Creation(
       title = "Example form"
     )
-  }, { featureGuid, idSeed ->
+  }, { idSeed ->
     FormTemplateRep.Complete(
       guid = deterministicUuidGenerator[idSeed],
       createdDate = LocalDateTime.now(fixedClock),
-      featureGuid = featureGuid,
       title = "Example form",
       description = null,
       questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
@@ -32,11 +31,10 @@ internal object FormTemplateRepFixtures {
     FormTemplateRep.Creation(
       title = "Vehicle Inspection"
     )
-  }, { featureGuid, idSeed ->
+  }, { idSeed ->
     FormTemplateRep.Complete(
       guid = deterministicUuidGenerator[idSeed],
       createdDate = LocalDateTime.now(fixedClock),
-      featureGuid = featureGuid,
       title = "Vehicle Inspection",
       description = null,
       questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
@@ -49,7 +47,6 @@ internal object FormTemplateRepFixtures {
 internal fun FormTemplateRep.Complete.summary() = FormTemplateRep.Summary(
   guid = guid,
   createdDate = createdDate,
-  featureGuid = featureGuid,
   title = title,
   description = description
 )

@@ -26,7 +26,7 @@ internal class GetFormTemplateTest : ResourceTest() {
     val feature0Guid = UUID.randomUUID()
     val feature1Guid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Guid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(
@@ -39,7 +39,7 @@ internal class GetFormTemplateTest : ResourceTest() {
   fun happyPath() {
     val featureGuid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {

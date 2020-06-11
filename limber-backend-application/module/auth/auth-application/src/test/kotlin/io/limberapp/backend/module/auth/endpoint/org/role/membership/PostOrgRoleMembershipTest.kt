@@ -41,7 +41,7 @@ internal class PostOrgRoleMembershipTest : ResourceTest() {
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    val orgRoleMembershipRep = OrgRoleMembershipRepFixtures.fixture.complete(this, orgRoleRep.guid, accountGuid)
+    val orgRoleMembershipRep = OrgRoleMembershipRepFixtures.fixture.complete(this, accountGuid)
     piperTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
@@ -74,7 +74,7 @@ internal class PostOrgRoleMembershipTest : ResourceTest() {
     var orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    val orgRoleMembership0Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, orgRoleRep.guid, account0Guid)
+    val orgRoleMembership0Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, account0Guid)
     orgRoleRep = orgRoleRep.copy(memberCount = orgRoleRep.memberCount + 1)
     piperTest.test(
       endpoint = OrgRoleMembershipApi.Post(
@@ -86,7 +86,7 @@ internal class PostOrgRoleMembershipTest : ResourceTest() {
       val actual = json.parse<OrgRoleMembershipRep.Complete>(response.content!!)
       assertEquals(orgRoleMembership0Rep, actual)
     }
-    val orgRoleMembership1Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, orgRoleRep.guid, account1Guid)
+    val orgRoleMembership1Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
     orgRoleRep = orgRoleRep.copy(memberCount = orgRoleRep.memberCount + 1)
     piperTest.test(
       endpoint = OrgRoleMembershipApi.Post(

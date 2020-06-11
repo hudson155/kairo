@@ -27,8 +27,6 @@ object FormInstanceRep {
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
-    val featureGuid: UUID,
-    @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
     val number: Long,
     @Serializable(with = LocalDateTimeSerializer::class)
@@ -43,8 +41,6 @@ object FormInstanceRep {
     val guid: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
-    @Serializable(with = UuidSerializer::class)
-    val featureGuid: UUID,
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
     val number: Long,

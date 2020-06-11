@@ -27,7 +27,6 @@ internal class FormInstanceMapper @Inject constructor(
   fun summaryRep(model: FormInstanceModel) = FormInstanceRep.Summary(
     guid = model.guid,
     createdDate = model.createdDate,
-    featureGuid = model.featureGuid,
     formTemplateGuid = model.formTemplateGuid,
     number = model.number,
     submittedDate = model.submittedDate,
@@ -37,7 +36,6 @@ internal class FormInstanceMapper @Inject constructor(
   fun completeRep(model: FormInstanceModel, questions: List<FormInstanceQuestionModel>) = FormInstanceRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
-    featureGuid = model.featureGuid,
     formTemplateGuid = model.formTemplateGuid,
     number = model.number,
     submittedDate = model.submittedDate,
