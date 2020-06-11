@@ -1,5 +1,6 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleCreationPage
 
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
@@ -56,7 +57,7 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
   val onCreate = {
     setIsSaving(true)
     async {
-      self.createOrgRole(OrgRoleRep.Creation(newRoleName))
+      self.createOrgRole(OrgRoleRep.Creation(newRoleName, OrgPermissions.none()))
       goBack()
       setIsSaving(false)
     }
