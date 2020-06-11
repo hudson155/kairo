@@ -35,7 +35,7 @@ internal class GetFormInstance @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
-    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    Authorization.FeatureMember(command.featureGuid).authorize()
     val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
       ?: throw FormInstanceNotFound()
     val questions = formInstanceQuestionService.getByFormInstanceGuid(command.featureGuid, command.formInstanceGuid)

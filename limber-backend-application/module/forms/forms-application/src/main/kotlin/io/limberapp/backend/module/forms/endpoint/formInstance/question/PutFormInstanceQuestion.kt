@@ -34,7 +34,7 @@ internal class PutFormInstanceQuestion @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
-    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    Authorization.FeatureMember(command.featureGuid).authorize()
     val formInstanceQuestion = formInstanceQuestionService.upsert(
       featureGuid = command.featureGuid,
       model = formInstanceQuestionMapper.model(

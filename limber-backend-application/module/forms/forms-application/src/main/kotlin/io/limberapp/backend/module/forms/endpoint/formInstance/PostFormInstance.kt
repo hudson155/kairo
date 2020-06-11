@@ -35,7 +35,7 @@ internal class PostFormInstance @Inject constructor(
 
   override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
     val rep = command.rep.required()
-    Authorization.HasAccessToFeature(command.featureGuid).authorize()
+    Authorization.FeatureMember(command.featureGuid).authorize()
     Authorization.User(rep.creatorAccountGuid).authorize()
     val formInstance = formInstanceService.create(formInstanceMapper.model(command.featureGuid, rep))
     val questions = formInstanceQuestionService.getByFormInstanceGuid(command.featureGuid, formInstance.guid)

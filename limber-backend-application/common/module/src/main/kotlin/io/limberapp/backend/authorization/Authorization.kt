@@ -1,6 +1,7 @@
 package io.limberapp.backend.authorization
 
 import com.piperframework.authorization.PiperAuthorization
+import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermission
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
@@ -45,14 +46,16 @@ abstract class Authorization : PiperAuthorization<Jwt> {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
       userGuid ?: return false
-      return principal.user?.guid == userGuid
+      val user = principal.user ?: return false
+      return user.guid == userGuid
     }
   }
 
   class OrgMember(private val orgGuid: UUID) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
-      return principal.org?.guid == orgGuid
+      val org = principal.org ?: return false
+      return org.guid == orgGuid
     }
   }
 
@@ -62,16 +65,29 @@ abstract class Authorization : PiperAuthorization<Jwt> {
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
-      if (principal.org?.guid != orgGuid) return false
-      return principal.org.permissions.hasPermission(orgPermission)
+      val org = principal.org ?: return false
+      if (org.guid != orgGuid) return false
+      return org.permissions.hasPermission(orgPermission)
     }
   }
 
-  class HasAccessToFeature(private val featureGuid: UUID) : Authorization() {
+  class FeatureMember(private val featureGuid: UUID) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
-      principal.org ?: return false
-      return featureGuid in principal.org.features
+      val org = principal.org ?: return false
+      return featureGuid in org.features
+    }
+  }
+
+  class FeatureMemberWithPermission(
+    private val featureGuid: UUID,
+    private val featurePermission: FeaturePermission
+  ) : Authorization() {
+    override fun authorizeInternal(principal: Jwt?): Boolean {
+      principal ?: return false
+      val org = principal.org ?: return false
+      val feature = org.features[featureGuid] ?: return false
+      return feature.permissions.hasPermission(featurePermission)
     }
   }
 }
