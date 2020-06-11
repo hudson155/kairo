@@ -33,8 +33,9 @@ internal class PostOrgRole @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: OrgRoleApi.Post): OrgRoleRep.Complete {
+    val rep = command.rep.required()
     Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
-    val orgRole = orgRoleService.create(orgRoleMapper.model(command.orgGuid, command.rep.required()))
+    val orgRole = orgRoleService.create(orgRoleMapper.model(command.orgGuid, rep))
     return orgRoleMapper.completeRep(orgRole)
   }
 }

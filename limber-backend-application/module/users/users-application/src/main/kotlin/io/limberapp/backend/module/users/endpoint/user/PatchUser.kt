@@ -32,9 +32,9 @@ internal class PatchUser @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: UserApi.Patch): UserRep.Complete {
+    val rep = command.rep.required()
     Authorization.User(command.userGuid).authorize()
-    val update = userMapper.update(command.rep.required())
-    val user = userService.update(command.userGuid, update)
+    val user = userService.update(command.userGuid, userMapper.update(rep))
     return userMapper.completeRep(user)
   }
 }

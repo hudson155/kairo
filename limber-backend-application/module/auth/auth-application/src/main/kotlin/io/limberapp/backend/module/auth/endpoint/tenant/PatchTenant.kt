@@ -34,9 +34,9 @@ internal class PatchTenant @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: TenantApi.Patch): TenantRep.Complete {
+    val rep = command.rep.required()
     Authorization.Role(JwtRole.SUPERUSER).authorize()
-    val update = tenantMapper.update(command.rep.required())
-    val tenant = tenantService.update(command.orgGuid, update)
+    val tenant = tenantService.update(command.orgGuid, tenantMapper.update(rep))
     val domains = tenantDomainService.getByOrgGuid(tenant.orgGuid)
     return tenantMapper.completeRep(tenant, domains)
   }

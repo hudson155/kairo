@@ -31,8 +31,9 @@ internal class PostUser @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: UserApi.Post): UserRep.Complete {
+    val rep = command.rep.required()
     Authorization.Role(JwtRole.SUPERUSER).authorize()
-    val user = userService.create(userMapper.model(command.rep.required()))
+    val user = userService.create(userMapper.model(rep))
     return userMapper.completeRep(user)
   }
 }
