@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.mapper.org
+package io.limberapp.backend.module.orgs.mapper.feature
 
 import com.google.inject.Inject
 import com.piperframework.util.uuid.UuidGenerator
