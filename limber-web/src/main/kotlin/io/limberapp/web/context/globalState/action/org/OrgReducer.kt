@@ -1,21 +1,14 @@
 package io.limberapp.web.context.globalState.action.org
 
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.GlobalStateContext
 
 internal fun orgReducer(
-  state: GlobalStateContext,
+  state: OrgState,
   action: OrgAction
-): GlobalStateContext = with(state.org) {
+): OrgState = with(state) {
   return@with when (action) {
-    is OrgAction.BeginLoading -> {
-      state.copy(org = LoadableState.loading())
-    }
-    is OrgAction.SetValue -> {
-      state.copy(org = LoadableState.Loaded(action.org))
-    }
-    is OrgAction.SetError -> {
-      state.copy(org = LoadableState.Error(action.errorMessage))
-    }
+    is OrgAction.BeginLoading -> LoadableState.loading()
+    is OrgAction.SetValue -> LoadableState.Loaded(action.org)
+    is OrgAction.SetError -> LoadableState.Error(action.errorMessage)
   }
 }

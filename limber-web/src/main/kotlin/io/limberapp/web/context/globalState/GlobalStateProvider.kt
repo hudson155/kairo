@@ -46,14 +46,16 @@ private val initialState = GlobalStateContext(
 private val component = functionalComponent<RProps> { props ->
   val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
     return@useReducer when (action) {
-      is FormInstancesAction -> formInstancesReducer(state, action)
-      is FormTemplatesAction -> formTemplatesReducer(state, action)
-      is OrgAction -> orgReducer(state, action)
-      is OrgRoleMembershipsAction -> orgRoleMembershipsReducer(state, action)
-      is OrgRolesAction -> orgRolesReducer(state, action)
-      is TenantAction -> tenantReducer(state, action)
-      is UserAction -> userReducer(state, action)
-      is UsersAction -> usersReducer(state, action)
+      is FormInstancesAction -> state.copy(formInstances = formInstancesReducer(state.formInstances, action))
+      is FormTemplatesAction -> state.copy(formTemplates = formTemplatesReducer(state.formTemplates, action))
+      is OrgAction -> state.copy(org = orgReducer(state.org, action))
+      is OrgRoleMembershipsAction -> state.copy(
+        orgRoleMemberships = orgRoleMembershipsReducer(state.orgRoleMemberships, action)
+      )
+      is OrgRolesAction -> state.copy(orgRoles = orgRolesReducer(state.orgRoles, action))
+      is TenantAction -> state.copy(tenant = tenantReducer(state.tenant, action))
+      is UserAction -> state.copy(user = userReducer(state.user, action))
+      is UsersAction -> state.copy(users = usersReducer(state.users, action))
       else -> error("Unhandled action: $action.")
     }
   }, initialState)
