@@ -69,7 +69,7 @@ internal class DeleteMembershipTest : ResourceTest() {
       )
     )
 
-    val orgRoleMembershipRep1 = OrgRoleMembershipRepFixtures.fixture.complete(this, orgRoleRep.guid, account1Guid)
+    val orgRoleMembershipRep1 = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
     piperTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,

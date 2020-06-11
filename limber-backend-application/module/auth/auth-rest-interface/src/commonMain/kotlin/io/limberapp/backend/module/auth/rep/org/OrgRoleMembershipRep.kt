@@ -23,8 +23,6 @@ object OrgRoleMembershipRep {
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
-    val orgRoleGuid: UUID,
-    @Serializable(with = UuidSerializer::class)
     val accountGuid: UUID
   ) : CompleteRep
 }

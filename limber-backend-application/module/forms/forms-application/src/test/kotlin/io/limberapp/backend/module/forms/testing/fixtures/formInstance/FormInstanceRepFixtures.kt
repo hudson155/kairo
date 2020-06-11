@@ -9,7 +9,6 @@ internal object FormInstanceRepFixtures {
   data class Fixture(
     val creation: (formTemplateGuid: UUID, creatorAccountGuid: UUID) -> FormInstanceRep.Creation,
     val complete: ResourceTest.(
-      featureGuid: UUID,
       formTemplateGuid: UUID,
       number: Long,
       creatorAccountGuid: UUID,
@@ -22,11 +21,10 @@ internal object FormInstanceRepFixtures {
       formTemplateGuid = formTemplateGuid,
       creatorAccountGuid = creatorAccountGuid
     )
-  }, { featureGuid, formTemplateGuid, number, creatorAccountGuid, idSeed ->
+  }, { formTemplateGuid, number, creatorAccountGuid, idSeed ->
     FormInstanceRep.Complete(
       guid = deterministicUuidGenerator[idSeed],
       createdDate = LocalDateTime.now(fixedClock),
-      featureGuid = featureGuid,
       formTemplateGuid = formTemplateGuid,
       number = number,
       submittedDate = null,
@@ -39,7 +37,6 @@ internal object FormInstanceRepFixtures {
 internal fun FormInstanceRep.Complete.summary() = FormInstanceRep.Summary(
   guid = guid,
   createdDate = createdDate,
-  featureGuid = featureGuid,
   formTemplateGuid = formTemplateGuid,
   number = number,
   submittedDate = submittedDate,

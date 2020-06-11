@@ -28,7 +28,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
     val feature0Guid = UUID.randomUUID()
     val feature1Guid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, feature0Guid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
@@ -47,7 +47,7 @@ internal class PatchFormTemplateTest : ResourceTest() {
   fun happyPath() {
     val featureGuid = UUID.randomUUID()
 
-    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")

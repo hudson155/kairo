@@ -25,10 +25,10 @@ internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
   fun happyPathMultipleFormTemplates() {
     val featureGuid = UUID.randomUUID()
 
-    val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    val formTemplate0Rep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, featureGuid, 5)
+    val formTemplate1Rep = FormTemplateRepFixtures.vehicleInspectionFixture.complete(this, 5)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.vehicleInspectionFixture.creation()))
 
     piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {

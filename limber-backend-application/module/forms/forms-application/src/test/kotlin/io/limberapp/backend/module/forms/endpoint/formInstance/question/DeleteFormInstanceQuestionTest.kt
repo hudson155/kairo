@@ -20,7 +20,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(
@@ -35,12 +35,10 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(
-      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
-    )
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -76,12 +74,10 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(
-      this, featureGuid, formTemplateRep.guid, 1, creatorAccountGuid, 5
-    )
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,

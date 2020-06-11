@@ -30,7 +30,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(
@@ -43,7 +43,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
   fun happyPath() {
     val featureGuid = UUID.randomUUID()
 
-    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, featureGuid, 0)
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)

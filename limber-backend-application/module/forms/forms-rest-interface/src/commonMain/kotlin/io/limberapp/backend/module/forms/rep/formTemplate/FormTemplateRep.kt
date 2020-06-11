@@ -30,8 +30,6 @@ object FormTemplateRep {
     val guid: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
-    @Serializable(with = UuidSerializer::class)
-    val featureGuid: UUID,
     val title: String,
     val description: String?
   ) : CompleteRep
@@ -42,8 +40,6 @@ object FormTemplateRep {
     val guid: UUID,
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
-    @Serializable(with = UuidSerializer::class)
-    val featureGuid: UUID,
     val title: String,
     val description: String?,
     val questions: List<FormTemplateQuestionRep.Complete>
