@@ -76,6 +76,11 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
+  fun existsAndHasFormTemplateGuid(questionGuid: UUID, formTemplateGuid: UUID): Boolean {
+    val model = get(questionGuid) ?: return false
+    return model.formTemplateGuid == formTemplateGuid
+  }
+
   fun get(questionGuid: UUID): FormTemplateQuestionModel? {
     return jdbi.withHandle<FormTemplateQuestionModel?, Exception> {
       it.createQuery(

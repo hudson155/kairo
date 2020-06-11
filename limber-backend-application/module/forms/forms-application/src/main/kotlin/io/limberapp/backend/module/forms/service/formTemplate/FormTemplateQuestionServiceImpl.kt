@@ -21,7 +21,9 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService {
   override fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-    checkFeatureGuid(featureGuid, formTemplateGuid)
+    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
     require(formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid).isEmpty())
     val questions = listOf(
       FormTemplateTextQuestionModel(
@@ -67,12 +69,16 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   }
 
   override fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int?): FormTemplateQuestionModel {
-    checkFeatureGuid(featureGuid, model.formTemplateGuid)
+    if (!formTemplateStore.existsAndHasFeatureGuid(model.formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
     return formTemplateQuestionStore.create(model, rank)
   }
 
   override fun getByFormTemplateGuid(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-    checkFeatureGuid(featureGuid, formTemplateGuid)
+    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
     return formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
   }
 
@@ -82,24 +88,22 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     questionGuid: UUID,
     update: FormTemplateQuestionModel.Update
   ): FormTemplateQuestionModel {
-    checkFeatureGuid(featureGuid, formTemplateGuid)
-    checkFormTemplateGuid(formTemplateGuid, questionGuid)
+    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
+    if (!formTemplateQuestionStore.existsAndHasFormTemplateGuid(questionGuid, formTemplateGuid = formTemplateGuid)) {
+      throw FormTemplateQuestionNotFound()
+    }
     return formTemplateQuestionStore.update(questionGuid, update)
   }
 
   override fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID) {
-    checkFeatureGuid(featureGuid, formTemplateGuid)
-    checkFormTemplateGuid(formTemplateGuid, questionGuid)
-    formTemplateQuestionStore.delete(questionGuid)
-  }
-
-  private fun checkFeatureGuid(featureGuid: UUID, formTemplateGuid: UUID) {
-    if (formTemplateStore.get(formTemplateGuid)?.featureGuid != featureGuid) throw FormTemplateNotFound()
-  }
-
-  private fun checkFormTemplateGuid(formTemplateGuid: UUID, questionGuid: UUID) {
-    if (formTemplateQuestionStore.get(questionGuid)?.formTemplateGuid != formTemplateGuid) {
+    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
+    if (!formTemplateQuestionStore.existsAndHasFormTemplateGuid(questionGuid, formTemplateGuid = formTemplateGuid)) {
       throw FormTemplateQuestionNotFound()
     }
+    formTemplateQuestionStore.delete(questionGuid)
   }
 }

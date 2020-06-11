@@ -26,11 +26,9 @@ internal class FormInstanceServiceImpl @Inject constructor(
   override fun getByFeatureGuid(featureGuid: UUID) = formInstanceStore.getByFeatureGuid(featureGuid)
 
   override fun delete(featureGuid: UUID, formInstanceGuid: UUID) {
-    checkFeatureGuid(featureGuid, formInstanceGuid)
+    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
+      throw FormInstanceNotFound()
+    }
     formInstanceStore.delete(formInstanceGuid)
-  }
-
-  private fun checkFeatureGuid(featureGuid: UUID, formInstanceGuid: UUID) {
-    if (formInstanceStore.get(formInstanceGuid)?.featureGuid != featureGuid) throw FormInstanceNotFound()
   }
 }

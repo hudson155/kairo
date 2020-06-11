@@ -1,11 +1,8 @@
 package io.limberapp.backend.module.users.service.account
 
 import com.google.inject.Inject
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
-import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
-import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.store.account.UserStore
 import java.util.*
@@ -24,11 +21,6 @@ internal class UserServiceImpl @Inject constructor(
   override fun getByOrgGuid(orgGuid: UUID) = userStore.getByOrgGuid(orgGuid)
 
   override fun update(userGuid: UUID, update: UserModel.Update) = userStore.update(userGuid, update)
-
-  override fun deleteRole(userGuid: UUID, role: JwtRole) {
-    if (!(userStore.get(userGuid) ?: throw UserNotFound()).hasRole(role)) throw UserDoesNotHaveRole()
-    userStore.update(userGuid, UserModel.Update.fromRole(role, false))
-  }
 
   override fun delete(userGuid: UUID) {
     if (orgService.getByOwnerAccountGuid(userGuid) != null) throw CannotDeleteOrgOwner()

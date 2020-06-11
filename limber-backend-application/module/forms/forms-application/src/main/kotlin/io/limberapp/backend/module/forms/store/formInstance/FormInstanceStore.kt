@@ -18,6 +18,11 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
+  fun existsAndHasFeatureGuid(formInstanceGuid: UUID, featureGuid: UUID): Boolean {
+    val model = get(formInstanceGuid) ?: return false
+    return model.featureGuid == featureGuid
+  }
+
   fun get(formInstanceGuid: UUID): FormInstanceModel? {
     return jdbi.withHandle<FormInstanceModel?, Exception> {
       it.createQuery("SELECT * FROM forms.form_instance WHERE guid = :guid AND archived_date IS NULL")

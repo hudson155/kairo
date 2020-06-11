@@ -15,7 +15,9 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
 ) : FormInstanceQuestionService {
   override fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel {
     val questionGuid = requireNotNull(model.questionGuid)
-    checkFeatureGuid(featureGuid, model.formInstanceGuid)
+    if (!formInstanceStore.existsAndHasFeatureGuid(model.formInstanceGuid, featureGuid = featureGuid)) {
+      throw FormInstanceNotFound()
+    }
     val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(model.formInstanceGuid, questionGuid)
     return if (existingFormInstanceQuestionModel == null) {
       formInstanceQuestionStore.create(model)
@@ -29,16 +31,16 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
   }
 
   override fun getByFormInstanceGuid(featureGuid: UUID, formInstanceGuid: UUID): List<FormInstanceQuestionModel> {
-    checkFeatureGuid(featureGuid, formInstanceGuid)
+    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
+      throw FormInstanceNotFound()
+    }
     return formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid)
   }
 
   override fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID) {
-    checkFeatureGuid(featureGuid, formInstanceGuid)
+    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
+      throw FormInstanceNotFound()
+    }
     formInstanceQuestionStore.delete(formInstanceGuid, questionGuid)
-  }
-
-  private fun checkFeatureGuid(featureGuid: UUID, formInstanceGuid: UUID) {
-    if (formInstanceStore.get(formInstanceGuid)?.featureGuid != featureGuid) throw FormInstanceNotFound()
   }
 }

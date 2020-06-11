@@ -25,16 +25,16 @@ internal class FormTemplateServiceImpl @Inject constructor(
   override fun getByFeatureGuid(featureGuid: UUID) = formTemplateStore.getByFeatureGuid(featureGuid)
 
   override fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel {
-    checkFeatureGuid(featureGuid, formTemplateGuid)
+    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
     return formTemplateStore.update(formTemplateGuid, update)
   }
 
   override fun delete(featureGuid: UUID, formTemplateGuid: UUID) {
-    checkFeatureGuid(featureGuid, formTemplateGuid)
+    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
+      throw FormTemplateNotFound()
+    }
     formTemplateStore.delete(formTemplateGuid)
-  }
-
-  private fun checkFeatureGuid(featureGuid: UUID, formTemplateGuid: UUID) {
-    if (formTemplateStore.get(formTemplateGuid)?.featureGuid != featureGuid) throw FormTemplateNotFound()
   }
 }
