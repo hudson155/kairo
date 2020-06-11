@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.auth.exception.org.OrgRoleIsNotUnique
+import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import org.jdbi.v3.core.Jdbi
@@ -30,7 +30,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleIsNotUnique()
+    if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleNameIsNotUnique()
     else throw e
   }
 
@@ -87,7 +87,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleIsNotUnique()
+    if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleNameIsNotUnique()
     else throw e
   }
 
