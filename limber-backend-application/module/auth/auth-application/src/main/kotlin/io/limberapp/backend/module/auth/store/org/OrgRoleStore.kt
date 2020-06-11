@@ -36,8 +36,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   fun existsAndHasOrgGuid(orgRoleGuid: UUID, orgGuid: UUID): Boolean {
     val model = get(orgRoleGuid) ?: return false
-    if (model.orgGuid != orgGuid) return false
-    return true
+    return model.orgGuid == orgGuid
   }
 
   fun get(orgRoleGuid: UUID): OrgRoleModel? {

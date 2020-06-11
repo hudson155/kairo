@@ -21,8 +21,7 @@ internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : S
 
   fun existsAndHasFeatureGuid(formTemplateGuid: UUID, featureGuid: UUID): Boolean {
     val model = get(formTemplateGuid) ?: return false
-    if (model.featureGuid != featureGuid) return false
-    return true
+    return model.featureGuid == featureGuid
   }
 
   fun get(formTemplateGuid: UUID): FormTemplateModel? {

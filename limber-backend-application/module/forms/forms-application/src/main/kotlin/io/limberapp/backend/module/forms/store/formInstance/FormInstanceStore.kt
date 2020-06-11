@@ -20,8 +20,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
 
   fun existsAndHasFeatureGuid(formInstanceGuid: UUID, featureGuid: UUID): Boolean {
     val model = get(formInstanceGuid) ?: return false
-    if (model.featureGuid != featureGuid) return false
-    return true
+    return model.featureGuid == featureGuid
   }
 
   fun get(formInstanceGuid: UUID): FormInstanceModel? {

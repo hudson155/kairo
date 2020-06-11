@@ -42,8 +42,7 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
 
   fun existsAndHasOrgGuid(domain: String, orgGuid: UUID): Boolean {
     val model = get(domain) ?: return false
-    if (model.orgGuid != orgGuid) return false
-    return true
+    return model.orgGuid == orgGuid
   }
 
   fun get(domain: String): TenantDomainModel? {

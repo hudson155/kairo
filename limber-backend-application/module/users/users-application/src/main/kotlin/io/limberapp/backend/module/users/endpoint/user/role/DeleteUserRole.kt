@@ -34,7 +34,8 @@ internal class DeleteUserRole @Inject constructor(
 
   override suspend fun Handler.handle(command: UserRoleApi.Delete) {
     Authorization.Role(JwtRole.SUPERUSER).authorize()
-    if (!(userService.get(command.userGuid) ?: throw UserNotFound()).hasRole(command.role)) throw UserDoesNotHaveRole()
+    val user = userService.get(command.userGuid) ?: throw UserNotFound()
+    if (!user.hasRole(command.role)) throw UserDoesNotHaveRole()
     userService.update(command.userGuid, UserModel.Update.fromRole(command.role, false))
   }
 }
