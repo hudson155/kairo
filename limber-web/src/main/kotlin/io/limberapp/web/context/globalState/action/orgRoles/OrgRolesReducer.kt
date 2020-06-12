@@ -1,29 +1,28 @@
 package io.limberapp.web.context.globalState.action.orgRoles
 
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.GlobalStateContext
 
 internal fun orgRolesReducer(
-  state: GlobalStateContext,
+  state: OrgRolesState,
   action: OrgRolesAction
-): GlobalStateContext = with(state.orgRoles) {
+): OrgRolesState = with(state) {
   return@with when (action) {
     is OrgRolesAction.BeginLoading -> {
-      state.copy(orgRoles = LoadableState.loading())
+      LoadableState.loading()
     }
     is OrgRolesAction.SetValue -> {
-      state.copy(orgRoles = LoadableState.Loaded(action.orgRoles.associateBy { it.guid }))
+      LoadableState.Loaded(action.orgRoles.associateBy { it.guid })
     }
     is OrgRolesAction.UpdateValue -> {
       check(isLoaded)
-      state.copy(orgRoles = update { it.orEmpty().plus(action.orgRole.guid to action.orgRole) })
+      update { it.plus(action.orgRole.guid to action.orgRole) }
     }
     is OrgRolesAction.DeleteValue -> {
       check(isLoaded)
-      state.copy(orgRoles = update { it.orEmpty().minus(action.orgRoleGuid) })
+      update { it.minus(action.orgRoleGuid) }
     }
     is OrgRolesAction.SetError -> {
-      state.copy(orgRoles = LoadableState.Error(action.errorMessage))
+      LoadableState.Error(action.errorMessage)
     }
   }
 }

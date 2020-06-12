@@ -1,25 +1,20 @@
 package io.limberapp.web.context.globalState.action.formInstances
 
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.GlobalStateContext
 
 internal fun formInstancesReducer(
-  state: GlobalStateContext,
+  state: FormInstancesState,
   action: FormInstancesAction
-): GlobalStateContext = with(state.formInstances) {
+): FormInstancesState = with(state) {
   return@with when (action) {
     is FormInstancesAction.BeginLoading -> {
-      state.copy(formInstances = plus(action.featureGuid to LoadableState.loading()))
+      plus(action.featureGuid to LoadableState.loading())
     }
     is FormInstancesAction.SetValue -> {
-      state.copy(
-        formInstances = plus(
-          action.featureGuid to LoadableState.Loaded(action.formInstances.associateBy { it.guid })
-        )
-      )
+      plus(action.featureGuid to LoadableState.Loaded(action.formInstances.associateBy { it.guid }))
     }
     is FormInstancesAction.SetError -> {
-      state.copy(formInstances = plus(action.featureGuid to LoadableState.Error(action.errorMessage)))
+      plus(action.featureGuid to LoadableState.Error(action.errorMessage))
     }
   }
 }

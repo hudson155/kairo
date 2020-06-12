@@ -7,7 +7,7 @@ internal sealed class LoadableState<State : Any> {
 
   abstract val stateOrNull: State?
 
-  fun update(function: (State?) -> State) = (this as Loaded<State>).copy(state = function(state))
+  fun update(function: (State) -> State) = (this as Loaded<State>).copy(state = function(state))
 
   internal data class Unloaded<State : Any>(override val hasBegunLoading: Boolean) : LoadableState<State>() {
     override val isLoaded = false

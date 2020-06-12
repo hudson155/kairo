@@ -1,44 +1,34 @@
 package io.limberapp.web.context.globalState.action.orgRoleMemberships
 
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.GlobalStateContext
 
 internal fun orgRoleMembershipsReducer(
-  state: GlobalStateContext,
+  state: OrgRoleMembershipsState,
   action: OrgRoleMembershipsAction
-): GlobalStateContext = with(state.orgRoleMemberships) {
+): OrgRoleMembershipsState = with(state) {
   return@with when (action) {
     is OrgRoleMembershipsAction.BeginLoading -> {
-      state.copy(orgRoleMemberships = plus(action.orgRoleGuid to LoadableState.loading()))
+      plus(action.orgRoleGuid to LoadableState.loading())
     }
     is OrgRoleMembershipsAction.SetValue -> {
-      state.copy(
-        orgRoleMemberships = plus(
-          action.orgRoleGuid to LoadableState.Loaded(action.orgRoleMemberships.associateBy { it.accountGuid })
-        )
-      )
+      plus(action.orgRoleGuid to LoadableState.Loaded(action.orgRoleMemberships.associateBy { it.accountGuid }))
     }
     is OrgRoleMembershipsAction.UpdateValue -> {
       val orgRoleMembership = checkNotNull(get(action.orgRoleGuid))
       check(orgRoleMembership.isLoaded)
-      state.copy(
-        orgRoleMemberships = plus(
-          action.orgRoleGuid to orgRoleMembership
-            .update { it.orEmpty().plus(action.orgRoleMembership.accountGuid to action.orgRoleMembership) }
-        )
+      plus(
+        action.orgRoleGuid to orgRoleMembership.update {
+          it.plus(action.orgRoleMembership.accountGuid to action.orgRoleMembership)
+        }
       )
     }
     is OrgRoleMembershipsAction.DeleteValue -> {
       val orgRoleMembership = checkNotNull(get(action.orgRoleGuid))
       check(orgRoleMembership.isLoaded)
-      state.copy(
-        orgRoleMemberships = plus(
-          action.orgRoleGuid to orgRoleMembership.update { it.orEmpty().minus(action.accountGuid) }
-        )
-      )
+      plus(action.orgRoleGuid to orgRoleMembership.update { it.minus(action.accountGuid) })
     }
     is OrgRoleMembershipsAction.SetError -> {
-      state.copy(orgRoleMemberships = plus(action.orgRoleGuid to LoadableState.Error(action.errorMessage)))
+      plus(action.orgRoleGuid to LoadableState.Error(action.errorMessage))
     }
   }
 }
