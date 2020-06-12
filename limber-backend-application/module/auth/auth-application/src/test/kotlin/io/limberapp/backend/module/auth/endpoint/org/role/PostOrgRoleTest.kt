@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.org.role
 
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.auth.exception.org.OrgRoleIsNotUnique
+import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
@@ -22,7 +22,7 @@ internal class PostOrgRoleTest : ResourceTest() {
         orgGuid = orgGuid,
         rep = OrgRoleRepFixtures.memberFixture.creation().copy(name = adminOrgRoleRep.name)
       ),
-      expectedException = OrgRoleIsNotUnique()
+      expectedException = OrgRoleNameIsNotUnique()
     )
 
     piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {

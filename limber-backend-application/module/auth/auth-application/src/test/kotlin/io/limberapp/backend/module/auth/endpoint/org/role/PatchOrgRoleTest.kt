@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.endpoint.org.role
 
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.auth.exception.org.OrgRoleIsNotUnique
+import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
@@ -37,7 +37,7 @@ internal class PatchOrgRoleTest : ResourceTest() {
     val orgRoleUpdateRep = OrgRoleRep.Update(name = adminOrgRoleRep.name)
     piperTest.test(
       endpoint = OrgRoleApi.Patch(orgGuid, memberOrgRoleRep.guid, orgRoleUpdateRep),
-      expectedException = OrgRoleIsNotUnique()
+      expectedException = OrgRoleNameIsNotUnique()
     )
 
     piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
