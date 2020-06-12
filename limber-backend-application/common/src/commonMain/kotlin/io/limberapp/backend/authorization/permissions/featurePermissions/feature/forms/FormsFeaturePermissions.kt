@@ -1,5 +1,6 @@
 package io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms
 
+import com.piperframework.util.darb.BitStringEncoder
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
 
 /**
@@ -12,13 +13,15 @@ private val ALL_FORMS_FEATURE_PERMISSIONS = with(FormsFeaturePermission.values()
 
 internal const val FORMS_FEATURE_PREFIX = 'F'
 
-class FormsFeaturePermissions(override val permissions: Set<FormsFeaturePermission>) : FeaturePermissions() {
+data class FormsFeaturePermissions(override val permissions: Set<FormsFeaturePermission>) : FeaturePermissions() {
   override val prefix = FORMS_FEATURE_PREFIX
 
   override fun allPermissions() = ALL_FORMS_FEATURE_PERMISSIONS
 
   companion object {
     fun none() = FormsFeaturePermissions(emptySet())
+
+    fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
     internal fun fromBooleanList(booleanList: List<Boolean>) = FormsFeaturePermissions(
       permissions = ALL_FORMS_FEATURE_PERMISSIONS

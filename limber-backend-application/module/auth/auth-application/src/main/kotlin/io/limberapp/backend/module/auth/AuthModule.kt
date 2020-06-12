@@ -1,6 +1,10 @@
 package io.limberapp.backend.module.auth
 
 import com.piperframework.module.Module
+import io.limberapp.backend.module.auth.endpoint.feature.role.DeleteFeatureRole
+import io.limberapp.backend.module.auth.endpoint.feature.role.GetFeatureRolesByFeatureGuid
+import io.limberapp.backend.module.auth.endpoint.feature.role.PatchFeatureRole
+import io.limberapp.backend.module.auth.endpoint.feature.role.PostFeatureRole
 import io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest.PostJwtClaimsRequest
 import io.limberapp.backend.module.auth.endpoint.org.role.DeleteOrgRole
 import io.limberapp.backend.module.auth.endpoint.org.role.GetOrgRolesByOrgGuid
@@ -16,6 +20,8 @@ import io.limberapp.backend.module.auth.endpoint.tenant.PatchTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.PostTenant
 import io.limberapp.backend.module.auth.endpoint.tenant.domain.DeleteTenantDomain
 import io.limberapp.backend.module.auth.endpoint.tenant.domain.PostTenantDomain
+import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
+import io.limberapp.backend.module.auth.service.feature.FeatureRoleServiceImpl
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestServiceImpl
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
@@ -32,6 +38,12 @@ class AuthModule : Module() {
   override val serialModule = EmptyModule
 
   override val endpoints = listOf(
+
+    PostFeatureRole::class.java,
+    GetFeatureRolesByFeatureGuid::class.java,
+    PatchFeatureRole::class.java,
+    DeleteFeatureRole::class.java,
+
     PostJwtClaimsRequest::class.java,
 
     PostOrgRole::class.java,
@@ -52,6 +64,8 @@ class AuthModule : Module() {
   )
 
   override fun bindServices() {
+    bind(FeatureRoleService::class, FeatureRoleServiceImpl::class)
+
     bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
 
     bind(OrgRoleService::class, OrgRoleServiceImpl::class)
