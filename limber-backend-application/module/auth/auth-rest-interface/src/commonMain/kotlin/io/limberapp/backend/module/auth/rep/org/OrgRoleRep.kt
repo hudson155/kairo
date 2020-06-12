@@ -17,7 +17,8 @@ import kotlinx.serialization.Serializable
 object OrgRoleRep {
   @Serializable
   data class Creation(
-    val name: String
+    val name: String,
+    val permissions: OrgPermissions
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::name) { Validator.orgRoleName(value) }
