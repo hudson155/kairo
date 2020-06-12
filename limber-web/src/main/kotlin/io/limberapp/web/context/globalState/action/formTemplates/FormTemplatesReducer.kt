@@ -9,7 +9,6 @@ internal fun formTemplatesReducer(
   when (action) {
     is FormTemplateCompletesAction -> copy(completes = formTemplateCompletesReducer(completes, action))
     is FormTemplateSummariesAction -> copy(summaries = formTemplateSummariesReducer(summaries, action))
-    else -> error("Unhandled action: $action.")
   }
 }
 
@@ -18,11 +17,15 @@ private fun formTemplateCompletesReducer(
   action: FormTemplateCompletesAction
 ): FormTemplatesCompletesState = with(state) {
   return@with when (action) {
-    is FormTemplateCompletesAction.BeginLoading -> plus(action.fromTemplateGuid to LoadableState.loading())
-    is FormTemplateCompletesAction.SetValue -> plus(
-      action.formTemplate.guid to LoadableState.Loaded(action.formTemplate)
-    )
-    is FormTemplateCompletesAction.SetError -> plus(action.formTemplateGuid to LoadableState.Error(action.errorMessage))
+    is FormTemplateCompletesAction.BeginLoading -> {
+      plus(action.fromTemplateGuid to LoadableState.loading())
+    }
+    is FormTemplateCompletesAction.SetValue -> {
+      plus(action.formTemplate.guid to LoadableState.Loaded(action.formTemplate))
+    }
+    is FormTemplateCompletesAction.SetError -> {
+      plus(action.formTemplateGuid to LoadableState.Error(action.errorMessage))
+    }
   }
 }
 
@@ -31,10 +34,14 @@ private fun formTemplateSummariesReducer(
   action: FormTemplateSummariesAction
 ): FormTemplatesSummariesState = with(state) {
   when (action) {
-    is FormTemplateSummariesAction.BeginLoading -> plus(action.featureGuid to LoadableState.loading())
-    is FormTemplateSummariesAction.SetValue -> plus(
-      action.featureGuid to LoadableState.Loaded(action.formTemplates.associateBy { it.guid })
-    )
-    is FormTemplateSummariesAction.SetError -> plus(action.featureGuid to LoadableState.Error(action.errorMessage))
+    is FormTemplateSummariesAction.BeginLoading -> {
+      plus(action.featureGuid to LoadableState.loading())
+    }
+    is FormTemplateSummariesAction.SetValue -> {
+      plus(action.featureGuid to LoadableState.Loaded(action.formTemplates.associateBy { it.guid }))
+    }
+    is FormTemplateSummariesAction.SetError -> {
+      plus(action.featureGuid to LoadableState.Error(action.errorMessage))
+    }
   }
 }

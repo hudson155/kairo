@@ -8,7 +8,20 @@ import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import react.*
 
-internal abstract class FormTemplatesAction : Action()
+internal abstract sealed class FormTemplatesAction : Action()
+
+internal sealed class FormTemplateCompletesAction : FormTemplatesAction() {
+  internal data class BeginLoading(val fromTemplateGuid: UUID) : FormTemplateCompletesAction()
+
+  internal data class SetValue(
+    val formTemplate: FormTemplateRep.Complete
+  ) : FormTemplateCompletesAction()
+
+  internal data class SetError(
+    val formTemplateGuid: UUID,
+    val errorMessage: String?
+  ) : FormTemplateCompletesAction()
+}
 
 internal sealed class FormTemplateSummariesAction : FormTemplatesAction() {
   internal data class BeginLoading(val featureGuid: UUID) : FormTemplateSummariesAction()
@@ -24,27 +37,14 @@ internal sealed class FormTemplateSummariesAction : FormTemplatesAction() {
   ) : FormTemplateSummariesAction()
 }
 
-internal sealed class FormTemplateCompletesAction : FormTemplatesAction() {
-  internal data class BeginLoading(val fromTemplateGuid: UUID) : FormTemplateCompletesAction()
-
-  internal data class SetValue(
-    val formTemplate: FormTemplateRep.Complete
-  ) : FormTemplateCompletesAction()
-
-  internal data class SetError(
-    val formTemplateGuid: UUID,
-    val errorMessage: String?
-  ) : FormTemplateCompletesAction()
-}
-
-internal fun ComponentWithApi.loadFormTemplate(featureGuid: UUID, templateGuid: UUID) {
-  useEffect(listOf(templateGuid)) {
-    if (gs.formTemplates.completes[templateGuid]?.hasBegunLoading == true) return@useEffect
-    dispatch(FormTemplateCompletesAction.BeginLoading(templateGuid))
+internal fun ComponentWithApi.loadFormTemplate(featureGuid: UUID, formTemplateGuid: UUID) {
+  useEffect(listOf(formTemplateGuid)) {
+    if (gs.formTemplates.completes[formTemplateGuid]?.hasBegunLoading == true) return@useEffect
+    dispatch(FormTemplateCompletesAction.BeginLoading(formTemplateGuid))
     async {
-      api.formTemplates(FormTemplateApi.Get(featureGuid, templateGuid)).fold(
+      api.formTemplates(FormTemplateApi.Get(featureGuid, formTemplateGuid)).fold(
         onSuccess = { formTemplate -> dispatch(FormTemplateCompletesAction.SetValue(formTemplate)) },
-        onFailure = { dispatch(FormTemplateCompletesAction.SetError(templateGuid, it.message)) }
+        onFailure = { dispatch(FormTemplateCompletesAction.SetError(formTemplateGuid, it.message)) }
       )
     }
   }
