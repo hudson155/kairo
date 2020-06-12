@@ -11,17 +11,6 @@ import kotlin.test.assertEquals
 
 internal class DeleteOrgRoleTest : ResourceTest() {
   @Test
-  fun orgDoesNotExist() {
-    val orgGuid = UUID.randomUUID()
-    val orgRoleGuid = UUID.randomUUID()
-
-    piperTest.test(
-      endpoint = OrgRoleApi.Delete(orgGuid, orgRoleGuid),
-      expectedException = OrgRoleNotFound()
-    )
-  }
-
-  @Test
   fun orgRoleDoesNotExist() {
     val orgGuid = UUID.randomUUID()
     val orgRoleGuid = UUID.randomUUID()
@@ -39,7 +28,7 @@ internal class DeleteOrgRoleTest : ResourceTest() {
     val adminOrgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    val memberOrgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 1)
+    val memberOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 1)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.memberFixture.creation()))
 
     piperTest.test(OrgRoleApi.Delete(orgGuid, memberOrgRoleRep.guid)) {}
