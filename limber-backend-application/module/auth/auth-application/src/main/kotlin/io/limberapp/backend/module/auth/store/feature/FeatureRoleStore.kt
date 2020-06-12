@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.auth.exception.feature.FeatureRoleIsNotUnique
+import io.limberapp.backend.module.auth.exception.feature.FeatureRoleOrgRoleIsNotUnique
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
 import org.jdbi.v3.core.Jdbi
@@ -30,7 +30,7 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT)) throw FeatureRoleIsNotUnique()
+    if (error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT)) throw FeatureRoleOrgRoleIsNotUnique()
     else throw e
   }
 
@@ -77,7 +77,7 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT)) throw FeatureRoleIsNotUnique()
+    if (error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT)) throw FeatureRoleOrgRoleIsNotUnique()
     else throw e
   }
 
