@@ -1,5 +1,6 @@
 package io.limberapp.backend.authorization.permissions.featurePermissions.feature.home
 
+import com.piperframework.util.darb.BitStringEncoder
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
 
 /**
@@ -19,6 +20,8 @@ class HomeFeaturePermissions(override val permissions: Set<HomeFeaturePermission
 
   companion object {
     fun none() = HomeFeaturePermissions(emptySet())
+
+    fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
     internal fun fromBooleanList(booleanList: List<Boolean>) = HomeFeaturePermissions(
       permissions = ALL_HOME_FEATURE_PERMISSIONS
