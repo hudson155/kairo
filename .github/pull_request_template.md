@@ -1,6 +1,6 @@
-Resolves #0
+Resolves [ENG-0](https://limberapp.atlassian.net/browse/ENG-0)
 or
-Part of #0
+Part of [ENG-0](https://limberapp.atlassian.net/browse/ENG-0)
 
 ### Description of changes
 
