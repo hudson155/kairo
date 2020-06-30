@@ -38,7 +38,7 @@ items:
         spec:
           containers:
             - name: limber-backend
-              image: registry.digitalocean.com/limber-registry/limber-backend:master
+              image: registry.digitalocean.com/limber/limber-backend:master
               imagePullPolicy: Always
               resources:
                 requests:
@@ -79,4 +79,4 @@ items:
                 successThreshold: 5
                 failureThreshold: 12
           imagePullSecrets:
-            - name: limber-do-registry
+            - name: registry-limber

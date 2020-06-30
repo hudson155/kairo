@@ -25,7 +25,7 @@ Browser and operating system DNS and TLS certificate caching is annoying.
 
 ### Set up a DNS record
 
-1. Create a DNS A record for the host, with a TTL of 1 hour and a value of `104.248.105.23`.
+1. Create a DNS A record for the host, with a TTL of 1 hour and a value of `174.138.114.191`.
     1. For `limberapp.io` subdomains, our domain is managed by Jeff's personal Google Domains account,
         so he will need to do this for you.
 
