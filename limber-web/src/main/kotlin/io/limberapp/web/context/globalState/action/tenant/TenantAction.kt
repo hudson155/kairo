@@ -2,7 +2,7 @@ package io.limberapp.web.context.globalState.action.tenant
 
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
-import io.limberapp.web.context.api.Api
+import io.limberapp.web.api.Api
 import io.limberapp.web.context.globalState.action.Action
 import io.limberapp.web.util.ComponentWithGlobalState
 import io.limberapp.web.util.async

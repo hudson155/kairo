@@ -1,6 +1,6 @@
 package io.limberapp.web.app
 
-import io.limberapp.web.context.api.apiProvider
+import io.limberapp.web.api.apiProvider
 import io.limberapp.web.context.globalState.globalStateProvider
 import io.limberapp.web.util.component
 import react.*

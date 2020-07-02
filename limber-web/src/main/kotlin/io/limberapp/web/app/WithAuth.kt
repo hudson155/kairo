@@ -1,12 +1,12 @@
 package io.limberapp.web.app
 
 import com.piperframework.restInterface.Fetch
+import io.limberapp.web.api.Api
+import io.limberapp.web.api.json
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.api.Api
-import io.limberapp.web.context.api.json
 import io.limberapp.web.context.auth.authProvider
 import io.limberapp.web.context.globalState.action.tenant.loadTenant
 import io.limberapp.web.util.Theme
