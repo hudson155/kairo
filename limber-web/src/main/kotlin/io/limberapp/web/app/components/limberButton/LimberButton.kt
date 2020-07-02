@@ -106,7 +106,7 @@ private val component = functionalComponent<Props> { props ->
     Style.DANGER -> s.c { it::danger }
   }
 
-  button(classes = cls(s.c{ it::base}, buttonStyle, props.classes)) {
+  button(classes = cls(s.c { it::base }, buttonStyle, props.classes)) {
     attrs.onClickFunction = { props.onClick() }
     attrs.disabled = props.loading
 

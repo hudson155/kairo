@@ -4,8 +4,8 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.auth.exception.feature.FeatureRoleOrgRoleIsNotUnique
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
+import io.limberapp.backend.module.auth.exception.feature.FeatureRoleOrgRoleIsNotUnique
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
