@@ -1,4 +1,4 @@
-package io.limberapp.web.context.auth
+package io.limberapp.web.auth
 
 internal data class AuthContext(
   val isLoading: Boolean,

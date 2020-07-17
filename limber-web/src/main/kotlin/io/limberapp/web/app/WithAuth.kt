@@ -7,7 +7,7 @@ import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.auth.authProvider
+import io.limberapp.web.auth.authProvider
 import io.limberapp.web.context.globalState.action.tenant.loadTenant
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.componentWithGlobalState

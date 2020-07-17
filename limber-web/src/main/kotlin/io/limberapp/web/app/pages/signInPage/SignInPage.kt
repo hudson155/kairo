@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.signInPage
 
-import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.auth.useAuth
 import io.limberapp.web.util.component
 import react.*
 

@@ -1,6 +1,6 @@
 package io.limberapp.web.util.external
 
-import io.limberapp.web.context.auth.Auth0Config
+import io.limberapp.web.auth.Auth0Config
 import kotlin.js.Promise
 
 internal external interface Auth0Client {

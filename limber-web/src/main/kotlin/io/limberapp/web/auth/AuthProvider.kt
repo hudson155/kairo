@@ -1,4 +1,4 @@
-package io.limberapp.web.context.auth
+package io.limberapp.web.auth
 
 import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.util.async

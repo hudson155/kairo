@@ -9,7 +9,7 @@ import io.limberapp.web.app.pages.signInPage.signInPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
 import io.limberapp.web.app.pages.signOutPage.signOutPage
 import io.limberapp.web.app.pages.unauthenticatedPage.unauthenticatedPage
-import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.auth.useAuth
 import io.limberapp.web.util.component
 import io.limberapp.web.util.rootPath
 import react.*

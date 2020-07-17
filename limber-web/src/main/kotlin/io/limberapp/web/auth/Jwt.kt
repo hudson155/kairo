@@ -1,4 +1,4 @@
-package io.limberapp.web.context.auth
+package io.limberapp.web.auth
 
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.JwtOrg

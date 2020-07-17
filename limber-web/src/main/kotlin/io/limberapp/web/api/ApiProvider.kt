@@ -2,7 +2,7 @@ package io.limberapp.web.api
 
 import com.piperframework.restInterface.Fetch
 import io.limberapp.web.context.ProviderValue
-import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.auth.useAuth
 import io.limberapp.web.util.process
 import react.*
 

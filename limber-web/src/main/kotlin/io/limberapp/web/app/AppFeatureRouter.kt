@@ -13,7 +13,7 @@ import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
 import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.auth.useAuth
+import io.limberapp.web.auth.useAuth
 import io.limberapp.web.context.globalState.action.org.loadOrg
 import io.limberapp.web.context.globalState.action.org.state
 import io.limberapp.web.context.globalState.action.user.loadUser
