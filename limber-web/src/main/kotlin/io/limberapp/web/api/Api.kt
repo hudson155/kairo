@@ -9,6 +9,8 @@ import io.limberapp.backend.module.auth.client.tenant.TenantClient
 import io.limberapp.backend.module.auth.client.tenant.TenantClientImpl
 import io.limberapp.backend.module.forms.client.formInstance.FormInstanceClient
 import io.limberapp.backend.module.forms.client.formInstance.FormInstanceClientImpl
+import io.limberapp.backend.module.forms.client.formInstance.question.FormInstanceQuestionClient
+import io.limberapp.backend.module.forms.client.formInstance.question.FormInstanceQuestionClientImpl
 import io.limberapp.backend.module.forms.client.formTemplate.FormTemplateClient
 import io.limberapp.backend.module.forms.client.formTemplate.FormTemplateClientImpl
 import io.limberapp.backend.module.orgs.client.org.OrgClient
@@ -18,6 +20,7 @@ import io.limberapp.backend.module.users.client.user.UserClientImpl
 
 internal class Api(fetch: Fetch) {
   val formInstances: FormInstanceClient = FormInstanceClientImpl(fetch, json)
+  val formInstanceQuestions: FormInstanceQuestionClient = FormInstanceQuestionClientImpl(fetch, json)
   val formTemplates: FormTemplateClient = FormTemplateClientImpl(fetch, json)
   val orgs: OrgClient = OrgClientImpl(fetch, json)
   val orgRoleMemberships: OrgRoleMembershipClient = OrgRoleMembershipClientImpl(fetch, json)
