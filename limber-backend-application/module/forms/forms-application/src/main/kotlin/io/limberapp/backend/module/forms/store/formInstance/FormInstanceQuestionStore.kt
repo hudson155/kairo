@@ -1,14 +1,19 @@
 package io.limberapp.backend.module.forms.store.formInstance
 
 import com.google.inject.Inject
+import com.piperframework.sql.PolymorphicRowMapper
+import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.forms.entity.formInstance.FormInstanceQuestionEntity
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -17,15 +22,27 @@ import java.util.*
 private const val FORM_INSTANCE_GUID_FOREIGN_KEY = "form_instance_question_form_instance_guid_fkey"
 private const val QUESTION_GUID_FOREIGN_KEY = "form_instance_question_question_guid_fkey"
 
+private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQuestionModel>("type") {
+  override fun getClass(type: String) = when (FormTemplateQuestionModel.Type.valueOf(type)) {
+    FormTemplateQuestionModel.Type.DATE -> FormInstanceDateQuestionModel::class.java
+    FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormInstanceRadioSelectorQuestionModel::class.java
+    FormTemplateQuestionModel.Type.TEXT -> FormInstanceTextQuestionModel::class.java
+  }
+}
+
 internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+  init {
+    jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
+  }
+
   fun create(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
     return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
       try {
         it.createQuery(sqlResource("create"))
-          .bindKotlin(FormInstanceQuestionEntity(model))
-          .mapTo(FormInstanceQuestionEntity::class.java)
+          .bindKotlin(model)
+          .bindNullForMissingArguments()
+          .mapTo(FormInstanceQuestionModel::class.java)
           .single()
-          .asModel()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }
@@ -55,9 +72,8 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
       )
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
-        .mapTo(FormInstanceQuestionEntity::class.java)
+        .mapTo(FormInstanceQuestionModel::class.java)
         .singleNullOrThrow()
-        ?.asModel()
     }
   }
 
@@ -65,8 +81,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
     return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
       it.createQuery(sqlResource("getByFormInstanceGuid"))
         .bind("formInstanceGuid", formInstanceGuid)
-        .mapTo(FormInstanceQuestionEntity::class.java)
-        .map { it.asModel() }
+        .mapTo(FormInstanceQuestionModel::class.java)
         .toList()
     }
   }
@@ -80,7 +95,8 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
       val updateCount = it.createUpdate(sqlResource("update"))
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
-        .bindKotlin(FormInstanceQuestionEntity.Update(update))
+        .bindKotlin(update)
+        .bindNullForMissingArguments()
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormInstanceQuestionNotFound()

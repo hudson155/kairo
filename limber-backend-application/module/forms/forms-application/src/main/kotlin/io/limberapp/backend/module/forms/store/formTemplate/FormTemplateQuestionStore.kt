@@ -2,16 +2,32 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
+import com.piperframework.sql.PolymorphicRowMapper
+import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
 import com.piperframework.util.singleNullOrThrow
-import io.limberapp.backend.module.forms.entity.formTemplate.FormTemplateQuestionEntity
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
+private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQuestionModel>("type") {
+  override fun getClass(type: String) = when (FormTemplateQuestionModel.Type.valueOf(type)) {
+    FormTemplateQuestionModel.Type.DATE -> FormTemplateDateQuestionModel::class.java
+    FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel::class.java
+    FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel::class.java
+  }
+}
+
 internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+  init {
+    jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
+  }
+
   fun create(models: List<FormTemplateQuestionModel>, rank: Int? = null) {
     // Batch creation is only supported for questions in the same form template.
     val formTemplateGuid = models.map { it.formTemplateGuid }.distinct().singleOrNull() ?: return
@@ -22,7 +38,8 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         models.forEachIndexed { i, model ->
           this
             .bind("rank", insertionRank + i)
-            .bindKotlin(FormTemplateQuestionEntity(model))
+            .bindKotlin(model)
+            .bindNullForMissingArguments()
             .add()
         }
       }.execute()
@@ -35,10 +52,10 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
       incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
       it.createQuery(sqlResource("create"))
         .bind("rank", insertionRank)
-        .bindKotlin(FormTemplateQuestionEntity(model))
-        .mapTo(FormTemplateQuestionEntity::class.java)
+        .bindKotlin(model)
+        .bindNullForMissingArguments()
+        .mapTo(FormTemplateQuestionModel::class.java)
         .single()
-        ?.asModel()
     }
   }
 
@@ -91,9 +108,8 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         """.trimIndent()
       )
         .bind("guid", questionGuid)
-        .mapTo(FormTemplateQuestionEntity::class.java)
+        .mapTo(FormTemplateQuestionModel::class.java)
         .singleNullOrThrow()
-        ?.asModel()
     }
   }
 
@@ -108,8 +124,7 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         """.trimIndent()
       )
         .bind("formTemplateGuid", formTemplateGuid)
-        .mapTo(FormTemplateQuestionEntity::class.java)
-        .map { it.asModel() }
+        .mapTo(FormTemplateQuestionModel::class.java)
         .toList()
     }
   }
@@ -118,7 +133,8 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
       val updateCount = it.createUpdate(sqlResource("update"))
         .bind("questionGuid", questionGuid)
-        .bindKotlin(FormTemplateQuestionEntity.Update(update))
+        .bindKotlin(update)
+        .bindNullForMissingArguments()
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormTemplateQuestionNotFound()
