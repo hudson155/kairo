@@ -42,7 +42,7 @@ internal fun ComponentWithApi.loadFormTemplate(featureGuid: UUID, formTemplateGu
     if (gs.formTemplates.completes[formTemplateGuid]?.hasBegunLoading == true) return@useEffect
     dispatch(FormTemplateCompletesAction.BeginLoading(formTemplateGuid))
     async {
-      api.formTemplates(FormTemplateApi.Get(featureGuid, formTemplateGuid)).fold(
+      api(FormTemplateApi.Get(featureGuid, formTemplateGuid)).fold(
         onSuccess = { formTemplate -> dispatch(FormTemplateCompletesAction.SetValue(formTemplate)) },
         onFailure = { dispatch(FormTemplateCompletesAction.SetError(formTemplateGuid, it.message)) }
       )
@@ -55,7 +55,7 @@ internal fun ComponentWithApi.loadFormTemplates(featureGuid: UUID) {
     if (gs.formTemplates.summaries[featureGuid]?.hasBegunLoading == true) return@useEffect
     dispatch(FormTemplateSummariesAction.BeginLoading(featureGuid))
     async {
-      api.formTemplates(FormTemplateApi.GetByFeatureGuid(featureGuid)).fold(
+      api(FormTemplateApi.GetByFeatureGuid(featureGuid)).fold(
         onSuccess = { formTemplates -> dispatch(FormTemplateSummariesAction.SetValue(featureGuid, formTemplates)) },
         onFailure = { dispatch(FormTemplateSummariesAction.SetError(featureGuid, it.message)) }
       )

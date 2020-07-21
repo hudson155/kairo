@@ -40,7 +40,7 @@ internal fun ComponentWithApi.loadOrgRoleMemberships(orgRoleGuid: UUID) {
     if (gs.orgRoleMemberships[orgRoleGuid]?.hasBegunLoading == true) return@useEffect
     dispatch(OrgRoleMembershipsAction.BeginLoading(orgRoleGuid))
     async {
-      api.orgRoleMemberships(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid)).fold(
+      api(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid)).fold(
         onSuccess = { orgRoleMemberships ->
           dispatch(OrgRoleMembershipsAction.SetValue(orgRoleGuid, orgRoleMemberships))
         },
@@ -53,7 +53,7 @@ internal fun ComponentWithApi.loadOrgRoleMemberships(orgRoleGuid: UUID) {
 }
 
 internal suspend fun ComponentWithApi.createOrgRoleMembership(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) {
-  api.orgRoleMemberships(
+  api(
     endpoint = OrgRoleMembershipApi.Post(
       orgGuid = gs.org.state.guid,
       orgRoleGuid = orgRoleGuid,
@@ -66,7 +66,7 @@ internal suspend fun ComponentWithApi.createOrgRoleMembership(orgRoleGuid: UUID,
 }
 
 internal suspend fun ComponentWithApi.deleteOrgRoleMembership(orgRoleGuid: UUID, accountGuid: UUID) {
-  api.orgRoleMemberships(
+  api(
     endpoint = OrgRoleMembershipApi.Delete(
       orgGuid = gs.org.state.guid,
       orgRoleGuid = orgRoleGuid,

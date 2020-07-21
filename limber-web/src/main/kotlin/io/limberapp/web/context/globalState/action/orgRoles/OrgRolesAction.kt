@@ -28,7 +28,7 @@ internal fun ComponentWithApi.loadOrgRoles() {
     if (gs.orgRoles.hasBegunLoading) return@useEffect
     dispatch(OrgRolesAction.BeginLoading)
     async {
-      api.orgRoles(OrgRoleApi.GetByOrgGuid(orgGuid)).fold(
+      api(OrgRoleApi.GetByOrgGuid(orgGuid)).fold(
         onSuccess = { orgRoles -> dispatch(OrgRolesAction.SetValue(orgRoles)) },
         onFailure = { dispatch(OrgRolesAction.SetError(it.message)) }
       )
@@ -37,7 +37,7 @@ internal fun ComponentWithApi.loadOrgRoles() {
 }
 
 internal suspend fun ComponentWithApi.createOrgRole(rep: OrgRoleRep.Creation) {
-  api.orgRoles(
+  api(
     endpoint = OrgRoleApi.Post(
       orgGuid = gs.org.state.guid,
       rep = rep
@@ -49,7 +49,7 @@ internal suspend fun ComponentWithApi.createOrgRole(rep: OrgRoleRep.Creation) {
 }
 
 internal suspend fun ComponentWithApi.updateOrgRole(orgRoleGuid: UUID, rep: OrgRoleRep.Update) {
-  api.orgRoles(
+  api(
     endpoint = OrgRoleApi.Patch(
       orgGuid = gs.org.state.guid,
       orgRoleGuid = orgRoleGuid,
@@ -62,7 +62,7 @@ internal suspend fun ComponentWithApi.updateOrgRole(orgRoleGuid: UUID, rep: OrgR
 }
 
 internal suspend fun ComponentWithApi.deleteOrgRole(orgRoleGuid: UUID) {
-  api.orgRoles(OrgRoleApi.Delete(orgGuid = gs.org.state.guid, orgRoleGuid = orgRoleGuid)).fold(
+  api(OrgRoleApi.Delete(orgGuid = gs.org.state.guid, orgRoleGuid = orgRoleGuid)).fold(
     onSuccess = { dispatch(OrgRolesAction.DeleteValue(orgRoleGuid)) },
     onFailure = { dispatch(OrgRolesAction.SetError(it.message)) }
   )

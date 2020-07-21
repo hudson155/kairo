@@ -21,7 +21,7 @@ internal fun ComponentWithGlobalState.loadTenant(api: Api, domain: String) {
     if (gs.tenant.hasBegunLoading) return@useEffect
     dispatch(TenantAction.BeginLoading)
     async {
-      api.tenants(TenantApi.GetByDomain(domain)).fold(
+      api(TenantApi.GetByDomain(domain)).fold(
         onSuccess = { tenant -> dispatch(TenantAction.SetValue(tenant)) },
         onFailure = { dispatch(TenantAction.SetError(it.message)) }
       )

@@ -21,7 +21,7 @@ internal fun ComponentWithApi.loadUser(userGuid: UUID) {
     if (gs.user.hasBegunLoading) return@useEffect
     dispatch(UserAction.BeginLoading)
     async {
-      api.users(UserApi.Get(userGuid)).fold(
+      api(UserApi.Get(userGuid)).fold(
         onSuccess = { user -> dispatch(UserAction.SetValue(user)) },
         onFailure = { dispatch(UserAction.SetError(it.message)) }
       )

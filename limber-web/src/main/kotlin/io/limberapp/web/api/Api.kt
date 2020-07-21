@@ -18,13 +18,12 @@ import io.limberapp.backend.module.orgs.client.org.OrgClientImpl
 import io.limberapp.backend.module.users.client.user.UserClient
 import io.limberapp.backend.module.users.client.user.UserClientImpl
 
-internal class Api(fetch: Fetch) {
-  val formInstances: FormInstanceClient = FormInstanceClientImpl(fetch, json)
-  val formInstanceQuestions: FormInstanceQuestionClient = FormInstanceQuestionClientImpl(fetch, json)
-  val formTemplates: FormTemplateClient = FormTemplateClientImpl(fetch, json)
-  val orgs: OrgClient = OrgClientImpl(fetch, json)
-  val orgRoleMemberships: OrgRoleMembershipClient = OrgRoleMembershipClientImpl(fetch, json)
-  val orgRoles: OrgRoleClient = OrgRoleClientImpl(fetch, json)
-  val tenants: TenantClient = TenantClientImpl(fetch, json)
-  val users: UserClient = UserClientImpl(fetch, json)
-}
+internal class Api(fetch: Fetch) :
+  FormInstanceClient by FormInstanceClientImpl(fetch, json),
+  FormInstanceQuestionClient by FormInstanceQuestionClientImpl(fetch, json),
+  FormTemplateClient by FormTemplateClientImpl(fetch, json),
+  OrgClient by OrgClientImpl(fetch, json),
+  OrgRoleMembershipClient by OrgRoleMembershipClientImpl(fetch, json),
+  OrgRoleClient by OrgRoleClientImpl(fetch, json),
+  TenantClient by TenantClientImpl(fetch, json),
+  UserClient by UserClientImpl(fetch, json)

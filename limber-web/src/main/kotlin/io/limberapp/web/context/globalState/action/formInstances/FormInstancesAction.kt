@@ -27,7 +27,7 @@ internal fun ComponentWithApi.loadFormInstances(featureGuid: UUID) {
     if (gs.formInstances[featureGuid]?.hasBegunLoading == true) return@useEffect
     dispatch(FormInstancesAction.BeginLoading(featureGuid))
     async {
-      api.formInstances(FormInstanceApi.GetByFeatureGuid(featureGuid)).fold(
+      api(FormInstanceApi.GetByFeatureGuid(featureGuid)).fold(
         onSuccess = { formInstances -> dispatch(FormInstancesAction.SetValue(featureGuid, formInstances)) },
         onFailure = { dispatch(FormInstancesAction.SetError(featureGuid, it.message)) }
       )

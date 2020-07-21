@@ -21,7 +21,7 @@ internal fun ComponentWithApi.loadOrg(orgGuid: UUID) {
     if (gs.org.hasBegunLoading) return@useEffect
     dispatch(OrgAction.BeginLoading)
     async {
-      api.orgs(OrgApi.Get(orgGuid)).fold(
+      api(OrgApi.Get(orgGuid)).fold(
         onSuccess = { org -> dispatch(OrgAction.SetValue(org)) },
         onFailure = { dispatch(OrgAction.SetError(it.message)) }
       )

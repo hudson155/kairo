@@ -23,7 +23,7 @@ internal fun ComponentWithApi.loadUsers() {
     if (gs.users.hasBegunLoading) return@useEffect
     dispatch(UsersAction.BeginLoading)
     async {
-      api.users(UserApi.GetByOrgGuid(orgGuid)).fold(
+      api(UserApi.GetByOrgGuid(orgGuid)).fold(
         onSuccess = { users -> dispatch(UsersAction.SetValue(users)) },
         onFailure = { dispatch(UsersAction.SetError(it.message)) }
       )
