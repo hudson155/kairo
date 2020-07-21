@@ -7,7 +7,6 @@ import io.limberapp.web.app.components.sidenav.sidenav
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
-import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.xs
 import kotlinx.css.*
@@ -50,7 +49,8 @@ private class S : Styles("SidenavHeader") {
 
 private val s = S().apply { inject() }
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   sidenavGroup {
     a(classes = s.c { it::container }) {
       span { b { +props.text } }

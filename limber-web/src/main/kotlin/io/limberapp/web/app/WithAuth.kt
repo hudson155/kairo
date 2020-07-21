@@ -6,9 +6,10 @@ import io.limberapp.web.api.json
 import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
-import io.limberapp.web.context.LoadableState
 import io.limberapp.web.auth.authProvider
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.tenant.loadTenant
+import io.limberapp.web.util.ComponentWithGlobalState
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.componentWithGlobalState
 import io.limberapp.web.util.external.AppState
@@ -34,7 +35,8 @@ private val onRedirectCallback: (AppState?) -> Unit = {
   )
 }
 
-private val component = componentWithGlobalState<RProps> component@{ self, props ->
+private val component = componentWithGlobalState(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithGlobalState, props: RProps) {
   // We use a non-authenticated API here rather than calling the useApi() hook which we should do everywhere else
   // because the tenant must be fetched before we can create the AuthProvider, and the AuthProvider is required for
   // the ApiProvider.
@@ -51,8 +53,8 @@ private val component = componentWithGlobalState<RProps> component@{ self, props
   // While the tenant is loading, show the loading page.
   val tenant = self.gs.tenant.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component minimalPage(linkType = null) { loadingPage("Loading tenant...") }
-      is LoadableState.Error -> return@component minimalPage(linkType = null) { failedToLoadPage("tenant") }
+      is LoadableState.Unloaded -> return minimalPage(linkType = null) { loadingPage("Loading tenant...") }
+      is LoadableState.Error -> return minimalPage(linkType = null) { failedToLoadPage("tenant") }
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

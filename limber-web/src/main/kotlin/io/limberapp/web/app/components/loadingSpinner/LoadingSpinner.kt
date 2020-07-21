@@ -68,7 +68,8 @@ private class S : Styles("LoadingSpinner") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   div(classes = cls(s.c { it::root }, props.classes)) {
     div(classes = cls(s.c { it::container }, s.c(props.large) { it::largeContainer })) {
       div(classes = s.c { it::innerContainer }) {

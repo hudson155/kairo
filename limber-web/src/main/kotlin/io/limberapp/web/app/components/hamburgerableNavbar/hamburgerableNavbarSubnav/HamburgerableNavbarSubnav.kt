@@ -6,7 +6,6 @@ import io.limberapp.web.app.components.navbar.components.subnav.components.subna
 import io.limberapp.web.app.components.navbar.components.subnav.components.subnavItem.subnavItem
 import io.limberapp.web.app.components.navbar.components.subnav.subnav
 import io.limberapp.web.hook.useClickListener
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -24,7 +23,8 @@ internal fun RBuilder.hamburgerableNavbarSubnav(features: List<FeatureRep.Comple
 
 internal data class Props(val features: List<FeatureRep.Complete>, val onUnfocus: () -> Unit) : RProps
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   useClickListener(emptyList()) { props.onUnfocus() }
 
   subnav {

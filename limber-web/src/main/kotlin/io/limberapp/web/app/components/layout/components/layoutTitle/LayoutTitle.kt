@@ -3,7 +3,6 @@ package io.limberapp.web.app.components.layout.components.layoutTitle
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
-import io.limberapp.web.util.component
 import io.limberapp.web.util.xs
 import kotlinx.css.*
 import kotlinx.css.properties.*
@@ -45,7 +44,8 @@ private class S : Styles("LayoutTitle") {
 
 private val s = S().apply { inject() }
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   div(classes = s.c { it::container }) {
     h1(classes = s.c { it::title }) { +props.title }
     props.description?.let { p(classes = s.c { it::description }) { +it } }

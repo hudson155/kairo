@@ -6,7 +6,6 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.orgSettingsRoleDetailPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -22,7 +21,8 @@ internal object OrgSettingsRolesPage {
   const val path = "${OrgSettingsPage.path}/roles"
 }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   val match = checkNotNull(useRouteMatch<RProps>())
 
   switch {

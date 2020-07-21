@@ -28,7 +28,8 @@ internal fun useAuth() = useContext(authContext)
 
 internal data class Props(val clientId: String, val onRedirectCallback: (AppState?) -> Unit) : RProps
 
-private val component = functionalComponent<Props> { props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val (isLoading, setIsLoading) = useState(true)
   val (auth0Client, setAuth0Client) = useState<Auth0Client?>(null)
   val (isAuthenticated, setIsAuthenticated) = useState(false)

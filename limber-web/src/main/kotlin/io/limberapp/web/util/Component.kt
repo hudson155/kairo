@@ -26,10 +26,6 @@ internal open class ComponentWithApi : ComponentWithGlobalState() {
   val api = useApi()
 }
 
-internal fun <P : RProps> component(
-  function: RBuilder.(props: P) -> Unit
-): FunctionalComponent<P> = functionalComponent { function(it) }
-
 internal fun <P : RProps> componentWithGlobalState(
   function: RBuilder.(self: ComponentWithGlobalState, props: P) -> Unit
 ): FunctionalComponent<P> = functionalComponent { function(ComponentWithGlobalState(), it) }

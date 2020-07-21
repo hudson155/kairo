@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRoleTableRoleDeleter.components.orgRoleTableRoleDeleterModal.orgRolesTableRoleDeleterModal
 import io.limberapp.web.context.globalState.action.orgRoles.deleteOrgRole
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
@@ -43,7 +44,8 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, CONFIRMING }
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   val (state, setState) = useState(State.DEFAULT)
 
   val onDelete = {

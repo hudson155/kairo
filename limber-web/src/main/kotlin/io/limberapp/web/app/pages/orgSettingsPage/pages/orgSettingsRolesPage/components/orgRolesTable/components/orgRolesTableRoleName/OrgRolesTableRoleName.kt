@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.limberTable.components.limberTableCell.li
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
 import io.limberapp.web.hook.useEscapeKeyListener
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
@@ -63,7 +64,8 @@ private val s = S().apply { inject() }
  */
 private enum class State { DISPLAYING, EDITING, SAVING }
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   val isMounted = useIsMounted()
 
   val (state, setState) = useState(State.DISPLAYING)

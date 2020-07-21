@@ -6,7 +6,6 @@ import io.limberapp.web.app.components.sidenav.sidenav
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.OrgSettingsInfoPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
-import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -16,7 +15,8 @@ internal fun RBuilder.orgSettingsSidenav() {
   child(component)
 }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   sidenav(OrgSettingsPage.name) {
     sidenavGroup {
       sidenavLink(OrgSettingsInfoPage.name, to = OrgSettingsInfoPage.path)

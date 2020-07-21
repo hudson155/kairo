@@ -9,6 +9,7 @@ import io.limberapp.web.app.components.limberTable.components.limberTableRow.lim
 import io.limberapp.web.app.components.limberTable.limberTable
 import io.limberapp.web.app.components.memberRow.memberRow
 import io.limberapp.web.context.globalState.action.users.loadUsers
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.componentWithApi
@@ -67,7 +68,8 @@ private class S : Styles("FormInstancesTable") {
 
 private val s = S().apply { inject() }
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   self.loadUsers()
 
   if (props.formInstances.isEmpty()) {

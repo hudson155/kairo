@@ -6,7 +6,6 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.OrgS
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.orgSettingsInfoPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.orgSettingsRolesPage
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -22,7 +21,8 @@ internal object OrgSettingsPage {
   const val path = "/settings/org"
 }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   standardLayout(leftPane = buildElement { orgSettingsSidenav() }) {
     switch {
       route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }

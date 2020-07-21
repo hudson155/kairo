@@ -44,7 +44,8 @@ private val initialState = GlobalStateContext(
   users = LoadableState.initial()
 )
 
-private val component = functionalComponent<RProps> { props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   val (state, dispatch) = useReducer({ state: GlobalStateContext, action: Action ->
     return@useReducer when (action) {
       is FormInstancesAction -> state.copy(formInstances = formInstancesReducer(state.formInstances, action))

@@ -7,6 +7,7 @@ import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.users.loadUsers
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -81,7 +82,8 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, SEARCHING }
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   self.loadUsers()
 
   val (state, setState) = useState(State.DEFAULT)
@@ -91,8 +93,8 @@ private val component = componentWithApi<Props> component@{ self, props ->
   // While the users are loading, show a loading spinner.
   val users = self.gs.users.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component loadingSpinner()
-      is LoadableState.Error -> return@component failedToLoad("users")
+      is LoadableState.Unloaded -> return loadingSpinner()
+      is LoadableState.Error -> return failedToLoad("users")
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

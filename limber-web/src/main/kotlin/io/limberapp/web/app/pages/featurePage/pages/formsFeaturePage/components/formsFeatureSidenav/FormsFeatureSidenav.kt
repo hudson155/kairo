@@ -5,7 +5,6 @@ import io.limberapp.web.app.components.sidenav.components.sidenavLink.sidenavLin
 import io.limberapp.web.app.components.sidenav.sidenav
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.FormInstancesPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.FormTemplatesPage
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -18,7 +17,8 @@ internal fun RBuilder.formsFeatureSidenav(title: String) {
 
 internal data class Props(val title: String) : RProps
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val match = checkNotNull(useRouteMatch<RProps>())
 
   sidenav(props.title) {

@@ -2,7 +2,6 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.form
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.pages.formTemplatesListPage.formTemplatesListPage
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -20,7 +19,8 @@ internal object FormTemplatesPage {
   const val subpath = "/templates"
 }
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val match = checkNotNull(useRouteMatch<RProps>())
 
   switch {

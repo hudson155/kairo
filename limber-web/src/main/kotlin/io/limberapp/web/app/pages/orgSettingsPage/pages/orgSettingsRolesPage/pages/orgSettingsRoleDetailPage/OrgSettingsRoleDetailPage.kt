@@ -10,6 +10,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.orgRoles.loadOrgRoles
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.componentWithApi
@@ -41,7 +42,8 @@ private class S : Styles("OrgSettingsRoleDetailPage") {
 
 private val s = S().apply { inject() }
 
-private val component = componentWithApi<RProps> component@{ self, _ ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: RProps) {
   val history = useHistory()
   val match = checkNotNull(useRouteMatch<OrgSettingsRoleDetailPage.PageParams>())
 
@@ -54,8 +56,8 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
   // While the org roles are loading, show a blank modal.
   val orgRoles = self.gs.orgRoles.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component modal(blank = true, onClose = goBack) {}
-      is LoadableState.Error -> return@component modal(onClose = goBack) { failedToLoad("roles") }
+      is LoadableState.Unloaded -> return modal(blank = true, onClose = goBack) {}
+      is LoadableState.Error -> return modal(onClose = goBack) { failedToLoad("roles") }
       is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
   }

@@ -4,7 +4,6 @@ import io.limberapp.web.app.components.layout.components.centeredContentLayout.c
 import io.limberapp.web.app.pages.signInPage.SignInPage
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
-import io.limberapp.web.util.component
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -29,7 +28,8 @@ private class S : Styles("UnauthenticatedPage") {
 
 private val s = S().apply { inject() }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   centeredContentLayout {
     div(classes = s.c { it::container }) {
       h1 { +"Welcome to Limber" }

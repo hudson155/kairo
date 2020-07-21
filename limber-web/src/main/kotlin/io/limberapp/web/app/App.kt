@@ -2,7 +2,6 @@ package io.limberapp.web.app
 
 import io.limberapp.web.api.apiProvider
 import io.limberapp.web.context.globalState.globalStateProvider
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -13,7 +12,8 @@ internal fun RBuilder.app() {
   child(component)
 }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   globalStateProvider {
     withAuth {
       apiProvider {

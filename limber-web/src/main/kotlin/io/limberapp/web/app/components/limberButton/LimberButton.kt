@@ -99,7 +99,8 @@ private class S : Styles("LimberButton") {
 
 private val s = S().apply { inject() }
 
-private val component = functionalComponent<Props> { props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val buttonStyle = when (props.style) {
     Style.PRIMARY -> s.c { it::primary }
     Style.SECONDARY -> s.c { it::secondary }

@@ -2,7 +2,6 @@ package io.limberapp.web.app.components.limberTable
 
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.util.c
-import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import kotlinx.css.*
 import react.*
@@ -25,7 +24,8 @@ internal fun RBuilder.limberTable(headers: List<String?>?, classes: String? = nu
 
 internal data class Props(val headers: List<String?>?, val classes: String?) : RProps
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   table(classes = props.classes) {
     props.headers?.let { headers ->
       thead(classes = gs.c { it::hiddenXs }) {

@@ -8,6 +8,7 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formI
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.formInstances.loadFormInstances
 import io.limberapp.web.context.globalState.action.formTemplates.loadFormTemplates
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.componentWithApi
 import react.*
 
@@ -20,7 +21,8 @@ internal fun RBuilder.formInstancesListPage(feature: FeatureRep.Complete) {
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   self.loadFormInstances(props.feature.guid)
   self.loadFormTemplates(props.feature.guid)
 
@@ -29,8 +31,8 @@ private val component = componentWithApi<Props> component@{ self, props ->
   // While the form instances are loading, show a loading spinner.
   val formInstances = self.gs.formInstances[props.feature.guid].let { loadableState ->
     when (loadableState) {
-      null, is LoadableState.Unloaded -> return@component loadingSpinner()
-      is LoadableState.Error -> return@component failedToLoad("forms")
+      null, is LoadableState.Unloaded -> return loadingSpinner()
+      is LoadableState.Error -> return failedToLoad("forms")
       is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
   }

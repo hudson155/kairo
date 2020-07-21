@@ -8,6 +8,7 @@ import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.context.globalState.action.org.state
 import io.limberapp.web.context.globalState.action.user.state
+import io.limberapp.web.util.ComponentWithGlobalState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
 import io.limberapp.web.util.c
@@ -47,7 +48,8 @@ private val s = S().apply { inject() }
 
 private enum class OpenItem { HAMBURGER, USER_DROPDOWN }
 
-private val component = componentWithGlobalState<RProps> component@{ self, _ ->
+private val component = componentWithGlobalState(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithGlobalState, props: RProps) {
   // Only 1 item on the navbar can be open at a time.
   val (openItem, setOpenItem) = useState<OpenItem?>(null)
 

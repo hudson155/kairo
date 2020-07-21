@@ -455,6 +455,7 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
+    allowedNames: "(_|props)"
   UseArrayLiteralsInAnnotations:
     active: true
   UseCheckOrError:

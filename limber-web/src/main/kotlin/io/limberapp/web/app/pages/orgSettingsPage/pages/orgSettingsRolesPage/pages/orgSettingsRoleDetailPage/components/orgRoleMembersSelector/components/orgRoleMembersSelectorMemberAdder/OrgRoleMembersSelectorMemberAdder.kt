@@ -10,7 +10,6 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
-import io.limberapp.web.util.component
 import kotlinx.css.*
 import react.*
 import react.dom.*
@@ -65,7 +64,8 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, ADDING, ADD_SAVING }
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val (state, setState) = useState(State.DEFAULT)
   val (selectedUserGuid, setSelectedUserGuid) = useState<UUID?>(null)
 

@@ -5,6 +5,7 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
 import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
@@ -63,7 +64,8 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, SAVING }
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   val isMounted = useIsMounted()
 
   val (state, setState) = useState(State.DEFAULT)

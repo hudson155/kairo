@@ -1,6 +1,5 @@
 package io.limberapp.web.app.components.pageTracker
 
-import io.limberapp.web.util.component
 import io.limberapp.web.util.external.segment
 import io.limberapp.web.util.process
 import react.*
@@ -15,7 +14,8 @@ internal fun RBuilder.pageTracker() {
   child(component)
 }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   val location = useLocation()
 
   useEffect(emptyList()) {

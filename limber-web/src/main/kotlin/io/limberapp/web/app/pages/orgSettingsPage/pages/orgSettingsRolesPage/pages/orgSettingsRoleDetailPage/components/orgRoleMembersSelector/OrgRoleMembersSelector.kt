@@ -14,6 +14,7 @@ import io.limberapp.web.context.globalState.action.orgRoleMemberships.createOrgR
 import io.limberapp.web.context.globalState.action.orgRoleMemberships.deleteOrgRoleMembership
 import io.limberapp.web.context.globalState.action.orgRoleMemberships.loadOrgRoleMemberships
 import io.limberapp.web.context.globalState.action.users.loadUsers
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
 import io.limberapp.web.util.componentWithApi
@@ -32,7 +33,8 @@ internal fun RBuilder.orgRoleMembersSelector(orgRole: OrgRoleRep.Complete, onClo
 
 internal data class Props(val orgRole: OrgRoleRep.Complete, val onClose: () -> Unit) : RProps
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   self.loadUsers()
   self.loadOrgRoleMemberships(props.orgRole.guid)
 
@@ -47,8 +49,8 @@ private val component = componentWithApi<Props> component@{ self, props ->
   // While the users are loading, show a loading spinner.
   val users = self.gs.users.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component loadingSpinner()
-      is LoadableState.Error -> return@component failedToLoad("users")
+      is LoadableState.Unloaded -> return loadingSpinner()
+      is LoadableState.Error -> return failedToLoad("users")
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }
@@ -56,8 +58,8 @@ private val component = componentWithApi<Props> component@{ self, props ->
   // While the users are loading, show a loading spinner.
   val orgRoleMemberships = self.gs.orgRoleMemberships[props.orgRole.guid].let { loadableState ->
     when (loadableState) {
-      null, is LoadableState.Unloaded -> return@component loadingSpinner()
-      is LoadableState.Error -> return@component failedToLoad("roles")
+      null, is LoadableState.Unloaded -> return loadingSpinner()
+      is LoadableState.Error -> return failedToLoad("roles")
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

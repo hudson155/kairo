@@ -1,8 +1,8 @@
 package io.limberapp.web.api
 
 import com.piperframework.restInterface.Fetch
-import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.auth.useAuth
+import io.limberapp.web.context.ProviderValue
 import io.limberapp.web.util.process
 import react.*
 
@@ -16,7 +16,8 @@ internal fun RBuilder.apiProvider(children: RHandler<RProps>) {
 private val api = createContext<Api>()
 internal fun useApi() = useContext(api)
 
-private val component = functionalComponent<RProps> { props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   val auth = useAuth()
 
   val fetch = object : Fetch(process.env.API_ROOT_URL, json) {

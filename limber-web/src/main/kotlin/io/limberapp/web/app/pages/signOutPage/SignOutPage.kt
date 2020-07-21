@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.signOutPage
 
 import io.limberapp.web.auth.useAuth
-import io.limberapp.web.util.component
 import react.*
 
 /**
@@ -16,7 +15,8 @@ internal object SignOutPage {
   const val path = "/signout"
 }
 
-private val component = component<RProps> component@{
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: RProps) {
   val auth = useAuth()
   auth.signOut()
 }

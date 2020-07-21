@@ -10,6 +10,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleCreationPage.OrgSettingsRoleCreationPage
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.orgRoles.loadOrgRoles
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.componentWithApi
@@ -40,7 +41,8 @@ private class S : Styles("OrgSettingsRolesListPage") {
 
 private val s = S().apply { inject() }
 
-private val component = componentWithApi<RProps> component@{ self, _ ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: RProps) {
   val history = useHistory();
 
   self.loadOrgRoles()
@@ -50,8 +52,8 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
   // While the org roles are loading, show a loading spinner.
   val orgRoles = self.gs.orgRoles.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component loadingSpinner()
-      is LoadableState.Error -> return@component failedToLoad("roles")
+      is LoadableState.Unloaded -> return loadingSpinner()
+      is LoadableState.Error -> return failedToLoad("roles")
       is LoadableState.Loaded -> return@let loadableState.state.values.toSet()
     }
   }

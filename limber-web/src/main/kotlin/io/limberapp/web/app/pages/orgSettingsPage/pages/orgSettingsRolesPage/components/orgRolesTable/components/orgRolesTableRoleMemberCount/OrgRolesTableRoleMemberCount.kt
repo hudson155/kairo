@@ -7,7 +7,6 @@ import io.limberapp.web.app.components.limberTable.components.limberTableCell.li
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleDetailPage.OrgSettingsRoleDetailPage
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
-import io.limberapp.web.util.component
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.pluralize
 import react.*
@@ -27,7 +26,8 @@ internal fun RBuilder.orgRolesTableRoleMemberCount(orgRole: OrgRoleRep.Complete,
 
 internal data class Props(val orgRole: OrgRoleRep.Complete, val classes: String?) : RProps
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val match = checkNotNull(useRouteMatch<RProps>())
   limberTableCell(classes = props.classes) {
     navLink<RProps>(

@@ -7,6 +7,7 @@ import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.formTemplates.loadFormTemplate
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.componentWithApi
 import react.*
 import react.dom.*
@@ -27,7 +28,8 @@ internal object FormInstanceCreationPage {
   val subpath = "/create/:${PageParams::templateGuid.name}"
 }
 
-private val component = componentWithApi<Props> component@{ self, props ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: Props) {
   val match = checkNotNull(useRouteMatch<FormInstanceCreationPage.PageParams>())
   val templateGuid = match.params.templateGuid
 
@@ -35,8 +37,8 @@ private val component = componentWithApi<Props> component@{ self, props ->
 
   val template = self.gs.formTemplates.completes[templateGuid].let { loadableState ->
     when (loadableState) {
-      null, is LoadableState.Unloaded -> return@component centeredContentLayout { loadingSpinner(large = true) }
-      is LoadableState.Error -> return@component centeredContentLayout { failedToLoad("form") }
+      null, is LoadableState.Unloaded -> return centeredContentLayout { loadingSpinner(large = true) }
+      is LoadableState.Error -> return centeredContentLayout { failedToLoad("form") }
       is LoadableState.Loaded -> return@let loadableState.state
     }
   }

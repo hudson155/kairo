@@ -6,7 +6,6 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formI
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.formInstancesPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.FormTemplatesPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.formTemplatesPage
-import io.limberapp.web.util.component
 import react.*
 import react.router.dom.*
 
@@ -19,7 +18,8 @@ internal fun RBuilder.formsFeaturePage(feature: FeatureRep.Complete) {
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-private val component = component<Props> component@{ props ->
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val match = checkNotNull(useRouteMatch<RProps>())
 
   // TODO: The line below is temporarily commented out to disable form templates.

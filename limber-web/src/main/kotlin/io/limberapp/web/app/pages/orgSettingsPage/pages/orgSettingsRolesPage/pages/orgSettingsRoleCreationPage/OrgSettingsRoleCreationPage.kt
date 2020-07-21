@@ -10,6 +10,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.Org
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.context.globalState.action.orgRoles.createOrgRole
 import io.limberapp.web.context.globalState.action.orgRoles.loadOrgRoles
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
@@ -46,7 +47,8 @@ private class S : Styles("OrgSettingsRoleCreationPage") {
 
 private val s = S().apply { inject() }
 
-private val component = componentWithApi<RProps> component@{ self, _ ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: RProps) {
   self.loadOrgRoles()
 
   val (newRoleName, setNewRoleName) = useState("");

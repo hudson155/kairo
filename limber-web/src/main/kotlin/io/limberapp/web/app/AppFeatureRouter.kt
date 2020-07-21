@@ -12,11 +12,12 @@ import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
-import io.limberapp.web.context.LoadableState
 import io.limberapp.web.auth.useAuth
+import io.limberapp.web.context.LoadableState
 import io.limberapp.web.context.globalState.action.org.loadOrg
 import io.limberapp.web.context.globalState.action.org.state
 import io.limberapp.web.context.globalState.action.user.loadUser
+import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.rootPath
 import react.*
@@ -31,7 +32,8 @@ internal fun RBuilder.appFeatureRouter() {
   child(component)
 }
 
-private val component = componentWithApi<RProps> component@{ self, _ ->
+private val component = componentWithApi(RBuilder::component)
+private fun RBuilder.component(self: ComponentWithApi, props: RProps) {
   val auth = useAuth()
 
   self.loadOrg(checkNotNull(auth.jwt).org.guid)
@@ -40,8 +42,8 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
   // While the org is loading, show the loading page.
   self.gs.org.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component minimalPage(linkType = null) { loadingPage("Loading org...") }
-      is LoadableState.Error -> return@component minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("org") }
+      is LoadableState.Unloaded -> return minimalPage(linkType = null) { loadingPage("Loading org...") }
+      is LoadableState.Error -> return minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("org") }
       is LoadableState.Loaded -> Unit
     }
   }
@@ -49,8 +51,8 @@ private val component = componentWithApi<RProps> component@{ self, _ ->
   // While the user is loading, show the loading page.
   self.gs.user.let { loadableState ->
     when (loadableState) {
-      is LoadableState.Unloaded -> return@component minimalPage(linkType = null) { loadingPage("Loading user...") }
-      is LoadableState.Error -> return@component minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("user") }
+      is LoadableState.Unloaded -> return minimalPage(linkType = null) { loadingPage("Loading user...") }
+      is LoadableState.Error -> return minimalPage(linkType = LinkType.SIGN_OUT) { failedToLoadPage("user") }
       is LoadableState.Loaded -> Unit
     }
   }
