@@ -1,10 +1,11 @@
 package io.limberapp.backend.module.orgs.client.org
 
+import com.piperframework.util.Outcome
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 
 interface OrgClient {
-  suspend operator fun invoke(endpoint: OrgApi.Get): Result<OrgRep.Complete>
+  suspend operator fun invoke(endpoint: OrgApi.Get): Outcome<OrgRep.Complete>
 
-  suspend operator fun invoke(endpoint: OrgApi.Patch): Result<OrgRep.Complete>
+  suspend operator fun invoke(endpoint: OrgApi.Patch): Outcome<OrgRep.Complete>
 }
