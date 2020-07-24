@@ -90,7 +90,7 @@ private fun RBuilder.component(props: Props) {
         label(classes = s.c { it::label }) {
           span {
             input(type = InputType.checkBox) {
-              attrs.defaultChecked = props.permissions.hasPermission(permission)
+              attrs.defaultChecked = permission in props.permissions
               attrs.disabled = state == State.SAVING
               attrs.onChangeFunction = { setPermissionValue(permission, it.targetChecked) }
             }

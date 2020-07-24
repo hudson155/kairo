@@ -15,6 +15,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.state.state.orgRoles.orgRolesStateProvider
 import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.util.Page
 import react.*
 import react.router.dom.*
 
@@ -24,7 +25,7 @@ internal fun RBuilder.orgSettingsRolesPage() {
 
 internal typealias Props = RProps
 
-internal object OrgSettingsRolesPage {
+internal object OrgSettingsRolesPage : Page {
   const val name = "Roles & permissions"
   const val path = "${OrgSettingsPage.path}/roles"
 }

@@ -1,6 +1,7 @@
 package io.limberapp.web.app.pages.signInPage
 
 import io.limberapp.web.auth.useAuth
+import io.limberapp.web.util.Page
 import react.*
 
 /**
@@ -12,7 +13,7 @@ internal fun RBuilder.signInPage() {
 
 internal typealias Props = RProps
 
-internal object SignInPage {
+internal object SignInPage : Page {
   const val name = "Sign in"
   const val path = "/signin"
 }

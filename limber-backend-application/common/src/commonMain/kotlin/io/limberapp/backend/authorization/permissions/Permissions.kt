@@ -24,7 +24,7 @@ abstract class Permissions<P : Permission> {
 
   val size get() = permissions.size
 
-  fun hasPermission(permission: P) = permission in permissions
+  operator fun contains(permission: P) = permission in permissions
 
   fun asDarb() = listOfNotNull(prefix, DarbEncoder.encode(asBooleanList())).joinToString(".")
 

@@ -2,6 +2,7 @@ package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage
 
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
+import io.limberapp.web.util.Page
 import react.*
 
 internal fun RBuilder.orgSettingsInfoPage() {
@@ -10,7 +11,7 @@ internal fun RBuilder.orgSettingsInfoPage() {
 
 internal typealias Props = RProps
 
-internal object OrgSettingsInfoPage {
+internal object OrgSettingsInfoPage : Page {
   const val name = "Organization info"
   const val path = "${OrgSettingsPage.path}/info"
 }

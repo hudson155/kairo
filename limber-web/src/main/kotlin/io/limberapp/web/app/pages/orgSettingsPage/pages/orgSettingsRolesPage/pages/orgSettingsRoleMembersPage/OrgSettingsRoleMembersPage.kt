@@ -14,6 +14,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.state.state.orgRoleMemberships.orgRoleMembershipsStateProvider
 import io.limberapp.web.state.state.orgRoles.useOrgRolesState
 import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.util.Page
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import kotlinx.css.*
@@ -27,7 +28,7 @@ internal fun RBuilder.orgSettingsRoleMembersPage() {
 
 internal typealias Props = RProps
 
-internal object OrgSettingsRoleMembersPage {
+internal object OrgSettingsRoleMembersPage : Page {
   internal data class PageParams(val roleSlug: String) : RProps
 
   fun path(roleSlug: String?) = listOf(

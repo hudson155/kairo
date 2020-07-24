@@ -8,6 +8,7 @@ import io.limberapp.web.api.useApi
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
+import io.limberapp.web.util.Page
 import react.*
 import react.dom.*
 import react.router.dom.*
@@ -18,7 +19,7 @@ internal fun RBuilder.formInstanceCreationPage(feature: FeatureRep.Complete) {
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-internal object FormInstanceCreationPage {
+internal object FormInstanceCreationPage : Page {
   internal data class PageParams(val templateGuid: UUID) : RProps
 
   val subpath = "/create/:${PageParams::templateGuid.name}"

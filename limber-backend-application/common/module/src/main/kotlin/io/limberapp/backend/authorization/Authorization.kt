@@ -67,7 +67,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
       principal ?: return false
       val org = principal.org ?: return false
       if (org.guid != orgGuid) return false
-      return org.permissions.hasPermission(orgPermission)
+      return orgPermission in org.permissions
     }
   }
 
@@ -90,7 +90,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
       // After making sure the feature exists on the org, we blindly check the org permission without checking the org
       // guid. This is ok because features are owned by orgs and users are members of a single org, so if the user has
       // access to the feature, the org GUID must be correct.
-      return org.permissions.hasPermission(orgPermission)
+      return orgPermission in org.permissions
     }
   }
 
@@ -102,7 +102,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
       principal ?: return false
       val org = principal.org ?: return false
       val feature = org.features[featureGuid] ?: return false
-      return feature.permissions.hasPermission(featurePermission)
+      return featurePermission in feature.permissions
     }
   }
 }

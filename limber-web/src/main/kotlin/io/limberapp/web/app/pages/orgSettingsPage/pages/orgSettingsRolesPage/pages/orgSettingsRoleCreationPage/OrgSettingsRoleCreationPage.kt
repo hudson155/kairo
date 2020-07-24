@@ -9,6 +9,7 @@ import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.state.state.orgRoles.useOrgRolesState
+import io.limberapp.web.util.Page
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
@@ -28,7 +29,7 @@ internal fun RBuilder.orgSettingsRoleCreationPage() {
 
 internal typealias Props = RProps
 
-internal object OrgSettingsRoleCreationPage {
+internal object OrgSettingsRoleCreationPage : Page {
   const val path = "${OrgSettingsRolesPage.path}/create"
 }
 

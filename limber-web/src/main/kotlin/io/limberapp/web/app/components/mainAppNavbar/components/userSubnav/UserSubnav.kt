@@ -6,6 +6,7 @@ import io.limberapp.web.app.components.navbar.components.subnav.components.subna
 import io.limberapp.web.app.components.navbar.components.subnav.subnav
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
+import io.limberapp.web.auth.useAuth
 import io.limberapp.web.hook.useClickListener
 import io.limberapp.web.state.state.user.useUserState
 import react.*
@@ -26,6 +27,8 @@ internal data class Props(val onUnfocus: () -> Unit) : RProps
 
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
+  val auth = useAuth()
+
   val (user, _) = useUserState()
 
   val name = user.fullName
@@ -39,8 +42,10 @@ private fun RBuilder.component(props: Props) {
         b { +name }
       }
     }
-    subnavGroup {
-      navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +OrgSettingsPage.name } }
+    if (auth.canVisit(OrgSettingsPage)) {
+      subnavGroup {
+        navLink<RProps>(to = OrgSettingsPage.path) { subnavItem { +OrgSettingsPage.name } }
+      }
     }
     subnavGroup {
       navLink<RProps>(to = SignOutPage.path, exact = true) { subnavItem { +SignOutPage.name } }

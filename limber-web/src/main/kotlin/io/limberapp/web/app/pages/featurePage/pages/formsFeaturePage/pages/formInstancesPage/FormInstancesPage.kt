@@ -4,6 +4,7 @@ import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage.FormInstanceCreationPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage.formInstanceCreationPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.formInstancesListPage
+import io.limberapp.web.util.Page
 import react.*
 import react.router.dom.*
 
@@ -13,7 +14,7 @@ internal fun RBuilder.formInstancesPage(feature: FeatureRep.Complete) {
 
 internal data class Props(val feature: FeatureRep.Complete) : RProps
 
-internal object FormInstancesPage {
+internal object FormInstancesPage : Page {
   const val subpath = "/instances"
 }
 
