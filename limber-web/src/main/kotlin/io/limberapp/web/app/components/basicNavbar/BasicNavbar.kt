@@ -12,12 +12,14 @@ import react.*
  *
  * [children] should be [headerItem]s for the right section of the nav.
  */
-internal fun RBuilder.basicNavbar(children: RHandler<RProps> = {}) {
+internal fun RBuilder.basicNavbar(children: RHandler<Props> = {}) {
   child(component, handler = children)
 }
 
+internal typealias Props = RProps
+
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   navbar(
     left = buildElements { headerGroup { headerItem { +"Limber" } } },
     right = buildElements { headerGroup { props.children() } }

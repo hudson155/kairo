@@ -11,13 +11,6 @@ import react.dom.div
 import react.dom.h1
 import react.dom.p
 
-/**
- * The title at the top of a layout, plus an optional description. All pages should have one of these.
- *
- * The [title] shows in an <h1>.
- *
- * The [description] just shows in a <p>.
- */
 internal fun RBuilder.layoutTitle(title: String, description: String? = null) {
   child(component, Props(title, description))
 }

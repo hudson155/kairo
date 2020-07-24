@@ -8,12 +8,11 @@ import react.*
 import react.dom.*
 import kotlin.js.Date
 
-/**
- * Footer present on all pages.
- */
 internal fun RBuilder.footer() {
   child(component)
 }
+
+internal typealias Props = RProps
 
 private class S : Styles("Footer") {
   val container by css {
@@ -25,7 +24,7 @@ private class S : Styles("Footer") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   div(classes = s.c { it::container }) {
     p { small { +"Copyright © ${Date().getFullYear()} ${process.env.COPYRIGHT_HOLDER}" } }
   }

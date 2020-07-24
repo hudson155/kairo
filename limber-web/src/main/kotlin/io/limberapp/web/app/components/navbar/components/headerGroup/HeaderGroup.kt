@@ -9,15 +9,14 @@ import react.*
 import react.dom.*
 
 /**
- * A group of items on a top-of-page navbar. Items in the same group should be conceptually grouped. The physical
- * spacing between them will be less for items in the same group than for items in different groups.
- *
  * [children] should be a series of [headerItem]s, probably including some <a> tags and possibly including some
  * [subnav]s.
  */
-internal fun RBuilder.headerGroup(children: RHandler<RProps>) {
+internal fun RBuilder.headerGroup(children: RHandler<Props>) {
   child(component, handler = children)
 }
+
+internal typealias Props = RProps
 
 private class S : Styles("HeaderGroup") {
   val container by css {
@@ -31,7 +30,7 @@ private class S : Styles("HeaderGroup") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   div(classes = s.c { it::container }) {
     props.children()
   }

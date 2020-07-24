@@ -1,6 +1,5 @@
 package io.limberapp.web.app.components.sidenav.components.sidenavLink
 
-import io.limberapp.web.app.components.sidenav.components.sidenavGroup.sidenavGroup
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -10,13 +9,6 @@ import react.*
 import react.dom.*
 import react.router.dom.*
 
-/**
- * A single link on a sidenav. This goes inside a [sidenavGroup].
- *
- * [text] is the text to display.
- *
- * [to] is the path to link to, and is passed directly to the [navLink].
- */
 internal fun RBuilder.sidenavLink(text: String, to: String) {
   child(component, Props(text, to))
 }

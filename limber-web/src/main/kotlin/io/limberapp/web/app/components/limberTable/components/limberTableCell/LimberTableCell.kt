@@ -8,21 +8,15 @@ import react.*
 import react.dom.*
 
 /**
- * A thin wrapper for the HTML [td] or [th] element.
- *
  * If [header] is true, this will use [th] instead of [td].
  *
  * If [isEmpty] is true, the cell will be rendered without padding and ignoring the [children].
- *
- * [classes] is for CSS classes to apply.
- *
- * [children] is the contents of the [td] or [th].
  */
 internal fun RBuilder.limberTableCell(
   header: Boolean = false,
   hideContent: Boolean = false,
   classes: String? = null,
-  children: RHandler<RProps>
+  children: RHandler<Props>
 ) {
   child(component, Props(header, hideContent, classes), handler = children)
 }

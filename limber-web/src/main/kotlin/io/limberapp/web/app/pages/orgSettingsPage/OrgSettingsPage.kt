@@ -9,12 +9,11 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.org
 import react.*
 import react.router.dom.*
 
-/**
- * Parent page for organization-level settings.
- */
 internal fun RBuilder.orgSettingsPage() {
   child(component)
 }
+
+internal typealias Props = RProps
 
 internal object OrgSettingsPage {
   const val name = "Organization settings"
@@ -22,7 +21,7 @@ internal object OrgSettingsPage {
 }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   standardLayout(leftPane = buildElement { orgSettingsSidenav() }) {
     switch {
       route(path = OrgSettingsPage.path, exact = true) { redirect(to = OrgSettingsInfoPage.path) }

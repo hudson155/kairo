@@ -11,16 +11,6 @@ import react.dom.*
  * Icon in-line with text. Uses the free version of Font Awesome as the icon library.
  *
  * The [name] is any icon name (excluding the leading "fa-") https://fontawesome.com/icons?d=gallery&m=free.
- *
- * If [leftMargin] is true, the icon will have a small margin on the left side. Otherwise it will have no margin on that
- * side.
- *
- * If [rightMargin] is true, the icon will have a small margin on the right side. Otherwise it will have no margin on
- * that side.
- *
- * [classes] are applied directly to the icon tag.
- *
- * Note that this isn't a component, it's actually just an extension function.
  */
 internal fun RBuilder.inlineIcon(
   name: String,

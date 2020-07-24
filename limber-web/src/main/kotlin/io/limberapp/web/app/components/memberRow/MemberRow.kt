@@ -17,14 +17,6 @@ import react.dom.*
  * A row that represents a member, generally used as part of a list, such as a list of org members or a list of org role
  * members.
  *
- * The [user] is the user to represent.
- *
- * [small] indicates that the size of the row should be on the smaller side. If false, it will be on the larger side.
- *
- * If [hideNameXs] is true, the name will be hidden on the xs screen size.
- *
- * [grayscale] makes the photo grey, representing a disabled state.
- *
  * If [onSelect] is provided, the row will be clickable and the function will be called when the row is clicked.
  */
 internal fun RBuilder.memberRow(

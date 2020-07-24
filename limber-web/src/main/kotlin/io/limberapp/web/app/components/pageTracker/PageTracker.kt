@@ -14,8 +14,10 @@ internal fun RBuilder.pageTracker() {
   child(component)
 }
 
+internal typealias Props = RProps
+
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   val location = useLocation()
 
   useEffect(emptyList()) {

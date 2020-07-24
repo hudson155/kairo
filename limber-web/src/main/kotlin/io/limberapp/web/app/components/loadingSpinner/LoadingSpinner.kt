@@ -10,14 +10,9 @@ import react.dom.*
 
 /**
  * Spinner to show while something is loading. Automatically centers itself horizontally.
- *
- * If [large] is true, the spinners will display a large version. Generally this should only be used for full
- * page spinners.
- *
- * [classes] is for CSS classes to apply.
  */
 internal fun RBuilder.loadingSpinner(large: Boolean = false, classes: String? = null) {
-  child(component, Props(large, classes));
+  child(component, Props(large, classes))
 }
 
 internal data class Props(
@@ -45,13 +40,13 @@ private class S : Styles("LoadingSpinner") {
   }
   val innerContainer by css {
     animation("spinner", 1.s, Timing.linear, iterationCount = IterationCount.infinite)
-    height = 100.pct;
-    position = Position.relative;
+    height = 100.pct
+    position = Position.relative
     transform {
       translateZ(0.px)
       scale(1)
     }
-    width = 100.pct;
+    width = 100.pct
   }
   val spinner by css {
     borderRadius = 50.pct

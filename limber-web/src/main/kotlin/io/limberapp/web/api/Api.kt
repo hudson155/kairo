@@ -23,7 +23,7 @@ internal class Api(fetch: Fetch) :
   FormInstanceQuestionClient by FormInstanceQuestionClientImpl(fetch, json),
   FormTemplateClient by FormTemplateClientImpl(fetch, json),
   OrgClient by OrgClientImpl(fetch, json),
-  OrgRoleMembershipClient by OrgRoleMembershipClientImpl(fetch, json),
   OrgRoleClient by OrgRoleClientImpl(fetch, json),
+  OrgRoleMembershipClient by OrgRoleMembershipClientImpl(fetch, json),
   TenantClient by TenantClientImpl(fetch, json),
   UserClient by UserClientImpl(fetch, json)

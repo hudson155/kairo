@@ -8,15 +8,14 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsInfoPage.OrgS
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import react.*
 
-/**
- * Sidenav for navigation within org settings pages.
- */
 internal fun RBuilder.orgSettingsSidenav() {
   child(component)
 }
 
+internal typealias Props = RProps
+
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   sidenav(OrgSettingsPage.name) {
     sidenavGroup {
       sidenavLink(OrgSettingsInfoPage.name, to = OrgSettingsInfoPage.path)

@@ -12,9 +12,11 @@ import react.dom.*
  *
  * Content is provided by [children]. Content should be kept small; behaviour is undefined upon overflow.
  */
-internal fun RBuilder.centeredContentLayout(children: RHandler<RProps>) {
+internal fun RBuilder.centeredContentLayout(children: RHandler<Props>) {
   child(component, handler = children)
 }
+
+internal typealias Props = RProps
 
 private class S : Styles("CenteredContentLayout") {
   val container by css {
@@ -30,7 +32,7 @@ private class S : Styles("CenteredContentLayout") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   div(classes = s.c { it::container }) {
     props.children()
   }

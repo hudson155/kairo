@@ -8,15 +8,13 @@ import io.limberapp.web.app.components.modal.components.modalTitle.modalTitle
 import io.limberapp.web.app.components.modal.modal
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.OrgSettingsRolesPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
-import io.limberapp.web.context.globalState.action.orgRoles.createOrgRole
-import io.limberapp.web.context.globalState.action.orgRoles.loadOrgRoles
-import io.limberapp.web.util.ComponentWithApi
+import io.limberapp.web.state.state.orgRoles.useOrgRolesState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
-import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetValue
+import io.limberapp.web.util.useIsMounted
 import kotlinx.css.*
 import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
@@ -24,12 +22,11 @@ import react.*
 import react.dom.*
 import react.router.dom.*
 
-/**
- * Page for creating a new org role.
- */
 internal fun RBuilder.orgSettingsRoleCreationPage() {
   child(component)
 }
+
+internal typealias Props = RProps
 
 internal object OrgSettingsRoleCreationPage {
   const val path = "${OrgSettingsRolesPage.path}/create"
@@ -47,21 +44,26 @@ private class S : Styles("OrgSettingsRoleCreationPage") {
 
 private val s = S().apply { inject() }
 
-private val component = componentWithApi(RBuilder::component)
-private fun RBuilder.component(self: ComponentWithApi, props: RProps) {
-  self.loadOrgRoles()
-
-  val (newRoleName, setNewRoleName) = useState("");
-  val (isSaving, setIsSaving) = useState(false);
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val history = useHistory()
+  val isMounted = useIsMounted()
+
+  val (_, orgRolesMutator) = useOrgRolesState()
+
+  val (newRoleName, setNewRoleName) = useState("")
+  val (isSaving, setIsSaving) = useState(false)
+
   val goBack = { history.goBack() }
 
   val onCreate = {
     setIsSaving(true)
     async {
-      self.createOrgRole(OrgRoleRep.Creation(newRoleName, OrgPermissions.none()))
-      goBack()
-      setIsSaving(false)
+      orgRolesMutator.post(OrgRoleRep.Creation(newRoleName, OrgPermissions.none()))
+      if (isMounted.current) {
+        goBack()
+        setIsSaving(false)
+      }
     }
   }
 

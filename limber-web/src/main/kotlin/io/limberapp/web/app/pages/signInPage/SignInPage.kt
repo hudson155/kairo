@@ -10,13 +10,15 @@ internal fun RBuilder.signInPage() {
   child(component)
 }
 
+internal typealias Props = RProps
+
 internal object SignInPage {
   const val name = "Sign in"
   const val path = "/signin"
 }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   val auth = useAuth()
   auth.signIn()
 }

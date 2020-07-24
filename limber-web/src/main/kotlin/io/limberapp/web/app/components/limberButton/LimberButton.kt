@@ -11,21 +11,12 @@ import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 
-/**
- * Limber styled button should generally be used in place of [button] in order to ensure a consistent UI across the app.
- *
- * The [style] allows for selecting the button color based on usage.
- *
- * [classes] is for CSS classes to apply.
- *
- * [children] can be any valid element to render inside a button. Generally this should be text.
- */
 internal fun RBuilder.limberButton(
   style: Style,
   loading: Boolean = false,
   onClick: () -> Unit,
   classes: String? = null,
-  children: RHandler<RProps>
+  children: RHandler<Props>
 ) {
   child(component, Props(style, loading, onClick, classes), handler = children)
 }

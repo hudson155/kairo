@@ -9,9 +9,6 @@ import kotlinx.css.*
 import react.*
 import react.dom.*
 
-/**
- * Generic error page.
- */
 internal fun RBuilder.errorPage(title: String, description: String) {
   child(component, Props(title, description))
 }

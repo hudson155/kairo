@@ -8,9 +8,6 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formT
 import react.*
 import react.router.dom.*
 
-/**
- * Sidenav for navigation within a forms feature.
- */
 internal fun RBuilder.formsFeatureSidenav(title: String) {
   child(component, Props(title))
 }

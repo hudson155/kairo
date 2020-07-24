@@ -10,12 +10,11 @@ import react.*
 import react.dom.*
 import react.router.dom.*
 
-/**
- * The only page shown when in an unauthenticated state.
- */
 internal fun RBuilder.unauthenticatedPage() {
   child(component)
 }
+
+internal typealias Props = RProps
 
 private class S : Styles("UnauthenticatedPage") {
   val container by css {
@@ -29,7 +28,7 @@ private class S : Styles("UnauthenticatedPage") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   centeredContentLayout {
     div(classes = s.c { it::container }) {
       h1 { +"Welcome to Limber" }

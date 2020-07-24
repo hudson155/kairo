@@ -8,11 +8,9 @@ import io.limberapp.web.app.components.limberTable.components.limberTableCell.li
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
 import io.limberapp.web.app.components.limberTable.limberTable
 import io.limberapp.web.app.components.memberRow.memberRow
-import io.limberapp.web.context.globalState.action.users.loadUsers
-import io.limberapp.web.util.ComponentWithApi
+import io.limberapp.web.state.state.users.useUsersState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
-import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.xs
 import kotlinx.css.*
@@ -20,16 +18,6 @@ import react.*
 import react.dom.*
 import styled.getClassName
 
-/**
- * A table showing form instances, and allowing them to be viewed by clicking on them.
- *
- * [formInstances] is the set of form instances to show on the table. One row for each.
- *
- * [formTemplates] is the form templates that [formInstances] are derived from. These are necessary in order to include
- * information that only exists on the [FormTemplateRep.Summary] and not on the [FormInstanceRep.Summary]. If this is
- * null, that data will be missing. However, it's recommended that [formTemplates] is only null if it's loading or if
- * there's an error, since the table will look incomplete without this information.
- */
 internal fun RBuilder.formInstancesTable(
   formInstances: Set<FormInstanceRep.Summary>,
   formTemplates: Map<UUID, FormTemplateRep.Summary>?
@@ -68,13 +56,13 @@ private class S : Styles("FormInstancesTable") {
 
 private val s = S().apply { inject() }
 
-private val component = componentWithApi(RBuilder::component)
-private fun RBuilder.component(self: ComponentWithApi, props: Props) {
-  self.loadUsers()
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
+  val (users, _) = useUsersState()
 
   if (props.formInstances.isEmpty()) {
     p { +"No forms exist." }
-    return@component
+    return
   }
 
   limberTable(headers = listOf("#", "Created", null, "Type", "Creator")) {
@@ -97,7 +85,7 @@ private fun RBuilder.component(self: ComponentWithApi, props: Props) {
           props.formTemplates?.get(formInstance.formTemplateGuid)?.title?.let { +it }
         }
         limberTableCell(classes = s.c { it::cell }) {
-          self.gs.users.stateOrNull?.get(formInstance.creatorAccountGuid)?.let {
+          users[formInstance.creatorAccountGuid]?.let {
             memberRow(it, small = true, hideNameXs = true)
           }
         }

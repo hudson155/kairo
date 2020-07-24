@@ -5,9 +5,6 @@ import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.FormTemplatesPage
 import react.*
 
-/**
- * Lists all form templates within the feature.
- */
 internal fun RBuilder.formTemplatesListPage(feature: FeatureRep.Complete) {
   child(component, Props(feature))
 }

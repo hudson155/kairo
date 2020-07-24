@@ -9,14 +9,7 @@ import kotlinx.css.properties.*
 import react.*
 import react.dom.*
 
-/**
- * A thin wrapper for the HTML [tr] element.
- *
- * [classes] is for CSS classes to apply.
- *
- * [children] is the contents of the [tr].
- */
-internal fun RBuilder.limberTableRow(classes: String? = null, children: RHandler<RProps>) {
+internal fun RBuilder.limberTableRow(classes: String? = null, children: RHandler<Props>) {
   child(component, Props(classes), handler = children)
 }
 

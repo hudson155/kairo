@@ -9,21 +9,6 @@ import kotlinx.css.properties.*
 import react.*
 import react.dom.*
 
-/**
- * A user's profile photo.
- *
- * [placeholder] is some text to be used in place of the profile photo if it's null and/or while it's loading.
- *
- * [url] is the URL to pull the profile photo from. It can be any URL. It's not validated.
- *
- * If [small] is true, the profile photo will display in a small version. Otherwise it will display in a large version.
- * The small version should be used in a navbar, for example.
- *
- * If [grayscale] is true, the profile photo will be shown in grayscale. This should be used to represent a disabled
- * state.
- *
- * [classes] is for CSS classes to apply.
- */
 internal fun RBuilder.profilePhoto(
   placeholder: String,
   url: String?,

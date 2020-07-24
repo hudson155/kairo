@@ -1,17 +1,12 @@
 package io.limberapp.web.app.components.orgMemberSelector
 
 import com.piperframework.types.UUID
-import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.components.memberRow.memberRow
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
-import io.limberapp.web.app.pages.failedToLoad.failedToLoad
-import io.limberapp.web.context.LoadableState
-import io.limberapp.web.context.globalState.action.users.loadUsers
-import io.limberapp.web.util.ComponentWithApi
+import io.limberapp.web.state.state.users.useUsersState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
-import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.initials
 import io.limberapp.web.util.search
 import io.limberapp.web.util.targetValue
@@ -25,11 +20,6 @@ import react.dom.*
 /**
  * A selector to choose an org member from a drop down. By default, this component will include all org members in the
  * list.
- *
- * If [excludedUserGuids] is provided, the given users will be excluded from the list.
- *
- * [onSelect] is called when the user selects one of the users from the list. It's called with null if the selected user
- * is deselected.
  */
 internal fun RBuilder.orgMemberSelector(excludedUserGuids: Set<UUID> = emptySet(), onSelect: (UUID?) -> Unit) {
   child(component, Props(excludedUserGuids, onSelect))
@@ -82,22 +72,13 @@ private val s = S().apply { inject() }
  */
 private enum class State { DEFAULT, SEARCHING }
 
-private val component = componentWithApi(RBuilder::component)
-private fun RBuilder.component(self: ComponentWithApi, props: Props) {
-  self.loadUsers()
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
+  val (users, _) = useUsersState()
 
   val (state, setState) = useState(State.DEFAULT)
   val (searchValue, setSearchValue) = useState("")
   val (selectedUserGuid, setSelectedUserGuid) = useState<UUID?>(null)
-
-  // While the users are loading, show a loading spinner.
-  val users = self.gs.users.let { loadableState ->
-    when (loadableState) {
-      is LoadableState.Unloaded -> return loadingSpinner()
-      is LoadableState.Error -> return failedToLoad("users")
-      is LoadableState.Loaded -> return@let loadableState.state
-    }
-  }
 
   val onSearchValue = onSelect@{ value: String ->
     setState(State.SEARCHING)

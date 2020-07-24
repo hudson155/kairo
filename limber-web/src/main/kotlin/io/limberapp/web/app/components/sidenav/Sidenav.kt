@@ -18,7 +18,7 @@ import react.router.dom.*
  *
  * [children] should be a series of [sidenavGroup]s.
  */
-internal fun RBuilder.sidenav(title: String, children: RHandler<RProps>) {
+internal fun RBuilder.sidenav(title: String, children: RHandler<Props>) {
   child(component, Props(title), handler = children)
 }
 

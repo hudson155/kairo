@@ -6,9 +6,6 @@ import io.limberapp.web.app.pages.featurePage.pages.homePage.homePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import react.*
 
-/**
- * Parent page for feature-specific pages.
- */
 internal fun RBuilder.featurePage(feature: FeatureRep.Complete) {
   child(component, Props(feature))
 }

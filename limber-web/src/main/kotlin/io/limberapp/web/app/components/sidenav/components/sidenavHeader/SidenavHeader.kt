@@ -18,12 +18,6 @@ import react.dom.*
 /**
  * The header for a [sidenav]. Contains functionality to open and close the [sidenavLink] series that the [sidenav]
  * contains.
- *
- * [text] is the text to display.
- *
- * [isOpen] represents whether or not the dropdown is open.
- *
- * [onClick] is called to toggle the state of the [sidenav]'s dropdown.
  */
 internal fun RBuilder.sidenavHeader(text: String, isOpen: Boolean, onClick: () -> Unit) {
   child(component, Props(text, isOpen, onClick))

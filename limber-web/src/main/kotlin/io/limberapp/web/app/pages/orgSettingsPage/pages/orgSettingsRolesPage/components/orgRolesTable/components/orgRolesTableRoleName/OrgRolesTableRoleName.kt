@@ -1,17 +1,13 @@
 package io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName
 
-import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.app.components.inlineIcon.inlineIcon
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
-import io.limberapp.web.context.globalState.action.orgRoles.updateOrgRole
 import io.limberapp.web.hook.useEscapeKeyListener
-import io.limberapp.web.util.ComponentWithApi
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
-import io.limberapp.web.util.componentWithApi
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.targetValue
 import io.limberapp.web.util.useIsMounted
@@ -24,16 +20,11 @@ import org.w3c.dom.events.Event
 import react.*
 import react.dom.*
 
-/**
- * Portion of org roles table that shows the name of the org role.
- *
- * [orgRole] is the role to be represented by this component.
- */
-internal fun RBuilder.orgRolesTableRoleName(orgRole: OrgRoleRep.Complete) {
-  child(component, Props(orgRole))
+internal fun RBuilder.orgRolesTableRoleName(name: String, onSetName: suspend (String) -> Unit) {
+  child(component, Props(name, onSetName))
 }
 
-internal data class Props(val orgRole: OrgRoleRep.Complete) : RProps
+internal data class Props(val name: String, val onSetName: suspend (String) -> Unit) : RProps
 
 private class S : Styles("OrgRolesTableRoleName") {
   val form by css {
@@ -64,23 +55,23 @@ private val s = S().apply { inject() }
  */
 private enum class State { DISPLAYING, EDITING, SAVING }
 
-private val component = componentWithApi(RBuilder::component)
-private fun RBuilder.component(self: ComponentWithApi, props: Props) {
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
   val isMounted = useIsMounted()
 
   val (state, setState) = useState(State.DISPLAYING)
-  val (editValue, setValue) = useState(props.orgRole.name)
+  val (editValue, setValue) = useState(props.name)
 
   val onEditClicked = { _: Event -> setState(State.EDITING) }
   val onCancelEdit = { _: Event ->
-    setValue(props.orgRole.name)
+    setValue(props.name)
     setState(State.DISPLAYING)
   }
   val onSubmit = { event: Event ->
     event.preventDefault()
     setState(State.SAVING)
     async {
-      self.updateOrgRole(props.orgRole.guid, OrgRoleRep.Update(name = editValue))
+      props.onSetName(editValue)
       if (isMounted.current) setState(State.DISPLAYING)
     }
   }
@@ -92,7 +83,7 @@ private fun RBuilder.component(self: ComponentWithApi, props: Props) {
     form(classes = s.c { it::form }) {
       attrs.onSubmitFunction = onSubmit
       when (state) {
-        State.DISPLAYING -> +props.orgRole.name
+        State.DISPLAYING -> +props.name
         State.EDITING, State.SAVING -> {
           input(type = InputType.text, classes = s.c { it::input }) {
             attrs.autoFocus = true

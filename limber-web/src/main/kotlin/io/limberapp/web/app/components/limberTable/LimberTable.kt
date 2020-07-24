@@ -8,17 +8,13 @@ import react.*
 import react.dom.*
 
 /**
- * A thin wrapper for the HTML [table] element.
- *
  * [headers] renders a column header for each element, and a blank column header for each null element. These are not
  * visible below the xs screen size.
- *
- * [classes] is for CSS classes to apply.
  *
  * [children] is the contents of the [table]'s [tbody]. In order to support proper rendering, each [tr] must have the
  * same number of [td]s as the length of [headers].
  */
-internal fun RBuilder.limberTable(headers: List<String?>?, classes: String? = null, children: RHandler<RProps>) {
+internal fun RBuilder.limberTable(headers: List<String?>?, classes: String? = null, children: RHandler<Props>) {
   child(component, Props(headers, classes), handler = children)
 }
 

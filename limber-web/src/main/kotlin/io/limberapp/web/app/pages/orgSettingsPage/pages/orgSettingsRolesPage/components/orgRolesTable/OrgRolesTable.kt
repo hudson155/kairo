@@ -7,6 +7,9 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.com
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleMemberCount.orgRolesTableRoleMemberCount
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRoleName.orgRolesTableRoleName
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.components.orgRolesTable.components.orgRolesTableRolePermissions.orgRolesTableRolePermissions
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleMembersPage.OrgSettingsRoleMembersPage
+import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolePermissionsPage.OrgSettingsRolePermissionsPage
+import io.limberapp.web.state.state.orgRoles.useOrgRolesState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
 import io.limberapp.web.util.gs
@@ -48,6 +51,8 @@ private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
+  val (_, orgRolesMutator) = useOrgRolesState()
+
   if (props.orgRoles.isEmpty()) {
     p { +"No roles are defined." }
     return
@@ -59,10 +64,22 @@ private fun RBuilder.component(props: Props) {
     props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
       limberTableRow {
         attrs.key = orgRole.guid
-        orgRolesTableRoleName(orgRole)
-        orgRolesTableRolePermissions(orgRole)
-        orgRolesTableRoleMemberCount(orgRole)
-        orgRolesTableRoleDeleter(orgRole)
+        orgRolesTableRoleName(
+          name = orgRole.name,
+          onSetName = { orgRolesMutator.patch(orgRole.guid, OrgRoleRep.Update(name = it)) }
+        )
+        orgRolesTableRolePermissions(
+          permissions = orgRole.permissions,
+          linkTo = OrgSettingsRolePermissionsPage.path(orgRole.slug)
+        )
+        orgRolesTableRoleMemberCount(
+          memberCount = orgRole.memberCount,
+          linkTo = OrgSettingsRoleMembersPage.path(orgRole.slug)
+        )
+        orgRolesTableRoleDeleter(
+          name = orgRole.name,
+          onDelete = { orgRolesMutator.delete(orgRole.guid) }
+        )
       }
     }
   }

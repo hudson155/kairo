@@ -10,14 +10,13 @@ import react.*
 import react.dom.*
 
 /**
- * A group of items on a subnav. Items in the same group should be conceptually grouped. The physical spacing between
- * them will be less for items in the same group than for items in different groups.
- *
  * [children] should be a series of [subnavItem]s, probably including some <a> tags.
  */
-internal fun RBuilder.subnavGroup(children: RHandler<RProps>) {
+internal fun RBuilder.subnavGroup(children: RHandler<Props>) {
   child(component, handler = children)
 }
+
+internal typealias Props = RProps
 
 private class S : Styles("SubnavGroup") {
   val container by css {
@@ -33,7 +32,7 @@ private class S : Styles("SubnavGroup") {
 private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
-private fun RBuilder.component(props: RProps) {
+private fun RBuilder.component(props: Props) {
   div(classes = s.c { it::container }) {
     props.children()
   }

@@ -20,7 +20,7 @@ import react.dom.*
  *
  * [children] should be a series of [subnavGroup]s.
  */
-internal fun RBuilder.subnav(right: Boolean = false, children: RHandler<RProps>) {
+internal fun RBuilder.subnav(right: Boolean = false, children: RHandler<Props>) {
   child(component, Props(right), handler = children)
 }
 

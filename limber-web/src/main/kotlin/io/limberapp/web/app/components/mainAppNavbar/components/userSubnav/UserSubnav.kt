@@ -6,10 +6,8 @@ import io.limberapp.web.app.components.navbar.components.subnav.components.subna
 import io.limberapp.web.app.components.navbar.components.subnav.subnav
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.signOutPage.SignOutPage
-import io.limberapp.web.context.globalState.action.user.state
 import io.limberapp.web.hook.useClickListener
-import io.limberapp.web.util.ComponentWithGlobalState
-import io.limberapp.web.util.componentWithGlobalState
+import io.limberapp.web.state.state.user.useUserState
 import react.*
 import react.dom.*
 import react.router.dom.*
@@ -26,9 +24,11 @@ internal fun RBuilder.userSubnav(onUnfocus: () -> Unit) {
 
 internal data class Props(val onUnfocus: () -> Unit) : RProps
 
-private val component = componentWithGlobalState(RBuilder::component)
-private fun RBuilder.component(self: ComponentWithGlobalState, props: Props) {
-  val name = self.gs.user.state.fullName
+private val component = functionalComponent(RBuilder::component)
+private fun RBuilder.component(props: Props) {
+  val (user, _) = useUserState()
+
+  val name = user.fullName
 
   useClickListener(emptyList()) { props.onUnfocus() }
 

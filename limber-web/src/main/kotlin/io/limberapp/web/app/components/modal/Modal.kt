@@ -22,8 +22,6 @@ import react.dom.*
  *
  * [onClose] is called in order to close the modal. The modal can't remove itself from the DOM, so this is called to
  * make the parent do so.
- *
- * [children] is the arbitrary content of the modal.
  */
 internal fun RBuilder.modal(
   blank: Boolean = false,

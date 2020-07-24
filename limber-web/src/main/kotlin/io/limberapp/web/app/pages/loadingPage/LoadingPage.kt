@@ -5,9 +5,6 @@ import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import react.*
 import react.dom.*
 
-/**
- * Page to show while things are loading.
- */
 internal fun RBuilder.loadingPage(loadingText: String) {
   child(component, Props(loadingText))
 }

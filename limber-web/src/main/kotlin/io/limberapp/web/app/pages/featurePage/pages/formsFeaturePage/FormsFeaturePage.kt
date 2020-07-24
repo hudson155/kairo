@@ -9,9 +9,6 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formT
 import react.*
 import react.router.dom.*
 
-/**
- * Parent page for forms module pages.
- */
 internal fun RBuilder.formsFeaturePage(feature: FeatureRep.Complete) {
   child(component, Props(feature))
 }

@@ -11,8 +11,7 @@ import react.dom.*
  *
  * The [footer] usually contains copyright and/or some links.
  *
- * The [children] is the main page content. Each of these is put into a semantically-appropriate HTML element (<header>,
- * <main>, <footer>).
+ * The [children] is the main page content.
  */
 internal fun RBuilder.page(
   header: ReactElement? = null,

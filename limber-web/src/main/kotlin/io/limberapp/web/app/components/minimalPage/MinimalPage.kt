@@ -11,8 +11,6 @@ import react.router.dom.*
 
 /**
  * Renders a page with a basic navbar and the footer. This is useful for error pages and loading pages.
- *
- * The [children] is the main page content, same as for [page].
  */
 internal fun RBuilder.minimalPage(
   linkType: LinkType?,

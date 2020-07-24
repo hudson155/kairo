@@ -10,11 +10,6 @@ import kotlinx.css.*
 import react.*
 import react.dom.*
 
-/**
- * A modal to confirm deletion of an org role.
- *
- * [orgRoleName] is the name of the org role.
- */
 internal fun RBuilder.orgRolesTableRoleDeleterModal(orgRoleName: String, onDelete: () -> Unit, onCancel: () -> Unit) {
   child(component, Props(orgRoleName, onDelete, onCancel))
 }
