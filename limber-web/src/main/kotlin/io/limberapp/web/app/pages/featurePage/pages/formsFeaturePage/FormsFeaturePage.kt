@@ -1,6 +1,5 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage
 
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.FormInstancesPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.formInstancesPage
@@ -9,11 +8,11 @@ import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formT
 import react.*
 import react.router.dom.*
 
-internal fun RBuilder.formsFeaturePage(feature: FeatureRep.Complete) {
-  child(component, Props(feature))
+internal fun RBuilder.formsFeaturePage() {
+  child(component)
 }
 
-internal data class Props(val feature: FeatureRep.Complete) : RProps
+internal typealias Props = RProps
 
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
@@ -28,10 +27,10 @@ private fun RBuilder.component(props: Props) {
         redirect(to = match.path + FormInstancesPage.subpath)
       }
       route(path = match.path + FormInstancesPage.subpath) {
-        buildElement { formInstancesPage(props.feature) }
+        buildElement { formInstancesPage() }
       }
       route(path = match.path + FormTemplatesPage.subpath, exact = true) {
-        buildElement { formTemplatesPage(props.feature) }
+        buildElement { formTemplatesPage() }
       }
     }
   }

@@ -1,4 +1,4 @@
-package io.limberapp.web.state.state.orgState
+package io.limberapp.web.state.state.org
 
 import io.limberapp.web.state.ProviderValue
 import react.*

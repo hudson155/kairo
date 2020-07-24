@@ -14,7 +14,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolePermissionsPage.orgSettingsRolePermissionsPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.state.state.orgRoles.orgRolesStateProvider
-import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.state.state.org.useOrgState
 import io.limberapp.web.util.Page
 import react.*
 import react.router.dom.*

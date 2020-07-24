@@ -8,7 +8,7 @@ import io.limberapp.web.app.pages.featurePage.featurePage
 import io.limberapp.web.app.pages.notFoundPage.notFoundPage
 import io.limberapp.web.app.pages.orgSettingsPage.OrgSettingsPage
 import io.limberapp.web.app.pages.orgSettingsPage.orgSettingsPage
-import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.state.state.org.useOrgState
 import io.limberapp.web.util.rootPath
 import react.*
 import react.router.dom.*

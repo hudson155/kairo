@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.api.useApi
 import io.limberapp.web.state.ProviderValue
-import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.state.state.org.useOrgState
 import react.*
 
 internal fun RBuilder.orgRolesStateProvider(orgRoles: OrgRolesState, children: RHandler<Props>) {

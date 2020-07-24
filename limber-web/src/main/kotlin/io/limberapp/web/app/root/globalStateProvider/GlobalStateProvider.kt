@@ -9,7 +9,7 @@ import io.limberapp.web.app.components.minimalPage.minimalPage
 import io.limberapp.web.app.pages.failedToLoadPage.failedToLoadPage
 import io.limberapp.web.app.pages.loadingPage.loadingPage
 import io.limberapp.web.auth.useAuth
-import io.limberapp.web.state.state.orgState.orgStateProvider
+import io.limberapp.web.state.state.org.orgStateProvider
 import io.limberapp.web.state.state.user.userStateProvider
 import io.limberapp.web.state.state.users.usersStateProvider
 import react.*

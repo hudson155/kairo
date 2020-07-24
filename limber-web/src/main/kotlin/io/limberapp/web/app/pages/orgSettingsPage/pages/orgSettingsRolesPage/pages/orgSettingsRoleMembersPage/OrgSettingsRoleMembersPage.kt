@@ -13,7 +13,7 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pag
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
 import io.limberapp.web.state.state.orgRoleMemberships.orgRoleMembershipsStateProvider
 import io.limberapp.web.state.state.orgRoles.useOrgRolesState
-import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.state.state.org.useOrgState
 import io.limberapp.web.util.Page
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c

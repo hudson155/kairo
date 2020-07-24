@@ -6,7 +6,7 @@ import io.limberapp.web.app.components.mainAppNavbar.components.userSubnav.userS
 import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
-import io.limberapp.web.state.state.orgState.useOrgState
+import io.limberapp.web.state.state.org.useOrgState
 import io.limberapp.web.state.state.user.useUserState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements

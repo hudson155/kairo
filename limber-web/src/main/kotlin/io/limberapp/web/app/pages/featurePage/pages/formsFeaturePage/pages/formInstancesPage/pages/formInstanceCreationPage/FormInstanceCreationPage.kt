@@ -2,22 +2,22 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.form
 
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.api.load
 import io.limberapp.web.api.useApi
 import io.limberapp.web.app.components.layout.components.centeredContentLayout.centeredContentLayout
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
+import io.limberapp.web.state.state.feature.useFeatureState
 import io.limberapp.web.util.Page
 import react.*
 import react.dom.*
 import react.router.dom.*
 
-internal fun RBuilder.formInstanceCreationPage(feature: FeatureRep.Complete) {
-  child(component, Props(feature))
+internal fun RBuilder.formInstanceCreationPage() {
+  child(component)
 }
 
-internal data class Props(val feature: FeatureRep.Complete) : RProps
+internal typealias Props = RProps
 
 internal object FormInstanceCreationPage : Page {
   internal data class PageParams(val templateGuid: UUID) : RProps
@@ -30,9 +30,11 @@ private fun RBuilder.component(props: Props) {
   val api = useApi()
   val match = checkNotNull(useRouteMatch<FormInstanceCreationPage.PageParams>())
 
+  val (feature, _) = useFeatureState()
+
   val templateGuid = match.params.templateGuid
 
-  val formTemplate = load { api(FormTemplateApi.Get(props.feature.guid, templateGuid)) }
+  val formTemplate = load { api(FormTemplateApi.Get(feature.guid, templateGuid)) }
 
   // While the form template is loading, show a loading spinner.
   (formTemplate ?: return centeredContentLayout { loadingSpinner(large = true) })

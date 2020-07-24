@@ -1,16 +1,15 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage
 
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formTemplatesPage.pages.formTemplatesListPage.formTemplatesListPage
 import io.limberapp.web.util.Page
 import react.*
 import react.router.dom.*
 
-internal fun RBuilder.formTemplatesPage(feature: FeatureRep.Complete) {
-  child(component, Props(feature))
+internal fun RBuilder.formTemplatesPage() {
+  child(component)
 }
 
-internal data class Props(val feature: FeatureRep.Complete) : RProps
+internal typealias Props = RProps
 
 internal object FormTemplatesPage : Page {
   const val name = "Templates"
@@ -23,7 +22,7 @@ private fun RBuilder.component(props: Props) {
 
   switch {
     route(path = match.path, exact = true) {
-      buildElement { formTemplatesListPage(props.feature) }
+      buildElement { formTemplatesListPage() }
     }
   }
 }
