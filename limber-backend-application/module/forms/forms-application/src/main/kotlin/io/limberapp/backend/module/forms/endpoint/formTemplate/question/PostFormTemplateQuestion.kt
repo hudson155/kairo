@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateQuestionMapper
@@ -35,7 +36,10 @@ internal class PostFormTemplateQuestion @Inject constructor(
 
   override suspend fun Handler.handle(command: FormTemplateQuestionApi.Post): FormTemplateQuestionRep.Complete {
     val rep = command.rep.required()
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    Authorization.FeatureMemberWithFeaturePermission(
+      featureGuid = command.featureGuid,
+      featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
+    ).authorize()
     val formTemplateQuestion = formTemplateQuestionService.create(
       featureGuid = command.featureGuid,
       model = formTemplateQuestionMapper.model(command.formTemplateGuid, rep),

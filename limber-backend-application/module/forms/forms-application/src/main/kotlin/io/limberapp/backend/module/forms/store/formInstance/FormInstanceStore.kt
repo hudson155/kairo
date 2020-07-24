@@ -32,6 +32,24 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
+  fun getByFeatureGuidAndCreatorAccountGuid(featureGuid: UUID, creatorAccountGuid: UUID): Set<FormInstanceModel> {
+    return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
+      it.createQuery(
+        """
+        SELECT *
+        FROM forms.form_instance
+        WHERE feature_guid = :featureGuid
+          AND creator_account_guid = :creatorAccountGuid
+          AND archived_date IS NULL
+        """.trimIndent()
+      )
+        .bind("featureGuid", featureGuid)
+        .bind("creatorAccountGuid", creatorAccountGuid)
+        .mapTo(FormInstanceModel::class.java)
+        .toSet()
+    }
+  }
+
   fun getByFeatureGuid(featureGuid: UUID): Set<FormInstanceModel> {
     return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
       it.createQuery(

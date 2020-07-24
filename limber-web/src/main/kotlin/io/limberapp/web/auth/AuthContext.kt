@@ -13,7 +13,9 @@ internal data class AuthContext(
   val jwt: Jwt?,
   val signOut: () -> Unit
 ) {
-  private val orgPermissions get() = checkNotNull(jwt).org.permissions
+  val featurePermissions by lazy { checkNotNull(jwt).org.features.mapValues { it.value.permissions } }
+
+  val orgPermissions by lazy { checkNotNull(jwt).org.permissions }
 
   fun canVisit(page: Page): Boolean {
     when (page) {

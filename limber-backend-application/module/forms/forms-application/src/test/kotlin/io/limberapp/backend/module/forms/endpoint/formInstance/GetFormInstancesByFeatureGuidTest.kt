@@ -17,7 +17,7 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
   fun happyPathNoFormInstances() {
     val featureGuid = UUID.randomUUID()
 
-    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
+    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
       val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
       assertTrue(actual.isEmpty())
     }
@@ -51,7 +51,69 @@ internal class GetFormInstancesByFeatureGuidTest : ResourceTest() {
       )
     )
 
-    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid)) {
+    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
+      val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+      assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
+    }
+  }
+
+  @Test
+  fun happyPathNoFormInstancesForCreator() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = UUID.randomUUID())) {
+      val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+      assertTrue(actual.isEmpty())
+    }
+  }
+
+  @Test
+  fun happyPathMultipleFormInstancesForCreator() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
+      this, formTemplateRep.guid, 1, creatorAccountGuid, 5
+    )
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
+      this, formTemplateRep.guid, 2, creatorAccountGuid, 6
+    )
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = creatorAccountGuid)) {
       val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
       assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
     }

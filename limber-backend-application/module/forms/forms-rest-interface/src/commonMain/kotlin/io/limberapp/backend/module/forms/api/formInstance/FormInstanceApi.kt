@@ -19,9 +19,10 @@ object FormInstanceApi {
     path = "/forms/${enc(featureGuid)}/instances/${enc(formInstanceGuid)}"
   )
 
-  data class GetByFeatureGuid(val featureGuid: UUID) : PiperEndpoint(
+  data class GetByFeatureGuid(val featureGuid: UUID, val creatorAccountGuid: UUID?) : PiperEndpoint(
     httpMethod = HttpMethod.GET,
-    path = "/forms/${enc(featureGuid)}/instances"
+    path = "/forms/${enc(featureGuid)}/instances",
+    queryParams = listOfNotNull(creatorAccountGuid?.let { "creatorAccountGuid" to enc(it) })
   )
 
   data class Delete(val featureGuid: UUID, val formInstanceGuid: UUID) : PiperEndpoint(

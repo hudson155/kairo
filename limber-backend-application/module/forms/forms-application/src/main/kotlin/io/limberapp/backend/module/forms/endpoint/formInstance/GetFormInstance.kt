@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
@@ -38,6 +39,12 @@ internal class GetFormInstance @Inject constructor(
     Authorization.FeatureMember(command.featureGuid).authorize()
     val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
       ?: throw FormInstanceNotFound()
+    if (formInstance.creatorAccountGuid != principal?.user?.guid) {
+      Authorization.FeatureMemberWithFeaturePermission(
+        featureGuid = command.featureGuid,
+        featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
+      ).authorize()
+    }
     val questions = formInstanceQuestionService.getByFormInstanceGuid(command.featureGuid, command.formInstanceGuid)
     return formInstanceMapper.completeRep(formInstance, questions)
   }

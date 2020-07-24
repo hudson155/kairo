@@ -464,7 +464,7 @@ style:
     active: false
     allowVars: false
   UseIfInsteadOfWhen:
-    active: true
+    active: false
   UseRequire:
     active: true
   UselessCallOnNotNull:

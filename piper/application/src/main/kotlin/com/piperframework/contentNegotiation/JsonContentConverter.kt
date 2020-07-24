@@ -20,7 +20,6 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
     val charset = context.call.request.contentCharset() ?: Charsets.UTF_8
     val reader = value.toInputStream().reader(charset)
     val string = reader.readText()
-    @Suppress("UseIfInsteadOfWhen")
     return when {
       List::class.isSuperclassOf(type) -> throw UnsupportedOperationException() // Unsupported for now.
       else -> json.parse(string, type)
@@ -32,7 +31,6 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
     contentType: ContentType,
     value: Any
   ): Any? {
-    @Suppress("UseIfInsteadOfWhen")
     return when (value) {
       is Set<*> -> json.stringifySet(value)
       is List<*> -> json.stringifyList(value)

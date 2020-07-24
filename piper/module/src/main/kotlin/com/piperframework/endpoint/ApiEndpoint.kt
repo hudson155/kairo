@@ -42,7 +42,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
 ) {
   private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 
-  inner class Handler(private val endpoint: Endpoint, private val principal: P?) {
+  inner class Handler(private val endpoint: Endpoint, val principal: P?) {
     private var authorized = false
 
     internal suspend fun handle(): Pair<HttpStatusCode?, ResponseType> {

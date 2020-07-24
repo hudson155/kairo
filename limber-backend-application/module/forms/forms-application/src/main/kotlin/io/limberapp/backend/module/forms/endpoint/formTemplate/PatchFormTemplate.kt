@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
@@ -34,7 +35,10 @@ internal class PatchFormTemplate @Inject constructor(
 
   override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
     val rep = command.rep.required()
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    Authorization.FeatureMemberWithFeaturePermission(
+      featureGuid = command.featureGuid,
+      featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
+    ).authorize()
     val formTemplate = formTemplateService.update(
       featureGuid = command.featureGuid,
       formTemplateGuid = command.formTemplateGuid,

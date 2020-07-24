@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -29,7 +30,10 @@ internal class DeleteFormTemplate @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.Delete) {
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    Authorization.FeatureMemberWithFeaturePermission(
+      featureGuid = command.featureGuid,
+      featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
+    ).authorize()
     formTemplateService.delete(command.featureGuid, command.formTemplateGuid)
   }
 }

@@ -47,7 +47,7 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
       // The number of matches is 1 fewer than the size of the split.
       when (split.size - 1) {
         // This must be a query param. If it's not nullable, add it to the set.
-        0 -> if (!args.withName(name).isOptional) requiredQueryParams.add(name)
+        0 -> if (args.withName(name).let { !it.isOptional && !it.type.isMarkedNullable }) requiredQueryParams.add(name)
         // Perform the path replacement.
         1 -> pathTemplate = split.joinToString("{${name}}")
         // Multiple matches indicate an error.

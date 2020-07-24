@@ -6,8 +6,10 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
+import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
@@ -29,7 +31,15 @@ internal class DeleteFormInstance @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Delete) {
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
+      ?: throw FormInstanceNotFound()
+    Authorization.FeatureMemberWithFeaturePermission(
+      featureGuid = command.featureGuid,
+      featurePermission = when (formInstance.creatorAccountGuid) {
+        principal?.user?.guid -> FormsFeaturePermission.DELETE_OWN_FORM_INSTANCES
+        else -> FormsFeaturePermission.DELETE_OTHERS_FORM_INSTANCES
+      }
+    ).authorize()
     formInstanceService.delete(command.featureGuid, command.formInstanceGuid)
   }
 }

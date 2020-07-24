@@ -8,6 +8,8 @@ interface FormInstanceService {
 
   fun get(featureGuid: UUID, formInstanceGuid: UUID): FormInstanceModel?
 
+  fun getByFeatureGuidAndCreatorAccountGuid(featureGuid: UUID, creatorAccountGuid: UUID): Set<FormInstanceModel>
+
   fun getByFeatureGuid(featureGuid: UUID): Set<FormInstanceModel>
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID)
