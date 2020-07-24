@@ -1,8 +1,18 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage
 
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
+import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
+import io.limberapp.web.api.load
+import io.limberapp.web.api.useApi
+import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
+import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage.FormInstanceCreationPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage.formInstanceCreationPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.formInstancesListPage
+import io.limberapp.web.auth.useAuth
+import io.limberapp.web.state.state.feature.useFeatureState
+import io.limberapp.web.state.state.formInstances.formInstancesStateProvider
+import io.limberapp.web.state.state.user.useUserState
 import io.limberapp.web.util.Page
 import react.*
 import react.router.dom.*
@@ -19,14 +29,33 @@ internal object FormInstancesPage : Page {
 
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
+  val api = useApi()
+  val auth = useAuth()
   val match = checkNotNull(useRouteMatch<RProps>())
 
-  switch {
-    route(path = match.path, exact = true) {
-      buildElement { formInstancesListPage() }
-    }
-    route(path = match.path + FormInstanceCreationPage.subpath, exact = true) {
-      buildElement { formInstanceCreationPage() }
+  val (feature, _) = useFeatureState()
+  val (user, _) = useUserState()
+
+  val formInstances = load {
+    // If the user has permission to see others' form instances, we'll request all form instances by using null for the
+    // creator account GUID in the request. Otherwise, we'll only request the form instances created by the current
+    // user.
+    val permissions = checkNotNull(auth.featurePermissions[feature.guid])
+    val creatorAccountGuid = if (FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES in permissions) null else user.guid
+    api(FormInstanceApi.GetByFeatureGuid(feature.guid, creatorAccountGuid))
+  }
+
+  // While the form instances are loading, show a loading spinner.
+  (formInstances ?: return loadingSpinner()).onFailure { return failedToLoad("form instances") }
+
+  formInstancesStateProvider(formInstances.value.associateBy { it.guid }) {
+    switch {
+      route(path = match.path, exact = true) {
+        buildElement { formInstancesListPage() }
+      }
+      route(path = match.path + FormInstanceCreationPage.subpath, exact = true) {
+        buildElement { formInstanceCreationPage() }
+      }
     }
   }
 }
