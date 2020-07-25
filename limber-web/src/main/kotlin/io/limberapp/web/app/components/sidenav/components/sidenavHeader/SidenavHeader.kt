@@ -29,7 +29,7 @@ private class S : Styles("SidenavHeader") {
   val container by css {
     display = Display.flex
     justifyContent = JustifyContent.spaceBetween
-    backgroundColor = Theme.Color.Background.lightDisabled
+    backgroundColor = Theme.Color.Background.lightActive
     padding(8.px)
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     xs {

@@ -18,7 +18,6 @@ internal data class Props(val text: String, val to: String) : RProps
 private class S : Styles("SidenavLink") {
   val navLink by css {
     color = Theme.Color.Text.link
-    backgroundColor = Theme.Color.Background.light
     padding(8.px)
     borderLeft(2.px, BorderStyle.solid, Color.transparent)
     borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)

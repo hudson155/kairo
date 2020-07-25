@@ -13,6 +13,13 @@ internal object Theme {
     private val babyPowderDarker10 = Color("#E3E3E3")
     private val babyPowderDarker20 = Color("#C9C9C9")
 
+    // TODO (ENG-34): Clean css'ing
+    // Color scheme for gray scale based on Github: https://primer.style/css/support/color-system
+    private val grey = Color("#6A737D")
+    private val grey100 = Color("#F6F8FA")
+    private val grey200 = Color("#E1E4E8")
+    private val grey300 = Color("#D1D5DA")
+
     private val nickel = Color("#707070")
     private val nickelDarker10 = Color("#575757")
     private val nickelDarker20 = Color("#3D3D3D")
@@ -56,22 +63,23 @@ internal object Theme {
 
     object Text {
       val dark = jet
-      val light = babyPowder
+      val light = grey100
       val link = blue
       val red = Color.red
     }
 
     object Background {
       val dark = jet
-      val light = babyPowder
-      val lightActive = babyPowderDarker05
-      val lightDisabled = babyPowderDarker10
+      val light = grey100
+      val lightActive = grey200
+      val lightDisabled = grey300
       val link = blue
+      val white = kotlinx.css.Color.white
     }
 
     object Border {
       val dark = jetLighter20
-      val light = babyPowderDarker20
+      val light = grey300
     }
   }
 

@@ -22,6 +22,7 @@ private class S : Styles("SidenavGroup") {
   val container by css {
     display = Display.flex
     flexDirection = FlexDirection.column
+    backgroundColor = Theme.Color.Background.white
     border(1.px, BorderStyle.solid, Theme.Color.Border.light)
     borderRadius = Theme.Sizing.borderRadius
     marginBottom = 16.px
