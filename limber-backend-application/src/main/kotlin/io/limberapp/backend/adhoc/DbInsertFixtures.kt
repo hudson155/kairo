@@ -58,13 +58,20 @@ INSERT INTO forms.form_template (guid, created_date, feature_guid,
 VALUES ('85ae9d91-2666-4174-bdfe-1f7cd868869c', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
         'Vehicle Inspection', NULL);
 INSERT INTO forms.form_template_question (guid, created_date, form_template_guid, rank,
-                                          label, help_text, type, multi_line, placeholder, validator, earliest, latest)
+                                          label, help_text, type, multi_line, placeholder, validator, earliest, latest,
+                                          options)
 VALUES ('59c0b82c-57d3-4d29-b7ef-0bbf90084d7d', NOW() AT TIME ZONE 'UTC', '85ae9d91-2666-4174-bdfe-1f7cd868869c', 0,
-        'Worker name', NULL, 'TEXT', FALSE, NULL, NULL, NULL, NULL),
+        'Worker name', NULL, 'TEXT', FALSE, NULL, NULL, NULL, NULL,
+        NULL),
        ('2a355fc7-33a6-44af-b737-ffa874b2b1a0', NOW() AT TIME ZONE 'UTC', '85ae9d91-2666-4174-bdfe-1f7cd868869c', 1,
-        'Date', NULL, 'DATE', NULL, NULL, NULL, NULL, NULL),
+        'Date', NULL, 'DATE', NULL, NULL, NULL, NULL, NULL,
+        NULL),
        ('43f20f0d-03c0-4477-808d-8cfefefb46bc', NOW() AT TIME ZONE 'UTC', '85ae9d91-2666-4174-bdfe-1f7cd868869c', 2,
-        'Description', NULL, 'TEXT', TRUE, NULL, NULL, NULL, NULL);
+        'Description', NULL, 'TEXT', TRUE, NULL, NULL, NULL, NULL,
+        NULL),
+       ('1dd86a5e-60bb-4257-9862-caa480ed5286', NOW() AT TIME ZONE 'UTC', '85ae9d91-2666-4174-bdfe-1f7cd868869c', 3,
+        'Description', NULL, 'RADIO_SELECTOR', TRUE, NULL, NULL, NULL, NULL,
+        '{"option 1", "option 2"}');
 INSERT INTO forms.form_instance (guid, created_date, feature_guid,
                                  form_template_guid, number, submitted_date, creator_account_guid)
 VALUES ('8e6ff3f9-26a0-42e4-935b-100c0327ab79', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
