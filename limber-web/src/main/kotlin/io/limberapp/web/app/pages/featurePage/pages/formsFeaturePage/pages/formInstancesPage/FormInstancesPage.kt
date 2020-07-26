@@ -37,12 +37,18 @@ private fun RBuilder.component(props: Props) {
   val (user, _) = useUserState()
 
   val formInstances = load {
-    // If the user has permission to see others' form instances, we'll request all form instances by using null for the
-    // creator account GUID in the request. Otherwise, we'll only request the form instances created by the current
-    // user.
-    val permissions = checkNotNull(auth.featurePermissions[feature.guid])
-    val creatorAccountGuid = if (FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES in permissions) null else user.guid
-    api(FormInstanceApi.GetByFeatureGuid(feature.guid, creatorAccountGuid))
+    api(
+      endpoint = FormInstanceApi.GetByFeatureGuid(
+        featureGuid = feature.guid,
+        creatorAccountGuid = run {
+          // If the user has permission to see others' form instances, we'll request all form instances by using null
+          // for the creator account GUID in the request. Otherwise, we'll only request the form instances created by
+          // the current user.
+          val permissions = checkNotNull(auth.featurePermissions[feature.guid])
+          if (FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES in permissions) null else user.guid
+        }
+      )
+    )
   }
 
   // While the form instances are loading, show a loading spinner.

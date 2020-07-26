@@ -32,35 +32,28 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
-  fun getByFeatureGuidAndCreatorAccountGuid(featureGuid: UUID, creatorAccountGuid: UUID): Set<FormInstanceModel> {
+  fun getByFeatureGuid(featureGuid: UUID, creatorAccountGuid: UUID?): Set<FormInstanceModel> {
     return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM forms.form_instance
-        WHERE feature_guid = :featureGuid
-          AND creator_account_guid = :creatorAccountGuid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("featureGuid", featureGuid)
-        .bind("creatorAccountGuid", creatorAccountGuid)
-        .mapTo(FormInstanceModel::class.java)
-        .toSet()
-    }
-  }
+      val (conditions, bindings) = conditionsAndBindings()
 
-  fun getByFeatureGuid(featureGuid: UUID): Set<FormInstanceModel> {
-    return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
+      conditions.add("feature_guid = :featureGuid")
+      bindings["featureGuid"] = featureGuid
+
+      if (creatorAccountGuid != null) {
+        conditions.add("creator_account_guid = :creatorAccountGuid")
+        bindings["creatorAccountGuid"] = creatorAccountGuid
+      }
+
       it.createQuery(
         """
         SELECT *
         FROM forms.form_instance
-        WHERE feature_guid = :featureGuid
+        WHERE <conditions>
           AND archived_date IS NULL
         """.trimIndent()
       )
-        .bind("featureGuid", featureGuid)
+        .define("conditions", conditions.joinToString(" AND "))
+        .bindMap(bindings)
         .mapTo(FormInstanceModel::class.java)
         .toSet()
     }
