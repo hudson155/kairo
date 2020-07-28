@@ -9,6 +9,7 @@ interface FormTemplateQuestionModel {
   val formTemplateGuid: UUID
   val label: String
   val helpText: String?
+  val required: Boolean
   val type: Type
 
   enum class Type {
@@ -20,5 +21,6 @@ interface FormTemplateQuestionModel {
   interface Update {
     val label: String?
     val helpText: String?
+    val required: Boolean?
   }
 }

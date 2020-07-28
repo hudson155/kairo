@@ -18,6 +18,7 @@ object FormTemplateTextQuestionRep {
   data class Creation(
     override val label: String,
     override val helpText: String? = null,
+    override val required: Boolean,
     val multiLine: Boolean,
     val placeholder: String? = null,
     @Serializable(with = RegexSerializer::class)
@@ -38,6 +39,7 @@ object FormTemplateTextQuestionRep {
     override val createdDate: LocalDateTime,
     override val label: String,
     override val helpText: String?,
+    override val required: Boolean,
     val maxLength: Int,
     val multiLine: Boolean,
     val placeholder: String?,
@@ -50,6 +52,7 @@ object FormTemplateTextQuestionRep {
   data class Update(
     override val label: String? = null,
     override val helpText: String? = null,
+    override val required: Boolean? = null,
     val multiLine: Boolean? = null,
     val placeholder: String? = null,
     @Serializable(with = RegexSerializer::class)

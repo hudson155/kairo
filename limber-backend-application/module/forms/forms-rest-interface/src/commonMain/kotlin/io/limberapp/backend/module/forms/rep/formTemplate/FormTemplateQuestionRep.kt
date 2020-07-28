@@ -12,6 +12,7 @@ object FormTemplateQuestionRep {
   interface Creation : CreationRep {
     val label: String
     val helpText: String?
+    val required: Boolean
 
     override fun validate() = RepValidation {
       validate(Creation::label) { Validator.length1hundred(value, allowEmpty = false) }
@@ -23,11 +24,13 @@ object FormTemplateQuestionRep {
     val guid: UUID
     val label: String
     val helpText: String?
+    val required: Boolean
   }
 
   interface Update : UpdateRep {
     val label: String?
     val helpText: String?
+    val required: Boolean?
 
     override fun validate() = RepValidation {
       validate(Update::label) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }

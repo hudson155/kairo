@@ -20,6 +20,7 @@ CREATE TABLE forms.form_template_question
     rank               INT         NOT NULL,
     label              VARCHAR     NOT NULL,
     help_text          VARCHAR,
+    required           BOOLEAN     NOT NULL,
     type               VARCHAR     NOT NULL,
     multi_line         BOOLEAN,
     placeholder        VARCHAR,

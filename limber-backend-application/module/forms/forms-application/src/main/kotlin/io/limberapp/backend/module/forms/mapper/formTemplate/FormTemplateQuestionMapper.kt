@@ -30,6 +30,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       formTemplateGuid = formTemplateGuid,
       label = rep.label,
       helpText = rep.helpText,
+      required = rep.required,
       earliest = rep.earliest,
       latest = rep.latest
     )
@@ -39,6 +40,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       formTemplateGuid = formTemplateGuid,
       label = rep.label,
       helpText = rep.helpText,
+      required = rep.required,
       options = rep.options
     )
     is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
@@ -47,6 +49,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       formTemplateGuid = formTemplateGuid,
       label = rep.label,
       helpText = rep.helpText,
+      required = rep.required,
       multiLine = rep.multiLine,
       placeholder = rep.placeholder,
       validator = rep.validator
@@ -60,6 +63,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       createdDate = model.createdDate,
       label = model.label,
       helpText = model.helpText,
+      required = model.required,
       earliest = model.earliest,
       latest = model.latest
     )
@@ -68,6 +72,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       createdDate = model.createdDate,
       label = model.label,
       helpText = model.helpText,
+      required = model.required,
       options = model.options
     )
     is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
@@ -75,6 +80,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       createdDate = model.createdDate,
       label = model.label,
       helpText = model.helpText,
+      required = model.required,
       maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,
       multiLine = model.multiLine,
       placeholder = model.placeholder,
@@ -87,17 +93,20 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     is FormTemplateDateQuestionRep.Update -> FormTemplateDateQuestionModel.Update(
       label = rep.label,
       helpText = rep.helpText,
+      required = rep.required,
       earliest = rep.earliest,
       latest = rep.latest
     )
     is FormTemplateRadioSelectorQuestionRep.Update -> FormTemplateRadioSelectorQuestionModel.Update(
       label = rep.label,
       helpText = rep.helpText,
+      required = rep.required,
       options = rep.options
     )
     is FormTemplateTextQuestionRep.Update -> FormTemplateTextQuestionModel.Update(
       label = rep.label,
       helpText = rep.helpText,
+      required = rep.required,
       multiLine = rep.multiLine,
       placeholder = rep.placeholder,
       validator = rep.validator

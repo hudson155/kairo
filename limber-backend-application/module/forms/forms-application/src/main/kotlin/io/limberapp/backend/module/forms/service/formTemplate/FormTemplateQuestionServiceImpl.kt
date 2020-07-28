@@ -32,6 +32,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplateGuid = formTemplateGuid,
         label = "Worker name",
         helpText = null,
+        required = true,
         multiLine = false,
         placeholder = null,
         validator = null
@@ -42,6 +43,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplateGuid = formTemplateGuid,
         label = "Date",
         helpText = null,
+        required = true,
         earliest = null,
         latest = null
       ),
@@ -51,6 +53,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplateGuid = formTemplateGuid,
         label = "Description",
         helpText = null,
+        required = false,
         multiLine = true,
         placeholder = null,
         validator = null
@@ -61,6 +64,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
         formTemplateGuid = formTemplateGuid,
         label = "Two options",
         helpText = null,
+        required = false,
         options = listOf("test_option_one", "test_option_two")
       )
     )

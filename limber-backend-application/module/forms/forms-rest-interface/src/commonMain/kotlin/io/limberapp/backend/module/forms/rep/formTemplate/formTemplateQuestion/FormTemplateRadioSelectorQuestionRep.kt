@@ -17,6 +17,7 @@ object FormTemplateRadioSelectorQuestionRep {
   data class Creation(
     override val label: String,
     override val helpText: String? = null,
+    override val required: Boolean,
     val options: List<String>
   ) : FormTemplateQuestionRep.Creation {
     override fun validate() = RepValidation {
@@ -38,6 +39,7 @@ object FormTemplateRadioSelectorQuestionRep {
     override val createdDate: LocalDateTime,
     override val label: String,
     override val helpText: String?,
+    override val required: Boolean,
     val options: List<String>
   ) : FormTemplateQuestionRep.Complete
 
@@ -46,6 +48,7 @@ object FormTemplateRadioSelectorQuestionRep {
   data class Update(
     override val label: String? = null,
     override val helpText: String? = null,
+    override val required: Boolean? = null,
     val options: List<String>? = null
   ) : FormTemplateQuestionRep.Update {
     override fun validate() = RepValidation {
