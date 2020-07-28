@@ -1,5 +1,5 @@
 object Plugins {
-  // https://github.com/arturbosch/detekt/releases
+  // https://github.com/detekt/detekt/releases
   const val detekt = "io.gitlab.arturbosch.detekt"
 
   // https://github.com/johnrengelman/shadow/releases
