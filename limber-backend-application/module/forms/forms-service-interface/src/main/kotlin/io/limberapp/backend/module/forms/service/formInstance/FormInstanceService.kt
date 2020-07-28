@@ -10,5 +10,7 @@ interface FormInstanceService {
 
   fun getByFeatureGuid(featureGuid: UUID, creatorAccountGuid: UUID? = null): Set<FormInstanceModel>
 
+  fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel
+
   fun delete(featureGuid: UUID, formInstanceGuid: UUID)
 }

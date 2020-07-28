@@ -42,4 +42,8 @@ internal class FormInstanceMapper @Inject constructor(
     creatorAccountGuid = model.creatorAccountGuid,
     questions = questions.map { formInstanceQuestionMapper.completeRep(it) }
   )
+
+  fun update(rep: FormInstanceRep.Update) = FormInstanceModel.Update(
+    submittedDate = if (rep.submitted == true) LocalDateTime.now(clock) else null
+  )
 }

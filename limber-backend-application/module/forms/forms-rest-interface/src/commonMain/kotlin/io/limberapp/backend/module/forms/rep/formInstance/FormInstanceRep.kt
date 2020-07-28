@@ -2,11 +2,13 @@ package io.limberapp.backend.module.forms.rep.formInstance
 
 import com.piperframework.rep.CompleteRep
 import com.piperframework.rep.CreationRep
+import com.piperframework.rep.UpdateRep
 import com.piperframework.serialization.serializer.LocalDateTimeSerializer
 import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.types.LocalDateTime
 import com.piperframework.types.UUID
 import com.piperframework.validation.RepValidation
+import com.piperframework.validation.ifPresent
 import kotlinx.serialization.Serializable
 
 object FormInstanceRep {
@@ -50,4 +52,13 @@ object FormInstanceRep {
     val creatorAccountGuid: UUID,
     val questions: List<FormInstanceQuestionRep.Complete>
   ) : CompleteRep
+
+  @Serializable
+  data class Update(
+    val submitted: Boolean?
+  ) : UpdateRep {
+    override fun validate() = RepValidation {
+      validate(Update::submitted) { ifPresent { value } }
+    }
+  }
 }

@@ -59,6 +59,20 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
+  fun update(formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel {
+    return jdbi.inTransaction<FormInstanceModel, Exception> {
+      val updateCount = it.createUpdate(sqlResource("update"))
+        .bind("guid", formInstanceGuid)
+        .bindKotlin(update)
+        .execute()
+      return@inTransaction when (updateCount) {
+        0 -> throw FormInstanceNotFound()
+        1 -> get(formInstanceGuid)
+        else -> badSql()
+      }
+    }
+  }
+
   fun delete(formInstanceGuid: UUID) {
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(

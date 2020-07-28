@@ -25,6 +25,12 @@ object FormInstanceApi {
     queryParams = listOfNotNull(creatorAccountGuid?.let { "creatorAccountGuid" to enc(it) })
   )
 
+  data class Patch(val featureGuid: UUID, val formInstanceGuid: UUID, val rep: FormInstanceRep.Update?) : PiperEndpoint(
+    httpMethod = HttpMethod.PATCH,
+    path = "/forms/${enc(featureGuid)}/instances/${enc(formInstanceGuid)}",
+    body = rep
+  )
+
   data class Delete(val featureGuid: UUID, val formInstanceGuid: UUID) : PiperEndpoint(
     httpMethod = HttpMethod.DELETE,
     path = "/forms/${enc(featureGuid)}/instances/${enc(formInstanceGuid)}"
