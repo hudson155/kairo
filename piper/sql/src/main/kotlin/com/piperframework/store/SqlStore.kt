@@ -7,19 +7,23 @@ import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
 
+private val SQL_PATH_REGEX = Regex("/store/[A-Za-z]+/[A-Za-z]+\\.sql")
+
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore {
-  private val resourceCache = ResourceCache()
+  private val resourceCache = object : ResourceCache() {
+    override fun get(resourceName: String): String {
+      // This check is added to the resource cache rather than to the store itself for performance reasons.
+      check(SQL_PATH_REGEX.matches(resourceName)) { "Invalid SQL path: $resourceName." }
+      return super.get(resourceName)
+    }
+  }
 
   /**
    * Fetches the given SQL resource, throwing an exception if it does not exist. The implementation uses a cache that
    * never evicts.
    */
-  protected fun sqlResource(name: String): String {
-    val classResourcePath = checkNotNull(this::class.qualifiedName).replace('.', '/')
-    val resourceName = "/$classResourcePath/$name.sql"
-    return resourceCache.get(resourceName)
-  }
+  protected fun sqlResource(path: String) = resourceCache.get(path)
 
   protected fun Query.asInt() = map { rs, _ ->
     rs.getInt(1).let { if (rs.wasNull()) null else it }

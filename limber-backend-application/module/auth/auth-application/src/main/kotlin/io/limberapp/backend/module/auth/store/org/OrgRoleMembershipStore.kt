@@ -17,7 +17,7 @@ internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi
   fun create(model: OrgRoleMembershipModel): OrgRoleMembershipModel {
     return jdbi.withHandle<OrgRoleMembershipModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/orgRoleMembership/create.sql"))
           .bindKotlin(model)
           .mapTo(OrgRoleMembershipModel::class.java)
           .single()

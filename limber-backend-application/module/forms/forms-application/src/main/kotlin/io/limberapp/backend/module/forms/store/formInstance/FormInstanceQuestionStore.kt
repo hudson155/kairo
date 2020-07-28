@@ -38,7 +38,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
   fun create(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
     return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/formInstanceQuestion/create.sql"))
           .bindKotlin(model)
           .bindNullForMissingArguments()
           .mapTo(FormInstanceQuestionModel::class.java)
@@ -79,7 +79,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
 
   fun getByFormInstanceGuid(formInstanceGuid: UUID): List<FormInstanceQuestionModel> {
     return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
-      it.createQuery(sqlResource("getByFormInstanceGuid"))
+      it.createQuery(sqlResource("/store/formInstanceQuestion/getByFormInstanceGuid.sql"))
         .bind("formInstanceGuid", formInstanceGuid)
         .mapTo(FormInstanceQuestionModel::class.java)
         .toList()
@@ -92,7 +92,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
     update: FormInstanceQuestionModel.Update
   ): FormInstanceQuestionModel {
     return jdbi.inTransaction<FormInstanceQuestionModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("update"))
+      val updateCount = it.createUpdate(sqlResource("/store/formInstanceQuestion/update.sql"))
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)

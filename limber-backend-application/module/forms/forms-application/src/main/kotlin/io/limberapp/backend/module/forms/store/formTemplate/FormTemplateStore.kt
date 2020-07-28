@@ -12,7 +12,7 @@ import java.util.*
 internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: FormTemplateModel): FormTemplateModel {
     return jdbi.withHandle<FormTemplateModel, Exception> {
-      it.createQuery(sqlResource("create"))
+      it.createQuery(sqlResource("/store/formTemplate/create.sql"))
         .bindKotlin(model)
         .mapTo(FormTemplateModel::class.java)
         .single()
@@ -51,7 +51,7 @@ internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : S
 
   fun update(formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel {
     return jdbi.inTransaction<FormTemplateModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("update"))
+      val updateCount = it.createUpdate(sqlResource("/store/formTemplate/update.sql"))
         .bind("guid", formTemplateGuid)
         .bindKotlin(update)
         .execute()

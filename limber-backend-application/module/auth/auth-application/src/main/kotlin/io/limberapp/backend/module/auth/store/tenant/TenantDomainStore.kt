@@ -21,7 +21,7 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
   fun create(model: TenantDomainModel): TenantDomainModel {
     return jdbi.withHandle<TenantDomainModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/tenantDomain/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantDomainModel::class.java)
           .single()

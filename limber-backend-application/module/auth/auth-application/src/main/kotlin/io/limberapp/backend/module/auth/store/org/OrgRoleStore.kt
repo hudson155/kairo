@@ -18,7 +18,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   fun create(model: OrgRoleModel): OrgRoleModel {
     return jdbi.withHandle<OrgRoleModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/orgRole/create.sql"))
           .bindKotlin(model)
           .mapTo(OrgRoleModel::class.java)
           .single()
@@ -41,7 +41,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   fun get(orgRoleGuid: UUID): OrgRoleModel? {
     return jdbi.withHandle<OrgRoleModel?, Exception> {
-      it.createQuery(sqlResource("get"))
+      it.createQuery(sqlResource("/store/orgRole/get.sql"))
         .bind("guid", orgRoleGuid)
         .mapTo(OrgRoleModel::class.java)
         .singleNullOrThrow()
@@ -50,7 +50,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
     return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
-      it.createQuery(sqlResource("getByOrgGuid"))
+      it.createQuery(sqlResource("/store/orgRole/getByOrgGuid.sql"))
         .bind("orgGuid", orgGuid)
         .mapTo(OrgRoleModel::class.java)
         .toSet()
@@ -59,7 +59,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID): Set<OrgRoleModel> {
     return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
-      it.createQuery(sqlResource("getByAccountGuid"))
+      it.createQuery(sqlResource("/store/orgRole/getByAccountGuid.sql"))
         .bind("orgGuid", orgGuid)
         .bind("accountGuid", accountGuid)
         .mapTo(OrgRoleModel::class.java)
@@ -70,7 +70,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   fun update(orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel {
     return jdbi.inTransaction<OrgRoleModel, Exception> {
       val updateCount = try {
-        it.createUpdate(sqlResource("update"))
+        it.createUpdate(sqlResource("/store/orgRole/update.sql"))
           .bind("guid", orgRoleGuid)
           .bindKotlin(update)
           .execute()

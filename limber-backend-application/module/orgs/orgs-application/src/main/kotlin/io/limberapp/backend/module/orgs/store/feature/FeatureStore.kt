@@ -23,7 +23,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
   fun create(model: FeatureModel): FeatureModel {
     return jdbi.withHandle<FeatureModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/feature/create.sql"))
           .bindKotlin(model)
           .mapTo(FeatureModel::class.java)
           .single()
@@ -88,7 +88,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
           .execute()
       }
       val updateCount = try {
-        it.createUpdate(sqlResource("update"))
+        it.createUpdate(sqlResource("/store/feature/update.sql"))
           .bind("orgGuid", orgGuid)
           .bind("featureGuid", featureGuid)
           .bindKotlin(update)

@@ -18,7 +18,7 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
   fun create(model: FeatureRoleModel): FeatureRoleModel {
     return jdbi.withHandle<FeatureRoleModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/featureRole/create.sql"))
           .bindKotlin(model)
           .mapTo(FeatureRoleModel::class.java)
           .single()
@@ -60,7 +60,7 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
   fun update(featureRoleGuid: UUID, update: FeatureRoleModel.Update): FeatureRoleModel {
     return jdbi.inTransaction<FeatureRoleModel, Exception> {
       val updateCount = try {
-        it.createUpdate(sqlResource("update"))
+        it.createUpdate(sqlResource("/store/featureRole/update.sql"))
           .bind("guid", featureRoleGuid)
           .bindKotlin(update)
           .execute()

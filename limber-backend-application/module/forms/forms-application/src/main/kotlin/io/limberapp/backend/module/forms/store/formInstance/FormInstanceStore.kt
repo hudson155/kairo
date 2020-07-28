@@ -11,7 +11,7 @@ import java.util.*
 internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: FormInstanceModel): FormInstanceModel {
     return jdbi.withHandle<FormInstanceModel, Exception> {
-      it.createQuery(sqlResource("create"))
+      it.createQuery(sqlResource("/store/formInstance/create.sql"))
         .bindKotlin(model)
         .mapTo(FormInstanceModel::class.java)
         .single()

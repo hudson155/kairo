@@ -12,7 +12,7 @@ import java.util.*
 internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
   fun create(model: OrgModel): OrgModel {
     return jdbi.withHandle<OrgModel, Exception> {
-      it.createQuery(sqlResource("create"))
+      it.createQuery(sqlResource("/store/org/create.sql"))
         .bindKotlin(model)
         .mapTo(OrgModel::class.java)
         .single()
@@ -46,7 +46,7 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
 
   fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel {
     return jdbi.inTransaction<OrgModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("update"))
+      val updateCount = it.createUpdate(sqlResource("/store/org/update.sql"))
         .bind("guid", orgGuid)
         .bindKotlin(update)
         .execute()

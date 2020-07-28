@@ -18,7 +18,7 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
   fun create(model: UserModel): UserModel {
     return jdbi.withHandle<UserModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/user/create.sql"))
           .bindKotlin(model)
           .mapTo(UserModel::class.java)
           .single()
@@ -79,7 +79,7 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
 
   fun update(userGuid: UUID, update: UserModel.Update): UserModel {
     return jdbi.inTransaction<UserModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("update"))
+      val updateCount = it.createUpdate(sqlResource("/store/user/update.sql"))
         .bind("guid", userGuid)
         .bindKotlin(update)
         .execute()

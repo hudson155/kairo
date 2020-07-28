@@ -20,7 +20,7 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
   fun create(model: TenantModel): TenantModel {
     return jdbi.withHandle<TenantModel, Exception> {
       try {
-        it.createQuery(sqlResource("create"))
+        it.createQuery(sqlResource("/store/tenant/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantModel::class.java)
           .single()
@@ -80,7 +80,7 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel {
     return jdbi.inTransaction<TenantModel, Exception> {
       val updateCount = try {
-        it.createUpdate(sqlResource("update"))
+        it.createUpdate(sqlResource("/store/tenant/update.sql"))
           .bind("orgGuid", orgGuid)
           .bindKotlin(update)
           .execute()

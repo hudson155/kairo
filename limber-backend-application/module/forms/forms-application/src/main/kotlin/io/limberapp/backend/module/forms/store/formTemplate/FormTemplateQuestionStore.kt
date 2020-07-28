@@ -34,7 +34,7 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     jdbi.useTransaction<Exception> {
       val insertionRank = validateInsertionRank(formTemplateGuid, rank)
       incrementExistingRanks(formTemplateGuid, atLeast = insertionRank, incrementBy = models.size)
-      it.prepareBatch(sqlResource("create")).apply {
+      it.prepareBatch(sqlResource("/store/formTemplateQuestion/create.sql")).apply {
         models.forEachIndexed { i, model ->
           this
             .bind("rank", insertionRank + i)
@@ -50,7 +50,7 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
       val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
       incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
-      it.createQuery(sqlResource("create"))
+      it.createQuery(sqlResource("/store/formTemplateQuestion/create.sql"))
         .bind("rank", insertionRank)
         .bindKotlin(model)
         .bindNullForMissingArguments()
@@ -131,7 +131,7 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
 
   fun update(questionGuid: UUID, update: FormTemplateQuestionModel.Update): FormTemplateQuestionModel {
     return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("update"))
+      val updateCount = it.createUpdate(sqlResource("/store/formTemplateQuestion/update.sql"))
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
         .bindNullForMissingArguments()
