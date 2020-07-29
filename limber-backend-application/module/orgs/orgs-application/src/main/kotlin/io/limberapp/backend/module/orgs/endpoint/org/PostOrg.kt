@@ -14,9 +14,6 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 
-/**
- * Creates a new org.
- */
 internal class PostOrg @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

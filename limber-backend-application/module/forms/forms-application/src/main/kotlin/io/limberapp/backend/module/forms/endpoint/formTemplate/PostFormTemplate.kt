@@ -15,9 +15,6 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.*
 
-/**
- * Creates a new form template.
- */
 internal class PostFormTemplate @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

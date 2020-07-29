@@ -14,10 +14,6 @@ import io.limberapp.backend.module.orgs.rep.org.FeatureRep
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.*
 
-/**
- * Creates a new feature within an org. This must be done before creating the feature's implementation in the
- * corresponding module.
- */
 internal class PostFeature @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

@@ -12,9 +12,6 @@ import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import java.util.*
 
-/**
- * Deletes a domain from a tenant.
- */
 internal class DeleteTenantDomain @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import java.util.*
 
-/**
- * Returns all roles within the given org.
- */
 internal class GetOrgRolesByOrgGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

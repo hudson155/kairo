@@ -12,10 +12,6 @@ import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import java.util.*
 
-/**
- * Deletes a feature from an org. This does not delete the feature's implementation in the corresponding module. The
- * implementation is not deleted, in case it needs to be recovered.
- */
 internal class DeleteFeature @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

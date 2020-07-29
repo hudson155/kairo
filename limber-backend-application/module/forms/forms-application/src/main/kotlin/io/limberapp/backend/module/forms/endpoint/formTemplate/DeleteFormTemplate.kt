@@ -12,9 +12,6 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.*
 
-/**
- * Deletes an existing form template.
- */
 internal class DeleteFormTemplate @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

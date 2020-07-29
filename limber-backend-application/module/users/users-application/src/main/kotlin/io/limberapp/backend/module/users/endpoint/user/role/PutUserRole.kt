@@ -13,9 +13,6 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
-/**
- * Gives the user a certain role. Roles are system-wide, NOT org-wide.
- */
 internal class PutUserRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

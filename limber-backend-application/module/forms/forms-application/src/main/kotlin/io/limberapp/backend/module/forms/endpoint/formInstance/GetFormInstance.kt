@@ -16,9 +16,6 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuesti
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Returns a single form instance.
- */
 internal class GetFormInstance @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

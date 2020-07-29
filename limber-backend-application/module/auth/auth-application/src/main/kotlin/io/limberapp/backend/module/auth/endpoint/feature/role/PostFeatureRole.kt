@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import java.util.*
 
-/**
- * Creates a new role within an org.
- */
 internal class PostFeatureRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

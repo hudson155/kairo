@@ -15,9 +15,6 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
-/**
- * Revokes a certain role from the user. Roles are system-wide, NOT org-wide.
- */
 internal class DeleteUserRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

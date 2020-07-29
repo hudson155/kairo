@@ -12,9 +12,6 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import java.util.*
 
-/**
- * Deletes an existing tenant.
- */
 internal class DeleteTenant @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

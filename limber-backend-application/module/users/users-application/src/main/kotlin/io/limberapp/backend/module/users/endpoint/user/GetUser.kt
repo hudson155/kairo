@@ -14,9 +14,6 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
-/**
- * Returns a single user.
- */
 internal class GetUser @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

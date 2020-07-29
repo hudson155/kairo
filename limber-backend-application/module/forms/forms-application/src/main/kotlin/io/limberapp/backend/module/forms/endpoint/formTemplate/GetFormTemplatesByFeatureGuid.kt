@@ -13,9 +13,6 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.*
 
-/**
- * Returns all form templates within the feature.
- */
 internal class GetFormTemplatesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

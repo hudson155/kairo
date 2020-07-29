@@ -14,9 +14,6 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Returns all form instances within the feature.
- */
 internal class GetFormInstancesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

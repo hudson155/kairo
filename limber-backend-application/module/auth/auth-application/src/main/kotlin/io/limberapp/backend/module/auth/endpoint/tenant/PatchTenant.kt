@@ -15,9 +15,6 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import java.util.*
 
-/**
- * Updates a tenant's information.
- */
 internal class PatchTenant @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

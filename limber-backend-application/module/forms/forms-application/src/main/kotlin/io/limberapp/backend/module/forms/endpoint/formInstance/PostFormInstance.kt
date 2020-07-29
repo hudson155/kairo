@@ -15,9 +15,6 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuesti
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Creates a new form instance.
- */
 internal class PostFormInstance @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

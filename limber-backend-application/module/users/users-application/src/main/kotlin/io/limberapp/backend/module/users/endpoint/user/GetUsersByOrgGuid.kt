@@ -13,9 +13,6 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
-/**
- * Returns all users that are a member of the given org.
- */
 internal class GetUsersByOrgGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

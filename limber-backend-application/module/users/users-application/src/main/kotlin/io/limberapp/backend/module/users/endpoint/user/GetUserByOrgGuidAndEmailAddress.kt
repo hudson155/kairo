@@ -14,9 +14,6 @@ import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 
-/**
- * Returns a single user in the given org with the given email address.
- */
 internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

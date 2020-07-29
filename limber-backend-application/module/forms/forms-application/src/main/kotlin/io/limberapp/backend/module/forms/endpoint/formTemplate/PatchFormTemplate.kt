@@ -14,9 +14,6 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.*
 
-/**
- * Updates an form template's information.
- */
 internal class PatchFormTemplate @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

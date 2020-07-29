@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import java.util.*
 
-/**
- * Returns all roles for the given feature.
- */
 internal class GetFeatureRolesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

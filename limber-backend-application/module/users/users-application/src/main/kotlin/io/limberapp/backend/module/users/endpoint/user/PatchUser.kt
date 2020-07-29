@@ -13,9 +13,6 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
-/**
- * Updates a user's information.
- */
 internal class PatchUser @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

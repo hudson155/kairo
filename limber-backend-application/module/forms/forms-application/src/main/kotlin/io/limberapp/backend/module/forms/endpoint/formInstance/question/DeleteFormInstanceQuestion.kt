@@ -14,9 +14,6 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuesti
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Deletes a existing question (answer) from a form instance.
- */
 internal class DeleteFormInstanceQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

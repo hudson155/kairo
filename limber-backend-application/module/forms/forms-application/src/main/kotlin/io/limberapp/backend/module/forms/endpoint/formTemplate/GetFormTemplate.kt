@@ -15,9 +15,6 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import java.util.*
 
-/**
- * Returns a single form template.
- */
 internal class GetFormTemplate @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

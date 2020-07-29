@@ -15,9 +15,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.*
 
-/**
- * Returns the org with the given owner.
- */
 internal class GetOrgByOwnerAccountGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

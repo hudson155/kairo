@@ -14,9 +14,6 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import java.util.*
 
-/**
- * Creates a new question within a form template.
- */
 internal class PostFormTemplateQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

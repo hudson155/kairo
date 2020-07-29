@@ -11,9 +11,6 @@ import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
-/**
- * Deletes an existing user. This will fail if the user is the owner of any orgs.
- */
 internal class DeleteUser @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

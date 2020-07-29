@@ -15,9 +15,6 @@ import io.limberapp.backend.module.healthCheck.rep.healthCheck.HealthCheckRep
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckService
 import org.slf4j.LoggerFactory
 
-/**
- * Performs a health check.
- */
 internal class HealthCheck @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

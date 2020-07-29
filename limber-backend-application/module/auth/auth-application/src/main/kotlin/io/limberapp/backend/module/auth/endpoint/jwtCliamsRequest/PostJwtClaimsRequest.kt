@@ -13,12 +13,6 @@ import io.limberapp.backend.module.auth.mapper.jwtClaimsRequest.JwtClaimsRequest
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 
-/**
- * Creates something called a "JWT claims request", which is never persisted anywhere. Instead, think of this claims
- * request as a transitive request that is resolved when the HTTP request is resolved. The result of the JWT claims
- * request is an object containing JWT claims that should be included in JWTs. Auth0 creates JWT claims requests and
- * uses the results every time it issues a JWT.
- */
 internal class PostJwtClaimsRequest @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

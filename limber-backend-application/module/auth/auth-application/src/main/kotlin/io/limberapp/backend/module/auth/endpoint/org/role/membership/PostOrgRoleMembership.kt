@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
 import java.util.*
 
-/**
- * Gives the account membership within the given org role.
- */
 internal class PostOrgRoleMembership @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

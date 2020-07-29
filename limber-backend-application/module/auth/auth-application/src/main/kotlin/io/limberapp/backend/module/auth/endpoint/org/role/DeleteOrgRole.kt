@@ -12,9 +12,6 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import java.util.*
 
-/**
- * Deletes a role from an org.
- */
 internal class DeleteOrgRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

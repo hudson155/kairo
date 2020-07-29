@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import java.util.*
 
-/**
- * Creates a new domain within a tenant.
- */
 internal class PostTenantDomain @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

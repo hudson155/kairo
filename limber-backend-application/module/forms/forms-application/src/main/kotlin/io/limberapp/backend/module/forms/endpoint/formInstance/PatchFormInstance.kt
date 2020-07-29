@@ -15,9 +15,6 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuesti
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Updates a form instance's information.
- */
 internal class PatchFormInstance @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

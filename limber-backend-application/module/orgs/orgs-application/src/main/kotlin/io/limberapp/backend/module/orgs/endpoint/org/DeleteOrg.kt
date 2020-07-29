@@ -12,9 +12,6 @@ import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.*
 
-/**
- * Deletes an existing org.
- */
 internal class DeleteOrg @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

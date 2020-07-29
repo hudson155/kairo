@@ -15,9 +15,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.*
 
-/**
- * Returns a single org.
- */
 internal class GetOrg @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

@@ -13,9 +13,6 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotF
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Deletes an existing form instance.
- */
 internal class DeleteFormInstance @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

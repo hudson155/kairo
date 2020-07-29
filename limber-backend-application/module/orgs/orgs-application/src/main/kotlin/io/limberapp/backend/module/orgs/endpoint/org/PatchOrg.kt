@@ -15,9 +15,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.*
 
-/**
- * Updates an org's information.
- */
 internal class PatchOrg @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

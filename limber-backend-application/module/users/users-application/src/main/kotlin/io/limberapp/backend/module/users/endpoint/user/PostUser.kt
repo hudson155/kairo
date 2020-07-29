@@ -13,9 +13,6 @@ import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 
-/**
- * Creates a new user.
- */
 internal class PostUser @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

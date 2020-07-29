@@ -12,9 +12,6 @@ import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQ
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import java.util.*
 
-/**
- * Deletes a existing question from a form template.
- */
 internal class DeleteFormTemplateQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

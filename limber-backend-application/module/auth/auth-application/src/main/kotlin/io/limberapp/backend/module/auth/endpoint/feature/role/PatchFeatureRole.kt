@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import java.util.*
 
-/**
- * Deletes an feature role's information.
- */
 internal class PatchFeatureRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

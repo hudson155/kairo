@@ -15,9 +15,6 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 
-/**
- * Creates a new tenant.
- */
 internal class PostTenant @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

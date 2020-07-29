@@ -12,9 +12,6 @@ import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import java.util.*
 
-/**
- * Deletes a role from a feature.
- */
 internal class DeleteFeatureRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

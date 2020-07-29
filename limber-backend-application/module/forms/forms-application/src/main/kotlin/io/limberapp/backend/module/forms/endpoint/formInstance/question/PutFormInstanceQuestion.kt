@@ -16,9 +16,6 @@ import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuesti
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
 
-/**
- * Creates a new question (answer) within a form instance.
- */
 internal class PutFormInstanceQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

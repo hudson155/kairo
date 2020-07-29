@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import java.util.*
 
-/**
- * Deletes an org role's information.
- */
 internal class PatchOrgRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

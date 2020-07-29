@@ -14,9 +14,6 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 
-/**
- * Returns the tenant for the given domain.
- */
 internal class GetTenantByDomain @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

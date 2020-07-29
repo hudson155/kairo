@@ -15,9 +15,6 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import java.util.*
 
-/**
- * Returns a single tenant.
- */
 internal class GetTenant @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
