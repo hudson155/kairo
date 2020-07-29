@@ -104,7 +104,7 @@ private fun generateArgsAndReplacements(
       // Generate a random time zone.
       kClass == TimeZone::class -> TimeZone(ZoneId.of(ZoneId.getAvailableZoneIds().random())).also {
         // Time zones should also go into arg replacements.
-        argReplacements[argName] = it.zoneId.toString()
+        argReplacements[argName] = it.toString()
       }
       // Generate a random UUID.
       kClass == UUID::class -> UUID.randomUUID().also {

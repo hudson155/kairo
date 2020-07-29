@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms
 
 import com.piperframework.module.Module
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
+import io.limberapp.backend.module.forms.endpoint.formInstance.ExportFormInstancesByFeatureGuid
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstancesByFeatureGuid
 import io.limberapp.backend.module.forms.endpoint.formInstance.PatchFormInstance
@@ -42,6 +43,7 @@ class FormsModule : Module() {
     PostFormInstance::class.java,
     GetFormInstance::class.java,
     GetFormInstancesByFeatureGuid::class.java,
+    ExportFormInstancesByFeatureGuid::class.java,
     PatchFormInstance::class.java,
     DeleteFormInstance::class.java,
     PutFormInstanceQuestion::class.java,

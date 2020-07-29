@@ -1,3 +1,6 @@
 package com.piperframework.restInterface
 
-enum class ContentType { CSV, JSON }
+enum class ContentType(val headerValue: String) {
+  CSV("text/csv"),
+  JSON("application/json");
+}

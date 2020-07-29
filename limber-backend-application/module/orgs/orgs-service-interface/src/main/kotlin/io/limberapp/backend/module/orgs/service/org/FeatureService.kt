@@ -8,6 +8,8 @@ interface FeatureService {
 
   fun create(model: FeatureModel): FeatureModel
 
+  fun get(featureGuid: UUID): FeatureModel?
+
   fun getByOrgGuid(orgGuid: UUID): List<FeatureModel>
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel

@@ -1,4 +1,7 @@
 object Versions {
+  // https://commons.apache.org/proper/commons-csv/
+  const val apacheCsv = "1.8"
+
   // https://github.com/auth0/java-jwt/releases
   const val auth0JavaJwt = "3.10.3"
 

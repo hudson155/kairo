@@ -1,4 +1,8 @@
 object Dependencies {
+  object Apache {
+    const val csv = "org.apache.commons:commons-csv:${Versions.apacheCsv}"
+  }
+
   object Bcrypt {
     const val jbcrypt = "org.mindrot:jbcrypt:${Versions.jbcrypt}"
   }

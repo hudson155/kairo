@@ -1,7 +1,9 @@
 package io.limberapp.backend.module.forms.api.formInstance
 
+import com.piperframework.restInterface.ContentType
 import com.piperframework.restInterface.HttpMethod
 import com.piperframework.restInterface.PiperEndpoint
+import com.piperframework.types.TimeZone
 import com.piperframework.types.UUID
 import com.piperframework.util.enc
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -23,6 +25,20 @@ object FormInstanceApi {
     httpMethod = HttpMethod.GET,
     path = "/forms/${enc(featureGuid)}/instances",
     queryParams = listOfNotNull(creatorAccountGuid?.let { "creatorAccountGuid" to enc(it) })
+  )
+
+  data class ExportByFeatureGuid(
+    val featureGuid: UUID,
+    val creatorAccountGuid: UUID? = null,
+    val timeZone: TimeZone? = null
+  ) : PiperEndpoint(
+    httpMethod = HttpMethod.GET,
+    path = "/forms/${enc(featureGuid)}/instances",
+    queryParams = listOfNotNull(
+      creatorAccountGuid?.let { "creatorAccountGuid" to enc(it) },
+      timeZone?.let { "timeZone" to enc(it) }
+    ),
+    contentType = ContentType.CSV
   )
 
   data class Patch(val featureGuid: UUID, val formInstanceGuid: UUID, val rep: FormInstanceRep.Update?) : PiperEndpoint(

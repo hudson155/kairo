@@ -33,6 +33,8 @@ internal class FeatureServiceImpl @Inject constructor(
 
   override fun create(model: FeatureModel) = featureStore.create(model)
 
+  override fun get(featureGuid: UUID) = featureStore.get(featureGuid)
+
   override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
 
   override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {

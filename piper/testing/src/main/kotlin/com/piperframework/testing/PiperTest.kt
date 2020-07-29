@@ -95,8 +95,9 @@ abstract class PiperTest(
 
   private fun TestApplicationEngine.createCall(endpoint: PiperEndpoint): TestApplicationCall {
     return handleRequest(endpoint.httpMethod.forKtor(), endpoint.href) {
-      addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
       createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
+      addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+      addHeader(HttpHeaders.Accept, endpoint.contentType.forKtor().toString())
       endpoint.body?.let { setBody(json.stringify(it)) }
     }
   }

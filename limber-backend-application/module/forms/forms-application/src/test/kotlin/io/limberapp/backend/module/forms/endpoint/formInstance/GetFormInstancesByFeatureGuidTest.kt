@@ -12,7 +12,7 @@ import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class GetFormInstancesByFeatureGuidTest {
+object GetFormInstancesByFeatureGuidTest {
   internal class Default : ResourceTest() {
     @Test
     fun happyPathNoFormInstances() {

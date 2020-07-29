@@ -12,7 +12,7 @@ open class Fetch(private val rootUrl: String, private val json: Json) {
 
   suspend operator fun <R> invoke(request: PiperEndpoint, transform: (String) -> R): Outcome<R> {
     val url = request.url
-    val headers = headers(request.body != null)
+    val headers = headers(request.body != null, accept = request.contentType)
     val requestInit = RequestInit(
       method = request.httpMethod.name,
       headers = headers,
@@ -26,10 +26,10 @@ open class Fetch(private val rootUrl: String, private val json: Json) {
 
   private val PiperEndpoint.url: String get() = rootUrl + href
 
-  protected open suspend fun headers(body: Boolean): dynamic {
+  protected open suspend fun headers(body: Boolean, accept: ContentType): dynamic {
     return jsObject<dynamic> {
-      this["Accept"] = "application/json"
       if (body) this["Content-Type"] = "application/json"
+      this["Accept"] = accept.headerValue
     }
   }
 }

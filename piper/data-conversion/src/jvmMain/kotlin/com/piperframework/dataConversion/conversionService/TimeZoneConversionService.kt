@@ -11,5 +11,5 @@ actual object TimeZoneConversionService : DataConversionService<TimeZone> {
 
   override fun fromString(value: String): TimeZone = TimeZone(ZoneId.of(value))
 
-  override fun toString(value: TimeZone) = value.zoneId.toString()
+  override fun toString(value: TimeZone) = value.toString()
 }
