@@ -5,6 +5,7 @@ import com.google.inject.Injector
 import com.google.inject.Stage
 import com.piperframework.config.Config
 import com.piperframework.contentNegotiation.JsonContentConverter
+import com.piperframework.dataConversion.conversionService.TimeZoneConversionService
 import com.piperframework.dataConversion.conversionService.UuidConversionService
 import com.piperframework.exception.EndpointNotFound
 import com.piperframework.exception.PiperException
@@ -14,6 +15,7 @@ import com.piperframework.module.ModuleWithLifecycle
 import com.piperframework.restInterface.HttpMethod
 import com.piperframework.restInterface.forKtor
 import com.piperframework.serialization.Json
+import com.piperframework.types.TimeZone
 import com.piperframework.util.conversionService
 import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
@@ -110,6 +112,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
   protected open fun Application.dataConversion() {
     install(DataConversion) {
+      convert(TimeZone::class, conversionService(TimeZoneConversionService))
       convert(UUID::class, conversionService(UuidConversionService))
     }
   }

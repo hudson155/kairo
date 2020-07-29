@@ -12,6 +12,7 @@ dependencies {
   implementation(project(":piper:ktor-auth"))
   implementation(project(":piper:module")) // For registering modules
   api(project(":piper:serialization")) // Provides Json to implementation projects
+  api(project(":piper:types"))
   api(project(":piper:util"))
   implementation(Dependencies.Jackson.moduleKotlin) // For config loader
   implementation(Dependencies.Guice.guice)

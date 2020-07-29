@@ -1,8 +1,10 @@
 package com.piperframework.restInterface
 
 import com.piperframework.rep.ValidatedRep
+import com.piperframework.types.TimeZone
 import com.piperframework.util.unknownType
 import org.slf4j.LoggerFactory
+import java.time.ZoneId
 import java.util.*
 import kotlin.random.Random
 import kotlin.reflect.KClass
@@ -98,6 +100,11 @@ private fun generateArgsAndReplacements(
       kClass == String::class -> UUID.randomUUID().toString().also {
         // Strings should also go into arg replacements.
         argReplacements[argName] = it
+      }
+      // Generate a random time zone.
+      kClass == TimeZone::class -> TimeZone(ZoneId.of(ZoneId.getAvailableZoneIds().random())).also {
+        // Time zones should also go into arg replacements.
+        argReplacements[argName] = it.zoneId.toString()
       }
       // Generate a random UUID.
       kClass == UUID::class -> UUID.randomUUID().also {
