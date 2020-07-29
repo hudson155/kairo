@@ -7,5 +7,6 @@ package com.piperframework.restInterface
 data class PiperEndpointTemplate(
   val httpMethod: HttpMethod,
   val pathTemplate: String,
-  val requiredQueryParams: Set<String>
+  val requiredQueryParams: Set<String>,
+  val contentType: ContentType
 )

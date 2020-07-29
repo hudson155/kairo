@@ -20,6 +20,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import io.ktor.request.receiveOrNull
 import io.ktor.response.respond
+import io.ktor.routing.HttpAcceptRouteSelector
 import io.ktor.routing.HttpMethodRouteSelector
 import io.ktor.routing.ParameterRouteSelector
 import io.ktor.routing.Route
@@ -119,6 +120,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
   @ContextDsl
   private fun Route.route(endpointTemplate: PiperEndpointTemplate, build: Route.() -> Unit): Route {
     var route = createRouteFromPath(endpointTemplate.pathTemplate)
+    route = route.createChild(HttpAcceptRouteSelector(endpointTemplate.contentType.forKtor()))
     route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod.forKtor()))
     endpointTemplate.requiredQueryParams.forEach { route = route.createChild(ParameterRouteSelector(it)) }
     return route.apply(build)

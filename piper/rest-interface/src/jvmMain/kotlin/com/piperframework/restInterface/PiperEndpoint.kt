@@ -58,7 +58,8 @@ fun KClass<out PiperEndpoint>.template(): PiperEndpointTemplate {
     return PiperEndpointTemplate(
       httpMethod = endpoint.httpMethod,
       pathTemplate = pathTemplate,
-      requiredQueryParams = requiredQueryParams
+      requiredQueryParams = requiredQueryParams,
+      contentType = endpoint.contentType
     )
   } catch (e: Exception) {
     logger.error("Unable to construct template.", e)
@@ -70,7 +71,8 @@ private fun PiperEndpoint.toTemplate(): PiperEndpointTemplate {
   return PiperEndpointTemplate(
     httpMethod = httpMethod,
     pathTemplate = path,
-    requiredQueryParams = queryParams.map { it.first }.toSet()
+    requiredQueryParams = queryParams.map { it.first }.toSet(),
+    contentType = contentType
   )
 }
 
