@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import com.piperframework.types.TimeZone
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
+import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
@@ -16,6 +17,7 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.users.service.account.UserService
 import java.util.*
 
+@OptIn(LimberModule.Orgs::class, LimberModule.Users::class)
 internal class ExportFormInstancesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,

@@ -1,8 +1,10 @@
 package io.limberapp.backend.module.forms.service.formInstance
 
+import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import java.util.*
 
+@LimberModule.Forms
 interface FormInstanceService {
   fun create(model: FormInstanceModel): FormInstanceModel
 

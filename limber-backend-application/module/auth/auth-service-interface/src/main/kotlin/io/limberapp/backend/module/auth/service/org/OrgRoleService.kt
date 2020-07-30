@@ -1,8 +1,10 @@
 package io.limberapp.backend.module.auth.service.org
 
+import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import java.util.*
 
+@LimberModule.Auth
 interface OrgRoleService {
   fun create(model: OrgRoleModel): OrgRoleModel
 

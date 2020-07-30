@@ -1,8 +1,10 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
+import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.util.*
 
+@LimberModule.Forms
 interface FormTemplateQuestionService {
   fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel>
 

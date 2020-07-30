@@ -3,6 +3,7 @@ package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 import com.google.inject.Inject
 import com.piperframework.serialization.Json
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions
@@ -31,21 +32,24 @@ private val ORG_OWNER_ORG_ROLE =
   OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS))
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
-  private val featureService: FeatureService,
-  private val orgService: OrgService,
+  @OptIn(LimberModule.Orgs::class) private val featureService: FeatureService,
+  @OptIn(LimberModule.Orgs::class) private val orgService: OrgService,
   private val orgRoleService: OrgRoleService,
   private val tenantService: TenantService,
-  private val userService: UserService,
+  @OptIn(LimberModule.Users::class) private val userService: UserService,
   private val clock: Clock,
   private val uuidGenerator: UuidGenerator
 ) : JwtClaimsRequestService {
   private val json = Json()
 
+  @LimberModule.Orgs
+  @LimberModule.Users
   override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
     val user = getAccountOrCreateUser(request)
     return requestJwtClaimsForUser(user)
   }
 
+  @LimberModule.Users
   private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
     val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
 
@@ -67,6 +71,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     )
   }
 
+  @LimberModule.Orgs
   private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
     val org = checkNotNull(orgService.get(user.orgGuid))
     val features = featureService.getByOrgGuid(user.orgGuid)

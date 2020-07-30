@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+
 plugins {
   kotlin("jvm")
   id(Plugins.detekt)
@@ -15,6 +17,15 @@ dependencies {
   implementation(Dependencies.Bcrypt.jbcrypt)
   testImplementation(project(":limber-backend-application:common:sql:testing"))
   testImplementation(project(":limber-backend-application:common:testing"))
+}
+
+
+tasks.withType<KotlinCompile<*>>().configureEach {
+  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Auth"
+}
+tasks.compileTestKotlin {
+  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Orgs"
+  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Users"
 }
 
 tasks.test {
