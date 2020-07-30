@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.orgs.service.feature
 
 import com.google.inject.Inject
+import com.piperframework.util.singleNullOrThrow
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
@@ -16,7 +17,7 @@ internal class FeatureServiceImpl @Inject constructor(
   private val featureStore: FeatureStore
 ) : FeatureService {
   override fun createDefaults(orgGuid: UUID): List<FeatureModel> {
-    require(featureStore.getByOrgGuid(orgGuid).isEmpty())
+    require(featureStore.get(orgGuid = orgGuid).isEmpty())
     val feature = FeatureModel(
       guid = uuidGenerator.generate(),
       createdDate = LocalDateTime.now(clock),
@@ -33,17 +34,17 @@ internal class FeatureServiceImpl @Inject constructor(
 
   override fun create(model: FeatureModel) = featureStore.create(model)
 
-  override fun get(featureGuid: UUID) = featureStore.get(featureGuid)
+  override fun get(featureGuid: UUID) = featureStore.get(featureGuid = featureGuid).singleNullOrThrow()
 
-  override fun getByOrgGuid(orgGuid: UUID) = featureStore.getByOrgGuid(orgGuid)
+  override fun getByOrgGuid(orgGuid: UUID) = featureStore.get(orgGuid = orgGuid)
 
   override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
-    if (!featureStore.existsAndHasOrgGuid(featureGuid, orgGuid = orgGuid)) throw FeatureNotFound()
+    featureStore.get(featureGuid = featureGuid, orgGuid = orgGuid).singleNullOrThrow() ?: throw FeatureNotFound()
     return featureStore.update(orgGuid, featureGuid, update)
   }
 
   override fun delete(orgGuid: UUID, featureGuid: UUID) {
-    if (!featureStore.existsAndHasOrgGuid(featureGuid, orgGuid = orgGuid)) throw FeatureNotFound()
+    featureStore.get(featureGuid = featureGuid, orgGuid = orgGuid).singleNullOrThrow() ?: throw FeatureNotFound()
     featureStore.delete(featureGuid)
   }
 }

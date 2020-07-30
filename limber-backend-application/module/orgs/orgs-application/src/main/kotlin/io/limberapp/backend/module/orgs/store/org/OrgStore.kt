@@ -2,7 +2,6 @@ package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import org.jdbi.v3.core.Jdbi
@@ -19,28 +18,24 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
     }
   }
 
-  fun get(orgGuid: UUID): OrgModel? {
-    return jdbi.withHandle<OrgModel?, Exception> {
-      it.createQuery("SELECT * FROM orgs.org WHERE guid = :guid AND archived_date IS NULL")
-        .bind("guid", orgGuid)
-        .mapTo(OrgModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
+  fun get(orgGuid: UUID? = null, ownerAccountGuid: UUID? = null): List<OrgModel> {
+    return jdbi.withHandle<List<OrgModel>, Exception> {
+      val (conditions, bindings) = conditionsAndBindings()
 
-  fun getByOwnerAccountGuid(ownerAccountGuid: UUID): OrgModel? {
-    return jdbi.withHandle<OrgModel?, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM orgs.org
-        WHERE owner_account_guid = :ownerAccountGuid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("ownerAccountGuid", ownerAccountGuid)
+      if (orgGuid != null) {
+        conditions.add("guid = :orgGuid")
+        bindings["orgGuid"] = orgGuid
+      }
+
+      if (ownerAccountGuid != null) {
+        conditions.add("owner_account_guid = :ownerAccountGuid")
+        bindings["ownerAccountGuid"] = ownerAccountGuid
+      }
+
+      it.createQuery("SELECT * FROM orgs.org WHERE <conditions> AND archived_date IS NULL")
+        .withConditionsAndBindings(conditions, bindings)
         .mapTo(OrgModel::class.java)
-        .singleNullOrThrow()
+        .list()
     }
   }
 
@@ -52,7 +47,7 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw OrgNotFound()
-        1 -> checkNotNull(get(orgGuid))
+        1 -> get(orgGuid).single()
         else -> badSql()
       }
     }

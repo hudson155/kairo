@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
@@ -43,33 +42,27 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     }
   }
 
-  fun existsAndHasOrgGuid(featureGuid: UUID, orgGuid: UUID): Boolean {
-    val model = get(featureGuid) ?: return false
-    return model.orgGuid == orgGuid
-  }
-
-  fun get(featureGuid: UUID): FeatureModel? {
-    return jdbi.withHandle<FeatureModel?, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM orgs.feature
-        WHERE guid = :featureGuid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("featureGuid", featureGuid)
-        .mapTo(FeatureModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByOrgGuid(orgGuid: UUID): List<FeatureModel> {
+  fun get(
+    featureGuid: UUID? = null,
+    orgGuid: UUID? = null
+  ): List<FeatureModel> {
     return jdbi.withHandle<List<FeatureModel>, Exception> {
-      it.createQuery("SELECT * FROM orgs.feature WHERE org_guid = :orgGuid AND archived_date IS NULL ORDER BY rank")
-        .bind("orgGuid", orgGuid)
+      val (conditions, bindings) = conditionsAndBindings()
+
+      if (featureGuid != null) {
+        conditions.add("guid = :featureGuid")
+        bindings["featureGuid"] = featureGuid
+      }
+
+      if (orgGuid != null) {
+        conditions.add("org_guid = :orgGuid")
+        bindings["orgGuid"] = orgGuid
+      }
+
+      it.createQuery("SELECT * FROM orgs.feature WHERE <conditions> AND archived_date IS NULL ORDER BY rank")
+        .withConditionsAndBindings(conditions, bindings)
         .mapTo(FeatureModel::class.java)
-        .toList()
+        .list()
     }
   }
 
@@ -98,7 +91,7 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
       }
       return@inTransaction when (updateCount) {
         0 -> throw FeatureNotFound()
-        1 -> checkNotNull(get(featureGuid))
+        1 -> get(featureGuid = featureGuid).single()
         else -> badSql()
       }
     }
