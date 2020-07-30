@@ -5,7 +5,6 @@ import com.piperframework.sql.PolymorphicRowMapper
 import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
@@ -60,29 +59,20 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
-  fun get(formInstanceGuid: UUID, questionGuid: UUID): FormInstanceQuestionModel? {
-    return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM forms.form_instance_question
-        WHERE form_instance_guid = :formInstanceGuid
-          AND question_guid = :questionGuid
-        """.trimIndent()
-      )
-        .bind("formInstanceGuid", formInstanceGuid)
-        .bind("questionGuid", questionGuid)
-        .mapTo(FormInstanceQuestionModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByFormInstanceGuid(formInstanceGuid: UUID): List<FormInstanceQuestionModel> {
+  fun get(formInstanceGuid: UUID? = null, questionGuid: UUID? = null): List<FormInstanceQuestionModel> {
     return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
-      it.createQuery(sqlResource("/store/formInstanceQuestion/getByFormInstanceGuid.sql"))
-        .bind("formInstanceGuid", formInstanceGuid)
+      it.createQuery("SELECT * FROM forms.form_instance_question WHERE <conditions>").build {
+        if (formInstanceGuid != null) {
+          conditions.add("form_instance_guid = :formInstanceGuid")
+          bindings["formInstanceGuid"] = formInstanceGuid
+        }
+        if (questionGuid != null) {
+          conditions.add("question_guid = :questionGuid")
+          bindings["questionGuid"] = questionGuid
+        }
+      }
         .mapTo(FormInstanceQuestionModel::class.java)
-        .toList()
+        .list()
     }
   }
 
@@ -100,7 +90,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormInstanceQuestionNotFound()
-        1 -> checkNotNull(get(formInstanceGuid, questionGuid))
+        1 -> get(formInstanceGuid = formInstanceGuid, questionGuid = questionGuid).single()
         else -> badSql()
       }
     }

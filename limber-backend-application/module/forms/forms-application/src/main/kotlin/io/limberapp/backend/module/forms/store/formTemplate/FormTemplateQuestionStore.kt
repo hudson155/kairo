@@ -5,7 +5,6 @@ import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import com.piperframework.sql.PolymorphicRowMapper
 import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
@@ -93,39 +92,21 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
-  fun existsAndHasFormTemplateGuid(questionGuid: UUID, formTemplateGuid: UUID): Boolean {
-    val model = get(questionGuid) ?: return false
-    return model.formTemplateGuid == formTemplateGuid
-  }
-
-  fun get(questionGuid: UUID): FormTemplateQuestionModel? {
-    return jdbi.withHandle<FormTemplateQuestionModel?, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM forms.form_template_question
-        WHERE guid = :guid
-        """.trimIndent()
-      )
+  fun get(formTemplateGuid: UUID? = null, questionGuid: UUID? = null): List<FormTemplateQuestionModel> {
+    return jdbi.withHandle<List<FormTemplateQuestionModel>, Exception> {
+      it.createQuery("SELECT * FROM forms.form_template_question WHERE <conditions> ORDER BY rank").build {
+        if (formTemplateGuid != null) {
+          conditions.add("form_template_guid = :formTemplateGuid")
+          bindings["formTemplateGuid"] = formTemplateGuid
+        }
+        if (questionGuid != null) {
+          conditions.add("guid = :questionGuid")
+          bindings["questionGuid"] = questionGuid
+        }
+      }
         .bind("guid", questionGuid)
         .mapTo(FormTemplateQuestionModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByFormTemplateGuid(formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-    return jdbi.withHandle<List<FormTemplateQuestionModel>, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM forms.form_template_question
-        WHERE form_template_guid = :formTemplateGuid
-        ORDER BY rank
-        """.trimIndent()
-      )
-        .bind("formTemplateGuid", formTemplateGuid)
-        .mapTo(FormTemplateQuestionModel::class.java)
-        .toList()
+        .list()
     }
   }
 
@@ -138,7 +119,7 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormTemplateQuestionNotFound()
-        1 -> checkNotNull(get(questionGuid))
+        1 -> get(questionGuid = questionGuid).single()
         else -> badSql()
       }
     }

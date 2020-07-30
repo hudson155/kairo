@@ -20,20 +20,16 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
 
   fun get(orgGuid: UUID? = null, ownerAccountGuid: UUID? = null): List<OrgModel> {
     return jdbi.withHandle<List<OrgModel>, Exception> {
-      val (conditions, bindings) = conditionsAndBindings()
-
-      if (orgGuid != null) {
-        conditions.add("guid = :orgGuid")
-        bindings["orgGuid"] = orgGuid
+      it.createQuery("SELECT * FROM orgs.org WHERE <conditions> AND archived_date IS NULL").build {
+        if (orgGuid != null) {
+          conditions.add("guid = :orgGuid")
+          bindings["orgGuid"] = orgGuid
+        }
+        if (ownerAccountGuid != null) {
+          conditions.add("owner_account_guid = :ownerAccountGuid")
+          bindings["ownerAccountGuid"] = ownerAccountGuid
+        }
       }
-
-      if (ownerAccountGuid != null) {
-        conditions.add("owner_account_guid = :ownerAccountGuid")
-        bindings["ownerAccountGuid"] = ownerAccountGuid
-      }
-
-      it.createQuery("SELECT * FROM orgs.org WHERE <conditions> AND archived_date IS NULL")
-        .withConditionsAndBindings(conditions, bindings)
         .mapTo(OrgModel::class.java)
         .list()
     }

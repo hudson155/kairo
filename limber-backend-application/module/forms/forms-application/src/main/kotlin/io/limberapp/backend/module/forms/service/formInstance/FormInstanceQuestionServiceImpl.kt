@@ -1,6 +1,8 @@
 package io.limberapp.backend.module.forms.service.formInstance
 
 import com.google.inject.Inject
+import com.piperframework.util.ifNull
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceQuestionMapper
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
@@ -15,10 +17,13 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
 ) : FormInstanceQuestionService {
   override fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel {
     val questionGuid = requireNotNull(model.questionGuid)
-    if (!formInstanceStore.existsAndHasFeatureGuid(model.formInstanceGuid, featureGuid = featureGuid)) {
-      throw FormInstanceNotFound()
-    }
-    val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(model.formInstanceGuid, questionGuid)
+    formInstanceStore.get(featureGuid = featureGuid, formInstanceGuid = model.formInstanceGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormInstanceNotFound() }
+    val existingFormInstanceQuestionModel = formInstanceQuestionStore.get(
+      formInstanceGuid = model.formInstanceGuid,
+      questionGuid = questionGuid
+    ).singleNullOrThrow()
     return if (existingFormInstanceQuestionModel == null) {
       formInstanceQuestionStore.create(model)
     } else {
@@ -31,16 +36,16 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
   }
 
   override fun getByFormInstanceGuid(featureGuid: UUID, formInstanceGuid: UUID): List<FormInstanceQuestionModel> {
-    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
-      throw FormInstanceNotFound()
-    }
-    return formInstanceQuestionStore.getByFormInstanceGuid(formInstanceGuid)
+    formInstanceStore.get(featureGuid = featureGuid, formInstanceGuid = formInstanceGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormInstanceNotFound() }
+    return formInstanceQuestionStore.get(formInstanceGuid = formInstanceGuid)
   }
 
   override fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID) {
-    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
-      throw FormInstanceNotFound()
-    }
+    formInstanceStore.get(featureGuid = featureGuid, formInstanceGuid = formInstanceGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormInstanceNotFound() }
     formInstanceQuestionStore.delete(formInstanceGuid, questionGuid)
   }
 }

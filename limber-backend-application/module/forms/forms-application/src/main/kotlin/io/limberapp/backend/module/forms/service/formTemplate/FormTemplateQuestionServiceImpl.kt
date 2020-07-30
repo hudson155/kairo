@@ -1,6 +1,8 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
+import com.piperframework.util.ifNull
+import com.piperframework.util.singleNullOrThrow
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
@@ -21,10 +23,10 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   private val formTemplateQuestionStore: FormTemplateQuestionStore
 ) : FormTemplateQuestionService {
   override fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
-      throw FormTemplateNotFound()
-    }
-    require(formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid).isEmpty())
+    formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
+    require(formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid).isEmpty())
     val questions = listOf(
       FormTemplateTextQuestionModel(
         guid = uuidGenerator.generate(),
@@ -73,17 +75,17 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   }
 
   override fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int?): FormTemplateQuestionModel {
-    if (!formTemplateStore.existsAndHasFeatureGuid(model.formTemplateGuid, featureGuid = featureGuid)) {
-      throw FormTemplateNotFound()
-    }
+    formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = model.formTemplateGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
     return formTemplateQuestionStore.create(model, rank)
   }
 
   override fun getByFormTemplateGuid(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
-      throw FormTemplateNotFound()
-    }
-    return formTemplateQuestionStore.getByFormTemplateGuid(formTemplateGuid)
+    formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
+    return formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid)
   }
 
   override fun update(
@@ -92,22 +94,22 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     questionGuid: UUID,
     update: FormTemplateQuestionModel.Update
   ): FormTemplateQuestionModel {
-    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
-      throw FormTemplateNotFound()
-    }
-    if (!formTemplateQuestionStore.existsAndHasFormTemplateGuid(questionGuid, formTemplateGuid = formTemplateGuid)) {
-      throw FormTemplateQuestionNotFound()
-    }
+    formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
+    formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid, questionGuid = questionGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateQuestionNotFound() }
     return formTemplateQuestionStore.update(questionGuid, update)
   }
 
   override fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID) {
-    if (!formTemplateStore.existsAndHasFeatureGuid(formTemplateGuid, featureGuid = featureGuid)) {
-      throw FormTemplateNotFound()
-    }
-    if (!formTemplateQuestionStore.existsAndHasFormTemplateGuid(questionGuid, formTemplateGuid = formTemplateGuid)) {
-      throw FormTemplateQuestionNotFound()
-    }
+    formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
+    formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid, questionGuid = questionGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateQuestionNotFound() }
     formTemplateQuestionStore.delete(questionGuid)
   }
 }

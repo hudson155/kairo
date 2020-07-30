@@ -33,31 +33,22 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
     throw e
   }
 
-  fun get(
-    emailAddress: String? = null,
-    orgGuid: UUID? = null,
-    userGuid: UUID? = null
-  ): List<UserModel> {
+  fun get(orgGuid: UUID? = null, userGuid: UUID? = null, emailAddress: String? = null): List<UserModel> {
     return jdbi.withHandle<List<UserModel>, Exception> {
-      val (conditions, bindings) = conditionsAndBindings()
-
-      if (emailAddress != null) {
-        conditions.add("email_address = :emailAddress")
-        bindings["emailAddress"] = emailAddress
+      it.createQuery("SELECT * FROM users.user WHERE <conditions> AND archived_date IS NULL").build {
+        if (orgGuid != null) {
+          conditions.add("org_guid = :orgGuid")
+          bindings["orgGuid"] = orgGuid
+        }
+        if (userGuid != null) {
+          conditions.add("guid = :userGuid")
+          bindings["userGuid"] = userGuid
+        }
+        if (emailAddress != null) {
+          conditions.add("email_address = :emailAddress")
+          bindings["emailAddress"] = emailAddress
+        }
       }
-
-      if (orgGuid != null) {
-        conditions.add("org_guid = :orgGuid")
-        bindings["orgGuid"] = orgGuid
-      }
-
-      if (userGuid != null) {
-        conditions.add("guid = :userGuid")
-        bindings["userGuid"] = userGuid
-      }
-
-      it.createQuery("SELECT * FROM users.user WHERE <conditions> AND archived_date IS NULL")
-        .withConditionsAndBindings(conditions, bindings)
         .mapTo(UserModel::class.java)
         .list()
     }

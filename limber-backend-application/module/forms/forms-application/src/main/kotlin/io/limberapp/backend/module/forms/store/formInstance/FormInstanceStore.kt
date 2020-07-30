@@ -18,42 +18,26 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
-  fun existsAndHasFeatureGuid(formInstanceGuid: UUID, featureGuid: UUID): Boolean {
-    val model = get(formInstanceGuid) ?: return false
-    return model.featureGuid == featureGuid
-  }
-
-  fun get(formInstanceGuid: UUID): FormInstanceModel? {
-    return jdbi.withHandle<FormInstanceModel?, Exception> {
-      it.createQuery("SELECT * FROM forms.form_instance WHERE guid = :guid AND archived_date IS NULL")
-        .bind("guid", formInstanceGuid)
-        .mapTo(FormInstanceModel::class.java)
-        .singleOrNull()
-    }
-  }
-
-  fun getByFeatureGuid(featureGuid: UUID, creatorAccountGuid: UUID?): Set<FormInstanceModel> {
+  fun get(
+    featureGuid: UUID? = null,
+    formInstanceGuid: UUID? = null,
+    creatorAccountGuid: UUID? = null
+  ): Set<FormInstanceModel> {
     return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
-      val (conditions, bindings) = conditionsAndBindings()
-
-      conditions.add("feature_guid = :featureGuid")
-      bindings["featureGuid"] = featureGuid
-
-      if (creatorAccountGuid != null) {
-        conditions.add("creator_account_guid = :creatorAccountGuid")
-        bindings["creatorAccountGuid"] = creatorAccountGuid
+      it.createQuery("SELECT * FROM forms.form_instance WHERE <conditions> AND archived_date IS NULL").build {
+        if (featureGuid != null) {
+          conditions.add("feature_guid = :featureGuid")
+          bindings["featureGuid"] = featureGuid
+        }
+        if (formInstanceGuid != null) {
+          conditions.add("guid = :formInstanceGuid")
+          bindings["formInstanceGuid"] = formInstanceGuid
+        }
+        if (creatorAccountGuid != null) {
+          conditions.add("creator_account_guid = :creatorAccountGuid")
+          bindings["creatorAccountGuid"] = creatorAccountGuid
+        }
       }
-
-      it.createQuery(
-        """
-        SELECT *
-        FROM forms.form_instance
-        WHERE <conditions>
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .define("conditions", conditions.joinToString(" AND "))
-        .bindMap(bindings)
         .mapTo(FormInstanceModel::class.java)
         .toSet()
     }
@@ -67,7 +51,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormInstanceNotFound()
-        1 -> get(formInstanceGuid)
+        1 -> get(formInstanceGuid = formInstanceGuid).single()
         else -> badSql()
       }
     }

@@ -7,3 +7,5 @@ fun <T> Iterable<T>.singleNullOrThrow(): T? {
   require(!iterator.hasNext()) { "Collection contains more than one matching element." }
   return single
 }
+
+fun Any?.ifNull(function: () -> Nothing) = this ?: function()

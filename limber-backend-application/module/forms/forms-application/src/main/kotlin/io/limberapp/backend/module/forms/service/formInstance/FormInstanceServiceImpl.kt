@@ -1,7 +1,8 @@
 package io.limberapp.backend.module.forms.service.formInstance
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
+import com.piperframework.util.ifNull
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -17,26 +18,23 @@ internal class FormInstanceServiceImpl @Inject constructor(
     return formInstanceStore.create(model)
   }
 
-  override fun get(featureGuid: UUID, formInstanceGuid: UUID): FormInstanceModel? {
-    return formInstanceStore.get(formInstanceGuid)?.also {
-      if (it.featureGuid != featureGuid) return null
-    }
-  }
+  override fun get(featureGuid: UUID, formInstanceGuid: UUID) =
+    formInstanceStore.get(featureGuid = featureGuid, formInstanceGuid = formInstanceGuid).singleNullOrThrow()
 
   override fun getByFeatureGuid(featureGuid: UUID, creatorAccountGuid: UUID?) =
-    formInstanceStore.getByFeatureGuid(featureGuid, creatorAccountGuid)
+    formInstanceStore.get(featureGuid = featureGuid, creatorAccountGuid = creatorAccountGuid)
 
   override fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel {
-    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
-      throw FormInstanceNotFound()
-    }
+    formInstanceStore.get(featureGuid = featureGuid, formInstanceGuid = formInstanceGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
     return formInstanceStore.update(formInstanceGuid, update)
   }
 
   override fun delete(featureGuid: UUID, formInstanceGuid: UUID) {
-    if (!formInstanceStore.existsAndHasFeatureGuid(formInstanceGuid, featureGuid = featureGuid)) {
-      throw FormInstanceNotFound()
-    }
+    formInstanceStore.get(featureGuid = featureGuid, formInstanceGuid = formInstanceGuid)
+      .singleNullOrThrow()
+      .ifNull { throw FormTemplateNotFound() }
     formInstanceStore.delete(formInstanceGuid)
   }
 }

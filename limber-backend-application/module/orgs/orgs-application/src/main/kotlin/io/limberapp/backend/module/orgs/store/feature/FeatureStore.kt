@@ -42,25 +42,18 @@ internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     }
   }
 
-  fun get(
-    featureGuid: UUID? = null,
-    orgGuid: UUID? = null
-  ): List<FeatureModel> {
+  fun get(featureGuid: UUID? = null, orgGuid: UUID? = null): List<FeatureModel> {
     return jdbi.withHandle<List<FeatureModel>, Exception> {
-      val (conditions, bindings) = conditionsAndBindings()
-
-      if (featureGuid != null) {
-        conditions.add("guid = :featureGuid")
-        bindings["featureGuid"] = featureGuid
+      it.createQuery("SELECT * FROM orgs.feature WHERE <conditions> AND archived_date IS NULL ORDER BY rank").build {
+        if (featureGuid != null) {
+          conditions.add("guid = :featureGuid")
+          bindings["featureGuid"] = featureGuid
+        }
+        if (orgGuid != null) {
+          conditions.add("org_guid = :orgGuid")
+          bindings["orgGuid"] = orgGuid
+        }
       }
-
-      if (orgGuid != null) {
-        conditions.add("org_guid = :orgGuid")
-        bindings["orgGuid"] = orgGuid
-      }
-
-      it.createQuery("SELECT * FROM orgs.feature WHERE <conditions> AND archived_date IS NULL ORDER BY rank")
-        .withConditionsAndBindings(conditions, bindings)
         .mapTo(FeatureModel::class.java)
         .list()
     }

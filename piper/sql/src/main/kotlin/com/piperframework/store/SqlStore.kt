@@ -39,22 +39,16 @@ abstract class SqlStore {
       }?.serverErrorMessage
     }
 
-  /**
-   * Returns a new empty conditions list and a new empty bindings map for JDBI template engine queries.
-   */
-  protected fun conditionsAndBindings(): Pair<MutableList<String>, MutableMap<String, Any>> {
+  protected class QueryBuilder {
     val conditions = mutableListOf<String>()
     val bindings = mutableMapOf<String, Any>()
-    return Pair(conditions, bindings)
   }
 
-  protected fun Query.withConditionsAndBindings(
-    conditions: MutableList<String>,
-    bindings: MutableMap<String, Any>
-  ): Query {
+  protected fun Query.build(build: QueryBuilder.() -> Unit): Query {
+    val queryBuilder = QueryBuilder().apply { build() }
     return this
-      .define("conditions", conditions.joinToString(" AND "))
-      .bindMap(bindings)
+      .define("conditions", queryBuilder.conditions.joinToString(" AND "))
+      .bindMap(queryBuilder.bindings)
   }
 
   protected fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")

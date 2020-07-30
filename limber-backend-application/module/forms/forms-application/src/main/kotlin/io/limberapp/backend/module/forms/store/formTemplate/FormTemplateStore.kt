@@ -2,7 +2,6 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.jdbi.v3.core.Jdbi
@@ -19,33 +18,20 @@ internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
-  fun existsAndHasFeatureGuid(formTemplateGuid: UUID, featureGuid: UUID): Boolean {
-    val model = get(formTemplateGuid) ?: return false
-    return model.featureGuid == featureGuid
-  }
-
-  fun get(formTemplateGuid: UUID): FormTemplateModel? {
-    return jdbi.withHandle<FormTemplateModel?, Exception> {
-      it.createQuery("SELECT * FROM forms.form_template WHERE guid = :guid AND archived_date IS NULL")
-        .bind("guid", formTemplateGuid)
+  fun get(featureGuid: UUID? = null, formTemplateGuid: UUID? = null): List<FormTemplateModel> {
+    return jdbi.withHandle<List<FormTemplateModel>, Exception> {
+      it.createQuery("SELECT * FROM forms.form_template WHERE <conditions> AND archived_date IS NULL").build {
+        if (featureGuid != null) {
+          conditions.add("feature_guid = :featureGuid")
+          bindings["featureGuid"] = featureGuid
+        }
+        if (formTemplateGuid != null) {
+          conditions.add("guid = :formTemplateGuid")
+          bindings["formTemplateGuid"] = formTemplateGuid
+        }
+      }
         .mapTo(FormTemplateModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel> {
-    return jdbi.withHandle<Set<FormTemplateModel>, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM forms.form_template
-        WHERE feature_guid = :featureGuid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("featureGuid", featureGuid)
-        .mapTo(FormTemplateModel::class.java)
-        .toSet()
+        .list()
     }
   }
 
@@ -57,7 +43,7 @@ internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : S
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormTemplateNotFound()
-        1 -> get(formTemplateGuid)
+        1 -> get(formTemplateGuid = formTemplateGuid).single()
         else -> badSql()
       }
     }
