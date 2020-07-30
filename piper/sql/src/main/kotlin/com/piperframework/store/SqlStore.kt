@@ -48,5 +48,14 @@ abstract class SqlStore {
     return Pair(conditions, bindings)
   }
 
+  protected fun Query.withConditionsAndBindings(
+    conditions: MutableList<String>,
+    bindings: MutableMap<String, Any>
+  ): Query {
+    return this
+      .define("conditions", conditions.joinToString(" AND "))
+      .bindMap(bindings)
+  }
+
   protected fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
 }

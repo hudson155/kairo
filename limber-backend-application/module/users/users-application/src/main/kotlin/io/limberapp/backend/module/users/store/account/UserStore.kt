@@ -3,7 +3,6 @@ package io.limberapp.backend.module.users.store.account
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserModel
@@ -34,46 +33,33 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
     throw e
   }
 
-  fun get(userGuid: UUID): UserModel? {
-    return jdbi.withHandle<UserModel?, Exception> {
-      it.createQuery("SELECT * FROM users.user WHERE guid = :guid AND archived_date IS NULL")
-        .bind("guid", userGuid)
-        .mapTo(UserModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
+  fun get(
+    emailAddress: String? = null,
+    orgGuid: UUID? = null,
+    userGuid: UUID? = null
+  ): List<UserModel> {
+    return jdbi.withHandle<List<UserModel>, Exception> {
+      val (conditions, bindings) = conditionsAndBindings()
 
-  fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? {
-    return jdbi.withHandle<UserModel?, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM users.user
-        WHERE org_guid = :orgGuid
-          AND LOWER(email_address) = LOWER(:emailAddress)
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("orgGuid", orgGuid)
-        .bind("emailAddress", emailAddress)
-        .mapTo(UserModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
+      if (emailAddress != null) {
+        conditions.add("email_address = :emailAddress")
+        bindings["emailAddress"] = emailAddress
+      }
 
-  fun getByOrgGuid(orgGuid: UUID): Set<UserModel> {
-    return jdbi.withHandle<Set<UserModel>, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM users.user
-        WHERE org_guid = :orgGuid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("orgGuid", orgGuid)
+      if (orgGuid != null) {
+        conditions.add("org_guid = :orgGuid")
+        bindings["orgGuid"] = orgGuid
+      }
+
+      if (userGuid != null) {
+        conditions.add("guid = :userGuid")
+        bindings["userGuid"] = userGuid
+      }
+
+      it.createQuery("SELECT * FROM users.user WHERE <conditions> AND archived_date IS NULL")
+        .withConditionsAndBindings(conditions, bindings)
         .mapTo(UserModel::class.java)
-        .toSet()
+        .list()
     }
   }
 
@@ -85,7 +71,7 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw UserNotFound()
-        1 -> checkNotNull(get(userGuid))
+        1 -> get(userGuid = userGuid).single()
         else -> badSql()
       }
     }

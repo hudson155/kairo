@@ -7,5 +7,5 @@ import java.util.*
 internal class AccountServiceImpl @Inject constructor(
   private val accountStore: AccountStore
 ) : AccountService {
-  override fun get(accountGuid: UUID) = accountStore.get(accountGuid)
+  override fun get(accountGuid: UUID) = accountStore.get(accountGuid = accountGuid)
 }

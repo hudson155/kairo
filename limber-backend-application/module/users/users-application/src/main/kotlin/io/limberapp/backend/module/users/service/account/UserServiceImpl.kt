@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.users.service.account
 
 import com.google.inject.Inject
+import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
@@ -14,12 +15,12 @@ internal class UserServiceImpl @Inject constructor(
 ) : UserService {
   override fun create(model: UserModel) = userStore.create(model)
 
-  override fun get(userGuid: UUID) = userStore.get(userGuid)
+  override fun get(userGuid: UUID) = userStore.get(userGuid = userGuid).singleOrNull()
 
   override fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String) =
-    userStore.getByOrgGuidAndEmailAddress(orgGuid, emailAddress)
+    userStore.get(orgGuid = orgGuid, emailAddress = emailAddress).singleNullOrThrow()
 
-  override fun getByOrgGuid(orgGuid: UUID) = userStore.getByOrgGuid(orgGuid)
+  override fun getByOrgGuid(orgGuid: UUID) = userStore.get(orgGuid = orgGuid).toSet()
 
   override fun update(userGuid: UUID, update: UserModel.Update) = userStore.update(userGuid, update)
 
