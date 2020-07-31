@@ -15,54 +15,45 @@ import java.util.*
 private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
 private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
 
-internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
-  fun create(model: TenantModel): TenantModel {
-    return jdbi.withHandle<TenantModel, Exception> {
-      try {
-        it.createQuery(sqlResource("/store/tenant/create.sql"))
+internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+  fun create(model: TenantModel): TenantModel =
+    withHandle { handle ->
+      return@withHandle try {
+        handle.createQuery(sqlResource("/store/tenant/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantModel::class.java)
-          .single()
+          .one()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }
     }
-  }
 
-  private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
-    val error = e.serverErrorMessage ?: throw e
-    when {
-      error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) ->
-        throw OrgAlreadyHasTenant()
-      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
-        throw Auth0ClientIdAlreadyRegistered()
-      else -> throw e
-    }
-  }
-
-  fun get(orgGuid: UUID? = null, auth0ClientId: String? = null, domain: String? = null): List<TenantModel> {
-    return jdbi.withHandle<List<TenantModel>, Exception> {
-      it.createQuery("SELECT * FROM auth.tenant WHERE <conditions> AND archived_date IS NULL").build {
-        if (orgGuid != null) {
-          conditions.add("org_guid = :orgGuid")
-          bindings["orgGuid"] = orgGuid
-        }
-        if (auth0ClientId != null) {
-          conditions.add("auth0_client_id = :auth0ClientId")
-          bindings["auth0ClientId"] = auth0ClientId
-        }
-        if (domain != null) {
-          conditions.add("org_guid = (SELECT org_guid FROM auth.tenant_domain WHERE LOWER(domain) = LOWER(:domain))")
-          bindings["domain"] = domain
-        }
-      }
+  fun get(orgGuid: UUID): TenantModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenant/get.sql"))
+        .bind("orgGuid", orgGuid)
         .mapTo(TenantModel::class.java)
-        .list()
+        .findOne().orElse(null)
     }
-  }
 
-  fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel {
-    return jdbi.inTransaction<TenantModel, Exception> {
+  fun getByAuth0ClientId(auth0ClientId: String): TenantModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenant/getByAuth0ClientId.sql"))
+        .bind("auth0ClientId", auth0ClientId)
+        .mapTo(TenantModel::class.java)
+        .findOne().orElse(null)
+    }
+
+  fun getByDomain(domain: String): TenantModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenant/getByDomain.sql"))
+        .bind("domain", domain)
+        .mapTo(TenantModel::class.java)
+        .findOne().orElse(null)
+    }
+
+  fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =
+    inTransaction {
       val updateCount = try {
         it.createUpdate(sqlResource("/store/tenant/update.sql"))
           .bind("orgGuid", orgGuid)
@@ -73,38 +64,37 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
       }
       return@inTransaction when (updateCount) {
         0 -> throw TenantNotFound()
-        1 -> get(orgGuid = orgGuid).single()
+        1 -> checkNotNull(get(orgGuid))
         else -> badSql()
       }
+    }
+
+  fun delete(orgGuid: UUID) =
+    inTransaction {
+      val updateCount = it.createUpdate(sqlResource("/store/tenant/delete.sql"))
+        .bind("orgGuid", orgGuid)
+        .execute()
+      return@inTransaction when (updateCount) {
+        0 -> throw TenantNotFound()
+        1 -> Unit
+        else -> badSql()
+      }
+    }
+
+  private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
+    val error = e.serverErrorMessage ?: throw e
+    when {
+      error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) -> throw OrgAlreadyHasTenant()
+      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) -> throw Auth0ClientIdAlreadyRegistered()
+      else -> throw e
     }
   }
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
-        throw Auth0ClientIdAlreadyRegistered()
+      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) -> throw Auth0ClientIdAlreadyRegistered()
       else -> throw e
-    }
-  }
-
-  fun delete(orgGuid: UUID) {
-    jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(
-        """
-        UPDATE auth.tenant
-        SET archived_date = NOW()
-        WHERE org_guid = :orgGuid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("orgGuid", orgGuid)
-        .execute()
-      return@useTransaction when (updateCount) {
-        0 -> throw TenantNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
     }
   }
 }

@@ -9,7 +9,7 @@ import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
 
-private val SQL_PATH_REGEX = Regex("/store/[A-Za-z]+/[A-Za-z]+\\.sql")
+private val SQL_PATH_REGEX = Regex("/store/[A-Za-z]+/[A-Za-z0-9]+\\.sql")
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class SqlStore(private val jdbi: Jdbi) {
