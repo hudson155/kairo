@@ -1,6 +1,5 @@
 UPDATE auth.org_role
-SET name        = COALESCE(:name, name),
-    permissions = COALESCE(:permissions, permissions)
+SET archived_date = NOW()
 WHERE org_guid = :orgGuid
   AND guid = :orgRoleGuid
   AND archived_date IS NULL
