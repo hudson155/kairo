@@ -29,8 +29,10 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT)) throw FeatureRoleOrgRoleIsNotUnique()
-    else throw e
+    when {
+      error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT) -> throw FeatureRoleOrgRoleIsNotUnique()
+      else -> throw e
+    }
   }
 
   fun get(featureGuid: UUID? = null, featureRoleGuid: UUID? = null): List<FeatureRoleModel> {
@@ -70,8 +72,10 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT)) throw FeatureRoleOrgRoleIsNotUnique()
-    else throw e
+    when {
+      error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT) -> throw FeatureRoleOrgRoleIsNotUnique()
+      else -> throw e
+    }
   }
 
   fun delete(featureRoleGuid: UUID) {

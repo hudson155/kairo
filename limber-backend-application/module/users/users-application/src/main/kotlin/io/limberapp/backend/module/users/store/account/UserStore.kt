@@ -29,8 +29,10 @@ internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT)) throw EmailAddressAlreadyTaken()
-    throw e
+    when {
+      error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT) -> throw EmailAddressAlreadyTaken()
+      else -> throw e
+    }
   }
 
   fun get(orgGuid: UUID? = null, userGuid: UUID? = null, emailAddress: String? = null): List<UserModel> {

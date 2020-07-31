@@ -29,8 +29,10 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleNameIsNotUnique()
-    else throw e
+    when {
+      error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT) -> throw OrgRoleNameIsNotUnique()
+      else -> throw e
+    }
   }
 
   fun get(orgGuid: UUID? = null, orgRoleGuid: UUID? = null, accountGuid: UUID? = null): List<OrgRoleModel> {
@@ -81,8 +83,10 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT)) throw OrgRoleNameIsNotUnique()
-    else throw e
+    when {
+      error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT) -> throw OrgRoleNameIsNotUnique()
+      else -> throw e
+    }
   }
 
   fun delete(orgRoleGuid: UUID) {

@@ -29,10 +29,11 @@ internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT)) {
-      throw AccountIsAlreadyMemberOfOrgRole()
+    when {
+      error.isUniqueConstraintViolation(ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT) ->
+        throw AccountIsAlreadyMemberOfOrgRole()
+      else -> throw e
     }
-    throw e
   }
 
   fun get(orgRoleGuid: UUID? = null): Set<OrgRoleMembershipModel> {

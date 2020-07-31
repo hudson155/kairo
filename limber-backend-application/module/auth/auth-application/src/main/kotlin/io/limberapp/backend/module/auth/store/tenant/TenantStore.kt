@@ -81,10 +81,11 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
-    if (error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT)) {
-      throw Auth0ClientIdAlreadyRegistered()
+    when {
+      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) ->
+        throw Auth0ClientIdAlreadyRegistered()
+      else -> throw e
     }
-    throw e
   }
 
   fun delete(orgGuid: UUID) {
