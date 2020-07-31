@@ -3,7 +3,6 @@ package io.limberapp.backend.module.auth.store.tenant
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
@@ -41,39 +40,24 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
     }
   }
 
-  fun get(orgGuid: UUID): TenantModel? {
-    return jdbi.withHandle<TenantModel?, Exception> {
-      it.createQuery("SELECT * FROM auth.tenant WHERE org_guid = :orgGuid AND archived_date IS NULL")
-        .bind("orgGuid", orgGuid)
+  fun get(orgGuid: UUID? = null, auth0ClientId: String? = null, domain: String? = null): List<TenantModel> {
+    return jdbi.withHandle<List<TenantModel>, Exception> {
+      it.createQuery("SELECT * FROM auth.tenant WHERE <conditions> AND archived_date IS NULL").build {
+        if (orgGuid != null) {
+          conditions.add("org_guid = :orgGuid")
+          bindings["orgGuid"] = orgGuid
+        }
+        if (auth0ClientId != null) {
+          conditions.add("auth0_client_id = :auth0ClientId")
+          bindings["auth0ClientId"] = auth0ClientId
+        }
+        if (domain != null) {
+          conditions.add("org_guid = (SELECT org_guid FROM auth.tenant_domain WHERE LOWER(domain) = LOWER(:domain))")
+          bindings["domain"] = domain
+        }
+      }
         .mapTo(TenantModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByDomain(domain: String): TenantModel? {
-    return jdbi.withHandle<TenantModel?, Exception> {
-      it.createQuery(
-        """
-        SELECT *
-        FROM auth.tenant
-        WHERE org_guid = (SELECT org_guid
-                          FROM auth.tenant_domain
-                          WHERE LOWER(domain) = LOWER(:domain))
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("domain", domain)
-        .mapTo(TenantModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByAuth0ClientId(auth0ClientId: String): TenantModel? {
-    return jdbi.withHandle<TenantModel?, Exception> {
-      it.createQuery("SELECT * FROM auth.tenant WHERE auth0_client_id = :auth0ClientId AND archived_date IS NULL")
-        .bind("auth0ClientId", auth0ClientId)
-        .mapTo(TenantModel::class.java)
-        .singleNullOrThrow()
+        .list()
     }
   }
 
@@ -89,7 +73,7 @@ internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStor
       }
       return@inTransaction when (updateCount) {
         0 -> throw TenantNotFound()
-        1 -> checkNotNull(get(orgGuid))
+        1 -> get(orgGuid = orgGuid).single()
         else -> badSql()
       }
     }

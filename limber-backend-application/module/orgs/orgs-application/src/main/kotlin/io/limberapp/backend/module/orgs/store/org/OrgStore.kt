@@ -43,7 +43,7 @@ internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore()
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw OrgNotFound()
-        1 -> get(orgGuid).single()
+        1 -> get(orgGuid = orgGuid).single()
         else -> badSql()
       }
     }

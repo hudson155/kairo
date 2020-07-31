@@ -35,10 +35,14 @@ internal class OrgRoleMembershipStore @Inject constructor(private val jdbi: Jdbi
     throw e
   }
 
-  fun getByOrgRoleGuid(orgRoleGuid: UUID): Set<OrgRoleMembershipModel> {
+  fun get(orgRoleGuid: UUID? = null): Set<OrgRoleMembershipModel> {
     return jdbi.withHandle<Set<OrgRoleMembershipModel>, Exception> {
-      it.createQuery("SELECT * FROM auth.org_role_membership WHERE org_role_guid = :orgRoleGuid")
-        .bind("orgRoleGuid", orgRoleGuid)
+      it.createQuery("SELECT * FROM auth.org_role_membership WHERE <conditions>").build {
+        if (orgRoleGuid != null) {
+          conditions.add("org_role_guid = :orgRoleGuid")
+          bindings["orgRoleGuid"] = orgRoleGuid
+        }
+      }
         .mapTo(OrgRoleMembershipModel::class.java)
         .toSet()
     }

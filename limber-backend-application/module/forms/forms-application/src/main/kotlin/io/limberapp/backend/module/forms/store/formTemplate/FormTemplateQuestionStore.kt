@@ -104,7 +104,6 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
           bindings["questionGuid"] = questionGuid
         }
       }
-        .bind("guid", questionGuid)
         .mapTo(FormTemplateQuestionModel::class.java)
         .list()
     }

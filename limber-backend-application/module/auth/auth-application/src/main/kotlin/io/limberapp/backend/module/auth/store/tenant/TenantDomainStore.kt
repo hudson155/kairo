@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
@@ -40,26 +39,20 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
     }
   }
 
-  fun existsAndHasOrgGuid(domain: String, orgGuid: UUID): Boolean {
-    val model = get(domain) ?: return false
-    return model.orgGuid == orgGuid
-  }
-
-  fun get(domain: String): TenantDomainModel? {
-    return jdbi.withHandle<TenantDomainModel?, Exception> {
-      it.createQuery("SELECT * FROM auth.tenant_domain WHERE LOWER(domain) = LOWER(:domain)")
-        .bind("domain", domain)
+  fun get(orgGuid: UUID? = null, domain: String? = null): List<TenantDomainModel> {
+    return jdbi.withHandle<List<TenantDomainModel>, Exception> {
+      it.createQuery("SELECT * FROM auth.tenant_domain WHERE <conditions>").build {
+        if (domain != null) {
+          conditions.add("LOWER(domain) = :domain")
+          bindings["domain"] = domain
+        }
+        if (orgGuid != null) {
+          conditions.add("org_guid = :orgGuid")
+          bindings["orgGuid"] = orgGuid
+        }
+      }
         .mapTo(TenantDomainModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel> {
-    return jdbi.withHandle<Set<TenantDomainModel>, Exception> {
-      it.createQuery("SELECT * FROM auth.tenant_domain WHERE org_guid = :orgGuid")
-        .bind("orgGuid", orgGuid)
-        .mapTo(TenantDomainModel::class.java)
-        .toSet()
+        .list()
     }
   }
 

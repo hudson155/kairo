@@ -3,7 +3,6 @@ package io.limberapp.backend.module.auth.store.org
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
@@ -34,36 +33,31 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
     else throw e
   }
 
-  fun existsAndHasOrgGuid(orgRoleGuid: UUID, orgGuid: UUID): Boolean {
-    val model = get(orgRoleGuid) ?: return false
-    return model.orgGuid == orgGuid
-  }
-
-  fun get(orgRoleGuid: UUID): OrgRoleModel? {
-    return jdbi.withHandle<OrgRoleModel?, Exception> {
-      it.createQuery(sqlResource("/store/orgRole/get.sql"))
-        .bind("guid", orgRoleGuid)
+  fun get(orgGuid: UUID? = null, orgRoleGuid: UUID? = null, accountGuid: UUID? = null): List<OrgRoleModel> {
+    return jdbi.withHandle<List<OrgRoleModel>, Exception> {
+      it.createQuery(sqlResource("/store/orgRole/get.sql")).build {
+        if (orgGuid != null) {
+          conditions.add("org_guid = :orgGuid")
+          bindings["orgGuid"] = orgGuid
+        }
+        if (orgRoleGuid != null) {
+          conditions.add("guid = :orgRoleGuid")
+          bindings["orgRoleGuid"] = orgRoleGuid
+        }
+        if (accountGuid != null) {
+          conditions.add(
+            """
+            EXISTS(SELECT id
+                   FROM auth.org_role_membership
+                   WHERE org_role_guid = org_role.guid
+                     AND account_guid = :accountGuid)
+            """.trimIndent()
+          )
+          bindings["accountGuid"] = accountGuid
+        }
+      }
         .mapTo(OrgRoleModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> {
-    return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
-      it.createQuery(sqlResource("/store/orgRole/getByOrgGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .mapTo(OrgRoleModel::class.java)
-        .toSet()
-    }
-  }
-
-  fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID): Set<OrgRoleModel> {
-    return jdbi.withHandle<Set<OrgRoleModel>, Exception> {
-      it.createQuery(sqlResource("/store/orgRole/getByAccountGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("accountGuid", accountGuid)
-        .mapTo(OrgRoleModel::class.java)
-        .toSet()
+        .list()
     }
   }
 
@@ -79,7 +73,7 @@ internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlSto
       }
       return@inTransaction when (updateCount) {
         0 -> throw OrgRoleNotFound()
-        1 -> checkNotNull(get(orgRoleGuid))
+        1 -> get(orgRoleGuid = orgRoleGuid).single()
         else -> badSql()
       }
     }

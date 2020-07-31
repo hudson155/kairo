@@ -3,7 +3,6 @@ package io.limberapp.backend.module.auth.store.feature
 import com.google.inject.Inject
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.util.singleNullOrThrow
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleOrgRoleIsNotUnique
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
@@ -34,26 +33,20 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
     else throw e
   }
 
-  fun existsAndHasFeatureGuid(featureRoleGuid: UUID, featureGuid: UUID): Boolean {
-    val model = get(featureRoleGuid) ?: return false
-    return model.featureGuid == featureGuid
-  }
-
-  fun get(featureRoleGuid: UUID): FeatureRoleModel? {
-    return jdbi.withHandle<FeatureRoleModel?, Exception> {
-      it.createQuery("SELECT * FROM auth.feature_role WHERE guid = :guid")
-        .bind("guid", featureRoleGuid)
+  fun get(featureGuid: UUID? = null, featureRoleGuid: UUID? = null): List<FeatureRoleModel> {
+    return jdbi.withHandle<List<FeatureRoleModel>, Exception> {
+      it.createQuery("SELECT * FROM auth.feature_role WHERE <conditions>").build {
+        if (featureGuid != null) {
+          conditions.add("feature_guid = :featureGuid")
+          bindings["featureGuid"] = featureGuid
+        }
+        if (featureRoleGuid != null) {
+          conditions.add("guid = :featureRoleGuid")
+          bindings["featureRoleGuid"] = featureRoleGuid
+        }
+      }
         .mapTo(FeatureRoleModel::class.java)
-        .singleNullOrThrow()
-    }
-  }
-
-  fun getByFeatureGuid(featureGuid: UUID): Set<FeatureRoleModel> {
-    return jdbi.withHandle<Set<FeatureRoleModel>, Exception> {
-      it.createQuery("SELECT * FROM auth.feature_role WHERE feature_guid = :featureGuid")
-        .bind("featureGuid", featureGuid)
-        .mapTo(FeatureRoleModel::class.java)
-        .toSet()
+        .list()
     }
   }
 
@@ -69,7 +62,7 @@ internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : Sq
       }
       return@inTransaction when (updateCount) {
         0 -> throw FeatureRoleNotFound()
-        1 -> checkNotNull(get(featureRoleGuid))
+        1 -> get(featureRoleGuid = featureRoleGuid).single()
         else -> badSql()
       }
     }
