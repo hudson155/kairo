@@ -16,19 +16,49 @@ import java.util.*
 private const val ORG_GUID_FOREIGN_KEY = "tenant_domain_org_guid_fkey"
 private const val DOMAIN_UNIQUE_CONSTRAINT = "tenant_domain_lower_idx"
 
-internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
-  fun create(model: TenantDomainModel): TenantDomainModel {
-    return jdbi.withHandle<TenantDomainModel, Exception> {
-      try {
-        it.createQuery(sqlResource("/store/tenantDomain/create.sql"))
+internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+  fun create(model: TenantDomainModel): TenantDomainModel =
+    withHandle { handle ->
+      return@withHandle try {
+        handle.createQuery(sqlResource("/store/tenantDomain/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantDomainModel::class.java)
-          .single()
+          .one()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }
     }
-  }
+
+  fun get(orgGuid: UUID, domain: String): TenantDomainModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenantDomain/get.sql"))
+        .bind("orgGuid", orgGuid)
+        .bind("domain", domain)
+        .mapTo(TenantDomainModel::class.java)
+        .findOne().orElse(null)
+    }
+
+  fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel> =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenantDomain/getByOrgGuid.sql"))
+        .bind("orgGuid", orgGuid)
+        .mapTo(TenantDomainModel::class.java)
+        .toSet()
+    }
+
+  fun delete(orgGuid: UUID, domain: String) =
+    inTransaction {
+      val updateCount =
+        it.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
+          .bind("orgGuid", orgGuid)
+          .bind("domain", domain)
+          .execute()
+      return@inTransaction when (updateCount) {
+        0 -> throw TenantDomainNotFound()
+        1 -> Unit
+        else -> badSql()
+      }
+    }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
@@ -36,37 +66,6 @@ internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : S
       error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
       error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
       else -> throw e
-    }
-  }
-
-  fun get(orgGuid: UUID? = null, domain: String? = null): List<TenantDomainModel> {
-    return jdbi.withHandle<List<TenantDomainModel>, Exception> {
-      it.createQuery("SELECT * FROM auth.tenant_domain WHERE <conditions>").build {
-        if (domain != null) {
-          conditions.add("LOWER(domain) = :domain")
-          bindings["domain"] = domain
-        }
-        if (orgGuid != null) {
-          conditions.add("org_guid = :orgGuid")
-          bindings["orgGuid"] = orgGuid
-        }
-      }
-        .mapTo(TenantDomainModel::class.java)
-        .list()
-    }
-  }
-
-  fun delete(domain: String) {
-    return jdbi.useTransaction<Exception> {
-      val updateCount =
-        it.createUpdate("DELETE FROM auth.tenant_domain WHERE LOWER(domain) = LOWER(:domain)")
-          .bind("domain", domain)
-          .execute()
-      return@useTransaction when (updateCount) {
-        0 -> throw TenantDomainNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
     }
   }
 }
