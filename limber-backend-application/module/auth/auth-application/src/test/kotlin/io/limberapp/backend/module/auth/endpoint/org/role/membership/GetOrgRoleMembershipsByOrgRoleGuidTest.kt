@@ -2,7 +2,6 @@ package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
-import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
@@ -21,20 +20,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest : ResourceTest() {
     // Create an org role anyways, to ensure that the error still happens when there is one.
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    piperTest.test(
-      endpoint = OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid),
-      expectedException = OrgRoleNotFound()
-    )
-  }
-
-  @Test
-  fun happyPathNone() {
-    val orgGuid = UUID.randomUUID()
-
-    val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
-
-    piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
+    piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid)) {
       val actual = json.parseSet<OrgRoleMembershipRep.Complete>(response.content!!)
       assertTrue(actual.isEmpty())
     }

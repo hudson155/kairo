@@ -17,7 +17,6 @@ internal class FeatureRoleServiceImpl @Inject constructor(
   override fun update(featureGuid: UUID, featureRoleGuid: UUID, update: FeatureRoleModel.Update) =
     featureRoleStore.update(featureGuid, featureRoleGuid, update)
 
-  override fun delete(featureGuid: UUID, featureRoleGuid: UUID) {
+  override fun delete(featureGuid: UUID, featureRoleGuid: UUID) =
     featureRoleStore.delete(featureGuid, featureRoleGuid)
-  }
 }

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
-import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
+import io.limberapp.backend.module.auth.exception.org.OrgRoleMembershipNotFound
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
@@ -23,7 +23,7 @@ internal class DeleteMembershipTest : ResourceTest() {
 
     piperTest.test(
       endpoint = OrgRoleMembershipApi.Delete(orgGuid, orgRoleGuid, accountGuid),
-      expectedException = OrgRoleNotFound()
+      expectedException = OrgRoleMembershipNotFound()
     )
   }
 
@@ -48,7 +48,7 @@ internal class DeleteMembershipTest : ResourceTest() {
 
     piperTest.test(
       endpoint = OrgRoleMembershipApi.Delete(orgGuid, orgRoleGuid, account1Guid),
-      expectedException = OrgRoleNotFound()
+      expectedException = OrgRoleMembershipNotFound()
     )
   }
 
