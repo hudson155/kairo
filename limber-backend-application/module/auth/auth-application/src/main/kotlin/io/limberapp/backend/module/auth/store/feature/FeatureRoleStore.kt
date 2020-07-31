@@ -13,7 +13,7 @@ import java.util.*
 
 private const val FEATURE_ROLE_UNIQUE_CONSTRAINT = "feature_role_feature_guid_org_role_guid_key"
 
-internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class FeatureRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FeatureRoleModel): FeatureRoleModel {
     return jdbi.withHandle<FeatureRoleModel, Exception> {
       try {

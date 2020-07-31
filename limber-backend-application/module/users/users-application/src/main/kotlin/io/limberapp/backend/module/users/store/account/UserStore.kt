@@ -13,7 +13,7 @@ import java.util.*
 
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_org_guid_lower_idx"
 
-internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: UserModel): UserModel {
     return jdbi.withHandle<UserModel, Exception> {
       try {

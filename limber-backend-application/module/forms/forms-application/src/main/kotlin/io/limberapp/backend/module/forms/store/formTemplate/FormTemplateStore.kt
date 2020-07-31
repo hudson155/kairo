@@ -8,7 +8,7 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
-internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FormTemplateModel): FormTemplateModel {
     return jdbi.withHandle<FormTemplateModel, Exception> {
       it.createQuery(sqlResource("/store/formTemplate/create.sql"))

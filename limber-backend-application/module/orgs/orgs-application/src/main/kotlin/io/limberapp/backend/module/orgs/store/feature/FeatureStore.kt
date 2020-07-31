@@ -18,7 +18,7 @@ private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
 private const val PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
 private const val RANK_UNIQUE_CONSTRAINT = "feature_org_guid_rank_key"
 
-internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FeatureModel): FeatureModel {
     return jdbi.withHandle<FeatureModel, Exception> {
       try {

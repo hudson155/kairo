@@ -13,7 +13,7 @@ import java.util.*
 
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
-internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class OrgRoleStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: OrgRoleModel): OrgRoleModel {
     return jdbi.withHandle<OrgRoleModel, Exception> {
       try {

@@ -6,7 +6,7 @@ import io.limberapp.backend.module.users.model.account.AccountModel
 import org.jdbi.v3.core.Jdbi
 import java.util.*
 
-internal class AccountStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class AccountStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun get(accountGuid: UUID? = null): List<AccountModel> {
     return jdbi.withHandle<List<AccountModel>, Exception> {
       it.createQuery("SELECT * FROM users.account WHERE guid = :guid AND archived_date IS NULL").build {

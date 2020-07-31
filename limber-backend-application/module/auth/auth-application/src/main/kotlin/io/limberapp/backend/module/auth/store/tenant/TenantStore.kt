@@ -15,7 +15,7 @@ import java.util.*
 private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
 private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
 
-internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class TenantStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantModel): TenantModel {
     return jdbi.withHandle<TenantModel, Exception> {
       try {

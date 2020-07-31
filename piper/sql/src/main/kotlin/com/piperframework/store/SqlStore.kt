@@ -1,6 +1,8 @@
 package com.piperframework.store
 
 import com.piperframework.util.singleNullOrThrow
+import org.jdbi.v3.core.Handle
+import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.PSQLException
@@ -10,7 +12,7 @@ import java.sql.BatchUpdateException
 private val SQL_PATH_REGEX = Regex("/store/[A-Za-z]+/[A-Za-z]+\\.sql")
 
 @Suppress("UnnecessaryAbstractClass")
-abstract class SqlStore {
+abstract class SqlStore(private val jdbi: Jdbi) {
   private val resourceCache = object : ResourceCache() {
     override fun get(resourceName: String): String {
       // This check is added to the resource cache rather than to the store itself for performance reasons.
@@ -38,6 +40,10 @@ abstract class SqlStore {
         else -> null
       }?.serverErrorMessage
     }
+
+  fun <R> inTransaction(callback: (Handle) -> R): R = jdbi.inTransaction<R, Exception>(callback)
+
+  fun <R> withHandle(callback: (Handle) -> R): R = jdbi.withHandle<R, Exception>(callback)
 
   protected class QueryBuilder {
     val conditions = mutableListOf<String>()

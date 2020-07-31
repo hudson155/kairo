@@ -16,7 +16,7 @@ import java.util.*
 private const val ORG_GUID_FOREIGN_KEY = "tenant_domain_org_guid_fkey"
 private const val DOMAIN_UNIQUE_CONSTRAINT = "tenant_domain_lower_idx"
 
-internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class TenantDomainStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantDomainModel): TenantDomainModel {
     return jdbi.withHandle<TenantDomainModel, Exception> {
       try {

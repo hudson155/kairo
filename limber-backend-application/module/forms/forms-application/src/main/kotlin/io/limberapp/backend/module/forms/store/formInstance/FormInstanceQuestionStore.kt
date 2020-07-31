@@ -29,7 +29,7 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQ
   }
 }
 
-internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }

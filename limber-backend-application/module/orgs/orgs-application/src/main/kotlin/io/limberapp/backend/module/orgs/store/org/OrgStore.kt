@@ -8,7 +8,7 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
-internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore() {
+internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: OrgModel): OrgModel {
     return jdbi.withHandle<OrgModel, Exception> {
       it.createQuery(sqlResource("/store/org/create.sql"))
