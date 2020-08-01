@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.store.org
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
@@ -13,6 +14,7 @@ import java.util.*
 
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
+@Singleton
 internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: OrgRoleModel): OrgRoleModel =
     withHandle { handle ->

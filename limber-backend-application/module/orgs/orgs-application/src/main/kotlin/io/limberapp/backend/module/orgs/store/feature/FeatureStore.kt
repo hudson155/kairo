@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.orgs.store.feature
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
@@ -18,6 +19,7 @@ private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
 private const val PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
 private const val RANK_UNIQUE_CONSTRAINT = "feature_org_guid_rank_key"
 
+@Singleton
 internal class FeatureStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FeatureModel): FeatureModel {
     return jdbi.withHandle<FeatureModel, Exception> {

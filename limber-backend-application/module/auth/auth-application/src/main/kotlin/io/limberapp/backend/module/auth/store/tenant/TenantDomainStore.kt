@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.store.tenant
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
@@ -16,6 +17,7 @@ import java.util.*
 private const val ORG_GUID_FOREIGN_KEY = "tenant_domain_org_guid_fkey"
 private const val DOMAIN_UNIQUE_CONSTRAINT = "tenant_domain_lower_idx"
 
+@Singleton
 internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantDomainModel): TenantDomainModel =
     withHandle { handle ->

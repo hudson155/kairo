@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
@@ -13,6 +14,7 @@ import java.util.*
 
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_org_guid_lower_idx"
 
+@Singleton
 internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: UserModel): UserModel {
     return jdbi.withHandle<UserModel, Exception> {

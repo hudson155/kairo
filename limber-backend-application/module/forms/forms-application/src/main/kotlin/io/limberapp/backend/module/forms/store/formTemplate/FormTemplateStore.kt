@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
@@ -8,6 +9,7 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
+@Singleton
 internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FormTemplateModel): FormTemplateModel {
     return jdbi.withHandle<FormTemplateModel, Exception> {

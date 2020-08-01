@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.orgs.store.org
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.model.org.OrgModel
@@ -8,6 +9,7 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
+@Singleton
 internal class OrgStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: OrgModel): OrgModel {
     return jdbi.withHandle<OrgModel, Exception> {

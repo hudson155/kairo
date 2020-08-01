@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.store.feature
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
@@ -13,6 +14,7 @@ import java.util.*
 
 private const val FEATURE_ROLE_UNIQUE_CONSTRAINT = "feature_role_feature_guid_org_role_guid_key"
 
+@Singleton
 internal class FeatureRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FeatureRoleModel): FeatureRoleModel =
     withHandle { handle ->

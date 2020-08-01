@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
 import com.piperframework.sql.PolymorphicRowMapper
 import com.piperframework.sql.bindNullForMissingArguments
@@ -22,6 +23,7 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQ
   }
 }
 
+@Singleton
 internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())

@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.store.tenant
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
@@ -15,6 +16,7 @@ import java.util.*
 private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
 private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
 
+@Singleton
 internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantModel): TenantModel =
     withHandle { handle ->

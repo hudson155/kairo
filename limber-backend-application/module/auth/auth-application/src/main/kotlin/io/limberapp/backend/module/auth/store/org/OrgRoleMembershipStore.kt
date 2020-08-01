@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.auth.store.org
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isNotNullConstraintViolation
 import com.piperframework.store.isUniqueConstraintViolation
@@ -15,6 +16,7 @@ import java.util.*
 
 private const val ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT = "org_role_membership_org_role_guid_account_guid_key"
 
+@Singleton
 internal class OrgRoleMembershipStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel =
     withHandle { handle ->
