@@ -15,80 +15,74 @@ import java.util.*
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_org_guid_lower_idx"
 
 @Singleton
-internal class UserStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
-  fun create(model: UserModel): UserModel {
-    return jdbi.withHandle<UserModel, Exception> {
-      try {
-        it.createQuery(sqlResource("/store/user/create.sql"))
+internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+  fun create(model: UserModel): UserModel =
+    withHandle { handle ->
+      return@withHandle try {
+        handle.createQuery(sqlResource("/store/user/create.sql"))
           .bindKotlin(model)
           .mapTo(UserModel::class.java)
-          .single()
+          .one()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }
     }
-  }
+
+  fun get(userGuid: UUID): UserModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/user/get.sql"))
+        .bind("userGuid", userGuid)
+        .mapTo(UserModel::class.java)
+        .findOne().orElse(null)
+    }
+
+  fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/user/getByOrgGuidAndEmailAddress.sql"))
+        .bind("orgGuid", orgGuid)
+        .bind("emailAddress", emailAddress)
+        .mapTo(UserModel::class.java)
+        .findOne().orElse(null)
+    }
+
+  fun getByOrgGuid(orgGuid: UUID): Set<UserModel> =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/user/getByOrgGuid.sql"))
+        .bind("orgGuid", orgGuid)
+        .mapTo(UserModel::class.java)
+        .toSet()
+    }
+
+  fun update(userGuid: UUID, update: UserModel.Update): UserModel =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/user/update.sql"))
+        .bind("userGuid", userGuid)
+        .bindKotlin(update)
+        .execute()
+      return@inTransaction when (updateCount) {
+        0 -> throw UserNotFound()
+        1 -> checkNotNull(get(userGuid))
+        else -> badSql()
+      }
+    }
+
+  fun delete(userGuid: UUID) =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/user/delete.sql"))
+        .bind("userGuid", userGuid)
+        .execute()
+      return@inTransaction when (updateCount) {
+        0 -> throw UserNotFound()
+        1 -> Unit
+        else -> badSql()
+      }
+    }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
       error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT) -> throw EmailAddressAlreadyTaken()
       else -> throw e
-    }
-  }
-
-  fun get(orgGuid: UUID? = null, userGuid: UUID? = null, emailAddress: String? = null): List<UserModel> {
-    return jdbi.withHandle<List<UserModel>, Exception> {
-      it.createQuery("SELECT * FROM users.user WHERE <conditions> AND archived_date IS NULL").build {
-        if (orgGuid != null) {
-          conditions.add("org_guid = :orgGuid")
-          bindings["orgGuid"] = orgGuid
-        }
-        if (userGuid != null) {
-          conditions.add("guid = :userGuid")
-          bindings["userGuid"] = userGuid
-        }
-        if (emailAddress != null) {
-          conditions.add("email_address = :emailAddress")
-          bindings["emailAddress"] = emailAddress
-        }
-      }
-        .mapTo(UserModel::class.java)
-        .list()
-    }
-  }
-
-  fun update(userGuid: UUID, update: UserModel.Update): UserModel {
-    return jdbi.inTransaction<UserModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/user/update.sql"))
-        .bind("guid", userGuid)
-        .bindKotlin(update)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw UserNotFound()
-        1 -> get(userGuid = userGuid).single()
-        else -> badSql()
-      }
-    }
-  }
-
-  fun delete(userGuid: UUID) {
-    jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(
-        """
-        UPDATE users.user
-        SET archived_date = NOW()
-        WHERE guid = :guid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("guid", userGuid)
-        .execute()
-      return@useTransaction when (updateCount) {
-        0 -> throw UserNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
     }
   }
 }
