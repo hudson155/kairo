@@ -44,6 +44,7 @@
             <option value="$PROJECT_DIR$/piper/errors" />
             <option value="$PROJECT_DIR$/piper/exception-mapping" />
             <option value="$PROJECT_DIR$/piper/exceptions" />
+            <option value="$PROJECT_DIR$/piper/finder" />
             <option value="$PROJECT_DIR$/piper/ktor-auth" />
             <option value="$PROJECT_DIR$/piper/module" />
             <option value="$PROJECT_DIR$/piper/reps" />
@@ -56,7 +57,6 @@
             <option value="$PROJECT_DIR$/piper/validation" />
           </set>
         </option>
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>
