@@ -55,9 +55,9 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
     }
 
   fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel =
-    inTransaction {
+    inTransaction { handle ->
       val updateCount = try {
-        it.createUpdate(sqlResource("/store/orgRole/update.sql"))
+        handle.createUpdate(sqlResource("/store/orgRole/update.sql"))
           .bind("orgGuid", orgGuid)
           .bind("orgRoleGuid", orgRoleGuid)
           .bindKotlin(update)
@@ -73,8 +73,8 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
     }
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID) =
-    inTransaction {
-      val updateCount = it.createUpdate(sqlResource("/store/orgRole/delete.sql"))
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("orgRoleGuid", orgRoleGuid)
         .execute()

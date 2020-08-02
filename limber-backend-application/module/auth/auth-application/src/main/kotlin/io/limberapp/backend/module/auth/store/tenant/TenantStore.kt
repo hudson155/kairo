@@ -55,9 +55,9 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
     }
 
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =
-    inTransaction {
+    inTransaction { handle ->
       val updateCount = try {
-        it.createUpdate(sqlResource("/store/tenant/update.sql"))
+        handle.createUpdate(sqlResource("/store/tenant/update.sql"))
           .bind("orgGuid", orgGuid)
           .bindKotlin(update)
           .execute()
@@ -72,8 +72,8 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
     }
 
   fun delete(orgGuid: UUID) =
-    inTransaction {
-      val updateCount = it.createUpdate(sqlResource("/store/tenant/delete.sql"))
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
         .bind("orgGuid", orgGuid)
         .execute()
       return@inTransaction when (updateCount) {

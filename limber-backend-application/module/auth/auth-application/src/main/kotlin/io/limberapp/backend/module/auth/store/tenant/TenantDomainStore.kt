@@ -49,9 +49,9 @@ internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi
     }
 
   fun delete(orgGuid: UUID, domain: String) =
-    inTransaction {
+    inTransaction { handle ->
       val updateCount =
-        it.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
+        handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
           .bind("orgGuid", orgGuid)
           .bind("domain", domain)
           .execute()
