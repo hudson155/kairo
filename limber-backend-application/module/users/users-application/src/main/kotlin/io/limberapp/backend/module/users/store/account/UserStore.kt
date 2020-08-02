@@ -2,10 +2,13 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.exception.account.UserNotFound
+import io.limberapp.backend.module.users.model.account.UserFinder
 import io.limberapp.backend.module.users.model.account.UserModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -15,7 +18,7 @@ import java.util.*
 private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_org_guid_lower_idx"
 
 @Singleton
-internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<UserModel, UserFinder> {
   fun create(model: UserModel): UserModel =
     withHandle { handle ->
       return@withHandle try {
@@ -28,29 +31,12 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
     }
 
-  fun get(userGuid: UUID): UserModel? =
+  override fun <R> find(result: (Iterable<UserModel>) -> R, query: UserFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/user/get.sql"))
-        .bind("userGuid", userGuid)
+      handle.createQuery(sqlResource("/store/user/find.sql"))
+        .withFinder(UserQueryBuilder().apply(query))
         .mapTo(UserModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/user/getByOrgGuidAndEmailAddress.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("emailAddress", emailAddress)
-        .mapTo(UserModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByOrgGuid(orgGuid: UUID): Set<UserModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/user/getByOrgGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .mapTo(UserModel::class.java)
-        .toSet()
+        .let(result)
     }
 
   fun update(userGuid: UUID, update: UserModel.Update): UserModel =
@@ -61,7 +47,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw UserNotFound()
-        1 -> checkNotNull(get(userGuid))
+        1 -> findOnlyOrThrow { userGuid(userGuid) }
         else -> badSql()
       }
     }

@@ -1,4 +1,4 @@
 SELECT *
 FROM users.account
-WHERE guid = :accountGuid
+WHERE (<conditions>)
   AND archived_date IS NULL

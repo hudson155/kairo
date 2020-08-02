@@ -40,7 +40,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       name = "Cranky Pasta",
       ownerAccountGuid = UUID.randomUUID()
     )
-    every { mockedServices[AccountService::class].get(userGuid) } returns AccountModel(
+    every { mockedServices[AccountService::class].findOnlyOrNull(any()) } returns AccountModel(
       guid = userGuid,
       createdDate = LocalDateTime.now(fixedClock),
       identityProvider = false,
@@ -48,7 +48,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       name = "Jeff Hudson"
     )
     every {
-      mockedServices[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress)
+      mockedServices[UserService::class].findOnlyOrNull(any())
     } returns null
     every {
       mockedServices[UserService::class].create(any())
@@ -126,10 +126,10 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       profilePhotoUrl = null
     )
     every {
-      mockedServices[AccountService::class].get(existingAccount.guid)
+      mockedServices[AccountService::class].findOnlyOrNull(any())
     } returns existingAccount
     every {
-      mockedServices[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress)
+      mockedServices[UserService::class].findOnlyOrNull(any())
     } returns existingUser
     every {
       mockedServices[OrgService::class].get(existingOrg.guid)

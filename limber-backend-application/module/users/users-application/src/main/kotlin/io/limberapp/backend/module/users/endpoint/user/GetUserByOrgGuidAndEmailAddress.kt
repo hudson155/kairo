@@ -31,7 +31,7 @@ internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
 
   override suspend fun Handler.handle(command: UserApi.GetByOrgGuidAndEmailAddress): UserRep.Complete {
     Authorization.OrgMember(command.orgGuid).authorize()
-    val user = userService.getByOrgGuidAndEmailAddress(command.orgGuid, command.emailAddress)
+    val user = userService.findOnlyOrNull { orgGuid(command.orgGuid); emailAddress(command.emailAddress) }
     Authorization.User(user?.guid).authorize()
     return userMapper.completeRep(user ?: throw UserNotFound())
   }
