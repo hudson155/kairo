@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+
 plugins {
   kotlin("multiplatform")
   id(Plugins.detekt)
@@ -45,6 +47,10 @@ kotlin {
       }
     }
   }
+}
+
+tasks.withType<KotlinCompile<*>>().configureEach {
+  kotlinOptions.freeCompilerArgs += "-Xallow-kotlin-package"
 }
 
 tasks.named<Test>("jvmTest") {

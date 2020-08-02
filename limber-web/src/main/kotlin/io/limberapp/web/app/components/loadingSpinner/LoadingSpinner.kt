@@ -73,5 +73,3 @@ private fun RBuilder.component(props: Props) {
     }
   }
 }
-
-

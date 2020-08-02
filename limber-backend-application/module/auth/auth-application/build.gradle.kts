@@ -19,7 +19,6 @@ dependencies {
   testImplementation(project(":limber-backend-application:common:testing"))
 }
 
-
 tasks.withType<KotlinCompile<*>>().configureEach {
   kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Auth"
 }
