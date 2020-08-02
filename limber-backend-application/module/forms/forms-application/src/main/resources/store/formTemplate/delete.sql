@@ -1,6 +1,5 @@
 UPDATE forms.form_template
-SET title       = COALESCE(:title, title),
-    description = COALESCE(:description, description)
+SET archived_date = NOW()
 WHERE feature_guid = :featureGuid
   AND guid = :formTemplateGuid
   AND archived_date IS NULL

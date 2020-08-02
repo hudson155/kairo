@@ -24,7 +24,6 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
 ) : FormTemplateQuestionService {
   override fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
-      .singleNullOrThrow()
       .ifNull { throw FormTemplateNotFound() }
     require(formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid).isEmpty())
     val questions = listOf(
@@ -76,14 +75,12 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
 
   override fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int?): FormTemplateQuestionModel {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = model.formTemplateGuid)
-      .singleNullOrThrow()
       .ifNull { throw FormTemplateNotFound() }
     return formTemplateQuestionStore.create(model, rank)
   }
 
   override fun getByFormTemplateGuid(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
-      .singleNullOrThrow()
       .ifNull { throw FormTemplateNotFound() }
     return formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid)
   }
@@ -95,7 +92,6 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     update: FormTemplateQuestionModel.Update
   ): FormTemplateQuestionModel {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
-      .singleNullOrThrow()
       .ifNull { throw FormTemplateNotFound() }
     formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid, questionGuid = questionGuid)
       .singleNullOrThrow()
@@ -105,7 +101,6 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
 
   override fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID) {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
-      .singleNullOrThrow()
       .ifNull { throw FormTemplateNotFound() }
     formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid, questionGuid = questionGuid)
       .singleNullOrThrow()

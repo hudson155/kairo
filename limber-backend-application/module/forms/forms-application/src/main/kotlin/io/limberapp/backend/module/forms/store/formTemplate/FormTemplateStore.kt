@@ -10,64 +10,56 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
 @Singleton
-internal class FormTemplateStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
-  fun create(model: FormTemplateModel): FormTemplateModel {
-    return jdbi.withHandle<FormTemplateModel, Exception> {
-      it.createQuery(sqlResource("/store/formTemplate/create.sql"))
+internal class FormTemplateStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+  fun create(model: FormTemplateModel): FormTemplateModel =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formTemplate/create.sql"))
         .bindKotlin(model)
         .mapTo(FormTemplateModel::class.java)
-        .single()
+        .one()
     }
-  }
 
-  fun get(featureGuid: UUID? = null, formTemplateGuid: UUID? = null): List<FormTemplateModel> {
-    return jdbi.withHandle<List<FormTemplateModel>, Exception> {
-      it.createQuery("SELECT * FROM forms.form_template WHERE <conditions> AND archived_date IS NULL").build {
-        if (featureGuid != null) {
-          conditions.add("feature_guid = :featureGuid")
-          bindings["featureGuid"] = featureGuid
-        }
-        if (formTemplateGuid != null) {
-          conditions.add("guid = :formTemplateGuid")
-          bindings["formTemplateGuid"] = formTemplateGuid
-        }
-      }
+  fun get(featureGuid: UUID, formTemplateGuid: UUID): FormTemplateModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formTemplate/get.sql"))
+        .bind("featureGuid", featureGuid)
+        .bind("formTemplateGuid", formTemplateGuid)
         .mapTo(FormTemplateModel::class.java)
-        .list()
+        .findOne().orElse(null)
     }
-  }
 
-  fun update(formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel {
-    return jdbi.inTransaction<FormTemplateModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/formTemplate/update.sql"))
-        .bind("guid", formTemplateGuid)
+  fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel> =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formTemplate/getByFeatureGuid.sql"))
+        .bind("featureGuid", featureGuid)
+        .mapTo(FormTemplateModel::class.java)
+        .toSet()
+    }
+
+  fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formTemplate/update.sql"))
+        .bind("featureGuid", featureGuid)
+        .bind("formTemplateGuid", formTemplateGuid)
         .bindKotlin(update)
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormTemplateNotFound()
-        1 -> get(formTemplateGuid = formTemplateGuid).single()
+        1 -> checkNotNull(get(featureGuid, formTemplateGuid))
         else -> badSql()
       }
     }
-  }
 
-  fun delete(formTemplateGuid: UUID) {
-    jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(
-        """
-        UPDATE forms.form_template
-        SET archived_date = NOW()
-        WHERE guid = :guid
-          AND archived_date IS NULL
-        """.trimIndent()
-      )
-        .bind("guid", formTemplateGuid)
+  fun delete(featureGuid: UUID, formTemplateGuid: UUID) =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
+        .bind("featureGuid", featureGuid)
+        .bind("formTemplateGuid", formTemplateGuid)
         .execute()
-      return@useTransaction when (updateCount) {
+      return@inTransaction when (updateCount) {
         0 -> throw FormTemplateNotFound()
         1 -> Unit
         else -> badSql()
       }
     }
-  }
 }
