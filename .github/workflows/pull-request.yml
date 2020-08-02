@@ -20,20 +20,20 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - uses: actions/checkout@v2.1.0
-      - uses: actions/setup-java@v1.3.0
+      - uses: actions/checkout@v2.3.1
+      - uses: actions/setup-java@v1.4.0
         with:
           java-version: 11
-      - uses: actions/cache@v1.1.2
+      - uses: actions/cache@v2.1.0
         with:
           path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-v1-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - uses: actions/cache@v1.1.2
+          key: ${{ runner.os }}-gradle-wrapper-v2-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+      - uses: actions/cache@v2.1.0
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v1-${{ hashFiles('**/*.gradle') }}
+          key: ${{ runner.os }}-gradle-dependencies-v2-${{ hashFiles('**/*.gradle') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v1-
+            ${{ runner.os }}-gradle-dependencies-v2-
       - run: ./gradlew --info --stacktrace downloadDependencies
       - run: ./gradlew --info --stacktrace classes
       - run: ./gradlew --info --stacktrace testClasses
