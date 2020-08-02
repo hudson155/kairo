@@ -47,7 +47,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
       ).authorize()
     }
     val formInstances = formInstanceService.getByFeatureGuid(command.featureGuid, command.creatorAccountGuid)
-    val feature = checkNotNull(featureService.get(command.featureGuid))
+    val feature = checkNotNull(featureService.getByFeatureGuid(command.featureGuid))
     val users = userService.getByOrgGuid(feature.orgGuid)
     return FormInstanceExporter(
       users = users.associateBy { it.guid },

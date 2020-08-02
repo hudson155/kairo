@@ -10,7 +10,9 @@ interface FeatureService {
 
   fun create(model: FeatureModel): FeatureModel
 
-  fun get(featureGuid: UUID): FeatureModel?
+  fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel?
+
+  fun getByFeatureGuid(featureGuid: UUID): FeatureModel?
 
   fun getByOrgGuid(orgGuid: UUID): List<FeatureModel>
 

@@ -29,7 +29,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].get(featureGuid) } returns existingFeature
+      every { mockedServices[FeatureService::class].getByFeatureGuid(featureGuid) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -67,7 +67,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].get(featureGuid) } returns existingFeature
+      every { mockedServices[FeatureService::class].getByFeatureGuid(featureGuid) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -141,7 +141,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].get(featureGuid) } returns existingFeature
+      every { mockedServices[FeatureService::class].getByFeatureGuid(featureGuid) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -196,7 +196,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].get(featureGuid) } returns existingFeature
+      every { mockedServices[FeatureService::class].getByFeatureGuid(featureGuid) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()

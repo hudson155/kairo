@@ -1,10 +1,7 @@
 package io.limberapp.backend.module.orgs.service.feature
 
 import com.google.inject.Inject
-import com.piperframework.util.ifNull
-import com.piperframework.util.singleNullOrThrow
 import com.piperframework.util.uuid.UuidGenerator
-import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.store.feature.FeatureStore
@@ -18,7 +15,7 @@ internal class FeatureServiceImpl @Inject constructor(
   private val featureStore: FeatureStore
 ) : FeatureService {
   override fun createDefaults(orgGuid: UUID): List<FeatureModel> {
-    require(featureStore.get(orgGuid = orgGuid).isEmpty())
+    require(featureStore.getByOrgGuid(orgGuid).isEmpty())
     val feature = FeatureModel(
       guid = uuidGenerator.generate(),
       createdDate = LocalDateTime.now(clock),
@@ -33,23 +30,21 @@ internal class FeatureServiceImpl @Inject constructor(
     return listOf(feature)
   }
 
-  override fun create(model: FeatureModel) = featureStore.create(model)
+  override fun create(model: FeatureModel) =
+    featureStore.create(model)
 
-  override fun get(featureGuid: UUID) = featureStore.get(featureGuid = featureGuid).singleNullOrThrow()
+  override fun get(orgGuid: UUID, featureGuid: UUID) =
+    featureStore.get(orgGuid, featureGuid)
 
-  override fun getByOrgGuid(orgGuid: UUID) = featureStore.get(orgGuid = orgGuid)
+  override fun getByFeatureGuid(featureGuid: UUID) =
+    featureStore.getByFeatureGuid(featureGuid)
 
-  override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel {
-    featureStore.get(featureGuid = featureGuid, orgGuid = orgGuid)
-      .singleNullOrThrow()
-      .ifNull { throw FeatureNotFound() }
-    return featureStore.update(orgGuid, featureGuid, update)
-  }
+  override fun getByOrgGuid(orgGuid: UUID) =
+    featureStore.getByOrgGuid(orgGuid)
 
-  override fun delete(orgGuid: UUID, featureGuid: UUID) {
-    featureStore.get(featureGuid = featureGuid, orgGuid = orgGuid)
-      .singleNullOrThrow()
-      .ifNull { throw FeatureNotFound() }
-    featureStore.delete(featureGuid)
-  }
+  override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update) =
+    featureStore.update(orgGuid, featureGuid, update)
+
+  override fun delete(orgGuid: UUID, featureGuid: UUID) =
+    featureStore.delete(orgGuid, featureGuid)
 }
