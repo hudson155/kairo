@@ -13,16 +13,18 @@ import react.dom.*
 
 internal fun RBuilder.limberButton(
   style: Style,
+  disabled: Boolean = false,
   loading: Boolean = false,
   onClick: () -> Unit,
   classes: String? = null,
   children: RHandler<Props>
 ) {
-  child(component, Props(style, loading, onClick, classes), handler = children)
+  child(component, Props(style, disabled, loading, onClick, classes), handler = children)
 }
 
 internal data class Props(
   val style: Style,
+  val disabled: Boolean,
   val loading: Boolean,
   val onClick: () -> Unit,
   val classes: String?
@@ -100,7 +102,7 @@ private fun RBuilder.component(props: Props) {
 
   button(classes = cls(s.c { it::base }, buttonStyle, props.classes)) {
     attrs.onClickFunction = { props.onClick() }
-    attrs.disabled = props.loading
+    attrs.disabled = props.loading || props.disabled
 
     span(classes = cls(s.c { it::spinner }, s.c(!props.loading) { it::hidden })) {
       loadingSpinner()

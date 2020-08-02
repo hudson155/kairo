@@ -24,7 +24,6 @@ internal data class Props(
 private class S : Styles("LoadingSpinner") {
   val root by css {
     textAlign = TextAlign.center
-    padding(12.px)
   }
   val container by css {
     display = Display.inlineBlock
