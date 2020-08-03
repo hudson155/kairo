@@ -11,9 +11,9 @@ import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.Org
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRoleMembersPage.components.orgRoleMembersSelector.orgRoleMembersSelector
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolePermissionsPage.OrgSettingsRolePermissionsPage
 import io.limberapp.web.app.pages.orgSettingsPage.pages.orgSettingsRolesPage.pages.orgSettingsRolesListPage.orgSettingsRolesListPage
+import io.limberapp.web.state.state.org.useOrgState
 import io.limberapp.web.state.state.orgRoleMemberships.orgRoleMembershipsStateProvider
 import io.limberapp.web.state.state.orgRoles.useOrgRolesState
-import io.limberapp.web.state.state.org.useOrgState
 import io.limberapp.web.util.Page
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.c
@@ -68,19 +68,17 @@ private fun RBuilder.component(props: Props) {
 
   val orgRoleMemberships = load { api(OrgRoleMembershipApi.GetByOrgRoleGuid(org.guid, orgRole.guid)) }
 
-  // While the org role memberships are loading, show a loading spinner.
-  (orgRoleMemberships ?: return loadingSpinner()).onFailure { return failedToLoad("org role memberships") }
+  orgRoleMemberships?.onFailure { return failedToLoad("org role memberships") }
 
-  orgRoleMembershipsStateProvider(orgRoleMemberships.value.associateBy { it.accountGuid }) {
-    modal(onClose = goBack) {
-      modalTitle(
-        title = "Edit role: ${orgRole.name}",
-        description = "Update the members of this role."
-      )
-      div(classes = s.c { it::container }) {
-        div {
-          orgRoleMembersSelector(orgRoleGuid = orgRole.guid, onClose = goBack)
-        }
+  modal(onClose = goBack) {
+    modalTitle(
+      title = "Edit role: ${orgRole.name}",
+      description = "Update the members of this role."
+    )
+    div(classes = s.c { it::container }) {
+      if (orgRoleMemberships == null) return@div loadingSpinner()
+      orgRoleMembershipsStateProvider(orgRoleMemberships.value.associateBy { it.accountGuid }) {
+        orgRoleMembersSelector(orgRoleGuid = orgRole.guid, onClose = goBack)
       }
     }
   }
