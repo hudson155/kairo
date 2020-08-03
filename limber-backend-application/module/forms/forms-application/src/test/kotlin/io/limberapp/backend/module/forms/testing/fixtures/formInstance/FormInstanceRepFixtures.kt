@@ -33,12 +33,3 @@ internal object FormInstanceRepFixtures {
     )
   })
 }
-
-internal fun FormInstanceRep.Complete.summary() = FormInstanceRep.Summary(
-  guid = guid,
-  createdDate = createdDate,
-  formTemplateGuid = formTemplateGuid,
-  number = number,
-  submittedDate = submittedDate,
-  creatorAccountGuid = creatorAccountGuid
-)

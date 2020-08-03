@@ -3,9 +3,9 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
+import io.limberapp.backend.module.forms.rep.formInstance.summary
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
-import io.limberapp.backend.module.forms.testing.fixtures.formInstance.summary
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import org.junit.jupiter.api.Test
 import java.util.*
