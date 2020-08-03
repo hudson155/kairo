@@ -9,6 +9,9 @@ class FormInstanceClientImpl(private val fetch: Fetch, private val json: Json) :
   override suspend operator fun invoke(endpoint: FormInstanceApi.Post) =
     fetch(endpoint) { json.parse<FormInstanceRep.Complete>(it) }
 
+  override suspend operator fun invoke(endpoint: FormInstanceApi.Get) =
+    fetch(endpoint) { json.parse<FormInstanceRep.Complete>(it) }
+
   override suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid) =
     fetch(endpoint) { json.parseSet<FormInstanceRep.Summary>(it) }
 
