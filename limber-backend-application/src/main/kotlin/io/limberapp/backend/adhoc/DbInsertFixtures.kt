@@ -56,7 +56,9 @@ VALUES (NOW() AT TIME ZONE 'UTC', 'b9ce1942-897d-470f-8b68-822d901005a6', '3e2d1
 INSERT INTO forms.form_template (guid, created_date, feature_guid,
                                  title, description)
 VALUES ('85ae9d91-2666-4174-bdfe-1f7cd868869c', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
-        'Vehicle Inspection', NULL);
+        'Vehicle Inspection', NULL),
+        ('3e8e966d-613f-4bf9-936a-2b1e3c6ab3f0', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
+        'Pre-Flight Safety Inspection', NULL);
 INSERT INTO forms.form_template_question (guid, created_date, form_template_guid, rank,
                                           label, help_text, required, type, 
                                           multi_line, placeholder, validator, earliest, latest, options)
@@ -70,8 +72,20 @@ VALUES ('59c0b82c-57d3-4d29-b7ef-0bbf90084d7d', NOW() AT TIME ZONE 'UTC', '85ae9
         'Description', NULL, FALSE, 'TEXT',
          TRUE, NULL, NULL, NULL, NULL, NULL),
        ('1dd86a5e-60bb-4257-9862-caa480ed5286', NOW() AT TIME ZONE 'UTC', '85ae9d91-2666-4174-bdfe-1f7cd868869c', 3,
-        'Description', NULL, FALSE, 'RADIO_SELECTOR',
-         TRUE, NULL, NULL, NULL, NULL, '{"option 1", "option 2"}');
+        'Option', NULL, FALSE, 'RADIO_SELECTOR',
+         NULL, NULL, NULL, NULL, NULL, '{"option 1", "option 2"}'),
+       ('50c32a31-35c6-458e-b582-f3f8c9a019e4', NOW() AT TIME ZONE 'UTC', '3e8e966d-613f-4bf9-936a-2b1e3c6ab3f0', 0,
+        'Pilot Name', NULL, TRUE, 'TEXT',
+         FALSE, NULL, NULL, NULL, NULL, NULL),
+       ('283167ce-a9fe-4de5-9042-ac1707e8f8dc', NOW() AT TIME ZONE 'UTC', '3e8e966d-613f-4bf9-936a-2b1e3c6ab3f0', 1,
+        'Departure Date', NULL, TRUE, 'DATE',
+         NULL, NULL, NULL, NULL, NULL, NULL),
+       ('761dea1a-e422-4e3c-81c6-497ec21cc1c3', NOW() AT TIME ZONE 'UTC', '3e8e966d-613f-4bf9-936a-2b1e3c6ab3f0', 2,
+        'Destination', NULL, TRUE, 'TEXT',
+         TRUE, NULL, NULL, NULL, NULL, NULL),
+       ('d9fbaa35-ffd6-4a66-8c26-7d40e32ac7aa', NOW() AT TIME ZONE 'UTC', '3e8e966d-613f-4bf9-936a-2b1e3c6ab3f0', 3,
+        'Plane', NULL, FALSE, 'RADIO_SELECTOR',
+         NULL, NULL, NULL, NULL, NULL, '{"HondaJet", "SR20", "Challenger"}');
 INSERT INTO forms.form_instance (guid, created_date, feature_guid,
                                  form_template_guid, number, submitted_date, creator_account_guid)
 VALUES ('8e6ff3f9-26a0-42e4-935b-100c0327ab79', NOW() AT TIME ZONE 'UTC', '3dc95c5d-767c-4b29-9c50-a6f93edd0c06',
