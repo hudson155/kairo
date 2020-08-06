@@ -18,7 +18,7 @@ internal typealias Props = RProps
 
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
-  val location = useLocation()
+  val history = useHistory()
 
   useEffect(emptyList()) {
     process.env.SEGMENT_WRITE_KEY?.let {
@@ -27,7 +27,7 @@ private fun RBuilder.component(props: Props) {
     }
   }
 
-  useEffect(listOf(location.pathname)) {
+  useEffect(listOf(history.location.pathname, history.location.search)) {
     if (process.env.SEGMENT_WRITE_KEY == null) return@useEffect
     window.segment.page()
   }
