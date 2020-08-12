@@ -30,6 +30,13 @@ object Dependencies {
     const val extensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinExtensions}"
   }
 
+  object KotlinJs {
+    const val react = "org.jetbrains:kotlin-react:${Versions.react}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
+    const val reactDom = "org.jetbrains:kotlin-react-dom:${Versions.react}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
+    const val reactRouterDom = "org.jetbrains:kotlin-react-router-dom:${Versions.reactRouter}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
+    const val styledComponents = "org.jetbrains:kotlin-styled:${Versions.styledComponents}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
+  }
+
   object Kotlinx {
     const val coroutinesJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.kotlinxCoroutines}"
   }

@@ -16,26 +16,14 @@ dependencies {
   implementation(project(":piper:rest-interface"))
   implementation(project(":piper:serialization"))
   implementation(project(":piper:util"))
-
-  implementation("org.jetbrains:kotlin-react:16.13.1-pre.110-kotlin-1.3.72")
-  implementation(npm("react", "16.13.1"))
-
-  implementation("org.jetbrains:kotlin-react-dom:16.13.1-pre.110-kotlin-1.3.72")
-  implementation(npm("react-dom", "16.13.1"))
-
-  implementation("org.jetbrains:kotlin-react-router-dom:5.1.2-pre.110-kotlin-1.3.72")
-  implementation(npm("react-router-dom", "5.1.2"))
-
-  implementation("org.jetbrains:kotlin-styled:1.0.0-pre.110-kotlin-1.3.72")
-  implementation(npm("styled-components", "5.1.1"))
-  implementation(npm("inline-style-prefixer", "6.0.0"))
-
-  implementation(npm("@auth0/auth0-spa-js", "1.6.5"))
-
-  implementation(npm("jsonwebtoken", "8.5.1"))
-
   implementation(Dependencies.Kotlin.extensions)
   implementation(Dependencies.Kotlinx.coroutinesJs)
+  implementation(Dependencies.KotlinJs.react)
+  implementation(Dependencies.KotlinJs.reactDom)
+  implementation(Dependencies.KotlinJs.reactRouterDom)
+  implementation(Dependencies.KotlinJs.styledComponents)
+  implementation(npm("@auth0/auth0-spa-js", "1.6.5"))
+  implementation(npm("jsonwebtoken", "8.5.1"))
 }
 
 kotlin.target.browser {}

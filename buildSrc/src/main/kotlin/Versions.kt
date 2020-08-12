@@ -53,11 +53,23 @@ object Versions {
   // https://mvnrepository.com/artifact/org.postgresql/postgresql
   const val postgres = "42.2.14"
 
+  // https://github.com/facebook/react/releases
+  const val react = "16.13.1"
+
+  // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
+  const val reactExtensions = "pre.110"
+
+  // https://github.com/ReactTraining/react-router/releases
+  const val reactRouter = "5.1.2"
+
   // https://github.com/Kotlin/kotlinx.serialization/releases
   const val serialization = "0.20.0"
 
   // https://github.com/johnrengelman/shadow/releases
   const val shadow = "6.0.0"
+
+  // https://github.com/styled-components/styled-components/releases
+  const val styledComponents = "1.0.0"
 
   // https://github.com/qos-ch/slf4j/releases
   const val slf4j = "1.7.30"
