@@ -7,5 +7,7 @@ interface Finder<Model : Any, Finder : Any> {
 
   fun findOnlyOrNull(query: Finder.() -> Unit) = find(Iterable<Model>::singleNullOrThrow, query)
 
+  fun findAsList(query: Finder.() -> Unit) = find(Iterable<Model>::toList, query)
+
   fun findAsSet(query: Finder.() -> Unit) = find(Iterable<Model>::toSet, query)
 }

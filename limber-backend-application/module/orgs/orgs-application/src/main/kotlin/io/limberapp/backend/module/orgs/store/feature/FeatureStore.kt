@@ -2,13 +2,16 @@ package io.limberapp.backend.module.orgs.store.feature
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
+import io.limberapp.backend.module.orgs.model.org.FeatureFinder
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -20,7 +23,7 @@ private const val PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
 private const val RANK_UNIQUE_CONSTRAINT = "feature_org_guid_rank_key"
 
 @Singleton
-internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<FeatureModel, FeatureFinder> {
   fun create(model: FeatureModel): FeatureModel =
     withHandle { handle ->
       return@withHandle try {
@@ -33,29 +36,12 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
     }
 
-  fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel? =
+  override fun <R> find(result: (Iterable<FeatureModel>) -> R, query: FeatureFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/feature/get.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("featureGuid", featureGuid)
+      handle.createQuery(sqlResource("/store/feature/find.sql"))
+        .withFinder(FeatureQueryBuilder().apply(query))
         .mapTo(FeatureModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByFeatureGuid(featureGuid: UUID): FeatureModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/feature/getByFeatureGuid.sql"))
-        .bind("featureGuid", featureGuid)
-        .mapTo(FeatureModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByOrgGuid(orgGuid: UUID): List<FeatureModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/feature/getByOrgGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .mapTo(FeatureModel::class.java)
-        .toList()
+        .let(result)
     }
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel =
@@ -76,7 +62,7 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
       return@inTransaction when (updateCount) {
         0 -> throw FeatureNotFound()
-        1 -> checkNotNull(get(orgGuid, featureGuid))
+        1 -> findOnlyOrThrow { featureGuid(featureGuid) }
         else -> badSql()
       }
     }

@@ -35,7 +35,7 @@ internal class PatchOrg @Inject constructor(
     val rep = command.rep.required()
     Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_METADATA).authorize()
     val org = orgService.update(command.orgGuid, orgMapper.update(rep))
-    val features = featureService.getByOrgGuid(org.guid)
+    val features = featureService.findAsList { orgGuid(org.guid) }
     return orgMapper.completeRep(org, features)
   }
 }

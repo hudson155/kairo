@@ -1,4 +1,4 @@
 SELECT *
 FROM orgs.org
-WHERE owner_account_guid = :ownerAccountGuid
+WHERE <conditions>
   AND archived_date IS NULL

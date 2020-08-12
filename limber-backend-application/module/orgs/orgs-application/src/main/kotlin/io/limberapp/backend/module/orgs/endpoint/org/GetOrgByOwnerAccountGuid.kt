@@ -32,8 +32,8 @@ internal class GetOrgByOwnerAccountGuid @Inject constructor(
 
   override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): OrgRep.Complete {
     Authorization.User(command.ownerAccountGuid).authorize()
-    val org = orgService.getByOwnerAccountGuid(command.ownerAccountGuid) ?: throw OrgNotFound()
-    val features = featureService.getByOrgGuid(org.guid)
+    val org = orgService.findOnlyOrNull { ownerAccountGuid(command.ownerAccountGuid) } ?: throw OrgNotFound()
+    val features = featureService.findAsList { orgGuid(org.guid) }
     return orgMapper.completeRep(org, features)
   }
 }

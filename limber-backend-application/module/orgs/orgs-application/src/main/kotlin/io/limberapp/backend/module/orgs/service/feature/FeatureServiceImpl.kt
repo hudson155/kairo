@@ -1,7 +1,9 @@
 package io.limberapp.backend.module.orgs.service.feature
 
 import com.google.inject.Inject
+import com.piperframework.finder.Finder
 import com.piperframework.util.uuid.UuidGenerator
+import io.limberapp.backend.module.orgs.model.org.FeatureFinder
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.store.feature.FeatureStore
@@ -13,9 +15,9 @@ internal class FeatureServiceImpl @Inject constructor(
   private val clock: Clock,
   private val uuidGenerator: UuidGenerator,
   private val featureStore: FeatureStore
-) : FeatureService {
+) : FeatureService, Finder<FeatureModel, FeatureFinder> by featureStore {
   override fun createDefaults(orgGuid: UUID): List<FeatureModel> {
-    require(featureStore.getByOrgGuid(orgGuid).isEmpty())
+    require(featureStore.findAsSet { orgGuid(orgGuid) }.isEmpty())
     val feature = FeatureModel(
       guid = uuidGenerator.generate(),
       createdDate = LocalDateTime.now(clock),
@@ -32,15 +34,6 @@ internal class FeatureServiceImpl @Inject constructor(
 
   override fun create(model: FeatureModel) =
     featureStore.create(model)
-
-  override fun get(orgGuid: UUID, featureGuid: UUID) =
-    featureStore.get(orgGuid, featureGuid)
-
-  override fun getByFeatureGuid(featureGuid: UUID) =
-    featureStore.getByFeatureGuid(featureGuid)
-
-  override fun getByOrgGuid(orgGuid: UUID) =
-    featureStore.getByOrgGuid(orgGuid)
 
   override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update) =
     featureStore.update(orgGuid, featureGuid, update)

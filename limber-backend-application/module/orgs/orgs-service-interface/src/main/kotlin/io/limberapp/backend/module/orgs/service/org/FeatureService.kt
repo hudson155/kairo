@@ -1,20 +1,16 @@
 package io.limberapp.backend.module.orgs.service.org
 
+import com.piperframework.finder.Finder
 import io.limberapp.backend.LimberModule
+import io.limberapp.backend.module.orgs.model.org.FeatureFinder
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import java.util.*
 
 @LimberModule.Orgs
-interface FeatureService {
+interface FeatureService : Finder<FeatureModel, FeatureFinder> {
   fun createDefaults(orgGuid: UUID): List<FeatureModel>
 
   fun create(model: FeatureModel): FeatureModel
-
-  fun get(orgGuid: UUID, featureGuid: UUID): FeatureModel?
-
-  fun getByFeatureGuid(featureGuid: UUID): FeatureModel?
-
-  fun getByOrgGuid(orgGuid: UUID): List<FeatureModel>
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel
 

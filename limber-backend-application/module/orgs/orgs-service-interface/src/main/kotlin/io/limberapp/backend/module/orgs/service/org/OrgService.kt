@@ -1,16 +1,14 @@
 package io.limberapp.backend.module.orgs.service.org
 
+import com.piperframework.finder.Finder
 import io.limberapp.backend.LimberModule
+import io.limberapp.backend.module.orgs.model.org.OrgFinder
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.*
 
 @LimberModule.Orgs
-interface OrgService {
+interface OrgService : Finder<OrgModel, OrgFinder> {
   fun create(model: OrgModel): OrgModel
-
-  fun get(orgGuid: UUID): OrgModel?
-
-  fun getByOwnerAccountGuid(ownerAccountGuid: UUID): OrgModel?
 
   fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel
 

@@ -22,7 +22,7 @@ internal class UserServiceImpl @Inject constructor(
 
   @LimberModule.Orgs
   override fun delete(userGuid: UUID) {
-    if (orgService.getByOwnerAccountGuid(userGuid) != null) throw CannotDeleteOrgOwner()
+    if (orgService.findOnlyOrNull { ownerAccountGuid(userGuid) } != null) throw CannotDeleteOrgOwner()
     userStore.delete(userGuid)
   }
 }
