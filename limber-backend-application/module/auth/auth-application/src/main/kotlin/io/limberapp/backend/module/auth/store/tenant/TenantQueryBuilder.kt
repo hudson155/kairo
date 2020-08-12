@@ -18,7 +18,7 @@ internal class TenantQueryBuilder : QueryBuilder(), TenantFinder {
   override fun domain(domain: String) {
     conditions +=
       """
-      EXISTS(SELECT id
+      EXISTS(SELECT 1
              FROM auth.tenant_domain
              WHERE tenant_domain.org_guid = tenant.org_guid
                AND LOWER(domain) = LOWER(:domain))

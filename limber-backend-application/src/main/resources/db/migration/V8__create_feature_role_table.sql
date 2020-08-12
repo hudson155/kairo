@@ -1,6 +1,5 @@
 CREATE TABLE auth.feature_role
 (
-    id            BIGSERIAL PRIMARY KEY,
     guid          UUID UNIQUE NOT NULL,
     created_date  TIMESTAMP   NOT NULL,
     feature_guid  UUID        NOT NULL,

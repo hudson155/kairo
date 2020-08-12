@@ -2,7 +2,6 @@ CREATE SCHEMA forms;
 
 CREATE TABLE forms.form_template
 (
-    id           BIGSERIAL PRIMARY KEY,
     guid         UUID UNIQUE NOT NULL,
     created_date TIMESTAMP   NOT NULL,
     feature_guid UUID        NOT NULL,
@@ -12,7 +11,6 @@ CREATE TABLE forms.form_template
 
 CREATE TABLE forms.form_template_question
 (
-    id                 BIGSERIAL PRIMARY KEY,
     guid               UUID UNIQUE NOT NULL,
     created_date       TIMESTAMP   NOT NULL,
     form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE CASCADE,
@@ -32,7 +30,6 @@ CREATE TABLE forms.form_template_question
 
 CREATE TABLE forms.form_instance
 (
-    id                   BIGSERIAL PRIMARY KEY,
     guid                 UUID UNIQUE NOT NULL,
     created_date         TIMESTAMP   NOT NULL,
     feature_guid         UUID        NOT NULL,
@@ -44,7 +41,6 @@ CREATE TABLE forms.form_instance
 
 CREATE TABLE forms.form_instance_question
 (
-    id                 BIGSERIAL PRIMARY KEY,
     created_date       TIMESTAMP NOT NULL,
     form_instance_guid UUID      NOT NULL REFERENCES forms.form_instance (guid) ON DELETE CASCADE,
     question_guid      UUID      REFERENCES forms.form_template_question (guid) ON DELETE SET NULL,

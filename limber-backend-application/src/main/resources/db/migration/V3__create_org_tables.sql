@@ -1,6 +1,5 @@
 CREATE TABLE orgs.org
 (
-    id                 BIGSERIAL PRIMARY KEY,
     guid               UUID UNIQUE NOT NULL,
     created_date       TIMESTAMP   NOT NULL,
     name               VARCHAR     NOT NULL,

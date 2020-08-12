@@ -1,6 +1,5 @@
 CREATE TABLE orgs.feature
 (
-    id                 BIGSERIAL PRIMARY KEY,
     guid               UUID UNIQUE NOT NULL,
     created_date       TIMESTAMP   NOT NULL,
     org_guid           UUID        NOT NULL REFERENCES orgs.org (guid) ON DELETE CASCADE,

@@ -1,6 +1,5 @@
 CREATE TABLE users.account
 (
-    id                BIGSERIAL PRIMARY KEY,
     guid              UUID UNIQUE NOT NULL,
     created_date      TIMESTAMP   NOT NULL,
     identity_provider BOOLEAN     NOT NULL,

@@ -18,7 +18,7 @@ internal class OrgRoleQueryBuilder : QueryBuilder(), OrgRoleFinder {
   override fun accountGuid(accountGuid: UUID) {
     conditions +=
       """
-      EXISTS(SELECT id
+      EXISTS(SELECT 1
              FROM auth.org_role_membership
              WHERE org_role_guid = org_role.guid
                AND account_guid = :accountGuid)
