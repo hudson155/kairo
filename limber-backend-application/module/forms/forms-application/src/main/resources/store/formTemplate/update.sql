@@ -3,4 +3,3 @@ SET title       = COALESCE(:title, title),
     description = COALESCE(:description, description)
 WHERE feature_guid = :featureGuid
   AND guid = :formTemplateGuid
-  AND archived_date IS NULL

@@ -26,7 +26,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     creatorAccountGuid: UUID? = null
   ): Set<FormInstanceModel> {
     return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
-      it.createQuery("SELECT * FROM forms.form_instance WHERE <conditions> AND archived_date IS NULL").build {
+      it.createQuery("SELECT * FROM forms.form_instance WHERE <conditions>").build {
         if (featureGuid != null) {
           conditions.add("feature_guid = :featureGuid")
           bindings["featureGuid"] = featureGuid
@@ -63,10 +63,9 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     jdbi.useTransaction<Exception> {
       val updateCount = it.createUpdate(
         """
-        UPDATE forms.form_instance
-        SET archived_date = NOW()
+        DELETE
+        FROM forms.form_instance
         WHERE guid = :guid
-          AND archived_date IS NULL
         """.trimIndent()
       )
         .bind("guid", formInstanceGuid)

@@ -5,4 +5,3 @@ SET rank               = COALESCE(:rank, rank),
     is_default_feature = COALESCE(:isDefaultFeature, is_default_feature)
 WHERE org_guid = :orgGuid
   AND guid = :featureGuid
-  AND archived_date IS NULL

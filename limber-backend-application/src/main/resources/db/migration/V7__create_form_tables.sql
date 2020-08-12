@@ -2,13 +2,12 @@ CREATE SCHEMA forms;
 
 CREATE TABLE forms.form_template
 (
-    id            BIGSERIAL PRIMARY KEY,
-    guid          UUID UNIQUE NOT NULL,
-    created_date  TIMESTAMP   NOT NULL,
-    archived_date TIMESTAMP DEFAULT NULL,
-    feature_guid  UUID        NOT NULL,
-    title         VARCHAR     NOT NULL,
-    description   VARCHAR
+    id           BIGSERIAL PRIMARY KEY,
+    guid         UUID UNIQUE NOT NULL,
+    created_date TIMESTAMP   NOT NULL,
+    feature_guid UUID        NOT NULL,
+    title        VARCHAR     NOT NULL,
+    description  VARCHAR
 );
 
 CREATE TABLE forms.form_template_question
@@ -36,7 +35,6 @@ CREATE TABLE forms.form_instance
     id                   BIGSERIAL PRIMARY KEY,
     guid                 UUID UNIQUE NOT NULL,
     created_date         TIMESTAMP   NOT NULL,
-    archived_date        TIMESTAMP DEFAULT NULL,
     feature_guid         UUID        NOT NULL,
     form_template_guid   UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT,
     number               BIGINT      NOT NULL,
