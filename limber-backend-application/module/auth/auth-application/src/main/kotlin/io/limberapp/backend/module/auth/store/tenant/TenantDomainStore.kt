@@ -2,12 +2,15 @@ package io.limberapp.backend.module.auth.store.tenant
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
+import io.limberapp.backend.module.auth.model.tenant.TenantDomainFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -18,7 +21,9 @@ private const val ORG_GUID_FOREIGN_KEY = "tenant_domain_org_guid_fkey"
 private const val DOMAIN_UNIQUE_CONSTRAINT = "tenant_domain_lower_idx"
 
 @Singleton
-internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class TenantDomainStore @Inject constructor(
+  jdbi: Jdbi
+) : SqlStore(jdbi), Finder<TenantDomainModel, TenantDomainFinder> {
   fun create(model: TenantDomainModel): TenantDomainModel =
     withHandle { handle ->
       return@withHandle try {
@@ -31,21 +36,12 @@ internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi
       }
     }
 
-  fun get(orgGuid: UUID, domain: String): TenantDomainModel? =
+  override fun <R> find(result: (Iterable<TenantDomainModel>) -> R, query: TenantDomainFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenantDomain/get.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("domain", domain)
+      handle.createQuery(sqlResource("/store/tenantDomain/find.sql"))
+        .withFinder(TenantDomainQueryBuilder().apply(query))
         .mapTo(TenantDomainModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenantDomain/getByOrgGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .mapTo(TenantDomainModel::class.java)
-        .toSet()
+        .let(result)
     }
 
   fun delete(orgGuid: UUID, domain: String) =

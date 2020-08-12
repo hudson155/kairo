@@ -2,12 +2,15 @@ package io.limberapp.backend.module.auth.store.org
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isNotNullConstraintViolation
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.org.AccountIsAlreadyMemberOfOrgRole
 import io.limberapp.backend.module.auth.exception.org.OrgRoleMembershipNotFound
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
+import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipFinder
 import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -17,7 +20,9 @@ import java.util.*
 private const val ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT = "org_role_membership_org_role_guid_account_guid_key"
 
 @Singleton
-internal class OrgRoleMembershipStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class OrgRoleMembershipStore @Inject constructor(
+  jdbi: Jdbi
+) : SqlStore(jdbi), Finder<OrgRoleMembershipModel, OrgRoleMembershipFinder> {
   fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel =
     withHandle { handle ->
       return@withHandle try {
@@ -31,13 +36,12 @@ internal class OrgRoleMembershipStore @Inject constructor(jdbi: Jdbi) : SqlStore
       }
     }
 
-  fun get(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel> =
+  override fun <R> find(result: (Iterable<OrgRoleMembershipModel>) -> R, query: OrgRoleMembershipFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/orgRoleMembership/get.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("orgRoleGuid", orgRoleGuid)
+      handle.createQuery(sqlResource("/store/orgRoleMembership/find.sql"))
+        .withFinder(OrgRoleMembershipQueryBuilder().apply(query))
         .mapTo(OrgRoleMembershipModel::class.java)
-        .toSet()
+        .let(result)
     }
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID) =

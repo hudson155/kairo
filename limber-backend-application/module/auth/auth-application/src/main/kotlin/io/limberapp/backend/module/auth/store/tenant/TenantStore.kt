@@ -2,11 +2,14 @@ package io.limberapp.backend.module.auth.store.tenant
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
+import io.limberapp.backend.module.auth.model.tenant.TenantFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -17,7 +20,7 @@ private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
 private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
 
 @Singleton
-internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<TenantModel, TenantFinder> {
   fun create(model: TenantModel): TenantModel =
     withHandle { handle ->
       return@withHandle try {
@@ -30,28 +33,12 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
     }
 
-  fun get(orgGuid: UUID): TenantModel? =
+  override fun <R> find(result: (Iterable<TenantModel>) -> R, query: TenantFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/get.sql"))
-        .bind("orgGuid", orgGuid)
+      handle.createQuery(sqlResource("/store/tenant/find.sql"))
+        .withFinder(TenantQueryBuilder().apply(query))
         .mapTo(TenantModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByAuth0ClientId(auth0ClientId: String): TenantModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/getByAuth0ClientId.sql"))
-        .bind("auth0ClientId", auth0ClientId)
-        .mapTo(TenantModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByDomain(domain: String): TenantModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/getByDomain.sql"))
-        .bind("domain", domain)
-        .mapTo(TenantModel::class.java)
-        .findOne().orElse(null)
+        .let(result)
     }
 
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =
@@ -66,7 +53,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
       return@inTransaction when (updateCount) {
         0 -> throw TenantNotFound()
-        1 -> checkNotNull(get(orgGuid))
+        1 -> findOnlyOrThrow { orgGuid(orgGuid) }
         else -> badSql()
       }
     }

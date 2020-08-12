@@ -2,10 +2,13 @@ package io.limberapp.backend.module.auth.store.org
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isUniqueConstraintViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
+import io.limberapp.backend.module.auth.model.org.OrgRoleFinder
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -15,7 +18,7 @@ import java.util.*
 private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
 
 @Singleton
-internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<OrgRoleModel, OrgRoleFinder> {
   fun create(model: OrgRoleModel): OrgRoleModel =
     withHandle { handle ->
       return@withHandle try {
@@ -28,30 +31,12 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
     }
 
-  fun get(orgGuid: UUID, orgRoleGuid: UUID): OrgRoleModel? =
+  override fun <R> find(result: (Iterable<OrgRoleModel>) -> R, query: OrgRoleFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/orgRole/get.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("orgRoleGuid", orgRoleGuid)
+      handle.createQuery(sqlResource("/store/orgRole/find.sql"))
+        .withFinder(OrgRoleQueryBuilder().apply(query))
         .mapTo(OrgRoleModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/orgRole/getByOrgGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .mapTo(OrgRoleModel::class.java)
-        .toSet()
-    }
-
-  fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID): Set<OrgRoleModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/orgRole/getByAccountGuid.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("accountGuid", accountGuid)
-        .mapTo(OrgRoleModel::class.java)
-        .toSet()
+        .let(result)
     }
 
   fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel =
@@ -67,7 +52,7 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       }
       return@inTransaction when (updateCount) {
         0 -> throw OrgRoleNotFound()
-        1 -> checkNotNull(get(orgGuid, orgRoleGuid))
+        1 -> findOnlyOrThrow { orgRoleGuid(orgRoleGuid) }
         else -> badSql()
       }
     }

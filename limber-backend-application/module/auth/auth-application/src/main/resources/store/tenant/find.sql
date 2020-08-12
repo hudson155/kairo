@@ -1,4 +1,4 @@
 SELECT *
 FROM auth.tenant
-WHERE org_guid = :orgGuid
+WHERE <conditions>
   AND archived_date IS NULL

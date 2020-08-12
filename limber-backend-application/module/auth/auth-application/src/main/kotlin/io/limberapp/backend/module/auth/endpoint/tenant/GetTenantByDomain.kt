@@ -30,8 +30,8 @@ internal class GetTenantByDomain @Inject constructor(
 
   override suspend fun Handler.handle(command: TenantApi.GetByDomain): TenantRep.Complete {
     Authorization.Public.authorize()
-    val tenant = tenantService.getByDomain(command.domain) ?: throw TenantNotFound()
-    val domains = tenantDomainService.getByOrgGuid(tenant.orgGuid)
+    val tenant = tenantService.findOnlyOrNull { domain(command.domain) } ?: throw TenantNotFound()
+    val domains = tenantDomainService.findAsSet { orgGuid(tenant.orgGuid) }
     return tenantMapper.completeRep(tenant, domains)
   }
 }

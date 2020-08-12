@@ -51,7 +51,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
   @LimberModule.Users
   private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
-    val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
+    val tenant = tenantService.findOnlyOrThrow { auth0ClientId(request.auth0ClientId) }
 
     val existingUser = userService.findOnlyOrNull { orgGuid(tenant.orgGuid); emailAddress(request.emailAddress) }
     if (existingUser != null) return existingUser
@@ -85,7 +85,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   }
 
   private fun getPermissions(org: OrgModel, userGuid: UUID): OrgPermissions {
-    val orgPermissions = orgRoleService.getByAccountGuid(org.guid, userGuid).map { it.permissions }.toMutableSet()
+    val orgPermissions = orgRoleService.findAsSet { orgGuid(org.guid); accountGuid(userGuid) }
+      .map { it.permissions }.toMutableSet()
     if (userGuid == org.ownerAccountGuid) orgPermissions.add(ORG_OWNER_ORG_ROLE)
     return orgPermissions.union()
   }
