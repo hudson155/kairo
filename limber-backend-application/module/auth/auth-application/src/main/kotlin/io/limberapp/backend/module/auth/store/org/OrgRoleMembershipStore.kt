@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
-import com.piperframework.store.isNotNullConstraintViolation
+import com.piperframework.store.isForeignKeyViolation
 import com.piperframework.store.isUniqueConstraintViolation
 import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.org.AccountIsAlreadyMemberOfOrgRole
@@ -17,6 +17,7 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
+private const val ORG_ROLE_GUID_FOREIGN_KEY = "org_role_membership_org_role_guid_fkey"
 private const val ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT = "org_role_membership_org_role_guid_account_guid_key"
 
 @Singleton
@@ -61,7 +62,7 @@ internal class OrgRoleMembershipStore @Inject constructor(
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isNotNullConstraintViolation("org_role_guid") ->
+      error.isForeignKeyViolation(ORG_ROLE_GUID_FOREIGN_KEY) ->
         throw OrgRoleNotFound()
       error.isUniqueConstraintViolation(ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT) ->
         throw AccountIsAlreadyMemberOfOrgRole()
