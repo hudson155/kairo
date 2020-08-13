@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   api(Dependencies.Ktor.auth) // Provides Ktor auth along with this artifact
 }
 

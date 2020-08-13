@@ -27,14 +27,14 @@ object Dependencies {
   }
 
   object Kotlin {
-    const val extensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinExtensions}"
+    const val extensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinExtensions}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
   }
 
   object KotlinJs {
-    const val react = "org.jetbrains:kotlin-react:${Versions.react}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
-    const val reactDom = "org.jetbrains:kotlin-react-dom:${Versions.react}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
-    const val reactRouterDom = "org.jetbrains:kotlin-react-router-dom:${Versions.reactRouter}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
-    const val styledComponents = "org.jetbrains:kotlin-styled:${Versions.styledComponents}-${Versions.reactExtensions}-kotlin-${Versions.kotlin}"
+    const val react = "org.jetbrains:kotlin-react:${Versions.react}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
+    const val reactDom = "org.jetbrains:kotlin-react-dom:${Versions.react}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
+    const val reactRouterDom = "org.jetbrains:kotlin-react-router-dom:${Versions.reactRouter}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
+    const val styledComponents = "org.jetbrains:kotlin-styled:${Versions.styledComponents}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
   }
 
   object Kotlinx {
@@ -60,7 +60,7 @@ object Dependencies {
   }
 
   object Serialization {
-    const val common = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.serialization}"
+    const val common = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
     const val js = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
     const val jvm = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
   }

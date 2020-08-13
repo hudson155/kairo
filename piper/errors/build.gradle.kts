@@ -8,26 +8,12 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(kotlin("stdlib-common"))
         implementation(Dependencies.Serialization.common)
       }
     }
-    jvm {
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-jdk8"))
-          implementation(Dependencies.Serialization.jvm)
-        }
-      }
-    }
+    jvm()
     js {
-      browser { }
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-js"))
-          implementation(Dependencies.Serialization.js)
-        }
-      }
+      browser()
     }
   }
 }

@@ -7,7 +7,6 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(kotlin("stdlib-common"))
         implementation(project(":piper:data-conversion"))
         implementation(project(":piper:types"))
         api(Dependencies.Serialization.common)
@@ -16,16 +15,14 @@ kotlin {
     jvm {
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-jdk8"))
           api(Dependencies.Serialization.jvm)
         }
       }
     }
     js {
-      browser { }
+      browser()
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-js"))
           api(Dependencies.Serialization.js)
         }
       }

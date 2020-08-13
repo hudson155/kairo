@@ -3,12 +3,12 @@ package io.limberapp.backend.authorization.permissions.orgPermissions
 import com.piperframework.util.darb.BitStringEncoder
 import com.piperframework.util.darb.DarbEncoder
 import io.limberapp.backend.authorization.permissions.Permissions
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.PrimitiveDescriptor
-import kotlinx.serialization.PrimitiveKind
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * All permissions, in the correct order, with a quick sanity check on the digits. If this sanity check fails, double
@@ -55,7 +55,7 @@ data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permis
 }
 
 object OrgPermissionsSerializer : KSerializer<OrgPermissions> {
-  override val descriptor = PrimitiveDescriptor("OrgPermissions", PrimitiveKind.STRING)
+  override val descriptor = PrimitiveSerialDescriptor("OrgPermissions", PrimitiveKind.STRING)
 
   override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.asDarb())
 

@@ -5,25 +5,9 @@ plugins {
 
 kotlin {
   sourceSets {
-    commonMain {
-      dependencies {
-        implementation(kotlin("stdlib-common"))
-      }
-    }
-    jvm {
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-jdk8"))
-        }
-      }
-    }
+    jvm()
     js {
-      browser { }
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-js"))
-        }
-      }
+      browser()
     }
   }
 }

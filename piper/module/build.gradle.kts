@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   api(project(":piper:config")) // Provides config to modules
   api(project(":piper:exceptions")) // Provides exceptions to modules
   api(project(":piper:ktor-auth")) // All modules use auth

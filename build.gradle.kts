@@ -8,6 +8,11 @@ plugins {
   id(Plugins.detekt).version(Versions.detekt)
 }
 
+kotlin {
+  jvm()
+  js()
+}
+
 repositories {
   jcenter()
 }
@@ -34,7 +39,5 @@ subprojects {
   tasks.withType<KotlinCompile<*>>().configureEach {
     (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlinx.serialization.ImplicitReflectionSerializer"
-    kotlinOptions.freeCompilerArgs += "-Xallow-result-return-type"
   }
 }

@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   implementation(project(":limber-backend-application:common"))
 }
 

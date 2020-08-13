@@ -8,7 +8,6 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(kotlin("stdlib-common"))
         api(project(":limber-backend-application:common"))
         api(project(":piper:reps"))
         implementation(project(":piper:rest-interface"))
@@ -16,20 +15,9 @@ kotlin {
         implementation(project(":piper:util"))
       }
     }
-    jvm {
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-jdk8"))
-        }
-      }
-    }
+    jvm()
     js {
-      browser { }
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-js"))
-        }
-      }
+      browser()
     }
   }
 }

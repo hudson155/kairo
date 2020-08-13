@@ -6,7 +6,7 @@ import com.piperframework.serialization.Json
 import com.piperframework.testing.AbstractResourceTest
 
 abstract class LimberResourceTest : AbstractResourceTest() {
-  protected val json by lazy { Json(context = module.serialModule) }
+  protected val json by lazy { Json(serializersModule = module.serializersModule) }
 
   protected abstract val module: Module
 

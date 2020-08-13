@@ -15,7 +15,6 @@ application {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   implementation(project(":limber-backend-application:common:module")) // HealthCheckModule is defined in the application
   implementation(project(":limber-backend-application:common:sql"))
   implementation(project(":limber-backend-application:module:auth:auth-application"))

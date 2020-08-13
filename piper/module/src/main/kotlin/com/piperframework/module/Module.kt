@@ -1,7 +1,7 @@
 package com.piperframework.module
 
 import com.piperframework.endpoint.ApiEndpoint
-import kotlinx.serialization.modules.SerialModule
+import kotlinx.serialization.modules.SerializersModule
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
@@ -16,7 +16,7 @@ abstract class Module : ModuleWithLifecycle() {
   /**
    * The serial module is used for serialization.
    */
-  abstract val serialModule: SerialModule
+  abstract val serializersModule: SerializersModule
 
   /**
    * Endpoints are automatically wired up.

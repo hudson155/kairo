@@ -32,10 +32,10 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainServiceImpl
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.auth.service.tenant.TenantServiceImpl
-import kotlinx.serialization.modules.EmptyModule
+import kotlinx.serialization.modules.EmptySerializersModule
 
 class AuthModule : Module() {
-  override val serialModule = EmptyModule
+  override val serializersModule = EmptySerializersModule
 
   override val endpoints = listOf(
 

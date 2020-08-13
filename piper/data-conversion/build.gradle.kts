@@ -7,7 +7,6 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(kotlin("stdlib-common"))
         implementation(project(":piper:types"))
         implementation(project(":piper:validation"))
       }
@@ -15,18 +14,12 @@ kotlin {
     jvm {
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-jdk8"))
           implementation(project(":piper:util"))
         }
       }
     }
     js {
-      browser { }
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-js"))
-        }
-      }
+      browser()
     }
   }
 }

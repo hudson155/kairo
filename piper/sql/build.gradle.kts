@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   api(project(":piper:config")) // Uses ConfigString in the interface
   implementation(project(":piper:data-conversion"))
   api(project(":piper:module")) // This artifact implements a module

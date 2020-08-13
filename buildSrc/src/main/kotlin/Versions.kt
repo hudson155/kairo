@@ -33,16 +33,19 @@ object Versions {
   const val junit = "5.6.2"
 
   // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
-  const val kotlin = "1.3.72"
+  const val kotlin = "1.4.0-rc"
 
   // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
-  const val kotlinExtensions = "1.0.1-pre.110-kotlin-1.3.72"
+  const val kotlinExtensions = "1.0.1"
+
+  // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
+  const val kotlinJsWrappers = "pre.110"
 
   // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-  const val kotlinxCoroutines = "1.3.8"
+  const val kotlinxCoroutines = "1.3.8-1.4.0-rc"
 
   // https://github.com/ktorio/ktor/releases
-  const val ktor = "1.3.2"
+  const val ktor = "1.3.2-1.4.0-rc"
 
   // https://github.com/qos-ch/logback/releases
   const val logback = "1.2.3"
@@ -56,14 +59,11 @@ object Versions {
   // https://github.com/facebook/react/releases
   const val react = "16.13.1"
 
-  // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
-  const val reactExtensions = "pre.110"
-
   // https://github.com/ReactTraining/react-router/releases
   const val reactRouter = "5.1.2"
 
   // https://github.com/Kotlin/kotlinx.serialization/releases
-  const val serialization = "0.20.0"
+  const val serialization = "1.0-M1-1.4.0-rc"
 
   // https://github.com/johnrengelman/shadow/releases
   const val shadow = "6.0.0"

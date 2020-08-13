@@ -7,11 +7,6 @@ plugins {
 
 kotlin {
   sourceSets {
-    commonMain {
-      dependencies {
-        implementation(kotlin("stdlib-common"))
-      }
-    }
     commonTest {
       dependencies {
         implementation(kotlin("test-annotations-common"))
@@ -21,7 +16,6 @@ kotlin {
     jvm {
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-jdk8"))
           implementation(kotlin("reflect"))
         }
       }
@@ -33,10 +27,9 @@ kotlin {
       }
     }
     js {
-      browser { }
+      browser()
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-js"))
           implementation(Dependencies.Kotlin.extensions)
         }
       }

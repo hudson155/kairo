@@ -7,12 +7,12 @@ import io.limberapp.backend.authorization.permissions.featurePermissions.feature
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HOME_FEATURE_PREFIX
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.PrimitiveDescriptor
-import kotlinx.serialization.PrimitiveKind
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Permissions that only apply to a specific organization feature.
@@ -37,7 +37,7 @@ abstract class FeaturePermissions : Permissions<FeaturePermission>() {
 }
 
 object FeaturePermissionsSerializer : KSerializer<FeaturePermissions> {
-  override val descriptor = PrimitiveDescriptor("FeaturePermissions", PrimitiveKind.STRING)
+  override val descriptor = PrimitiveSerialDescriptor("FeaturePermissions", PrimitiveKind.STRING)
 
   override fun serialize(encoder: Encoder, value: FeaturePermissions) = encoder.encodeString(value.asDarb())
 

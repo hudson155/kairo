@@ -5,7 +5,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   api(project(":limber-backend-application:common"))
   api(project(":piper:module"))
   implementation(Dependencies.Logging.slf4j)

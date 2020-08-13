@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   api(kotlin("test"))
   api(kotlin("test-junit5"))
   api(project(":piper:application")) // Tests application (so do implementations)

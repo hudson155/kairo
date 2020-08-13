@@ -13,10 +13,10 @@ import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.AccountServiceImpl
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.module.users.service.account.UserServiceImpl
-import kotlinx.serialization.modules.EmptyModule
+import kotlinx.serialization.modules.EmptySerializersModule
 
 class UsersModule : Module() {
-  override val serialModule = EmptyModule
+  override val serializersModule = EmptySerializersModule
 
   override val endpoints = listOf(
     PostUser::class.java,

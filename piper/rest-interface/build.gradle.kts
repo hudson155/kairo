@@ -7,7 +7,6 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(kotlin("stdlib-common"))
         implementation(project(":piper:reps"))
         implementation(project(":piper:util"))
       }
@@ -15,17 +14,15 @@ kotlin {
     jvm {
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-jdk8"))
           implementation(kotlin("reflect"))
           implementation(Dependencies.Logging.slf4j)
         }
       }
     }
     js {
-      browser { }
+      browser()
       compilations["main"].defaultSourceSet {
         dependencies {
-          implementation(kotlin("stdlib-js"))
           implementation(project(":piper:serialization"))
           implementation(Dependencies.Kotlin.extensions)
           implementation(Dependencies.Kotlinx.coroutinesJs)

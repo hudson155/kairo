@@ -135,7 +135,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
     install(ContentNegotiation) {
       val json = Json(
         prettyPrint = true,
-        context = modules.map { it.serialModule }.reduce { acc, serialModule -> acc + serialModule }
+        serializersModule = modules.map { it.serializersModule }.reduce { acc, module -> acc + module }
       )
       register(
         contentType = ContentType.Application.Json,

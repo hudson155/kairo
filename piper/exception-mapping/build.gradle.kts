@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   implementation(project(":piper:errors"))
   implementation(project(":piper:exceptions"))
   implementation(project(":piper:util"))

@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
   api(project(":piper:config")) // Provides config to implementation projects
   implementation(project(":piper:data-conversion"))
   implementation(project(":piper:errors"))
