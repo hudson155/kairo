@@ -34,7 +34,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
     creatorAccountGuid: UUID? = null
   ): Set<FormInstanceModel> {
     return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
-      it.createQuery("SELECT * FROM forms.form_instance WHERE <conditions>").build {
+      it.createQuery(sqlResource("/store/formInstance/get.sql")).build {
         if (featureGuid != null) {
           conditions.add("feature_guid = :featureGuid")
           bindings["featureGuid"] = featureGuid
@@ -68,13 +68,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
 
   fun delete(formInstanceGuid: UUID) {
     jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(
-        """
-        DELETE
-        FROM forms.form_instance
-        WHERE guid = :guid
-        """.trimIndent()
-      )
+      val updateCount = it.createUpdate(sqlResource("/store/formInstance/delete.sql"))
         .bind("guid", formInstanceGuid)
         .execute()
       return@useTransaction when (updateCount) {

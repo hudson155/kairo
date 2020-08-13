@@ -63,7 +63,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
 
   fun get(formInstanceGuid: UUID? = null, questionGuid: UUID? = null): List<FormInstanceQuestionModel> {
     return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
-      it.createQuery("SELECT * FROM forms.form_instance_question WHERE <conditions>").build {
+      it.createQuery(sqlResource("/store/formInstanceQuestion/get.sql")).build {
         if (formInstanceGuid != null) {
           conditions.add("form_instance_guid = :formInstanceGuid")
           bindings["formInstanceGuid"] = formInstanceGuid
@@ -99,14 +99,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
 
   fun delete(formInstanceGuid: UUID, questionGuid: UUID) {
     jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(
-        """
-        DELETE
-        FROM forms.form_instance_question
-        WHERE form_instance_guid = :formInstanceGuid
-          AND question_guid = :questionGuid
-        """.trimIndent()
-      )
+      val updateCount = it.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .execute()
