@@ -16,8 +16,8 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val ORG_GUID_UNIQUE_CONSTRAINT = "tenant_org_guid_key"
-private const val AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT = "tenant_auth0_client_id_key"
+private const val UNIQ_ORG_GUID = "uniq__tenant__org_guid"
+private const val UNIQ_AUTH0_CLIENT_ID = "uniq__tenant__auth0_client_id"
 
 @Singleton
 internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<TenantModel, TenantFinder> {
@@ -73,8 +73,8 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(ORG_GUID_UNIQUE_CONSTRAINT) -> throw OrgAlreadyHasTenant()
-      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) -> throw Auth0ClientIdAlreadyRegistered()
+      error.isUniqueConstraintViolation(UNIQ_ORG_GUID) -> throw OrgAlreadyHasTenant()
+      error.isUniqueConstraintViolation(UNIQ_AUTH0_CLIENT_ID) -> throw Auth0ClientIdAlreadyRegistered()
       else -> throw e
     }
   }
@@ -82,7 +82,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(AUTH0_CLIENT_ID_UNIQUE_CONSTRAINT) -> throw Auth0ClientIdAlreadyRegistered()
+      error.isUniqueConstraintViolation(UNIQ_AUTH0_CLIENT_ID) -> throw Auth0ClientIdAlreadyRegistered()
       else -> throw e
     }
   }
