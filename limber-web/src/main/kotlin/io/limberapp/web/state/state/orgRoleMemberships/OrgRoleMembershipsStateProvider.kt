@@ -1,12 +1,13 @@
 package io.limberapp.web.state.state.orgRoleMemberships
 
 import com.piperframework.types.UUID
+import com.piperframework.util.Outcome
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.web.api.useApi
 import io.limberapp.web.state.ProviderValue
-import io.limberapp.web.state.state.orgRoles.useOrgRolesState
 import io.limberapp.web.state.state.org.useOrgState
+import io.limberapp.web.state.state.orgRoles.useOrgRolesState
 import react.*
 
 internal fun RBuilder.orgRoleMembershipsStateProvider(
@@ -35,12 +36,14 @@ private fun RBuilder.component(props: Props) {
       api(OrgRoleMembershipApi.Post(org.guid, orgRoleGuid, rep)).map { orgRoleMembership ->
         orgRolesMutator.localMemberCountChanged(orgRoleGuid, by = 1)
         setState(state + (rep.accountGuid to orgRoleMembership))
+        return@map Outcome.Success(Unit)
       }
 
     override suspend fun delete(orgRoleGuid: UUID, accountGuid: UUID) =
       api(OrgRoleMembershipApi.Delete(org.guid, orgRoleGuid, accountGuid)).map {
         orgRolesMutator.localMemberCountChanged(orgRoleGuid, by = -1)
         setState(state - accountGuid)
+        return@map Outcome.Success(Unit)
       }
   }
 

@@ -29,8 +29,8 @@ sealed class Outcome<T> {
    * If [Success], calls [transform] and returns a [Success] with the result.
    * If [Failure], identity.
    */
-  inline fun <R> map(transform: (T) -> R): Outcome<R> = when (this) {
-    is Success<T> -> Success(transform(value))
+  inline fun <R> map(transform: (T) -> Outcome<R>): Outcome<R> = when (this) {
+    is Success<T> -> transform(value)
     is Failure<T> -> Failure(exception)
   }
 

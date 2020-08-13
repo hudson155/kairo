@@ -1,6 +1,7 @@
 package io.limberapp.web.state.state.orgRoles
 
 import com.piperframework.types.UUID
+import com.piperframework.util.Outcome
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.web.api.useApi
@@ -29,11 +30,13 @@ private fun RBuilder.component(props: Props) {
     override suspend fun post(rep: OrgRoleRep.Creation) =
       api(OrgRoleApi.Post(org.guid, rep)).map { orgRole ->
         setState(state + (orgRole.guid to orgRole))
+        return@map Outcome.Success(Unit)
       }
 
     override suspend fun patch(orgRoleGuid: UUID, rep: OrgRoleRep.Update) =
       api(OrgRoleApi.Patch(org.guid, orgRoleGuid, rep)).map { orgRole ->
         setState(state + (orgRole.guid to orgRole))
+        return@map Outcome.Success(Unit)
       }
 
     override fun localMemberCountChanged(orgRoleGuid: UUID, by: Int) {
@@ -44,6 +47,7 @@ private fun RBuilder.component(props: Props) {
     override suspend fun delete(orgRoleGuid: UUID) =
       api(OrgRoleApi.Delete(org.guid, orgRoleGuid)).map {
         setState(state - (orgRoleGuid))
+        return@map Outcome.Success(Unit)
       }
   }
 
