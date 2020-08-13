@@ -82,9 +82,9 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
     formInstanceGuid: UUID,
     questionGuid: UUID,
     update: FormInstanceQuestionModel.Update
-  ): FormInstanceQuestionModel {
-    return jdbi.inTransaction<FormInstanceQuestionModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/formInstanceQuestion/update.sql"))
+  ): FormInstanceQuestionModel =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formInstanceQuestion/update.sql"))
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
@@ -96,7 +96,6 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
         else -> badSql()
       }
     }
-  }
 
   fun delete(formInstanceGuid: UUID, questionGuid: UUID) {
     jdbi.useTransaction<Exception> {

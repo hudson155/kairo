@@ -111,9 +111,9 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
-  fun update(questionGuid: UUID, update: FormTemplateQuestionModel.Update): FormTemplateQuestionModel {
-    return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/formTemplateQuestion/update.sql"))
+  fun update(questionGuid: UUID, update: FormTemplateQuestionModel.Update): FormTemplateQuestionModel =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formTemplateQuestion/update.sql"))
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
         .bindNullForMissingArguments()
@@ -124,7 +124,6 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         else -> badSql()
       }
     }
-  }
 
   fun delete(questionGuid: UUID) {
     jdbi.useTransaction<Exception> {
