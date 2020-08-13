@@ -9,6 +9,8 @@ CREATE TABLE forms.form_template
     description  VARCHAR
 );
 
+CREATE UNIQUE INDEX ON forms.form_template (guid, feature_guid);
+
 CREATE TABLE forms.form_template_question
 (
     guid               UUID UNIQUE NOT NULL,
@@ -33,10 +35,12 @@ CREATE TABLE forms.form_instance
     guid                 UUID UNIQUE NOT NULL,
     created_date         TIMESTAMP   NOT NULL,
     feature_guid         UUID        NOT NULL,
-    form_template_guid   UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE RESTRICT,
+    form_template_guid   UUID        NOT NULL,
     number               BIGINT      NOT NULL,
     submitted_date       TIMESTAMP,
-    creator_account_guid UUID        NOT NULL
+    creator_account_guid UUID        NOT NULL,
+    CONSTRAINT fk__form_instance__form_template_guid FOREIGN KEY (feature_guid, form_template_guid)
+        REFERENCES forms.form_template (feature_guid, guid) ON DELETE RESTRICT
 );
 
 CREATE TABLE forms.form_instance_question
