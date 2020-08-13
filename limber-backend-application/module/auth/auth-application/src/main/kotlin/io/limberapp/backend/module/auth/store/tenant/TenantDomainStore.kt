@@ -17,8 +17,8 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val ORG_GUID_FOREIGN_KEY = "tenant_domain_org_guid_fkey"
-private const val DOMAIN_UNIQUE_CONSTRAINT = "tenant_domain_lower_idx"
+private const val FK_ORG_GUID = "fk__tenant_domain__org_guid"
+private const val UNIQ_DOMAIN = "uniq__tenant_domain__domain"
 
 @Singleton
 internal class TenantDomainStore @Inject constructor(
@@ -61,8 +61,8 @@ internal class TenantDomainStore @Inject constructor(
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw TenantNotFound()
-      error.isUniqueConstraintViolation(DOMAIN_UNIQUE_CONSTRAINT) -> throw TenantDomainAlreadyRegistered()
+      error.isForeignKeyViolation(FK_ORG_GUID) -> throw TenantNotFound()
+      error.isUniqueConstraintViolation(UNIQ_DOMAIN) -> throw TenantDomainAlreadyRegistered()
       else -> throw e
     }
   }
