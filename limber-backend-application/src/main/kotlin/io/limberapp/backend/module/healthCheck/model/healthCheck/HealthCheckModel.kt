@@ -5,6 +5,6 @@ internal sealed class HealthCheckModel {
 
   internal data class UnhealthyHealthCheckModel(
     val reason: String,
-    val e: Exception
+    val e: Exception,
   ) : HealthCheckModel()
 }

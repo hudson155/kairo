@@ -8,7 +8,7 @@ import io.limberapp.backend.module.orgs.store.org.OrgStore
 import java.util.*
 
 internal class OrgServiceImpl @Inject constructor(
-  private val orgStore: OrgStore
+  private val orgStore: OrgStore,
 ) : OrgService, Finder<OrgModel, OrgFinder> by orgStore {
   override fun create(model: OrgModel) =
     orgStore.create(model)

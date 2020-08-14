@@ -20,7 +20,7 @@ internal class PostFormTemplate @Inject constructor(
   servingConfig: ServingConfig,
   private val formTemplateService: FormTemplateService,
   private val formTemplateQuestionService: FormTemplateQuestionService,
-  private val formTemplateMapper: FormTemplateMapper
+  private val formTemplateMapper: FormTemplateMapper,
 ) : LimberApiEndpoint<FormTemplateApi.Post, FormTemplateRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

@@ -8,10 +8,10 @@ data class FormTemplateModel(
   val createdDate: LocalDateTime,
   val featureGuid: UUID,
   val title: String,
-  val description: String?
+  val description: String?,
 ) {
   data class Update(
     val title: String?,
-    val description: String?
+    val description: String?,
   )
 }

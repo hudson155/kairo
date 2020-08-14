@@ -6,7 +6,7 @@ import react.*
 
 internal fun <T : Any> load(
   dependencies: RDependenciesList = emptyList(),
-  function: suspend () -> Outcome<T>?
+  function: suspend () -> Outcome<T>?,
 ): Outcome<T>? {
   val (state, setState) = useState<Outcome<T>?>(null)
   useEffect(dependencies) { async { setState(function()) } }

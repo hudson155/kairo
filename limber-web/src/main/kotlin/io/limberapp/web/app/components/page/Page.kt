@@ -16,7 +16,7 @@ import react.dom.*
 internal fun RBuilder.page(
   header: ReactElement? = null,
   footer: ReactElement? = null,
-  children: RBuilder.() -> Unit
+  children: RBuilder.() -> Unit,
 ) {
   child(component, Props(header, footer), handler = children)
 }

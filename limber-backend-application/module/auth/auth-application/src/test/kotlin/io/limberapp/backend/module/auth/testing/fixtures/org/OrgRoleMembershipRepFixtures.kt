@@ -8,7 +8,7 @@ import java.util.*
 internal object OrgRoleMembershipRepFixtures {
   data class Fixture(
     val creation: (accountGuid: UUID) -> OrgRoleMembershipRep.Creation,
-    val complete: ResourceTest.(accountGuid: UUID) -> OrgRoleMembershipRep.Complete
+    val complete: ResourceTest.(accountGuid: UUID) -> OrgRoleMembershipRep.Complete,
   )
 
   // There's only 1 fixture here (it's parameterized), but it's still useful for code brevity and timestamp creation.

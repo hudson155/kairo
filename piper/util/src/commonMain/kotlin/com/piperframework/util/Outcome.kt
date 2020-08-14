@@ -40,7 +40,7 @@ sealed class Outcome<T> {
    */
   inline fun fold(
     successAction: (value: T) -> Unit,
-    failureAction: (exception: Exception) -> Unit
+    failureAction: (exception: Exception) -> Unit,
   ) {
     when (this) {
       is Success<T> -> successAction(value)

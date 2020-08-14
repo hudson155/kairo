@@ -19,7 +19,7 @@ internal class GetTenantByDomain @Inject constructor(
   servingConfig: ServingConfig,
   private val tenantService: TenantService,
   private val tenantDomainService: TenantDomainService,
-  private val tenantMapper: TenantMapper
+  private val tenantMapper: TenantMapper,
 ) : LimberApiEndpoint<TenantApi.GetByDomain, TenantRep.Complete>(
   application, servingConfig.apiPathPrefix,
   endpointTemplate = TenantApi.GetByDomain::class.template()

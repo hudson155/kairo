@@ -79,7 +79,7 @@ private fun PiperEndpoint.toTemplate(): PiperEndpointTemplate {
 }
 
 private fun generateArgsAndReplacements(
-  constructor: KFunction<PiperEndpoint>
+  constructor: KFunction<PiperEndpoint>,
 ): Pair<Map<KParameter, Any?>, MutableMap<String, String>> {
   // The key is the arg name, and the value is the temporary placeholder value.
   val argReplacements = mutableMapOf<String, String>()

@@ -12,5 +12,5 @@ data class SqlDatabaseConfig(
   val connectionTimeout: Long? = null,
   val minimumIdle: Int? = null,
   val maximumPoolSize: Int? = null,
-  val properties: Map<String, String> = emptyMap()
+  val properties: Map<String, String> = emptyMap(),
 )

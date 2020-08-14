@@ -13,7 +13,7 @@ data class FormTemplateTextQuestionModel(
   override val required: Boolean,
   val multiLine: Boolean,
   val placeholder: String?,
-  val validator: Regex?
+  val validator: Regex?,
 ) : FormTemplateQuestionModel {
   override val type = FormTemplateQuestionModel.Type.TEXT
 
@@ -23,6 +23,6 @@ data class FormTemplateTextQuestionModel(
     override val required: Boolean?,
     val multiLine: Boolean?,
     val placeholder: String?,
-    val validator: Regex?
+    val validator: Regex?,
   ) : FormTemplateQuestionModel.Update
 }

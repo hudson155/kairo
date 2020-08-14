@@ -31,7 +31,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
   fun get(
     featureGuid: UUID? = null,
     formInstanceGuid: UUID? = null,
-    creatorAccountGuid: UUID? = null
+    creatorAccountGuid: UUID? = null,
   ): Set<FormInstanceModel> {
     return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
       it.createQuery(sqlResource("/store/formInstance/get.sql")).build {

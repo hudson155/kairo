@@ -7,7 +7,7 @@ import io.limberapp.backend.module.forms.store.formInstance.FormInstanceStore
 import java.util.*
 
 internal class FormInstanceServiceImpl @Inject constructor(
-  private val formInstanceStore: FormInstanceStore
+  private val formInstanceStore: FormInstanceStore,
 ) : FormInstanceService {
   override fun create(model: FormInstanceModel): FormInstanceModel =
     formInstanceStore.create(model)

@@ -8,7 +8,7 @@ import java.util.*
 internal object UserRepFixtures {
   data class Fixture(
     val creation: (orgGuid: UUID) -> UserRep.Creation,
-    val complete: ResourceTest.(orgGuid: UUID, idSeed: Int) -> UserRep.Complete
+    val complete: ResourceTest.(orgGuid: UUID, idSeed: Int) -> UserRep.Complete,
   )
 
   val jeffHudsonFixture = Fixture({ orgGuid ->

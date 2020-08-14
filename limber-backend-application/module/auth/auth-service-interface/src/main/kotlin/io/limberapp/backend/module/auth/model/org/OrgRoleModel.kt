@@ -10,10 +10,10 @@ data class OrgRoleModel(
   val orgGuid: UUID,
   val name: String,
   val permissions: OrgPermissions,
-  val memberCount: Int
+  val memberCount: Int,
 ) {
   data class Update(
     val name: String?,
-    val permissions: OrgPermissions?
+    val permissions: OrgPermissions?,
   )
 }

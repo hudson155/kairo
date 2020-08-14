@@ -10,7 +10,7 @@ import java.util.*
 
 internal class FeatureMapper @Inject constructor(
   private val clock: Clock,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) {
   fun model(orgGuid: UUID, rep: FeatureRep.Creation) = FeatureModel(
     guid = uuidGenerator.generate(),

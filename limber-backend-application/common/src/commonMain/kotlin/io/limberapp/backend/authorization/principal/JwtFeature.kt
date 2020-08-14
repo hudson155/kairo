@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class JwtFeature(
-  val permissions: FeaturePermissions
+  val permissions: FeaturePermissions,
 )

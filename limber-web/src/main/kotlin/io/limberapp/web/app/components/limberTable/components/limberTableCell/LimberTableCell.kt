@@ -16,7 +16,7 @@ internal fun RBuilder.limberTableCell(
   header: Boolean = false,
   hideContent: Boolean = false,
   classes: String? = null,
-  children: RHandler<Props>
+  children: RHandler<Props>,
 ) {
   child(component, Props(header, hideContent, classes), handler = children)
 }

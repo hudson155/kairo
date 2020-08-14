@@ -13,7 +13,7 @@ data class UserModel(
   val firstName: String,
   val lastName: String,
   val emailAddress: String,
-  val profilePhotoUrl: String?
+  val profilePhotoUrl: String?,
 ) {
   fun hasRole(role: JwtRole) = when (role) {
     JwtRole.IDENTITY_PROVIDER -> identityProvider
@@ -24,7 +24,7 @@ data class UserModel(
     val identityProvider: Boolean?,
     val superuser: Boolean?,
     val firstName: String?,
-    val lastName: String?
+    val lastName: String?,
   ) {
     companion object {
       fun fromRole(role: JwtRole, value: Boolean) = Update(

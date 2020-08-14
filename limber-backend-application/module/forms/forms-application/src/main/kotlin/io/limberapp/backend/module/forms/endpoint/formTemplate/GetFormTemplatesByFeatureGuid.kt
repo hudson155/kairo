@@ -17,7 +17,7 @@ internal class GetFormTemplatesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val formTemplateService: FormTemplateService,
-  private val formTemplateMapper: FormTemplateMapper
+  private val formTemplateMapper: FormTemplateMapper,
 ) : LimberApiEndpoint<FormTemplateApi.GetByFeatureGuid, Set<FormTemplateRep.Summary>>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

@@ -8,7 +8,7 @@ import io.limberapp.backend.module.auth.store.org.OrgRoleStore
 import java.util.*
 
 internal class OrgRoleServiceImpl @Inject constructor(
-  private val orgRoleStore: OrgRoleStore
+  private val orgRoleStore: OrgRoleStore,
 ) : OrgRoleService, Finder<OrgRoleModel, OrgRoleFinder> by orgRoleStore {
   override fun create(model: OrgRoleModel) =
     orgRoleStore.create(model)

@@ -12,7 +12,7 @@ object FormTemplateQuestionApi {
     val featureGuid: UUID,
     val formTemplateGuid: UUID,
     val rank: Int? = null,
-    val rep: FormTemplateQuestionRep.Creation?
+    val rep: FormTemplateQuestionRep.Creation?,
   ) : PiperEndpoint(
     httpMethod = HttpMethod.POST,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions",
@@ -24,7 +24,7 @@ object FormTemplateQuestionApi {
     val featureGuid: UUID,
     val formTemplateGuid: UUID,
     val questionGuid: UUID,
-    val rep: FormTemplateQuestionRep.Update?
+    val rep: FormTemplateQuestionRep.Update?,
   ) : PiperEndpoint(
     httpMethod = HttpMethod.PATCH,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions/${enc(questionGuid)}",

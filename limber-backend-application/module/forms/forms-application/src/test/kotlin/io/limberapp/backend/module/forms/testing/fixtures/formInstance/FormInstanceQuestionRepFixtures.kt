@@ -9,7 +9,7 @@ import java.util.*
 internal object FormInstanceQuestionRepFixtures {
   data class Fixture(
     val creation: () -> FormInstanceQuestionRep.Creation,
-    val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete
+    val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete,
   )
 
   val textFixture = Fixture({

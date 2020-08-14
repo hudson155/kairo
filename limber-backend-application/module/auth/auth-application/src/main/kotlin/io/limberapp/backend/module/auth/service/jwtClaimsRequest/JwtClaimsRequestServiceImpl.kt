@@ -38,7 +38,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   private val tenantService: TenantService,
   @OptIn(LimberModule.Users::class) private val userService: UserService,
   private val clock: Clock,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) : JwtClaimsRequestService {
   private val json = Json()
 

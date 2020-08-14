@@ -25,7 +25,7 @@ import react.dom.*
 internal fun RBuilder.orgRolePermissionsSelector(
   permissions: OrgPermissions,
   onChangePermissions: suspend (OrgPermissions) -> Unit,
-  onClose: () -> Unit
+  onClose: () -> Unit,
 ) {
   child(component, Props(permissions, onChangePermissions, onClose))
 }
@@ -33,7 +33,7 @@ internal fun RBuilder.orgRolePermissionsSelector(
 internal data class Props(
   val permissions: OrgPermissions,
   val onChangePermissions: suspend (OrgPermissions) -> Unit,
-  val onClose: () -> Unit
+  val onClose: () -> Unit,
 ) : RProps
 
 private class S : Styles("OrgRolePermissionsSelector") {

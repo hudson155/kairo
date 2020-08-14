@@ -81,7 +81,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
   fun update(
     formInstanceGuid: UUID,
     questionGuid: UUID,
-    update: FormInstanceQuestionModel.Update
+    update: FormInstanceQuestionModel.Update,
   ): FormInstanceQuestionModel =
     inTransaction { handle ->
       val updateCount = handle.createUpdate(sqlResource("/store/formInstanceQuestion/update.sql"))

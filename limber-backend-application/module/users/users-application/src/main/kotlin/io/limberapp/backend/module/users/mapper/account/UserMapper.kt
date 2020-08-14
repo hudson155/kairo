@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 internal class UserMapper @Inject constructor(
   private val clock: Clock,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) {
   fun model(rep: UserRep.Creation) = UserModel(
     guid = uuidGenerator.generate(),

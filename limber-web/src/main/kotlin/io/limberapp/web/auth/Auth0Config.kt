@@ -5,5 +5,5 @@ internal data class Auth0Config(
   val domain: String,
   val client_id: String,
   val redirect_uri: String,
-  val audience: String
+  val audience: String,
 )

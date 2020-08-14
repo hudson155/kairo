@@ -20,7 +20,7 @@ internal class PatchOrg @Inject constructor(
   servingConfig: ServingConfig,
   private val featureService: FeatureService,
   private val orgService: OrgService,
-  private val orgMapper: OrgMapper
+  private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.Patch, OrgRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

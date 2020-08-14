@@ -18,7 +18,7 @@ object FormTemplateRadioSelectorQuestionRep {
     override val label: String,
     override val helpText: String? = null,
     override val required: Boolean,
-    val options: List<String>
+    val options: List<String>,
   ) : FormTemplateQuestionRep.Creation {
     override fun validate() = RepValidation {
       validate(super.validate())
@@ -40,7 +40,7 @@ object FormTemplateRadioSelectorQuestionRep {
     override val label: String,
     override val helpText: String?,
     override val required: Boolean,
-    val options: List<String>
+    val options: List<String>,
   ) : FormTemplateQuestionRep.Complete
 
   @Serializable
@@ -49,7 +49,7 @@ object FormTemplateRadioSelectorQuestionRep {
     override val label: String? = null,
     override val helpText: String? = null,
     override val required: Boolean? = null,
-    val options: List<String>? = null
+    val options: List<String>? = null,
   ) : FormTemplateQuestionRep.Update {
     override fun validate() = RepValidation {
       validate(super.validate())

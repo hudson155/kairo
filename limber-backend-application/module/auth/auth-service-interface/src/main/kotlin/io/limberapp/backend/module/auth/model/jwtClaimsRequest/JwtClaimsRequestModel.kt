@@ -5,5 +5,5 @@ data class JwtClaimsRequestModel(
   val firstName: String,
   val lastName: String,
   val emailAddress: String,
-  val profilePhotoUrl: String?
+  val profilePhotoUrl: String?,
 )

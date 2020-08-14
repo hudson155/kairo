@@ -27,7 +27,7 @@ internal fun RBuilder.modal(
   blank: Boolean = false,
   narrow: Boolean = false,
   onClose: () -> Unit,
-  children: RHandler<Props>
+  children: RHandler<Props>,
 ) {
   child(component, Props(blank, narrow, onClose), handler = children)
 }

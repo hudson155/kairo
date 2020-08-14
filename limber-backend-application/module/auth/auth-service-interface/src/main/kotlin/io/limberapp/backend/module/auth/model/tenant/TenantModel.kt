@@ -6,9 +6,9 @@ import java.util.*
 data class TenantModel(
   val createdDate: LocalDateTime,
   val orgGuid: UUID,
-  val auth0ClientId: String
+  val auth0ClientId: String,
 ) {
   data class Update(
-    val auth0ClientId: String?
+    val auth0ClientId: String?,
   )
 }

@@ -21,7 +21,7 @@ object UserRep {
     val firstName: String,
     val lastName: String,
     val emailAddress: String,
-    val profilePhotoUrl: String? = null
+    val profilePhotoUrl: String? = null,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::firstName) { Validator.humanName(value) }
@@ -41,7 +41,7 @@ object UserRep {
     val orgGuid: UUID,
     val firstName: String,
     val lastName: String,
-    val profilePhotoUrl: String?
+    val profilePhotoUrl: String?,
   ) : CompleteRep {
     val fullName get() = "$firstName $lastName"
     val uniqueSortKey get() = "$fullName-$guid"
@@ -59,7 +59,7 @@ object UserRep {
     val firstName: String,
     val lastName: String,
     val emailAddress: String,
-    val profilePhotoUrl: String?
+    val profilePhotoUrl: String?,
   ) : CompleteRep {
     val fullName get() = "$firstName $lastName"
   }
@@ -67,7 +67,7 @@ object UserRep {
   @Serializable
   data class Update(
     val firstName: String? = null,
-    val lastName: String? = null
+    val lastName: String? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::firstName) { ifPresent { Validator.humanName(value) } }

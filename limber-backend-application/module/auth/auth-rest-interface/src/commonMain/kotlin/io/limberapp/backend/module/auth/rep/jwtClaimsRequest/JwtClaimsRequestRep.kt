@@ -13,7 +13,7 @@ object JwtClaimsRequestRep {
     val firstName: String,
     val lastName: String,
     val emailAddress: String,
-    val profilePhotoUrl: String? = null
+    val profilePhotoUrl: String? = null,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
@@ -28,6 +28,6 @@ object JwtClaimsRequestRep {
   data class Complete(
     val org: String?,
     val roles: String,
-    val user: String
+    val user: String,
   ) : Any()
 }

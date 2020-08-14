@@ -44,7 +44,7 @@ internal fun RBuilder.hamburgerableNavbar(
   right: ReactElement?,
   features: List<FeatureRep.Complete>,
   hamburgerOpen: Boolean,
-  onHamburger: (open: Boolean) -> Unit
+  onHamburger: (open: Boolean) -> Unit,
 ) {
   child(component, Props(left, right, features, hamburgerOpen, onHamburger))
 }
@@ -54,7 +54,7 @@ internal data class Props(
   val right: ReactElement?,
   val features: List<FeatureRep.Complete>,
   val hamburgerOpen: Boolean,
-  val onHamburger: (open: Boolean) -> Unit
+  val onHamburger: (open: Boolean) -> Unit,
 ) : RProps
 
 private class S : Styles("HamburgerableNavbar") {

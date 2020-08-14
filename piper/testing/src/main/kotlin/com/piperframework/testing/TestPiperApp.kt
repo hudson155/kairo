@@ -15,7 +15,7 @@ abstract class TestPiperApp(
   module: Module,
   private val additionalModules: Set<ModuleWithLifecycle>,
   private val fixedClock: Clock,
-  private val deterministicUuidGenerator: UuidGenerator
+  private val deterministicUuidGenerator: UuidGenerator,
 ) : SimplePiperApp<Config>(application, config) {
   final override fun getMainModules(application: Application) =
     listOf(MainModule(application, fixedClock, config, deterministicUuidGenerator)).plus(additionalModules)

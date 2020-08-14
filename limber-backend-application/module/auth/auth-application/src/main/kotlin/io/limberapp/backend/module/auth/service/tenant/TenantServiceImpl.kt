@@ -8,7 +8,7 @@ import io.limberapp.backend.module.auth.store.tenant.TenantStore
 import java.util.*
 
 internal class TenantServiceImpl @Inject constructor(
-  private val tenantStore: TenantStore
+  private val tenantStore: TenantStore,
 ) : TenantService, Finder<TenantModel, TenantFinder> by tenantStore {
   override fun create(model: TenantModel) =
     tenantStore.create(model)

@@ -18,7 +18,7 @@ internal class PostFeatureRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val featureRoleService: FeatureRoleService,
-  private val featureRoleMapper: FeatureRoleMapper
+  private val featureRoleMapper: FeatureRoleMapper,
 ) : LimberApiEndpoint<FeatureRoleApi.Post, FeatureRoleRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

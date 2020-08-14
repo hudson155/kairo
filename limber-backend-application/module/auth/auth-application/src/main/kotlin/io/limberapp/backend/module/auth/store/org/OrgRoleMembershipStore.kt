@@ -22,7 +22,7 @@ private const val ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT = "org_role_membe
 
 @Singleton
 internal class OrgRoleMembershipStore @Inject constructor(
-  jdbi: Jdbi
+  jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<OrgRoleMembershipModel, OrgRoleMembershipFinder> {
   fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel =
     withHandle { handle ->

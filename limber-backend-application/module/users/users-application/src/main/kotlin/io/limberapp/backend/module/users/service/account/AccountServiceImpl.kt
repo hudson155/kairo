@@ -7,5 +7,5 @@ import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.store.account.AccountStore
 
 internal class AccountServiceImpl @Inject constructor(
-  private val accountStore: AccountStore
+  private val accountStore: AccountStore,
 ) : AccountService, Finder<AccountModel, AccountFinder> by accountStore

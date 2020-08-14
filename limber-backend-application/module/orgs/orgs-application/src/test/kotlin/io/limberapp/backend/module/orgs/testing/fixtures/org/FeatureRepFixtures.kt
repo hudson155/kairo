@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 internal object FeatureRepFixtures {
   data class Fixture(
     val creation: () -> FeatureRep.Creation,
-    val complete: ResourceTest.(idSeed: Int) -> FeatureRep.Complete
+    val complete: ResourceTest.(idSeed: Int) -> FeatureRep.Complete,
   )
 
   val default = Fixture(

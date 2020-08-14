@@ -14,7 +14,7 @@ import react.router.dom.*
 internal fun RBuilder.orgRolesTableRolePermissions(
   permissions: OrgPermissions,
   linkTo: String,
-  classes: String? = null
+  classes: String? = null,
 ) {
   child(component, Props(permissions, linkTo, classes))
 }
@@ -22,7 +22,7 @@ internal fun RBuilder.orgRolesTableRolePermissions(
 internal data class Props(
   val permissions: OrgPermissions,
   val linkTo: String,
-  val classes: String?
+  val classes: String?,
 ) : RProps
 
 private val component = functionalComponent(RBuilder::component)

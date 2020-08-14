@@ -20,7 +20,7 @@ internal class PatchTenant @Inject constructor(
   servingConfig: ServingConfig,
   private val tenantService: TenantService,
   private val tenantDomainService: TenantDomainService,
-  private val tenantMapper: TenantMapper
+  private val tenantMapper: TenantMapper,
 ) : LimberApiEndpoint<TenantApi.Patch, TenantRep.Complete>(
   application, servingConfig.apiPathPrefix,
   endpointTemplate = TenantApi.Patch::class.template()

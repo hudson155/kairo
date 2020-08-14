@@ -22,7 +22,7 @@ object FormTemplateTextQuestionRep {
     val multiLine: Boolean,
     val placeholder: String? = null,
     @Serializable(with = RegexSerializer::class)
-    val validator: Regex? = null
+    val validator: Regex? = null,
   ) : FormTemplateQuestionRep.Creation {
     override fun validate() = RepValidation {
       validate(super.validate())
@@ -44,7 +44,7 @@ object FormTemplateTextQuestionRep {
     val multiLine: Boolean,
     val placeholder: String?,
     @Serializable(with = RegexSerializer::class)
-    val validator: Regex?
+    val validator: Regex?,
   ) : FormTemplateQuestionRep.Complete
 
   @Serializable
@@ -56,7 +56,7 @@ object FormTemplateTextQuestionRep {
     val multiLine: Boolean? = null,
     val placeholder: String? = null,
     @Serializable(with = RegexSerializer::class)
-    val validator: Regex? = null
+    val validator: Regex? = null,
   ) : FormTemplateQuestionRep.Update {
     override fun validate() = RepValidation {
       validate(super.validate())

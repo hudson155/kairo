@@ -16,7 +16,7 @@ import java.util.*
 internal class PutUserRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val userService: UserService
+  private val userService: UserService,
 ) : LimberApiEndpoint<UserRoleApi.Put, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

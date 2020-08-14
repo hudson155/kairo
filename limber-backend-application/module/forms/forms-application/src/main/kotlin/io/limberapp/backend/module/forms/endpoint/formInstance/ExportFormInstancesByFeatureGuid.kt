@@ -23,7 +23,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
   servingConfig: ServingConfig,
   private val featureService: FeatureService,
   private val formInstanceService: FormInstanceService,
-  private val userService: UserService
+  private val userService: UserService,
 ) : LimberApiEndpoint<FormInstanceApi.ExportByFeatureGuid, String>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

@@ -13,7 +13,7 @@ import react.router.dom.*
 internal fun RBuilder.orgRolesTableRoleMemberCount(
   memberCount: Int,
   linkTo: String,
-  classes: String? = null
+  classes: String? = null,
 ) {
   child(component, Props(memberCount, linkTo, classes))
 }
@@ -21,7 +21,7 @@ internal fun RBuilder.orgRolesTableRoleMemberCount(
 internal data class Props(
   val memberCount: Int,
   val linkTo: String,
-  val classes: String?
+  val classes: String?,
 ) : RProps
 
 private val component = functionalComponent(RBuilder::component)

@@ -30,7 +30,7 @@ object FormInstanceApi {
   data class ExportByFeatureGuid(
     val featureGuid: UUID,
     val creatorAccountGuid: UUID? = null,
-    val timeZone: TimeZone? = null
+    val timeZone: TimeZone? = null,
   ) : PiperEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/forms/${enc(featureGuid)}/instances",

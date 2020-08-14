@@ -12,7 +12,7 @@ object FormInstanceTextQuestionRep {
   @Serializable
   @SerialName("TEXT")
   data class Creation(
-    val text: String
+    val text: String,
   ) : FormInstanceQuestionRep.Creation
 
   @Serializable
@@ -22,6 +22,6 @@ object FormInstanceTextQuestionRep {
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     override val questionGuid: UUID?,
-    val text: String
+    val text: String,
   ) : FormInstanceQuestionRep.Complete
 }

@@ -9,11 +9,11 @@ data class FormInstanceTextQuestionModel(
   override val createdDate: LocalDateTime,
   override val formInstanceGuid: UUID,
   override val questionGuid: UUID?,
-  val text: String
+  val text: String,
 ) : FormInstanceQuestionModel {
   override val type = FormTemplateQuestionModel.Type.TEXT
 
   data class Update(
-    val text: String?
+    val text: String?,
   ) : FormInstanceQuestionModel.Update
 }

@@ -16,7 +16,7 @@ interface FormTemplateQuestionService {
     featureGuid: UUID,
     formTemplateGuid: UUID,
     questionGuid: UUID,
-    update: FormTemplateQuestionModel.Update
+    update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel
 
   fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID)

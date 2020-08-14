@@ -19,7 +19,7 @@ class TestLimberApp(
   module: Module,
   additionalModules: Set<ModuleWithLifecycle>,
   fixedClock: Clock,
-  deterministicUuidGenerator: UuidGenerator
+  deterministicUuidGenerator: UuidGenerator,
 ) : TestPiperApp(application, config, module, additionalModules, fixedClock, deterministicUuidGenerator) {
   override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
     piperAuth<Jwt> {

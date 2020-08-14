@@ -22,7 +22,7 @@ private const val UNIQ_DOMAIN = "uniq__tenant_domain__domain"
 
 @Singleton
 internal class TenantDomainStore @Inject constructor(
-  jdbi: Jdbi
+  jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<TenantDomainModel, TenantDomainFinder> {
   fun create(model: TenantDomainModel): TenantDomainModel =
     withHandle { handle ->

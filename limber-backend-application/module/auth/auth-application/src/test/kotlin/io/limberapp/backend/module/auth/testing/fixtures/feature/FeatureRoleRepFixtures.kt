@@ -10,7 +10,7 @@ import java.util.*
 internal object FeatureRoleRepFixtures {
   data class Fixture(
     val creation: (orgRoleGuid: UUID) -> FeatureRoleRep.Creation,
-    val complete: ResourceTest.(orgRoleGuid: UUID, idSeed: Int) -> FeatureRoleRep.Complete
+    val complete: ResourceTest.(orgRoleGuid: UUID, idSeed: Int) -> FeatureRoleRep.Complete,
   )
 
   val fixture = Fixture(

@@ -39,7 +39,7 @@ import kotlin.reflect.full.cast
 abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType : Any>(
   private val application: Application,
   private val pathPrefix: String,
-  private val endpointTemplate: PiperEndpointTemplate
+  private val endpointTemplate: PiperEndpointTemplate,
 ) {
   private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 

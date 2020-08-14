@@ -18,7 +18,7 @@ internal class PatchFormTemplateQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val formTemplateQuestionService: FormTemplateQuestionService,
-  private val formTemplateQuestionMapper: FormTemplateQuestionMapper
+  private val formTemplateQuestionMapper: FormTemplateQuestionMapper,
 ) : LimberApiEndpoint<FormTemplateQuestionApi.Patch, FormTemplateQuestionRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

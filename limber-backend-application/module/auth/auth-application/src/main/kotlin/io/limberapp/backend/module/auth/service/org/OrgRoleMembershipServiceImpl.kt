@@ -8,7 +8,7 @@ import io.limberapp.backend.module.auth.store.org.OrgRoleMembershipStore
 import java.util.*
 
 internal class OrgRoleMembershipServiceImpl @Inject constructor(
-  private val orgRoleMembershipStore: OrgRoleMembershipStore
+  private val orgRoleMembershipStore: OrgRoleMembershipStore,
 ) : OrgRoleMembershipService, Finder<OrgRoleMembershipModel, OrgRoleMembershipFinder> by orgRoleMembershipStore {
   override fun create(orgGuid: UUID, model: OrgRoleMembershipModel) =
     orgRoleMembershipStore.create(orgGuid, model)

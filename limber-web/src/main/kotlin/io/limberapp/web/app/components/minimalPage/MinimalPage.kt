@@ -14,7 +14,7 @@ import react.router.dom.*
  */
 internal fun RBuilder.minimalPage(
   linkType: LinkType?,
-  children: RBuilder.() -> Unit
+  children: RBuilder.() -> Unit,
 ) {
   child(component, Props(linkType), handler = children)
 }

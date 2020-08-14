@@ -6,7 +6,7 @@ import io.limberapp.backend.authorization.permissions.featurePermissions.Feature
 enum class FormsFeaturePermission(
   override val bit: Int,
   override val title: String,
-  override val description: String
+  override val description: String,
 ) : FeaturePermission {
   MANAGE_FORM_TEMPLATES(
     bit = 0,

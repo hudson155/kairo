@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory
  * authentication.
  */
 internal class PiperAuthProvider<P : Principal> internal constructor(
-  private val config: PiperAuthConfig<P>
+  private val config: PiperAuthConfig<P>,
 ) : AuthenticationProvider(config) {
   private val logger = LoggerFactory.getLogger(PiperAuthProvider::class.java)
 
@@ -56,7 +56,7 @@ internal class PiperAuthProvider<P : Principal> internal constructor(
   }
 
   private fun AuthenticationContext.bearerChallenge(
-    e: AuthenticationFailedCause
+    e: AuthenticationFailedCause,
   ) = challenge(config.authKey, e) {
     val challenge = HttpAuthHeader.Parameterized(
       authScheme = config.defaultScheme,

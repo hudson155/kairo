@@ -17,7 +17,7 @@ internal class GetUsersByOrgGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val userService: UserService,
-  private val userMapper: UserMapper
+  private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.GetByOrgGuid, Set<UserRep.Summary>>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

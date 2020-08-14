@@ -61,7 +61,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
 
   class OrgMemberWithPermission(
     private val orgGuid: UUID,
-    private val orgPermission: OrgPermission
+    private val orgPermission: OrgPermission,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
@@ -81,7 +81,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
 
   class FeatureMemberWithOrgPermission(
     private val featureGuid: UUID,
-    private val orgPermission: OrgPermission
+    private val orgPermission: OrgPermission,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
@@ -96,7 +96,7 @@ abstract class Authorization : PiperAuthorization<Jwt> {
 
   class FeatureMemberWithFeaturePermission(
     private val featureGuid: UUID,
-    private val featurePermission: FeaturePermission
+    private val featurePermission: FeaturePermission,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false

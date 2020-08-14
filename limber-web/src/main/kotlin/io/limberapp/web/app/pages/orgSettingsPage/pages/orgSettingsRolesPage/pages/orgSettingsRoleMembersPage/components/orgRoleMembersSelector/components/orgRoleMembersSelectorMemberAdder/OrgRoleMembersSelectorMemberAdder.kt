@@ -15,7 +15,7 @@ import react.dom.*
 
 internal fun RBuilder.orgRoleMembersSelectorMemberAdder(
   excludedUserGuids: Set<UUID> = emptySet(),
-  onAdd: (accountGuid: UUID) -> Unit
+  onAdd: (accountGuid: UUID) -> Unit,
 ) {
   child(component, Props(excludedUserGuids, onAdd))
 }

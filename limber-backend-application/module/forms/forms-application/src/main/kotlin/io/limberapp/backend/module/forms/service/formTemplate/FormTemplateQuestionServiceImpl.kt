@@ -18,7 +18,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   private val clock: Clock,
   private val uuidGenerator: UuidGenerator,
   private val formTemplateStore: FormTemplateStore,
-  private val formTemplateQuestionStore: FormTemplateQuestionStore
+  private val formTemplateQuestionStore: FormTemplateQuestionStore,
 ) : FormTemplateQuestionService {
   override fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
@@ -87,7 +87,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     featureGuid: UUID,
     formTemplateGuid: UUID,
     questionGuid: UUID,
-    update: FormTemplateQuestionModel.Update
+    update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel {
     formTemplateStore.get(featureGuid = featureGuid, formTemplateGuid = formTemplateGuid)
       .ifNull { throw FormTemplateNotFound() }

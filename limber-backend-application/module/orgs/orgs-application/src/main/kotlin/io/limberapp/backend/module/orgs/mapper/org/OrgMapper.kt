@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 internal class OrgMapper @Inject constructor(
   private val clock: Clock,
   private val uuidGenerator: UuidGenerator,
-  private val featureMapper: FeatureMapper
+  private val featureMapper: FeatureMapper,
 ) {
   fun model(rep: OrgRep.Creation) = OrgModel(
     guid = uuidGenerator.generate(),

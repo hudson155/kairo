@@ -12,7 +12,7 @@ abstract class PiperEndpoint(
   val path: String,
   val queryParams: List<Pair<String, String>> = emptyList(),
   val contentType: ContentType = ContentType.JSON,
-  val body: ValidatedRep? = null
+  val body: ValidatedRep? = null,
 ) {
   val href = href(path, queryParams)
 }

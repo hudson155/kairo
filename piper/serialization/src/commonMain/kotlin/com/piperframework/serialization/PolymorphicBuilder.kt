@@ -42,7 +42,7 @@ class PolymorphicBuilder<T : Any> internal constructor(private val baseClass: KC
 
 fun <T : Any> SerializersModuleBuilder.baseClass(
   baseClass: KClass<T>,
-  buildAction: PolymorphicBuilder<T>.() -> Unit
+  buildAction: PolymorphicBuilder<T>.() -> Unit,
 ) {
   PolymorphicBuilder(baseClass).apply(buildAction).applyTo(this)
 }

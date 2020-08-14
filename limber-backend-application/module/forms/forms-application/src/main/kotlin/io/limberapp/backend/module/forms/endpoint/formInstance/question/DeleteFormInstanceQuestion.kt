@@ -18,7 +18,7 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionService: FormInstanceQuestionService
+  private val formInstanceQuestionService: FormInstanceQuestionService,
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

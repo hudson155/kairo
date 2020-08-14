@@ -18,7 +18,7 @@ internal class GetFeatureRolesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val featureRoleService: FeatureRoleService,
-  private val featureRoleMapper: FeatureRoleMapper
+  private val featureRoleMapper: FeatureRoleMapper,
 ) : LimberApiEndpoint<FeatureRoleApi.GetByFeatureGuid, Set<FeatureRoleRep.Complete>>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

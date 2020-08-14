@@ -23,7 +23,7 @@ import kotlin.test.assertTrue
 @Suppress("LongParameterList") // For these methods, we're ok with it.
 abstract class PiperTest(
   protected val json: Json,
-  private val moduleFunction: Application.() -> Unit
+  private val moduleFunction: Application.() -> Unit,
 ) {
   private val exceptionMapper = ExceptionMapper()
 
@@ -36,7 +36,7 @@ abstract class PiperTest(
   fun test(
     endpoint: PiperEndpoint,
     expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
-    test: TestApplicationCall.() -> Unit
+    test: TestApplicationCall.() -> Unit,
   ) = testInternal(
     endpoint = endpoint,
     expectedStatusCode = expectedStatusCode,
@@ -58,7 +58,7 @@ abstract class PiperTest(
   private fun testInternal(
     endpoint: PiperEndpoint,
     expectedStatusCode: HttpStatusCode,
-    test: TestApplicationCall.() -> Unit
+    test: TestApplicationCall.() -> Unit,
   ) = withPiperTestApp {
     createCall(endpoint)
       .runTest(expectedStatusCode, test)
@@ -106,7 +106,7 @@ abstract class PiperTest(
 
   private fun TestApplicationCall.runTest(
     expectedStatusCode: HttpStatusCode,
-    test: TestApplicationCall.() -> Unit
+    test: TestApplicationCall.() -> Unit,
   ) {
     assertTrue(
       actual = requestHandled,

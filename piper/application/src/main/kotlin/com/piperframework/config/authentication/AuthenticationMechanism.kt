@@ -17,17 +17,17 @@ sealed class AuthenticationMechanism {
   data class Jwk(
     override val issuer: String,
     override val leeway: Long,
-    val domain: String
+    val domain: String,
   ) : AuthenticationMechanism()
 
   data class Jwt(
     override val issuer: String,
     override val leeway: Long,
-    val secret: ConfigString
+    val secret: ConfigString,
   ) : AuthenticationMechanism()
 
   data class UnsignedJwt(
-    override val leeway: Long
+    override val leeway: Long,
   ) : AuthenticationMechanism() {
     override val issuer: Nothing? = null
   }

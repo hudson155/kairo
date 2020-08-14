@@ -18,7 +18,7 @@ import java.util.*
 internal class DeleteUserRole @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val userService: UserService
+  private val userService: UserService,
 ) : LimberApiEndpoint<UserRoleApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

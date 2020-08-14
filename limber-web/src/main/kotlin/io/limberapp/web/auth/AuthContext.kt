@@ -11,7 +11,7 @@ internal data class AuthContext(
   val isAuthenticated: Boolean,
   val signIn: () -> Unit,
   val jwt: Jwt?,
-  val signOut: () -> Unit
+  val signOut: () -> Unit,
 ) {
   val featurePermissions by lazy { checkNotNull(jwt).org.features.mapValues { it.value.permissions } }
 

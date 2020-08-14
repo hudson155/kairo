@@ -22,7 +22,7 @@ import react.dom.*
 
 internal fun RBuilder.formTemplateSelectorModal(
   onClose: () -> Unit,
-  onFormInstanceCreate: (UUID) -> Unit
+  onFormInstanceCreate: (UUID) -> Unit,
 ) {
   child(component, Props(onClose, onFormInstanceCreate))
 }

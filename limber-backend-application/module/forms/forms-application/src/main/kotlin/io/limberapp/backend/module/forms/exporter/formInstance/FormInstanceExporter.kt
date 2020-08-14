@@ -16,7 +16,7 @@ private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EE, MMM d, yyyy '
 internal class FormInstanceExporter(
   private val users: Map<UUID, UserModel>,
   private val timeZone: TimeZone?,
-  private val formInstances: Set<FormInstanceModel>
+  private val formInstances: Set<FormInstanceModel>,
 ) {
   enum class CsvColumn(val display: String) {
     NUMBER("Number"),

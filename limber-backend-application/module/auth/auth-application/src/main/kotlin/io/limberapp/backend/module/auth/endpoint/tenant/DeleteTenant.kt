@@ -15,7 +15,7 @@ import java.util.*
 internal class DeleteTenant @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val tenantService: TenantService
+  private val tenantService: TenantService,
 ) : LimberApiEndpoint<TenantApi.Delete, Unit>(
   application, servingConfig.apiPathPrefix,
   endpointTemplate = TenantApi.Delete::class.template()

@@ -18,7 +18,7 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
-  private val formInstanceMapper: FormInstanceMapper
+  private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, Set<FormInstanceRep.Summary>>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

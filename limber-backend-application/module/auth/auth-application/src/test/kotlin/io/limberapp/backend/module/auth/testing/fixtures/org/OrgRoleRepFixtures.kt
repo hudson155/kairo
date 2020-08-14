@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 internal object OrgRoleRepFixtures {
   data class Fixture(
     val creation: () -> OrgRoleRep.Creation,
-    val complete: ResourceTest.(idSeed: Int) -> OrgRoleRep.Complete
+    val complete: ResourceTest.(idSeed: Int) -> OrgRoleRep.Complete,
   )
 
   val adminFixture = Fixture(

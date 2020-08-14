@@ -11,7 +11,7 @@ data class FeatureModel(
   val name: String,
   val path: String,
   val type: Type,
-  val isDefaultFeature: Boolean
+  val isDefaultFeature: Boolean,
 ) {
   enum class Type {
     FORMS,
@@ -22,6 +22,6 @@ data class FeatureModel(
     val rank: Int?,
     val name: String?,
     val path: String?,
-    val isDefaultFeature: Boolean?
+    val isDefaultFeature: Boolean?,
   )
 }

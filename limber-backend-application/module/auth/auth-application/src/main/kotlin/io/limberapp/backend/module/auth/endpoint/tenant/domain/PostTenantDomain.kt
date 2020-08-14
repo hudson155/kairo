@@ -18,7 +18,7 @@ internal class PostTenantDomain @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val tenantDomainService: TenantDomainService,
-  private val tenantDomainMapper: TenantDomainMapper
+  private val tenantDomainMapper: TenantDomainMapper,
 ) : LimberApiEndpoint<TenantDomainApi.Post, TenantDomainRep.Complete>(
   application, servingConfig.apiPathPrefix,
   endpointTemplate = TenantDomainApi.Post::class.template()

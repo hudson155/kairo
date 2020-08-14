@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 object TenantDomainRep {
   @Serializable
   data class Creation(
-    val domain: String
+    val domain: String,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::domain) { Validator.hostname(value) }
@@ -22,6 +22,6 @@ object TenantDomainRep {
   data class Complete(
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
-    val domain: String
+    val domain: String,
   ) : CompleteRep
 }

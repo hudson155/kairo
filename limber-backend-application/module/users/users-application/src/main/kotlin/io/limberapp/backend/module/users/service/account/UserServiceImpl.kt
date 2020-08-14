@@ -12,7 +12,7 @@ import java.util.*
 
 internal class UserServiceImpl @Inject constructor(
   @OptIn(LimberModule.Orgs::class) private val orgService: OrgService,
-  private val userStore: UserStore
+  private val userStore: UserStore,
 ) : UserService, Finder<UserModel, UserFinder> by userStore {
   override fun create(model: UserModel) =
     userStore.create(model)

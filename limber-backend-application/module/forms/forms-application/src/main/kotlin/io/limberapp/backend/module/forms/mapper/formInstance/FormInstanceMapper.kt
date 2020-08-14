@@ -12,7 +12,7 @@ import java.util.*
 internal class FormInstanceMapper @Inject constructor(
   private val clock: Clock,
   private val uuidGenerator: UuidGenerator,
-  private val formInstanceQuestionMapper: FormInstanceQuestionMapper
+  private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
 ) {
   fun model(featureGuid: UUID, rep: FormInstanceRep.Creation) = FormInstanceModel(
     guid = uuidGenerator.generate(),

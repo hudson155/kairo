@@ -18,7 +18,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val orgRoleMembershipService: OrgRoleMembershipService,
-  private val orgRoleMembershipMapper: OrgRoleMembershipMapper
+  private val orgRoleMembershipMapper: OrgRoleMembershipMapper,
 ) : LimberApiEndpoint<OrgRoleMembershipApi.GetByOrgRoleGuid, Set<OrgRoleMembershipRep.Complete>>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,
@@ -30,7 +30,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(
   )
 
   override suspend fun Handler.handle(
-    command: OrgRoleMembershipApi.GetByOrgRoleGuid
+    command: OrgRoleMembershipApi.GetByOrgRoleGuid,
   ): Set<OrgRoleMembershipRep.Complete> {
     Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
     val orgRoleMemberships = orgRoleMembershipService.findAsSet {

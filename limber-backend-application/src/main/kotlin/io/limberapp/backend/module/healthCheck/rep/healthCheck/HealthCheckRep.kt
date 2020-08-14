@@ -15,6 +15,6 @@ internal object HealthCheckRep {
   data class Complete(
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
-    val state: State
+    val state: State,
   ) : CompleteRep
 }

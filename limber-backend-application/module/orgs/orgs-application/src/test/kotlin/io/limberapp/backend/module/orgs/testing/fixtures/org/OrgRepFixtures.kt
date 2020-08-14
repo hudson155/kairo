@@ -8,7 +8,7 @@ import java.util.*
 internal object OrgRepFixtures {
   data class Fixture(
     val creation: (ownerAccountGuid: UUID) -> OrgRep.Creation,
-    val complete: ResourceTest.(ownerAccountGuid: UUID, idSeed: Int) -> OrgRep.Complete
+    val complete: ResourceTest.(ownerAccountGuid: UUID, idSeed: Int) -> OrgRep.Complete,
   )
 
   val crankyPastaFixture = Fixture({ ownerAccountGuid ->

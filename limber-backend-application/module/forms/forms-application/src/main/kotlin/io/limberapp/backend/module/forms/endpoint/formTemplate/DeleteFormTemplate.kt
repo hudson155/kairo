@@ -15,7 +15,7 @@ import java.util.*
 internal class DeleteFormTemplate @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val formTemplateService: FormTemplateService
+  private val formTemplateService: FormTemplateService,
 ) : LimberApiEndpoint<FormTemplateApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

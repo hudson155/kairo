@@ -7,7 +7,7 @@ import java.util.*
 
 internal class FormTemplateServiceImpl @Inject constructor(
   private val formTemplateQuestionService: FormTemplateQuestionService,
-  private val formTemplateStore: FormTemplateStore
+  private val formTemplateStore: FormTemplateStore,
 ) : FormTemplateService {
   override fun create(model: FormTemplateModel): FormTemplateModel {
     val formTemplate = formTemplateStore.create(model)

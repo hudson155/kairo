@@ -15,7 +15,7 @@ import java.util.*
 internal class DeleteOrgRoleMembership @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val orgRoleMembershipService: OrgRoleMembershipService
+  private val orgRoleMembershipService: OrgRoleMembershipService,
 ) : LimberApiEndpoint<OrgRoleMembershipApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

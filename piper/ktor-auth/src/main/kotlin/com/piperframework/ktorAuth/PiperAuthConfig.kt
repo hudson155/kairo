@@ -11,7 +11,7 @@ class PiperAuthConfig<P : Principal> private constructor(
   val defaultScheme: String,
   val verifiers: Map<String, PiperAuthVerifier<P>>,
   val authKey: String,
-  val realm: String
+  val realm: String,
 ) : AuthenticationProvider.Configuration(name) {
   class Builder<P : Principal>(private val name: String?) {
     /**

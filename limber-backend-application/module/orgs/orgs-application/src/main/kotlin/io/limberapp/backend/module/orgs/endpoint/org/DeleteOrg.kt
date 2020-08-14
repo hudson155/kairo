@@ -15,7 +15,7 @@ import java.util.*
 internal class DeleteOrg @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val orgService: OrgService
+  private val orgService: OrgService,
 ) : LimberApiEndpoint<OrgApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

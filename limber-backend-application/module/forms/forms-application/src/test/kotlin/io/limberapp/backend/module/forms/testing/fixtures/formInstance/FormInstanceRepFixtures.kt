@@ -12,8 +12,8 @@ internal object FormInstanceRepFixtures {
       formTemplateGuid: UUID,
       number: Long,
       creatorAccountGuid: UUID,
-      idSeed: Int
-    ) -> FormInstanceRep.Complete
+      idSeed: Int,
+    ) -> FormInstanceRep.Complete,
   )
 
   val fixture = Fixture({ formTemplateGuid, creatorAccountGuid ->

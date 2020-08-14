@@ -10,9 +10,9 @@ data class FormInstanceModel(
   val formTemplateGuid: UUID,
   val number: Long,
   val submittedDate: LocalDateTime?,
-  val creatorAccountGuid: UUID
+  val creatorAccountGuid: UUID,
 ) {
   data class Update(
-    val submittedDate: LocalDateTime?
+    val submittedDate: LocalDateTime?,
   )
 }

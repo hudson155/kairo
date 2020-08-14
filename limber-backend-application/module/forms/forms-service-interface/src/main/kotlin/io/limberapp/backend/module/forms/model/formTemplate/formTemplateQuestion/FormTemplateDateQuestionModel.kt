@@ -13,7 +13,7 @@ data class FormTemplateDateQuestionModel(
   override val helpText: String?,
   override val required: Boolean,
   val earliest: LocalDate?,
-  val latest: LocalDate?
+  val latest: LocalDate?,
 ) : FormTemplateQuestionModel {
   override val type = FormTemplateQuestionModel.Type.DATE
 
@@ -22,6 +22,6 @@ data class FormTemplateDateQuestionModel(
     override val helpText: String?,
     override val required: Boolean?,
     val earliest: LocalDate?,
-    val latest: LocalDate?
+    val latest: LocalDate?,
   ) : FormTemplateQuestionModel.Update
 }

@@ -10,7 +10,7 @@ import java.util.*
 
 internal class OrgRoleMapper @Inject constructor(
   private val clock: Clock,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) {
   fun model(orgGuid: UUID, rep: OrgRoleRep.Creation) = OrgRoleModel(
     guid = uuidGenerator.generate(),

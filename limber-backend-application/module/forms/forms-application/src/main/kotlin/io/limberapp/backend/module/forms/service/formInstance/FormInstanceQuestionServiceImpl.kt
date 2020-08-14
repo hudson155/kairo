@@ -11,7 +11,7 @@ import java.util.*
 internal class FormInstanceQuestionServiceImpl @Inject constructor(
   private val formInstanceStore: FormInstanceStore,
   private val formInstanceQuestionStore: FormInstanceQuestionStore,
-  private val formInstanceQuestionMapper: FormInstanceQuestionMapper
+  private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
 ) : FormInstanceQuestionService {
   override fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel {
     val questionGuid = requireNotNull(model.questionGuid)

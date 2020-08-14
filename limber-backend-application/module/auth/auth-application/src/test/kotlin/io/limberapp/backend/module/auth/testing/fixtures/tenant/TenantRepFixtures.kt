@@ -9,7 +9,7 @@ import java.util.*
 internal object TenantRepFixtures {
   data class Fixture(
     val creation: (orgGuid: UUID) -> TenantRep.Creation,
-    val complete: ResourceTest.(orgGuid: UUID) -> TenantRep.Complete
+    val complete: ResourceTest.(orgGuid: UUID) -> TenantRep.Complete,
   )
 
   val limberappFixture = Fixture({ orgGuid ->

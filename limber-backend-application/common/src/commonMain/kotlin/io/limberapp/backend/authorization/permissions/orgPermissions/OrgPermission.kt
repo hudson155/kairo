@@ -6,7 +6,7 @@ import io.limberapp.backend.authorization.permissions.Permission
 enum class OrgPermission(
   override val bit: Int,
   override val title: String,
-  override val description: String
+  override val description: String,
 ) : Permission {
   MANAGE_ORG_ROLES(
     bit = 0,

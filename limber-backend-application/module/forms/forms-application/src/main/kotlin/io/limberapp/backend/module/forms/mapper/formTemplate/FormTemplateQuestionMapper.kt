@@ -21,7 +21,7 @@ private const val TEXT_QUESTION_MAX_LENGTH_ONE_LINE = 200
 
 internal class FormTemplateQuestionMapper @Inject constructor(
   private val clock: Clock,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) {
   fun model(formTemplateGuid: UUID, rep: FormTemplateQuestionRep.Creation) = when (rep) {
     is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(

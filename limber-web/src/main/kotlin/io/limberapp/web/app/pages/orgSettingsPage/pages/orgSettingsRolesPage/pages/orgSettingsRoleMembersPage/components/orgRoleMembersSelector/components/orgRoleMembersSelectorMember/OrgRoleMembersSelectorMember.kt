@@ -17,7 +17,7 @@ import react.dom.*
 internal fun RBuilder.orgRoleMembersSelectorMember(
   user: UserRep.Summary,
   onRemove: () -> Unit,
-  children: RHandler<Props>
+  children: RHandler<Props>,
 ) {
   child(component, Props(user, onRemove), handler = children)
 }

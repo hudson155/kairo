@@ -24,7 +24,7 @@ internal fun RBuilder.memberRow(
   small: Boolean = false,
   hideNameXs: Boolean = false,
   grayscale: Boolean = false,
-  onSelect: (() -> Unit)? = null
+  onSelect: (() -> Unit)? = null,
 ) {
   child(component, Props(user, small, hideNameXs, grayscale, onSelect))
 }
@@ -34,7 +34,7 @@ internal data class Props(
   val small: Boolean,
   val hideNameXs: Boolean,
   val grayscale: Boolean,
-  val onSelect: (() -> Unit)?
+  val onSelect: (() -> Unit)?,
 ) : RProps
 
 private class S : Styles("MemberRow") {

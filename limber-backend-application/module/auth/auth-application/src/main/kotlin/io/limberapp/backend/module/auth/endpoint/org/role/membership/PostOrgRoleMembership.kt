@@ -18,7 +18,7 @@ internal class PostOrgRoleMembership @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val orgRoleMembershipService: OrgRoleMembershipService,
-  private val orgRoleMembershipMapper: OrgRoleMembershipMapper
+  private val orgRoleMembershipMapper: OrgRoleMembershipMapper,
 ) : LimberApiEndpoint<OrgRoleMembershipApi.Post, OrgRoleMembershipRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

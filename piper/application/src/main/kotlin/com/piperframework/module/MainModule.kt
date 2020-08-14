@@ -16,7 +16,7 @@ class MainModule(
   private val application: Application,
   private val clock: Clock,
   private val config: Config,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) : ModuleWithLifecycle() {
   override fun configure() {
     bind(Application::class.java).toInstance(application)

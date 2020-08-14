@@ -8,7 +8,7 @@ import io.limberapp.backend.module.auth.store.feature.FeatureRoleStore
 import java.util.*
 
 internal class FeatureRoleServiceImpl @Inject constructor(
-  private val featureRoleStore: FeatureRoleStore
+  private val featureRoleStore: FeatureRoleStore,
 ) : FeatureRoleService, Finder<FeatureRoleModel, FeatureRoleFinder> by featureRoleStore {
   override fun create(model: FeatureRoleModel) =
     featureRoleStore.create(model)

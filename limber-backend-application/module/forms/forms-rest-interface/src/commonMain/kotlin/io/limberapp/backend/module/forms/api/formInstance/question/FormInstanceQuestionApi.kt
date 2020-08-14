@@ -12,7 +12,7 @@ object FormInstanceQuestionApi {
     val featureGuid: UUID,
     val formInstanceGuid: UUID,
     val questionGuid: UUID,
-    val rep: FormInstanceQuestionRep.Creation?
+    val rep: FormInstanceQuestionRep.Creation?,
   ) : PiperEndpoint(
     httpMethod = HttpMethod.PUT,
     path = "/forms/${enc(featureGuid)}/instances/${enc(formInstanceGuid)}/questions/${enc(questionGuid)}",

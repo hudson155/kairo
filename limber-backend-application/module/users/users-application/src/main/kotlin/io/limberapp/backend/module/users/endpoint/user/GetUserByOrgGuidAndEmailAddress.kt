@@ -18,7 +18,7 @@ internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val userService: UserService,
-  private val userMapper: UserMapper
+  private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.GetByOrgGuidAndEmailAddress, UserRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

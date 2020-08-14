@@ -18,7 +18,7 @@ internal class PostFeature @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val featureService: FeatureService,
-  private val featureMapper: FeatureMapper
+  private val featureMapper: FeatureMapper,
 ) : LimberApiEndpoint<OrgFeatureApi.Post, FeatureRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

@@ -16,7 +16,7 @@ object FeatureRoleRep {
   data class Creation(
     @Serializable(with = UuidSerializer::class)
     val orgRoleGuid: UUID,
-    val permissions: FeaturePermissions
+    val permissions: FeaturePermissions,
   ) : CreationRep {
     override fun validate() = RepValidation {}
   }
@@ -29,14 +29,14 @@ object FeatureRoleRep {
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     val orgRoleGuid: UUID,
-    val permissions: FeaturePermissions
+    val permissions: FeaturePermissions,
   ) : CompleteRep {
     val uniqueSortKey get() = "$createdDate-$guid"
   }
 
   @Serializable
   data class Update(
-    val permissions: FeaturePermissions? = null
+    val permissions: FeaturePermissions? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {}
   }

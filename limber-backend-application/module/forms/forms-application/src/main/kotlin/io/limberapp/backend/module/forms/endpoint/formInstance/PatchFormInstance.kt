@@ -20,7 +20,7 @@ internal class PatchFormInstance @Inject constructor(
   servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
   private val formInstanceQuestionService: FormInstanceQuestionService,
-  private val formInstanceMapper: FormInstanceMapper
+  private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.Patch, FormInstanceRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

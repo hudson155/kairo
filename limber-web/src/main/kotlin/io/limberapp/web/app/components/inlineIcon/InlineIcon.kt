@@ -16,7 +16,7 @@ internal fun RBuilder.inlineIcon(
   name: String,
   leftMargin: Boolean = false,
   rightMargin: Boolean = false,
-  classes: String? = null
+  classes: String? = null,
 ) {
   // TODO: It would be nice to use a less rough version of these icons than "fas", but "fas" is the only free version.
   i(

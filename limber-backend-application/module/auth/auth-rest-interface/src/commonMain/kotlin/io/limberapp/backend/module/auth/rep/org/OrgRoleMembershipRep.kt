@@ -13,7 +13,7 @@ object OrgRoleMembershipRep {
   @Serializable
   data class Creation(
     @Serializable(with = UuidSerializer::class)
-    val accountGuid: UUID
+    val accountGuid: UUID,
   ) : CreationRep {
     override fun validate() = RepValidation {}
   }
@@ -23,6 +23,6 @@ object OrgRoleMembershipRep {
     @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
-    val accountGuid: UUID
+    val accountGuid: UUID,
   ) : CompleteRep
 }

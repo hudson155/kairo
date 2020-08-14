@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 internal object TenantDomainRepFixtures {
   data class Fixture(
     val creation: () -> TenantDomainRep.Creation,
-    val complete: ResourceTest.() -> TenantDomainRep.Complete
+    val complete: ResourceTest.() -> TenantDomainRep.Complete,
   )
 
   val limberappFixture = Fixture({

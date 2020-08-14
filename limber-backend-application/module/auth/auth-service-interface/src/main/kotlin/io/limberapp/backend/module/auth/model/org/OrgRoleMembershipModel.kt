@@ -6,5 +6,5 @@ import java.util.*
 data class OrgRoleMembershipModel(
   val createdDate: LocalDateTime,
   val orgRoleGuid: UUID,
-  val accountGuid: UUID
+  val accountGuid: UUID,
 )

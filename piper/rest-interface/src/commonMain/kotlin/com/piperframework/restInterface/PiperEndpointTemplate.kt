@@ -8,5 +8,5 @@ data class PiperEndpointTemplate(
   val httpMethod: HttpMethod,
   val pathTemplate: String,
   val requiredQueryParams: Set<String>,
-  val contentType: ContentType
+  val contentType: ContentType,
 )

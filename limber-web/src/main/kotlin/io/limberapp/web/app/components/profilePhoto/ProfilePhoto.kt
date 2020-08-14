@@ -14,7 +14,7 @@ internal fun RBuilder.profilePhoto(
   url: String?,
   small: Boolean = false,
   grayscale: Boolean = false,
-  classes: String? = null
+  classes: String? = null,
 ) {
   child(component, Props(placeholder, url, small, grayscale, classes))
 }
@@ -24,7 +24,7 @@ internal data class Props(
   val url: String?,
   val small: Boolean,
   val grayscale: Boolean,
-  val classes: String?
+  val classes: String?,
 ) : RProps
 
 private class S : Styles("ProfilePhoto") {

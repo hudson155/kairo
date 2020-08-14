@@ -17,7 +17,7 @@ object FormInstanceRep {
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: UUID,
     @Serializable(with = UuidSerializer::class)
-    val creatorAccountGuid: UUID
+    val creatorAccountGuid: UUID,
   ) : CreationRep {
     override fun validate() = RepValidation {}
   }
@@ -34,7 +34,7 @@ object FormInstanceRep {
     @Serializable(with = LocalDateTimeSerializer::class)
     val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
-    val creatorAccountGuid: UUID
+    val creatorAccountGuid: UUID,
   ) : CompleteRep
 
   @Serializable
@@ -50,12 +50,12 @@ object FormInstanceRep {
     val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
     val creatorAccountGuid: UUID,
-    val questions: List<FormInstanceQuestionRep.Complete>
+    val questions: List<FormInstanceQuestionRep.Complete>,
   ) : CompleteRep
 
   @Serializable
   data class Update(
-    val submitted: Boolean?
+    val submitted: Boolean?,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::submitted) { ifPresent { value } }

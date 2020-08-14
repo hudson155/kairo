@@ -12,7 +12,7 @@ import react.*
 
 internal fun RBuilder.orgRoleMembershipsStateProvider(
   orgRoleMemberships: OrgRoleMembershipsState,
-  children: RHandler<Props>
+  children: RHandler<Props>,
 ) {
   child(component, Props(orgRoleMemberships), handler = children)
 }

@@ -19,7 +19,7 @@ internal class HealthCheck @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val healthCheckService: HealthCheckService,
-  private val healthCheckMapper: HealthCheckMapper
+  private val healthCheckMapper: HealthCheckMapper,
 ) : LimberApiEndpoint<HealthCheckApi.Get, HealthCheckRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

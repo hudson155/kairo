@@ -18,7 +18,7 @@ object TenantRep {
     @Serializable(with = UuidSerializer::class)
     val orgGuid: UUID,
     val auth0ClientId: String,
-    val domain: TenantDomainRep.Creation
+    val domain: TenantDomainRep.Creation,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
@@ -33,12 +33,12 @@ object TenantRep {
     @Serializable(with = UuidSerializer::class)
     val orgGuid: UUID,
     val auth0ClientId: String,
-    val domains: Set<TenantDomainRep.Complete>
+    val domains: Set<TenantDomainRep.Complete>,
   ) : CompleteRep
 
   @Serializable
   data class Update(
-    val auth0ClientId: String? = null
+    val auth0ClientId: String? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::auth0ClientId) { ifPresent { Validator.auth0ClientId(value) } }

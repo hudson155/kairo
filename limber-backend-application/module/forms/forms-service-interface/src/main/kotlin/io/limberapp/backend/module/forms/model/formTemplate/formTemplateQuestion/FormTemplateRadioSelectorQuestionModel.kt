@@ -11,7 +11,7 @@ data class FormTemplateRadioSelectorQuestionModel(
   override val label: String,
   override val helpText: String?,
   override val required: Boolean,
-  val options: List<String>
+  val options: List<String>,
 ) : FormTemplateQuestionModel {
   override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
 
@@ -19,6 +19,6 @@ data class FormTemplateRadioSelectorQuestionModel(
     override val label: String?,
     override val helpText: String?,
     override val required: Boolean?,
-    val options: List<String>?
+    val options: List<String>?,
   ) : FormTemplateQuestionModel.Update
 }

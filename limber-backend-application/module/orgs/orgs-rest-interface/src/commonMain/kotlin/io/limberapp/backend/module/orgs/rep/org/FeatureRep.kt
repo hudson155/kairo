@@ -23,7 +23,7 @@ object FeatureRep {
     val rank: Int,
     val name: String,
     val path: String,
-    val type: Type
+    val type: Type,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::name) { Validator.featureName(value) }
@@ -41,7 +41,7 @@ object FeatureRep {
     val name: String,
     val path: String,
     val type: Type,
-    val isDefaultFeature: Boolean
+    val isDefaultFeature: Boolean,
   ) : CompleteRep
 
   @Serializable
@@ -49,7 +49,7 @@ object FeatureRep {
     val rank: Int? = null,
     val name: String? = null,
     val path: String? = null,
-    val isDefaultFeature: Boolean? = null
+    val isDefaultFeature: Boolean? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::name) { ifPresent { Validator.featureName(value) } }

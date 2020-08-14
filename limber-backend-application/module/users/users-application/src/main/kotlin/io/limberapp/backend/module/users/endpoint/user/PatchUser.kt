@@ -17,7 +17,7 @@ internal class PatchUser @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val userService: UserService,
-  private val userMapper: UserMapper
+  private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.Patch, UserRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

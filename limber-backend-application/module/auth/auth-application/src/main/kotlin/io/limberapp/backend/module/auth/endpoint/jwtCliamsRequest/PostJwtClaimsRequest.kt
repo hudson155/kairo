@@ -17,7 +17,7 @@ internal class PostJwtClaimsRequest @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val jwtClaimsRequestService: JwtClaimsRequestService,
-  private val jwtClaimsRequestMapper: JwtClaimsRequestMapper
+  private val jwtClaimsRequestMapper: JwtClaimsRequestMapper,
 ) : LimberApiEndpoint<JwtClaimsRequestApi.Post, JwtClaimsRequestRep.Complete>(
   application, servingConfig.apiPathPrefix,
   endpointTemplate = JwtClaimsRequestApi.Post::class.template()

@@ -21,7 +21,7 @@ internal class PutFormInstanceQuestion @Inject constructor(
   servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
   private val formInstanceQuestionService: FormInstanceQuestionService,
-  private val formInstanceQuestionMapper: FormInstanceQuestionMapper
+  private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Put, FormInstanceQuestionRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

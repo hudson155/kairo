@@ -29,7 +29,7 @@ class JsonContentConverter(private val json: Json) : ContentConverter {
   override suspend fun convertForSend(
     context: PipelineContext<Any, ApplicationCall>,
     contentType: ContentType,
-    value: Any
+    value: Any,
   ): Any? {
     return when (value) {
       is Set<*> -> json.stringifySet(value)

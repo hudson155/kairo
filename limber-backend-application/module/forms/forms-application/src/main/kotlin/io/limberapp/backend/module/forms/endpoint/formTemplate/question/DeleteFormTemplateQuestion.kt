@@ -15,7 +15,7 @@ import java.util.*
 internal class DeleteFormTemplateQuestion @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val formTemplateQuestionService: FormTemplateQuestionService
+  private val formTemplateQuestionService: FormTemplateQuestionService,
 ) : LimberApiEndpoint<FormTemplateQuestionApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

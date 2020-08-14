@@ -17,7 +17,7 @@ internal fun RBuilder.limberButton(
   loading: Boolean = false,
   onClick: () -> Unit,
   classes: String? = null,
-  children: RHandler<Props>
+  children: RHandler<Props>,
 ) {
   child(component, Props(style, disabled, loading, onClick, classes), handler = children)
 }
@@ -27,7 +27,7 @@ internal data class Props(
   val disabled: Boolean,
   val loading: Boolean,
   val onClick: () -> Unit,
-  val classes: String?
+  val classes: String?,
 ) : RProps
 
 internal enum class Style { PRIMARY, SECONDARY, DANGER }

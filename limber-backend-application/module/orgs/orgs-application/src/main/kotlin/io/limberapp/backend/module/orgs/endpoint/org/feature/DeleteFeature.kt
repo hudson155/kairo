@@ -15,7 +15,7 @@ import java.util.*
 internal class DeleteFeature @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
-  private val featureService: FeatureService
+  private val featureService: FeatureService,
 ) : LimberApiEndpoint<OrgFeatureApi.Delete, Unit>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

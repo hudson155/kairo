@@ -9,9 +9,9 @@ data class FeatureRoleModel(
   val createdDate: LocalDateTime,
   val featureGuid: UUID,
   val orgRoleGuid: UUID,
-  val permissions: FeaturePermissions
+  val permissions: FeaturePermissions,
 ) {
   data class Update(
-    val permissions: FeaturePermissions?
+    val permissions: FeaturePermissions?,
   )
 }

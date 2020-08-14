@@ -6,5 +6,5 @@ package com.piperframework.config.serving
 data class ServingConfig(
   val redirectHttpToHttps: Boolean,
   val apiPathPrefix: String,
-  val staticFiles: StaticFiles
+  val staticFiles: StaticFiles,
 )

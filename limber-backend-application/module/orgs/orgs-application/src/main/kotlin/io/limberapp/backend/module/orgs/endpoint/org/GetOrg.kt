@@ -20,7 +20,7 @@ internal class GetOrg @Inject constructor(
   servingConfig: ServingConfig,
   private val featureService: FeatureService,
   private val orgService: OrgService,
-  private val orgMapper: OrgMapper
+  private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.Get, OrgRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

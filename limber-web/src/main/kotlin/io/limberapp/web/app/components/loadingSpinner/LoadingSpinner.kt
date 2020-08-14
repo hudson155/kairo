@@ -17,7 +17,7 @@ internal fun RBuilder.loadingSpinner(large: Boolean = false, classes: String? = 
 
 internal data class Props(
   val large: Boolean,
-  val classes: String?
+  val classes: String?,
 ) : RProps
 
 /* Inspiration https://loading.io/spinner/eclipse/-eclipse-ring-circle-rotate */

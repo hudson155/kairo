@@ -17,7 +17,7 @@ object OrgRep {
   data class Creation(
     val name: String,
     @Serializable(with = UuidSerializer::class)
-    val ownerAccountGuid: UUID
+    val ownerAccountGuid: UUID,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::name) { Validator.orgName(value) }
@@ -33,12 +33,12 @@ object OrgRep {
     val name: String,
     @Serializable(with = UuidSerializer::class)
     val ownerAccountGuid: UUID,
-    val features: List<FeatureRep.Complete>
+    val features: List<FeatureRep.Complete>,
   ) : CompleteRep
 
   @Serializable
   data class Update(
-    val name: String? = null
+    val name: String? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::name) { ifPresent { Validator.orgName(value) } }

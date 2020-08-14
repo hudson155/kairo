@@ -19,7 +19,7 @@ private const val FEATURE_ROLE_UNIQUE_CONSTRAINT = "feature_role_feature_guid_or
 
 @Singleton
 internal class FeatureRoleStore @Inject constructor(
-  jdbi: Jdbi
+  jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FeatureRoleModel, FeatureRoleFinder> {
   fun create(model: FeatureRoleModel): FeatureRoleModel =
     withHandle { handle ->

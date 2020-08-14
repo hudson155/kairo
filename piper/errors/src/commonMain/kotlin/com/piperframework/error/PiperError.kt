@@ -9,5 +9,5 @@ import kotlinx.serialization.Serializable
 data class PiperError(
   val statusCode: Int,
   val statusCodeDescription: String,
-  val message: String?
+  val message: String?,
 )

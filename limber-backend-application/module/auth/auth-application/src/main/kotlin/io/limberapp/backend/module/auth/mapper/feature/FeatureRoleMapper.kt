@@ -10,7 +10,7 @@ import java.util.*
 
 internal class FeatureRoleMapper @Inject constructor(
   private val clock: Clock,
-  private val uuidGenerator: UuidGenerator
+  private val uuidGenerator: UuidGenerator,
 ) {
   fun model(featureGuid: UUID, rep: FeatureRoleRep.Creation) = FeatureRoleModel(
     guid = uuidGenerator.generate(),

@@ -20,7 +20,7 @@ object FormTemplateDateQuestionRep {
     @Serializable(with = LocalDateSerializer::class)
     val earliest: LocalDate? = null,
     @Serializable(with = LocalDateSerializer::class)
-    val latest: LocalDate? = null
+    val latest: LocalDate? = null,
   ) : FormTemplateQuestionRep.Creation
 
   @Serializable
@@ -36,7 +36,7 @@ object FormTemplateDateQuestionRep {
     @Serializable(with = LocalDateSerializer::class)
     val earliest: LocalDate?,
     @Serializable(with = LocalDateSerializer::class)
-    val latest: LocalDate?
+    val latest: LocalDate?,
   ) : FormTemplateQuestionRep.Complete
 
   @Serializable
@@ -48,6 +48,6 @@ object FormTemplateDateQuestionRep {
     @Serializable(with = LocalDateSerializer::class)
     val earliest: LocalDate? = null,
     @Serializable(with = LocalDateSerializer::class)
-    val latest: LocalDate? = null
+    val latest: LocalDate? = null,
   ) : FormTemplateQuestionRep.Update
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 internal object FormTemplateRepFixtures {
   data class Fixture(
     val creation: () -> FormTemplateRep.Creation,
-    val complete: ResourceTest.(idSeed: Int) -> FormTemplateRep.Complete
+    val complete: ResourceTest.(idSeed: Int) -> FormTemplateRep.Complete,
   )
 
   val exampleFormFixture = Fixture({

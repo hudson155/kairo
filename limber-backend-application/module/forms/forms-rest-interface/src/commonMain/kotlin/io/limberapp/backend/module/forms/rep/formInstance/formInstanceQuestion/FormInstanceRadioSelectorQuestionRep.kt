@@ -14,7 +14,7 @@ object FormInstanceRadioSelectorQuestionRep {
   @Serializable
   @SerialName("RADIO_SELECTOR")
   data class Creation(
-    val selection: String
+    val selection: String,
   ) : FormInstanceQuestionRep.Creation {
     override fun validate() = RepValidation {
       validate(super.validate())
@@ -29,6 +29,6 @@ object FormInstanceRadioSelectorQuestionRep {
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     override val questionGuid: UUID?,
-    val selection: String
+    val selection: String,
   ) : FormInstanceQuestionRep.Complete
 }

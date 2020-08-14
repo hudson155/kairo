@@ -9,5 +9,5 @@ import io.limberapp.backend.authorization.principal.Jwt
 abstract class LimberApiEndpoint<Endpoint : PiperEndpoint, ResponseType : Any>(
   application: Application,
   pathPrefix: String,
-  endpointTemplate: PiperEndpointTemplate
+  endpointTemplate: PiperEndpointTemplate,
 ) : ApiEndpoint<Jwt, Endpoint, ResponseType>(application, pathPrefix, endpointTemplate)

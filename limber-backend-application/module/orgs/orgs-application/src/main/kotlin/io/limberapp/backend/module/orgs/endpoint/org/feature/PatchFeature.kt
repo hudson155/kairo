@@ -18,7 +18,7 @@ internal class PatchFeature @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val featureService: FeatureService,
-  private val featureMapper: FeatureMapper
+  private val featureMapper: FeatureMapper,
 ) : LimberApiEndpoint<OrgFeatureApi.Patch, FeatureRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,

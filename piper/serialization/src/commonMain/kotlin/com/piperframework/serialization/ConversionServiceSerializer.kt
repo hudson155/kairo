@@ -12,7 +12,7 @@ import kotlinx.serialization.encoding.Encoder
  */
 abstract class ConversionServiceSerializer<T : Any>(
   serialName: String,
-  private val conversionService: DataConversionService<T>
+  private val conversionService: DataConversionService<T>,
 ) : KSerializer<T> {
   override val descriptor = PrimitiveSerialDescriptor(serialName, PrimitiveKind.STRING)
 

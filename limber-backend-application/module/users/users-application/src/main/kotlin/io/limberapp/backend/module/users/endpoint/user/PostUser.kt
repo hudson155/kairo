@@ -17,7 +17,7 @@ internal class PostUser @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val userService: UserService,
-  private val userMapper: UserMapper
+  private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.Post, UserRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,
