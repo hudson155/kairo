@@ -6,8 +6,8 @@ import io.limberapp.web.api.load
 import io.limberapp.web.api.useApi
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage.FormInstanceCreationPage
-import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceCreationPage.formInstanceCreationPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceAnswerPage.FormInstanceAnswerPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceAnswerPage.formInstanceAnswerPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.formInstancesListPage
 import io.limberapp.web.auth.useAuth
 import io.limberapp.web.state.state.feature.useFeatureState
@@ -59,8 +59,8 @@ private fun RBuilder.component(props: Props) {
       route(path = match.path, exact = true) {
         buildElement { formInstancesListPage() }
       }
-      route(path = match.path + FormInstanceCreationPage.subpath, exact = true) {
-        buildElement { formInstanceCreationPage() }
+      route(path = match.path + FormInstanceAnswerPage.subpath, exact = true) {
+        buildElement { formInstanceAnswerPage() }
       }
     }
   }
