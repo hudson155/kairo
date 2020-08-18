@@ -15,7 +15,7 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val EMAIL_ADDRESS_UNIQUE_CONSTRAINT = "user_org_guid_lower_idx"
+private const val UNIQ_EMAIL_ADDRESS = "uniq__user__email_address"
 
 @Singleton
 internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<UserModel, UserFinder> {
@@ -67,7 +67,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finde
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(EMAIL_ADDRESS_UNIQUE_CONSTRAINT) -> throw EmailAddressAlreadyTaken()
+      error.isUniqueConstraintViolation(UNIQ_EMAIL_ADDRESS) -> throw EmailAddressAlreadyTaken()
       else -> throw e
     }
   }

@@ -16,4 +16,5 @@ CREATE TABLE users.user
     profile_photo_url VARCHAR
 ) INHERITS (users.account);
 
-CREATE UNIQUE INDEX ON users.user (org_guid, LOWER(email_address));
+CREATE UNIQUE INDEX uniq__user__email_address
+    ON users.user (org_guid, LOWER(email_address));
