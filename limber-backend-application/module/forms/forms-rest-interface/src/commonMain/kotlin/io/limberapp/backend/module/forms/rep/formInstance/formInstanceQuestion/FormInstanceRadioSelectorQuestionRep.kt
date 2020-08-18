@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion
 
-import com.piperframework.serialization.serializer.LocalDateSerializer
+import com.piperframework.serialization.serializer.LocalDateTimeSerializer
 import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.types.LocalDateTime
 import com.piperframework.types.UUID
@@ -25,7 +25,7 @@ object FormInstanceRadioSelectorQuestionRep {
   @Serializable
   @SerialName("RADIO_SELECTOR")
   data class Complete(
-    @Serializable(with = LocalDateSerializer::class)
+    @Serializable(with = LocalDateTimeSerializer::class)
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     override val questionGuid: UUID?,
