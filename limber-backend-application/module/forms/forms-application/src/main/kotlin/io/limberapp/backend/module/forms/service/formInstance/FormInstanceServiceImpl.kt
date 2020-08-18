@@ -9,7 +9,7 @@ import java.util.*
 internal class FormInstanceServiceImpl @Inject constructor(
   private val formInstanceStore: FormInstanceStore,
 ) : FormInstanceService {
-  override fun create(model: FormInstanceModel): FormInstanceModel =
+  override fun create(model: FormInstanceModel) =
     formInstanceStore.create(model)
 
   override fun get(featureGuid: UUID, formInstanceGuid: UUID) =
