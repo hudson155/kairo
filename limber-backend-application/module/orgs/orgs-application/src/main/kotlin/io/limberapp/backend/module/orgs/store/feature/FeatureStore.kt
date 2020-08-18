@@ -18,9 +18,9 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val ORG_GUID_FOREIGN_KEY = "feature_org_guid_fkey"
-private const val PATH_UNIQUE_CONSTRAINT = "feature_org_guid_lower_idx"
-private const val RANK_UNIQUE_CONSTRAINT = "feature_org_guid_rank_key"
+private const val FK_ORG_GUID = "fk__feature__org_guid"
+private const val UNIQ_PATH = "uniq__feature__path"
+private const val UNIQ_RANK = "uniq__feature__rank"
 
 @Singleton
 internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<FeatureModel, FeatureFinder> {
@@ -83,9 +83,9 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isForeignKeyViolation(ORG_GUID_FOREIGN_KEY) -> throw OrgNotFound()
-      error.isUniqueConstraintViolation(PATH_UNIQUE_CONSTRAINT) -> throw FeaturePathIsNotUnique()
-      error.isUniqueConstraintViolation(RANK_UNIQUE_CONSTRAINT) -> throw FeatureRankIsNotUnique()
+      error.isForeignKeyViolation(FK_ORG_GUID) -> throw OrgNotFound()
+      error.isUniqueConstraintViolation(UNIQ_PATH) -> throw FeaturePathIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_RANK) -> throw FeatureRankIsNotUnique()
       else -> throw e
     }
   }
@@ -93,8 +93,8 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(PATH_UNIQUE_CONSTRAINT) -> throw FeaturePathIsNotUnique()
-      error.isUniqueConstraintViolation(RANK_UNIQUE_CONSTRAINT) -> throw FeatureRankIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_PATH) -> throw FeaturePathIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_RANK) -> throw FeatureRankIsNotUnique()
       else -> throw e
     }
   }

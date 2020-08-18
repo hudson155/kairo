@@ -1,16 +1,30 @@
 CREATE TABLE orgs.feature
 (
-    guid               UUID UNIQUE NOT NULL,
-    created_date       TIMESTAMP   NOT NULL,
-    org_guid           UUID        NOT NULL REFERENCES orgs.org (guid) ON DELETE CASCADE,
-    rank               INT         NOT NULL,
-    name               VARCHAR     NOT NULL,
-    path               VARCHAR     NOT NULL,
-    type               VARCHAR     NOT NULL,
-    is_default_feature BOOLEAN     NOT NULL,
-    UNIQUE (org_guid, rank)
+    guid               UUID      NOT NULL,
+    created_date       TIMESTAMP NOT NULL,
+    org_guid           UUID      NOT NULL,
+    rank               INT       NOT NULL,
+    name               VARCHAR   NOT NULL,
+    path               VARCHAR   NOT NULL,
+    type               VARCHAR   NOT NULL,
+    is_default_feature BOOLEAN   NOT NULL
 );
 
-CREATE UNIQUE INDEX ON orgs.feature (org_guid, LOWER(path));
+CREATE UNIQUE INDEX uniq__feature__guid
+    ON orgs.feature (guid);
 
-CREATE UNIQUE INDEX ON orgs.feature (org_guid) WHERE is_default_feature IS TRUE;
+CREATE INDEX idx__feature__org_guid
+    ON orgs.feature (org_guid);
+
+ALTER TABLE orgs.feature
+    ADD CONSTRAINT fk__feature__org_guid FOREIGN KEY (org_guid)
+        REFERENCES orgs.org (guid) ON DELETE CASCADE;
+
+CREATE UNIQUE INDEX uniq__feature__rank
+    ON orgs.feature (org_guid, rank);
+
+CREATE UNIQUE INDEX uniq__feature__path
+    ON orgs.feature (org_guid, LOWER(path));
+
+CREATE UNIQUE INDEX uniq__feature__is_default_feature ON orgs.feature (org_guid)
+    WHERE is_default_feature IS TRUE;
