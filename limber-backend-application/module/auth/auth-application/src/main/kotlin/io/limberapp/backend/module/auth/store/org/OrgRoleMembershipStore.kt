@@ -17,8 +17,8 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val ORG_ROLE_GUID_FOREIGN_KEY = "org_role_membership_org_role_guid_fkey"
-private const val ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT = "org_role_membership_org_role_guid_account_guid_key"
+private const val FK_ORG_ROLE_GUID = "fk__org_role_membership__org_role_guid"
+private const val UNIQ_ACCOUNT_GUID = "uniq__org_role_membership__account_guid"
 
 @Singleton
 internal class OrgRoleMembershipStore @Inject constructor(
@@ -62,10 +62,8 @@ internal class OrgRoleMembershipStore @Inject constructor(
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isForeignKeyViolation(ORG_ROLE_GUID_FOREIGN_KEY) ->
-        throw OrgRoleNotFound()
-      error.isUniqueConstraintViolation(ORG_ROLE_GUID_ACCOUNT_GUID_UNIQUE_CONSTRAINT) ->
-        throw AccountIsAlreadyMemberOfOrgRole()
+      error.isForeignKeyViolation(FK_ORG_ROLE_GUID) -> throw OrgRoleNotFound()
+      error.isUniqueConstraintViolation(UNIQ_ACCOUNT_GUID) -> throw AccountIsAlreadyMemberOfOrgRole()
       else -> throw e
     }
   }
