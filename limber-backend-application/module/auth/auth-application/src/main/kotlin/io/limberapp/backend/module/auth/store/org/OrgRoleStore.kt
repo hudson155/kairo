@@ -15,7 +15,7 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val ORG_ROLE_NAME_UNIQUE_CONSTRAINT = "org_role_org_guid_lower_idx"
+private const val UNIQ_NAME = "uniq__org_role__name"
 
 @Singleton
 internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<OrgRoleModel, OrgRoleFinder> {
@@ -73,7 +73,7 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT) -> throw OrgRoleNameIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_NAME) -> throw OrgRoleNameIsNotUnique()
       else -> throw e
     }
   }
@@ -81,7 +81,7 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(ORG_ROLE_NAME_UNIQUE_CONSTRAINT) -> throw OrgRoleNameIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_NAME) -> throw OrgRoleNameIsNotUnique()
       else -> throw e
     }
   }

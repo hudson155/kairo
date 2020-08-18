@@ -1,13 +1,17 @@
 CREATE TABLE auth.org_role
 (
-    guid         UUID UNIQUE NOT NULL,
-    created_date TIMESTAMP   NOT NULL,
-    org_guid     UUID        NOT NULL,
-    name         VARCHAR     NOT NULL,
-    permissions  VARCHAR     NOT NULL
+    guid         UUID      NOT NULL,
+    created_date TIMESTAMP NOT NULL,
+    org_guid     UUID      NOT NULL,
+    name         VARCHAR   NOT NULL,
+    permissions  VARCHAR   NOT NULL
 );
 
-CREATE UNIQUE INDEX ON auth.org_role (org_guid, LOWER(name));
+CREATE UNIQUE INDEX uniq__org_role__guid
+    ON auth.org_role (guid);
+
+CREATE UNIQUE INDEX uniq__org_role__name
+    ON auth.org_role (org_guid, LOWER(name));
 
 CREATE TABLE auth.org_role_membership
 (
