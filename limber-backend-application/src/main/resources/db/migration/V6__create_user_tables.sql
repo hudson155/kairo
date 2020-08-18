@@ -1,11 +1,14 @@
 CREATE TABLE users.account
 (
-    guid              UUID UNIQUE NOT NULL,
-    created_date      TIMESTAMP   NOT NULL,
-    identity_provider BOOLEAN     NOT NULL,
-    superuser         BOOLEAN     NOT NULL,
-    name              VARCHAR     NOT NULL
+    guid              UUID      NOT NULL,
+    created_date      TIMESTAMP NOT NULL,
+    identity_provider BOOLEAN   NOT NULL,
+    superuser         BOOLEAN   NOT NULL,
+    name              VARCHAR   NOT NULL
 );
+
+CREATE UNIQUE INDEX uniq__account__guid
+    ON users.account (guid);
 
 CREATE TABLE users.user
 (
