@@ -77,3 +77,8 @@ Java, Postgres, and IntelliJ
    val something = makeSomething() ?: return null
    return transform(something)
    ```
+## React Class Styling
+
+All react classes should follow a predefined ordering of contents. See the 
+[`Kotlin React`](/.idea/fileTemplates/Kotlin%20React.kt) template for 
+an example.
