@@ -5,6 +5,8 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
+import io.limberapp.web.util.notXs
+import io.limberapp.web.util.xs
 import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.*
@@ -61,7 +63,12 @@ private class S : Styles("Modal") {
     backgroundColor = Theme.Color.Background.light
   }
   val fixedWidthModal by css {
-    width = 768.px
+    xs {
+      width = LinearDimension.fillAvailable
+    }
+    notXs {
+      width = 768.px
+    }
   }
 }
 
@@ -76,7 +83,7 @@ private fun RBuilder.component(props: Props) {
       attrs.onClickFunction = { props.onClose() }
     }
     if (!props.blank) {
-      div(classes = cls(s.c { it::modal }, if (!props.narrow) s.c { it::fixedWidthModal } else null)) {
+      div(classes = cls(s.c { it::modal }, s.c(!props.narrow) { it::fixedWidthModal })) {
         props.children()
       }
     }
