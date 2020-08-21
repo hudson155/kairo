@@ -2,33 +2,47 @@ CREATE SCHEMA forms;
 
 CREATE TABLE forms.form_template
 (
-    guid         UUID UNIQUE NOT NULL,
-    created_date TIMESTAMP   NOT NULL,
-    feature_guid UUID        NOT NULL,
-    title        VARCHAR     NOT NULL,
+    guid         UUID      NOT NULL,
+    created_date TIMESTAMP NOT NULL,
+    feature_guid UUID      NOT NULL,
+    title        VARCHAR   NOT NULL,
     description  VARCHAR
 );
 
-CREATE UNIQUE INDEX ON forms.form_template (guid, feature_guid);
+CREATE UNIQUE INDEX uniq__form_template__guid
+    ON forms.form_template (guid);
+
+CREATE UNIQUE INDEX uniq__form_template__feature_guid__1
+    ON forms.form_template (feature_guid, guid);
 
 CREATE TABLE forms.form_template_question
 (
-    guid               UUID UNIQUE NOT NULL,
-    created_date       TIMESTAMP   NOT NULL,
-    form_template_guid UUID        NOT NULL REFERENCES forms.form_template (guid) ON DELETE CASCADE,
-    rank               INT         NOT NULL,
-    label              VARCHAR     NOT NULL,
+    guid               UUID      NOT NULL,
+    created_date       TIMESTAMP NOT NULL,
+    form_template_guid UUID      NOT NULL,
+    rank               INT       NOT NULL,
+    label              VARCHAR   NOT NULL,
     help_text          VARCHAR,
-    required           BOOLEAN     NOT NULL,
-    type               VARCHAR     NOT NULL,
+    required           BOOLEAN   NOT NULL,
+    type               VARCHAR   NOT NULL,
     multi_line         BOOLEAN,
     placeholder        VARCHAR,
     validator          VARCHAR,
     earliest           DATE,
     latest             DATE,
-    options            TEXT[],
-    UNIQUE (form_template_guid, rank) DEFERRABLE INITIALLY DEFERRED
+    options            TEXT[]
 );
+
+CREATE UNIQUE INDEX uniq__form_template_question__guid
+    ON forms.form_template_question (guid);
+
+ALTER TABLE forms.form_template_question
+    ADD CONSTRAINT fk__form_template__form_template_guid FOREIGN KEY (form_template_guid)
+        REFERENCES forms.form_template (guid) ON DELETE CASCADE;
+
+ALTER TABLE forms.form_template_question
+    ADD CONSTRAINT uniq__form_template__rank UNIQUE (form_template_guid, rank)
+        DEFERRABLE INITIALLY DEFERRED;
 
 CREATE TABLE forms.form_instance
 (
