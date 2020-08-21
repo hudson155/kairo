@@ -6,6 +6,7 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.web.api.load
 import io.limberapp.web.api.useApi
+import io.limberapp.web.app.components.formInstanceRenderer.formRenderer
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
@@ -49,4 +50,5 @@ private fun RBuilder.component(props: Props) {
   val (formInstance, formTemplate) = form.value
 
   layoutTitle(formTemplate.title)
+  formRenderer(formTemplate.questions, formInstance)
 }
