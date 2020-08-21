@@ -43,7 +43,7 @@ INSERT INTO users.user (guid, created_date, identity_provider, superuser,
                         profile_photo_url)
 VALUES ('3e2d1681-a666-456e-a168-647d8c3a3150', NOW() AT TIME ZONE 'UTC', FALSE, TRUE,
         '46c25689-71d6-4544-8c8c-6936d761dddb', 'Jeff Hudson', 'Jeff', 'Hudson', 'jeff.hudson@limberapp.io',
-        'https://avatars3.githubusercontent.com/u/1360420?s=460&u=5567ff6aeb050433e140cb81552914629dac57c3&v=4'),
+        'https://avatars0.githubusercontent.com/u/1360420?s=460&u=701cdf42f8638e94e4fd374efe5416638a608074&v=4'),
        ('71fe66b2-f115-43b9-a993-cbeb51c1b46a', NOW() AT TIME ZONE 'UTC', FALSE, TRUE,
         '46c25689-71d6-4544-8c8c-6936d761dddb', 'Noah Guld', 'Noah', 'Guld', 'nguld12@gmail.com',
         'https://avatars0.githubusercontent.com/u/8917186?s=460&u=364b0d5270cb9657b4222c0816713831805957c9&v=4');
