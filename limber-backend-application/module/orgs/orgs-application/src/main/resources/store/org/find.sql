@@ -1,3 +1,3 @@
 SELECT *
 FROM orgs.org
-WHERE <conditions>
+WHERE (<conditions>)

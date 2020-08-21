@@ -1,4 +1,4 @@
 SELECT *
 FROM orgs.feature
-WHERE <conditions>
+WHERE (<conditions>)
 ORDER BY rank
