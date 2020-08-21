@@ -3,6 +3,9 @@ package io.limberapp.web.app.components.formInstanceRenderer.components.formQues
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
@@ -24,13 +27,15 @@ import react.dom.*
 internal fun RBuilder.formQuestion(
   question: FormTemplateQuestionRep.Complete,
   formInstance: FormInstanceRep.Complete,
+  defaultValue: FormInstanceQuestionRep.Complete? = null,
 ) {
-  child(component, Props(question, formInstance))
+  child(component, Props(question, formInstance, defaultValue))
 }
 
 private data class Props(
   val question: FormTemplateQuestionRep.Complete,
   val formInstance: FormInstanceRep.Complete,
+  val defaultValue: FormInstanceQuestionRep.Complete?,
 ) : RProps
 
 private class S : Styles("FromQuestion") {
@@ -76,9 +81,21 @@ private fun RBuilder.component(props: Props) {
     }
     br {}
     when (props.question) {
-      is FormTemplateDateQuestionRep.Complete -> formDateQuestion(props.question, submitAnswer)
-      is FormTemplateRadioSelectorQuestionRep.Complete -> fromRadioQuestion(props.question, submitAnswer)
-      is FormTemplateTextQuestionRep.Complete -> fromTextQuestion(props.question, submitAnswer)
+      is FormTemplateDateQuestionRep.Complete -> formDateQuestion(
+        question = props.question,
+        onSubmit = submitAnswer,
+        defaultValue = props.defaultValue as FormInstanceDateQuestionRep.Complete?,
+      )
+      is FormTemplateRadioSelectorQuestionRep.Complete -> fromRadioQuestion(
+        question = props.question,
+        onSubmit = submitAnswer,
+        defaultValue = props.defaultValue as FormInstanceRadioSelectorQuestionRep.Complete?,
+      )
+      is FormTemplateTextQuestionRep.Complete -> fromTextQuestion(
+        question = props.question,
+        onSubmit = submitAnswer,
+        defaultValue = props.defaultValue as FormInstanceTextQuestionRep.Complete?,
+      )
     }
   }
 }

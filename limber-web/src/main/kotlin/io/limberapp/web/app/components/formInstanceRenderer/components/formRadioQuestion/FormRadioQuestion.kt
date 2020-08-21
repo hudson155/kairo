@@ -14,13 +14,15 @@ import react.dom.*
 internal fun RBuilder.fromRadioQuestion(
   question: FormTemplateRadioSelectorQuestionRep.Complete,
   onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
+  defaultValue: FormInstanceRadioSelectorQuestionRep.Complete? = null,
 ) {
-  child(component, Props(question, onSubmit))
+  child(component, Props(question, onSubmit, defaultValue))
 }
 
 private data class Props(
   val question: FormTemplateRadioSelectorQuestionRep.Complete,
   val onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
+  val defaultValue: FormInstanceRadioSelectorQuestionRep.Complete?,
 ) : RProps
 
 private class S : Styles("FormRadioQuestion") {
@@ -35,7 +37,7 @@ private val s = S().apply { inject() }
 private val component = functionalComponent(RBuilder::component)
 
 private fun RBuilder.component(props: Props) {
-  val (answer, setAnswer) = useState("")
+  val (answer, setAnswer) = useState(props.defaultValue?.selection ?: "")
   props.question.options.forEach { option ->
     span(s.c { it::radioOption }) {
       label {

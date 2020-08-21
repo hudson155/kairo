@@ -10,21 +10,23 @@ import react.*
 import react.dom.*
 
 internal fun RBuilder.fromTextQuestion(
-  formTemplateQuestion: FormTemplateTextQuestionRep.Complete,
+  question: FormTemplateTextQuestionRep.Complete,
   onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
+  defaultValue: FormInstanceTextQuestionRep.Complete? = null,
 ) {
-  child(component, Props(formTemplateQuestion, onSubmit))
+  child(component, Props(question, onSubmit, defaultValue))
 }
 
 private data class Props(
-  val formTemplateQuestion: FormTemplateTextQuestionRep.Complete,
+  val question: FormTemplateTextQuestionRep.Complete,
   val onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
+  val defaultValue: FormInstanceTextQuestionRep.Complete?,
 ) : RProps
 
 private val component = functionalComponent(RBuilder::component)
 
 private fun RBuilder.component(props: Props) {
-  val (answer, setAnswer) = useState("")
+  val (answer, setAnswer) = useState(props.defaultValue?.text ?: "")
   input {
     attrs {
       value = answer

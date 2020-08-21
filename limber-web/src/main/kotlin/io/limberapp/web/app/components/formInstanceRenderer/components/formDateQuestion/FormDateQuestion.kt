@@ -13,19 +13,21 @@ import react.dom.*
 internal fun RBuilder.formDateQuestion(
   question: FormTemplateDateQuestionRep.Complete,
   onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
+  defaultValue: FormInstanceDateQuestionRep.Complete? = null,
 ) {
-  child(component, Props(question, onSubmit))
+  child(component, Props(question, onSubmit, defaultValue))
 }
 
 private data class Props(
   val question: FormTemplateDateQuestionRep.Complete,
   val onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
+  val defaultValue: FormInstanceDateQuestionRep.Complete?,
 ) : RProps
 
 private val component = functionalComponent(RBuilder::component)
 
 private fun RBuilder.component(props: Props) {
-  val (answer, setAnswer) = useState(LocalDate())
+  val (answer, setAnswer) = useState(props.defaultValue?.date ?: LocalDate())
   input {
     attrs {
       type = InputType.date

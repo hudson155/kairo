@@ -14,7 +14,6 @@ import kotlinx.html.js.onSubmitFunction
 import react.*
 import react.dom.*
 
-// TODO (ENG-25) Allow a form instance to dictate existing values.
 internal fun RBuilder.formRenderer(
   formTemplateQuestions: List<FormTemplateQuestionRep.Complete>,
   formInstance: FormInstanceRep.Complete,
@@ -46,12 +45,14 @@ private val s = S().apply { inject() }
 private val component = functionalComponent(RBuilder::component)
 
 private fun RBuilder.component(props: Props) {
+  val instanceQuestions = props.formInstance.questions.associateBy { it.questionGuid }
+
   form(classes = s.c { it::root }) {
     attrs {
       onSubmitFunction = { e -> e.preventDefault() } // disable enter key triggering submit
     }
     props.formTemplateQuestions.forEach {
-      formQuestion(it, props.formInstance)
+      formQuestion(it, props.formInstance, instanceQuestions[it.guid])
     }
     div(classes = s.c { it::footer }) {
       limberButton(
