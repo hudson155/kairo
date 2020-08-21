@@ -9,10 +9,12 @@ import io.limberapp.web.app.components.memberRow.memberRow
 import io.limberapp.web.state.state.formTemplates.useFormTemplatesState
 import io.limberapp.web.state.state.users.useUsersState
 import io.limberapp.web.util.Styles
+import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
 import io.limberapp.web.util.gs
 import io.limberapp.web.util.xs
 import kotlinx.css.*
+import kotlinx.css.properties.*
 import react.*
 import react.dom.*
 import styled.getClassName
@@ -24,6 +26,13 @@ internal fun RBuilder.formInstancesTable(formInstances: Set<FormInstanceRep.Summ
 internal data class Props(val formInstances: Set<FormInstanceRep.Summary>) : RProps
 
 private class S : Styles("FormInstancesTable") {
+  val root by css {
+    backgroundColor = Theme.Color.Background.white
+    border(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    borderRadius = Theme.Sizing.borderRadius
+    marginTop = 10.px
+    padding(20.px)
+  }
   val row by css {
     xs {
       display = Display.flex
@@ -59,28 +68,30 @@ private fun RBuilder.component(props: Props) {
     return
   }
 
-  limberTable(headers = listOf("#", "Created", null, "Type", "Creator")) {
-    // TODO: Sort by unique sort key
-    props.formInstances.forEach { formInstance ->
-      limberTableRow(classes = s.c { it::row }) {
-        attrs.key = formInstance.guid
-        limberTableCell(classes = s.c { it::cell }) {
-          val number = formInstance.number.toString()
-          span(classes = gs.getClassName { it::visibleXs }) { small { +"#$number" } }
-          span(classes = gs.getClassName { it::hiddenXs }) { +number }
-        }
-        limberTableCell(classes = s.c { it::cell }) {
-          val createdDate = formInstance.createdDate.prettyRelative()
-          span(classes = gs.getClassName { it::visibleXs }) { small { +createdDate } }
-          span(classes = gs.getClassName { it::hiddenXs }) { +createdDate }
-        }
-        limberTableCell(hideContent = true, classes = s.c { it::cellBreak }) { }
-        limberTableCell(classes = s.c { it::cell }) {
-          formTemplates[formInstance.formTemplateGuid]?.title?.let { +it }
-        }
-        limberTableCell(classes = s.c { it::cell }) {
-          users[formInstance.creatorAccountGuid]?.let {
-            memberRow(it, small = true, hideNameXs = true)
+  div(classes = s.c { it::root }) {
+    limberTable(headers = listOf("#", "Created", null, "Type", "Creator")) {
+      // TODO: Sort by unique sort key
+      props.formInstances.forEach { formInstance ->
+        limberTableRow(classes = s.c { it::row }) {
+          attrs.key = formInstance.guid
+          limberTableCell(classes = s.c { it::cell }) {
+            val number = formInstance.number.toString()
+            span(classes = gs.getClassName { it::visibleXs }) { small { +"#$number" } }
+            span(classes = gs.getClassName { it::hiddenXs }) { +number }
+          }
+          limberTableCell(classes = s.c { it::cell }) {
+            val createdDate = formInstance.createdDate.prettyRelative()
+            span(classes = gs.getClassName { it::visibleXs }) { small { +createdDate } }
+            span(classes = gs.getClassName { it::hiddenXs }) { +createdDate }
+          }
+          limberTableCell(hideContent = true, classes = s.c { it::cellBreak }) { }
+          limberTableCell(classes = s.c { it::cell }) {
+            formTemplates[formInstance.formTemplateGuid]?.title?.let { +it }
+          }
+          limberTableCell(classes = s.c { it::cell }) {
+            users[formInstance.creatorAccountGuid]?.let {
+              memberRow(it, small = true, hideNameXs = true)
+            }
           }
         }
       }

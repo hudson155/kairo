@@ -18,9 +18,6 @@ internal data class Props(val classes: String?) : RProps
 private class S : Styles("LimberTableRow") {
   val row by css {
     borderTop(1.px, BorderStyle.solid, Theme.Color.Border.light)
-    lastOfType {
-      borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
-    }
     hover {
       backgroundColor = Theme.Color.Background.lightActive
     }
