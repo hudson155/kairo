@@ -19,8 +19,8 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val FORM_INSTANCE_GUID_FOREIGN_KEY = "form_instance_question_form_instance_guid_fkey"
-private const val QUESTION_GUID_FOREIGN_KEY = "form_instance_question_question_guid_fkey"
+private const val FK_FORM_INSTANCE_GUID = "fk__form_instance_question__form_instance_guid"
+private const val FK_QUESTION_GUID = "fk__form_instance_question__question_guid"
 
 private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQuestionModel>("type") {
   override fun getClass(type: String) = when (FormTemplateQuestionModel.Type.valueOf(type)) {
@@ -53,10 +53,8 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isForeignKeyViolation(FORM_INSTANCE_GUID_FOREIGN_KEY) ->
-        throw FormInstanceNotFound()
-      error.isForeignKeyViolation(QUESTION_GUID_FOREIGN_KEY) ->
-        throw FormTemplateQuestionNotFound()
+      error.isForeignKeyViolation(FK_FORM_INSTANCE_GUID) -> throw FormInstanceNotFound()
+      error.isForeignKeyViolation(FK_QUESTION_GUID) -> throw FormTemplateQuestionNotFound()
       else -> throw e
     }
   }

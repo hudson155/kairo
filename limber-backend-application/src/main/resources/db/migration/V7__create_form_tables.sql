@@ -46,25 +46,40 @@ ALTER TABLE forms.form_template_question
 
 CREATE TABLE forms.form_instance
 (
-    guid                 UUID UNIQUE NOT NULL,
-    created_date         TIMESTAMP   NOT NULL,
-    feature_guid         UUID        NOT NULL,
-    form_template_guid   UUID        NOT NULL,
-    number               BIGINT      NOT NULL,
+    guid                 UUID      NOT NULL,
+    created_date         TIMESTAMP NOT NULL,
+    feature_guid         UUID      NOT NULL,
+    form_template_guid   UUID      NOT NULL,
+    number               BIGINT    NOT NULL,
     submitted_date       TIMESTAMP,
-    creator_account_guid UUID        NOT NULL,
-    CONSTRAINT fk__form_instance__form_template_guid FOREIGN KEY (feature_guid, form_template_guid)
-        REFERENCES forms.form_template (feature_guid, guid) ON DELETE RESTRICT
+    creator_account_guid UUID      NOT NULL
 );
+
+CREATE UNIQUE INDEX uniq__form_instance__guid
+    ON forms.form_instance (guid);
+
+ALTER TABLE forms.form_instance
+    ADD CONSTRAINT fk__form_instance__form_template_guid FOREIGN KEY (feature_guid, form_template_guid)
+        REFERENCES forms.form_template (feature_guid, guid) ON DELETE RESTRICT;
 
 CREATE TABLE forms.form_instance_question
 (
     created_date       TIMESTAMP NOT NULL,
-    form_instance_guid UUID      NOT NULL REFERENCES forms.form_instance (guid) ON DELETE CASCADE,
-    question_guid      UUID      REFERENCES forms.form_template_question (guid) ON DELETE SET NULL,
+    form_instance_guid UUID      NOT NULL,
+    question_guid      UUID,
     type               VARCHAR   NOT NULL,
     text               VARCHAR,
     date               DATE,
-    selections         TEXT[],
-    UNIQUE (form_instance_guid, question_guid)
+    selections         TEXT[]
 );
+
+ALTER TABLE forms.form_instance_question
+    ADD CONSTRAINT fk__form_instance_question__form_instance_guid FOREIGN KEY (form_instance_guid)
+        REFERENCES forms.form_instance (guid) ON DELETE CASCADE;
+
+CREATE UNIQUE INDEX uniq__form_instance_question__question_guid
+    ON forms.form_instance_question (form_instance_guid, question_guid);
+
+ALTER TABLE forms.form_instance_question
+    ADD CONSTRAINT fk__form_instance_question__question_guid FOREIGN KEY (question_guid)
+        REFERENCES forms.form_template_question (guid) ON DELETE SET NULL;
