@@ -15,7 +15,7 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
 
-private const val FEATURE_ROLE_UNIQUE_CONSTRAINT = "feature_role_feature_guid_org_role_guid_key"
+private const val UNIQ_ORG_ROLE_GUID = "uniq__feature_role__org_role_guid"
 
 @Singleton
 internal class FeatureRoleStore @Inject constructor(
@@ -75,7 +75,7 @@ internal class FeatureRoleStore @Inject constructor(
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT) -> throw FeatureRoleOrgRoleIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_ORG_ROLE_GUID) -> throw FeatureRoleOrgRoleIsNotUnique()
       else -> throw e
     }
   }
@@ -83,7 +83,7 @@ internal class FeatureRoleStore @Inject constructor(
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(FEATURE_ROLE_UNIQUE_CONSTRAINT) -> throw FeatureRoleOrgRoleIsNotUnique()
+      error.isUniqueConstraintViolation(UNIQ_ORG_ROLE_GUID) -> throw FeatureRoleOrgRoleIsNotUnique()
       else -> throw e
     }
   }
