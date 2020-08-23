@@ -10,4 +10,6 @@ interface Finder<Model : Any, Finder : Any> {
   fun findAsList(query: Finder.() -> Unit) = find(Iterable<Model>::toList, query)
 
   fun findAsSet(query: Finder.() -> Unit) = find(Iterable<Model>::toSet, query)
+
+  fun has(query: Finder.() -> Unit) = find(Iterable<Model>::isNotEmpty, query)
 }

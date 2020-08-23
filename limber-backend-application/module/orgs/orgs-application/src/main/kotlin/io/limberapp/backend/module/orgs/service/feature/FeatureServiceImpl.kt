@@ -17,7 +17,7 @@ internal class FeatureServiceImpl @Inject constructor(
   private val featureStore: FeatureStore,
 ) : FeatureService, Finder<FeatureModel, FeatureFinder> by featureStore {
   override fun createDefaults(orgGuid: UUID): List<FeatureModel> {
-    require(featureStore.findAsSet { orgGuid(orgGuid) }.isEmpty())
+    require(!featureStore.has { orgGuid(orgGuid) })
     val feature = FeatureModel(
       guid = uuidGenerator.generate(),
       createdDate = LocalDateTime.now(clock),

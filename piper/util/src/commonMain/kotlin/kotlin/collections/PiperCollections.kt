@@ -19,4 +19,14 @@ fun <T> Iterable<T>.singleNullOrThrow(): T? {
   throw IllegalArgumentException("Collection has more than one element.")
 }
 
+/**
+ * Adapted from [firstOrNull].
+ */
+fun <T> Iterable<T>.isNotEmpty(): Boolean {
+  return when (this) {
+    is List -> isNotEmpty()
+    else -> iterator().hasNext()
+  }
+}
+
 fun Any?.ifNull(function: () -> Nothing) = this ?: function()
