@@ -46,7 +46,10 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
         featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
-    val formInstances = formInstanceService.getByFeatureGuid(command.featureGuid, command.creatorAccountGuid)
+    val formInstances = formInstanceService.findAsSet {
+      featureGuid(command.featureGuid)
+      command.creatorAccountGuid?.let { creatorAccountGuid(it) }
+    }
     val feature = featureService.findOnlyOrThrow { featureGuid(command.featureGuid) }
     val users = userService.findAsSet { orgGuid(feature.orgGuid) }
     return FormInstanceExporter(

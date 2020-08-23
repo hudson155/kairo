@@ -31,8 +31,10 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Delete) {
-    val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
-      ?: throw FormInstanceNotFound()
+    val formInstance = formInstanceService.findOnlyOrNull {
+      featureGuid(command.featureGuid)
+      formInstanceGuid(command.formInstanceGuid)
+    } ?: throw FormInstanceNotFound()
     Authorization.FeatureMemberWithFeaturePermission(
       featureGuid = command.featureGuid,
       featurePermission = when (formInstance.creatorAccountGuid) {

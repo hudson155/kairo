@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":limber-backend-application:common"))
+  api(project(":piper:finder"))
 }
 
 detekt {

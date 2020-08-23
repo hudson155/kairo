@@ -2,15 +2,20 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
 @Singleton
-internal class FormTemplateStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class FormTemplateStore @Inject constructor(
+  jdbi: Jdbi,
+) : SqlStore(jdbi), Finder<FormTemplateModel, FormTemplateFinder> {
   fun create(model: FormTemplateModel): FormTemplateModel =
     withHandle { handle ->
       handle.createQuery(sqlResource("/store/formTemplate/create.sql"))
@@ -19,21 +24,12 @@ internal class FormTemplateStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi
         .one()
     }
 
-  fun get(featureGuid: UUID, formTemplateGuid: UUID): FormTemplateModel? =
+  override fun <R> find(result: (Iterable<FormTemplateModel>) -> R, query: FormTemplateFinder.() -> Unit): R =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formTemplate/get.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formTemplateGuid", formTemplateGuid)
+      handle.createQuery(sqlResource("/store/formTemplate/find.sql"))
+        .withFinder(FormTemplateQueryBuilder().apply(query))
         .mapTo(FormTemplateModel::class.java)
-        .findOne().orElse(null)
-    }
-
-  fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formTemplate/getByFeatureGuid.sql"))
-        .bind("featureGuid", featureGuid)
-        .mapTo(FormTemplateModel::class.java)
-        .toSet()
+        .let(result)
     }
 
   fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel =
@@ -45,7 +41,7 @@ internal class FormTemplateStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormTemplateNotFound()
-        1 -> checkNotNull(get(featureGuid, formTemplateGuid))
+        1 -> findOnlyOrThrow { formTemplateGuid(formTemplateGuid) }
         else -> badSql()
       }
     }

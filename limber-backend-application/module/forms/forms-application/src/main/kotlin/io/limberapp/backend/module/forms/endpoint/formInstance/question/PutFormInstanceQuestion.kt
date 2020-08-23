@@ -36,8 +36,10 @@ internal class PutFormInstanceQuestion @Inject constructor(
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
     val rep = command.rep.required()
-    val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
-      ?: throw FormInstanceNotFound()
+    val formInstance = formInstanceService.findOnlyOrNull {
+      featureGuid(command.featureGuid)
+      formInstanceGuid(command.formInstanceGuid)
+    } ?: throw FormInstanceNotFound()
     Authorization.FeatureMemberWithFeaturePermission(
       featureGuid = command.featureGuid,
       featurePermission = when (formInstance.creatorAccountGuid) {

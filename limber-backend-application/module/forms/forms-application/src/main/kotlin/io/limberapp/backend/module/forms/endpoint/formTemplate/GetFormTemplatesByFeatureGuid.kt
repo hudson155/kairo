@@ -29,7 +29,7 @@ internal class GetFormTemplatesByFeatureGuid @Inject constructor(
 
   override suspend fun Handler.handle(command: FormTemplateApi.GetByFeatureGuid): Set<FormTemplateRep.Summary> {
     Authorization.FeatureMember(command.featureGuid).authorize()
-    val formTemplates = formTemplateService.getByFeatureGuid(command.featureGuid)
+    val formTemplates = formTemplateService.findAsSet { featureGuid(command.featureGuid) }
     return formTemplates.map { formTemplateMapper.summaryRep(it) }.toSet()
   }
 }

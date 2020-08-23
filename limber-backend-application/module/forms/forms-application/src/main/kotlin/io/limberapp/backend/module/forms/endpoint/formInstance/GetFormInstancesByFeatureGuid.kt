@@ -37,7 +37,10 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
         featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
-    val formInstances = formInstanceService.getByFeatureGuid(command.featureGuid, command.creatorAccountGuid)
+    val formInstances = formInstanceService.findAsSet {
+      featureGuid(command.featureGuid)
+      command.creatorAccountGuid?.let { creatorAccountGuid(it) }
+    }
     return formInstances.map { formInstanceMapper.summaryRep(it) }.toSet()
   }
 }

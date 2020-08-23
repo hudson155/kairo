@@ -1,6 +1,8 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
+import com.piperframework.finder.Finder
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import java.util.*
@@ -8,18 +10,12 @@ import java.util.*
 internal class FormTemplateServiceImpl @Inject constructor(
   private val formTemplateQuestionService: FormTemplateQuestionService,
   private val formTemplateStore: FormTemplateStore,
-) : FormTemplateService {
+) : FormTemplateService, Finder<FormTemplateModel, FormTemplateFinder> by formTemplateStore {
   override fun create(model: FormTemplateModel): FormTemplateModel {
     val formTemplate = formTemplateStore.create(model)
     formTemplateQuestionService.createDefaults(model.featureGuid, model.guid)
     return formTemplate
   }
-
-  override fun get(featureGuid: UUID, formTemplateGuid: UUID) =
-    formTemplateStore.get(featureGuid, formTemplateGuid)
-
-  override fun getByFeatureGuid(featureGuid: UUID) =
-    formTemplateStore.getByFeatureGuid(featureGuid)
 
   override fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update) =
     formTemplateStore.update(featureGuid, formTemplateGuid, update)

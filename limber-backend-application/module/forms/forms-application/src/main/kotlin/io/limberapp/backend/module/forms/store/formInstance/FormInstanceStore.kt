@@ -2,10 +2,13 @@ package io.limberapp.backend.module.forms.store.formInstance
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
+import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -15,7 +18,9 @@ import java.util.*
 private const val FK_FORM_TEMPLATE_GUID = "fk__form_instance__form_template_guid"
 
 @Singleton
-internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
+internal class FormInstanceStore @Inject constructor(
+  private val jdbi: Jdbi,
+) : SqlStore(jdbi), Finder<FormInstanceModel, FormInstanceFinder> {
   fun create(model: FormInstanceModel): FormInstanceModel =
     withHandle { handle ->
       return@withHandle try {
@@ -28,30 +33,13 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
       }
     }
 
-  fun get(
-    featureGuid: UUID? = null,
-    formInstanceGuid: UUID? = null,
-    creatorAccountGuid: UUID? = null,
-  ): Set<FormInstanceModel> {
-    return jdbi.withHandle<Set<FormInstanceModel>, Exception> {
-      it.createQuery(sqlResource("/store/formInstance/get.sql")).build {
-        if (featureGuid != null) {
-          conditions.add("feature_guid = :featureGuid")
-          bindings["featureGuid"] = featureGuid
-        }
-        if (formInstanceGuid != null) {
-          conditions.add("guid = :formInstanceGuid")
-          bindings["formInstanceGuid"] = formInstanceGuid
-        }
-        if (creatorAccountGuid != null) {
-          conditions.add("creator_account_guid = :creatorAccountGuid")
-          bindings["creatorAccountGuid"] = creatorAccountGuid
-        }
-      }
+  override fun <R> find(result: (Iterable<FormInstanceModel>) -> R, query: FormInstanceFinder.() -> Unit): R =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formInstance/find.sql"))
+        .withFinder(FormInstanceQueryBuilder().apply(query))
         .mapTo(FormInstanceModel::class.java)
-        .toSet()
+        .let(result)
     }
-  }
 
   fun update(formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel =
     inTransaction { handle ->
@@ -61,7 +49,7 @@ internal class FormInstanceStore @Inject constructor(private val jdbi: Jdbi) : S
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormInstanceNotFound()
-        1 -> get(formInstanceGuid = formInstanceGuid).single()
+        1 -> findOnlyOrThrow { formInstanceGuid(formInstanceGuid) }
         else -> badSql()
       }
     }

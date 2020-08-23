@@ -36,8 +36,10 @@ internal class PatchFormInstance @Inject constructor(
     val rep = command.rep.required()
     Authorization.FeatureMember(command.featureGuid).authorize()
     run {
-      val formInstance = formInstanceService.get(command.featureGuid, command.formInstanceGuid)
-        ?: throw FormInstanceNotFound()
+      val formInstance = formInstanceService.findOnlyOrNull {
+        featureGuid(command.featureGuid)
+        formInstanceGuid(command.formInstanceGuid)
+      } ?: throw FormInstanceNotFound()
       Authorization.User(formInstance.creatorAccountGuid).authorize()
     }
     val formInstance = formInstanceService.update(
