@@ -1,3 +1,4 @@
 DELETE
 FROM forms.form_instance
-WHERE guid = :guid
+WHERE feature_guid = :featureGuid
+  AND guid = :formInstanceGuid

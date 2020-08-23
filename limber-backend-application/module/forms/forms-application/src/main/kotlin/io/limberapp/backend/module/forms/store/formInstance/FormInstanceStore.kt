@@ -19,7 +19,7 @@ private const val FK_FORM_TEMPLATE_GUID = "fk__form_instance__form_template_guid
 
 @Singleton
 internal class FormInstanceStore @Inject constructor(
-  private val jdbi: Jdbi,
+  jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormInstanceModel, FormInstanceFinder> {
   fun create(model: FormInstanceModel): FormInstanceModel =
     withHandle { handle ->
@@ -41,10 +41,11 @@ internal class FormInstanceStore @Inject constructor(
         .let(result)
     }
 
-  fun update(formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel =
+  fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel =
     inTransaction { handle ->
       val updateCount = handle.createUpdate(sqlResource("/store/formInstance/update.sql"))
-        .bind("guid", formInstanceGuid)
+        .bind("featureGuid", featureGuid)
+        .bind("formInstanceGuid", formInstanceGuid)
         .bindKotlin(update)
         .execute()
       return@inTransaction when (updateCount) {
@@ -54,18 +55,18 @@ internal class FormInstanceStore @Inject constructor(
       }
     }
 
-  fun delete(formInstanceGuid: UUID) {
-    jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/formInstance/delete.sql"))
-        .bind("guid", formInstanceGuid)
+  fun delete(featureGuid: UUID, formInstanceGuid: UUID) =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
+        .bind("featureGuid", featureGuid)
+        .bind("formInstanceGuid", formInstanceGuid)
         .execute()
-      return@useTransaction when (updateCount) {
+      return@inTransaction when (updateCount) {
         0 -> throw FormInstanceNotFound()
         1 -> Unit
         else -> badSql()
       }
     }
-  }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
