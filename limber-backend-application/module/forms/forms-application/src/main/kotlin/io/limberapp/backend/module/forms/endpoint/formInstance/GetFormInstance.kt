@@ -44,7 +44,10 @@ internal class GetFormInstance @Inject constructor(
         featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
-    val questions = formInstanceQuestionService.getByFormInstanceGuid(command.featureGuid, command.formInstanceGuid)
+    val questions = formInstanceQuestionService.findAsList {
+      featureGuid(command.featureGuid)
+      formInstanceGuid(command.formInstanceGuid)
+    }
     return formInstanceMapper.completeRep(formInstance, questions)
   }
 }

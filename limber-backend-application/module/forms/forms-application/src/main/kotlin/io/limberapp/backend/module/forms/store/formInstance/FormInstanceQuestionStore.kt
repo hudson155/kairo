@@ -2,15 +2,18 @@ package io.limberapp.backend.module.forms.store.formInstance
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
+import com.piperframework.finder.Finder
 import com.piperframework.sql.PolymorphicRowMapper
 import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
 import com.piperframework.store.isForeignKeyViolation
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceQuestionFinder
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
@@ -31,7 +34,9 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQ
 }
 
 @Singleton
-internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
+internal class FormInstanceQuestionStore @Inject constructor(
+  private val jdbi: Jdbi,
+) : SqlStore(jdbi), Finder<FormInstanceQuestionModel, FormInstanceQuestionFinder> {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
@@ -59,21 +64,14 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
-  fun get(formInstanceGuid: UUID? = null, questionGuid: UUID? = null): List<FormInstanceQuestionModel> {
-    return jdbi.withHandle<List<FormInstanceQuestionModel>, Exception> {
-      it.createQuery(sqlResource("/store/formInstanceQuestion/get.sql")).build {
-        if (formInstanceGuid != null) {
-          conditions.add("form_instance_guid = :formInstanceGuid")
-          bindings["formInstanceGuid"] = formInstanceGuid
-        }
-        if (questionGuid != null) {
-          conditions.add("question_guid = :questionGuid")
-          bindings["questionGuid"] = questionGuid
-        }
-      }
-        .mapTo(FormInstanceQuestionModel::class.java)
-        .list()
-    }
+  override fun <R> find(
+    result: (Iterable<FormInstanceQuestionModel>) -> R,
+    query: FormInstanceQuestionFinder.() -> Unit,
+  ) = withHandle { handle ->
+    handle.createQuery(sqlResource("/store/formInstanceQuestion/find.sql"))
+      .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
+      .mapTo(FormInstanceQuestionModel::class.java)
+      .let(result)
   }
 
   fun update(
@@ -90,7 +88,7 @@ internal class FormInstanceQuestionStore @Inject constructor(private val jdbi: J
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormInstanceQuestionNotFound()
-        1 -> get(formInstanceGuid = formInstanceGuid, questionGuid = questionGuid).single()
+        1 -> findOnlyOrThrow { questionGuid(questionGuid) }
         else -> badSql()
       }
     }

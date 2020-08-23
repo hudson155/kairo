@@ -3,12 +3,15 @@ package io.limberapp.backend.module.forms.store.formTemplate
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
+import com.piperframework.finder.Finder
 import com.piperframework.sql.PolymorphicRowMapper
 import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
+import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateQuestionFinder
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jdbi.v3.core.Jdbi
@@ -24,7 +27,9 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQ
 }
 
 @Singleton
-internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: Jdbi) : SqlStore(jdbi) {
+internal class FormTemplateQuestionStore @Inject constructor(
+  private val jdbi: Jdbi,
+) : SqlStore(jdbi), Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
@@ -81,21 +86,14 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
     }
   }
 
-  fun get(formTemplateGuid: UUID? = null, questionGuid: UUID? = null): List<FormTemplateQuestionModel> {
-    return jdbi.withHandle<List<FormTemplateQuestionModel>, Exception> {
-      it.createQuery(sqlResource("/store/formTemplateQuestion/get.sql")).build {
-        if (formTemplateGuid != null) {
-          conditions.add("form_template_guid = :formTemplateGuid")
-          bindings["formTemplateGuid"] = formTemplateGuid
-        }
-        if (questionGuid != null) {
-          conditions.add("guid = :questionGuid")
-          bindings["questionGuid"] = questionGuid
-        }
-      }
-        .mapTo(FormTemplateQuestionModel::class.java)
-        .list()
-    }
+  override fun <R> find(
+    result: (Iterable<FormTemplateQuestionModel>) -> R,
+    query: FormTemplateQuestionFinder.() -> Unit,
+  ) = withHandle { handle ->
+    handle.createQuery(sqlResource("/store/formTemplateQuestion/find.sql"))
+      .withFinder(FormTemplateQuestionQueryBuilder().apply(query))
+      .mapTo(FormTemplateQuestionModel::class.java)
+      .let(result)
   }
 
   fun update(questionGuid: UUID, update: FormTemplateQuestionModel.Update): FormTemplateQuestionModel =
@@ -107,7 +105,7 @@ internal class FormTemplateQuestionStore @Inject constructor(private val jdbi: J
         .execute()
       return@inTransaction when (updateCount) {
         0 -> throw FormTemplateQuestionNotFound()
-        1 -> get(questionGuid = questionGuid).single()
+        1 -> findOnlyOrThrow { questionGuid(questionGuid) }
         else -> badSql()
       }
     }

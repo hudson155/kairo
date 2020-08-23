@@ -37,7 +37,10 @@ internal class PostFormTemplate @Inject constructor(
       featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
     ).authorize()
     val formTemplate = formTemplateService.create(formTemplateMapper.model(command.featureGuid, command.rep.required()))
-    val questions = formTemplateQuestionService.getByFormTemplateGuid(command.featureGuid, formTemplate.guid)
+    val questions = formTemplateQuestionService.findAsList {
+      featureGuid(command.featureGuid)
+      formTemplateGuid(formTemplate.guid)
+    }
     return formTemplateMapper.completeRep(formTemplate, questions)
   }
 }

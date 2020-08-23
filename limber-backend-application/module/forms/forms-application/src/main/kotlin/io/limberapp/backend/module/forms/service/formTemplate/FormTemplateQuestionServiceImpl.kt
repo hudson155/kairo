@@ -1,11 +1,13 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
+import com.piperframework.finder.Finder
 import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateQuestionFinder
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
@@ -19,11 +21,12 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   private val uuidGenerator: UuidGenerator,
   private val formTemplateStore: FormTemplateStore,
   private val formTemplateQuestionStore: FormTemplateQuestionStore,
-) : FormTemplateQuestionService {
+) : FormTemplateQuestionService,
+  Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> by formTemplateQuestionStore {
   override fun createDefaults(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
     formTemplateStore.findOnlyOrNull { featureGuid(featureGuid); formTemplateGuid(formTemplateGuid) }
       .ifNull { throw FormTemplateNotFound() }
-    require(formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid).isEmpty())
+    require(!formTemplateQuestionStore.has { formTemplateGuid(formTemplateGuid) })
     val questions = listOf(
       FormTemplateTextQuestionModel(
         guid = uuidGenerator.generate(),
@@ -77,12 +80,6 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
     return formTemplateQuestionStore.create(model, rank)
   }
 
-  override fun getByFormTemplateGuid(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> {
-    formTemplateStore.findOnlyOrNull { featureGuid(featureGuid); formTemplateGuid(formTemplateGuid) }
-      .ifNull { throw FormTemplateNotFound() }
-    return formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid)
-  }
-
   override fun update(
     featureGuid: UUID,
     formTemplateGuid: UUID,
@@ -91,8 +88,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   ): FormTemplateQuestionModel {
     formTemplateStore.findOnlyOrNull { featureGuid(featureGuid); formTemplateGuid(formTemplateGuid) }
       .ifNull { throw FormTemplateNotFound() }
-    formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid, questionGuid = questionGuid)
-      .singleNullOrThrow()
+    formTemplateQuestionStore.findOnlyOrNull { formTemplateGuid(formTemplateGuid); questionGuid(questionGuid) }
       .ifNull { throw FormTemplateQuestionNotFound() }
     return formTemplateQuestionStore.update(questionGuid, update)
   }
@@ -100,8 +96,7 @@ internal class FormTemplateQuestionServiceImpl @Inject constructor(
   override fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID) {
     formTemplateStore.findOnlyOrNull { featureGuid(featureGuid); formTemplateGuid(formTemplateGuid) }
       .ifNull { throw FormTemplateNotFound() }
-    formTemplateQuestionStore.get(formTemplateGuid = formTemplateGuid, questionGuid = questionGuid)
-      .singleNullOrThrow()
+    formTemplateQuestionStore.findOnlyOrNull { formTemplateGuid(formTemplateGuid); questionGuid(questionGuid) }
       .ifNull { throw FormTemplateQuestionNotFound() }
     formTemplateQuestionStore.delete(questionGuid)
   }
