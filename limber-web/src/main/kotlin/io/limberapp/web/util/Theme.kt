@@ -33,6 +33,10 @@ internal object Theme {
     private val red = Color("#C81818")
     private val redDarker10 = Color("#AF0000")
 
+    private val malachite = Color("#46D763")
+
+    private val fulvous = Color("#E68619")
+
     object Button {
       object Primary {
         val backgroundDefault = blue
@@ -63,6 +67,7 @@ internal object Theme {
 
     object Text {
       val dark = jet
+      val faded = grey
       val light = grey100
       val link = blue
       val red = Color.red
@@ -80,6 +85,12 @@ internal object Theme {
     object Border {
       val dark = jetLighter20
       val light = grey300
+    }
+
+    object Indicator {
+      val error = red
+      val success = malachite
+      val warning = fulvous
     }
   }
 
