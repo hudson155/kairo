@@ -29,7 +29,7 @@ internal object FormInstanceRepFixtures {
       number = number,
       submittedDate = null,
       creatorAccountGuid = creatorAccountGuid,
-      questions = emptyList()
+      questions = emptySet()
     )
   })
 }

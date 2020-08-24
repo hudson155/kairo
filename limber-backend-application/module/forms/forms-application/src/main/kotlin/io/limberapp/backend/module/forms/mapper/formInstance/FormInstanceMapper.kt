@@ -33,14 +33,14 @@ internal class FormInstanceMapper @Inject constructor(
     creatorAccountGuid = model.creatorAccountGuid
   )
 
-  fun completeRep(model: FormInstanceModel, questions: List<FormInstanceQuestionModel>) = FormInstanceRep.Complete(
+  fun completeRep(model: FormInstanceModel, questions: Set<FormInstanceQuestionModel>) = FormInstanceRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
     formTemplateGuid = model.formTemplateGuid,
     number = model.number,
     submittedDate = model.submittedDate,
     creatorAccountGuid = model.creatorAccountGuid,
-    questions = questions.map { formInstanceQuestionMapper.completeRep(it) }
+    questions = questions.map { formInstanceQuestionMapper.completeRep(it) }.toSet()
   )
 
   fun update(rep: FormInstanceRep.Update) = FormInstanceModel.Update(

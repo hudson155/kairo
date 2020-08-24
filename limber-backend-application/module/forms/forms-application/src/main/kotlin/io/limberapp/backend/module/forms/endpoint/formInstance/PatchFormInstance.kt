@@ -47,7 +47,7 @@ internal class PatchFormInstance @Inject constructor(
       formInstanceGuid = command.formInstanceGuid,
       update = formInstanceMapper.update(rep)
     )
-    val questions = formInstanceQuestionService.findAsList {
+    val questions = formInstanceQuestionService.findAsSet {
       featureGuid(command.featureGuid)
       formInstanceGuid(formInstance.guid)
     }

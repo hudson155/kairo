@@ -50,7 +50,7 @@ object FormInstanceRep {
     val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
     val creatorAccountGuid: UUID,
-    val questions: List<FormInstanceQuestionRep.Complete>,
+    val questions: Set<FormInstanceQuestionRep.Complete>,
   ) : CompleteRep
 
   @Serializable
