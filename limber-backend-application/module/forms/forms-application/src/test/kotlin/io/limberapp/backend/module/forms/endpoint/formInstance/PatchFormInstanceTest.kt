@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class PatchFormTemplateTest : ResourceTest() {
+internal class PatchFormInstanceTest : ResourceTest() {
   @Test
   fun doesNotExist() {
     val featureGuid = UUID.randomUUID()
