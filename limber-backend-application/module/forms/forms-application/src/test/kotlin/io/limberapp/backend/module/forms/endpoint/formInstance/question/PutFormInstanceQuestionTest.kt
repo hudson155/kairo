@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.endpoint.formInstance.question
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
-import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
+import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -32,7 +32,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         questionGuid = formTemplateRep.questions.first().guid,
         rep = FormInstanceQuestionRepFixtures.textFixture.creation()
       ),
-      expectedException = FormInstanceNotFound()
+      expectedException = FormInstanceQuestionNotFound()
     )
   }
 
@@ -62,6 +62,70 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
+  }
+
+  @Test
+  fun incorrectFeatureGuid() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    piperTest.test(
+      endpoint = FormInstanceQuestionApi.Put(
+        featureGuid = UUID.randomUUID(),
+        formInstanceGuid = formInstanceRep.guid,
+        questionGuid = formTemplateRep.questions.first().guid,
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+      ),
+      expectedException = FormInstanceQuestionNotFound()
+    )
+
+    piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      assertEquals(formInstanceRep, actual)
+    }
+  }
+
+  @Test
+  fun incorrectFormInstanceGuid() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    piperTest.test(
+      endpoint = FormInstanceQuestionApi.Put(
+        featureGuid = featureGuid,
+        formInstanceGuid = UUID.randomUUID(),
+        questionGuid = formTemplateRep.questions.first().guid,
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+      ),
+      expectedException = FormInstanceQuestionNotFound()
+    )
+
+    piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      assertEquals(formInstanceRep, actual)
+    }
   }
 
   @Test

@@ -35,16 +35,17 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQ
 
 @Singleton
 internal class FormInstanceQuestionStore @Inject constructor(
-  private val jdbi: Jdbi,
+  jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormInstanceQuestionModel, FormInstanceQuestionFinder> {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
 
-  fun create(model: FormInstanceQuestionModel): FormInstanceQuestionModel {
-    return jdbi.withHandle<FormInstanceQuestionModel, Exception> {
-      try {
-        it.createQuery(sqlResource("/store/formInstanceQuestion/create.sql"))
+  fun create(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel =
+    withHandle { handle ->
+      return@withHandle try {
+        handle.createQuery(sqlResource("/store/formInstanceQuestion/create.sql"))
+          .bind("featureGuid", featureGuid)
           .bindKotlin(model)
           .bindNullForMissingArguments()
           .mapTo(FormInstanceQuestionModel::class.java)
@@ -53,34 +54,27 @@ internal class FormInstanceQuestionStore @Inject constructor(
         handleCreateError(e)
       }
     }
-  }
-
-  private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
-    val error = e.serverErrorMessage ?: throw e
-    when {
-      error.isForeignKeyViolation(FK_FORM_INSTANCE_GUID) -> throw FormInstanceNotFound()
-      error.isForeignKeyViolation(FK_QUESTION_GUID) -> throw FormTemplateQuestionNotFound()
-      else -> throw e
-    }
-  }
 
   override fun <R> find(
     result: (Iterable<FormInstanceQuestionModel>) -> R,
     query: FormInstanceQuestionFinder.() -> Unit,
-  ) = withHandle { handle ->
-    handle.createQuery(sqlResource("/store/formInstanceQuestion/find.sql"))
-      .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
-      .mapTo(FormInstanceQuestionModel::class.java)
-      .let(result)
-  }
+  ) =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formInstanceQuestion/find.sql"))
+        .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
+        .mapTo(FormInstanceQuestionModel::class.java)
+        .let(result)
+    }
 
   fun update(
+    featureGuid: UUID,
     formInstanceGuid: UUID,
     questionGuid: UUID,
     update: FormInstanceQuestionModel.Update,
   ): FormInstanceQuestionModel =
     inTransaction { handle ->
       val updateCount = handle.createUpdate(sqlResource("/store/formInstanceQuestion/update.sql"))
+        .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
@@ -93,17 +87,27 @@ internal class FormInstanceQuestionStore @Inject constructor(
       }
     }
 
-  fun delete(formInstanceGuid: UUID, questionGuid: UUID) {
-    jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
+  fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID) {
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
+        .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .execute()
-      return@useTransaction when (updateCount) {
+      return@inTransaction when (updateCount) {
         0 -> throw FormInstanceQuestionNotFound()
         1 -> Unit
         else -> badSql()
       }
+    }
+  }
+
+  private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
+    val error = e.serverErrorMessage ?: throw e
+    when {
+      error.isForeignKeyViolation(FK_FORM_INSTANCE_GUID) -> throw FormInstanceNotFound()
+      error.isForeignKeyViolation(FK_QUESTION_GUID) -> throw FormTemplateQuestionNotFound()
+      else -> throw e
     }
   }
 }

@@ -9,7 +9,7 @@ import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
-import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
+import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
@@ -34,7 +34,7 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
     val formInstance = formInstanceService.findOnlyOrNull {
       featureGuid(command.featureGuid)
       formInstanceGuid(command.formInstanceGuid)
-    } ?: throw FormInstanceNotFound()
+    } ?: throw FormInstanceQuestionNotFound()
     Authorization.FeatureMemberWithFeaturePermission(
       featureGuid = command.featureGuid,
       featurePermission = when (formInstance.creatorAccountGuid) {
