@@ -25,7 +25,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finde
         handle.createQuery(sqlResource("/store/user/create.sql"))
           .bindKotlin(model)
           .mapTo(UserModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

@@ -25,7 +25,7 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
         handle.createQuery(sqlResource("/store/orgRole/create.sql"))
           .bindKotlin(model)
           .mapTo(OrgRoleModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

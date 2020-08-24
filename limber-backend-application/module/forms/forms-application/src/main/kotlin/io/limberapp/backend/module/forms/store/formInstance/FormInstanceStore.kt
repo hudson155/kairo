@@ -27,7 +27,7 @@ internal class FormInstanceStore @Inject constructor(
         handle.createQuery(sqlResource("/store/formInstance/create.sql"))
           .bindKotlin(model)
           .mapTo(FormInstanceModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

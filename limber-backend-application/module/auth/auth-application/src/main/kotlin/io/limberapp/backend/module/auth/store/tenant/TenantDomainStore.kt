@@ -30,7 +30,7 @@ internal class TenantDomainStore @Inject constructor(
         handle.createQuery(sqlResource("/store/tenantDomain/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantDomainModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

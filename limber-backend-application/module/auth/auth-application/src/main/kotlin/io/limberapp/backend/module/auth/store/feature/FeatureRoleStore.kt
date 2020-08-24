@@ -27,7 +27,7 @@ internal class FeatureRoleStore @Inject constructor(
         handle.createQuery(sqlResource("/store/featureRole/create.sql"))
           .bindKotlin(model)
           .mapTo(FeatureRoleModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

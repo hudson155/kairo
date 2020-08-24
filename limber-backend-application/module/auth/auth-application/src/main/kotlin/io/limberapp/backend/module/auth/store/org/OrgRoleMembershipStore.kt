@@ -31,7 +31,7 @@ internal class OrgRoleMembershipStore @Inject constructor(
           .bind("orgGuid", orgGuid)
           .bindKotlin(model)
           .mapTo(OrgRoleMembershipModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

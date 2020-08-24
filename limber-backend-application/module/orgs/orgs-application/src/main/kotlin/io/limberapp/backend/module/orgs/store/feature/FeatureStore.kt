@@ -30,7 +30,7 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
         handle.createQuery(sqlResource("/store/feature/create.sql"))
           .bindKotlin(model)
           .mapTo(FeatureModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

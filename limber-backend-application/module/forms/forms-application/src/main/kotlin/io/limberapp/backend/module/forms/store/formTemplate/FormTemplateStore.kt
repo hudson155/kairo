@@ -21,7 +21,7 @@ internal class FormTemplateStore @Inject constructor(
       handle.createQuery(sqlResource("/store/formTemplate/create.sql"))
         .bindKotlin(model)
         .mapTo(FormTemplateModel::class.java)
-        .one()
+        .single()
     }
 
   override fun <R> find(result: (Iterable<FormTemplateModel>) -> R, query: FormTemplateFinder.() -> Unit): R =

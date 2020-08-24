@@ -27,7 +27,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
         handle.createQuery(sqlResource("/store/tenant/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantModel::class.java)
-          .one()
+          .single()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
       }

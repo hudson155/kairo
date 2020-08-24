@@ -19,7 +19,7 @@ internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder
       handle.createQuery(sqlResource("/store/org/create.sql"))
         .bindKotlin(model)
         .mapTo(OrgModel::class.java)
-        .one()
+        .single()
     }
 
   override fun <R> find(result: (Iterable<OrgModel>) -> R, query: OrgFinder.() -> Unit): R =
