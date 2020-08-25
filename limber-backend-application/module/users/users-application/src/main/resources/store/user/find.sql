@@ -1,3 +1,3 @@
 SELECT *
 FROM users.user
-WHERE (<conditions>)
+WHERE <conditions>
