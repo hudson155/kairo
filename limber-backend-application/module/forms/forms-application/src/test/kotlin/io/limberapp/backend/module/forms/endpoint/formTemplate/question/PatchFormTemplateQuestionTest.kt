@@ -2,7 +2,6 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
-import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
@@ -28,7 +27,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         questionGuid = questionGuid,
         rep = formTemplateQuestionUpdateRep
       ),
-      expectedException = FormTemplateNotFound()
+      expectedException = FormTemplateQuestionNotFound()
     )
   }
 
@@ -50,6 +49,82 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
+  }
+
+  @Test
+  fun incorrectFeatureGuid() {
+    val featureGuid = UUID.randomUUID()
+
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+      as FormTemplateTextQuestionRep.Complete
+    formTemplateRep = formTemplateRep.copy(
+      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
+    )
+    piperTest.setup(
+      endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateRep.guid,
+        rank = 0,
+        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+      )
+    )
+
+    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
+    piperTest.test(
+      endpoint = FormTemplateQuestionApi.Patch(
+        featureGuid = UUID.randomUUID(),
+        formTemplateGuid = formTemplateRep.guid,
+        questionGuid = formTemplateQuestionRep.guid,
+        rep = formTemplateQuestionUpdateRep
+      ),
+      expectedException = FormTemplateQuestionNotFound()
+    )
+
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      assertEquals(formTemplateRep, actual)
+    }
+  }
+
+  @Test
+  fun incorrectFormTemplateGuid() {
+    val featureGuid = UUID.randomUUID()
+
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+      as FormTemplateTextQuestionRep.Complete
+    formTemplateRep = formTemplateRep.copy(
+      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
+    )
+    piperTest.setup(
+      endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateRep.guid,
+        rank = 0,
+        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+      )
+    )
+
+    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
+    piperTest.test(
+      endpoint = FormTemplateQuestionApi.Patch(
+        featureGuid = featureGuid,
+        formTemplateGuid = UUID.randomUUID(),
+        questionGuid = formTemplateQuestionRep.guid,
+        rep = formTemplateQuestionUpdateRep
+      ),
+      expectedException = FormTemplateQuestionNotFound()
+    )
+
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      assertEquals(formTemplateRep, actual)
+    }
   }
 
   @Test

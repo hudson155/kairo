@@ -30,6 +30,28 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
   }
 
   @Test
+  fun incorrectFeatureGuid() {
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    piperTest.test(
+      endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = UUID.randomUUID(),
+        formTemplateGuid = formTemplateRep.guid,
+        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+      ),
+      expectedException = FormTemplateNotFound()
+    )
+
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      assertEquals(formTemplateRep, actual)
+    }
+  }
+
+  @Test
   fun rankOutOfBoundsLow() {
     val featureGuid = UUID.randomUUID()
 

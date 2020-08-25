@@ -8,4 +8,6 @@ SET label       = COALESCE(:label, label),
     earliest    = COALESCE(:earliest, earliest),
     latest      = COALESCE(:latest, latest),
     options     = COALESCE(:options, options)
-WHERE guid = :questionGuid
+WHERE EXISTS(SELECT 1 FROM forms.form_template WHERE feature_guid = :featureGuid AND guid = form_template_guid)
+  AND form_template_guid = :formTemplateGuid
+  AND guid = :questionGuid

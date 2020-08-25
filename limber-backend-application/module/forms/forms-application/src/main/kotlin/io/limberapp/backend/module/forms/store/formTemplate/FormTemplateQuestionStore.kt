@@ -7,7 +7,10 @@ import com.piperframework.finder.Finder
 import com.piperframework.sql.PolymorphicRowMapper
 import com.piperframework.sql.bindNullForMissingArguments
 import com.piperframework.store.SqlStore
+import com.piperframework.store.isForeignKeyViolation
+import com.piperframework.store.isNotNullConstraintViolation
 import com.piperframework.store.withFinder
+import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
@@ -16,7 +19,11 @@ import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.*
+
+private const val COL_FORM_TEMPLATE_GUID = "form_template_guid"
+private const val FK_FORM_TEMPLATE_GUID = "fk__form_template__form_template_guid"
 
 private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQuestionModel>("type") {
   override fun getClass(type: String) = when (FormTemplateQuestionModel.Type.valueOf(type)) {
@@ -28,47 +35,33 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQ
 
 @Singleton
 internal class FormTemplateQuestionStore @Inject constructor(
-  private val jdbi: Jdbi,
+  jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
 
-  fun create(models: List<FormTemplateQuestionModel>, rank: Int? = null) {
-    // Batch creation is only supported for questions in the same form template.
-    val formTemplateGuid = models.map { it.formTemplateGuid }.distinct().singleOrNull() ?: return
-    jdbi.useTransaction<Exception> {
-      val insertionRank = validateInsertionRank(formTemplateGuid, rank)
-      incrementExistingRanks(formTemplateGuid, atLeast = insertionRank, incrementBy = models.size)
-      it.prepareBatch(sqlResource("/store/formTemplateQuestion/create.sql")).apply {
-        models.forEachIndexed { i, model ->
-          this
-            .bind("rank", insertionRank + i)
-            .bindKotlin(model)
-            .bindNullForMissingArguments()
-            .add()
-        }
-      }.execute()
-    }
-  }
-
-  fun create(model: FormTemplateQuestionModel, rank: Int? = null): FormTemplateQuestionModel {
-    return jdbi.inTransaction<FormTemplateQuestionModel, Exception> {
+  fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int? = null): FormTemplateQuestionModel =
+    inTransaction { handle ->
       val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
-      incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank, incrementBy = 1)
-      it.createQuery(sqlResource("/store/formTemplateQuestion/create.sql"))
-        .bind("rank", insertionRank)
-        .bindKotlin(model)
-        .bindNullForMissingArguments()
-        .mapTo(FormTemplateQuestionModel::class.java)
-        .single()
+      incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank)
+      return@inTransaction try {
+        handle.createQuery(sqlResource("/store/formTemplateQuestion/create.sql"))
+          .bind("featureGuid", featureGuid)
+          .bindKotlin(model)
+          .bind("rank", insertionRank)
+          .bindNullForMissingArguments()
+          .mapTo(FormTemplateQuestionModel::class.java)
+          .single()
+      } catch (e: UnableToExecuteStatementException) {
+        handleCreateError(e)
+      }
     }
-  }
 
   private fun validateInsertionRank(formTemplateGuid: UUID, rank: Int?): Int {
     rank?.let { if (it < 0) throw RankOutOfBounds(it) }
-    val maxExistingRank = jdbi.withHandle<Int, Exception> {
-      it.createQuery(sqlResource("/store/formTemplateQuestion/getMaxExistingRankByFormTemplateGuid.sql"))
+    val maxExistingRank = withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formTemplateQuestion/getMaxExistingRankByFormTemplateGuid.sql"))
         .bind("formTemplateGuid", formTemplateGuid)
         .asInt()
     } ?: -1
@@ -76,12 +69,11 @@ internal class FormTemplateQuestionStore @Inject constructor(
     return rank ?: maxExistingRank + 1
   }
 
-  private fun incrementExistingRanks(formTemplateGuid: UUID, atLeast: Int, incrementBy: Int) {
-    jdbi.useHandle<Exception> {
-      it.createUpdate(sqlResource("/store/formTemplateQuestion/incrementExistingRanksByFormTemplateGuid.sql"))
+  private fun incrementExistingRanks(formTemplateGuid: UUID, atLeast: Int) {
+    withHandle { handle ->
+      handle.createUpdate(sqlResource("/store/formTemplateQuestion/incrementExistingRanksByFormTemplateGuid.sql"))
         .bind("formTemplateGuid", formTemplateGuid)
         .bind("atLeast", atLeast)
-        .bind("incrementBy", incrementBy)
         .execute()
     }
   }
@@ -89,16 +81,24 @@ internal class FormTemplateQuestionStore @Inject constructor(
   override fun <R> find(
     result: (Iterable<FormTemplateQuestionModel>) -> R,
     query: FormTemplateQuestionFinder.() -> Unit,
-  ) = withHandle { handle ->
-    handle.createQuery(sqlResource("/store/formTemplateQuestion/find.sql"))
-      .withFinder(FormTemplateQuestionQueryBuilder().apply(query))
-      .mapTo(FormTemplateQuestionModel::class.java)
-      .let(result)
-  }
+  ) =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/formTemplateQuestion/find.sql"))
+        .withFinder(FormTemplateQuestionQueryBuilder().apply(query))
+        .mapTo(FormTemplateQuestionModel::class.java)
+        .let(result)
+    }
 
-  fun update(questionGuid: UUID, update: FormTemplateQuestionModel.Update): FormTemplateQuestionModel =
+  fun update(
+    featureGuid: UUID,
+    formTemplateGuid: UUID,
+    questionGuid: UUID,
+    update: FormTemplateQuestionModel.Update,
+  ): FormTemplateQuestionModel =
     inTransaction { handle ->
       val updateCount = handle.createUpdate(sqlResource("/store/formTemplateQuestion/update.sql"))
+        .bind("featureGuid", featureGuid)
+        .bind("formTemplateGuid", formTemplateGuid)
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
         .bindNullForMissingArguments()
@@ -110,16 +110,30 @@ internal class FormTemplateQuestionStore @Inject constructor(
       }
     }
 
-  fun delete(questionGuid: UUID) {
-    jdbi.useTransaction<Exception> {
-      val updateCount = it.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
+  fun delete(
+    featureGuid: UUID,
+    formTemplateGuid: UUID,
+    questionGuid: UUID,
+  ) =
+    inTransaction { handle ->
+      val updateCount = handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
+        .bind("featureGuid", featureGuid)
+        .bind("formTemplateGuid", formTemplateGuid)
         .bind("questionGuid", questionGuid)
         .execute()
-      return@useTransaction when (updateCount) {
+      return@inTransaction when (updateCount) {
         0 -> throw FormTemplateQuestionNotFound()
         1 -> Unit
         else -> badSql()
       }
+    }
+
+  private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
+    val error = e.serverErrorMessage ?: throw e
+    when {
+      error.isForeignKeyViolation(FK_FORM_TEMPLATE_GUID) -> throw FormTemplateNotFound()
+      error.isNotNullConstraintViolation(COL_FORM_TEMPLATE_GUID) -> throw FormTemplateNotFound()
+      else -> throw e
     }
   }
 }
