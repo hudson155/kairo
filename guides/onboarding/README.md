@@ -78,7 +78,7 @@ Make these requests using Postman, and use a JWT from a user that has global adm
     POST https://api.limberapp.io/orgs
     {
         "name": "Placeholder",
-        "ownerAccountGuid": "00000000-0000-0000-0000-000000000000"
+        "ownerAccountGuid": null
     }
     ```
 
