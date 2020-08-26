@@ -59,6 +59,15 @@ abstract class Authorization : PiperAuthorization<Jwt> {
     }
   }
 
+  class OrgOwner(private val orgGuid: UUID) : Authorization() {
+    override fun authorizeInternal(principal: Jwt?): Boolean {
+      principal ?: return false
+      val org = principal.org ?: return false
+      if (org.guid != orgGuid) return false
+      return org.isOwner
+    }
+  }
+
   class OrgMemberWithPermission(
     private val orgGuid: UUID,
     private val orgPermission: OrgPermission,

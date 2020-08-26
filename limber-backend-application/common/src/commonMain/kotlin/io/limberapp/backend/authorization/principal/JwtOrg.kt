@@ -10,6 +10,7 @@ data class JwtOrg(
   @Serializable(with = UuidSerializer::class)
   val guid: UUID,
   val name: String,
+  val isOwner: Boolean,
   val permissions: OrgPermissions,
   val features: Map<@Serializable(with = UuidSerializer::class) UUID, JwtFeature>,
 )

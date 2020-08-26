@@ -75,20 +75,21 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
     val org = orgService.findOnlyOrThrow { orgGuid(user.orgGuid) }
     val features = featureService.findAsSet { orgGuid(user.orgGuid) }
-    val permissions = getPermissions(org, user.guid)
+    val (isOwner, permissions) = getPermissions(org, user.guid)
     val jwtFeatures = features.associate { Pair(it.guid, JwtFeature(getPermissions(it))) }
     return convertJwtToModel(
-      org = JwtOrg(org.guid, org.name, permissions, jwtFeatures),
+      org = JwtOrg(org.guid, org.name, isOwner, permissions, jwtFeatures),
       roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
       user = JwtUser(user.guid, user.firstName, user.lastName)
     )
   }
 
-  private fun getPermissions(org: OrgModel, userGuid: UUID): OrgPermissions {
+  private fun getPermissions(org: OrgModel, userGuid: UUID): Pair<Boolean, OrgPermissions> {
     val orgPermissions = orgRoleService.findAsSet { orgGuid(org.guid); accountGuid(userGuid) }
       .map { it.permissions }.toMutableSet()
-    if (userGuid == org.ownerAccountGuid) orgPermissions.add(ORG_OWNER_ORG_ROLE)
-    return orgPermissions.union()
+    val isOwner = userGuid == org.ownerAccountGuid
+    if (isOwner) orgPermissions.add(ORG_OWNER_ORG_ROLE)
+    return Pair(isOwner, orgPermissions.union())
   }
 
   private fun getPermissions(feature: FeatureModel): FeaturePermissions = when (feature.type) {
