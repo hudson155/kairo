@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion
+package io.limberapp.backend.module.forms.model.formInstance
 
 import io.limberapp.backend.LimberModule
 import java.util.*

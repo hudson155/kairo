@@ -13,7 +13,7 @@ import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQues
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
-import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceQuestionFinder
+import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionFinder
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel

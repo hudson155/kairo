@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.piperframework.store.QueryBuilder
-import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateQuestionFinder
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionFinder
 import java.util.*
 
 internal class FormTemplateQuestionQueryBuilder : QueryBuilder(), FormTemplateQuestionFinder {
