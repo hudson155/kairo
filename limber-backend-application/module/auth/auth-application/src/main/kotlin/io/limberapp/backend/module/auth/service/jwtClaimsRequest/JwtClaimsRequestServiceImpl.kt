@@ -87,7 +87,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   private fun getPermissions(org: OrgModel, userGuid: UUID): Pair<Boolean, OrgPermissions> {
     val orgPermissions = orgRoleService.findAsSet { orgGuid(org.guid); accountGuid(userGuid) }
       .map { it.permissions }.toMutableSet()
-    val isOwner = userGuid == org.ownerAccountGuid
+    val isOwner = userGuid == org.ownerUserGuid
     if (isOwner) orgPermissions.add(ORG_OWNER_ORG_ROLE)
     return Pair(isOwner, orgPermissions.union())
   }

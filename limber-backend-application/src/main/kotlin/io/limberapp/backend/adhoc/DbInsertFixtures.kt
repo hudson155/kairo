@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
 private const val SQL = """
 -- Create Limber org and tenants.
 INSERT INTO orgs.org (guid, created_date, name,
-                      owner_account_guid)
+                      owner_user_guid)
 VALUES ('46c25689-71d6-4544-8c8c-6936d761dddb', NOW() AT TIME ZONE 'UTC', 'Limber',
         '3e2d1681-a666-456e-a168-647d8c3a3150');
 INSERT INTO auth.org_role (guid, created_date, org_guid,

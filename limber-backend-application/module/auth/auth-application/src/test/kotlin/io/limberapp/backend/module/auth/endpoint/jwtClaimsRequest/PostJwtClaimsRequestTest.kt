@@ -38,7 +38,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       guid = UUID.randomUUID(),
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
-      ownerAccountGuid = UUID.randomUUID()
+      ownerUserGuid = UUID.randomUUID()
     )
     every { mockedServices[AccountService::class].findOnlyOrNull(any()) } returns AccountModel(
       guid = userGuid,
@@ -96,7 +96,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       guid = UUID.randomUUID(),
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
-      ownerAccountGuid = UUID.randomUUID()
+      ownerUserGuid = UUID.randomUUID()
     )
     val existingFeature = FeatureModel(
       guid = UUID.randomUUID(),

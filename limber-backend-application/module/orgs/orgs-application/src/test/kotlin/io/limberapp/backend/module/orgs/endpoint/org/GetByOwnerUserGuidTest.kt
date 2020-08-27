@@ -9,25 +9,25 @@ import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class GetOrgByOwnerAccountGuidTest : ResourceTest() {
+internal class GetByOwnerUserGuidTest : ResourceTest() {
   @Test
   fun noOrg() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
     piperTest.test(
-      endpoint = OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid),
+      endpoint = OrgApi.GetByOwnerUserGuid(ownerUserGuid),
       expectedException = OrgNotFound()
     )
   }
 
   @Test
   fun happyPath() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
-    piperTest.test(OrgApi.GetByOwnerAccountGuid(orgOwnerAccountGuid)) {
+    piperTest.test(OrgApi.GetByOwnerUserGuid(ownerUserGuid)) {
       val actual = json.parse<OrgRep.Complete>(response.content!!)
       assertEquals(crankyPastaOrgRep, actual)
     }

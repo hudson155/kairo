@@ -6,5 +6,5 @@ import java.util.*
 @LimberModule.Orgs
 interface OrgFinder {
   fun orgGuid(orgGuid: UUID)
-  fun ownerAccountGuid(ownerAccountGuid: UUID)
+  fun ownerUserGuid(ownerUserGuid: UUID)
 }

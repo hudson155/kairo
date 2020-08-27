@@ -1,4 +1,4 @@
 UPDATE orgs.org
 SET name               = COALESCE(:name, name),
-    owner_account_guid = COALESCE(:ownerAccountGuid, owner_account_guid)
+    owner_user_guid = COALESCE(:ownerUserGuid, owner_user_guid)
 WHERE guid = :orgGuid

@@ -23,10 +23,10 @@ internal class PatchOrgTest : ResourceTest() {
 
   @Test
   fun happyPathName() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     val orgUpdateRep = OrgRep.Update(name = "Standing Teeth")
     orgRep = orgRep.copy(name = orgUpdateRep.name!!)
@@ -42,14 +42,14 @@ internal class PatchOrgTest : ResourceTest() {
   }
 
   @Test
-  fun happyPathOwnerAccountGuid() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+  fun happyPathOwnerUserGuid() {
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
-    val orgUpdateRep = OrgRep.Update(ownerAccountGuid = UUID.randomUUID())
-    orgRep = orgRep.copy(ownerAccountGuid = orgUpdateRep.ownerAccountGuid!!)
+    val orgUpdateRep = OrgRep.Update(ownerUserGuid = UUID.randomUUID())
+    orgRep = orgRep.copy(ownerUserGuid = orgUpdateRep.ownerUserGuid!!)
     piperTest.test(OrgApi.Patch(orgRep.guid, orgUpdateRep)) {
       val actual = json.parse<OrgRep.Complete>(response.content!!)
       assertEquals(orgRep, actual)

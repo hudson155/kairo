@@ -15,24 +15,24 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import java.util.*
 
-internal class GetOrgByOwnerAccountGuid @Inject constructor(
+internal class GetByOwnerUserGuid @Inject constructor(
   application: Application,
   servingConfig: ServingConfig,
   private val featureService: FeatureService,
   private val orgService: OrgService,
   private val orgMapper: OrgMapper,
-) : LimberApiEndpoint<OrgApi.GetByOwnerAccountGuid, OrgRep.Complete>(
+) : LimberApiEndpoint<OrgApi.GetByOwnerUserGuid, OrgRep.Complete>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,
-  endpointTemplate = OrgApi.GetByOwnerAccountGuid::class.template()
+  endpointTemplate = OrgApi.GetByOwnerUserGuid::class.template()
 ) {
-  override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerAccountGuid(
-    ownerAccountGuid = call.parameters.getAsType(UUID::class, "ownerAccountGuid")
+  override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerUserGuid(
+    ownerUserGuid = call.parameters.getAsType(UUID::class, "ownerUserGuid")
   )
 
-  override suspend fun Handler.handle(command: OrgApi.GetByOwnerAccountGuid): OrgRep.Complete {
-    Authorization.User(command.ownerAccountGuid).authorize()
-    val org = orgService.findOnlyOrNull { ownerAccountGuid(command.ownerAccountGuid) } ?: throw OrgNotFound()
+  override suspend fun Handler.handle(command: OrgApi.GetByOwnerUserGuid): OrgRep.Complete {
+    Authorization.User(command.ownerUserGuid).authorize()
+    val org = orgService.findOnlyOrNull { ownerUserGuid(command.ownerUserGuid) } ?: throw OrgNotFound()
     val features = featureService.findAsList { orgGuid(org.guid) }
     return orgMapper.completeRep(org, features)
   }

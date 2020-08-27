@@ -10,8 +10,8 @@ internal class OrgQueryBuilder : QueryBuilder(), OrgFinder {
     bindings["orgGuid"] = orgGuid
   }
 
-  override fun ownerAccountGuid(ownerAccountGuid: UUID) {
-    conditions += "owner_account_guid = :ownerAccountGuid"
-    bindings["ownerAccountGuid"] = ownerAccountGuid
+  override fun ownerUserGuid(ownerUserGuid: UUID) {
+    conditions += "owner_user_guid = :ownerUserGuid"
+    bindings["ownerUserGuid"] = ownerUserGuid
   }
 }

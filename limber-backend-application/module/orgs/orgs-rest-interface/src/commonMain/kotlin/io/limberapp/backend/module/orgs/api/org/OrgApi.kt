@@ -19,10 +19,10 @@ object OrgApi {
     path = "/orgs/${enc(orgGuid)}"
   )
 
-  data class GetByOwnerAccountGuid(val ownerAccountGuid: UUID) : PiperEndpoint(
+  data class GetByOwnerUserGuid(val ownerUserGuid: UUID) : PiperEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/orgs",
-    queryParams = listOf("ownerAccountGuid" to enc(ownerAccountGuid))
+    queryParams = listOf("ownerUserGuid" to enc(ownerUserGuid))
   )
 
   data class Patch(val orgGuid: UUID, val rep: OrgRep.Update?) : PiperEndpoint(

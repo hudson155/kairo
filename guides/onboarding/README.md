@@ -21,7 +21,7 @@ Browser and operating system DNS and TLS certificate caching is annoying.
 - [ ] [Manually insert database entities](#manually-insert-database-entities)
 - [ ] Wait 10 minutes (seriously).
 - [ ] [Test the tenant](#test-the-tenant)
-- [ ] [Update the owner account GUID](#update-the-owner-account-guid)
+- [ ] [Update the owner user GUID](#update-the-owner-user-guid)
 
 ### Set up a DNS record
 
@@ -73,12 +73,12 @@ as other Auth0 tenants.
 This inserts the most basic database entities.
 Make these requests using Postman, and use a JWT from a user that has global admin status.
 
-1. **Create the org**. Note, you'll change the `ownerAccountGuid` later.
+1. **Create the org**. Note, you'll change the `ownerUserGuid` later.
     ```
     POST https://api.limberapp.io/orgs
     {
         "name": "Placeholder",
-        "ownerAccountGuid": null
+        "ownerUserGuid": null
     }
     ```
 
@@ -100,11 +100,11 @@ Make these requests using Postman, and use a JWT from a user that has global adm
 Navigate to https://placeholder.limberapp.io in your browser and sign in.
 Make sure everything works ok.
 
-### Update the owner account GUID
+### Update the owner user GUID
 
-1. Manually update the `ownerAccountGuid` for the organization.
+1. Manually update the `ownerUserGuid` for the organization.
 ```postgresql
 UPDATE orgs.org
-SET owner_account_guid = :ownerAccountGuid
+SET owner_user_guid = :ownerUserGuid
 WHERE guid = :orgGuid
 ```

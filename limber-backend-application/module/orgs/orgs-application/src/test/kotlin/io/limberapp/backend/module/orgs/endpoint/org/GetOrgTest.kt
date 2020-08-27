@@ -22,10 +22,10 @@ internal class GetOrgTest : ResourceTest() {
 
   @Test
   fun happyPath() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
       val actual = json.parse<OrgRep.Complete>(response.content!!)

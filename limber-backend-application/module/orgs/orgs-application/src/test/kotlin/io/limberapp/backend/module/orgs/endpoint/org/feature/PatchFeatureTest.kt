@@ -28,11 +28,11 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun featureDoesNotExist() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
     piperTest.test(
@@ -48,10 +48,10 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun pathConflict() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -71,10 +71,10 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathRank() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -98,10 +98,10 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathName() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -125,10 +125,10 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathPath() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -152,10 +152,10 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathSetAndRemoveDefault() {
-    val orgOwnerAccountGuid = UUID.randomUUID()
+    val ownerUserGuid = UUID.randomUUID()
 
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))

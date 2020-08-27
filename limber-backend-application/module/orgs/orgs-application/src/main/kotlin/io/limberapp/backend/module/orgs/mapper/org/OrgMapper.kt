@@ -18,19 +18,19 @@ internal class OrgMapper @Inject constructor(
     guid = uuidGenerator.generate(),
     createdDate = LocalDateTime.now(clock),
     name = rep.name,
-    ownerAccountGuid = rep.ownerAccountGuid
+    ownerUserGuid = rep.ownerUserGuid
   )
 
   fun completeRep(model: OrgModel, features: List<FeatureModel>) = OrgRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
     name = model.name,
-    ownerAccountGuid = model.ownerAccountGuid,
+    ownerUserGuid = model.ownerUserGuid,
     features = features.map { featureMapper.completeRep(it) }
   )
 
   fun update(rep: OrgRep.Update) = OrgModel.Update(
     name = rep.name,
-    ownerAccountGuid = rep.ownerAccountGuid,
+    ownerUserGuid = rep.ownerUserGuid,
   )
 }
