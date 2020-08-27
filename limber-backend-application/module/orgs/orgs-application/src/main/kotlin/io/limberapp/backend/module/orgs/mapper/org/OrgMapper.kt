@@ -30,6 +30,7 @@ internal class OrgMapper @Inject constructor(
   )
 
   fun update(rep: OrgRep.Update) = OrgModel.Update(
-    name = rep.name
+    name = rep.name,
+    ownerAccountGuid = rep.ownerAccountGuid,
   )
 }

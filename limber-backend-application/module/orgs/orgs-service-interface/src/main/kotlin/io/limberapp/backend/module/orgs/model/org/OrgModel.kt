@@ -11,5 +11,6 @@ data class OrgModel(
 ) {
   data class Update(
     val name: String?,
+    val ownerAccountGuid: UUID?,
   )
 }

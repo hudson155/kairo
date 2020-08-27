@@ -22,14 +22,34 @@ internal class PatchOrgTest : ResourceTest() {
   }
 
   @Test
-  fun happyPath() {
+  fun happyPathName() {
     val orgOwnerAccountGuid = UUID.randomUUID()
 
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
     piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
 
-    val orgUpdateRep = OrgRep.Update("Standing Teeth")
+    val orgUpdateRep = OrgRep.Update(name = "Standing Teeth")
     orgRep = orgRep.copy(name = orgUpdateRep.name!!)
+    piperTest.test(OrgApi.Patch(orgRep.guid, orgUpdateRep)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
+    }
+
+    piperTest.test(OrgApi.Get(orgRep.guid)) {
+      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      assertEquals(orgRep, actual)
+    }
+  }
+
+  @Test
+  fun happyPathOwnerAccountGuid() {
+    val orgOwnerAccountGuid = UUID.randomUUID()
+
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, orgOwnerAccountGuid, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(orgOwnerAccountGuid)))
+
+    val orgUpdateRep = OrgRep.Update(ownerAccountGuid = UUID.randomUUID())
+    orgRep = orgRep.copy(ownerAccountGuid = orgUpdateRep.ownerAccountGuid!!)
     piperTest.test(OrgApi.Patch(orgRep.guid, orgUpdateRep)) {
       val actual = json.parse<OrgRep.Complete>(response.content!!)
       assertEquals(orgRep, actual)

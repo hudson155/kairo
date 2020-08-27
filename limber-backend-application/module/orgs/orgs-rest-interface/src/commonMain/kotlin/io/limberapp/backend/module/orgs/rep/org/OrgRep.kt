@@ -39,6 +39,8 @@ object OrgRep {
   @Serializable
   data class Update(
     val name: String? = null,
+    @Serializable(with = UuidSerializer::class)
+    val ownerAccountGuid: UUID? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::name) { ifPresent { Validator.orgName(value) } }
