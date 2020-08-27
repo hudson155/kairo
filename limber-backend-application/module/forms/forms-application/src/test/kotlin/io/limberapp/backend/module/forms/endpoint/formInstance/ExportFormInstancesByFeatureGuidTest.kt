@@ -2,9 +2,11 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.piperframework.types.TimeZone
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
+import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
@@ -93,6 +95,30 @@ object ExportFormInstancesByFeatureGuidTest {
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
+        )
+      )
+
+      val formInstance0Question0Rep =
+        FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions[0].guid)
+      formInstance0Rep = formInstance0Rep.copy(questions = formInstance0Rep.questions.plus(formInstance0Question0Rep))
+      piperTest.setup(
+        endpoint = FormInstanceQuestionApi.Put(
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstance0Rep.guid,
+          questionGuid = formTemplateRep.questions[0].guid,
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+        )
+      )
+
+      val formInstance0Question1Rep =
+        FormInstanceQuestionRepFixtures.dateFixture.complete(this, formTemplateRep.questions[1].guid)
+      formInstance0Rep = formInstance0Rep.copy(questions = formInstance0Rep.questions.plus(formInstance0Question1Rep))
+      piperTest.setup(
+        endpoint = FormInstanceQuestionApi.Put(
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstance0Rep.guid,
+          questionGuid = formTemplateRep.questions[1].guid,
+          rep = FormInstanceQuestionRepFixtures.dateFixture.creation(this)
         )
       )
 
@@ -222,6 +248,30 @@ object ExportFormInstancesByFeatureGuidTest {
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
+        )
+      )
+
+      val formInstance0Question0Rep =
+        FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions[0].guid)
+      formInstance0Rep = formInstance0Rep.copy(questions = formInstance0Rep.questions.plus(formInstance0Question0Rep))
+      piperTest.setup(
+        endpoint = FormInstanceQuestionApi.Put(
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstance0Rep.guid,
+          questionGuid = formTemplateRep.questions[0].guid,
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+        )
+      )
+
+      val formInstance0Question1Rep =
+        FormInstanceQuestionRepFixtures.dateFixture.complete(this, formTemplateRep.questions[1].guid)
+      formInstance0Rep = formInstance0Rep.copy(questions = formInstance0Rep.questions.plus(formInstance0Question1Rep))
+      piperTest.setup(
+        endpoint = FormInstanceQuestionApi.Put(
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstance0Rep.guid,
+          questionGuid = formTemplateRep.questions[1].guid,
+          rep = FormInstanceQuestionRepFixtures.dateFixture.creation(this)
         )
       )
 

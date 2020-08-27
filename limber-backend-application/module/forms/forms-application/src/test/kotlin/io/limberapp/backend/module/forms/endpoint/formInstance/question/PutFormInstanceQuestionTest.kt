@@ -30,7 +30,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceGuid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ),
       expectedException = FormInstanceQuestionNotFound()
     )
@@ -58,7 +58,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = questionGuid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -85,7 +85,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = UUID.randomUUID(),
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ),
       expectedException = FormInstanceQuestionNotFound()
     )
@@ -117,7 +117,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = UUID.randomUUID(),
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ),
       expectedException = FormInstanceQuestionNotFound()
     )
@@ -152,7 +152,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     ) {
       val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
@@ -189,7 +189,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     )
 
@@ -204,7 +204,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = (FormInstanceQuestionRepFixtures.textFixture.creation() as FormInstanceTextQuestionRep.Creation)
+        rep = (FormInstanceQuestionRepFixtures.textFixture.creation(this) as FormInstanceTextQuestionRep.Creation)
           .copy(text = "completely new text")
       )
     ) {

@@ -53,7 +53,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     )
 
@@ -92,7 +92,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     )
 
@@ -135,7 +135,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     )
 
@@ -178,7 +178,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateRep.questions.first().guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation()
+        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     )
 

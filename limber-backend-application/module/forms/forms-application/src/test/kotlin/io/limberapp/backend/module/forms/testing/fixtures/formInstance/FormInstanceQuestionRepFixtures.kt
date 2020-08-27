@@ -1,14 +1,16 @@
 package io.limberapp.backend.module.forms.testing.fixtures.formInstance
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
 internal object FormInstanceQuestionRepFixtures {
   data class Fixture(
-    val creation: () -> FormInstanceQuestionRep.Creation,
+    val creation: ResourceTest.() -> FormInstanceQuestionRep.Creation,
     val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete,
   )
 
@@ -21,6 +23,18 @@ internal object FormInstanceQuestionRepFixtures {
       createdDate = LocalDateTime.now(fixedClock),
       questionGuid = questionGuid,
       text = "Nothing significant to add."
+    )
+  })
+
+  val dateFixture = Fixture({
+    FormInstanceDateQuestionRep.Creation(
+      date = LocalDate.now(fixedClock)
+    )
+  }, { questionGuid ->
+    FormInstanceDateQuestionRep.Complete(
+      createdDate = LocalDateTime.now(fixedClock),
+      questionGuid = questionGuid,
+      date = LocalDate.now(fixedClock)
     )
   })
 }
