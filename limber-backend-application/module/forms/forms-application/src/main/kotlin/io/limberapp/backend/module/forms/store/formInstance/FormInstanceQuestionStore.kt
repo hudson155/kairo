@@ -41,18 +41,18 @@ internal class FormInstanceQuestionStore @Inject constructor(
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
 
-  fun create(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel =
+  fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel =
     withHandle { handle ->
       return@withHandle try {
-        handle.createQuery(sqlResource("/store/formInstanceQuestion/create.sql"))
+        handle.createQuery(sqlResource("/store/formInstanceQuestion/upsert.sql"))
           .bind("featureGuid", featureGuid)
           .bindKotlin(model)
           .bindNullForMissingArguments()
           .mapTo(FormInstanceQuestionModel::class.java)
-          .single()
+          .singleNullOrThrow()
       } catch (e: UnableToExecuteStatementException) {
         handleCreateError(e)
-      }
+      } ?: throw FormInstanceQuestionNotFound()
     }
 
   override fun <R> find(
@@ -64,23 +64,6 @@ internal class FormInstanceQuestionStore @Inject constructor(
         .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
         .mapTo(FormInstanceQuestionModel::class.java)
         .let(result)
-    }
-
-  fun update(
-    featureGuid: UUID,
-    formInstanceGuid: UUID,
-    questionGuid: UUID,
-    update: FormInstanceQuestionModel.Update,
-  ): FormInstanceQuestionModel =
-    inTransaction { handle ->
-      return@inTransaction handle.createQuery(sqlResource("/store/formInstanceQuestion/update.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formInstanceGuid", formInstanceGuid)
-        .bind("questionGuid", questionGuid)
-        .bindKotlin(update)
-        .bindNullForMissingArguments()
-        .mapTo(FormInstanceQuestionModel::class.java)
-        .singleNullOrThrow() ?: throw FormInstanceQuestionNotFound()
     }
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID): Unit =
