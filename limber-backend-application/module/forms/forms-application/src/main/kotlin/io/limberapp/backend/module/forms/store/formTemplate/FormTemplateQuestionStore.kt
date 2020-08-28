@@ -12,9 +12,9 @@ import com.piperframework.store.isNotNullConstraintViolation
 import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionFinder
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import org.jdbi.v3.core.Jdbi
@@ -96,36 +96,27 @@ internal class FormTemplateQuestionStore @Inject constructor(
     update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formTemplateQuestion/update.sql"))
+      return@inTransaction handle.createQuery(sqlResource("/store/formTemplateQuestion/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
         .bindNullForMissingArguments()
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormTemplateQuestionNotFound()
-        1 -> findOnlyOrThrow { questionGuid(questionGuid) }
-        else -> badSql()
-      }
+        .mapTo(FormTemplateQuestionModel::class.java)
+        .singleNullOrThrow() ?: throw FormTemplateQuestionNotFound()
     }
 
   fun delete(
     featureGuid: UUID,
     formTemplateGuid: UUID,
     questionGuid: UUID,
-  ) =
+  ): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .bind("questionGuid", questionGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormTemplateQuestionNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw FormTemplateQuestionNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

@@ -11,9 +11,9 @@ import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
+import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionFinder
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
-import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionFinder
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
@@ -73,34 +73,24 @@ internal class FormInstanceQuestionStore @Inject constructor(
     update: FormInstanceQuestionModel.Update,
   ): FormInstanceQuestionModel =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formInstanceQuestion/update.sql"))
+      return@inTransaction handle.createQuery(sqlResource("/store/formInstanceQuestion/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
         .bindKotlin(update)
         .bindNullForMissingArguments()
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormInstanceQuestionNotFound()
-        1 -> findOnlyOrThrow { questionGuid(questionGuid) }
-        else -> badSql()
-      }
+        .mapTo(FormInstanceQuestionModel::class.java)
+        .singleNullOrThrow() ?: throw FormInstanceQuestionNotFound()
     }
 
-  fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID) {
+  fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormInstanceQuestionNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw FormInstanceQuestionNotFound()
     }
-  }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

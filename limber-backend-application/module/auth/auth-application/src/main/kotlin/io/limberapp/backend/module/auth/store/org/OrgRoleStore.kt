@@ -41,33 +41,24 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
 
   fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel =
     inTransaction { handle ->
-      val updateCount = try {
-        handle.createUpdate(sqlResource("/store/orgRole/update.sql"))
+      return@inTransaction try {
+        handle.createQuery(sqlResource("/store/orgRole/update.sql"))
           .bind("orgGuid", orgGuid)
           .bind("orgRoleGuid", orgRoleGuid)
           .bindKotlin(update)
-          .execute()
+          .mapTo(OrgRoleModel::class.java)
+          .singleNullOrThrow()
       } catch (e: UnableToExecuteStatementException) {
         handleUpdateError(e)
-      }
-      return@inTransaction when (updateCount) {
-        0 -> throw OrgRoleNotFound()
-        1 -> findOnlyOrThrow { orgRoleGuid(orgRoleGuid) }
-        else -> badSql()
-      }
+      } ?: throw OrgRoleNotFound()
     }
 
-  fun delete(orgGuid: UUID, orgRoleGuid: UUID) =
+  fun delete(orgGuid: UUID, orgRoleGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("orgRoleGuid", orgRoleGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw OrgRoleNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw OrgRoleNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

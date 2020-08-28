@@ -45,18 +45,13 @@ internal class OrgRoleMembershipStore @Inject constructor(
         .let(result)
     }
 
-  fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID) =
+  fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/orgRoleMembership/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/orgRoleMembership/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("orgRoleGuid", orgRoleGuid)
         .bind("accountGuid", accountGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw OrgRoleMembershipNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw OrgRoleMembershipNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

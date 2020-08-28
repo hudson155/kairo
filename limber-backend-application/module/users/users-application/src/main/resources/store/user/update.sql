@@ -5,3 +5,4 @@ SET identity_provider = COALESCE(:identityProvider, identity_provider),
     first_name        = COALESCE(:firstName, first_name),
     last_name         = COALESCE(:lastName, last_name)
 WHERE guid = :userGuid
+RETURNING *

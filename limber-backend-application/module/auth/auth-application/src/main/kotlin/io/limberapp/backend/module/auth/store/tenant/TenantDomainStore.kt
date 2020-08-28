@@ -44,18 +44,12 @@ internal class TenantDomainStore @Inject constructor(
         .let(result)
     }
 
-  fun delete(orgGuid: UUID, domain: String) =
+  fun delete(orgGuid: UUID, domain: String): Unit =
     inTransaction { handle ->
-      val updateCount =
-        handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
-          .bind("orgGuid", orgGuid)
-          .bind("domain", domain)
-          .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw TenantDomainNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+      return@inTransaction handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
+        .bind("orgGuid", orgGuid)
+        .bind("domain", domain)
+        .updateOnly() ?: throw TenantDomainNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

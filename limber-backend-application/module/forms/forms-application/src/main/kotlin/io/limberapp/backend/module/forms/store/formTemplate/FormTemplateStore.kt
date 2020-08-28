@@ -34,28 +34,19 @@ internal class FormTemplateStore @Inject constructor(
 
   fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formTemplate/update.sql"))
+      return@inTransaction handle.createQuery(sqlResource("/store/formTemplate/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .bindKotlin(update)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormTemplateNotFound()
-        1 -> findOnlyOrThrow { formTemplateGuid(formTemplateGuid) }
-        else -> badSql()
-      }
+        .mapTo(FormTemplateModel::class.java)
+        .singleNullOrThrow() ?: throw FormTemplateNotFound()
     }
 
-  fun delete(featureGuid: UUID, formTemplateGuid: UUID) =
+  fun delete(featureGuid: UUID, formTemplateGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormTemplateNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw FormTemplateNotFound()
     }
 }

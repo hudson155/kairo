@@ -43,29 +43,20 @@ internal class FormInstanceStore @Inject constructor(
 
   fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formInstance/update.sql"))
+      return@inTransaction handle.createQuery(sqlResource("/store/formInstance/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bindKotlin(update)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormInstanceNotFound()
-        1 -> findOnlyOrThrow { formInstanceGuid(formInstanceGuid) }
-        else -> badSql()
-      }
+        .mapTo(FormInstanceModel::class.java)
+        .singleNullOrThrow() ?: throw FormInstanceNotFound()
     }
 
-  fun delete(featureGuid: UUID, formInstanceGuid: UUID) =
+  fun delete(featureGuid: UUID, formInstanceGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FormInstanceNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw FormInstanceNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

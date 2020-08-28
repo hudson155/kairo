@@ -43,33 +43,24 @@ internal class FeatureRoleStore @Inject constructor(
 
   fun update(featureGuid: UUID, featureRoleGuid: UUID, update: FeatureRoleModel.Update): FeatureRoleModel =
     inTransaction { handle ->
-      val updateCount = try {
-        handle.createUpdate(sqlResource("/store/featureRole/update.sql"))
+      return@inTransaction try {
+        handle.createQuery(sqlResource("/store/featureRole/update.sql"))
           .bind("featureGuid", featureGuid)
           .bind("featureRoleGuid", featureRoleGuid)
           .bindKotlin(update)
-          .execute()
+          .mapTo(FeatureRoleModel::class.java)
+          .singleNullOrThrow()
       } catch (e: UnableToExecuteStatementException) {
         handleUpdateError(e)
-      }
-      return@inTransaction when (updateCount) {
-        0 -> throw FeatureRoleNotFound()
-        1 -> findOnlyOrThrow { featureRoleGuid(featureRoleGuid) }
-        else -> badSql()
-      }
+      } ?: throw FeatureRoleNotFound()
     }
 
-  fun delete(featureGuid: UUID, featureRoleGuid: UUID) =
+  fun delete(featureGuid: UUID, featureRoleGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/featureRole/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/featureRole/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("featureRoleGuid", featureRoleGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FeatureRoleNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw FeatureRoleNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

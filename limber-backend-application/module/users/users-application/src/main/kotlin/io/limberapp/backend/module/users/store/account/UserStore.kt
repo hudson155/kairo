@@ -41,27 +41,18 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finde
 
   fun update(userGuid: UUID, update: UserModel.Update): UserModel =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/user/update.sql"))
+      return@inTransaction handle.createQuery(sqlResource("/store/user/update.sql"))
         .bind("userGuid", userGuid)
         .bindKotlin(update)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw UserNotFound()
-        1 -> findOnlyOrThrow { userGuid(userGuid) }
-        else -> badSql()
-      }
+        .mapTo(UserModel::class.java)
+        .singleNullOrThrow() ?: throw UserNotFound()
     }
 
-  fun delete(userGuid: UUID) =
+  fun delete(userGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/user/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/user/delete.sql"))
         .bind("userGuid", userGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw UserNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw UserNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

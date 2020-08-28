@@ -43,31 +43,22 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
 
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =
     inTransaction { handle ->
-      val updateCount = try {
-        handle.createUpdate(sqlResource("/store/tenant/update.sql"))
+      return@inTransaction try {
+        handle.createQuery(sqlResource("/store/tenant/update.sql"))
           .bind("orgGuid", orgGuid)
           .bindKotlin(update)
-          .execute()
+          .mapTo(TenantModel::class.java)
+          .singleNullOrThrow()
       } catch (e: UnableToExecuteStatementException) {
         handleUpdateError(e)
-      }
-      return@inTransaction when (updateCount) {
-        0 -> throw TenantNotFound()
-        1 -> findOnlyOrThrow { orgGuid(orgGuid) }
-        else -> badSql()
-      }
+      } ?: throw TenantNotFound()
     }
 
-  fun delete(orgGuid: UUID) =
+  fun delete(orgGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
         .bind("orgGuid", orgGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw TenantNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw TenantNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

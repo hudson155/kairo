@@ -51,33 +51,24 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
           .bind("orgGuid", orgGuid)
           .execute()
       }
-      val updateCount = try {
-        handle.createUpdate(sqlResource("/store/feature/update.sql"))
+      return@inTransaction try {
+        handle.createQuery(sqlResource("/store/feature/update.sql"))
           .bind("orgGuid", orgGuid)
           .bind("featureGuid", featureGuid)
           .bindKotlin(update)
-          .execute()
+          .mapTo(FeatureModel::class.java)
+          .singleNullOrThrow()
       } catch (e: UnableToExecuteStatementException) {
         handleUpdateError(e)
-      }
-      return@inTransaction when (updateCount) {
-        0 -> throw FeatureNotFound()
-        1 -> findOnlyOrThrow { featureGuid(featureGuid) }
-        else -> badSql()
-      }
+      } ?: throw FeatureNotFound()
     }
 
-  fun delete(orgGuid: UUID, featureGuid: UUID) =
+  fun delete(orgGuid: UUID, featureGuid: UUID): Unit =
     inTransaction { handle ->
-      val updateCount = handle.createUpdate(sqlResource("/store/feature/delete.sql"))
+      return@inTransaction handle.createUpdate(sqlResource("/store/feature/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("featureGuid", featureGuid)
-        .execute()
-      return@inTransaction when (updateCount) {
-        0 -> throw FeatureNotFound()
-        1 -> Unit
-        else -> badSql()
-      }
+        .updateOnly() ?: throw FeatureNotFound()
     }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

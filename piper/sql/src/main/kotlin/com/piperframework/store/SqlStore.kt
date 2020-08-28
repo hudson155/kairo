@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
+import org.jdbi.v3.core.statement.Update
 import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
@@ -56,5 +57,13 @@ abstract class SqlStore(private val jdbi: Jdbi) {
       .bindMap(queryBuilder.bindings)
   }
 
-  protected fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
+  protected fun Update.updateOnly(): Unit? {
+    return when (execute()) {
+      0 -> null
+      1 -> Unit
+      else -> badSql()
+    }
+  }
+
+  private fun badSql(): Nothing = error("An SQL statement invariant failed. The transaction has been aborted.")
 }
