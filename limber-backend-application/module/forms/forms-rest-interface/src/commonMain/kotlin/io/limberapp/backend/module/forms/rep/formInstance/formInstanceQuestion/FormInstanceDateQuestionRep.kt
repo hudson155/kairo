@@ -6,6 +6,7 @@ import com.piperframework.serialization.serializer.UuidSerializer
 import com.piperframework.types.LocalDate
 import com.piperframework.types.LocalDateTime
 import com.piperframework.types.UUID
+import com.piperframework.validation.RepValidation
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -16,7 +17,9 @@ object FormInstanceDateQuestionRep {
   data class Creation(
     @Serializable(with = LocalDateSerializer::class)
     val date: LocalDate,
-  ) : FormInstanceQuestionRep.Creation
+  ) : FormInstanceQuestionRep.Creation {
+    override fun validate() = RepValidation {}
+  }
 
   @Serializable
   @SerialName("DATE")

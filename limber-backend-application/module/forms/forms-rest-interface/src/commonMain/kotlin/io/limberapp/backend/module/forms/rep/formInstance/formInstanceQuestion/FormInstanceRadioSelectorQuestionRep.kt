@@ -17,7 +17,6 @@ object FormInstanceRadioSelectorQuestionRep {
     val selection: String,
   ) : FormInstanceQuestionRep.Creation {
     override fun validate() = RepValidation {
-      validate(super.validate())
       validate(Creation::selection) { Validator.length1hundred(value, allowEmpty = false) }
     }
   }
