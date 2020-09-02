@@ -19,7 +19,7 @@ object GetFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
-        val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
         assertTrue(actual.isEmpty())
       }
     }
@@ -53,8 +53,8 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
-        val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
-        assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
+        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
+        assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()), actual)
       }
     }
   }
@@ -83,7 +83,7 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = UUID.randomUUID())) {
-        val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
+        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
         assertTrue(actual.isEmpty())
       }
     }
@@ -117,8 +117,8 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = creatorAccountGuid)) {
-        val actual = json.parseSet<FormInstanceRep.Summary>(response.content!!)
-        assertEquals(setOf(formInstance0Rep.summary(), formInstance1Rep.summary()), actual)
+        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
+        assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()), actual)
       }
     }
   }

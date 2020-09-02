@@ -9,7 +9,7 @@ interface FormInstanceClient {
 
   suspend operator fun invoke(endpoint: FormInstanceApi.Get): Outcome<FormInstanceRep.Complete>
 
-  suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): Outcome<Set<FormInstanceRep.Summary>>
+  suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): Outcome<List<FormInstanceRep.Summary>>
 
   suspend operator fun invoke(endpoint: FormInstanceApi.Delete): Outcome<Unit>
 }

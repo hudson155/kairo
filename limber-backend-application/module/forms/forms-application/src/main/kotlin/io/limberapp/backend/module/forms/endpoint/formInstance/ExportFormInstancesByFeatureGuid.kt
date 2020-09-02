@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
+import com.piperframework.finder.SortableFinder
 import com.piperframework.restInterface.template
 import com.piperframework.types.TimeZone
 import io.ktor.application.Application
@@ -12,6 +13,7 @@ import io.limberapp.backend.authorization.permissions.featurePermissions.feature
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exporter.formInstance.FormInstanceExporter
+import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.users.service.account.UserService
@@ -46,9 +48,10 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
         featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
-    val formInstances = formInstanceService.findAsSet {
+    val formInstances = formInstanceService.findAsList {
       featureGuid(command.featureGuid)
       command.creatorAccountGuid?.let { creatorAccountGuid(it) }
+      sortBy(FormInstanceFinder.SortBy.NUMBER, SortableFinder.SortDirection.ASCENDING)
     }
     val feature = featureService.findOnlyOrThrow { featureGuid(command.featureGuid) }
     val users = userService.findAsSet { orgGuid(feature.orgGuid) }

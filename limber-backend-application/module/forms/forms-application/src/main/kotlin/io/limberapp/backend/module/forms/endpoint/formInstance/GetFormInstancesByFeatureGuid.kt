@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.google.inject.Inject
 import com.piperframework.config.serving.ServingConfig
+import com.piperframework.finder.SortableFinder
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -10,6 +11,7 @@ import io.limberapp.backend.authorization.permissions.featurePermissions.feature
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
+import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import java.util.*
@@ -19,7 +21,7 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
   servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
   private val formInstanceMapper: FormInstanceMapper,
-) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, Set<FormInstanceRep.Summary>>(
+) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, List<FormInstanceRep.Summary>>(
   application = application,
   pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
@@ -29,7 +31,7 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
     creatorAccountGuid = call.parameters.getAsType(UUID::class, "creatorAccountGuid", optional = true)
   )
 
-  override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): Set<FormInstanceRep.Summary> {
+  override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): List<FormInstanceRep.Summary> {
     Authorization.FeatureMember(command.featureGuid).authorize()
     if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.user?.guid) {
       Authorization.FeatureMemberWithFeaturePermission(
@@ -40,7 +42,8 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
     val formInstances = formInstanceService.findAsSet {
       featureGuid(command.featureGuid)
       command.creatorAccountGuid?.let { creatorAccountGuid(it) }
+      sortBy(FormInstanceFinder.SortBy.NUMBER, SortableFinder.SortDirection.DESCENDING)
     }
-    return formInstances.map { formInstanceMapper.summaryRep(it) }.toSet()
+    return formInstances.map { formInstanceMapper.summaryRep(it) }
   }
 }

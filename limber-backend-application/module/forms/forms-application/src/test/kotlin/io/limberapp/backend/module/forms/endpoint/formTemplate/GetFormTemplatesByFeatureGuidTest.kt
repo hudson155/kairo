@@ -33,7 +33,7 @@ internal class GetFormTemplatesByFeatureGuidTest : ResourceTest() {
 
     piperTest.test(FormTemplateApi.GetByFeatureGuid(featureGuid)) {
       val actual = json.parseSet<FormTemplateRep.Summary>(response.content!!)
-      assertEquals(setOf(formTemplate0Rep.summary(), formTemplate1Rep.summary()), actual)
+      assertEquals(setOf(formTemplate1Rep.summary(), formTemplate0Rep.summary()), actual)
     }
   }
 }
