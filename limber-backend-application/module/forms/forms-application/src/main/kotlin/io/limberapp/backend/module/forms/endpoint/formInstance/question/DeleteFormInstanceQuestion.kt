@@ -42,6 +42,7 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
         else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
       }
     ).authorize()
+    if (formInstance.submittedDate == null) Authorization.User(formInstance.creatorAccountGuid).authorize()
     formInstanceQuestionService.delete(command.featureGuid, command.formInstanceGuid, command.questionGuid)
   }
 }

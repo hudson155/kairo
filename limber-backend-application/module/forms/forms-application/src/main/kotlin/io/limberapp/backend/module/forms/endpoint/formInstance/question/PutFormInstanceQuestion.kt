@@ -47,6 +47,7 @@ internal class PutFormInstanceQuestion @Inject constructor(
         else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
       }
     ).authorize()
+    if (formInstance.submittedDate == null) Authorization.User(formInstance.creatorAccountGuid).authorize()
     val formInstanceQuestion = formInstanceQuestionService.upsert(
       featureGuid = command.featureGuid,
       model = formInstanceQuestionMapper.model(command.formInstanceGuid, command.questionGuid, rep)
