@@ -12,8 +12,4 @@ data class FormInstanceRadioSelectorQuestionModel(
   val selections: List<String>,
 ) : FormInstanceQuestionModel {
   override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
-
-  data class Update(
-    val selections: List<String>,
-  ) : FormInstanceQuestionModel.Update
 }

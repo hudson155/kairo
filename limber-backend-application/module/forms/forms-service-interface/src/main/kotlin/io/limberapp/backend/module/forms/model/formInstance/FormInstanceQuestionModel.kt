@@ -9,6 +9,4 @@ interface FormInstanceQuestionModel {
   val formInstanceGuid: UUID
   val questionGuid: UUID?
   val type: FormTemplateQuestionModel.Type
-
-  interface Update
 }
