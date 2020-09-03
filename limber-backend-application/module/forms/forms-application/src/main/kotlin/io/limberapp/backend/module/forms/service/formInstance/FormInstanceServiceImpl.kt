@@ -2,6 +2,7 @@ package io.limberapp.backend.module.forms.service.formInstance
 
 import com.google.inject.Inject
 import com.piperframework.finder.Finder
+import io.limberapp.backend.module.forms.exception.formInstance.CannotReSubmitFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
@@ -19,13 +20,14 @@ internal class FormInstanceServiceImpl @Inject constructor(
     formInstanceStore.create(model)
 
   override fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel {
-    ensureAllRequiredQuestionsAreAnswered(featureGuid, formInstanceGuid)
+    if (update.submittedDate != null) validateBeforeSubmission(featureGuid, formInstanceGuid)
     return formInstanceStore.update(featureGuid, formInstanceGuid, update)
   }
 
-  private fun ensureAllRequiredQuestionsAreAnswered(featureGuid: UUID, formInstanceGuid: UUID) {
+  private fun validateBeforeSubmission(featureGuid: UUID, formInstanceGuid: UUID) {
     val formInstance = formInstanceStore.findOnlyOrNull { featureGuid(featureGuid); formInstanceGuid(formInstanceGuid) }
       ?: throw FormInstanceNotFound()
+    if (formInstance.submittedDate != null) throw CannotReSubmitFormInstance()
     val formTemplateQuestions = formTemplateQuestionService.findAsSet {
       formTemplateGuid(formInstance.formTemplateGuid)
     }

@@ -4,6 +4,7 @@ import com.piperframework.endpoint.exception.ValidationException
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
+import io.limberapp.backend.module.forms.exception.formInstance.CannotReSubmitFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -100,6 +101,37 @@ internal class PatchFormInstanceTest : ResourceTest() {
     piperTest.test(
       endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep),
       expectedException = CannotSubmitFormBeforeAnsweringAllRequiredQuestions()
+    )
+
+    piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      assertEquals(formInstanceRep, actual)
+    }
+  }
+
+  @Test
+  fun alreadySubmitted() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
+    formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
+    piperTest.setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep))
+
+    piperTest.test(
+      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep),
+      expectedException = CannotReSubmitFormInstance()
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
