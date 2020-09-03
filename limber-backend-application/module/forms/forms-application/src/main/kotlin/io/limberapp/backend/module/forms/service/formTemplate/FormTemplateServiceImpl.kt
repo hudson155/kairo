@@ -8,14 +8,10 @@ import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
 import java.util.*
 
 internal class FormTemplateServiceImpl @Inject constructor(
-  private val formTemplateQuestionService: FormTemplateQuestionService,
   private val formTemplateStore: FormTemplateStore,
 ) : FormTemplateService, Finder<FormTemplateModel, FormTemplateFinder> by formTemplateStore {
-  override fun create(model: FormTemplateModel): FormTemplateModel {
-    val formTemplate = formTemplateStore.create(model)
-    formTemplateQuestionService.createDefaults(model.featureGuid, model.guid)
-    return formTemplate
-  }
+  override fun create(model: FormTemplateModel) =
+    formTemplateStore.create(model)
 
   override fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update) =
     formTemplateStore.update(featureGuid, formTemplateGuid, update)

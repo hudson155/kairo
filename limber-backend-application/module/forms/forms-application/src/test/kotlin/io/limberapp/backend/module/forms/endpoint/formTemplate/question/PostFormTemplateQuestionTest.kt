@@ -80,10 +80,10 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
-        rank = FormTemplateQuestionRepFixtures.defaults.size + 1,
+        rank = 1,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ),
-      expectedException = RankOutOfBounds((FormTemplateQuestionRepFixtures.defaults.size + 1))
+      expectedException = RankOutOfBounds(1)
     )
   }
 
@@ -94,7 +94,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
     )
@@ -123,7 +123,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
       questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
     )

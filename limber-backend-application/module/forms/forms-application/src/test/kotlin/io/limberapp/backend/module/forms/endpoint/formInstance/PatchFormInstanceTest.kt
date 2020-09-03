@@ -2,14 +2,14 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.piperframework.endpoint.exception.ValidationException
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
-import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
+import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
-import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
+import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -38,7 +38,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = feature0Guid,
@@ -75,10 +75,20 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val creatorAccountGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
-    val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    piperTest.setup(
+      endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateRep.guid,
+        rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
+      )
+    )
+
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -106,35 +116,11 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 5)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
     piperTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
-
-    val formInstanceQuestion0Rep =
-      FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateRep.questions[0].guid)
-    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestion0Rep))
-    piperTest.setup(
-      endpoint = FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = formTemplateRep.questions[0].guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
-      )
-    )
-
-    val formInstanceQuestion1Rep =
-      FormInstanceQuestionRepFixtures.dateFixture.complete(this, formTemplateRep.questions[1].guid)
-    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestion1Rep))
-    piperTest.setup(
-      endpoint = FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = formTemplateRep.questions[1].guid,
-        rep = FormInstanceQuestionRepFixtures.dateFixture.creation(this)
       )
     )
 

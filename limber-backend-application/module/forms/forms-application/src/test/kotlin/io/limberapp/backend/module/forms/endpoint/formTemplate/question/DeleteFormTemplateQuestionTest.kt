@@ -45,7 +45,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
     )
@@ -76,7 +76,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
     )
@@ -107,7 +107,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 5)
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
     )

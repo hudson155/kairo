@@ -33,7 +33,7 @@ object GetFormInstancesByFeatureGuidTest {
       piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
       val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 1, creatorAccountGuid, 5
+        this, formTemplateRep.guid, 1, creatorAccountGuid, 1
       )
       piperTest.setup(
         endpoint = FormInstanceApi.Post(
@@ -43,7 +43,7 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 2, creatorAccountGuid, 6
+        this, formTemplateRep.guid, 2, creatorAccountGuid, 2
       )
       piperTest.setup(
         endpoint = FormInstanceApi.Post(
@@ -97,7 +97,7 @@ object GetFormInstancesByFeatureGuidTest {
       piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
       val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 1, creatorAccountGuid, 5
+        this, formTemplateRep.guid, 1, creatorAccountGuid, 1
       )
       piperTest.setup(
         endpoint = FormInstanceApi.Post(
@@ -107,7 +107,7 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 2, creatorAccountGuid, 6
+        this, formTemplateRep.guid, 2, creatorAccountGuid, 2
       )
       piperTest.setup(
         endpoint = FormInstanceApi.Post(

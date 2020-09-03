@@ -20,9 +20,7 @@ internal object FormTemplateRepFixtures {
       createdDate = LocalDateTime.now(fixedClock),
       title = "Example form",
       description = null,
-      questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
-        rep.complete(this, idSeed + 1 + i)
-      }
+      questions = emptyList()
     )
   })
 
@@ -36,9 +34,7 @@ internal object FormTemplateRepFixtures {
       createdDate = LocalDateTime.now(fixedClock),
       title = "Vehicle Inspection",
       description = null,
-      questions = FormTemplateQuestionRepFixtures.defaults.mapIndexed { i, rep ->
-        rep.complete(this, idSeed + 1 + i)
-      }
+      questions = emptyList()
     )
   })
 }
