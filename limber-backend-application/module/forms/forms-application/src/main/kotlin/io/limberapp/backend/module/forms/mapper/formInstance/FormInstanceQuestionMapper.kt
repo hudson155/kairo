@@ -6,10 +6,12 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestion
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
+import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionModel
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*
@@ -23,19 +25,25 @@ internal class FormInstanceQuestionMapper @Inject constructor(
       createdDate = LocalDateTime.now(clock),
       formInstanceGuid = formInstanceGuid,
       questionGuid = questionGuid,
-      date = rep.date
+      date = rep.date,
     )
     is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
       createdDate = LocalDateTime.now(clock),
       formInstanceGuid = formInstanceGuid,
       questionGuid = questionGuid,
-      selections = listOf(rep.selection)
+      selections = listOf(rep.selection),
     )
     is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
       createdDate = LocalDateTime.now(clock),
       formInstanceGuid = formInstanceGuid,
       questionGuid = questionGuid,
-      text = rep.text
+      text = rep.text,
+    )
+    is FormInstanceYesNoQuestionRep.Creation -> FormInstanceYesNoQuestionModel(
+      createdDate = LocalDateTime.now(clock),
+      formInstanceGuid = formInstanceGuid,
+      questionGuid = questionGuid,
+      yes = rep.yes,
     )
     else -> unknownFormInstanceQuestion(rep::class)
   }
@@ -44,17 +52,22 @@ internal class FormInstanceQuestionMapper @Inject constructor(
     is FormInstanceDateQuestionModel -> FormInstanceDateQuestionRep.Complete(
       createdDate = model.createdDate,
       questionGuid = model.questionGuid,
-      date = model.date
+      date = model.date,
     )
     is FormInstanceRadioSelectorQuestionModel -> FormInstanceRadioSelectorQuestionRep.Complete(
       createdDate = model.createdDate,
       questionGuid = model.questionGuid,
-      selection = model.selections.single()
+      selection = model.selections.single(),
     )
     is FormInstanceTextQuestionModel -> FormInstanceTextQuestionRep.Complete(
       createdDate = model.createdDate,
       questionGuid = model.questionGuid,
-      text = model.text
+      text = model.text,
+    )
+    is FormInstanceYesNoQuestionModel -> FormInstanceYesNoQuestionRep.Complete(
+      createdDate = model.createdDate,
+      questionGuid = model.questionGuid,
+      yes = model.yes,
     )
     else -> unknownFormInstanceQuestion(model::class)
   }

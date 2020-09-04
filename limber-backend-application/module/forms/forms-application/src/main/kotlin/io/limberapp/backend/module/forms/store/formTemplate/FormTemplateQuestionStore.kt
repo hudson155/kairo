@@ -17,6 +17,7 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionModel
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -30,6 +31,7 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQ
     FormTemplateQuestionModel.Type.DATE -> FormTemplateDateQuestionModel::class.java
     FormTemplateQuestionModel.Type.RADIO_SELECTOR -> FormTemplateRadioSelectorQuestionModel::class.java
     FormTemplateQuestionModel.Type.TEXT -> FormTemplateTextQuestionModel::class.java
+    FormTemplateQuestionModel.Type.YES_NO -> FormTemplateYesNoQuestionModel::class.java
   }
 }
 

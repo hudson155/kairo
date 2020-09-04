@@ -95,4 +95,32 @@ internal class PostFormTemplateQuestionTypeTest : ResourceTest() {
       assertEquals(formTemplateRep, actual)
     }
   }
+
+  @Test
+  fun yesNoQuestion() {
+    val featureGuid = UUID.randomUUID()
+
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.yesNoFixture.complete(this, 1)
+    formTemplateRep = formTemplateRep.copy(
+      questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
+    )
+    piperTest.test(
+      endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateRep.guid,
+        rep = FormTemplateQuestionRepFixtures.yesNoFixture.creation()
+      )
+    ) {
+      val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
+      assertEquals(formTemplateQuestionRep, actual)
+    }
+
+    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      assertEquals(formTemplateRep, actual)
+    }
+  }
 }

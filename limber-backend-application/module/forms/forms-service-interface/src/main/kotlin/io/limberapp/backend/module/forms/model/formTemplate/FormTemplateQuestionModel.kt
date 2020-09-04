@@ -16,6 +16,7 @@ interface FormTemplateQuestionModel {
     DATE,
     RADIO_SELECTOR,
     TEXT,
+    YES_NO,
   }
 
   interface Update {

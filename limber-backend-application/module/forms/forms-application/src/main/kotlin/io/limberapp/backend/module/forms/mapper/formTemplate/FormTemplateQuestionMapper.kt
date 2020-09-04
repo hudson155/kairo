@@ -7,10 +7,12 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionModel
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*
@@ -32,7 +34,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       helpText = rep.helpText,
       required = rep.required,
       earliest = rep.earliest,
-      latest = rep.latest
+      latest = rep.latest,
     )
     is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
       guid = uuidGenerator.generate(),
@@ -41,7 +43,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       label = rep.label,
       helpText = rep.helpText,
       required = rep.required,
-      options = rep.options
+      options = rep.options,
     )
     is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
       guid = uuidGenerator.generate(),
@@ -52,7 +54,15 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       required = rep.required,
       multiLine = rep.multiLine,
       placeholder = rep.placeholder,
-      validator = rep.validator
+      validator = rep.validator,
+    )
+    is FormTemplateYesNoQuestionRep.Creation -> FormTemplateYesNoQuestionModel(
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      formTemplateGuid = formTemplateGuid,
+      label = rep.label,
+      helpText = rep.helpText,
+      required = rep.required,
     )
     else -> unknownFormTemplateQuestion(rep::class)
   }
@@ -65,7 +75,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       helpText = model.helpText,
       required = model.required,
       earliest = model.earliest,
-      latest = model.latest
+      latest = model.latest,
     )
     is FormTemplateRadioSelectorQuestionModel -> FormTemplateRadioSelectorQuestionRep.Complete(
       guid = model.guid,
@@ -73,7 +83,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       label = model.label,
       helpText = model.helpText,
       required = model.required,
-      options = model.options
+      options = model.options,
     )
     is FormTemplateTextQuestionModel -> FormTemplateTextQuestionRep.Complete(
       guid = model.guid,
@@ -84,7 +94,14 @@ internal class FormTemplateQuestionMapper @Inject constructor(
       maxLength = if (model.multiLine) TEXT_QUESTION_MAX_LENGTH_MULTILINE else TEXT_QUESTION_MAX_LENGTH_ONE_LINE,
       multiLine = model.multiLine,
       placeholder = model.placeholder,
-      validator = model.validator
+      validator = model.validator,
+    )
+    is FormTemplateYesNoQuestionModel -> FormTemplateYesNoQuestionRep.Complete(
+      guid = model.guid,
+      createdDate = model.createdDate,
+      label = model.label,
+      helpText = model.helpText,
+      required = model.required,
     )
     else -> unknownFormTemplateQuestion(model::class)
   }

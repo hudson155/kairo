@@ -156,4 +156,51 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
       assertEquals(formInstanceRep, actual)
     }
   }
+
+  @Test
+  fun yesNoQuestion() {
+    val creatorAccountGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
+    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+
+    val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.yesNoFixture.complete(this, 1)
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    piperTest.setup(
+      endpoint = FormTemplateQuestionApi.Post(
+        featureGuid = featureGuid,
+        formTemplateGuid = formTemplateRep.guid,
+        rep = FormTemplateQuestionRepFixtures.yesNoFixture.creation(),
+      )
+    )
+
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    piperTest.setup(
+      endpoint = FormInstanceApi.Post(
+        featureGuid = featureGuid,
+        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+      )
+    )
+
+    val formInstanceQuestionRep =
+      FormInstanceQuestionRepFixtures.yesNoFixture.complete(this, formTemplateQuestionRep.guid)
+    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
+    piperTest.test(
+      endpoint = FormInstanceQuestionApi.Put(
+        featureGuid = featureGuid,
+        formInstanceGuid = formInstanceRep.guid,
+        questionGuid = formTemplateQuestionRep.guid,
+        rep = FormInstanceQuestionRepFixtures.yesNoFixture.creation(this)
+      )
+    ) {
+      val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
+      assertEquals(formInstanceQuestionRep, actual)
+    }
+
+    piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      assertEquals(formInstanceRep, actual)
+    }
+  }
 }

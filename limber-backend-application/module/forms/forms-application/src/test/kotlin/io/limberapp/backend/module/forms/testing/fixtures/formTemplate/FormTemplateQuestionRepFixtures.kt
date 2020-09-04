@@ -4,6 +4,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import java.time.LocalDateTime
 
@@ -71,6 +72,22 @@ internal object FormTemplateQuestionRepFixtures {
       multiLine = false,
       placeholder = null,
       validator = null,
+    )
+  })
+
+  val yesNoFixture = Fixture({
+    FormTemplateYesNoQuestionRep.Creation(
+      label = "Healthy?",
+      helpText = null,
+      required = true,
+    )
+  }, { idSeed ->
+    FormTemplateYesNoQuestionRep.Complete(
+      guid = deterministicUuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(fixedClock),
+      label = "Healthy?",
+      helpText = null,
+      required = true,
     )
   })
 }
