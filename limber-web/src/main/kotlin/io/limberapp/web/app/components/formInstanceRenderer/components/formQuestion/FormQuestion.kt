@@ -73,7 +73,10 @@ private fun RBuilder.component(props: Props) {
   }
 
   div(classes = s.c { it::root }) {
-    label { +props.question.label }
+    label {
+      if (props.question.required) +"* "
+      +props.question.label
+    }
     if (error) {
       // TODO (ENG-26) Handle error state better
       br {}
