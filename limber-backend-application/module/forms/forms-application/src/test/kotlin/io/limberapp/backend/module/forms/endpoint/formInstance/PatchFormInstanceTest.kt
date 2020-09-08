@@ -23,9 +23,8 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
     piperTest.test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, formInstanceUpdateRep),
+      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = true)),
       expectedException = FormInstanceNotFound()
     )
   }
@@ -47,9 +46,8 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
     piperTest.test(
-      endpoint = FormInstanceApi.Patch(feature1Guid, formInstanceRep.guid, formInstanceUpdateRep),
+      endpoint = FormInstanceApi.Patch(feature1Guid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
       expectedException = FormInstanceNotFound()
     )
 
@@ -64,9 +62,8 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = false)
     piperTest.test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, formInstanceUpdateRep),
+      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = false)),
       expectedException = ValidationException(FormInstanceRep.Update::submitted.name)
     )
   }
@@ -97,9 +94,8 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
     piperTest.test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep),
+      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
       expectedException = CannotSubmitFormBeforeAnsweringAllRequiredQuestions()
     )
 
@@ -125,12 +121,11 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
     formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
-    piperTest.setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep))
+    piperTest.setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)))
 
     piperTest.test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep),
+      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
       expectedException = CannotReSubmitFormInstance()
     )
 
@@ -156,9 +151,8 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
     formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
-    piperTest.test(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, formInstanceUpdateRep)) {
+    piperTest.test(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true))) {
       val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
       assertEquals(formInstanceRep, actual)
     }

@@ -18,9 +18,12 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val featureRoleGuid = UUID.randomUUID()
 
-    val featureRoleUpdateRep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("110"))
     piperTest.test(
-      endpoint = FeatureRoleApi.Patch(featureGuid, featureRoleGuid, featureRoleUpdateRep),
+      endpoint = FeatureRoleApi.Patch(
+        featureGuid = featureGuid,
+        featureRoleGuid = featureRoleGuid,
+        rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("110"))
+      ),
       expectedException = FeatureRoleNotFound()
     )
   }
@@ -36,9 +39,9 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     var featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, orgRoleRep.guid, 1)
     piperTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
 
-    val featureRoleUpdateRep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("110"))
-    featureRoleRep = featureRoleRep.copy(permissions = featureRoleUpdateRep.permissions!!)
-    piperTest.test(FeatureRoleApi.Patch(featureGuid, featureRoleRep.guid, featureRoleUpdateRep)) {
+    featureRoleRep = featureRoleRep.copy(permissions = FormsFeaturePermissions.fromBitString("110"))
+    piperTest.test(FeatureRoleApi.Patch(featureGuid, featureRoleRep.guid,
+      FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("110")))) {
       val actual = json.parse<FeatureRoleRep.Complete>(response.content!!)
       assertEquals(featureRoleRep, actual)
     }

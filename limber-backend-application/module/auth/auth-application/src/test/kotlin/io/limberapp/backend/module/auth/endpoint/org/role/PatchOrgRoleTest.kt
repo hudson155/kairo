@@ -17,9 +17,12 @@ internal class PatchOrgRoleTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
     val orgRoleGuid = UUID.randomUUID()
 
-    val orgRoleUpdateRep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("110"))
     piperTest.test(
-      endpoint = OrgRoleApi.Patch(orgGuid, orgRoleGuid, orgRoleUpdateRep),
+      endpoint = OrgRoleApi.Patch(
+        orgGuid = orgGuid,
+        orgRoleGuid = orgRoleGuid,
+        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("110"))
+      ),
       expectedException = OrgRoleNotFound()
     )
   }
@@ -34,9 +37,8 @@ internal class PatchOrgRoleTest : ResourceTest() {
     val memberOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 1)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.memberFixture.creation()))
 
-    val orgRoleUpdateRep = OrgRoleRep.Update(name = adminOrgRoleRep.name)
     piperTest.test(
-      endpoint = OrgRoleApi.Patch(orgGuid, memberOrgRoleRep.guid, orgRoleUpdateRep),
+      endpoint = OrgRoleApi.Patch(orgGuid, memberOrgRoleRep.guid, OrgRoleRep.Update(name = adminOrgRoleRep.name)),
       expectedException = OrgRoleNameIsNotUnique()
     )
 
@@ -53,9 +55,9 @@ internal class PatchOrgRoleTest : ResourceTest() {
     var orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    val orgRoleUpdateRep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("110"))
-    orgRoleRep = orgRoleRep.copy(permissions = orgRoleUpdateRep.permissions!!)
-    piperTest.test(OrgRoleApi.Patch(orgGuid, orgRoleRep.guid, orgRoleUpdateRep)) {
+    orgRoleRep = orgRoleRep.copy(permissions = OrgPermissions.fromBitString("110"))
+    piperTest.test(OrgRoleApi.Patch(orgGuid, orgRoleRep.guid,
+      OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("110")))) {
       val actual = json.parse<OrgRoleRep.Complete>(response.content!!)
       assertEquals(orgRoleRep, actual)
     }

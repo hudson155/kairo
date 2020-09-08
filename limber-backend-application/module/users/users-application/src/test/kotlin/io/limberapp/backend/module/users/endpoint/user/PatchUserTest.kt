@@ -14,9 +14,8 @@ internal class PatchUserTest : ResourceTest() {
   fun doesNotExist() {
     val userGuid = UUID.randomUUID()
 
-    val updateRep = UserRep.Update(firstName = "Gunner")
     piperTest.test(
-      endpoint = UserApi.Patch(userGuid, updateRep),
+      endpoint = UserApi.Patch(userGuid, UserRep.Update(firstName = "Gunner")),
       expectedException = UserNotFound()
     )
   }
@@ -28,9 +27,8 @@ internal class PatchUserTest : ResourceTest() {
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    val updateRep = UserRep.Update(firstName = "Gunner")
-    userRep = userRep.copy(firstName = updateRep.firstName!!)
-    piperTest.test(UserApi.Patch(userRep.guid, updateRep)) {
+    userRep = userRep.copy(firstName = "Gunner")
+    piperTest.test(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner"))) {
       val actual = json.parse<UserRep.Complete>(response.content!!)
       assertEquals(userRep, actual)
     }

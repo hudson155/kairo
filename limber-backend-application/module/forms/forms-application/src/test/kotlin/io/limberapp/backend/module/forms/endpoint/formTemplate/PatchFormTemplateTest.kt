@@ -16,9 +16,8 @@ internal class PatchFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
     piperTest.test(
-      endpoint = FormTemplateApi.Patch(featureGuid, formTemplateGuid, formTemplateUpdateRep),
+      endpoint = FormTemplateApi.Patch(featureGuid, formTemplateGuid, FormTemplateRep.Update("Crazy Form")),
       expectedException = FormTemplateNotFound()
     )
   }
@@ -31,9 +30,8 @@ internal class PatchFormTemplateTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
     piperTest.test(
-      endpoint = FormTemplateApi.Patch(feature1Guid, formTemplateRep.guid, formTemplateUpdateRep),
+      endpoint = FormTemplateApi.Patch(feature1Guid, formTemplateRep.guid, FormTemplateRep.Update("Crazy Form")),
       expectedException = FormTemplateNotFound()
     )
 
@@ -50,9 +48,8 @@ internal class PatchFormTemplateTest : ResourceTest() {
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateUpdateRep = FormTemplateRep.Update("Crazy Form")
-    formTemplateRep = formTemplateRep.copy(title = formTemplateUpdateRep.title!!)
-    piperTest.test(FormTemplateApi.Patch(featureGuid, formTemplateRep.guid, formTemplateUpdateRep)) {
+    formTemplateRep = formTemplateRep.copy(title = "Crazy Form")
+    piperTest.test(FormTemplateApi.Patch(featureGuid, formTemplateRep.guid, FormTemplateRep.Update("Crazy Form"))) {
       val actual = json.parse<FormTemplateRep.Summary>(response.content!!)
       assertEquals(formTemplateRep.summary(), actual)
     }

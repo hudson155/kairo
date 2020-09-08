@@ -212,13 +212,12 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    val formInstanceUpdateRep = FormInstanceRep.Update(submitted = true)
     formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
     piperTest.setup(
       endpoint = FormInstanceApi.Patch(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
-        rep = formInstanceUpdateRep,
+        rep = FormInstanceRep.Update(submitted = true),
       )
     )
 

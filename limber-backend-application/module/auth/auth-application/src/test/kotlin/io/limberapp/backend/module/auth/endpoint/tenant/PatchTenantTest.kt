@@ -15,9 +15,8 @@ internal class PatchTenantTest : ResourceTest() {
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    val tenantUpdateRep = TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
     piperTest.test(
-      endpoint = TenantApi.Patch(orgGuid, tenantUpdateRep),
+      endpoint = TenantApi.Patch(orgGuid, TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")),
       expectedException = TenantNotFound()
     )
   }
@@ -32,9 +31,8 @@ internal class PatchTenantTest : ResourceTest() {
 
     piperTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
-    val tenantUpdateRep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
     piperTest.test(
-      endpoint = TenantApi.Patch(someclientOrgGuid, tenantUpdateRep),
+      endpoint = TenantApi.Patch(someclientOrgGuid, TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)),
       expectedException = Auth0ClientIdAlreadyRegistered()
     )
   }
@@ -47,9 +45,9 @@ internal class PatchTenantTest : ResourceTest() {
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
-    val tenantUpdateRep = TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
-    tenantRep = tenantRep.copy(auth0ClientId = tenantUpdateRep.auth0ClientId!!)
-    piperTest.test(TenantApi.Patch(originalTenantRep.orgGuid, tenantUpdateRep)) {
+    tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
+    piperTest.test(TenantApi.Patch(originalTenantRep.orgGuid,
+      TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"))) {
       val actual = json.parse<TenantRep.Complete>(response.content!!)
       assertEquals(tenantRep, actual)
     }

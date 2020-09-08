@@ -19,13 +19,12 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     val formTemplateGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
-    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateGuid,
         questionGuid = questionGuid,
-        rep = formTemplateQuestionUpdateRep
+        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -39,13 +38,12 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = questionGuid,
-        rep = formTemplateQuestionUpdateRep
+        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -72,13 +70,12 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
       )
     )
 
-    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Patch(
         featureGuid = UUID.randomUUID(),
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
-        rep = formTemplateQuestionUpdateRep
+        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -110,13 +107,12 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
       )
     )
 
-    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = UUID.randomUUID(),
         questionGuid = formTemplateQuestionRep.guid,
-        rep = formTemplateQuestionUpdateRep
+        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -148,8 +144,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
       )
     )
 
-    val formTemplateQuestionUpdateRep = FormTemplateTextQuestionRep.Update("Renamed Question")
-    formTemplateQuestionRep = formTemplateQuestionRep.copy(label = formTemplateQuestionUpdateRep.label!!)
+    formTemplateQuestionRep = formTemplateQuestionRep.copy(label = "Renamed Question")
     formTemplateRep = formTemplateRep.copy(
       questions = formTemplateRep.questions.map {
         if (it.guid == formTemplateQuestionRep.guid) formTemplateQuestionRep else it
@@ -160,7 +155,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
-        rep = formTemplateQuestionUpdateRep
+        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       )
     ) {}
 
