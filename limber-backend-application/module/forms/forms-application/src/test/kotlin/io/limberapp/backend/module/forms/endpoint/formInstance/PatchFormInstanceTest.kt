@@ -80,7 +80,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,

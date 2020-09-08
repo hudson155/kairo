@@ -54,7 +54,7 @@ abstract class SimplePiperApp<C : Config>(application: Application, protected va
 
   override fun onStart(application: Application): Context {
     // First, create the injector.
-    val modules = getMainModules(application).plus(modules)
+    val modules = getMainModules(application) + modules
     val injector = Guice.createInjector(Stage.PRODUCTION, modules)
 
     // Then, configure the application.

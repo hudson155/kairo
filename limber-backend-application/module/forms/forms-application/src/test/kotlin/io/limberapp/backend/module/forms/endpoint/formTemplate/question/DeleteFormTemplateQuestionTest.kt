@@ -46,9 +46,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
-    )
+    formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -77,9 +75,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
-    )
+    formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -108,9 +104,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
-    )
+    formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,

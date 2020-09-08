@@ -53,7 +53,7 @@ internal class PostTenantDomainTest : ResourceTest() {
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
     val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
-    tenantRep = tenantRep.copy(domains = tenantRep.domains.plus(tenantDomainRep))
+    tenantRep = tenantRep.copy(domains = tenantRep.domains + tenantDomainRep)
     piperTest.test(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation())) {
       val actual = json.parse<TenantDomainRep.Complete>(response.content!!)
       assertEquals(tenantDomainRep, actual)

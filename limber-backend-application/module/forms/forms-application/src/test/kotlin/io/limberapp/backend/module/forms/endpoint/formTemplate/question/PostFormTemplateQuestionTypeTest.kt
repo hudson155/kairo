@@ -21,7 +21,7 @@ internal class PostFormTemplateQuestionTypeTest : ResourceTest() {
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.dateFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
+      questions = formTemplateRep.questions + formTemplateQuestionRep
     )
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
@@ -49,7 +49,7 @@ internal class PostFormTemplateQuestionTypeTest : ResourceTest() {
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.radioSelectorFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
+      questions = formTemplateRep.questions + formTemplateQuestionRep
     )
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
@@ -76,9 +76,7 @@ internal class PostFormTemplateQuestionTypeTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
-    )
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -104,9 +102,7 @@ internal class PostFormTemplateQuestionTypeTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.yesNoFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions.plus(formTemplateQuestionRep)
-    )
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.test(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,

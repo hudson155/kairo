@@ -25,7 +25,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.dateFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -44,7 +44,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.dateFixture.complete(this, formTemplateQuestionRep.guid)
-    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
+    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
     piperTest.test(
       endpoint = FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
@@ -72,7 +72,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.radioSelectorFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -91,7 +91,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.radioSelectorFixture.complete(this, formTemplateQuestionRep.guid)
-    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
+    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
     piperTest.test(
       endpoint = FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
@@ -119,7 +119,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -138,7 +138,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
-    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
+    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
     piperTest.test(
       endpoint = FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
@@ -166,7 +166,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.yesNoFixture.complete(this, 1)
-    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions.plus(formTemplateQuestionRep))
+    formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
@@ -185,7 +185,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.yesNoFixture.complete(this, formTemplateQuestionRep.guid)
-    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions.plus(formInstanceQuestionRep))
+    formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
     piperTest.test(
       endpoint = FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,

@@ -61,7 +61,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
       as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
+      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
@@ -99,7 +99,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
       as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
+      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
@@ -137,7 +137,7 @@ internal class PatchFormTemplateQuestionTest : ResourceTest() {
     var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
       as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep).plus(formTemplateRep.questions)
+      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     piperTest.setup(
       endpoint = FormTemplateQuestionApi.Post(

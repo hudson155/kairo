@@ -29,7 +29,7 @@ internal class PutUserRoleTest : ResourceTest() {
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
+    userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
     piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
 
     piperTest.test(UserApi.Get(userRep.guid)) {
@@ -45,7 +45,7 @@ internal class PutUserRoleTest : ResourceTest() {
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
+    userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
     piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
 
     piperTest.test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}

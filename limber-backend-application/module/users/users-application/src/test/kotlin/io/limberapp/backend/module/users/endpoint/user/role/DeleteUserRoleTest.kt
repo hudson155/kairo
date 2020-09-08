@@ -48,7 +48,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    userRep = userRep.copy(roles = userRep.roles.plus(JwtRole.SUPERUSER))
+    userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
     piperTest.setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
 
     userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
