@@ -24,8 +24,11 @@ internal class GetByOwnerUserGuidTest : ResourceTest() {
   fun happyPath() {
     val ownerUserGuid = UUID.randomUUID()
 
-    val crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+
+    crankyPastaOrgRep = crankyPastaOrgRep.copy(ownerUserGuid = ownerUserGuid)
+    piperTest.setup(OrgApi.Patch(crankyPastaOrgRep.guid, OrgRep.Update(ownerUserGuid = ownerUserGuid)))
 
     piperTest.test(OrgApi.GetByOwnerUserGuid(ownerUserGuid)) {
       val actual = json.parse<OrgRep.Complete>(response.content!!)

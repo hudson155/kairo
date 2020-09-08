@@ -73,12 +73,11 @@ as other Auth0 tenants.
 This inserts the most basic database entities.
 Make these requests using Postman, and use a JWT from a user that has global admin status.
 
-1. **Create the org**. Note, you'll change the `ownerUserGuid` later.
+1. **Create the org**. Note, you'll set the `ownerUserGuid` later.
     ```
     POST https://api.limberapp.io/orgs
     {
-        "name": "Placeholder",
-        "ownerUserGuid": null
+        "name": "Placeholder"
     }
     ```
 
@@ -86,12 +85,13 @@ Make these requests using Postman, and use a JWT from a user that has global adm
     ```
     POST https://api.limberapp.io/tenants
     {
-    	"orgGuid": "<placeholder>", // Get this from the "Create the org" request's response.
-    	"auth0ClientId": "<placeholder>", // Get this from Auth0.
+    	"orgGuid": "{orgGuid}", // Get this from the "Create the org" request's response.
+    	"auth0ClientId": "{auth0ClientId}", // Get this from Auth0.
     	"domain": {
     		"domain": "placeholder.limberapp.io"
     	}
     }
+   ```
 
 ### Test the tenant
 
@@ -102,9 +102,10 @@ Make sure everything works ok.
 
 ### Update the owner user GUID
 
-1. Manually update the `ownerUserGuid` for the organization.
-```postgresql
-UPDATE orgs.org
-SET owner_user_guid = :ownerUserGuid
-WHERE guid = :orgGuid
-```
+1. **Set the org owner** for the organization.
+    ```
+    PATCH https://api.limberapp.io/orgs/{orgGuid}
+    {
+        "ownerUserGuid": "{ownerUserGuid}"
+    }
+   ```

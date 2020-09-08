@@ -20,10 +20,8 @@ internal class DeleteOrgTest : ResourceTest() {
 
   @Test
   fun happyPath() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     piperTest.test(OrgApi.Delete(orgRep.guid)) {}
 

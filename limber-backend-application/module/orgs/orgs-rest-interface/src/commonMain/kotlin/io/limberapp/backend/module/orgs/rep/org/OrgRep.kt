@@ -16,8 +16,6 @@ object OrgRep {
   @Serializable
   data class Creation(
     val name: String,
-    @Serializable(with = UuidSerializer::class)
-    val ownerUserGuid: UUID?,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::name) { Validator.orgName(value) }

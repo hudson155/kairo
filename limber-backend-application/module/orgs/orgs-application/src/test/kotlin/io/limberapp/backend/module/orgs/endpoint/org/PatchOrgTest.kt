@@ -23,10 +23,8 @@ internal class PatchOrgTest : ResourceTest() {
 
   @Test
   fun happyPathName() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     val orgUpdateRep = OrgRep.Update(name = "Standing Teeth")
     orgRep = orgRep.copy(name = orgUpdateRep.name!!)
@@ -43,10 +41,8 @@ internal class PatchOrgTest : ResourceTest() {
 
   @Test
   fun happyPathOwnerUserGuid() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     val orgUpdateRep = OrgRep.Update(ownerUserGuid = UUID.randomUUID())
     orgRep = orgRep.copy(ownerUserGuid = orgUpdateRep.ownerUserGuid!!)

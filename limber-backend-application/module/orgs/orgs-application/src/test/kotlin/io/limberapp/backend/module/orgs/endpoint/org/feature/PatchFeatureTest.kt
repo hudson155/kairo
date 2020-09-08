@@ -28,11 +28,10 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun featureDoesNotExist() {
-    val ownerUserGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     val featureUpdateRep = FeatureRep.Update(name = "Renamed Feature")
     piperTest.test(
@@ -48,10 +47,8 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun pathConflict() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -71,10 +68,8 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathRank() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -98,10 +93,8 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathName() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -125,10 +118,8 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathPath() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
@@ -152,10 +143,8 @@ internal class PatchFeatureTest : ResourceTest() {
 
   @Test
   fun happyPathSetAndRemoveDefault() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     var featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))

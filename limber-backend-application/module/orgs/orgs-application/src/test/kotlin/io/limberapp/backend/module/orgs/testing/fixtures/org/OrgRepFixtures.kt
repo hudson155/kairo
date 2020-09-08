@@ -7,30 +7,30 @@ import java.util.*
 
 internal object OrgRepFixtures {
   data class Fixture(
-    val creation: (ownerUserGuid: UUID) -> OrgRep.Creation,
-    val complete: ResourceTest.(ownerUserGuid: UUID, idSeed: Int) -> OrgRep.Complete,
+    val creation: () -> OrgRep.Creation,
+    val complete: ResourceTest.(idSeed: Int) -> OrgRep.Complete,
   )
 
-  val crankyPastaFixture = Fixture({ ownerUserGuid ->
-    OrgRep.Creation("Cranky Pasta", ownerUserGuid)
-  }, { ownerUserGuid, idSeed ->
+  val crankyPastaFixture = Fixture({
+    OrgRep.Creation("Cranky Pasta")
+  }, { idSeed ->
     OrgRep.Complete(
       guid = deterministicUuidGenerator[idSeed],
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
-      ownerUserGuid = ownerUserGuid,
+      ownerUserGuid = null,
       features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
     )
   })
 
-  val dynamicTennisFixture = Fixture({ ownerUserGuid ->
-    OrgRep.Creation("Dynamic Tennis", ownerUserGuid)
-  }, { ownerUserGuid, idSeed ->
+  val dynamicTennisFixture = Fixture({
+    OrgRep.Creation("Dynamic Tennis")
+  }, { idSeed ->
     OrgRep.Complete(
       guid = deterministicUuidGenerator[idSeed],
       createdDate = LocalDateTime.now(fixedClock),
       name = "Dynamic Tennis",
-      ownerUserGuid = ownerUserGuid,
+      ownerUserGuid = null,
       features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
     )
   })

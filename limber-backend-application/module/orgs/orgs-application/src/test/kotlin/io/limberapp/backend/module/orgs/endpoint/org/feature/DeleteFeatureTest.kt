@@ -25,11 +25,10 @@ internal class DeleteFeatureTest : ResourceTest() {
 
   @Test
   fun featureDoesNotExist() {
-    val ownerUserGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     piperTest.test(
       endpoint = OrgFeatureApi.Delete(orgRep.guid, featureGuid),
@@ -44,10 +43,8 @@ internal class DeleteFeatureTest : ResourceTest() {
 
   @Test
   fun happyPath() {
-    val ownerUserGuid = UUID.randomUUID()
-
-    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, ownerUserGuid, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation(ownerUserGuid)))
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
