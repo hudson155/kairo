@@ -76,7 +76,8 @@ abstract class PiperTest(
   }
 
   fun stop() {
-    engine.stop(0L, 0L)
+    @Suppress("MagicNumber")
+    engine.stop(3000, 5000)
   }
 
   private fun withPiperTestApp(test: TestApplicationEngine.() -> Unit) {

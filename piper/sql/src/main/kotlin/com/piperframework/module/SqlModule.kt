@@ -12,12 +12,12 @@ import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
  * SqlModule configures bindings for an SQL database.
  */
 @Suppress("LateinitUsage")
-open class SqlModule(config: SqlDatabaseConfig) : ModuleWithLifecycle() {
+open class SqlModule(config: SqlDatabaseConfig, private val runMigrations: Boolean) : ModuleWithLifecycle() {
   protected val wrapper = SqlWrapper(config)
 
   override fun configure() {
     wrapper.connect()
-    wrapper.runMigrations()
+    if (runMigrations) wrapper.runMigrations()
     bind(Jdbi::class.java).toInstance(createJdbi())
   }
 

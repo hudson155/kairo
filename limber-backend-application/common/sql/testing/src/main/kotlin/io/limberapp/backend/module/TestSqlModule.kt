@@ -3,7 +3,7 @@ package io.limberapp.backend.module
 import com.piperframework.config.database.SqlDatabaseConfig
 import java.sql.Connection
 
-open class TestSqlModule(config: SqlDatabaseConfig) : LimberSqlModule(config) {
+open class TestSqlModule(config: SqlDatabaseConfig) : LimberSqlModule(config, runMigrations = true) {
   fun dropDatabase() {
     val connection = checkNotNull(wrapper.dataSource).connection
     val customSchemas = listOf("auth", "forms", "orgs", "users")

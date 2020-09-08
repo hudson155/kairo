@@ -52,7 +52,7 @@ abstract class SimplePiperApp<C : Config>(
   application: Application,
   protected val config: C,
 ) : PiperApp<SimplePiperApp.Context>(application) {
-  data class Context(val modules: List<ModuleWithLifecycle>)
+  data class Context(val injector: Injector, val modules: List<ModuleWithLifecycle>)
 
   override fun onStart(application: Application): Context {
     // First, create the injector.
@@ -71,7 +71,7 @@ abstract class SimplePiperApp<C : Config>(
     application.handle404()
 
     // Return the context.
-    return Context(modules)
+    return Context(injector, modules)
   }
 
   final override fun onStop(application: Application, context: Context) {

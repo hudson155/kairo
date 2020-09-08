@@ -30,10 +30,12 @@ abstract class PiperApp<Context : Any>(application: Application) {
     @Suppress("TooGenericExceptionCaught")
     try {
       check(context == null)
-      context = onStart(application)
+      val newContext = onStart(application)
+      context = newContext
+      application.afterStart(newContext)
     } catch (e: Throwable) {
       logger.error("An error occurred during application startup. Shutting down...", e)
-      application.shutDown()
+      application.shutDown(1)
     }
   }
 
@@ -45,20 +47,22 @@ abstract class PiperApp<Context : Any>(application: Application) {
 
   abstract fun onStart(application: Application): Context
 
-  abstract fun onStop(application: Application, context: Context)
+  protected open fun Application.afterStart(context: Context) {}
 
-  /**
-   * Implementation adapted from [io.ktor.server.engine.ShutDownUrl].
-   */
-  private fun Application.shutDown() {
-    val latch = CountDownLatch(1)
-    thread {
-      @Suppress("MagicNumber")
-      latch.await(10L, TimeUnit.SECONDS)
-      environment.monitor.raise(ApplicationStopPreparing, environment)
-      (environment as? ApplicationEngineEnvironment)?.stop() ?: dispose()
-      exitProcess(1)
-    }
-    latch.countDown()
+  abstract fun onStop(application: Application, context: Context)
+}
+
+/**
+ * Implementation adapted from [io.ktor.server.engine.ShutDownUrl].
+ */
+fun Application.shutDown(status: Int) {
+  val latch = CountDownLatch(1)
+  thread {
+    @Suppress("MagicNumber")
+    latch.await(10L, TimeUnit.SECONDS)
+    environment.monitor.raise(ApplicationStopPreparing, environment)
+    (environment as? ApplicationEngineEnvironment)?.stop() ?: dispose()
+    exitProcess(status)
   }
+  latch.countDown()
 }
