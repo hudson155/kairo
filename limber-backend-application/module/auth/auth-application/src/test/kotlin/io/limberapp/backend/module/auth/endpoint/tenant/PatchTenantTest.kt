@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
@@ -48,12 +49,12 @@ internal class PatchTenantTest : ResourceTest() {
     tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
     piperTest.test(TenantApi.Patch(originalTenantRep.orgGuid,
       TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"))) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
 
     piperTest.test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
   }

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -31,7 +32,7 @@ internal class GetByOwnerUserGuidTest : ResourceTest() {
     piperTest.setup(OrgApi.Patch(crankyPastaOrgRep.guid, OrgRep.Update(ownerUserGuid = ownerUserGuid)))
 
     piperTest.test(OrgApi.GetByOwnerUserGuid(ownerUserGuid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(crankyPastaOrgRep, actual)
     }
   }

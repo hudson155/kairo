@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.feature.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleOrgRoleIsNotUnique
@@ -31,7 +32,7 @@ internal class PostFeatureRoleTest : ResourceTest() {
     )
 
     piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureAdminOrgRoleRep), actual)
     }
   }
@@ -46,12 +47,12 @@ internal class PostFeatureRoleTest : ResourceTest() {
 
     val featureAdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this, adminOrgRoleRep.guid, 1)
     piperTest.test(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid))) {
-      val actual = json.parse<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRoleRep.Complete>(responseContent)
       assertEquals(featureAdminRoleRep, actual)
     }
 
     piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureAdminRoleRep), actual)
     }
   }

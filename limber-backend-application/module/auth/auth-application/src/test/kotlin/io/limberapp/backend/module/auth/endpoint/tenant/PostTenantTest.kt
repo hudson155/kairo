@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
@@ -70,23 +71,23 @@ internal class PostTenantTest : ResourceTest() {
 
     val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
     piperTest.test(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid))) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(limberappTenantRep, actual)
     }
 
     val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, someclientOrgGuid)
     piperTest.test(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid))) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(someclientTenantRep, actual)
     }
 
     piperTest.test(TenantApi.Get(limberappOrgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(limberappTenantRep, actual)
     }
 
     piperTest.test(TenantApi.Get(someclientOrgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(someclientTenantRep, actual)
     }
   }

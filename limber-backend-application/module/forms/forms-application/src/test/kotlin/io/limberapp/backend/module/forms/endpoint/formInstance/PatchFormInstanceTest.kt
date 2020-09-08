@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.piperframework.endpoint.exception.ValidationException
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
@@ -52,7 +53,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -100,7 +101,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -130,7 +131,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -153,12 +154,12 @@ internal class PatchFormInstanceTest : ResourceTest() {
 
     formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
     piperTest.test(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true))) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }

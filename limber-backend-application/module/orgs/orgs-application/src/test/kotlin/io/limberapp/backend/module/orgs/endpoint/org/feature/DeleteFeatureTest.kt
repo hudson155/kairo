@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
@@ -36,7 +37,7 @@ internal class DeleteFeatureTest : ResourceTest() {
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -58,7 +59,7 @@ internal class DeleteFeatureTest : ResourceTest() {
     piperTest.test(OrgFeatureApi.Delete(orgRep.guid, formsFeatureRep.guid)) {}
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }

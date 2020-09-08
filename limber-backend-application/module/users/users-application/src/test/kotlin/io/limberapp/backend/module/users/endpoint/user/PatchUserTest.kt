@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
@@ -29,12 +30,12 @@ internal class PatchUserTest : ResourceTest() {
 
     userRep = userRep.copy(firstName = "Gunner")
     piperTest.test(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner"))) {
-      val actual = json.parse<UserRep.Complete>(response.content!!)
+      val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
 
     piperTest.test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(response.content!!)
+      val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
   }

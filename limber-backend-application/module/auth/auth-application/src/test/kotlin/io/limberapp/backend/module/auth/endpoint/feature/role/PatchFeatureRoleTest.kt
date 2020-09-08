@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.feature.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
@@ -42,12 +43,12 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     featureRoleRep = featureRoleRep.copy(permissions = FormsFeaturePermissions.fromBitString("110"))
     piperTest.test(FeatureRoleApi.Patch(featureGuid, featureRoleRep.guid,
       FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("110")))) {
-      val actual = json.parse<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRoleRep.Complete>(responseContent)
       assertEquals(featureRoleRep, actual)
     }
 
     piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureRoleRep), actual)
     }
   }

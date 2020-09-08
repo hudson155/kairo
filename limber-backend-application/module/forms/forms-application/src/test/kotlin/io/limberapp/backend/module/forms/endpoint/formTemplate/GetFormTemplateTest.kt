@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
@@ -43,7 +44,7 @@ internal class GetFormTemplateTest : ResourceTest() {
     piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }

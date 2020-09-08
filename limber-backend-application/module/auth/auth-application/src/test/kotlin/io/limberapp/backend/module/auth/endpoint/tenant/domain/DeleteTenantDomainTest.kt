@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
@@ -38,7 +39,7 @@ internal class DeleteTenantDomainTest : ResourceTest() {
     )
 
     piperTest.test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
   }
@@ -53,7 +54,7 @@ internal class DeleteTenantDomainTest : ResourceTest() {
     val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
     tenantRep = tenantRep.copy(domains = tenantRep.domains + tenantDomainRep)
     piperTest.test(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation())) {
-      val actual = json.parse<TenantDomainRep.Complete>(response.content!!)
+      val actual = json.parse<TenantDomainRep.Complete>(responseContent)
       assertEquals(tenantDomainRep, actual)
     }
 
@@ -61,7 +62,7 @@ internal class DeleteTenantDomainTest : ResourceTest() {
     piperTest.test(TenantDomainApi.Delete(orgGuid, tenantDomainRep.domain)) {}
 
     piperTest.test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
   }

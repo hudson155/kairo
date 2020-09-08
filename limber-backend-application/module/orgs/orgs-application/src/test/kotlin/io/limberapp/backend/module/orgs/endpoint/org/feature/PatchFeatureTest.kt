@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
@@ -39,7 +40,7 @@ internal class PatchFeatureTest : ResourceTest() {
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -63,7 +64,7 @@ internal class PatchFeatureTest : ResourceTest() {
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -87,7 +88,7 @@ internal class PatchFeatureTest : ResourceTest() {
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -110,12 +111,12 @@ internal class PatchFeatureTest : ResourceTest() {
       features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     piperTest.test(OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(rank = 3))) {
-      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -140,12 +141,12 @@ internal class PatchFeatureTest : ResourceTest() {
     piperTest.test(OrgFeatureApi.Patch(orgRep.guid,
       formsFeatureRep.guid,
       FeatureRep.Update(name = "Renamed Feature"))) {
-      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -168,12 +169,12 @@ internal class PatchFeatureTest : ResourceTest() {
       features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     piperTest.test(OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(path = "/renamed"))) {
-      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -200,7 +201,7 @@ internal class PatchFeatureTest : ResourceTest() {
     piperTest.test(
       endpoint = OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = true))
     ) {
-      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
 
@@ -211,12 +212,12 @@ internal class PatchFeatureTest : ResourceTest() {
     piperTest.test(
       endpoint = OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = false))
     ) {
-      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }

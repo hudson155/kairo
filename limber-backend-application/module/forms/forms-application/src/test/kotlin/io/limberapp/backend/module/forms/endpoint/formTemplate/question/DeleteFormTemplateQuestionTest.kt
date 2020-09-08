@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
@@ -62,7 +63,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }
@@ -91,7 +92,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }
@@ -120,7 +121,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     piperTest.test(FormTemplateQuestionApi.Delete(featureGuid, formTemplateRep.guid, formTemplateQuestionRep.guid)) {}
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }

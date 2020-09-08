@@ -1,6 +1,7 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
 import com.piperframework.exception.exception.badRequest.RankOutOfBounds
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
@@ -46,7 +47,7 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }
@@ -106,12 +107,12 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       )
     ) {
-      val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateQuestionRep.Complete>(responseContent)
       assertEquals(formTemplateQuestionRep, actual)
     }
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }
@@ -134,12 +135,12 @@ internal class PostFormTemplateQuestionTest : ResourceTest() {
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       )
     ) {
-      val actual = json.parse<FormTemplateQuestionRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateQuestionRep.Complete>(responseContent)
       assertEquals(formTemplateQuestionRep, actual)
     }
 
     piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(response.content!!)
+      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
   }

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
@@ -41,7 +42,7 @@ internal class DeleteUserTest : ResourceTest() {
     )
 
     piperTest.test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(response.content!!)
+      val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
   }

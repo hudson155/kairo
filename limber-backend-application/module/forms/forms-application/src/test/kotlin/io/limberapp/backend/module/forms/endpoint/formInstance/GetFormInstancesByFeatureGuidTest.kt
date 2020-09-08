@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -19,7 +20,7 @@ object GetFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
-        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
+        val actual = json.parseList<FormInstanceRep.Summary>(responseContent)
         assertTrue(actual.isEmpty())
       }
     }
@@ -53,7 +54,7 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
-        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
+        val actual = json.parseList<FormInstanceRep.Summary>(responseContent)
         assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()), actual)
       }
     }
@@ -83,7 +84,7 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = UUID.randomUUID())) {
-        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
+        val actual = json.parseList<FormInstanceRep.Summary>(responseContent)
         assertTrue(actual.isEmpty())
       }
     }
@@ -117,7 +118,7 @@ object GetFormInstancesByFeatureGuidTest {
       )
 
       piperTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = creatorAccountGuid)) {
-        val actual = json.parseList<FormInstanceRep.Summary>(response.content!!)
+        val actual = json.parseList<FormInstanceRep.Summary>(responseContent)
         assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()), actual)
       }
     }

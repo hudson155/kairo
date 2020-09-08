@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
@@ -60,12 +61,12 @@ internal class PostFormInstanceTest : ResourceTest() {
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     ) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }

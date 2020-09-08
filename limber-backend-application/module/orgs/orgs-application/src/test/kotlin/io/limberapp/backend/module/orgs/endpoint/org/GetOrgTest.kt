@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
@@ -26,7 +27,7 @@ internal class GetOrgTest : ResourceTest() {
     piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }

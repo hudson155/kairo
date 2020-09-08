@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
@@ -26,7 +27,7 @@ internal class PostOrgRoleTest : ResourceTest() {
     )
 
     piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
-      val actual = json.parseSet<OrgRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
       assertEquals(setOf(adminOrgRoleRep), actual)
     }
   }
@@ -37,12 +38,12 @@ internal class PostOrgRoleTest : ResourceTest() {
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.test(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation())) {
-      val actual = json.parse<OrgRoleRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRoleRep.Complete>(responseContent)
       assertEquals(orgRoleRep, actual)
     }
 
     piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
-      val actual = json.parseSet<OrgRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleRep), actual)
     }
   }

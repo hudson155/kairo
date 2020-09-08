@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
@@ -44,7 +45,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest : ResourceTest() {
     piperTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
 
     piperTest.test(UserApi.GetByOrgGuidAndEmailAddress(orgGuid, userRep.emailAddress)) {
-      val actual = json.parse<UserRep.Complete>(response.content!!)
+      val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
   }

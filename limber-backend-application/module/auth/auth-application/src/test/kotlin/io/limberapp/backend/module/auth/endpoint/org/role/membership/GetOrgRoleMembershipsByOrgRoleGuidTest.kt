@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
@@ -21,7 +22,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest : ResourceTest() {
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
     piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
       assertTrue(actual.isEmpty())
     }
   }
@@ -54,7 +55,7 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest : ResourceTest() {
     )
 
     piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleMembershipRep0, orgRoleMembershipRep1), actual)
     }
   }

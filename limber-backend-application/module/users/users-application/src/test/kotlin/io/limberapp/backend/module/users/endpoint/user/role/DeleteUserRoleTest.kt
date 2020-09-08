@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
@@ -36,7 +37,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
     )
 
     piperTest.test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(response.content!!)
+      val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
   }
@@ -55,7 +56,7 @@ internal class DeleteUserRoleTest : ResourceTest() {
     piperTest.test(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER)) {}
 
     piperTest.test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(response.content!!)
+      val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
   }

@@ -18,6 +18,7 @@ import io.ktor.server.testing.createTestEnvironment
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @Suppress("LongParameterList") // For these methods, we're ok with it.
@@ -122,3 +123,5 @@ abstract class PiperTest(
     test()
   }
 }
+
+val TestApplicationCall.responseContent get() = assertNotNull(response.content)

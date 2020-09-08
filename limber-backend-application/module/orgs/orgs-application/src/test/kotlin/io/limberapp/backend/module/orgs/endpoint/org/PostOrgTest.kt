@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
@@ -12,12 +13,12 @@ internal class PostOrgTest : ResourceTest() {
   fun happyPath() {
     val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
     piperTest.test(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }

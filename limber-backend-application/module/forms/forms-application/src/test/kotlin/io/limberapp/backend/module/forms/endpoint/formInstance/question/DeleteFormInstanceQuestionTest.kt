@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
@@ -63,7 +64,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -116,7 +117,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -169,7 +170,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -231,7 +232,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     )
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -284,7 +285,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     ) {}
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -337,7 +338,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
     ) {}
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }

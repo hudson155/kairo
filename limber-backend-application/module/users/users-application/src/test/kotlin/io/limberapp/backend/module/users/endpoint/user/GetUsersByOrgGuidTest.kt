@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
@@ -16,7 +17,7 @@ internal class GetUsersByOrgGuidTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     piperTest.test(UserApi.GetByOrgGuid(orgGuid)) {
-      val actual = json.parseSet<UserRep.Summary>(response.content!!)
+      val actual = json.parseSet<UserRep.Summary>(responseContent)
       assertTrue(actual.isEmpty())
     }
   }
@@ -32,7 +33,7 @@ internal class GetUsersByOrgGuidTest : ResourceTest() {
     piperTest.test(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) {}
 
     piperTest.test(UserApi.GetByOrgGuid(orgGuid)) {
-      val actual = json.parseSet<UserRep.Summary>(response.content!!)
+      val actual = json.parseSet<UserRep.Summary>(responseContent)
       assertEquals(setOf(jeffHudsonUserRep.summary(), billGatesUserRep.summary()), actual)
     }
   }

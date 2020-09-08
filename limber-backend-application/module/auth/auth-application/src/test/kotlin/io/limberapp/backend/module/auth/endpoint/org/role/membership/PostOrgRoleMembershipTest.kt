@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.exception.org.AccountIsAlreadyMemberOfOrgRole
@@ -60,7 +61,7 @@ internal class PostOrgRoleMembershipTest : ResourceTest() {
     )
 
     piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleMembershipRep), actual)
     }
   }
@@ -83,7 +84,7 @@ internal class PostOrgRoleMembershipTest : ResourceTest() {
         rep = OrgRoleMembershipRepFixtures.fixture.creation(account0Guid)
       )
     ) {
-      val actual = json.parse<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(orgRoleMembership0Rep, actual)
     }
     val orgRoleMembership1Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
@@ -95,17 +96,17 @@ internal class PostOrgRoleMembershipTest : ResourceTest() {
         rep = OrgRoleMembershipRepFixtures.fixture.creation(account1Guid)
       )
     ) {
-      val actual = json.parse<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(orgRoleMembership1Rep, actual)
     }
 
     piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleMembership0Rep, orgRoleMembership1Rep), actual)
     }
 
     piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
-      val actual = json.parseSet<OrgRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleRep), actual)
     }
   }

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
@@ -28,7 +29,7 @@ internal class GetTenantByDomainTest : ResourceTest() {
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
     piperTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
-      val actual = json.parse<TenantRep.Complete>(response.content!!)
+      val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
   }

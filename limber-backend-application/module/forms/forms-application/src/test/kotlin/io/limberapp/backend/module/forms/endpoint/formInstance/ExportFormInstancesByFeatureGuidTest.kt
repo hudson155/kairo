@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
+import com.piperframework.testing.responseContent
 import com.piperframework.types.TimeZone
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
@@ -56,7 +57,7 @@ object ExportFormInstancesByFeatureGuidTest {
           """
           Number,Submitted date,Creator name,Creator email address
           """.trimIndent() + '\n',
-          response.content!!
+          responseContent
         )
       }
     }
@@ -128,7 +129,7 @@ object ExportFormInstancesByFeatureGuidTest {
           ${formInstance0Rep.number},"$FIXED_CLOCK_FORMATTED_VALUE",Jeff Hudson,jhudson@jhudson.ca
           ${formInstance1Rep.number},,Bill Gates,bill.gates@microsoft.com
           """.trimIndent() + '\n',
-          response.content!!
+          responseContent
         )
       }
     }
@@ -185,7 +186,7 @@ object ExportFormInstancesByFeatureGuidTest {
           """
           Number,Submitted date,Creator name,Creator email address
           """.trimIndent() + '\n',
-          response.content!!
+          responseContent
         )
       }
     }
@@ -253,7 +254,7 @@ object ExportFormInstancesByFeatureGuidTest {
           Number,Submitted date,Creator name,Creator email address
           ${formInstance0Rep.number},"$FIXED_CLOCK_FORMATTED_VALUE",Jeff Hudson,jhudson@jhudson.ca
           """.trimIndent() + '\n',
-          response.content!!
+          responseContent
         )
       }
     }

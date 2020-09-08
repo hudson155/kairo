@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
@@ -71,7 +72,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       profilePhotoUrl = null
     )
     piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
-      val actual = response.content!!
+      val actual = responseContent
       val expected = "{\n" +
         "    \"org\": \"{" +
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
@@ -198,7 +199,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       profilePhotoUrl = null
     )
     piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
-      val actual = response.content!!
+      val actual = responseContent
       val expected = "{\n" +
         "    \"org\": \"{" +
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +

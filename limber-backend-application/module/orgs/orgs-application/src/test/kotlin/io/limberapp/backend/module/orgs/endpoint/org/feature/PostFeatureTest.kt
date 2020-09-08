@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
@@ -47,7 +48,7 @@ internal class PostFeatureTest : ResourceTest() {
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -74,7 +75,7 @@ internal class PostFeatureTest : ResourceTest() {
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }
@@ -87,12 +88,12 @@ internal class PostFeatureTest : ResourceTest() {
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + featureRep)
     piperTest.test(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) {
-      val actual = json.parse<FeatureRep.Complete>(response.content!!)
+      val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(featureRep, actual)
     }
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(response.content!!)
+      val actual = json.parse<OrgRep.Complete>(responseContent)
       assertEquals(orgRep, actual)
     }
   }

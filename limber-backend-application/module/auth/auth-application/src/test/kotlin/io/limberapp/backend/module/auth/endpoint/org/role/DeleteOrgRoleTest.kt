@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
@@ -34,7 +35,7 @@ internal class DeleteOrgRoleTest : ResourceTest() {
     piperTest.test(OrgRoleApi.Delete(orgGuid, memberOrgRoleRep.guid)) {}
 
     piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
-      val actual = json.parseSet<OrgRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
       assertEquals(setOf(adminOrgRoleRep), actual)
     }
   }

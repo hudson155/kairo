@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
@@ -53,12 +54,12 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
         rep = FormInstanceQuestionRepFixtures.dateFixture.creation(this)
       )
     ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
       assertEquals(formInstanceQuestionRep, actual)
     }
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -100,12 +101,12 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
         rep = FormInstanceQuestionRepFixtures.radioSelectorFixture.creation(this)
       )
     ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
       assertEquals(formInstanceQuestionRep, actual)
     }
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -147,12 +148,12 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
         rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       )
     ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
       assertEquals(formInstanceQuestionRep, actual)
     }
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }
@@ -194,12 +195,12 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
         rep = FormInstanceQuestionRepFixtures.yesNoFixture.creation(this)
       )
     ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
       assertEquals(formInstanceQuestionRep, actual)
     }
 
     piperTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(response.content!!)
+      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
   }

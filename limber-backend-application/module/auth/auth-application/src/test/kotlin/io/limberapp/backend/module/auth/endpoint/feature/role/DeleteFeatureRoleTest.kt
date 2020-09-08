@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.feature.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
@@ -43,7 +44,7 @@ internal class DeleteFeatureRoleTest : ResourceTest() {
     piperTest.test(FeatureRoleApi.Delete(featureGuid, featureMemberRoleRep.guid)) {}
 
     piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureAdminRoleRep), actual)
     }
   }

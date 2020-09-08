@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.feature.role
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
@@ -17,7 +18,7 @@ internal class GetFeatureRolesByFeatureGuidTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertTrue(actual.isEmpty())
     }
   }
@@ -40,7 +41,7 @@ internal class GetFeatureRolesByFeatureGuidTest : ResourceTest() {
     piperTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(memberOrgRoleRep.guid)))
 
     piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(response.content!!)
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureAdminRoleRep, featureMemberRoleRep), actual)
     }
   }

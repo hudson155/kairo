@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
+import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleMembershipNotFound
@@ -81,7 +82,7 @@ internal class DeleteMembershipTest : ResourceTest() {
     piperTest.test(OrgRoleMembershipApi.Delete(orgGuid, orgRoleRep.guid, account0Guid)) {}
 
     piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(response.content!!)
+      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleMembershipRep1), actual)
     }
   }
