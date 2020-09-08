@@ -1,11 +1,13 @@
 sqlDatabase:
   jdbcUrl:
     type: ENVIRONMENT_VARIABLE
-    value: LIMBER_PROD_POSTGRES_JDBC_URL
-  username: limber
+    name: LIMBER_PROD_POSTGRES_JDBC_URL
+  username:
+    type: ENVIRONMENT_VARIABLE
+    name: LIMBER_PROD_POSTGRES_USERNAME
   password:
     type: ENVIRONMENT_VARIABLE
-    value: LIMBER_PROD_POSTGRES_PASSWORD
+    name: LIMBER_PROD_POSTGRES_PASSWORD
   connectionTimeout: 2500
   maximumPoolSize: 8
 
@@ -16,7 +18,7 @@ authentication:
       leeway: 20 # 20 seconds
       secret:
         type: ENVIRONMENT_VARIABLE
-        value: LIMBER_PROD_JWT_SECRET
+        name: LIMBER_PROD_JWT_SECRET
     - type: JWK
       issuer: https://limber.auth0.com/
       leeway: 20 # 20 seconds

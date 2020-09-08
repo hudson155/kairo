@@ -19,19 +19,24 @@ data class LimberAppMonolithConfig(
 ) : Config {
   fun decrypt() = copy(sqlDatabase = sqlDatabase.decrypt(), authentication = authentication.decrypt())
 
-  private fun SqlDatabaseConfig.decrypt() = copy(jdbcUrl = jdbcUrl.decrypt(), password = password?.decrypt())
+  private fun SqlDatabaseConfig.decrypt() = copy(
+    jdbcUrl = jdbcUrl.decryptNotNull(),
+    username = username.decryptNotNull(),
+    password = password.decryptNullable(),
+  )
 
   private fun AuthenticationConfig.decrypt() = copy(mechanisms = mechanisms.map { it.decrypt() })
 
   private fun AuthenticationMechanism.decrypt() =
-    if (this is AuthenticationMechanism.Jwt) copy(secret = secret.decrypt()) else this
+    if (this is AuthenticationMechanism.Jwt) copy(secret = secret.decryptNotNull()) else this
 
-  private fun ConfigString.decrypt(): ConfigString {
-    return when (type) {
-      ConfigString.Type.PLAINTEXT -> this
-      ConfigString.Type.ENVIRONMENT_VARIABLE -> copy(
-        value = checkNotNull(System.getenv(value)) { "Environment variable $value not set." }
-      )
+  private fun ConfigString.decryptNotNull() = requireNotNull(decryptNullable())
+
+  private fun ConfigString?.decryptNullable(): ConfigString.Plaintext? = when (this) {
+    null -> null
+    is ConfigString.Plaintext -> this
+    is ConfigString.EnvironmentVariable -> System.getenv(name).let { value: String? ->
+      (value ?: defaultValue)?.let { ConfigString.Plaintext(value = it) }
     }
   }
 }

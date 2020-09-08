@@ -54,6 +54,8 @@ items:
                   value: prod
                 - name: LIMBER_PROD_POSTGRES_JDBC_URL
                   value: jdbc:postgresql://db-limber-prod-do-user-7022079-0.a.db.ondigitalocean.com:25060/limber?sslmode=require
+                - name: LIMBER_PROD_POSTGRES_USERNAME
+                  value: limber
                 - name: LIMBER_PROD_POSTGRES_PASSWORD
                   valueFrom:
                     secretKeyRef:

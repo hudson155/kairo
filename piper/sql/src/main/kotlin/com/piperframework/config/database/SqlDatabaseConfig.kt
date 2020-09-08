@@ -7,7 +7,7 @@ import com.piperframework.config.ConfigString
  */
 data class SqlDatabaseConfig(
   val jdbcUrl: ConfigString,
-  val username: String,
+  val username: ConfigString,
   val password: ConfigString?,
   val connectionTimeout: Long? = null,
   val minimumIdle: Int? = null,

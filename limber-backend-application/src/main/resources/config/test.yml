@@ -2,7 +2,13 @@ sqlDatabase:
   jdbcUrl:
     type: PLAINTEXT
     value: jdbc:postgresql://localhost/limber_test
-  username: postgres
+  username:
+    type: ENVIRONMENT_VARIABLE
+    name: LIMBER_PROD_POSTGRES_USERNAME
+    defaultValue: postgres
+  password:
+    type: ENVIRONMENT_VARIABLE
+    name: LIMBER_PROD_POSTGRES_PASSWORD
   connectionTimeout: 1000
   maximumPoolSize: 2
 
