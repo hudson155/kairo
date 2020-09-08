@@ -4,11 +4,11 @@ sqlDatabase:
     value: jdbc:postgresql://localhost/limber
   username:
     type: ENVIRONMENT_VARIABLE
-    name: LIMBER_PROD_POSTGRES_USERNAME
+    name: LIMBER_DEV_POSTGRES_USERNAME
     defaultValue: postgres
   password:
     type: ENVIRONMENT_VARIABLE
-    name: LIMBER_PROD_POSTGRES_PASSWORD
+    name: LIMBER_DEV_POSTGRES_PASSWORD
   connectionTimeout: 1000
   maximumPoolSize: 2
 
