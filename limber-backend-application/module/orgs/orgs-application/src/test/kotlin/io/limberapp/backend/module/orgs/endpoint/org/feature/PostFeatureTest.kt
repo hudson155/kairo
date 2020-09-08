@@ -21,21 +21,29 @@ internal class PostFeatureTest : ResourceTest() {
 
     piperTest.test(
       endpoint = OrgFeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()),
-      expectedException = OrgNotFound()
+      expectedException = OrgNotFound(),
     )
   }
 
   @Test
   fun duplicateRank() {
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
     piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+
+    orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
+    piperTest.setup(
+      endpoint = OrgFeatureApi.Post(
+        orgGuid = orgRep.guid,
+        rep = FeatureRepFixtures.homeFixture.creation(),
+      ),
+    )
 
     piperTest.test(
       endpoint = OrgFeatureApi.Post(
         orgGuid = orgRep.guid,
-        rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.default.creation().rank)
+        rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.homeFixture.creation().rank),
       ),
-      expectedException = FeatureRankIsNotUnique()
+      expectedException = FeatureRankIsNotUnique(),
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
@@ -46,15 +54,23 @@ internal class PostFeatureTest : ResourceTest() {
 
   @Test
   fun duplicatePath() {
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
     piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+
+    orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
+    piperTest.setup(
+      endpoint = OrgFeatureApi.Post(
+        orgGuid = orgRep.guid,
+        rep = FeatureRepFixtures.homeFixture.creation(),
+      ),
+    )
 
     piperTest.test(
       endpoint = OrgFeatureApi.Post(
         orgGuid = orgRep.guid,
-        rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.default.creation().path)
+        rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.homeFixture.creation().path),
       ),
-      expectedException = FeaturePathIsNotUnique()
+      expectedException = FeaturePathIsNotUnique(),
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
@@ -68,8 +84,8 @@ internal class PostFeatureTest : ResourceTest() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
     piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
-    val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
-    orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
+    val featureRep = FeatureRepFixtures.formsFixture.complete(this, 1)
+    orgRep = orgRep.copy(features = orgRep.features + featureRep)
     piperTest.test(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) {
       val actual = json.parse<FeatureRep.Complete>(response.content!!)
       assertEquals(featureRep, actual)

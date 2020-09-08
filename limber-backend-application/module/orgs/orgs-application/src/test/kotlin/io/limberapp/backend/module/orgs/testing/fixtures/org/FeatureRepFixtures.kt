@@ -10,7 +10,7 @@ internal object FeatureRepFixtures {
     val complete: ResourceTest.(idSeed: Int) -> FeatureRep.Complete,
   )
 
-  val default = Fixture(
+  val homeFixture = Fixture(
     {
       FeatureRep.Creation(0, "Home", "/home", FeatureRep.Type.HOME)
     },
@@ -22,7 +22,7 @@ internal object FeatureRepFixtures {
         name = "Home",
         path = "/home",
         type = FeatureRep.Type.HOME,
-        isDefaultFeature = true
+        isDefaultFeature = false
       )
     }
   )

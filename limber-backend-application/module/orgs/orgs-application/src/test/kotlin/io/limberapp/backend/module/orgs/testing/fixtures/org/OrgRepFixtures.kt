@@ -3,7 +3,6 @@ package io.limberapp.backend.module.orgs.testing.fixtures.org
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.ResourceTest
 import java.time.LocalDateTime
-import java.util.*
 
 internal object OrgRepFixtures {
   data class Fixture(
@@ -19,7 +18,7 @@ internal object OrgRepFixtures {
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
       ownerUserGuid = null,
-      features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
+      features = emptyList(),
     )
   })
 
@@ -31,7 +30,7 @@ internal object OrgRepFixtures {
       createdDate = LocalDateTime.now(fixedClock),
       name = "Dynamic Tennis",
       ownerUserGuid = null,
-      features = listOf(FeatureRepFixtures.default.complete(this, idSeed + 1))
+      features = emptyList(),
     )
   })
 }

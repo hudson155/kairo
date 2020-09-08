@@ -19,7 +19,7 @@ internal class DeleteFeatureTest : ResourceTest() {
 
     piperTest.test(
       endpoint = OrgFeatureApi.Delete(orgGuid, featureGuid),
-      expectedException = FeatureNotFound()
+      expectedException = FeatureNotFound(),
     )
   }
 
@@ -32,7 +32,7 @@ internal class DeleteFeatureTest : ResourceTest() {
 
     piperTest.test(
       endpoint = OrgFeatureApi.Delete(orgRep.guid, featureGuid),
-      expectedException = FeatureNotFound()
+      expectedException = FeatureNotFound(),
     )
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
@@ -46,12 +46,16 @@ internal class DeleteFeatureTest : ResourceTest() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
     piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
-    val featureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
-    orgRep = orgRep.copy(features = orgRep.features.plus(featureRep))
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    piperTest.setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+
+    val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     piperTest.setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
-    orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != featureRep.guid })
-    piperTest.test(OrgFeatureApi.Delete(orgRep.guid, featureRep.guid)) {}
+    orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != formsFeatureRep.guid })
+    piperTest.test(OrgFeatureApi.Delete(orgRep.guid, formsFeatureRep.guid)) {}
 
     piperTest.test(OrgApi.Get(orgRep.guid)) {
       val actual = json.parse<OrgRep.Complete>(response.content!!)

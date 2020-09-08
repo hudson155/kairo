@@ -8,8 +8,6 @@ import java.util.*
 
 @LimberModule.Orgs
 interface FeatureService : Finder<FeatureModel, FeatureFinder> {
-  fun createDefaults(orgGuid: UUID): List<FeatureModel>
-
   fun create(model: FeatureModel): FeatureModel
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel
