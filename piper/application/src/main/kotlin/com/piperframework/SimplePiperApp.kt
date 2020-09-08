@@ -48,8 +48,10 @@ import java.util.*
  * This class has a lot of functions, but it's clearer this way.
  */
 @Suppress("TooManyFunctions")
-abstract class SimplePiperApp<C : Config>(application: Application, protected val config: C) :
-  PiperApp<SimplePiperApp.Context>(application) {
+abstract class SimplePiperApp<C : Config>(
+  application: Application,
+  protected val config: C,
+) : PiperApp<SimplePiperApp.Context>(application) {
   data class Context(val modules: List<ModuleWithLifecycle>)
 
   override fun onStart(application: Application): Context {

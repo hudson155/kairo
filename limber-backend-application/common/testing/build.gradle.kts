@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":limber-backend-application"))
+  api(project(":limber-backend-application"))
   api(project(":limber-backend-application:common:module"))
   api(project(":piper:testing"))
   implementation(Dependencies.Jwt.auth0JavaJwt)

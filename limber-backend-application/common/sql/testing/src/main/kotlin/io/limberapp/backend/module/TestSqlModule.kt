@@ -1,16 +1,9 @@
 package io.limberapp.backend.module
 
-import com.piperframework.config.ConfigString
 import com.piperframework.config.database.SqlDatabaseConfig
 import java.sql.Connection
 
-open class TestSqlModule : LimberSqlModule(
-  SqlDatabaseConfig(
-    jdbcUrl = ConfigString(type = ConfigString.Type.PLAINTEXT, value = "jdbc:postgresql://localhost/limber_test"),
-    username = "postgres",
-    password = System.getenv("LIMBER_PROD_POSTGRES_PASSWORD")?.let { ConfigString(ConfigString.Type.PLAINTEXT, it) }
-  )
-) {
+open class TestSqlModule(config: SqlDatabaseConfig) : LimberSqlModule(config) {
   fun dropDatabase() {
     val connection = checkNotNull(wrapper.dataSource).connection
     val customSchemas = listOf("auth", "forms", "orgs", "users")

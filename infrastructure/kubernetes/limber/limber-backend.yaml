@@ -50,6 +50,8 @@ items:
               ports:
                 - containerPort: 55100
               env:
+                - name: LIMBER_CONFIG
+                  value: prod
                 - name: LIMBER_PROD_POSTGRES_JDBC_URL
                   value: jdbc:postgresql://db-limber-prod-do-user-7022079-0.a.db.ondigitalocean.com:25060/limber?sslmode=require
                 - name: LIMBER_PROD_POSTGRES_PASSWORD

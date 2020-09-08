@@ -8,14 +8,18 @@ import org.slf4j.LoggerFactory
 
 private const val LIMBER_CONFIG = "LIMBER_CONFIG"
 
-internal class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(LimberAppMonolithConfig::class) {
+class LimberConfigLoader : PiperConfigLoader<LimberAppMonolithConfig>(LimberAppMonolithConfig::class) {
   private val logger = LoggerFactory.getLogger(LimberConfigLoader::class.java)
 
   override val objectMapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
 
-  override fun load(): LimberAppMonolithConfig {
+  override fun load() = load(null)
+
+  fun load(limberConfig: String?): LimberAppMonolithConfig {
     logger.info("Loading config...")
-    val configName = System.getenv(LIMBER_CONFIG) ?: "prod"
+    val configName = requireNotNull(System.getenv(LIMBER_CONFIG) ?: limberConfig) {
+      "Environment variable $LIMBER_CONFIG not set."
+    }
     logger.info("Loading config $configName...")
     val config = loadInternal("/config/$configName.yml") ?: error("Config $LIMBER_CONFIG=$configName not found.")
     logger.info("Loaded config $configName.")

@@ -9,7 +9,7 @@ import io.limberapp.backend.test.LimberResourceTest
 abstract class ResourceTest : LimberResourceTest() {
   override val module = UsersModule()
 
-  private val testSqlModule = TestSqlModule()
+  private val testSqlModule = TestSqlModule(config.sqlDatabase)
 
   protected val mockedServices: MockedServices = MockedServices(OrgService::class)
 

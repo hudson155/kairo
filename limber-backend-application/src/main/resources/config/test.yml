@@ -1,0 +1,21 @@
+sqlDatabase:
+  jdbcUrl:
+    type: PLAINTEXT
+    value: jdbc:postgresql://localhost/limber_test
+  username: postgres
+  connectionTimeout: 1000
+  maximumPoolSize: 2
+
+authentication:
+  mechanisms:
+    - type: UNSIGNED_JWT
+      leeway: 0
+
+hashing:
+  logRounds: 4
+
+serving:
+  redirectHttpToHttps: false
+  apiPathPrefix: /
+  staticFiles:
+    serve: false

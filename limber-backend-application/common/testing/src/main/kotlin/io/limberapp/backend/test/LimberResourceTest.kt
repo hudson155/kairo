@@ -4,8 +4,11 @@ import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
 import com.piperframework.serialization.Json
 import com.piperframework.testing.AbstractResourceTest
+import io.limberapp.backend.config.LimberConfigLoader
 
 abstract class LimberResourceTest : AbstractResourceTest() {
+  protected val config = LimberConfigLoader().load("test")
+
   protected val json by lazy { Json(serializersModule = module.serializersModule) }
 
   protected abstract val module: Module

@@ -7,7 +7,7 @@ import io.limberapp.backend.test.LimberResourceTest
 abstract class ResourceTest : LimberResourceTest() {
   override val module = OrgsModule()
 
-  private val testSqlModule = TestSqlModule()
+  private val testSqlModule = TestSqlModule(config.sqlDatabase)
 
   override val additionalModules = setOf(testSqlModule)
 

@@ -11,7 +11,7 @@ import com.piperframework.config.serving.ServingConfig
 /**
  * The config class contains all custom configuration for the app. It doesn't contain Ktor built-in configuration.
  */
-internal data class LimberAppMonolithConfig(
+data class LimberAppMonolithConfig(
   val sqlDatabase: SqlDatabaseConfig,
   override val authentication: AuthenticationConfig,
   override val hashing: HashingConfig,

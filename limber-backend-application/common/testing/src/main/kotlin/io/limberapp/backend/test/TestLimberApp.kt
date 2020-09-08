@@ -1,7 +1,6 @@
 package io.limberapp.backend.test
 
 import com.google.inject.Injector
-import com.piperframework.config.Config
 import com.piperframework.ktorAuth.piperAuth
 import com.piperframework.module.Module
 import com.piperframework.module.ModuleWithLifecycle
@@ -11,11 +10,12 @@ import io.ktor.application.Application
 import io.ktor.auth.Authentication
 import io.limberapp.backend.authentication.jwt.JwtAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.backend.config.LimberAppMonolithConfig
 import java.time.Clock
 
 class TestLimberApp(
   application: Application,
-  config: Config,
+  config: LimberAppMonolithConfig,
   module: Module,
   additionalModules: Set<ModuleWithLifecycle>,
   fixedClock: Clock,
