@@ -10,8 +10,8 @@ object JwtClaimsRequestRep {
   @Serializable
   data class Creation(
     val auth0ClientId: String,
-    val firstName: String?,
-    val lastName: String?,
+    val firstName: String? = null,
+    val lastName: String? = null,
     val emailAddress: String,
     val profilePhotoUrl: String? = null,
   ) : CreationRep {

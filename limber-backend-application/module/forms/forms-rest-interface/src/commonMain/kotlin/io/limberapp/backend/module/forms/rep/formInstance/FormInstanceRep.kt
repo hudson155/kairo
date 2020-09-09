@@ -55,7 +55,7 @@ object FormInstanceRep {
 
   @Serializable
   data class Update(
-    val submitted: Boolean?,
+    val submitted: Boolean? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::submitted) { ifPresent { value } }
