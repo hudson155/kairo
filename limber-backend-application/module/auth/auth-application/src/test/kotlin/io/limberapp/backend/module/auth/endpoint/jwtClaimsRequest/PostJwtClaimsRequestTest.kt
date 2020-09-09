@@ -22,7 +22,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
-import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.mockk.every
 import org.junit.jupiter.api.Test
@@ -40,13 +39,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
       ownerUserGuid = UUID.randomUUID()
-    )
-    every { mockedServices[AccountService::class].findOnlyOrNull(any()) } returns AccountModel(
-      guid = userGuid,
-      createdDate = LocalDateTime.now(fixedClock),
-      identityProvider = false,
-      superuser = false,
-      name = "Jeff Hudson"
     )
     every {
       mockedServices[UserService::class].findOnlyOrNull(any())
@@ -127,9 +119,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       emailAddress = "jhudson@jhudson.ca",
       profilePhotoUrl = null
     )
-    every {
-      mockedServices[AccountService::class].findOnlyOrNull(any())
-    } returns existingAccount
     every {
       mockedServices[UserService::class].findOnlyOrNull(any())
     } returns existingUser

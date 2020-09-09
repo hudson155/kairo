@@ -5,7 +5,6 @@ import io.limberapp.backend.module.TestSqlModule
 import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.backend.module.users.service.account.AccountService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.test.LimberResourceTest
 
@@ -15,7 +14,6 @@ abstract class ResourceTest : LimberResourceTest() {
   private val testSqlModule = TestSqlModule(config.sqlDatabase)
 
   protected val mockedServices: MockedServices = MockedServices(
-    AccountService::class,
     FeatureService::class,
     OrgService::class,
     UserService::class

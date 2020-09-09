@@ -9,8 +9,6 @@ import io.limberapp.backend.module.users.endpoint.user.PatchUser
 import io.limberapp.backend.module.users.endpoint.user.PostUser
 import io.limberapp.backend.module.users.endpoint.user.role.DeleteUserRole
 import io.limberapp.backend.module.users.endpoint.user.role.PutUserRole
-import io.limberapp.backend.module.users.service.account.AccountService
-import io.limberapp.backend.module.users.service.account.AccountServiceImpl
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.module.users.service.account.UserServiceImpl
 import kotlinx.serialization.modules.EmptySerializersModule
@@ -30,7 +28,6 @@ class UsersModule : Module() {
   )
 
   override fun bindServices() {
-    bind(AccountService::class, AccountServiceImpl::class)
     bind(UserService::class, UserServiceImpl::class)
   }
 }
