@@ -14,6 +14,7 @@ spec:
         # The API goes first in the list.
         - api.limberapp.io
         # Everything else should be alphabetical. Don't forget to also add a rule for the host.
+        - demo.covidreopening.ca
         - limber.limberapp.io
       secretName: limber-tls
   rules:
@@ -22,6 +23,12 @@ spec:
         paths:
           - backend:
               serviceName: limber-backend
+              servicePort: 80
+    - host: demo.covidreopening.ca
+      http:
+        paths:
+          - backend:
+              serviceName: limber-web
               servicePort: 80
     - host: limber.limberapp.io
       http:
