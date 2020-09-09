@@ -5,29 +5,26 @@ If you're following this guide, please keep it up to date by making a PR if anyt
 
 ## Prerequisites
 
+- The name of the tenant.
 - The domain for the tenant.
-    This can be a subdomain of `limberapp.io` (in which case we'll manage the DNS),
-    or it can be their own custom domain.
 
 ## Steps
 
 The steps below can be done in parallel, but keep 1 thing in mind:
 **Don't visit the tenant domain until all steps are complete and you've waited 10 minutes.**
-Browser and operating system DNS and TLS certificate caching is annoying. 
+Browser and operating system DNS and TLS certificate caching is annoying.
 
 - [ ] [Set up a DNS record](#set-up-a-dns-record)
 - [ ] [Add the Kubernetes configuration](#add-the-kubernetes-configuration)
 - [ ] [Set up the Auth0 tenant](#set-up-the-auth0-tenant)
-- [ ] [Manually insert database entities](#manually-insert-database-entities)
+- [ ] [Onboard the org](#onboard-the-org)
 - [ ] Wait 10 minutes (seriously).
 - [ ] [Test the tenant](#test-the-tenant)
-- [ ] [Update the owner user GUID](#update-the-owner-user-guid)
+- [ ] [Set the owner user GUID](#set-the-owner-user-guid)
 
 ### Set up a DNS record
 
 1. Create a DNS A record for the host, with a TTL of 1 hour and a value of `174.138.114.191`.
-    1. For `limberapp.io` subdomains, our domain is managed by Jeff's personal Google Domains account,
-        so he will need to do this for you.
 
 ### Add the Kubernetes configuration
 
@@ -40,7 +37,7 @@ We also need to modify the Kubernetes config in the future if their domain chang
     to apply the infrastructure changes.
 
 3. Wait until the
-    [Kubernetes dashboard](https://cloud.digitalocean.com/kubernetes/clusters/f008d8aa-d8da-4ccd-8266-e0808029709b/db/c5c479b0-a8ed-4704-9791-c41ad6470f87/#/overview?namespace=_all)
+    [Kubernetes dashboard](https://cloud.digitalocean.com/kubernetes/clusters/9a0961f1-ad6b-4513-ab64-b7491fb5cc80/db/a69ec443cb9345ca353c8482c7651416f5a77826/#/overview?namespace=_all)
     goes all-green again.
 
 ### Set up the Auth0 tenant
@@ -53,45 +50,24 @@ as other Auth0 tenants.
 1. Navigate to https://manage.auth0.com/dashboard/us/limber/applications.
 
 2. Click "Create Application".
-    - Provide the organization name as the "Name".
-        Names should be unique though, so if a client has or might have multiple tenants, disambiguate somehow.
+    - Provide the domain name as the "Name".
     - Choose "Single Page Web Applications".
     - Hit "Create".
 
-3. Configure things on the "Settings" page. In this example, we're using the term "placeholder" in a few places. Replace
-    it as necessary.
-    - Application Login URI: `https://placeholder.limberapp.io/signin`.
-    - Allowed Callback URLs: `https://placeholder.limberapp.io`.
-    - Allowed Logout URLs: `https://placeholder.limberapp.io`.
-    - Allowed Web Origins: `https://placeholder.limberapp.io`.
+3. Configure things on the "Settings" page.
+    - Application Login URI: `https://{domain}/signin`.
+    - Allowed Callback URLs: `https://{domain}`.
+    - Allowed Logout URLs: `https://{domain}`.
+    - Allowed Web Origins: `https://{domain}`.
     - Hit "Save Changes".
 
 4. Manage desired connections on the "Connections" page.
 
-### Manually insert database entities
+### Onboard the org
 
-This inserts the most basic database entities.
-Make these requests using Postman, and use a JWT from a user that has global admin status.
-
-1. **Create the org**. Note, you'll set the `ownerUserGuid` later.
-    ```
-    POST https://api.limberapp.io/orgs
-    {
-        "name": "Placeholder"
-    }
-    ```
-
-1. **Create the tenant**.
-    ```
-    POST https://api.limberapp.io/tenants
-    {
-    	"orgGuid": "{orgGuid}", // Get this from the "Create the org" request's response.
-    	"auth0ClientId": "{auth0ClientId}", // Get this from Auth0.
-    	"domain": {
-    		"domain": "placeholder.limberapp.io"
-    	}
-    }
-   ```
+Set the variables in
+[this script](/limber-backend-application/src/main/kotlin/io/limberapp/backend/adhoc/Onboard.kt)
+and run `LIMBER_CONFIG=prod LIMBER_TASK=onboard ./gradlew limber-backend-application:run`.
 
 ### Test the tenant
 
@@ -100,12 +76,8 @@ Make these requests using Postman, and use a JWT from a user that has global adm
 Navigate to https://placeholder.limberapp.io in your browser and sign in.
 Make sure everything works ok.
 
-### Update the owner user GUID
+### Set the owner user GUID
 
-1. **Set the org owner** for the organization.
-    ```
-    PATCH https://api.limberapp.io/orgs/{orgGuid}
-    {
-        "ownerUserGuid": "{ownerUserGuid}"
-    }
-   ```
+Set the variables in
+[this script](/limber-backend-application/src/main/kotlin/io/limberapp/backend/adhoc/UpdateOwnerUserGuid.kt)
+and run `LIMBER_CONFIG=prod LIMBER_TASK=updateOwnerUserGuid ./gradlew limber-backend-application:run`.
