@@ -36,7 +36,6 @@ object OrgRoleRep {
     val memberCount: Int,
   ) : CompleteRep {
     val slug get() = name.slugify()
-    val uniqueSortKey get() = "$createdDate-$guid"
   }
 
   @Serializable

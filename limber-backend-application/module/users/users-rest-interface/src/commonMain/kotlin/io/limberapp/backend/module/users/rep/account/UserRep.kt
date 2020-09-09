@@ -44,7 +44,6 @@ object UserRep {
     val profilePhotoUrl: String?,
   ) : CompleteRep {
     val fullName get() = "$firstName $lastName"
-    val uniqueSortKey get() = "$fullName-$guid"
   }
 
   @Serializable

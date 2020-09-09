@@ -44,7 +44,7 @@ private fun RBuilder.component(props: Props) {
 
   val memberUsers = orgRoleMemberships
     .mapNotNull { users[it.key] }
-    .sortedBy { it.uniqueSortKey }
+    .sortedBy { it.fullName }
 
   memberUsers.forEach { user ->
     orgRoleMembersSelectorMember(user, onRemove = { onRemove(user.guid) }) {

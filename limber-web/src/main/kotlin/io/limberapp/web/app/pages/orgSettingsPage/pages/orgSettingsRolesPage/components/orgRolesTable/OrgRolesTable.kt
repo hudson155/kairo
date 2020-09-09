@@ -61,7 +61,7 @@ private fun RBuilder.component(props: Props) {
   p(classes = gs.c { it::visibleXs }) { +"Visit this page on a larger device to edit the roles." }
 
   limberTable(headers = listOf("Name", "Permissions", "Members", null), classes = s.c { it::table }) {
-    props.orgRoles.sortedBy { it.uniqueSortKey }.forEach { orgRole ->
+    props.orgRoles.sortedBy { it.createdDate.toString() }.forEach { orgRole ->
       limberTableRow {
         attrs.key = orgRole.guid
         orgRolesTableRoleName(

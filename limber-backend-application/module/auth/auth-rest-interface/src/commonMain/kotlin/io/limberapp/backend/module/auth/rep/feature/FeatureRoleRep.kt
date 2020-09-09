@@ -30,9 +30,7 @@ object FeatureRoleRep {
     @Serializable(with = UuidSerializer::class)
     val orgRoleGuid: UUID,
     val permissions: FeaturePermissions,
-  ) : CompleteRep {
-    val uniqueSortKey get() = "$createdDate-$guid"
-  }
+  ) : CompleteRep
 
   @Serializable
   data class Update(
