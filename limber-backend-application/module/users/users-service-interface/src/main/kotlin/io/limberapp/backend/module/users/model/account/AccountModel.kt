@@ -9,7 +9,6 @@ data class AccountModel(
   val createdDate: LocalDateTime,
   val identityProvider: Boolean,
   val superuser: Boolean,
-  val name: String,
 ) {
   fun hasRole(role: JwtRole) = when (role) {
     JwtRole.IDENTITY_PROVIDER -> identityProvider

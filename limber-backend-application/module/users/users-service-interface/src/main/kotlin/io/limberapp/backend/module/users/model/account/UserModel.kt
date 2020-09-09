@@ -10,8 +10,8 @@ data class UserModel(
   val identityProvider: Boolean,
   val superuser: Boolean,
   val orgGuid: UUID,
-  val firstName: String,
-  val lastName: String,
+  val firstName: String?,
+  val lastName: String?,
   val emailAddress: String,
   val profilePhotoUrl: String?,
 ) {

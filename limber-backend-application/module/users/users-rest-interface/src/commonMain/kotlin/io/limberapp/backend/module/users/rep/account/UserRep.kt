@@ -39,11 +39,11 @@ object UserRep {
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     val orgGuid: UUID,
-    val firstName: String,
-    val lastName: String,
+    val firstName: String?,
+    val lastName: String?,
     val profilePhotoUrl: String?,
   ) : CompleteRep {
-    val fullName get() = "$firstName $lastName"
+    val fullName get() = listOfNotNull(firstName, lastName).joinToString(" ")
   }
 
   @Serializable
@@ -55,12 +55,12 @@ object UserRep {
     val roles: Set<JwtRole>,
     @Serializable(with = UuidSerializer::class)
     val orgGuid: UUID,
-    val firstName: String,
-    val lastName: String,
+    val firstName: String?,
+    val lastName: String?,
     val emailAddress: String,
     val profilePhotoUrl: String?,
   ) : CompleteRep {
-    val fullName get() = "$firstName $lastName"
+    val fullName get() = listOfNotNull(firstName, lastName).joinToString(" ")
   }
 
   @Serializable

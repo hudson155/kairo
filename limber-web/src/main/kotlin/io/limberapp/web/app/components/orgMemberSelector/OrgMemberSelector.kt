@@ -99,7 +99,7 @@ private fun RBuilder.component(props: Props) {
   val usersToShow = users
     .map { it.value }
     .filter { it.guid !in props.excludedUserGuids }
-    .search(searchValue) { setOf(it.firstName, it.lastName) }
+    .search(searchValue) { setOfNotNull(it.firstName, it.lastName) }
 
   val selectedUser = users[selectedUserGuid]
 

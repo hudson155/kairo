@@ -106,7 +106,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       createdDate = LocalDateTime.now(fixedClock),
       identityProvider = false,
       superuser = true,
-      name = "Summer Kavan"
     )
     val existingUser = UserModel(
       guid = existingAccount.guid,
@@ -114,8 +113,8 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       identityProvider = existingAccount.identityProvider,
       superuser = existingAccount.superuser,
       orgGuid = existingOrg.guid,
-      firstName = existingAccount.name.split(' ')[0],
-      lastName = existingAccount.name.split(' ')[1],
+      firstName = "Summer",
+      lastName = "Kavan",
       emailAddress = "jhudson@jhudson.ca",
       profilePhotoUrl = null
     )

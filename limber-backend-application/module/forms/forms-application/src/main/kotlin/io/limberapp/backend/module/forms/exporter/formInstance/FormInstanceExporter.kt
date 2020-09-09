@@ -50,7 +50,9 @@ internal class FormInstanceExporter(
       if (timeZone != null) zonedSubmittedDate = zonedSubmittedDate.withZoneSameInstant(timeZone.zoneId)
       return@let zonedSubmittedDate.format(DATE_TIME_FORMATTER)
     } ?: ""
-    CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).let { "${it.firstName} ${it.lastName}" }
+    CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).let {
+      return@let listOfNotNull(it.firstName, it.lastName).joinToString(" ")
+    }
     CsvColumn.CREATOR_EMAIL_ADDRESS -> checkNotNull(users[creatorAccountGuid]).emailAddress
   }
 }
