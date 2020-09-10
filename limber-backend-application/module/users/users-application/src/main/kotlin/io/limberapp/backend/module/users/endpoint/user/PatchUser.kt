@@ -6,6 +6,7 @@ import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.mapper.account.UserMapper
@@ -31,6 +32,7 @@ internal class PatchUser @Inject constructor(
   override suspend fun Handler.handle(command: UserApi.Patch): UserRep.Complete {
     val rep = command.rep.required()
     Authorization.User(command.userGuid).authorize()
+    Authorization.WithOrgPermission(OrgPermission.MODIFY_OWN_METADATA, ignoreOrgGuid = true).authorize()
     val user = userService.update(command.userGuid, userMapper.update(rep))
     return userMapper.completeRep(user)
   }

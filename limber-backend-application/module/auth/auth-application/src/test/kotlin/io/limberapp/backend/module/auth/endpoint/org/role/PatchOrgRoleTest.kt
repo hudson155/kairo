@@ -22,7 +22,7 @@ internal class PatchOrgRoleTest : ResourceTest() {
       endpoint = OrgRoleApi.Patch(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleGuid,
-        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("110"))
+        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110"))
       ),
       expectedException = OrgRoleNotFound()
     )
@@ -56,9 +56,9 @@ internal class PatchOrgRoleTest : ResourceTest() {
     var orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    orgRoleRep = orgRoleRep.copy(permissions = OrgPermissions.fromBitString("110"))
+    orgRoleRep = orgRoleRep.copy(permissions = OrgPermissions.fromBitString("0110"))
     piperTest.test(OrgRoleApi.Patch(orgGuid, orgRoleRep.guid,
-      OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("110")))) {
+      OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")))) {
       val actual = json.parse<OrgRoleRep.Complete>(responseContent)
       assertEquals(orgRoleRep, actual)
     }

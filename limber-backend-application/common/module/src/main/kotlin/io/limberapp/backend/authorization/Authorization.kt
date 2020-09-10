@@ -80,6 +80,22 @@ abstract class Authorization : PiperAuthorization<Jwt> {
     }
   }
 
+  /**
+   * [ignoreOrgGuid] must be true. It's required so the caller considers using [OrgMemberWithPermission] instead. This
+   * should only be used for operations that are independent from the org.
+   */
+  class WithOrgPermission(
+    private val orgPermission: OrgPermission,
+    private val ignoreOrgGuid: Boolean,
+  ) : Authorization() {
+    override fun authorizeInternal(principal: Jwt?): Boolean {
+      check(ignoreOrgGuid)
+      principal ?: return false
+      val org = principal.org ?: return false
+      return orgPermission in org.permissions
+    }
+  }
+
   class FeatureMember(private val featureGuid: UUID) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
