@@ -245,29 +245,29 @@ internal fun Adhoc.dbReset() {
         formTemplateQuestionService.create(formsFeature.guid, FormTemplateTextQuestionModel(
           guid = UUID.fromString("50c32a31-35c6-458e-b582-f3f8c9a019e4"),
           createdDate = LocalDateTime.now(),
-          formTemplateGuid = vehicleInspectionFormTemplate.guid,
+          formTemplateGuid = preFlightSafetyInspectionFormTemplate.guid,
           label = "Pilot name",
           helpText = null,
           required = true,
           multiLine = false,
           placeholder = null,
-          validator = null,
+          validator = Regex("[a-zA-Z]{2,}(?: [a-zA-Z]{2,}){0,2}"),
         ))
       val preFlightSafetyInspectionDepartureDateFormTemplateQuestion =
         formTemplateQuestionService.create(formsFeature.guid, FormTemplateDateQuestionModel(
           guid = UUID.fromString("283167ce-a9fe-4de5-9042-ac1707e8f8dc"),
           createdDate = LocalDateTime.now(),
-          formTemplateGuid = vehicleInspectionFormTemplate.guid,
+          formTemplateGuid = preFlightSafetyInspectionFormTemplate.guid,
           label = "Departure date",
           helpText = null,
           required = true,
-          earliest = null,
-          latest = null,
+          earliest = LocalDate.of(2020, 1,1),
+          latest = LocalDate.of(2021, 1,1),
         ))
       formTemplateQuestionService.create(formsFeature.guid, FormTemplateTextQuestionModel(
         guid = UUID.fromString("761dea1a-e422-4e3c-81c6-497ec21cc1c3"),
         createdDate = LocalDateTime.now(),
-        formTemplateGuid = vehicleInspectionFormTemplate.guid,
+        formTemplateGuid = preFlightSafetyInspectionFormTemplate.guid,
         label = "Destination",
         helpText = null,
         required = false,
@@ -279,7 +279,7 @@ internal fun Adhoc.dbReset() {
         formTemplateQuestionService.create(formsFeature.guid, FormTemplateRadioSelectorQuestionModel(
           guid = UUID.fromString("d9fbaa35-ffd6-4a66-8c26-7d40e32ac7aa"),
           createdDate = LocalDateTime.now(),
-          formTemplateGuid = vehicleInspectionFormTemplate.guid,
+          formTemplateGuid = preFlightSafetyInspectionFormTemplate.guid,
           label = "Plane",
           helpText = null,
           required = false,

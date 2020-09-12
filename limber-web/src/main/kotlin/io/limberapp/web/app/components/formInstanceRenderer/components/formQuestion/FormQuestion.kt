@@ -20,6 +20,7 @@ import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.async
 import io.limberapp.web.util.c
+import io.limberapp.web.util.cls
 import kotlinx.css.*
 import kotlinx.css.properties.*
 import react.*
@@ -49,6 +50,11 @@ private class S : Styles("FromQuestion") {
     lastChild {
       borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     }.not()
+    // Transparent border is used to stop div from janking over when error css is applied.
+    borderLeft(5.px, BorderStyle.solid, Color.transparent)
+  }
+  val error by css {
+    borderColor = Theme.Color.Indicator.error
   }
 }
 
@@ -60,6 +66,8 @@ private fun RBuilder.component(props: Props) {
   val api = useApi()
 
   val (feature, _) = useFeatureState();
+
+  val (hasValidationError, setHasValidationError) = useState(false);
 
   val submitAnswer = { rep: FormInstanceQuestionRep.Creation ->
     async {
@@ -77,7 +85,16 @@ private fun RBuilder.component(props: Props) {
     }
   }
 
-  div(classes = s.c { it::root }) {
+  val hasValidationErrorCallback = { hasError: Boolean ->
+    if (hasError) {
+      setHasValidationError(true)
+      props.onAnswerFailure(props.question.guid)
+    } else {
+      setHasValidationError(false)
+    }
+  }
+
+  div(classes = cls(s.c { it::root }, s.c(hasValidationError) { it::error })) {
     label {
       if (props.question.required) +"* "
       +props.question.label
@@ -87,6 +104,7 @@ private fun RBuilder.component(props: Props) {
       is FormTemplateDateQuestionRep.Complete -> formDateQuestion(
         question = props.question,
         onSubmit = submitAnswer,
+        hasValidationError = hasValidationErrorCallback,
         defaultValue = props.defaultValue as FormInstanceDateQuestionRep.Complete?,
       )
       is FormTemplateRadioSelectorQuestionRep.Complete -> fromRadioQuestion(
@@ -97,6 +115,7 @@ private fun RBuilder.component(props: Props) {
       is FormTemplateTextQuestionRep.Complete -> fromTextQuestion(
         question = props.question,
         onSubmit = submitAnswer,
+        hasValidationError = hasValidationErrorCallback,
         defaultValue = props.defaultValue as FormInstanceTextQuestionRep.Complete?,
       )
     }
