@@ -6,7 +6,9 @@ import kotlinx.css.*
 internal object Theme {
   object Color {
     private val jet = Color("#303030")
+    private val jetLighter10 = Color("#4A4A4A")
     private val jetLighter20 = Color("#636363")
+    private val jetLighter30 = Color("#7D7D7D")
 
     private val babyPowder = Color("#FCFCFC")
     private val babyPowderDarker05 = Color("#EFEFEF")
@@ -19,6 +21,7 @@ internal object Theme {
     private val grey100 = Color("#F6F8FA")
     private val grey200 = Color("#E1E4E8")
     private val grey300 = Color("#D1D5DA")
+    private val grey400 = Color("#C4C8CD")
 
     private val nickel = Color("#707070")
     private val nickelDarker10 = Color("#575757")
@@ -29,9 +32,11 @@ internal object Theme {
     private val blue = Color("#1078D8")
     private val blueDarker10 = Color("#005FBF")
     private val blueDarker50 = Color("#000059")
+    private val blueFaded = Color("#6db9ff")
 
     private val red = Color("#C81818")
     private val redDarker10 = Color("#AF0000")
+    private val redLighter10 = Color("#DC7070")
 
     private val malachite = Color("#46D763")
 
@@ -41,19 +46,21 @@ internal object Theme {
       object Primary {
         val backgroundDefault = blue
         val backgroundActive = blueDarker10
-        val backgroundDisabled = blueDarker50
+        val backgroundDisabled = blueFaded
       }
 
       object Secondary {
-        val backgroundDefault = nickel
-        val backgroundActive = nickelDarker10
-        val backgroundDisabled = nickelDarker20
+        val colorDefault = jetLighter10
+        val colorDisabled = jetLighter30
+        val backgroundDefault = grey300
+        val backgroundActive = grey400
+        val backgroundDisabled = grey200
       }
 
       object Red {
         val backgroundDefault = red
         val backgroundActive = redDarker10
-        val backgroundDisabled = nickelDarker20
+        val backgroundDisabled = redLighter10
       }
     }
 

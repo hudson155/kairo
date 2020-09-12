@@ -57,11 +57,13 @@ private class S : Styles("LimberButton") {
     }
   }
   val secondary by css {
+    color = Theme.Color.Button.Secondary.colorDefault
     backgroundColor = Theme.Color.Button.Secondary.backgroundDefault
     hover {
       backgroundColor = Theme.Color.Button.Secondary.backgroundActive
     }
     disabled {
+      color = Theme.Color.Button.Secondary.colorDisabled
       backgroundColor = Theme.Color.Button.Secondary.backgroundDisabled
       hover {
         backgroundColor = Theme.Color.Button.Secondary.backgroundDisabled
