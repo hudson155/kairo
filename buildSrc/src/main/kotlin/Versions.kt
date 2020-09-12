@@ -33,19 +33,19 @@ object Versions {
   const val junit = "5.6.2"
 
   // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
-  const val kotlin = "1.4.0-rc"
+  const val kotlin = "1.4.0"
 
   // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
   const val kotlinExtensions = "1.0.1"
 
   // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
-  const val kotlinJsWrappers = "pre.110"
+  const val kotlinJsWrappers = "pre.112"
 
   // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-  const val kotlinxCoroutines = "1.3.8-1.4.0-rc"
+  const val kotlinxCoroutines = "1.3.9"
 
   // https://github.com/ktorio/ktor/releases
-  const val ktor = "1.3.2-1.4.0-rc"
+  const val ktor = "1.4.0"
 
   // https://github.com/qos-ch/logback/releases
   const val logback = "1.2.3"
