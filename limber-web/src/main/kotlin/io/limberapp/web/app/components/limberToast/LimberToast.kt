@@ -36,24 +36,27 @@ internal enum class LimberToastStatus(val icon: String, val label: String, val s
 
 private class S : Styles("LimberToast") {
   val root by css {
-    display = Display.flex
-    flexDirection = FlexDirection.row
-    alignItems = Align.center
+    overflow = Overflow.hidden
     position = Position.absolute
     bottom = 10.px
     right = 10.px
     minHeight = 50.px
     minWidth = 350.px
-    backgroundColor = Theme.Color.Background.white
-    borderRadius = 3.px
-    boxShadow(color = Theme.Color.Border.light, blurRadius = 14.px, spreadRadius = (-1).px)
-    padding(10.px)
-    transition("transform", 0.15.s, Timing.easeInOut)
 
     xs {
       left = 10.px
       minWidth = 0.px
     }
+  }
+  val toast by css {
+    display = Display.flex
+    flexDirection = FlexDirection.row
+    alignItems = Align.center
+    backgroundColor = Theme.Color.Background.white
+    borderRadius = 3.px
+    boxShadow(color = Theme.Color.Border.light, blurRadius = 14.px, spreadRadius = (-1).px)
+    padding(10.px)
+    transition("transform", 0.15.s, Timing.easeInOut)
   }
   val open by css {
     transform.translate3d(0.0.pct, 0.0.pct, 0.0.pct)
@@ -95,19 +98,19 @@ private val s = S().apply { inject() }
 private val component = functionalComponent(RBuilder::component)
 
 private fun RBuilder.component(props: Props) {
-  div(classes = cls(s.c { it::root }, s.c { if (props.open) it::open else it::closed }, props.status.styling)) {
-    div(classes = s.c { it::statusIcon }) {
-      inlineIcon(props.status.icon)
-    }
-    div(classes = s.c { it::content }) {
-      b { +props.status.label }
-      div { +props.message }
-    }
-    div(classes = s.c { it::exitIcon }) {
-      attrs {
-        onClickFunction = { props.onClose() }
+  div(classes = s.c { it::root }) {
+    div(classes = cls(s.c { it::toast }, s.c { if (props.open) it::open else it::closed }, props.status.styling)) {
+      div(classes = s.c { it::statusIcon }) {
+        inlineIcon(props.status.icon)
       }
-      inlineIcon("times")
+      div(classes = s.c { it::content }) {
+        b { +props.status.label }
+        div { +props.message }
+      }
+      div(classes = s.c { it::exitIcon }) {
+        attrs.onClickFunction = { props.onClose() }
+        inlineIcon("times")
+      }
     }
   }
 }
