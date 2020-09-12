@@ -1,5 +1,6 @@
 package io.limberapp.web.app.components.formInstanceRenderer.components.formQuestion
 
+import com.piperframework.types.UUID
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -27,21 +28,27 @@ import react.dom.*
 internal fun RBuilder.formQuestion(
   question: FormTemplateQuestionRep.Complete,
   formInstance: FormInstanceRep.Complete,
+  onAnswerQuestion: (FormInstanceQuestionRep.Complete) -> Unit,
+  onClearQuestion: (UUID) -> Unit,
   defaultValue: FormInstanceQuestionRep.Complete? = null,
 ) {
-  child(component, Props(question, formInstance, defaultValue))
+  child(component, Props(question, formInstance, onAnswerQuestion, onClearQuestion, defaultValue))
 }
 
 private data class Props(
   val question: FormTemplateQuestionRep.Complete,
   val formInstance: FormInstanceRep.Complete,
+  val onAnswerSuccess: (FormInstanceQuestionRep.Complete) -> Unit,
+  val onAnswerFailure: (UUID) -> Unit,
   val defaultValue: FormInstanceQuestionRep.Complete?,
 ) : RProps
 
 private class S : Styles("FromQuestion") {
   val root by css {
     padding(20.px)
-    borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    lastChild {
+      borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
+    }.not()
   }
 }
 
@@ -54,8 +61,6 @@ private fun RBuilder.component(props: Props) {
 
   val (feature, _) = useFeatureState();
 
-  val (error, setError) = useState(false);
-
   val submitAnswer = { rep: FormInstanceQuestionRep.Creation ->
     async {
       api(
@@ -66,8 +71,8 @@ private fun RBuilder.component(props: Props) {
           rep = rep
         )
       ).fold(
-        successAction = { setError(false) },
-        failureAction = { setError(true) },
+        successAction = { props.onAnswerSuccess(it) },
+        failureAction = { props.onAnswerFailure(props.question.guid) },
       )
     }
   }
@@ -76,11 +81,6 @@ private fun RBuilder.component(props: Props) {
     label {
       if (props.question.required) +"* "
       +props.question.label
-    }
-    if (error) {
-      // TODO (ENG-26) Handle error state better
-      br {}
-      p { +"Something went wrong" }
     }
     br {}
     when (props.question) {
