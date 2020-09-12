@@ -51,7 +51,7 @@ complexity:
   LongMethod:
     active: true
     excludes: "**/src/test/**/*Test.kt"
-    threshold: 60
+    threshold: 80
   LongParameterList:
     active: false
   MethodOverloading:

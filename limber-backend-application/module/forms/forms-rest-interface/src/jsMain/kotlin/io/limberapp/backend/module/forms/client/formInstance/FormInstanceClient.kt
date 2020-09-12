@@ -11,5 +11,7 @@ interface FormInstanceClient {
 
   suspend operator fun invoke(endpoint: FormInstanceApi.GetByFeatureGuid): Outcome<List<FormInstanceRep.Summary>>
 
+  suspend operator fun invoke(endpoint: FormInstanceApi.Patch): Outcome<FormInstanceRep.Complete>
+
   suspend operator fun invoke(endpoint: FormInstanceApi.Delete): Outcome<Unit>
 }
