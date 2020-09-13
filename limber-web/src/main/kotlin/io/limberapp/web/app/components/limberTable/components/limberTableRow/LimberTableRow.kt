@@ -6,14 +6,22 @@ import io.limberapp.web.util.c
 import io.limberapp.web.util.cls
 import kotlinx.css.*
 import kotlinx.css.properties.*
+import kotlinx.html.js.onClickFunction
 import react.*
 import react.dom.*
 
-internal fun RBuilder.limberTableRow(classes: String? = null, children: RHandler<Props>) {
-  child(component, Props(classes), handler = children)
+internal fun RBuilder.limberTableRow(
+  classes: String? = null,
+  onClick: (() -> Unit)? = null,
+  children: RHandler<Props>,
+) {
+  child(component, Props(classes, onClick), handler = children)
 }
 
-internal data class Props(val classes: String?) : RProps
+internal data class Props(
+  val classes: String?,
+  val onClick: (() -> Unit)?,
+) : RProps
 
 private class S : Styles("LimberTableRow") {
   val row by css {
@@ -29,6 +37,7 @@ private val s = S().apply { inject() }
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
   tr(classes = cls(s.c { it::row }, props.classes)) {
+    attrs { onClickFunction = { props.onClick?.invoke() } }
     props.children()
   }
 }

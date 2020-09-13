@@ -3,6 +3,7 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.form
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceViewPage.FormInstanceViewPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable.formInstancesTable
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formTemplateSelectorModal.formTemplateSelectorModal
 import io.limberapp.web.state.state.feature.useFeatureState
@@ -46,7 +47,10 @@ private fun RBuilder.component(props: Props) {
       onClick = { setIsTemplateSelectorModalOpen(true) }
     ) { +"Fill out new form" }
   }
-  formInstancesTable(formInstances.values.toSet())
+  formInstancesTable(
+    formInstances = formInstances.values.toSet(),
+    onRowClick = { formInstanceGuid -> history.push(FormInstanceViewPage.path(feature.path, formInstanceGuid)) }
+  )
 
   if (isTemplateSelectorModalOpen) {
     formTemplateSelectorModal(

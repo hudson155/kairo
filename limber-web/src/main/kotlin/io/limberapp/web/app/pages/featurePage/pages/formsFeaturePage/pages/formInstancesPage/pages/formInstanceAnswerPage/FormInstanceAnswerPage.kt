@@ -18,6 +18,7 @@ import io.limberapp.web.app.components.limberToast.LimberToastStatus
 import io.limberapp.web.app.components.limberToast.limberToast
 import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceViewPage.FormInstanceViewPage
 import io.limberapp.web.state.state.feature.useFeatureState
 import io.limberapp.web.util.Page
 import io.limberapp.web.util.Styles
@@ -83,6 +84,7 @@ private fun RBuilder.component(props: Props) {
 
 private fun RBuilder.formAnswerComponent(props: FormAnswerProps) {
   val api = useApi()
+  val history = useHistory()
 
   val (feature, _) = useFeatureState();
 
@@ -92,6 +94,12 @@ private fun RBuilder.formAnswerComponent(props: FormAnswerProps) {
   val (formSubmittedAt, setFormSubmittedAt) = useState(submittedDateTime)
   val (requiredQuestions, setRequiredQuestions) = useState(emptySet<UUID>())
   val (toastDetails, setToastDetails) = useState<Pair<String, LimberToastStatus>?>(null)
+
+  useEffect(emptyList()) {
+    if (props.formInstance.submittedDate != null) {
+      history.push(FormInstanceViewPage.path(feature.path, props.formInstance.guid))
+    }
+  }
 
   useEffect(listOf(props.formTemplate.guid)) {
     setRequiredQuestions(
@@ -136,6 +144,7 @@ private fun RBuilder.formAnswerComponent(props: FormAnswerProps) {
       // TODO (ENG-50): Toasts should auto handle/standardise the timeout
       delay(3000)
       setToastDetails(null)
+      history.push(FormInstanceViewPage.path(feature.path, props.formInstance.guid))
     }
   }
 

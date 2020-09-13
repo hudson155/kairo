@@ -8,6 +8,8 @@ import io.limberapp.web.app.components.loadingSpinner.loadingSpinner
 import io.limberapp.web.app.pages.failedToLoad.failedToLoad
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceAnswerPage.FormInstanceAnswerPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceAnswerPage.formInstanceAnswerPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceViewPage.FormInstanceViewPage
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceViewPage.formInstanceViewPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.formInstancesListPage
 import io.limberapp.web.auth.useAuth
 import io.limberapp.web.state.state.feature.useFeatureState
@@ -61,6 +63,9 @@ private fun RBuilder.component(props: Props) {
       }
       route(path = match.path + FormInstanceAnswerPage.subpath, exact = true) {
         buildElement { formInstanceAnswerPage() }
+      }
+      route(path = FormInstanceViewPage.path(feature.path, null), exact = true) {
+        buildElement { formInstanceViewPage() }
       }
     }
   }
