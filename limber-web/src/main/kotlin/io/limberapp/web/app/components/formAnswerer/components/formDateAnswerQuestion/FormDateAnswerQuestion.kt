@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.formInstanceRenderer.components.formDateQuestion
+package io.limberapp.web.app.components.formAnswerer.components.formDateAnswerQuestion
 
 import com.piperframework.types.LocalDate
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
@@ -12,7 +12,7 @@ import react.*
 import react.dom.*
 import kotlin.js.Date
 
-internal fun RBuilder.formDateQuestion(
+internal fun RBuilder.formDateAnswerQuestion(
   question: FormTemplateDateQuestionRep.Complete,
   onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
   hasValidationError: (Boolean) -> Unit,

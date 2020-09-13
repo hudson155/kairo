@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.formInstanceRenderer.components.formTextQuestion
+package io.limberapp.web.app.components.formAnswerer.components.formTextAnswerQuestion
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
@@ -10,7 +10,7 @@ import org.w3c.dom.events.Event
 import react.*
 import react.dom.*
 
-internal fun RBuilder.fromTextQuestion(
+internal fun RBuilder.fromTextAnswerQuestion(
   question: FormTemplateTextQuestionRep.Complete,
   hasValidationError: (Boolean) -> Unit,
   onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,

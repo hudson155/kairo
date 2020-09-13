@@ -1,10 +1,10 @@
-package io.limberapp.web.app.components.formInstanceRenderer
+package io.limberapp.web.app.components.formAnswerer
 
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.web.app.components.formInstanceRenderer.components.formQuestion.formQuestion
+import io.limberapp.web.app.components.formAnswerer.components.formAnswerQuestion.formAnswerQuestion
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -14,7 +14,7 @@ import kotlinx.html.js.onSubmitFunction
 import react.*
 import react.dom.*
 
-internal fun RBuilder.formRenderer(
+internal fun RBuilder.formAnswerer(
   formTemplateQuestions: List<FormTemplateQuestionRep.Complete>,
   formInstance: FormInstanceRep.Complete,
   onAnswerQuestion: (FormInstanceQuestionRep.Complete) -> Unit,
@@ -30,7 +30,7 @@ internal data class Props(
   val onAnswerFailure: (UUID) -> Unit,
 ) : RProps
 
-private class S : Styles("FromRenderer") {
+private class S : Styles("FromAnswerer") {
   val root by css {
     backgroundColor = Theme.Color.Background.white
     border(1.px, BorderStyle.solid, Theme.Color.Border.light)
@@ -51,7 +51,7 @@ private fun RBuilder.component(props: Props) {
       onSubmitFunction = { e -> e.preventDefault() } // disable enter key triggering submit
     }
     props.formTemplateQuestions.forEach { formTemplateQuestion ->
-      formQuestion(
+      formAnswerQuestion(
         question = formTemplateQuestion,
         formInstance = props.formInstance,
         onAnswerQuestion = props.onAnswerSuccess,

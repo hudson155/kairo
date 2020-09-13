@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.formInstanceRenderer.components.formQuestion
+package io.limberapp.web.app.components.formAnswerer.components.formAnswerQuestion
 
 import com.piperframework.types.UUID
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
@@ -12,9 +12,9 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.web.api.useApi
-import io.limberapp.web.app.components.formInstanceRenderer.components.formDateQuestion.formDateQuestion
-import io.limberapp.web.app.components.formInstanceRenderer.components.formRadioQuestion.fromRadioQuestion
-import io.limberapp.web.app.components.formInstanceRenderer.components.formTextQuestion.fromTextQuestion
+import io.limberapp.web.app.components.formAnswerer.components.formDateAnswerQuestion.formDateAnswerQuestion
+import io.limberapp.web.app.components.formAnswerer.components.formRadioAnswerQuestion.fromRadioAnswerQuestion
+import io.limberapp.web.app.components.formAnswerer.components.formTextAnswerQuestion.fromTextAnswerQuestion
 import io.limberapp.web.state.state.feature.useFeatureState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
@@ -26,7 +26,7 @@ import kotlinx.css.properties.*
 import react.*
 import react.dom.*
 
-internal fun RBuilder.formQuestion(
+internal fun RBuilder.formAnswerQuestion(
   question: FormTemplateQuestionRep.Complete,
   formInstance: FormInstanceRep.Complete,
   onAnswerQuestion: (FormInstanceQuestionRep.Complete) -> Unit,
@@ -44,7 +44,7 @@ private data class Props(
   val defaultValue: FormInstanceQuestionRep.Complete?,
 ) : RProps
 
-private class S : Styles("FromQuestion") {
+private class S : Styles("FromAnswerQuestion") {
   val root by css {
     padding(20.px)
     lastChild {
@@ -101,18 +101,18 @@ private fun RBuilder.component(props: Props) {
     }
     br {}
     when (props.question) {
-      is FormTemplateDateQuestionRep.Complete -> formDateQuestion(
+      is FormTemplateDateQuestionRep.Complete -> formDateAnswerQuestion(
         question = props.question,
         onSubmit = submitAnswer,
         hasValidationError = hasValidationErrorCallback,
         defaultValue = props.defaultValue as FormInstanceDateQuestionRep.Complete?,
       )
-      is FormTemplateRadioSelectorQuestionRep.Complete -> fromRadioQuestion(
+      is FormTemplateRadioSelectorQuestionRep.Complete -> fromRadioAnswerQuestion(
         question = props.question,
         onSubmit = submitAnswer,
         defaultValue = props.defaultValue as FormInstanceRadioSelectorQuestionRep.Complete?,
       )
-      is FormTemplateTextQuestionRep.Complete -> fromTextQuestion(
+      is FormTemplateTextQuestionRep.Complete -> fromTextAnswerQuestion(
         question = props.question,
         onSubmit = submitAnswer,
         hasValidationError = hasValidationErrorCallback,

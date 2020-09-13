@@ -10,7 +10,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.web.api.load
 import io.limberapp.web.api.useApi
-import io.limberapp.web.app.components.formInstanceRenderer.formRenderer
+import io.limberapp.web.app.components.formAnswerer.formAnswerer
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
@@ -140,7 +140,7 @@ private fun RBuilder.formAnswerComponent(props: FormAnswerProps) {
   }
 
   layoutTitle(props.formTemplate.title)
-  formRenderer(props.formTemplate.questions, props.formInstance, onAnswerSuccess, onAnswerFailure)
+  formAnswerer(props.formTemplate.questions, props.formInstance, onAnswerSuccess, onAnswerFailure)
   div(classes = s.c { it::footer }) {
     limberButton(
       style = Style.PRIMARY,

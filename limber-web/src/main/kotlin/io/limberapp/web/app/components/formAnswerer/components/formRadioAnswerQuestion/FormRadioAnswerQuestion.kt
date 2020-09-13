@@ -1,4 +1,4 @@
-package io.limberapp.web.app.components.formInstanceRenderer.components.formRadioQuestion
+package io.limberapp.web.app.components.formAnswerer.components.formRadioAnswerQuestion
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
@@ -11,7 +11,7 @@ import kotlinx.html.js.onChangeFunction
 import react.*
 import react.dom.*
 
-internal fun RBuilder.fromRadioQuestion(
+internal fun RBuilder.fromRadioAnswerQuestion(
   question: FormTemplateRadioSelectorQuestionRep.Complete,
   onSubmit: (FormInstanceQuestionRep.Creation) -> Unit,
   defaultValue: FormInstanceRadioSelectorQuestionRep.Complete? = null,
