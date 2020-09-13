@@ -3,6 +3,7 @@ build:
 
 config:
   validation: true
+  warningsAsErrors: true
 
 processors:
   active: true
@@ -218,6 +219,8 @@ formatting:
     active: true
   SpacingAroundDot:
     active: true
+  SpacingAroundDoubleColon:
+    active: true
   SpacingAroundKeyword:
     active: true
   SpacingAroundOperators:
@@ -225,6 +228,10 @@ formatting:
   SpacingAroundParens:
     active: true
   SpacingAroundRangeOperator:
+    active: true
+  SpacingBetweenDeclarationsWithAnnotations:
+    active: true
+  SpacingBetweenDeclarationsWithComments:
     active: true
   StringTemplate:
     active: true
@@ -259,6 +266,8 @@ naming:
     mustBeFirst: true
   MemberNameEqualsClassName:
     active: false
+  NonBooleanPropertyPrefixedWithIs:
+    active: true
   ObjectPropertyNaming:
     active: true
   PackageNaming:
@@ -304,6 +313,9 @@ potential-bugs:
     active: false
   ImplicitDefaultLocale:
     active: true
+  ImplicitUnitReturnType:
+    active: true
+    allowExplicitReturnType: false
   InvalidRange:
     active: true
   IteratorHasNextCallsNextMethod:
@@ -315,6 +327,8 @@ potential-bugs:
   MapGetWithNotNullAssertionOperator:
     active: true
   MissingWhenCase:
+    active: true
+  NullableToStringCall:
     active: true
   RedundantElseInWhen:
     active: true
@@ -371,6 +385,8 @@ style:
     active: true
     ignoreOverridableFunction: true
   LibraryCodeMustSpecifyReturnType:
+    active: true
+  LibraryEntitiesShouldNotBePublic:
     active: true
   LoopWithTooManyJumpStatements:
     active: true
@@ -461,14 +477,20 @@ style:
     allowedNames: "(_)"
   UseArrayLiteralsInAnnotations:
     active: true
+  UseCheckNotNull:
+    active: true
   UseCheckOrError:
     active: true
   UseDataClass:
     active: false
     allowVars: false
+  UseEmptyCounterpart:
+    active: true
   UseIfInsteadOfWhen:
     active: false
   UseRequire:
+    active: true
+  UseRequireNotNull:
     active: true
   UselessCallOnNotNull:
     active: true
