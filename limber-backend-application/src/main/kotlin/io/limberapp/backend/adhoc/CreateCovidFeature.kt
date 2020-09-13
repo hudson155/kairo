@@ -10,6 +10,7 @@ import io.limberapp.backend.LimberModule
 import io.limberapp.backend.config.LimberConfigLoader
 import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
+import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionModel
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
@@ -34,6 +35,7 @@ internal fun Adhoc.createCovidFeature() {
     override fun Application.afterStart(context: Context) {
       val featureGuid = createFeature(context.injector)
       createPreScreeningSelfAssessmentFormTemplate(context.injector, featureGuid)
+      createWorkplaceInspectionFormTemplate(context.injector, featureGuid)
       shutDown(0)
     }
 
@@ -126,6 +128,128 @@ internal fun Adhoc.createCovidFeature() {
         label = "In the past 14 days, did you return from travel outside of Canada, or did you have close contact with someone who is confirmed as having COVID-19?",
         helpText = null,
         required = true,
+      ))
+    }
+
+    @Suppress("LongMethod", "MaxLineLength")
+    @OptIn(LimberModule.Forms::class)
+    private fun createWorkplaceInspectionFormTemplate(injector: Injector, featureGuid: UUID) {
+      val formTemplateService = injector.getInstance(FormTemplateService::class.java)
+      val formTemplateQuestionService = injector.getInstance(FormTemplateQuestionService::class.java)
+      val formTemplateGuid = formTemplateService.create(FormTemplateModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        featureGuid = featureGuid,
+        title = "Workplace inspection",
+        description = null,
+      )).guid
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Has the COVID-19 Policy been communicated?",
+        helpText = "e.g. Through visible signage, via email, discussed in meetings, etc.",
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Have the COVID-19 social distancing requirements been communicated?",
+        helpText = "e.g. Through visible signage, via email, discussed in meetings, etc.",
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Has it been communicated that anyone experiencing symptoms of COVID-19 is not allowed on the" +
+          " premises (unless symptoms are related to known, unrelated health conditions)?",
+        helpText = "e.g. Through pre-screening self-assessment.",
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Is hand sanitizer readily available?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Are cleaning and sanitization supplies available?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Is the work area clean, sanitized and free of debris?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Have high touch areas been cleaned and sanitized?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Have equipment and tools been cleaned and sanitized?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Have all non-food contact surfaces been disinfected?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Have all food contact surfaces been disinfected?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Are all staff wearing required PPE?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Is social distancing practiced?",
+        helpText = null,
+        required = true,
+      ))
+      formTemplateQuestionService.create(featureGuid, FormTemplateTextQuestionModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        formTemplateGuid = formTemplateGuid,
+        label = "Other observations and comments:",
+        helpText = null,
+        required = false,
+        multiLine = true,
+        placeholder = null,
+        validator = null,
       ))
     }
   }
