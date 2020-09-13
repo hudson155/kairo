@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.users.endpoint.user
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import com.piperframework.types.UUID
 import io.ktor.application.Application
@@ -16,12 +15,10 @@ import io.limberapp.backend.module.users.service.account.UserService
 
 internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val userService: UserService,
   private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.GetByOrgGuidAndEmailAddress, UserRep.Complete>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = UserApi.GetByOrgGuidAndEmailAddress::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserApi.GetByOrgGuidAndEmailAddress(

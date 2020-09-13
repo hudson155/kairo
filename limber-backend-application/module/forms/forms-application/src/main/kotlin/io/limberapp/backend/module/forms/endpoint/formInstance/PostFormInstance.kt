@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -17,13 +16,11 @@ import java.util.*
 
 internal class PostFormInstance @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
   private val formInstanceQuestionService: FormInstanceQuestionService,
   private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.Post, FormInstanceRep.Complete>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FormInstanceApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(

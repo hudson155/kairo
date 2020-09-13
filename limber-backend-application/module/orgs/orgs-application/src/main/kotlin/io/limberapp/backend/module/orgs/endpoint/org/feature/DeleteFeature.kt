@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -14,11 +13,9 @@ import java.util.*
 
 internal class DeleteFeature @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val featureService: FeatureService,
 ) : LimberApiEndpoint<OrgFeatureApi.Delete, Unit>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = OrgFeatureApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgFeatureApi.Delete(

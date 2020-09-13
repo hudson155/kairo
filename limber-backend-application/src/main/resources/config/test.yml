@@ -19,9 +19,3 @@ authentication:
 
 hashing:
   logRounds: 4
-
-serving:
-  redirectHttpToHttps: false
-  apiPathPrefix: /
-  staticFiles:
-    serve: false

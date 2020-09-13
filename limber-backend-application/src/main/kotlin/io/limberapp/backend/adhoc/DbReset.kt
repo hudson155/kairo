@@ -263,8 +263,8 @@ internal fun Adhoc.dbReset() {
           label = "Departure date",
           helpText = null,
           required = true,
-          earliest = LocalDate.of(2020, 1,1),
-          latest = LocalDate.of(2021, 1,1),
+          earliest = LocalDate.of(2020, 1, 1),
+          latest = LocalDate.of(2021, 1, 1),
         ))
       formTemplateQuestionService.create(formsFeature.guid, FormTemplateTextQuestionModel(
         guid = UUID.fromString("761dea1a-e422-4e3c-81c6-497ec21cc1c3"),

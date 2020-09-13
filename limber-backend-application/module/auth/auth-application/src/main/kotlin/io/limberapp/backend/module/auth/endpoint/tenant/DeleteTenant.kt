@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -14,10 +13,9 @@ import java.util.*
 
 internal class DeleteTenant @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val tenantService: TenantService,
 ) : LimberApiEndpoint<TenantApi.Delete, Unit>(
-  application, servingConfig.apiPathPrefix,
+  application = application,
   endpointTemplate = TenantApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Delete(

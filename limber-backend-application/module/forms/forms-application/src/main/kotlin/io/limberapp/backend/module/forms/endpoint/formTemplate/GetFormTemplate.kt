@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -17,13 +16,11 @@ import java.util.*
 
 internal class GetFormTemplate @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val formTemplateService: FormTemplateService,
   private val formTemplateQuestionService: FormTemplateQuestionService,
   private val formTemplateMapper: FormTemplateMapper,
 ) : LimberApiEndpoint<FormTemplateApi.Get, FormTemplateRep.Complete>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FormTemplateApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Get(

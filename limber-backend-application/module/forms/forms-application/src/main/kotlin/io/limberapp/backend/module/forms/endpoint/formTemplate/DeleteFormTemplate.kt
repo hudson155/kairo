@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -14,11 +13,9 @@ import java.util.*
 
 internal class DeleteFormTemplate @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val formTemplateService: FormTemplateService,
 ) : LimberApiEndpoint<FormTemplateApi.Delete, Unit>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FormTemplateApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Delete(

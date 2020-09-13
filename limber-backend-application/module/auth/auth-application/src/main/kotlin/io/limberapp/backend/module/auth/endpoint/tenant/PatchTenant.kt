@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -17,12 +16,11 @@ import java.util.*
 
 internal class PatchTenant @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val tenantService: TenantService,
   private val tenantDomainService: TenantDomainService,
   private val tenantMapper: TenantMapper,
 ) : LimberApiEndpoint<TenantApi.Patch, TenantRep.Complete>(
-  application, servingConfig.apiPathPrefix,
+  application = application,
   endpointTemplate = TenantApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Patch(

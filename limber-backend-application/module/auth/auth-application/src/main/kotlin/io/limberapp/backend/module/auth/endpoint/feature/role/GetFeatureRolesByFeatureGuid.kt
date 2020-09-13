@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.feature.role
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -16,12 +15,10 @@ import java.util.*
 
 internal class GetFeatureRolesByFeatureGuid @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val featureRoleService: FeatureRoleService,
   private val featureRoleMapper: FeatureRoleMapper,
 ) : LimberApiEndpoint<FeatureRoleApi.GetByFeatureGuid, Set<FeatureRoleRep.Complete>>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FeatureRoleApi.GetByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FeatureRoleApi.GetByFeatureGuid(

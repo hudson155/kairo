@@ -2,8 +2,8 @@ package io.limberapp.backend.module.orgs
 
 import com.piperframework.module.Module
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
-import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetByOwnerUserGuid
+import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PatchOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.endpoint.org.feature.DeleteFeature

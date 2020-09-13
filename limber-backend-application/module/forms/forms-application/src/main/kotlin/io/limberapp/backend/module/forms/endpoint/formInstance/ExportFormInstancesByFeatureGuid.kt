@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.finder.SortableFinder
 import com.piperframework.restInterface.template
 import com.piperframework.types.TimeZone
@@ -22,13 +21,11 @@ import java.util.*
 @OptIn(LimberModule.Orgs::class, LimberModule.Users::class)
 internal class ExportFormInstancesByFeatureGuid @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val featureService: FeatureService,
   private val formInstanceService: FormInstanceService,
   private val userService: UserService,
 ) : LimberApiEndpoint<FormInstanceApi.ExportByFeatureGuid, String>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FormInstanceApi.ExportByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.ExportByFeatureGuid(

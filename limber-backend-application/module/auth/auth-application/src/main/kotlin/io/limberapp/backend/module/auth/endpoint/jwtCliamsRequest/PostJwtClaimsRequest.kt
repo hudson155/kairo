@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -15,11 +14,10 @@ import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsReques
 
 internal class PostJwtClaimsRequest @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val jwtClaimsRequestService: JwtClaimsRequestService,
   private val jwtClaimsRequestMapper: JwtClaimsRequestMapper,
 ) : LimberApiEndpoint<JwtClaimsRequestApi.Post, JwtClaimsRequestRep.Complete>(
-  application, servingConfig.apiPathPrefix,
+  application = application,
   endpointTemplate = JwtClaimsRequestApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = JwtClaimsRequestApi.Post(

@@ -17,7 +17,6 @@ import com.piperframework.restInterface.forKtor
 import com.piperframework.serialization.Json
 import com.piperframework.types.TimeZone
 import com.piperframework.util.conversionService
-import com.piperframework.util.serveStaticFiles
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -28,7 +27,6 @@ import io.ktor.features.Compression
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
-import io.ktor.features.HttpsRedirect
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
@@ -63,10 +61,7 @@ abstract class SimplePiperApp<C : Config>(
     // Pass the injector because configuration may require services that are bound in the injector.
     application.configure(injector)
 
-    // Configure routing. Static files, dynamic endpoints, then 404.
-    if (config.serving.staticFiles.serve) {
-      application.serveStaticFiles(config.serving.staticFiles.rootPath!!, "index.html")
-    }
+    // Configure routing. Dynamic endpoints, then 404.
     registerEndpoints(injector)
     application.handle404()
 
@@ -79,7 +74,6 @@ abstract class SimplePiperApp<C : Config>(
   }
 
   private fun Application.configure(injector: Injector) {
-    httpsRedirect()
     authentication(injector)
     cors()
     dataConversion()
@@ -88,12 +82,6 @@ abstract class SimplePiperApp<C : Config>(
     callLogging()
     contentNegotiation()
     statusPages()
-  }
-
-  protected fun Application.httpsRedirect() {
-    if (config.serving.redirectHttpToHttps) {
-      install(HttpsRedirect)
-    }
   }
 
   protected fun Application.authentication(injector: Injector) {
@@ -173,7 +161,7 @@ abstract class SimplePiperApp<C : Config>(
 
   private fun Application.handle404(): Routing {
     return routing {
-      route("${config.serving.apiPathPrefix}/{...}") {
+      route("/{...}") {
         handle { throw EndpointNotFound() }
       }
     }

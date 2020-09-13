@@ -25,7 +25,6 @@ import io.ktor.routing.HttpMethodRouteSelector
 import io.ktor.routing.ParameterRouteSelector
 import io.ktor.routing.Route
 import io.ktor.routing.createRouteFromPath
-import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.util.pipeline.ContextDsl
 import org.slf4j.LoggerFactory
@@ -38,7 +37,6 @@ import kotlin.reflect.full.cast
  */
 abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType : Any>(
   private val application: Application,
-  private val pathPrefix: String,
   private val endpointTemplate: PiperEndpointTemplate,
 ) {
   private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
@@ -94,11 +92,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : PiperEndpoint, ResponseType
         with(endpointTemplate.requiredQueryParams) { if (isNotEmpty()) "(${joinToString()})" else null }
       ).joinToString(" ")
     )
-    application.routing {
-      authenticate(optional = true) {
-        route(pathPrefix) { routeEndpoint() }
-      }
-    }
+    application.routing { authenticate(optional = true) { routeEndpoint() } }
   }
 
   private fun Route.routeEndpoint() {

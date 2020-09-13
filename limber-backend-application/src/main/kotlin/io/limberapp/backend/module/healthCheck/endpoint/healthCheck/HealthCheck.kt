@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.healthCheck.endpoint.healthCheck
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -17,12 +16,10 @@ import org.slf4j.LoggerFactory
 
 internal class HealthCheck @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val healthCheckService: HealthCheckService,
   private val healthCheckMapper: HealthCheckMapper,
 ) : LimberApiEndpoint<HealthCheckApi.Get, HealthCheckRep.Complete>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = HealthCheckApi.Get::class.template()
 ) {
   private val logger = LoggerFactory.getLogger(HealthCheck::class.java)

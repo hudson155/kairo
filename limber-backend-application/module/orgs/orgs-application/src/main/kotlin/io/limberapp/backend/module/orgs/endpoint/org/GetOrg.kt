@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -17,13 +16,11 @@ import java.util.*
 
 internal class GetOrg @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val featureService: FeatureService,
   private val orgService: OrgService,
   private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.Get, OrgRep.Complete>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = OrgApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Get(

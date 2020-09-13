@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -14,10 +13,9 @@ import java.util.*
 
 internal class DeleteTenantDomain @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val tenantDomainService: TenantDomainService,
 ) : LimberApiEndpoint<TenantDomainApi.Delete, Unit>(
-  application, servingConfig.apiPathPrefix,
+  application = application,
   endpointTemplate = TenantDomainApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Delete(

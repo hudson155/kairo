@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.config.serving.ServingConfig
 import com.piperframework.finder.SortableFinder
 import com.piperframework.restInterface.template
 import io.ktor.application.Application
@@ -18,12 +17,10 @@ import java.util.*
 
 internal class GetFormInstancesByFeatureGuid @Inject constructor(
   application: Application,
-  servingConfig: ServingConfig,
   private val formInstanceService: FormInstanceService,
   private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, List<FormInstanceRep.Summary>>(
   application = application,
-  pathPrefix = servingConfig.apiPathPrefix,
   endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.GetByFeatureGuid(
