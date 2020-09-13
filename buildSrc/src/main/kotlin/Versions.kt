@@ -30,7 +30,7 @@ object Versions {
   const val jdbi3 = "3.13.0"
 
   // https://github.com/junit-team/junit5/releases
-  const val junit = "5.6.2"
+  const val junit = "5.7.0"
 
   // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
   const val kotlin = "1.4.0"
