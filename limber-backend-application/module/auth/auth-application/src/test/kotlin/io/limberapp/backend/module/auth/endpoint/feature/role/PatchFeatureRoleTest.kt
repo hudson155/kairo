@@ -23,14 +23,14 @@ internal class PatchFeatureRoleTest : ResourceTest() {
       endpoint = FeatureRoleApi.Patch(
         featureGuid = featureGuid,
         featureRoleGuid = featureRoleGuid,
-        rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110"))
+        rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")),
       ),
       expectedException = FeatureRoleNotFound()
     )
   }
 
   @Test
-  fun happyPath() {
+  fun happyPathPermissions() {
     val orgGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
@@ -41,8 +41,59 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     piperTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
 
     featureRoleRep = featureRoleRep.copy(permissions = FormsFeaturePermissions.fromBitString("0110"))
-    piperTest.test(FeatureRoleApi.Patch(featureGuid, featureRoleRep.guid,
-      FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")))) {
+    piperTest.test(
+      endpoint = FeatureRoleApi.Patch(
+        featureGuid = featureGuid,
+        featureRoleGuid = featureRoleRep.guid,
+        rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")),
+      )
+    ) {
+      val actual = json.parse<FeatureRoleRep.Complete>(responseContent)
+      assertEquals(featureRoleRep, actual)
+    }
+
+    piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
+      assertEquals(setOf(featureRoleRep), actual)
+    }
+  }
+
+  @Test
+  fun happyPathIsDefault() {
+    val orgGuid = UUID.randomUUID()
+    val featureGuid = UUID.randomUUID()
+
+    val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
+    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+
+    var featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, orgRoleRep.guid, 1)
+    piperTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
+
+    featureRoleRep = featureRoleRep.copy(isDefault = true)
+    piperTest.test(
+      endpoint = FeatureRoleApi.Patch(
+        featureGuid = featureGuid,
+        featureRoleGuid = featureRoleRep.guid,
+        rep = FeatureRoleRep.Update(isDefault = true),
+      )
+    ) {
+      val actual = json.parse<FeatureRoleRep.Complete>(responseContent)
+      assertEquals(featureRoleRep, actual)
+    }
+
+    piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
+      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
+      assertEquals(setOf(featureRoleRep), actual)
+    }
+
+    featureRoleRep = featureRoleRep.copy(isDefault = false)
+    piperTest.test(
+      endpoint = FeatureRoleApi.Patch(
+        featureGuid = featureGuid,
+        featureRoleGuid = featureRoleRep.guid,
+        rep = FeatureRoleRep.Update(isDefault = false),
+      )
+    ) {
       val actual = json.parse<FeatureRoleRep.Complete>(responseContent)
       assertEquals(featureRoleRep, actual)
     }

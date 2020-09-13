@@ -15,14 +15,19 @@ internal object FeatureRoleRepFixtures {
 
   val fixture = Fixture(
     { orgRoleGuid ->
-      FeatureRoleRep.Creation(orgRoleGuid, FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)))
+      FeatureRoleRep.Creation(
+        orgRoleGuid = orgRoleGuid,
+        permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
+        isDefault = false,
+      )
     },
     { orgRoleGuid: UUID, idSeed ->
       FeatureRoleRep.Complete(
         guid = deterministicUuidGenerator[idSeed],
         createdDate = LocalDateTime.now(fixedClock),
         orgRoleGuid = orgRoleGuid,
-        permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES))
+        permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
+        isDefault = false,
       )
     }
   )

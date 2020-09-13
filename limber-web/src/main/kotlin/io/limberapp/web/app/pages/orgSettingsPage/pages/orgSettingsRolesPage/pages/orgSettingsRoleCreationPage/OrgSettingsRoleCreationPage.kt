@@ -60,7 +60,7 @@ private fun RBuilder.component(props: Props) {
   val onCreate = {
     setIsSaving(true)
     async {
-      orgRolesMutator.post(OrgRoleRep.Creation(newRoleName, OrgPermissions.none()))
+      orgRolesMutator.post(OrgRoleRep.Creation(newRoleName, OrgPermissions.none(), isDefault = false))
       if (isMounted.current) {
         goBack()
         setIsSaving(false)

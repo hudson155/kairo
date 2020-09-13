@@ -90,6 +90,7 @@ internal fun Adhoc.dbReset() {
         orgGuid = org.guid,
         name = "Admin",
         permissions = OrgPermissions.fromBitString("1100"),
+        isDefault = false,
         memberCount = 0,
       ))
       orgRoleService.create(OrgRoleModel(
@@ -98,6 +99,7 @@ internal fun Adhoc.dbReset() {
         orgGuid = org.guid,
         name = "Member",
         permissions = OrgPermissions.fromBitString("0010"),
+        isDefault = true,
         memberCount = 0,
       ))
 

@@ -22,7 +22,7 @@ internal class PatchOrgRoleTest : ResourceTest() {
       endpoint = OrgRoleApi.Patch(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleGuid,
-        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110"))
+        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")),
       ),
       expectedException = OrgRoleNotFound()
     )
@@ -50,15 +50,62 @@ internal class PatchOrgRoleTest : ResourceTest() {
   }
 
   @Test
-  fun happyPath() {
+  fun happyPathPermissions() {
     val orgGuid = UUID.randomUUID()
 
     var orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
     orgRoleRep = orgRoleRep.copy(permissions = OrgPermissions.fromBitString("0110"))
-    piperTest.test(OrgRoleApi.Patch(orgGuid, orgRoleRep.guid,
-      OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")))) {
+    piperTest.test(
+      endpoint = OrgRoleApi.Patch(
+        orgGuid = orgGuid,
+        orgRoleGuid = orgRoleRep.guid,
+        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")),
+      )
+    ) {
+      val actual = json.parse<OrgRoleRep.Complete>(responseContent)
+      assertEquals(orgRoleRep, actual)
+    }
+
+    piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
+      val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
+      assertEquals(setOf(orgRoleRep), actual)
+    }
+  }
+
+  @Test
+  fun happyPathIsDefault() {
+    val orgGuid = UUID.randomUUID()
+
+    var orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
+    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+
+    orgRoleRep = orgRoleRep.copy(isDefault = true)
+    piperTest.test(
+      endpoint = OrgRoleApi.Patch(
+        orgGuid = orgGuid,
+        orgRoleGuid = orgRoleRep.guid,
+        rep = OrgRoleRep.Update(isDefault = true),
+      )
+    ) {
+      val actual = json.parse<OrgRoleRep.Complete>(responseContent)
+      assertEquals(orgRoleRep, actual)
+    }
+
+    piperTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
+      val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
+      assertEquals(setOf(orgRoleRep), actual)
+    }
+
+    orgRoleRep = orgRoleRep.copy(isDefault = false)
+    piperTest.test(
+      endpoint = OrgRoleApi.Patch(
+        orgGuid = orgGuid,
+        orgRoleGuid = orgRoleRep.guid,
+        rep = OrgRoleRep.Update(isDefault = false),
+      )
+    ) {
       val actual = json.parse<OrgRoleRep.Complete>(responseContent)
       assertEquals(orgRoleRep, actual)
     }

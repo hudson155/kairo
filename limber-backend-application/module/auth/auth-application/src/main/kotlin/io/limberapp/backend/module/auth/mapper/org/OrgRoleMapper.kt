@@ -18,7 +18,8 @@ internal class OrgRoleMapper @Inject constructor(
     orgGuid = orgGuid,
     name = rep.name,
     permissions = rep.permissions,
-    memberCount = 0
+    isDefault = rep.isDefault,
+    memberCount = 0,
   )
 
   fun completeRep(model: OrgRoleModel) = OrgRoleRep.Complete(
@@ -26,11 +27,13 @@ internal class OrgRoleMapper @Inject constructor(
     createdDate = model.createdDate,
     name = model.name,
     permissions = model.permissions,
-    memberCount = model.memberCount
+    isDefault = model.isDefault,
+    memberCount = model.memberCount,
   )
 
   fun update(rep: OrgRoleRep.Update) = OrgRoleModel.Update(
     name = rep.name,
-    permissions = rep.permissions
+    permissions = rep.permissions,
+    isDefault = rep.isDefault,
   )
 }

@@ -1,6 +1,7 @@
 UPDATE auth.org_role
 SET name        = COALESCE(:name, name),
-    permissions = COALESCE(:permissions, permissions)
+    permissions = COALESCE(:permissions, permissions),
+    is_default  = COALESCE(:isDefault, is_default)
 WHERE org_guid = :orgGuid
   AND guid = :orgRoleGuid
 RETURNING *, (SELECT COUNT(*)

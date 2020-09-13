@@ -17,6 +17,7 @@ object FeatureRoleRep {
     @Serializable(with = UuidSerializer::class)
     val orgRoleGuid: UUID,
     val permissions: FeaturePermissions,
+    val isDefault: Boolean,
   ) : CreationRep {
     override fun validate() = RepValidation {}
   }
@@ -30,11 +31,13 @@ object FeatureRoleRep {
     @Serializable(with = UuidSerializer::class)
     val orgRoleGuid: UUID,
     val permissions: FeaturePermissions,
+    val isDefault: Boolean,
   ) : CompleteRep
 
   @Serializable
   data class Update(
     val permissions: FeaturePermissions? = null,
+    val isDefault: Boolean? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {}
   }

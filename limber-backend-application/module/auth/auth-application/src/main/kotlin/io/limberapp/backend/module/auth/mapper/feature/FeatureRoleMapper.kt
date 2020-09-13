@@ -17,17 +17,20 @@ internal class FeatureRoleMapper @Inject constructor(
     createdDate = LocalDateTime.now(clock),
     featureGuid = featureGuid,
     orgRoleGuid = rep.orgRoleGuid,
-    permissions = rep.permissions
+    permissions = rep.permissions,
+    isDefault = rep.isDefault,
   )
 
   fun completeRep(model: FeatureRoleModel) = FeatureRoleRep.Complete(
     guid = model.guid,
     createdDate = model.createdDate,
     orgRoleGuid = model.orgRoleGuid,
-    permissions = model.permissions
+    permissions = model.permissions,
+    isDefault = model.isDefault,
   )
 
   fun update(rep: FeatureRoleRep.Update) = FeatureRoleModel.Update(
-    permissions = rep.permissions
+    permissions = rep.permissions,
+    isDefault = rep.isDefault,
   )
 }

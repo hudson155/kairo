@@ -2,8 +2,6 @@ package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
 import com.piperframework.testing.responseContent
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
@@ -11,7 +9,6 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
-import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
@@ -32,7 +29,7 @@ import kotlin.test.assertEquals
 internal class PostJwtClaimsRequestTest : ResourceTest() {
   @Test
   fun happyPathUserDoesNotExist() {
-    val userGuid = deterministicUuidGenerator[0]
+    val userGuid = deterministicUuidGenerator[3]
     val emailAddress = "jhudson@jhudson.ca"
     val existingOrg = OrgModel(
       guid = UUID.randomUUID(),
@@ -56,6 +53,17 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
+    val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
+    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+
+    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+
+    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+
+    val orgPermissions = setOf(
+      membershipOrgRoleRep.permissions, // This org role has isDefault = true.
+    ).union()
+
     val jwtRequest = JwtClaimsRequestRep.Creation(
       auth0ClientId = tenantRep.auth0ClientId,
       firstName = "Jeff",
@@ -70,7 +78,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"isOwner\\\":false," +
-        "\\\"permissions\\\":\\\"${OrgPermissions.none().asDarb()}\\\"," +
+        "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
         "\\\"features\\\":{}" +
         "}\",\n" +
         "    \"roles\": \"[]\",\n" +
@@ -134,34 +142,10 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
     piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
 
-    piperTest.setup(
-      endpoint = OrgRoleApi.Patch(
-        orgGuid = existingOrg.guid,
-        orgRoleGuid = membershipOrgRoleRep.guid,
-        rep = OrgRoleRep.Update(permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES)))
-      )
-    )
-
-    val maintainerOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 1)
+    val maintainerOrgRoleRep = OrgRoleRepFixtures.maintainerFixture.complete(this, 1)
     piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
 
-    piperTest.setup(
-      endpoint = OrgRoleApi.Patch(
-        orgGuid = existingOrg.guid,
-        orgRoleGuid = maintainerOrgRoleRep.guid,
-        rep = OrgRoleRep.Update(permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_METADATA)))
-      )
-    )
-
     piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
-
-    piperTest.setup(
-      endpoint = OrgRoleMembershipApi.Post(
-        orgGuid = existingOrg.guid,
-        orgRoleGuid = membershipOrgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(existingUser.guid)
-      )
-    )
 
     piperTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
@@ -172,9 +156,8 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     )
 
     val orgPermissions = setOf(
-      membershipOrgRoleRep.permissions,
+      membershipOrgRoleRep.permissions, // This org role has isDefault = true.
       maintainerOrgRoleRep.permissions,
-      OrgPermissions(setOf(OrgPermission.MANAGE_ORG_FEATURES, OrgPermission.MANAGE_ORG_METADATA))
     ).union()
 
     val featurePermissions = FormsFeaturePermissions.none()

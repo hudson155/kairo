@@ -10,8 +10,10 @@ data class FeatureRoleModel(
   val featureGuid: UUID,
   val orgRoleGuid: UUID,
   val permissions: FeaturePermissions,
+  val isDefault: Boolean,
 ) {
   data class Update(
     val permissions: FeaturePermissions?,
+    val isDefault: Boolean?,
   )
 }

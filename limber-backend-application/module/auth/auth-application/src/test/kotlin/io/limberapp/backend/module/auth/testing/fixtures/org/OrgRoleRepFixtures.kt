@@ -14,7 +14,11 @@ internal object OrgRoleRepFixtures {
 
   val adminFixture = Fixture(
     {
-      OrgRoleRep.Creation("Admin", OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)))
+      OrgRoleRep.Creation(
+        name = "Admin",
+        permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
+        isDefault = false,
+      )
     },
     { idSeed ->
       OrgRoleRep.Complete(
@@ -22,14 +26,19 @@ internal object OrgRoleRepFixtures {
         createdDate = LocalDateTime.now(fixedClock),
         name = "Admin",
         permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
-        memberCount = 0
+        isDefault = false,
+        memberCount = 0,
       )
     }
   )
 
   val maintainerFixture = Fixture(
     {
-      OrgRoleRep.Creation("Maintainer", OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)))
+      OrgRoleRep.Creation(
+        name = "Maintainer",
+        permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
+        isDefault = false,
+      )
     },
     { idSeed ->
       OrgRoleRep.Complete(
@@ -37,22 +46,28 @@ internal object OrgRoleRepFixtures {
         createdDate = LocalDateTime.now(fixedClock),
         name = "Maintainer",
         permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
-        memberCount = 0
+        isDefault = false,
+        memberCount = 0,
       )
     }
   )
 
   val memberFixture = Fixture(
     {
-      OrgRoleRep.Creation("Member", OrgPermissions.none())
+      OrgRoleRep.Creation(
+        name = "Member",
+        permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
+        isDefault = true,
+      )
     },
     { idSeed ->
       OrgRoleRep.Complete(
         guid = deterministicUuidGenerator[idSeed],
         createdDate = LocalDateTime.now(fixedClock),
         name = "Member",
-        permissions = OrgPermissions.none(),
-        memberCount = 0
+        permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
+        isDefault = true,
+        memberCount = 0,
       )
     }
   )
