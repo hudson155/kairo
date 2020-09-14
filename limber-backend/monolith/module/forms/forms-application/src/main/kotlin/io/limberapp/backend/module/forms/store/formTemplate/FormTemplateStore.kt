@@ -2,12 +2,12 @@ package io.limberapp.backend.module.forms.store.formTemplate
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import com.piperframework.finder.Finder
-import com.piperframework.store.SqlStore
-import com.piperframework.store.withFinder
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
+import io.limberapp.common.finder.Finder
+import io.limberapp.common.store.SqlStore
+import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*

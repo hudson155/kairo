@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.exception.org
 
-import com.piperframework.exception.exception.conflict.ConflictException
+import io.limberapp.common.exception.exception.conflict.ConflictException
 
 internal class OrgRoleNameIsNotUnique : ConflictException(
   message = "The role cannot have the same name as another role.",

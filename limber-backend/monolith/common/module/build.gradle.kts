@@ -5,8 +5,8 @@ plugins {
 }
 
 dependencies {
+  api(project(":limber-backend:common:module"))
   api(project(":limber-backend:monolith:common"))
-  api(project(":piper:module"))
   implementation(Dependencies.Logging.slf4j)
 }
 

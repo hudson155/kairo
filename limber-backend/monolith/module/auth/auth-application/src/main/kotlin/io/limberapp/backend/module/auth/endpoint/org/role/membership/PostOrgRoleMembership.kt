@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -11,6 +10,7 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.mapper.org.OrgRoleMembershipMapper
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostOrgRoleMembership @Inject constructor(

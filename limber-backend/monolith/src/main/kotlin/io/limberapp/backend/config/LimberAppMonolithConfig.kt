@@ -1,11 +1,11 @@
 package io.limberapp.backend.config
 
-import com.piperframework.config.Config
-import com.piperframework.config.ConfigString
-import com.piperframework.config.authentication.AuthenticationConfig
-import com.piperframework.config.authentication.AuthenticationMechanism
-import com.piperframework.config.database.SqlDatabaseConfig
-import com.piperframework.config.hashing.HashingConfig
+import io.limberapp.common.config.Config
+import io.limberapp.common.config.ConfigString
+import io.limberapp.common.config.authentication.AuthenticationConfig
+import io.limberapp.common.config.authentication.AuthenticationMechanism
+import io.limberapp.common.config.database.SqlDatabaseConfig
+import io.limberapp.common.config.hashing.HashingConfig
 
 /**
  * The config class contains all custom configuration for the app. It doesn't contain Ktor built-in configuration.

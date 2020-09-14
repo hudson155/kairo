@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.forms.rep.formTemplate
 
-import com.piperframework.rep.CompleteRep
-import com.piperframework.rep.CreationRep
-import com.piperframework.rep.UpdateRep
-import com.piperframework.types.UUID
-import com.piperframework.validation.RepValidation
-import com.piperframework.validation.ifPresent
-import com.piperframework.validator.Validator
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.rep.UpdateRep
+import io.limberapp.common.types.UUID
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validation.ifPresent
+import io.limberapp.common.validator.Validator
 
 object FormTemplateQuestionRep {
   interface Creation : CreationRep {

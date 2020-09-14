@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.store.formInstance
 
-import com.piperframework.finder.SortableFinder
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
+import io.limberapp.common.finder.SortableFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class FormInstanceQueryBuilder : QueryBuilder(), FormInstanceFinder {

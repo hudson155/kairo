@@ -6,11 +6,11 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":limber-backend:common:serialization"))
   implementation(project(":limber-backend:monolith:common:module"))
   implementation(project(":limber-backend:monolith:common:sql"))
   implementation(project(":limber-backend:monolith:module:orgs:orgs-rest-interface"))
   api(project(":limber-backend:monolith:module:orgs:orgs-service-interface"))
-  implementation(project(":piper:serialization"))
   testImplementation(project(":limber-backend:monolith:common:sql:testing"))
   testImplementation(project(":limber-backend:monolith:common:testing"))
 }

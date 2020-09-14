@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -11,6 +10,7 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchFormTemplate @Inject constructor(

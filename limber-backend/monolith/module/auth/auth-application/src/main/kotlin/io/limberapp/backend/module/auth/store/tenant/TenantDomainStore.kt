@@ -2,16 +2,16 @@ package io.limberapp.backend.module.auth.store.tenant
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import com.piperframework.finder.Finder
-import com.piperframework.store.SqlStore
-import com.piperframework.store.isForeignKeyViolation
-import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
+import io.limberapp.common.finder.Finder
+import io.limberapp.common.store.SqlStore
+import io.limberapp.common.store.isForeignKeyViolation
+import io.limberapp.common.store.isUniqueConstraintViolation
+import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException

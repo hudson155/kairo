@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
+  api(project(":limber-backend:common:finder"))
   implementation(project(":limber-backend:monolith:common"))
-  api(project(":piper:finder"))
 }
 
 detekt {

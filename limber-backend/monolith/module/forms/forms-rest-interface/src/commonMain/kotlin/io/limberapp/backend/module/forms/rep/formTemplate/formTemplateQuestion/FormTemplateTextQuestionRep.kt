@@ -1,14 +1,14 @@
 package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
-import com.piperframework.serialization.serializer.LocalDateTimeSerializer
-import com.piperframework.serialization.serializer.RegexSerializer
-import com.piperframework.serialization.serializer.UuidSerializer
-import com.piperframework.types.LocalDateTime
-import com.piperframework.types.UUID
-import com.piperframework.validation.RepValidation
-import com.piperframework.validation.ifPresent
-import com.piperframework.validator.Validator
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
+import io.limberapp.common.serialization.serializer.LocalDateTimeSerializer
+import io.limberapp.common.serialization.serializer.RegexSerializer
+import io.limberapp.common.serialization.serializer.UuidSerializer
+import io.limberapp.common.types.LocalDateTime
+import io.limberapp.common.types.UUID
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validation.ifPresent
+import io.limberapp.common.validator.Validator
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

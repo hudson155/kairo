@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.orgs.exception.feature
 
-import com.piperframework.exception.exception.conflict.ConflictException
+import io.limberapp.common.exception.exception.conflict.ConflictException
 
 internal class FeatureRankIsNotUnique : ConflictException(
   message = "The feature cannot have the same rank as another feature.",

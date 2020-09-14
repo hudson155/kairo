@@ -1,6 +1,6 @@
 package io.limberapp.web.api
 
-import com.piperframework.restInterface.Fetch
+import io.limberapp.common.restInterface.Fetch
 import io.limberapp.backend.module.auth.client.org.role.OrgRoleClient
 import io.limberapp.backend.module.auth.client.org.role.OrgRoleClientImpl
 import io.limberapp.backend.module.auth.client.org.role.OrgRoleMembershipClient

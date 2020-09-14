@@ -22,18 +22,14 @@ Java, Postgres, and IntelliJ
 
 ## Modules
 
+* [`limber-backend-common`](/limber-backend/common):
+    Limber's backend framework, built on Ktor.
 * [`limber-backend-monolith`](/limber-backend/monolith):
     Limber's backend implementation.
-    Uses Piper.
     Currently a monolith, but broken into modules to allow simplified refactoring
     when moving to microservices becomes necessary.
 * [`limber-web`](/limber-web):
     Limber's web frontend.
-* [`piper`](/piper):
-    Piper is Limber's backend framework, built on Ktor.
-    It's in the same repo as Limber, but has nothing to do with Limber.
-    One day, this framework will move its way out of this repo and become open source.
-    Until then, make sure no Limber-specific code enters this module.
 
 ## Conventions
 

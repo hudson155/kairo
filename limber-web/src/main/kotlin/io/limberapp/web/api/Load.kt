@@ -1,6 +1,6 @@
 package io.limberapp.web.api
 
-import com.piperframework.util.Outcome
+import io.limberapp.common.util.Outcome
 import io.limberapp.web.util.async
 import react.*
 

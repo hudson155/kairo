@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.users.client.user
 
-import com.piperframework.restInterface.Fetch
-import com.piperframework.serialization.Json
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.common.restInterface.Fetch
+import io.limberapp.common.serialization.Json
 
 class UserClientImpl(private val fetch: Fetch, private val json: Json) : UserClient {
   override suspend operator fun invoke(endpoint: UserApi.Get) =

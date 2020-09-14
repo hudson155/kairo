@@ -2,11 +2,11 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import com.piperframework.finder.Finder
-import com.piperframework.store.SqlStore
-import com.piperframework.store.withFinder
 import io.limberapp.backend.module.users.model.account.AccountFinder
 import io.limberapp.backend.module.users.model.account.AccountModel
+import io.limberapp.common.finder.Finder
+import io.limberapp.common.store.SqlStore
+import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 
 @Singleton

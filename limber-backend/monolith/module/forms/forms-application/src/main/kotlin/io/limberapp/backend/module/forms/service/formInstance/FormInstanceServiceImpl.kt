@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.service.formInstance
 
 import com.google.inject.Inject
-import com.piperframework.finder.Finder
 import io.limberapp.backend.module.forms.exception.formInstance.CannotReSubmitFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
@@ -9,6 +8,7 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.store.formInstance.FormInstanceStore
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FormInstanceServiceImpl @Inject constructor(

@@ -1,12 +1,12 @@
 package io.limberapp.backend.endpoint
 
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.restInterface.PiperEndpoint
-import com.piperframework.restInterface.PiperEndpointTemplate
 import io.ktor.application.Application
 import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.common.endpoint.ApiEndpoint
+import io.limberapp.common.restInterface.LimberEndpoint
+import io.limberapp.common.restInterface.LimberEndpointTemplate
 
-abstract class LimberApiEndpoint<Endpoint : PiperEndpoint, ResponseType : Any>(
+abstract class LimberApiEndpoint<Endpoint : LimberEndpoint, ResponseType : Any>(
   application: Application,
-  endpointTemplate: PiperEndpointTemplate,
+  endpointTemplate: LimberEndpointTemplate,
 ) : ApiEndpoint<Jwt, Endpoint, ResponseType>(application, endpointTemplate)

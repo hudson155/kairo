@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
-import com.piperframework.rep.CreationRep
-import com.piperframework.validation.RepValidation
-import com.piperframework.validation.ifPresent
-import com.piperframework.validator.Validator
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validation.ifPresent
+import io.limberapp.common.validator.Validator
 import kotlinx.serialization.Serializable
 
 object JwtClaimsRequestRep {

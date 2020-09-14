@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.model.formInstance
 
-import com.piperframework.finder.SortableFinder
 import io.limberapp.backend.LimberModule
+import io.limberapp.common.finder.SortableFinder
 import java.util.*
 
 @LimberModule.Forms

@@ -1,11 +1,11 @@
 package io.limberapp.backend.module.auth.rep.tenant
 
-import com.piperframework.rep.CompleteRep
-import com.piperframework.rep.CreationRep
-import com.piperframework.serialization.serializer.LocalDateTimeSerializer
-import com.piperframework.types.LocalDateTime
-import com.piperframework.validation.RepValidation
-import com.piperframework.validator.Validator
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.serialization.serializer.LocalDateTimeSerializer
+import io.limberapp.common.types.LocalDateTime
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validator.Validator
 import kotlinx.serialization.Serializable
 
 object TenantDomainRep {

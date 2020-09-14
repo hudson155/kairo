@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms
 
-import com.piperframework.module.Module
 import io.limberapp.backend.module.forms.endpoint.formInstance.DeleteFormInstance
 import io.limberapp.backend.module.forms.endpoint.formInstance.ExportFormInstancesByFeatureGuid
 import io.limberapp.backend.module.forms.endpoint.formInstance.GetFormInstance
@@ -26,6 +25,7 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
+import io.limberapp.common.module.Module
 
 class FormsModule : Module() {
   override val serializersModule = formsSerializersModule

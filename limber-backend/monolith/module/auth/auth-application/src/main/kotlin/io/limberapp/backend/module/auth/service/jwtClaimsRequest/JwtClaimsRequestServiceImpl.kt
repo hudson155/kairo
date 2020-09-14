@@ -1,8 +1,6 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
-import com.piperframework.serialization.Json
-import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
@@ -24,6 +22,8 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.common.serialization.Json
+import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*

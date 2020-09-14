@@ -4,18 +4,18 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
-import com.piperframework.config.authentication.AuthenticationConfig
-import com.piperframework.config.authentication.AuthenticationMechanism
-import com.piperframework.ktorAuth.PiperAuthVerifier
-import com.piperframework.serialization.Json
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
+import io.limberapp.common.config.authentication.AuthenticationConfig
+import io.limberapp.common.config.authentication.AuthenticationMechanism
+import io.limberapp.common.ktorAuth.LimberAuthVerifier
+import io.limberapp.common.serialization.Json
 import org.slf4j.LoggerFactory
 
-class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : PiperAuthVerifier<Jwt> {
+class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVerifier<Jwt> {
   private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
 
   private val json = Json()

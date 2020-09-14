@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 
-import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
@@ -8,6 +7,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import io.limberapp.common.testing.responseContent
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -19,7 +19,7 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val formTemplateGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateQuestionApi.Delete(featureGuid, formTemplateGuid, questionGuid),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -31,9 +31,9 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val questionGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateQuestionApi.Delete(featureGuid, formTemplateRep.guid, questionGuid),
       expectedException = FormTemplateQuestionNotFound()
     )
@@ -44,11 +44,11 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
-    piperTest.setup(
+    limberTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
@@ -57,12 +57,12 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
       )
     )
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateQuestionApi.Delete(UUID.randomUUID(), formTemplateRep.guid, formTemplateQuestionRep.guid),
       expectedException = FormTemplateQuestionNotFound()
     )
 
-    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+    limberTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
@@ -73,11 +73,11 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
-    piperTest.setup(
+    limberTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
@@ -86,12 +86,12 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
       )
     )
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateQuestionApi.Delete(featureGuid, UUID.randomUUID(), formTemplateQuestionRep.guid),
       expectedException = FormTemplateQuestionNotFound()
     )
 
-    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+    limberTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }
@@ -102,11 +102,11 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
-    piperTest.setup(
+    limberTest.setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
@@ -118,9 +118,9 @@ internal class DeleteFormTemplateQuestionTest : ResourceTest() {
     formTemplateRep = formTemplateRep.copy(
       questions = formTemplateRep.questions.filter { it.guid != formTemplateQuestionRep.guid }
     )
-    piperTest.test(FormTemplateQuestionApi.Delete(featureGuid, formTemplateRep.guid, formTemplateQuestionRep.guid)) {}
+    limberTest.test(FormTemplateQuestionApi.Delete(featureGuid, formTemplateRep.guid, formTemplateQuestionRep.guid)) {}
 
-    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+    limberTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }

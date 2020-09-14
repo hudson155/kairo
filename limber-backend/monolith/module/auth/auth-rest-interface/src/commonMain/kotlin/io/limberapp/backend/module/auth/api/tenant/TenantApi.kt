@@ -1,37 +1,37 @@
 package io.limberapp.backend.module.auth.api.tenant
 
-import com.piperframework.restInterface.HttpMethod
-import com.piperframework.restInterface.PiperEndpoint
-import com.piperframework.types.UUID
-import com.piperframework.util.enc
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
+import io.limberapp.common.restInterface.HttpMethod
+import io.limberapp.common.restInterface.LimberEndpoint
+import io.limberapp.common.types.UUID
+import io.limberapp.common.util.enc
 
 @Suppress("StringLiteralDuplication")
 object TenantApi {
-  data class Post(val rep: TenantRep.Creation?) : PiperEndpoint(
+  data class Post(val rep: TenantRep.Creation?) : LimberEndpoint(
     httpMethod = HttpMethod.POST,
     path = "/tenants",
     body = rep
   )
 
-  data class Get(val orgGuid: UUID) : PiperEndpoint(
+  data class Get(val orgGuid: UUID) : LimberEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/tenants/${enc(orgGuid)}"
   )
 
-  data class GetByDomain(val domain: String) : PiperEndpoint(
+  data class GetByDomain(val domain: String) : LimberEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/tenants",
     queryParams = listOf("domain" to enc(domain))
   )
 
-  data class Patch(val orgGuid: UUID, val rep: TenantRep.Update?) : PiperEndpoint(
+  data class Patch(val orgGuid: UUID, val rep: TenantRep.Update?) : LimberEndpoint(
     httpMethod = HttpMethod.PATCH,
     path = "/tenants/${enc(orgGuid)}",
     body = rep
   )
 
-  data class Delete(val orgGuid: UUID) : PiperEndpoint(
+  data class Delete(val orgGuid: UUID) : LimberEndpoint(
     httpMethod = HttpMethod.DELETE,
     path = "/tenants/${enc(orgGuid)}"
   )

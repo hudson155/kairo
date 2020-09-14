@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.forms.rep.formInstance
 
-import com.piperframework.rep.CompleteRep
-import com.piperframework.rep.CreationRep
-import com.piperframework.types.LocalDateTime
-import com.piperframework.types.UUID
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.types.LocalDateTime
+import io.limberapp.common.types.UUID
 
 object FormInstanceQuestionRep {
   interface Creation : CreationRep

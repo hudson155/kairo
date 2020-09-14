@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
-import com.piperframework.testing.responseContent
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.limberapp.backend.authorization.principal.JwtRole
@@ -20,6 +19,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.common.testing.responseContent
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -51,14 +51,14 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     } returns emptySet()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
-    piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
+    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
 
-    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
 
-    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
 
     val orgPermissions = setOf(
       membershipOrgRoleRep.permissions, // This org role has isDefault = true.
@@ -71,7 +71,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       emailAddress = emailAddress,
       profilePhotoUrl = null
     )
-    piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
+    limberTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = responseContent
       val expected = "{\n" +
         "    \"org\": \"{" +
@@ -137,17 +137,17 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     } returns setOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
-    piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
+    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
 
     val maintainerOrgRoleRep = OrgRoleRepFixtures.maintainerFixture.complete(this, 1)
-    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
 
-    piperTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    piperTest.setup(
+    limberTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = existingOrg.guid,
         orgRoleGuid = maintainerOrgRoleRep.guid,
@@ -169,7 +169,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       emailAddress = "jhudson@jhudson.ca",
       profilePhotoUrl = null
     )
-    piperTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
+    limberTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = responseContent
       val expected = "{\n" +
         "    \"org\": \"{" +

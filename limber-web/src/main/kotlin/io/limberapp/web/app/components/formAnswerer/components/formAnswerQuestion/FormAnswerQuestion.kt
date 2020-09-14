@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.formAnswerer.components.formAnswerQuestion
 
-import com.piperframework.types.UUID
+import io.limberapp.common.types.UUID
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep

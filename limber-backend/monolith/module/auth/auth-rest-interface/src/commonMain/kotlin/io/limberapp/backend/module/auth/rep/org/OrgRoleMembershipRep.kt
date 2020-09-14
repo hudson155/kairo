@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.auth.rep.org
 
-import com.piperframework.rep.CompleteRep
-import com.piperframework.rep.CreationRep
-import com.piperframework.serialization.serializer.LocalDateTimeSerializer
-import com.piperframework.serialization.serializer.UuidSerializer
-import com.piperframework.types.LocalDateTime
-import com.piperframework.types.UUID
-import com.piperframework.validation.RepValidation
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.serialization.serializer.LocalDateTimeSerializer
+import io.limberapp.common.serialization.serializer.UuidSerializer
+import io.limberapp.common.types.LocalDateTime
+import io.limberapp.common.types.UUID
+import io.limberapp.common.validation.RepValidation
 import kotlinx.serialization.Serializable
 
 object OrgRoleMembershipRep {

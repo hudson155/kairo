@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.service.feature
 
-import com.piperframework.finder.Finder
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleFinder
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 @LimberModule.Auth

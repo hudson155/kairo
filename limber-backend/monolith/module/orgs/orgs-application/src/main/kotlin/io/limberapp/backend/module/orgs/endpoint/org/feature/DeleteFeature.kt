@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -9,6 +8,7 @@ import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissi
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteFeature @Inject constructor(

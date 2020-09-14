@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.store.account
 
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.users.model.account.UserFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class UserQueryBuilder : QueryBuilder(), UserFinder {

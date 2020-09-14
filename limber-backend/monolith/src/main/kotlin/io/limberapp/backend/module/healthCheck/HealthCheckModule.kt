@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.healthCheck
 
-import com.piperframework.endpoint.ApiEndpoint
-import com.piperframework.module.Module
 import io.limberapp.backend.module.healthCheck.endpoint.healthCheck.HealthCheck
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckService
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckServiceImpl
+import io.limberapp.common.endpoint.ApiEndpoint
+import io.limberapp.common.module.Module
 import kotlinx.serialization.modules.EmptySerializersModule
 
 /**

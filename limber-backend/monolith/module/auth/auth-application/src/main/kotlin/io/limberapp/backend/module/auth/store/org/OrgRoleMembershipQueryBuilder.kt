@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.store.org
 
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class OrgRoleMembershipQueryBuilder : QueryBuilder(), OrgRoleMembershipFinder {

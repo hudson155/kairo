@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -13,6 +12,7 @@ import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceQuestio
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PutFormInstanceQuestion @Inject constructor(

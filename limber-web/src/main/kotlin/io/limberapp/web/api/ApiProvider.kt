@@ -1,7 +1,7 @@
 package io.limberapp.web.api
 
-import com.piperframework.restInterface.ContentType
-import com.piperframework.restInterface.Fetch
+import io.limberapp.common.restInterface.ContentType
+import io.limberapp.common.restInterface.Fetch
 import io.limberapp.web.auth.useAuth
 import io.limberapp.web.state.ProviderValue
 import io.limberapp.web.util.process

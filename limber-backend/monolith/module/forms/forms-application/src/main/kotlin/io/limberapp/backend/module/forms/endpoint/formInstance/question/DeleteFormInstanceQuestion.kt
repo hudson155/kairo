@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance.question
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -11,6 +10,7 @@ import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQ
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteFormInstanceQuestion @Inject constructor(

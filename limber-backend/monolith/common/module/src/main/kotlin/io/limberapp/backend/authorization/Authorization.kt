@@ -1,15 +1,15 @@
 package io.limberapp.backend.authorization
 
-import com.piperframework.authorization.PiperAuthorization
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermission
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.common.authorization.LimberAuthorization
 import org.slf4j.LoggerFactory
 import java.util.*
 
 @Suppress("MethodOverloading")
-abstract class Authorization : PiperAuthorization<Jwt> {
+abstract class Authorization : LimberAuthorization<Jwt> {
   private val logger = LoggerFactory.getLogger(Authorization::class.java)
 
   override fun authorize(principal: Jwt?): Boolean {

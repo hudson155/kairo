@@ -2,14 +2,14 @@ package io.limberapp.backend.module.users.store.account
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import com.piperframework.finder.Finder
-import com.piperframework.store.SqlStore
-import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.store.withFinder
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserFinder
 import io.limberapp.backend.module.users.model.account.UserModel
+import io.limberapp.common.finder.Finder
+import io.limberapp.common.store.SqlStore
+import io.limberapp.common.store.isUniqueConstraintViolation
+import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException

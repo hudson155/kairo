@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.client.org.role
 
-import com.piperframework.restInterface.Fetch
-import com.piperframework.serialization.Json
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
+import io.limberapp.common.restInterface.Fetch
+import io.limberapp.common.serialization.Json
 
 class OrgRoleClientImpl(private val fetch: Fetch, private val json: Json) : OrgRoleClient {
   override suspend operator fun invoke(endpoint: OrgRoleApi.Post) =

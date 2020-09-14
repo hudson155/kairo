@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.store.feature
 
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class FeatureRoleQueryBuilder : QueryBuilder(), FeatureRoleFinder {

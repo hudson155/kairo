@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth.service.tenant
 
 import com.google.inject.Inject
-import com.piperframework.finder.Finder
 import io.limberapp.backend.module.auth.model.tenant.TenantFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import io.limberapp.backend.module.auth.store.tenant.TenantStore
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class TenantServiceImpl @Inject constructor(

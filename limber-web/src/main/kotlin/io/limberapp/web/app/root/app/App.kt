@@ -1,6 +1,6 @@
 package io.limberapp.web.app.root.app
 
-import com.piperframework.restInterface.Fetch
+import io.limberapp.common.restInterface.Fetch
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.web.api.Api
 import io.limberapp.web.api.apiProvider

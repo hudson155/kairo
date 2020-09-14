@@ -1,11 +1,11 @@
 package io.limberapp.backend.module.users.endpoint.user
 
-import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.ResourceTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
+import io.limberapp.common.testing.responseContent
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -15,7 +15,7 @@ internal class PatchUserTest : ResourceTest() {
   fun doesNotExist() {
     val userGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = UserApi.Patch(userGuid, UserRep.Update(firstName = "Gunner")),
       expectedException = UserNotFound()
     )
@@ -26,15 +26,15 @@ internal class PatchUserTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    piperTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    limberTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
     userRep = userRep.copy(firstName = "Gunner")
-    piperTest.test(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner"))) {
+    limberTest.test(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner"))) {
       val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
 
-    piperTest.test(UserApi.Get(userRep.guid)) {
+    limberTest.test(UserApi.Get(userRep.guid)) {
       val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }

@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.users.service.account
 
 import com.google.inject.Inject
-import com.piperframework.finder.Finder
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
 import io.limberapp.backend.module.users.model.account.UserFinder
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.store.account.UserStore
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class UserServiceImpl @Inject constructor(

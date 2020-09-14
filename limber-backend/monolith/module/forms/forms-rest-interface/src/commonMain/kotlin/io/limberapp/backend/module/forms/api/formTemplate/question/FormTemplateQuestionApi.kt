@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.forms.api.formTemplate.question
 
-import com.piperframework.restInterface.HttpMethod
-import com.piperframework.restInterface.PiperEndpoint
-import com.piperframework.types.UUID
-import com.piperframework.util.enc
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
+import io.limberapp.common.restInterface.HttpMethod
+import io.limberapp.common.restInterface.LimberEndpoint
+import io.limberapp.common.types.UUID
+import io.limberapp.common.util.enc
 
 @Suppress("StringLiteralDuplication")
 object FormTemplateQuestionApi {
@@ -13,7 +13,7 @@ object FormTemplateQuestionApi {
     val formTemplateGuid: UUID,
     val rank: Int? = null,
     val rep: FormTemplateQuestionRep.Creation?,
-  ) : PiperEndpoint(
+  ) : LimberEndpoint(
     httpMethod = HttpMethod.POST,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions",
     queryParams = rank?.let { listOf("rank" to it.toString()) } ?: emptyList(),
@@ -25,13 +25,13 @@ object FormTemplateQuestionApi {
     val formTemplateGuid: UUID,
     val questionGuid: UUID,
     val rep: FormTemplateQuestionRep.Update?,
-  ) : PiperEndpoint(
+  ) : LimberEndpoint(
     httpMethod = HttpMethod.PATCH,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions/${enc(questionGuid)}",
     body = rep
   )
 
-  data class Delete(val featureGuid: UUID, val formTemplateGuid: UUID, val questionGuid: UUID) : PiperEndpoint(
+  data class Delete(val featureGuid: UUID, val formTemplateGuid: UUID, val questionGuid: UUID) : LimberEndpoint(
     httpMethod = HttpMethod.DELETE,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions/${enc(questionGuid)}"
   )

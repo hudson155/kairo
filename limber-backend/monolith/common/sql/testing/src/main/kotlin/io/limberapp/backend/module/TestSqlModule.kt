@@ -1,6 +1,6 @@
 package io.limberapp.backend.module
 
-import com.piperframework.config.database.SqlDatabaseConfig
+import io.limberapp.common.config.database.SqlDatabaseConfig
 import java.sql.Connection
 
 open class TestSqlModule(config: SqlDatabaseConfig) : LimberSqlModule(config, runMigrations = true) {

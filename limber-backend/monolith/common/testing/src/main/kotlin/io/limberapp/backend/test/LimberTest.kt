@@ -3,17 +3,17 @@ package io.limberapp.backend.test
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTCreator
 import com.auth0.jwt.algorithms.Algorithm
-import com.piperframework.serialization.Json
-import com.piperframework.testing.PiperTest
 import io.ktor.application.Application
 import io.ktor.http.auth.HttpAuthHeader
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
+import io.limberapp.common.serialization.Json
+import io.limberapp.common.testing.LimberTest
 import java.util.*
 
-class LimberTest(json: Json, moduleFunction: Application.() -> Unit) : PiperTest(json, moduleFunction) {
+class LimberTest(json: Json, moduleFunction: Application.() -> Unit) : LimberTest(json, moduleFunction) {
   override fun createAuthHeader(): HttpAuthHeader? {
     val jwt = JWT.create().withJwt(
       jwt = Jwt(

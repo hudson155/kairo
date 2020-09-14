@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.orgs
 
-import com.piperframework.module.Module
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetByOwnerUserGuid
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
@@ -13,6 +12,7 @@ import io.limberapp.backend.module.orgs.service.feature.FeatureServiceImpl
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
+import io.limberapp.common.module.Module
 import kotlinx.serialization.modules.EmptySerializersModule
 
 class OrgsModule : Module() {

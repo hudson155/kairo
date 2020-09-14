@@ -1,7 +1,7 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable
 
-import com.piperframework.types.UUID
-import com.piperframework.util.prettyRelative
+import io.limberapp.common.types.UUID
+import io.limberapp.common.util.prettyRelative
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow

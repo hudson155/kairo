@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth.service.org
 
 import com.google.inject.Inject
-import com.piperframework.finder.Finder
 import io.limberapp.backend.module.auth.model.org.OrgRoleFinder
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.store.org.OrgRoleStore
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class OrgRoleServiceImpl @Inject constructor(

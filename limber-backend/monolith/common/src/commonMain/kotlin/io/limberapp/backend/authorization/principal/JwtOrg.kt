@@ -1,8 +1,8 @@
 package io.limberapp.backend.authorization.principal
 
-import com.piperframework.serialization.serializer.UuidSerializer
-import com.piperframework.types.UUID
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
+import io.limberapp.common.serialization.serializer.UuidSerializer
+import io.limberapp.common.types.UUID
 import kotlinx.serialization.Serializable
 
 @Serializable

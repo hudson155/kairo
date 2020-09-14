@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -11,6 +10,7 @@ import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
 import io.limberapp.backend.module.auth.mapper.tenant.TenantDomainMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostTenantDomain @Inject constructor(

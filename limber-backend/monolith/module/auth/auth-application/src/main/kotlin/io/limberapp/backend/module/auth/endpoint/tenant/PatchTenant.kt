@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -12,6 +11,7 @@ import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchTenant @Inject constructor(

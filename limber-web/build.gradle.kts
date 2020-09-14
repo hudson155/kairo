@@ -7,13 +7,13 @@ group = "io.limberapp.web"
 version = "0.1.0-SNAPSHOT"
 
 dependencies {
+  implementation(project(":limber-backend:common:rest-interface"))
+  implementation(project(":limber-backend:common:serialization"))
+  implementation(project(":limber-backend:common:util"))
   implementation(project(":limber-backend:monolith:module:auth:auth-rest-interface"))
   implementation(project(":limber-backend:monolith:module:forms:forms-rest-interface"))
   implementation(project(":limber-backend:monolith:module:orgs:orgs-rest-interface"))
   implementation(project(":limber-backend:monolith:module:users:users-rest-interface"))
-  implementation(project(":piper:rest-interface"))
-  implementation(project(":piper:serialization"))
-  implementation(project(":piper:util"))
   implementation(Dependencies.Kotlin.extensions)
   implementation(Dependencies.Kotlinx.coroutinesJs)
   implementation(Dependencies.KotlinJs.react)

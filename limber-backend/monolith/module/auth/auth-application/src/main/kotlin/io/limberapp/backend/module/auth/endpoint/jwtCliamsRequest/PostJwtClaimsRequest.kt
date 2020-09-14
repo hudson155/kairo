@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
@@ -11,6 +10,7 @@ import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.mapper.jwtClaimsRequest.JwtClaimsRequestMapper
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
+import io.limberapp.common.restInterface.template
 
 internal class PostJwtClaimsRequest @Inject constructor(
   application: Application,

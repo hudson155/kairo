@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.orgs.service.org
 
-import com.piperframework.finder.Finder
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.orgs.model.org.OrgFinder
 import io.limberapp.backend.module.orgs.model.org.OrgModel
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 @LimberModule.Orgs

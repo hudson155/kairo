@@ -2,14 +2,14 @@ package io.limberapp.backend.module.auth.store.feature
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import com.piperframework.finder.Finder
-import com.piperframework.store.SqlStore
-import com.piperframework.store.isUniqueConstraintViolation
-import com.piperframework.store.withFinder
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
 import io.limberapp.backend.module.auth.exception.feature.FeatureRoleOrgRoleIsNotUnique
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleFinder
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
+import io.limberapp.common.finder.Finder
+import io.limberapp.common.store.SqlStore
+import io.limberapp.common.store.isUniqueConstraintViolation
+import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException

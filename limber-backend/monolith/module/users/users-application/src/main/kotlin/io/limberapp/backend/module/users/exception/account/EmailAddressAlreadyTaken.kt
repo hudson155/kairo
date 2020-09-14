@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.exception.account
 
-import com.piperframework.exception.exception.conflict.ConflictException
+import io.limberapp.common.exception.exception.conflict.ConflictException
 
 internal class EmailAddressAlreadyTaken : ConflictException(
   message = "The email address is already taken.",

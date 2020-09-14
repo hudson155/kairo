@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.exception.tenant
 
-import com.piperframework.exception.exception.conflict.ConflictException
+import io.limberapp.common.exception.exception.conflict.ConflictException
 
 internal class Auth0ClientIdAlreadyRegistered : ConflictException(
   message = "The Auth0 client ID is already registered to a tenant.",

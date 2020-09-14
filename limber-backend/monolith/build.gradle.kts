@@ -15,15 +15,15 @@ application {
 }
 
 dependencies {
+  implementation(project(":limber-backend:common:application"))
+  implementation(project(":limber-backend:common:reps")) // HealthCheckModule rest interface is defined in the application
+  implementation(project(":limber-backend:common:sql"))
   implementation(project(":limber-backend:monolith:common:module")) // HealthCheckModule is defined in the application
   implementation(project(":limber-backend:monolith:common:sql"))
   implementation(project(":limber-backend:monolith:module:auth:auth-application"))
   implementation(project(":limber-backend:monolith:module:forms:forms-application"))
   implementation(project(":limber-backend:monolith:module:orgs:orgs-application"))
   implementation(project(":limber-backend:monolith:module:users:users-application"))
-  implementation(project(":piper:application"))
-  implementation(project(":piper:reps")) // HealthCheckModule rest interface is defined in the application
-  implementation(project(":piper:sql"))
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
   implementation(Dependencies.Jackson.dataFormatYaml) // For config loader

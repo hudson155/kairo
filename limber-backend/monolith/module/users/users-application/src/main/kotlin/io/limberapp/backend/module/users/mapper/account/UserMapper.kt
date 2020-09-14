@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.users.mapper.account
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 

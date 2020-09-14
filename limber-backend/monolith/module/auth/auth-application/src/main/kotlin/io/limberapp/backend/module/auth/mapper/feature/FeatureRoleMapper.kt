@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.mapper.feature
 
 import com.google.inject.Inject
-import com.piperframework.util.uuid.UuidGenerator
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
+import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*

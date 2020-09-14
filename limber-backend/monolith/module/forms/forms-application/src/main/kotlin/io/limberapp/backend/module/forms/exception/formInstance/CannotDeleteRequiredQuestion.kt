@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.exception.formInstance
 
-import com.piperframework.exception.exception.conflict.ConflictException
+import io.limberapp.common.exception.exception.conflict.ConflictException
 
 internal class CannotDeleteRequiredQuestion : ConflictException(
   message = "You can't delete this question - it is required. Update it instead.",

@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
-import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleMembershipNotFound
@@ -8,6 +7,7 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
+import io.limberapp.common.testing.responseContent
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -20,9 +20,9 @@ internal class DeleteMembershipTest : ResourceTest() {
     val accountGuid = UUID.randomUUID()
 
     // Create an org role anyways, to ensure that the error still happens when there is one.
-    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    piperTest.test(
+    limberTest.test(
       endpoint = OrgRoleMembershipApi.Delete(orgGuid, orgRoleGuid, accountGuid),
       expectedException = OrgRoleMembershipNotFound()
     )
@@ -36,10 +36,10 @@ internal class DeleteMembershipTest : ResourceTest() {
     val account1Guid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
     // Create an org role membership anyways, to ensure that the error still happens when there is one.
-    piperTest.setup(
+    limberTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
@@ -47,7 +47,7 @@ internal class DeleteMembershipTest : ResourceTest() {
       )
     )
 
-    piperTest.test(
+    limberTest.test(
       endpoint = OrgRoleMembershipApi.Delete(orgGuid, orgRoleGuid, account1Guid),
       expectedException = OrgRoleMembershipNotFound()
     )
@@ -60,9 +60,9 @@ internal class DeleteMembershipTest : ResourceTest() {
     val account1Guid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    piperTest.setup(
+    limberTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
@@ -71,7 +71,7 @@ internal class DeleteMembershipTest : ResourceTest() {
     )
 
     val orgRoleMembershipRep1 = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
-    piperTest.setup(
+    limberTest.setup(
       endpoint = OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
@@ -79,9 +79,9 @@ internal class DeleteMembershipTest : ResourceTest() {
       )
     )
 
-    piperTest.test(OrgRoleMembershipApi.Delete(orgGuid, orgRoleRep.guid, account0Guid)) {}
+    limberTest.test(OrgRoleMembershipApi.Delete(orgGuid, orgRoleRep.guid, account0Guid)) {}
 
-    piperTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
+    limberTest.test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
       val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleMembershipRep1), actual)
     }

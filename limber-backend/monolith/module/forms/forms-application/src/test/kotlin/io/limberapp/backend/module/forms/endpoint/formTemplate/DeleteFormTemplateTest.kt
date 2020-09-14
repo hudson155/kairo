@@ -13,7 +13,7 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateApi.Delete(featureGuid, formTemplateGuid),
       expectedException = FormTemplateNotFound()
     )
@@ -25,14 +25,14 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     val feature1Guid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateApi.Delete(feature1Guid, formTemplateRep.guid),
       expectedException = FormTemplateNotFound()
     )
 
-    piperTest.test(FormTemplateApi.Get(feature0Guid, formTemplateRep.guid)) {}
+    limberTest.test(FormTemplateApi.Get(feature0Guid, formTemplateRep.guid)) {}
   }
 
   @Test
@@ -40,11 +40,11 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    piperTest.test(FormTemplateApi.Delete(featureGuid, formTemplateRep.guid)) {}
+    limberTest.test(FormTemplateApi.Delete(featureGuid, formTemplateRep.guid)) {}
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateApi.Get(featureGuid, formTemplateRep.guid),
       expectedException = FormTemplateNotFound()
     )

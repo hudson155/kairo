@@ -1,11 +1,11 @@
 package io.limberapp.backend.api.healthCheck
 
-import com.piperframework.restInterface.HttpMethod
-import com.piperframework.restInterface.PiperEndpoint
+import io.limberapp.common.restInterface.HttpMethod
+import io.limberapp.common.restInterface.LimberEndpoint
 
 @Suppress("StringLiteralDuplication")
 object HealthCheckApi {
-  object Get : PiperEndpoint(
+  object Get : LimberEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/health-check"
   )

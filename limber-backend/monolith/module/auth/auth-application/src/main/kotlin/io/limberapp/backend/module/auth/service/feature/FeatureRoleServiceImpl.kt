@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth.service.feature
 
 import com.google.inject.Inject
-import com.piperframework.finder.Finder
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleFinder
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
 import io.limberapp.backend.module.auth.store.feature.FeatureRoleStore
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FeatureRoleServiceImpl @Inject constructor(

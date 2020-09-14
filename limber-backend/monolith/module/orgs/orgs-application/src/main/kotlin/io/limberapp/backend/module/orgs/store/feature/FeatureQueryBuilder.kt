@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.store.feature
 
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.orgs.model.org.FeatureFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class FeatureQueryBuilder : QueryBuilder(), FeatureFinder {

@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.forms.client.formTemplate
 
-import com.piperframework.restInterface.Fetch
-import com.piperframework.serialization.Json
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
+import io.limberapp.common.restInterface.Fetch
+import io.limberapp.common.serialization.Json
 
 class FormTemplateClientImpl(private val fetch: Fetch, private val json: Json) : FormTemplateClient {
   override suspend operator fun invoke(endpoint: FormTemplateApi.Post) =

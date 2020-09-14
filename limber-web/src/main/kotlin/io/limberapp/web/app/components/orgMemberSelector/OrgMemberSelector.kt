@@ -1,6 +1,6 @@
 package io.limberapp.web.app.components.orgMemberSelector
 
-import com.piperframework.types.UUID
+import io.limberapp.common.types.UUID
 import io.limberapp.web.app.components.memberRow.memberRow
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.state.state.users.useUsersState

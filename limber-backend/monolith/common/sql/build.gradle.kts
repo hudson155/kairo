@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
+  api(project(":limber-backend:common:sql"))
   implementation(project(":limber-backend:monolith:common"))
-  api(project(":piper:sql"))
 }
 
 detekt {

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.orgs.store.org
 
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.orgs.model.org.OrgFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class OrgQueryBuilder : QueryBuilder(), OrgFinder {

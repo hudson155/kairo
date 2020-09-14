@@ -8,11 +8,11 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
+        api(project(":limber-backend:common:reps"))
+        implementation(project(":limber-backend:common:rest-interface"))
+        implementation(project(":limber-backend:common:serialization"))
+        implementation(project(":limber-backend:common:util"))
         api(project(":limber-backend:monolith:common"))
-        api(project(":piper:reps"))
-        implementation(project(":piper:rest-interface"))
-        implementation(project(":piper:serialization"))
-        implementation(project(":piper:util"))
       }
     }
     jvm()

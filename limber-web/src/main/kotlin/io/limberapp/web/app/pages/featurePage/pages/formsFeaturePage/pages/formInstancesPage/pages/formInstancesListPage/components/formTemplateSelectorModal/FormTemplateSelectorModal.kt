@@ -1,6 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formTemplateSelectorModal
 
-import com.piperframework.types.UUID
+import io.limberapp.common.types.UUID
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.store.tenant
 
-import com.piperframework.store.QueryBuilder
 import io.limberapp.backend.module.auth.model.tenant.TenantFinder
+import io.limberapp.common.store.QueryBuilder
 import java.util.*
 
 internal class TenantQueryBuilder : QueryBuilder(), TenantFinder {

@@ -12,7 +12,7 @@ internal class DeleteTenantTest : ResourceTest() {
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = TenantApi.Delete(orgGuid),
       expectedException = TenantNotFound()
     )
@@ -23,11 +23,11 @@ internal class DeleteTenantTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    piperTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
-    piperTest.test(TenantApi.Delete(tenantRep.orgGuid)) {}
+    limberTest.test(TenantApi.Delete(tenantRep.orgGuid)) {}
 
-    piperTest.test(
+    limberTest.test(
       endpoint = TenantApi.Get(orgGuid),
       expectedException = TenantNotFound()
     )

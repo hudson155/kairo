@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
-import com.piperframework.finder.Finder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateQuestionStore
+import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FormTemplateQuestionServiceImpl @Inject constructor(

@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.exception.account
 
-import com.piperframework.exception.exception.conflict.ConflictException
+import io.limberapp.common.exception.exception.conflict.ConflictException
 
 internal class CannotDeleteOrgOwner : ConflictException(
   message = "You can't delete your account because you're the owner of your organization." +

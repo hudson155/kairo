@@ -14,6 +14,24 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/limber-backend" />
+            <option value="$PROJECT_DIR$/limber-backend/common" />
+            <option value="$PROJECT_DIR$/limber-backend/common/application" />
+            <option value="$PROJECT_DIR$/limber-backend/common/config" />
+            <option value="$PROJECT_DIR$/limber-backend/common/data-conversion" />
+            <option value="$PROJECT_DIR$/limber-backend/common/errors" />
+            <option value="$PROJECT_DIR$/limber-backend/common/exception-mapping" />
+            <option value="$PROJECT_DIR$/limber-backend/common/exceptions" />
+            <option value="$PROJECT_DIR$/limber-backend/common/finder" />
+            <option value="$PROJECT_DIR$/limber-backend/common/ktor-auth" />
+            <option value="$PROJECT_DIR$/limber-backend/common/module" />
+            <option value="$PROJECT_DIR$/limber-backend/common/reps" />
+            <option value="$PROJECT_DIR$/limber-backend/common/rest-interface" />
+            <option value="$PROJECT_DIR$/limber-backend/common/serialization" />
+            <option value="$PROJECT_DIR$/limber-backend/common/sql" />
+            <option value="$PROJECT_DIR$/limber-backend/common/testing" />
+            <option value="$PROJECT_DIR$/limber-backend/common/types" />
+            <option value="$PROJECT_DIR$/limber-backend/common/util" />
+            <option value="$PROJECT_DIR$/limber-backend/common/validation" />
             <option value="$PROJECT_DIR$/limber-backend/monolith" />
             <option value="$PROJECT_DIR$/limber-backend/monolith/common" />
             <option value="$PROJECT_DIR$/limber-backend/monolith/common/module" />
@@ -38,24 +56,6 @@
             <option value="$PROJECT_DIR$/limber-backend/monolith/module/users/users-rest-interface" />
             <option value="$PROJECT_DIR$/limber-backend/monolith/module/users/users-service-interface" />
             <option value="$PROJECT_DIR$/limber-web" />
-            <option value="$PROJECT_DIR$/piper" />
-            <option value="$PROJECT_DIR$/piper/application" />
-            <option value="$PROJECT_DIR$/piper/config" />
-            <option value="$PROJECT_DIR$/piper/data-conversion" />
-            <option value="$PROJECT_DIR$/piper/errors" />
-            <option value="$PROJECT_DIR$/piper/exception-mapping" />
-            <option value="$PROJECT_DIR$/piper/exceptions" />
-            <option value="$PROJECT_DIR$/piper/finder" />
-            <option value="$PROJECT_DIR$/piper/ktor-auth" />
-            <option value="$PROJECT_DIR$/piper/module" />
-            <option value="$PROJECT_DIR$/piper/reps" />
-            <option value="$PROJECT_DIR$/piper/rest-interface" />
-            <option value="$PROJECT_DIR$/piper/serialization" />
-            <option value="$PROJECT_DIR$/piper/sql" />
-            <option value="$PROJECT_DIR$/piper/testing" />
-            <option value="$PROJECT_DIR$/piper/types" />
-            <option value="$PROJECT_DIR$/piper/util" />
-            <option value="$PROJECT_DIR$/piper/validation" />
           </set>
         </option>
       </GradleProjectSettings>

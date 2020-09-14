@@ -1,31 +1,31 @@
 package io.limberapp.backend.module.auth.api.org.role
 
-import com.piperframework.restInterface.HttpMethod
-import com.piperframework.restInterface.PiperEndpoint
-import com.piperframework.types.UUID
-import com.piperframework.util.enc
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
+import io.limberapp.common.restInterface.HttpMethod
+import io.limberapp.common.restInterface.LimberEndpoint
+import io.limberapp.common.types.UUID
+import io.limberapp.common.util.enc
 
 @Suppress("StringLiteralDuplication")
 object OrgRoleApi {
-  data class Post(val orgGuid: UUID, val rep: OrgRoleRep.Creation?) : PiperEndpoint(
+  data class Post(val orgGuid: UUID, val rep: OrgRoleRep.Creation?) : LimberEndpoint(
     httpMethod = HttpMethod.POST,
     path = "/orgs/${enc(orgGuid)}/roles",
     body = rep
   )
 
-  data class GetByOrgGuid(val orgGuid: UUID) : PiperEndpoint(
+  data class GetByOrgGuid(val orgGuid: UUID) : LimberEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/orgs/${enc(orgGuid)}/roles"
   )
 
-  data class Patch(val orgGuid: UUID, val orgRoleGuid: UUID, val rep: OrgRoleRep.Update?) : PiperEndpoint(
+  data class Patch(val orgGuid: UUID, val orgRoleGuid: UUID, val rep: OrgRoleRep.Update?) : LimberEndpoint(
     httpMethod = HttpMethod.PATCH,
     path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}",
     body = rep
   )
 
-  data class Delete(val orgGuid: UUID, val orgRoleGuid: UUID) : PiperEndpoint(
+  data class Delete(val orgGuid: UUID, val orgRoleGuid: UUID) : LimberEndpoint(
     httpMethod = HttpMethod.DELETE,
     path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}"
   )

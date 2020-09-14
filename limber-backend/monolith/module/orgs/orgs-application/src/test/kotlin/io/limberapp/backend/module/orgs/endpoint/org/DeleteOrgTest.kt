@@ -12,7 +12,7 @@ internal class DeleteOrgTest : ResourceTest() {
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = OrgApi.Delete(orgGuid),
       expectedException = OrgNotFound()
     )
@@ -21,11 +21,11 @@ internal class DeleteOrgTest : ResourceTest() {
   @Test
   fun happyPath() {
     val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    piperTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    limberTest.setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
-    piperTest.test(OrgApi.Delete(orgRep.guid)) {}
+    limberTest.test(OrgApi.Delete(orgRep.guid)) {}
 
-    piperTest.test(
+    limberTest.test(
       endpoint = OrgApi.Get(orgRep.guid),
       expectedException = OrgNotFound()
     )

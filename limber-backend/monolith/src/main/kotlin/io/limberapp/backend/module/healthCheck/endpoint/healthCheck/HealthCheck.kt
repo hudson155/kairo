@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.healthCheck.endpoint.healthCheck
 
 import com.google.inject.Inject
-import com.piperframework.restInterface.template
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
@@ -12,6 +11,7 @@ import io.limberapp.backend.module.healthCheck.mapper.healthCheck.HealthCheckMap
 import io.limberapp.backend.module.healthCheck.model.healthCheck.HealthCheckModel
 import io.limberapp.backend.module.healthCheck.rep.healthCheck.HealthCheckRep
 import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckService
+import io.limberapp.common.restInterface.template
 import org.slf4j.LoggerFactory
 
 internal class HealthCheck @Inject constructor(

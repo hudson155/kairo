@@ -1,8 +1,8 @@
 package io.limberapp.backend.authorization.permissions.orgPermissions
 
-import com.piperframework.util.darb.BitStringEncoder
-import com.piperframework.util.darb.DarbEncoder
 import io.limberapp.backend.authorization.permissions.Permissions
+import io.limberapp.common.util.darb.BitStringEncoder
+import io.limberapp.common.util.darb.DarbEncoder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind

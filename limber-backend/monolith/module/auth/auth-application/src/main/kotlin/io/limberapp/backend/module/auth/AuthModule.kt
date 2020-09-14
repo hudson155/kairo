@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth
 
-import com.piperframework.module.Module
 import io.limberapp.backend.module.auth.endpoint.feature.role.DeleteFeatureRole
 import io.limberapp.backend.module.auth.endpoint.feature.role.GetFeatureRolesByFeatureGuid
 import io.limberapp.backend.module.auth.endpoint.feature.role.PatchFeatureRole
@@ -32,6 +31,7 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainServiceImpl
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.auth.service.tenant.TenantServiceImpl
+import io.limberapp.common.module.Module
 import kotlinx.serialization.modules.EmptySerializersModule
 
 class AuthModule : Module() {

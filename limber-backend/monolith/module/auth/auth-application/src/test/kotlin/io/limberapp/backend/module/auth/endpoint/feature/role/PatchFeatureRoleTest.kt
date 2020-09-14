@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.endpoint.feature.role
 
-import com.piperframework.testing.responseContent
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
@@ -9,6 +8,7 @@ import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
 import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
+import io.limberapp.common.testing.responseContent
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -19,7 +19,7 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val featureRoleGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FeatureRoleApi.Patch(
         featureGuid = featureGuid,
         featureRoleGuid = featureRoleGuid,
@@ -35,13 +35,13 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
     var featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, orgRoleRep.guid, 1)
-    piperTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
+    limberTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
 
     featureRoleRep = featureRoleRep.copy(permissions = FormsFeaturePermissions.fromBitString("0110"))
-    piperTest.test(
+    limberTest.test(
       endpoint = FeatureRoleApi.Patch(
         featureGuid = featureGuid,
         featureRoleGuid = featureRoleRep.guid,
@@ -52,7 +52,7 @@ internal class PatchFeatureRoleTest : ResourceTest() {
       assertEquals(featureRoleRep, actual)
     }
 
-    piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
+    limberTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
       val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureRoleRep), actual)
     }
@@ -64,13 +64,13 @@ internal class PatchFeatureRoleTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    piperTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    limberTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
     var featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, orgRoleRep.guid, 1)
-    piperTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
+    limberTest.setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(orgRoleRep.guid)))
 
     featureRoleRep = featureRoleRep.copy(isDefault = true)
-    piperTest.test(
+    limberTest.test(
       endpoint = FeatureRoleApi.Patch(
         featureGuid = featureGuid,
         featureRoleGuid = featureRoleRep.guid,
@@ -81,13 +81,13 @@ internal class PatchFeatureRoleTest : ResourceTest() {
       assertEquals(featureRoleRep, actual)
     }
 
-    piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
+    limberTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
       val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureRoleRep), actual)
     }
 
     featureRoleRep = featureRoleRep.copy(isDefault = false)
-    piperTest.test(
+    limberTest.test(
       endpoint = FeatureRoleApi.Patch(
         featureGuid = featureGuid,
         featureRoleGuid = featureRoleRep.guid,
@@ -98,7 +98,7 @@ internal class PatchFeatureRoleTest : ResourceTest() {
       assertEquals(featureRoleRep, actual)
     }
 
-    piperTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
+    limberTest.test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
       val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
       assertEquals(setOf(featureRoleRep), actual)
     }

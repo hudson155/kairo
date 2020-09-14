@@ -1,11 +1,11 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
-import com.piperframework.testing.responseContent
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.ResourceTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import io.limberapp.common.testing.responseContent
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -16,7 +16,7 @@ internal class GetFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateApi.Get(featureGuid, formTemplateGuid),
       expectedException = FormTemplateNotFound()
     )
@@ -28,9 +28,9 @@ internal class GetFormTemplateTest : ResourceTest() {
     val feature1Guid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    piperTest.test(
+    limberTest.test(
       endpoint = FormTemplateApi.Get(feature1Guid, formTemplateRep.guid),
       expectedException = FormTemplateNotFound()
     )
@@ -41,9 +41,9 @@ internal class GetFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    piperTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    piperTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
+    limberTest.test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
       val actual = json.parse<FormTemplateRep.Complete>(responseContent)
       assertEquals(formTemplateRep, actual)
     }

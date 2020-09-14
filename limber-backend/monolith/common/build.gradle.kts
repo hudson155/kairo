@@ -8,9 +8,9 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation(project(":piper:serialization"))
-        implementation(project(":piper:types"))
-        implementation(project(":piper:util"))
+        implementation(project(":limber-backend:common:serialization"))
+        implementation(project(":limber-backend:common:types"))
+        implementation(project(":limber-backend:common:util"))
       }
     }
     jvm()
