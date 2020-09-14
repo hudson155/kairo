@@ -22,7 +22,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: limber-backend
+              serviceName: limber-backend-monolith
               servicePort: 80
     - host: demo.covidreopening.ca
       http:

@@ -14,5 +14,5 @@ If you're following this guide, please keep it up to date by making a PR if anyt
 ### Create the feature and form templates
 
 Set the variables in
-[this script](/limber-backend-application/src/main/kotlin/io/limberapp/backend/adhoc/CreateCovidFeature.kt)
-and run `LIMBER_CONFIG=prod LIMBER_TASK=createCovidFeature ./gradlew limber-backend-application:run`.
+[this script](/limber-backend/monolith/src/main/kotlin/io/limberapp/backend/adhoc/CreateCovidFeature.kt)
+and run `LIMBER_CONFIG=prod LIMBER_TASK=createCovidFeature ./gradlew limber-backend:monolith:run`.

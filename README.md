@@ -22,7 +22,7 @@ Java, Postgres, and IntelliJ
 
 ## Modules
 
-* [`limber-backend-application`](/limber-backend-application):
+* [`limber-backend-monolith`](/limber-backend/monolith):
     Limber's backend implementation.
     Uses Piper.
     Currently a monolith, but broken into modules to allow simplified refactoring

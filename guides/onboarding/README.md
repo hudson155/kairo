@@ -66,8 +66,8 @@ as other Auth0 tenants.
 ### Onboard the org
 
 Set the variables in
-[this script](/limber-backend-application/src/main/kotlin/io/limberapp/backend/adhoc/Onboard.kt)
-and run `LIMBER_CONFIG=prod LIMBER_TASK=onboard ./gradlew limber-backend-application:run`.
+[this script](/limber-backend/monolith/src/main/kotlin/io/limberapp/backend/adhoc/Onboard.kt)
+and run `LIMBER_CONFIG=prod LIMBER_TASK=onboard ./gradlew limber-backend:monolith:run`.
 
 ### Test the tenant
 
@@ -79,5 +79,5 @@ Make sure everything works ok.
 ### Set the owner user GUID
 
 Set the variables in
-[this script](/limber-backend-application/src/main/kotlin/io/limberapp/backend/adhoc/UpdateOwnerUserGuid.kt)
-and run `LIMBER_CONFIG=prod LIMBER_TASK=updateOwnerUserGuid ./gradlew limber-backend-application:run`.
+[this script](/limber-backend/monolith/src/main/kotlin/io/limberapp/backend/adhoc/UpdateOwnerUserGuid.kt)
+and run `LIMBER_CONFIG=prod LIMBER_TASK=updateOwnerUserGuid ./gradlew limber-backend:monolith:run`.
