@@ -36,6 +36,10 @@ private class S : Styles("FormRendererQuestion") {
       borderBottom(1.px, BorderStyle.solid, Theme.Color.Border.light)
     }.not()
   }
+  val label by css {
+    color = Theme.Color.Text.faded
+    marginBottom = 8.px
+  }
 }
 
 private val s = S().apply { inject() }
@@ -44,9 +48,11 @@ private val component = functionalComponent(RBuilder::component)
 
 private fun RBuilder.component(props: Props) {
   div(classes = s.c { it::root }) {
-    label {
-      if (props.formTemplateQuestion.required) +"* "
-      +props.formTemplateQuestion.label
+    small {
+      label(classes = s.c { it::label }) {
+        if (props.formTemplateQuestion.required) +"* "
+        +props.formTemplateQuestion.label
+      }
     }
     br {}
     if (props.formInstanceQuestion == null) {

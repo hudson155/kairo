@@ -56,6 +56,10 @@ private class S : Styles("FromAnswerQuestion") {
   val error by css {
     borderColor = Theme.Color.Indicator.error
   }
+  val label by css {
+    color = Theme.Color.Text.faded
+    marginBottom = 8.px
+  }
 }
 
 private val s = S().apply { inject() }
@@ -95,9 +99,11 @@ private fun RBuilder.component(props: Props) {
   }
 
   div(classes = cls(s.c { it::root }, s.c(hasValidationError) { it::error })) {
-    label {
-      if (props.question.required) +"* "
-      +props.question.label
+    small {
+      label(classes = s.c { it::label }) {
+        if (props.question.required) +"* "
+        +props.question.label
+      }
     }
     br {}
     when (props.question) {
