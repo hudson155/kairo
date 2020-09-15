@@ -1,6 +1,6 @@
 @file:JvmName("UnknownCommonKt")
 
-package io.limberapp.common.util
+package kotlin
 
 import kotlin.jvm.JvmName
 import kotlin.reflect.KClass

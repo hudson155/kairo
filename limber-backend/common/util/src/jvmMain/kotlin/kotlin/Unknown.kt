@@ -1,6 +1,6 @@
 @file:JvmName("UnknownJvmKt")
 
-package io.limberapp.common.util
+package kotlin
 
 import kotlin.reflect.KType
 import kotlin.reflect.jvm.jvmErasure

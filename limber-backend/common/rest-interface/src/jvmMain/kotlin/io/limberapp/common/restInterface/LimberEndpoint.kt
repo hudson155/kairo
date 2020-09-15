@@ -2,7 +2,6 @@ package io.limberapp.common.restInterface
 
 import io.limberapp.common.rep.ValidatedRep
 import io.limberapp.common.types.TimeZone
-import io.limberapp.common.util.unknownType
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
 import java.util.*

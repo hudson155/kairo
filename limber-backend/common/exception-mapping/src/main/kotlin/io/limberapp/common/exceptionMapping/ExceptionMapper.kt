@@ -7,7 +7,6 @@ import io.limberapp.common.exception.exception.badRequest.BadRequestException
 import io.limberapp.common.exception.exception.conflict.ConflictException
 import io.limberapp.common.exception.exception.forbidden.ForbiddenException
 import io.limberapp.common.exception.exception.notFound.NotFoundException
-import io.limberapp.common.util.unknownType
 
 class ExceptionMapper {
   fun handle(e: LimberException): LimberError {
