@@ -1,7 +1,6 @@
 package io.limberapp.common.restInterface
 
 import io.limberapp.common.serialization.Json
-import io.limberapp.common.util.Outcome
 import kotlinext.js.jsObject
 import kotlinx.coroutines.await
 import org.w3c.fetch.RequestInit

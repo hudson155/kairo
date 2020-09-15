@@ -1,7 +1,6 @@
 package io.limberapp.web.state.state.orgRoleMemberships
 
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.Outcome
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 
 internal interface OrgRoleMembershipsMutator {

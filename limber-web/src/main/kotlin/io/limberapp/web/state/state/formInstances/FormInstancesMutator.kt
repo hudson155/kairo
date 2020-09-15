@@ -1,7 +1,6 @@
 package io.limberapp.web.state.state.formInstances
 
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.Outcome
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 
 internal interface FormInstancesMutator {

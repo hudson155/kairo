@@ -2,7 +2,6 @@ package io.limberapp.backend.module.auth.client.feature.role
 
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
-import io.limberapp.common.util.Outcome
 
 interface FeatureRoleClient {
   suspend operator fun invoke(endpoint: FeatureRoleApi.Post): Outcome<FeatureRoleRep.Complete>

@@ -1,6 +1,5 @@
 package io.limberapp.web.api
 
-import io.limberapp.common.util.Outcome
 import io.limberapp.web.util.async
 import react.*
 

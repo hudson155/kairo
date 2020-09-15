@@ -2,7 +2,6 @@ package io.limberapp.backend.module.forms.client.formTemplate
 
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
-import io.limberapp.common.util.Outcome
 
 interface FormTemplateClient {
   suspend operator fun invoke(endpoint: FormTemplateApi.Post): Outcome<FormTemplateRep.Complete>

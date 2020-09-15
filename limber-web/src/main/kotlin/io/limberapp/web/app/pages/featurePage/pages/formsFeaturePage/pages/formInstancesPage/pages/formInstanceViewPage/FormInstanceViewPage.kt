@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceViewPage
 
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.Outcome
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.web.api.load

@@ -1,4 +1,4 @@
-package io.limberapp.common.util
+package kotlin
 
 sealed class Outcome<T> {
   abstract val value: T
