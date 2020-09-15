@@ -2,7 +2,7 @@ set -e
 
 docker build -t limber-backend-monolith:master .
 
-docker run -p 8080:80 \
+docker run -p 55100:55100 \
   -e LIMBER_CONFIG=prod \
   -e LIMBER_PROD_POSTGRES_JDBC_URL="$LIMBER_PROD_POSTGRES_JDBC_URL" \
   -e LIMBER_PROD_POSTGRES_USERNAME="$LIMBER_PROD_POSTGRES_USERNAME" \
