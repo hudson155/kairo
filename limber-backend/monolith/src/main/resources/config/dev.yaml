@@ -24,6 +24,3 @@ authentication:
       issuer: https://limber.auth0.com/
       leeway: 300 # 5 minutes
       domain: limber.auth0.com
-
-hashing:
-  logRounds: 12

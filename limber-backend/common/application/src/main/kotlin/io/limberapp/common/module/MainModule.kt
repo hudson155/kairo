@@ -3,7 +3,6 @@ package io.limberapp.common.module
 import io.ktor.application.Application
 import io.limberapp.common.config.Config
 import io.limberapp.common.config.authentication.AuthenticationConfig
-import io.limberapp.common.config.hashing.HashingConfig
 import io.limberapp.common.util.uuid.RandomUuidGenerator
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
@@ -21,7 +20,6 @@ class MainModule(
     bind(Application::class.java).toInstance(application)
     bind(Clock::class.java).toInstance(clock)
     bind(AuthenticationConfig::class.java).toInstance(config.authentication)
-    bind(HashingConfig::class.java).toInstance(config.hashing)
     bind(UuidGenerator::class.java).toInstance(uuidGenerator)
   }
 
