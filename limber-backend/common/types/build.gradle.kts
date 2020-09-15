@@ -13,7 +13,7 @@ kotlin {
 }
 
 detekt {
-  config = files("$rootDir/.detekt/config.yml")
+  config = files("$rootDir/.detekt/config.yaml")
   input = files(
     "src/commonMain/kotlin",
     "src/commonTest/kotlin",

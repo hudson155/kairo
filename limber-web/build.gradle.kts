@@ -28,6 +28,6 @@ kotlin.target.browser {}
 kotlin.target.useCommonJs()
 
 detekt {
-  config = files("$projectDir/.detekt/config.yml")
+  config = files("$projectDir/.detekt/config.yaml")
   input = files("src/main/kotlin", "src/test/kotlin")
 }
