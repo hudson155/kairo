@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(Dependencies.Jackson.annotations)
+  implementation(Dependencies.Jackson.databind)
 }
 
 detekt {

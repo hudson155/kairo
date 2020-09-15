@@ -6,9 +6,9 @@ import io.limberapp.common.config.database.SqlDatabaseConfig
 
 fun SqlDatabaseConfig.createDataSource(): HikariDataSource {
   val hikariConfig = HikariConfig().apply {
-    jdbcUrl = this@createDataSource.jdbcUrl.value
-    username = this@createDataSource.username.value
-    this@createDataSource.password?.let { password = it.value }
+    this@createDataSource.jdbcUrl.let { jdbcUrl = it }
+    this@createDataSource.username.let { username = it }
+    this@createDataSource.password?.let { password = it }
     this@createDataSource.connectionTimeout?.let { connectionTimeout = it }
     this@createDataSource.minimumIdle?.let { minimumIdle = it }
     this@createDataSource.maximumPoolSize?.let { maximumPoolSize = it }

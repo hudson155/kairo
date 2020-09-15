@@ -23,9 +23,6 @@ class LimberConfigLoader : LimberConfigLoader<LimberAppMonolithConfig>(LimberApp
     logger.info("Loading config $configName...")
     val config = loadInternal("/config/$configName.yaml") ?: error("Config $LIMBER_CONFIG=$configName not found.")
     logger.info("Loaded config $configName.")
-    logger.info("Decrypting config $configName...")
-    val decryptedConfig = config.decrypt()
-    logger.info("Decrypted config $configName.")
-    return decryptedConfig
+    return config
   }
 }

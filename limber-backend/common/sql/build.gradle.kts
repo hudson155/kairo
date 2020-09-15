@@ -7,6 +7,7 @@ dependencies {
   api(project(":limber-backend:common:config")) // Uses ConfigString in the interface
   implementation(project(":limber-backend:common:data-conversion"))
   api(project(":limber-backend:common:module")) // This artifact implements a module
+  implementation(Dependencies.Jackson.databind)
   implementation(Dependencies.Sql.flyway)
   api(Dependencies.Sql.hikari) // Uses Hikari in the interface
   api(Dependencies.Sql.jdbi3Kotlin) // Provides JDBI3 interface

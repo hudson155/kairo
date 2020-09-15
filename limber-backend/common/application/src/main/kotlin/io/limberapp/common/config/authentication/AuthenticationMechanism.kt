@@ -2,7 +2,8 @@ package io.limberapp.common.config.authentication
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import io.limberapp.common.config.ConfigString
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import io.limberapp.common.config.ConfigStringDeserializer
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
@@ -23,7 +24,8 @@ sealed class AuthenticationMechanism {
   data class Jwt(
     override val issuer: String,
     override val leeway: Long,
-    val secret: ConfigString,
+    @JsonDeserialize(using = ConfigStringDeserializer::class)
+    val secret: String,
   ) : AuthenticationMechanism()
 
   data class UnsignedJwt(

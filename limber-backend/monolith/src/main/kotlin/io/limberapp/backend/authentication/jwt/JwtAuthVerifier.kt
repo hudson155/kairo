@@ -27,7 +27,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
         leeway = mechanism.leeway
       )
       is AuthenticationMechanism.Jwt -> StaticJwtVerifierProvider(
-        jwtVerifier = JWT.require(Algorithm.HMAC256(mechanism.secret.value)).acceptLeeway(mechanism.leeway).build()
+        jwtVerifier = JWT.require(Algorithm.HMAC256(mechanism.secret)).acceptLeeway(mechanism.leeway).build()
       )
       is AuthenticationMechanism.UnsignedJwt -> StaticJwtVerifierProvider(
         jwtVerifier = JWT.require(Algorithm.none()).acceptLeeway(mechanism.leeway).build()
