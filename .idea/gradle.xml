@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/limber-backend/common/types" />
             <option value="$PROJECT_DIR$/limber-backend/common/util" />
             <option value="$PROJECT_DIR$/limber-backend/common/validation" />
+            <option value="$PROJECT_DIR$/limber-backend/graphql-server" />
             <option value="$PROJECT_DIR$/limber-backend/monolith" />
             <option value="$PROJECT_DIR$/limber-backend/monolith/common" />
             <option value="$PROJECT_DIR$/limber-backend/monolith/common/module" />

@@ -19,6 +19,8 @@ include(":limber-backend:common:types")
 include(":limber-backend:common:util")
 include(":limber-backend:common:validation")
 
+include(":limber-backend:graphql-server")
+
 include(":limber-backend:monolith")
 
 include(":limber-backend:monolith:common")
