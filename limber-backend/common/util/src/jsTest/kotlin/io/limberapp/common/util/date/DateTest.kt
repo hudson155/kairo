@@ -1,6 +1,6 @@
 @file:Suppress("InvalidPackageDeclaration") // Detekt false positive.
 
-package io.limberapp.common.util
+package io.limberapp.common.util.date
 
 import kotlin.js.Date
 import kotlin.test.Test

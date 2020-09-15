@@ -1,6 +1,6 @@
 @file:JvmName("UrlJvmKt")
 
-package io.limberapp.common.util
+package io.limberapp.common.util.url
 
 import java.net.URLEncoder
 

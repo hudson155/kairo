@@ -1,4 +1,4 @@
-package io.limberapp.common.util
+package io.limberapp.common.util.date
 
 import kotlinext.js.js
 import kotlin.js.Date

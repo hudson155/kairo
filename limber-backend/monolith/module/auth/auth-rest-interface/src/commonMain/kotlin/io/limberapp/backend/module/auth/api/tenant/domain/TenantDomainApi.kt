@@ -4,7 +4,7 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.enc
+import io.limberapp.common.util.url.enc
 
 @Suppress("StringLiteralDuplication")
 object TenantDomainApi {

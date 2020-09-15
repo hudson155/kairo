@@ -8,7 +8,7 @@ import io.limberapp.common.serialization.serializer.LocalDateTimeSerializer
 import io.limberapp.common.serialization.serializer.UuidSerializer
 import io.limberapp.common.types.LocalDateTime
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.slugify
+import io.limberapp.common.util.url.slugify
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.ifPresent
 import io.limberapp.common.validator.Validator

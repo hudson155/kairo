@@ -2,7 +2,7 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.form
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.prettyRelative
+import io.limberapp.common.util.date.prettyRelative
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
 import io.limberapp.web.app.components.limberTable.limberTable

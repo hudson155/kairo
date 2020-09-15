@@ -1,4 +1,4 @@
-package io.limberapp.common.util
+package io.limberapp.common.util.url
 
 external fun encodeURIComponent(uriComponent: String): String
 

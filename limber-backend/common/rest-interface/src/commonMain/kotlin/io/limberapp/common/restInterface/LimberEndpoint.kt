@@ -1,7 +1,7 @@
 package io.limberapp.common.restInterface
 
 import io.limberapp.common.rep.ValidatedRep
-import io.limberapp.common.util.href
+import io.limberapp.common.util.url.href
 
 /**
  * Instances represent parameterized requests to an HTTP endpoint.

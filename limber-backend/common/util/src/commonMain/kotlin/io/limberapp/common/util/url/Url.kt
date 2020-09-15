@@ -1,6 +1,6 @@
 @file:JvmName("UrlCommonKt")
 
-package io.limberapp.common.util
+package io.limberapp.common.util.url
 
 import kotlin.jvm.JvmName
 

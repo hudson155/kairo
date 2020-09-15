@@ -6,7 +6,7 @@ import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.types.TimeZone
 import io.limberapp.common.types.UUID
-import io.limberapp.common.util.enc
+import io.limberapp.common.util.url.enc
 
 @Suppress("StringLiteralDuplication")
 object FormInstanceApi {
