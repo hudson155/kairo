@@ -16,9 +16,9 @@ application {
 
 dependencies {
   implementation(project(":limber-backend:common:application"))
-  implementation(project(":limber-backend:common:reps")) // HealthCheckModule rest interface is defined in the application
+  implementation(project(":limber-backend:common:health-check-module"))
   implementation(project(":limber-backend:common:sql"))
-  implementation(project(":limber-backend:monolith:common:module")) // HealthCheckModule is defined in the application
+  implementation(project(":limber-backend:monolith:common:module"))
   implementation(project(":limber-backend:monolith:common:sql"))
   implementation(project(":limber-backend:monolith:module:auth:auth-application"))
   implementation(project(":limber-backend:monolith:module:forms:forms-application"))

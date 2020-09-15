@@ -1,4 +1,4 @@
-package io.limberapp.backend.api.healthCheck
+package io.limberapp.common.module.healthCheck.api.healthCheck
 
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint

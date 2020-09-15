@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.healthCheck.rep.healthCheck
+package io.limberapp.common.module.healthCheck.rep.healthCheck
 
 import io.limberapp.common.rep.CompleteRep
 import io.limberapp.common.serialization.serializer.LocalDateTimeSerializer

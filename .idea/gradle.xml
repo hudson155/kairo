@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/limber-backend/common/exception-mapping" />
             <option value="$PROJECT_DIR$/limber-backend/common/exceptions" />
             <option value="$PROJECT_DIR$/limber-backend/common/finder" />
+            <option value="$PROJECT_DIR$/limber-backend/common/health-check-module" />
             <option value="$PROJECT_DIR$/limber-backend/common/ktor-auth" />
             <option value="$PROJECT_DIR$/limber-backend/common/module" />
             <option value="$PROJECT_DIR$/limber-backend/common/reps" />

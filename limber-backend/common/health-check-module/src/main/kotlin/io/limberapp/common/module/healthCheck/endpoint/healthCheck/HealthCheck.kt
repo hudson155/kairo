@@ -1,16 +1,16 @@
-package io.limberapp.backend.module.healthCheck.endpoint.healthCheck
+package io.limberapp.common.module.healthCheck.endpoint.healthCheck
 
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
-import io.limberapp.backend.api.healthCheck.HealthCheckApi
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.healthCheck.mapper.healthCheck.HealthCheckMapper
-import io.limberapp.backend.module.healthCheck.model.healthCheck.HealthCheckModel
-import io.limberapp.backend.module.healthCheck.rep.healthCheck.HealthCheckRep
-import io.limberapp.backend.module.healthCheck.service.healthCheck.HealthCheckService
+import io.limberapp.common.module.healthCheck.api.healthCheck.HealthCheckApi
+import io.limberapp.common.module.healthCheck.mapper.healthCheck.HealthCheckMapper
+import io.limberapp.common.module.healthCheck.model.healthCheck.HealthCheckModel
+import io.limberapp.common.module.healthCheck.rep.healthCheck.HealthCheckRep
+import io.limberapp.common.module.healthCheck.service.healthCheck.HealthCheckService
 import io.limberapp.common.restInterface.template
 import org.slf4j.LoggerFactory
 
@@ -28,11 +28,13 @@ internal class HealthCheck @Inject constructor(
 
   override suspend fun Handler.handle(command: HealthCheckApi.Get): HealthCheckRep.Complete {
     Authorization.Public.authorize()
-    val model = healthCheckService.healthCheck()
-    if (model is HealthCheckModel.UnhealthyHealthCheckModel) {
-      logger.error("Health check failed: ${model.reason}", model.e)
-      responseCode = HttpStatusCode.InternalServerError
+    when (val healthCheck = healthCheckService.healthCheck()) {
+      is HealthCheckModel.UnhealthyHealthCheckModel -> {
+        logger.error("Health check failed: ${healthCheck.reason}", healthCheck.e)
+        responseCode = HttpStatusCode.InternalServerError
+        return healthCheckMapper.completeRep(healthCheck)
+      }
+      HealthCheckModel.HealthyHealthCheckModel -> return healthCheckMapper.completeRep(healthCheck)
     }
-    return healthCheckMapper.completeRep(model)
   }
 }

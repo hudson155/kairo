@@ -1,8 +1,8 @@
-package io.limberapp.backend.module.healthCheck.mapper.healthCheck
+package io.limberapp.common.module.healthCheck.mapper.healthCheck
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.healthCheck.model.healthCheck.HealthCheckModel
-import io.limberapp.backend.module.healthCheck.rep.healthCheck.HealthCheckRep
+import io.limberapp.common.module.healthCheck.model.healthCheck.HealthCheckModel
+import io.limberapp.common.module.healthCheck.rep.healthCheck.HealthCheckRep
 import java.time.Clock
 import java.time.LocalDateTime
 
