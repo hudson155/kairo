@@ -1,8 +1,8 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable
 
+import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.common.types.UUID
 import io.limberapp.common.util.prettyRelative
-import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
 import io.limberapp.web.app.components.limberTable.limberTable
@@ -76,10 +76,10 @@ private fun RBuilder.component(props: Props) {
   }
 
   div(classes = s.c { it::root }) {
-    limberTable(headers = listOf("#", "Created", null, "Type", "Creator")) {
+    limberTable(headers = listOf("#", "Submitted", null, "Type", "Creator")) {
       // TODO: Sort by unique sort key
       props.formInstances.forEach { formInstance ->
-        limberTableRow(classes = s.c { it::row }, onClick = { props.onRowClick(formInstance.guid)}) {
+        limberTableRow(classes = s.c { it::row }, onClick = { props.onRowClick(formInstance.guid) }) {
           attrs.key = formInstance.guid
           limberTableCell(classes = s.c { it::cell }) {
             val number = formInstance.number.toString()
@@ -87,9 +87,10 @@ private fun RBuilder.component(props: Props) {
             span(classes = gs.getClassName { it::hiddenXs }) { +number }
           }
           limberTableCell(classes = s.c { it::cell }) {
-            val createdDate = formInstance.createdDate.prettyRelative()
-            span(classes = gs.getClassName { it::visibleXs }) { small { +createdDate } }
-            span(classes = gs.getClassName { it::hiddenXs }) { +createdDate }
+            formInstance.submittedDate?.prettyRelative()?.let { submittedDate ->
+              span(classes = gs.getClassName { it::visibleXs }) { small { +submittedDate } }
+              span(classes = gs.getClassName { it::hiddenXs }) { +submittedDate }
+            }
           }
           limberTableCell(hideContent = true, classes = s.c { it::cellBreak }) { }
           limberTableCell(classes = s.c { it::cell }) {
