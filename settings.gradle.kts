@@ -30,19 +30,15 @@ include(":limber-backend:monolith:common:sql:testing")
 include(":limber-backend:monolith:common:testing")
 
 include(":limber-backend:monolith:module:auth:auth-application")
-include(":limber-backend:monolith:module:auth:auth-rest-interface")
 include(":limber-backend:monolith:module:auth:auth-service-interface")
 
 include(":limber-backend:monolith:module:forms:forms-application")
-include(":limber-backend:monolith:module:forms:forms-rest-interface")
 include(":limber-backend:monolith:module:forms:forms-service-interface")
 
 include(":limber-backend:monolith:module:orgs:orgs-application")
-include(":limber-backend:monolith:module:orgs:orgs-rest-interface")
 include(":limber-backend:monolith:module:orgs:orgs-service-interface")
 
 include(":limber-backend:monolith:module:users:users-application")
-include(":limber-backend:monolith:module:users:users-rest-interface")
 include(":limber-backend:monolith:module:users:users-service-interface")
 
 include(":limber-web")
