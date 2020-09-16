@@ -1,0 +1,52 @@
+interface Node {
+    id: ID!
+}
+
+type User implements Node {
+    id: ID!
+    firstName: String
+    lastName: String
+    fullName: String
+    emailAddress: String!
+    profilePhotoUrl: String
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: ID!
+    endCursor: ID!
+}
+
+type FormTemplate implements Node {
+    id: ID!
+    createdDate: String!
+    title: String!
+    description: String
+    formInstances: FormInstanceConnection!
+}
+
+type FormInstance implements Node {
+    id: ID!
+    createdDate: String!
+    formTemplate: FormTemplate!
+    number: Int
+    submittedDate: String!
+    creator: User
+}
+
+type FormInstanceConnection {
+    edges: [FormInstanceEdge]
+    pageInfo: PageInfo!
+}
+
+type FormInstanceEdge {
+    cursor: ID!
+    node: FormInstance
+}
+
+type Query {
+    node(
+        id: ID!
+    ): Node
+}
