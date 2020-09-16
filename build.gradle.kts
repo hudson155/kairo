@@ -2,15 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 plugins {
-  kotlin("multiplatform") version Versions.kotlin
+  kotlin("jvm") version Versions.kotlin
   idea
   kotlin("plugin.serialization") version Versions.kotlin
   id(Plugins.detekt).version(Versions.detekt)
-}
-
-kotlin {
-  jvm()
-  js()
 }
 
 repositories {

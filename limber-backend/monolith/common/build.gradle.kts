@@ -1,33 +1,16 @@
 plugins {
-  kotlin("multiplatform")
+  kotlin("jvm")
   kotlin("plugin.serialization")
   id(Plugins.detekt)
 }
 
-kotlin {
-  sourceSets {
-    commonMain {
-      dependencies {
-        implementation(project(":limber-backend:common:serialization"))
-        implementation(project(":limber-backend:common:types"))
-        implementation(project(":limber-backend:common:util"))
-      }
-    }
-    jvm()
-    js {
-      browser()
-    }
-  }
+dependencies {
+  implementation(project(":limber-backend:common:serialization"))
+  implementation(project(":limber-backend:common:types"))
+  implementation(project(":limber-backend:common:util"))
 }
 
 detekt {
   config = files("$rootDir/.detekt/config.yaml")
-  input = files(
-    "src/commonMain/kotlin",
-    "src/commonTest/kotlin",
-    "src/jsMain/kotlin",
-    "src/jsTest/kotlin",
-    "src/jvmMain/kotlin",
-    "src/jvmTest/kotlin"
-  )
+  input = files("src/main/kotlin", "src/test/kotlin")
 }
