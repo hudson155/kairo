@@ -3,14 +3,14 @@ package io.limberapp.backend.test
 import com.google.inject.Injector
 import io.ktor.application.Application
 import io.ktor.auth.Authentication
-import io.limberapp.backend.authentication.jwt.JwtAuthVerifier
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.backend.config.LimberAppMonolithConfig
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.Module
 import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.common.testing.TestLimberApp
 import io.limberapp.common.util.uuid.UuidGenerator
+import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
 import java.time.Clock
 
 class TestLimberApp(

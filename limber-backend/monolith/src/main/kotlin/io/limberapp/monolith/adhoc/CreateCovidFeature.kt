@@ -1,12 +1,10 @@
 @file:Suppress("UNREACHABLE_CODE")
 
-package io.limberapp.backend.adhoc
+package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.BaseLimberApp
 import io.limberapp.backend.LimberModule
-import io.limberapp.backend.config.LimberConfigLoader
 import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
@@ -16,6 +14,8 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.common.shutDown
+import io.limberapp.monolith.BaseLimberApp
+import io.limberapp.monolith.config.LimberConfigLoader
 import java.time.LocalDateTime
 import java.util.*
 

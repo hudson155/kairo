@@ -46,10 +46,10 @@ jobs:
         env:
           ENV: production
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
-      - run: docker build -t registry.digitalocean.com/limber/limber-backend-monolith:master limber-backend/monolith
-      - run: docker tag registry.digitalocean.com/limber/limber-backend-monolith:master registry.digitalocean.com/limber/limber-backend-monolith:$(git rev-parse HEAD)
-      - run: docker push registry.digitalocean.com/limber/limber-backend-monolith:master
-      - run: docker push registry.digitalocean.com/limber/limber-backend-monolith:$(git rev-parse HEAD)
+      - run: docker build -t registry.digitalocean.com/limber/limber-monolith:master limber-backend/monolith
+      - run: docker tag registry.digitalocean.com/limber/limber-monolith:master registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)
+      - run: docker push registry.digitalocean.com/limber/limber-monolith:master
+      - run: docker push registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)
       - run: docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
       - run: docker tag registry.digitalocean.com/limber/limber-web:master registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)
       - run: docker push registry.digitalocean.com/limber/limber-web:master
@@ -58,5 +58,5 @@ jobs:
         with:
           token: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save limber
-      - run: kubectl set image deployment/limber-backend-monolith limber-backend-monolith=registry.digitalocean.com/limber/limber-backend-monolith:$(git rev-parse HEAD) --namespace limber
+      - run: kubectl set image deployment/limber-monolith limber-monolith=registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD) --namespace limber
       - run: kubectl set image deployment/limber-web limber-web=registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) --namespace limber

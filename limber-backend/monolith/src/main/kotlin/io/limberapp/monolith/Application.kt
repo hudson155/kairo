@@ -1,12 +1,12 @@
-package io.limberapp.backend
+package io.limberapp.monolith
 
 import io.ktor.application.Application
-import io.limberapp.backend.adhoc.Adhoc
-import io.limberapp.backend.adhoc.adhoc
-import io.limberapp.backend.adhoc.createCovidFeature
-import io.limberapp.backend.adhoc.dbReset
-import io.limberapp.backend.adhoc.onboard
-import io.limberapp.backend.adhoc.updateOwnerUserGuid
+import io.limberapp.monolith.adhoc.Adhoc
+import io.limberapp.monolith.adhoc.adhoc
+import io.limberapp.monolith.adhoc.createCovidFeature
+import io.limberapp.monolith.adhoc.dbReset
+import io.limberapp.monolith.adhoc.onboard
+import io.limberapp.monolith.adhoc.updateOwnerUserGuid
 
 private const val LIMBER_TASK = "LIMBER_TASK"
 

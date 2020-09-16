@@ -8,7 +8,7 @@ plugins {
   id(Plugins.shadow).version(Versions.shadow)
 }
 
-group = "io.limberapp.backend"
+group = "io.limberapp.monolith"
 version = "0.1.0-SNAPSHOT"
 application {
   mainClassName = project.properties.getOrDefault("mainClass", "io.ktor.server.cio.EngineMain") as String
@@ -38,7 +38,7 @@ detekt {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-  archiveFileName.set("limber-backend-monolith.jar")
+  archiveFileName.set("limber-monolith.jar")
   mergeServiceFiles()
   manifest {
     attributes(mapOf("MainClass" to application.mainClassName))

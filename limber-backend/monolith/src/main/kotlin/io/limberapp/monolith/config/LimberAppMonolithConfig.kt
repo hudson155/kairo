@@ -1,4 +1,4 @@
-package io.limberapp.backend.config
+package io.limberapp.monolith.config
 
 import io.limberapp.common.config.Config
 import io.limberapp.common.config.authentication.AuthenticationConfig

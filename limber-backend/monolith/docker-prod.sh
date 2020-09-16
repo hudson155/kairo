@@ -1,6 +1,6 @@
 set -e
 
-docker build -t limber-backend-monolith:master .
+docker build -t limber-monolith:master .
 
 docker run -p 55100:55100 \
   -e LIMBER_CONFIG=prod \
@@ -8,4 +8,4 @@ docker run -p 55100:55100 \
   -e LIMBER_PROD_POSTGRES_USERNAME="$LIMBER_PROD_POSTGRES_USERNAME" \
   -e LIMBER_PROD_POSTGRES_PASSWORD="$LIMBER_PROD_POSTGRES_PASSWORD" \
   -e LIMBER_PROD_JWT_SECRET="$LIMBER_PROD_JWT_SECRET" \
-  limber-backend-monolith:master
+  limber-monolith:master

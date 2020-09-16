@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.monolith.service.healthCheck
+package io.limberapp.module.monolith.service.healthCheck
 
 import com.google.inject.Inject
 import io.limberapp.common.module.healthCheck.model.healthCheck.HealthCheckModel

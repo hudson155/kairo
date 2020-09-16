@@ -1,11 +1,9 @@
-package io.limberapp.backend.adhoc
+package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.BaseLimberApp
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
-import io.limberapp.backend.config.LimberConfigLoader
 import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
@@ -33,6 +31,8 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.module.SqlWrapper
 import io.limberapp.common.shutDown
+import io.limberapp.monolith.BaseLimberApp
+import io.limberapp.monolith.config.LimberConfigLoader
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*

@@ -1,4 +1,4 @@
-package io.limberapp.backend.authentication.jwt
+package io.limberapp.monolith.authentication.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier

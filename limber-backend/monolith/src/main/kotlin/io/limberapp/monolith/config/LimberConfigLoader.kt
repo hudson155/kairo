@@ -1,4 +1,4 @@
-package io.limberapp.backend.config
+package io.limberapp.monolith.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory

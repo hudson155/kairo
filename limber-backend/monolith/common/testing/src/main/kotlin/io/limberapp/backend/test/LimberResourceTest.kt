@@ -1,10 +1,10 @@
 package io.limberapp.backend.test
 
-import io.limberapp.backend.config.LimberConfigLoader
 import io.limberapp.common.module.Module
 import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.testing.AbstractResourceTest
+import io.limberapp.monolith.config.LimberConfigLoader
 
 abstract class LimberResourceTest : AbstractResourceTest() {
   protected val config = LimberConfigLoader().load("test")

@@ -1,4 +1,4 @@
-package io.limberapp.backend.adhoc
+package io.limberapp.monolith.adhoc
 
 import io.ktor.application.Application
 import io.limberapp.common.shutDown
