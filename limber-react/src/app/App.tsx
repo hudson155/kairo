@@ -8,6 +8,8 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import { app } from '../app';
 import ApiProvider from '../provider/ApiProvider';
 import LoadingPage from './components/LoadingPage/LoadingPage';
+import { RelayEnvironmentProvider } from 'react-relay/hooks';
+import {environment as relayEnvironment} from '../relay-env';
 
 const api = new LimberApi(env.LIMBER_API_BASE_URL, () => Promise.resolve(undefined));
 
@@ -28,9 +30,11 @@ const App: React.FC = () => {
       audience={`https://${env.AUTH0_DOMAIN}/api/v2/`}
     >
       <ApiProvider>
-        <BrowserRouter>
-          <AppRootRouter orgGuid={tenant.orgGuid} />
-        </BrowserRouter>
+        <RelayEnvironmentProvider environment={relayEnvironment}>
+          <BrowserRouter>
+            <AppRootRouter orgGuid={tenant.orgGuid} />
+          </BrowserRouter>
+        </RelayEnvironmentProvider>
       </ApiProvider>
     </Auth0Provider>
   );
