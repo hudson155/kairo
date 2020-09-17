@@ -25,7 +25,6 @@ dependencies {
   implementation(project(":limber-backend:monolith:module:users:module"))
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
-  implementation(Dependencies.Jackson.dataFormatYaml)
   implementation(Dependencies.Logging.logbackClassic)
   implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Ktor.serverCio)

@@ -31,14 +31,15 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.module.SqlWrapper
 import io.limberapp.common.shutDown
+import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberConfigLoader
+import io.limberapp.monolith.config.LimberAppMonolithConfig
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
 internal fun Adhoc.dbReset() {
-  val config = LimberConfigLoader().load()
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
 
   with(SqlWrapper(config.sqlDatabase)) {
     connect()

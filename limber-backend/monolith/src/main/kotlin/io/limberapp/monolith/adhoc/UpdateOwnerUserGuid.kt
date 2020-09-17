@@ -7,8 +7,9 @@ import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.shutDown
+import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberConfigLoader
+import io.limberapp.monolith.config.LimberAppMonolithConfig
 import java.util.*
 
 private object UpdateOwnerUserGuidArgs {
@@ -17,7 +18,7 @@ private object UpdateOwnerUserGuidArgs {
 }
 
 internal fun Adhoc.updateOwnerUserGuid() {
-  val config = LimberConfigLoader().load()
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
 
   object : BaseLimberApp(application, config) {
     override fun getMainModules(application: Application) =

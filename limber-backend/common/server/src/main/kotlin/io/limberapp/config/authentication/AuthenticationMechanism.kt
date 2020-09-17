@@ -1,4 +1,4 @@
-package io.limberapp.common.config.authentication
+package io.limberapp.config.authentication
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo

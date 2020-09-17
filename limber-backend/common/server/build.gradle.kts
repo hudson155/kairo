@@ -12,7 +12,8 @@ dependencies {
   implementation(project(":limber-backend:common:module")) // For registering modules
   api(project(":limber-backend:common:serialization")) // Provides Json to implementation projects
   api(project(":limber-backend:common:util"))
-  implementation(Dependencies.Jackson.moduleKotlin) // For config loader
+  implementation(Dependencies.Jackson.moduleKotlin)
+  implementation(Dependencies.Jackson.dataFormatYaml)
   implementation(Dependencies.Guice.guice)
   implementation(Dependencies.Ktor.serverHostCommon)
   api(Dependencies.Ktor.serverCore) // Implementation projects use this

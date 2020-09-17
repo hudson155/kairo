@@ -2,7 +2,7 @@ package io.limberapp.common.sql
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import io.limberapp.common.config.database.SqlDatabaseConfig
+import io.limberapp.config.database.SqlDatabaseConfig
 
 fun SqlDatabaseConfig.createDataSource(): HikariDataSource {
   val hikariConfig = HikariConfig().apply {

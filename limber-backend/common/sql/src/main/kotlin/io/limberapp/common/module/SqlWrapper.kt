@@ -1,8 +1,8 @@
 package io.limberapp.common.module
 
 import com.zaxxer.hikari.HikariDataSource
-import io.limberapp.common.config.database.SqlDatabaseConfig
 import io.limberapp.common.sql.createDataSource
+import io.limberapp.config.database.SqlDatabaseConfig
 import org.flywaydb.core.Flyway
 import org.slf4j.LoggerFactory
 

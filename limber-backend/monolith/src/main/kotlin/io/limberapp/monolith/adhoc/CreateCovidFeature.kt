@@ -14,8 +14,9 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.common.shutDown
+import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberConfigLoader
+import io.limberapp.monolith.config.LimberAppMonolithConfig
 import java.time.LocalDateTime
 import java.util.*
 
@@ -24,7 +25,7 @@ private object CreateCovidFeatureArgs {
 }
 
 internal fun Adhoc.createCovidFeature() {
-  val config = LimberConfigLoader().load()
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
 
   object : BaseLimberApp(application, config) {
     override fun getMainModules(application: Application) =

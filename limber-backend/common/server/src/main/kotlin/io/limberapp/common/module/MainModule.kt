@@ -1,10 +1,10 @@
 package io.limberapp.common.module
 
 import io.ktor.application.Application
-import io.limberapp.common.config.Config
-import io.limberapp.common.config.authentication.AuthenticationConfig
 import io.limberapp.common.util.uuid.RandomUuidGenerator
 import io.limberapp.common.util.uuid.UuidGenerator
+import io.limberapp.config.Config
+import io.limberapp.config.authentication.AuthenticationConfig
 import java.time.Clock
 
 /**

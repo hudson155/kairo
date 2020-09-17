@@ -9,10 +9,10 @@ import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtOrg
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import io.limberapp.common.config.authentication.AuthenticationConfig
-import io.limberapp.common.config.authentication.AuthenticationMechanism
 import io.limberapp.common.ktorAuth.LimberAuthVerifier
 import io.limberapp.common.serialization.Json
+import io.limberapp.config.authentication.AuthenticationConfig
+import io.limberapp.config.authentication.AuthenticationMechanism
 import org.slf4j.LoggerFactory
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVerifier<Jwt> {

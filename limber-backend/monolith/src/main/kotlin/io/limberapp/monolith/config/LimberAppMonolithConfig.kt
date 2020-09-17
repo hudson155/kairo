@@ -1,8 +1,8 @@
 package io.limberapp.monolith.config
 
-import io.limberapp.common.config.Config
-import io.limberapp.common.config.authentication.AuthenticationConfig
-import io.limberapp.common.config.database.SqlDatabaseConfig
+import io.limberapp.config.Config
+import io.limberapp.config.authentication.AuthenticationConfig
+import io.limberapp.config.database.SqlDatabaseConfig
 
 /**
  * The config class contains all custom configuration for the app. It doesn't contain Ktor built-in configuration.
