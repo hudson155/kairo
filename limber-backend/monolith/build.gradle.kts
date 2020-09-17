@@ -14,8 +14,8 @@ application {
 }
 
 dependencies {
-  implementation(project(":limber-backend:common:application"))
   implementation(project(":limber-backend:common:health-check-module"))
+  implementation(project(":limber-backend:common:server"))
   implementation(project(":limber-backend:common:sql"))
   implementation(project(":limber-backend:monolith:common:module"))
   implementation(project(":limber-backend:monolith:common:sql"))
