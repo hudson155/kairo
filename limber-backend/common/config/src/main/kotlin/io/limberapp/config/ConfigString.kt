@@ -1,4 +1,4 @@
-package io.limberapp.common.config
+package io.limberapp.config
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo

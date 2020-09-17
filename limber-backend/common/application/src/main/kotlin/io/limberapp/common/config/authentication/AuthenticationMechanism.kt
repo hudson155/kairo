@@ -3,7 +3,7 @@ package io.limberapp.common.config.authentication
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import io.limberapp.common.config.ConfigStringDeserializer
+import io.limberapp.config.ConfigStringDeserializer
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(

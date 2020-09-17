@@ -1,4 +1,4 @@
-package io.limberapp.common.config
+package io.limberapp.config
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext

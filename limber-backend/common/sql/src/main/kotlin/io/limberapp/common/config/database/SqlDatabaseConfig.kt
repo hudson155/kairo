@@ -1,7 +1,7 @@
 package io.limberapp.common.config.database
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import io.limberapp.common.config.ConfigStringDeserializer
+import io.limberapp.config.ConfigStringDeserializer
 
 /**
  * This class encapsulates the configuration for the connection to an SQL database.

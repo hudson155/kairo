@@ -5,13 +5,14 @@ With config strings, a config data class can have `String` properties
 annotated with `@JsonDeserialize(using = ConfigStringDeserializer::class)`.
 The config file(s) corresponding to that data class can either contain regular strings
 or delegate the value to another source.
+At this time, the only other supported source is environment variables.
 
 ### Example
 
 ```kotlin
 data class MyConfig(
   @JsonDeserialize(using = ConfigStringDeserializer::class)
-  val someValue: String
+  val someValue: String,
 )
 ```
 
