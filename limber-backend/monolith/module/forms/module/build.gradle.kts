@@ -11,17 +11,20 @@ dependencies {
   implementation(project(":limber-backend:common:serialization"))
   implementation(project(":limber-backend:monolith:common:module"))
   implementation(project(":limber-backend:monolith:common:sql"))
-  api(project(":limber-backend:monolith:module:users:users-service-interface"))
-  implementation(project(":limber-backend:monolith:module:orgs:orgs-service-interface"))
+  api(project(":limber-backend:monolith:module:forms:interface"))
+  implementation(project(":limber-backend:monolith:module:orgs:interface"))
+  implementation(project(":limber-backend:monolith:module:users:interface"))
+  implementation(Dependencies.Apache.csv)
   testImplementation(project(":limber-backend:monolith:common:sql:testing"))
   testImplementation(project(":limber-backend:monolith:common:testing"))
 }
 
 tasks.withType<KotlinCompile<*>>().configureEach {
-  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Users"
+  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Forms"
 }
 tasks.compileTestKotlin {
   kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Orgs"
+  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Users"
 }
 
 tasks.test {

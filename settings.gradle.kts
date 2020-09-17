@@ -29,16 +29,16 @@ include(":limber-backend:monolith:common:sql")
 include(":limber-backend:monolith:common:sql:testing")
 include(":limber-backend:monolith:common:testing")
 
-include(":limber-backend:monolith:module:auth:auth-application")
-include(":limber-backend:monolith:module:auth:auth-service-interface")
+include(":limber-backend:monolith:module:auth:interface")
+include(":limber-backend:monolith:module:auth:module")
 
-include(":limber-backend:monolith:module:forms:forms-application")
-include(":limber-backend:monolith:module:forms:forms-service-interface")
+include(":limber-backend:monolith:module:forms:interface")
+include(":limber-backend:monolith:module:forms:module")
 
-include(":limber-backend:monolith:module:orgs:orgs-application")
-include(":limber-backend:monolith:module:orgs:orgs-service-interface")
+include(":limber-backend:monolith:module:orgs:interface")
+include(":limber-backend:monolith:module:orgs:module")
 
-include(":limber-backend:monolith:module:users:users-application")
-include(":limber-backend:monolith:module:users:users-service-interface")
+include(":limber-backend:monolith:module:users:interface")
+include(":limber-backend:monolith:module:users:module")
 
 include(":limber-web")
