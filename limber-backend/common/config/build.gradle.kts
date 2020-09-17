@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   implementation(Dependencies.Jackson.databind)
+  implementation(Dependencies.Logging.slf4j)
 }
 
 detekt {
