@@ -9,7 +9,7 @@ import io.limberapp.monolith.config.LimberConfigLoader
 abstract class LimberResourceTest : AbstractResourceTest() {
   protected val config = LimberConfigLoader().load("test")
 
-  protected val json by lazy { Json(serializersModule = module.serializersModule) }
+  protected val json = Json()
 
   protected abstract val module: Module
 

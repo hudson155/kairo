@@ -1,7 +1,6 @@
 package io.limberapp.common.module
 
 import io.limberapp.common.endpoint.ApiEndpoint
-import kotlinx.serialization.modules.SerializersModule
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
@@ -12,11 +11,6 @@ import kotlin.reflect.KClass
  */
 abstract class Module : ModuleWithLifecycle() {
   private val logger = LoggerFactory.getLogger(Module::class.java)
-
-  /**
-   * The serial module is used for serialization.
-   */
-  abstract val serializersModule: SerializersModule
 
   /**
    * Endpoints are automatically wired up.

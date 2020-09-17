@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 plugins {
   kotlin("jvm") version Versions.kotlin
   idea
-  kotlin("plugin.serialization") version Versions.kotlin
   id(Plugins.detekt).version(Versions.detekt)
 }
 

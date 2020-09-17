@@ -13,11 +13,8 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
 import io.limberapp.common.module.Module
-import kotlinx.serialization.modules.EmptySerializersModule
 
 class OrgsModule : Module() {
-  override val serializersModule = EmptySerializersModule
-
   override val endpoints = listOf(
     PostOrg::class.java,
     GetOrg::class.java,

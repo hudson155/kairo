@@ -1,5 +1,6 @@
 package io.limberapp.backend.authorization.permissions
 
+import com.fasterxml.jackson.annotation.JsonValue
 import io.limberapp.common.util.darb.BitStringEncoder
 import io.limberapp.common.util.darb.DarbEncoder
 
@@ -26,6 +27,7 @@ abstract class Permissions<P : Permission> {
 
   operator fun contains(permission: P) = permission in permissions
 
+  @JsonValue
   fun asDarb() = listOfNotNull(prefix, DarbEncoder.encode(asBooleanList())).joinToString(".")
 
   fun asBitString() = listOfNotNull(prefix, BitStringEncoder.encode(asBooleanList())).joinToString("")

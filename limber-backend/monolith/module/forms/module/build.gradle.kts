@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 plugins {
   kotlin("jvm")
-  kotlin("plugin.serialization")
   id(Plugins.detekt)
 }
 
@@ -15,6 +14,7 @@ dependencies {
   implementation(project(":limber-backend:monolith:module:orgs:interface"))
   implementation(project(":limber-backend:monolith:module:users:interface"))
   implementation(Dependencies.Apache.csv)
+  implementation(Dependencies.Jackson.annotations)
   testImplementation(project(":limber-backend:monolith:common:sql:testing"))
   testImplementation(project(":limber-backend:monolith:common:testing"))
 }

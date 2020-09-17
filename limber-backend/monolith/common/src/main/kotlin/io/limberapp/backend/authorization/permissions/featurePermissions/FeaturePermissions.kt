@@ -1,5 +1,9 @@
 package io.limberapp.backend.authorization.permissions.featurePermissions
 
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import io.limberapp.backend.authorization.permissions.Permissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FORMS_FEATURE_PREFIX
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
@@ -7,17 +11,11 @@ import io.limberapp.backend.authorization.permissions.featurePermissions.feature
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions
 import io.limberapp.common.util.darb.BitStringEncoder
 import io.limberapp.common.util.darb.DarbEncoder
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * Permissions that only apply to a specific organization feature.
  */
-@Serializable(with = FeaturePermissionsSerializer::class)
+@JsonDeserialize(using = FeaturePermissions.Deserializer::class)
 abstract class FeaturePermissions : Permissions<FeaturePermission>() {
   companion object {
     fun fromDarb(darb: String) = darb.split('.', limit = 2).let {
@@ -34,12 +32,8 @@ abstract class FeaturePermissions : Permissions<FeaturePermission>() {
       else -> error("Unrecognized feature permissions prefix: $prefix.")
     }
   }
-}
 
-object FeaturePermissionsSerializer : KSerializer<FeaturePermissions> {
-  override val descriptor = PrimitiveSerialDescriptor("FeaturePermissions", PrimitiveKind.STRING)
-
-  override fun serialize(encoder: Encoder, value: FeaturePermissions) = encoder.encodeString(value.asDarb())
-
-  override fun deserialize(decoder: Decoder) = FeaturePermissions.fromDarb(decoder.decodeString())
+  class Deserializer : StdDeserializer<FeaturePermissions>(FeaturePermissions::class.java) {
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext) = fromDarb(p.text)
+  }
 }

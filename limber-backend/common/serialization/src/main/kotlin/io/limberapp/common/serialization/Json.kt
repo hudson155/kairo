@@ -1,66 +1,64 @@
 package io.limberapp.common.serialization
 
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerializationStrategy
-import kotlinx.serialization.UnsafeSerializationApi
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.SetSerializer
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.EmptySerializersModule
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.getContextualOrDefault
-import kotlinx.serialization.serializer
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.MapperFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import kotlin.reflect.KClass
 
 /**
- * Class to serialize/deserialize [kotlinx.serialization.Serializable] classes.
+ * Class to handle serialization & deserialization.
  */
-@OptIn(UnsafeSerializationApi::class)
 @Suppress("UNCHECKED_CAST")
-class Json(prettyPrint: Boolean = false, serializersModule: SerializersModule = EmptySerializersModule) {
+class Json(prettyPrint: Boolean = false) {
   /**
    * Most functionality is delegated to this class (which has the same name). It must be public due to the inline
    * functions.
    */
-  val json = Json {
-    this.prettyPrint = prettyPrint
-    this.serializersModule = serializersModule
-  }
+  val json: ObjectMapper = jacksonObjectMapper()
+    .registerModule(JavaTimeModule())
+    .setDefaultPrettyPrinter(LimberJsonPrettyPrinter())
+    .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, false)
+    .configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
+    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
   /**
    * Parse string to arbitrary class.
    * Cleaner interface used when the class is available at compile time.
    */
   inline fun <reified T : Any> parse(string: String): T =
-    json.decodeFromString(getSerializer(), string)
+    json.readValue(string)
 
   /**
    * Parse string to arbitrary class.
    * More verbose interface used when the class is only available at run time.
    */
   fun <T : Any> parse(string: String, kClass: KClass<T>): T =
-    json.decodeFromString(getSerializer(kClass), string)
+    json.readValue(string, kClass.java)
 
   /**
    * Parse string to arbitrary set of classes.
    * Cleaner interface used when the class is available at compile time.
    */
   inline fun <reified T : Any> parseSet(string: String): Set<T> =
-    json.decodeFromString(SetSerializer(getSerializer()), string)
+    json.readValue(string)
 
   /**
    * Parse string to arbitrary list of classes.
    * Cleaner interface used when the class is available at compile time.
    */
   inline fun <reified T : Any> parseList(string: String): List<T> =
-    json.decodeFromString(ListSerializer(getSerializer()), string)
+    json.readValue(string)
 
   /**
    * Stringify arbitrary class to string.
    */
   fun stringify(model: Any): String =
-    json.encodeToString(getSerializer(model::class) as SerializationStrategy<Any>, model)
+    json.writeValueAsString(model)
 
   /**
    * Stringify arbitrary set of classes to string.
@@ -68,7 +66,7 @@ class Json(prettyPrint: Boolean = false, serializersModule: SerializersModule = 
    */
   @JvmName("stringifySetDynamically")
   inline fun <reified T : Any> stringifySet(model: Set<T>): String =
-    json.encodeToString(SetSerializer(getSerializer()), model)
+    json.writeValueAsString(model)
 
   /**
    * Stringify arbitrary list of classes to string.
@@ -76,41 +74,21 @@ class Json(prettyPrint: Boolean = false, serializersModule: SerializersModule = 
    */
   @JvmName("stringifyListDynamically")
   inline fun <reified T : Any> stringifyList(model: List<T>): String =
-    json.encodeToString(ListSerializer(getSerializer()), model)
+    json.writeValueAsString(model)
 
   /**
    * Stringify arbitrary set of classes to string.
    * Slower implementation used when the class is available at compile time.
    */
   @JvmName("stringifySetStatically")
-  fun stringifySet(model: Set<*>): String {
-    val serializer = elementSerializer(model)
-    return json.encodeToString(SetSerializer(serializer), model as Set<Any>)
-  }
+  fun stringifySet(model: Set<*>): String =
+    json.writeValueAsString(model as Set<Any>)
 
   /**
    * Stringify arbitrary list of classes to string.
    * Slower implementation used when the class is available at compile time.
    */
   @JvmName("stringifyListStatically")
-  fun stringifyList(model: List<*>): String {
-    val serializer = elementSerializer(model)
-    return json.encodeToString(ListSerializer(serializer), model as List<Any>)
-  }
-
-  private fun elementSerializer(model: Collection<*>): KSerializer<Any> {
-    val serializers = model.mapNotNull { it?.let { getSerializer(it::class) } }
-    return if (serializers.isEmpty()) {
-      String.serializer()
-    } else {
-      if (serializers.distinct().size > 1) throw UnsupportedOperationException()
-      serializers.first()
-    } as KSerializer<Any>
-  }
-
-  inline fun <reified T : Any> getSerializer(): KSerializer<T> =
-    json.serializersModule.getContextualOrDefault()
-
-  private fun <T : Any> getSerializer(kClass: KClass<T>): KSerializer<T> =
-    json.serializersModule.getContextual(kClass) ?: kClass.serializer()
+  fun stringifyList(model: List<*>): String =
+    json.writeValueAsString(model as List<Any>)
 }

@@ -6,7 +6,8 @@ plugins {
 dependencies {
   implementation(project(":limber-backend:common:data-conversion"))
   implementation(project(":limber-backend:common:types"))
-  api(Dependencies.Serialization.jvm)
+  implementation(Dependencies.Jackson.datatypeJsr310)
+  implementation(Dependencies.Jackson.moduleKotlin)
 }
 
 detekt {

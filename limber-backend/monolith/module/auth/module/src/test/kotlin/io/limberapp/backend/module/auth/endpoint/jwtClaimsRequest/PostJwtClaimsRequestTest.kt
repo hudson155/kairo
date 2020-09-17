@@ -74,15 +74,15 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     limberTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = responseContent
       val expected = "{\n" +
-        "    \"org\": \"{" +
+        "  \"org\": \"{" +
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"isOwner\\\":false," +
         "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
         "\\\"features\\\":{}" +
         "}\",\n" +
-        "    \"roles\": \"[]\",\n" +
-        "    \"user\": \"{" +
+        "  \"roles\": \"[]\",\n" +
+        "  \"user\": \"{" +
         "\\\"guid\\\":\\\"$userGuid\\\"," +
         "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
         "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
@@ -172,7 +172,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     limberTest.test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = responseContent
       val expected = "{\n" +
-        "    \"org\": \"{" +
+        "  \"org\": \"{" +
         "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"isOwner\\\":false," +
@@ -183,8 +183,8 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "}" +
         "}" +
         "}\",\n" +
-        "    \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
-        "    \"user\": \"{" +
+        "  \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
+        "  \"user\": \"{" +
         "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
         "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
         "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +

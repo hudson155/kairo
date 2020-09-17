@@ -35,7 +35,6 @@ import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.types.TimeZone
 import io.limberapp.common.util.conversionService
-import kotlinx.serialization.modules.plus
 import org.slf4j.event.Level
 import java.util.*
 
@@ -123,10 +122,7 @@ abstract class SimpleLimberApp<C : Config>(
 
   protected open fun Application.contentNegotiation() {
     install(ContentNegotiation) {
-      val json = Json(
-        prettyPrint = true,
-        serializersModule = modules.map { it.serializersModule }.reduce { acc, module -> acc + module }
-      )
+      val json = Json(prettyPrint = true)
       register(
         contentType = ContentType.Application.Json,
         converter = JsonContentConverter(json)

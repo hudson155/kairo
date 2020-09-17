@@ -1,11 +1,6 @@
 plugins {
   kotlin("jvm")
-  kotlin("plugin.serialization")
   id(Plugins.detekt)
-}
-
-dependencies {
-  implementation(Dependencies.Serialization.common)
 }
 
 detekt {

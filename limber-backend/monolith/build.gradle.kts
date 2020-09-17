@@ -2,7 +2,6 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
   kotlin("jvm")
-  kotlin("plugin.serialization")
   application
   id(Plugins.detekt)
   id(Plugins.shadow).version(Versions.shadow)

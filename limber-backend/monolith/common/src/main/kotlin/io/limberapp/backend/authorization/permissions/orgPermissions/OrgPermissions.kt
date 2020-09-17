@@ -1,14 +1,12 @@
 package io.limberapp.backend.authorization.permissions.orgPermissions
 
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import io.limberapp.backend.authorization.permissions.Permissions
 import io.limberapp.common.util.darb.BitStringEncoder
 import io.limberapp.common.util.darb.DarbEncoder
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * All permissions, in the correct order, with a quick sanity check on the digits. If this sanity check fails, double
@@ -23,17 +21,11 @@ private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
 /**
  * Permissions that apply organization-wide.
  */
-@Serializable(with = OrgPermissionsSerializer::class)
+@JsonDeserialize(using = OrgPermissions.Deserializer::class)
 data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permissions<OrgPermission>() {
   override val prefix: Char? = null // OrgPermissions is not prefixed.
 
   override fun allPermissions() = ALL_ORG_PERMISSIONS
-
-  fun withPermission(permission: OrgPermission, value: Boolean): OrgPermissions {
-    val permissions = permissions.toMutableSet()
-    if (value) permissions.add(permission) else permissions.remove(permission)
-    return copy(permissions = permissions)
-  }
 
   companion object {
     fun none() = OrgPermissions(emptySet())
@@ -52,12 +44,8 @@ data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permis
       permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
     )
   }
-}
 
-object OrgPermissionsSerializer : KSerializer<OrgPermissions> {
-  override val descriptor = PrimitiveSerialDescriptor("OrgPermissions", PrimitiveKind.STRING)
-
-  override fun serialize(encoder: Encoder, value: OrgPermissions) = encoder.encodeString(value.asDarb())
-
-  override fun deserialize(decoder: Decoder) = OrgPermissions.fromDarb(decoder.decodeString())
+  class Deserializer : StdDeserializer<OrgPermissions>(OrgPermissions::class.java) {
+    override fun deserialize(p: JsonParser, ctxt: DeserializationContext) = fromDarb(p.text)
+  }
 }

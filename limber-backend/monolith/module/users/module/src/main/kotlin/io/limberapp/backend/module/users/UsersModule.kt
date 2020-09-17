@@ -11,11 +11,8 @@ import io.limberapp.backend.module.users.endpoint.user.role.PutUserRole
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.module.users.service.account.UserServiceImpl
 import io.limberapp.common.module.Module
-import kotlinx.serialization.modules.EmptySerializersModule
 
 class UsersModule : Module() {
-  override val serializersModule = EmptySerializersModule
-
   override val endpoints = listOf(
     PostUser::class.java,
     GetUser::class.java,

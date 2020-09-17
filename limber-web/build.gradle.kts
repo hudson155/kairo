@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 plugins {
   kotlin("js")
-  kotlin("plugin.serialization")
+  kotlin("plugin.serialization") version Versions.kotlin
   id(Plugins.detekt)
 }
 
