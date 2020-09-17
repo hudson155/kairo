@@ -15,7 +15,6 @@ include(":limber-backend:common:serialization")
 include(":limber-backend:common:server")
 include(":limber-backend:common:sql")
 include(":limber-backend:common:testing")
-include(":limber-backend:common:types")
 include(":limber-backend:common:util")
 include(":limber-backend:common:validation")
 

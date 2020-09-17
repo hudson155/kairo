@@ -3,8 +3,8 @@ package io.limberapp.backend.module.orgs.api.org
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.types.UUID
 import io.limberapp.common.util.url.enc
+import java.util.*
 
 @Suppress("StringLiteralDuplication")
 object OrgApi {

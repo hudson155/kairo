@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.common.types.LocalDate
-import io.limberapp.common.types.LocalDateTime
-import io.limberapp.common.types.UUID
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 object FormTemplateDateQuestionRep {
   data class Creation(

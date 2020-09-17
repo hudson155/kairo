@@ -11,7 +11,7 @@ import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.restInterface.template
-import io.limberapp.common.types.UUID
+import java.util.*
 
 internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
   application: Application,

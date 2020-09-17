@@ -11,7 +11,6 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.testing.responseContent
-import io.limberapp.common.types.TimeZone
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -50,7 +49,7 @@ object ExportFormInstancesByFeatureGuidTest {
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = null,
-          timeZone = TimeZone(ZoneId.of("America/Edmonton"))
+          timeZone = ZoneId.of("America/Edmonton")
         )
       ) {
         assertEquals(
@@ -120,7 +119,7 @@ object ExportFormInstancesByFeatureGuidTest {
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = null,
-          timeZone = TimeZone(ZoneId.of("America/Edmonton"))
+          timeZone = ZoneId.of("America/Edmonton")
         )
       ) {
         assertEquals(
@@ -179,7 +178,7 @@ object ExportFormInstancesByFeatureGuidTest {
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = UUID.randomUUID(),
-          timeZone = TimeZone(ZoneId.of("America/Edmonton"))
+          timeZone = ZoneId.of("America/Edmonton")
         )
       ) {
         assertEquals(
@@ -246,7 +245,7 @@ object ExportFormInstancesByFeatureGuidTest {
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = existingUser0.guid,
-          timeZone = TimeZone(ZoneId.of("America/Edmonton"))
+          timeZone = ZoneId.of("America/Edmonton")
         )
       ) {
         assertEquals(

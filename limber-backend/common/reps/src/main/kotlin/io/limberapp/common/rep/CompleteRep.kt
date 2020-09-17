@@ -1,6 +1,6 @@
 package io.limberapp.common.rep
 
-import io.limberapp.common.types.LocalDateTime
+import java.time.LocalDateTime
 
 /**
  * Used for cases where the rep exists in the backend.

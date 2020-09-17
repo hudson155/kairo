@@ -2,7 +2,6 @@ package io.limberapp.backend.module.forms.exporter.formInstance
 
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import io.limberapp.backend.module.users.model.account.UserModel
-import io.limberapp.common.types.TimeZone
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import org.apache.commons.csv.QuoteMode
@@ -15,7 +14,7 @@ private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EE, MMM d, yyyy '
 
 internal class FormInstanceExporter(
   private val users: Map<UUID, UserModel>,
-  private val timeZone: TimeZone?,
+  private val timeZone: ZoneId?,
   private val formInstances: List<FormInstanceModel>,
 ) {
   enum class CsvColumn(val display: String) {
@@ -47,7 +46,7 @@ internal class FormInstanceExporter(
     CsvColumn.NUMBER -> number.toString()
     CsvColumn.SUBMITTED_DATE -> submittedDate?.let { submittedDate ->
       var zonedSubmittedDate = submittedDate.atZone(ZoneId.of("UTC"))
-      if (timeZone != null) zonedSubmittedDate = zonedSubmittedDate.withZoneSameInstant(timeZone.zoneId)
+      if (timeZone != null) zonedSubmittedDate = zonedSubmittedDate.withZoneSameInstant(timeZone)
       return@let zonedSubmittedDate.format(DATE_TIME_FORMATTER)
     } ?: ""
     CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).let {

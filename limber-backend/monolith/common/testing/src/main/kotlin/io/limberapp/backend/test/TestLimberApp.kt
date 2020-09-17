@@ -9,8 +9,8 @@ import io.limberapp.common.module.Module
 import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.common.testing.TestLimberApp
 import io.limberapp.common.util.uuid.UuidGenerator
-import io.limberapp.monolith.config.LimberAppMonolithConfig
 import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
+import io.limberapp.monolith.config.LimberAppMonolithConfig
 import java.time.Clock
 
 class TestLimberApp(

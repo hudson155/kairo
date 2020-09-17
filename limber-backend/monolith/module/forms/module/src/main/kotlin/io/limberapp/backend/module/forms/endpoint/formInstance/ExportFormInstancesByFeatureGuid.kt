@@ -15,7 +15,7 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.finder.SortableFinder
 import io.limberapp.common.restInterface.template
-import io.limberapp.common.types.TimeZone
+import java.time.ZoneId
 import java.util.*
 
 @OptIn(LimberModule.Orgs::class, LimberModule.Users::class)
@@ -31,7 +31,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.ExportByFeatureGuid(
     featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
     creatorAccountGuid = call.parameters.getAsType(UUID::class, "creatorAccountGuid", optional = true),
-    timeZone = call.parameters.getAsType(TimeZone::class, "timeZone", optional = true)
+    timeZone = call.parameters.getAsType(ZoneId::class, "timeZone", optional = true)
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.ExportByFeatureGuid): String {

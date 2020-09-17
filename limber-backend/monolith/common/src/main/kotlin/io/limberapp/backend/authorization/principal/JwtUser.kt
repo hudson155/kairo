@@ -1,6 +1,6 @@
 package io.limberapp.backend.authorization.principal
 
-import io.limberapp.common.types.UUID
+import java.util.*
 
 data class JwtUser(
   val guid: UUID,

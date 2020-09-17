@@ -8,8 +8,8 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
 import io.limberapp.common.rep.CompleteRep
 import io.limberapp.common.rep.CreationRep
-import io.limberapp.common.types.LocalDateTime
-import io.limberapp.common.types.UUID
+import java.time.LocalDateTime
+import java.util.*
 
 object FormInstanceQuestionRep {
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")

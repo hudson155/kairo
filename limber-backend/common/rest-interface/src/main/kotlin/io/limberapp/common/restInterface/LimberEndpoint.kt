@@ -1,11 +1,10 @@
 package io.limberapp.common.restInterface
 
 import io.limberapp.common.rep.ValidatedRep
-import io.limberapp.common.types.TimeZone
-import io.limberapp.common.types.UUID
 import io.limberapp.common.util.url.href
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
+import java.util.*
 import kotlin.random.Random
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
@@ -116,7 +115,7 @@ private fun generateArgsAndReplacements(
         argReplacements[argName] = it
       }
       // Generate a random time zone.
-      kClass == TimeZone::class -> TimeZone(ZoneId.of(ZoneId.getAvailableZoneIds().random())).also {
+      kClass == ZoneId::class -> ZoneId.of(ZoneId.getAvailableZoneIds().random()).also {
         // Time zones should also go into arg replacements.
         argReplacements[argName] = it.toString()
       }

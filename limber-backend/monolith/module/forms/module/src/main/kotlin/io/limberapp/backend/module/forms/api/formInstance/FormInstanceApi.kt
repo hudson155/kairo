@@ -4,9 +4,9 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.common.restInterface.ContentType
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.types.TimeZone
-import io.limberapp.common.types.UUID
 import io.limberapp.common.util.url.enc
+import java.time.ZoneId
+import java.util.*
 
 @Suppress("StringLiteralDuplication")
 object FormInstanceApi {
@@ -30,7 +30,7 @@ object FormInstanceApi {
   data class ExportByFeatureGuid(
     val featureGuid: UUID,
     val creatorAccountGuid: UUID? = null,
-    val timeZone: TimeZone? = null,
+    val timeZone: ZoneId? = null,
   ) : LimberEndpoint(
     httpMethod = HttpMethod.GET,
     path = "/forms/${enc(featureGuid)}/instances",

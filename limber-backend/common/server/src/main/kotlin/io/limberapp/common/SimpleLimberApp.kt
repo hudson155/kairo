@@ -33,9 +33,9 @@ import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
-import io.limberapp.common.types.TimeZone
 import io.limberapp.common.util.conversionService
 import org.slf4j.event.Level
+import java.time.ZoneId
 import java.util.*
 
 /**
@@ -101,7 +101,7 @@ abstract class SimpleLimberApp<C : Config>(
 
   protected open fun Application.dataConversion() {
     install(DataConversion) {
-      convert(TimeZone::class, conversionService(TimeZoneConversionService))
+      convert(ZoneId::class, conversionService(TimeZoneConversionService))
       convert(UUID::class, conversionService(UuidConversionService))
     }
   }

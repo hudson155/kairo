@@ -9,10 +9,10 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.common.rep.CompleteRep
 import io.limberapp.common.rep.CreationRep
 import io.limberapp.common.rep.UpdateRep
-import io.limberapp.common.types.UUID
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.ifPresent
 import io.limberapp.common.validator.Validator
+import java.util.*
 
 object FormTemplateQuestionRep {
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")

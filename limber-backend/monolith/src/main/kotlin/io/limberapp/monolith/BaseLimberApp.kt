@@ -12,8 +12,8 @@ import io.limberapp.common.SimpleLimberApp
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.MainModule
 import io.limberapp.common.module.ModuleWithLifecycle
-import io.limberapp.monolith.config.LimberAppMonolithConfig
 import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
+import io.limberapp.monolith.config.LimberAppMonolithConfig
 
 internal abstract class BaseLimberApp(
   application: Application,

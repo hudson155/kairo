@@ -11,7 +11,6 @@ dependencies {
   implementation(project(":limber-backend:common:ktor-auth"))
   implementation(project(":limber-backend:common:module")) // For registering modules
   api(project(":limber-backend:common:serialization")) // Provides Json to implementation projects
-  api(project(":limber-backend:common:types"))
   api(project(":limber-backend:common:util"))
   implementation(Dependencies.Jackson.moduleKotlin) // For config loader
   implementation(Dependencies.Guice.guice)

@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":limber-backend:common:types"))
   implementation(project(":limber-backend:common:util"))
   implementation(project(":limber-backend:common:validation"))
 }
