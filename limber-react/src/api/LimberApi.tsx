@@ -15,15 +15,15 @@ export class LimberApi {
 
   async getOrg(orgGuid: string): Promise<OrgRepComplete | undefined> {
     const url = `/orgs/${encodeURIComponent(orgGuid)}`;
-    const result = await this.request<OrgRepComplete>('GET', url);
-    return result?.data;
+    const response = await this.request<OrgRepComplete>('GET', url);
+    return response?.data;
   }
 
   async getTenant(tenantDomain: string): Promise<TenantRepComplete | undefined> {
     const url = '/tenants';
     const params = { domain: tenantDomain };
-    const result = await this.request<TenantRepComplete>('GET', url, params);
-    return result?.data;
+    const response = await this.request<TenantRepComplete>('GET', url, params);
+    return response?.data;
   }
 
   private async headers(): Promise<any> {
