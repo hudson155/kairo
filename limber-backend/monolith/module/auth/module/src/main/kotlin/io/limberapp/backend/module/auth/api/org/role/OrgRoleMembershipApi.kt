@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.api.org.role
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.util.url.enc
+import io.limberapp.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")

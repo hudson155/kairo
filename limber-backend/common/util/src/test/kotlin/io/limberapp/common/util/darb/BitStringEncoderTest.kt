@@ -1,5 +1,6 @@
 package io.limberapp.common.util.darb
 
+import io.limberapp.util.darb.BitStringEncoder
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

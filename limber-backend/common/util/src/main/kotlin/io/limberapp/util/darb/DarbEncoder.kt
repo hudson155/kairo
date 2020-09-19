@@ -1,4 +1,6 @@
-package io.limberapp.common.util.darb
+package io.limberapp.util.darb
+
+import org.slf4j.LoggerFactory
 
 /**
  * Converts between boolean lists and the DARB string format. The DARB string format is a format invented by Limber. It
@@ -7,9 +9,14 @@ package io.limberapp.common.util.darb
  * For examples, see this class's tests.
  */
 object DarbEncoder {
+  private val logger = LoggerFactory.getLogger(DarbEncoder::class.java)
+
   private const val CHUNK_SIZE = 4 // Warning, changing this alone will break the code.
 
   fun encode(booleanList: List<Boolean>): String {
+    val bitString = BitStringEncoder.encode(booleanList)
+    logger.debug("Encoding bit string: $bitString.")
+
     // Chunk by 4 because each hex represents 4 bits.
     val chunkedBooleanList = booleanList.chunked(CHUNK_SIZE)
 
@@ -33,10 +40,13 @@ object DarbEncoder {
 
     // DARB prefixes the hex characters with the size of the length of the data.
     val size = booleanList.size
-    return "$size.$hex"
+    return "$size.$hex".also {
+      logger.debug("Encoded bit string $bitString to $it.")
+    }
   }
 
   fun decode(darb: String): List<Boolean> {
+    logger.debug("Decoding DARB: $darb.")
     val (size, hex) = getComponentsOrNull(darb) ?: error("Invalid DARB: $darb")
 
     // Map each hex to a list of 4 digits representing the hex in binary.
@@ -62,7 +72,10 @@ object DarbEncoder {
 
     // Take the size into account to return a list of the correct length.
     // This will omit between 0 and 3 booleans from the end.
-    return booleanList.subList(0, size)
+    return booleanList.subList(0, size).also {
+      val bitString = BitStringEncoder.encode(it)
+      logger.debug("Decoded DARB $darb to $bitString.")
+    }
   }
 
   /**

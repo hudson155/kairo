@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.api.formInstance.question
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.util.url.enc
+import io.limberapp.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")

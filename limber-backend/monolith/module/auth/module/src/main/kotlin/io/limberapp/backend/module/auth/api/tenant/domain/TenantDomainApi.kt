@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.api.tenant.domain
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.util.url.enc
+import io.limberapp.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")

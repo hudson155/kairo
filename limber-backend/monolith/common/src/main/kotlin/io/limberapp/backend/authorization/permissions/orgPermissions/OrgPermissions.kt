@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import io.limberapp.backend.authorization.permissions.Permissions
-import io.limberapp.common.util.darb.BitStringEncoder
-import io.limberapp.common.util.darb.DarbEncoder
+import io.limberapp.util.darb.BitStringEncoder
+import io.limberapp.util.darb.DarbEncoder
 
 /**
  * All permissions, in the correct order, with a quick sanity check on the digits. If this sanity check fails, double

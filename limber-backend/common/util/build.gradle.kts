@@ -7,8 +7,9 @@ plugins {
 
 dependencies {
   implementation(kotlin("reflect"))
-  implementation(kotlin("test-annotations-common"))
-  implementation(kotlin("test-common"))
+
+  implementation(Dependencies.Logging.slf4j)
+
   testImplementation(kotlin("test-junit5"))
   testRuntimeOnly(Dependencies.JUnit.engine)
 }

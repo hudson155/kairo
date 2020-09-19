@@ -1,4 +1,4 @@
-package io.limberapp.common.util.darb
+package io.limberapp.util.darb
 
 /**
  * Converts between boolean lists and bit string format.

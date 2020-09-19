@@ -3,7 +3,7 @@ package io.limberapp.backend.module.users.api.user
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.util.url.enc
+import io.limberapp.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")

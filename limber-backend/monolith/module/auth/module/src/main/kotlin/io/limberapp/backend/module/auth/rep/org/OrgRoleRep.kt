@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.auth.rep.org
 
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
+import io.limberapp.common.validator.Validator
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.rep.UpdateRep
-import io.limberapp.common.util.url.slugify
+import io.limberapp.util.url.slugify
 import io.limberapp.validation.RepValidation
 import io.limberapp.validation.ifPresent
-import io.limberapp.common.validator.Validator
 import java.time.LocalDateTime
 import java.util.*
 

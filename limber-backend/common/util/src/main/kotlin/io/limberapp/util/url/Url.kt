@@ -1,4 +1,4 @@
-package io.limberapp.common.util.url
+package io.limberapp.util.url
 
 import java.net.URLEncoder
 
