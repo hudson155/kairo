@@ -33,13 +33,13 @@ import io.limberapp.common.module.SqlWrapper
 import io.limberapp.common.shutDown
 import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
 internal fun Adhoc.dbReset() {
-  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberMonolithConfig::class)
 
   with(SqlWrapper(config.sqlDatabase)) {
     connect()
@@ -56,9 +56,9 @@ internal fun Adhoc.dbReset() {
 
     override val modules = allLimberModules()
 
-    override fun Application.afterStart(context: Context) {
-      insertFixtures(context.injector)
-      shutDown(0)
+    override fun afterStart(application: Application, injector: Injector) {
+      insertFixtures(injector)
+      application.shutDown(0)
     }
 
     @Suppress("LongMethod")

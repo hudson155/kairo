@@ -5,10 +5,10 @@ import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.testing.AbstractResourceTest
 import io.limberapp.config.ConfigLoader
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 
 abstract class LimberResourceTest : AbstractResourceTest() {
-  protected val config = ConfigLoader.load("test", LimberAppMonolithConfig::class)
+  protected val config = ConfigLoader.load("test", LimberMonolithConfig::class)
 
   protected val json = Json()
 

@@ -7,7 +7,7 @@ import io.limberapp.config.database.SqlDatabaseConfig
 /**
  * The config class contains all custom configuration for the app. It doesn't contain Ktor built-in configuration.
  */
-data class LimberAppMonolithConfig(
+data class LimberMonolithConfig(
   val sqlDatabase: SqlDatabaseConfig,
   override val authentication: AuthenticationConfig,
 ) : Config

@@ -4,6 +4,9 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Stage
 import io.ktor.application.Application
+import io.ktor.application.ApplicationStarted
+import io.ktor.application.ApplicationStopPreparing
+import io.ktor.application.ApplicationStopping
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
@@ -21,6 +24,7 @@ import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
+import io.ktor.server.engine.ApplicationEngineEnvironment
 import io.limberapp.common.contentNegotiation.JsonContentConverter
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.exception.LimberException
@@ -31,27 +35,48 @@ import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.util.conversionService
-import io.limberapp.config.Config
 import io.limberapp.typeConversion.conversionService.TimeZoneConversionService
 import io.limberapp.typeConversion.conversionService.UuidConversionService
+import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 import java.time.ZoneId
 import java.util.*
+import java.util.concurrent.*
+import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
-/**
- * A basic Limber app that implements most things by default. Unless an application needs heavy customization, it's
- * generally easiest to extend from this rather than [LimberApp].
- *
- * This class has a lot of functions, but it's clearer this way.
- */
 @Suppress("TooManyFunctions")
-abstract class SimpleLimberApp<C : Config>(
-  application: Application,
-  protected val config: C,
-) : LimberApp<SimpleLimberApp.Context>(application) {
-  data class Context(val injector: Injector, val modules: List<ModuleWithLifecycle>)
+abstract class LimberApplication(application: Application) {
+  private val logger = LoggerFactory.getLogger(LimberApplication::class.java)
 
-  override fun onStart(application: Application): Context {
+  private var context: Pair<Injector, List<ModuleWithLifecycle>>? = null
+
+  init {
+    application.environment.monitor.subscribe(ApplicationStarted) { onStartInternal(it) }
+    application.environment.monitor.subscribe(ApplicationStopping) { onStopInternal() }
+  }
+
+  private fun onStartInternal(application: Application) {
+    logger.info("LimberApp starting...")
+    @Suppress("TooGenericExceptionCaught")
+    try {
+      check(context == null)
+      val newContext = onStart(application)
+      context = newContext
+      afterStart(application, newContext.first)
+    } catch (e: Throwable) {
+      logger.error("An error occurred during application startup. Shutting down...", e)
+      application.shutDown(1)
+    }
+  }
+
+  private fun onStopInternal() {
+    logger.info("LimberApp stopping...")
+    context?.let { onStop(it.second) }
+    context = null
+  }
+
+  private fun onStart(application: Application): Pair<Injector, List<ModuleWithLifecycle>> {
     // First, create the injector.
     val modules = getMainModules(application) + modules
     val injector = Guice.createInjector(Stage.PRODUCTION, modules)
@@ -65,12 +90,12 @@ abstract class SimpleLimberApp<C : Config>(
     application.handle404()
 
     // Return the context.
-    return Context(injector, modules)
+    return Pair(injector, modules)
   }
 
-  final override fun onStop(application: Application, context: Context) {
-    context.modules.forEach { it.unconfigure() }
-  }
+  protected abstract fun getMainModules(application: Application): List<ModuleWithLifecycle>
+
+  protected abstract val modules: List<Module>
 
   private fun Application.configure(injector: Injector) {
     authentication(injector)
@@ -88,6 +113,8 @@ abstract class SimpleLimberApp<C : Config>(
       configureAuthentication(injector)
     }
   }
+
+  protected abstract fun Authentication.Configuration.configureAuthentication(injector: Injector)
 
   protected open fun Application.cors() {
     install(CORS) {
@@ -149,12 +176,6 @@ abstract class SimpleLimberApp<C : Config>(
     }
   }
 
-  protected abstract fun Authentication.Configuration.configureAuthentication(injector: Injector)
-
-  protected abstract fun getMainModules(application: Application): List<ModuleWithLifecycle>
-
-  protected abstract val modules: List<Module>
-
   private fun Application.handle404(): Routing {
     return routing {
       route("/{...}") {
@@ -162,4 +183,25 @@ abstract class SimpleLimberApp<C : Config>(
       }
     }
   }
+
+  protected abstract fun afterStart(application: Application, injector: Injector)
+
+  private fun onStop(modules: List<ModuleWithLifecycle>) {
+    modules.forEach { it.unconfigure() }
+  }
+}
+
+/**
+ * Implementation adapted from [io.ktor.server.engine.ShutDownUrl].
+ */
+fun Application.shutDown(status: Int) {
+  val latch = CountDownLatch(1)
+  thread {
+    @Suppress("MagicNumber")
+    latch.await(10L, TimeUnit.SECONDS)
+    environment.monitor.raise(ApplicationStopPreparing, environment)
+    (environment as? ApplicationEngineEnvironment)?.stop() ?: dispose()
+    exitProcess(status)
+  }
+  latch.countDown()
 }

@@ -16,7 +16,7 @@ import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.common.shutDown
 import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 import java.time.LocalDateTime
 import java.util.*
 
@@ -25,7 +25,7 @@ private object CreateCovidFeatureArgs {
 }
 
 internal fun Adhoc.createCovidFeature() {
-  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberMonolithConfig::class)
 
   object : BaseLimberApp(application, config) {
     override fun getMainModules(application: Application) =
@@ -33,11 +33,11 @@ internal fun Adhoc.createCovidFeature() {
 
     override val modules = allLimberModules()
 
-    override fun Application.afterStart(context: Context) {
-      val featureGuid = createFeature(context.injector)
-      createPreScreeningSelfAssessmentFormTemplate(context.injector, featureGuid)
-      createWorkplaceInspectionFormTemplate(context.injector, featureGuid)
-      shutDown(0)
+    override fun afterStart(application: Application, injector: Injector) {
+      val featureGuid = createFeature(injector)
+      createPreScreeningSelfAssessmentFormTemplate(injector, featureGuid)
+      createWorkplaceInspectionFormTemplate(injector, featureGuid)
+      application.shutDown(0)
     }
 
     @OptIn(LimberModule.Orgs::class)

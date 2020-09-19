@@ -10,12 +10,12 @@ import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.common.testing.TestLimberApp
 import io.limberapp.common.util.uuid.UuidGenerator
 import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 import java.time.Clock
 
 class TestLimberApp(
   application: Application,
-  config: LimberAppMonolithConfig,
+  config: LimberMonolithConfig,
   module: Module,
   additionalModules: Set<ModuleWithLifecycle>,
   fixedClock: Clock,
@@ -26,4 +26,6 @@ class TestLimberApp(
       verifier(JwtAuthVerifier.scheme, JwtAuthVerifier(config.authentication), default = true)
     }
   }
+
+  override fun afterStart(application: Application, injector: Injector) = Unit
 }

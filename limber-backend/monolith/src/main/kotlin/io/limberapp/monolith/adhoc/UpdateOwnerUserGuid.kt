@@ -9,7 +9,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.shutDown
 import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 import java.util.*
 
 private object UpdateOwnerUserGuidArgs {
@@ -18,7 +18,7 @@ private object UpdateOwnerUserGuidArgs {
 }
 
 internal fun Adhoc.updateOwnerUserGuid() {
-  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberMonolithConfig::class)
 
   object : BaseLimberApp(application, config) {
     override fun getMainModules(application: Application) =
@@ -26,9 +26,9 @@ internal fun Adhoc.updateOwnerUserGuid() {
 
     override val modules = allLimberModules()
 
-    override fun Application.afterStart(context: Context) {
-      updateOwnerUserGuid(context.injector)
-      shutDown(0)
+    override fun afterStart(application: Application, injector: Injector) {
+      updateOwnerUserGuid(injector)
+      application.shutDown(0)
     }
 
     @OptIn(LimberModule.Orgs::class)

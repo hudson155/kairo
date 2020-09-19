@@ -8,17 +8,17 @@ import io.limberapp.backend.module.auth.AuthModule
 import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
-import io.limberapp.common.SimpleLimberApp
+import io.limberapp.common.LimberApplication
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.MainModule
 import io.limberapp.common.module.ModuleWithLifecycle
 import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 
 internal abstract class BaseLimberApp(
   application: Application,
-  config: LimberAppMonolithConfig,
-) : SimpleLimberApp<LimberAppMonolithConfig>(application, config) {
+  protected val config: LimberMonolithConfig,
+) : LimberApplication(application) {
   final override fun Authentication.Configuration.configureAuthentication(injector: Injector) {
     limberAuth<Jwt> {
       verifier(

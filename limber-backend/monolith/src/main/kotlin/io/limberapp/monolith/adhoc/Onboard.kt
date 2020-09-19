@@ -15,7 +15,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.shutDown
 import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
-import io.limberapp.monolith.config.LimberAppMonolithConfig
+import io.limberapp.monolith.config.LimberMonolithConfig
 import java.time.LocalDateTime
 import java.util.*
 
@@ -26,7 +26,7 @@ private object OnboardArgs {
 }
 
 internal fun Adhoc.onboard() {
-  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberAppMonolithConfig::class)
+  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberMonolithConfig::class)
 
   object : BaseLimberApp(application, config) {
     override fun getMainModules(application: Application) =
@@ -34,11 +34,11 @@ internal fun Adhoc.onboard() {
 
     override val modules = allLimberModules()
 
-    override fun Application.afterStart(context: Context) {
-      val orgGuid = createOrg(context.injector)
-      createTenant(context.injector, orgGuid = orgGuid)
-      createTenantDomain(context.injector, orgGuid = orgGuid)
-      shutDown(0)
+    override fun afterStart(application: Application, injector: Injector) {
+      val orgGuid = createOrg(injector)
+      createTenant(injector, orgGuid = orgGuid)
+      createTenantDomain(injector, orgGuid = orgGuid)
+      application.shutDown(0)
     }
 
     @OptIn(LimberModule.Orgs::class)

@@ -20,6 +20,6 @@ internal fun Application.main() {
     "dbReset" -> adhoc(Adhoc::dbReset)
     "onboard" -> adhoc(Adhoc::onboard)
     "updateOwnerUserGuid" -> adhoc(Adhoc::updateOwnerUserGuid)
-    null -> LimberAppMonolith(this)
+    null -> LimberMonolith(this)
   }
 }
