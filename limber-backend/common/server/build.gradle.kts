@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
   api(project(":limber-backend:common:config")) // Provides config to implementation projects
-  implementation(project(":limber-backend:common:data-conversion"))
   implementation(project(":limber-backend:common:errors"))
   implementation(project(":limber-backend:common:exception-mapping"))
   implementation(project(":limber-backend:common:ktor-auth"))
   implementation(project(":limber-backend:common:module")) // For registering modules
   api(project(":limber-backend:common:serialization")) // Provides Json to implementation projects
+  implementation(project(":limber-backend:common:type-conversion"))
   api(project(":limber-backend:common:util"))
   implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Jackson.dataFormatYaml)

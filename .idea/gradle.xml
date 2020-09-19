@@ -16,7 +16,6 @@
             <option value="$PROJECT_DIR$/limber-backend" />
             <option value="$PROJECT_DIR$/limber-backend/common" />
             <option value="$PROJECT_DIR$/limber-backend/common/config" />
-            <option value="$PROJECT_DIR$/limber-backend/common/data-conversion" />
             <option value="$PROJECT_DIR$/limber-backend/common/errors" />
             <option value="$PROJECT_DIR$/limber-backend/common/exception-mapping" />
             <option value="$PROJECT_DIR$/limber-backend/common/exceptions" />
@@ -30,6 +29,7 @@
             <option value="$PROJECT_DIR$/limber-backend/common/server" />
             <option value="$PROJECT_DIR$/limber-backend/common/sql" />
             <option value="$PROJECT_DIR$/limber-backend/common/testing" />
+            <option value="$PROJECT_DIR$/limber-backend/common/type-conversion" />
             <option value="$PROJECT_DIR$/limber-backend/common/util" />
             <option value="$PROJECT_DIR$/limber-backend/common/validation" />
             <option value="$PROJECT_DIR$/limber-backend/graphql-server" />

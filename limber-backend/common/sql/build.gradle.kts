@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   api(project(":limber-backend:common:config")) // Uses ConfigString in the interface
-  implementation(project(":limber-backend:common:data-conversion"))
+  implementation(project(":limber-backend:common:type-conversion"))
   api(project(":limber-backend:common:module")) // This artifact implements a module
   implementation(Dependencies.Jackson.databind)
   implementation(Dependencies.Sql.flyway)

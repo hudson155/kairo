@@ -22,8 +22,6 @@ import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.limberapp.common.contentNegotiation.JsonContentConverter
-import io.limberapp.common.dataConversion.conversionService.TimeZoneConversionService
-import io.limberapp.common.dataConversion.conversionService.UuidConversionService
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.exception.LimberException
 import io.limberapp.common.exceptionMapping.ExceptionMapper
@@ -34,6 +32,8 @@ import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.util.conversionService
 import io.limberapp.config.Config
+import io.limberapp.typeConversion.conversionService.TimeZoneConversionService
+import io.limberapp.typeConversion.conversionService.UuidConversionService
 import org.slf4j.event.Level
 import java.time.ZoneId
 import java.util.*

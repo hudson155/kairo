@@ -1,7 +1,6 @@
 rootProject.name = "limber"
 
 include(":limber-backend:common:config")
-include(":limber-backend:common:data-conversion")
 include(":limber-backend:common:errors")
 include(":limber-backend:common:exception-mapping")
 include(":limber-backend:common:exceptions")
@@ -15,6 +14,7 @@ include(":limber-backend:common:serialization")
 include(":limber-backend:common:server")
 include(":limber-backend:common:sql")
 include(":limber-backend:common:testing")
+include(":limber-backend:common:type-conversion")
 include(":limber-backend:common:util")
 include(":limber-backend:common:validation")
 
