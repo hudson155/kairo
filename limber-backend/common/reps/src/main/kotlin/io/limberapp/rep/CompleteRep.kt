@@ -1,4 +1,4 @@
-package io.limberapp.common.rep
+package io.limberapp.rep
 
 import java.time.LocalDateTime
 

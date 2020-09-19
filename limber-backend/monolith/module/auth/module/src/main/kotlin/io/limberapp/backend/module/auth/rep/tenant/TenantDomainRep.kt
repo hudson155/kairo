@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.rep.tenant
 
-import io.limberapp.common.rep.CompleteRep
-import io.limberapp.common.rep.CreationRep
-import io.limberapp.common.validation.RepValidation
+import io.limberapp.rep.CompleteRep
+import io.limberapp.rep.CreationRep
+import io.limberapp.validation.RepValidation
 import io.limberapp.common.validator.Validator
 import java.time.LocalDateTime
 

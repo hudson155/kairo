@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.auth.rep.feature
 
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
-import io.limberapp.common.rep.CompleteRep
-import io.limberapp.common.rep.CreationRep
-import io.limberapp.common.rep.UpdateRep
-import io.limberapp.common.validation.RepValidation
+import io.limberapp.rep.CompleteRep
+import io.limberapp.rep.CreationRep
+import io.limberapp.rep.UpdateRep
+import io.limberapp.validation.RepValidation
 import java.time.LocalDateTime
 import java.util.*
 

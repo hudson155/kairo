@@ -1,4 +1,4 @@
-package io.limberapp.common.rep
+package io.limberapp.rep
 
 /**
  * Used for cases where the rep is being created in the backend.

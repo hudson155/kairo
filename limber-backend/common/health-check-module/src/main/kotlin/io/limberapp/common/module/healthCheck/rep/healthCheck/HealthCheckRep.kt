@@ -1,6 +1,6 @@
 package io.limberapp.common.module.healthCheck.rep.healthCheck
 
-import io.limberapp.common.rep.CompleteRep
+import io.limberapp.rep.CompleteRep
 import java.time.LocalDateTime
 
 internal object HealthCheckRep {

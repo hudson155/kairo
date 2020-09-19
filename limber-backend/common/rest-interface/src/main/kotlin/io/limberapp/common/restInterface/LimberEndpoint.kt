@@ -1,6 +1,6 @@
 package io.limberapp.common.restInterface
 
-import io.limberapp.common.rep.ValidatedRep
+import io.limberapp.rep.ValidatedRep
 import io.limberapp.common.util.url.href
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
