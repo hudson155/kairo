@@ -1,3 +1,8 @@
+authentication:
+  mechanisms:
+    - type: UNSIGNED_JWT
+      leeway: 0
+
 sqlDatabase:
   jdbcUrl:
     type: PLAINTEXT
@@ -12,7 +17,8 @@ sqlDatabase:
   connectionTimeout: 1000
   maximumPoolSize: 2
 
-authentication:
-  mechanisms:
-    - type: UNSIGNED_JWT
-      leeway: 0
+clock:
+  type: FIXED
+
+uuids:
+  generation: DETERMINISTIC

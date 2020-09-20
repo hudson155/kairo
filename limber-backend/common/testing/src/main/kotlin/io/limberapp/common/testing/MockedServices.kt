@@ -1,10 +1,10 @@
 package io.limberapp.common.testing
 
-import io.limberapp.common.module.ModuleWithLifecycle
+import io.limberapp.common.module.GuiceModule
 import io.mockk.mockkClass
 import kotlin.reflect.KClass
 
-class MockedServices(servicesToMock: List<KClass<*>>) : ModuleWithLifecycle() {
+class MockedServices(servicesToMock: List<KClass<*>>) : GuiceModule() {
   constructor(vararg servicesToMock: KClass<*>) : this(servicesToMock.toList())
 
   private val mocks = servicesToMock.associateWith { mockkClass(it) }

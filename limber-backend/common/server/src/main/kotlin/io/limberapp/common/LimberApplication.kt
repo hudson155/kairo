@@ -25,16 +25,21 @@ import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngineEnvironment
+import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.common.contentNegotiation.JsonContentConverter
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.exception.LimberException
 import io.limberapp.common.exceptionMapping.ExceptionMapper
-import io.limberapp.common.module.Module
-import io.limberapp.common.module.ModuleWithLifecycle
+import io.limberapp.common.ktorAuth.limberAuth
+import io.limberapp.common.module.ApplicationModule
+import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.util.conversionService
+import io.limberapp.config.Config
+import io.limberapp.module.main.MainModule
+import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
 import io.limberapp.typeConversion.conversionService.TimeZoneConversionService
 import io.limberapp.typeConversion.conversionService.UuidConversionService
 import org.slf4j.LoggerFactory
@@ -46,10 +51,10 @@ import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 @Suppress("TooManyFunctions")
-abstract class LimberApplication(application: Application) {
+abstract class LimberApplication<C : Config>(application: Application, protected val config: C) {
   private val logger = LoggerFactory.getLogger(LimberApplication::class.java)
 
-  private var context: Pair<Injector, List<ModuleWithLifecycle>>? = null
+  private var context: Pair<Injector, List<GuiceModule>>? = null
 
   init {
     application.environment.monitor.subscribe(ApplicationStarted) { onStartInternal(it) }
@@ -76,14 +81,14 @@ abstract class LimberApplication(application: Application) {
     context = null
   }
 
-  private fun onStart(application: Application): Pair<Injector, List<ModuleWithLifecycle>> {
+  private fun onStart(application: Application): Pair<Injector, List<GuiceModule>> {
     // First, create the injector.
-    val modules = getMainModules(application) + modules
+    val modules = getApplicationModules() + getAdditionalModules() + MainModule(application, config)
     val injector = Guice.createInjector(Stage.PRODUCTION, modules)
 
     // Then, configure the application.
     // Pass the injector because configuration may require services that are bound in the injector.
-    application.configure(injector)
+    application.configure()
 
     // Configure routing. Dynamic endpoints, then 404.
     registerEndpoints(injector)
@@ -93,12 +98,12 @@ abstract class LimberApplication(application: Application) {
     return Pair(injector, modules)
   }
 
-  protected abstract fun getMainModules(application: Application): List<ModuleWithLifecycle>
+  protected abstract fun getApplicationModules(): List<ApplicationModule>
 
-  protected abstract val modules: List<Module>
+  protected open fun getAdditionalModules(): List<GuiceModule> = emptyList()
 
-  private fun Application.configure(injector: Injector) {
-    authentication(injector)
+  private fun Application.configure() {
+    authentication()
     cors()
     dataConversion()
     defaultHeaders()
@@ -108,15 +113,23 @@ abstract class LimberApplication(application: Application) {
     statusPages()
   }
 
-  protected fun Application.authentication(injector: Injector) {
+  private fun Application.authentication() {
     install(Authentication) {
-      configureAuthentication(injector)
+      configureAuthentication()
     }
   }
 
-  protected abstract fun Authentication.Configuration.configureAuthentication(injector: Injector)
+  private fun Authentication.Configuration.configureAuthentication() {
+    limberAuth<Jwt> {
+      verifier(
+        scheme = JwtAuthVerifier.scheme,
+        verifier = JwtAuthVerifier(config.authentication),
+        default = true,
+      )
+    }
+  }
 
-  protected open fun Application.cors() {
+  private fun Application.cors() {
     install(CORS) {
       HttpMethod.values().forEach { method(it.forKtor()) }
       allowSameOrigin = false
@@ -126,28 +139,28 @@ abstract class LimberApplication(application: Application) {
     }
   }
 
-  protected open fun Application.dataConversion() {
+  private fun Application.dataConversion() {
     install(DataConversion) {
       convert(ZoneId::class, conversionService(TimeZoneConversionService))
       convert(UUID::class, conversionService(UuidConversionService))
     }
   }
 
-  protected open fun Application.defaultHeaders() {
+  private fun Application.defaultHeaders() {
     install(DefaultHeaders)
   }
 
-  protected open fun Application.compression() {
+  private fun Application.compression() {
     install(Compression)
   }
 
-  protected open fun Application.callLogging() {
+  private fun Application.callLogging() {
     install(CallLogging) {
       level = Level.INFO
     }
   }
 
-  protected open fun Application.contentNegotiation() {
+  private fun Application.contentNegotiation() {
     install(ContentNegotiation) {
       val json = Json(prettyPrint = true)
       register(
@@ -157,7 +170,7 @@ abstract class LimberApplication(application: Application) {
     }
   }
 
-  protected open fun Application.statusPages() {
+  private fun Application.statusPages() {
     install(StatusPages) {
       val exceptionMapper = ExceptionMapper()
       this.exception(LimberException::class.java) {
@@ -168,7 +181,7 @@ abstract class LimberApplication(application: Application) {
   }
 
   private fun registerEndpoints(injector: Injector) {
-    modules.forEach { module ->
+    getApplicationModules().forEach { module ->
       module.endpoints.forEach {
         val endpoint = injector.getInstance(it)
         endpoint.register()
@@ -184,9 +197,9 @@ abstract class LimberApplication(application: Application) {
     }
   }
 
-  protected abstract fun afterStart(application: Application, injector: Injector)
+  protected open fun afterStart(application: Application, injector: Injector) {}
 
-  private fun onStop(modules: List<ModuleWithLifecycle>) {
+  private fun onStop(modules: List<GuiceModule>) {
     modules.forEach { it.unconfigure() }
   }
 }

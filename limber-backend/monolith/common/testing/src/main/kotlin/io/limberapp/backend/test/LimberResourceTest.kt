@@ -1,20 +1,20 @@
 package io.limberapp.backend.test
 
-import io.limberapp.common.module.Module
-import io.limberapp.common.module.ModuleWithLifecycle
+import io.limberapp.common.module.ApplicationModule
+import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.testing.AbstractResourceTest
 import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.config.LimberMonolithConfig
 
 abstract class LimberResourceTest : AbstractResourceTest() {
-  protected val config = ConfigLoader.load("test", LimberMonolithConfig::class)
+  protected val config = ConfigLoader.load<LimberMonolithConfig>("test")
 
   protected val json = Json()
 
-  protected abstract val module: Module
+  protected abstract val module: ApplicationModule
 
-  protected abstract val additionalModules: Set<ModuleWithLifecycle>
+  protected abstract val additionalModules: Set<GuiceModule>
 
   final override val limberTest by lazy {
     LimberTest(json) {
@@ -23,8 +23,6 @@ abstract class LimberResourceTest : AbstractResourceTest() {
         config = config,
         module = module,
         additionalModules = additionalModules,
-        fixedClock = fixedClock,
-        deterministicUuidGenerator = deterministicUuidGenerator
       )
     }
   }

@@ -12,9 +12,9 @@ import io.limberapp.backend.module.orgs.service.feature.FeatureServiceImpl
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.orgs.service.org.OrgServiceImpl
-import io.limberapp.common.module.Module
+import io.limberapp.common.module.ApplicationModule
 
-class OrgsModule : Module() {
+class OrgsModule : ApplicationModule() {
   override val endpoints = listOf(
     PostOrg::class.java,
     GetOrg::class.java,

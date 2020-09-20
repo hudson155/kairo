@@ -39,7 +39,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 internal fun Adhoc.dbReset() {
-  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberMonolithConfig::class)
+  val config = ConfigLoader.load<LimberMonolithConfig>(System.getenv("LIMBER_CONFIG"))
 
   with(SqlWrapper(config.sqlDatabase)) {
     connect()
@@ -51,10 +51,9 @@ internal fun Adhoc.dbReset() {
   }
 
   object : BaseLimberApp(application, config) {
-    override fun getMainModules(application: Application) =
-      super.getMainModules(application) + LimberSqlModule(config.sqlDatabase, runMigrations = true)
+    override fun getApplicationModules() = allLimberModules()
 
-    override val modules = allLimberModules()
+    override fun getAdditionalModules() = listOf(LimberSqlModule(config.sqlDatabase, runMigrations = true))
 
     override fun afterStart(application: Application, injector: Injector) {
       insertFixtures(injector)

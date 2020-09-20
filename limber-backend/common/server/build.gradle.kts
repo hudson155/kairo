@@ -4,19 +4,23 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:common:config")) // Provides config to implementation projects
+  api(project(":limber-backend:common:config"))
   implementation(project(":limber-backend:common:errors"))
   implementation(project(":limber-backend:common:exception-mapping"))
   implementation(project(":limber-backend:common:ktor-auth"))
-  implementation(project(":limber-backend:common:module")) // For registering modules
-  api(project(":limber-backend:common:serialization")) // Provides Json to implementation projects
+  api(project(":limber-backend:common:module"))
+  api(project(":limber-backend:common:serialization"))
   implementation(project(":limber-backend:common:type-conversion"))
   api(project(":limber-backend:common:util"))
+  api(project(":limber-backend:monolith:common:module"))
+  implementation(Dependencies.Guice.guice)
   implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Jackson.dataFormatYaml)
-  implementation(Dependencies.Guice.guice)
+  implementation(Dependencies.Jwt.auth0JavaJwt)
+  implementation(Dependencies.Jwt.auth0JwksRsa)
   implementation(Dependencies.Ktor.serverHostCommon)
-  api(Dependencies.Ktor.serverCore) // Implementation projects use this
+  api(Dependencies.Ktor.serverCore)
+  implementation(Dependencies.Logging.slf4j)
 }
 
 detekt {

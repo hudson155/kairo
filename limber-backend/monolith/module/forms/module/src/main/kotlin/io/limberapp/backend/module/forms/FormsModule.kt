@@ -24,9 +24,9 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuesti
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionServiceImpl
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServiceImpl
-import io.limberapp.common.module.Module
+import io.limberapp.common.module.ApplicationModule
 
-class FormsModule : Module() {
+class FormsModule : ApplicationModule() {
   override val endpoints = listOf(
     PostFormTemplate::class.java,
     GetFormTemplate::class.java,

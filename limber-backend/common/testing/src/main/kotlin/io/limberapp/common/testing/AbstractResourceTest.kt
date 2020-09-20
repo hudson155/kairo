@@ -8,6 +8,11 @@ import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
 
+/**
+ * LEGACY CODE NOTE: At this time, [fixedClock] and [deterministicUuidGenerator] are separate instances of their
+ * respective classes than the instances actually used by the test application. This should be changed when testing is
+ * refactored or improved.
+ */
 abstract class AbstractResourceTest {
   protected abstract val limberTest: LimberTest
 
@@ -18,7 +23,6 @@ abstract class AbstractResourceTest {
   @BeforeEach
   fun beforeInternal() {
     MockKAnnotations.init(this)
-    deterministicUuidGenerator.reset()
     limberTest.start()
     before()
   }

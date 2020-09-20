@@ -26,13 +26,12 @@ private object OnboardArgs {
 }
 
 internal fun Adhoc.onboard() {
-  val config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"), LimberMonolithConfig::class)
+  val config = ConfigLoader.load<LimberMonolithConfig>(System.getenv("LIMBER_CONFIG"))
 
   object : BaseLimberApp(application, config) {
-    override fun getMainModules(application: Application) =
-      super.getMainModules(application) + LimberSqlModule(config.sqlDatabase, runMigrations = false)
+    override fun getApplicationModules() = allLimberModules()
 
-    override val modules = allLimberModules()
+    override fun getAdditionalModules() = listOf(LimberSqlModule(config.sqlDatabase, runMigrations = false))
 
     override fun afterStart(application: Application, injector: Injector) {
       val orgGuid = createOrg(injector)

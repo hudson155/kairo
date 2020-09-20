@@ -10,9 +10,9 @@ import io.limberapp.backend.module.users.endpoint.user.role.DeleteUserRole
 import io.limberapp.backend.module.users.endpoint.user.role.PutUserRole
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.module.users.service.account.UserServiceImpl
-import io.limberapp.common.module.Module
+import io.limberapp.common.module.ApplicationModule
 
-class UsersModule : Module() {
+class UsersModule : ApplicationModule() {
   override val endpoints = listOf(
     PostUser::class.java,
     GetUser::class.java,

@@ -31,9 +31,9 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainServiceImpl
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.auth.service.tenant.TenantServiceImpl
-import io.limberapp.common.module.Module
+import io.limberapp.common.module.ApplicationModule
 
-class AuthModule : Module() {
+class AuthModule : ApplicationModule() {
   override val endpoints = listOf(
 
     PostFeatureRole::class.java,
