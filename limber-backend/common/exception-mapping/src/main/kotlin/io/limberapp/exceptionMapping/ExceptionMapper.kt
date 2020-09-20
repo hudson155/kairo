@@ -1,4 +1,4 @@
-package io.limberapp.common.exceptionMapping
+package io.limberapp.exceptionMapping
 
 import io.ktor.http.HttpStatusCode
 import io.limberapp.common.error.LimberError
@@ -8,7 +8,7 @@ import io.limberapp.common.exception.exception.conflict.ConflictException
 import io.limberapp.common.exception.exception.forbidden.ForbiddenException
 import io.limberapp.common.exception.exception.notFound.NotFoundException
 
-class ExceptionMapper {
+object ExceptionMapper {
   fun handle(e: LimberException): LimberError {
     val httpStatusCode = when (e) {
       is BadRequestException -> HttpStatusCode.BadRequest

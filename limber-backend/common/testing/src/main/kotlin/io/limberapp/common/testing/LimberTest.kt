@@ -13,10 +13,10 @@ import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.limberapp.common.error.LimberError
 import io.limberapp.common.exception.LimberException
-import io.limberapp.common.exceptionMapping.ExceptionMapper
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
+import io.limberapp.exceptionMapping.ExceptionMapper
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -26,8 +26,6 @@ abstract class LimberTest(
   protected val json: Json,
   private val moduleFunction: Application.() -> Unit,
 ) {
-  private val exceptionMapper = ExceptionMapper()
-
   fun setup(endpoint: LimberEndpoint) = testInternal(
     endpoint = endpoint,
     expectedStatusCode = HttpStatusCode.OK,
@@ -45,7 +43,7 @@ abstract class LimberTest(
   )
 
   fun test(endpoint: LimberEndpoint, expectedException: LimberException) {
-    val expectedError = exceptionMapper.handle(expectedException)
+    val expectedError = ExceptionMapper.handle(expectedException)
     testInternal(
       endpoint = endpoint,
       expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
