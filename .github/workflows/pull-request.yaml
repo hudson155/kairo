@@ -45,5 +45,6 @@ jobs:
       - run: ./gradlew --info --stacktrace build
         env:
           ENV: production
+      - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD) limber-backend/graphql-server
       - run: docker build -t registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD) limber-backend/monolith
       - run: docker build -t registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) limber-web
