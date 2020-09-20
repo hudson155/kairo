@@ -10,9 +10,6 @@ import io.limberapp.monolith.adhoc.updateOwnerUserGuid
 
 private const val LIMBER_TASK = "LIMBER_TASK"
 
-/**
- * Application configuration method, used automatically by Ktor to configure and set up the application.
- */
 @Suppress("Unused")
 internal fun Application.main() {
   when (System.getenv(LIMBER_TASK)) {

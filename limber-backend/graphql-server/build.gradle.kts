@@ -14,10 +14,9 @@ application {
 }
 
 dependencies {
-  implementation(Dependencies.Jwt.auth0JavaJwt)
-  implementation(Dependencies.Jwt.auth0JwksRsa)
+  implementation(project(":limber-backend:common:health-check-module"))
+  implementation(project(":limber-backend:common:server"))
   implementation(Dependencies.Logging.logbackClassic)
-  implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Ktor.serverCio)
 }
 
