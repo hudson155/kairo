@@ -5,8 +5,8 @@ import io.limberapp.backend.authorization.permissions.featurePermissions.feature
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HOME_FEATURE_PREFIX
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions
-import io.limberapp.common.util.darb.BitStringEncoder
-import io.limberapp.common.util.darb.DarbEncoder
+import io.limberapp.util.darb.BitStringEncoder
+import io.limberapp.util.darb.DarbEncoder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind

@@ -11,6 +11,7 @@ dependencies {
   implementation(Dependencies.Logging.slf4j)
 
   testImplementation(kotlin("test-junit5"))
+
   testRuntimeOnly(Dependencies.JUnit.engine)
 }
 

@@ -3,7 +3,7 @@
 As the name suggests, this contains utilities.
 **This Gradle module should have no dependencies.**
 
-All utilities should be in `io.limberapp.common.util.somePackage`,
+All utilities should be in `io.limberapp.util.somePackage`,
 where `somePackage` is a logical grouping.
 Some utilities may be Limber-specific.
 
