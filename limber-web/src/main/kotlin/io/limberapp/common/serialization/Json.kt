@@ -26,6 +26,7 @@ class Json(prettyPrint: Boolean = false, serializersModule: SerializersModule = 
   val json = Json {
     this.prettyPrint = prettyPrint
     this.serializersModule = serializersModule
+    this.ignoreUnknownKeys = true
   }
 
   /**
