@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { useFeature } from '../../../provider/FeatureProvider';
-import { graphql } from 'relay-runtime';
+import { graphql } from 'babel-plugin-relay/macro';
 import { useFragment, useLazyLoadQuery } from 'react-relay/hooks';
 import { FormsFeaturePageQuery } from './__generated__/FormsFeaturePageQuery.graphql';
 import { FormsFeaturePageFragment_formInstance$key } from './__generated__/FormsFeaturePageFragment_formInstance.graphql';
