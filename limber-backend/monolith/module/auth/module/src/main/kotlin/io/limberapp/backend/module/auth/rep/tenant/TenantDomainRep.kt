@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.rep.tenant
 
+import io.limberapp.common.validator.Validator
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.validation.RepValidation
-import io.limberapp.common.validator.Validator
 import java.time.LocalDateTime
 
 object TenantDomainRep {
