@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:common:testing"))
+  api(project(":limber-backend:common:testing-old"))
   api(project(":limber-backend:monolith"))
   api(project(":limber-backend:monolith:common:module"))
   implementation(Dependencies.Jwt.auth0JavaJwt)
