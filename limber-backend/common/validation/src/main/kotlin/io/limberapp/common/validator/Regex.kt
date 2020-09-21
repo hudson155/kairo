@@ -17,7 +17,7 @@ internal object Regex {
 
   val emailAddress = Regex("[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@${hostname.pattern}")
 
-  private val urlChar = Regex("[A-Za-z0-9\\-_.]")
+  private val urlChar = Regex("[A-Za-z0-9\\-_.%]")
 
   val path = Regex("(?:/${urlChar.pattern}+)*/?")
 
