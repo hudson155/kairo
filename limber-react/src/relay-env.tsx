@@ -10,7 +10,7 @@ function fetchQuery(
   operation: RequestParameters,
   variables: Variables,
 ) {
-  return axiosInstance.post('', {
+  return axiosInstance.post('/graphql', {
     query: operation.text,
     variables,
   }).then(response => response.data);

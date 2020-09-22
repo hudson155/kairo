@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  deploy:
-    name: Deploy (prod)
+  deploy-backend:
+    name: Deploy backend (prod)
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -54,6 +54,10 @@ jobs:
       - run: docker tag registry.digitalocean.com/limber/limber-monolith:master "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-monolith:master
       - run: docker push "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
+      - run: docker build -t registry.digitalocean.com/limber/limber-react:master limber-react
+      - run: docker tag registry.digitalocean.com/limber/limber-react:master "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
+      - run: docker push registry.digitalocean.com/limber/limber-react:master
+      - run: docker push "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
       - run: docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
       - run: docker tag registry.digitalocean.com/limber/limber-web:master "registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-web:master
@@ -64,4 +68,43 @@ jobs:
       - run: doctl kubernetes cluster kubeconfig save limber
       - run: kubectl set image deployment/limber-graphql-server limber-graphql-server="registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-monolith limber-monolith="registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)" --namespace limber
+      - run: kubectl set image deployment/limber-react limber-react="registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-web limber-web="registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)" --namespace limber
+  deploy-web:
+    name: Deploy web (prod)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: actions/setup-node@v1.4.3
+        with:
+          node-version: 12
+      - uses: actions/cache@v2.1.0
+        with:
+          path: ~/limber-react/node_modules
+          key: ${{ runner.os }}-node-modules-v2-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-v2-
+      - run: yarn install --immutable
+        working-directory: limber-react
+      - run: yarn relay
+        working-directory: limber-react
+      - run: yarn test
+        working-directory: limber-react
+        env:
+          CI: true # https://github.com/facebook/create-react-app/issues/6899
+      - run: yarn build
+        working-directory: limber-react
+        env:
+          CI: false # https://github.com/facebook/create-react-app/issues/3657
+          REACT_APP_LIMBER_API_BASE_URL: https://api.limberapp.io
+          REACT_APP_LIMBER_GRAPHQL_BASE_URL: https://api.limberapp.io
+      - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
+      - run: docker build -t registry.digitalocean.com/limber/limber-react:master limber-react
+      - run: docker tag registry.digitalocean.com/limber/limber-react:master "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
+      - run: docker push registry.digitalocean.com/limber/limber-react:master
+      - run: docker push "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
+      - uses: digitalocean/action-doctl@v2.0.0
+        with:
+          token: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save limber
+      - run: kubectl set image deployment/limber-react limber-react="registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)" --namespace limber

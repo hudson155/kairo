@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  build:
-    name: Build
+  build-backend:
+    name: Build backend
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -48,3 +48,32 @@ jobs:
       - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD) limber-backend/graphql-server
       - run: docker build -t registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD) limber-backend/monolith
       - run: docker build -t registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) limber-web
+  build-web:
+    name: Build web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: actions/setup-node@v1.4.3
+        with:
+          node-version: 12
+      - uses: actions/cache@v2.1.0
+        with:
+          path: ~/limber-react/node_modules
+          key: ${{ runner.os }}-node-modules-v2-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-v2-
+      - run: yarn install --immutable
+        working-directory: limber-react
+      - run: yarn relay
+        working-directory: limber-react
+      - run: yarn test
+        working-directory: limber-react
+        env:
+          CI: true # https://github.com/facebook/create-react-app/issues/6899
+      - run: yarn build
+        working-directory: limber-react
+        env:
+          CI: false # https://github.com/facebook/create-react-app/issues/3657
+          REACT_APP_LIMBER_API_BASE_URL: https://api.limberapp.io
+          REACT_APP_LIMBER_GRAPHQL_BASE_URL: https://api.limberapp.io
+      - run: docker build -t registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD) limber-react

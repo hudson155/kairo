@@ -17,6 +17,11 @@ docker tag registry.digitalocean.com/limber/limber-monolith:master "registry.dig
 docker push registry.digitalocean.com/limber/limber-monolith:master
 docker push "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
 
+docker build -t registry.digitalocean.com/limber/limber-react:master limber-react
+docker tag registry.digitalocean.com/limber/limber-react:master "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
+docker push registry.digitalocean.com/limber/limber-react:master
+docker push "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
+
 docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
 docker tag registry.digitalocean.com/limber/limber-web:master "registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)"
 docker push registry.digitalocean.com/limber/limber-web:master
