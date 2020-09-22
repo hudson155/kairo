@@ -1,6 +1,5 @@
 package io.limberapp.web.app.components.formAnswerer.components.formAnswerQuestion
 
-import io.limberapp.common.types.UUID
 import io.limberapp.backend.module.forms.api.formInstance.question.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -11,10 +10,13 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
+import io.limberapp.common.types.UUID
 import io.limberapp.web.api.useApi
 import io.limberapp.web.app.components.formAnswerer.components.formDateAnswerQuestion.formDateAnswerQuestion
 import io.limberapp.web.app.components.formAnswerer.components.formRadioAnswerQuestion.fromRadioAnswerQuestion
 import io.limberapp.web.app.components.formAnswerer.components.formTextAnswerQuestion.fromTextAnswerQuestion
+import io.limberapp.web.app.components.formAnswerer.components.formYesNoAnswerQuestion.formYesNoAnswerQuestion
 import io.limberapp.web.state.state.feature.useFeatureState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
@@ -123,6 +125,10 @@ private fun RBuilder.component(props: Props) {
         onSubmit = submitAnswer,
         hasValidationError = hasValidationErrorCallback,
         defaultValue = props.defaultValue as FormInstanceTextQuestionRep.Complete?,
+      )
+      is FormTemplateYesNoQuestionRep.Complete -> formYesNoAnswerQuestion(
+        question = props.question,
+        onSubmit = submitAnswer,
       )
     }
   }

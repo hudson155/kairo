@@ -4,10 +4,12 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRe
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
+import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateDateQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
+import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.Theme
 import io.limberapp.web.util.c
@@ -70,6 +72,10 @@ private fun RBuilder.component(props: Props) {
         is FormTemplateTextQuestionRep.Complete -> {
           val formInstanceQuestion = props.formInstanceQuestion as FormInstanceTextQuestionRep.Complete
           div { +formInstanceQuestion.text }
+        }
+        is FormTemplateYesNoQuestionRep.Complete -> {
+          val formInstanceQuestion = props.formInstanceQuestion as FormInstanceYesNoQuestionRep.Complete
+          div { +(if (formInstanceQuestion.yes) "Yes" else "No") }
         }
       }
     }
