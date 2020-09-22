@@ -15,7 +15,7 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import io.limberapp.common.error.LimberError
+import io.limberapp.error.LimberError
 import io.limberapp.common.exception.LimberException
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.serialization.Json

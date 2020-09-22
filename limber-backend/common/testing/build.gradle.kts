@@ -6,7 +6,6 @@ plugins {
 dependencies {
   api(kotlin("test"))
   api(kotlin("test-junit5"))
-  implementation(project(":limber-backend:common:errors"))
   implementation(project(":limber-backend:common:exception-mapping"))
   implementation(project(":limber-backend:common:exceptions"))
   implementation(project(":limber-backend:common:reps"))

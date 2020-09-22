@@ -6,7 +6,6 @@ plugins {
 dependencies {
   api(kotlin("test"))
   api(kotlin("test-junit5"))
-  implementation(project(":limber-backend:common:errors")) // Parses errors internally
   implementation(project(":limber-backend:common:exception-mapping")) // Used for expected exceptions/errors
   implementation(project(":limber-backend:common:module")) // Tests application (so do implementations)
   implementation(project(":limber-backend:common:reps"))

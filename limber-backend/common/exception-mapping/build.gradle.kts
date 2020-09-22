@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":limber-backend:common:errors"))
   implementation(project(":limber-backend:common:exceptions"))
   implementation(project(":limber-backend:common:util"))
 
