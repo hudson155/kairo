@@ -18,6 +18,15 @@ dependencies {
   implementation(project(":limber-backend:common:server"))
   implementation(Dependencies.Logging.logbackClassic)
   implementation(Dependencies.Ktor.serverCio)
+
+  testImplementation(project(":limber-backend:common:testing"))
+}
+
+tasks.test {
+  useJUnitPlatform()
+  testLogging {
+    events("passed", "skipped", "failed")
+  }
 }
 
 detekt {

@@ -7,9 +7,12 @@ import io.limberapp.config.ConfigLoader
 import io.limberapp.graphqlServer.config.LimberGraphqlServerConfig
 import io.limberapp.module.graphql.GraphqlModule
 
-internal class LimberGraphqlServer(application: Application) : LimberApplication<LimberGraphqlServerConfig>(
+internal class LimberGraphqlServer(
+  application: Application,
+  configName: String? = null,
+) : LimberApplication<LimberGraphqlServerConfig>(
   application = application,
-  config = ConfigLoader.load(System.getenv("LIMBER_CONFIG"))
+  config = ConfigLoader.load(configName ?: System.getenv("LIMBER_CONFIG"))
 ) {
   override fun getApplicationModules() = listOf(
     HealthCheckModule(),
