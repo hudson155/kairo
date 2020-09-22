@@ -18,7 +18,6 @@ internal object FeatureRoleRepFixtures {
       FeatureRoleRep.Creation(
         orgRoleGuid = orgRoleGuid,
         permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
-        isDefault = false,
       )
     },
     { orgRoleGuid: UUID, idSeed ->
@@ -27,7 +26,6 @@ internal object FeatureRoleRepFixtures {
         createdDate = LocalDateTime.now(fixedClock),
         orgRoleGuid = orgRoleGuid,
         permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
-        isDefault = false,
       )
     }
   )
