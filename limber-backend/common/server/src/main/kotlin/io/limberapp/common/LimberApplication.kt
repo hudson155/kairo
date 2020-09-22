@@ -19,6 +19,7 @@ import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.routing.Routing
@@ -32,8 +33,6 @@ import io.limberapp.common.exception.LimberException
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.ApplicationModule
 import io.limberapp.common.module.GuiceModule
-import io.limberapp.common.restInterface.HttpMethod
-import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.util.conversionService
 import io.limberapp.config.Config
@@ -131,7 +130,7 @@ abstract class LimberApplication<C : Config>(application: Application, protected
 
   private fun Application.cors() {
     install(CORS) {
-      HttpMethod.values().forEach { method(it.forKtor()) }
+      HttpMethod.DefaultMethods.forEach { method(it) }
       allowSameOrigin = false
       anyHost()
       header(HttpHeaders.Authorization)

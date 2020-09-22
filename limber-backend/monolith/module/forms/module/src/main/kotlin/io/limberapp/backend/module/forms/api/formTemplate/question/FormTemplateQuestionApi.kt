@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.api.formTemplate.question
 
+import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.common.restInterface.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.util.url.enc
 import java.util.*
@@ -14,7 +14,7 @@ object FormTemplateQuestionApi {
     val rank: Int? = null,
     val rep: FormTemplateQuestionRep.Creation?,
   ) : LimberEndpoint(
-    httpMethod = HttpMethod.POST,
+    httpMethod = HttpMethod.Post,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions",
     queryParams = rank?.let { listOf("rank" to it.toString()) } ?: emptyList(),
     body = rep
@@ -26,13 +26,13 @@ object FormTemplateQuestionApi {
     val questionGuid: UUID,
     val rep: FormTemplateQuestionRep.Update?,
   ) : LimberEndpoint(
-    httpMethod = HttpMethod.PATCH,
+    httpMethod = HttpMethod.Patch,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions/${enc(questionGuid)}",
     body = rep
   )
 
   data class Delete(val featureGuid: UUID, val formTemplateGuid: UUID, val questionGuid: UUID) : LimberEndpoint(
-    httpMethod = HttpMethod.DELETE,
+    httpMethod = HttpMethod.Delete,
     path = "/forms/${enc(featureGuid)}/templates/${enc(formTemplateGuid)}/questions/${enc(questionGuid)}"
   )
 }

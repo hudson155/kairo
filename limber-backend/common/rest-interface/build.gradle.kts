@@ -8,6 +8,7 @@ dependencies {
   implementation(project(":limber-backend:common:reps"))
   implementation(project(":limber-backend:common:util"))
   implementation(Dependencies.Logging.slf4j)
+  implementation(Dependencies.Ktor.serverCore)
 }
 
 detekt {

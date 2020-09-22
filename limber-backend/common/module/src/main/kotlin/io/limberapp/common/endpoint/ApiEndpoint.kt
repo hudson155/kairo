@@ -23,10 +23,10 @@ import io.limberapp.common.endpoint.exception.ParameterConversionException
 import io.limberapp.common.endpoint.exception.ValidationException
 import io.limberapp.common.exception.exception.badRequest.BodyRequired
 import io.limberapp.common.exception.exception.forbidden.ForbiddenException
-import io.limberapp.rep.ValidatedRep
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.restInterface.LimberEndpointTemplate
 import io.limberapp.common.restInterface.forKtor
+import io.limberapp.rep.ValidatedRep
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast
@@ -115,7 +115,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseTyp
   private fun Route.route(endpointTemplate: LimberEndpointTemplate, build: Route.() -> Unit): Route {
     var route = createRouteFromPath(endpointTemplate.pathTemplate)
     route = route.createChild(HttpAcceptRouteSelector(endpointTemplate.contentType.forKtor()))
-    route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod.forKtor()))
+    route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod))
     endpointTemplate.requiredQueryParams.forEach { route = route.createChild(ParameterRouteSelector(it)) }
     return route.apply(build)
   }

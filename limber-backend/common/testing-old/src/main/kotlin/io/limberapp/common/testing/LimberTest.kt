@@ -94,7 +94,7 @@ abstract class LimberTest(
   }
 
   private fun TestApplicationEngine.createCall(endpoint: LimberEndpoint): TestApplicationCall {
-    return handleRequest(endpoint.httpMethod.forKtor(), endpoint.href) {
+    return handleRequest(endpoint.httpMethod, endpoint.href) {
       createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
       addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
       addHeader(HttpHeaders.Accept, endpoint.contentType.forKtor().toString())

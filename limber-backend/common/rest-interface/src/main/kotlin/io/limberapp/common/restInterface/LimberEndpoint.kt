@@ -1,5 +1,6 @@
 package io.limberapp.common.restInterface
 
+import io.ktor.http.HttpMethod
 import io.limberapp.rep.ValidatedRep
 import io.limberapp.util.url.href
 import org.slf4j.LoggerFactory

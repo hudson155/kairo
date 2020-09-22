@@ -18,7 +18,6 @@ import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.common.error.LimberError
 import io.limberapp.common.exception.LimberException
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.exceptionMapping.ExceptionMapper
 import org.junit.jupiter.api.extension.ExtendWith
@@ -69,7 +68,7 @@ abstract class IntegrationTest(private val engine: TestApplicationEngine) {
   }
 
   private fun TestApplicationEngine.createCall(endpoint: LimberEndpoint): TestApplicationCall {
-    return handleRequest(endpoint.httpMethod.forKtor(), endpoint.href) {
+    return handleRequest(endpoint.httpMethod, endpoint.href) {
       createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
       addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
       addHeader(HttpHeaders.Accept, endpoint.contentType.toString())
