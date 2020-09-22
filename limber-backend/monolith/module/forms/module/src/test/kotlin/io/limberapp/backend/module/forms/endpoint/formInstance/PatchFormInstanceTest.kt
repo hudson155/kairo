@@ -39,7 +39,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     limberTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = feature0Guid,
@@ -87,7 +87,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -114,7 +114,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -122,7 +122,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
     limberTest.setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)))
 
     limberTest.test(
@@ -144,7 +144,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -152,7 +152,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
       )
     )
 
-    formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
     limberTest.test(
       endpoint = FormInstanceApi.Patch(
         featureGuid = featureGuid,

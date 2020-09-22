@@ -33,7 +33,7 @@ internal class GetFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     limberTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = feature0Guid,
@@ -55,7 +55,7 @@ internal class GetFormInstanceTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,

@@ -33,9 +33,7 @@ object GetFormInstancesByFeatureGuidTest {
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-      val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 1, creatorAccountGuid, 1
-      )
+      val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -43,9 +41,7 @@ object GetFormInstancesByFeatureGuidTest {
         )
       )
 
-      val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 2, creatorAccountGuid, 2
-      )
+      val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -55,7 +51,8 @@ object GetFormInstancesByFeatureGuidTest {
 
       limberTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = null)) {
         val actual = json.parseList<FormInstanceRep.Summary>(responseContent)
-        assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()), actual)
+        // Not asserting ordering.
+        assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()).toSet(), actual.toSet())
       }
     }
   }
@@ -97,9 +94,7 @@ object GetFormInstancesByFeatureGuidTest {
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-      val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 1, creatorAccountGuid, 1
-      )
+      val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -107,9 +102,7 @@ object GetFormInstancesByFeatureGuidTest {
         )
       )
 
-      val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 2, creatorAccountGuid, 2
-      )
+      val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -119,7 +112,8 @@ object GetFormInstancesByFeatureGuidTest {
 
       limberTest.test(FormInstanceApi.GetByFeatureGuid(featureGuid, creatorAccountGuid = creatorAccountGuid)) {
         val actual = json.parseList<FormInstanceRep.Summary>(responseContent)
-        assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()), actual)
+        // Not asserting ordering.
+        assertEquals(listOf(formInstance1Rep.summary(), formInstance0Rep.summary()).toSet(), actual.toSet())
       }
     }
   }

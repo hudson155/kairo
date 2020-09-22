@@ -50,7 +50,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -87,7 +87,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -140,7 +140,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -193,7 +193,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -213,7 +213,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    formInstanceRep = formInstanceRep.copy(submittedDate = LocalDateTime.now(fixedClock))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
     limberTest.setup(
       endpoint = FormInstanceApi.Patch(
         featureGuid = featureGuid,
@@ -255,7 +255,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -308,7 +308,7 @@ internal class DeleteFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,

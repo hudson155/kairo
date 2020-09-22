@@ -35,7 +35,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -82,7 +82,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -129,7 +129,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -176,7 +176,7 @@ internal class PutFormInstanceQuestionTypeTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,

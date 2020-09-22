@@ -86,9 +86,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-      var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 1, existingUser0.guid, 1
-      )
+      var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -96,7 +94,7 @@ object ExportFormInstancesByFeatureGuidTest {
         )
       )
 
-      formInstance0Rep = formInstance0Rep.copy(submittedDate = LocalDateTime.now(fixedClock))
+      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
       limberTest.setup(
         endpoint = FormInstanceApi.Patch(
           featureGuid = featureGuid,
@@ -105,9 +103,7 @@ object ExportFormInstancesByFeatureGuidTest {
         )
       )
 
-      val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 2, existingUser1.guid, 6
-      )
+      val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser1.guid, 6)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -215,9 +211,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-      var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(
-        this, formTemplateRep.guid, 1, existingUser0.guid, 1,
-      )
+      var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
       limberTest.setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
@@ -225,7 +219,7 @@ object ExportFormInstancesByFeatureGuidTest {
         )
       )
 
-      formInstance0Rep = formInstance0Rep.copy(submittedDate = LocalDateTime.now(fixedClock))
+      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
       limberTest.setup(
         endpoint = FormInstanceApi.Patch(
           featureGuid = featureGuid,

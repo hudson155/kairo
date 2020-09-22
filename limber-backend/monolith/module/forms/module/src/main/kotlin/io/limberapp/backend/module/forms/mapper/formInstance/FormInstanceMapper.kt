@@ -19,7 +19,7 @@ internal class FormInstanceMapper @Inject constructor(
     createdDate = LocalDateTime.now(clock),
     featureGuid = featureGuid,
     formTemplateGuid = rep.formTemplateGuid,
-    number = 0,
+    number = null,
     submittedDate = null,
     creatorAccountGuid = rep.creatorAccountGuid
   )
@@ -44,6 +44,7 @@ internal class FormInstanceMapper @Inject constructor(
   )
 
   fun update(rep: FormInstanceRep.Update) = FormInstanceModel.Update(
+    setNumber = rep.submitted == true,
     submittedDate = if (rep.submitted == true) LocalDateTime.now(clock) else null
   )
 }

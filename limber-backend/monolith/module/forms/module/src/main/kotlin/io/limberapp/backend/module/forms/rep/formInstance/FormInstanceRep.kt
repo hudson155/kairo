@@ -20,7 +20,7 @@ object FormInstanceRep {
     val guid: UUID,
     override val createdDate: LocalDateTime,
     val formTemplateGuid: UUID,
-    val number: Long,
+    val number: Long?,
     val submittedDate: LocalDateTime?,
     val creatorAccountGuid: UUID,
   ) : CompleteRep
@@ -29,7 +29,7 @@ object FormInstanceRep {
     val guid: UUID,
     override val createdDate: LocalDateTime,
     val formTemplateGuid: UUID,
-    val number: Long,
+    val number: Long?,
     val submittedDate: LocalDateTime?,
     val creatorAccountGuid: UUID,
     val questions: Set<FormInstanceQuestionRep.Complete>,

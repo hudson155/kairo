@@ -8,11 +8,12 @@ data class FormInstanceModel(
   val createdDate: LocalDateTime,
   val featureGuid: UUID,
   val formTemplateGuid: UUID,
-  val number: Long,
+  val number: Long?,
   val submittedDate: LocalDateTime?,
   val creatorAccountGuid: UUID,
 ) {
   data class Update(
+    val setNumber: Boolean,
     val submittedDate: LocalDateTime?,
   )
 }

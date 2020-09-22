@@ -46,7 +46,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
     limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 1)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -83,7 +83,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -125,7 +125,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -167,7 +167,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
@@ -214,7 +214,7 @@ internal class PutFormInstanceQuestionTest : ResourceTest() {
       )
     )
 
-    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, 1, creatorAccountGuid, 2)
+    var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     limberTest.setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
