@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.api.formInstance
 
+import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.common.restInterface.ContentType
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.util.url.enc
 import java.time.ZoneId
@@ -38,7 +38,7 @@ object FormInstanceApi {
       creatorAccountGuid?.let { "creatorAccountGuid" to enc(it) },
       timeZone?.let { "timeZone" to enc(it) }
     ),
-    contentType = ContentType.CSV
+    contentType = ContentType.Text.CSV
   )
 
   data class Patch(

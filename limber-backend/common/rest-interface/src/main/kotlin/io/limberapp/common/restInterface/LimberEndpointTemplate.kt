@@ -1,5 +1,6 @@
 package io.limberapp.common.restInterface
 
+import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 
 /**

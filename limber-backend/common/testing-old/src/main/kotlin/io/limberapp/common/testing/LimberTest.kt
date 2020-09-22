@@ -14,7 +14,6 @@ import io.ktor.server.testing.setBody
 import io.limberapp.common.error.LimberError
 import io.limberapp.common.exception.LimberException
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.restInterface.forKtor
 import io.limberapp.common.serialization.Json
 import io.limberapp.exceptionMapping.ExceptionMapper
 import kotlin.test.assertEquals
@@ -97,7 +96,7 @@ abstract class LimberTest(
     return handleRequest(endpoint.httpMethod, endpoint.href) {
       createAuthHeader()?.let { addHeader(HttpHeaders.Authorization, it.toString()) }
       addHeader(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-      addHeader(HttpHeaders.Accept, endpoint.contentType.forKtor().toString())
+      addHeader(HttpHeaders.Accept, endpoint.contentType.toString())
       endpoint.body?.let { setBody(json.stringify(it)) }
     }
   }

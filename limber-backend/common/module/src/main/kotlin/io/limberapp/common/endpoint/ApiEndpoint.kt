@@ -25,7 +25,6 @@ import io.limberapp.common.exception.exception.badRequest.BodyRequired
 import io.limberapp.common.exception.exception.forbidden.ForbiddenException
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.restInterface.LimberEndpointTemplate
-import io.limberapp.common.restInterface.forKtor
 import io.limberapp.rep.ValidatedRep
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
@@ -114,7 +113,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseTyp
   @ContextDsl
   private fun Route.route(endpointTemplate: LimberEndpointTemplate, build: Route.() -> Unit): Route {
     var route = createRouteFromPath(endpointTemplate.pathTemplate)
-    route = route.createChild(HttpAcceptRouteSelector(endpointTemplate.contentType.forKtor()))
+    route = route.createChild(HttpAcceptRouteSelector(endpointTemplate.contentType))
     route = route.createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod))
     endpointTemplate.requiredQueryParams.forEach { route = route.createChild(ParameterRouteSelector(it)) }
     return route.apply(build)

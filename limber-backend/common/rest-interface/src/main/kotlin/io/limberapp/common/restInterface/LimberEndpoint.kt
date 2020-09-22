@@ -1,5 +1,6 @@
 package io.limberapp.common.restInterface
 
+import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.limberapp.rep.ValidatedRep
 import io.limberapp.util.url.href
@@ -21,7 +22,7 @@ abstract class LimberEndpoint(
   val httpMethod: HttpMethod,
   val path: String,
   val queryParams: List<Pair<String, String>> = emptyList(),
-  val contentType: ContentType = ContentType.JSON,
+  val contentType: ContentType = ContentType.Application.Json,
   val body: ValidatedRep? = null,
 ) {
   val href = href(path, queryParams)
