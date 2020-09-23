@@ -12,7 +12,7 @@ object Versions {
   const val detekt = "1.13.1"
 
   // https://github.com/flyway/flyway/releases
-  const val flyway = "6.5.6"
+  const val flyway = "6.5.7"
 
   // https://github.com/google/guice/releases
   const val guice = "4.2.3"
