@@ -15,7 +15,7 @@ internal object OrgRoleRepFixtures {
   val adminFixture = Fixture(
     {
       OrgRoleRep.Creation(
-        name = "Admin",
+        name = "Admins",
         permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
         isDefault = false,
       )
@@ -24,7 +24,7 @@ internal object OrgRoleRepFixtures {
       OrgRoleRep.Complete(
         guid = deterministicUuidGenerator[idSeed],
         createdDate = LocalDateTime.now(fixedClock),
-        name = "Admin",
+        name = "Admins",
         permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
         isDefault = false,
         memberCount = 0,
@@ -55,7 +55,7 @@ internal object OrgRoleRepFixtures {
   val memberFixture = Fixture(
     {
       OrgRoleRep.Creation(
-        name = "Member",
+        name = "Members",
         permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
         isDefault = true,
       )
@@ -64,7 +64,7 @@ internal object OrgRoleRepFixtures {
       OrgRoleRep.Complete(
         guid = deterministicUuidGenerator[idSeed],
         createdDate = LocalDateTime.now(fixedClock),
-        name = "Member",
+        name = "Members",
         permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
         isDefault = true,
         memberCount = 0,
