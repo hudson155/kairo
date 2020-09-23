@@ -24,7 +24,7 @@ Java, Postgres, and IntelliJ
 
 * [`limber-backend-common`](/limber-backend/common):
     Limber's backend framework, built on Ktor.
-* [`limber-monolith`](/limber-backend/monolith):
+* [`limber-monolith`](/limber-backend/server/monolith):
     Limber's backend implementation.
     Currently a monolith, but broken into modules to allow simplified refactoring
     when moving to microservices becomes necessary.

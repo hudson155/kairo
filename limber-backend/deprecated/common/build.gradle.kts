@@ -4,7 +4,10 @@ plugins {
 }
 
 dependencies {
-  api(Dependencies.Ktor.auth)
+  implementation(project(":limber-backend:common:serialization"))
+  implementation(project(":limber-backend:common:util"))
+
+  implementation(Dependencies.Jackson.databind)
 }
 
 detekt {

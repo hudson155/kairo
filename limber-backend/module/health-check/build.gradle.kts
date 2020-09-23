@@ -4,7 +4,9 @@ plugins {
 }
 
 dependencies {
-  api(Dependencies.Ktor.auth)
+  implementation(project(":limber-backend:common:reps"))
+
+  implementation(project(":limber-backend:deprecated:common:module"))
 }
 
 detekt {

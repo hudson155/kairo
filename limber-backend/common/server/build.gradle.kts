@@ -12,7 +12,9 @@ dependencies {
   api(project(":limber-backend:common:serialization"))
   implementation(project(":limber-backend:common:type-conversion"))
   api(project(":limber-backend:common:util"))
-  api(project(":limber-backend:monolith:common:module"))
+
+  api(project(":limber-backend:deprecated:common:module"))
+
   implementation(Dependencies.Guice.guice)
   implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Jackson.dataFormatYaml)

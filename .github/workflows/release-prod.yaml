@@ -46,11 +46,11 @@ jobs:
         env:
           ENV: production
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
-      - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:master limber-backend/graphql-server
+      - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:master limber-backend/server/graphql
       - run: docker tag registry.digitalocean.com/limber/limber-graphql-server:master "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-graphql-server:master
       - run: docker push "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
-      - run: docker build -t registry.digitalocean.com/limber/limber-monolith:master limber-backend/monolith
+      - run: docker build -t registry.digitalocean.com/limber/limber-monolith:master limber-backend/server/monolith
       - run: docker tag registry.digitalocean.com/limber/limber-monolith:master "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-monolith:master
       - run: docker push "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"

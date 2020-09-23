@@ -4,16 +4,17 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:common:config")) // Uses ConfigString in the interface
+  api(project(":limber-backend:common:config"))
+  api(project(":limber-backend:common:module"))
   implementation(project(":limber-backend:common:type-conversion"))
-  api(project(":limber-backend:common:module")) // This artifact implements a module
+
   implementation(Dependencies.Jackson.databind)
   implementation(Dependencies.Sql.flyway)
-  api(Dependencies.Sql.hikari) // Uses Hikari in the interface
-  api(Dependencies.Sql.jdbi3Kotlin) // Provides JDBI3 interface
+  api(Dependencies.Sql.hikari)
+  api(Dependencies.Sql.jdbi3Kotlin)
   implementation(Dependencies.Sql.jdbi3KotlinSqlobject)
   implementation(Dependencies.Sql.jdbi3Postgres)
-  api(Dependencies.Sql.postgres) // This artifact only supports Postgres right now
+  api(Dependencies.Sql.postgres)
 }
 
 detekt {

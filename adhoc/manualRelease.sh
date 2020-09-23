@@ -7,12 +7,12 @@ set -e
 ./gradlew clean
 ENV=production ./gradlew build
 
-docker build -t registry.digitalocean.com/limber/limber-graphql-server:master limber-backend/graphql-server
+docker build -t registry.digitalocean.com/limber/limber-graphql-server:master limber-backend/server/graphql
 docker tag registry.digitalocean.com/limber/limber-graphql-server:master "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
 docker push registry.digitalocean.com/limber/limber-graphql-server:master
 docker push "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
 
-docker build -t registry.digitalocean.com/limber/limber-monolith:master limber-backend/monolith
+docker build -t registry.digitalocean.com/limber/limber-monolith:master limber-backend/server/monolith
 docker tag registry.digitalocean.com/limber/limber-monolith:master "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
 docker push registry.digitalocean.com/limber/limber-monolith:master
 docker push "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"

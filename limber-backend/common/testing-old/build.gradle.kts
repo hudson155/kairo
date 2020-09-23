@@ -6,11 +6,13 @@ plugins {
 dependencies {
   api(kotlin("test"))
   api(kotlin("test-junit5"))
-  implementation(project(":limber-backend:common:exception-mapping")) // Used for expected exceptions/errors
-  implementation(project(":limber-backend:common:module")) // Tests application (so do implementations)
+
+  implementation(project(":limber-backend:common:exception-mapping"))
+  implementation(project(":limber-backend:common:module"))
   implementation(project(":limber-backend:common:reps"))
-  api(project(":limber-backend:common:serialization")) // Includes Json in interface (so do implementations)
-  api(project(":limber-backend:common:server")) // Tests application (so do implementations)
+  api(project(":limber-backend:common:serialization"))
+  api(project(":limber-backend:common:server"))
+
   runtimeOnly(Dependencies.JUnit.engine)
   api(Dependencies.Ktor.test)
   api(Dependencies.MockK.mockK)

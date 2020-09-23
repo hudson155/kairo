@@ -4,7 +4,11 @@ plugins {
 }
 
 dependencies {
-  api(Dependencies.Ktor.auth)
+  api(project(":limber-backend:common:module"))
+
+  api(project(":limber-backend:deprecated:common"))
+
+  implementation(Dependencies.Logging.slf4j)
 }
 
 detekt {

@@ -6,12 +6,15 @@ plugins {
 dependencies {
   api(kotlin("test"))
   api(kotlin("test-junit5"))
+
   implementation(project(":limber-backend:common:exception-mapping"))
   implementation(project(":limber-backend:common:exceptions"))
   implementation(project(":limber-backend:common:reps"))
   implementation(project(":limber-backend:common:rest-interface"))
   implementation(project(":limber-backend:common:serialization"))
-  implementation(project(":limber-backend:monolith:common:module"))
+
+  implementation(project(":limber-backend:deprecated:common:module"))
+
   api(Dependencies.JUnit.api)
   runtimeOnly(Dependencies.JUnit.engine)
   implementation(Dependencies.Jwt.auth0JavaJwt)
