@@ -31,7 +31,7 @@ jobs:
       - uses: actions/cache@v2.1.0
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v2-${{ hashFiles('**/*.gradle.kts') }}
+          key: ${{ runner.os }}-gradle-dependencies-v3-${{ hashFiles('**/*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-dependencies-v2-
       - run: ./gradlew --info --stacktrace downloadDependencies
@@ -54,10 +54,6 @@ jobs:
       - run: docker tag registry.digitalocean.com/limber/limber-monolith:master "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-monolith:master
       - run: docker push "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
-      - run: docker build -t registry.digitalocean.com/limber/limber-react:master limber-react
-      - run: docker tag registry.digitalocean.com/limber/limber-react:master "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
-      - run: docker push registry.digitalocean.com/limber/limber-react:master
-      - run: docker push "registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)"
       - run: docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
       - run: docker tag registry.digitalocean.com/limber/limber-web:master "registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-web:master
@@ -68,7 +64,6 @@ jobs:
       - run: doctl kubernetes cluster kubeconfig save limber
       - run: kubectl set image deployment/limber-graphql-server limber-graphql-server="registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-monolith limber-monolith="registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)" --namespace limber
-      - run: kubectl set image deployment/limber-react limber-react="registry.digitalocean.com/limber/limber-react:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-web limber-web="registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)" --namespace limber
   deploy-web:
     name: Deploy web (prod)
