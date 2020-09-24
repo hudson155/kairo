@@ -82,7 +82,7 @@ private fun RBuilder.component(props: Props) {
         limberTableRow(classes = s.c { it::row }, onClick = { props.onRowClick(formInstance.guid) }) {
           attrs.key = formInstance.guid
           limberTableCell(classes = s.c { it::cell }) {
-            val number = formInstance.number.toString()
+            val number = formInstance.number?.toString() ?: ""
             span(classes = gs.getClassName { it::visibleXs }) { small { +"#$number" } }
             span(classes = gs.getClassName { it::hiddenXs }) { +number }
           }

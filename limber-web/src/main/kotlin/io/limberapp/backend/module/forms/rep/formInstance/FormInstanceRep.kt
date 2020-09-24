@@ -29,7 +29,7 @@ object FormInstanceRep {
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: String,
-    val number: Long,
+    val number: Long?,
     @Serializable(with = LocalDateTimeSerializer::class)
     val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
@@ -44,7 +44,7 @@ object FormInstanceRep {
     override val createdDate: LocalDateTime,
     @Serializable(with = UuidSerializer::class)
     val formTemplateGuid: String,
-    val number: Long,
+    val number: Long?,
     @Serializable(with = LocalDateTimeSerializer::class)
     val submittedDate: LocalDateTime?,
     @Serializable(with = UuidSerializer::class)
