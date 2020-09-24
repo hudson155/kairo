@@ -89,7 +89,7 @@ internal fun Adhoc.dbReset() {
         createdDate = LocalDateTime.now(),
         orgGuid = org.guid,
         name = "Admins",
-        permissions = OrgPermissions.fromBitString("1100"),
+        permissions = OrgPermissions.fromBitString("11000"),
         isDefault = false,
         memberCount = 0,
       ))
@@ -98,7 +98,7 @@ internal fun Adhoc.dbReset() {
         createdDate = LocalDateTime.now(),
         orgGuid = org.guid,
         name = "Members",
-        permissions = OrgPermissions.fromBitString("0010"),
+        permissions = OrgPermissions.fromBitString("00100"),
         isDefault = true,
         memberCount = 0,
       ))
