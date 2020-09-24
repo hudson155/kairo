@@ -26,7 +26,7 @@ internal class TenantDomainStore @Inject constructor(
 ) : SqlStore(jdbi), Finder<TenantDomainModel, TenantDomainFinder> {
   fun create(model: TenantDomainModel): TenantDomainModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/tenantDomain/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantDomainModel::class.java)
@@ -46,7 +46,7 @@ internal class TenantDomainStore @Inject constructor(
 
   fun delete(orgGuid: UUID, domain: String): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
+      handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("domain", domain)
         .updateOnly() ?: throw TenantDomainNotFound()

@@ -23,7 +23,7 @@ private const val UNIQ_AUTH0_CLIENT_ID = "uniq__tenant__auth0_client_id"
 internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<TenantModel, TenantFinder> {
   fun create(model: TenantModel): TenantModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/tenant/create.sql"))
           .bindKotlin(model)
           .mapTo(TenantModel::class.java)
@@ -43,7 +43,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
 
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =
     inTransaction { handle ->
-      return@inTransaction try {
+      try {
         handle.createQuery(sqlResource("/store/tenant/update.sql"))
           .bind("orgGuid", orgGuid)
           .bindKotlin(update)
@@ -56,7 +56,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
 
   fun delete(orgGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
+      handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
         .bind("orgGuid", orgGuid)
         .updateOnly() ?: throw TenantNotFound()
     }

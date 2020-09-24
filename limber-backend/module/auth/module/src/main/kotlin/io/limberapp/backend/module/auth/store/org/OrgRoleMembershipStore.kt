@@ -26,7 +26,7 @@ internal class OrgRoleMembershipStore @Inject constructor(
 ) : SqlStore(jdbi), Finder<OrgRoleMembershipModel, OrgRoleMembershipFinder> {
   fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/orgRoleMembership/create.sql"))
           .bind("orgGuid", orgGuid)
           .bindKotlin(model)
@@ -47,7 +47,7 @@ internal class OrgRoleMembershipStore @Inject constructor(
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/orgRoleMembership/delete.sql"))
+      handle.createUpdate(sqlResource("/store/orgRoleMembership/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("orgRoleGuid", orgRoleGuid)
         .bind("accountGuid", accountGuid)

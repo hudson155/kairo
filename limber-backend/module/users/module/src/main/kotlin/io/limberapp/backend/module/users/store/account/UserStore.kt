@@ -21,7 +21,7 @@ private const val UNIQ_EMAIL_ADDRESS = "uniq__user__email_address"
 internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<UserModel, UserFinder> {
   fun create(model: UserModel): UserModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/user/create.sql"))
           .bindKotlin(model)
           .mapTo(UserModel::class.java)
@@ -41,7 +41,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finde
 
   fun update(userGuid: UUID, update: UserModel.Update): UserModel =
     inTransaction { handle ->
-      return@inTransaction handle.createQuery(sqlResource("/store/user/update.sql"))
+      handle.createQuery(sqlResource("/store/user/update.sql"))
         .bind("userGuid", userGuid)
         .bindKotlin(update)
         .mapTo(UserModel::class.java)
@@ -50,7 +50,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finde
 
   fun delete(userGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/user/delete.sql"))
+      handle.createUpdate(sqlResource("/store/user/delete.sql"))
         .bind("userGuid", userGuid)
         .updateOnly() ?: throw UserNotFound()
     }

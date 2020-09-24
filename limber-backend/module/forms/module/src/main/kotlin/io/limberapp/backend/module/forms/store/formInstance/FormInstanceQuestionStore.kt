@@ -45,7 +45,7 @@ internal class FormInstanceQuestionStore @Inject constructor(
 
   fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/formInstanceQuestion/upsert.sql"))
           .bind("featureGuid", featureGuid)
           .bindKotlin(model)
@@ -70,7 +70,7 @@ internal class FormInstanceQuestionStore @Inject constructor(
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
+      handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bind("questionGuid", questionGuid)

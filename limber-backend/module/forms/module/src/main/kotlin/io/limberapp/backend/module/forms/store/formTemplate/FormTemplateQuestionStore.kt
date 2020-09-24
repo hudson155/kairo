@@ -47,7 +47,7 @@ internal class FormTemplateQuestionStore @Inject constructor(
     inTransaction { handle ->
       val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
       incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank)
-      return@inTransaction try {
+      try {
         handle.createQuery(sqlResource("/store/formTemplateQuestion/create.sql"))
           .bind("featureGuid", featureGuid)
           .bindKotlin(model)
@@ -98,7 +98,7 @@ internal class FormTemplateQuestionStore @Inject constructor(
     update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel =
     inTransaction { handle ->
-      return@inTransaction handle.createQuery(sqlResource("/store/formTemplateQuestion/update.sql"))
+      handle.createQuery(sqlResource("/store/formTemplateQuestion/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .bind("questionGuid", questionGuid)
@@ -114,7 +114,7 @@ internal class FormTemplateQuestionStore @Inject constructor(
     questionGuid: UUID,
   ): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
+      handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .bind("questionGuid", questionGuid)

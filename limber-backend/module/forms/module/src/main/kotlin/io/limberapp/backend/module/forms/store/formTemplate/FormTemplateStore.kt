@@ -34,7 +34,7 @@ internal class FormTemplateStore @Inject constructor(
 
   fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel =
     inTransaction { handle ->
-      return@inTransaction handle.createQuery(sqlResource("/store/formTemplate/update.sql"))
+      handle.createQuery(sqlResource("/store/formTemplate/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .bindKotlin(update)
@@ -44,7 +44,7 @@ internal class FormTemplateStore @Inject constructor(
 
   fun delete(featureGuid: UUID, formTemplateGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
+      handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formTemplateGuid", formTemplateGuid)
         .updateOnly() ?: throw FormTemplateNotFound()

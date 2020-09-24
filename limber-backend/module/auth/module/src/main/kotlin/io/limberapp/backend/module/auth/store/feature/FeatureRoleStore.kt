@@ -23,7 +23,7 @@ internal class FeatureRoleStore @Inject constructor(
 ) : SqlStore(jdbi), Finder<FeatureRoleModel, FeatureRoleFinder> {
   fun create(model: FeatureRoleModel): FeatureRoleModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/featureRole/create.sql"))
           .bindKotlin(model)
           .mapTo(FeatureRoleModel::class.java)
@@ -43,7 +43,7 @@ internal class FeatureRoleStore @Inject constructor(
 
   fun update(featureGuid: UUID, featureRoleGuid: UUID, update: FeatureRoleModel.Update): FeatureRoleModel =
     inTransaction { handle ->
-      return@inTransaction try {
+      try {
         handle.createQuery(sqlResource("/store/featureRole/update.sql"))
           .bind("featureGuid", featureGuid)
           .bind("featureRoleGuid", featureRoleGuid)
@@ -57,7 +57,7 @@ internal class FeatureRoleStore @Inject constructor(
 
   fun delete(featureGuid: UUID, featureRoleGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/featureRole/delete.sql"))
+      handle.createUpdate(sqlResource("/store/featureRole/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("featureRoleGuid", featureRoleGuid)
         .updateOnly() ?: throw FeatureRoleNotFound()

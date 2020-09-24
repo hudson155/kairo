@@ -32,7 +32,7 @@ internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder
 
   fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel =
     inTransaction { handle ->
-      return@inTransaction handle.createQuery(sqlResource("/store/org/update.sql"))
+      handle.createQuery(sqlResource("/store/org/update.sql"))
         .bind("orgGuid", orgGuid)
         .bindKotlin(update)
         .mapTo(OrgModel::class.java)
@@ -41,7 +41,7 @@ internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder
 
   fun delete(orgGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/org/delete.sql"))
+      handle.createUpdate(sqlResource("/store/org/delete.sql"))
         .bind("orgGuid", orgGuid)
         .updateOnly() ?: throw OrgNotFound()
     }

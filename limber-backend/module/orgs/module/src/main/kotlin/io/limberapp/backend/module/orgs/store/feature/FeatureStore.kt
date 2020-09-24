@@ -26,7 +26,7 @@ private const val UNIQ_RANK = "uniq__feature__rank"
 internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<FeatureModel, FeatureFinder> {
   fun create(model: FeatureModel): FeatureModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/feature/create.sql"))
           .bindKotlin(model)
           .mapTo(FeatureModel::class.java)
@@ -51,7 +51,7 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
           .bind("orgGuid", orgGuid)
           .execute()
       }
-      return@inTransaction try {
+      try {
         handle.createQuery(sqlResource("/store/feature/update.sql"))
           .bind("orgGuid", orgGuid)
           .bind("featureGuid", featureGuid)
@@ -65,7 +65,7 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
 
   fun delete(orgGuid: UUID, featureGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/feature/delete.sql"))
+      handle.createUpdate(sqlResource("/store/feature/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("featureGuid", featureGuid)
         .updateOnly() ?: throw FeatureNotFound()

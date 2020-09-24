@@ -23,7 +23,7 @@ internal class FormInstanceStore @Inject constructor(
 ) : SqlStore(jdbi), Finder<FormInstanceModel, FormInstanceFinder> {
   fun create(model: FormInstanceModel): FormInstanceModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/formInstance/create.sql"))
           .bindKotlin(model)
           .mapTo(FormInstanceModel::class.java)
@@ -43,7 +43,7 @@ internal class FormInstanceStore @Inject constructor(
 
   fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel =
     inTransaction { handle ->
-      return@inTransaction handle.createQuery(sqlResource("/store/formInstance/update.sql"))
+      handle.createQuery(sqlResource("/store/formInstance/update.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .bindKotlin(update)
@@ -53,7 +53,7 @@ internal class FormInstanceStore @Inject constructor(
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
+      handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
         .bind("featureGuid", featureGuid)
         .bind("formInstanceGuid", formInstanceGuid)
         .updateOnly() ?: throw FormInstanceNotFound()

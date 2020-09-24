@@ -21,7 +21,7 @@ private const val UNIQ_NAME = "uniq__org_role__name"
 internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<OrgRoleModel, OrgRoleFinder> {
   fun create(model: OrgRoleModel): OrgRoleModel =
     withHandle { handle ->
-      return@withHandle try {
+      try {
         handle.createQuery(sqlResource("/store/orgRole/create.sql"))
           .bindKotlin(model)
           .mapTo(OrgRoleModel::class.java)
@@ -41,7 +41,7 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
 
   fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel =
     inTransaction { handle ->
-      return@inTransaction try {
+      try {
         handle.createQuery(sqlResource("/store/orgRole/update.sql"))
           .bind("orgGuid", orgGuid)
           .bind("orgRoleGuid", orgRoleGuid)
@@ -55,7 +55,7 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID): Unit =
     inTransaction { handle ->
-      return@inTransaction handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
+      handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
         .bind("orgGuid", orgGuid)
         .bind("orgRoleGuid", orgRoleGuid)
         .updateOnly() ?: throw OrgRoleNotFound()
