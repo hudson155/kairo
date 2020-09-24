@@ -5,9 +5,13 @@ package io.limberapp.monolith.adhoc
 import com.google.inject.Injector
 import io.ktor.application.Application
 import io.limberapp.backend.LimberModule
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
+import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.LimberSqlModule
+import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
+import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.orgs.model.org.OrgModel
@@ -37,6 +41,7 @@ internal fun Adhoc.onboard() {
       val orgGuid = createOrg(injector)
       createTenant(injector, orgGuid = orgGuid)
       createTenantDomain(injector, orgGuid = orgGuid)
+      createOrgRoles(injector, orgGuid = orgGuid)
       application.shutDown(0)
     }
 
@@ -68,6 +73,29 @@ internal fun Adhoc.onboard() {
         createdDate = LocalDateTime.now(),
         orgGuid = orgGuid,
         domain = OnboardArgs.orgDomain,
+      ))
+    }
+
+    @OptIn(LimberModule.Auth::class)
+    private fun createOrgRoles(injector: Injector, orgGuid: UUID) {
+      val orgRoleService = injector.getInstance(OrgRoleService::class.java)
+      orgRoleService.create(OrgRoleModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        orgGuid = orgGuid,
+        name = "Members",
+        permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
+        isDefault = true,
+        memberCount = 0,
+      ))
+      orgRoleService.create(OrgRoleModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        orgGuid = orgGuid,
+        name = "Managers",
+        permissions = OrgPermissions.none(),
+        isDefault = false,
+        memberCount = 0,
       ))
     }
   }

@@ -5,7 +5,11 @@ package io.limberapp.monolith.adhoc
 import com.google.inject.Injector
 import io.ktor.application.Application
 import io.limberapp.backend.LimberModule
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.module.LimberSqlModule
+import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
+import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionModel
@@ -22,6 +26,8 @@ import java.util.*
 
 private object CreateCovidFeatureArgs {
   val orgGuid: UUID get() = TODO()
+  val membersOrgRoleGuid: UUID get() = TODO()
+  val managersOrgRoleGuid: UUID get() = TODO()
 }
 
 internal fun Adhoc.createCovidFeature() {
@@ -34,8 +40,9 @@ internal fun Adhoc.createCovidFeature() {
 
     override fun afterStart(application: Application, injector: Injector) {
       val featureGuid = createFeature(injector)
-      createPreScreeningSelfAssessmentFormTemplate(injector, featureGuid)
-      createWorkplaceInspectionFormTemplate(injector, featureGuid)
+      createFeatureRoles(injector, featureGuid = featureGuid)
+      createPreScreeningSelfAssessmentFormTemplate(injector, featureGuid = featureGuid)
+      createWorkplaceInspectionFormTemplate(injector, featureGuid = featureGuid)
       application.shutDown(0)
     }
 
@@ -52,6 +59,28 @@ internal fun Adhoc.createCovidFeature() {
         type = FeatureModel.Type.FORMS,
         isDefaultFeature = true,
       )).guid
+    }
+
+    @OptIn(LimberModule.Auth::class)
+    private fun createFeatureRoles(injector: Injector, featureGuid: UUID) {
+      val featureRoleService = injector.getInstance(FeatureRoleService::class.java)
+      featureRoleService.create(FeatureRoleModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        featureGuid = featureGuid,
+        orgRoleGuid = CreateCovidFeatureArgs.membersOrgRoleGuid,
+        permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
+      ))
+      featureRoleService.create(FeatureRoleModel(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(),
+        featureGuid = featureGuid,
+        orgRoleGuid = CreateCovidFeatureArgs.managersOrgRoleGuid,
+        permissions = FormsFeaturePermissions(setOf(
+          FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES,
+          FormsFeaturePermission.EXPORT_FORM_INSTANCES,
+        )),
+      ))
     }
 
     @Suppress("LongMethod", "MaxLineLength")
