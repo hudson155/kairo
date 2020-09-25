@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { TenantRepComplete } from '../rep/Tenant';
+
 import { OrgRepComplete } from '../rep/Org';
+import { TenantRepComplete } from '../rep/Tenant';
 
 type Method = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 
@@ -26,13 +27,16 @@ export class LimberApi {
     return response?.data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async headers(): Promise<any> {
     const jwt = await this.getJwt();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const headers: any = {};
     if (jwt) headers['Authorization'] = `Bearer ${jwt}`;
     return headers;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async request<T>(method: Method, url: string, params: any = {}): Promise<AxiosResponse<T> | undefined> {
     try {
       const headers = await this.headers();

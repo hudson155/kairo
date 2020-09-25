@@ -1,9 +1,11 @@
-import React, { Suspense } from 'react';
-import { useFeature } from '../../../provider/FeatureProvider';
 import { graphql } from 'babel-plugin-relay/macro';
+import React, { ReactElement, Suspense } from 'react';
 import { useFragment, useLazyLoadQuery } from 'react-relay/hooks';
-import { FormsFeaturePageQuery } from './__generated__/FormsFeaturePageQuery.graphql';
+
+import { useFeature } from '../../../provider/FeatureProvider';
+
 import { FormsFeaturePageFragment_formInstance$key } from './__generated__/FormsFeaturePageFragment_formInstance.graphql';
+import { FormsFeaturePageQuery } from './__generated__/FormsFeaturePageQuery.graphql';
 
 const query = graphql`
   query FormsFeaturePageQuery($id: ID!) {
@@ -31,21 +33,22 @@ const fragment = graphql`
   }
 `;
 
-const FormInstanceExample: React.FC<{
-  readonly formInstance: FormsFeaturePageFragment_formInstance$key,
-}> = (props) => {
+function FormInstanceExample(props: {
+  readonly formInstance: FormsFeaturePageFragment_formInstance$key | null;
+}): ReactElement {
   const formInstance = useFragment(fragment, props.formInstance);
 
   return (
-    <p>{formInstance.id} : {formInstance.createdDate}</p>
+    <p>{formInstance?.id} : {formInstance?.createdDate}</p>
   );
-};
+}
 
-const FormTemplateExample: React.FC = () => {
+function FormTemplateExample(): ReactElement {
   const data = useLazyLoadQuery<FormsFeaturePageQuery>(query, { id: 'b1959d44-b39d-453d-aa27-fb4394c1d550' });
 
-  const formInstances = data.node?.formInstances?.edges?.map(edge => (
-    <FormInstanceExample key={edge?.node?.id} formInstance={edge?.node!} />),
+  const formInstances = data.node?.formInstances?.edges?.map(edge =>
+    // TODO: ENG-74: Confirm that fallback to null is the correct way for typescript to handle possibly null fragments
+    <FormInstanceExample formInstance={edge?.node ?? null} key={edge?.node?.id} />,
   );
 
   return (
@@ -57,9 +60,9 @@ const FormTemplateExample: React.FC = () => {
       </div>
     </>
   );
-};
+}
 
-const FormsFeaturePage: React.FC = () => {
+function FormsFeaturePage(): ReactElement {
   const feature = useFeature();
 
   return (
@@ -71,6 +74,6 @@ const FormsFeaturePage: React.FC = () => {
       </Suspense>
     </>
   );
-};
+}
 
 export default FormsFeaturePage;

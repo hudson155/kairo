@@ -87,6 +87,8 @@ jobs:
         working-directory: limber-react
         env:
           CI: true # https://github.com/facebook/create-react-app/issues/6899
+      - run: yarn lint
+        working-directory: limber-react
       - run: yarn build
         working-directory: limber-react
         env:

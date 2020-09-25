@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 interface Props {
   readonly message: string;
 }
 
-const LoadingPage: React.FC<Props> = (props) => {
+function LoadingPage(props: Props): ReactElement {
   return <p>{props.message}</p>;
-};
+}
 
 export default LoadingPage;

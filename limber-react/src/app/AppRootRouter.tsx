@@ -1,36 +1,39 @@
-import React, { ReactNode } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import React, { ReactElement, ReactNode } from 'react';
 import { Route, Switch } from 'react-router-dom';
+
 import { app } from '../app';
-import AppFeatureRouter from './AppFeatureRouter';
 import GlobalStateProvider from '../provider/GlobalStateProvider';
+
+import AppFeatureRouter from './AppFeatureRouter';
 import AppUnauthenticatedRouter from './AppUnauthenticatedRouter';
-import SignOutPage from './components/SignOutPage/SignOutPage';
-import SignInPage from './components/SignInPage/SignInPage';
 import LoadingPage from './components/LoadingPage/LoadingPage';
+import SignInPage from './components/SignInPage/SignInPage';
+import SignOutPage from './components/SignOutPage/SignOutPage';
+
 
 interface Props {
   readonly orgGuid: string;
 }
 
-const AppRootRouter: React.FC<Props> = (props) => {
+function AppRootRouter(props: Props): ReactElement {
   const auth = useAuth0();
 
   if (auth.isLoading) return <LoadingPage message="Identifying you..." />;
 
   const subRouter: ReactNode = auth.isAuthenticated ? (
     <GlobalStateProvider orgGuid={props.orgGuid}>
-      <Route path={app.rootPath} exact={false} component={AppFeatureRouter} />
+      <Route component={AppFeatureRouter} exact={false} path={app.rootPath} />
     </GlobalStateProvider>
-  ) : <Route path={app.rootPath} exact={false} component={AppUnauthenticatedRouter} />;
+  ) : <Route component={AppUnauthenticatedRouter} exact={false} path={app.rootPath} />;
 
   return (
     <Switch>
-      <Route path="/signin" exact={true} component={SignInPage} />
-      <Route path="/signout" exact={true} component={SignOutPage} />
+      <Route component={SignInPage} exact={true} path="/signin" />
+      <Route component={SignOutPage} exact={true} path="/signout" />
       {subRouter}
     </Switch>
   );
-};
+}
 
 export default AppRootRouter;

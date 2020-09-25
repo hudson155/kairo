@@ -1,3 +1,4 @@
+/* eslint-disable */
 const formInstances = [
     {
       id: '87a2641f-6dd8-4cb3-a8cb-449a1e95d77d',
@@ -15,6 +16,7 @@ const formInstances = [
 
 const formTemplates = [
   {
+    __typename: 'FormTemplate',
     id: 'b1959d44-b39d-453d-aa27-fb4394c1d550',
     createdDate: '6/9/1969',
     title: 'Super serious form',
@@ -36,3 +38,4 @@ module.exports = {
   formTemplates,
   user
 };
+/* eslint-enable */

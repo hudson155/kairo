@@ -1,7 +1,7 @@
-const { override, addBabelPlugins } = require('customize-cra')
+const { addBabelPlugins, override } = require('customize-cra');
 
 module.exports = override(
   addBabelPlugins(
     'babel-plugin-relay',
-  )
-)
+  ),
+);

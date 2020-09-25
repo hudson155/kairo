@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
+
 import { useFeature } from '../../../provider/FeatureProvider';
 
-const HomePage: React.FC = () => {
+function HomePage(): ReactElement {
   const feature = useFeature();
   return (
     <>
@@ -9,6 +10,6 @@ const HomePage: React.FC = () => {
       <p>This is the homepage.</p>
     </>
   );
-};
+}
 
 export default HomePage;

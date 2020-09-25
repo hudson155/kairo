@@ -1,1 +1,8 @@
 /src/serviceWorker.ts
+node_modules/
+build/
+__generated__/
+/.eslintrc.js
+/config-overrides.js
+/graphql/mock_data.js
+/graphql/server.js

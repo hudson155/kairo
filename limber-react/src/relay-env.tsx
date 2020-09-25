@@ -1,6 +1,7 @@
-import { Environment, Network, RecordSource, RequestParameters, Store, Variables } from 'relay-runtime';
-import { env } from './env';
 import axios from 'axios';
+import { Environment, Network, RecordSource, RequestParameters, Store, Variables } from 'relay-runtime';
+
+import { env } from './env';
 
 const axiosInstance = axios.create({
   baseURL: env.LIMBER_GRAPHQL_BASE_URL,

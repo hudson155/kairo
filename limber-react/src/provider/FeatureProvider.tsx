@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+
 import { FeatureRepComplete } from '../rep/Feature';
 
 const Context = React.createContext<FeatureRepComplete>(
@@ -9,4 +10,4 @@ const FeatureProvider = Context.Provider;
 
 export default FeatureProvider;
 
-export const useFeature = () => useContext(Context);
+export const useFeature = (): FeatureRepComplete => useContext(Context);

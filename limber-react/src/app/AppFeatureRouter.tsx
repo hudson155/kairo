@@ -1,13 +1,16 @@
-import React from 'react';
-import { useOrg } from '../provider/OrgProvider';
+import React, { ReactElement } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { getDefaultFeature } from '../rep/Feature';
+
 import { app } from '../app';
-import OrgSettingsPage from './pages/OrgSettingsPage/OrgSettingsPage';
+import { useOrg } from '../provider/OrgProvider';
+import { getDefaultFeature } from '../rep/Feature';
+
 import FeaturePage from './pages/FeaturePage/FeaturePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import OrgSettingsPage from './pages/OrgSettingsPage/OrgSettingsPage';
 
-const AppFeatureRouter: React.FC = () => {
+
+function AppFeatureRouter(): ReactElement {
   const org = useOrg();
 
   const features = org.features;
@@ -15,17 +18,17 @@ const AppFeatureRouter: React.FC = () => {
 
   return (
     <Switch>
-      {defaultFeature && <Route path={app.rootPath} exact={true}><Redirect to={defaultFeature.path} /></Route>}
-      <Route path="/settings/org" exact={false} component={OrgSettingsPage} />
+      {defaultFeature && <Route exact={true} path={app.rootPath}><Redirect to={defaultFeature.path} /></Route>}
+      <Route component={OrgSettingsPage} exact={false} path="/settings/org" />
       {features.map(feature => (
-          <Route key={feature.guid} path={feature.path} exact={false}>
-            <FeaturePage feature={feature} />
-          </Route>
-        ),
+        <Route exact={false} key={feature.guid} path={feature.path}>
+          <FeaturePage feature={feature} />
+        </Route>
+      ),
       )}
-      <Route path={app.rootPath} exact={false} component={NotFoundPage} />
+      <Route component={NotFoundPage} exact={false} path={app.rootPath} />
     </Switch>
   );
-};
+}
 
 export default AppFeatureRouter;

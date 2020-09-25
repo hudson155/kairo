@@ -1,7 +1,7 @@
-import React from 'react';
+import { ReactElement } from 'react';
 
-const OrgSettingsPage: React.FC = () => {
+function OrgSettingsPage(): ReactElement | null {
   return null;
-};
+}
 
 export default OrgSettingsPage;

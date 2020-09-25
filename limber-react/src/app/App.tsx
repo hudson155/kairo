@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { TenantRepComplete } from '../rep/Tenant';
-import { LimberApi } from '../api/LimberApi';
-import { env } from '../env';
-import { BrowserRouter } from 'react-router-dom';
-import AppRootRouter from './AppRootRouter';
 import { Auth0Provider } from '@auth0/auth0-react';
-import { app } from '../app';
-import ApiProvider from '../provider/ApiProvider';
-import LoadingPage from './components/LoadingPage/LoadingPage';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
-import {environment as relayEnvironment} from '../relay-env';
+import { BrowserRouter } from 'react-router-dom';
+
+import { LimberApi } from '../api/LimberApi';
+import { app } from '../app';
+import { env } from '../env';
+import ApiProvider from '../provider/ApiProvider';
+import { environment as relayEnvironment } from '../relay-env';
+import { TenantRepComplete } from '../rep/Tenant';
+
+import AppRootRouter from './AppRootRouter';
+import LoadingPage from './components/LoadingPage/LoadingPage';
 
 const api = new LimberApi(env.LIMBER_API_BASE_URL, () => Promise.resolve(undefined));
 
-const App: React.FC = () => {
+function App(): ReactElement {
   const [tenant, setTenant] = useState<TenantRepComplete>();
 
   useEffect(() => {
@@ -24,10 +26,10 @@ const App: React.FC = () => {
 
   return (
     <Auth0Provider
-      domain={env.AUTH0_DOMAIN}
-      clientId={tenant.auth0ClientId}
-      redirectUri={app.rootUrl}
       audience={`https://${env.AUTH0_DOMAIN}/api/v2/`}
+      clientId={tenant.auth0ClientId}
+      domain={env.AUTH0_DOMAIN}
+      redirectUri={app.rootUrl}
     >
       <ApiProvider>
         <RelayEnvironmentProvider environment={relayEnvironment}>
@@ -38,6 +40,6 @@ const App: React.FC = () => {
       </ApiProvider>
     </Auth0Provider>
   );
-};
+}
 
 export default App;

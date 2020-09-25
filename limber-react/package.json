@@ -18,6 +18,9 @@
     "babel-plugin-relay": "^10.0.1",
     "cors": "^2.8.5",
     "customize-cra": "^1.0.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-react": "^7.20.6",
     "express": "^4.17.1",
     "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",
@@ -34,11 +37,12 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "start:graphql": "node ./graphql/server.js",
-    "build": "react-app-rewired build",
+    "start:graphql": "node graphql/server.js",
+    "build": "EXTEND_ESLINT=true react-app-rewired build",
+    "lint": "EXTEND_ESLINT=true eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "relay": "relay-compiler --language typescript --extensions ts tsx --src ./src --schema ./graphql/schema.graphql"
+    "relay": "relay-compiler --language typescript --extensions ts tsx --src ./src --schema graphql/schema.graphql"
   },
   "eslintConfig": {
     "extends": "react-app"
