@@ -28,5 +28,9 @@ data class FormsFeaturePermissions(override val permissions: Set<FormsFeaturePer
         .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
         .toSet()
     )
+
+    fun Collection<FormsFeaturePermissions>.union() = FormsFeaturePermissions(
+      permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+    )
   }
 }

@@ -7,8 +7,10 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import io.limberapp.backend.authorization.permissions.Permissions
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FORMS_FEATURE_PREFIX
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions.Companion.union
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HOME_FEATURE_PREFIX
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions
+import io.limberapp.backend.authorization.permissions.featurePermissions.feature.home.HomeFeaturePermissions.Companion.union
 import io.limberapp.util.darb.BitStringEncoder
 import io.limberapp.util.darb.DarbEncoder
 
@@ -30,6 +32,19 @@ abstract class FeaturePermissions : Permissions<FeaturePermission>() {
       HOME_FEATURE_PREFIX -> HomeFeaturePermissions.fromBooleanList(booleanList)
       FORMS_FEATURE_PREFIX -> FormsFeaturePermissions.fromBooleanList(booleanList)
       else -> error("Unrecognized feature permissions prefix: $prefix.")
+    }
+
+    fun Collection<FeaturePermissions>.unionIfSameType(): FeaturePermissions? {
+      val first = firstOrNull() ?: return null
+      try {
+        return when (first) {
+          is FormsFeaturePermissions -> (this as Collection<FormsFeaturePermissions>).union()
+          is HomeFeaturePermissions -> (this as Collection<HomeFeaturePermissions>).union()
+          else -> unknownType("feature", first::class)
+        }
+      } catch (_: ClassCastException) {
+        error("FeaturePermissions must be for the same feature type to do a union.")
+      }
     }
   }
 

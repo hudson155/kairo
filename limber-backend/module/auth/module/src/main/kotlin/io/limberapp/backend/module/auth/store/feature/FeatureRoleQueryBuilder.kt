@@ -14,4 +14,9 @@ internal class FeatureRoleQueryBuilder : QueryBuilder(), FeatureRoleFinder {
     conditions += "guid = :featureRoleGuid"
     bindings["featureRoleGuid"] = featureRoleGuid
   }
+
+  override fun orgRoleGuids(orgRoleGuids: Set<UUID>) {
+    conditions += "org_role_guid = ANY(:orgRoleGuids)"
+    bindings["orgRoleGuids"] = orgRoleGuids
+  }
 }

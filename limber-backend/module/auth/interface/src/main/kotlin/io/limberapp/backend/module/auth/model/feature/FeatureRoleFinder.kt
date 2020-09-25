@@ -7,4 +7,5 @@ import java.util.*
 interface FeatureRoleFinder {
   fun featureGuid(featureGuid: UUID)
   fun featureRoleGuid(featureRoleGuid: UUID)
+  fun orgRoleGuids(orgRoleGuids: Set<UUID>)
 }

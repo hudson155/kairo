@@ -28,5 +28,9 @@ class HomeFeaturePermissions(override val permissions: Set<HomeFeaturePermission
         .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
         .toSet()
     )
+
+    fun Collection<HomeFeaturePermissions>.union() = HomeFeaturePermissions(
+      permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+    )
   }
 }

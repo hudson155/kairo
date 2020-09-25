@@ -1,14 +1,16 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
-import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
+import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
@@ -29,13 +31,23 @@ import kotlin.test.assertEquals
 internal class PostJwtClaimsRequestTest : ResourceTest() {
   @Test
   fun happyPathUserDoesNotExist() {
-    val userGuid = deterministicUuidGenerator[3]
+    val userGuid = deterministicUuidGenerator[4]
     val emailAddress = "jhudson@jhudson.ca"
     val existingOrg = OrgModel(
       guid = UUID.randomUUID(),
       createdDate = LocalDateTime.now(fixedClock),
       name = "Cranky Pasta",
       ownerUserGuid = UUID.randomUUID()
+    )
+    val existingFeature = FeatureModel(
+      guid = UUID.randomUUID(),
+      createdDate = LocalDateTime.now(fixedClock),
+      orgGuid = existingOrg.guid,
+      rank = 0,
+      name = "Forms",
+      path = "/forms",
+      type = FeatureModel.Type.FORMS,
+      isDefaultFeature = true
     )
     every {
       mockedServices[UserService::class].findOnlyOrNull(any())
@@ -48,7 +60,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     } returns existingOrg
     every {
       mockedServices[FeatureService::class].findAsSet(any())
-    } returns emptySet()
+    } returns setOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
@@ -63,6 +75,18 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
     val orgPermissions = setOf(
       membershipOrgRoleRep.permissions, // This org role has isDefault = true.
     ).union()
+
+    val featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, membershipOrgRoleRep.guid, 3)
+    limberTest.setup(
+      endpoint = FeatureRoleApi.Post(
+        featureGuid = existingFeature.guid,
+        rep = FeatureRoleRepFixtures.fixture.creation(membershipOrgRoleRep.guid),
+      ),
+    )
+
+    val featurePermissions = checkNotNull(setOf(
+      featureRoleRep.permissions, // Associated with membershipOrgRoleRep which has isDefault = true.
+    ).unionIfSameType())
 
     val jwtRequest = JwtClaimsRequestRep.Creation(
       auth0ClientId = tenantRep.auth0ClientId,
@@ -79,7 +103,11 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"isOwner\\\":false," +
         "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
-        "\\\"features\\\":{}" +
+        "\\\"features\\\":{" +
+        "\\\"${existingFeature.guid}\\\":{" +
+        "\\\"permissions\\\":\\\"${featurePermissions.asDarb()}\\\"" +
+        "}" +
+        "}" +
         "}\",\n" +
         "  \"roles\": \"[]\",\n" +
         "  \"user\": \"{" +
@@ -160,8 +188,6 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       maintainerOrgRoleRep.permissions,
     ).union()
 
-    val featurePermissions = FormsFeaturePermissions.none()
-
     val jwtRequest = JwtClaimsRequestRep.Creation(
       auth0ClientId = tenantRep.auth0ClientId,
       firstName = "Jeff",
@@ -177,11 +203,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
         "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
         "\\\"isOwner\\\":false," +
         "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
-        "\\\"features\\\":{" +
-        "\\\"${existingFeature.guid}\\\":{" +
-        "\\\"permissions\\\":\\\"${featurePermissions.asDarb()}\\\"" +
-        "}" +
-        "}" +
+        "\\\"features\\\":{}" +
         "}\",\n" +
         "  \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
         "  \"user\": \"{" +
