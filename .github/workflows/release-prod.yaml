@@ -50,10 +50,10 @@ jobs:
       - run: docker tag registry.digitalocean.com/limber/limber-graphql-server:master "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-graphql-server:master
       - run: docker push "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
-      - run: docker build -t registry.digitalocean.com/limber/limber-monolith:master limber-backend/server/monolith
-      - run: docker tag registry.digitalocean.com/limber/limber-monolith:master "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
-      - run: docker push registry.digitalocean.com/limber/limber-monolith:master
-      - run: docker push "registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)"
+      - run: docker build -t registry.digitalocean.com/limber/limber-monolith-server:master limber-backend/server/monolith
+      - run: docker tag registry.digitalocean.com/limber/limber-monolith-server:master "registry.digitalocean.com/limber/limber-monolith-server:$(git rev-parse HEAD)"
+      - run: docker push registry.digitalocean.com/limber/limber-monolith-server:master
+      - run: docker push "registry.digitalocean.com/limber/limber-monolith-server:$(git rev-parse HEAD)"
       - run: docker build -t registry.digitalocean.com/limber/limber-web:master limber-web
       - run: docker tag registry.digitalocean.com/limber/limber-web:master "registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-web:master
@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save limber
       - run: kubectl set image deployment/limber-graphql-server limber-graphql-server="registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)" --namespace limber
-      - run: kubectl set image deployment/limber-monolith limber-monolith="registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD)" --namespace limber
+      - run: kubectl set image deployment/limber-monolith-server limber-monolith-server="registry.digitalocean.com/limber/limber-monolith-server:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-web limber-web="registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)" --namespace limber
   deploy-web:
     name: Deploy web (prod)

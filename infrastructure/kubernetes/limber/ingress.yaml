@@ -30,7 +30,7 @@ spec:
           - pathType: Prefix
             path: /
             backend:
-              serviceName: limber-monolith
+              serviceName: limber-monolith-server
               servicePort: 80
     - host: demo.covidreopening.ca
       http:

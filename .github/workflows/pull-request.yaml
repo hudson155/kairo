@@ -46,7 +46,7 @@ jobs:
         env:
           ENV: production
       - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD) limber-backend/server/graphql
-      - run: docker build -t registry.digitalocean.com/limber/limber-monolith:$(git rev-parse HEAD) limber-backend/server/monolith
+      - run: docker build -t registry.digitalocean.com/limber/limber-monolith-server:$(git rev-parse HEAD) limber-backend/server/monolith
       - run: docker build -t registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD) limber-web
   build-web:
     name: Build web

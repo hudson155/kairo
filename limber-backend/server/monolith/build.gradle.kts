@@ -39,7 +39,7 @@ detekt {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-  archiveFileName.set("limber-monolith.jar")
+  archiveFileName.set("limber-monolith-server.jar")
   mergeServiceFiles()
   manifest {
     attributes(mapOf("MainClass" to application.mainClassName))

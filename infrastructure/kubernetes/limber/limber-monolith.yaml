@@ -4,7 +4,7 @@ items:
   - apiVersion: v1
     kind: Service
     metadata:
-      name: limber-monolith
+      name: limber-monolith-server
       namespace: limber
       labels:
         instance: limber
@@ -13,18 +13,18 @@ items:
         - port: 80
           targetPort: 55100
       selector:
-        app: limber-monolith
+        app: limber-monolith-server
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: limber-monolith
+      name: limber-monolith-server
       namespace: limber
       labels:
         instance: limber
     spec:
       selector:
         matchLabels:
-          app: limber-monolith
+          app: limber-monolith-server
       replicas: 1
       strategy:
         type: RollingUpdate
@@ -34,11 +34,11 @@ items:
       template:
         metadata:
           labels:
-            app: limber-monolith
+            app: limber-monolith-server
         spec:
           containers:
-            - name: limber-monolith
-              image: registry.digitalocean.com/limber/limber-monolith:master
+            - name: limber-monolith-server
+              image: registry.digitalocean.com/limber/limber-monolith-server:master
               imagePullPolicy: Always
               resources:
                 requests:
