@@ -45,7 +45,7 @@ object Versions {
   const val kotlinxCoroutines = "1.3.9"
 
   // https://github.com/ktorio/ktor/releases
-  const val ktor = "1.4.0"
+  const val ktor = "1.4.1"
 
   // https://github.com/qos-ch/logback/releases
   const val logback = "1.2.3"
