@@ -53,7 +53,8 @@ import kotlin.system.exitProcess
 abstract class LimberApplication<C : Config>(application: Application, protected val config: C) {
   private val logger = LoggerFactory.getLogger(LimberApplication::class.java)
 
-  private var context: Pair<Injector, List<GuiceModule>>? = null
+  var context: Pair<Injector, List<GuiceModule>>? = null
+    private set
 
   init {
     application.environment.monitor.subscribe(ApplicationStarted) { onStartInternal(it) }

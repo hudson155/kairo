@@ -6,7 +6,6 @@ import kotlin.reflect.KType
 import kotlin.reflect.javaType
 import kotlin.reflect.typeOf
 
-@Suppress("UnnecessaryAbstractClass")
 abstract class QueryBuilder {
   class Conditions {
     private val conditions = mutableListOf<String>()

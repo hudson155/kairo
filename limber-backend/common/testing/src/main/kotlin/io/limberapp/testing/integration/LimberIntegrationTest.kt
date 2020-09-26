@@ -15,20 +15,37 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
-import io.limberapp.error.LimberError
+import io.limberapp.common.LimberApplication
 import io.limberapp.common.exception.LimberException
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.serialization.Json
+import io.limberapp.error.LimberError
 import io.limberapp.exceptionMapping.ExceptionMapper
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
+import kotlin.reflect.KClass
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-@Suppress("UnnecessaryAbstractClass")
 @ExtendWith(TestApplicationEngineParameterResolver::class)
-abstract class IntegrationTest(private val engine: TestApplicationEngine) {
-  private val json = Json(prettyPrint = true)
+abstract class LimberIntegrationTest(
+  private val engine: TestApplicationEngine,
+  private val limberServer: LimberApplication<*>,
+) {
+  inner class LimberIntegrationTestMocks {
+    operator fun <T : Any> get(key: KClass<T>): T = limberServer.injector.getInstance(key.java)
+  }
+
+  protected val json = Json(prettyPrint = true)
+
+  protected val mocks = LimberIntegrationTestMocks()
+
+  val uuidGenerator get() = limberServer.uuidGenerator
+
+  val clock get() = limberServer.clock
+
+  protected val TestApplicationCall.responseContent get() = assertNotNull(response.content)
 
   protected fun setup(endpoint: LimberEndpoint) = makeServerCall(
     endpoint = endpoint,

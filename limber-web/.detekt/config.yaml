@@ -454,7 +454,7 @@ style:
     active: true
     acceptableDecimalLength: 5
   UnnecessaryAbstractClass:
-    active: true
+    active: false
   UnnecessaryAnnotationUseSiteTarget:
     active: true
   UnnecessaryApply:

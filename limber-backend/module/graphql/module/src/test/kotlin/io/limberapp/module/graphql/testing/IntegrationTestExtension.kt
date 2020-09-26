@@ -2,24 +2,17 @@ package io.limberapp.module.graphql.testing
 
 import io.ktor.application.Application
 import io.limberapp.common.LimberApplication
-import io.limberapp.config.Config
-import io.limberapp.config.authentication.AuthenticationConfig
-import io.limberapp.config.authentication.AuthenticationMechanism
-import io.limberapp.config.authentication.ClockConfig
-import io.limberapp.config.authentication.UuidsConfig
+import io.limberapp.config.ConfigLoader
 import io.limberapp.module.graphql.GraphqlModule
-import io.limberapp.testing.integration.IntegrationTestExtension
+import io.limberapp.module.graphql.config.GraphqlModuleConfig
+import io.limberapp.testing.integration.LimberIntegrationTestExtension
 
-internal class IntegrationTestExtension : IntegrationTestExtension() {
-  private val config = object : Config {
-    override val authentication = AuthenticationConfig(listOf(AuthenticationMechanism.UnsignedJwt(leeway = 0)))
-    override val clock = ClockConfig(ClockConfig.Type.FIXED)
-    override val uuids = UuidsConfig(UuidsConfig.Generation.DETERMINISTIC)
+internal class IntegrationTestExtension : LimberIntegrationTestExtension() {
+  companion object {
+    private val config = ConfigLoader.load<GraphqlModuleConfig>("test")
   }
 
-  override fun Application.main() {
-    object : LimberApplication<Config>(this, config) {
-      override fun getApplicationModules() = listOf(GraphqlModule())
-    }
+  override fun Application.main() = object : LimberApplication<GraphqlModuleConfig>(this, config) {
+    override fun getApplicationModules() = listOf(GraphqlModule())
   }
 }

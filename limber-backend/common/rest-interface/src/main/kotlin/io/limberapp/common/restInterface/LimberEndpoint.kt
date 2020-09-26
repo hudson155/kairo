@@ -17,7 +17,6 @@ import kotlin.reflect.full.primaryConstructor
 /**
  * Instances represent parameterized requests to an HTTP endpoint.
  */
-@Suppress("UnnecessaryAbstractClass")
 abstract class LimberEndpoint(
   val httpMethod: HttpMethod,
   val path: String,

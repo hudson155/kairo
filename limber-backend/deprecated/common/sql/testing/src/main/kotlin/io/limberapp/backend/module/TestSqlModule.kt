@@ -5,9 +5,10 @@ import java.sql.Connection
 
 open class TestSqlModule(config: SqlDatabaseConfig) : LimberSqlModule(config, runMigrations = true) {
   fun dropDatabase() {
-    val connection = checkNotNull(wrapper.dataSource).connection
-    val customSchemas = listOf("auth", "forms", "orgs", "users")
-    connection.truncateAllTables(customSchemas)
+    checkNotNull(wrapper.dataSource).connection.use { connection ->
+      val customSchemas = listOf("auth", "forms", "orgs", "users")
+      connection.truncateAllTables(customSchemas)
+    }
   }
 
   @Suppress("SqlNoDataSourceInspection", "SqlResolve")

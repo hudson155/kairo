@@ -12,6 +12,7 @@ dependencies {
   implementation(project(":limber-backend:common:reps"))
   implementation(project(":limber-backend:common:rest-interface"))
   implementation(project(":limber-backend:common:serialization"))
+  implementation(project(":limber-backend:common:server"))
 
   implementation(project(":limber-backend:deprecated:common:module"))
 

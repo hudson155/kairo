@@ -6,7 +6,6 @@ import io.limberapp.common.util.url.href
 /**
  * Instances represent parameterized requests to an HTTP endpoint.
  */
-@Suppress("UnnecessaryAbstractClass")
 abstract class LimberEndpoint(
   val httpMethod: HttpMethod,
   val path: String,
