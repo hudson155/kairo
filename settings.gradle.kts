@@ -29,6 +29,8 @@ include(":limber-backend:module:auth:module")
 include(":limber-backend:module:forms:interface")
 include(":limber-backend:module:forms:module")
 
+include(":limber-backend:module:graphql:module")
+
 include(":limber-backend:module:health-check")
 
 include(":limber-backend:module:orgs:interface")
@@ -37,7 +39,6 @@ include(":limber-backend:module:orgs:module")
 include(":limber-backend:module:users:interface")
 include(":limber-backend:module:users:module")
 
-include(":limber-backend:server:graphql")
 include(":limber-backend:server:monolith")
 
 include(":limber-web")
