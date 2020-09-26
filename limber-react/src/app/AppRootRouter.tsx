@@ -7,9 +7,9 @@ import GlobalStateProvider from '../provider/GlobalStateProvider';
 
 import AppFeatureRouter from './AppFeatureRouter';
 import AppUnauthenticatedRouter from './AppUnauthenticatedRouter';
-import LoadingPage from './components/LoadingPage/LoadingPage';
-import SignInPage from './components/SignInPage/SignInPage';
-import SignOutPage from './components/SignOutPage/SignOutPage';
+import LoadingPage from './pages/LoadingPage/LoadingPage';
+import SignInPage from './pages/SignInPage/SignInPage';
+import SignOutPage from './pages/SignOutPage/SignOutPage';
 
 
 interface Props {

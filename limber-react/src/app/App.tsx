@@ -11,7 +11,7 @@ import { environment as relayEnvironment } from '../relay-env';
 import { TenantRepComplete } from '../rep/Tenant';
 
 import AppRootRouter from './AppRootRouter';
-import LoadingPage from './components/LoadingPage/LoadingPage';
+import LoadingPage from './pages/LoadingPage/LoadingPage';
 
 const api = new LimberApi(env.LIMBER_API_BASE_URL, () => Promise.resolve(undefined));
 

@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 
-import LoadingPage from '../app/components/LoadingPage/LoadingPage';
+import LoadingPage from '../app/pages/LoadingPage/LoadingPage';
 import { OrgRepComplete } from '../rep/Org';
 
 import { useApi } from './ApiProvider';
