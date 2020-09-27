@@ -62,6 +62,7 @@ internal fun Adhoc.onboard() {
       tenantService.create(TenantModel(
         createdDate = LocalDateTime.now(),
         orgGuid = orgGuid,
+        name = OnboardArgs.orgName,
         auth0ClientId = OnboardArgs.auth0ClientId,
       ))
     }

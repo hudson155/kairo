@@ -127,6 +127,7 @@ internal fun Adhoc.dbReset() {
       tenantService.create(TenantModel(
         createdDate = LocalDateTime.now(),
         orgGuid = org.guid,
+        name = org.name,
         auth0ClientId = "kwQNShDsyv7vAObSiBG12O46CMY7qr2Q",
       ))
 

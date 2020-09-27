@@ -39,7 +39,28 @@ internal class PatchTenantTest : ResourceTest() {
   }
 
   @Test
-  fun happyPath() {
+  fun happyPathName() {
+    val orgGuid = UUID.randomUUID()
+
+    val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+    var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
+    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+
+    tenantRep = tenantRep.copy(name = "new tenant (display) name")
+    limberTest.test(TenantApi.Patch(originalTenantRep.orgGuid,
+      TenantRep.Update(name = "new tenant (display) name"))) {
+      val actual = json.parse<TenantRep.Complete>(responseContent)
+      assertEquals(tenantRep, actual)
+    }
+
+    limberTest.test(TenantApi.Get(orgGuid)) {
+      val actual = json.parse<TenantRep.Complete>(responseContent)
+      assertEquals(tenantRep, actual)
+    }
+  }
+
+  @Test
+  fun happyPathAuth0ClientId() {
     val orgGuid = UUID.randomUUID()
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
