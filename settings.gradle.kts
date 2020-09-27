@@ -23,21 +23,21 @@ include(":limber-backend:deprecated:common:sql")
 include(":limber-backend:deprecated:common:sql:testing")
 include(":limber-backend:deprecated:common:testing")
 
-include(":limber-backend:module:auth:interface")
 include(":limber-backend:module:auth:module")
+include(":limber-backend:module:auth:service-interface")
 
-include(":limber-backend:module:forms:interface")
 include(":limber-backend:module:forms:module")
+include(":limber-backend:module:forms:service-interface")
 
 include(":limber-backend:module:graphql:module")
 
 include(":limber-backend:module:health-check")
 
-include(":limber-backend:module:orgs:interface")
 include(":limber-backend:module:orgs:module")
+include(":limber-backend:module:orgs:service-interface")
 
-include(":limber-backend:module:users:interface")
 include(":limber-backend:module:users:module")
+include(":limber-backend:module:users:service-interface")
 
 include(":limber-backend:server:monolith")
 
