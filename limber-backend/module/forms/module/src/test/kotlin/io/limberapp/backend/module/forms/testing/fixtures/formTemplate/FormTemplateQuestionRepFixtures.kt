@@ -5,13 +5,13 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
-import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.IntegrationTest
 import java.time.LocalDateTime
 
 internal object FormTemplateQuestionRepFixtures {
   data class Fixture(
     val creation: () -> FormTemplateQuestionRep.Creation,
-    val complete: ResourceTest.(idSeed: Int) -> FormTemplateQuestionRep.Complete,
+    val complete: IntegrationTest.(idSeed: Int) -> FormTemplateQuestionRep.Complete,
   )
 
   val dateFixture = Fixture({
@@ -24,8 +24,8 @@ internal object FormTemplateQuestionRepFixtures {
     )
   }, { idSeed ->
     FormTemplateDateQuestionRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       label = "Date",
       helpText = null,
       required = false,
@@ -43,8 +43,8 @@ internal object FormTemplateQuestionRepFixtures {
     )
   }, { idSeed ->
     FormTemplateRadioSelectorQuestionRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       label = "Options",
       helpText = null,
       required = false,
@@ -63,8 +63,8 @@ internal object FormTemplateQuestionRepFixtures {
     )
   }, { idSeed ->
     FormTemplateTextQuestionRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       label = "Worker name",
       helpText = null,
       required = true,
@@ -83,8 +83,8 @@ internal object FormTemplateQuestionRepFixtures {
     )
   }, { idSeed ->
     FormTemplateYesNoQuestionRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       label = "Healthy?",
       helpText = null,
       required = true,

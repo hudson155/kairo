@@ -1,16 +1,17 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.backend.module.orgs.model.org.FeatureModel
 import io.limberapp.backend.module.orgs.service.org.FeatureService
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
-import io.limberapp.common.testing.responseContent
+import io.limberapp.common.LimberApplication
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -22,14 +23,17 @@ import kotlin.test.assertEquals
 private const val FIXED_CLOCK_FORMATTED_VALUE = "Sun, Dec 2, 2007 at 22:15 MST"
 
 object ExportFormInstancesByFeatureGuidTest {
-  internal class Default : ResourceTest() {
+  internal class Default(
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
+  ) : IntegrationTest(engine, limberServer) {
     @Test
     fun happyPathNoFormInstances() {
       val orgGuid = UUID.randomUUID()
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -43,9 +47,9 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
-      limberTest.test(
+      test(
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = null,
@@ -67,7 +71,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -81,21 +85,21 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
-      limberTest.setup(
+      setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
         )
       )
 
-      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
-      limberTest.setup(
+      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+      setup(
         endpoint = FormInstanceApi.Patch(
           featureGuid = featureGuid,
           formInstanceGuid = formInstance0Rep.guid,
@@ -104,14 +108,14 @@ object ExportFormInstancesByFeatureGuidTest {
       )
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser1.guid, 6)
-      limberTest.setup(
+      setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
         )
       )
 
-      limberTest.test(
+      test(
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = null,
@@ -130,14 +134,17 @@ object ExportFormInstancesByFeatureGuidTest {
     }
   }
 
-  internal class CreatorAccountGuid : ResourceTest() {
+  internal class CreatorAccountGuid(
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
+  ) : IntegrationTest(engine, limberServer) {
     @Test
     fun happyPathNoFormInstancesForCreator() {
       val orgGuid = UUID.randomUUID()
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -151,26 +158,26 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-      limberTest.setup(
+      setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
         )
       )
 
-      limberTest.setup(
+      setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
         )
       )
 
-      limberTest.test(
+      test(
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = UUID.randomUUID(),
@@ -192,7 +199,7 @@ object ExportFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mockedServices[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
       val existingUser0 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -206,21 +213,21 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
-      limberTest.setup(
+      setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
         )
       )
 
-      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
-      limberTest.setup(
+      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+      setup(
         endpoint = FormInstanceApi.Patch(
           featureGuid = featureGuid,
           formInstanceGuid = formInstance0Rep.guid,
@@ -228,14 +235,14 @@ object ExportFormInstancesByFeatureGuidTest {
         )
       )
 
-      limberTest.setup(
+      setup(
         endpoint = FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
         )
       )
 
-      limberTest.test(
+      test(
         endpoint = FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = existingUser0.guid,

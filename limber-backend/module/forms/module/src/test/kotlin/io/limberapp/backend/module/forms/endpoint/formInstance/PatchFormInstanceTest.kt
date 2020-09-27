@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.endpoint.formInstance
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.question.FormTemplateQuestionApi
@@ -7,24 +8,27 @@ import io.limberapp.backend.module.forms.exception.formInstance.CannotReSubmitFo
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import io.limberapp.common.LimberApplication
 import io.limberapp.common.endpoint.exception.ValidationException
-import io.limberapp.common.testing.responseContent
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class PatchFormInstanceTest : ResourceTest() {
+internal class PatchFormInstanceTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    limberTest.test(
+    test(
       endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = true)),
       expectedException = FormInstanceNotFound()
     )
@@ -37,22 +41,22 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val feature1Guid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    limberTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    limberTest.setup(
+    setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = feature0Guid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 
-    limberTest.test(
+    test(
       endpoint = FormInstanceApi.Patch(feature1Guid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
       expectedException = FormInstanceNotFound()
     )
 
-    limberTest.test(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid)) {
+    test(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid)) {
       val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
@@ -63,7 +67,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    limberTest.test(
+    test(
       endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = false)),
       expectedException = ValidationException(FormInstanceRep.Update::submitted.name)
     )
@@ -75,11 +79,11 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    limberTest.setup(
+    setup(
       endpoint = FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
@@ -88,19 +92,19 @@ internal class PatchFormInstanceTest : ResourceTest() {
     )
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    limberTest.setup(
+    setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 
-    limberTest.test(
+    test(
       endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
       expectedException = CannotSubmitFormBeforeAnsweringAllRequiredQuestions()
     )
 
-    limberTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
       val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
@@ -112,25 +116,25 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    limberTest.setup(
+    setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 
-    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
-    limberTest.setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+    setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)))
 
-    limberTest.test(
+    test(
       endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
       expectedException = CannotReSubmitFormInstance()
     )
 
-    limberTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
       val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }
@@ -142,18 +146,18 @@ internal class PatchFormInstanceTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    limberTest.setup(
+    setup(
       endpoint = FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       )
     )
 
-    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(fixedClock))
-    limberTest.test(
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+    test(
       endpoint = FormInstanceApi.Patch(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
@@ -164,7 +168,7 @@ internal class PatchFormInstanceTest : ResourceTest() {
       assertEquals(formInstanceRep, actual)
     }
 
-    limberTest.test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
+    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
       val actual = json.parse<FormInstanceRep.Complete>(responseContent)
       assertEquals(formInstanceRep, actual)
     }

@@ -1,14 +1,14 @@
 package io.limberapp.backend.module.forms.testing.fixtures.formInstance
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.IntegrationTest
 import java.time.LocalDateTime
 import java.util.*
 
 internal object FormInstanceRepFixtures {
   data class Fixture(
     val creation: (formTemplateGuid: UUID, creatorAccountGuid: UUID) -> FormInstanceRep.Creation,
-    val complete: ResourceTest.(
+    val complete: IntegrationTest.(
       formTemplateGuid: UUID,
       creatorAccountGuid: UUID,
       idSeed: Int,
@@ -22,8 +22,8 @@ internal object FormInstanceRepFixtures {
     )
   }, { formTemplateGuid, creatorAccountGuid, idSeed ->
     FormInstanceRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       formTemplateGuid = formTemplateGuid,
       number = null,
       submittedDate = null,

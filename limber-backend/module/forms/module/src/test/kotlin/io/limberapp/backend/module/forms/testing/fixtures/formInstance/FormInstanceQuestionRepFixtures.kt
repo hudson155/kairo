@@ -5,26 +5,26 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
-import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.IntegrationTest
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
 internal object FormInstanceQuestionRepFixtures {
   data class Fixture(
-    val creation: ResourceTest.() -> FormInstanceQuestionRep.Creation,
-    val complete: ResourceTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete,
+    val creation: IntegrationTest.() -> FormInstanceQuestionRep.Creation,
+    val complete: IntegrationTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete,
   )
 
   val dateFixture = Fixture({
     FormInstanceDateQuestionRep.Creation(
-      date = LocalDate.now(fixedClock),
+      date = LocalDate.now(clock),
     )
   }, { questionGuid ->
     FormInstanceDateQuestionRep.Complete(
-      createdDate = LocalDateTime.now(fixedClock),
+      createdDate = LocalDateTime.now(clock),
       questionGuid = questionGuid,
-      date = LocalDate.now(fixedClock),
+      date = LocalDate.now(clock),
     )
   })
 
@@ -34,7 +34,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceRadioSelectorQuestionRep.Complete(
-      createdDate = LocalDateTime.now(fixedClock),
+      createdDate = LocalDateTime.now(clock),
       questionGuid = questionGuid,
       selection = "Option 1",
     )
@@ -46,7 +46,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceTextQuestionRep.Complete(
-      createdDate = LocalDateTime.now(fixedClock),
+      createdDate = LocalDateTime.now(clock),
       questionGuid = questionGuid,
       text = "Nothing significant to add.",
     )
@@ -58,7 +58,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceYesNoQuestionRep.Complete(
-      createdDate = LocalDateTime.now(fixedClock),
+      createdDate = LocalDateTime.now(clock),
       questionGuid = questionGuid,
       yes = true,
     )

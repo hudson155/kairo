@@ -1,19 +1,24 @@
 package io.limberapp.backend.module.forms.endpoint.formTemplate
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
-import io.limberapp.backend.module.forms.testing.ResourceTest
+import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 
-internal class DeleteFormTemplateTest : ResourceTest() {
+internal class DeleteFormTemplateTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    limberTest.test(
+    test(
       endpoint = FormTemplateApi.Delete(featureGuid, formTemplateGuid),
       expectedException = FormTemplateNotFound()
     )
@@ -25,14 +30,14 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     val feature1Guid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    limberTest.setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    limberTest.test(
+    test(
       endpoint = FormTemplateApi.Delete(feature1Guid, formTemplateRep.guid),
       expectedException = FormTemplateNotFound()
     )
 
-    limberTest.test(FormTemplateApi.Get(feature0Guid, formTemplateRep.guid)) {}
+    test(FormTemplateApi.Get(feature0Guid, formTemplateRep.guid)) {}
   }
 
   @Test
@@ -40,11 +45,11 @@ internal class DeleteFormTemplateTest : ResourceTest() {
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
 
-    limberTest.test(FormTemplateApi.Delete(featureGuid, formTemplateRep.guid)) {}
+    test(FormTemplateApi.Delete(featureGuid, formTemplateRep.guid)) {}
 
-    limberTest.test(
+    test(
       endpoint = FormTemplateApi.Get(featureGuid, formTemplateRep.guid),
       expectedException = FormTemplateNotFound()
     )
