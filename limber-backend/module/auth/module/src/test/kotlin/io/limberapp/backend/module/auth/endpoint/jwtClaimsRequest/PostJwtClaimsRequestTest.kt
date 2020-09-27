@@ -56,7 +56,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       mockedServices[UserService::class].create(any())
     } answers { firstArg() }
     every {
-      mockedServices[OrgService::class].findOnlyOrThrow(any())
+      mockedServices[OrgService::class].get(existingOrg.guid)
     } returns existingOrg
     every {
       mockedServices[FeatureService::class].findAsSet(any())
@@ -158,7 +158,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       mockedServices[UserService::class].findOnlyOrNull(any())
     } returns existingUser
     every {
-      mockedServices[OrgService::class].findOnlyOrThrow(any())
+      mockedServices[OrgService::class].get(existingOrg.guid)
     } returns existingOrg
     every {
       mockedServices[FeatureService::class].findAsSet(any())

@@ -19,7 +19,7 @@ internal class DeleteUserTest : ResourceTest() {
   fun doesNotExist() {
     val userGuid = UUID.randomUUID()
 
-    every { mockedServices[OrgService::class].findOnlyOrNull(any()) } returns null
+    every { mockedServices[OrgService::class].getByOwnerUserGuid(userGuid) } returns null
 
     limberTest.test(
       endpoint = UserApi.Delete(userGuid),
@@ -34,7 +34,7 @@ internal class DeleteUserTest : ResourceTest() {
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     limberTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    every { mockedServices[OrgService::class].findOnlyOrNull(any()) } returns mockk()
+    every { mockedServices[OrgService::class].getByOwnerUserGuid(userRep.guid) } returns mockk()
 
     limberTest.test(
       endpoint = UserApi.Delete(userRep.guid),
@@ -54,7 +54,7 @@ internal class DeleteUserTest : ResourceTest() {
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     limberTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    every { mockedServices[OrgService::class].findOnlyOrNull(any()) } returns null
+    every { mockedServices[OrgService::class].getByOwnerUserGuid(userRep.guid) } returns null
 
     limberTest.test(UserApi.Delete(userRep.guid)) {}
 

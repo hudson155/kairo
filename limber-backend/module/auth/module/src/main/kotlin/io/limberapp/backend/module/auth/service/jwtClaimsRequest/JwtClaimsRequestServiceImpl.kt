@@ -75,7 +75,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
   @LimberModule.Orgs
   private fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
-    val org = orgService.findOnlyOrThrow { orgGuid(user.orgGuid) }
+    val org = checkNotNull(orgService.get(user.orgGuid))
     val features = featureService.findAsSet { orgGuid(user.orgGuid) }
     val (orgRoles, isOwner, permissions) = getPermissions(org, user.guid)
     val orgRoleGuids = orgRoles.map { it.guid }.toSet()

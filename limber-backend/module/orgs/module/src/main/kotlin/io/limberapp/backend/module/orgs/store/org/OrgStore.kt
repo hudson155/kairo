@@ -3,17 +3,14 @@ package io.limberapp.backend.module.orgs.store.org
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
-import io.limberapp.backend.module.orgs.model.org.OrgFinder
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
-import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
 @Singleton
-internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<OrgModel, OrgFinder> {
+internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: OrgModel): OrgModel =
     withHandle { handle ->
       handle.createQuery(sqlResource("/store/org/create.sql"))
@@ -22,12 +19,20 @@ internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder
         .single()
     }
 
-  override fun <R> find(result: (Iterable<OrgModel>) -> R, query: OrgFinder.() -> Unit): R =
+  fun get(orgGuid: UUID): OrgModel? =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/org/find.sql"))
-        .withFinder(OrgQueryBuilder().apply(query))
+      handle.createQuery(sqlResource("/store/org/get.sql"))
+        .bind("orgGuid", orgGuid)
         .mapTo(OrgModel::class.java)
-        .let(result)
+        .singleOrNull()
+    }
+
+  fun getByOwnerUserGuid(ownerUserGuid: UUID): OrgModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/org/getByOwnerUserGuid.sql"))
+        .bind("ownerUserGuid", ownerUserGuid)
+        .mapTo(OrgModel::class.java)
+        .singleOrNull()
     }
 
   fun update(orgGuid: UUID, update: OrgModel.Update): OrgModel =
