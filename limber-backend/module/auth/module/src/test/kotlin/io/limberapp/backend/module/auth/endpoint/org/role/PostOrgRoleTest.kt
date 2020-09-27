@@ -1,24 +1,28 @@
 package io.limberapp.backend.module.auth.endpoint.org.role
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
-import io.limberapp.common.testing.responseContent
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class PostOrgRoleTest : ResourceTest() {
+internal class PostOrgRoleTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun duplicateName() {
     val orgGuid = UUID.randomUUID()
 
     val adminOrgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    limberTest.setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    limberTest.test(
+    test(
       endpoint = OrgRoleApi.Post(
         orgGuid = orgGuid,
         rep = OrgRoleRepFixtures.memberFixture.creation().copy(name = adminOrgRoleRep.name)
@@ -26,7 +30,7 @@ internal class PostOrgRoleTest : ResourceTest() {
       expectedException = OrgRoleNameIsNotUnique()
     )
 
-    limberTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
+    test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
       val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
       assertEquals(setOf(adminOrgRoleRep), actual)
     }
@@ -37,12 +41,12 @@ internal class PostOrgRoleTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    limberTest.test(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation())) {
+    test(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation())) {
       val actual = json.parse<OrgRoleRep.Complete>(responseContent)
       assertEquals(orgRoleRep, actual)
     }
 
-    limberTest.test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
+    test(OrgRoleApi.GetByOrgGuid(orgGuid)) {
       val actual = json.parseSet<OrgRoleRep.Complete>(responseContent)
       assertEquals(setOf(orgRoleRep), actual)
     }

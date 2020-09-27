@@ -3,13 +3,13 @@ package io.limberapp.backend.module.auth.testing.fixtures.org
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
-import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.IntegrationTest
 import java.time.LocalDateTime
 
 internal object OrgRoleRepFixtures {
   data class Fixture(
     val creation: () -> OrgRoleRep.Creation,
-    val complete: ResourceTest.(idSeed: Int) -> OrgRoleRep.Complete,
+    val complete: IntegrationTest.(idSeed: Int) -> OrgRoleRep.Complete,
   )
 
   val adminFixture = Fixture(
@@ -22,8 +22,8 @@ internal object OrgRoleRepFixtures {
     },
     { idSeed ->
       OrgRoleRep.Complete(
-        guid = deterministicUuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(fixedClock),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
         name = "Admins",
         permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
         isDefault = false,
@@ -42,8 +42,8 @@ internal object OrgRoleRepFixtures {
     },
     { idSeed ->
       OrgRoleRep.Complete(
-        guid = deterministicUuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(fixedClock),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
         name = "Maintainer",
         permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
         isDefault = false,
@@ -62,8 +62,8 @@ internal object OrgRoleRepFixtures {
     },
     { idSeed ->
       OrgRoleRep.Complete(
-        guid = deterministicUuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(fixedClock),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
         name = "Members",
         permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
         isDefault = true,

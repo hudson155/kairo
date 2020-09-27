@@ -1,22 +1,26 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
-import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
-import io.limberapp.common.testing.responseContent
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class PatchTenantTest : ResourceTest() {
+internal class PatchTenantTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    limberTest.test(
+    test(
       endpoint = TenantApi.Patch(orgGuid, TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")),
       expectedException = TenantNotFound()
     )
@@ -28,11 +32,11 @@ internal class PatchTenantTest : ResourceTest() {
     val someclientOrgGuid = UUID.randomUUID()
 
     val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
-    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
 
-    limberTest.setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
+    setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
-    limberTest.test(
+    test(
       endpoint = TenantApi.Patch(someclientOrgGuid, TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)),
       expectedException = Auth0ClientIdAlreadyRegistered()
     )
@@ -44,16 +48,16 @@ internal class PatchTenantTest : ResourceTest() {
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
     tenantRep = tenantRep.copy(name = "new tenant (display) name")
-    limberTest.test(TenantApi.Patch(originalTenantRep.orgGuid,
+    test(TenantApi.Patch(originalTenantRep.orgGuid,
       TenantRep.Update(name = "new tenant (display) name"))) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
 
-    limberTest.test(TenantApi.Get(orgGuid)) {
+    test(TenantApi.Get(orgGuid)) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
@@ -65,16 +69,16 @@ internal class PatchTenantTest : ResourceTest() {
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
     tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
-    limberTest.test(TenantApi.Patch(originalTenantRep.orgGuid,
+    test(TenantApi.Patch(originalTenantRep.orgGuid,
       TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"))) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
 
-    limberTest.test(TenantApi.Get(orgGuid)) {
+    test(TenantApi.Get(orgGuid)) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }

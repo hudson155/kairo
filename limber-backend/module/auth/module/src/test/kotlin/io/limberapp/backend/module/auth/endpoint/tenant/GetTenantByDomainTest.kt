@@ -1,21 +1,25 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
-import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
-import io.limberapp.common.testing.responseContent
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class GetTenantByDomainTest : ResourceTest() {
+internal class GetTenantByDomainTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val tenantDomain = "fakedomain.com"
 
-    limberTest.test(
+    test(
       endpoint = TenantApi.GetByDomain(tenantDomain),
       expectedException = TenantNotFound()
     )
@@ -26,9 +30,9 @@ internal class GetTenantByDomainTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
-    limberTest.test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
+    test(TenantApi.GetByDomain(tenantRep.domains.single().domain)) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }

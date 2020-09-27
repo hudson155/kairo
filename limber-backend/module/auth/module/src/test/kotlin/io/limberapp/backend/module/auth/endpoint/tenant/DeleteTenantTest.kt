@@ -1,18 +1,23 @@
 package io.limberapp.backend.module.auth.endpoint.tenant
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
-import io.limberapp.backend.module.auth.testing.ResourceTest
+import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 
-internal class DeleteTenantTest : ResourceTest() {
+internal class DeleteTenantTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    limberTest.test(
+    test(
       endpoint = TenantApi.Delete(orgGuid),
       expectedException = TenantNotFound()
     )
@@ -23,11 +28,11 @@ internal class DeleteTenantTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    limberTest.setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
-    limberTest.test(TenantApi.Delete(tenantRep.orgGuid)) {}
+    test(TenantApi.Delete(tenantRep.orgGuid)) {}
 
-    limberTest.test(
+    test(
       endpoint = TenantApi.Get(orgGuid),
       expectedException = TenantNotFound()
     )
