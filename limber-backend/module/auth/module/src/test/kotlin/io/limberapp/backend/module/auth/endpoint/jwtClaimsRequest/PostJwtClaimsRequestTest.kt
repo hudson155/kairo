@@ -50,7 +50,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       isDefaultFeature = true
     )
     every {
-      mockedServices[UserService::class].findOnlyOrNull(any())
+      mockedServices[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress)
     } returns null
     every {
       mockedServices[UserService::class].create(any())
@@ -155,7 +155,7 @@ internal class PostJwtClaimsRequestTest : ResourceTest() {
       profilePhotoUrl = null
     )
     every {
-      mockedServices[UserService::class].findOnlyOrNull(any())
+      mockedServices[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress)
     } returns existingUser
     every {
       mockedServices[OrgService::class].get(existingOrg.guid)

@@ -26,7 +26,7 @@ internal class GetUsersByOrgGuid @Inject constructor(
 
   override suspend fun Handler.handle(command: UserApi.GetByOrgGuid): Set<UserRep.Summary> {
     Authorization.OrgMember(command.orgGuid).authorize()
-    val users = userService.findAsSet { orgGuid(command.orgGuid) }
+    val users = userService.getByOrgGuid(command.orgGuid)
     return users.map { userMapper.summaryRep(it) }.toSet()
   }
 }

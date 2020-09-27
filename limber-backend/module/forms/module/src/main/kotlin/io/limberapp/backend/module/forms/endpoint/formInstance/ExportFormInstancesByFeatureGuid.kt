@@ -51,7 +51,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
       sortBy(FormInstanceFinder.SortBy.NUMBER, SortableFinder.SortDirection.ASCENDING)
     }
     val feature = featureService.findOnlyOrThrow { featureGuid(command.featureGuid) }
-    val users = userService.findAsSet { orgGuid(feature.orgGuid) }
+    val users = userService.getByOrgGuid(feature.orgGuid)
     return FormInstanceExporter(
       users = users.associateBy { it.guid },
       timeZone = command.timeZone,

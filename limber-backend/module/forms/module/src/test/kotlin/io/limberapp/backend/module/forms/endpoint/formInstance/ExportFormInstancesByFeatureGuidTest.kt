@@ -43,7 +43,7 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].findAsSet(any()) } returns setOf(existingUser0, existingUser1)
+      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       limberTest.test(
         endpoint = FormInstanceApi.ExportByFeatureGuid(
@@ -81,7 +81,7 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].findAsSet(any()) } returns setOf(existingUser0, existingUser1)
+      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
@@ -151,7 +151,7 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].findAsSet(any()) } returns setOf(existingUser0, existingUser1)
+      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
@@ -206,7 +206,7 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.lastName } returns "Gates"
         every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
-      every { mockedServices[UserService::class].findAsSet(any()) } returns setOf(existingUser0, existingUser1)
+      every { mockedServices[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       limberTest.setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
