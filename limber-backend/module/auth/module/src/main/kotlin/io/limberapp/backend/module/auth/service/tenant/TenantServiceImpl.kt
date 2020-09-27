@@ -1,17 +1,24 @@
 package io.limberapp.backend.module.auth.service.tenant
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.auth.model.tenant.TenantFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import io.limberapp.backend.module.auth.store.tenant.TenantStore
-import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class TenantServiceImpl @Inject constructor(
   private val tenantStore: TenantStore,
-) : TenantService, Finder<TenantModel, TenantFinder> by tenantStore {
+) : TenantService {
   override fun create(model: TenantModel) =
     tenantStore.create(model)
+
+  override fun get(orgGuid: UUID) =
+    tenantStore.get(orgGuid)
+
+  override fun getByAuth0ClientId(auth0ClientId: String) =
+    tenantStore.getByAuth0ClientId(auth0ClientId)
+
+  override fun getByDomain(domain: String) =
+    tenantStore.getByDomain(domain)
 
   override fun update(orgGuid: UUID, update: TenantModel.Update) =
     tenantStore.update(orgGuid, update)

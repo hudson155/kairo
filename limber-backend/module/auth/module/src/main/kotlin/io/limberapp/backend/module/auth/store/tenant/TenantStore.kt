@@ -5,12 +5,9 @@ import com.google.inject.Singleton
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
-import io.limberapp.backend.module.auth.model.tenant.TenantFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isUniqueConstraintViolation
-import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -20,7 +17,7 @@ private const val UNIQ_ORG_GUID = "uniq__tenant__org_guid"
 private const val UNIQ_AUTH0_CLIENT_ID = "uniq__tenant__auth0_client_id"
 
 @Singleton
-internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<TenantModel, TenantFinder> {
+internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantModel): TenantModel =
     withHandle { handle ->
       try {
@@ -33,12 +30,28 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fin
       }
     }
 
-  override fun <R> find(result: (Iterable<TenantModel>) -> R, query: TenantFinder.() -> Unit): R =
+  fun get(orgGuid: UUID): TenantModel? =
     withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/find.sql"))
-        .withFinder(TenantQueryBuilder().apply(query))
+      handle.createQuery(sqlResource("/store/tenant/get.sql"))
+        .bind("orgGuid", orgGuid)
         .mapTo(TenantModel::class.java)
-        .let(result)
+        .singleNullOrThrow()
+    }
+
+  fun getByAuth0ClientId(auth0ClientId: String): TenantModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenant/getByAuth0ClientId.sql"))
+        .bind("auth0ClientId", auth0ClientId)
+        .mapTo(TenantModel::class.java)
+        .singleNullOrThrow()
+    }
+
+  fun getByDomain(domain: String): TenantModel? =
+    withHandle { handle ->
+      handle.createQuery(sqlResource("/store/tenant/getByDomain.sql"))
+        .bind("domain", domain)
+        .mapTo(TenantModel::class.java)
+        .singleNullOrThrow()
     }
 
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =

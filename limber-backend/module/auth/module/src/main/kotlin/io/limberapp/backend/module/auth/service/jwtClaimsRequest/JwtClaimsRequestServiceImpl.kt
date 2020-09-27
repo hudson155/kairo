@@ -53,7 +53,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
 
   @LimberModule.Users
   private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
-    val tenant = tenantService.findOnlyOrThrow { auth0ClientId(request.auth0ClientId) }
+    val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
 
     val existingUser = userService.getByOrgGuidAndEmailAddress(tenant.orgGuid, request.emailAddress)
     if (existingUser != null) return existingUser

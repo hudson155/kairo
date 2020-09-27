@@ -1,3 +1,3 @@
 SELECT *
 FROM auth.tenant
-WHERE <conditions>
+WHERE org_guid = :orgGuid
