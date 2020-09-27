@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.orgs.testing.fixtures.org
 
 import io.limberapp.backend.module.orgs.rep.org.FeatureRep
-import io.limberapp.backend.module.orgs.testing.ResourceTest
+import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import java.time.LocalDateTime
 
 internal object FeatureRepFixtures {
   data class Fixture(
     val creation: () -> FeatureRep.Creation,
-    val complete: ResourceTest.(idSeed: Int) -> FeatureRep.Complete,
+    val complete: IntegrationTest.(idSeed: Int) -> FeatureRep.Complete,
   )
 
   val homeFixture = Fixture(
@@ -16,8 +16,8 @@ internal object FeatureRepFixtures {
     },
     { idSeed ->
       FeatureRep.Complete(
-        guid = deterministicUuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(fixedClock),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
         rank = 0,
         name = "Home",
         path = "/home",
@@ -33,8 +33,8 @@ internal object FeatureRepFixtures {
     },
     { idSeed ->
       FeatureRep.Complete(
-        guid = deterministicUuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(fixedClock),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
         rank = 1,
         name = "Forms",
         path = "/forms",
