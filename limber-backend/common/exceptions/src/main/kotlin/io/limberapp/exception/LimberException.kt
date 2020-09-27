@@ -1,4 +1,4 @@
-package io.limberapp.common.exception
+package io.limberapp.exception
 
 abstract class LimberException(
   message: String,

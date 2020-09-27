@@ -12,7 +12,7 @@ import io.ktor.server.testing.createTestEnvironment
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
 import io.limberapp.error.LimberError
-import io.limberapp.common.exception.LimberException
+import io.limberapp.exception.LimberException
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.serialization.Json
 import io.limberapp.exceptionMapping.ExceptionMapper

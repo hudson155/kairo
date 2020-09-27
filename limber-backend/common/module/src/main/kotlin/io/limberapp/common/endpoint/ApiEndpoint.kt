@@ -21,8 +21,8 @@ import io.ktor.util.pipeline.ContextDsl
 import io.limberapp.common.authorization.LimberAuthorization
 import io.limberapp.common.endpoint.exception.ParameterConversionException
 import io.limberapp.common.endpoint.exception.ValidationException
-import io.limberapp.common.exception.exception.badRequest.BodyRequired
-import io.limberapp.common.exception.exception.forbidden.ForbiddenException
+import io.limberapp.exception.badRequest.BodyRequired
+import io.limberapp.exception.forbidden.ForbiddenException
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.restInterface.LimberEndpointTemplate
 import io.limberapp.rep.ValidatedRep

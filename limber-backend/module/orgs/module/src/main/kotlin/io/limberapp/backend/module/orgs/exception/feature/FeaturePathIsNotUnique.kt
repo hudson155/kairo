@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.orgs.exception.feature
 
-import io.limberapp.common.exception.exception.conflict.ConflictException
+import io.limberapp.exception.conflict.ConflictException
 
 internal class FeaturePathIsNotUnique : ConflictException(
   message = "The feature cannot have the same path as another feature.",

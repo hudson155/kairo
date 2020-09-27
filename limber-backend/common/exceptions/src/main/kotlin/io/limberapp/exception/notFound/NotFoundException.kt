@@ -1,5 +1,5 @@
-package io.limberapp.common.exception.exception.notFound
+package io.limberapp.exception.notFound
 
-import io.limberapp.common.exception.LimberException
+import io.limberapp.exception.LimberException
 
 abstract class NotFoundException(message: String, cause: Exception? = null) : LimberException(message, null, cause)

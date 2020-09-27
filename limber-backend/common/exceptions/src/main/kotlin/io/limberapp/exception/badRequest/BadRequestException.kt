@@ -1,5 +1,5 @@
-package io.limberapp.common.exception.exception.badRequest
+package io.limberapp.exception.badRequest
 
-import io.limberapp.common.exception.LimberException
+import io.limberapp.exception.LimberException
 
 abstract class BadRequestException(message: String, cause: Exception? = null) : LimberException(message, null, cause)

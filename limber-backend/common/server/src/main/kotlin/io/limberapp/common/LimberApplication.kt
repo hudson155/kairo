@@ -29,7 +29,7 @@ import io.ktor.server.engine.ApplicationEngineEnvironment
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.common.contentNegotiation.JsonContentConverter
 import io.limberapp.common.exception.EndpointNotFound
-import io.limberapp.common.exception.LimberException
+import io.limberapp.exception.LimberException
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.ApplicationModule
 import io.limberapp.common.module.GuiceModule

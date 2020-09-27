@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.exception.formInstance
 
-import io.limberapp.common.exception.exception.conflict.ConflictException
+import io.limberapp.exception.conflict.ConflictException
 
 internal class CannotReSubmitFormInstance : ConflictException(
   message = "This form has already been submitted.",

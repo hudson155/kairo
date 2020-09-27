@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.exception.formInstance
 
-import io.limberapp.common.exception.exception.conflict.ConflictException
+import io.limberapp.exception.conflict.ConflictException
 
 internal class CannotSubmitFormBeforeAnsweringAllRequiredQuestions : ConflictException(
   message = "You can't submit this form until you answer all required questions.",

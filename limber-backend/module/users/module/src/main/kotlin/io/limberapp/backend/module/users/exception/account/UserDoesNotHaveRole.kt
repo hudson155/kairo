@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.exception.account
 
-import io.limberapp.common.exception.exception.conflict.ConflictException
+import io.limberapp.exception.conflict.ConflictException
 
 internal class UserDoesNotHaveRole : ConflictException(
   message = "The user does not have the role.",

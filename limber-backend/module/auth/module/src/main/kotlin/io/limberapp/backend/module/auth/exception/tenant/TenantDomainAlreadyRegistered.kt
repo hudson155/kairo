@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.exception.tenant
 
-import io.limberapp.common.exception.exception.conflict.ConflictException
+import io.limberapp.exception.conflict.ConflictException
 
 internal class TenantDomainAlreadyRegistered : ConflictException(
   message = "The tenant domain is already registered to a tenant.",

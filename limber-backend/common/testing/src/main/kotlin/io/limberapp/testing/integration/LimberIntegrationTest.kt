@@ -16,10 +16,10 @@ import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.common.LimberApplication
-import io.limberapp.common.exception.LimberException
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.serialization.Json
 import io.limberapp.error.LimberError
+import io.limberapp.exception.LimberException
 import io.limberapp.exceptionMapping.ExceptionMapper
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
