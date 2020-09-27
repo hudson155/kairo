@@ -1,14 +1,14 @@
 package io.limberapp.backend.module.users.testing.fixtures.account
 
 import io.limberapp.backend.module.users.rep.account.UserRep
-import io.limberapp.backend.module.users.testing.ResourceTest
+import io.limberapp.testing.integration.LimberIntegrationTest
 import java.time.LocalDateTime
 import java.util.*
 
 internal object UserRepFixtures {
   data class Fixture(
     val creation: (orgGuid: UUID) -> UserRep.Creation,
-    val complete: ResourceTest.(orgGuid: UUID, idSeed: Int) -> UserRep.Complete,
+    val complete: LimberIntegrationTest.(orgGuid: UUID, idSeed: Int) -> UserRep.Complete,
   )
 
   val jeffHudsonFixture = Fixture({ orgGuid ->
@@ -21,8 +21,8 @@ internal object UserRepFixtures {
     )
   }, { orgGuid, idSeed ->
     UserRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       roles = emptySet(),
       orgGuid = orgGuid,
       firstName = "Jeff",
@@ -42,8 +42,8 @@ internal object UserRepFixtures {
     )
   }, { orgGuid, idSeed ->
     UserRep.Complete(
-      guid = deterministicUuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(fixedClock),
+      guid = uuidGenerator[idSeed],
+      createdDate = LocalDateTime.now(clock),
       roles = emptySet(),
       orgGuid = orgGuid,
       firstName = "Bill",

@@ -1,24 +1,28 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.EmailAddressAlreadyTaken
 import io.limberapp.backend.module.users.rep.account.UserRep
-import io.limberapp.backend.module.users.testing.ResourceTest
+import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
-import io.limberapp.common.testing.responseContent
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class PostUserTest : ResourceTest() {
+internal class PostUserTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun duplicateEmailAddress() {
     val orgGuid = UUID.randomUUID()
 
     val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    limberTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
 
-    limberTest.test(
+    test(
       endpoint = UserApi.Post(
         rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
           .copy(emailAddress = jeffHudsonUserRep.emailAddress)
@@ -33,10 +37,10 @@ internal class PostUserTest : ResourceTest() {
     val org1Guid = UUID.randomUUID()
 
     val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, org0Guid, 0)
-    limberTest.setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid)))
+    setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid)))
 
     // Just checking that this doesn't throw an exception. Not checking the response.
-    limberTest.test(
+    test(
       endpoint = UserApi.Post(
         rep = UserRepFixtures.billGatesFixture.creation(org1Guid)
           .copy(emailAddress = jeffHudsonUserRep.emailAddress)
@@ -49,12 +53,12 @@ internal class PostUserTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    limberTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {
+    test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {
       val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
 
-    limberTest.test(UserApi.Get(userRep.guid)) {
+    test(UserApi.Get(userRep.guid)) {
       val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }

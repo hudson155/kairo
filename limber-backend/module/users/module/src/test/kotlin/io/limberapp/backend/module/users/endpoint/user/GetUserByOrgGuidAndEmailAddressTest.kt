@@ -1,23 +1,27 @@
 package io.limberapp.backend.module.users.endpoint.user
 
+import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.rep.account.UserRep
-import io.limberapp.backend.module.users.testing.ResourceTest
+import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
-import io.limberapp.common.testing.responseContent
+import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class GetUserByOrgGuidAndEmailAddressTest : ResourceTest() {
+internal class GetUserByOrgGuidAndEmailAddressTest(
+  engine: TestApplicationEngine,
+  limberServer: LimberApplication<*>,
+) : IntegrationTest(engine, limberServer) {
   @Test
   fun emailAddressDoesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    limberTest.test(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) {}
+    test(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) {}
 
-    limberTest.test(
+    test(
       endpoint = UserApi.GetByOrgGuidAndEmailAddress(orgGuid, "jhudson@jhudson.ca"),
       expectedException = UserNotFound()
     )
@@ -29,9 +33,9 @@ internal class GetUserByOrgGuidAndEmailAddressTest : ResourceTest() {
     val org1Guid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, org0Guid, 0)
-    limberTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid))) {}
+    test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid))) {}
 
-    limberTest.test(
+    test(
       endpoint = UserApi.GetByOrgGuidAndEmailAddress(org1Guid, userRep.emailAddress),
       expectedException = UserNotFound()
     )
@@ -42,9 +46,9 @@ internal class GetUserByOrgGuidAndEmailAddressTest : ResourceTest() {
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    limberTest.test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
+    test(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) {}
 
-    limberTest.test(UserApi.GetByOrgGuidAndEmailAddress(orgGuid, userRep.emailAddress)) {
+    test(UserApi.GetByOrgGuidAndEmailAddress(orgGuid, userRep.emailAddress)) {
       val actual = json.parse<UserRep.Complete>(responseContent)
       assertEquals(userRep, actual)
     }
