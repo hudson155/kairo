@@ -22,7 +22,14 @@ spec:
     - host: api.limberapp.io
       http:
         paths:
-          - backend:
+          - pathType: Exact
+            path: /graphql
+            backend:
+              serviceName: limber-graphql-server
+              servicePort: 80
+          - pathType: Prefix
+            path: /
+            backend:
               serviceName: limber-monolith-server
               servicePort: 80
     - host: demo.covidreopening.ca

@@ -46,6 +46,10 @@ jobs:
         env:
           ENV: production
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
+      - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:master limber-backend/server/graphql
+      - run: docker tag registry.digitalocean.com/limber/limber-graphql-server:master "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
+      - run: docker push registry.digitalocean.com/limber/limber-graphql-server:master
+      - run: docker push "registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)"
       - run: docker build -t registry.digitalocean.com/limber/limber-monolith-server:master limber-backend/server/monolith
       - run: docker tag registry.digitalocean.com/limber/limber-monolith-server:master "registry.digitalocean.com/limber/limber-monolith-server:$(git rev-parse HEAD)"
       - run: docker push registry.digitalocean.com/limber/limber-monolith-server:master
@@ -58,6 +62,7 @@ jobs:
         with:
           token: ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }}
       - run: doctl kubernetes cluster kubeconfig save limber
+      - run: kubectl set image deployment/limber-graphql-server limber-graphql-server="registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-monolith-server limber-monolith-server="registry.digitalocean.com/limber/limber-monolith-server:$(git rev-parse HEAD)" --namespace limber
       - run: kubectl set image deployment/limber-web limber-web="registry.digitalocean.com/limber/limber-web:$(git rev-parse HEAD)" --namespace limber
   deploy-web:

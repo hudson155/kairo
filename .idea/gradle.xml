@@ -63,6 +63,7 @@
             <option value="$PROJECT_DIR$/limber-backend/module/users/module" />
             <option value="$PROJECT_DIR$/limber-backend/module/users/service-interface" />
             <option value="$PROJECT_DIR$/limber-backend/server" />
+            <option value="$PROJECT_DIR$/limber-backend/server/graphql" />
             <option value="$PROJECT_DIR$/limber-backend/server/monolith" />
             <option value="$PROJECT_DIR$/limber-web" />
           </set>

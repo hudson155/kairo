@@ -47,6 +47,7 @@ include(":limber-backend:module:users:interface")
 include(":limber-backend:module:users:module")
 include(":limber-backend:module:users:service-interface")
 
+include(":limber-backend:server:graphql")
 include(":limber-backend:server:monolith")
 
 include(":limber-web")

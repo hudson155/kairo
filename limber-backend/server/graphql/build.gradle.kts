@@ -7,7 +7,7 @@ plugins {
   id(Plugins.shadow).version(Versions.shadow)
 }
 
-group = "io.limberapp.monolith"
+group = "io.limberapp.graphqlServer"
 version = "0.1.0-SNAPSHOT"
 application {
   mainClassName = project.properties.getOrDefault("mainClass", "io.ktor.server.cio.EngineMain") as String
@@ -15,22 +15,21 @@ application {
 
 dependencies {
   implementation(project(":limber-backend:common:server"))
-  implementation(project(":limber-backend:common:sql"))
 
-  implementation(project(":limber-backend:deprecated:common:module"))
-  implementation(project(":limber-backend:deprecated:common:sql"))
-
-  implementation(project(":limber-backend:module:auth:module"))
-  implementation(project(":limber-backend:module:forms:module"))
+  implementation(project(":limber-backend:module:graphql:module"))
   implementation(project(":limber-backend:module:health-check:module"))
-  implementation(project(":limber-backend:module:orgs:module"))
-  implementation(project(":limber-backend:module:users:module"))
 
-  implementation(Dependencies.Jackson.moduleKotlin)
-  implementation(Dependencies.Jwt.auth0JavaJwt)
-  implementation(Dependencies.Jwt.auth0JwksRsa)
   implementation(Dependencies.Ktor.serverCio)
   implementation(Dependencies.Logging.logbackClassic)
+
+  testImplementation(project(":limber-backend:common:testing"))
+}
+
+tasks.test {
+  useJUnitPlatform()
+  testLogging {
+    events("passed", "skipped", "failed")
+  }
 }
 
 detekt {
@@ -39,7 +38,7 @@ detekt {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-  archiveFileName.set("limber-monolith-server.jar")
+  archiveFileName.set("limber-graphql-server.jar")
   mergeServiceFiles()
   manifest {
     attributes(mapOf("MainClass" to application.mainClassName))

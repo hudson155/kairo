@@ -6,7 +6,6 @@ import io.limberapp.backend.module.forms.FormsModule
 import io.limberapp.backend.module.orgs.OrgsModule
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.common.LimberApplication
-import io.limberapp.module.graphql.GraphqlModule
 import io.limberapp.monolith.config.LimberMonolithConfig
 
 internal abstract class BaseLimberApp(
@@ -16,7 +15,6 @@ internal abstract class BaseLimberApp(
   protected fun allLimberModules() = listOf(
     AuthModule(),
     FormsModule(),
-    GraphqlModule(),
     OrgsModule(),
     UsersModule(),
   )
