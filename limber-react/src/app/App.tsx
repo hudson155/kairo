@@ -1,4 +1,5 @@
 import { Auth0Provider } from '@auth0/auth0-react';
+import { ThemeProvider } from 'emotion-theming';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,6 +12,7 @@ import { environment as relayEnvironment } from '../relay-env';
 import { TenantRepComplete } from '../rep/Tenant';
 
 import AppRootRouter from './AppRootRouter';
+import EmotionTheme from './EmotionTheme';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
 
 const api = new LimberApi(env.LIMBER_API_BASE_URL, () => Promise.resolve(undefined));
@@ -33,9 +35,11 @@ function App(): ReactElement {
     >
       <ApiProvider>
         <RelayEnvironmentProvider environment={relayEnvironment}>
-          <BrowserRouter>
-            <AppRootRouter tenant={tenant} />
-          </BrowserRouter>
+          <ThemeProvider theme={EmotionTheme}>
+            <BrowserRouter>
+              <AppRootRouter tenant={tenant} />
+            </BrowserRouter>
+          </ThemeProvider>
         </RelayEnvironmentProvider>
       </ApiProvider>
     </Auth0Provider>
