@@ -22,7 +22,7 @@ dependencies {
   implementation(Dependencies.Ktor.serverCio)
   implementation(Dependencies.Logging.logbackClassic)
 
-  testImplementation(project(":limber-backend:common:testing"))
+  testImplementation(project(":limber-backend:common:testing:integration"))
 }
 
 tasks.test {
