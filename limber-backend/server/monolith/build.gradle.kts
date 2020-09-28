@@ -22,8 +22,8 @@ dependencies {
 
   implementation(project(":limber-backend:module:auth:module"))
   implementation(project(":limber-backend:module:forms:module"))
-  implementation(project(":limber-backend:module:health-check"))
   implementation(project(":limber-backend:module:graphql:module"))
+  implementation(project(":limber-backend:module:health-check:module"))
   implementation(project(":limber-backend:module:orgs:module"))
   implementation(project(":limber-backend:module:users:module"))
 

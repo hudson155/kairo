@@ -4,13 +4,11 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("reflect"))
-
-  api(project(":limber-backend:common:reps"))
+  api(project(":limber-backend:common:exceptions"))
+  api(project(":limber-backend:common:rest-interface"))
   implementation(project(":limber-backend:common:util"))
 
-  api(Dependencies.Ktor.httpJvm)
-  implementation(Dependencies.Logging.slf4j)
+  api(project(":limber-backend:deprecated:common"))
 }
 
 detekt {

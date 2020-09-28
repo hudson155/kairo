@@ -4,9 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:common:validation"))
-
-  api(Dependencies.Jackson.annotations)
+  api(project(":limber-backend:module:orgs:interface"))
 }
 
 detekt {
