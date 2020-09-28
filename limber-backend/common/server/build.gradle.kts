@@ -20,8 +20,9 @@ dependencies {
   implementation(Dependencies.Jackson.dataFormatYaml)
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
-  implementation(Dependencies.Ktor.serverHostCommon)
+  implementation(Dependencies.Ktor.jackson)
   api(Dependencies.Ktor.serverCore)
+  implementation(Dependencies.Ktor.serverHostCommon)
   implementation(Dependencies.Logging.slf4j)
 }
 

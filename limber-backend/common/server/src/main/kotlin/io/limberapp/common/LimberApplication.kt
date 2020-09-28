@@ -21,21 +21,21 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
+import io.ktor.jackson.JacksonConverter
 import io.ktor.response.respond
 import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngineEnvironment
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.common.contentNegotiation.JsonContentConverter
 import io.limberapp.common.exception.EndpointNotFound
-import io.limberapp.exception.LimberException
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.ApplicationModule
 import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.serialization.Json
 import io.limberapp.common.util.conversionService
 import io.limberapp.config.Config
+import io.limberapp.exception.LimberException
 import io.limberapp.exceptionMapping.ExceptionMapper
 import io.limberapp.module.main.MainModule
 import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
@@ -165,7 +165,7 @@ abstract class LimberApplication<C : Config>(application: Application, protected
       val json = Json(prettyPrint = true)
       register(
         contentType = ContentType.Application.Json,
-        converter = JsonContentConverter(json)
+        converter = JacksonConverter(json.objectMapper)
       )
     }
   }

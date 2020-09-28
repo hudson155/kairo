@@ -47,6 +47,7 @@ object Dependencies {
   object Ktor {
     const val auth = "io.ktor:ktor-auth:${Versions.ktor}"
     const val httpJvm = "io.ktor:ktor-http-jvm:${Versions.ktor}"
+    const val jackson = "io.ktor:ktor-jackson:${Versions.ktor}"
     const val serverCio = "io.ktor:ktor-server-cio:${Versions.ktor}"
     const val serverCore = "io.ktor:ktor-server-core:${Versions.ktor}"
     const val serverHostCommon = "io.ktor:ktor-server-host-common:${Versions.ktor}"
