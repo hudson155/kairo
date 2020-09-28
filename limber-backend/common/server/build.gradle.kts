@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   api(project(":limber-backend:common:config"))
-  implementation(project(":limber-backend:common:exception-mapping"))
+  api(project(":limber-backend:common:exception-mapping"))
   implementation(project(":limber-backend:common:ktor-auth"))
   api(project(":limber-backend:common:module"))
   api(project(":limber-backend:common:reps"))

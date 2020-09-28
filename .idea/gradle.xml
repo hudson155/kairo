@@ -26,7 +26,8 @@
             <option value="$PROJECT_DIR$/limber-backend/common/serialization" />
             <option value="$PROJECT_DIR$/limber-backend/common/server" />
             <option value="$PROJECT_DIR$/limber-backend/common/sql" />
-            <option value="$PROJECT_DIR$/limber-backend/common/testing" />
+            <option value="$PROJECT_DIR$/limber-backend/common/testing/integration" />
+            <option value="$PROJECT_DIR$/limber-backend/common/testing/unit" />
             <option value="$PROJECT_DIR$/limber-backend/common/testing-old" />
             <option value="$PROJECT_DIR$/limber-backend/common/type-conversion" />
             <option value="$PROJECT_DIR$/limber-backend/common/util" />

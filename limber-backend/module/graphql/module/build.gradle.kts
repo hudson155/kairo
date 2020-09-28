@@ -9,8 +9,7 @@ dependencies {
 
   implementation(project(":limber-backend:deprecated:common:module"))
 
-  testImplementation(project(":limber-backend:common:server"))
-  testImplementation(project(":limber-backend:common:testing"))
+  testImplementation(project(":limber-backend:common:testing:integration"))
 }
 
 tasks.test {
