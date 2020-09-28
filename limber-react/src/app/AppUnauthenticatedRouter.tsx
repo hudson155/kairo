@@ -1,10 +1,15 @@
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
-function AppUnuthenticatedRouter(): ReactElement {
+interface Props {
+  readonly name: string;
+}
+
+function AppUnuthenticatedRouter(props: Props): ReactElement {
   return (
     <>
-      <h1>Welcome to Limber</h1>
+      <h1>Welcome to {props.name}</h1>
+      <p>Powered by Limber</p>
       <Link to="/signin">Click here to sign in.</Link>
     </>
   );

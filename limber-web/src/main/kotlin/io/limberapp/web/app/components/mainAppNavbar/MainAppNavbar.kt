@@ -7,6 +7,7 @@ import io.limberapp.web.app.components.navbar.components.headerGroup.headerGroup
 import io.limberapp.web.app.components.navbar.components.headerItem.headerItem
 import io.limberapp.web.app.components.profilePhoto.profilePhoto
 import io.limberapp.web.state.state.org.useOrgState
+import io.limberapp.web.state.state.tenant.useTenantState
 import io.limberapp.web.state.state.user.useUserState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.buildElements
@@ -48,6 +49,7 @@ private enum class OpenItem { HAMBURGER, USER_DROPDOWN }
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
   val (org, _) = useOrgState()
+  val (tenant, _) = useTenantState()
   val (user, _) = useUserState()
 
   // Only 1 item on the navbar can be open at a time.
@@ -60,7 +62,7 @@ private fun RBuilder.component(props: Props) {
   hamburgerableNavbar(
     left = buildElements {
       headerGroup {
-        features.default?.let { navLink<RProps>(to = it.path) { headerItem { +"Limber" } } }
+        features.default?.let { navLink<RProps>(to = it.path) { headerItem { +tenant.name } } }
       }
     },
     right = buildElements {

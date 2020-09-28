@@ -34,7 +34,7 @@ function App(): ReactElement {
       <ApiProvider>
         <RelayEnvironmentProvider environment={relayEnvironment}>
           <BrowserRouter>
-            <AppRootRouter orgGuid={tenant.orgGuid} />
+            <AppRootRouter tenant={tenant} />
           </BrowserRouter>
         </RelayEnvironmentProvider>
       </ApiProvider>

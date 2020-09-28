@@ -5,6 +5,7 @@ import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.layout.components.standardLayout.standardLayout
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
+import io.limberapp.web.state.state.tenant.useTenantState
 import io.limberapp.web.state.state.user.useUserState
 import io.limberapp.web.util.Styles
 import io.limberapp.web.util.async
@@ -41,6 +42,7 @@ private val s = S().apply { inject() }
 
 private val component = functionalComponent(RBuilder::component)
 private fun RBuilder.component(props: Props) {
+  val (tenant, _) = useTenantState()
   val (user, userMutator) = useUserState()
 
   val (firstName, setFirstName) = useState(user.firstName ?: "")
@@ -53,7 +55,7 @@ private fun RBuilder.component(props: Props) {
   }
 
   standardLayout {
-    layoutTitle("Welcome to Limber!")
+    layoutTitle("Welcome to ${tenant.name}!")
     p { +"Before you can get started, we just need to know your name." }
     form(classes = s.c { it::form }) {
       attrs.onSubmitFunction = { e ->

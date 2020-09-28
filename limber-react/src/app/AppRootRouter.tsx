@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { app } from '../app';
 import GlobalStateProvider from '../provider/GlobalStateProvider';
+import { TenantRepComplete } from '../rep/Tenant';
 
 import AppFeatureRouter from './AppFeatureRouter';
 import AppUnauthenticatedRouter from './AppUnauthenticatedRouter';
@@ -11,9 +12,8 @@ import LoadingPage from './pages/LoadingPage/LoadingPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import SignOutPage from './pages/SignOutPage/SignOutPage';
 
-
 interface Props {
-  readonly orgGuid: string;
+  readonly tenant: TenantRepComplete;
 }
 
 function AppRootRouter(props: Props): ReactElement {
@@ -22,10 +22,10 @@ function AppRootRouter(props: Props): ReactElement {
   if (auth.isLoading) return <LoadingPage message="Identifying you..." />;
 
   const subRouter: ReactNode = auth.isAuthenticated ? (
-    <GlobalStateProvider orgGuid={props.orgGuid}>
+    <GlobalStateProvider orgGuid={props.tenant.orgGuid}>
       <Route component={AppFeatureRouter} exact={false} path={app.rootPath} />
     </GlobalStateProvider>
-  ) : <Route component={AppUnauthenticatedRouter} exact={false} path={app.rootPath} />;
+  ) : <Route exact={false} path={app.rootPath}><AppUnauthenticatedRouter name={props.tenant.name} /></Route>;
 
   return (
     <Switch>
