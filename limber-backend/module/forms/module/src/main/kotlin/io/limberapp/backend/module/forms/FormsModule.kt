@@ -48,10 +48,10 @@ class FormsModule : ApplicationModule() {
   )
 
   override fun bindServices() {
-    bind(FormTemplateService::class, FormTemplateServiceImpl::class)
-    bind(FormTemplateQuestionService::class, FormTemplateQuestionServiceImpl::class)
+    bind(FormTemplateService::class.java).to(FormTemplateServiceImpl::class.java).asEagerSingleton()
+    bind(FormTemplateQuestionService::class.java).to(FormTemplateQuestionServiceImpl::class.java).asEagerSingleton()
 
-    bind(FormInstanceService::class, FormInstanceServiceImpl::class)
-    bind(FormInstanceQuestionService::class, FormInstanceQuestionServiceImpl::class)
+    bind(FormInstanceService::class.java).to(FormInstanceServiceImpl::class.java).asEagerSingleton()
+    bind(FormInstanceQuestionService::class.java).to(FormInstanceQuestionServiceImpl::class.java).asEagerSingleton()
   }
 }

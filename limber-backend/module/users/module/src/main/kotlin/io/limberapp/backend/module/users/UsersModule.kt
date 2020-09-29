@@ -25,6 +25,6 @@ class UsersModule : ApplicationModule() {
   )
 
   override fun bindServices() {
-    bind(UserService::class, UserServiceImpl::class)
+    bind(UserService::class.java).to(UserServiceImpl::class.java).asEagerSingleton()
   }
 }

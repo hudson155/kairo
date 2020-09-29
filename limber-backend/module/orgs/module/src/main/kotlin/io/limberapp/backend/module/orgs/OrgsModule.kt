@@ -27,7 +27,7 @@ class OrgsModule : ApplicationModule() {
   )
 
   override fun bindServices() {
-    bind(OrgService::class, OrgServiceImpl::class)
-    bind(FeatureService::class, FeatureServiceImpl::class)
+    bind(OrgService::class.java).to(OrgServiceImpl::class.java).asEagerSingleton()
+    bind(FeatureService::class.java).to(FeatureServiceImpl::class.java).asEagerSingleton()
   }
 }

@@ -9,6 +9,6 @@ internal class MonolithModule : ApplicationModule() {
   override val endpoints = emptyList<Class<out ApiEndpoint<*, *, *>>>()
 
   override fun bindServices() {
-    bind(HealthCheckService::class, HealthCheckServiceImpl::class)
+    bind(HealthCheckService::class.java).to(HealthCheckServiceImpl::class.java).asEagerSingleton()
   }
 }

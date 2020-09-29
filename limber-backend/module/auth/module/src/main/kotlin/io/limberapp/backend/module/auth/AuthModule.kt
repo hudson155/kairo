@@ -61,14 +61,14 @@ class AuthModule : ApplicationModule() {
   )
 
   override fun bindServices() {
-    bind(FeatureRoleService::class, FeatureRoleServiceImpl::class)
+    bind(FeatureRoleService::class.java).to(FeatureRoleServiceImpl::class.java).asEagerSingleton()
 
-    bind(JwtClaimsRequestService::class, JwtClaimsRequestServiceImpl::class)
+    bind(JwtClaimsRequestService::class.java).to(JwtClaimsRequestServiceImpl::class.java).asEagerSingleton()
 
-    bind(OrgRoleService::class, OrgRoleServiceImpl::class)
-    bind(OrgRoleMembershipService::class, OrgRoleMembershipServiceImpl::class)
+    bind(OrgRoleService::class.java).to(OrgRoleServiceImpl::class.java).asEagerSingleton()
+    bind(OrgRoleMembershipService::class.java).to(OrgRoleMembershipServiceImpl::class.java).asEagerSingleton()
 
-    bind(TenantService::class, TenantServiceImpl::class)
-    bind(TenantDomainService::class, TenantDomainServiceImpl::class)
+    bind(TenantService::class.java).to(TenantServiceImpl::class.java).asEagerSingleton()
+    bind(TenantDomainService::class.java).to(TenantDomainServiceImpl::class.java).asEagerSingleton()
   }
 }

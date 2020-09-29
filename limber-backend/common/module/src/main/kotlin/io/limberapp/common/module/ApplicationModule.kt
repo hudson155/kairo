@@ -2,7 +2,6 @@ package io.limberapp.common.module
 
 import io.limberapp.common.endpoint.ApiEndpoint
 import org.slf4j.LoggerFactory
-import kotlin.reflect.KClass
 
 /**
  * A [ApplicationModule] encapsulates a distinct concept in the application. It wires up the endpoints and binds
@@ -34,11 +33,4 @@ abstract class ApplicationModule : GuiceModule() {
    * the bind() method provided.
    */
   protected abstract fun bindServices()
-
-  /**
-   * This method should be used to bind services and stores.
-   */
-  protected fun <T : Any> bind(serviceClass: KClass<T>, implementationClass: KClass<out T>) {
-    bind(serviceClass.java).to(implementationClass.java).asEagerSingleton()
-  }
 }
