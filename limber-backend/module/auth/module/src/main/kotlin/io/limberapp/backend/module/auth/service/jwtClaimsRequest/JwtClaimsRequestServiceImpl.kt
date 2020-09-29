@@ -98,7 +98,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   }
 
   private fun getPermissions(feature: FeatureModel, orgRoleGuids: Set<UUID>): FeaturePermissions? {
-    val featureRoles = featureRoleService.findAsSet { featureGuid(feature.guid); orgRoleGuids(orgRoleGuids) }
+    val featureRoles = featureRoleService.getByFeatureGuidAndOrgRoleGuids(feature.guid, orgRoleGuids)
     val featurePermissions = featureRoles.map { it.permissions }
     return featurePermissions.unionIfSameType()
   }

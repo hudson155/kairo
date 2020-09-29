@@ -27,7 +27,7 @@ internal class GetFeatureRolesByFeatureGuid @Inject constructor(
 
   override suspend fun Handler.handle(command: FeatureRoleApi.GetByFeatureGuid): Set<FeatureRoleRep.Complete> {
     Authorization.FeatureMemberWithOrgPermission(command.featureGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
-    val featureRoles = featureRoleService.findAsSet { featureGuid(command.featureGuid) }
+    val featureRoles = featureRoleService.getByFeatureGuid(command.featureGuid)
     return featureRoles.map { featureRoleMapper.completeRep(it) }.toSet()
   }
 }

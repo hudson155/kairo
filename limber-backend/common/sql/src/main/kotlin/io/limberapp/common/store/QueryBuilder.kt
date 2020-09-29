@@ -17,7 +17,6 @@ abstract class QueryBuilder {
     override fun toString() = conditions.joinToString(" AND ")
   }
 
-  @OptIn(ExperimentalStdlibApi::class)
   class Bindings {
     private val bindings = mutableMapOf<String, Pair<Any, KType>>()
 

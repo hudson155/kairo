@@ -32,6 +32,7 @@ subprojects {
 
   tasks.withType<KotlinCompile<*>>().configureEach {
     (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "1.8"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalStdlibApi"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
   }
 }
