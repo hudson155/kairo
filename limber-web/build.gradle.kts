@@ -10,13 +10,13 @@ group = "io.limberapp.web"
 version = "0.1.0-SNAPSHOT"
 
 dependencies {
-  implementation(Dependencies.Kotlin.extensions)
-  implementation(Dependencies.Kotlinx.coroutinesJs)
-  implementation(Dependencies.KotlinJs.react)
-  implementation(Dependencies.KotlinJs.reactDom)
-  implementation(Dependencies.KotlinJs.reactRouterDom)
-  implementation(Dependencies.KotlinJs.styledComponents)
-  implementation(Dependencies.Serialization.js)
+  implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.112-kotlin-${Versions.kotlin}")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.9")
+  implementation("org.jetbrains:kotlin-react:16.13.1-pre.112-kotlin-${Versions.kotlin}")
+  implementation("org.jetbrains:kotlin-react-dom:16.13.1-pre.112-kotlin-${Versions.kotlin}")
+  implementation("org.jetbrains:kotlin-react-router-dom:5.1.2-pre.112-kotlin-${Versions.kotlin}")
+  implementation("org.jetbrains:kotlin-styled:1.0.0-pre.112-kotlin-${Versions.kotlin}")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:1.0-M1-1.4.0-rc")
   implementation(npm("@auth0/auth0-spa-js", "1.6.5"))
   implementation(npm("jsonwebtoken", "8.5.1"))
 }

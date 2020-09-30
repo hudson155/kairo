@@ -29,21 +29,6 @@ object Dependencies {
     const val auth0JwksRsa = "com.auth0:jwks-rsa:${Versions.auth0JwksRsa}"
   }
 
-  object Kotlin {
-    const val extensions = "org.jetbrains:kotlin-extensions:${Versions.kotlinExtensions}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
-  }
-
-  object KotlinJs {
-    const val react = "org.jetbrains:kotlin-react:${Versions.react}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
-    const val reactDom = "org.jetbrains:kotlin-react-dom:${Versions.react}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
-    const val reactRouterDom = "org.jetbrains:kotlin-react-router-dom:${Versions.reactRouter}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
-    const val styledComponents = "org.jetbrains:kotlin-styled:${Versions.styledComponents}-${Versions.kotlinJsWrappers}-kotlin-${Versions.kotlin}"
-  }
-
-  object Kotlinx {
-    const val coroutinesJs = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:${Versions.kotlinxCoroutines}"
-  }
-
   object Ktor {
     const val auth = "io.ktor:ktor-auth:${Versions.ktor}"
     const val httpJvm = "io.ktor:ktor-http-jvm:${Versions.ktor}"
@@ -61,12 +46,6 @@ object Dependencies {
 
   object MockK {
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
-  }
-
-  object Serialization {
-    const val common = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
-    const val js = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.serialization}"
-    const val jvm = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.serialization}"
   }
 
   object Sql {

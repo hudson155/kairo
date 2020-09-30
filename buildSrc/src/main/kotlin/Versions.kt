@@ -35,15 +35,6 @@ object Versions {
   // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
   const val kotlin = "1.4.0"
 
-  // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
-  const val kotlinExtensions = "1.0.1"
-
-  // https://github.com/JetBrains/kotlin-wrappers/blob/master/gradle.properties
-  const val kotlinJsWrappers = "pre.112"
-
-  // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-  const val kotlinxCoroutines = "1.3.9"
-
   // https://github.com/ktorio/ktor/releases
   const val ktor = "1.4.1"
 
@@ -56,20 +47,8 @@ object Versions {
   // https://mvnrepository.com/artifact/org.postgresql/postgresql
   const val postgres = "42.2.14"
 
-  // https://github.com/facebook/react/releases
-  const val react = "16.13.1"
-
-  // https://github.com/ReactTraining/react-router/releases
-  const val reactRouter = "5.1.2"
-
-  // https://github.com/Kotlin/kotlinx.serialization/releases
-  const val serialization = "1.0-M1-1.4.0-rc"
-
   // https://github.com/johnrengelman/shadow/releases
   const val shadow = "6.0.0"
-
-  // https://github.com/styled-components/styled-components/releases
-  const val styledComponents = "1.0.0"
 
   // https://github.com/qos-ch/slf4j/releases
   const val slf4j = "1.7.30"
