@@ -1,3 +1,5 @@
+monolithBaseUrl: ~
+
 authentication:
   mechanisms:
     - type: UNSIGNED_JWT

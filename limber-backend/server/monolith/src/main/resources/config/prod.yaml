@@ -1,3 +1,5 @@
+monolithBaseUrl: http://limber-monolith-server
+
 authentication:
   mechanisms:
     - type: JWT
