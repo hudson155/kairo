@@ -3,7 +3,7 @@ object Versions {
   const val apacheCsv = "1.8"
 
   // https://github.com/auth0/java-jwt/releases
-  const val auth0JavaJwt = "3.10.3"
+  const val auth0JavaJwt = "3.11.0"
 
   // https://github.com/auth0/jwks-rsa-java/releases
   const val auth0JwksRsa = "0.12.0"
