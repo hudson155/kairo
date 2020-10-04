@@ -15,18 +15,22 @@ import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.authorization.principal.JwtUser
+import io.limberapp.client.LimberHttpClient
+import io.limberapp.client.exception.LimberHttpClientException
 import io.limberapp.common.LimberApplication
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.serialization.Json
 import io.limberapp.error.LimberError
 import io.limberapp.exception.LimberException
 import io.limberapp.exceptionMapping.ExceptionMapper
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.ExtendWith
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 @ExtendWith(TestApplicationEngineParameterResolver::class)
 abstract class LimberIntegrationTest(
@@ -37,6 +41,8 @@ abstract class LimberIntegrationTest(
     operator fun <T : Any> get(key: KClass<T>): T = limberServer.injector.getInstance(key.java)
   }
 
+  protected val httpClient: LimberHttpClient = IntegrationTestHttpClient(engine)
+
   protected val json = Json(prettyPrint = true)
 
   protected val mocks = LimberIntegrationTestMocks()
@@ -46,6 +52,24 @@ abstract class LimberIntegrationTest(
   val clock get() = limberServer.clock
 
   protected val TestApplicationCall.responseContent get() = assertNotNull(response.content)
+
+  protected fun setup(block: suspend () -> Unit) = runBlocking {
+    block()
+  }
+
+  protected fun <T> test(expectResult: T, block: suspend () -> T) = runBlocking {
+    val actual = block()
+    assertEquals(expectResult, actual)
+  }
+
+  protected fun test(expectError: LimberException, block: suspend () -> Any?) = runBlocking {
+    try {
+      val actual = block()
+      fail("Expected exception. Instead got $actual.")
+    } catch (e: LimberHttpClientException) {
+      assertEquals(ExceptionMapper.handle(expectError), e.error)
+    }
+  }
 
   protected fun setup(endpoint: LimberEndpoint) = makeServerCall(
     endpoint = endpoint,
