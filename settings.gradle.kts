@@ -1,5 +1,6 @@
 rootProject.name = "limber"
 
+include(":limber-backend:common:client")
 include(":limber-backend:common:config")
 include(":limber-backend:common:exception-mapping")
 include(":limber-backend:common:exceptions")

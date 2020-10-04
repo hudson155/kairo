@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/limber-backend" />
             <option value="$PROJECT_DIR$/limber-backend/common" />
+            <option value="$PROJECT_DIR$/limber-backend/common/client" />
             <option value="$PROJECT_DIR$/limber-backend/common/config" />
             <option value="$PROJECT_DIR$/limber-backend/common/exception-mapping" />
             <option value="$PROJECT_DIR$/limber-backend/common/exceptions" />
