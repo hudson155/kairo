@@ -20,6 +20,8 @@ dependencies {
 
   testImplementation(project(":limber-backend:deprecated:common:sql:testing"))
 
+  testImplementation(project(":limber-backend:module:users:client"))
+
   testImplementation(project(":limber-backend:server:monolith"))
 }
 
