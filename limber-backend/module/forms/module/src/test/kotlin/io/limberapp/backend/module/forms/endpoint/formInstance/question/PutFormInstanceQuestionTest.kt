@@ -16,6 +16,7 @@ import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInsta
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -65,7 +66,7 @@ internal class PutFormInstanceQuestionTest(
         questionGuid = UUID.randomUUID(),
         rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ),
-      expectedException = FormTemplateQuestionNotFound()
+      expectedException = FormTemplateQuestionNotFound().unprocessable(),
     )
   }
 

@@ -18,6 +18,7 @@ import io.limberapp.common.sql.bindNullForMissingArguments
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.withFinder
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -80,8 +81,8 @@ internal class FormInstanceQuestionStore @Inject constructor(
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isForeignKeyViolation(FK_FORM_INSTANCE_GUID) -> throw FormInstanceNotFound()
-      error.isForeignKeyViolation(FK_QUESTION_GUID) -> throw FormTemplateQuestionNotFound()
+      error.isForeignKeyViolation(FK_FORM_INSTANCE_GUID) -> throw FormInstanceNotFound().unprocessable()
+      error.isForeignKeyViolation(FK_QUESTION_GUID) -> throw FormTemplateQuestionNotFound().unprocessable()
       else -> throw e
     }
   }

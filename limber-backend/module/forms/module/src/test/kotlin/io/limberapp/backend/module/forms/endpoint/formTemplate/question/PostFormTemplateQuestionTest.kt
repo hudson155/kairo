@@ -11,6 +11,7 @@ import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTempl
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
 import io.limberapp.exception.badRequest.RankOutOfBounds
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -30,7 +31,7 @@ internal class PostFormTemplateQuestionTest(
         formTemplateGuid = formTemplateGuid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ),
-      expectedException = FormTemplateNotFound()
+      expectedException = FormTemplateNotFound().unprocessable()
     )
   }
 
@@ -47,7 +48,7 @@ internal class PostFormTemplateQuestionTest(
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ),
-      expectedException = FormTemplateNotFound()
+      expectedException = FormTemplateNotFound().unprocessable(),
     )
 
     test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {

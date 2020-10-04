@@ -12,6 +12,7 @@ import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -26,7 +27,7 @@ internal class PostFeatureTest(
 
     test(
       endpoint = OrgFeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()),
-      expectedException = OrgNotFound(),
+      expectedException = OrgNotFound().unprocessable(),
     )
   }
 

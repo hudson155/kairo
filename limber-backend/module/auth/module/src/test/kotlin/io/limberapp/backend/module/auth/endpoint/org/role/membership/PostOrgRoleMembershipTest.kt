@@ -11,6 +11,7 @@ import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -34,7 +35,7 @@ internal class PostOrgRoleMembershipTest(
         orgRoleGuid = orgRoleGuid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
       ),
-      expectedException = OrgRoleNotFound()
+      expectedException = OrgRoleNotFound().unprocessable(),
     )
   }
 

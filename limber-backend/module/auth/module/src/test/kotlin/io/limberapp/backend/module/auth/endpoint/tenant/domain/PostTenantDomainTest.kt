@@ -11,6 +11,7 @@ import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantDomainRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -25,7 +26,7 @@ internal class PostTenantDomainTest(
 
     test(
       endpoint = TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.limberappFixture.creation()),
-      expectedException = TenantNotFound()
+      expectedException = TenantNotFound().unprocessable(),
     )
   }
 

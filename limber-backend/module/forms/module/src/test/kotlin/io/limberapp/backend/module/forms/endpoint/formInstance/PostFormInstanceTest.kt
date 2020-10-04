@@ -9,6 +9,7 @@ import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
@@ -28,7 +29,7 @@ internal class PostFormInstanceTest(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateGuid, creatorAccountGuid)
       ),
-      expectedException = FormTemplateNotFound()
+      expectedException = FormTemplateNotFound().unprocessable()
     )
   }
 
@@ -46,7 +47,7 @@ internal class PostFormInstanceTest(
         featureGuid = feature1Guid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ),
-      expectedException = FormTemplateNotFound()
+      expectedException = FormTemplateNotFound().unprocessable(),
     )
   }
 

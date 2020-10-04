@@ -1,7 +1,7 @@
 package io.limberapp.exception
 
 abstract class LimberException(
-  message: String,
+  override val message: String,
   val developerMessage: String?,
-  cause: Exception? = null,
+  override val cause: Exception? = null,
 ) : Exception(message, cause)

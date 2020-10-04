@@ -12,6 +12,7 @@ import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.isUniqueConstraintViolation
 import io.limberapp.common.store.withFinder
+import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -57,7 +58,7 @@ internal class OrgRoleMembershipStore @Inject constructor(
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isForeignKeyViolation(FK_ORG_ROLE_GUID) -> throw OrgRoleNotFound()
+      error.isForeignKeyViolation(FK_ORG_ROLE_GUID) -> throw OrgRoleNotFound().unprocessable()
       error.isUniqueConstraintViolation(UNIQ_ACCOUNT_GUID) -> throw AccountIsAlreadyMemberOfOrgRole()
       else -> throw e
     }
