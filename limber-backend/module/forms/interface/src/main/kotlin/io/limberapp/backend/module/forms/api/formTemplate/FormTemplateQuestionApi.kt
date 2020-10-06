@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.forms.api.formTemplate.question
+package io.limberapp.backend.module.forms.api.formTemplate
 
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
