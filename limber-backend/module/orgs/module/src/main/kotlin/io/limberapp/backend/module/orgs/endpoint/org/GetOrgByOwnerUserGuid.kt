@@ -14,7 +14,7 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.restInterface.template
 import java.util.*
 
-internal class GetByOwnerUserGuid @Inject constructor(
+internal class GetOrgByOwnerUserGuid @Inject constructor(
   application: Application,
   private val featureService: FeatureService,
   private val orgService: OrgService,

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import java.util.*
 import kotlin.test.assertEquals
 
-internal class GetByOwnerUserGuidTest(
+internal class GetOrgByOwnerUserGuidTest(
   engine: TestApplicationEngine,
   limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {

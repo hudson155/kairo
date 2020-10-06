@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.orgs
 
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
-import io.limberapp.backend.module.orgs.endpoint.org.GetByOwnerUserGuid
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
+import io.limberapp.backend.module.orgs.endpoint.org.GetOrgByOwnerUserGuid
 import io.limberapp.backend.module.orgs.endpoint.org.PatchOrg
 import io.limberapp.backend.module.orgs.endpoint.org.PostOrg
 import io.limberapp.backend.module.orgs.endpoint.org.feature.DeleteFeature
@@ -18,7 +18,7 @@ class OrgsModule : ApplicationModule() {
   override val endpoints = listOf(
     PostOrg::class.java,
     GetOrg::class.java,
-    GetByOwnerUserGuid::class.java,
+    GetOrgByOwnerUserGuid::class.java,
     PatchOrg::class.java,
     DeleteOrg::class.java,
     PostFeature::class.java,
