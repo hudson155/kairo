@@ -6,13 +6,11 @@ import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
-import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class DeleteUserRoleTest(
   engine: TestApplicationEngine,
@@ -33,16 +31,17 @@ internal class DeleteUserRoleTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    setup {
+      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    }
 
     test(
       endpoint = UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER),
       expectedException = UserDoesNotHaveRole()
     )
 
-    test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(responseContent)
-      assertEquals(userRep, actual)
+    test(expectResult = userRep) {
+      userClient(UserApi.Get(userRep.guid))
     }
   }
 
@@ -51,7 +50,9 @@ internal class DeleteUserRoleTest(
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    setup {
+      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    }
 
     userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
     setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
@@ -59,9 +60,8 @@ internal class DeleteUserRoleTest(
     userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
     test(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER)) {}
 
-    test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(responseContent)
-      assertEquals(userRep, actual)
+    test(expectResult = userRep) {
+      userClient(UserApi.Get(userRep.guid))
     }
   }
 }

@@ -4,8 +4,6 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
-import io.limberapp.backend.module.users.exception.account.UserNotFound
-import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
@@ -13,7 +11,6 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class DeleteUserTest(
   engine: TestApplicationEngine,
@@ -25,7 +22,9 @@ internal class DeleteUserTest(
 
     every { mocks[OrgService::class].getByOwnerUserGuid(userGuid) } returns null
 
-    test(UserApi.Delete(userGuid), expectedException = UserNotFound())
+    test(expectResult = null) {
+      userClient(UserApi.Delete(userGuid))
+    }
   }
 
   @Test
@@ -33,15 +32,18 @@ internal class DeleteUserTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    setup {
+      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    }
 
     every { mocks[OrgService::class].getByOwnerUserGuid(userRep.guid) } returns mockk()
 
-    test(UserApi.Delete(userRep.guid), expectedException = CannotDeleteOrgOwner())
+    test(expectError = CannotDeleteOrgOwner()) {
+      userClient(UserApi.Delete(userRep.guid))
+    }
 
-    test(UserApi.Get(userRep.guid)) {
-      val actual = json.parse<UserRep.Complete>(responseContent)
-      assertEquals(userRep, actual)
+    test(expectResult = userRep) {
+      userClient(UserApi.Get(userRep.guid))
     }
   }
 
@@ -50,12 +52,18 @@ internal class DeleteUserTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    setup {
+      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    }
 
     every { mocks[OrgService::class].getByOwnerUserGuid(userRep.guid) } returns null
 
-    test(UserApi.Delete(userRep.guid)) {}
+    test(expectResult = Unit) {
+      userClient(UserApi.Delete(userRep.guid))
+    }
 
-    test(UserApi.Get(userRep.guid), expectedException = UserNotFound())
+    test(expectResult = null) {
+      userClient(UserApi.Get(userRep.guid))
+    }
   }
 }
