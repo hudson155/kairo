@@ -24,25 +24,29 @@ function App(): ReactElement {
     (async () => setTenant(await api.getTenant(app.rootDomain)))();
   }, []);
 
-  if (!tenant) return <LoadingPage message="Loading tenant..." />;
+  // General whole app theming. Should occur before any components are returned.
+  // TODO (ENG-82): Complete the base default theming
+  document.body.style.backgroundColor = EmotionTheme.colors.grey100;
 
   return (
-    <Auth0Provider
-      audience={`https://${env.AUTH0_DOMAIN}/api/v2/`}
-      clientId={tenant.auth0ClientId}
-      domain={env.AUTH0_DOMAIN}
-      redirectUri={app.rootUrl}
-    >
-      <ApiProvider>
-        <RelayEnvironmentProvider environment={relayEnvironment}>
-          <ThemeProvider theme={EmotionTheme}>
-            <BrowserRouter>
-              <AppRootRouter tenant={tenant} />
-            </BrowserRouter>
-          </ThemeProvider>
-        </RelayEnvironmentProvider>
-      </ApiProvider>
-    </Auth0Provider>
+    <ThemeProvider theme={EmotionTheme}>
+      {tenant == null ? <LoadingPage message="Loading tenant..." /> : (
+        <Auth0Provider
+          audience={`https://${env.AUTH0_DOMAIN}/api/v2/`}
+          clientId={tenant.auth0ClientId}
+          domain={env.AUTH0_DOMAIN}
+          redirectUri={app.rootUrl}
+        >
+          <ApiProvider>
+            <RelayEnvironmentProvider environment={relayEnvironment}>
+              <BrowserRouter>
+                <AppRootRouter tenant={tenant} />
+              </BrowserRouter>
+            </RelayEnvironmentProvider>
+          </ApiProvider>
+        </Auth0Provider>
+      )}
+    </ThemeProvider>
   );
 }
 
