@@ -10,21 +10,18 @@ const schema = fs.readFileSync('./graphql/schema.graphql').toString('utf-8');
 
 const root = {
   node: (input) => {
-    const formTemplate = formTemplates.find(formTemplate => formTemplate.id === input.id);
-    const formInstanceEdges = formInstances.map(formInstance => ({
-      cursor: formInstance.id,
-      // Note this isn't strictly correct since the formTemplate here won't have the instances set on it. In the real
-      // application that's okay because you wouldn't write an infinitely recursive query so it can be filled.
-      node: { ...formInstance, formTemplate: formTemplate, creator: user },
-    }));
-    const formInstancesConnection = {
-      edges: formInstanceEdges,
-      // ignore the pageInfo for now since we won't paginate the mock data
-    };
+    const formInstance = formInstances.find(instance => instance.id === input.id);
+    const formTemplate = formTemplates[0];
+    const mappedQuestions = formInstance.questions.map(instanceQuestion => ({
+        ...instanceQuestion,
+        question: formTemplate.questions.find(templateQuestion => templateQuestion.id === instanceQuestion.questionId),
+      }),
+    );
 
-    formTemplate.formInstances = formInstancesConnection;
+    formInstance.formTemplate = formTemplate;
+    formInstance.questions = mappedQuestions;
 
-    return formTemplate;
+    return formInstance;
   },
 };
 
