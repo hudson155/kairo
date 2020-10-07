@@ -35,7 +35,9 @@ object GetFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup {
+        formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      }
 
       val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
       setup(
@@ -71,7 +73,9 @@ object GetFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup {
+        formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      }
 
       setup(
         endpoint = FormInstanceApi.Post(
@@ -99,7 +103,9 @@ object GetFormInstancesByFeatureGuidTest {
       val featureGuid = UUID.randomUUID()
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup {
+        formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      }
 
       val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
       setup(

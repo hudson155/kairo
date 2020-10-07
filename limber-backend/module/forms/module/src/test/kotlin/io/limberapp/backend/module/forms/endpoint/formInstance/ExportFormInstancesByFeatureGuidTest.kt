@@ -88,7 +88,9 @@ object ExportFormInstancesByFeatureGuidTest {
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup {
+        formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      }
 
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
       setup(
@@ -161,7 +163,9 @@ object ExportFormInstancesByFeatureGuidTest {
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup {
+        formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      }
 
       setup(
         endpoint = FormInstanceApi.Post(
@@ -216,7 +220,9 @@ object ExportFormInstancesByFeatureGuidTest {
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-      setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      setup {
+        formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+      }
 
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
       setup(

@@ -2,7 +2,6 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
-import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
@@ -18,10 +17,9 @@ internal class DeleteFormTemplateTest(
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FormTemplateApi.Delete(featureGuid, formTemplateGuid),
-      expectedException = FormTemplateNotFound()
-    )
+    test(expectResult = null) {
+      formTemplateClient(FormTemplateApi.Delete(featureGuid, formTemplateGuid))
+    }
   }
 
   @Test
@@ -30,14 +28,13 @@ internal class DeleteFormTemplateTest(
     val feature1Guid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(feature0Guid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
-    test(
-      endpoint = FormTemplateApi.Delete(feature1Guid, formTemplateRep.guid),
-      expectedException = FormTemplateNotFound()
-    )
-
-    test(FormTemplateApi.Get(feature0Guid, formTemplateRep.guid)) {}
+    test(expectResult = null) {
+      formTemplateClient(FormTemplateApi.Delete(feature1Guid, formTemplateRep.guid))
+    }
   }
 
   @Test
@@ -45,13 +42,16 @@ internal class DeleteFormTemplateTest(
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
-    test(FormTemplateApi.Delete(featureGuid, formTemplateRep.guid)) {}
+    test(expectResult = Unit) {
+      formTemplateClient(FormTemplateApi.Delete(featureGuid, formTemplateRep.guid))
+    }
 
-    test(
-      endpoint = FormTemplateApi.Get(featureGuid, formTemplateRep.guid),
-      expectedException = FormTemplateNotFound()
-    )
+    test(expectResult = null) {
+      formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
+    }
   }
 }

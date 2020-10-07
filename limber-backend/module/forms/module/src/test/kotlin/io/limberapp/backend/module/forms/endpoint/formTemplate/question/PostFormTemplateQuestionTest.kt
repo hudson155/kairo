@@ -5,7 +5,6 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
-import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
@@ -40,7 +39,9 @@ internal class PostFormTemplateQuestionTest(
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
     test(
       endpoint = FormTemplateQuestionApi.Post(
@@ -51,9 +52,8 @@ internal class PostFormTemplateQuestionTest(
       expectedException = FormTemplateNotFound().unprocessable(),
     )
 
-    test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
-      assertEquals(formTemplateRep, actual)
+    test(expectResult = formTemplateRep) {
+      formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
     }
   }
 
@@ -62,7 +62,9 @@ internal class PostFormTemplateQuestionTest(
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
     test(
       endpoint = FormTemplateQuestionApi.Post(
@@ -80,7 +82,9 @@ internal class PostFormTemplateQuestionTest(
     val featureGuid = UUID.randomUUID()
 
     val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
     test(
       endpoint = FormTemplateQuestionApi.Post(
@@ -98,7 +102,9 @@ internal class PostFormTemplateQuestionTest(
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
@@ -116,9 +122,8 @@ internal class PostFormTemplateQuestionTest(
       assertEquals(formTemplateQuestionRep, actual)
     }
 
-    test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
-      assertEquals(formTemplateRep, actual)
+    test(expectResult = formTemplateRep) {
+      formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
     }
   }
 
@@ -127,7 +132,9 @@ internal class PostFormTemplateQuestionTest(
     val featureGuid = UUID.randomUUID()
 
     var formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
-    setup(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    setup {
+      formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
+    }
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
@@ -144,9 +151,8 @@ internal class PostFormTemplateQuestionTest(
       assertEquals(formTemplateQuestionRep, actual)
     }
 
-    test(FormTemplateApi.Get(featureGuid, formTemplateRep.guid)) {
-      val actual = json.parse<FormTemplateRep.Complete>(responseContent)
-      assertEquals(formTemplateRep, actual)
+    test(expectResult = formTemplateRep) {
+      formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
     }
   }
 }
