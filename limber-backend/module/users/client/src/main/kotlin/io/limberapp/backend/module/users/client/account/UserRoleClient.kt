@@ -9,7 +9,7 @@ class UserRoleClient(private val httpClient: LimberHttpClient) {
     endpoint: UserRoleApi.Put,
     builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<Unit>(checkNotNull(it))
+    it?.let { parse<Unit>(it) }
   }
 
   suspend operator fun invoke(
