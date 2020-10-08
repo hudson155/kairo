@@ -9,7 +9,7 @@ import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.restInterface.template
 import java.util.*

@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.orgs.mapper.feature
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime

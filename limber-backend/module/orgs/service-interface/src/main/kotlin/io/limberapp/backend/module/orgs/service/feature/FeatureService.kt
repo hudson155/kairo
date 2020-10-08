@@ -1,8 +1,8 @@
-package io.limberapp.backend.module.orgs.service.org
+package io.limberapp.backend.module.orgs.service.feature
 
 import io.limberapp.backend.LimberModule
-import io.limberapp.backend.module.orgs.model.org.FeatureFinder
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import io.limberapp.backend.module.orgs.model.feature.FeatureFinder
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.common.finder.Finder
 import java.util.*
 

@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.rep.org
+package io.limberapp.backend.module.orgs.rep.feature
 
 import io.limberapp.common.validator.Validator
 import io.limberapp.rep.CompleteRep

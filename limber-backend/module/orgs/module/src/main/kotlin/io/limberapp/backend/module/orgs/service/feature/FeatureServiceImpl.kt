@@ -1,9 +1,8 @@
 package io.limberapp.backend.module.orgs.service.feature
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.orgs.model.org.FeatureFinder
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.model.feature.FeatureFinder
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.backend.module.orgs.store.feature.FeatureStore
 import io.limberapp.common.finder.Finder
 import java.util.*

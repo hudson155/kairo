@@ -1,13 +1,13 @@
-package io.limberapp.backend.module.orgs.api.org.feature
+package io.limberapp.backend.module.orgs.api.feature
 
 import io.ktor.http.HttpMethod
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")
-object OrgFeatureApi {
+object FeatureApi {
   data class Post(val orgGuid: UUID, val rep: FeatureRep.Creation?) : LimberEndpoint(
     httpMethod = HttpMethod.Post,
     path = "/orgs/${enc(orgGuid)}/features",

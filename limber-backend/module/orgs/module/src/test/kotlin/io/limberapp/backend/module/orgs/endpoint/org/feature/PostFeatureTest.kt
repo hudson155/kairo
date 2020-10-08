@@ -1,15 +1,15 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import io.ktor.server.testing.TestApplicationEngine
+import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
-import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
-import io.limberapp.backend.module.orgs.testing.fixtures.org.FeatureRepFixtures
+import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import io.limberapp.common.LimberApplication
 import io.limberapp.exception.unprocessableEntity.unprocessable
@@ -26,7 +26,7 @@ internal class PostFeatureTest(
     val orgGuid = UUID.randomUUID()
 
     test(
-      endpoint = OrgFeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()),
+      endpoint = FeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()),
       expectedException = OrgNotFound().unprocessable(),
     )
   }
@@ -38,14 +38,14 @@ internal class PostFeatureTest(
 
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
     setup(
-      endpoint = OrgFeatureApi.Post(
+      endpoint = FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.homeFixture.creation(),
       ),
     )
 
     test(
-      endpoint = OrgFeatureApi.Post(
+      endpoint = FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.homeFixture.creation().rank),
       ),
@@ -65,14 +65,14 @@ internal class PostFeatureTest(
 
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
     setup(
-      endpoint = OrgFeatureApi.Post(
+      endpoint = FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.homeFixture.creation(),
       ),
     )
 
     test(
-      endpoint = OrgFeatureApi.Post(
+      endpoint = FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.homeFixture.creation().path),
       ),
@@ -92,7 +92,7 @@ internal class PostFeatureTest(
 
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + featureRep)
-    test(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) {
+    test(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) {
       val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(featureRep, actual)
     }

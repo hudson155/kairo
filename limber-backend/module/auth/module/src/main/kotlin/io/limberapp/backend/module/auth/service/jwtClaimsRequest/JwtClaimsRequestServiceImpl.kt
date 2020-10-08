@@ -17,9 +17,9 @@ import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService

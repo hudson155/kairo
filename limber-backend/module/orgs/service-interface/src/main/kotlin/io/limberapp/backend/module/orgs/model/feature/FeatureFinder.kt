@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.model.org
+package io.limberapp.backend.module.orgs.model.feature
 
 import io.limberapp.backend.LimberModule
 import java.util.*

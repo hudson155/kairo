@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs.rep.org
 
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.common.validator.Validator
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep

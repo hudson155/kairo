@@ -15,9 +15,9 @@ import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepF
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel

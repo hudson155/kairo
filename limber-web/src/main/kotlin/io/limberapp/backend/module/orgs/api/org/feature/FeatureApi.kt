@@ -6,7 +6,7 @@ import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.util.url.enc
 
 @Suppress("StringLiteralDuplication")
-object OrgFeatureApi {
+object FeatureApi {
   data class Post(val orgGuid: String, val rep: FeatureRep.Creation?) : LimberEndpoint(
     httpMethod = HttpMethod.POST,
     path = "/orgs/${enc(orgGuid)}/features",

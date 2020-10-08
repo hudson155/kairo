@@ -15,8 +15,8 @@ import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionModel
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
+import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.common.shutDown
 import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp

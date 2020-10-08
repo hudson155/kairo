@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.orgs.store.feature
 
-import io.limberapp.backend.module.orgs.model.org.FeatureFinder
+import io.limberapp.backend.module.orgs.model.feature.FeatureFinder
 import io.limberapp.common.store.QueryBuilder
 import java.util.*
 

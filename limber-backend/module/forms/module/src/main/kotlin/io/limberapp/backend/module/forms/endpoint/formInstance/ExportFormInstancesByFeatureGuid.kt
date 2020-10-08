@@ -11,7 +11,7 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exporter.formInstance.FormInstanceExporter
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.finder.SortableFinder
 import io.limberapp.common.restInterface.template

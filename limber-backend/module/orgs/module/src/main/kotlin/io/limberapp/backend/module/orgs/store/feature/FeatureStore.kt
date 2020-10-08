@@ -6,8 +6,8 @@ import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
-import io.limberapp.backend.module.orgs.model.org.FeatureFinder
-import io.limberapp.backend.module.orgs.model.org.FeatureModel
+import io.limberapp.backend.module.orgs.model.feature.FeatureFinder
+import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation

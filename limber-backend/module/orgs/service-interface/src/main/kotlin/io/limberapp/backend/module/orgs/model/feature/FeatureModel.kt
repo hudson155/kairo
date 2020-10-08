@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.orgs.model.org
+package io.limberapp.backend.module.orgs.model.feature
 
 import java.time.LocalDateTime
 import java.util.*

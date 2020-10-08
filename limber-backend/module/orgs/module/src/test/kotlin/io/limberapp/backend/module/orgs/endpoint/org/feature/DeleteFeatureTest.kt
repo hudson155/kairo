@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import io.ktor.server.testing.TestApplicationEngine
+import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
-import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
-import io.limberapp.backend.module.orgs.testing.fixtures.org.FeatureRepFixtures
+import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
@@ -23,7 +23,7 @@ internal class DeleteFeatureTest(
     val featureGuid = UUID.randomUUID()
 
     test(
-      endpoint = OrgFeatureApi.Delete(orgGuid, featureGuid),
+      endpoint = FeatureApi.Delete(orgGuid, featureGuid),
       expectedException = FeatureNotFound(),
     )
   }
@@ -36,7 +36,7 @@ internal class DeleteFeatureTest(
     setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     test(
-      endpoint = OrgFeatureApi.Delete(orgRep.guid, featureGuid),
+      endpoint = FeatureApi.Delete(orgRep.guid, featureGuid),
       expectedException = FeatureNotFound(),
     )
 
@@ -53,14 +53,14 @@ internal class DeleteFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != formsFeatureRep.guid })
-    test(OrgFeatureApi.Delete(orgRep.guid, formsFeatureRep.guid)) {}
+    test(FeatureApi.Delete(orgRep.guid, formsFeatureRep.guid)) {}
 
     test(OrgApi.Get(orgRep.guid)) {
       val actual = json.parse<OrgRep.Complete>(responseContent)

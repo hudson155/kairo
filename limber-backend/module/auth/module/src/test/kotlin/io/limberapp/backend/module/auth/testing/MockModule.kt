@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.testing
 
-import io.limberapp.backend.module.orgs.service.org.FeatureService
+import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.module.GuiceModule

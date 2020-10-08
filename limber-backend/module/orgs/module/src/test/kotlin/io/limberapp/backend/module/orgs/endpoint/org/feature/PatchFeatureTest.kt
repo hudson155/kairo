@@ -1,15 +1,15 @@
 package io.limberapp.backend.module.orgs.endpoint.org.feature
 
 import io.ktor.server.testing.TestApplicationEngine
+import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
-import io.limberapp.backend.module.orgs.api.org.feature.OrgFeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
-import io.limberapp.backend.module.orgs.rep.org.FeatureRep
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
-import io.limberapp.backend.module.orgs.testing.fixtures.org.FeatureRepFixtures
+import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
@@ -26,7 +26,7 @@ internal class PatchFeatureTest(
     val featureGuid = UUID.randomUUID()
 
     test(
-      endpoint = OrgFeatureApi.Patch(orgGuid, featureGuid, FeatureRep.Update(name = "Renamed Feature")),
+      endpoint = FeatureApi.Patch(orgGuid, featureGuid, FeatureRep.Update(name = "Renamed Feature")),
       expectedException = FeatureNotFound(),
     )
   }
@@ -39,7 +39,7 @@ internal class PatchFeatureTest(
     setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
 
     test(
-      endpoint = OrgFeatureApi.Patch(orgRep.guid, featureGuid, FeatureRep.Update(name = "Renamed Feature")),
+      endpoint = FeatureApi.Patch(orgRep.guid, featureGuid, FeatureRep.Update(name = "Renamed Feature")),
       expectedException = FeatureNotFound(),
     )
 
@@ -56,14 +56,14 @@ internal class PatchFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     test(
-      endpoint = OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(rank = homeFeatureRep.rank)),
+      endpoint = FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(rank = homeFeatureRep.rank)),
       expectedException = FeatureRankIsNotUnique(),
     )
 
@@ -80,14 +80,14 @@ internal class PatchFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     test(
-      endpoint = OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(path = homeFeatureRep.path)),
+      endpoint = FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(path = homeFeatureRep.path)),
       expectedException = FeaturePathIsNotUnique(),
     )
 
@@ -104,17 +104,17 @@ internal class PatchFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     formsFeatureRep = formsFeatureRep.copy(rank = 3)
     orgRep = orgRep.copy(
       features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
-    test(OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(rank = 3))) {
+    test(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(rank = 3))) {
       val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
@@ -132,17 +132,17 @@ internal class PatchFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     formsFeatureRep = formsFeatureRep.copy(name = "Renamed Feature")
     orgRep = orgRep.copy(
       features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
-    test(OrgFeatureApi.Patch(orgRep.guid,
+    test(FeatureApi.Patch(orgRep.guid,
       formsFeatureRep.guid,
       FeatureRep.Update(name = "Renamed Feature"))) {
       val actual = json.parse<FeatureRep.Complete>(responseContent)
@@ -162,17 +162,17 @@ internal class PatchFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     formsFeatureRep = formsFeatureRep.copy(path = "/renamed")
     orgRep = orgRep.copy(
       features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
-    test(OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(path = "/renamed"))) {
+    test(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(path = "/renamed"))) {
       val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
     }
@@ -190,11 +190,11 @@ internal class PatchFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(OrgFeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
 
     formsFeatureRep = formsFeatureRep.copy(isDefaultFeature = true)
     orgRep = orgRep.copy(
@@ -203,7 +203,7 @@ internal class PatchFeatureTest(
       }
     )
     test(
-      endpoint = OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = true))
+      endpoint = FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = true))
     ) {
       val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
@@ -214,7 +214,7 @@ internal class PatchFeatureTest(
       features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     test(
-      endpoint = OrgFeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = false))
+      endpoint = FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = false))
     ) {
       val actual = json.parse<FeatureRep.Complete>(responseContent)
       assertEquals(formsFeatureRep, actual)
