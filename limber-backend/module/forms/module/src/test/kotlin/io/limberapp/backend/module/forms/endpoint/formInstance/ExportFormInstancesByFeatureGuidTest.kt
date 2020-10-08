@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
-import kotlin.test.assertEquals
 
 private const val FIXED_CLOCK_FORMATTED_VALUE = "Sun, Dec 2, 2007 at 22:15 MST"
 
@@ -49,19 +48,12 @@ object ExportFormInstancesByFeatureGuidTest {
       }
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
-      test(
-        endpoint = FormInstanceApi.ExportByFeatureGuid(
+      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n") {
+        formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = null,
           timeZone = ZoneId.of("America/Edmonton")
-        )
-      ) {
-        assertEquals(
-          """
-          Number,Submitted date,Creator name,Creator email address
-          """.trimIndent() + '\n',
-          responseContent
-        )
+        ))
       }
     }
 
@@ -93,45 +85,38 @@ object ExportFormInstancesByFeatureGuidTest {
       }
 
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
-      setup(
-        endpoint = FormInstanceApi.Post(
+      setup {
+        formInstanceClient(FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
-        )
-      )
+        ))
+      }
 
       formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
-      setup(
-        endpoint = FormInstanceApi.Patch(
+      setup {
+        formInstanceClient(FormInstanceApi.Patch(
           featureGuid = featureGuid,
           formInstanceGuid = formInstance0Rep.guid,
           rep = FormInstanceRep.Update(submitted = true)
-        )
-      )
+        ))
+      }
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser1.guid, 6)
-      setup(
-        endpoint = FormInstanceApi.Post(
+      setup {
+        formInstanceClient(FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
-        )
-      )
+        ))
+      }
 
-      test(
-        endpoint = FormInstanceApi.ExportByFeatureGuid(
+      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n"
+        + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n"
+        + "${formInstance1Rep.number},,Bill Gates,bill.gates@microsoft.com\n") {
+        formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = null,
           timeZone = ZoneId.of("America/Edmonton")
-        )
-      ) {
-        assertEquals(
-          """
-          Number,Submitted date,Creator name,Creator email address
-          ${formInstance0Rep.number},"$FIXED_CLOCK_FORMATTED_VALUE",Jeff Hudson,jhudson@jhudson.ca
-          ${formInstance1Rep.number},,Bill Gates,bill.gates@microsoft.com
-          """.trimIndent() + '\n',
-          responseContent
-        )
+        ))
       }
     }
   }
@@ -167,33 +152,26 @@ object ExportFormInstancesByFeatureGuidTest {
         formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
       }
 
-      setup(
-        endpoint = FormInstanceApi.Post(
+      setup {
+        formInstanceClient(FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
-        )
-      )
+        ))
+      }
 
-      setup(
-        endpoint = FormInstanceApi.Post(
+      setup {
+        formInstanceClient(FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
-        )
-      )
+        ))
+      }
 
-      test(
-        endpoint = FormInstanceApi.ExportByFeatureGuid(
+      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n") {
+        formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = UUID.randomUUID(),
           timeZone = ZoneId.of("America/Edmonton")
-        )
-      ) {
-        assertEquals(
-          """
-          Number,Submitted date,Creator name,Creator email address
-          """.trimIndent() + '\n',
-          responseContent
-        )
+        ))
       }
     }
 
@@ -225,43 +203,36 @@ object ExportFormInstancesByFeatureGuidTest {
       }
 
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
-      setup(
-        endpoint = FormInstanceApi.Post(
+      setup {
+        formInstanceClient(FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
-        )
-      )
+        ))
+      }
 
       formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
-      setup(
-        endpoint = FormInstanceApi.Patch(
+      setup {
+        formInstanceClient(FormInstanceApi.Patch(
           featureGuid = featureGuid,
           formInstanceGuid = formInstance0Rep.guid,
           rep = FormInstanceRep.Update(submitted = true)
-        )
-      )
+        ))
+      }
 
-      setup(
-        endpoint = FormInstanceApi.Post(
+      setup {
+        formInstanceClient(FormInstanceApi.Post(
           featureGuid = featureGuid,
           rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
-        )
-      )
+        ))
+      }
 
-      test(
-        endpoint = FormInstanceApi.ExportByFeatureGuid(
+      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n"
+        + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n") {
+        formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
           featureGuid = featureGuid,
           creatorAccountGuid = existingUser0.guid,
           timeZone = ZoneId.of("America/Edmonton")
-        )
-      ) {
-        assertEquals(
-          """
-          Number,Submitted date,Creator name,Creator email address
-          ${formInstance0Rep.number},"$FIXED_CLOCK_FORMATTED_VALUE",Jeff Hudson,jhudson@jhudson.ca
-          """.trimIndent() + '\n',
-          responseContent
-        )
+        ))
       }
     }
   }

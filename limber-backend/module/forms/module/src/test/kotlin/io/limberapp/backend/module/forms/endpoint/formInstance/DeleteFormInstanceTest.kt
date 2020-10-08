@@ -3,7 +3,6 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
-import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
@@ -20,10 +19,9 @@ internal class DeleteFormInstanceTest(
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FormInstanceApi.Delete(featureGuid, formInstanceGuid),
-      expectedException = FormInstanceNotFound()
-    )
+    test(expectResult = null) {
+      formInstanceClient(FormInstanceApi.Delete(featureGuid, formInstanceGuid))
+    }
   }
 
   @Test
@@ -38,19 +36,20 @@ internal class DeleteFormInstanceTest(
     }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = feature0Guid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
-    test(
-      endpoint = FormInstanceApi.Delete(feature1Guid, formInstanceRep.guid),
-      expectedException = FormInstanceNotFound()
-    )
+    test(expectResult = null) {
+      formInstanceClient(FormInstanceApi.Delete(feature1Guid, formInstanceRep.guid))
+    }
 
-    test(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid)) {}
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid))
+    }
   }
 
   @Test
@@ -64,18 +63,19 @@ internal class DeleteFormInstanceTest(
     }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
-    test(FormInstanceApi.Delete(featureGuid, formInstanceRep.guid)) {}
+    test(expectResult = Unit) {
+      formInstanceClient(FormInstanceApi.Delete(featureGuid, formInstanceRep.guid))
+    }
 
-    test(
-      endpoint = FormInstanceApi.Get(featureGuid, formInstanceRep.guid),
-      expectedException = FormInstanceNotFound()
-    )
+    test(expectResult = null) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
+    }
   }
 }

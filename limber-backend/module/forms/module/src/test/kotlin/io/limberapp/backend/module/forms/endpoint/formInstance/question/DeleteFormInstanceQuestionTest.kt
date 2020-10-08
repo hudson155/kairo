@@ -17,7 +17,6 @@ import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class DeleteFormInstanceQuestionTest(
   engine: TestApplicationEngine,
@@ -59,21 +58,20 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     test(
       endpoint = FormInstanceQuestionApi.Delete(featureGuid, formInstanceRep.guid, UUID.randomUUID()),
       expectedException = FormInstanceQuestionNotFound()
     )
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -98,12 +96,12 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
@@ -126,9 +124,8 @@ internal class DeleteFormInstanceQuestionTest(
       expectedException = FormInstanceQuestionNotFound()
     )
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -153,12 +150,12 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
@@ -181,9 +178,8 @@ internal class DeleteFormInstanceQuestionTest(
       expectedException = FormInstanceQuestionNotFound()
     )
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -208,12 +204,12 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
@@ -228,13 +224,13 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
-    setup(
-      endpoint = FormInstanceApi.Patch(
+    setup {
+      formInstanceClient(FormInstanceApi.Patch(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         rep = FormInstanceRep.Update(submitted = true),
-      )
-    )
+      ))
+    }
 
     test(
       endpoint = FormInstanceQuestionApi.Delete(
@@ -245,9 +241,8 @@ internal class DeleteFormInstanceQuestionTest(
       expectedException = CannotDeleteRequiredQuestion()
     )
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -272,12 +267,12 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
@@ -300,9 +295,8 @@ internal class DeleteFormInstanceQuestionTest(
       )
     ) {}
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -327,12 +321,12 @@ internal class DeleteFormInstanceQuestionTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
@@ -355,9 +349,8 @@ internal class DeleteFormInstanceQuestionTest(
       )
     ) {}
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 }

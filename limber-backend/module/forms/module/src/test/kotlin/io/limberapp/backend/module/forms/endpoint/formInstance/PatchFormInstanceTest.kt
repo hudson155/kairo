@@ -6,7 +6,6 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formInstance.CannotReSubmitFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
-import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
@@ -17,7 +16,6 @@ import io.limberapp.common.endpoint.exception.ValidationException
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PatchFormInstanceTest(
   engine: TestApplicationEngine,
@@ -28,10 +26,9 @@ internal class PatchFormInstanceTest(
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = true)),
-      expectedException = FormInstanceNotFound()
-    )
+    test(expectResult = null) {
+      formInstanceClient(FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = true)))
+    }
   }
 
   @Test
@@ -46,21 +43,22 @@ internal class PatchFormInstanceTest(
     }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = feature0Guid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
-    test(
-      endpoint = FormInstanceApi.Patch(feature1Guid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
-      expectedException = FormInstanceNotFound()
-    )
+    test(expectResult = null) {
+      formInstanceClient(FormInstanceApi.Patch(featureGuid = feature1Guid,
+        formInstanceGuid = formInstanceRep.guid,
+        rep = FormInstanceRep.Update(submitted = true)
+      ))
+    }
 
-    test(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(feature0Guid, formInstanceRep.guid))
     }
   }
 
@@ -69,10 +67,13 @@ internal class PatchFormInstanceTest(
     val featureGuid = UUID.randomUUID()
     val formInstanceGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceGuid, FormInstanceRep.Update(submitted = false)),
-      expectedException = ValidationException(FormInstanceRep.Update::submitted.name)
-    )
+    test(expectError = ValidationException(FormInstanceRep.Update::submitted.name)) {
+      formInstanceClient(FormInstanceApi.Patch(
+        featureGuid = featureGuid,
+        formInstanceGuid = formInstanceGuid,
+        rep = FormInstanceRep.Update(submitted = false)
+      ))
+    }
   }
 
   @Test
@@ -96,21 +97,23 @@ internal class PatchFormInstanceTest(
     )
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
-    test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
-      expectedException = CannotSubmitFormBeforeAnsweringAllRequiredQuestions()
-    )
+    test(expectError = CannotSubmitFormBeforeAnsweringAllRequiredQuestions()) {
+      formInstanceClient(FormInstanceApi.Patch(
+        featureGuid = featureGuid,
+        formInstanceGuid = formInstanceRep.guid,
+        rep = FormInstanceRep.Update(submitted = true)
+      ))
+    }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -125,24 +128,32 @@ internal class PatchFormInstanceTest(
     }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
-    setup(FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)))
+    setup {
+      formInstanceClient(FormInstanceApi.Patch(
+        featureGuid = featureGuid,
+        formInstanceGuid = formInstanceRep.guid,
+        rep = FormInstanceRep.Update(submitted = true)
+      ))
+    }
 
-    test(
-      endpoint = FormInstanceApi.Patch(featureGuid, formInstanceRep.guid, FormInstanceRep.Update(submitted = true)),
-      expectedException = CannotReSubmitFormInstance()
-    )
+    test(expectError = CannotReSubmitFormInstance()) {
+      formInstanceClient(FormInstanceApi.Patch(
+        featureGuid = featureGuid,
+        formInstanceGuid = formInstanceRep.guid,
+        rep = FormInstanceRep.Update(submitted = true)
+      ))
+    }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -157,28 +168,24 @@ internal class PatchFormInstanceTest(
     }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
-    test(
-      endpoint = FormInstanceApi.Patch(
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Patch(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         rep = FormInstanceRep.Update(submitted = true)
-      ),
-    ) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+      ))
     }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 }

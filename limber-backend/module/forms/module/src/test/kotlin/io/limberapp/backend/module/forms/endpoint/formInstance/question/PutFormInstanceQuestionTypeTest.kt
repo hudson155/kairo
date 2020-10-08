@@ -6,7 +6,6 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceQuestionAp
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
-import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
@@ -42,12 +41,12 @@ internal class PutFormInstanceQuestionTypeTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.dateFixture.complete(this, formTemplateQuestionRep.guid)
@@ -64,9 +63,8 @@ internal class PutFormInstanceQuestionTypeTest(
       assertEquals(formInstanceQuestionRep, actual)
     }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -91,12 +89,12 @@ internal class PutFormInstanceQuestionTypeTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.radioSelectorFixture.complete(this, formTemplateQuestionRep.guid)
@@ -113,9 +111,8 @@ internal class PutFormInstanceQuestionTypeTest(
       assertEquals(formInstanceQuestionRep, actual)
     }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -140,12 +137,12 @@ internal class PutFormInstanceQuestionTypeTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
@@ -162,9 +159,8 @@ internal class PutFormInstanceQuestionTypeTest(
       assertEquals(formInstanceQuestionRep, actual)
     }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 
@@ -189,12 +185,12 @@ internal class PutFormInstanceQuestionTypeTest(
     )
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
-    setup(
-      endpoint = FormInstanceApi.Post(
+    setup {
+      formInstanceClient(FormInstanceApi.Post(
         featureGuid = featureGuid,
         rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
-      )
-    )
+      ))
+    }
 
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.yesNoFixture.complete(this, formTemplateQuestionRep.guid)
@@ -211,9 +207,8 @@ internal class PutFormInstanceQuestionTypeTest(
       assertEquals(formInstanceQuestionRep, actual)
     }
 
-    test(FormInstanceApi.Get(featureGuid, formInstanceRep.guid)) {
-      val actual = json.parse<FormInstanceRep.Complete>(responseContent)
-      assertEquals(formInstanceRep, actual)
+    test(expectResult = formInstanceRep) {
+      formInstanceClient(FormInstanceApi.Get(featureGuid, formInstanceRep.guid))
     }
   }
 }
