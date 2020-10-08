@@ -4,7 +4,6 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
-import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
@@ -19,10 +18,9 @@ internal class PutUserRoleTest(
   fun userDoesNotExist() {
     val userGuid = UUID.randomUUID()
 
-    test(
-      endpoint = UserRoleApi.Put(userGuid, JwtRole.SUPERUSER),
-      expectedException = UserNotFound()
-    )
+    test(expectResult = null) {
+      userRoleClient(UserRoleApi.Put(userGuid, JwtRole.SUPERUSER))
+    }
   }
 
   @Test
@@ -35,7 +33,9 @@ internal class PutUserRoleTest(
     }
 
     userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
-    test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
+    test(expectResult = Unit) {
+      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+    }
 
     test(expectResult = userRep) {
       userClient(UserApi.Get(userRep.guid))
@@ -52,9 +52,13 @@ internal class PutUserRoleTest(
     }
 
     userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
-    setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+    setup {
+      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+    }
 
-    test(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER)) {}
+    test(expectResult = Unit) {
+      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+    }
 
     test(expectResult = userRep) {
       userClient(UserApi.Get(userRep.guid))

@@ -5,7 +5,6 @@ import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.api.user.UserApi
 import io.limberapp.backend.module.users.api.user.role.UserRoleApi
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
-import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
@@ -20,10 +19,9 @@ internal class DeleteUserRoleTest(
   fun userDoesNotExist() {
     val userGuid = UUID.randomUUID()
 
-    test(
-      endpoint = UserRoleApi.Delete(userGuid, JwtRole.SUPERUSER),
-      expectedException = UserNotFound()
-    )
+    test(expectResult = null) {
+      userRoleClient(UserRoleApi.Delete(userGuid, JwtRole.SUPERUSER))
+    }
   }
 
   @Test
@@ -35,10 +33,9 @@ internal class DeleteUserRoleTest(
       userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
     }
 
-    test(
-      endpoint = UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER),
-      expectedException = UserDoesNotHaveRole()
-    )
+    test(expectError = UserDoesNotHaveRole()) {
+      userRoleClient(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER))
+    }
 
     test(expectResult = userRep) {
       userClient(UserApi.Get(userRep.guid))
@@ -55,10 +52,14 @@ internal class DeleteUserRoleTest(
     }
 
     userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
-    setup(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+    setup {
+      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+    }
 
     userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
-    test(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER)) {}
+    test(expectResult = Unit) {
+      userRoleClient(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER))
+    }
 
     test(expectResult = userRep) {
       userClient(UserApi.Get(userRep.guid))
