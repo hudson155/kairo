@@ -49,13 +49,13 @@ internal class DeleteFormInstanceQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
-      )
-    )
+      ))
+    }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
@@ -87,13 +87,13 @@ internal class DeleteFormInstanceQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
-      )
-    )
+      ))
+    }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
@@ -141,13 +141,13 @@ internal class DeleteFormInstanceQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
-      )
-    )
+      ))
+    }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
@@ -195,13 +195,13 @@ internal class DeleteFormInstanceQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
-      )
-    )
+      ))
+    }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
@@ -258,13 +258,13 @@ internal class DeleteFormInstanceQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
-      )
-    )
+      ))
+    }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
@@ -312,13 +312,13 @@ internal class DeleteFormInstanceQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.dateFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.dateFixture.creation(),
-      )
-    )
+      ))
+    }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {

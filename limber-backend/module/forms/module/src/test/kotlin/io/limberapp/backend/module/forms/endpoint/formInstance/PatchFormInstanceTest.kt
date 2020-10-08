@@ -88,13 +88,13 @@ internal class PatchFormInstanceTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
-      )
-    )
+      ))
+    }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {

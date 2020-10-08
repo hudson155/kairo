@@ -4,7 +4,6 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
-import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
@@ -13,7 +12,6 @@ import io.limberapp.exception.badRequest.RankOutOfBounds
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PostFormTemplateQuestionTest(
   engine: TestApplicationEngine,
@@ -24,14 +22,13 @@ internal class PostFormTemplateQuestionTest(
     val featureGuid = UUID.randomUUID()
     val formTemplateGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FormTemplateQuestionApi.Post(
+    test(expectError = FormTemplateNotFound().unprocessable()) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateGuid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      ),
-      expectedException = FormTemplateNotFound().unprocessable()
-    )
+      ))
+    }
   }
 
   @Test
@@ -43,14 +40,13 @@ internal class PostFormTemplateQuestionTest(
       formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
     }
 
-    test(
-      endpoint = FormTemplateQuestionApi.Post(
+    test(expectError = FormTemplateNotFound().unprocessable()) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = UUID.randomUUID(),
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      ),
-      expectedException = FormTemplateNotFound().unprocessable(),
-    )
+      ))
+    }
 
     test(expectResult = formTemplateRep) {
       formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
@@ -66,15 +62,14 @@ internal class PostFormTemplateQuestionTest(
       formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
     }
 
-    test(
-      endpoint = FormTemplateQuestionApi.Post(
+    test(expectError = RankOutOfBounds(-1)) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = -1,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      ),
-      expectedException = RankOutOfBounds(-1)
-    )
+      ))
+    }
   }
 
   @Test
@@ -86,15 +81,14 @@ internal class PostFormTemplateQuestionTest(
       formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
     }
 
-    test(
-      endpoint = FormTemplateQuestionApi.Post(
+    test(expectError = RankOutOfBounds(1)) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 1,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      ),
-      expectedException = RankOutOfBounds(1)
-    )
+      ))
+    }
   }
 
   @Test
@@ -110,16 +104,13 @@ internal class PostFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
-    test(
-      endpoint = FormTemplateQuestionApi.Post(
+    test(expectResult = formTemplateQuestionRep) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      )
-    ) {
-      val actual = json.parse<FormTemplateQuestionRep.Complete>(responseContent)
-      assertEquals(formTemplateQuestionRep, actual)
+      ))
     }
 
     test(expectResult = formTemplateRep) {
@@ -140,15 +131,12 @@ internal class PostFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(
       questions = formTemplateRep.questions + formTemplateQuestionRep
     )
-    test(
-      endpoint = FormTemplateQuestionApi.Post(
+    test(expectResult = formTemplateQuestionRep) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      )
-    ) {
-      val actual = json.parse<FormTemplateQuestionRep.Complete>(responseContent)
-      assertEquals(formTemplateQuestionRep, actual)
+      ))
     }
 
     test(expectResult = formTemplateRep) {

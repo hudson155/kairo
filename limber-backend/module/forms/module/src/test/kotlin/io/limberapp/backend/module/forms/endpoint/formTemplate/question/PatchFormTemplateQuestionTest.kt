@@ -3,7 +3,6 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
-import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
@@ -22,15 +21,14 @@ internal class PatchFormTemplateQuestionTest(
     val formTemplateGuid = UUID.randomUUID()
     val questionGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FormTemplateQuestionApi.Patch(
+    test(expectResult = null) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateGuid,
         questionGuid = questionGuid,
         rep = FormTemplateTextQuestionRep.Update("Renamed Question")
-      ),
-      expectedException = FormTemplateQuestionNotFound()
-    )
+      ))
+    }
   }
 
   @Test
@@ -43,15 +41,14 @@ internal class PatchFormTemplateQuestionTest(
       formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
     }
 
-    test(
-      endpoint = FormTemplateQuestionApi.Patch(
+    test(expectResult = null) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = questionGuid,
         rep = FormTemplateTextQuestionRep.Update("Renamed Question")
-      ),
-      expectedException = FormTemplateQuestionNotFound()
-    )
+      ))
+    }
   }
 
   @Test
@@ -68,24 +65,23 @@ internal class PatchFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      )
-    )
+      ))
+    }
 
-    test(
-      endpoint = FormTemplateQuestionApi.Patch(
+    test(expectResult = null) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
         featureGuid = UUID.randomUUID(),
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormTemplateTextQuestionRep.Update("Renamed Question")
-      ),
-      expectedException = FormTemplateQuestionNotFound()
-    )
+      ))
+    }
 
     test(expectResult = formTemplateRep) {
       formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
@@ -105,24 +101,23 @@ internal class PatchFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      )
-    )
+      ))
+    }
 
-    test(
-      endpoint = FormTemplateQuestionApi.Patch(
+    test(expectResult = null) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = UUID.randomUUID(),
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormTemplateTextQuestionRep.Update("Renamed Question")
-      ),
-      expectedException = FormTemplateQuestionNotFound()
-    )
+      ))
+    }
 
     test(expectResult = formTemplateRep) {
       formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
@@ -143,14 +138,14 @@ internal class PatchFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(
       questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
-    setup(
-      endpoint = FormTemplateQuestionApi.Post(
+    setup {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Post(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         rank = 0,
         rep = FormTemplateQuestionRepFixtures.textFixture.creation()
-      )
-    )
+      ))
+    }
 
     formTemplateQuestionRep = formTemplateQuestionRep.copy(label = "Renamed Question")
     formTemplateRep = formTemplateRep.copy(
@@ -158,14 +153,14 @@ internal class PatchFormTemplateQuestionTest(
         if (it.guid == formTemplateQuestionRep.guid) formTemplateQuestionRep else it
       }
     )
-    test(
-      endpoint = FormTemplateQuestionApi.Patch(
+    test(expectResult = formTemplateQuestionRep) {
+      formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
         featureGuid = featureGuid,
         formTemplateGuid = formTemplateRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormTemplateTextQuestionRep.Update("Renamed Question")
-      )
-    ) {}
+      ))
+    }
 
     test(expectResult = formTemplateRep) {
       formTemplateClient(FormTemplateApi.Get(featureGuid, formTemplateRep.guid))
