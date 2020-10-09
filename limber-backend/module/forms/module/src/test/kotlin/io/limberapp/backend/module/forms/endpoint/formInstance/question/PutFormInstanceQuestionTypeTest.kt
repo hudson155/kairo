@@ -5,7 +5,6 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
-import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
@@ -14,7 +13,6 @@ import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTempl
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PutFormInstanceQuestionTypeTest(
   engine: TestApplicationEngine,
@@ -51,16 +49,13 @@ internal class PutFormInstanceQuestionTypeTest(
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.dateFixture.complete(this, formTemplateQuestionRep.guid)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
-    test(
-      endpoint = FormInstanceQuestionApi.Put(
+    test(expectResult = formInstanceQuestionRep) {
+      formInstanceQuestionClient(FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormInstanceQuestionRepFixtures.dateFixture.creation(this)
-      )
-    ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
-      assertEquals(formInstanceQuestionRep, actual)
+      ))
     }
 
     test(expectResult = formInstanceRep) {
@@ -99,16 +94,13 @@ internal class PutFormInstanceQuestionTypeTest(
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.radioSelectorFixture.complete(this, formTemplateQuestionRep.guid)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
-    test(
-      endpoint = FormInstanceQuestionApi.Put(
+    test(expectResult = formInstanceQuestionRep) {
+      formInstanceQuestionClient(FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormInstanceQuestionRepFixtures.radioSelectorFixture.creation(this)
-      )
-    ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
-      assertEquals(formInstanceQuestionRep, actual)
+      ))
     }
 
     test(expectResult = formInstanceRep) {
@@ -147,16 +139,13 @@ internal class PutFormInstanceQuestionTypeTest(
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
-    test(
-      endpoint = FormInstanceQuestionApi.Put(
+    test(expectResult = formInstanceQuestionRep) {
+      formInstanceQuestionClient(FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
-      )
-    ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
-      assertEquals(formInstanceQuestionRep, actual)
+      ))
     }
 
     test(expectResult = formInstanceRep) {
@@ -195,16 +184,13 @@ internal class PutFormInstanceQuestionTypeTest(
     val formInstanceQuestionRep =
       FormInstanceQuestionRepFixtures.yesNoFixture.complete(this, formTemplateQuestionRep.guid)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
-    test(
-      endpoint = FormInstanceQuestionApi.Put(
+    test(expectResult = formInstanceQuestionRep) {
+      formInstanceQuestionClient(FormInstanceQuestionApi.Put(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,
         questionGuid = formTemplateQuestionRep.guid,
         rep = FormInstanceQuestionRepFixtures.yesNoFixture.creation(this)
-      )
-    ) {
-      val actual = json.parse<FormInstanceQuestionRep.Complete>(responseContent)
-      assertEquals(formInstanceQuestionRep, actual)
+      ))
     }
 
     test(expectResult = formInstanceRep) {
