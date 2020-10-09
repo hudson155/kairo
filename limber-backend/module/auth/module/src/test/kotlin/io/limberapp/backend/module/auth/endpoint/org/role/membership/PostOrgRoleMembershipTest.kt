@@ -5,7 +5,6 @@ import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.exception.org.AccountIsAlreadyMemberOfOrgRole
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
-import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
@@ -29,14 +28,13 @@ internal class PostOrgRoleMembershipTest(
     // Create an org role anyways, to ensure that the error still happens when there is one.
     setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    test(
-      endpoint = OrgRoleMembershipApi.Post(
+    test(expectError = OrgRoleNotFound().unprocessable()) {
+      orgRoleMembershipClient(OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleGuid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
-      ),
-      expectedException = OrgRoleNotFound().unprocessable(),
-    )
+      ))
+    }
   }
 
   @Test
@@ -48,26 +46,24 @@ internal class PostOrgRoleMembershipTest(
     setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
 
     val orgRoleMembershipRep = OrgRoleMembershipRepFixtures.fixture.complete(this, accountGuid)
-    setup(
-      endpoint = OrgRoleMembershipApi.Post(
+    setup {
+      orgRoleMembershipClient(OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
-      )
-    )
+      ))
+    }
 
-    test(
-      endpoint = OrgRoleMembershipApi.Post(
+    test(expectError = AccountIsAlreadyMemberOfOrgRole()) {
+      orgRoleMembershipClient(OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
-      ),
-      expectedException = AccountIsAlreadyMemberOfOrgRole()
-    )
+      ))
+    }
 
-    test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
-      assertEquals(setOf(orgRoleMembershipRep), actual)
+    test(expectResult = setOf(orgRoleMembershipRep)) {
+      orgRoleMembershipClient(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid))
     }
   }
 
@@ -82,32 +78,25 @@ internal class PostOrgRoleMembershipTest(
 
     val orgRoleMembership0Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, account0Guid)
     orgRoleRep = orgRoleRep.copy(memberCount = orgRoleRep.memberCount + 1)
-    test(
-      endpoint = OrgRoleMembershipApi.Post(
+    test(expectResult = orgRoleMembership0Rep) {
+      orgRoleMembershipClient(OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(account0Guid)
-      )
-    ) {
-      val actual = json.parse<OrgRoleMembershipRep.Complete>(responseContent)
-      assertEquals(orgRoleMembership0Rep, actual)
+      ))
     }
     val orgRoleMembership1Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
     orgRoleRep = orgRoleRep.copy(memberCount = orgRoleRep.memberCount + 1)
-    test(
-      endpoint = OrgRoleMembershipApi.Post(
+    test(expectResult = orgRoleMembership1Rep) {
+      orgRoleMembershipClient(OrgRoleMembershipApi.Post(
         orgGuid = orgGuid,
         orgRoleGuid = orgRoleRep.guid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(account1Guid)
-      )
-    ) {
-      val actual = json.parse<OrgRoleMembershipRep.Complete>(responseContent)
-      assertEquals(orgRoleMembership1Rep, actual)
+      ))
     }
 
-    test(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid)) {
-      val actual = json.parseSet<OrgRoleMembershipRep.Complete>(responseContent)
-      assertEquals(setOf(orgRoleMembership0Rep, orgRoleMembership1Rep), actual)
+    test(expectResult = setOf(orgRoleMembership0Rep, orgRoleMembership1Rep)) {
+      orgRoleMembershipClient(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleRep.guid))
     }
 
     test(OrgRoleApi.GetByOrgGuid(orgGuid)) {

@@ -179,13 +179,13 @@ internal class PostJwtClaimsRequestTest(
 
     setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
 
-    setup(
-      endpoint = OrgRoleMembershipApi.Post(
+    setup {
+      orgRoleMembershipClient(OrgRoleMembershipApi.Post(
         orgGuid = existingOrg.guid,
         orgRoleGuid = maintainerOrgRoleRep.guid,
         rep = OrgRoleMembershipRepFixtures.fixture.creation(existingUser.guid)
-      )
-    )
+      ))
+    }
 
     val orgPermissions = setOf(
       membershipOrgRoleRep.permissions, // This org role has isDefault = true.
