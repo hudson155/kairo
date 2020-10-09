@@ -6,7 +6,7 @@ import { EmotionThemeType } from '../EmotionTheme';
 type LimberButtonType = 'PRIMARY' | 'SECONDARY';
 
 interface Props {
-  readonly disabled: boolean;
+  readonly disabled?: boolean;
   readonly label: string;
   readonly type: LimberButtonType;
   readonly onClick: () => void;
