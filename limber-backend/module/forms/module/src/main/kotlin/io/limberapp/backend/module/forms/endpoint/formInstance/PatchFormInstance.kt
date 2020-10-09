@@ -9,7 +9,6 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.mapper.formInstance.FormInstanceMapper
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.backend.module.forms.service.formInstance.FormInstanceQuestionService
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import io.limberapp.common.restInterface.template
 import java.util.*
@@ -17,9 +16,8 @@ import java.util.*
 internal class PatchFormInstance @Inject constructor(
   application: Application,
   private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionService: FormInstanceQuestionService,
   private val formInstanceMapper: FormInstanceMapper,
-) : LimberApiEndpoint<FormInstanceApi.Patch, FormInstanceRep.Complete>(
+) : LimberApiEndpoint<FormInstanceApi.Patch, FormInstanceRep.Summary>(
   application = application,
   endpointTemplate = FormInstanceApi.Patch::class.template()
 ) {
@@ -29,7 +27,7 @@ internal class PatchFormInstance @Inject constructor(
     rep = call.getAndValidateBody()
   )
 
-  override suspend fun Handler.handle(command: FormInstanceApi.Patch): FormInstanceRep.Complete {
+  override suspend fun Handler.handle(command: FormInstanceApi.Patch): FormInstanceRep.Summary {
     val rep = command.rep.required()
     Authorization.FeatureMember(command.featureGuid).authorize()
     run {
@@ -44,10 +42,6 @@ internal class PatchFormInstance @Inject constructor(
       formInstanceGuid = command.formInstanceGuid,
       update = formInstanceMapper.update(rep)
     )
-    val questions = formInstanceQuestionService.findAsSet {
-      featureGuid(command.featureGuid)
-      formInstanceGuid(formInstance.guid)
-    }
-    return formInstanceMapper.completeRep(formInstance, questions)
+    return formInstanceMapper.summaryRep(formInstance)
   }
 }

@@ -7,6 +7,7 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionAp
 import io.limberapp.backend.module.forms.exception.formInstance.CannotReSubmitFormInstance
 import io.limberapp.backend.module.forms.exception.formInstance.CannotSubmitFormBeforeAnsweringAllRequiredQuestions
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
+import io.limberapp.backend.module.forms.rep.formInstance.summary
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
@@ -176,7 +177,7 @@ internal class PatchFormInstanceTest(
     }
 
     formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
-    test(expectResult = formInstanceRep) {
+    test(expectResult = formInstanceRep.summary()) {
       formInstanceClient(FormInstanceApi.Patch(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceRep.guid,

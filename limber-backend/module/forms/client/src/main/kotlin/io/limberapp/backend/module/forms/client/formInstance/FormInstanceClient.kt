@@ -38,7 +38,7 @@ class FormInstanceClient(private val httpClient: LimberHttpClient) {
     endpoint: FormInstanceApi.Patch,
     builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<FormInstanceRep.Complete>(it) }
+    it?.let { parse<FormInstanceRep.Summary>(it) }
   }
 
   suspend operator fun invoke(
