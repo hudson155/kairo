@@ -33,10 +33,14 @@ internal class GetFeatureRolesByFeatureGuidTest(
     val featureGuid = UUID.randomUUID()
 
     val adminOrgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     val memberOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 1)
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.memberFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.memberFixture.creation()))
+    }
 
     val featureAdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this, adminOrgRoleRep.guid, 2)
     setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)))

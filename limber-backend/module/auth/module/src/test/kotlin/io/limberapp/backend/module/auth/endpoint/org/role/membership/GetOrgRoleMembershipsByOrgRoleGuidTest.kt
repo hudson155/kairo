@@ -20,7 +20,9 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest(
     val orgRoleGuid = UUID.randomUUID()
 
     // Create an org role anyways, to ensure that the error still happens when there is one.
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     test(expectResult = emptySet()) {
       orgRoleMembershipClient(OrgRoleMembershipApi.GetByOrgRoleGuid(orgGuid, orgRoleGuid))
@@ -34,7 +36,9 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest(
     val account1Guid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     val orgRoleMembershipRep0 = OrgRoleMembershipRepFixtures.fixture.complete(this, account0Guid)
     setup {

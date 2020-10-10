@@ -22,7 +22,9 @@ internal class PostFeatureRoleTest(
     val featureGuid = UUID.randomUUID()
 
     val adminOrgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(adminOrgRoleRep.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(adminOrgRoleRep.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     val featureAdminOrgRoleRep = FeatureRoleRepFixtures.fixture.complete(this, adminOrgRoleRep.guid, 1)
     setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)))
@@ -47,7 +49,9 @@ internal class PostFeatureRoleTest(
     val featureGuid = UUID.randomUUID()
 
     val adminOrgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     val featureAdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this, adminOrgRoleRep.guid, 1)
     test(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid))) {

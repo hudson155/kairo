@@ -70,11 +70,17 @@ internal class PostJwtClaimsRequestTest(
     setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+    }
 
-    setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+    }
 
-    setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     val orgPermissions = setOf(
       membershipOrgRoleRep.permissions, // This org role has isDefault = true.
@@ -172,12 +178,18 @@ internal class PostJwtClaimsRequestTest(
     setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
 
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.memberFixture.creation()))
+    }
 
     val maintainerOrgRoleRep = OrgRoleRepFixtures.maintainerFixture.complete(this, 1)
-    setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.maintainerFixture.creation()))
+    }
 
-    setup(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(existingOrg.guid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     setup {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(

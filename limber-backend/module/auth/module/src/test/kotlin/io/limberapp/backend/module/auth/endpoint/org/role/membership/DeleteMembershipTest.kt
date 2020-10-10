@@ -21,7 +21,9 @@ internal class DeleteMembershipTest(
     val accountGuid = UUID.randomUUID()
 
     // Create an org role anyways, to ensure that the error still happens when there is one.
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     test(expectResult = null) {
       orgRoleMembershipClient(OrgRoleMembershipApi.Delete(orgGuid, orgRoleGuid, accountGuid))
@@ -36,7 +38,9 @@ internal class DeleteMembershipTest(
     val account1Guid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     // Create an org role membership anyways, to ensure that the error still happens when there is one.
     setup {
@@ -59,7 +63,9 @@ internal class DeleteMembershipTest(
     val account1Guid = UUID.randomUUID()
 
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, 0)
-    setup(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    setup {
+      orgRoleClient(OrgRoleApi.Post(orgGuid, OrgRoleRepFixtures.adminFixture.creation()))
+    }
 
     setup {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
