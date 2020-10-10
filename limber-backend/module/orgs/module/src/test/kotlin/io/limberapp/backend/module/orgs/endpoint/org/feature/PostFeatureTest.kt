@@ -7,7 +7,6 @@ import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
-import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -34,7 +33,9 @@ internal class PostFeatureTest(
   @Test
   fun duplicateRank() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    setup {
+      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    }
 
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
     setup(
@@ -52,16 +53,17 @@ internal class PostFeatureTest(
       expectedException = FeatureRankIsNotUnique(),
     )
 
-    test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(responseContent)
-      assertEquals(orgRep, actual)
+    test(expectResult = orgRep) {
+      orgClient(OrgApi.Get(orgRep.guid))
     }
   }
 
   @Test
   fun duplicatePath() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    setup {
+      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    }
 
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
     setup(
@@ -79,16 +81,17 @@ internal class PostFeatureTest(
       expectedException = FeaturePathIsNotUnique(),
     )
 
-    test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(responseContent)
-      assertEquals(orgRep, actual)
+    test(expectResult = orgRep) {
+      orgClient(OrgApi.Get(orgRep.guid))
     }
   }
 
   @Test
   fun happyPath() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    setup {
+      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    }
 
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + featureRep)
@@ -97,9 +100,8 @@ internal class PostFeatureTest(
       assertEquals(featureRep, actual)
     }
 
-    test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(responseContent)
-      assertEquals(orgRep, actual)
+    test(expectResult = orgRep) {
+      orgClient(OrgApi.Get(orgRep.guid))
     }
   }
 }

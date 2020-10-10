@@ -2,7 +2,6 @@ package io.limberapp.backend.module.orgs.endpoint.org
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.orgs.api.org.OrgApi
-import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import io.limberapp.common.LimberApplication
@@ -17,22 +16,24 @@ internal class DeleteOrgTest(
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    test(
-      endpoint = OrgApi.Delete(orgGuid),
-      expectedException = OrgNotFound()
-    )
+    test(expectResult = null) {
+      orgClient(OrgApi.Delete(orgGuid))
+    }
   }
 
   @Test
   fun happyPath() {
     val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    setup {
+      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    }
 
-    test(OrgApi.Delete(orgRep.guid)) {}
+    test(expectResult = Unit) {
+      orgClient(OrgApi.Delete(orgRep.guid))
+    }
 
-    test(
-      endpoint = OrgApi.Get(orgRep.guid),
-      expectedException = OrgNotFound()
-    )
+    test(expectResult = null) {
+      orgClient(OrgApi.Get(orgRep.guid))
+    }
   }
 }

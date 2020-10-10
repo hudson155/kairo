@@ -4,14 +4,12 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
-import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class DeleteFeatureTest(
   engine: TestApplicationEngine,
@@ -33,23 +31,26 @@ internal class DeleteFeatureTest(
     val featureGuid = UUID.randomUUID()
 
     val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    setup {
+      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    }
 
     test(
       endpoint = FeatureApi.Delete(orgRep.guid, featureGuid),
       expectedException = FeatureNotFound(),
     )
 
-    test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(responseContent)
-      assertEquals(orgRep, actual)
+    test(expectResult = orgRep) {
+      orgClient(OrgApi.Get(orgRep.guid))
     }
   }
 
   @Test
   fun happyPath() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    setup {
+      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
+    }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
@@ -62,9 +63,8 @@ internal class DeleteFeatureTest(
     orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != formsFeatureRep.guid })
     test(FeatureApi.Delete(orgRep.guid, formsFeatureRep.guid)) {}
 
-    test(OrgApi.Get(orgRep.guid)) {
-      val actual = json.parse<OrgRep.Complete>(responseContent)
-      assertEquals(orgRep, actual)
+    test(expectResult = orgRep) {
+      orgClient(OrgApi.Get(orgRep.guid))
     }
   }
 }
