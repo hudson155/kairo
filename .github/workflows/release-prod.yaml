@@ -34,15 +34,15 @@ jobs:
           key: ${{ runner.os }}-gradle-dependencies-v3-${{ hashFiles('**/*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-dependencies-v2-
-      - run: ./gradlew --info --stacktrace downloadDependencies
-      - run: ./gradlew --info --stacktrace classes
-      - run: ./gradlew --info --stacktrace testClasses
-      - run: ./gradlew --info --stacktrace test
+      - run: ./gradlew --info --stacktrace --no-build-cache downloadDependencies
+      - run: ./gradlew --info --stacktrace --no-build-cache classes
+      - run: ./gradlew --info --stacktrace --no-build-cache testClasses
+      - run: ./gradlew --info --stacktrace --no-build-cache test
         env:
           LIMBER_TEST_POSTGRES_USERNAME: postgres
           LIMBER_TEST_POSTGRES_PASSWORD: postgres
-      - run: ./gradlew --info --stacktrace detekt
-      - run: ./gradlew --info --stacktrace build
+      - run: ./gradlew --info --stacktrace --no-build-cache detekt
+      - run: ./gradlew --info --stacktrace --no-build-cache build
         env:
           ENV: production
       - run: docker login -u ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} -p ${{ secrets.LIMBER_DIGITAL_OCEAN_ACCESS_TOKEN }} registry.digitalocean.com
