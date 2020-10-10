@@ -1,10 +1,10 @@
 import { CSSObject } from '@emotion/core';
 import React, { ReactElement } from 'react';
 
-import { EmotionThemeType } from '../EmotionTheme';
+import { EmotionTheme } from '../EmotionTheme';
 
 const styles = {
-  toggle: (theme: EmotionThemeType): CSSObject => ({
+  toggle: (theme: EmotionTheme): CSSObject => ({
     position: 'relative',
     cursor: 'pointer',
     height: theme.size.$24,
@@ -13,10 +13,10 @@ const styles = {
     borderRadius: theme.size.$24,
     background: theme.colors.grey400,
   }),
-  toggleEnabled: (theme: EmotionThemeType): CSSObject => ({
+  toggleEnabled: (theme: EmotionTheme): CSSObject => ({
     background: theme.colors.blue400,
   }),
-  slider: (theme: EmotionThemeType): CSSObject => ({
+  slider: (theme: EmotionTheme): CSSObject => ({
     position: 'absolute',
     backgroundColor: theme.colors.grey50,
     height: theme.size.$24,

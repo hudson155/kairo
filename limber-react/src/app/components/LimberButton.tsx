@@ -1,7 +1,7 @@
 import { CSSObject } from '@emotion/core';
 import React, { ReactElement } from 'react';
 
-import { EmotionThemeType } from '../EmotionTheme';
+import { EmotionTheme } from '../EmotionTheme';
 
 type LimberButtonType = 'PRIMARY' | 'SECONDARY';
 
@@ -13,14 +13,14 @@ interface Props {
 }
 
 const styles = {
-  baseButton: (theme: EmotionThemeType): CSSObject => ({
+  baseButton: (theme: EmotionTheme): CSSObject => ({
     fontWeight: 'bold',
     fontSize: 'initial',
     border: 'none',
     borderRadius: theme.size.$4,
     padding: `${theme.size.$6} ${theme.size.$12} ${theme.size.$6} ${theme.size.$12}`,
   }),
-  primary: (theme: EmotionThemeType): CSSObject => ({
+  primary: (theme: EmotionTheme): CSSObject => ({
     backgroundColor: theme.colors.blue400,
     color: theme.colors.grey100,
     outlineColor: theme.colors.blue500,
@@ -29,12 +29,12 @@ const styles = {
       color: theme.colors.grey100,
     },
   }),
-  secondary: (theme: EmotionThemeType): CSSObject => ({
-    backgroundColor: theme.colors.grey300,
+  secondary: (theme: EmotionTheme): CSSObject => ({
+    backgroundColor: theme.colors.grey400,
     color: theme.colors.grey800,
     outlineColor: theme.colors.grey200,
     ':disabled': {
-      backgroundColor: theme.colors.grey200,
+      backgroundColor: theme.colors.grey300,
       color: theme.colors.grey500,
     },
   }),

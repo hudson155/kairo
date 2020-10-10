@@ -1,11 +1,11 @@
 import { CSSObject } from '@emotion/core';
 import React, { ReactElement, ReactNode, Suspense } from 'react';
 
-import { EmotionThemeType } from '../EmotionTheme';
+import { EmotionTheme } from '../EmotionTheme';
 
 // TODO (ENG-81): Properly implement and style this component to support navigation component etc.
 const styles = {
-  root: (theme: EmotionThemeType): CSSObject => ({
+  root: (theme: EmotionTheme): CSSObject => ({
     marginLeft: theme.size.$64,
     marginRight: theme.size.$64,
   }),
