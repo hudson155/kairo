@@ -87,12 +87,12 @@ internal class PostJwtClaimsRequestTest(
     ).union()
 
     val featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, membershipOrgRoleRep.guid, 3)
-    setup(
-      endpoint = FeatureRoleApi.Post(
+    setup {
+      featureRoleClient(FeatureRoleApi.Post(
         featureGuid = existingFeature.guid,
         rep = FeatureRoleRepFixtures.fixture.creation(membershipOrgRoleRep.guid),
-      ),
-    )
+      ))
+    }
 
     val featurePermissions = checkNotNull(setOf(
       featureRoleRep.permissions, // Associated with membershipOrgRoleRep which has isDefault = true.

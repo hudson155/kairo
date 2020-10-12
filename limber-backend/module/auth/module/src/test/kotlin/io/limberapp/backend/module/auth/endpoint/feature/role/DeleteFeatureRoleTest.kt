@@ -3,15 +3,12 @@ package io.limberapp.backend.module.auth.endpoint.feature.role
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.auth.exception.feature.FeatureRoleNotFound
-import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class DeleteFeatureRoleTest(
   engine: TestApplicationEngine,
@@ -22,10 +19,9 @@ internal class DeleteFeatureRoleTest(
     val featureGuid = UUID.randomUUID()
     val featureRoleGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FeatureRoleApi.Delete(featureGuid, featureRoleGuid),
-      expectedException = FeatureRoleNotFound()
-    )
+    test(expectResult = null) {
+      featureRoleClient(FeatureRoleApi.Delete(featureGuid, featureRoleGuid))
+    }
   }
 
   @Test
@@ -44,16 +40,27 @@ internal class DeleteFeatureRoleTest(
     }
 
     val featureAdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this, adminOrgRoleRep.guid, 2)
-    setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)))
+    setup {
+      featureRoleClient(FeatureRoleApi.Post(
+        featureGuid = featureGuid,
+        rep = FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)
+      ))
+    }
 
     val featureMemberRoleRep = FeatureRoleRepFixtures.fixture.complete(this, memberOrgRoleRep.guid, 3)
-    setup(FeatureRoleApi.Post(featureGuid, FeatureRoleRepFixtures.fixture.creation(memberOrgRoleRep.guid)))
+    setup {
+      featureRoleClient(FeatureRoleApi.Post(
+        featureGuid = featureGuid,
+        rep = FeatureRoleRepFixtures.fixture.creation(memberOrgRoleRep.guid)
+      ))
+    }
 
-    test(FeatureRoleApi.Delete(featureGuid, featureMemberRoleRep.guid)) {}
+    test(expectResult = Unit) {
+      featureRoleClient(FeatureRoleApi.Delete(featureGuid, featureMemberRoleRep.guid))
+    }
 
-    test(FeatureRoleApi.GetByFeatureGuid(featureGuid)) {
-      val actual = json.parseSet<FeatureRoleRep.Complete>(responseContent)
-      assertEquals(setOf(featureAdminRoleRep), actual)
+    test(expectResult = setOf(featureAdminRoleRep)) {
+      featureRoleClient(FeatureRoleApi.GetByFeatureGuid(featureGuid))
     }
   }
 }
