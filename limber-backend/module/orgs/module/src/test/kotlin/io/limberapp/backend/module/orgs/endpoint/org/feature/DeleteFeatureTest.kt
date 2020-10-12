@@ -3,7 +3,6 @@ package io.limberapp.backend.module.orgs.endpoint.org.feature
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.api.org.OrgApi
-import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -20,10 +19,9 @@ internal class DeleteFeatureTest(
     val orgGuid = UUID.randomUUID()
     val featureGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FeatureApi.Delete(orgGuid, featureGuid),
-      expectedException = FeatureNotFound(),
-    )
+    test(expectResult = null) {
+      featureClient(FeatureApi.Delete(orgGuid, featureGuid))
+    }
   }
 
   @Test
@@ -35,10 +33,9 @@ internal class DeleteFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    test(
-      endpoint = FeatureApi.Delete(orgRep.guid, featureGuid),
-      expectedException = FeatureNotFound(),
-    )
+    test(expectResult = null) {
+      featureClient(FeatureApi.Delete(orgRep.guid, featureGuid))
+    }
 
     test(expectResult = orgRep) {
       orgClient(OrgApi.Get(orgRep.guid))
@@ -54,14 +51,20 @@ internal class DeleteFeatureTest(
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
-    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    setup {
+      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+    }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
-    setup(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    setup {
+      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+    }
 
     orgRep = orgRep.copy(features = orgRep.features.filter { it.guid != formsFeatureRep.guid })
-    test(FeatureApi.Delete(orgRep.guid, formsFeatureRep.guid)) {}
+    test(expectResult = Unit) {
+      featureClient(FeatureApi.Delete(orgRep.guid, formsFeatureRep.guid))
+    }
 
     test(expectResult = orgRep) {
       orgClient(OrgApi.Get(orgRep.guid))

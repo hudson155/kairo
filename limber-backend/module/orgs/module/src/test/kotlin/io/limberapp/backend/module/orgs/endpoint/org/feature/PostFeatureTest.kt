@@ -6,7 +6,6 @@ import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
-import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
 import io.limberapp.backend.module.orgs.testing.fixtures.feature.FeatureRepFixtures
 import io.limberapp.backend.module.orgs.testing.fixtures.org.OrgRepFixtures
@@ -14,7 +13,6 @@ import io.limberapp.common.LimberApplication
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PostFeatureTest(
   engine: TestApplicationEngine,
@@ -24,10 +22,9 @@ internal class PostFeatureTest(
   fun orgDoesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    test(
-      endpoint = FeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()),
-      expectedException = OrgNotFound().unprocessable(),
-    )
+    test(expectError = OrgNotFound().unprocessable()) {
+      featureClient(FeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()))
+    }
   }
 
   @Test
@@ -38,20 +35,16 @@ internal class PostFeatureTest(
     }
 
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
-    setup(
-      endpoint = FeatureApi.Post(
-        orgGuid = orgRep.guid,
-        rep = FeatureRepFixtures.homeFixture.creation(),
-      ),
-    )
+    setup {
+      featureClient(FeatureApi.Post(orgGuid = orgRep.guid, rep = FeatureRepFixtures.homeFixture.creation()))
+    }
 
-    test(
-      endpoint = FeatureApi.Post(
+    test(expectError = FeatureRankIsNotUnique()) {
+      featureClient(FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.homeFixture.creation().rank),
-      ),
-      expectedException = FeatureRankIsNotUnique(),
-    )
+      ))
+    }
 
     test(expectResult = orgRep) {
       orgClient(OrgApi.Get(orgRep.guid))
@@ -66,20 +59,19 @@ internal class PostFeatureTest(
     }
 
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
-    setup(
-      endpoint = FeatureApi.Post(
+    setup {
+      featureClient(FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.homeFixture.creation(),
-      ),
-    )
+      ))
+    }
 
-    test(
-      endpoint = FeatureApi.Post(
+    test(expectError = FeaturePathIsNotUnique()) {
+      featureClient(FeatureApi.Post(
         orgGuid = orgRep.guid,
         rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.homeFixture.creation().path),
-      ),
-      expectedException = FeaturePathIsNotUnique(),
-    )
+      ))
+    }
 
     test(expectResult = orgRep) {
       orgClient(OrgApi.Get(orgRep.guid))
@@ -95,9 +87,8 @@ internal class PostFeatureTest(
 
     val featureRep = FeatureRepFixtures.formsFixture.complete(this, 1)
     orgRep = orgRep.copy(features = orgRep.features + featureRep)
-    test(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) {
-      val actual = json.parse<FeatureRep.Complete>(responseContent)
-      assertEquals(featureRep, actual)
+    test(expectResult = featureRep) {
+      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
 
     test(expectResult = orgRep) {
