@@ -9,7 +9,11 @@ dependencies {
 
   implementation(project(":limber-backend:deprecated:common:module"))
 
+  api(project(":limber-backend:module:graphql:interface"))
+
   testImplementation(project(":limber-backend:common:testing:integration"))
+
+  testImplementation(project(":limber-backend:module:graphql:client"))
 }
 
 tasks.test {

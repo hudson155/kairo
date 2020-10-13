@@ -50,6 +50,8 @@
             <option value="$PROJECT_DIR$/limber-backend/module/forms/module" />
             <option value="$PROJECT_DIR$/limber-backend/module/forms/service-interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/graphql" />
+            <option value="$PROJECT_DIR$/limber-backend/module/graphql/client" />
+            <option value="$PROJECT_DIR$/limber-backend/module/graphql/interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/graphql/module" />
             <option value="$PROJECT_DIR$/limber-backend/module/health-check" />
             <option value="$PROJECT_DIR$/limber-backend/module/health-check/module" />

@@ -2,6 +2,7 @@ package io.limberapp.module.graphql.testing
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.common.LimberApplication
+import io.limberapp.module.graphql.client.graphql.GraphqlClient
 import io.limberapp.testing.integration.LimberIntegrationTest
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -9,4 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith
 internal abstract class IntegrationTest(
     engine: TestApplicationEngine,
     limberServer: LimberApplication<*>,
-) : LimberIntegrationTest(engine, limberServer)
+) : LimberIntegrationTest(engine, limberServer) {
+  protected val graphqlClient = GraphqlClient(httpClient)
+}

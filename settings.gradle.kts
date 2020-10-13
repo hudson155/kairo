@@ -33,6 +33,8 @@ include(":limber-backend:module:forms:interface")
 include(":limber-backend:module:forms:module")
 include(":limber-backend:module:forms:service-interface")
 
+include(":limber-backend:module:graphql:client")
+include(":limber-backend:module:graphql:interface")
 include(":limber-backend:module:graphql:module")
 
 include(":limber-backend:module:health-check:module")

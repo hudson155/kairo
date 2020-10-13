@@ -12,6 +12,8 @@ internal class GraphqlTest(
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun graphql() {
-    test(GraphqlApi) {}
+    test(expectResult = Unit) {
+      graphqlClient(GraphqlApi)
+    }
   }
 }
