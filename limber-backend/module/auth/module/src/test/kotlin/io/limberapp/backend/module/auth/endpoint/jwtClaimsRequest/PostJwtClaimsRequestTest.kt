@@ -27,7 +27,6 @@ import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PostJwtClaimsRequestTest(
     engine: TestApplicationEngine,
@@ -105,27 +104,25 @@ internal class PostJwtClaimsRequestTest(
         emailAddress = emailAddress,
         profilePhotoUrl = null
     )
-    test(JwtClaimsRequestApi.Post(jwtRequest)) {
-      val actual = responseContent
-      val expected = "{\n" +
-          "  \"org\": \"{" +
-          "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
-          "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-          "\\\"isOwner\\\":false," +
-          "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
-          "\\\"features\\\":{" +
-          "\\\"${existingFeature.guid}\\\":{" +
-          "\\\"permissions\\\":\\\"${featurePermissions.asDarb()}\\\"" +
-          "}" +
-          "}" +
-          "}\",\n" +
-          "  \"roles\": \"[]\",\n" +
-          "  \"user\": \"{" +
-          "\\\"guid\\\":\\\"$userGuid\\\"," +
-          "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
-          "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
-          "}"
-      assertEquals(expected, actual)
+    test(expectResult = JwtClaimsRequestRep.Complete(
+        org = "{" +
+            "\"guid\":\"${existingOrg.guid}\"," +
+            "\"name\":\"${existingOrg.name}\"," +
+            "\"isOwner\":false," +
+            "\"permissions\":\"${orgPermissions.asDarb()}\"," +
+            "\"features\":{" +
+            "\"${existingFeature.guid}\":{" +
+            "\"permissions\":\"${featurePermissions.asDarb()}\"" +
+            "}" +
+            "}" +
+            "}",
+        roles = "[]",
+        user = "{" +
+            "\"guid\":\"$userGuid\"," +
+            "\"firstName\":\"${jwtRequest.firstName}\"," +
+            "\"lastName\":\"${jwtRequest.lastName}\"}"
+    )) {
+      jwtClaimsRequestClient(JwtClaimsRequestApi.Post(jwtRequest))
     }
   }
 
@@ -211,23 +208,21 @@ internal class PostJwtClaimsRequestTest(
         emailAddress = "jhudson@jhudson.ca",
         profilePhotoUrl = null
     )
-    test(JwtClaimsRequestApi.Post(jwtRequest)) {
-      val actual = responseContent
-      val expected = "{\n" +
-          "  \"org\": \"{" +
-          "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
-          "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-          "\\\"isOwner\\\":false," +
-          "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
-          "\\\"features\\\":{}" +
-          "}\",\n" +
-          "  \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
-          "  \"user\": \"{" +
-          "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
-          "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
-          "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
-          "}"
-      assertEquals(expected, actual)
+    test(expectResult = JwtClaimsRequestRep.Complete(
+        org = "{" +
+            "\"guid\":\"${existingOrg.guid}\"," +
+            "\"name\":\"${existingOrg.name}\"," +
+            "\"isOwner\":false," +
+            "\"permissions\":\"${orgPermissions.asDarb()}\"," +
+            "\"features\":{}" +
+            "}",
+        roles = "[\"${JwtRole.SUPERUSER}\"]",
+        user = "{" +
+            "\"guid\":\"${existingUser.guid}\"," +
+            "\"firstName\":\"${existingUser.firstName}\"," +
+            "\"lastName\":\"${existingUser.lastName}\"}"
+    )) {
+      jwtClaimsRequestClient(JwtClaimsRequestApi.Post(jwtRequest))
     }
   }
 }
