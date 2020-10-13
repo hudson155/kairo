@@ -8,14 +8,14 @@ import java.util.*
 
 object FormInstanceDateQuestionRep {
   data class Creation(
-    val date: LocalDate,
+      val date: LocalDate,
   ) : FormInstanceQuestionRep.Creation {
     override fun validate() = RepValidation {}
   }
 
   data class Complete(
-    override val createdDate: LocalDateTime,
-    override val questionGuid: UUID?,
-    val date: LocalDate,
+      override val createdDate: LocalDateTime,
+      override val questionGuid: UUID?,
+      val date: LocalDate,
   ) : FormInstanceQuestionRep.Complete
 }

@@ -30,28 +30,28 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class PostJwtClaimsRequestTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun happyPathUserDoesNotExist() {
     val userGuid = uuidGenerator[4]
     val emailAddress = "jhudson@jhudson.ca"
     val existingOrg = OrgModel(
-      guid = UUID.randomUUID(),
-      createdDate = LocalDateTime.now(clock),
-      name = "Cranky Pasta",
-      ownerUserGuid = UUID.randomUUID()
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        name = "Cranky Pasta",
+        ownerUserGuid = UUID.randomUUID()
     )
     val existingFeature = FeatureModel(
-      guid = UUID.randomUUID(),
-      createdDate = LocalDateTime.now(clock),
-      orgGuid = existingOrg.guid,
-      rank = 0,
-      name = "Forms",
-      path = "/forms",
-      type = FeatureModel.Type.FORMS,
-      isDefaultFeature = true
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        orgGuid = existingOrg.guid,
+        rank = 0,
+        name = "Forms",
+        path = "/forms",
+        type = FeatureModel.Type.FORMS,
+        isDefaultFeature = true
     )
     every {
       mocks[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress)
@@ -83,48 +83,48 @@ internal class PostJwtClaimsRequestTest(
     }
 
     val orgPermissions = setOf(
-      membershipOrgRoleRep.permissions, // This org role has isDefault = true.
+        membershipOrgRoleRep.permissions, // This org role has isDefault = true.
     ).union()
 
     val featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this, membershipOrgRoleRep.guid, 3)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
-        featureGuid = existingFeature.guid,
-        rep = FeatureRoleRepFixtures.fixture.creation(membershipOrgRoleRep.guid),
+          featureGuid = existingFeature.guid,
+          rep = FeatureRoleRepFixtures.fixture.creation(membershipOrgRoleRep.guid),
       ))
     }
 
     val featurePermissions = checkNotNull(setOf(
-      featureRoleRep.permissions, // Associated with membershipOrgRoleRep which has isDefault = true.
+        featureRoleRep.permissions, // Associated with membershipOrgRoleRep which has isDefault = true.
     ).unionIfSameType())
 
     val jwtRequest = JwtClaimsRequestRep.Creation(
-      auth0ClientId = tenantRep.auth0ClientId,
-      firstName = "Jeff",
-      lastName = "Hudson",
-      emailAddress = emailAddress,
-      profilePhotoUrl = null
+        auth0ClientId = tenantRep.auth0ClientId,
+        firstName = "Jeff",
+        lastName = "Hudson",
+        emailAddress = emailAddress,
+        profilePhotoUrl = null
     )
     test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = responseContent
       val expected = "{\n" +
-        "  \"org\": \"{" +
-        "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
-        "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-        "\\\"isOwner\\\":false," +
-        "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
-        "\\\"features\\\":{" +
-        "\\\"${existingFeature.guid}\\\":{" +
-        "\\\"permissions\\\":\\\"${featurePermissions.asDarb()}\\\"" +
-        "}" +
-        "}" +
-        "}\",\n" +
-        "  \"roles\": \"[]\",\n" +
-        "  \"user\": \"{" +
-        "\\\"guid\\\":\\\"$userGuid\\\"," +
-        "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
-        "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
-        "}"
+          "  \"org\": \"{" +
+          "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
+          "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+          "\\\"isOwner\\\":false," +
+          "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
+          "\\\"features\\\":{" +
+          "\\\"${existingFeature.guid}\\\":{" +
+          "\\\"permissions\\\":\\\"${featurePermissions.asDarb()}\\\"" +
+          "}" +
+          "}" +
+          "}\",\n" +
+          "  \"roles\": \"[]\",\n" +
+          "  \"user\": \"{" +
+          "\\\"guid\\\":\\\"$userGuid\\\"," +
+          "\\\"firstName\\\":\\\"${jwtRequest.firstName}\\\"," +
+          "\\\"lastName\\\":\\\"${jwtRequest.lastName}\\\"}\"\n" +
+          "}"
       assertEquals(expected, actual)
     }
   }
@@ -132,37 +132,37 @@ internal class PostJwtClaimsRequestTest(
   @Test
   fun happyPathUserExists() {
     val existingOrg = OrgModel(
-      guid = UUID.randomUUID(),
-      createdDate = LocalDateTime.now(clock),
-      name = "Cranky Pasta",
-      ownerUserGuid = UUID.randomUUID()
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        name = "Cranky Pasta",
+        ownerUserGuid = UUID.randomUUID()
     )
     val existingFeature = FeatureModel(
-      guid = UUID.randomUUID(),
-      createdDate = LocalDateTime.now(clock),
-      orgGuid = existingOrg.guid,
-      rank = 0,
-      name = "Forms",
-      path = "/forms",
-      type = FeatureModel.Type.FORMS,
-      isDefaultFeature = true
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        orgGuid = existingOrg.guid,
+        rank = 0,
+        name = "Forms",
+        path = "/forms",
+        type = FeatureModel.Type.FORMS,
+        isDefaultFeature = true
     )
     val existingAccount = AccountModel(
-      guid = UUID.randomUUID(),
-      createdDate = LocalDateTime.now(clock),
-      identityProvider = false,
-      superuser = true,
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        identityProvider = false,
+        superuser = true,
     )
     val existingUser = UserModel(
-      guid = existingAccount.guid,
-      createdDate = existingAccount.createdDate,
-      identityProvider = existingAccount.identityProvider,
-      superuser = existingAccount.superuser,
-      orgGuid = existingOrg.guid,
-      firstName = "Summer",
-      lastName = "Kavan",
-      emailAddress = "jhudson@jhudson.ca",
-      profilePhotoUrl = null
+        guid = existingAccount.guid,
+        createdDate = existingAccount.createdDate,
+        identityProvider = existingAccount.identityProvider,
+        superuser = existingAccount.superuser,
+        orgGuid = existingOrg.guid,
+        firstName = "Summer",
+        lastName = "Kavan",
+        emailAddress = "jhudson@jhudson.ca",
+        profilePhotoUrl = null
     )
     every {
       mocks[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress)
@@ -193,40 +193,40 @@ internal class PostJwtClaimsRequestTest(
 
     setup {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = existingOrg.guid,
-        orgRoleGuid = maintainerOrgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(existingUser.guid)
+          orgGuid = existingOrg.guid,
+          orgRoleGuid = maintainerOrgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(existingUser.guid)
       ))
     }
 
     val orgPermissions = setOf(
-      membershipOrgRoleRep.permissions, // This org role has isDefault = true.
-      maintainerOrgRoleRep.permissions,
+        membershipOrgRoleRep.permissions, // This org role has isDefault = true.
+        maintainerOrgRoleRep.permissions,
     ).union()
 
     val jwtRequest = JwtClaimsRequestRep.Creation(
-      auth0ClientId = tenantRep.auth0ClientId,
-      firstName = "Jeff",
-      lastName = "Hudson",
-      emailAddress = "jhudson@jhudson.ca",
-      profilePhotoUrl = null
+        auth0ClientId = tenantRep.auth0ClientId,
+        firstName = "Jeff",
+        lastName = "Hudson",
+        emailAddress = "jhudson@jhudson.ca",
+        profilePhotoUrl = null
     )
     test(JwtClaimsRequestApi.Post(jwtRequest)) {
       val actual = responseContent
       val expected = "{\n" +
-        "  \"org\": \"{" +
-        "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
-        "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
-        "\\\"isOwner\\\":false," +
-        "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
-        "\\\"features\\\":{}" +
-        "}\",\n" +
-        "  \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
-        "  \"user\": \"{" +
-        "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
-        "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
-        "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
-        "}"
+          "  \"org\": \"{" +
+          "\\\"guid\\\":\\\"${existingOrg.guid}\\\"," +
+          "\\\"name\\\":\\\"${existingOrg.name}\\\"," +
+          "\\\"isOwner\\\":false," +
+          "\\\"permissions\\\":\\\"${orgPermissions.asDarb()}\\\"," +
+          "\\\"features\\\":{}" +
+          "}\",\n" +
+          "  \"roles\": \"[\\\"${JwtRole.SUPERUSER}\\\"]\",\n" +
+          "  \"user\": \"{" +
+          "\\\"guid\\\":\\\"${existingUser.guid}\\\"," +
+          "\\\"firstName\\\":\\\"${existingUser.firstName}\\\"," +
+          "\\\"lastName\\\":\\\"${existingUser.lastName}\\\"}\"\n" +
+          "}"
       assertEquals(expected, actual)
     }
   }

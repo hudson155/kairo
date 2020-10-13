@@ -16,17 +16,17 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetFormInstance @Inject constructor(
-  application: Application,
-  private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionService: FormInstanceQuestionService,
-  private val formInstanceMapper: FormInstanceMapper,
+    application: Application,
+    private val formInstanceService: FormInstanceService,
+    private val formInstanceQuestionService: FormInstanceQuestionService,
+    private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.Get, FormInstanceRep.Complete>(
-  application = application,
-  endpointTemplate = FormInstanceApi.Get::class.template()
+    application = application,
+    endpointTemplate = FormInstanceApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Get(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
@@ -37,8 +37,8 @@ internal class GetFormInstance @Inject constructor(
     } ?: throw FormInstanceNotFound()
     if (formInstance.creatorAccountGuid != principal?.user?.guid) {
       Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
+          featureGuid = command.featureGuid,
+          featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
     val questions = formInstanceQuestionService.findAsSet {

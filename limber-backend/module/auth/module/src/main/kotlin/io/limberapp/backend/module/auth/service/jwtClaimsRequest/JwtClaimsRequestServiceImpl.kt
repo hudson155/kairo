@@ -30,17 +30,17 @@ import java.time.LocalDateTime
 import java.util.*
 
 private val ORG_OWNER_ORG_ROLE =
-  OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS))
+    OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS))
 
 internal class JwtClaimsRequestServiceImpl @Inject constructor(
-  @OptIn(LimberModule.Orgs::class) private val featureService: FeatureService,
-  private val featureRoleService: FeatureRoleService,
-  @OptIn(LimberModule.Orgs::class) private val orgService: OrgService,
-  private val orgRoleService: OrgRoleService,
-  private val tenantService: TenantService,
-  @OptIn(LimberModule.Users::class) private val userService: UserService,
-  private val clock: Clock,
-  private val uuidGenerator: UuidGenerator,
+    @OptIn(LimberModule.Orgs::class) private val featureService: FeatureService,
+    private val featureRoleService: FeatureRoleService,
+    @OptIn(LimberModule.Orgs::class) private val orgService: OrgService,
+    private val orgRoleService: OrgRoleService,
+    private val tenantService: TenantService,
+    @OptIn(LimberModule.Users::class) private val userService: UserService,
+    private val clock: Clock,
+    private val uuidGenerator: UuidGenerator,
 ) : JwtClaimsRequestService {
   private val json = Json()
 
@@ -59,17 +59,17 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     if (existingUser != null) return existingUser
 
     return userService.create(
-      model = UserModel(
-        guid = uuidGenerator.generate(),
-        createdDate = LocalDateTime.now(clock),
-        identityProvider = false,
-        superuser = false,
-        orgGuid = tenant.orgGuid,
-        firstName = request.firstName,
-        lastName = request.lastName,
-        emailAddress = request.emailAddress,
-        profilePhotoUrl = request.profilePhotoUrl
-      )
+        model = UserModel(
+            guid = uuidGenerator.generate(),
+            createdDate = LocalDateTime.now(clock),
+            identityProvider = false,
+            superuser = false,
+            orgGuid = tenant.orgGuid,
+            firstName = request.firstName,
+            lastName = request.lastName,
+            emailAddress = request.emailAddress,
+            profilePhotoUrl = request.profilePhotoUrl
+        )
     )
   }
 
@@ -80,12 +80,12 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     val (orgRoles, isOwner, permissions) = getPermissions(org, user.guid)
     val orgRoleGuids = orgRoles.map { it.guid }.toSet()
     val jwtFeatures = features
-      .mapNotNull { feature -> getPermissions(feature, orgRoleGuids)?.let { Pair(feature.guid, JwtFeature(it)) } }
-      .associate { it }
+        .mapNotNull { feature -> getPermissions(feature, orgRoleGuids)?.let { Pair(feature.guid, JwtFeature(it)) } }
+        .associate { it }
     return convertJwtToModel(
-      org = JwtOrg(org.guid, org.name, isOwner, permissions, jwtFeatures),
-      roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
-      user = JwtUser(user.guid, user.firstName, user.lastName)
+        org = JwtOrg(org.guid, org.name, isOwner, permissions, jwtFeatures),
+        roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
+        user = JwtUser(user.guid, user.firstName, user.lastName)
     )
   }
 
@@ -104,8 +104,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   }
 
   private fun convertJwtToModel(org: JwtOrg, roles: Set<JwtRole>, user: JwtUser) = JwtClaimsModel(
-    org = json.stringify(org),
-    roles = json.stringifySet(roles),
-    user = json.stringify(user)
+      org = json.stringify(org),
+      roles = json.stringifySet(roles),
+      user = json.stringify(user)
   )
 }

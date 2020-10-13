@@ -19,46 +19,46 @@ class Json(prettyPrint: Boolean = false) {
    * functions.
    */
   val objectMapper: ObjectMapper = jacksonObjectMapper()
-    .registerModule(JavaTimeModule())
-    .setDefaultPrettyPrinter(LimberJsonPrettyPrinter())
-    .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, false)
-    .configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
-    .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+      .registerModule(JavaTimeModule())
+      .setDefaultPrettyPrinter(LimberJsonPrettyPrinter())
+      .configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, false)
+      .configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
+      .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+      .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
   /**
    * Parse string to arbitrary class.
    * Cleaner interface used when the class is available at compile time.
    */
   inline fun <reified T : Any> parse(string: String): T =
-    objectMapper.readValue(string)
+      objectMapper.readValue(string)
 
   /**
    * Parse string to arbitrary class.
    * More verbose interface used when the class is only available at run time.
    */
   fun <T : Any> parse(string: String, kClass: KClass<T>): T =
-    objectMapper.readValue(string, kClass.java)
+      objectMapper.readValue(string, kClass.java)
 
   /**
    * Parse string to arbitrary set of classes.
    * Cleaner interface used when the class is available at compile time.
    */
   inline fun <reified T : Any> parseSet(string: String): Set<T> =
-    objectMapper.readValue(string)
+      objectMapper.readValue(string)
 
   /**
    * Parse string to arbitrary list of classes.
    * Cleaner interface used when the class is available at compile time.
    */
   inline fun <reified T : Any> parseList(string: String): List<T> =
-    objectMapper.readValue(string)
+      objectMapper.readValue(string)
 
   /**
    * Stringify arbitrary class to string.
    */
   fun stringify(model: Any): String =
-    objectMapper.writeValueAsString(model)
+      objectMapper.writeValueAsString(model)
 
   /**
    * Stringify arbitrary set of classes to string.
@@ -66,7 +66,7 @@ class Json(prettyPrint: Boolean = false) {
    */
   @JvmName("stringifySetDynamically")
   inline fun <reified T : Any> stringifySet(model: Set<T>): String =
-    objectMapper.writeValueAsString(model)
+      objectMapper.writeValueAsString(model)
 
   /**
    * Stringify arbitrary list of classes to string.
@@ -74,7 +74,7 @@ class Json(prettyPrint: Boolean = false) {
    */
   @JvmName("stringifyListDynamically")
   inline fun <reified T : Any> stringifyList(model: List<T>): String =
-    objectMapper.writeValueAsString(model)
+      objectMapper.writeValueAsString(model)
 
   /**
    * Stringify arbitrary set of classes to string.
@@ -82,7 +82,7 @@ class Json(prettyPrint: Boolean = false) {
    */
   @JvmName("stringifySetStatically")
   fun stringifySet(model: Set<*>): String =
-    objectMapper.writeValueAsString(model as Set<Any>)
+      objectMapper.writeValueAsString(model as Set<Any>)
 
   /**
    * Stringify arbitrary list of classes to string.
@@ -90,5 +90,5 @@ class Json(prettyPrint: Boolean = false) {
    */
   @JvmName("stringifyListStatically")
   fun stringifyList(model: List<*>): String =
-    objectMapper.writeValueAsString(model as List<Any>)
+      objectMapper.writeValueAsString(model as List<Any>)
 }

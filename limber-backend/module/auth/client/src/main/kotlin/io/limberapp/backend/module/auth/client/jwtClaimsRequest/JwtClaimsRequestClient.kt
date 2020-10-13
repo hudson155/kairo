@@ -7,8 +7,8 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 
 class JwtClaimsRequestClient(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
-    endpoint: JwtClaimsRequestApi.Post,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: JwtClaimsRequestApi.Post,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     parse<JwtClaimsRequestRep.Complete>(checkNotNull(it))
   }

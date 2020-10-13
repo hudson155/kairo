@@ -6,42 +6,42 @@ import java.time.LocalDateTime
 
 internal object FormTemplateRepFixtures {
   data class Fixture(
-    val creation: () -> FormTemplateRep.Creation,
-    val complete: IntegrationTest.(idSeed: Int) -> FormTemplateRep.Complete,
+      val creation: () -> FormTemplateRep.Creation,
+      val complete: IntegrationTest.(idSeed: Int) -> FormTemplateRep.Complete,
   )
 
   val exampleFormFixture = Fixture({
     FormTemplateRep.Creation(
-      title = "Example form"
+        title = "Example form"
     )
   }, { idSeed ->
     FormTemplateRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      title = "Example form",
-      description = null,
-      questions = emptyList()
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        title = "Example form",
+        description = null,
+        questions = emptyList()
     )
   })
 
   val vehicleInspectionFixture = Fixture({
     FormTemplateRep.Creation(
-      title = "Vehicle Inspection"
+        title = "Vehicle Inspection"
     )
   }, { idSeed ->
     FormTemplateRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      title = "Vehicle Inspection",
-      description = null,
-      questions = emptyList()
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        title = "Vehicle Inspection",
+        description = null,
+        questions = emptyList()
     )
   })
 }
 
 internal fun FormTemplateRep.Complete.summary() = FormTemplateRep.Summary(
-  guid = guid,
-  createdDate = createdDate,
-  title = title,
-  description = description
+    guid = guid,
+    createdDate = createdDate,
+    title = title,
+    description = description
 )

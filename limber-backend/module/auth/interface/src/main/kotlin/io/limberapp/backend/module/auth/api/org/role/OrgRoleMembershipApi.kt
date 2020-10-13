@@ -9,18 +9,18 @@ import java.util.*
 @Suppress("StringLiteralDuplication")
 object OrgRoleMembershipApi {
   data class Post(val orgGuid: UUID, val orgRoleGuid: UUID, val rep: OrgRoleMembershipRep.Creation?) : LimberEndpoint(
-    httpMethod = HttpMethod.Post,
-    path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}/memberships",
-    body = rep
+      httpMethod = HttpMethod.Post,
+      path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}/memberships",
+      body = rep
   )
 
   data class GetByOrgRoleGuid(val orgGuid: UUID, val orgRoleGuid: UUID) : LimberEndpoint(
-    httpMethod = HttpMethod.Get,
-    path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}/memberships"
+      httpMethod = HttpMethod.Get,
+      path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}/memberships"
   )
 
   data class Delete(val orgGuid: UUID, val orgRoleGuid: UUID, val accountGuid: UUID) : LimberEndpoint(
-    httpMethod = HttpMethod.Delete,
-    path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}/memberships/${enc(accountGuid)}"
+      httpMethod = HttpMethod.Delete,
+      path = "/orgs/${enc(orgGuid)}/roles/${enc(orgRoleGuid)}/memberships/${enc(accountGuid)}"
   )
 }

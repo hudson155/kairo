@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostFormTemplateQuestionTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun formTemplateDoesNotExist() {
@@ -24,9 +24,9 @@ internal class PostFormTemplateQuestionTest(
 
     test(expectError = FormTemplateNotFound().unprocessable()) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateGuid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateGuid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
   }
@@ -42,9 +42,9 @@ internal class PostFormTemplateQuestionTest(
 
     test(expectError = FormTemplateNotFound().unprocessable()) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = UUID.randomUUID(),
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = UUID.randomUUID(),
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
@@ -64,10 +64,10 @@ internal class PostFormTemplateQuestionTest(
 
     test(expectError = RankOutOfBounds(-1)) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = -1,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = -1,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
   }
@@ -83,10 +83,10 @@ internal class PostFormTemplateQuestionTest(
 
     test(expectError = RankOutOfBounds(1)) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 1,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 1,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
   }
@@ -102,14 +102,14 @@ internal class PostFormTemplateQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
+        questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
@@ -129,13 +129,13 @@ internal class PostFormTemplateQuestionTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions + formTemplateQuestionRep
+        questions = formTemplateRep.questions + formTemplateQuestionRep
     )
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 

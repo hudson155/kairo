@@ -4,13 +4,13 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class OrgModel(
-  val guid: UUID,
-  val createdDate: LocalDateTime,
-  val name: String,
-  val ownerUserGuid: UUID?,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
+    val name: String,
+    val ownerUserGuid: UUID?,
 ) {
   data class Update(
-    val name: String?,
-    val ownerUserGuid: UUID?,
+      val name: String?,
+      val ownerUserGuid: UUID?,
   )
 }

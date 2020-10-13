@@ -8,20 +8,20 @@ import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FormTemplateQuestionServiceImpl @Inject constructor(
-  private val formTemplateQuestionStore: FormTemplateQuestionStore,
+    private val formTemplateQuestionStore: FormTemplateQuestionStore,
 ) : FormTemplateQuestionService,
-  Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> by formTemplateQuestionStore {
+    Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> by formTemplateQuestionStore {
   override fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int?) =
-    formTemplateQuestionStore.create(featureGuid, model, rank)
+      formTemplateQuestionStore.create(featureGuid, model, rank)
 
   override fun update(
-    featureGuid: UUID,
-    formTemplateGuid: UUID,
-    questionGuid: UUID,
-    update: FormTemplateQuestionModel.Update,
+      featureGuid: UUID,
+      formTemplateGuid: UUID,
+      questionGuid: UUID,
+      update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel =
-    formTemplateQuestionStore.update(featureGuid, formTemplateGuid, questionGuid, update)
+      formTemplateQuestionStore.update(featureGuid, formTemplateGuid, questionGuid, update)
 
   override fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID) =
-    formTemplateQuestionStore.delete(featureGuid, formTemplateGuid, questionGuid)
+      formTemplateQuestionStore.delete(featureGuid, formTemplateGuid, questionGuid)
 }

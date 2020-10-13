@@ -18,58 +18,58 @@ private const val UNIQ_ORG_ROLE_GUID = "uniq__feature_role__org_role_guid"
 
 @Singleton
 internal class FeatureRoleStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi) {
   fun create(model: FeatureRoleModel): FeatureRoleModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/featureRole/create.sql"))
-          .bindKotlin(model)
-          .mapTo(FeatureRoleModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/featureRole/create.sql"))
+              .bindKotlin(model)
+              .mapTo(FeatureRoleModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   fun getByFeatureGuidAndOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/featureRole/getByFeatureGuidAndOrgRoleGuids.sql"))
-        .bind("featureGuid", featureGuid)
-        .bindByType("orgRoleGuids", orgRoleGuids, typeOf<Set<UUID>>().javaType)
-        .mapTo(FeatureRoleModel::class.java)
-        .toSet()
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/featureRole/getByFeatureGuidAndOrgRoleGuids.sql"))
+            .bind("featureGuid", featureGuid)
+            .bindByType("orgRoleGuids", orgRoleGuids, typeOf<Set<UUID>>().javaType)
+            .mapTo(FeatureRoleModel::class.java)
+            .toSet()
+      }
 
   fun getByFeatureGuid(featureGuid: UUID): Set<FeatureRoleModel> =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/featureRole/getByFeatureGuid.sql"))
-        .bind("featureGuid", featureGuid)
-        .mapTo(FeatureRoleModel::class.java)
-        .toSet()
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/featureRole/getByFeatureGuid.sql"))
+            .bind("featureGuid", featureGuid)
+            .mapTo(FeatureRoleModel::class.java)
+            .toSet()
+      }
 
   fun update(featureGuid: UUID, featureRoleGuid: UUID, update: FeatureRoleModel.Update): FeatureRoleModel =
-    inTransaction { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/featureRole/update.sql"))
-          .bind("featureGuid", featureGuid)
-          .bind("featureRoleGuid", featureRoleGuid)
-          .bindKotlin(update)
-          .mapTo(FeatureRoleModel::class.java)
-          .singleNullOrThrow()
-      } catch (e: UnableToExecuteStatementException) {
-        handleUpdateError(e)
-      } ?: throw FeatureRoleNotFound()
-    }
+      inTransaction { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/featureRole/update.sql"))
+              .bind("featureGuid", featureGuid)
+              .bind("featureRoleGuid", featureRoleGuid)
+              .bindKotlin(update)
+              .mapTo(FeatureRoleModel::class.java)
+              .singleNullOrThrow()
+        } catch (e: UnableToExecuteStatementException) {
+          handleUpdateError(e)
+        } ?: throw FeatureRoleNotFound()
+      }
 
   fun delete(featureGuid: UUID, featureRoleGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/featureRole/delete.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("featureRoleGuid", featureRoleGuid)
-        .updateOnly() ?: throw FeatureRoleNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/featureRole/delete.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("featureRoleGuid", featureRoleGuid)
+            .updateOnly() ?: throw FeatureRoleNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

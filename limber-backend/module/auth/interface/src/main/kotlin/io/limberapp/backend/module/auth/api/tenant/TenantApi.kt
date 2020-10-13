@@ -9,30 +9,30 @@ import java.util.*
 @Suppress("StringLiteralDuplication")
 object TenantApi {
   data class Post(val rep: TenantRep.Creation?) : LimberEndpoint(
-    httpMethod = HttpMethod.Post,
-    path = "/tenants",
-    body = rep
+      httpMethod = HttpMethod.Post,
+      path = "/tenants",
+      body = rep
   )
 
   data class Get(val orgGuid: UUID) : LimberEndpoint(
-    httpMethod = HttpMethod.Get,
-    path = "/tenants/${enc(orgGuid)}"
+      httpMethod = HttpMethod.Get,
+      path = "/tenants/${enc(orgGuid)}"
   )
 
   data class GetByDomain(val domain: String) : LimberEndpoint(
-    httpMethod = HttpMethod.Get,
-    path = "/tenants",
-    queryParams = listOf("domain" to enc(domain))
+      httpMethod = HttpMethod.Get,
+      path = "/tenants",
+      queryParams = listOf("domain" to enc(domain))
   )
 
   data class Patch(val orgGuid: UUID, val rep: TenantRep.Update?) : LimberEndpoint(
-    httpMethod = HttpMethod.Patch,
-    path = "/tenants/${enc(orgGuid)}",
-    body = rep
+      httpMethod = HttpMethod.Patch,
+      path = "/tenants/${enc(orgGuid)}",
+      body = rep
   )
 
   data class Delete(val orgGuid: UUID) : LimberEndpoint(
-    httpMethod = HttpMethod.Delete,
-    path = "/tenants/${enc(orgGuid)}"
+      httpMethod = HttpMethod.Delete,
+      path = "/tenants/${enc(orgGuid)}"
   )
 }

@@ -15,16 +15,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetOrgByOwnerUserGuid @Inject constructor(
-  application: Application,
-  private val featureService: FeatureService,
-  private val orgService: OrgService,
-  private val orgMapper: OrgMapper,
+    application: Application,
+    private val featureService: FeatureService,
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.GetByOwnerUserGuid, OrgRep.Complete>(
-  application = application,
-  endpointTemplate = OrgApi.GetByOwnerUserGuid::class.template()
+    application = application,
+    endpointTemplate = OrgApi.GetByOwnerUserGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgApi.GetByOwnerUserGuid(
-    ownerUserGuid = call.parameters.getAsType(UUID::class, "ownerUserGuid")
+      ownerUserGuid = call.parameters.getAsType(UUID::class, "ownerUserGuid")
   )
 
   override suspend fun Handler.handle(command: OrgApi.GetByOwnerUserGuid): OrgRep.Complete {

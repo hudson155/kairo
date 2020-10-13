@@ -12,14 +12,14 @@ import kotlin.reflect.KClass
 
 internal abstract class ConversionServiceJdbiType<T : Any>(override val kClass: KClass<T>) : JdbiType<T>() {
   internal abstract class ConversionServiceColumnMapper<T : Any>(
-    private val conversionService: TypeConversionService<T>,
+      private val conversionService: TypeConversionService<T>,
   ) : ColumnMapper<T?> {
     final override fun map(r: ResultSet, columnNumber: Int, ctx: StatementContext): T? =
-      r.getString(columnNumber)?.let { conversionService.fromString(it) }
+        r.getString(columnNumber)?.let { conversionService.fromString(it) }
   }
 
   internal abstract class ConversionServiceArgumentFactory<T : Any>(
-    private val conversionService: TypeConversionService<T>,
+      private val conversionService: TypeConversionService<T>,
   ) : AbstractArgumentFactory<T>(Types.VARCHAR) {
     final override fun build(value: T, config: ConfigRegistry): Argument = Argument { position, statement, _ ->
       statement.setString(position, conversionService.toString(value))

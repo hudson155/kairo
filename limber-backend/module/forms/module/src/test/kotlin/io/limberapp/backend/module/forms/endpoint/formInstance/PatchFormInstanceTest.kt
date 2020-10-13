@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 import java.util.*
 
 internal class PatchFormInstanceTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
@@ -46,15 +46,15 @@ internal class PatchFormInstanceTest(
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = feature0Guid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = feature0Guid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     test(expectResult = null) {
       formInstanceClient(FormInstanceApi.Patch(featureGuid = feature1Guid,
-        formInstanceGuid = formInstanceRep.guid,
-        rep = FormInstanceRep.Update(submitted = true)
+          formInstanceGuid = formInstanceRep.guid,
+          rep = FormInstanceRep.Update(submitted = true)
       ))
     }
 
@@ -70,9 +70,9 @@ internal class PatchFormInstanceTest(
 
     test(expectError = ValidationException(FormInstanceRep.Update::submitted.name)) {
       formInstanceClient(FormInstanceApi.Patch(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceGuid,
-        rep = FormInstanceRep.Update(submitted = false)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceGuid,
+          rep = FormInstanceRep.Update(submitted = false)
       ))
     }
   }
@@ -91,25 +91,25 @@ internal class PatchFormInstanceTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
       ))
     }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     test(expectError = CannotSubmitFormBeforeAnsweringAllRequiredQuestions()) {
       formInstanceClient(FormInstanceApi.Patch(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        rep = FormInstanceRep.Update(submitted = true)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          rep = FormInstanceRep.Update(submitted = true)
       ))
     }
 
@@ -131,25 +131,25 @@ internal class PatchFormInstanceTest(
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
     setup {
       formInstanceClient(FormInstanceApi.Patch(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        rep = FormInstanceRep.Update(submitted = true)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          rep = FormInstanceRep.Update(submitted = true)
       ))
     }
 
     test(expectError = CannotReSubmitFormInstance()) {
       formInstanceClient(FormInstanceApi.Patch(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        rep = FormInstanceRep.Update(submitted = true)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          rep = FormInstanceRep.Update(submitted = true)
       ))
     }
 
@@ -171,17 +171,17 @@ internal class PatchFormInstanceTest(
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
     test(expectResult = formInstanceRep.summary()) {
       formInstanceClient(FormInstanceApi.Patch(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        rep = FormInstanceRep.Update(submitted = true)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          rep = FormInstanceRep.Update(submitted = true)
       ))
     }
 

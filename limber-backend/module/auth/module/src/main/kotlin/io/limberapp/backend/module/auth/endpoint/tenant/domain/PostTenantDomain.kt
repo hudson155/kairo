@@ -14,16 +14,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostTenantDomain @Inject constructor(
-  application: Application,
-  private val tenantDomainService: TenantDomainService,
-  private val tenantDomainMapper: TenantDomainMapper,
+    application: Application,
+    private val tenantDomainService: TenantDomainService,
+    private val tenantDomainMapper: TenantDomainMapper,
 ) : LimberApiEndpoint<TenantDomainApi.Post, TenantDomainRep.Complete>(
-  application = application,
-  endpointTemplate = TenantDomainApi.Post::class.template()
+    application = application,
+    endpointTemplate = TenantDomainApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Post(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    rep = call.getAndValidateBody()
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: TenantDomainApi.Post): TenantDomainRep.Complete {

@@ -38,35 +38,35 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQ
 
 @Singleton
 internal class FormTemplateQuestionStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
 
   fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int? = null): FormTemplateQuestionModel =
-    inTransaction { handle ->
-      val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
-      incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank)
-      try {
-        handle.createQuery(sqlResource("/store/formTemplateQuestion/create.sql"))
-          .bind("featureGuid", featureGuid)
-          .bindKotlin(model)
-          .bind("rank", insertionRank)
-          .bindNullForMissingArguments()
-          .mapTo(FormTemplateQuestionModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      inTransaction { handle ->
+        val insertionRank = validateInsertionRank(model.formTemplateGuid, rank)
+        incrementExistingRanks(model.formTemplateGuid, atLeast = insertionRank)
+        try {
+          handle.createQuery(sqlResource("/store/formTemplateQuestion/create.sql"))
+              .bind("featureGuid", featureGuid)
+              .bindKotlin(model)
+              .bind("rank", insertionRank)
+              .bindNullForMissingArguments()
+              .mapTo(FormTemplateQuestionModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   private fun validateInsertionRank(formTemplateGuid: UUID, rank: Int?): Int {
     rank?.let { if (it < 0) throw RankOutOfBounds(it) }
     val maxExistingRank = withHandle { handle ->
       handle.createQuery(sqlResource("/store/formTemplateQuestion/getMaxExistingRankByFormTemplateGuid.sql"))
-        .bind("formTemplateGuid", formTemplateGuid)
-        .asInt()
+          .bind("formTemplateGuid", formTemplateGuid)
+          .asInt()
     } ?: -1
     rank?.let { if (it > maxExistingRank + 1) throw RankOutOfBounds(it) }
     return rank ?: maxExistingRank + 1
@@ -75,52 +75,52 @@ internal class FormTemplateQuestionStore @Inject constructor(
   private fun incrementExistingRanks(formTemplateGuid: UUID, atLeast: Int) {
     withHandle { handle ->
       handle.createUpdate(sqlResource("/store/formTemplateQuestion/incrementExistingRanksByFormTemplateGuid.sql"))
-        .bind("formTemplateGuid", formTemplateGuid)
-        .bind("atLeast", atLeast)
-        .execute()
+          .bind("formTemplateGuid", formTemplateGuid)
+          .bind("atLeast", atLeast)
+          .execute()
     }
   }
 
   override fun <R> find(
-    result: (Iterable<FormTemplateQuestionModel>) -> R,
-    query: FormTemplateQuestionFinder.() -> Unit,
+      result: (Iterable<FormTemplateQuestionModel>) -> R,
+      query: FormTemplateQuestionFinder.() -> Unit,
   ) =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formTemplateQuestion/find.sql"))
-        .withFinder(FormTemplateQuestionQueryBuilder().apply(query))
-        .mapTo(FormTemplateQuestionModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formTemplateQuestion/find.sql"))
+            .withFinder(FormTemplateQuestionQueryBuilder().apply(query))
+            .mapTo(FormTemplateQuestionModel::class.java)
+            .let(result)
+      }
 
   fun update(
-    featureGuid: UUID,
-    formTemplateGuid: UUID,
-    questionGuid: UUID,
-    update: FormTemplateQuestionModel.Update,
+      featureGuid: UUID,
+      formTemplateGuid: UUID,
+      questionGuid: UUID,
+      update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel =
-    inTransaction { handle ->
-      handle.createQuery(sqlResource("/store/formTemplateQuestion/update.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formTemplateGuid", formTemplateGuid)
-        .bind("questionGuid", questionGuid)
-        .bindKotlin(update)
-        .bindNullForMissingArguments()
-        .mapTo(FormTemplateQuestionModel::class.java)
-        .singleNullOrThrow() ?: throw FormTemplateQuestionNotFound()
-    }
+      inTransaction { handle ->
+        handle.createQuery(sqlResource("/store/formTemplateQuestion/update.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
+            .bind("questionGuid", questionGuid)
+            .bindKotlin(update)
+            .bindNullForMissingArguments()
+            .mapTo(FormTemplateQuestionModel::class.java)
+            .singleNullOrThrow() ?: throw FormTemplateQuestionNotFound()
+      }
 
   fun delete(
-    featureGuid: UUID,
-    formTemplateGuid: UUID,
-    questionGuid: UUID,
+      featureGuid: UUID,
+      formTemplateGuid: UUID,
+      questionGuid: UUID,
   ): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formTemplateGuid", formTemplateGuid)
-        .bind("questionGuid", questionGuid)
-        .updateOnly() ?: throw FormTemplateQuestionNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/formTemplateQuestion/delete.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
+            .bind("questionGuid", questionGuid)
+            .updateOnly() ?: throw FormTemplateQuestionNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

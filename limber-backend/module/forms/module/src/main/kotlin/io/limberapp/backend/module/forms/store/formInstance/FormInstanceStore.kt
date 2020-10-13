@@ -20,45 +20,45 @@ private const val FK_FORM_TEMPLATE_GUID = "fk__form_instance__form_template_guid
 
 @Singleton
 internal class FormInstanceStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormInstanceModel, FormInstanceFinder> {
   fun create(model: FormInstanceModel): FormInstanceModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/formInstance/create.sql"))
-          .bindKotlin(model)
-          .mapTo(FormInstanceModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/formInstance/create.sql"))
+              .bindKotlin(model)
+              .mapTo(FormInstanceModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   override fun <R> find(result: (Iterable<FormInstanceModel>) -> R, query: FormInstanceFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formInstance/find.sql"))
-        .withFinder(FormInstanceQueryBuilder().apply(query))
-        .mapTo(FormInstanceModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formInstance/find.sql"))
+            .withFinder(FormInstanceQueryBuilder().apply(query))
+            .mapTo(FormInstanceModel::class.java)
+            .let(result)
+      }
 
   fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel =
-    inTransaction { handle ->
-      handle.createQuery(sqlResource("/store/formInstance/update.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formInstanceGuid", formInstanceGuid)
-        .bindKotlin(update)
-        .mapTo(FormInstanceModel::class.java)
-        .singleNullOrThrow() ?: throw FormInstanceNotFound()
-    }
+      inTransaction { handle ->
+        handle.createQuery(sqlResource("/store/formInstance/update.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formInstanceGuid", formInstanceGuid)
+            .bindKotlin(update)
+            .mapTo(FormInstanceModel::class.java)
+            .singleNullOrThrow() ?: throw FormInstanceNotFound()
+      }
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formInstanceGuid", formInstanceGuid)
-        .updateOnly() ?: throw FormInstanceNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/formInstance/delete.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formInstanceGuid", formInstanceGuid)
+            .updateOnly() ?: throw FormInstanceNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostFormTemplateQuestionTypeTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun dateQuestion() {
@@ -25,13 +25,13 @@ internal class PostFormTemplateQuestionTypeTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.dateFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions + formTemplateQuestionRep
+        questions = formTemplateRep.questions + formTemplateQuestionRep
     )
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.dateFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.dateFixture.creation()
       ))
     }
 
@@ -51,13 +51,13 @@ internal class PostFormTemplateQuestionTypeTest(
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.radioSelectorFixture.complete(this, 1)
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions + formTemplateQuestionRep
+        questions = formTemplateRep.questions + formTemplateQuestionRep
     )
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.radioSelectorFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.radioSelectorFixture.creation()
       ))
     }
 
@@ -79,9 +79,9 @@ internal class PostFormTemplateQuestionTypeTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
@@ -103,9 +103,9 @@ internal class PostFormTemplateQuestionTypeTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.yesNoFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.yesNoFixture.creation()
       ))
     }
 

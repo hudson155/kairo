@@ -8,11 +8,11 @@ import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class TenantDomainServiceImpl @Inject constructor(
-  private val tenantDomainStore: TenantDomainStore,
+    private val tenantDomainStore: TenantDomainStore,
 ) : TenantDomainService, Finder<TenantDomainModel, TenantDomainFinder> by tenantDomainStore {
   override fun create(model: TenantDomainModel) =
-    tenantDomainStore.create(model)
+      tenantDomainStore.create(model)
 
   override fun delete(orgGuid: UUID, domain: String) =
-    tenantDomainStore.delete(orgGuid, domain)
+      tenantDomainStore.delete(orgGuid, domain)
 }

@@ -10,21 +10,21 @@ import java.util.*
 
 object FeatureRoleRep {
   data class Creation(
-    val orgRoleGuid: UUID,
-    val permissions: FeaturePermissions,
+      val orgRoleGuid: UUID,
+      val permissions: FeaturePermissions,
   ) : CreationRep {
     override fun validate() = RepValidation {}
   }
 
   data class Complete(
-    val guid: UUID,
-    override val createdDate: LocalDateTime,
-    val orgRoleGuid: UUID,
-    val permissions: FeaturePermissions,
+      val guid: UUID,
+      override val createdDate: LocalDateTime,
+      val orgRoleGuid: UUID,
+      val permissions: FeaturePermissions,
   ) : CompleteRep
 
   data class Update(
-    val permissions: FeaturePermissions? = null,
+      val permissions: FeaturePermissions? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {}
   }

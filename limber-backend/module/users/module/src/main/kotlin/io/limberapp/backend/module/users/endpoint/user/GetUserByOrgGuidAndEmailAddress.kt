@@ -14,16 +14,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
-  application: Application,
-  private val userService: UserService,
-  private val userMapper: UserMapper,
+    application: Application,
+    private val userService: UserService,
+    private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.GetByOrgGuidAndEmailAddress, UserRep.Complete>(
-  application = application,
-  endpointTemplate = UserApi.GetByOrgGuidAndEmailAddress::class.template()
+    application = application,
+    endpointTemplate = UserApi.GetByOrgGuidAndEmailAddress::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserApi.GetByOrgGuidAndEmailAddress(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    emailAddress = call.parameters.getAsType(String::class, "emailAddress")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      emailAddress = call.parameters.getAsType(String::class, "emailAddress")
   )
 
   override suspend fun Handler.handle(command: UserApi.GetByOrgGuidAndEmailAddress): UserRep.Complete {

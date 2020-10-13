@@ -13,15 +13,15 @@ import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.restInterface.template
 
 internal class PostOrg @Inject constructor(
-  application: Application,
-  private val orgService: OrgService,
-  private val orgMapper: OrgMapper,
+    application: Application,
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.Post, OrgRep.Complete>(
-  application = application,
-  endpointTemplate = OrgApi.Post::class.template()
+    application = application,
+    endpointTemplate = OrgApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Post(
-    rep = call.getAndValidateBody()
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: OrgApi.Post): OrgRep.Complete {

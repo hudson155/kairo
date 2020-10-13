@@ -69,8 +69,8 @@ abstract class Authorization : LimberAuthorization<Jwt> {
   }
 
   class OrgMemberWithPermission(
-    private val orgGuid: UUID,
-    private val orgPermission: OrgPermission,
+      private val orgGuid: UUID,
+      private val orgPermission: OrgPermission,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
@@ -85,8 +85,8 @@ abstract class Authorization : LimberAuthorization<Jwt> {
    * should only be used for operations that are independent from the org.
    */
   class WithOrgPermission(
-    private val orgPermission: OrgPermission,
-    private val ignoreOrgGuid: Boolean,
+      private val orgPermission: OrgPermission,
+      private val ignoreOrgGuid: Boolean,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       check(ignoreOrgGuid)
@@ -105,8 +105,8 @@ abstract class Authorization : LimberAuthorization<Jwt> {
   }
 
   class FeatureMemberWithOrgPermission(
-    private val featureGuid: UUID,
-    private val orgPermission: OrgPermission,
+      private val featureGuid: UUID,
+      private val orgPermission: OrgPermission,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
@@ -120,8 +120,8 @@ abstract class Authorization : LimberAuthorization<Jwt> {
   }
 
   class FeatureMemberWithFeaturePermission(
-    private val featureGuid: UUID,
-    private val featurePermission: FeaturePermission,
+      private val featureGuid: UUID,
+      private val featurePermission: FeaturePermission,
   ) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false

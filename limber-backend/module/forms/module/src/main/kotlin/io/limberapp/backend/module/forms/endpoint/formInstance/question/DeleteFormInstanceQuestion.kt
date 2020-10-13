@@ -14,17 +14,17 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteFormInstanceQuestion @Inject constructor(
-  application: Application,
-  private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionService: FormInstanceQuestionService,
+    application: Application,
+    private val formInstanceService: FormInstanceService,
+    private val formInstanceQuestionService: FormInstanceQuestionService,
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = FormInstanceQuestionApi.Delete::class.template()
+    application = application,
+    endpointTemplate = FormInstanceQuestionApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Delete(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
-    questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
+      questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
   )
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Delete) {
@@ -33,11 +33,11 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
       formInstanceGuid(command.formInstanceGuid)
     } ?: throw FormInstanceQuestionNotFound()
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = when (formInstance.creatorAccountGuid) {
-        principal?.user?.guid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
-        else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
-      }
+        featureGuid = command.featureGuid,
+        featurePermission = when (formInstance.creatorAccountGuid) {
+          principal?.user?.guid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
+          else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
+        }
     ).authorize()
     if (formInstance.submittedDate == null) Authorization.User(formInstance.creatorAccountGuid).authorize()
     formInstanceQuestionService.delete(command.featureGuid, command.formInstanceGuid, command.questionGuid)

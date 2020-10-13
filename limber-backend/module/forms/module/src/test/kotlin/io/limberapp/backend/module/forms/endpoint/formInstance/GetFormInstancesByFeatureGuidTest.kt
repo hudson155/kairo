@@ -13,8 +13,8 @@ import java.util.*
 
 object GetFormInstancesByFeatureGuidTest {
   internal class Default(
-    engine: TestApplicationEngine,
-    limberServer: LimberApplication<*>,
+      engine: TestApplicationEngine,
+      limberServer: LimberApplication<*>,
   ) : IntegrationTest(engine, limberServer) {
     @Test
     fun happyPathNoFormInstances() {
@@ -38,16 +38,16 @@ object GetFormInstancesByFeatureGuidTest {
       val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
         ))
       }
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
         ))
       }
 
@@ -59,8 +59,8 @@ object GetFormInstancesByFeatureGuidTest {
   }
 
   internal class CreatorAccountGuid(
-    engine: TestApplicationEngine,
-    limberServer: LimberApplication<*>,
+      engine: TestApplicationEngine,
+      limberServer: LimberApplication<*>,
   ) : IntegrationTest(engine, limberServer) {
     @Test
     fun happyPathNoFormInstancesForCreator() {
@@ -74,15 +74,15 @@ object GetFormInstancesByFeatureGuidTest {
 
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
         ))
       }
 
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
         ))
       }
 
@@ -104,24 +104,24 @@ object GetFormInstancesByFeatureGuidTest {
       val formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
         ))
       }
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
         ))
       }
 
       // Not asserting ordering.
       test(expectResult = setOf(formInstance1Rep.summary(), formInstance0Rep.summary())) {
         formInstanceClient(FormInstanceApi.GetByFeatureGuid(
-          featureGuid = featureGuid,
-          creatorAccountGuid = creatorAccountGuid)
+            featureGuid = featureGuid,
+            creatorAccountGuid = creatorAccountGuid)
         ).toSet()
       }
     }

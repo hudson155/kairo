@@ -35,8 +35,8 @@ import kotlin.reflect.full.cast
  * called for each request.
  */
 abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseType : Any>(
-  private val application: Application,
-  private val endpointTemplate: LimberEndpointTemplate,
+    private val application: Application,
+    private val endpointTemplate: LimberEndpointTemplate,
 ) {
   private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 
@@ -84,12 +84,12 @@ abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseTyp
    */
   fun register() {
     logger.info(
-      listOfNotNull(
-        "Registering",
-        endpointTemplate.httpMethod,
-        endpointTemplate.pathTemplate,
-        with(endpointTemplate.requiredQueryParams) { if (isNotEmpty()) "(${joinToString()})" else null }
-      ).joinToString(" ")
+        listOfNotNull(
+            "Registering",
+            endpointTemplate.httpMethod,
+            endpointTemplate.pathTemplate,
+            with(endpointTemplate.requiredQueryParams) { if (isNotEmpty()) "(${joinToString()})" else null }
+        ).joinToString(" ")
     )
     application.routing { authenticate(optional = true) { routeEndpoint() } }
   }
@@ -139,7 +139,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseTyp
 
   protected fun <T : Any> Parameters.getAsType(kClass: KClass<T>, name: String): T {
     return getAsType(kClass, name, optional = true)
-      ?: throw ParameterConversionException("Missing required parameter: $name.")
+        ?: throw ParameterConversionException("Missing required parameter: $name.")
   }
 
   /**

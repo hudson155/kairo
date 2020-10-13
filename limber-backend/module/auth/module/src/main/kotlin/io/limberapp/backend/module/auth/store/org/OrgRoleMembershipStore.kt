@@ -23,37 +23,37 @@ private const val UNIQ_ACCOUNT_GUID = "uniq__org_role_membership__account_guid"
 
 @Singleton
 internal class OrgRoleMembershipStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<OrgRoleMembershipModel, OrgRoleMembershipFinder> {
   fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/orgRoleMembership/create.sql"))
-          .bind("orgGuid", orgGuid)
-          .bindKotlin(model)
-          .mapTo(OrgRoleMembershipModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/orgRoleMembership/create.sql"))
+              .bind("orgGuid", orgGuid)
+              .bindKotlin(model)
+              .mapTo(OrgRoleMembershipModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   override fun <R> find(result: (Iterable<OrgRoleMembershipModel>) -> R, query: OrgRoleMembershipFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/orgRoleMembership/find.sql"))
-        .withFinder(OrgRoleMembershipQueryBuilder().apply(query))
-        .mapTo(OrgRoleMembershipModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/orgRoleMembership/find.sql"))
+            .withFinder(OrgRoleMembershipQueryBuilder().apply(query))
+            .mapTo(OrgRoleMembershipModel::class.java)
+            .let(result)
+      }
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/orgRoleMembership/delete.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("orgRoleGuid", orgRoleGuid)
-        .bind("accountGuid", accountGuid)
-        .updateOnly() ?: throw OrgRoleMembershipNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/orgRoleMembership/delete.sql"))
+            .bind("orgGuid", orgGuid)
+            .bind("orgRoleGuid", orgRoleGuid)
+            .bind("accountGuid", accountGuid)
+            .updateOnly() ?: throw OrgRoleMembershipNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

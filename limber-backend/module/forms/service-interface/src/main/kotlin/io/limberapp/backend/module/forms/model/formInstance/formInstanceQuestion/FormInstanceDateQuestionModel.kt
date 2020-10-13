@@ -7,10 +7,10 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class FormInstanceDateQuestionModel(
-  override val createdDate: LocalDateTime,
-  override val formInstanceGuid: UUID,
-  override val questionGuid: UUID?,
-  val date: LocalDate,
+    override val createdDate: LocalDateTime,
+    override val formInstanceGuid: UUID,
+    override val questionGuid: UUID?,
+    val date: LocalDate,
 ) : FormInstanceQuestionModel {
   override val type = FormTemplateQuestionModel.Type.DATE
 }

@@ -14,15 +14,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetUser @Inject constructor(
-  application: Application,
-  private val userService: UserService,
-  private val userMapper: UserMapper,
+    application: Application,
+    private val userService: UserService,
+    private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.Get, UserRep.Complete>(
-  application = application,
-  endpointTemplate = UserApi.Get::class.template()
+    application = application,
+    endpointTemplate = UserApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserApi.Get(
-    userGuid = call.parameters.getAsType(UUID::class, "userGuid")
+      userGuid = call.parameters.getAsType(UUID::class, "userGuid")
   )
 
   override suspend fun Handler.handle(command: UserApi.Get): UserRep.Complete {

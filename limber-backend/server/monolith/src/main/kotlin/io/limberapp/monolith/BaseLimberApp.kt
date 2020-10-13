@@ -9,13 +9,13 @@ import io.limberapp.common.LimberApplication
 import io.limberapp.monolith.config.LimberMonolithConfig
 
 internal abstract class BaseLimberApp(
-  application: Application,
-  config: LimberMonolithConfig,
+    application: Application,
+    config: LimberMonolithConfig,
 ) : LimberApplication<LimberMonolithConfig>(application, config) {
   protected fun allLimberModules() = listOf(
-    AuthModule(),
-    FormsModule(),
-    OrgsModule(),
-    UsersModule(),
+      AuthModule(),
+      FormsModule(),
+      OrgsModule(),
+      UsersModule(),
   )
 }

@@ -16,8 +16,8 @@ internal object JdbiFeaturePermissionsType : JdbiType<FeaturePermissions>() {
   }
 
   override val argumentFactory: AbstractArgumentFactory<FeaturePermissions> =
-    object : AbstractArgumentFactory<FeaturePermissions>(Types.VARCHAR) {
-      override fun build(value: FeaturePermissions, config: ConfigRegistry): Argument =
-        Argument { position, statement, _ -> statement.setString(position, value.asBitString()) }
-    }
+      object : AbstractArgumentFactory<FeaturePermissions>(Types.VARCHAR) {
+        override fun build(value: FeaturePermissions, config: ConfigRegistry): Argument =
+            Argument { position, statement, _ -> statement.setString(position, value.asBitString()) }
+      }
 }

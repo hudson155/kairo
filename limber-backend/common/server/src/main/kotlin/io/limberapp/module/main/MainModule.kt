@@ -14,8 +14,8 @@ import java.time.Instant
 import java.time.ZoneId
 
 internal class MainModule(
-  private val application: Application,
-  private val config: Config,
+    private val application: Application,
+    private val config: Config,
 ) : GuiceModule() {
   override fun configure() {
     bind(Application::class.java).toInstance(application)

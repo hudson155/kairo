@@ -6,15 +6,15 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 
 class UserRoleClient(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
-    endpoint: UserRoleApi.Put,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: UserRoleApi.Put,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<Unit>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: UserRoleApi.Delete,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: UserRoleApi.Delete,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<Unit>(it) }
   }

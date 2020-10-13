@@ -7,8 +7,8 @@ import io.limberapp.common.restInterface.LimberEndpoint
 @Suppress("StringLiteralDuplication")
 object JwtClaimsRequestApi {
   data class Post(val rep: JwtClaimsRequestRep.Creation?) : LimberEndpoint(
-    httpMethod = HttpMethod.Post,
-    path = "/jwt-claims-request",
-    body = rep
+      httpMethod = HttpMethod.Post,
+      path = "/jwt-claims-request",
+      body = rep
   )
 }

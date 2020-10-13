@@ -9,12 +9,12 @@ import java.util.*
 @Suppress("StringLiteralDuplication")
 object UserRoleApi {
   data class Put(val userGuid: UUID, val role: JwtRole) : LimberEndpoint(
-    httpMethod = HttpMethod.Put,
-    path = "/users/${enc(userGuid)}/roles/${enc(role)}"
+      httpMethod = HttpMethod.Put,
+      path = "/users/${enc(userGuid)}/roles/${enc(role)}"
   )
 
   data class Delete(val userGuid: UUID, val role: JwtRole) : LimberEndpoint(
-    httpMethod = HttpMethod.Delete,
-    path = "/users/${enc(userGuid)}/roles/${enc(role)}"
+      httpMethod = HttpMethod.Delete,
+      path = "/users/${enc(userGuid)}/roles/${enc(role)}"
   )
 }

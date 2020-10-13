@@ -13,9 +13,9 @@ import java.util.*
 private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EE, MMM d, yyyy 'at' H:mm zz")
 
 internal class FormInstanceExporter(
-  private val users: Map<UUID, UserModel>,
-  private val timeZone: ZoneId?,
-  private val formInstances: List<FormInstanceModel>,
+    private val users: Map<UUID, UserModel>,
+    private val timeZone: ZoneId?,
+    private val formInstances: List<FormInstanceModel>,
 ) {
   enum class CsvColumn(val display: String) {
     NUMBER("Number"),
@@ -29,9 +29,9 @@ internal class FormInstanceExporter(
     Files.newBufferedWriter(tempFile).use { writer ->
       @Suppress("SpreadOperator")
       val csvFormat = CSVFormat.DEFAULT
-        .withRecordSeparator('\n')
-        .withQuoteMode(QuoteMode.MINIMAL)
-        .withHeader(*CsvColumn.values().map { it.display }.toTypedArray())
+          .withRecordSeparator('\n')
+          .withQuoteMode(QuoteMode.MINIMAL)
+          .withHeader(*CsvColumn.values().map { it.display }.toTypedArray())
       CSVPrinter(writer, csvFormat).use { printer ->
         formInstances.forEach { formInstance ->
           printer.printRecord(CsvColumn.values().map { column -> formInstance.getValue(column) })

@@ -7,36 +7,36 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 
 class OrgClient(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
-    endpoint: OrgApi.Post,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: OrgApi.Post,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     parse<OrgRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
-    endpoint: OrgApi.Get,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: OrgApi.Get,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<OrgRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: OrgApi.GetByOwnerUserGuid,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: OrgApi.GetByOwnerUserGuid,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<OrgRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: OrgApi.Patch,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: OrgApi.Patch,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<OrgRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: OrgApi.Delete,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: OrgApi.Delete,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<Unit>(it) }
   }

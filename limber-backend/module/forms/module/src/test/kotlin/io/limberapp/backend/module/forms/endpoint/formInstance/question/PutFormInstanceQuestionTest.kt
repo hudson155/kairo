@@ -19,8 +19,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PutFormInstanceQuestionTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun formInstanceDoesNotExist() {
@@ -33,10 +33,10 @@ internal class PutFormInstanceQuestionTest(
 
     test(expectError = FormInstanceNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceGuid,
-        questionGuid = UUID.randomUUID(),
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceGuid,
+          questionGuid = UUID.randomUUID(),
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ))
     }
   }
@@ -54,17 +54,17 @@ internal class PutFormInstanceQuestionTest(
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     test(expectError = FormTemplateQuestionNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = UUID.randomUUID(),
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          questionGuid = UUID.randomUUID(),
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ))
     }
   }
@@ -83,26 +83,26 @@ internal class PutFormInstanceQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
       ))
     }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     test(expectError = FormInstanceNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = UUID.randomUUID(),
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+          featureGuid = UUID.randomUUID(),
+          formInstanceGuid = formInstanceRep.guid,
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ))
     }
 
@@ -125,26 +125,26 @@ internal class PutFormInstanceQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
       ))
     }
 
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     test(expectError = FormInstanceNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = UUID.randomUUID(),
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+          featureGuid = featureGuid,
+          formInstanceGuid = UUID.randomUUID(),
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ))
     }
 
@@ -167,29 +167,29 @@ internal class PutFormInstanceQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
       ))
     }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     val formInstanceQuestionRep =
-      FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
+        FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestionRep)
     test(expectResult = formInstanceQuestionRep) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ))
     }
 
@@ -212,45 +212,45 @@ internal class PutFormInstanceQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = formTemplateRep.questions + formTemplateQuestionRep)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation(),
       ))
     }
 
     var formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 2)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
     val formInstanceQuestion0Rep =
-      FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
+        FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestion0Rep)
     setup {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormInstanceQuestionRepFixtures.textFixture.creation(this)
       ))
     }
 
     val formInstanceQuestion1Rep =
-      (FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
-        as FormInstanceTextQuestionRep.Complete)
-        .copy(text = "completely new text")
+        (FormInstanceQuestionRepFixtures.textFixture.complete(this, formTemplateQuestionRep.guid)
+            as FormInstanceTextQuestionRep.Complete)
+            .copy(text = "completely new text")
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions - formInstanceQuestion0Rep)
     formInstanceRep = formInstanceRep.copy(questions = formInstanceRep.questions + formInstanceQuestion1Rep)
     test(expectResult = formInstanceQuestion1Rep) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Put(
-        featureGuid = featureGuid,
-        formInstanceGuid = formInstanceRep.guid,
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = (FormInstanceQuestionRepFixtures.textFixture.creation(this) as FormInstanceTextQuestionRep.Creation)
-          .copy(text = "completely new text")
+          featureGuid = featureGuid,
+          formInstanceGuid = formInstanceRep.guid,
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = (FormInstanceQuestionRepFixtures.textFixture.creation(this) as FormInstanceTextQuestionRep.Creation)
+              .copy(text = "completely new text")
       ))
     }
 

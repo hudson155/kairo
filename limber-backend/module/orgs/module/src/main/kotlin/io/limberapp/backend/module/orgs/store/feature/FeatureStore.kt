@@ -26,51 +26,51 @@ private const val UNIQ_RANK = "uniq__feature__rank"
 @Singleton
 internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<FeatureModel, FeatureFinder> {
   fun create(model: FeatureModel): FeatureModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/feature/create.sql"))
-          .bindKotlin(model)
-          .mapTo(FeatureModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/feature/create.sql"))
+              .bindKotlin(model)
+              .mapTo(FeatureModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   override fun <R> find(result: (Iterable<FeatureModel>) -> R, query: FeatureFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/feature/find.sql"))
-        .withFinder(FeatureQueryBuilder().apply(query))
-        .mapTo(FeatureModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/feature/find.sql"))
+            .withFinder(FeatureQueryBuilder().apply(query))
+            .mapTo(FeatureModel::class.java)
+            .let(result)
+      }
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel =
-    inTransaction { handle ->
-      if (update.isDefaultFeature == true) {
-        handle.createUpdate(sqlResource("/store/feature/removeDefaultFeaturesByOrgGuid.sql"))
-          .bind("orgGuid", orgGuid)
-          .execute()
+      inTransaction { handle ->
+        if (update.isDefaultFeature == true) {
+          handle.createUpdate(sqlResource("/store/feature/removeDefaultFeaturesByOrgGuid.sql"))
+              .bind("orgGuid", orgGuid)
+              .execute()
+        }
+        try {
+          handle.createQuery(sqlResource("/store/feature/update.sql"))
+              .bind("orgGuid", orgGuid)
+              .bind("featureGuid", featureGuid)
+              .bindKotlin(update)
+              .mapTo(FeatureModel::class.java)
+              .singleNullOrThrow()
+        } catch (e: UnableToExecuteStatementException) {
+          handleUpdateError(e)
+        } ?: throw FeatureNotFound()
       }
-      try {
-        handle.createQuery(sqlResource("/store/feature/update.sql"))
-          .bind("orgGuid", orgGuid)
-          .bind("featureGuid", featureGuid)
-          .bindKotlin(update)
-          .mapTo(FeatureModel::class.java)
-          .singleNullOrThrow()
-      } catch (e: UnableToExecuteStatementException) {
-        handleUpdateError(e)
-      } ?: throw FeatureNotFound()
-    }
 
   fun delete(orgGuid: UUID, featureGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/feature/delete.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("featureGuid", featureGuid)
-        .updateOnly() ?: throw FeatureNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/feature/delete.sql"))
+            .bind("orgGuid", orgGuid)
+            .bind("featureGuid", featureGuid)
+            .updateOnly() ?: throw FeatureNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

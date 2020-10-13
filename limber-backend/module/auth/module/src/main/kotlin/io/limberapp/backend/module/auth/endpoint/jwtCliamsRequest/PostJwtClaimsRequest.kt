@@ -13,15 +13,15 @@ import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsReques
 import io.limberapp.common.restInterface.template
 
 internal class PostJwtClaimsRequest @Inject constructor(
-  application: Application,
-  private val jwtClaimsRequestService: JwtClaimsRequestService,
-  private val jwtClaimsRequestMapper: JwtClaimsRequestMapper,
+    application: Application,
+    private val jwtClaimsRequestService: JwtClaimsRequestService,
+    private val jwtClaimsRequestMapper: JwtClaimsRequestMapper,
 ) : LimberApiEndpoint<JwtClaimsRequestApi.Post, JwtClaimsRequestRep.Complete>(
-  application = application,
-  endpointTemplate = JwtClaimsRequestApi.Post::class.template()
+    application = application,
+    endpointTemplate = JwtClaimsRequestApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = JwtClaimsRequestApi.Post(
-    rep = call.getAndValidateBody()
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: JwtClaimsRequestApi.Post): JwtClaimsRequestRep.Complete {

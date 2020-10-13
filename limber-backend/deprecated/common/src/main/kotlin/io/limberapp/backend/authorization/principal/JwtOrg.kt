@@ -4,9 +4,9 @@ import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissi
 import java.util.*
 
 data class JwtOrg(
-  val guid: UUID,
-  val name: String,
-  val isOwner: Boolean,
-  val permissions: OrgPermissions,
-  val features: Map<UUID, JwtFeature>,
+    val guid: UUID,
+    val name: String,
+    val isOwner: Boolean,
+    val permissions: OrgPermissions,
+    val features: Map<UUID, JwtFeature>,
 )

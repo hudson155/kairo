@@ -9,24 +9,24 @@ import java.util.*
 
 internal object FeatureRoleRepFixtures {
   data class Fixture(
-    val creation: (orgRoleGuid: UUID) -> FeatureRoleRep.Creation,
-    val complete: IntegrationTest.(orgRoleGuid: UUID, idSeed: Int) -> FeatureRoleRep.Complete,
+      val creation: (orgRoleGuid: UUID) -> FeatureRoleRep.Creation,
+      val complete: IntegrationTest.(orgRoleGuid: UUID, idSeed: Int) -> FeatureRoleRep.Complete,
   )
 
   val fixture = Fixture(
-    { orgRoleGuid ->
-      FeatureRoleRep.Creation(
-        orgRoleGuid = orgRoleGuid,
-        permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
-      )
-    },
-    { orgRoleGuid: UUID, idSeed ->
-      FeatureRoleRep.Complete(
-        guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
-        orgRoleGuid = orgRoleGuid,
-        permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
-      )
-    }
+      { orgRoleGuid ->
+        FeatureRoleRep.Creation(
+            orgRoleGuid = orgRoleGuid,
+            permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
+        )
+      },
+      { orgRoleGuid: UUID, idSeed ->
+        FeatureRoleRep.Complete(
+            guid = uuidGenerator[idSeed],
+            createdDate = LocalDateTime.now(clock),
+            orgRoleGuid = orgRoleGuid,
+            permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
+        )
+      }
   )
 }

@@ -15,17 +15,17 @@ import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.common.restInterface.template
 
 internal class PostTenant @Inject constructor(
-  application: Application,
-  private val tenantService: TenantService,
-  private val tenantDomainService: TenantDomainService,
-  private val tenantMapper: TenantMapper,
-  private val tenantDomainMapper: TenantDomainMapper,
+    application: Application,
+    private val tenantService: TenantService,
+    private val tenantDomainService: TenantDomainService,
+    private val tenantMapper: TenantMapper,
+    private val tenantDomainMapper: TenantDomainMapper,
 ) : LimberApiEndpoint<TenantApi.Post, TenantRep.Complete>(
-  application = application,
-  endpointTemplate = TenantApi.Post::class.template()
+    application = application,
+    endpointTemplate = TenantApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Post(
-    rep = call.getAndValidateBody()
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: TenantApi.Post): TenantRep.Complete {

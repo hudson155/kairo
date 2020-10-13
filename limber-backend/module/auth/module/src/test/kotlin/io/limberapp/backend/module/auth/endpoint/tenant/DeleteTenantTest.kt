@@ -10,16 +10,16 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class DeleteTenantTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
     test(
-      endpoint = TenantApi.Delete(orgGuid),
-      expectedException = TenantNotFound()
+        endpoint = TenantApi.Delete(orgGuid),
+        expectedException = TenantNotFound()
     )
   }
 
@@ -33,8 +33,8 @@ internal class DeleteTenantTest(
     test(TenantApi.Delete(tenantRep.orgGuid)) {}
 
     test(
-      endpoint = TenantApi.Get(orgGuid),
-      expectedException = TenantNotFound()
+        endpoint = TenantApi.Get(orgGuid),
+        expectedException = TenantNotFound()
     )
   }
 }

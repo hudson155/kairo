@@ -8,7 +8,7 @@ import io.limberapp.util.darb.BitStringEncoder
  */
 private val ALL_HOME_FEATURE_PERMISSIONS = with(HomeFeaturePermission.values()) {
   sortedBy { it.bit }
-    .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
+      .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
 }
 
 internal const val HOME_FEATURE_PREFIX = 'H'
@@ -24,13 +24,13 @@ class HomeFeaturePermissions(override val permissions: Set<HomeFeaturePermission
     fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
     internal fun fromBooleanList(booleanList: List<Boolean>) = HomeFeaturePermissions(
-      permissions = ALL_HOME_FEATURE_PERMISSIONS
-        .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
-        .toSet()
+        permissions = ALL_HOME_FEATURE_PERMISSIONS
+            .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
+            .toSet()
     )
 
     fun Collection<HomeFeaturePermissions>.union() = HomeFeaturePermissions(
-      permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+        permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
     )
   }
 }

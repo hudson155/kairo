@@ -9,19 +9,19 @@ import java.util.*
 @Suppress("StringLiteralDuplication")
 object FeatureApi {
   data class Post(val orgGuid: UUID, val rep: FeatureRep.Creation?) : LimberEndpoint(
-    httpMethod = HttpMethod.Post,
-    path = "/orgs/${enc(orgGuid)}/features",
-    body = rep
+      httpMethod = HttpMethod.Post,
+      path = "/orgs/${enc(orgGuid)}/features",
+      body = rep
   )
 
   data class Patch(val orgGuid: UUID, val featureGuid: UUID, val rep: FeatureRep.Update?) : LimberEndpoint(
-    httpMethod = HttpMethod.Patch,
-    path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}",
-    body = rep
+      httpMethod = HttpMethod.Patch,
+      path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}",
+      body = rep
   )
 
   data class Delete(val orgGuid: UUID, val featureGuid: UUID) : LimberEndpoint(
-    httpMethod = HttpMethod.Delete,
-    path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}"
+      httpMethod = HttpMethod.Delete,
+      path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}"
   )
 }

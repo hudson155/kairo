@@ -20,46 +20,46 @@ private const val UNIQ_NAME = "uniq__org_role__name"
 @Singleton
 internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<OrgRoleModel, OrgRoleFinder> {
   fun create(model: OrgRoleModel): OrgRoleModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/orgRole/create.sql"))
-          .bindKotlin(model)
-          .mapTo(OrgRoleModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/orgRole/create.sql"))
+              .bindKotlin(model)
+              .mapTo(OrgRoleModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   override fun <R> find(result: (Iterable<OrgRoleModel>) -> R, query: OrgRoleFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/orgRole/find.sql"))
-        .withFinder(OrgRoleQueryBuilder().apply(query))
-        .mapTo(OrgRoleModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/orgRole/find.sql"))
+            .withFinder(OrgRoleQueryBuilder().apply(query))
+            .mapTo(OrgRoleModel::class.java)
+            .let(result)
+      }
 
   fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel =
-    inTransaction { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/orgRole/update.sql"))
-          .bind("orgGuid", orgGuid)
-          .bind("orgRoleGuid", orgRoleGuid)
-          .bindKotlin(update)
-          .mapTo(OrgRoleModel::class.java)
-          .singleNullOrThrow()
-      } catch (e: UnableToExecuteStatementException) {
-        handleUpdateError(e)
-      } ?: throw OrgRoleNotFound()
-    }
+      inTransaction { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/orgRole/update.sql"))
+              .bind("orgGuid", orgGuid)
+              .bind("orgRoleGuid", orgRoleGuid)
+              .bindKotlin(update)
+              .mapTo(OrgRoleModel::class.java)
+              .singleNullOrThrow()
+        } catch (e: UnableToExecuteStatementException) {
+          handleUpdateError(e)
+        } ?: throw OrgRoleNotFound()
+      }
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("orgRoleGuid", orgRoleGuid)
-        .updateOnly() ?: throw OrgRoleNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/orgRole/delete.sql"))
+            .bind("orgGuid", orgGuid)
+            .bind("orgRoleGuid", orgRoleGuid)
+            .updateOnly() ?: throw OrgRoleNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

@@ -6,7 +6,7 @@ import io.limberapp.common.restInterface.LimberEndpoint
 @Suppress("StringLiteralDuplication")
 object HealthCheckApi {
   object Get : LimberEndpoint(
-    httpMethod = HttpMethod.Get,
-    path = "/health-check"
+      httpMethod = HttpMethod.Get,
+      path = "/health-check"
   )
 }

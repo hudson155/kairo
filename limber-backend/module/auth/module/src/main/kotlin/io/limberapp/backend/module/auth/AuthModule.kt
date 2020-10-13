@@ -36,28 +36,28 @@ import io.limberapp.common.module.ApplicationModule
 class AuthModule : ApplicationModule() {
   override val endpoints = listOf(
 
-    PostFeatureRole::class.java,
-    GetFeatureRolesByFeatureGuid::class.java,
-    PatchFeatureRole::class.java,
-    DeleteFeatureRole::class.java,
+      PostFeatureRole::class.java,
+      GetFeatureRolesByFeatureGuid::class.java,
+      PatchFeatureRole::class.java,
+      DeleteFeatureRole::class.java,
 
-    PostJwtClaimsRequest::class.java,
+      PostJwtClaimsRequest::class.java,
 
-    PostOrgRole::class.java,
-    GetOrgRolesByOrgGuid::class.java,
-    PatchOrgRole::class.java,
-    DeleteOrgRole::class.java,
-    PostOrgRoleMembership::class.java,
-    GetOrgRoleMembershipsByOrgRoleGuid::class.java,
-    DeleteOrgRoleMembership::class.java,
+      PostOrgRole::class.java,
+      GetOrgRolesByOrgGuid::class.java,
+      PatchOrgRole::class.java,
+      DeleteOrgRole::class.java,
+      PostOrgRoleMembership::class.java,
+      GetOrgRoleMembershipsByOrgRoleGuid::class.java,
+      DeleteOrgRoleMembership::class.java,
 
-    PostTenant::class.java,
-    GetTenant::class.java,
-    GetTenantByDomain::class.java,
-    PatchTenant::class.java,
-    DeleteTenant::class.java,
-    PostTenantDomain::class.java,
-    DeleteTenantDomain::class.java
+      PostTenant::class.java,
+      GetTenant::class.java,
+      GetTenantByDomain::class.java,
+      PatchTenant::class.java,
+      DeleteTenant::class.java,
+      PostTenantDomain::class.java,
+      DeleteTenantDomain::class.java
   )
 
   override fun bindServices() {

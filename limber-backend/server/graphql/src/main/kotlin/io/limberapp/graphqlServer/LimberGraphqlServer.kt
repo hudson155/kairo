@@ -9,15 +9,15 @@ import io.limberapp.graphqlServer.module.GraphqlServerModule
 import io.limberapp.module.graphql.GraphqlModule
 
 internal class LimberGraphqlServer(
-  application: Application,
-  configName: String? = null,
+    application: Application,
+    configName: String? = null,
 ) : LimberApplication<LimberGraphqlServerConfig>(
-  application = application,
-  config = ConfigLoader.load(configName ?: System.getenv("LIMBER_CONFIG"))
+    application = application,
+    config = ConfigLoader.load(configName ?: System.getenv("LIMBER_CONFIG"))
 ) {
   override fun getApplicationModules() = listOf(
-    GraphqlServerModule(),
-    HealthCheckModule(),
-    GraphqlModule(),
+      GraphqlServerModule(),
+      HealthCheckModule(),
+      GraphqlModule(),
   )
 }

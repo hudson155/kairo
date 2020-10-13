@@ -12,10 +12,10 @@ import org.jdbi.v3.core.Jdbi
 @Singleton
 internal class AccountStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<AccountModel, AccountFinder> {
   override fun <R> find(result: (Iterable<AccountModel>) -> R, query: AccountFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/account/get"))
-        .withFinder(AccountQueryBuilder().apply(query))
-        .mapTo(AccountModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/account/get"))
+            .withFinder(AccountQueryBuilder().apply(query))
+            .mapTo(AccountModel::class.java)
+            .let(result)
+      }
 }

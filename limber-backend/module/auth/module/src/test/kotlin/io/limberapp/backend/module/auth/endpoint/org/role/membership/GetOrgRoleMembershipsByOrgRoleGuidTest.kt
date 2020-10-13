@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class GetOrgRoleMembershipsByOrgRoleGuidTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgRoleDoesNotExist() {
@@ -43,18 +43,18 @@ internal class GetOrgRoleMembershipsByOrgRoleGuidTest(
     val orgRoleMembershipRep0 = OrgRoleMembershipRepFixtures.fixture.complete(this, account0Guid)
     setup {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(account0Guid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(account0Guid)
       ))
     }
 
     val orgRoleMembershipRep1 = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
     setup {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(account1Guid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(account1Guid)
       ))
     }
 

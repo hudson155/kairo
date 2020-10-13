@@ -12,15 +12,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteFeatureRole @Inject constructor(
-  application: Application,
-  private val featureRoleService: FeatureRoleService,
+    application: Application,
+    private val featureRoleService: FeatureRoleService,
 ) : LimberApiEndpoint<FeatureRoleApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = FeatureRoleApi.Delete::class.template()
+    application = application,
+    endpointTemplate = FeatureRoleApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FeatureRoleApi.Delete(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    featureRoleGuid = call.parameters.getAsType(UUID::class, "featureRoleGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      featureRoleGuid = call.parameters.getAsType(UUID::class, "featureRoleGuid")
   )
 
   override suspend fun Handler.handle(command: FeatureRoleApi.Delete) {

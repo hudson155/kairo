@@ -12,12 +12,12 @@ import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FormInstanceServiceImpl @Inject constructor(
-  private val formTemplateQuestionService: FormTemplateQuestionService,
-  private val formInstanceQuestionService: FormInstanceQuestionService,
-  private val formInstanceStore: FormInstanceStore,
+    private val formTemplateQuestionService: FormTemplateQuestionService,
+    private val formInstanceQuestionService: FormInstanceQuestionService,
+    private val formInstanceStore: FormInstanceStore,
 ) : FormInstanceService, Finder<FormInstanceModel, FormInstanceFinder> by formInstanceStore {
   override fun create(model: FormInstanceModel) =
-    formInstanceStore.create(model)
+      formInstanceStore.create(model)
 
   override fun update(featureGuid: UUID, formInstanceGuid: UUID, update: FormInstanceModel.Update): FormInstanceModel {
     if (update.submittedDate != null) validateBeforeSubmission(featureGuid, formInstanceGuid)
@@ -26,7 +26,7 @@ internal class FormInstanceServiceImpl @Inject constructor(
 
   private fun validateBeforeSubmission(featureGuid: UUID, formInstanceGuid: UUID) {
     val formInstance = formInstanceStore.findOnlyOrNull { featureGuid(featureGuid); formInstanceGuid(formInstanceGuid) }
-      ?: throw FormInstanceNotFound()
+        ?: throw FormInstanceNotFound()
     if (formInstance.submittedDate != null) throw CannotReSubmitFormInstance()
     val formTemplateQuestions = formTemplateQuestionService.findAsSet {
       formTemplateGuid(formInstance.formTemplateGuid)
@@ -40,5 +40,5 @@ internal class FormInstanceServiceImpl @Inject constructor(
   }
 
   override fun delete(featureGuid: UUID, formInstanceGuid: UUID) =
-    formInstanceStore.delete(featureGuid, formInstanceGuid)
+      formInstanceStore.delete(featureGuid, formInstanceGuid)
 }

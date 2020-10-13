@@ -8,7 +8,7 @@ import java.util.*
 
 object FormInstanceRadioSelectorQuestionRep {
   data class Creation(
-    val selection: String,
+      val selection: String,
   ) : FormInstanceQuestionRep.Creation {
     override fun validate() = RepValidation {
       validate(Creation::selection) { Validator.length1hundred(value, allowEmpty = false) }
@@ -16,8 +16,8 @@ object FormInstanceRadioSelectorQuestionRep {
   }
 
   data class Complete(
-    override val createdDate: LocalDateTime,
-    override val questionGuid: UUID?,
-    val selection: String,
+      override val createdDate: LocalDateTime,
+      override val questionGuid: UUID?,
+      val selection: String,
   ) : FormInstanceQuestionRep.Complete
 }

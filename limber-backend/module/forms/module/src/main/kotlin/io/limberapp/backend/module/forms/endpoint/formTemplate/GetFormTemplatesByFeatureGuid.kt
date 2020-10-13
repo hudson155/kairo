@@ -13,15 +13,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetFormTemplatesByFeatureGuid @Inject constructor(
-  application: Application,
-  private val formTemplateService: FormTemplateService,
-  private val formTemplateMapper: FormTemplateMapper,
+    application: Application,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateMapper: FormTemplateMapper,
 ) : LimberApiEndpoint<FormTemplateApi.GetByFeatureGuid, Set<FormTemplateRep.Summary>>(
-  application = application,
-  endpointTemplate = FormTemplateApi.GetByFeatureGuid::class.template()
+    application = application,
+    endpointTemplate = FormTemplateApi.GetByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.GetByFeatureGuid(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.GetByFeatureGuid): Set<FormTemplateRep.Summary> {

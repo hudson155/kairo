@@ -14,15 +14,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetFeatureRolesByFeatureGuid @Inject constructor(
-  application: Application,
-  private val featureRoleService: FeatureRoleService,
-  private val featureRoleMapper: FeatureRoleMapper,
+    application: Application,
+    private val featureRoleService: FeatureRoleService,
+    private val featureRoleMapper: FeatureRoleMapper,
 ) : LimberApiEndpoint<FeatureRoleApi.GetByFeatureGuid, Set<FeatureRoleRep.Complete>>(
-  application = application,
-  endpointTemplate = FeatureRoleApi.GetByFeatureGuid::class.template()
+    application = application,
+    endpointTemplate = FeatureRoleApi.GetByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FeatureRoleApi.GetByFeatureGuid(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid")
   )
 
   override suspend fun Handler.handle(command: FeatureRoleApi.GetByFeatureGuid): Set<FeatureRoleRep.Complete> {

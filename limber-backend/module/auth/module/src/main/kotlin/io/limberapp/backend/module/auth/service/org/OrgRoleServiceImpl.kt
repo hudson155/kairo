@@ -8,14 +8,14 @@ import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class OrgRoleServiceImpl @Inject constructor(
-  private val orgRoleStore: OrgRoleStore,
+    private val orgRoleStore: OrgRoleStore,
 ) : OrgRoleService, Finder<OrgRoleModel, OrgRoleFinder> by orgRoleStore {
   override fun create(model: OrgRoleModel) =
-    orgRoleStore.create(model)
+      orgRoleStore.create(model)
 
   override fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update) =
-    orgRoleStore.update(orgGuid, orgRoleGuid, update)
+      orgRoleStore.update(orgGuid, orgRoleGuid, update)
 
   override fun delete(orgGuid: UUID, orgRoleGuid: UUID) =
-    orgRoleStore.delete(orgGuid, orgRoleGuid)
+      orgRoleStore.delete(orgGuid, orgRoleGuid)
 }

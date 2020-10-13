@@ -18,11 +18,11 @@ import kotlin.reflect.full.primaryConstructor
  * Instances represent parameterized requests to an HTTP endpoint.
  */
 abstract class LimberEndpoint(
-  val httpMethod: HttpMethod,
-  val path: String,
-  val queryParams: List<Pair<String, String>> = emptyList(),
-  val contentType: ContentType = ContentType.Application.Json,
-  val body: ValidatedRep? = null,
+    val httpMethod: HttpMethod,
+    val path: String,
+    val queryParams: List<Pair<String, String>> = emptyList(),
+    val contentType: ContentType = ContentType.Application.Json,
+    val body: ValidatedRep? = null,
 ) {
   val href = href(path, queryParams)
 }
@@ -72,10 +72,10 @@ fun KClass<out LimberEndpoint>.template(): LimberEndpointTemplate {
     }
 
     return LimberEndpointTemplate(
-      httpMethod = endpoint.httpMethod,
-      pathTemplate = pathTemplate,
-      requiredQueryParams = requiredQueryParams,
-      contentType = endpoint.contentType
+        httpMethod = endpoint.httpMethod,
+        pathTemplate = pathTemplate,
+        requiredQueryParams = requiredQueryParams,
+        contentType = endpoint.contentType
     )
   } catch (e: Exception) {
     logger.error("Unable to construct template.", e)
@@ -85,15 +85,15 @@ fun KClass<out LimberEndpoint>.template(): LimberEndpointTemplate {
 
 private fun LimberEndpoint.toTemplate(): LimberEndpointTemplate {
   return LimberEndpointTemplate(
-    httpMethod = httpMethod,
-    pathTemplate = path,
-    requiredQueryParams = queryParams.map { it.first }.toSet(),
-    contentType = contentType
+      httpMethod = httpMethod,
+      pathTemplate = path,
+      requiredQueryParams = queryParams.map { it.first }.toSet(),
+      contentType = contentType
   )
 }
 
 private fun generateArgsAndReplacements(
-  constructor: KFunction<LimberEndpoint>,
+    constructor: KFunction<LimberEndpoint>,
 ): Pair<Map<KParameter, Any?>, MutableMap<String, String>> {
   // The key is the arg name, and the value is the temporary placeholder value.
   val argReplacements = mutableMapOf<String, String>()

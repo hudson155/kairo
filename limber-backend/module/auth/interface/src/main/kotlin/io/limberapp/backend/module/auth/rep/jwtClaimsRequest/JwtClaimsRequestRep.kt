@@ -7,11 +7,11 @@ import io.limberapp.validation.ifPresent
 
 object JwtClaimsRequestRep {
   data class Creation(
-    val auth0ClientId: String,
-    val firstName: String? = null,
-    val lastName: String? = null,
-    val emailAddress: String,
-    val profilePhotoUrl: String? = null,
+      val auth0ClientId: String,
+      val firstName: String? = null,
+      val lastName: String? = null,
+      val emailAddress: String,
+      val profilePhotoUrl: String? = null,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::auth0ClientId) { Validator.auth0ClientId(value) }
@@ -23,8 +23,8 @@ object JwtClaimsRequestRep {
   }
 
   data class Complete(
-    val org: String?,
-    val roles: String,
-    val user: String,
+      val org: String?,
+      val roles: String,
+      val user: String,
   ) : Any()
 }

@@ -63,10 +63,10 @@ object DarbEncoder {
       }
 
       return@flatMap listOf(
-        intValue >= 8, // first bit
-        intValue % 8 >= 4, // second bit
-        intValue % 4 >= 2, // third bit
-        intValue % 2 >= 1 // fourth bit
+          intValue >= 8, // first bit
+          intValue % 8 >= 4, // second bit
+          intValue % 4 >= 2, // third bit
+          intValue % 2 >= 1 // fourth bit
       )
     }
 

@@ -15,23 +15,23 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostFormTemplate @Inject constructor(
-  application: Application,
-  private val formTemplateService: FormTemplateService,
-  private val formTemplateQuestionService: FormTemplateQuestionService,
-  private val formTemplateMapper: FormTemplateMapper,
+    application: Application,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateQuestionService: FormTemplateQuestionService,
+    private val formTemplateMapper: FormTemplateMapper,
 ) : LimberApiEndpoint<FormTemplateApi.Post, FormTemplateRep.Complete>(
-  application = application,
-  endpointTemplate = FormTemplateApi.Post::class.template()
+    application = application,
+    endpointTemplate = FormTemplateApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Post(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    rep = call.getAndValidateBody()
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.Post): FormTemplateRep.Complete {
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
+        featureGuid = command.featureGuid,
+        featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
     ).authorize()
     val formTemplate = formTemplateService.create(formTemplateMapper.model(command.featureGuid, command.rep.required()))
     val questions = formTemplateQuestionService.findAsList {

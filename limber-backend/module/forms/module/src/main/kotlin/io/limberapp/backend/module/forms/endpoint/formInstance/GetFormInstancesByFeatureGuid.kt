@@ -16,24 +16,24 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetFormInstancesByFeatureGuid @Inject constructor(
-  application: Application,
-  private val formInstanceService: FormInstanceService,
-  private val formInstanceMapper: FormInstanceMapper,
+    application: Application,
+    private val formInstanceService: FormInstanceService,
+    private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.GetByFeatureGuid, List<FormInstanceRep.Summary>>(
-  application = application,
-  endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
+    application = application,
+    endpointTemplate = FormInstanceApi.GetByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.GetByFeatureGuid(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    creatorAccountGuid = call.parameters.getAsType(UUID::class, "creatorAccountGuid", optional = true)
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      creatorAccountGuid = call.parameters.getAsType(UUID::class, "creatorAccountGuid", optional = true)
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): List<FormInstanceRep.Summary> {
     Authorization.FeatureMember(command.featureGuid).authorize()
     if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.user?.guid) {
       Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
+          featureGuid = command.featureGuid,
+          featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
     val formInstances = formInstanceService.findAsSet {

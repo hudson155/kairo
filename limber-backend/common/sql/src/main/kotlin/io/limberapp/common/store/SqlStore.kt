@@ -52,8 +52,8 @@ abstract class SqlStore(private val jdbi: Jdbi) {
   protected fun Query.build(build: QueryBuilder.() -> Unit): Query {
     val queryBuilder = QueryBuilder().apply { build() }
     return this
-      .define("conditions", queryBuilder.conditions.joinToString(" AND "))
-      .bindMap(queryBuilder.bindings)
+        .define("conditions", queryBuilder.conditions.joinToString(" AND "))
+        .bindMap(queryBuilder.bindings)
   }
 
   protected fun Update.updateOnly(): Unit? {

@@ -14,8 +14,8 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class PostTenantTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun duplicateOrgGuid() {
@@ -26,11 +26,11 @@ internal class PostTenantTest(
     setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
 
     test(
-      endpoint = TenantApi.Post(
-        TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-          .copy(orgGuid = limberappTenantRep.orgGuid)
-      ),
-      expectedException = OrgAlreadyHasTenant()
+        endpoint = TenantApi.Post(
+            TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
+                .copy(orgGuid = limberappTenantRep.orgGuid)
+        ),
+        expectedException = OrgAlreadyHasTenant()
     )
   }
 
@@ -43,11 +43,11 @@ internal class PostTenantTest(
     setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
 
     test(
-      endpoint = TenantApi.Post(
-        TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-          .copy(auth0ClientId = limberappTenantRep.auth0ClientId)
-      ),
-      expectedException = Auth0ClientIdAlreadyRegistered()
+        endpoint = TenantApi.Post(
+            TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
+                .copy(auth0ClientId = limberappTenantRep.auth0ClientId)
+        ),
+        expectedException = Auth0ClientIdAlreadyRegistered()
     )
   }
 
@@ -60,11 +60,11 @@ internal class PostTenantTest(
 
     val duplicateDomain = TenantRepFixtures.limberappFixture.creation(limberappOrgGuid).domain
     test(
-      endpoint = TenantApi.Post(
-        TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-          .copy(domain = duplicateDomain)
-      ),
-      expectedException = TenantDomainAlreadyRegistered()
+        endpoint = TenantApi.Post(
+            TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
+                .copy(domain = duplicateDomain)
+        ),
+        expectedException = TenantDomainAlreadyRegistered()
     )
   }
 

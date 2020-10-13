@@ -20,29 +20,29 @@ import java.util.*
 
 @OptIn(LimberModule.Orgs::class, LimberModule.Users::class)
 internal class ExportFormInstancesByFeatureGuid @Inject constructor(
-  application: Application,
-  private val featureService: FeatureService,
-  private val formInstanceService: FormInstanceService,
-  private val userService: UserService,
+    application: Application,
+    private val featureService: FeatureService,
+    private val formInstanceService: FormInstanceService,
+    private val userService: UserService,
 ) : LimberApiEndpoint<FormInstanceApi.ExportByFeatureGuid, String>(
-  application = application,
-  endpointTemplate = FormInstanceApi.ExportByFeatureGuid::class.template()
+    application = application,
+    endpointTemplate = FormInstanceApi.ExportByFeatureGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.ExportByFeatureGuid(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    creatorAccountGuid = call.parameters.getAsType(UUID::class, "creatorAccountGuid", optional = true),
-    timeZone = call.parameters.getAsType(ZoneId::class, "timeZone", optional = true)
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      creatorAccountGuid = call.parameters.getAsType(UUID::class, "creatorAccountGuid", optional = true),
+      timeZone = call.parameters.getAsType(ZoneId::class, "timeZone", optional = true)
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.ExportByFeatureGuid): String {
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = FormsFeaturePermission.EXPORT_FORM_INSTANCES
+        featureGuid = command.featureGuid,
+        featurePermission = FormsFeaturePermission.EXPORT_FORM_INSTANCES
     ).authorize()
     if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.user?.guid) {
       Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
+          featureGuid = command.featureGuid,
+          featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
       ).authorize()
     }
     val formInstances = formInstanceService.findAsList {
@@ -53,9 +53,9 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
     val feature = featureService.findOnlyOrThrow { featureGuid(command.featureGuid) }
     val users = userService.getByOrgGuid(feature.orgGuid)
     return FormInstanceExporter(
-      users = users.associateBy { it.guid },
-      timeZone = command.timeZone,
-      formInstances = formInstances
+        users = users.associateBy { it.guid },
+        timeZone = command.timeZone,
+        formInstances = formInstances
     ).export()
   }
 }

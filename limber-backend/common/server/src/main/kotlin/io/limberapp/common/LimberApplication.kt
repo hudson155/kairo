@@ -122,9 +122,9 @@ abstract class LimberApplication<C : Config>(application: Application, protected
   private fun Authentication.Configuration.configureAuthentication() {
     limberAuth<Jwt> {
       verifier(
-        scheme = JwtAuthVerifier.scheme,
-        verifier = JwtAuthVerifier(config.authentication),
-        default = true,
+          scheme = JwtAuthVerifier.scheme,
+          verifier = JwtAuthVerifier(config.authentication),
+          default = true,
       )
     }
   }
@@ -164,8 +164,8 @@ abstract class LimberApplication<C : Config>(application: Application, protected
     install(ContentNegotiation) {
       val json = Json(prettyPrint = true)
       register(
-        contentType = ContentType.Application.Json,
-        converter = JacksonConverter(json.objectMapper)
+          contentType = ContentType.Application.Json,
+          converter = JacksonConverter(json.objectMapper)
       )
     }
   }

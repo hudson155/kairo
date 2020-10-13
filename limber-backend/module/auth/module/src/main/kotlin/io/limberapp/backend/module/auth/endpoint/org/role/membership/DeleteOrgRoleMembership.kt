@@ -12,16 +12,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteOrgRoleMembership @Inject constructor(
-  application: Application,
-  private val orgRoleMembershipService: OrgRoleMembershipService,
+    application: Application,
+    private val orgRoleMembershipService: OrgRoleMembershipService,
 ) : LimberApiEndpoint<OrgRoleMembershipApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = OrgRoleMembershipApi.Delete::class.template()
+    application = application,
+    endpointTemplate = OrgRoleMembershipApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgRoleMembershipApi.Delete(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid"),
-    accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid"),
+      accountGuid = call.parameters.getAsType(UUID::class, "accountGuid")
   )
 
   override suspend fun Handler.handle(command: OrgRoleMembershipApi.Delete) {

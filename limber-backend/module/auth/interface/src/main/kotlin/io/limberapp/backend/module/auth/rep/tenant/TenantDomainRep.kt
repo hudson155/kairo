@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 object TenantDomainRep {
   data class Creation(
-    val domain: String,
+      val domain: String,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::domain) { Validator.hostname(value) }
@@ -16,7 +16,7 @@ object TenantDomainRep {
   }
 
   data class Complete(
-    override val createdDate: LocalDateTime,
-    val domain: String,
+      override val createdDate: LocalDateTime,
+      val domain: String,
   ) : CompleteRep
 }

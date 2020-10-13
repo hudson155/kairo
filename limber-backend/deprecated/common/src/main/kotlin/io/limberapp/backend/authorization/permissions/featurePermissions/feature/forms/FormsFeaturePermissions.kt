@@ -8,7 +8,7 @@ import io.limberapp.util.darb.BitStringEncoder
  */
 private val ALL_FORMS_FEATURE_PERMISSIONS = with(FormsFeaturePermission.values()) {
   sortedBy { it.bit }
-    .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
+      .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
 }
 
 internal const val FORMS_FEATURE_PREFIX = 'F'
@@ -24,13 +24,13 @@ data class FormsFeaturePermissions(override val permissions: Set<FormsFeaturePer
     fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
     internal fun fromBooleanList(booleanList: List<Boolean>) = FormsFeaturePermissions(
-      permissions = ALL_FORMS_FEATURE_PERMISSIONS
-        .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
-        .toSet()
+        permissions = ALL_FORMS_FEATURE_PERMISSIONS
+            .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
+            .toSet()
     )
 
     fun Collection<FormsFeaturePermissions>.union() = FormsFeaturePermissions(
-      permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+        permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
     )
   }
 }

@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostOrgRoleMembershipTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgRoleDoesNotExist() {
@@ -30,9 +30,9 @@ internal class PostOrgRoleMembershipTest(
 
     test(expectError = OrgRoleNotFound().unprocessable()) {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleGuid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleGuid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
       ))
     }
   }
@@ -50,17 +50,17 @@ internal class PostOrgRoleMembershipTest(
     val orgRoleMembershipRep = OrgRoleMembershipRepFixtures.fixture.complete(this, accountGuid)
     setup {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
       ))
     }
 
     test(expectError = AccountIsAlreadyMemberOfOrgRole()) {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(accountGuid)
       ))
     }
 
@@ -84,18 +84,18 @@ internal class PostOrgRoleMembershipTest(
     orgRoleRep = orgRoleRep.copy(memberCount = orgRoleRep.memberCount + 1)
     test(expectResult = orgRoleMembership0Rep) {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(account0Guid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(account0Guid)
       ))
     }
     val orgRoleMembership1Rep = OrgRoleMembershipRepFixtures.fixture.complete(this, account1Guid)
     orgRoleRep = orgRoleRep.copy(memberCount = orgRoleRep.memberCount + 1)
     test(expectResult = orgRoleMembership1Rep) {
       orgRoleMembershipClient(OrgRoleMembershipApi.Post(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleMembershipRepFixtures.fixture.creation(account1Guid)
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleMembershipRepFixtures.fixture.creation(account1Guid)
       ))
     }
 

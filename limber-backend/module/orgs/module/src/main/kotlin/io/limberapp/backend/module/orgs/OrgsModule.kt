@@ -16,14 +16,14 @@ import io.limberapp.common.module.ApplicationModule
 
 class OrgsModule : ApplicationModule() {
   override val endpoints = listOf(
-    PostOrg::class.java,
-    GetOrg::class.java,
-    GetOrgByOwnerUserGuid::class.java,
-    PatchOrg::class.java,
-    DeleteOrg::class.java,
-    PostFeature::class.java,
-    PatchFeature::class.java,
-    DeleteFeature::class.java
+      PostOrg::class.java,
+      GetOrg::class.java,
+      GetOrgByOwnerUserGuid::class.java,
+      PatchOrg::class.java,
+      DeleteOrg::class.java,
+      PostFeature::class.java,
+      PatchFeature::class.java,
+      DeleteFeature::class.java
   )
 
   override fun bindServices() {

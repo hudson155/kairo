@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
 abstract class LimberIntegrationTestExtension :
-  BeforeAllCallback, BeforeEachCallback, ExtensionContext.Store.CloseableResource {
+    BeforeAllCallback, BeforeEachCallback, ExtensionContext.Store.CloseableResource {
   companion object {
     private val engine = TestApplicationEngine(createTestEnvironment())
     private var started = false

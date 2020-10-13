@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory
  * authentication.
  */
 internal class LimberAuthProvider<P : Principal> internal constructor(
-  private val config: LimberAuthConfig<P>,
+    private val config: LimberAuthConfig<P>,
 ) : AuthenticationProvider(config) {
   private val logger = LoggerFactory.getLogger(LimberAuthProvider::class.java)
 
@@ -30,12 +30,12 @@ internal class LimberAuthProvider<P : Principal> internal constructor(
 
   private fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(context: AuthenticationContext) {
     val token = call.request.parseAuthorizationHeaderOrNull()
-      ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
+        ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
 
     @Suppress("TooGenericExceptionCaught") // ktor-auth-jwt does this so we do it too.
     try {
       val principal = getPrincipal(token)
-        ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
+          ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
       context.principal(principal)
     } catch (e: Exception) {
       context.handleError(e)
@@ -56,11 +56,11 @@ internal class LimberAuthProvider<P : Principal> internal constructor(
   }
 
   private fun AuthenticationContext.bearerChallenge(
-    e: AuthenticationFailedCause,
+      e: AuthenticationFailedCause,
   ) = challenge(config.authKey, e) {
     val challenge = HttpAuthHeader.Parameterized(
-      authScheme = config.defaultScheme,
-      parameters = mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
+        authScheme = config.defaultScheme,
+        parameters = mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
     )
     call.respond(UnauthorizedResponse(challenge))
     if (!it.completed && call.response.status() != null) it.complete()

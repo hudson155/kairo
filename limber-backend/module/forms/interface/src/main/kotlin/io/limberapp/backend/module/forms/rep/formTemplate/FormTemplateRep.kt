@@ -11,8 +11,8 @@ import java.util.*
 
 object FormTemplateRep {
   data class Creation(
-    val title: String,
-    val description: String? = null,
+      val title: String,
+      val description: String? = null,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::title) { Validator.length1hundred(value, allowEmpty = false) }
@@ -21,23 +21,23 @@ object FormTemplateRep {
   }
 
   data class Summary(
-    val guid: UUID,
-    override val createdDate: LocalDateTime,
-    val title: String,
-    val description: String?,
+      val guid: UUID,
+      override val createdDate: LocalDateTime,
+      val title: String,
+      val description: String?,
   ) : CompleteRep
 
   data class Complete(
-    val guid: UUID,
-    override val createdDate: LocalDateTime,
-    val title: String,
-    val description: String?,
-    val questions: List<FormTemplateQuestionRep.Complete>,
+      val guid: UUID,
+      override val createdDate: LocalDateTime,
+      val title: String,
+      val description: String?,
+      val questions: List<FormTemplateQuestionRep.Complete>,
   ) : CompleteRep
 
   data class Update(
-    val title: String? = null,
-    val description: String? = null,
+      val title: String? = null,
+      val description: String? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::title) { ifPresent { Validator.length1hundred(value, allowEmpty = false) } }

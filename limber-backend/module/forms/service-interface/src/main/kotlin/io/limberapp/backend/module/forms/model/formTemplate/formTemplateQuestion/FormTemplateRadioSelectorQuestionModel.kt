@@ -5,20 +5,20 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class FormTemplateRadioSelectorQuestionModel(
-  override val guid: UUID,
-  override val createdDate: LocalDateTime,
-  override val formTemplateGuid: UUID,
-  override val label: String,
-  override val helpText: String?,
-  override val required: Boolean,
-  val options: List<String>,
+    override val guid: UUID,
+    override val createdDate: LocalDateTime,
+    override val formTemplateGuid: UUID,
+    override val label: String,
+    override val helpText: String?,
+    override val required: Boolean,
+    val options: List<String>,
 ) : FormTemplateQuestionModel {
   override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
 
   data class Update(
-    override val label: String?,
-    override val helpText: String?,
-    override val required: Boolean?,
-    val options: List<String>?,
+      override val label: String?,
+      override val helpText: String?,
+      override val required: Boolean?,
+      val options: List<String>?,
   ) : FormTemplateQuestionModel.Update
 }

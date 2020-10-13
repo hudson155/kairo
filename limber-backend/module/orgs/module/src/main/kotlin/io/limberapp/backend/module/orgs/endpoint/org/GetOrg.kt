@@ -15,16 +15,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetOrg @Inject constructor(
-  application: Application,
-  private val featureService: FeatureService,
-  private val orgService: OrgService,
-  private val orgMapper: OrgMapper,
+    application: Application,
+    private val featureService: FeatureService,
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.Get, OrgRep.Complete>(
-  application = application,
-  endpointTemplate = OrgApi.Get::class.template()
+    application = application,
+    endpointTemplate = OrgApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Get(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
   )
 
   override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {

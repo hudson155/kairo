@@ -13,15 +13,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PutUserRole @Inject constructor(
-  application: Application,
-  private val userService: UserService,
+    application: Application,
+    private val userService: UserService,
 ) : LimberApiEndpoint<UserRoleApi.Put, Unit>(
-  application = application,
-  endpointTemplate = UserRoleApi.Put::class.template()
+    application = application,
+    endpointTemplate = UserRoleApi.Put::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Put(
-    userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
-    role = call.parameters.getAsType(JwtRole::class, "role")
+      userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
+      role = call.parameters.getAsType(JwtRole::class, "role")
   )
 
   override suspend fun Handler.handle(command: UserRoleApi.Put) {

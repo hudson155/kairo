@@ -15,12 +15,12 @@ import io.limberapp.common.restInterface.template
 import org.slf4j.LoggerFactory
 
 internal class HealthCheck @Inject constructor(
-  application: Application,
-  private val healthCheckService: HealthCheckService,
-  private val healthCheckMapper: HealthCheckMapper,
+    application: Application,
+    private val healthCheckService: HealthCheckService,
+    private val healthCheckMapper: HealthCheckMapper,
 ) : LimberApiEndpoint<HealthCheckApi.Get, HealthCheckRep.Complete>(
-  application = application,
-  endpointTemplate = HealthCheckApi.Get::class.template()
+    application = application,
+    endpointTemplate = HealthCheckApi.Get::class.template()
 ) {
   private val logger = LoggerFactory.getLogger(HealthCheck::class.java)
 

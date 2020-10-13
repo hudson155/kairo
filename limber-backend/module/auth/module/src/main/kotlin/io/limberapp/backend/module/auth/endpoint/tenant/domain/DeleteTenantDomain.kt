@@ -12,15 +12,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteTenantDomain @Inject constructor(
-  application: Application,
-  private val tenantDomainService: TenantDomainService,
+    application: Application,
+    private val tenantDomainService: TenantDomainService,
 ) : LimberApiEndpoint<TenantDomainApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = TenantDomainApi.Delete::class.template()
+    application = application,
+    endpointTemplate = TenantDomainApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantDomainApi.Delete(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    domain = call.parameters.getAsType(String::class, "domain")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      domain = call.parameters.getAsType(String::class, "domain")
   )
 
   override suspend fun Handler.handle(command: TenantDomainApi.Delete) {

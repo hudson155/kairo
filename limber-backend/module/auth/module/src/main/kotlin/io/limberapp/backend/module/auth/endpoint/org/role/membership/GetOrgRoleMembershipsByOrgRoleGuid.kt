@@ -14,20 +14,20 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(
-  application: Application,
-  private val orgRoleMembershipService: OrgRoleMembershipService,
-  private val orgRoleMembershipMapper: OrgRoleMembershipMapper,
+    application: Application,
+    private val orgRoleMembershipService: OrgRoleMembershipService,
+    private val orgRoleMembershipMapper: OrgRoleMembershipMapper,
 ) : LimberApiEndpoint<OrgRoleMembershipApi.GetByOrgRoleGuid, Set<OrgRoleMembershipRep.Complete>>(
-  application = application,
-  endpointTemplate = OrgRoleMembershipApi.GetByOrgRoleGuid::class.template()
+    application = application,
+    endpointTemplate = OrgRoleMembershipApi.GetByOrgRoleGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgRoleMembershipApi.GetByOrgRoleGuid(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      orgRoleGuid = call.parameters.getAsType(UUID::class, "orgRoleGuid")
   )
 
   override suspend fun Handler.handle(
-    command: OrgRoleMembershipApi.GetByOrgRoleGuid,
+      command: OrgRoleMembershipApi.GetByOrgRoleGuid,
   ): Set<OrgRoleMembershipRep.Complete> {
     Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
     val orgRoleMemberships = orgRoleMembershipService.findAsSet {

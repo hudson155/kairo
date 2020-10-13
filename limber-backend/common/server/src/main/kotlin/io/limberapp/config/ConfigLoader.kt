@@ -9,7 +9,7 @@ object ConfigLoader {
 
   inline fun <reified C : Config> load(configName: String): C {
     val stream = this.javaClass.getResourceAsStream("/config/$configName.yaml")
-      ?: error("Config $configName not found.")
+        ?: error("Config $configName not found.")
     return objectMapper.readValue(stream, C::class.java)
   }
 }

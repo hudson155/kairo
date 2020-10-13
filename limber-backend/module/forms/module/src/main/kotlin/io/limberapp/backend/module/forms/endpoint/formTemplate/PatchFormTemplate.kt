@@ -14,29 +14,29 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchFormTemplate @Inject constructor(
-  application: Application,
-  private val formTemplateService: FormTemplateService,
-  private val formTemplateMapper: FormTemplateMapper,
+    application: Application,
+    private val formTemplateService: FormTemplateService,
+    private val formTemplateMapper: FormTemplateMapper,
 ) : LimberApiEndpoint<FormTemplateApi.Patch, FormTemplateRep.Summary>(
-  application = application,
-  endpointTemplate = FormTemplateApi.Patch::class.template()
+    application = application,
+    endpointTemplate = FormTemplateApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateApi.Patch(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
-    rep = call.getAndValidateBody()
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.Patch): FormTemplateRep.Summary {
     val rep = command.rep.required()
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
+        featureGuid = command.featureGuid,
+        featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
     ).authorize()
     val formTemplate = formTemplateService.update(
-      featureGuid = command.featureGuid,
-      formTemplateGuid = command.formTemplateGuid,
-      update = formTemplateMapper.update(rep)
+        featureGuid = command.featureGuid,
+        formTemplateGuid = command.formTemplateGuid,
+        update = formTemplateMapper.update(rep)
     )
     return formTemplateMapper.summaryRep(formTemplate)
   }

@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class TenantDomainModel(
-  val createdDate: LocalDateTime,
-  val orgGuid: UUID,
-  val domain: String,
+    val createdDate: LocalDateTime,
+    val orgGuid: UUID,
+    val domain: String,
 )

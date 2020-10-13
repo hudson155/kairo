@@ -38,45 +38,45 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQ
 
 @Singleton
 internal class FormInstanceQuestionStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormInstanceQuestionModel, FormInstanceQuestionFinder> {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
 
   fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/formInstanceQuestion/upsert.sql"))
-          .bind("featureGuid", featureGuid)
-          .bindKotlin(model)
-          .bindNullForMissingArguments()
-          .mapTo(FormInstanceQuestionModel::class.java)
-          .singleNullOrThrow()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
-      } ?: throw FormInstanceQuestionNotFound()
-    }
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/formInstanceQuestion/upsert.sql"))
+              .bind("featureGuid", featureGuid)
+              .bindKotlin(model)
+              .bindNullForMissingArguments()
+              .mapTo(FormInstanceQuestionModel::class.java)
+              .singleNullOrThrow()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        } ?: throw FormInstanceQuestionNotFound()
+      }
 
   override fun <R> find(
-    result: (Iterable<FormInstanceQuestionModel>) -> R,
-    query: FormInstanceQuestionFinder.() -> Unit,
+      result: (Iterable<FormInstanceQuestionModel>) -> R,
+      query: FormInstanceQuestionFinder.() -> Unit,
   ) =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formInstanceQuestion/find.sql"))
-        .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
-        .mapTo(FormInstanceQuestionModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formInstanceQuestion/find.sql"))
+            .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
+            .mapTo(FormInstanceQuestionModel::class.java)
+            .let(result)
+      }
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formInstanceGuid", formInstanceGuid)
-        .bind("questionGuid", questionGuid)
-        .updateOnly() ?: throw FormInstanceQuestionNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/formInstanceQuestion/delete.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formInstanceGuid", formInstanceGuid)
+            .bind("questionGuid", questionGuid)
+            .updateOnly() ?: throw FormInstanceQuestionNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

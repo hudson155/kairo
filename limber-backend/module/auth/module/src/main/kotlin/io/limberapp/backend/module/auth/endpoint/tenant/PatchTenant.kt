@@ -15,17 +15,17 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchTenant @Inject constructor(
-  application: Application,
-  private val tenantService: TenantService,
-  private val tenantDomainService: TenantDomainService,
-  private val tenantMapper: TenantMapper,
+    application: Application,
+    private val tenantService: TenantService,
+    private val tenantDomainService: TenantDomainService,
+    private val tenantMapper: TenantMapper,
 ) : LimberApiEndpoint<TenantApi.Patch, TenantRep.Complete>(
-  application = application,
-  endpointTemplate = TenantApi.Patch::class.template()
+    application = application,
+    endpointTemplate = TenantApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Patch(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    rep = call.getAndValidateBody()
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: TenantApi.Patch): TenantRep.Complete {

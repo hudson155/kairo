@@ -20,5 +20,5 @@ class DeterministicUuidGenerator : UuidGenerator {
   }
 
   operator fun get(i: Int): UUID =
-    UUID.nameUUIDFromBytes(ByteBuffer.allocate(Int.SIZE_BYTES).apply { putInt(i) }.array())
+      UUID.nameUUIDFromBytes(ByteBuffer.allocate(Int.SIZE_BYTES).apply { putInt(i) }.array())
 }

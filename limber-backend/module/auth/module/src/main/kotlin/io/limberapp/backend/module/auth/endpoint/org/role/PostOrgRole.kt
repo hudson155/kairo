@@ -14,16 +14,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostOrgRole @Inject constructor(
-  application: Application,
-  private val orgRoleService: OrgRoleService,
-  private val orgRoleMapper: OrgRoleMapper,
+    application: Application,
+    private val orgRoleService: OrgRoleService,
+    private val orgRoleMapper: OrgRoleMapper,
 ) : LimberApiEndpoint<OrgRoleApi.Post, OrgRoleRep.Complete>(
-  application = application,
-  endpointTemplate = OrgRoleApi.Post::class.template()
+    application = application,
+    endpointTemplate = OrgRoleApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgRoleApi.Post(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    rep = call.getAndValidateBody()
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: OrgRoleApi.Post): OrgRoleRep.Complete {

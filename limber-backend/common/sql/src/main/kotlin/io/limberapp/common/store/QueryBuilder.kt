@@ -62,6 +62,6 @@ abstract class QueryBuilder {
 }
 
 fun <S : SqlStatement<S>> S.withFinder(query: QueryBuilder): S = this
-  .define("conditions", query.conditions.toString())
-  .define("sort", query.sorts.toString())
-  .bind(query.bindings)
+    .define("conditions", query.conditions.toString())
+    .define("sort", query.sorts.toString())
+    .bind(query.bindings)

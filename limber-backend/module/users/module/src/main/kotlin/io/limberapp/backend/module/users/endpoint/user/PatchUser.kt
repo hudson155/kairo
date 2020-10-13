@@ -14,16 +14,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchUser @Inject constructor(
-  application: Application,
-  private val userService: UserService,
-  private val userMapper: UserMapper,
+    application: Application,
+    private val userService: UserService,
+    private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.Patch, UserRep.Complete>(
-  application = application,
-  endpointTemplate = UserApi.Patch::class.template()
+    application = application,
+    endpointTemplate = UserApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserApi.Patch(
-    userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
-    rep = call.getAndValidateBody()
+      userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: UserApi.Patch): UserRep.Complete {

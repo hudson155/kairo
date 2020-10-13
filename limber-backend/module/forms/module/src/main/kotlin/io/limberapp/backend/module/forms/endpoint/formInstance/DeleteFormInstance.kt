@@ -13,15 +13,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteFormInstance @Inject constructor(
-  application: Application,
-  private val formInstanceService: FormInstanceService,
+    application: Application,
+    private val formInstanceService: FormInstanceService,
 ) : LimberApiEndpoint<FormInstanceApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = FormInstanceApi.Delete::class.template()
+    application = application,
+    endpointTemplate = FormInstanceApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Delete(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid")
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Delete) {
@@ -30,11 +30,11 @@ internal class DeleteFormInstance @Inject constructor(
       formInstanceGuid(command.formInstanceGuid)
     } ?: throw FormInstanceNotFound()
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = when (formInstance.creatorAccountGuid) {
-        principal?.user?.guid -> FormsFeaturePermission.DELETE_OWN_FORM_INSTANCES
-        else -> FormsFeaturePermission.DELETE_OTHERS_FORM_INSTANCES
-      }
+        featureGuid = command.featureGuid,
+        featurePermission = when (formInstance.creatorAccountGuid) {
+          principal?.user?.guid -> FormsFeaturePermission.DELETE_OWN_FORM_INSTANCES
+          else -> FormsFeaturePermission.DELETE_OTHERS_FORM_INSTANCES
+        }
     ).authorize()
     formInstanceService.delete(command.featureGuid, command.formInstanceGuid)
   }

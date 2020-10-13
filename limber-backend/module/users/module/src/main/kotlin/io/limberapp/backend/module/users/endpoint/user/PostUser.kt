@@ -13,15 +13,15 @@ import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.restInterface.template
 
 internal class PostUser @Inject constructor(
-  application: Application,
-  private val userService: UserService,
-  private val userMapper: UserMapper,
+    application: Application,
+    private val userService: UserService,
+    private val userMapper: UserMapper,
 ) : LimberApiEndpoint<UserApi.Post, UserRep.Complete>(
-  application = application,
-  endpointTemplate = UserApi.Post::class.template()
+    application = application,
+    endpointTemplate = UserApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserApi.Post(
-    rep = call.getAndValidateBody()
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: UserApi.Post): UserRep.Complete {

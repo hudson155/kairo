@@ -12,14 +12,14 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteOrg @Inject constructor(
-  application: Application,
-  private val orgService: OrgService,
+    application: Application,
+    private val orgService: OrgService,
 ) : LimberApiEndpoint<OrgApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = OrgApi.Delete::class.template()
+    application = application,
+    endpointTemplate = OrgApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Delete(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
   )
 
   override suspend fun Handler.handle(command: OrgApi.Delete) {

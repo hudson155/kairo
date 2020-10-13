@@ -15,24 +15,24 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostFormInstance @Inject constructor(
-  application: Application,
-  private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionService: FormInstanceQuestionService,
-  private val formInstanceMapper: FormInstanceMapper,
+    application: Application,
+    private val formInstanceService: FormInstanceService,
+    private val formInstanceQuestionService: FormInstanceQuestionService,
+    private val formInstanceMapper: FormInstanceMapper,
 ) : LimberApiEndpoint<FormInstanceApi.Post, FormInstanceRep.Complete>(
-  application = application,
-  endpointTemplate = FormInstanceApi.Post::class.template()
+    application = application,
+    endpointTemplate = FormInstanceApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceApi.Post(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    rep = call.getAndValidateBody()
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Post): FormInstanceRep.Complete {
     val rep = command.rep.required()
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = FormsFeaturePermission.CREATE_FORM_INSTANCES
+        featureGuid = command.featureGuid,
+        featurePermission = FormsFeaturePermission.CREATE_FORM_INSTANCES
     ).authorize()
     Authorization.User(rep.creatorAccountGuid).authorize()
     val formInstance = formInstanceService.create(formInstanceMapper.model(command.featureGuid, rep))

@@ -13,14 +13,14 @@ import io.limberapp.common.restInterface.LimberEndpoint
 
 @OptIn(KtorExperimentalAPI::class)
 class LimberHttpClientImpl(
-  private val baseUrl: String,
-  private val rootBuilder: LimberHttpClientRequestBuilder.() -> Unit,
+    private val baseUrl: String,
+    private val rootBuilder: LimberHttpClientRequestBuilder.() -> Unit,
 ) : LimberHttpClient() {
   private val httpClient = HttpClient(CIO)
 
   override suspend fun request(
-    endpoint: LimberEndpoint,
-    builder: LimberHttpClientRequestBuilder.() -> Unit,
+      endpoint: LimberEndpoint,
+      builder: LimberHttpClientRequestBuilder.() -> Unit,
   ): Pair<HttpStatusCode, String> {
     val httpResponse = httpClient.request<HttpResponse> {
       method = endpoint.httpMethod

@@ -49,10 +49,10 @@ internal fun Adhoc.onboard() {
     private fun createOrg(injector: Injector): UUID {
       val orgService = injector.getInstance(OrgService::class.java)
       return orgService.create(OrgModel(
-        guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(),
-        name = OnboardArgs.orgName,
-        ownerUserGuid = null,
+          guid = UUID.randomUUID(),
+          createdDate = LocalDateTime.now(),
+          name = OnboardArgs.orgName,
+          ownerUserGuid = null,
       )).guid
     }
 
@@ -60,10 +60,10 @@ internal fun Adhoc.onboard() {
     private fun createTenant(injector: Injector, orgGuid: UUID) {
       val tenantService = injector.getInstance(TenantService::class.java)
       tenantService.create(TenantModel(
-        createdDate = LocalDateTime.now(),
-        orgGuid = orgGuid,
-        name = OnboardArgs.orgName,
-        auth0ClientId = OnboardArgs.auth0ClientId,
+          createdDate = LocalDateTime.now(),
+          orgGuid = orgGuid,
+          name = OnboardArgs.orgName,
+          auth0ClientId = OnboardArgs.auth0ClientId,
       ))
     }
 
@@ -71,9 +71,9 @@ internal fun Adhoc.onboard() {
     private fun createTenantDomain(injector: Injector, orgGuid: UUID) {
       val tenantDomainService = injector.getInstance(TenantDomainService::class.java)
       tenantDomainService.create(TenantDomainModel(
-        createdDate = LocalDateTime.now(),
-        orgGuid = orgGuid,
-        domain = OnboardArgs.orgDomain,
+          createdDate = LocalDateTime.now(),
+          orgGuid = orgGuid,
+          domain = OnboardArgs.orgDomain,
       ))
     }
 
@@ -81,22 +81,22 @@ internal fun Adhoc.onboard() {
     private fun createOrgRoles(injector: Injector, orgGuid: UUID) {
       val orgRoleService = injector.getInstance(OrgRoleService::class.java)
       orgRoleService.create(OrgRoleModel(
-        guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(),
-        orgGuid = orgGuid,
-        name = "Members",
-        permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
-        isDefault = true,
-        memberCount = 0,
+          guid = UUID.randomUUID(),
+          createdDate = LocalDateTime.now(),
+          orgGuid = orgGuid,
+          name = "Members",
+          permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
+          isDefault = true,
+          memberCount = 0,
       ))
       orgRoleService.create(OrgRoleModel(
-        guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(),
-        orgGuid = orgGuid,
-        name = "Managers",
-        permissions = OrgPermissions.none(),
-        isDefault = false,
-        memberCount = 0,
+          guid = UUID.randomUUID(),
+          createdDate = LocalDateTime.now(),
+          orgGuid = orgGuid,
+          name = "Managers",
+          permissions = OrgPermissions.none(),
+          isDefault = false,
+          memberCount = 0,
       ))
     }
   }

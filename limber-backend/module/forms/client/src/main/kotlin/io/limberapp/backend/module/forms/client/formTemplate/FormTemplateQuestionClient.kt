@@ -7,22 +7,22 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 
 class FormTemplateQuestionClient(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
-    endpoint: FormTemplateQuestionApi.Post,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FormTemplateQuestionApi.Post,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     parse<FormTemplateQuestionRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
-    endpoint: FormTemplateQuestionApi.Patch,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FormTemplateQuestionApi.Patch,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<FormTemplateQuestionRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: FormTemplateQuestionApi.Delete,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FormTemplateQuestionApi.Delete,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<Unit>(it) }
   }

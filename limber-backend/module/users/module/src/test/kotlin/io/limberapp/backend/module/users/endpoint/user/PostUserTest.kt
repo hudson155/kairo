@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostUserTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun duplicateEmailAddress() {
@@ -24,8 +24,8 @@ internal class PostUserTest(
 
     test(expectError = EmailAddressAlreadyTaken()) {
       userClient(UserApi.Post(
-        rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
-          .copy(emailAddress = jeffHudsonUserRep.emailAddress)
+          rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
+              .copy(emailAddress = jeffHudsonUserRep.emailAddress)
       ))
     }
   }

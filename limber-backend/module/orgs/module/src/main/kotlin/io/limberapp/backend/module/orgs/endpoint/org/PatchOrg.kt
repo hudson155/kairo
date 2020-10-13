@@ -15,17 +15,17 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchOrg @Inject constructor(
-  application: Application,
-  private val featureService: FeatureService,
-  private val orgService: OrgService,
-  private val orgMapper: OrgMapper,
+    application: Application,
+    private val featureService: FeatureService,
+    private val orgService: OrgService,
+    private val orgMapper: OrgMapper,
 ) : LimberApiEndpoint<OrgApi.Patch, OrgRep.Complete>(
-  application = application,
-  endpointTemplate = OrgApi.Patch::class.template()
+    application = application,
+    endpointTemplate = OrgApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgApi.Patch(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    rep = call.getAndValidateBody()
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: OrgApi.Patch): OrgRep.Complete {

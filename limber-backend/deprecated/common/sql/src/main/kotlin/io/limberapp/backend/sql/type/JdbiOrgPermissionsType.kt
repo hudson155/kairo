@@ -16,8 +16,8 @@ internal object JdbiOrgPermissionsType : JdbiType<OrgPermissions>() {
   }
 
   override val argumentFactory: AbstractArgumentFactory<OrgPermissions> =
-    object : AbstractArgumentFactory<OrgPermissions>(Types.VARCHAR) {
-      override fun build(value: OrgPermissions, config: ConfigRegistry): Argument =
-        Argument { position, statement, _ -> statement.setString(position, value.asBitString()) }
-    }
+      object : AbstractArgumentFactory<OrgPermissions>(Types.VARCHAR) {
+        override fun build(value: OrgPermissions, config: ConfigRegistry): Argument =
+            Argument { position, statement, _ -> statement.setString(position, value.asBitString()) }
+      }
 }

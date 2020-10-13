@@ -14,16 +14,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PostFeature @Inject constructor(
-  application: Application,
-  private val featureService: FeatureService,
-  private val featureMapper: FeatureMapper,
+    application: Application,
+    private val featureService: FeatureService,
+    private val featureMapper: FeatureMapper,
 ) : LimberApiEndpoint<FeatureApi.Post, FeatureRep.Complete>(
-  application = application,
-  endpointTemplate = FeatureApi.Post::class.template()
+    application = application,
+    endpointTemplate = FeatureApi.Post::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FeatureApi.Post(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    rep = call.getAndValidateBody()
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FeatureApi.Post): FeatureRep.Complete {

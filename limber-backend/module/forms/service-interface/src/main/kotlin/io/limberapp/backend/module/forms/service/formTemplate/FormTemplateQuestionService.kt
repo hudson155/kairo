@@ -11,10 +11,10 @@ interface FormTemplateQuestionService : Finder<FormTemplateQuestionModel, FormTe
   fun create(featureGuid: UUID, model: FormTemplateQuestionModel, rank: Int? = null): FormTemplateQuestionModel
 
   fun update(
-    featureGuid: UUID,
-    formTemplateGuid: UUID,
-    questionGuid: UUID,
-    update: FormTemplateQuestionModel.Update,
+      featureGuid: UUID,
+      formTemplateGuid: UUID,
+      questionGuid: UUID,
+      update: FormTemplateQuestionModel.Update,
   ): FormTemplateQuestionModel
 
   fun delete(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID)

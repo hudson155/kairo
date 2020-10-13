@@ -24,8 +24,8 @@ class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : Lim
   private val json = Json(prettyPrint = true)
 
   override suspend fun request(
-    endpoint: LimberEndpoint,
-    builder: LimberHttpClientRequestBuilder.() -> Unit,
+      endpoint: LimberEndpoint,
+      builder: LimberHttpClientRequestBuilder.() -> Unit,
   ): Pair<HttpStatusCode, String> {
     val call = engine.handleRequest(endpoint.httpMethod, endpoint.href) {
       val requestBuilder = LimberHttpClientRequestBuilder(accept = endpoint.contentType).apply {
@@ -41,9 +41,9 @@ class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : Lim
 
   private fun createAuthHeader(): HttpAuthHeader? {
     val jwt = JWT.create().withJwt(Jwt(
-      org = null,
-      roles = setOf(JwtRole.SUPERUSER),
-      user = JwtUser(UUID.randomUUID(), null, null)
+        org = null,
+        roles = setOf(JwtRole.SUPERUSER),
+        user = JwtUser(UUID.randomUUID(), null, null)
     )).sign(Algorithm.none())
     return HttpAuthHeader.Single("Bearer", jwt)
   }

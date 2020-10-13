@@ -19,60 +19,60 @@ private const val UNIQ_AUTH0_CLIENT_ID = "uniq__tenant__auth0_client_id"
 @Singleton
 internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantModel): TenantModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/tenant/create.sql"))
-          .bindKotlin(model)
-          .mapTo(TenantModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/tenant/create.sql"))
+              .bindKotlin(model)
+              .mapTo(TenantModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   fun get(orgGuid: UUID): TenantModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/get.sql"))
-        .bind("orgGuid", orgGuid)
-        .mapTo(TenantModel::class.java)
-        .singleNullOrThrow()
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/tenant/get.sql"))
+            .bind("orgGuid", orgGuid)
+            .mapTo(TenantModel::class.java)
+            .singleNullOrThrow()
+      }
 
   fun getByAuth0ClientId(auth0ClientId: String): TenantModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/getByAuth0ClientId.sql"))
-        .bind("auth0ClientId", auth0ClientId)
-        .mapTo(TenantModel::class.java)
-        .singleNullOrThrow()
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/tenant/getByAuth0ClientId.sql"))
+            .bind("auth0ClientId", auth0ClientId)
+            .mapTo(TenantModel::class.java)
+            .singleNullOrThrow()
+      }
 
   fun getByDomain(domain: String): TenantModel? =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenant/getByDomain.sql"))
-        .bind("domain", domain)
-        .mapTo(TenantModel::class.java)
-        .singleNullOrThrow()
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/tenant/getByDomain.sql"))
+            .bind("domain", domain)
+            .mapTo(TenantModel::class.java)
+            .singleNullOrThrow()
+      }
 
   fun update(orgGuid: UUID, update: TenantModel.Update): TenantModel =
-    inTransaction { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/tenant/update.sql"))
-          .bind("orgGuid", orgGuid)
-          .bindKotlin(update)
-          .mapTo(TenantModel::class.java)
-          .singleNullOrThrow()
-      } catch (e: UnableToExecuteStatementException) {
-        handleUpdateError(e)
-      } ?: throw TenantNotFound()
-    }
+      inTransaction { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/tenant/update.sql"))
+              .bind("orgGuid", orgGuid)
+              .bindKotlin(update)
+              .mapTo(TenantModel::class.java)
+              .singleNullOrThrow()
+        } catch (e: UnableToExecuteStatementException) {
+          handleUpdateError(e)
+        } ?: throw TenantNotFound()
+      }
 
   fun delete(orgGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
-        .bind("orgGuid", orgGuid)
-        .updateOnly() ?: throw TenantNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/tenant/delete.sql"))
+            .bind("orgGuid", orgGuid)
+            .updateOnly() ?: throw TenantNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

@@ -7,11 +7,11 @@ import io.ktor.auth.Principal
  * Configuration for how to verify [Principal]s using one or more [LimberAuthVerifier]s.
  */
 class LimberAuthConfig<P : Principal> private constructor(
-  name: String?,
-  val defaultScheme: String,
-  val verifiers: Map<String, LimberAuthVerifier<P>>,
-  val authKey: String,
-  val realm: String,
+    name: String?,
+    val defaultScheme: String,
+    val verifiers: Map<String, LimberAuthVerifier<P>>,
+    val authKey: String,
+    val realm: String,
 ) : AuthenticationProvider.Configuration(name) {
   class Builder<P : Principal>(private val name: String?) {
     /**
@@ -55,11 +55,11 @@ class LimberAuthConfig<P : Principal> private constructor(
     }
 
     fun build(): LimberAuthConfig<P> = LimberAuthConfig(
-      name = name,
-      defaultScheme = requireNotNull(defaultScheme),
-      verifiers = verifiers,
-      authKey = authKey,
-      realm = realm
+        name = name,
+        defaultScheme = requireNotNull(defaultScheme),
+        verifiers = verifiers,
+        authKey = authKey,
+        realm = realm
     )
   }
 }

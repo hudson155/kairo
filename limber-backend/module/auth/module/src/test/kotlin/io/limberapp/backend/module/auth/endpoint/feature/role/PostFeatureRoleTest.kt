@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostFeatureRoleTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun duplicateFeatureRoleGuid() {
@@ -31,8 +31,8 @@ internal class PostFeatureRoleTest(
 
     test(expectError = FeatureRoleOrgRoleIsNotUnique()) {
       featureRoleClient(FeatureRoleApi.Post(
-        featureGuid = featureGuid,
-        rep = FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)
+          featureGuid = featureGuid,
+          rep = FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)
       ))
     }
 

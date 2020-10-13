@@ -23,14 +23,14 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
   private val providers = authenticationConfig.mechanisms.associate { mechanism ->
     val provider = when (mechanism) {
       is AuthenticationMechanism.Jwk -> UrlJwtVerifierProvider(
-        domain = mechanism.domain,
-        leeway = mechanism.leeway
+          domain = mechanism.domain,
+          leeway = mechanism.leeway
       )
       is AuthenticationMechanism.Jwt -> StaticJwtVerifierProvider(
-        jwtVerifier = JWT.require(Algorithm.HMAC256(mechanism.secret)).acceptLeeway(mechanism.leeway).build()
+          jwtVerifier = JWT.require(Algorithm.HMAC256(mechanism.secret)).acceptLeeway(mechanism.leeway).build()
       )
       is AuthenticationMechanism.UnsignedJwt -> StaticJwtVerifierProvider(
-        jwtVerifier = JWT.require(Algorithm.none()).acceptLeeway(mechanism.leeway).build()
+          jwtVerifier = JWT.require(Algorithm.none()).acceptLeeway(mechanism.leeway).build()
       )
     }
     return@associate Pair(mechanism.issuer, provider)
@@ -44,12 +44,12 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
       null
     } ?: return null
     return Jwt(
-      org = decodedJwt.getClaim(Claims.org).asString()
-        ?.let { json.parse<JwtOrg>(it) },
-      roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString())
-        .let { json.parseSet<JwtRole>(it) },
-      user = decodedJwt.getClaim(Claims.user).asString()
-        ?.let { json.parse<JwtUser>(it) }
+        org = decodedJwt.getClaim(Claims.org).asString()
+            ?.let { json.parse<JwtOrg>(it) },
+        roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString())
+            .let { json.parseSet<JwtRole>(it) },
+        user = decodedJwt.getClaim(Claims.user).asString()
+            ?.let { json.parse<JwtUser>(it) }
     )
   }
 

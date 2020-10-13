@@ -15,7 +15,7 @@ import io.limberapp.util.darb.DarbEncoder
  */
 private val ALL_ORG_PERMISSIONS = with(OrgPermission.values()) {
   sortedBy { it.bit }
-    .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
+      .apply { check(this@apply.map { it.bit } == this@with.indices.map { it }) }
 }
 
 /**
@@ -35,13 +35,13 @@ data class OrgPermissions(override val permissions: Set<OrgPermission>) : Permis
     fun fromBitString(bitString: String) = fromBooleanList(BitStringEncoder.decode(bitString))
 
     private fun fromBooleanList(booleanList: List<Boolean>) = OrgPermissions(
-      permissions = ALL_ORG_PERMISSIONS
-        .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
-        .toSet()
+        permissions = ALL_ORG_PERMISSIONS
+            .filterIndexed { i, _ -> booleanList.getOrNull(i) == true }
+            .toSet()
     )
 
     fun Collection<OrgPermissions>.union() = OrgPermissions(
-      permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
+        permissions = fold(emptySet()) { acc, permissions -> acc.union(permissions.permissions) }
     )
   }
 

@@ -14,15 +14,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetOrgRolesByOrgGuid @Inject constructor(
-  application: Application,
-  private val orgRoleService: OrgRoleService,
-  private val orgRoleMapper: OrgRoleMapper,
+    application: Application,
+    private val orgRoleService: OrgRoleService,
+    private val orgRoleMapper: OrgRoleMapper,
 ) : LimberApiEndpoint<OrgRoleApi.GetByOrgGuid, Set<OrgRoleRep.Complete>>(
-  application = application,
-  endpointTemplate = OrgRoleApi.GetByOrgGuid::class.template()
+    application = application,
+    endpointTemplate = OrgRoleApi.GetByOrgGuid::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = OrgRoleApi.GetByOrgGuid(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
   )
 
   override suspend fun Handler.handle(command: OrgRoleApi.GetByOrgGuid): Set<OrgRoleRep.Complete> {

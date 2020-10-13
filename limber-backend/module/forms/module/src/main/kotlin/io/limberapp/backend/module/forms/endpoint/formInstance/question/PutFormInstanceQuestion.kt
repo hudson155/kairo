@@ -17,19 +17,19 @@ import io.limberapp.exception.unprocessableEntity.unprocessable
 import java.util.*
 
 internal class PutFormInstanceQuestion @Inject constructor(
-  application: Application,
-  private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionService: FormInstanceQuestionService,
-  private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
+    application: Application,
+    private val formInstanceService: FormInstanceService,
+    private val formInstanceQuestionService: FormInstanceQuestionService,
+    private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
 ) : LimberApiEndpoint<FormInstanceQuestionApi.Put, FormInstanceQuestionRep.Complete>(
-  application = application,
-  endpointTemplate = FormInstanceQuestionApi.Put::class.template()
+    application = application,
+    endpointTemplate = FormInstanceQuestionApi.Put::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormInstanceQuestionApi.Put(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
-    questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
-    rep = call.getAndValidateBody()
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      formInstanceGuid = call.parameters.getAsType(UUID::class, "formInstanceGuid"),
+      questionGuid = call.parameters.getAsType(UUID::class, "questionGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
@@ -39,16 +39,16 @@ internal class PutFormInstanceQuestion @Inject constructor(
       formInstanceGuid(command.formInstanceGuid)
     } ?: throw FormInstanceNotFound().unprocessable()
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = when (formInstance.creatorAccountGuid) {
-        principal?.user?.guid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
-        else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
-      }
+        featureGuid = command.featureGuid,
+        featurePermission = when (formInstance.creatorAccountGuid) {
+          principal?.user?.guid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
+          else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
+        }
     ).authorize()
     if (formInstance.submittedDate == null) Authorization.User(formInstance.creatorAccountGuid).authorize()
     val formInstanceQuestion = formInstanceQuestionService.upsert(
-      featureGuid = command.featureGuid,
-      model = formInstanceQuestionMapper.model(command.formInstanceGuid, command.questionGuid, rep)
+        featureGuid = command.featureGuid,
+        model = formInstanceQuestionMapper.model(command.formInstanceGuid, command.questionGuid, rep)
     )
     return formInstanceQuestionMapper.completeRep(formInstanceQuestion)
   }

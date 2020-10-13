@@ -12,4 +12,4 @@ private object NullArgumentFinder : NamedArgumentFinder {
 }
 
 fun <This : SqlStatement<This>> SqlStatement<This>.bindNullForMissingArguments(): This =
-  bindNamedArgumentFinder(NullArgumentFinder)
+    bindNamedArgumentFinder(NullArgumentFinder)

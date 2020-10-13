@@ -10,41 +10,41 @@ import java.time.LocalDateTime
 import java.util.*
 
 internal class FormInstanceMapper @Inject constructor(
-  private val clock: Clock,
-  private val uuidGenerator: UuidGenerator,
-  private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
+    private val clock: Clock,
+    private val uuidGenerator: UuidGenerator,
+    private val formInstanceQuestionMapper: FormInstanceQuestionMapper,
 ) {
   fun model(featureGuid: UUID, rep: FormInstanceRep.Creation) = FormInstanceModel(
-    guid = uuidGenerator.generate(),
-    createdDate = LocalDateTime.now(clock),
-    featureGuid = featureGuid,
-    formTemplateGuid = rep.formTemplateGuid,
-    number = null,
-    submittedDate = null,
-    creatorAccountGuid = rep.creatorAccountGuid
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      featureGuid = featureGuid,
+      formTemplateGuid = rep.formTemplateGuid,
+      number = null,
+      submittedDate = null,
+      creatorAccountGuid = rep.creatorAccountGuid
   )
 
   fun summaryRep(model: FormInstanceModel) = FormInstanceRep.Summary(
-    guid = model.guid,
-    createdDate = model.createdDate,
-    formTemplateGuid = model.formTemplateGuid,
-    number = model.number,
-    submittedDate = model.submittedDate,
-    creatorAccountGuid = model.creatorAccountGuid
+      guid = model.guid,
+      createdDate = model.createdDate,
+      formTemplateGuid = model.formTemplateGuid,
+      number = model.number,
+      submittedDate = model.submittedDate,
+      creatorAccountGuid = model.creatorAccountGuid
   )
 
   fun completeRep(model: FormInstanceModel, questions: Set<FormInstanceQuestionModel>) = FormInstanceRep.Complete(
-    guid = model.guid,
-    createdDate = model.createdDate,
-    formTemplateGuid = model.formTemplateGuid,
-    number = model.number,
-    submittedDate = model.submittedDate,
-    creatorAccountGuid = model.creatorAccountGuid,
-    questions = questions.map { formInstanceQuestionMapper.completeRep(it) }.toSet()
+      guid = model.guid,
+      createdDate = model.createdDate,
+      formTemplateGuid = model.formTemplateGuid,
+      number = model.number,
+      submittedDate = model.submittedDate,
+      creatorAccountGuid = model.creatorAccountGuid,
+      questions = questions.map { formInstanceQuestionMapper.completeRep(it) }.toSet()
   )
 
   fun update(rep: FormInstanceRep.Update) = FormInstanceModel.Update(
-    setNumber = rep.submitted == true,
-    submittedDate = if (rep.submitted == true) LocalDateTime.now(clock) else null
+      setNumber = rep.submitted == true,
+      submittedDate = if (rep.submitted == true) LocalDateTime.now(clock) else null
   )
 }

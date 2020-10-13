@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class DeleteFormTemplateQuestionTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun formTemplateDoesNotExist() {
@@ -53,18 +53,18 @@ internal class DeleteFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
     test(expectResult = null) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Delete(
-        featureGuid = UUID.randomUUID(),
-        formTemplateGuid = formTemplateRep.guid,
-        questionGuid = formTemplateQuestionRep.guid
+          featureGuid = UUID.randomUUID(),
+          formTemplateGuid = formTemplateRep.guid,
+          questionGuid = formTemplateQuestionRep.guid
       ))
     }
 
@@ -86,18 +86,18 @@ internal class DeleteFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
     test(expectResult = null) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Delete(
-        featureGuid = featureGuid,
-        formTemplateGuid = UUID.randomUUID(),
-        questionGuid = formTemplateQuestionRep.guid
+          featureGuid = featureGuid,
+          formTemplateGuid = UUID.randomUUID(),
+          questionGuid = formTemplateQuestionRep.guid
       ))
     }
 
@@ -119,21 +119,21 @@ internal class DeleteFormTemplateQuestionTest(
     formTemplateRep = formTemplateRep.copy(questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions)
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions.filter { it.guid != formTemplateQuestionRep.guid }
+        questions = formTemplateRep.questions.filter { it.guid != formTemplateQuestionRep.guid }
     )
     test(expectResult = Unit) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Delete(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        questionGuid = formTemplateQuestionRep.guid
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          questionGuid = formTemplateQuestionRep.guid
       ))
     }
 

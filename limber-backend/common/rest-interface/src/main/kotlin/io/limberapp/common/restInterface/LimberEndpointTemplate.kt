@@ -8,8 +8,8 @@ import io.ktor.http.HttpMethod
  * the required query parameters.
  */
 data class LimberEndpointTemplate(
-  val httpMethod: HttpMethod,
-  val pathTemplate: String,
-  val requiredQueryParams: Set<String>,
-  val contentType: ContentType,
+    val httpMethod: HttpMethod,
+    val pathTemplate: String,
+    val requiredQueryParams: Set<String>,
+    val contentType: ContentType,
 )

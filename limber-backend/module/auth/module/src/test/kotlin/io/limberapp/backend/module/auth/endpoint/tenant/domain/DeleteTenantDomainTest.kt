@@ -15,8 +15,8 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class DeleteTenantDomainTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgDoesNotExist() {
@@ -24,8 +24,8 @@ internal class DeleteTenantDomainTest(
     val tenantDomain = "fakedomain.com"
 
     test(
-      endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
-      expectedException = TenantDomainNotFound()
+        endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
+        expectedException = TenantDomainNotFound()
     )
   }
 
@@ -38,8 +38,8 @@ internal class DeleteTenantDomainTest(
     setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
 
     test(
-      endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
-      expectedException = TenantDomainNotFound()
+        endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
+        expectedException = TenantDomainNotFound()
     )
 
     test(TenantApi.Get(orgGuid)) {

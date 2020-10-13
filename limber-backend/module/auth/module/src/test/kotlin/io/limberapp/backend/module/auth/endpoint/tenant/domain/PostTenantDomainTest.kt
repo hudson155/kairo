@@ -17,16 +17,16 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class PostTenantDomainTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgDoesNotExist() {
     val orgGuid = UUID.randomUUID()
 
     test(
-      endpoint = TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.limberappFixture.creation()),
-      expectedException = TenantNotFound().unprocessable(),
+        endpoint = TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.limberappFixture.creation()),
+        expectedException = TenantNotFound().unprocessable(),
     )
   }
 
@@ -41,8 +41,8 @@ internal class PostTenantDomainTest(
     setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
     test(
-      endpoint = TenantDomainApi.Post(limberappOrgGuid, TenantDomainRepFixtures.someclientFixture.creation()),
-      expectedException = TenantDomainAlreadyRegistered()
+        endpoint = TenantDomainApi.Post(limberappOrgGuid, TenantDomainRepFixtures.someclientFixture.creation()),
+        expectedException = TenantDomainAlreadyRegistered()
     )
 
     test(TenantApi.Get(limberappOrgGuid)) {

@@ -7,22 +7,22 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 
 class FeatureClient(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
-    endpoint: FeatureApi.Post,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureApi.Post,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     parse<FeatureRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
-    endpoint: FeatureApi.Patch,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureApi.Patch,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<FeatureRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: FeatureApi.Delete,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureApi.Delete,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<Unit>(it) }
   }

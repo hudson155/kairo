@@ -23,35 +23,35 @@ private const val UNIQ_DOMAIN = "uniq__tenant_domain__domain"
 
 @Singleton
 internal class TenantDomainStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<TenantDomainModel, TenantDomainFinder> {
   fun create(model: TenantDomainModel): TenantDomainModel =
-    withHandle { handle ->
-      try {
-        handle.createQuery(sqlResource("/store/tenantDomain/create.sql"))
-          .bindKotlin(model)
-          .mapTo(TenantDomainModel::class.java)
-          .single()
-      } catch (e: UnableToExecuteStatementException) {
-        handleCreateError(e)
+      withHandle { handle ->
+        try {
+          handle.createQuery(sqlResource("/store/tenantDomain/create.sql"))
+              .bindKotlin(model)
+              .mapTo(TenantDomainModel::class.java)
+              .single()
+        } catch (e: UnableToExecuteStatementException) {
+          handleCreateError(e)
+        }
       }
-    }
 
   override fun <R> find(result: (Iterable<TenantDomainModel>) -> R, query: TenantDomainFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/tenantDomain/find.sql"))
-        .withFinder(TenantDomainQueryBuilder().apply(query))
-        .mapTo(TenantDomainModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/tenantDomain/find.sql"))
+            .withFinder(TenantDomainQueryBuilder().apply(query))
+            .mapTo(TenantDomainModel::class.java)
+            .let(result)
+      }
 
   fun delete(orgGuid: UUID, domain: String): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
-        .bind("orgGuid", orgGuid)
-        .bind("domain", domain)
-        .updateOnly() ?: throw TenantDomainNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/tenantDomain/delete.sql"))
+            .bind("orgGuid", orgGuid)
+            .bind("domain", domain)
+            .updateOnly() ?: throw TenantDomainNotFound()
+      }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e

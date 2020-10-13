@@ -15,15 +15,15 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteUserRole @Inject constructor(
-  application: Application,
-  private val userService: UserService,
+    application: Application,
+    private val userService: UserService,
 ) : LimberApiEndpoint<UserRoleApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = UserRoleApi.Delete::class.template()
+    application = application,
+    endpointTemplate = UserRoleApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserRoleApi.Delete(
-    userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
-    role = call.parameters.getAsType(JwtRole::class, "role")
+      userGuid = call.parameters.getAsType(UUID::class, "userGuid"),
+      role = call.parameters.getAsType(JwtRole::class, "role")
   )
 
   override suspend fun Handler.handle(command: UserRoleApi.Delete) {

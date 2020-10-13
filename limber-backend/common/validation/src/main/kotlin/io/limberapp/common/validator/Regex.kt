@@ -24,7 +24,7 @@ internal object Regex {
   val url = run {
     val protocol = Regex("[Hh][Tt][Tt][Pp][Ss]?://")
     val queryString =
-      Regex("(?:\\?${urlChar.pattern}+=${urlChar.pattern}*(?:&${urlChar.pattern}+=${urlChar.pattern}*)*)?")
+        Regex("(?:\\?${urlChar.pattern}+=${urlChar.pattern}*(?:&${urlChar.pattern}+=${urlChar.pattern}*)*)?")
     val hash = Regex("(?:#${urlChar.pattern}*)?")
     return@run Regex(listOf(protocol, hostname, path, queryString, hash).joinToString(""))
   }

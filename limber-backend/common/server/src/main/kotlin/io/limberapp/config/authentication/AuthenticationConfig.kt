@@ -10,5 +10,5 @@ package io.limberapp.config.authentication
  * For tests, one might use unsigned authentication.
  */
 data class AuthenticationConfig(
-  val mechanisms: List<AuthenticationMechanism>,
+    val mechanisms: List<AuthenticationMechanism>,
 )

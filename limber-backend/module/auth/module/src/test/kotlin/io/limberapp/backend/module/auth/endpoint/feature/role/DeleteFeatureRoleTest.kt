@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class DeleteFeatureRoleTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun featureRoleDoesNotExist() {
@@ -42,16 +42,16 @@ internal class DeleteFeatureRoleTest(
     val featureAdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this, adminOrgRoleRep.guid, 2)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
-        featureGuid = featureGuid,
-        rep = FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)
+          featureGuid = featureGuid,
+          rep = FeatureRoleRepFixtures.fixture.creation(adminOrgRoleRep.guid)
       ))
     }
 
     val featureMemberRoleRep = FeatureRoleRepFixtures.fixture.complete(this, memberOrgRoleRep.guid, 3)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
-        featureGuid = featureGuid,
-        rep = FeatureRoleRepFixtures.fixture.creation(memberOrgRoleRep.guid)
+          featureGuid = featureGuid,
+          rep = FeatureRoleRepFixtures.fixture.creation(memberOrgRoleRep.guid)
       ))
     }
 

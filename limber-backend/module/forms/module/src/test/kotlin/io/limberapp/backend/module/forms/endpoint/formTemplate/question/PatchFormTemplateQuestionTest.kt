@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PatchFormTemplateQuestionTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun formTemplateDoesNotExist() {
@@ -23,10 +23,10 @@ internal class PatchFormTemplateQuestionTest(
 
     test(expectResult = null) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateGuid,
-        questionGuid = questionGuid,
-        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateGuid,
+          questionGuid = questionGuid,
+          rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ))
     }
   }
@@ -43,10 +43,10 @@ internal class PatchFormTemplateQuestionTest(
 
     test(expectResult = null) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        questionGuid = questionGuid,
-        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          questionGuid = questionGuid,
+          rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ))
     }
   }
@@ -61,25 +61,25 @@ internal class PatchFormTemplateQuestionTest(
     }
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-      as FormTemplateTextQuestionRep.Complete
+        as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
+        questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
     test(expectResult = null) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
-        featureGuid = UUID.randomUUID(),
-        formTemplateGuid = formTemplateRep.guid,
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
+          featureGuid = UUID.randomUUID(),
+          formTemplateGuid = formTemplateRep.guid,
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ))
     }
 
@@ -97,25 +97,25 @@ internal class PatchFormTemplateQuestionTest(
     }
 
     val formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-      as FormTemplateTextQuestionRep.Complete
+        as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
+        questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
     test(expectResult = null) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
-        featureGuid = featureGuid,
-        formTemplateGuid = UUID.randomUUID(),
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
+          featureGuid = featureGuid,
+          formTemplateGuid = UUID.randomUUID(),
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ))
     }
 
@@ -134,31 +134,31 @@ internal class PatchFormTemplateQuestionTest(
     }
 
     var formTemplateQuestionRep = FormTemplateQuestionRepFixtures.textFixture.complete(this, 1)
-      as FormTemplateTextQuestionRep.Complete
+        as FormTemplateTextQuestionRep.Complete
     formTemplateRep = formTemplateRep.copy(
-      questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
+        questions = listOf(formTemplateQuestionRep) + formTemplateRep.questions
     )
     setup {
       formTemplateQuestionClient(FormTemplateQuestionApi.Post(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        rank = 0,
-        rep = FormTemplateQuestionRepFixtures.textFixture.creation()
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          rank = 0,
+          rep = FormTemplateQuestionRepFixtures.textFixture.creation()
       ))
     }
 
     formTemplateQuestionRep = formTemplateQuestionRep.copy(label = "Renamed Question")
     formTemplateRep = formTemplateRep.copy(
-      questions = formTemplateRep.questions.map {
-        if (it.guid == formTemplateQuestionRep.guid) formTemplateQuestionRep else it
-      }
+        questions = formTemplateRep.questions.map {
+          if (it.guid == formTemplateQuestionRep.guid) formTemplateQuestionRep else it
+        }
     )
     test(expectResult = formTemplateQuestionRep) {
       formTemplateQuestionClient(FormTemplateQuestionApi.Patch(
-        featureGuid = featureGuid,
-        formTemplateGuid = formTemplateRep.guid,
-        questionGuid = formTemplateQuestionRep.guid,
-        rep = FormTemplateTextQuestionRep.Update("Renamed Question")
+          featureGuid = featureGuid,
+          formTemplateGuid = formTemplateRep.guid,
+          questionGuid = formTemplateQuestionRep.guid,
+          rep = FormTemplateTextQuestionRep.Update("Renamed Question")
       ))
     }
 

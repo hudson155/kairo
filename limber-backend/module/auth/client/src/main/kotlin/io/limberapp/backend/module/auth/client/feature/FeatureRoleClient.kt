@@ -7,29 +7,29 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 
 class FeatureRoleClient(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
-    endpoint: FeatureRoleApi.Post,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureRoleApi.Post,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     parse<FeatureRoleRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
-    endpoint: FeatureRoleApi.GetByFeatureGuid,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureRoleApi.GetByFeatureGuid,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     parse<Set<FeatureRoleRep.Complete>>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
-    endpoint: FeatureRoleApi.Patch,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureRoleApi.Patch,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<FeatureRoleRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
-    endpoint: FeatureRoleApi.Delete,
-    builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      endpoint: FeatureRoleApi.Delete,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
     it?.let { parse<Unit>(it) }
   }

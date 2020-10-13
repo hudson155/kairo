@@ -8,14 +8,14 @@ import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FeatureServiceImpl @Inject constructor(
-  private val featureStore: FeatureStore,
+    private val featureStore: FeatureStore,
 ) : FeatureService, Finder<FeatureModel, FeatureFinder> by featureStore {
   override fun create(model: FeatureModel) =
-    featureStore.create(model)
+      featureStore.create(model)
 
   override fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update) =
-    featureStore.update(orgGuid, featureGuid, update)
+      featureStore.update(orgGuid, featureGuid, update)
 
   override fun delete(orgGuid: UUID, featureGuid: UUID) =
-    featureStore.delete(orgGuid, featureGuid)
+      featureStore.delete(orgGuid, featureGuid)
 }

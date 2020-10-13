@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostFormInstanceTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun formTemplateDoesNotExist() {
@@ -24,8 +24,8 @@ internal class PostFormInstanceTest(
 
     test(expectError = FormTemplateNotFound().unprocessable()) {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateGuid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateGuid, creatorAccountGuid)
       ))
     }
   }
@@ -43,8 +43,8 @@ internal class PostFormInstanceTest(
 
     test(expectError = FormTemplateNotFound().unprocessable()) {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = feature1Guid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = feature1Guid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
   }
@@ -62,8 +62,8 @@ internal class PostFormInstanceTest(
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     test(expectResult = formInstanceRep) {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 

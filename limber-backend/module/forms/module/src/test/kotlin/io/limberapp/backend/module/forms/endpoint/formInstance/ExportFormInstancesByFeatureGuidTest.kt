@@ -23,8 +23,8 @@ private const val FIXED_CLOCK_FORMATTED_VALUE = "Sun, Dec 2, 2007 at 22:15 MST"
 
 object ExportFormInstancesByFeatureGuidTest {
   internal class Default(
-    engine: TestApplicationEngine,
-    limberServer: LimberApplication<*>,
+      engine: TestApplicationEngine,
+      limberServer: LimberApplication<*>,
   ) : IntegrationTest(engine, limberServer) {
     @Test
     fun happyPathNoFormInstances() {
@@ -50,9 +50,9 @@ object ExportFormInstancesByFeatureGuidTest {
 
       test(expectResult = "Number,Submitted date,Creator name,Creator email address\n") {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
-          featureGuid = featureGuid,
-          creatorAccountGuid = null,
-          timeZone = ZoneId.of("America/Edmonton")
+            featureGuid = featureGuid,
+            creatorAccountGuid = null,
+            timeZone = ZoneId.of("America/Edmonton")
         ))
       }
     }
@@ -87,43 +87,44 @@ object ExportFormInstancesByFeatureGuidTest {
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
         ))
       }
 
       formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
       setup {
         formInstanceClient(FormInstanceApi.Patch(
-          featureGuid = featureGuid,
-          formInstanceGuid = formInstance0Rep.guid,
-          rep = FormInstanceRep.Update(submitted = true)
+            featureGuid = featureGuid,
+            formInstanceGuid = formInstance0Rep.guid,
+            rep = FormInstanceRep.Update(submitted = true)
         ))
       }
 
       val formInstance1Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser1.guid, 6)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
         ))
       }
 
       test(expectResult = "Number,Submitted date,Creator name,Creator email address\n"
-        + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n"
-        + "${formInstance1Rep.number},,Bill Gates,bill.gates@microsoft.com\n") {
+          + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n"
+          + "${formInstance1Rep.number},,Bill Gates,bill.gates@microsoft.com\n"
+      ) {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
-          featureGuid = featureGuid,
-          creatorAccountGuid = null,
-          timeZone = ZoneId.of("America/Edmonton")
+            featureGuid = featureGuid,
+            creatorAccountGuid = null,
+            timeZone = ZoneId.of("America/Edmonton")
         ))
       }
     }
   }
 
   internal class CreatorAccountGuid(
-    engine: TestApplicationEngine,
-    limberServer: LimberApplication<*>,
+      engine: TestApplicationEngine,
+      limberServer: LimberApplication<*>,
   ) : IntegrationTest(engine, limberServer) {
     @Test
     fun happyPathNoFormInstancesForCreator() {
@@ -154,23 +155,23 @@ object ExportFormInstancesByFeatureGuidTest {
 
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
         ))
       }
 
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
         ))
       }
 
       test(expectResult = "Number,Submitted date,Creator name,Creator email address\n") {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
-          featureGuid = featureGuid,
-          creatorAccountGuid = UUID.randomUUID(),
-          timeZone = ZoneId.of("America/Edmonton")
+            featureGuid = featureGuid,
+            creatorAccountGuid = UUID.randomUUID(),
+            timeZone = ZoneId.of("America/Edmonton")
         ))
       }
     }
@@ -205,33 +206,34 @@ object ExportFormInstancesByFeatureGuidTest {
       var formInstance0Rep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, existingUser0.guid, 1)
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser0.guid)
         ))
       }
 
       formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
       setup {
         formInstanceClient(FormInstanceApi.Patch(
-          featureGuid = featureGuid,
-          formInstanceGuid = formInstance0Rep.guid,
-          rep = FormInstanceRep.Update(submitted = true)
+            featureGuid = featureGuid,
+            formInstanceGuid = formInstance0Rep.guid,
+            rep = FormInstanceRep.Update(submitted = true)
         ))
       }
 
       setup {
         formInstanceClient(FormInstanceApi.Post(
-          featureGuid = featureGuid,
-          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
+            featureGuid = featureGuid,
+            rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, existingUser1.guid)
         ))
       }
 
       test(expectResult = "Number,Submitted date,Creator name,Creator email address\n"
-        + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n") {
+          + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n"
+      ) {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
-          featureGuid = featureGuid,
-          creatorAccountGuid = existingUser0.guid,
-          timeZone = ZoneId.of("America/Edmonton")
+            featureGuid = featureGuid,
+            creatorAccountGuid = existingUser0.guid,
+            timeZone = ZoneId.of("America/Edmonton")
         ))
       }
     }

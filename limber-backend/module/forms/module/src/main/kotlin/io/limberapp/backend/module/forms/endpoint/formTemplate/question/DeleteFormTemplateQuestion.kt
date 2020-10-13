@@ -12,22 +12,22 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteFormTemplateQuestion @Inject constructor(
-  application: Application,
-  private val formTemplateQuestionService: FormTemplateQuestionService,
+    application: Application,
+    private val formTemplateQuestionService: FormTemplateQuestionService,
 ) : LimberApiEndpoint<FormTemplateQuestionApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = FormTemplateQuestionApi.Delete::class.template()
+    application = application,
+    endpointTemplate = FormTemplateQuestionApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FormTemplateQuestionApi.Delete(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
-    questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      formTemplateGuid = call.parameters.getAsType(UUID::class, "formTemplateGuid"),
+      questionGuid = call.parameters.getAsType(UUID::class, "questionGuid")
   )
 
   override suspend fun Handler.handle(command: FormTemplateQuestionApi.Delete) {
     Authorization.FeatureMemberWithFeaturePermission(
-      featureGuid = command.featureGuid,
-      featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
+        featureGuid = command.featureGuid,
+        featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
     ).authorize()
     formTemplateQuestionService.delete(command.featureGuid, command.formTemplateGuid, command.questionGuid)
   }

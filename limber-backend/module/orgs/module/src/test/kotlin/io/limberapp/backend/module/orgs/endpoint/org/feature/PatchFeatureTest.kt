@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PatchFeatureTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgDoesNotExist() {
@@ -122,7 +122,7 @@ internal class PatchFeatureTest(
 
     formsFeatureRep = formsFeatureRep.copy(rank = 3)
     orgRep = orgRep.copy(
-      features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
+        features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(rank = 3)))
@@ -150,7 +150,7 @@ internal class PatchFeatureTest(
 
     formsFeatureRep = formsFeatureRep.copy(name = "Renamed Feature")
     orgRep = orgRep.copy(
-      features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
+        features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(name = "Renamed Feature")))
@@ -178,7 +178,7 @@ internal class PatchFeatureTest(
 
     formsFeatureRep = formsFeatureRep.copy(path = "/renamed")
     orgRep = orgRep.copy(
-      features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
+        features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(path = "/renamed")))
@@ -210,9 +210,9 @@ internal class PatchFeatureTest(
 
     formsFeatureRep = formsFeatureRep.copy(isDefaultFeature = true)
     orgRep = orgRep.copy(
-      features = orgRep.features.map {
-        if (it.guid == formsFeatureRep.guid) formsFeatureRep else it.copy(isDefaultFeature = false)
-      }
+        features = orgRep.features.map {
+          if (it.guid == formsFeatureRep.guid) formsFeatureRep else it.copy(isDefaultFeature = false)
+        }
     )
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = true)))
@@ -220,7 +220,7 @@ internal class PatchFeatureTest(
 
     formsFeatureRep = formsFeatureRep.copy(isDefaultFeature = false)
     orgRep = orgRep.copy(
-      features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
+        features = orgRep.features.map { if (it.guid == formsFeatureRep.guid) formsFeatureRep else it }
     )
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(orgRep.guid, formsFeatureRep.guid, FeatureRep.Update(isDefaultFeature = false)))

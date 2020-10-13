@@ -14,14 +14,14 @@ import io.limberapp.common.module.ApplicationModule
 
 class UsersModule : ApplicationModule() {
   override val endpoints = listOf(
-    PostUser::class.java,
-    GetUser::class.java,
-    GetUserByOrgGuidAndEmailAddress::class.java,
-    GetUsersByOrgGuid::class.java,
-    PatchUser::class.java,
-    PutUserRole::class.java,
-    DeleteUserRole::class.java,
-    DeleteUser::class.java
+      PostUser::class.java,
+      GetUser::class.java,
+      GetUserByOrgGuidAndEmailAddress::class.java,
+      GetUsersByOrgGuid::class.java,
+      PatchUser::class.java,
+      PutUserRole::class.java,
+      DeleteUserRole::class.java,
+      DeleteUser::class.java
   )
 
   override fun bindServices() {

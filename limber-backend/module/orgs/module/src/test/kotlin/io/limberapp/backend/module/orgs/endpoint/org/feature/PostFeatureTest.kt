@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostFeatureTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgDoesNotExist() {
@@ -41,8 +41,8 @@ internal class PostFeatureTest(
 
     test(expectError = FeatureRankIsNotUnique()) {
       featureClient(FeatureApi.Post(
-        orgGuid = orgRep.guid,
-        rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.homeFixture.creation().rank),
+          orgGuid = orgRep.guid,
+          rep = FeatureRepFixtures.formsFixture.creation().copy(rank = FeatureRepFixtures.homeFixture.creation().rank),
       ))
     }
 
@@ -61,15 +61,15 @@ internal class PostFeatureTest(
     orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
     setup {
       featureClient(FeatureApi.Post(
-        orgGuid = orgRep.guid,
-        rep = FeatureRepFixtures.homeFixture.creation(),
+          orgGuid = orgRep.guid,
+          rep = FeatureRepFixtures.homeFixture.creation(),
       ))
     }
 
     test(expectError = FeaturePathIsNotUnique()) {
       featureClient(FeatureApi.Post(
-        orgGuid = orgRep.guid,
-        rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.homeFixture.creation().path),
+          orgGuid = orgRep.guid,
+          rep = FeatureRepFixtures.formsFixture.creation().copy(path = FeatureRepFixtures.homeFixture.creation().path),
       ))
     }
 

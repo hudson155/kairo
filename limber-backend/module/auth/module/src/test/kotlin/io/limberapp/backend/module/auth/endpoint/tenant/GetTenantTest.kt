@@ -12,16 +12,16 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class GetTenantTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
     test(
-      endpoint = TenantApi.Get(orgGuid),
-      expectedException = TenantNotFound()
+        endpoint = TenantApi.Get(orgGuid),
+        expectedException = TenantNotFound()
     )
   }
 

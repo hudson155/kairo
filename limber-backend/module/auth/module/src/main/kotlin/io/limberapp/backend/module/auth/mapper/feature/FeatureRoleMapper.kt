@@ -9,25 +9,25 @@ import java.time.LocalDateTime
 import java.util.*
 
 internal class FeatureRoleMapper @Inject constructor(
-  private val clock: Clock,
-  private val uuidGenerator: UuidGenerator,
+    private val clock: Clock,
+    private val uuidGenerator: UuidGenerator,
 ) {
   fun model(featureGuid: UUID, rep: FeatureRoleRep.Creation) = FeatureRoleModel(
-    guid = uuidGenerator.generate(),
-    createdDate = LocalDateTime.now(clock),
-    featureGuid = featureGuid,
-    orgRoleGuid = rep.orgRoleGuid,
-    permissions = rep.permissions,
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      featureGuid = featureGuid,
+      orgRoleGuid = rep.orgRoleGuid,
+      permissions = rep.permissions,
   )
 
   fun completeRep(model: FeatureRoleModel) = FeatureRoleRep.Complete(
-    guid = model.guid,
-    createdDate = model.createdDate,
-    orgRoleGuid = model.orgRoleGuid,
-    permissions = model.permissions,
+      guid = model.guid,
+      createdDate = model.createdDate,
+      orgRoleGuid = model.orgRoleGuid,
+      permissions = model.permissions,
   )
 
   fun update(rep: FeatureRoleRep.Update) = FeatureRoleModel.Update(
-    permissions = rep.permissions,
+      permissions = rep.permissions,
   )
 }

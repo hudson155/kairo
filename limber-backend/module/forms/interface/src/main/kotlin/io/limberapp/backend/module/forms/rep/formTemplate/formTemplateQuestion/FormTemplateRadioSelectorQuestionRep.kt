@@ -9,10 +9,10 @@ import java.util.*
 
 object FormTemplateRadioSelectorQuestionRep {
   data class Creation(
-    override val label: String,
-    override val helpText: String? = null,
-    override val required: Boolean,
-    val options: List<String>,
+      override val label: String,
+      override val helpText: String? = null,
+      override val required: Boolean,
+      val options: List<String>,
   ) : FormTemplateQuestionRep.Creation {
     override fun validate() = RepValidation {
       validate(super.validate())
@@ -25,19 +25,19 @@ object FormTemplateRadioSelectorQuestionRep {
   }
 
   data class Complete(
-    override val guid: UUID,
-    override val createdDate: LocalDateTime,
-    override val label: String,
-    override val helpText: String?,
-    override val required: Boolean,
-    val options: List<String>,
+      override val guid: UUID,
+      override val createdDate: LocalDateTime,
+      override val label: String,
+      override val helpText: String?,
+      override val required: Boolean,
+      val options: List<String>,
   ) : FormTemplateQuestionRep.Complete
 
   data class Update(
-    override val label: String? = null,
-    override val helpText: String? = null,
-    override val required: Boolean? = null,
-    val options: List<String>? = null,
+      override val label: String? = null,
+      override val helpText: String? = null,
+      override val required: Boolean? = null,
+      val options: List<String>? = null,
   ) : FormTemplateQuestionRep.Update {
     override fun validate() = RepValidation {
       validate(super.validate())

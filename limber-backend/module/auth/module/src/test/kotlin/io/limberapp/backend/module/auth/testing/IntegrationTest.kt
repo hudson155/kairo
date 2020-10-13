@@ -10,8 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(IntegrationTestExtension::class)
 internal abstract class IntegrationTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : LimberIntegrationTest(engine, limberServer) {
   protected val featureRoleClient by lazy { FeatureRoleClient(httpClient) }
   protected val orgRoleClient by lazy { OrgRoleClient(httpClient) }

@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PatchOrgRoleTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun orgRoleDoesNotExist() {
@@ -22,9 +22,9 @@ internal class PatchOrgRoleTest(
 
     test(expectResult = null) {
       orgRoleClient(OrgRoleApi.Patch(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleGuid,
-        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")),
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleGuid,
+          rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")),
       ))
     }
   }
@@ -60,9 +60,9 @@ internal class PatchOrgRoleTest(
     orgRoleRep = orgRoleRep.copy(permissions = OrgPermissions.fromBitString("0110"))
     test(expectResult = orgRoleRep) {
       orgRoleClient(OrgRoleApi.Patch(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")),
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleRep.Update(permissions = OrgPermissions.fromBitString("0110")),
       ))
     }
 
@@ -83,9 +83,9 @@ internal class PatchOrgRoleTest(
     orgRoleRep = orgRoleRep.copy(isDefault = true)
     test(expectResult = orgRoleRep) {
       orgRoleClient(OrgRoleApi.Patch(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleRep.Update(isDefault = true),
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleRep.Update(isDefault = true),
       ))
     }
 
@@ -96,9 +96,9 @@ internal class PatchOrgRoleTest(
     orgRoleRep = orgRoleRep.copy(isDefault = false)
     test(expectResult = orgRoleRep) {
       orgRoleClient(OrgRoleApi.Patch(
-        orgGuid = orgGuid,
-        orgRoleGuid = orgRoleRep.guid,
-        rep = OrgRoleRep.Update(isDefault = false),
+          orgGuid = orgGuid,
+          orgRoleGuid = orgRoleRep.guid,
+          rep = OrgRoleRep.Update(isDefault = false),
       ))
     }
 

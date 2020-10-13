@@ -10,84 +10,84 @@ import java.time.LocalDateTime
 
 internal object FormTemplateQuestionRepFixtures {
   data class Fixture(
-    val creation: () -> FormTemplateQuestionRep.Creation,
-    val complete: IntegrationTest.(idSeed: Int) -> FormTemplateQuestionRep.Complete,
+      val creation: () -> FormTemplateQuestionRep.Creation,
+      val complete: IntegrationTest.(idSeed: Int) -> FormTemplateQuestionRep.Complete,
   )
 
   val dateFixture = Fixture({
     FormTemplateDateQuestionRep.Creation(
-      label = "Date",
-      helpText = null,
-      required = false,
-      earliest = null,
-      latest = null,
+        label = "Date",
+        helpText = null,
+        required = false,
+        earliest = null,
+        latest = null,
     )
   }, { idSeed ->
     FormTemplateDateQuestionRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      label = "Date",
-      helpText = null,
-      required = false,
-      earliest = null,
-      latest = null,
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        label = "Date",
+        helpText = null,
+        required = false,
+        earliest = null,
+        latest = null,
     )
   })
 
   val radioSelectorFixture = Fixture({
     FormTemplateRadioSelectorQuestionRep.Creation(
-      label = "Options",
-      helpText = null,
-      required = false,
-      options = listOf("option 1, opt 2, #3"),
+        label = "Options",
+        helpText = null,
+        required = false,
+        options = listOf("option 1, opt 2, #3"),
     )
   }, { idSeed ->
     FormTemplateRadioSelectorQuestionRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      label = "Options",
-      helpText = null,
-      required = false,
-      options = listOf("option 1, opt 2, #3"),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        label = "Options",
+        helpText = null,
+        required = false,
+        options = listOf("option 1, opt 2, #3"),
     )
   })
 
   val textFixture = Fixture({
     FormTemplateTextQuestionRep.Creation(
-      label = "Worker name",
-      helpText = null,
-      required = true,
-      multiLine = false,
-      placeholder = null,
-      validator = null,
+        label = "Worker name",
+        helpText = null,
+        required = true,
+        multiLine = false,
+        placeholder = null,
+        validator = null,
     )
   }, { idSeed ->
     FormTemplateTextQuestionRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      label = "Worker name",
-      helpText = null,
-      required = true,
-      maxLength = 200,
-      multiLine = false,
-      placeholder = null,
-      validator = null,
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        label = "Worker name",
+        helpText = null,
+        required = true,
+        maxLength = 200,
+        multiLine = false,
+        placeholder = null,
+        validator = null,
     )
   })
 
   val yesNoFixture = Fixture({
     FormTemplateYesNoQuestionRep.Creation(
-      label = "Healthy?",
-      helpText = null,
-      required = true,
+        label = "Healthy?",
+        helpText = null,
+        required = true,
     )
   }, { idSeed ->
     FormTemplateYesNoQuestionRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      label = "Healthy?",
-      helpText = null,
-      required = true,
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        label = "Healthy?",
+        helpText = null,
+        required = true,
     )
   })
 }

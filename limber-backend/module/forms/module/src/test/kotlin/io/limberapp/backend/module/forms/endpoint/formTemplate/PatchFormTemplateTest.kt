@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PatchFormTemplateTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
@@ -36,9 +36,9 @@ internal class PatchFormTemplateTest(
 
     test(expectResult = null) {
       formTemplateClient(FormTemplateApi.Patch(
-        featureGuid = feature1Guid,
-        formTemplateGuid = formTemplateRep.guid,
-        rep = FormTemplateRep.Update("Crazy Form")
+          featureGuid = feature1Guid,
+          formTemplateGuid = formTemplateRep.guid,
+          rep = FormTemplateRep.Update("Crazy Form")
       ))
     }
 

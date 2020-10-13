@@ -9,10 +9,10 @@ import io.limberapp.common.restInterface.template
 import io.limberapp.module.graphql.api.graphql.GraphqlApi
 
 internal class GraphqlEndpoint @Inject constructor(
-  application: Application,
+    application: Application,
 ) : LimberApiEndpoint<GraphqlApi, Unit>(
-  application = application,
-  endpointTemplate = GraphqlApi::class.template()
+    application = application,
+    endpointTemplate = GraphqlApi::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = GraphqlApi
 

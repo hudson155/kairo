@@ -11,11 +11,11 @@ import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FormInstanceQuestionServiceImpl @Inject constructor(
-  private val formTemplateQuestionService: FormTemplateQuestionService,
-  private val formInstanceService: FormInstanceService,
-  private val formInstanceQuestionStore: FormInstanceQuestionStore,
+    private val formTemplateQuestionService: FormTemplateQuestionService,
+    private val formInstanceService: FormInstanceService,
+    private val formInstanceQuestionStore: FormInstanceQuestionStore,
 ) : FormInstanceQuestionService,
-  Finder<FormInstanceQuestionModel, FormInstanceQuestionFinder> by formInstanceQuestionStore {
+    Finder<FormInstanceQuestionModel, FormInstanceQuestionFinder> by formInstanceQuestionStore {
   override fun upsert(featureGuid: UUID, model: FormInstanceQuestionModel): FormInstanceQuestionModel {
     requireNotNull(model.questionGuid)
     return formInstanceQuestionStore.upsert(featureGuid, model)

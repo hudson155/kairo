@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PostOrgRoleTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun duplicateName() {
@@ -24,8 +24,8 @@ internal class PostOrgRoleTest(
 
     test(expectError = OrgRoleNameIsNotUnique()) {
       orgRoleClient(OrgRoleApi.Post(
-        orgGuid = orgGuid,
-        rep = OrgRoleRepFixtures.memberFixture.creation().copy(name = adminOrgRoleRep.name)
+          orgGuid = orgGuid,
+          rep = OrgRoleRepFixtures.memberFixture.creation().copy(name = adminOrgRoleRep.name)
       ))
     }
 

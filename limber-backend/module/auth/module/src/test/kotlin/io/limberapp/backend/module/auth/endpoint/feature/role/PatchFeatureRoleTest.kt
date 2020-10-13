@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class PatchFeatureRoleTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun featureRoleDoesNotExist() {
@@ -23,9 +23,9 @@ internal class PatchFeatureRoleTest(
 
     test(expectResult = null) {
       featureRoleClient(FeatureRoleApi.Patch(
-        featureGuid = featureGuid,
-        featureRoleGuid = featureRoleGuid,
-        rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")),
+          featureGuid = featureGuid,
+          featureRoleGuid = featureRoleGuid,
+          rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")),
       ))
     }
   }
@@ -48,9 +48,9 @@ internal class PatchFeatureRoleTest(
     featureRoleRep = featureRoleRep.copy(permissions = FormsFeaturePermissions.fromBitString("0110"))
     test(expectResult = featureRoleRep) {
       featureRoleClient(FeatureRoleApi.Patch(
-        featureGuid = featureGuid,
-        featureRoleGuid = featureRoleRep.guid,
-        rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")),
+          featureGuid = featureGuid,
+          featureRoleGuid = featureRoleRep.guid,
+          rep = FeatureRoleRep.Update(permissions = FormsFeaturePermissions.fromBitString("0110")),
       ))
     }
 

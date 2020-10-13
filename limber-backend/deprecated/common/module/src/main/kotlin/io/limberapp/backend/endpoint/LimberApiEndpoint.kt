@@ -7,6 +7,6 @@ import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.restInterface.LimberEndpointTemplate
 
 abstract class LimberApiEndpoint<Endpoint : LimberEndpoint, ResponseType : Any>(
-  application: Application,
-  endpointTemplate: LimberEndpointTemplate,
+    application: Application,
+    endpointTemplate: LimberEndpointTemplate,
 ) : ApiEndpoint<Jwt, Endpoint, ResponseType>(application, endpointTemplate)

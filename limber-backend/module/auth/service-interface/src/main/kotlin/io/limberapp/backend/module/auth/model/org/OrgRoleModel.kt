@@ -5,17 +5,17 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class OrgRoleModel(
-  val guid: UUID,
-  val createdDate: LocalDateTime,
-  val orgGuid: UUID,
-  val name: String,
-  val permissions: OrgPermissions,
-  val isDefault: Boolean,
-  val memberCount: Int,
+    val guid: UUID,
+    val createdDate: LocalDateTime,
+    val orgGuid: UUID,
+    val name: String,
+    val permissions: OrgPermissions,
+    val isDefault: Boolean,
+    val memberCount: Int,
 ) {
   data class Update(
-    val name: String?,
-    val permissions: OrgPermissions?,
-    val isDefault: Boolean?,
+      val name: String?,
+      val permissions: OrgPermissions?,
+      val isDefault: Boolean?,
   )
 }

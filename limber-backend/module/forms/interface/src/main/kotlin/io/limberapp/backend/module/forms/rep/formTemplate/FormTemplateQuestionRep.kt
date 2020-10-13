@@ -17,10 +17,10 @@ import java.util.*
 object FormTemplateQuestionRep {
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
   @JsonSubTypes(
-    JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Creation::class, name = "DATE"),
-    JsonSubTypes.Type(value = FormTemplateRadioSelectorQuestionRep.Creation::class, name = "RADIO_SELECTOR"),
-    JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Creation::class, name = "TEXT"),
-    JsonSubTypes.Type(value = FormTemplateYesNoQuestionRep.Creation::class, name = "YES_NO"),
+      JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Creation::class, name = "DATE"),
+      JsonSubTypes.Type(value = FormTemplateRadioSelectorQuestionRep.Creation::class, name = "RADIO_SELECTOR"),
+      JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Creation::class, name = "TEXT"),
+      JsonSubTypes.Type(value = FormTemplateYesNoQuestionRep.Creation::class, name = "YES_NO"),
   )
   interface Creation : CreationRep {
     val label: String
@@ -35,10 +35,10 @@ object FormTemplateQuestionRep {
 
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
   @JsonSubTypes(
-    JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Complete::class, name = "DATE"),
-    JsonSubTypes.Type(value = FormTemplateRadioSelectorQuestionRep.Complete::class, name = "RADIO_SELECTOR"),
-    JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Complete::class, name = "TEXT"),
-    JsonSubTypes.Type(value = FormTemplateYesNoQuestionRep.Complete::class, name = "YES_NO"),
+      JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Complete::class, name = "DATE"),
+      JsonSubTypes.Type(value = FormTemplateRadioSelectorQuestionRep.Complete::class, name = "RADIO_SELECTOR"),
+      JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Complete::class, name = "TEXT"),
+      JsonSubTypes.Type(value = FormTemplateYesNoQuestionRep.Complete::class, name = "YES_NO"),
   )
   interface Complete : CompleteRep {
     val guid: UUID
@@ -49,10 +49,10 @@ object FormTemplateQuestionRep {
 
   @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
   @JsonSubTypes(
-    JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Update::class, name = "DATE"),
-    JsonSubTypes.Type(value = FormTemplateRadioSelectorQuestionRep.Update::class, name = "RADIO_SELECTOR"),
-    JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Update::class, name = "TEXT"),
-    JsonSubTypes.Type(value = FormTemplateYesNoQuestionRep.Update::class, name = "YES_NO"),
+      JsonSubTypes.Type(value = FormTemplateDateQuestionRep.Update::class, name = "DATE"),
+      JsonSubTypes.Type(value = FormTemplateRadioSelectorQuestionRep.Update::class, name = "RADIO_SELECTOR"),
+      JsonSubTypes.Type(value = FormTemplateTextQuestionRep.Update::class, name = "TEXT"),
+      JsonSubTypes.Type(value = FormTemplateYesNoQuestionRep.Update::class, name = "YES_NO"),
   )
   interface Update : UpdateRep {
     val label: String?

@@ -8,8 +8,8 @@ import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 
 internal class PostOrgTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun happyPath() {

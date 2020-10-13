@@ -12,14 +12,14 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class DeleteTenant @Inject constructor(
-  application: Application,
-  private val tenantService: TenantService,
+    application: Application,
+    private val tenantService: TenantService,
 ) : LimberApiEndpoint<TenantApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = TenantApi.Delete::class.template()
+    application = application,
+    endpointTemplate = TenantApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Delete(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
   )
 
   override suspend fun Handler.handle(command: TenantApi.Delete) {

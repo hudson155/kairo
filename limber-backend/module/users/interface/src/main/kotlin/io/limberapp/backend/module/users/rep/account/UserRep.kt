@@ -12,11 +12,11 @@ import java.util.*
 
 object UserRep {
   data class Creation(
-    val orgGuid: UUID,
-    val firstName: String,
-    val lastName: String,
-    val emailAddress: String,
-    val profilePhotoUrl: String? = null,
+      val orgGuid: UUID,
+      val firstName: String,
+      val lastName: String,
+      val emailAddress: String,
+      val profilePhotoUrl: String? = null,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::firstName) { Validator.humanName(value) }
@@ -27,32 +27,32 @@ object UserRep {
   }
 
   data class Summary(
-    val guid: UUID,
-    override val createdDate: LocalDateTime,
-    val orgGuid: UUID,
-    val firstName: String?,
-    val lastName: String?,
-    val profilePhotoUrl: String?,
+      val guid: UUID,
+      override val createdDate: LocalDateTime,
+      val orgGuid: UUID,
+      val firstName: String?,
+      val lastName: String?,
+      val profilePhotoUrl: String?,
   ) : CompleteRep {
     val fullName get() = listOfNotNull(firstName, lastName).joinToString(" ")
   }
 
   data class Complete(
-    val guid: UUID,
-    override val createdDate: LocalDateTime,
-    val roles: Set<JwtRole>,
-    val orgGuid: UUID,
-    val firstName: String?,
-    val lastName: String?,
-    val emailAddress: String,
-    val profilePhotoUrl: String?,
+      val guid: UUID,
+      override val createdDate: LocalDateTime,
+      val roles: Set<JwtRole>,
+      val orgGuid: UUID,
+      val firstName: String?,
+      val lastName: String?,
+      val emailAddress: String,
+      val profilePhotoUrl: String?,
   ) : CompleteRep {
     val fullName get() = listOfNotNull(firstName, lastName).joinToString(" ")
   }
 
   data class Update(
-    val firstName: String? = null,
-    val lastName: String? = null,
+      val firstName: String? = null,
+      val lastName: String? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::firstName) { ifPresent { Validator.humanName(value) } }

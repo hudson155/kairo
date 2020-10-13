@@ -22,11 +22,11 @@ open class SqlModule(config: SqlDatabaseConfig, private val runMigrations: Boole
   }
 
   private fun createJdbi() = Jdbi.create(checkNotNull(wrapper.dataSource))
-    .installPlugin(KotlinPlugin())
-    .installPlugin(KotlinSqlObjectPlugin())
-    .installPlugin(PostgresPlugin())
-    .registerJdbiType(JdbiRegexType)
-    .apply { configureJdbi() }
+      .installPlugin(KotlinPlugin())
+      .installPlugin(KotlinSqlObjectPlugin())
+      .installPlugin(PostgresPlugin())
+      .registerJdbiType(JdbiRegexType)
+      .apply { configureJdbi() }
 
   protected open fun Jdbi.configureJdbi() {}
 

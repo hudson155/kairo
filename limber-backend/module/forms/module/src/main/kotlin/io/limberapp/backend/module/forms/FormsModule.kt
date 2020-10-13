@@ -28,23 +28,23 @@ import io.limberapp.common.module.ApplicationModule
 
 class FormsModule : ApplicationModule() {
   override val endpoints = listOf(
-    PostFormTemplate::class.java,
-    GetFormTemplate::class.java,
-    GetFormTemplatesByFeatureGuid::class.java,
-    PatchFormTemplate::class.java,
-    DeleteFormTemplate::class.java,
-    PostFormTemplateQuestion::class.java,
-    PatchFormTemplateQuestion::class.java,
-    DeleteFormTemplateQuestion::class.java,
+      PostFormTemplate::class.java,
+      GetFormTemplate::class.java,
+      GetFormTemplatesByFeatureGuid::class.java,
+      PatchFormTemplate::class.java,
+      DeleteFormTemplate::class.java,
+      PostFormTemplateQuestion::class.java,
+      PatchFormTemplateQuestion::class.java,
+      DeleteFormTemplateQuestion::class.java,
 
-    PostFormInstance::class.java,
-    GetFormInstance::class.java,
-    GetFormInstancesByFeatureGuid::class.java,
-    ExportFormInstancesByFeatureGuid::class.java,
-    PatchFormInstance::class.java,
-    DeleteFormInstance::class.java,
-    PutFormInstanceQuestion::class.java,
-    DeleteFormInstanceQuestion::class.java
+      PostFormInstance::class.java,
+      GetFormInstance::class.java,
+      GetFormInstancesByFeatureGuid::class.java,
+      ExportFormInstancesByFeatureGuid::class.java,
+      PatchFormInstance::class.java,
+      DeleteFormInstance::class.java,
+      PutFormInstanceQuestion::class.java,
+      DeleteFormInstanceQuestion::class.java
   )
 
   override fun bindServices() {

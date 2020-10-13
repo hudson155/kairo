@@ -14,17 +14,17 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchFeature @Inject constructor(
-  application: Application,
-  private val featureService: FeatureService,
-  private val featureMapper: FeatureMapper,
+    application: Application,
+    private val featureService: FeatureService,
+    private val featureMapper: FeatureMapper,
 ) : LimberApiEndpoint<FeatureApi.Patch, FeatureRep.Complete>(
-  application = application,
-  endpointTemplate = FeatureApi.Patch::class.template()
+    application = application,
+    endpointTemplate = FeatureApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FeatureApi.Patch(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    rep = call.getAndValidateBody()
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid"),
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FeatureApi.Patch): FeatureRep.Complete {

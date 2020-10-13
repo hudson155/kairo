@@ -14,17 +14,17 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class PatchFeatureRole @Inject constructor(
-  application: Application,
-  private val featureRoleService: FeatureRoleService,
-  private val featureRoleMapper: FeatureRoleMapper,
+    application: Application,
+    private val featureRoleService: FeatureRoleService,
+    private val featureRoleMapper: FeatureRoleMapper,
 ) : LimberApiEndpoint<FeatureRoleApi.Patch, FeatureRoleRep.Complete>(
-  application = application,
-  endpointTemplate = FeatureRoleApi.Patch::class.template()
+    application = application,
+    endpointTemplate = FeatureRoleApi.Patch::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = FeatureRoleApi.Patch(
-    featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
-    featureRoleGuid = call.parameters.getAsType(UUID::class, "featureRoleGuid"),
-    rep = call.getAndValidateBody()
+      featureGuid = call.parameters.getAsType(UUID::class, "featureGuid"),
+      featureRoleGuid = call.parameters.getAsType(UUID::class, "featureRoleGuid"),
+      rep = call.getAndValidateBody()
   )
 
   override suspend fun Handler.handle(command: FeatureRoleApi.Patch): FeatureRoleRep.Complete {

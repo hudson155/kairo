@@ -6,19 +6,19 @@ import java.time.LocalDateTime
 
 internal object OrgRepFixtures {
   data class Fixture(
-    val creation: () -> OrgRep.Creation,
-    val complete: IntegrationTest.(idSeed: Int) -> OrgRep.Complete,
+      val creation: () -> OrgRep.Creation,
+      val complete: IntegrationTest.(idSeed: Int) -> OrgRep.Complete,
   )
 
   val crankyPastaFixture = Fixture({
     OrgRep.Creation("Cranky Pasta")
   }, { idSeed ->
     OrgRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      name = "Cranky Pasta",
-      ownerUserGuid = null,
-      features = emptyList(),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        name = "Cranky Pasta",
+        ownerUserGuid = null,
+        features = emptyList(),
     )
   })
 
@@ -26,11 +26,11 @@ internal object OrgRepFixtures {
     OrgRep.Creation("Dynamic Tennis")
   }, { idSeed ->
     OrgRep.Complete(
-      guid = uuidGenerator[idSeed],
-      createdDate = LocalDateTime.now(clock),
-      name = "Dynamic Tennis",
-      ownerUserGuid = null,
-      features = emptyList(),
+        guid = uuidGenerator[idSeed],
+        createdDate = LocalDateTime.now(clock),
+        name = "Dynamic Tennis",
+        ownerUserGuid = null,
+        features = emptyList(),
     )
   })
 }

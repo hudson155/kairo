@@ -15,8 +15,8 @@ class RepValidation(validation: Builder.() -> Unit) {
     }
 
     fun <R : ValidatedRep, T : Any?> R.validate(
-      property: KProperty1<R, T>,
-      validator: ValueValidation<T>.() -> Boolean,
+        property: KProperty1<R, T>,
+        validator: ValueValidation<T>.() -> Boolean,
     ) {
       val validation = ValueValidation(property.name, property.get(this))
       validations.add(validation to validation.validator())
@@ -27,7 +27,7 @@ class RepValidation(validation: Builder.() -> Unit) {
      */
     @JvmName("validateRep")
     fun <R : ValidatedRep, T : ValidatedRep> R.validate(
-      property: KProperty1<R, T>,
+        property: KProperty1<R, T>,
     ) {
       validate(property.get(this).validate())
     }
@@ -37,7 +37,7 @@ class RepValidation(validation: Builder.() -> Unit) {
      */
     @JvmName("validateReps")
     fun <R : ValidatedRep, T : List<ValidatedRep>> R.validate(
-      property: KProperty1<R, T>,
+        property: KProperty1<R, T>,
     ) {
       property.get(this).forEach { validate(it.validate()) }
     }

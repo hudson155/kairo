@@ -15,9 +15,9 @@ abstract class LimberHttpClient : Closeable {
   private val json = Json(prettyPrint = true)
 
   suspend fun <T> request(
-    endpoint: LimberEndpoint,
-    builder: LimberHttpClientRequestBuilder.() -> Unit,
-    parseResponse: Json.(responseBody: String?) -> T,
+      endpoint: LimberEndpoint,
+      builder: LimberHttpClientRequestBuilder.() -> Unit,
+      parseResponse: Json.(responseBody: String?) -> T,
   ): T {
     val (statusCode, responseBody) = request(endpoint, builder)
     return when (statusCode.value) {
@@ -35,7 +35,7 @@ abstract class LimberHttpClient : Closeable {
   }
 
   protected abstract suspend fun request(
-    endpoint: LimberEndpoint,
-    builder: LimberHttpClientRequestBuilder.() -> Unit,
+      endpoint: LimberEndpoint,
+      builder: LimberHttpClientRequestBuilder.() -> Unit,
   ): Pair<HttpStatusCode, String>
 }

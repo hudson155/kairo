@@ -8,7 +8,7 @@ import java.util.*
 
 object FormInstanceTextQuestionRep {
   data class Creation(
-    val text: String,
+      val text: String,
   ) : FormInstanceQuestionRep.Creation {
     override fun validate() = RepValidation {
       validate(Creation::text) { Validator.length10thousand(value, allowEmpty = false) }
@@ -16,8 +16,8 @@ object FormInstanceTextQuestionRep {
   }
 
   data class Complete(
-    override val createdDate: LocalDateTime,
-    override val questionGuid: UUID?,
-    val text: String,
+      override val createdDate: LocalDateTime,
+      override val questionGuid: UUID?,
+      val text: String,
   ) : FormInstanceQuestionRep.Complete
 }

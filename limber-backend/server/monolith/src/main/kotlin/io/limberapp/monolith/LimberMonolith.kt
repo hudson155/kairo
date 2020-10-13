@@ -7,8 +7,8 @@ import io.limberapp.config.ConfigLoader
 import io.limberapp.module.monolith.MonolithModule
 
 internal class LimberMonolith(application: Application) : BaseLimberApp(
-  application = application,
-  config = ConfigLoader.load(System.getenv("LIMBER_CONFIG")),
+    application = application,
+    config = ConfigLoader.load(System.getenv("LIMBER_CONFIG")),
 ) {
   override fun getApplicationModules() = listOf(MonolithModule(), HealthCheckModule()) + allLimberModules()
 

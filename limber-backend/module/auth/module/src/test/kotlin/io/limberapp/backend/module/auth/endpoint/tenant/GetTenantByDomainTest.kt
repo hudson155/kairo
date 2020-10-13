@@ -12,16 +12,16 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class GetTenantByDomainTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val tenantDomain = "fakedomain.com"
 
     test(
-      endpoint = TenantApi.GetByDomain(tenantDomain),
-      expectedException = TenantNotFound()
+        endpoint = TenantApi.GetByDomain(tenantDomain),
+        expectedException = TenantNotFound()
     )
   }
 

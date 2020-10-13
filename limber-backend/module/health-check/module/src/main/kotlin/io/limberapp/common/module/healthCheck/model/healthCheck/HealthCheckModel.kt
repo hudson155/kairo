@@ -4,7 +4,7 @@ sealed class HealthCheckModel {
   object HealthyHealthCheckModel : HealthCheckModel()
 
   data class UnhealthyHealthCheckModel(
-    val reason: String,
-    val e: Exception,
+      val reason: String,
+      val e: Exception,
   ) : HealthCheckModel()
 }

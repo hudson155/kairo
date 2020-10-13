@@ -12,55 +12,55 @@ import java.util.*
 
 internal object FormInstanceQuestionRepFixtures {
   data class Fixture(
-    val creation: IntegrationTest.() -> FormInstanceQuestionRep.Creation,
-    val complete: IntegrationTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete,
+      val creation: IntegrationTest.() -> FormInstanceQuestionRep.Creation,
+      val complete: IntegrationTest.(questionGuid: UUID) -> FormInstanceQuestionRep.Complete,
   )
 
   val dateFixture = Fixture({
     FormInstanceDateQuestionRep.Creation(
-      date = LocalDate.now(clock),
+        date = LocalDate.now(clock),
     )
   }, { questionGuid ->
     FormInstanceDateQuestionRep.Complete(
-      createdDate = LocalDateTime.now(clock),
-      questionGuid = questionGuid,
-      date = LocalDate.now(clock),
+        createdDate = LocalDateTime.now(clock),
+        questionGuid = questionGuid,
+        date = LocalDate.now(clock),
     )
   })
 
   val radioSelectorFixture = Fixture({
     FormInstanceRadioSelectorQuestionRep.Creation(
-      selection = "Option 1",
+        selection = "Option 1",
     )
   }, { questionGuid ->
     FormInstanceRadioSelectorQuestionRep.Complete(
-      createdDate = LocalDateTime.now(clock),
-      questionGuid = questionGuid,
-      selection = "Option 1",
+        createdDate = LocalDateTime.now(clock),
+        questionGuid = questionGuid,
+        selection = "Option 1",
     )
   })
 
   val textFixture = Fixture({
     FormInstanceTextQuestionRep.Creation(
-      text = "Nothing significant to add.",
+        text = "Nothing significant to add.",
     )
   }, { questionGuid ->
     FormInstanceTextQuestionRep.Complete(
-      createdDate = LocalDateTime.now(clock),
-      questionGuid = questionGuid,
-      text = "Nothing significant to add.",
+        createdDate = LocalDateTime.now(clock),
+        questionGuid = questionGuid,
+        text = "Nothing significant to add.",
     )
   })
 
   val yesNoFixture = Fixture({
     FormInstanceYesNoQuestionRep.Creation(
-      yes = true,
+        yes = true,
     )
   }, { questionGuid ->
     FormInstanceYesNoQuestionRep.Complete(
-      createdDate = LocalDateTime.now(clock),
-      questionGuid = questionGuid,
-      yes = true,
+        createdDate = LocalDateTime.now(clock),
+        questionGuid = questionGuid,
+        yes = true,
     )
   })
 }

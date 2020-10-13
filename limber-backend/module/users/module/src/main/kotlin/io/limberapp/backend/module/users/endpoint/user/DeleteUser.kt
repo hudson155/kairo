@@ -13,14 +13,14 @@ import java.util.*
 
 @OptIn(LimberModule.Orgs::class)
 internal class DeleteUser @Inject constructor(
-  application: Application,
-  private val userService: UserService,
+    application: Application,
+    private val userService: UserService,
 ) : LimberApiEndpoint<UserApi.Delete, Unit>(
-  application = application,
-  endpointTemplate = UserApi.Delete::class.template()
+    application = application,
+    endpointTemplate = UserApi.Delete::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = UserApi.Delete(
-    userGuid = call.parameters.getAsType(UUID::class, "userGuid")
+      userGuid = call.parameters.getAsType(UUID::class, "userGuid")
   )
 
   override suspend fun Handler.handle(command: UserApi.Delete) {

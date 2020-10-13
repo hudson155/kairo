@@ -9,31 +9,31 @@ import java.time.LocalDateTime
 import java.util.*
 
 internal class OrgRoleMapper @Inject constructor(
-  private val clock: Clock,
-  private val uuidGenerator: UuidGenerator,
+    private val clock: Clock,
+    private val uuidGenerator: UuidGenerator,
 ) {
   fun model(orgGuid: UUID, rep: OrgRoleRep.Creation) = OrgRoleModel(
-    guid = uuidGenerator.generate(),
-    createdDate = LocalDateTime.now(clock),
-    orgGuid = orgGuid,
-    name = rep.name,
-    permissions = rep.permissions,
-    isDefault = rep.isDefault,
-    memberCount = 0,
+      guid = uuidGenerator.generate(),
+      createdDate = LocalDateTime.now(clock),
+      orgGuid = orgGuid,
+      name = rep.name,
+      permissions = rep.permissions,
+      isDefault = rep.isDefault,
+      memberCount = 0,
   )
 
   fun completeRep(model: OrgRoleModel) = OrgRoleRep.Complete(
-    guid = model.guid,
-    createdDate = model.createdDate,
-    name = model.name,
-    permissions = model.permissions,
-    isDefault = model.isDefault,
-    memberCount = model.memberCount,
+      guid = model.guid,
+      createdDate = model.createdDate,
+      name = model.name,
+      permissions = model.permissions,
+      isDefault = model.isDefault,
+      memberCount = model.memberCount,
   )
 
   fun update(rep: OrgRoleRep.Update) = OrgRoleModel.Update(
-    name = rep.name,
-    permissions = rep.permissions,
-    isDefault = rep.isDefault,
+      name = rep.name,
+      permissions = rep.permissions,
+      isDefault = rep.isDefault,
   )
 }

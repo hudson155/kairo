@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class DeleteUserRoleTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun userDoesNotExist() {

@@ -9,23 +9,23 @@ import io.limberapp.backend.module.users.store.account.UserStore
 import java.util.*
 
 internal class UserServiceImpl @Inject constructor(
-  @OptIn(LimberModule.Orgs::class) private val orgService: OrgService,
-  private val userStore: UserStore,
+    @OptIn(LimberModule.Orgs::class) private val orgService: OrgService,
+    private val userStore: UserStore,
 ) : UserService {
   override fun create(model: UserModel) =
-    userStore.create(model)
+      userStore.create(model)
 
   override fun get(userGuid: UUID) =
-    userStore.get(userGuid)
+      userStore.get(userGuid)
 
   override fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String) =
-    userStore.getByOrgGuidAndEmailAddress(orgGuid, emailAddress)
+      userStore.getByOrgGuidAndEmailAddress(orgGuid, emailAddress)
 
   override fun getByOrgGuid(orgGuid: UUID) =
-    userStore.getByOrgGuid(orgGuid)
+      userStore.getByOrgGuid(orgGuid)
 
   override fun update(userGuid: UUID, update: UserModel.Update) =
-    userStore.update(userGuid, update)
+      userStore.update(userGuid, update)
 
   @LimberModule.Orgs
   override fun delete(userGuid: UUID) {

@@ -14,16 +14,16 @@ import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.common.restInterface.template
 
 internal class GetTenantByDomain @Inject constructor(
-  application: Application,
-  private val tenantService: TenantService,
-  private val tenantDomainService: TenantDomainService,
-  private val tenantMapper: TenantMapper,
+    application: Application,
+    private val tenantService: TenantService,
+    private val tenantDomainService: TenantDomainService,
+    private val tenantMapper: TenantMapper,
 ) : LimberApiEndpoint<TenantApi.GetByDomain, TenantRep.Complete>(
-  application = application,
-  endpointTemplate = TenantApi.GetByDomain::class.template()
+    application = application,
+    endpointTemplate = TenantApi.GetByDomain::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.GetByDomain(
-    domain = call.parameters.getAsType(String::class, "domain")
+      domain = call.parameters.getAsType(String::class, "domain")
   )
 
   override suspend fun Handler.handle(command: TenantApi.GetByDomain): TenantRep.Complete {

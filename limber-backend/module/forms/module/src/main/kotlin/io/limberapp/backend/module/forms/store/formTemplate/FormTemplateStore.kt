@@ -14,39 +14,39 @@ import java.util.*
 
 @Singleton
 internal class FormTemplateStore @Inject constructor(
-  jdbi: Jdbi,
+    jdbi: Jdbi,
 ) : SqlStore(jdbi), Finder<FormTemplateModel, FormTemplateFinder> {
   fun create(model: FormTemplateModel): FormTemplateModel =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formTemplate/create.sql"))
-        .bindKotlin(model)
-        .mapTo(FormTemplateModel::class.java)
-        .single()
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formTemplate/create.sql"))
+            .bindKotlin(model)
+            .mapTo(FormTemplateModel::class.java)
+            .single()
+      }
 
   override fun <R> find(result: (Iterable<FormTemplateModel>) -> R, query: FormTemplateFinder.() -> Unit): R =
-    withHandle { handle ->
-      handle.createQuery(sqlResource("/store/formTemplate/find.sql"))
-        .withFinder(FormTemplateQueryBuilder().apply(query))
-        .mapTo(FormTemplateModel::class.java)
-        .let(result)
-    }
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formTemplate/find.sql"))
+            .withFinder(FormTemplateQueryBuilder().apply(query))
+            .mapTo(FormTemplateModel::class.java)
+            .let(result)
+      }
 
   fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel =
-    inTransaction { handle ->
-      handle.createQuery(sqlResource("/store/formTemplate/update.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formTemplateGuid", formTemplateGuid)
-        .bindKotlin(update)
-        .mapTo(FormTemplateModel::class.java)
-        .singleNullOrThrow() ?: throw FormTemplateNotFound()
-    }
+      inTransaction { handle ->
+        handle.createQuery(sqlResource("/store/formTemplate/update.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
+            .bindKotlin(update)
+            .mapTo(FormTemplateModel::class.java)
+            .singleNullOrThrow() ?: throw FormTemplateNotFound()
+      }
 
   fun delete(featureGuid: UUID, formTemplateGuid: UUID): Unit =
-    inTransaction { handle ->
-      handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
-        .bind("featureGuid", featureGuid)
-        .bind("formTemplateGuid", formTemplateGuid)
-        .updateOnly() ?: throw FormTemplateNotFound()
-    }
+      inTransaction { handle ->
+        handle.createUpdate(sqlResource("/store/formTemplate/delete.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
+            .updateOnly() ?: throw FormTemplateNotFound()
+      }
 }

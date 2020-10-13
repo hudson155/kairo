@@ -8,13 +8,13 @@ import java.util.*
 
 object OrgRoleMembershipRep {
   data class Creation(
-    val accountGuid: UUID,
+      val accountGuid: UUID,
   ) : CreationRep {
     override fun validate() = RepValidation {}
   }
 
   data class Complete(
-    override val createdDate: LocalDateTime,
-    val accountGuid: UUID,
+      override val createdDate: LocalDateTime,
+      val accountGuid: UUID,
   ) : CompleteRep
 }

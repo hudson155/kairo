@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test
 import java.util.*
 
 internal class DeleteFormInstanceTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
@@ -38,8 +38,8 @@ internal class DeleteFormInstanceTest(
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = feature0Guid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = feature0Guid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 
@@ -65,8 +65,8 @@ internal class DeleteFormInstanceTest(
     val formInstanceRep = FormInstanceRepFixtures.fixture.complete(this, formTemplateRep.guid, creatorAccountGuid, 1)
     setup {
       formInstanceClient(FormInstanceApi.Post(
-        featureGuid = featureGuid,
-        rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
+          featureGuid = featureGuid,
+          rep = FormInstanceRepFixtures.fixture.creation(formTemplateRep.guid, creatorAccountGuid)
       ))
     }
 

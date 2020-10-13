@@ -13,16 +13,16 @@ import java.util.*
 import kotlin.test.assertEquals
 
 internal class PatchTenantTest(
-  engine: TestApplicationEngine,
-  limberServer: LimberApplication<*>,
+    engine: TestApplicationEngine,
+    limberServer: LimberApplication<*>,
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
     test(
-      endpoint = TenantApi.Patch(orgGuid, TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")),
-      expectedException = TenantNotFound()
+        endpoint = TenantApi.Patch(orgGuid, TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")),
+        expectedException = TenantNotFound()
     )
   }
 
@@ -37,8 +37,11 @@ internal class PatchTenantTest(
     setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
 
     test(
-      endpoint = TenantApi.Patch(someclientOrgGuid, TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)),
-      expectedException = Auth0ClientIdAlreadyRegistered()
+        endpoint = TenantApi.Patch(
+            orgGuid = someclientOrgGuid,
+            rep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
+        ),
+        expectedException = Auth0ClientIdAlreadyRegistered()
     )
   }
 
@@ -52,7 +55,7 @@ internal class PatchTenantTest(
 
     tenantRep = tenantRep.copy(name = "new tenant (display) name")
     test(TenantApi.Patch(originalTenantRep.orgGuid,
-      TenantRep.Update(name = "new tenant (display) name"))) {
+        TenantRep.Update(name = "new tenant (display) name"))) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }
@@ -73,7 +76,7 @@ internal class PatchTenantTest(
 
     tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
     test(TenantApi.Patch(originalTenantRep.orgGuid,
-      TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"))) {
+        TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"))) {
       val actual = json.parse<TenantRep.Complete>(responseContent)
       assertEquals(tenantRep, actual)
     }

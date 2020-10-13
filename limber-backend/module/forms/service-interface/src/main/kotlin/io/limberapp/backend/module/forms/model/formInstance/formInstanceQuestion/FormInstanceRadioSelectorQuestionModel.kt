@@ -6,10 +6,10 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class FormInstanceRadioSelectorQuestionModel(
-  override val createdDate: LocalDateTime,
-  override val formInstanceGuid: UUID,
-  override val questionGuid: UUID?,
-  val selections: List<String>,
+    override val createdDate: LocalDateTime,
+    override val formInstanceGuid: UUID,
+    override val questionGuid: UUID?,
+    val selections: List<String>,
 ) : FormInstanceQuestionModel {
   override val type = FormTemplateQuestionModel.Type.RADIO_SELECTOR
 }

@@ -16,10 +16,10 @@ object FeatureRep {
   }
 
   data class Creation(
-    val rank: Int,
-    val name: String,
-    val path: String,
-    val type: Type,
+      val rank: Int,
+      val name: String,
+      val path: String,
+      val type: Type,
   ) : CreationRep {
     override fun validate() = RepValidation {
       validate(Creation::name) { Validator.featureName(value) }
@@ -28,20 +28,20 @@ object FeatureRep {
   }
 
   data class Complete(
-    val guid: UUID,
-    override val createdDate: LocalDateTime,
-    val rank: Int,
-    val name: String,
-    val path: String,
-    val type: Type,
-    val isDefaultFeature: Boolean,
+      val guid: UUID,
+      override val createdDate: LocalDateTime,
+      val rank: Int,
+      val name: String,
+      val path: String,
+      val type: Type,
+      val isDefaultFeature: Boolean,
   ) : CompleteRep
 
   data class Update(
-    val rank: Int? = null,
-    val name: String? = null,
-    val path: String? = null,
-    val isDefaultFeature: Boolean? = null,
+      val rank: Int? = null,
+      val name: String? = null,
+      val path: String? = null,
+      val isDefaultFeature: Boolean? = null,
   ) : UpdateRep {
     override fun validate() = RepValidation {
       validate(Update::name) { ifPresent { Validator.featureName(value) } }

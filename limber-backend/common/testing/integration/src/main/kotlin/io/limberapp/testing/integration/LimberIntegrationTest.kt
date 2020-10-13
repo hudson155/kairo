@@ -34,8 +34,8 @@ import kotlin.test.fail
 
 @ExtendWith(TestApplicationEngineParameterResolver::class)
 abstract class LimberIntegrationTest(
-  private val engine: TestApplicationEngine,
-  private val limberServer: LimberApplication<*>,
+    private val engine: TestApplicationEngine,
+    private val limberServer: LimberApplication<*>,
 ) {
   inner class LimberIntegrationTestMocks {
     operator fun <T : Any> get(key: KClass<T>): T = limberServer.injector.getInstance(key.java)
@@ -72,40 +72,40 @@ abstract class LimberIntegrationTest(
   }
 
   protected fun setup(endpoint: LimberEndpoint) = makeServerCall(
-    endpoint = endpoint,
-    expectedStatusCode = HttpStatusCode.OK,
-    block = {},
+      endpoint = endpoint,
+      expectedStatusCode = HttpStatusCode.OK,
+      block = {},
   )
 
   protected fun test(
-    endpoint: LimberEndpoint,
-    expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
-    test: TestApplicationCall.() -> Unit,
+      endpoint: LimberEndpoint,
+      expectedStatusCode: HttpStatusCode = HttpStatusCode.OK,
+      test: TestApplicationCall.() -> Unit,
   ) = makeServerCall(
-    endpoint = endpoint,
-    expectedStatusCode = expectedStatusCode,
-    block = test,
+      endpoint = endpoint,
+      expectedStatusCode = expectedStatusCode,
+      block = test,
   )
 
   protected fun test(endpoint: LimberEndpoint, expectedException: LimberException) {
     val expectedError = ExceptionMapper.handle(expectedException)
     makeServerCall(
-      endpoint = endpoint,
-      expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
-      block = {
-        val actual = json.parse<LimberError>(checkNotNull(response.content))
-        assertEquals(expectedError, actual)
-      },
+        endpoint = endpoint,
+        expectedStatusCode = HttpStatusCode.fromValue(expectedError.statusCode),
+        block = {
+          val actual = json.parse<LimberError>(checkNotNull(response.content))
+          assertEquals(expectedError, actual)
+        },
     )
   }
 
   private fun makeServerCall(
-    endpoint: LimberEndpoint,
-    expectedStatusCode: HttpStatusCode,
-    block: TestApplicationCall.() -> Unit,
+      endpoint: LimberEndpoint,
+      expectedStatusCode: HttpStatusCode,
+      block: TestApplicationCall.() -> Unit,
   ) {
     engine.createCall(endpoint)
-      .runTest(expectedStatusCode, block)
+        .runTest(expectedStatusCode, block)
   }
 
   private fun TestApplicationEngine.createCall(endpoint: LimberEndpoint): TestApplicationCall {
@@ -119,11 +119,11 @@ abstract class LimberIntegrationTest(
 
   private fun createAuthHeader(): HttpAuthHeader? {
     val jwt = JWT.create().withJwt(
-      jwt = Jwt(
-        org = null,
-        roles = setOf(JwtRole.SUPERUSER),
-        user = JwtUser(UUID.randomUUID(), null, null)
-      )
+        jwt = Jwt(
+            org = null,
+            roles = setOf(JwtRole.SUPERUSER),
+            user = JwtUser(UUID.randomUUID(), null, null)
+        )
     ).sign(Algorithm.none())
     return HttpAuthHeader.Single("Bearer", jwt)
   }
@@ -136,18 +136,18 @@ abstract class LimberIntegrationTest(
   }
 
   private fun TestApplicationCall.runTest(
-    expectedStatusCode: HttpStatusCode,
-    test: TestApplicationCall.() -> Unit,
+      expectedStatusCode: HttpStatusCode,
+      test: TestApplicationCall.() -> Unit,
   ) {
     assertTrue(
-      actual = requestHandled,
-      message = "The HTTP request was not handled." +
-        " Is the path wrong or did you forget to register the ApiEndpoint?"
+        actual = requestHandled,
+        message = "The HTTP request was not handled." +
+            " Is the path wrong or did you forget to register the ApiEndpoint?"
     )
     assertEquals(
-      expectedStatusCode,
-      response.status(),
-      "Unexpected HTTP response code.\nResponse: ${response.content}\n"
+        expectedStatusCode,
+        response.status(),
+        "Unexpected HTTP response code.\nResponse: ${response.content}\n"
     )
     test()
   }

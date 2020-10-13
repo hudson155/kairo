@@ -34,8 +34,8 @@ internal fun Adhoc.updateOwnerUserGuid() {
     private fun updateOwnerUserGuid(injector: Injector): UUID {
       val orgService = injector.getInstance(OrgService::class.java)
       return orgService.update(UpdateOwnerUserGuidArgs.orgGuid, OrgModel.Update(
-        name = null,
-        ownerUserGuid = UpdateOwnerUserGuidArgs.ownerUserGuid,
+          name = null,
+          ownerUserGuid = UpdateOwnerUserGuidArgs.ownerUserGuid,
       )).guid
     }
   }

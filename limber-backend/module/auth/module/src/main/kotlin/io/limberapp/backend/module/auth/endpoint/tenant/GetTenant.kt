@@ -15,16 +15,16 @@ import io.limberapp.common.restInterface.template
 import java.util.*
 
 internal class GetTenant @Inject constructor(
-  application: Application,
-  private val tenantService: TenantService,
-  private val tenantDomainService: TenantDomainService,
-  private val tenantMapper: TenantMapper,
+    application: Application,
+    private val tenantService: TenantService,
+    private val tenantDomainService: TenantDomainService,
+    private val tenantMapper: TenantMapper,
 ) : LimberApiEndpoint<TenantApi.Get, TenantRep.Complete>(
-  application = application,
-  endpointTemplate = TenantApi.Get::class.template()
+    application = application,
+    endpointTemplate = TenantApi.Get::class.template()
 ) {
   override suspend fun determineCommand(call: ApplicationCall) = TenantApi.Get(
-    orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
+      orgGuid = call.parameters.getAsType(UUID::class, "orgGuid")
   )
 
   override suspend fun Handler.handle(command: TenantApi.Get): TenantRep.Complete {
