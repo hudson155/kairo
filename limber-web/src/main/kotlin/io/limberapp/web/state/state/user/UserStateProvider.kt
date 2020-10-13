@@ -1,7 +1,7 @@
 package io.limberapp.web.state.state.user
 
 import io.limberapp.common.types.UUID
-import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.web.api.useApi
 import io.limberapp.web.state.ProviderValue

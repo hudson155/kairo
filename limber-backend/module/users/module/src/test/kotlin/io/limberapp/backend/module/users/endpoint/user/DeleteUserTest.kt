@@ -2,7 +2,7 @@ package io.limberapp.backend.module.users.endpoint.user
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.orgs.service.org.OrgService
-import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.exception.account.CannotDeleteOrgOwner
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures

@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.api.user
+package io.limberapp.backend.module.users.api.account
 
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.restInterface.HttpMethod

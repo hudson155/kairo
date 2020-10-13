@@ -1,7 +1,7 @@
 package io.limberapp.web.app.root.globalStateProvider
 
 import io.limberapp.backend.module.orgs.api.org.OrgApi
-import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.web.api.load
 import io.limberapp.web.api.useApi
 import io.limberapp.web.app.components.minimalPage.LinkType

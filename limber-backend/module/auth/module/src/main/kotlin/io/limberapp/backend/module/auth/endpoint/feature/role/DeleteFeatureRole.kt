@@ -6,7 +6,7 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
+import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import io.limberapp.common.restInterface.template
 import java.util.*

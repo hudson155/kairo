@@ -6,7 +6,7 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.users.api.user.role.UserRoleApi
+import io.limberapp.backend.module.users.api.account.UserRoleApi
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.exception.account.UserNotFound
 import io.limberapp.backend.module.users.model.account.UserModel

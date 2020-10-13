@@ -6,7 +6,7 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.mapper.org.OrgRoleMembershipMapper
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService

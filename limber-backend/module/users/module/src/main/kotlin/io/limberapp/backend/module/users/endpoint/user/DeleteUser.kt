@@ -6,7 +6,7 @@ import io.ktor.application.ApplicationCall
 import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.endpoint.LimberApiEndpoint
-import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.restInterface.template
 import java.util.*

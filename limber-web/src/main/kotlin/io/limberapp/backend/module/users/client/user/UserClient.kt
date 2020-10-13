@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.client.user
 
-import io.limberapp.backend.module.users.api.user.UserApi
+import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
 
 interface UserClient {

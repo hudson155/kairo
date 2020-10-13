@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.api.feature.role
+package io.limberapp.backend.module.auth.api.feature
 
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep

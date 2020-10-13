@@ -2,8 +2,8 @@ package io.limberapp.backend.module.auth.endpoint.feature.role
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
-import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
+import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepFixtures

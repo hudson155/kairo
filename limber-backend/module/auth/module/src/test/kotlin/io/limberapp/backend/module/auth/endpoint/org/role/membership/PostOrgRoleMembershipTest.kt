@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.endpoint.org.role.membership
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.exception.org.AccountIsAlreadyMemberOfOrgRole
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.testing.IntegrationTest

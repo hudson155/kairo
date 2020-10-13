@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.client.tenant
 
-import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
+import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder

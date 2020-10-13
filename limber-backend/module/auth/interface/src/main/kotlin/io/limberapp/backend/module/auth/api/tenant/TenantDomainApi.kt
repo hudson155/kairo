@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.auth.api.tenant.domain
+package io.limberapp.backend.module.auth.api.tenant
 
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep

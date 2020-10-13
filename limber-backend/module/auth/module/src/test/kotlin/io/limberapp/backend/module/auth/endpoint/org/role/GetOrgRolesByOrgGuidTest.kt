@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.endpoint.org.role
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.common.LimberApplication

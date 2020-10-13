@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.client.account
 
-import io.limberapp.backend.module.users.api.user.role.UserRoleApi
+import io.limberapp.backend.module.users.api.account.UserRoleApi
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 

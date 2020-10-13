@@ -2,8 +2,8 @@ package io.limberapp.backend.module.users.endpoint.user.role
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.users.api.user.UserApi
-import io.limberapp.backend.module.users.api.user.role.UserRoleApi
+import io.limberapp.backend.module.users.api.account.UserApi
+import io.limberapp.backend.module.users.api.account.UserRoleApi
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication

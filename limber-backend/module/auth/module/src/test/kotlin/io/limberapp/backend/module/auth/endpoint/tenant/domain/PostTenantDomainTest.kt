@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.endpoint.tenant.domain
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
-import io.limberapp.backend.module.auth.api.tenant.domain.TenantDomainApi
+import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep

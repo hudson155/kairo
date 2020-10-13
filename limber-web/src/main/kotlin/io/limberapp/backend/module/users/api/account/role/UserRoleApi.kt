@@ -1,4 +1,4 @@
-package io.limberapp.backend.module.users.api.user.role
+package io.limberapp.backend.module.users.api.account.role
 
 import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.common.restInterface.HttpMethod

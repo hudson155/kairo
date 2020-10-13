@@ -4,10 +4,10 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.module.auth.api.feature.role.FeatureRoleApi
+import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleMembershipApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest

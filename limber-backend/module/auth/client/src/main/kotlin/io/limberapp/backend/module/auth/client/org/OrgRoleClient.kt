@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.client.org
 
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder

@@ -2,7 +2,7 @@ package io.limberapp.backend.module.auth.endpoint.org.role
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
-import io.limberapp.backend.module.auth.api.org.role.OrgRoleApi
+import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
