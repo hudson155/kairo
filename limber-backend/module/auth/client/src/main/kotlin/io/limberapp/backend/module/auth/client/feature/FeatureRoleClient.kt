@@ -1,11 +1,12 @@
 package io.limberapp.backend.module.auth.client.feature
 
+import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 
-class FeatureRoleClient(private val httpClient: LimberHttpClient) {
+class FeatureRoleClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
       endpoint: FeatureRoleApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},

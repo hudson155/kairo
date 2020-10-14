@@ -1,11 +1,12 @@
 package io.limberapp.backend.module.forms.client.formTemplate
 
+import com.google.inject.Inject
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 
-class FormTemplateQuestionClient(private val httpClient: LimberHttpClient) {
+class FormTemplateQuestionClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
       endpoint: FormTemplateQuestionApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},

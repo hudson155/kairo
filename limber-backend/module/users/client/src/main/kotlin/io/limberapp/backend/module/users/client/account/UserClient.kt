@@ -1,11 +1,12 @@
 package io.limberapp.backend.module.users.client.account
 
+import com.google.inject.Inject
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 
-class UserClient(private val httpClient: LimberHttpClient) {
+class UserClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
       endpoint: UserApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},

@@ -1,11 +1,12 @@
 package io.limberapp.backend.module.auth.client.org
 
+import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 
-class OrgRoleMembershipClient(private val httpClient: LimberHttpClient) {
+class OrgRoleMembershipClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
       endpoint: OrgRoleMembershipApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
