@@ -6,6 +6,7 @@ import io.limberapp.backend.module.auth.client.jwtClaimsRequest.JwtClaimsRequest
 import io.limberapp.backend.module.auth.client.org.OrgRoleClient
 import io.limberapp.backend.module.auth.client.org.OrgRoleMembershipClient
 import io.limberapp.backend.module.auth.client.tenant.TenantClient
+import io.limberapp.backend.module.auth.client.tenant.TenantDomainClient
 import io.limberapp.common.LimberApplication
 import io.limberapp.testing.integration.LimberIntegrationTest
 import org.junit.jupiter.api.extension.ExtendWith
@@ -20,4 +21,5 @@ internal abstract class IntegrationTest(
   protected val orgRoleClient by lazy { OrgRoleClient(httpClient) }
   protected val orgRoleMembershipClient by lazy { OrgRoleMembershipClient(httpClient) }
   protected val tenantClient by lazy { TenantClient(httpClient) }
+  protected val tenantDomainClient by lazy { TenantDomainClient(httpClient) }
 }

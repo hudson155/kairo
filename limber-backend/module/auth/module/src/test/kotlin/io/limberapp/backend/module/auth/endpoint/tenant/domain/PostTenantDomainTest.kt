@@ -5,7 +5,6 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
-import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantDomainRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
@@ -13,7 +12,6 @@ import io.limberapp.common.LimberApplication
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PostTenantDomainTest(
     engine: TestApplicationEngine,
@@ -23,10 +21,9 @@ internal class PostTenantDomainTest(
   fun orgDoesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    test(
-        endpoint = TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.limberappFixture.creation()),
-        expectedException = TenantNotFound().unprocessable(),
-    )
+    test(expectError = TenantNotFound().unprocessable()) {
+      tenantDomainClient(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.limberappFixture.creation()))
+    }
   }
 
   @Test
@@ -43,10 +40,9 @@ internal class PostTenantDomainTest(
       tenantClient(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
     }
 
-    test(
-        endpoint = TenantDomainApi.Post(limberappOrgGuid, TenantDomainRepFixtures.someclientFixture.creation()),
-        expectedException = TenantDomainAlreadyRegistered()
-    )
+    test(expectError = TenantDomainAlreadyRegistered()) {
+      tenantDomainClient(TenantDomainApi.Post(limberappOrgGuid, TenantDomainRepFixtures.someclientFixture.creation()))
+    }
 
     test(expectResult = limberappTenantRep) {
       tenantClient(TenantApi.Get(limberappOrgGuid))
@@ -64,9 +60,8 @@ internal class PostTenantDomainTest(
 
     val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
     tenantRep = tenantRep.copy(domains = tenantRep.domains + tenantDomainRep)
-    test(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation())) {
-      val actual = json.parse<TenantDomainRep.Complete>(responseContent)
-      assertEquals(tenantDomainRep, actual)
+    test(expectResult = tenantDomainRep) {
+      tenantDomainClient(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation()))
     }
 
     test(expectResult = tenantRep) {

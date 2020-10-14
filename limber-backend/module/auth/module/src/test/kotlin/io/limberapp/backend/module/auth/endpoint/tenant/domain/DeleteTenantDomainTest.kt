@@ -3,15 +3,12 @@ package io.limberapp.backend.module.auth.endpoint.tenant.domain
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
-import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
-import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantDomainRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class DeleteTenantDomainTest(
     engine: TestApplicationEngine,
@@ -22,10 +19,9 @@ internal class DeleteTenantDomainTest(
     val orgGuid = UUID.randomUUID()
     val tenantDomain = "fakedomain.com"
 
-    test(
-        endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
-        expectedException = TenantDomainNotFound()
-    )
+    test(expectResult = null) {
+      tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomain))
+    }
   }
 
   @Test
@@ -38,10 +34,9 @@ internal class DeleteTenantDomainTest(
       tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
     }
 
-    test(
-        endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
-        expectedException = TenantDomainNotFound()
-    )
+    test(expectResult = null) {
+      tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomain))
+    }
 
     test(expectResult = tenantRep) {
       tenantClient(TenantApi.Get(orgGuid))
@@ -59,13 +54,14 @@ internal class DeleteTenantDomainTest(
 
     val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
     tenantRep = tenantRep.copy(domains = tenantRep.domains + tenantDomainRep)
-    test(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation())) {
-      val actual = json.parse<TenantDomainRep.Complete>(responseContent)
-      assertEquals(tenantDomainRep, actual)
+    test(expectResult = tenantDomainRep) {
+      tenantDomainClient(TenantDomainApi.Post(orgGuid, TenantDomainRepFixtures.someclientFixture.creation()))
     }
 
     tenantRep = tenantRep.copy(domains = tenantRep.domains - tenantDomainRep)
-    test(TenantDomainApi.Delete(orgGuid, tenantDomainRep.domain)) {}
+    test(expectResult = Unit) {
+      tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomainRep.domain))
+    }
 
     test(expectResult = tenantRep) {
       tenantClient(TenantApi.Get(orgGuid))
