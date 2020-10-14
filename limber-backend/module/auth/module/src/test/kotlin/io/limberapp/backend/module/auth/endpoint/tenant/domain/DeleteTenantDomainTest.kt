@@ -5,7 +5,6 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
-import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantDomainRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
@@ -35,16 +34,17 @@ internal class DeleteTenantDomainTest(
     val tenantDomain = "fakedomain.com"
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    }
 
     test(
         endpoint = TenantDomainApi.Delete(orgGuid, tenantDomain),
         expectedException = TenantDomainNotFound()
     )
 
-    test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(tenantRep, actual)
+    test(expectResult = tenantRep) {
+      tenantClient(TenantApi.Get(orgGuid))
     }
   }
 
@@ -53,7 +53,9 @@ internal class DeleteTenantDomainTest(
     val orgGuid = UUID.randomUUID()
 
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
+    }
 
     val tenantDomainRep = TenantDomainRepFixtures.someclientFixture.complete(this)
     tenantRep = tenantRep.copy(domains = tenantRep.domains + tenantDomainRep)
@@ -65,9 +67,8 @@ internal class DeleteTenantDomainTest(
     tenantRep = tenantRep.copy(domains = tenantRep.domains - tenantDomainRep)
     test(TenantDomainApi.Delete(orgGuid, tenantDomainRep.domain)) {}
 
-    test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(tenantRep, actual)
+    test(expectResult = tenantRep) {
+      tenantClient(TenantApi.Get(orgGuid))
     }
   }
 }

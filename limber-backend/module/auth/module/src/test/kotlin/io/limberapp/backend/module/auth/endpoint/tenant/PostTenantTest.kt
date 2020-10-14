@@ -5,13 +5,11 @@ import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
-import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PostTenantTest(
     engine: TestApplicationEngine,
@@ -23,15 +21,16 @@ internal class PostTenantTest(
     val someclientOrgGuid = UUID.randomUUID()
 
     val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    }
 
-    test(
-        endpoint = TenantApi.Post(
-            TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-                .copy(orgGuid = limberappTenantRep.orgGuid)
-        ),
-        expectedException = OrgAlreadyHasTenant()
-    )
+    test(expectError = OrgAlreadyHasTenant()) {
+      tenantClient(TenantApi.Post(
+          rep = TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
+              .copy(orgGuid = limberappTenantRep.orgGuid)
+      ))
+    }
   }
 
   @Test
@@ -40,15 +39,16 @@ internal class PostTenantTest(
     val someclientOrgGuid = UUID.randomUUID()
 
     val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    }
 
-    test(
-        endpoint = TenantApi.Post(
-            TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-                .copy(auth0ClientId = limberappTenantRep.auth0ClientId)
-        ),
-        expectedException = Auth0ClientIdAlreadyRegistered()
-    )
+    test(expectError = Auth0ClientIdAlreadyRegistered()) {
+      tenantClient(TenantApi.Post(
+          rep = TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
+              .copy(auth0ClientId = limberappTenantRep.auth0ClientId)
+      ))
+    }
   }
 
   @Test
@@ -56,16 +56,17 @@ internal class PostTenantTest(
     val limberappOrgGuid = UUID.randomUUID()
     val someclientOrgGuid = UUID.randomUUID()
 
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    }
 
     val duplicateDomain = TenantRepFixtures.limberappFixture.creation(limberappOrgGuid).domain
-    test(
-        endpoint = TenantApi.Post(
-            TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-                .copy(domain = duplicateDomain)
-        ),
-        expectedException = TenantDomainAlreadyRegistered()
-    )
+    test(expectError = TenantDomainAlreadyRegistered()) {
+      tenantClient(TenantApi.Post(
+          rep = TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
+              .copy(domain = duplicateDomain)
+      ))
+    }
   }
 
   @Test
@@ -74,25 +75,21 @@ internal class PostTenantTest(
     val someclientOrgGuid = UUID.randomUUID()
 
     val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
-    test(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid))) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(limberappTenantRep, actual)
+    test(expectResult = limberappTenantRep) {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
     }
 
     val someclientTenantRep = TenantRepFixtures.someclientFixture.complete(this, someclientOrgGuid)
-    test(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid))) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(someclientTenantRep, actual)
+    test(expectResult = someclientTenantRep) {
+      tenantClient(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
     }
 
-    test(TenantApi.Get(limberappOrgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(limberappTenantRep, actual)
+    test(expectResult = limberappTenantRep) {
+      tenantClient(TenantApi.Get(limberappOrgGuid))
     }
 
-    test(TenantApi.Get(someclientOrgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(someclientTenantRep, actual)
+    test(expectResult = someclientTenantRep) {
+      tenantClient(TenantApi.Get(someclientOrgGuid))
     }
   }
 }

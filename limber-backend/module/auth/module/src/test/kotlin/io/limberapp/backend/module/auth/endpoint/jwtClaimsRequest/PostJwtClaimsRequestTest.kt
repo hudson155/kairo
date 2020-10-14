@@ -66,7 +66,9 @@ internal class PostJwtClaimsRequestTest(
     } returns setOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
+    }
 
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
     setup {
@@ -172,7 +174,9 @@ internal class PostJwtClaimsRequestTest(
     } returns setOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(existingOrg.guid)))
+    }
 
     val membershipOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, 0)
     setup {

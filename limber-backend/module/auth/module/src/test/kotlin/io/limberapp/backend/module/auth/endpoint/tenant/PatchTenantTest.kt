@@ -3,14 +3,12 @@ package io.limberapp.backend.module.auth.endpoint.tenant
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.Auth0ClientIdAlreadyRegistered
-import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
 import io.limberapp.common.LimberApplication
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.test.assertEquals
 
 internal class PatchTenantTest(
     engine: TestApplicationEngine,
@@ -20,10 +18,9 @@ internal class PatchTenantTest(
   fun doesNotExist() {
     val orgGuid = UUID.randomUUID()
 
-    test(
-        endpoint = TenantApi.Patch(orgGuid, TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")),
-        expectedException = TenantNotFound()
-    )
+    test(expectResult = null) {
+      tenantClient(TenantApi.Patch(orgGuid, TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")))
+    }
   }
 
   @Test
@@ -32,17 +29,20 @@ internal class PatchTenantTest(
     val someclientOrgGuid = UUID.randomUUID()
 
     val limberappTenantRep = TenantRepFixtures.limberappFixture.complete(this, limberappOrgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
+    }
 
-    setup(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
+    }
 
-    test(
-        endpoint = TenantApi.Patch(
-            orgGuid = someclientOrgGuid,
-            rep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
-        ),
-        expectedException = Auth0ClientIdAlreadyRegistered()
-    )
+    test(expectError = Auth0ClientIdAlreadyRegistered()) {
+      tenantClient(TenantApi.Patch(
+          orgGuid = someclientOrgGuid,
+          rep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId)
+      ))
+    }
   }
 
   @Test
@@ -51,18 +51,20 @@ internal class PatchTenantTest(
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-
-    tenantRep = tenantRep.copy(name = "new tenant (display) name")
-    test(TenantApi.Patch(originalTenantRep.orgGuid,
-        TenantRep.Update(name = "new tenant (display) name"))) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(tenantRep, actual)
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
     }
 
-    test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(tenantRep, actual)
+    tenantRep = tenantRep.copy(name = "new tenant (display) name")
+    test(expectResult = tenantRep) {
+      tenantClient(TenantApi.Patch(
+          orgGuid = originalTenantRep.orgGuid,
+          rep = TenantRep.Update(name = "new tenant (display) name")
+      ))
+    }
+
+    test(expectResult = tenantRep) {
+      tenantClient(TenantApi.Get(orgGuid))
     }
   }
 
@@ -72,18 +74,20 @@ internal class PatchTenantTest(
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-
-    tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
-    test(TenantApi.Patch(originalTenantRep.orgGuid,
-        TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu"))) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(tenantRep, actual)
+    setup {
+      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
     }
 
-    test(TenantApi.Get(orgGuid)) {
-      val actual = json.parse<TenantRep.Complete>(responseContent)
-      assertEquals(tenantRep, actual)
+    tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
+    test(expectResult = tenantRep) {
+      tenantClient(TenantApi.Patch(
+          orgGuid = originalTenantRep.orgGuid,
+          rep = TenantRep.Update(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
+      ))
+    }
+
+    test(expectResult = tenantRep) {
+      tenantClient(TenantApi.Get(orgGuid))
     }
   }
 }
