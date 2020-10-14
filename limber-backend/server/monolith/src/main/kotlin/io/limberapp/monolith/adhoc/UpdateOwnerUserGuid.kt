@@ -2,7 +2,6 @@ package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
@@ -30,7 +29,6 @@ internal fun Adhoc.updateOwnerUserGuid() {
       application.shutDown(0)
     }
 
-    @OptIn(LimberModule.Orgs::class)
     private fun updateOwnerUserGuid(injector: Injector): UUID {
       val orgService = injector.getInstance(OrgService::class.java)
       return orgService.update(UpdateOwnerUserGuidArgs.orgGuid, OrgModel.Update(

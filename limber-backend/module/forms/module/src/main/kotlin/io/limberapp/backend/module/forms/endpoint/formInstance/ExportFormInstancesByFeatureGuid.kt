@@ -3,7 +3,6 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.Authorization
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
@@ -18,7 +17,6 @@ import io.limberapp.common.restInterface.template
 import java.time.ZoneId
 import java.util.*
 
-@OptIn(LimberModule.Orgs::class, LimberModule.Users::class)
 internal class ExportFormInstancesByFeatureGuid @Inject constructor(
     application: Application,
     private val featureService: FeatureService,

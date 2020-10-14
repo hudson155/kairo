@@ -2,7 +2,6 @@ package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
@@ -61,12 +60,6 @@ internal fun Adhoc.dbReset() {
     }
 
     @Suppress("LongMethod")
-    @OptIn(
-        LimberModule.Auth::class,
-        LimberModule.Forms::class,
-        LimberModule.Orgs::class,
-        LimberModule.Users::class,
-    )
     private fun insertFixtures(injector: Injector) {
       // Create Limber org and tenant.
 

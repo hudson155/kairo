@@ -4,7 +4,6 @@ package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.backend.module.LimberSqlModule
@@ -45,7 +44,6 @@ internal fun Adhoc.onboard() {
       application.shutDown(0)
     }
 
-    @OptIn(LimberModule.Orgs::class)
     private fun createOrg(injector: Injector): UUID {
       val orgService = injector.getInstance(OrgService::class.java)
       return orgService.create(OrgModel(
@@ -56,7 +54,6 @@ internal fun Adhoc.onboard() {
       )).guid
     }
 
-    @OptIn(LimberModule.Auth::class)
     private fun createTenant(injector: Injector, orgGuid: UUID) {
       val tenantService = injector.getInstance(TenantService::class.java)
       tenantService.create(TenantModel(
@@ -67,7 +64,6 @@ internal fun Adhoc.onboard() {
       ))
     }
 
-    @OptIn(LimberModule.Auth::class)
     private fun createTenantDomain(injector: Injector, orgGuid: UUID) {
       val tenantDomainService = injector.getInstance(TenantDomainService::class.java)
       tenantDomainService.create(TenantDomainModel(
@@ -77,7 +73,6 @@ internal fun Adhoc.onboard() {
       ))
     }
 
-    @OptIn(LimberModule.Auth::class)
     private fun createOrgRoles(injector: Injector, orgGuid: UUID) {
       val orgRoleService = injector.getInstance(OrgRoleService::class.java)
       orgRoleService.create(OrgRoleModel(

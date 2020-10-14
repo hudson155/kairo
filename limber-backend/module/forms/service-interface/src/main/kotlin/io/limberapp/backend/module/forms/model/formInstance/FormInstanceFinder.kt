@@ -1,10 +1,8 @@
 package io.limberapp.backend.module.forms.model.formInstance
 
-import io.limberapp.backend.LimberModule
 import io.limberapp.common.finder.SortableFinder
 import java.util.*
 
-@LimberModule.Forms
 interface FormInstanceFinder : SortableFinder<FormInstanceFinder.SortBy> {
   fun featureGuid(featureGuid: UUID)
   fun formInstanceGuid(formInstanceGuid: UUID)

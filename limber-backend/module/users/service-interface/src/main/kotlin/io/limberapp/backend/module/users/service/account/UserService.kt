@@ -1,10 +1,8 @@
 package io.limberapp.backend.module.users.service.account
 
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.users.model.account.UserModel
 import java.util.*
 
-@LimberModule.Users
 interface UserService {
   fun create(model: UserModel): UserModel
 
@@ -16,6 +14,5 @@ interface UserService {
 
   fun update(userGuid: UUID, update: UserModel.Update): UserModel
 
-  @LimberModule.Orgs
   fun delete(userGuid: UUID)
 }

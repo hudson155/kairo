@@ -4,7 +4,6 @@ package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.backend.module.LimberSqlModule
@@ -46,7 +45,6 @@ internal fun Adhoc.createCovidFeature() {
       application.shutDown(0)
     }
 
-    @OptIn(LimberModule.Orgs::class)
     private fun createFeature(injector: Injector): UUID {
       val featureService = injector.getInstance(FeatureService::class.java)
       return featureService.create(FeatureModel(
@@ -61,7 +59,6 @@ internal fun Adhoc.createCovidFeature() {
       )).guid
     }
 
-    @OptIn(LimberModule.Auth::class)
     private fun createFeatureRoles(injector: Injector, featureGuid: UUID) {
       val featureRoleService = injector.getInstance(FeatureRoleService::class.java)
       featureRoleService.create(FeatureRoleModel(
@@ -84,7 +81,6 @@ internal fun Adhoc.createCovidFeature() {
     }
 
     @Suppress("LongMethod", "MaxLineLength")
-    @OptIn(LimberModule.Forms::class)
     private fun createPreScreeningSelfAssessmentFormTemplate(injector: Injector, featureGuid: UUID) {
       val formTemplateService = injector.getInstance(FormTemplateService::class.java)
       val formTemplateQuestionService = injector.getInstance(FormTemplateQuestionService::class.java)
@@ -161,7 +157,6 @@ internal fun Adhoc.createCovidFeature() {
     }
 
     @Suppress("LongMethod", "MaxLineLength")
-    @OptIn(LimberModule.Forms::class)
     private fun createWorkplaceInspectionFormTemplate(injector: Injector, featureGuid: UUID) {
       val formTemplateService = injector.getInstance(FormTemplateService::class.java)
       val formTemplateQuestionService = injector.getInstance(FormTemplateQuestionService::class.java)

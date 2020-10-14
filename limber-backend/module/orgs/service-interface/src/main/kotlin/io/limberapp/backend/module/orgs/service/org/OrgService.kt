@@ -1,10 +1,8 @@
 package io.limberapp.backend.module.orgs.service.org
 
-import io.limberapp.backend.LimberModule
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import java.util.*
 
-@LimberModule.Orgs
 interface OrgService {
   fun create(model: OrgModel): OrgModel
 

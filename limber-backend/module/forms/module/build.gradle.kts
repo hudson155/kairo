@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
-
 plugins {
   kotlin("jvm")
   id(Plugins.detekt)
@@ -27,14 +25,6 @@ dependencies {
   testImplementation(project(":limber-backend:module:forms:client"))
 
   testImplementation(project(":limber-backend:server:monolith"))
-}
-
-tasks.withType<KotlinCompile<*>>().configureEach {
-  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Forms"
-}
-tasks.compileTestKotlin {
-  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Orgs"
-  kotlinOptions.freeCompilerArgs += "-Xopt-in=io.limberapp.backend.LimberModule.Users"
 }
 
 tasks.test {
