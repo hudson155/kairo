@@ -10,7 +10,7 @@ dependencies {
   implementation(project(":limber-backend:deprecated:common:module"))
   implementation(project(":limber-backend:deprecated:common:sql"))
 
-  implementation(project(":limber-backend:module:orgs:service-interface"))
+  implementation(project(":limber-backend:module:orgs:client"))
   api(project(":limber-backend:module:users:interface"))
   api(project(":limber-backend:module:users:service-interface"))
 

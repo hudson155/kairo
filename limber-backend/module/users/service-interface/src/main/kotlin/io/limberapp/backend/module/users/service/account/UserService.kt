@@ -14,5 +14,5 @@ interface UserService {
 
   fun update(userGuid: UUID, update: UserModel.Update): UserModel
 
-  fun delete(userGuid: UUID)
+  suspend fun delete(userGuid: UUID)
 }
