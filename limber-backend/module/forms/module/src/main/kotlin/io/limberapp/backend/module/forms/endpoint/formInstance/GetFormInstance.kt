@@ -35,7 +35,7 @@ internal class GetFormInstance @Inject constructor(
       featureGuid(command.featureGuid)
       formInstanceGuid(command.formInstanceGuid)
     } ?: throw FormInstanceNotFound()
-    if (formInstance.creatorAccountGuid != principal?.user?.guid) {
+    if (formInstance.creatorAccountGuid != principal?.userGuid) {
       Authorization.FeatureMemberWithFeaturePermission(
           featureGuid = command.featureGuid,
           featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES

@@ -37,7 +37,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
         featureGuid = command.featureGuid,
         featurePermission = FormsFeaturePermission.EXPORT_FORM_INSTANCES
     ).authorize()
-    if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.user?.guid) {
+    if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.userGuid) {
       Authorization.FeatureMemberWithFeaturePermission(
           featureGuid = command.featureGuid,
           featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES

@@ -27,7 +27,7 @@ import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngineEnvironment
-import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.backend.authorization.principal.JwtPrincipal
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.ApplicationModule
@@ -120,7 +120,7 @@ abstract class LimberApplication<C : Config>(application: Application, protected
   }
 
   private fun Authentication.Configuration.configureAuthentication() {
-    limberAuth<Jwt> {
+    limberAuth<JwtPrincipal> {
       verifier(
           scheme = JwtAuthVerifier.scheme,
           verifier = JwtAuthVerifier(config.authentication),

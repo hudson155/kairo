@@ -35,7 +35,7 @@ internal class DeleteFormInstanceQuestion @Inject constructor(
     Authorization.FeatureMemberWithFeaturePermission(
         featureGuid = command.featureGuid,
         featurePermission = when (formInstance.creatorAccountGuid) {
-          principal?.user?.guid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
+          principal?.userGuid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
           else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
         }
     ).authorize()

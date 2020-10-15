@@ -1,6 +1,7 @@
 package io.limberapp.backend.authorization
 
-import io.limberapp.backend.authorization.principal.Jwt
+import io.limberapp.auth.jwt.Jwt
+import io.limberapp.backend.authorization.principal.JwtPrincipal
 import io.limberapp.common.authorization.LimberAuthorization
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermission
@@ -9,21 +10,20 @@ import org.slf4j.LoggerFactory
 import java.util.*
 
 @Suppress("MethodOverloading")
-abstract class Authorization : LimberAuthorization<Jwt> {
+abstract class Authorization : LimberAuthorization<JwtPrincipal> {
   private val logger = LoggerFactory.getLogger(Authorization::class.java)
 
-  override fun authorize(principal: Jwt?): Boolean {
-    val authorized = authorizeInternal(principal)
+  override fun authorize(principal: JwtPrincipal?): Boolean {
+    val authorized = authorizeInternal(principal?.jwt)
     if (authorized) return true
     if (principal?.isSuperuser == true) {
-      if (principal.user == null) error("Cannot override Authorization access for a user with no UUID.")
-      logger.info("Overriding Authorization access for user with UUID ${principal.user.guid}.")
+      logger.info("Overriding Authorization access${principal.userGuid?.let { " for user with UUID $it" }.orEmpty()}.")
       return true
     }
     return false
   }
 
-  private val Jwt.isSuperuser get() = AccountRole.SUPERUSER in roles
+  private val JwtPrincipal.isSuperuser get() = AccountRole.SUPERUSER in jwt.roles
 
   protected abstract fun authorizeInternal(principal: Jwt?): Boolean
 

@@ -30,7 +30,7 @@ internal class GetFormInstancesByFeatureGuid @Inject constructor(
 
   override suspend fun Handler.handle(command: FormInstanceApi.GetByFeatureGuid): List<FormInstanceRep.Summary> {
     Authorization.FeatureMember(command.featureGuid).authorize()
-    if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.user?.guid) {
+    if (command.creatorAccountGuid == null || command.creatorAccountGuid != principal?.userGuid) {
       Authorization.FeatureMemberWithFeaturePermission(
           featureGuid = command.featureGuid,
           featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
