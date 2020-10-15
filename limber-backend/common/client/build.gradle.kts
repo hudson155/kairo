@@ -9,7 +9,6 @@ dependencies {
   api(project(":limber-backend:common:serialization"))
 
   api(Dependencies.Guice.guice)
-  implementation(Dependencies.Jackson.databind)
   implementation(Dependencies.Ktor.clientCio)
 }
 

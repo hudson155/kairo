@@ -1,5 +1,6 @@
 package io.limberapp.module.graphql.client.graphql
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
@@ -10,6 +11,6 @@ class GraphqlClient @Inject constructor(private val httpClient: LimberHttpClient
       endpoint: GraphqlApi,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<Unit>(checkNotNull(it))
+    readValue<Unit>(checkNotNull(it))
   }
 }

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.client.formInstance
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
@@ -11,21 +12,21 @@ class FormInstanceClient @Inject constructor(private val httpClient: LimberHttpC
       endpoint: FormInstanceApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<FormInstanceRep.Complete>(checkNotNull(it))
+    readValue<FormInstanceRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.Get,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<FormInstanceRep.Complete>(it) }
+    it?.let { readValue<FormInstanceRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.GetByFeatureGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<List<FormInstanceRep.Summary>>(checkNotNull(it))
+    readValue<List<FormInstanceRep.Summary>>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
@@ -39,13 +40,13 @@ class FormInstanceClient @Inject constructor(private val httpClient: LimberHttpC
       endpoint: FormInstanceApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<FormInstanceRep.Summary>(it) }
+    it?.let { readValue<FormInstanceRep.Summary>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 }

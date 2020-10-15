@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.client.jwtClaimsRequest
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
@@ -11,6 +12,6 @@ class JwtClaimsRequestClient @Inject constructor(private val httpClient: LimberH
       endpoint: JwtClaimsRequestApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<JwtClaimsRequestRep.Complete>(checkNotNull(it))
+    readValue<JwtClaimsRequestRep.Complete>(checkNotNull(it))
   }
 }

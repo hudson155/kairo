@@ -5,7 +5,7 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.exception.LimberHttpClientException
 import io.limberapp.common.LimberApplication
-import io.limberapp.common.serialization.Json
+import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.exception.LimberException
 import io.limberapp.exceptionMapping.ExceptionMapper
 import kotlinx.coroutines.runBlocking
@@ -26,7 +26,7 @@ abstract class LimberIntegrationTest(
 
   protected val httpClient: LimberHttpClient = IntegrationTestHttpClient(engine)
 
-  protected val json = Json(prettyPrint = true)
+  protected val objectMapper = limberObjectMapper(prettyPrint = true)
 
   protected val mocks = LimberIntegrationTestMocks()
 

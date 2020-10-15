@@ -16,7 +16,6 @@ dependencies {
   api(project(":limber-backend:deprecated:common:module"))
 
   implementation(Dependencies.Guice.guice)
-  implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Jackson.dataFormatYaml)
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)

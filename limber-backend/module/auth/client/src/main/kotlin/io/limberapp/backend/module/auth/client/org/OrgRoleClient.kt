@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.client.org
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
@@ -11,27 +12,27 @@ class OrgRoleClient @Inject constructor(private val httpClient: LimberHttpClient
       endpoint: OrgRoleApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<OrgRoleRep.Complete>(checkNotNull(it))
+    readValue<OrgRoleRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: OrgRoleApi.GetByOrgGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<Set<OrgRoleRep.Complete>>(checkNotNull(it))
+    readValue<Set<OrgRoleRep.Complete>>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: OrgRoleApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<OrgRoleRep.Complete>(it) }
+    it?.let { readValue<OrgRoleRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: OrgRoleApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 }

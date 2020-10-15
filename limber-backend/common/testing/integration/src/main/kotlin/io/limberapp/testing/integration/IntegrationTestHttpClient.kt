@@ -17,11 +17,11 @@ import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.serialization.Json
+import io.limberapp.common.serialization.limberObjectMapper
 import java.util.*
 
 class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : LimberHttpClient() {
-  private val json = Json(prettyPrint = true)
+  private val objectMapper = limberObjectMapper(prettyPrint = true)
 
   override suspend fun request(
       endpoint: LimberEndpoint,
@@ -34,7 +34,7 @@ class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : Lim
         builder()
       }
       requestBuilder.headers.forEach { (key, value) -> addHeader(key, value) }
-      endpoint.body?.let { setBody(json.stringify(it)) }
+      endpoint.body?.let { setBody(objectMapper.writeValueAsString(it)) }
     }
     return Pair(call.response.status()!!, call.response.content!!)
   }
@@ -49,9 +49,9 @@ class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : Lim
   }
 
   private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
-    withClaim(Claims.org, jwt.org?.let { json.stringify(it) })
-    withClaim(Claims.roles, json.stringifySet(jwt.roles))
-    withClaim(Claims.user, jwt.user?.let { json.stringify(it) })
+    withClaim(Claims.org, jwt.org?.let { objectMapper.writeValueAsString(it) })
+    withClaim(Claims.roles, objectMapper.writeValueAsString(jwt.roles))
+    withClaim(Claims.user, jwt.user?.let { objectMapper.writeValueAsString(it) })
     return this
   }
 

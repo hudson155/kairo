@@ -4,13 +4,11 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.authorization.principal.Claims
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.backend.authorization.principal.JwtOrg
-import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.common.ktorAuth.LimberAuthVerifier
-import io.limberapp.common.serialization.Json
+import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.config.authentication.AuthenticationConfig
 import io.limberapp.config.authentication.AuthenticationMechanism
 import org.slf4j.LoggerFactory
@@ -18,7 +16,7 @@ import org.slf4j.LoggerFactory
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVerifier<Jwt> {
   private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
 
-  private val json = Json()
+  private val objectMapper = limberObjectMapper()
 
   private val providers = authenticationConfig.mechanisms.associate { mechanism ->
     val provider = when (mechanism) {
@@ -45,11 +43,11 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
     } ?: return null
     return Jwt(
         org = decodedJwt.getClaim(Claims.org).asString()
-            ?.let { json.parse<JwtOrg>(it) },
+            ?.let { objectMapper.readValue(it) },
         roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString())
-            .let { json.parseSet<JwtRole>(it) },
+            .let { objectMapper.readValue(it) },
         user = decodedJwt.getClaim(Claims.user).asString()
-            ?.let { json.parse<JwtUser>(it) }
+            ?.let { objectMapper.readValue(it) }
     )
   }
 

@@ -22,7 +22,7 @@ import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
-import io.limberapp.common.serialization.Json
+import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
 import java.time.LocalDateTime
@@ -41,7 +41,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val clock: Clock,
     private val uuidGenerator: UuidGenerator,
 ) : JwtClaimsRequestService {
-  private val json = Json()
+  private val objectMapper = limberObjectMapper()
 
   override fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
     val user = getAccountOrCreateUser(request)
@@ -99,8 +99,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
   }
 
   private fun convertJwtToModel(org: JwtOrg, roles: Set<JwtRole>, user: JwtUser) = JwtClaimsModel(
-      org = json.stringify(org),
-      roles = json.stringifySet(roles),
-      user = json.stringify(user)
+      org = objectMapper.writeValueAsString(org),
+      roles = objectMapper.writeValueAsString(roles),
+      user = objectMapper.writeValueAsString(user)
   )
 }

@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.client.account
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.users.api.account.UserRoleApi
 import io.limberapp.client.LimberHttpClient
@@ -10,13 +11,13 @@ class UserRoleClient @Inject constructor(private val httpClient: LimberHttpClien
       endpoint: UserRoleApi.Put,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: UserRoleApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 }

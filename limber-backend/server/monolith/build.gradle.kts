@@ -26,7 +26,6 @@ dependencies {
   implementation(project(":limber-backend:module:orgs:module"))
   implementation(project(":limber-backend:module:users:module"))
 
-  implementation(Dependencies.Jackson.moduleKotlin)
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
   implementation(Dependencies.Ktor.serverCio)

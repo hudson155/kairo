@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.client.tenant
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
@@ -11,13 +12,13 @@ class TenantDomainClient @Inject constructor(private val httpClient: LimberHttpC
       endpoint: TenantDomainApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<TenantDomainRep.Complete>(checkNotNull(it))
+    readValue<TenantDomainRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: TenantDomainApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 }

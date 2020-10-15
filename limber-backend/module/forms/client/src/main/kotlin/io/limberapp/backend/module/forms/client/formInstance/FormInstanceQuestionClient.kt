@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.forms.client.formInstance
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
@@ -11,13 +12,13 @@ class FormInstanceQuestionClient @Inject constructor(private val httpClient: Lim
       endpoint: FormInstanceQuestionApi.Put,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<FormInstanceQuestionRep.Complete>(checkNotNull(it))
+    readValue<FormInstanceQuestionRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: FormInstanceQuestionApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 }

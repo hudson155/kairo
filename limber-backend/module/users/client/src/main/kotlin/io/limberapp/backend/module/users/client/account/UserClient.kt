@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.client.account
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.rep.account.UserRep
@@ -11,41 +12,41 @@ class UserClient @Inject constructor(private val httpClient: LimberHttpClient) {
       endpoint: UserApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<UserRep.Complete>(checkNotNull(it))
+    readValue<UserRep.Complete>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: UserApi.Get,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<UserRep.Complete>(it) }
+    it?.let { readValue<UserRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: UserApi.GetByOrgGuidAndEmailAddress,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<UserRep.Complete>(it) }
+    it?.let { readValue<UserRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: UserApi.GetByOrgGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    parse<Set<UserRep.Summary>>(checkNotNull(it))
+    readValue<Set<UserRep.Summary>>(checkNotNull(it))
   }
 
   suspend operator fun invoke(
       endpoint: UserApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<UserRep.Complete>(it) }
+    it?.let { readValue<UserRep.Complete>(it) }
   }
 
   suspend operator fun invoke(
       endpoint: UserApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {
-    it?.let { parse<Unit>(it) }
+    it?.let { readValue<Unit>(it) }
   }
 }
