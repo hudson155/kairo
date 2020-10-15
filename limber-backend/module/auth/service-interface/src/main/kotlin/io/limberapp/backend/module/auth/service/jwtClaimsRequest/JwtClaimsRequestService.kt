@@ -7,5 +7,5 @@ interface JwtClaimsRequestService {
   /**
    * Generates JWT claims. If a user with the same email address does not exist, it creates a user.
    */
-  fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel
+  suspend fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel
 }

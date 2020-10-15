@@ -12,10 +12,10 @@ import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepF
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.tenant.TenantRepFixtures
-import io.limberapp.backend.module.orgs.model.feature.FeatureModel
-import io.limberapp.backend.module.orgs.model.org.OrgModel
-import io.limberapp.backend.module.orgs.service.feature.FeatureService
-import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.backend.module.orgs.api.org.OrgApi
+import io.limberapp.backend.module.orgs.client.org.OrgClient
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
+import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
@@ -23,6 +23,7 @@ import io.limberapp.common.LimberApplication
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
 import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
+import io.mockk.coEvery
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -36,21 +37,21 @@ internal class PostJwtClaimsRequestTest(
   fun happyPathUserDoesNotExist() {
     val userGuid = uuidGenerator[4]
     val emailAddress = "jhudson@jhudson.ca"
-    val existingOrg = OrgModel(
+    val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
         createdDate = LocalDateTime.now(clock),
-        name = "Cranky Pasta",
-        ownerUserGuid = UUID.randomUUID()
-    )
-    val existingFeature = FeatureModel(
-        guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(clock),
-        orgGuid = existingOrg.guid,
         rank = 0,
         name = "Forms",
         path = "/forms",
-        type = FeatureModel.Type.FORMS,
+        type = FeatureRep.Type.FORMS,
         isDefaultFeature = true
+    )
+    val existingOrg = OrgRep.Complete(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        name = "Cranky Pasta",
+        ownerUserGuid = UUID.randomUUID(),
+        features = listOf(existingFeature)
     )
     every {
       mocks[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress)
@@ -58,12 +59,9 @@ internal class PostJwtClaimsRequestTest(
     every {
       mocks[UserService::class].create(any())
     } answers { firstArg() }
-    every {
-      mocks[OrgService::class].get(existingOrg.guid)
+    coEvery {
+      mocks[OrgClient::class](OrgApi.Get(existingOrg.guid))
     } returns existingOrg
-    every {
-      mocks[FeatureService::class].findAsSet(any())
-    } returns setOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     setup {
@@ -130,21 +128,21 @@ internal class PostJwtClaimsRequestTest(
 
   @Test
   fun happyPathUserExists() {
-    val existingOrg = OrgModel(
+    val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
         createdDate = LocalDateTime.now(clock),
-        name = "Cranky Pasta",
-        ownerUserGuid = UUID.randomUUID()
-    )
-    val existingFeature = FeatureModel(
-        guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(clock),
-        orgGuid = existingOrg.guid,
         rank = 0,
         name = "Forms",
         path = "/forms",
-        type = FeatureModel.Type.FORMS,
+        type = FeatureRep.Type.FORMS,
         isDefaultFeature = true
+    )
+    val existingOrg = OrgRep.Complete(
+        guid = UUID.randomUUID(),
+        createdDate = LocalDateTime.now(clock),
+        name = "Cranky Pasta",
+        ownerUserGuid = UUID.randomUUID(),
+        features = listOf(existingFeature)
     )
     val existingAccount = AccountModel(
         guid = UUID.randomUUID(),
@@ -166,12 +164,9 @@ internal class PostJwtClaimsRequestTest(
     every {
       mocks[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress)
     } returns existingUser
-    every {
-      mocks[OrgService::class].get(existingOrg.guid)
+    coEvery {
+      mocks[OrgClient::class](OrgApi.Get(existingOrg.guid))
     } returns existingOrg
-    every {
-      mocks[FeatureService::class].findAsSet(any())
-    } returns setOf(existingFeature)
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, existingOrg.guid)
     setup {
