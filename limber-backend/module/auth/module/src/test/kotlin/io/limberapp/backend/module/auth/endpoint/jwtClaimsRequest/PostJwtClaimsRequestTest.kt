@@ -1,9 +1,6 @@
 package io.limberapp.backend.module.auth.endpoint.jwtClaimsRequest
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.api.org.OrgRoleApi
@@ -23,6 +20,9 @@ import io.limberapp.backend.module.users.model.account.AccountModel
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.LimberApplication
+import io.limberapp.permissions.AccountRole
+import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
+import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -220,7 +220,7 @@ internal class PostJwtClaimsRequestTest(
             "\"permissions\":\"${orgPermissions.asDarb()}\"," +
             "\"features\":{}" +
             "}",
-        roles = "[\"${JwtRole.SUPERUSER}\"]",
+        roles = "[\"${AccountRole.SUPERUSER}\"]",
         user = "{" +
             "\"guid\":\"${existingUser.guid}\"," +
             "\"firstName\":\"${existingUser.firstName}\"," +

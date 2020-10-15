@@ -4,9 +4,8 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":limber-backend:common:permissions"))
   api(project(":limber-backend:common:sql"))
-
-  implementation(project(":limber-backend:deprecated:common"))
 }
 
 detekt {

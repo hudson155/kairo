@@ -5,10 +5,9 @@ plugins {
 
 dependencies {
   api(project(":limber-backend:common:exceptions"))
+  implementation(project(":limber-backend:common:permissions"))
   api(project(":limber-backend:common:rest-interface"))
   implementation(project(":limber-backend:common:util"))
-
-  api(project(":limber-backend:deprecated:common"))
 }
 
 detekt {

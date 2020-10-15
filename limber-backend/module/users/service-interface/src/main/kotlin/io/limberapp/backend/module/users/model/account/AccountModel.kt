@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.model.account
 
-import io.limberapp.backend.authorization.principal.JwtRole
+import io.limberapp.permissions.AccountRole
 import java.time.LocalDateTime
 import java.util.*
 
@@ -10,8 +10,8 @@ data class AccountModel(
     val identityProvider: Boolean,
     val superuser: Boolean,
 ) {
-  fun hasRole(role: JwtRole) = when (role) {
-    JwtRole.IDENTITY_PROVIDER -> identityProvider
-    JwtRole.SUPERUSER -> superuser
+  fun hasRole(role: AccountRole) = when (role) {
+    AccountRole.IDENTITY_PROVIDER -> identityProvider
+    AccountRole.SUPERUSER -> superuser
   }
 }

@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.rep.org
 
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
 import io.limberapp.common.validator.Validator
+import io.limberapp.permissions.orgPermissions.OrgPermissions
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.rep.UpdateRep

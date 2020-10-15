@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.rep.account
 
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.common.validator.Validator
+import io.limberapp.permissions.AccountRole
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.rep.UpdateRep
@@ -40,7 +40,7 @@ object UserRep {
   data class Complete(
       val guid: UUID,
       override val createdDate: LocalDateTime,
-      val roles: Set<JwtRole>,
+      val roles: Set<AccountRole>,
       val orgGuid: UUID,
       val firstName: String?,
       val lastName: String?,

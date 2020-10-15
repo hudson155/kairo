@@ -1,10 +1,10 @@
 package io.limberapp.backend.module.users.mapper.account
 
 import com.google.inject.Inject
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.util.uuid.UuidGenerator
+import io.limberapp.permissions.AccountRole
 import java.time.Clock
 import java.time.LocalDateTime
 
@@ -36,7 +36,7 @@ internal class UserMapper @Inject constructor(
   fun completeRep(model: UserModel) = UserRep.Complete(
       guid = model.guid,
       createdDate = model.createdDate,
-      roles = JwtRole.values().filter { model.hasRole(it) }.toSet(),
+      roles = AccountRole.values().filter { model.hasRole(it) }.toSet(),
       orgGuid = model.orgGuid,
       firstName = model.firstName,
       lastName = model.lastName,

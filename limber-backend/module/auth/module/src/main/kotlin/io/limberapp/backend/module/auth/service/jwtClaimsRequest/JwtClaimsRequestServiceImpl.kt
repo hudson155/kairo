@@ -1,15 +1,9 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
-import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
-import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermissions.Companion.union
-import io.limberapp.backend.authorization.principal.JwtFeature
-import io.limberapp.backend.authorization.principal.JwtOrg
-import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.authorization.principal.JwtUser
+import io.limberapp.auth.jwt.JwtFeature
+import io.limberapp.auth.jwt.JwtOrg
+import io.limberapp.auth.jwt.JwtUser
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
@@ -24,6 +18,12 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.common.util.uuid.UuidGenerator
+import io.limberapp.permissions.AccountRole
+import io.limberapp.permissions.featurePermissions.FeaturePermissions
+import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
+import io.limberapp.permissions.orgPermissions.OrgPermission
+import io.limberapp.permissions.orgPermissions.OrgPermissions
+import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
 import java.time.Clock
 import java.time.LocalDateTime
 import java.util.*
@@ -79,7 +79,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         .associate { it }
     return convertJwtToModel(
         org = JwtOrg(org.guid, org.name, isOwner, permissions, jwtFeatures),
-        roles = JwtRole.values().filter { user.hasRole(it) }.toSet(),
+        roles = AccountRole.values().filter { user.hasRole(it) }.toSet(),
         user = JwtUser(user.guid, user.firstName, user.lastName)
     )
   }
@@ -98,7 +98,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     return featurePermissions.unionIfSameType()
   }
 
-  private fun convertJwtToModel(org: JwtOrg, roles: Set<JwtRole>, user: JwtUser) = JwtClaimsModel(
+  private fun convertJwtToModel(org: JwtOrg, roles: Set<AccountRole>, user: JwtUser) = JwtClaimsModel(
       org = objectMapper.writeValueAsString(org),
       roles = objectMapper.writeValueAsString(roles),
       user = objectMapper.writeValueAsString(user)

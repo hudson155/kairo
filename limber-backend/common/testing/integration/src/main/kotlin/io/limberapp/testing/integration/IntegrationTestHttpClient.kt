@@ -10,19 +10,16 @@ import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
-import io.limberapp.backend.authorization.principal.Claims
+import io.limberapp.auth.jwt.JwtClaims
+import io.limberapp.auth.jwt.JwtUser
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.backend.authorization.principal.JwtRole
-import io.limberapp.backend.authorization.principal.JwtUser
 import io.limberapp.client.LimberHttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.common.serialization.limberObjectMapper
+import io.limberapp.permissions.AccountRole
 import java.util.*
 
 class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : LimberHttpClient() {
-  private val objectMapper = limberObjectMapper(prettyPrint = true)
-
   override suspend fun request(
       endpoint: LimberEndpoint,
       builder: LimberHttpClientRequestBuilder.() -> Unit,
@@ -42,16 +39,16 @@ class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : Lim
   private fun createAuthHeader(): HttpAuthHeader? {
     val jwt = JWT.create().withJwt(Jwt(
         org = null,
-        roles = setOf(JwtRole.SUPERUSER),
+        roles = setOf(AccountRole.SUPERUSER),
         user = JwtUser(UUID.randomUUID(), null, null)
     )).sign(Algorithm.none())
     return HttpAuthHeader.Single("Bearer", jwt)
   }
 
   private fun JWTCreator.Builder.withJwt(jwt: Jwt): JWTCreator.Builder {
-    withClaim(Claims.org, jwt.org?.let { objectMapper.writeValueAsString(it) })
-    withClaim(Claims.roles, objectMapper.writeValueAsString(jwt.roles))
-    withClaim(Claims.user, jwt.user?.let { objectMapper.writeValueAsString(it) })
+    withClaim(JwtClaims.org, jwt.org?.let { objectMapper.writeValueAsString(it) })
+    withClaim(JwtClaims.roles, objectMapper.writeValueAsString(jwt.roles))
+    withClaim(JwtClaims.user, jwt.user?.let { objectMapper.writeValueAsString(it) })
     return this
   }
 

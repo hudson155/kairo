@@ -5,8 +5,6 @@ plugins {
 
 dependencies {
   api(project(":limber-backend:common:finder"))
-
-  implementation(project(":limber-backend:deprecated:common"))
 }
 
 detekt {

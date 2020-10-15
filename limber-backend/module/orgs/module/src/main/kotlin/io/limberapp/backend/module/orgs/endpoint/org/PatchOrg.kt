@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.mapper.org.OrgMapper
@@ -12,6 +11,7 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class PatchOrg @Inject constructor(

@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.rep.feature
 
-import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
+import io.limberapp.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.rep.UpdateRep

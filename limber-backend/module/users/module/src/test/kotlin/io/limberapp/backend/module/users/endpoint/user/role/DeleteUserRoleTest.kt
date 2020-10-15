@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.api.account.UserRoleApi
 import io.limberapp.backend.module.users.exception.account.UserDoesNotHaveRole
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.permissions.AccountRole
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -20,7 +20,7 @@ internal class DeleteUserRoleTest(
     val userGuid = UUID.randomUUID()
 
     test(expectResult = null) {
-      userRoleClient(UserRoleApi.Delete(userGuid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Delete(userGuid, AccountRole.SUPERUSER))
     }
   }
 
@@ -34,7 +34,7 @@ internal class DeleteUserRoleTest(
     }
 
     test(expectError = UserDoesNotHaveRole()) {
-      userRoleClient(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Delete(userRep.guid, AccountRole.SUPERUSER))
     }
 
     test(expectResult = userRep) {
@@ -51,14 +51,14 @@ internal class DeleteUserRoleTest(
       userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
     }
 
-    userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
+    userRep = userRep.copy(roles = userRep.roles + AccountRole.SUPERUSER)
     setup {
-      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Put(userRep.guid, AccountRole.SUPERUSER))
     }
 
-    userRep = userRep.copy(roles = userRep.roles.filter { it != JwtRole.SUPERUSER }.toSet())
+    userRep = userRep.copy(roles = userRep.roles.filter { it != AccountRole.SUPERUSER }.toSet())
     test(expectResult = Unit) {
-      userRoleClient(UserRoleApi.Delete(userRep.guid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Delete(userRep.guid, AccountRole.SUPERUSER))
     }
 
     test(expectResult = userRep) {

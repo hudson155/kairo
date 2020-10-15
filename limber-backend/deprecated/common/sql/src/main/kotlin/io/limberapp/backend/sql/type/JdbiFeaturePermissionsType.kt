@@ -1,7 +1,7 @@
 package io.limberapp.backend.sql.type
 
-import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.common.sql.JdbiType
+import io.limberapp.permissions.featurePermissions.FeaturePermissions
 import org.jdbi.v3.core.argument.AbstractArgumentFactory
 import org.jdbi.v3.core.argument.Argument
 import org.jdbi.v3.core.config.ConfigRegistry

@@ -1,5 +1,6 @@
 rootProject.name = "limber"
 
+include(":limber-backend:common:auth")
 include(":limber-backend:common:client")
 include(":limber-backend:common:config")
 include(":limber-backend:common:exception-mapping")
@@ -7,6 +8,7 @@ include(":limber-backend:common:exceptions")
 include(":limber-backend:common:finder")
 include(":limber-backend:common:ktor-auth")
 include(":limber-backend:common:module")
+include(":limber-backend:common:permissions")
 include(":limber-backend:common:reps")
 include(":limber-backend:common:rest-interface")
 include(":limber-backend:common:serialization")
@@ -18,7 +20,6 @@ include(":limber-backend:common:type-conversion")
 include(":limber-backend:common:util")
 include(":limber-backend:common:validation")
 
-include(":limber-backend:deprecated:common")
 include(":limber-backend:deprecated:common:module")
 include(":limber-backend:deprecated:common:sql")
 include(":limber-backend:deprecated:common:sql:testing")

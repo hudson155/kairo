@@ -4,11 +4,11 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class DeleteOrgRoleMembership @Inject constructor(

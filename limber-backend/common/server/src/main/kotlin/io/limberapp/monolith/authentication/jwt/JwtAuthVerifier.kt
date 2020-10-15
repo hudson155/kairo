@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.backend.authorization.principal.Claims
+import io.limberapp.auth.jwt.JwtClaims
 import io.limberapp.backend.authorization.principal.Jwt
 import io.limberapp.common.ktorAuth.LimberAuthVerifier
 import io.limberapp.common.serialization.limberObjectMapper
@@ -42,11 +42,11 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
       null
     } ?: return null
     return Jwt(
-        org = decodedJwt.getClaim(Claims.org).asString()
+        org = decodedJwt.getClaim(JwtClaims.org).asString()
             ?.let { objectMapper.readValue(it) },
-        roles = requireNotNull(decodedJwt.getClaim(Claims.roles).asString())
+        roles = requireNotNull(decodedJwt.getClaim(JwtClaims.roles).asString())
             .let { objectMapper.readValue(it) },
-        user = decodedJwt.getClaim(Claims.user).asString()
+        user = decodedJwt.getClaim(JwtClaims.user).asString()
             ?.let { objectMapper.readValue(it) }
     )
   }

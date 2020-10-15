@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
+  api(project(":limber-backend:common:auth"))
   api(project(":limber-backend:common:module"))
-
-  api(project(":limber-backend:deprecated:common"))
+  api(project(":limber-backend:common:permissions"))
 
   implementation(Dependencies.Logging.slf4j)
 }

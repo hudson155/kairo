@@ -4,11 +4,11 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.AccountRole
 import java.util.*
 
 internal class DeleteOrg @Inject constructor(
@@ -23,7 +23,7 @@ internal class DeleteOrg @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: OrgApi.Delete) {
-    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    Authorization.Role(AccountRole.SUPERUSER).authorize()
     orgService.delete(command.orgGuid)
   }
 }

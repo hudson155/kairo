@@ -4,11 +4,11 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.AccountRole
 import java.util.*
 
 internal class DeleteTenant @Inject constructor(
@@ -23,7 +23,7 @@ internal class DeleteTenant @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: TenantApi.Delete) {
-    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    Authorization.Role(AccountRole.SUPERUSER).authorize()
     tenantService.delete(command.orgGuid)
   }
 }

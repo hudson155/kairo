@@ -14,7 +14,7 @@ import java.io.Closeable
 private val SUCCESSFUL_RESPONSE_RANGE = 200..299
 
 abstract class LimberHttpClient : Closeable {
-  private val objectMapper = limberObjectMapper(prettyPrint = true)
+  protected val objectMapper = limberObjectMapper(prettyPrint = true)
 
   suspend fun <T> request(
       endpoint: LimberEndpoint,

@@ -4,13 +4,13 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.AccountRole
 
 internal class PostUser @Inject constructor(
     application: Application,
@@ -26,7 +26,7 @@ internal class PostUser @Inject constructor(
 
   override suspend fun Handler.handle(command: UserApi.Post): UserRep.Complete {
     val rep = command.rep.required()
-    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    Authorization.Role(AccountRole.SUPERUSER).authorize()
     val user = userService.create(userMapper.model(rep))
     return userMapper.completeRep(user)
   }

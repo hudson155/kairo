@@ -4,13 +4,13 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.mapper.feature.FeatureMapper
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class PatchFeature @Inject constructor(

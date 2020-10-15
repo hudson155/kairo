@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.users.endpoint.user.role
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.api.account.UserRoleApi
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.permissions.AccountRole
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -19,7 +19,7 @@ internal class PutUserRoleTest(
     val userGuid = UUID.randomUUID()
 
     test(expectResult = null) {
-      userRoleClient(UserRoleApi.Put(userGuid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Put(userGuid, AccountRole.SUPERUSER))
     }
   }
 
@@ -32,9 +32,9 @@ internal class PutUserRoleTest(
       userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
     }
 
-    userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
+    userRep = userRep.copy(roles = userRep.roles + AccountRole.SUPERUSER)
     test(expectResult = Unit) {
-      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Put(userRep.guid, AccountRole.SUPERUSER))
     }
 
     test(expectResult = userRep) {
@@ -51,13 +51,13 @@ internal class PutUserRoleTest(
       userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
     }
 
-    userRep = userRep.copy(roles = userRep.roles + JwtRole.SUPERUSER)
+    userRep = userRep.copy(roles = userRep.roles + AccountRole.SUPERUSER)
     setup {
-      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Put(userRep.guid, AccountRole.SUPERUSER))
     }
 
     test(expectResult = Unit) {
-      userRoleClient(UserRoleApi.Put(userRep.guid, JwtRole.SUPERUSER))
+      userRoleClient(UserRoleApi.Put(userRep.guid, AccountRole.SUPERUSER))
     }
 
     test(expectResult = userRep) {

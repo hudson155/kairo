@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.limberapp.backend.authorization.Authorization
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
@@ -12,6 +11,7 @@ import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.AccountRole
 import java.util.*
 
 internal class PatchTenant @Inject constructor(
@@ -30,7 +30,7 @@ internal class PatchTenant @Inject constructor(
 
   override suspend fun Handler.handle(command: TenantApi.Patch): TenantRep.Complete {
     val rep = command.rep.required()
-    Authorization.Role(JwtRole.SUPERUSER).authorize()
+    Authorization.Role(AccountRole.SUPERUSER).authorize()
     val tenant = tenantService.update(command.orgGuid, tenantMapper.update(rep))
     val domains = tenantDomainService.findAsSet { orgGuid(tenant.orgGuid) }
     return tenantMapper.completeRep(tenant, domains)

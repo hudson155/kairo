@@ -1,10 +1,10 @@
 package io.limberapp.backend.authorization
 
-import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermission
-import io.limberapp.backend.authorization.permissions.orgPermissions.OrgPermission
 import io.limberapp.backend.authorization.principal.Jwt
-import io.limberapp.backend.authorization.principal.JwtRole
 import io.limberapp.common.authorization.LimberAuthorization
+import io.limberapp.permissions.AccountRole
+import io.limberapp.permissions.featurePermissions.FeaturePermission
+import io.limberapp.permissions.orgPermissions.OrgPermission
 import org.slf4j.LoggerFactory
 import java.util.*
 
@@ -23,7 +23,7 @@ abstract class Authorization : LimberAuthorization<Jwt> {
     return false
   }
 
-  private val Jwt.isSuperuser get() = JwtRole.SUPERUSER in roles
+  private val Jwt.isSuperuser get() = AccountRole.SUPERUSER in roles
 
   protected abstract fun authorizeInternal(principal: Jwt?): Boolean
 
@@ -35,7 +35,7 @@ abstract class Authorization : LimberAuthorization<Jwt> {
     override fun authorizeInternal(principal: Jwt?) = principal != null
   }
 
-  class Role(private val role: JwtRole) : Authorization() {
+  class Role(private val role: AccountRole) : Authorization() {
     override fun authorizeInternal(principal: Jwt?): Boolean {
       principal ?: return false
       return role in principal.roles
