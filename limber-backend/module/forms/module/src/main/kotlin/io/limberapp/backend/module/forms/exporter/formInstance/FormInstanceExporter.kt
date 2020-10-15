@@ -20,8 +20,7 @@ internal class FormInstanceExporter(
   enum class CsvColumn(val display: String) {
     NUMBER("Number"),
     SUBMITTED_DATE("Submitted date"),
-    CREATOR_NAME("Creator name"),
-    CREATOR_EMAIL_ADDRESS("Creator email address");
+    CREATOR_NAME("Creator name");
   }
 
   fun export(): String {
@@ -52,6 +51,5 @@ internal class FormInstanceExporter(
     CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).let {
       return@let listOfNotNull(it.firstName, it.lastName).joinToString(" ")
     }
-    CsvColumn.CREATOR_EMAIL_ADDRESS -> checkNotNull(users[creatorAccountGuid]).emailAddress
   }
 }

@@ -38,17 +38,15 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
-        every { this@apply.emailAddress } returns "jhudson@jhudson.ca"
       }
       val existingUser1 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
-        every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
-      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n") {
+      test(expectResult = "Number,Submitted date,Creator name\n") {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
             featureGuid = featureGuid,
             creatorAccountGuid = null,
@@ -69,13 +67,11 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
-        every { this@apply.emailAddress } returns "jhudson@jhudson.ca"
       }
       val existingUser1 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
-        every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
@@ -109,9 +105,9 @@ object ExportFormInstancesByFeatureGuidTest {
         ))
       }
 
-      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n"
-          + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n"
-          + "${formInstance1Rep.number},,Bill Gates,bill.gates@microsoft.com\n"
+      test(expectResult = "Number,Submitted date,Creator name\n"
+          + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson\n"
+          + "${formInstance1Rep.number},,Bill Gates\n"
       ) {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
             featureGuid = featureGuid,
@@ -138,13 +134,11 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
-        every { this@apply.emailAddress } returns "jhudson@jhudson.ca"
       }
       val existingUser1 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
-        every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
@@ -167,7 +161,7 @@ object ExportFormInstancesByFeatureGuidTest {
         ))
       }
 
-      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n") {
+      test(expectResult = "Number,Submitted date,Creator name\n") {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
             featureGuid = featureGuid,
             creatorAccountGuid = UUID.randomUUID(),
@@ -188,13 +182,11 @@ object ExportFormInstancesByFeatureGuidTest {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
-        every { this@apply.emailAddress } returns "jhudson@jhudson.ca"
       }
       val existingUser1 = mockk<UserModel>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
-        every { this@apply.emailAddress } returns "bill.gates@microsoft.com"
       }
       every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
 
@@ -227,8 +219,8 @@ object ExportFormInstancesByFeatureGuidTest {
         ))
       }
 
-      test(expectResult = "Number,Submitted date,Creator name,Creator email address\n"
-          + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson,jhudson@jhudson.ca\n"
+      test(expectResult = "Number,Submitted date,Creator name\n"
+          + "${formInstance0Rep.number},\"$FIXED_CLOCK_FORMATTED_VALUE\",Jeff Hudson\n"
       ) {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
             featureGuid = featureGuid,
