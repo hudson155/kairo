@@ -33,7 +33,7 @@ class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : Lim
       requestBuilder.headers.forEach { (key, value) -> addHeader(key, value) }
       endpoint.body?.let { setBody(objectMapper.writeValueAsString(it)) }
     }
-    return Pair(call.response.status()!!, call.response.content!!)
+    return Pair(checkNotNull(call.response.status()), checkNotNull(call.response.content))
   }
 
   private fun createAuthHeader(): HttpAuthHeader? {
