@@ -9,7 +9,7 @@ object Versions {
   const val auth0JwksRsa = "0.12.0"
 
   // https://github.com/detekt/detekt/releases
-  const val detekt = "1.13.1"
+  const val detekt = "1.14.1"
 
   // https://github.com/flyway/flyway/releases
   const val flyway = "7.0.3"

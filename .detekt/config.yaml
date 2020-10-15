@@ -61,6 +61,8 @@ complexity:
   NestedBlockDepth:
     active: true
     threshold: 4
+  ReplaceSafeCallChainWithRun:
+    active: true
   StringLiteralDuplication:
     active: true
     excludes: "**/src/test/**/*Test.kt"
@@ -84,6 +86,8 @@ coroutines:
   GlobalCoroutineUsage:
     active: true
   RedundantSuspendModifier:
+    active: true
+  SuspendFunWithFlowReturnType:
     active: true
 
 empty-blocks:
@@ -158,6 +162,10 @@ formatting:
   android: false
   AnnotationOnSeparateLine:
     active: false
+  AnnotationSpacing:
+    active: true
+  ArgumentListWrapping:
+    active: true
   ChainWrapping:
     active: true
   CommentSpacing:
@@ -352,6 +360,8 @@ potential-bugs:
 
 style:
   active: true
+  ClassOrdering:
+    active: false
   CollapsibleIfStatements:
     active: true
   DataClassContainsFunctions:
