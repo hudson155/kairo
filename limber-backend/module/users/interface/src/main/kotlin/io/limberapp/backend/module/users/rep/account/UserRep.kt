@@ -13,14 +13,14 @@ import java.util.*
 object UserRep {
   data class Creation(
       val orgGuid: UUID,
-      val firstName: String,
-      val lastName: String,
+      val firstName: String?,
+      val lastName: String?,
       val emailAddress: String,
       val profilePhotoUrl: String? = null,
   ) : CreationRep {
     override fun validate() = RepValidation {
-      validate(Creation::firstName) { Validator.humanName(value) }
-      validate(Creation::lastName) { Validator.humanName(value) }
+      validate(Creation::firstName) { ifPresent { Validator.humanName(value) } }
+      validate(Creation::lastName) { ifPresent { Validator.humanName(value) } }
       validate(Creation::emailAddress) { Validator.emailAddress(value) }
       validate(Creation::profilePhotoUrl) { ifPresent { Validator.url(value) } }
     }
