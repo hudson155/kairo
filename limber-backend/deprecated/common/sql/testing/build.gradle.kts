@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:deprecated:common:sql"))
+  api(project(":limber-backend:common:sql"))
 }
 
 detekt {

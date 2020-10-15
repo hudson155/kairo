@@ -18,7 +18,6 @@ dependencies {
   implementation(project(":limber-backend:common:sql"))
 
   implementation(project(":limber-backend:deprecated:common:module"))
-  implementation(project(":limber-backend:deprecated:common:sql"))
 
   implementation(project(":limber-backend:module:auth:module"))
   implementation(project(":limber-backend:module:forms:module"))

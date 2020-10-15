@@ -21,7 +21,6 @@ include(":limber-backend:common:util")
 include(":limber-backend:common:validation")
 
 include(":limber-backend:deprecated:common:module")
-include(":limber-backend:deprecated:common:sql")
 include(":limber-backend:deprecated:common:sql:testing")
 
 include(":limber-backend:module:auth:client")
