@@ -47,7 +47,6 @@ include(":limber-backend:module:orgs:service-interface")
 include(":limber-backend:module:users:client")
 include(":limber-backend:module:users:interface")
 include(":limber-backend:module:users:module")
-include(":limber-backend:module:users:service-interface")
 
 include(":limber-backend:server:graphql")
 include(":limber-backend:server:monolith")
