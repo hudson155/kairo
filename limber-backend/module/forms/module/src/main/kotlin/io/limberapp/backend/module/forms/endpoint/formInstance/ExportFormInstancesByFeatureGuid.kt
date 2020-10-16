@@ -10,7 +10,8 @@ import io.limberapp.backend.module.forms.exporter.formInstance.FormInstanceExpor
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import io.limberapp.backend.module.orgs.service.feature.FeatureService
-import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.backend.module.users.api.account.UserApi
+import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.common.finder.SortableFinder
 import io.limberapp.common.restInterface.template
 import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
@@ -21,7 +22,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
     application: Application,
     private val featureService: FeatureService,
     private val formInstanceService: FormInstanceService,
-    private val userService: UserService,
+    private val userClient: UserClient,
 ) : LimberApiEndpoint<FormInstanceApi.ExportByFeatureGuid, String>(
     application = application,
     endpointTemplate = FormInstanceApi.ExportByFeatureGuid::class.template()
@@ -49,7 +50,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
       sortBy(FormInstanceFinder.SortBy.NUMBER, SortableFinder.SortDirection.ASCENDING)
     }
     val feature = featureService.findOnlyOrThrow { featureGuid(command.featureGuid) }
-    val users = userService.getByOrgGuid(feature.orgGuid)
+    val users = userClient(UserApi.GetByOrgGuid(feature.orgGuid))
     return FormInstanceExporter(
         users = users.associateBy { it.guid },
         timeZone = command.timeZone,

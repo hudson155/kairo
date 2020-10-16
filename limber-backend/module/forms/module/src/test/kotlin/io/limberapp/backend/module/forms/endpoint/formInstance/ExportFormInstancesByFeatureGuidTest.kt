@@ -9,9 +9,11 @@ import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInsta
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.backend.module.orgs.service.feature.FeatureService
-import io.limberapp.backend.module.users.model.account.UserModel
-import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.backend.module.users.api.account.UserApi
+import io.limberapp.backend.module.users.client.account.UserClient
+import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.LimberApplication
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
@@ -34,17 +36,17 @@ object ExportFormInstancesByFeatureGuidTest {
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
       every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
-      val existingUser0 = mockk<UserModel>().apply {
+      val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
       }
-      val existingUser1 = mockk<UserModel>().apply {
+      val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
       }
-      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
       test(expectResult = "Number,Submitted date,Creator name\n") {
         formInstanceClient(FormInstanceApi.ExportByFeatureGuid(
@@ -63,17 +65,17 @@ object ExportFormInstancesByFeatureGuidTest {
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
       every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
-      val existingUser0 = mockk<UserModel>().apply {
+      val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
       }
-      val existingUser1 = mockk<UserModel>().apply {
+      val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
       }
-      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       setup {
@@ -130,17 +132,17 @@ object ExportFormInstancesByFeatureGuidTest {
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
       every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
-      val existingUser0 = mockk<UserModel>().apply {
+      val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
       }
-      val existingUser1 = mockk<UserModel>().apply {
+      val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
       }
-      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       setup {
@@ -178,17 +180,17 @@ object ExportFormInstancesByFeatureGuidTest {
       val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
       every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
 
-      val existingUser0 = mockk<UserModel>().apply {
+      val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Jeff"
         every { this@apply.lastName } returns "Hudson"
       }
-      val existingUser1 = mockk<UserModel>().apply {
+      val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
         every { this@apply.firstName } returns "Bill"
         every { this@apply.lastName } returns "Gates"
       }
-      every { mocks[UserService::class].getByOrgGuid(orgGuid) } returns setOf(existingUser0, existingUser1)
+      coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
       val formTemplateRep = FormTemplateRepFixtures.exampleFormFixture.complete(this, 0)
       setup {

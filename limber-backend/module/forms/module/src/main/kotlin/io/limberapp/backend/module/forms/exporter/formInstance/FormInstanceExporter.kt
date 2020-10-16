@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.forms.exporter.formInstance
 
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
-import io.limberapp.backend.module.users.model.account.UserModel
+import io.limberapp.backend.module.users.rep.account.UserRep
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import org.apache.commons.csv.QuoteMode
@@ -13,7 +13,7 @@ import java.util.*
 private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EE, MMM d, yyyy 'at' H:mm zz")
 
 internal class FormInstanceExporter(
-    private val users: Map<UUID, UserModel>,
+    private val users: Map<UUID, UserRep.Summary>,
     private val timeZone: ZoneId?,
     private val formInstances: List<FormInstanceModel>,
 ) {
