@@ -32,9 +32,9 @@ internal class FeatureRoleStore @Inject constructor(
         }
       }
 
-  fun getByFeatureGuidAndOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel> =
+  fun getByOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel> =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/featureRole/getByFeatureGuidAndOrgRoleGuids.sql"))
+        handle.createQuery(sqlResource("/store/featureRole/getByOrgRoleGuids.sql"))
             .bind("featureGuid", featureGuid)
             .bindByType("orgRoleGuids", orgRoleGuids, typeOf<Set<UUID>>().javaType)
             .mapTo(FeatureRoleModel::class.java)

@@ -18,8 +18,8 @@ internal class UserServiceImpl @Inject constructor(
   override fun get(userGuid: UUID) =
       userStore.get(userGuid)
 
-  override fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String) =
-      userStore.getByOrgGuidAndEmailAddress(orgGuid, emailAddress)
+  override fun getByEmailAddress(orgGuid: UUID, emailAddress: String) =
+      userStore.getByEmailAddress(orgGuid, emailAddress)
 
   override fun getByOrgGuid(orgGuid: UUID) =
       userStore.getByOrgGuid(orgGuid)

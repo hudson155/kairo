@@ -36,9 +36,9 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
             .singleOrNull()
       }
 
-  fun getByOrgGuidAndEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? =
+  fun getByEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/user/getByOrgGuidAndEmailAddress.sql"))
+        handle.createQuery(sqlResource("/store/user/getByEmailAddress.sql"))
             .bind("orgGuid", orgGuid)
             .bind("emailAddress", emailAddress)
             .mapTo(UserModel::class.java)

@@ -6,7 +6,7 @@ import java.util.*
 interface FeatureRoleService {
   fun create(model: FeatureRoleModel): FeatureRoleModel
 
-  fun getByFeatureGuidAndOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel>
+  fun getByOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel>
 
   fun getByFeatureGuid(featureGuid: UUID): Set<FeatureRoleModel>
 

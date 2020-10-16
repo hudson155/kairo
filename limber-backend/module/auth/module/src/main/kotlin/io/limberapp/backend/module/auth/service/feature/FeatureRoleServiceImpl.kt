@@ -11,8 +11,8 @@ internal class FeatureRoleServiceImpl @Inject constructor(
   override fun create(model: FeatureRoleModel) =
       featureRoleStore.create(model)
 
-  override fun getByFeatureGuidAndOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>) =
-      featureRoleStore.getByFeatureGuidAndOrgRoleGuids(featureGuid, orgRoleGuids)
+  override fun getByOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>) =
+      featureRoleStore.getByOrgRoleGuids(featureGuid, orgRoleGuids)
 
   override fun getByFeatureGuid(featureGuid: UUID) =
       featureRoleStore.getByFeatureGuid(featureGuid)
