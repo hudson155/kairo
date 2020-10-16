@@ -12,6 +12,7 @@ data class AccountModel(
 ) {
   fun hasRole(role: AccountRole) = when (role) {
     AccountRole.IDENTITY_PROVIDER -> identityProvider
+    AccountRole.LIMBER_SERVER -> false // Accounts can't be servers.
     AccountRole.SUPERUSER -> superuser
   }
 }

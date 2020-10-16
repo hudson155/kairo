@@ -13,19 +13,24 @@ import java.util.*
 abstract class Authorization : LimberAuthorization<JwtPrincipal> {
   private val logger = LoggerFactory.getLogger(Authorization::class.java)
 
-  override fun authorize(principal: JwtPrincipal?): Boolean {
+  final override fun authorize(principal: JwtPrincipal?): Boolean {
     val authorized = authorizeInternal(principal?.jwt)
     if (authorized) return true
-    if (principal?.isSuperuser == true) {
-      logger.info("Overriding Authorization access${principal.userGuid?.let { " for user with UUID $it" }.orEmpty()}.")
+    if (principal?.canOverride() == true) {
+      logger.info("Overriding Authorization access"
+          + " for user with ${principal.userGuid?.let { "UUID $it" } ?: "no UUID"}"
+          + " and account roles ${principal.jwt.roles}."
+      )
       return true
     }
     return false
   }
 
-  private val JwtPrincipal.isSuperuser get() = AccountRole.SUPERUSER in jwt.roles
+  private fun JwtPrincipal.canOverride() = overridingRoles.intersect(jwt.roles).isNotEmpty()
 
   protected abstract fun authorizeInternal(principal: Jwt?): Boolean
+
+  open val overridingRoles = setOf(AccountRole.LIMBER_SERVER, AccountRole.SUPERUSER)
 
   object Public : Authorization() {
     override fun authorizeInternal(principal: Jwt?) = true
@@ -40,6 +45,9 @@ abstract class Authorization : LimberAuthorization<JwtPrincipal> {
       principal ?: return false
       return role in principal.roles
     }
+
+    override val overridingRoles =
+        if (role == AccountRole.SUPERUSER) setOf(AccountRole.SUPERUSER) else super.overridingRoles
   }
 
   class User(private val userGuid: UUID?) : Authorization() {
