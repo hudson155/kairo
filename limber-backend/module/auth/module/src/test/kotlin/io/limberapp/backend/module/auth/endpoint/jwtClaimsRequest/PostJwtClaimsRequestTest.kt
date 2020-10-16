@@ -8,6 +8,7 @@ import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
+import io.limberapp.backend.module.auth.testing.fixtures.account.complete
 import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleMembershipRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
@@ -16,15 +17,14 @@ import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.client.org.OrgClient
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.backend.module.users.model.account.AccountModel
-import io.limberapp.backend.module.users.model.account.UserModel
-import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.backend.module.users.api.account.UserApi
+import io.limberapp.backend.module.users.client.account.UserClient
+import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.LimberApplication
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
 import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.mockk.coEvery
-import io.mockk.every
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import java.util.*
@@ -35,7 +35,7 @@ internal class PostJwtClaimsRequestTest(
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun happyPathUserDoesNotExist() {
-    val userGuid = uuidGenerator[4]
+    val userGuid = UUID.randomUUID()
     val emailAddress = "jhudson@jhudson.ca"
     val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
@@ -53,12 +53,14 @@ internal class PostJwtClaimsRequestTest(
         ownerUserGuid = UUID.randomUUID(),
         features = listOf(existingFeature)
     )
-    every {
-      mocks[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress)
+    coEvery {
+      mocks[UserClient::class](UserApi.GetByOrgGuidAndEmailAddress(existingOrg.guid, emailAddress))
     } returns null
-    every {
-      mocks[UserService::class].create(any())
-    } answers { firstArg() }
+    coEvery {
+      mocks[UserClient::class](any<UserApi.Post>())
+    } answers {
+      checkNotNull(firstArg<UserApi.Post>().rep).complete(guid = userGuid, createdDate = LocalDateTime.now())
+    }
     coEvery {
       mocks[OrgClient::class](OrgApi.Get(existingOrg.guid))
     } returns existingOrg
@@ -144,25 +146,18 @@ internal class PostJwtClaimsRequestTest(
         ownerUserGuid = UUID.randomUUID(),
         features = listOf(existingFeature)
     )
-    val existingAccount = AccountModel(
+    val existingUser = UserRep.Complete(
         guid = UUID.randomUUID(),
         createdDate = LocalDateTime.now(clock),
-        identityProvider = false,
-        superuser = true,
-    )
-    val existingUser = UserModel(
-        guid = existingAccount.guid,
-        createdDate = existingAccount.createdDate,
-        identityProvider = existingAccount.identityProvider,
-        superuser = existingAccount.superuser,
+        roles = setOf(AccountRole.SUPERUSER),
         orgGuid = existingOrg.guid,
         firstName = "Summer",
         lastName = "Kavan",
         emailAddress = "jhudson@jhudson.ca",
         profilePhotoUrl = null
     )
-    every {
-      mocks[UserService::class].getByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress)
+    coEvery {
+      mocks[UserClient::class](UserApi.GetByOrgGuidAndEmailAddress(existingOrg.guid, existingUser.emailAddress))
     } returns existingUser
     coEvery {
       mocks[OrgClient::class](OrgApi.Get(existingOrg.guid))

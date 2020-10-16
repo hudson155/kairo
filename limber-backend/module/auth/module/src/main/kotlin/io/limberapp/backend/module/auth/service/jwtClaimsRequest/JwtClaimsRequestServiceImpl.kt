@@ -14,18 +14,16 @@ import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.client.org.OrgClient
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
-import io.limberapp.backend.module.users.model.account.UserModel
-import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.backend.module.users.api.account.UserApi
+import io.limberapp.backend.module.users.client.account.UserClient
+import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.serialization.limberObjectMapper
-import io.limberapp.common.util.uuid.UuidGenerator
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
 import io.limberapp.permissions.orgPermissions.OrgPermission
 import io.limberapp.permissions.orgPermissions.OrgPermissions
 import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
-import java.time.Clock
-import java.time.LocalDateTime
 import java.util.*
 
 private val ORG_OWNER_ORG_ROLE =
@@ -35,10 +33,8 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val featureRoleService: FeatureRoleService,
     private val orgRoleService: OrgRoleService,
     private val tenantService: TenantService,
-    private val userService: UserService,
     private val orgClient: OrgClient,
-    private val clock: Clock,
-    private val uuidGenerator: UuidGenerator,
+    private val userClient: UserClient,
 ) : JwtClaimsRequestService {
   private val objectMapper = limberObjectMapper()
 
@@ -47,28 +43,24 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     return requestJwtClaimsForUser(user)
   }
 
-  private fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserModel {
+  private suspend fun getAccountOrCreateUser(request: JwtClaimsRequestModel): UserRep.Complete {
     val tenant = checkNotNull(tenantService.getByAuth0ClientId(request.auth0ClientId))
 
-    val existingUser = userService.getByOrgGuidAndEmailAddress(tenant.orgGuid, request.emailAddress)
+    val existingUser = userClient(UserApi.GetByOrgGuidAndEmailAddress(tenant.orgGuid, request.emailAddress))
     if (existingUser != null) return existingUser
 
-    return userService.create(
-        model = UserModel(
-            guid = uuidGenerator.generate(),
-            createdDate = LocalDateTime.now(clock),
-            identityProvider = false,
-            superuser = false,
+    return userClient(UserApi.Post(
+        rep = UserRep.Creation(
             orgGuid = tenant.orgGuid,
             firstName = request.firstName,
             lastName = request.lastName,
             emailAddress = request.emailAddress,
             profilePhotoUrl = request.profilePhotoUrl
         )
-    )
+    ))
   }
 
-  private suspend fun requestJwtClaimsForUser(user: UserModel): JwtClaimsModel {
+  private suspend fun requestJwtClaimsForUser(user: UserRep.Complete): JwtClaimsModel {
     val org = checkNotNull(orgClient(OrgApi.Get(user.orgGuid)))
     val (orgRoles, isOwner, permissions) = getPermissions(org, user.guid)
     val orgRoleGuids = orgRoles.map { it.guid }.toSet()
@@ -77,7 +69,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         .associate { it }
     return convertJwtToModel(
         org = JwtOrg(org.guid, org.name, isOwner, permissions, jwtFeatures),
-        roles = AccountRole.values().filter { user.hasRole(it) }.toSet(),
+        roles = AccountRole.values().filter { it in user.roles }.toSet(),
         user = JwtUser(user.guid, user.firstName, user.lastName)
     )
   }

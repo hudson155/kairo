@@ -13,7 +13,7 @@ dependencies {
   api(project(":limber-backend:module:auth:interface"))
   api(project(":limber-backend:module:auth:service-interface"))
   implementation(project(":limber-backend:module:orgs:client"))
-  implementation(project(":limber-backend:module:users:service-interface"))
+  implementation(project(":limber-backend:module:users:client"))
 
   implementation(Dependencies.Bcrypt.jbcrypt)
 
