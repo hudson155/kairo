@@ -11,14 +11,11 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.util.KtorExperimentalAPI
 import io.limberapp.common.restInterface.LimberEndpoint
 
-@OptIn(KtorExperimentalAPI::class)
-class LimberHttpClientImpl(
-    private val baseUrl: String,
-    private val rootBuilder: LimberHttpClientRequestBuilder.() -> Unit,
-) : LimberHttpClient() {
+open class LimberHttpClientImpl(private val baseUrl: String) : LimberHttpClient() {
+  @OptIn(KtorExperimentalAPI::class)
   private val httpClient = HttpClient(CIO)
 
-  override suspend fun request(
+  final override suspend fun request(
       endpoint: LimberEndpoint,
       builder: LimberHttpClientRequestBuilder.() -> Unit,
   ): Pair<HttpStatusCode, String> {
@@ -35,5 +32,7 @@ class LimberHttpClientImpl(
     return Pair(httpResponse.status, httpResponse.readText())
   }
 
-  override fun close() = httpClient.close()
+  protected open fun LimberHttpClientRequestBuilder.rootBuilder() {}
+
+  final override fun close() = httpClient.close()
 }

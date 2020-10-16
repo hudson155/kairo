@@ -8,7 +8,7 @@ dependencies {
   api(project(":limber-backend:common:rest-interface"))
   api(project(":limber-backend:common:serialization"))
 
-  api(Dependencies.Guice.guice)
+  api(Dependencies.Google.guice)
   implementation(Dependencies.Ktor.clientCio)
 }
 

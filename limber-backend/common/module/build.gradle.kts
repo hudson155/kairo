@@ -12,7 +12,7 @@ dependencies {
   api(project(":limber-backend:common:serialization"))
   api(project(":limber-backend:common:util"))
 
-  api(Dependencies.Guice.guice)
+  api(Dependencies.Google.guice)
   api(Dependencies.Ktor.serverCore)
 }
 

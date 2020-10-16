@@ -14,6 +14,7 @@ application {
 }
 
 dependencies {
+  implementation(project(":limber-backend:common:client"))
   implementation(project(":limber-backend:common:server"))
   implementation(project(":limber-backend:common:sql"))
 
@@ -25,6 +26,7 @@ dependencies {
   implementation(project(":limber-backend:module:orgs:module"))
   implementation(project(":limber-backend:module:users:module"))
 
+  implementation(Dependencies.Google.guava)
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
   implementation(Dependencies.Ktor.serverCio)

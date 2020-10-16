@@ -7,7 +7,8 @@ object Dependencies {
     const val jbcrypt = "org.mindrot:jbcrypt:${Versions.jbcrypt}"
   }
 
-  object Guice {
+  object Google {
+    const val guava = "com.google.guava:guava:${Versions.guava}"
     const val guice = "com.google.inject:guice:${Versions.guice}"
   }
 

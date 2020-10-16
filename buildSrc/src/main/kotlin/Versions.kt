@@ -14,6 +14,9 @@ object Versions {
   // https://github.com/flyway/flyway/releases
   const val flyway = "7.0.3"
 
+  // https://github.com/google/guava/releases
+  const val guava = "29.0-jre"
+
   // https://github.com/google/guice/releases
   const val guice = "4.2.3"
 
