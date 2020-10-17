@@ -20,16 +20,16 @@ internal class MainModule(
   override fun configure() {
     bind(Application::class.java).toInstance(application)
     bind(AuthenticationConfig::class.java).toInstance(config.authentication)
-    bind(Clock::class.java).toInstance(config.clock.instantiate())
-    bind(UuidGenerator::class.java).toInstance(config.uuids.instantiateGenerator())
+    bind(Clock::class.java).toInstance(clock())
+    bind(UuidGenerator::class.java).toInstance(uuidGenerator())
   }
 
-  private fun ClockConfig.instantiate() = when (type) {
+  private fun clock() = when (config.clock.type) {
     ClockConfig.Type.FIXED -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
     ClockConfig.Type.REAL -> Clock.systemUTC()
   }
 
-  private fun UuidsConfig.instantiateGenerator() = when (generation) {
+  private fun uuidGenerator() = when (config.uuids.generation) {
     UuidsConfig.Generation.DETERMINISTIC -> DeterministicUuidGenerator()
     UuidsConfig.Generation.RANDOM -> RandomUuidGenerator()
   }
