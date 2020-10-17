@@ -1,4 +1,4 @@
-package io.limberapp.monolith
+package io.limberapp.client
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
@@ -8,8 +8,6 @@ import com.google.common.cache.LoadingCache
 import io.ktor.http.HttpHeaders
 import io.limberapp.auth.jwt.Jwt
 import io.limberapp.auth.jwt.withJwt
-import io.limberapp.client.LimberHttpClientImpl
-import io.limberapp.client.LimberHttpClientRequestBuilder
 import io.limberapp.permissions.AccountRole
 import java.time.Duration
 import java.time.ZonedDateTime
@@ -24,7 +22,7 @@ private val cacheDuration = jwtLifespan.minusMinutes(1)
 internal class LimberServerSelfAuthenticatingHttpClient(
     baseUrl: String,
     private val algorithm: Algorithm,
-    private val issuer: String,
+    private val issuer: String?,
 ) : LimberHttpClientImpl(baseUrl) {
   private val jwtCache: LoadingCache<Unit, String> = CacheBuilder.newBuilder()
       .expireAfterWrite(cacheDuration)

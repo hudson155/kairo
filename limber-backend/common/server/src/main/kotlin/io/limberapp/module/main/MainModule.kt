@@ -1,12 +1,15 @@
 package io.limberapp.module.main
 
 import io.ktor.application.Application
+import io.limberapp.client.LimberHttpClient
+import io.limberapp.client.LimberServerSelfAuthenticatingHttpClient
 import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.util.uuid.DeterministicUuidGenerator
 import io.limberapp.common.util.uuid.RandomUuidGenerator
 import io.limberapp.common.util.uuid.UuidGenerator
 import io.limberapp.config.Config
 import io.limberapp.config.authentication.AuthenticationConfig
+import io.limberapp.config.authentication.AuthenticationMechanism
 import io.limberapp.config.authentication.ClockConfig
 import io.limberapp.config.authentication.UuidsConfig
 import java.time.Clock
@@ -22,6 +25,13 @@ internal class MainModule(
     bind(AuthenticationConfig::class.java).toInstance(config.authentication)
     bind(Clock::class.java).toInstance(clock())
     bind(UuidGenerator::class.java).toInstance(uuidGenerator())
+    bind(LimberHttpClient::class.java).toInstance(httpClient())
+  }
+
+  private fun httpClient(): LimberHttpClient {
+    val mechanism = config.authentication.mechanisms.filterIsInstance<AuthenticationMechanism.Jwt>().single()
+    val algorithm = mechanism.createAlgorithm()
+    return LimberServerSelfAuthenticatingHttpClient(config.monolithBaseUrl, algorithm, mechanism.issuer)
   }
 
   private fun clock() = when (config.clock.type) {

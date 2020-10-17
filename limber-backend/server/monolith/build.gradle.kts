@@ -14,7 +14,6 @@ application {
 }
 
 dependencies {
-  implementation(project(":limber-backend:common:client"))
   implementation(project(":limber-backend:common:server"))
   implementation(project(":limber-backend:common:sql"))
 

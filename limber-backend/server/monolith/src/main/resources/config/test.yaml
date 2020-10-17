@@ -1,4 +1,4 @@
-monolithBaseUrl: ~
+monolithBaseUrl: http://localhost:55100
 
 authentication:
   mechanisms:
