@@ -2,7 +2,6 @@ package io.limberapp.monolith.authentication.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
-import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.auth.jwt.Jwt
@@ -26,10 +25,7 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
           leeway = mechanism.leeway
       )
       is AuthenticationMechanism.Jwt -> StaticJwtVerifierProvider(
-          jwtVerifier = JWT.require(Algorithm.HMAC256(mechanism.secret)).acceptLeeway(mechanism.leeway).build()
-      )
-      is AuthenticationMechanism.UnsignedJwt -> StaticJwtVerifierProvider(
-          jwtVerifier = JWT.require(Algorithm.none()).acceptLeeway(mechanism.leeway).build()
+          jwtVerifier = JWT.require(mechanism.createAlgorithm()).acceptLeeway(mechanism.leeway).build()
       )
     }
     return@associate Pair(mechanism.issuer, provider)

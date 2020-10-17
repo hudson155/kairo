@@ -5,6 +5,7 @@ authentication:
     - type: JWT
       issuer: https://limberapp.io/
       leeway: 20 # 20 seconds
+      algorithm: HMAC256
       secret:
         type: ENVIRONMENT_VARIABLE
         name: LIMBER_PROD_JWT_SECRET

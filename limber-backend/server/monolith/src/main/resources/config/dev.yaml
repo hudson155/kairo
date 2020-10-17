@@ -5,6 +5,7 @@ authentication:
     - type: JWT
       issuer: https://limberapp.io/
       leeway: 300 # 5 minutes
+      algorithm: HMAC256
       secret:
         type: PLAINTEXT
         value: limber

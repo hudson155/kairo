@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import io.limberapp.config.ConfigStringDeserializer
+import com.auth0.jwt.algorithms.Algorithm as JwtAlgorithm
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
     JsonSubTypes.Type(value = AuthenticationMechanism.Jwk::class, name = "JWK"),
-    JsonSubTypes.Type(value = AuthenticationMechanism.Jwt::class, name = "JWT"),
-    JsonSubTypes.Type(value = AuthenticationMechanism.UnsignedJwt::class, name = "UNSIGNED_JWT")
+    JsonSubTypes.Type(value = AuthenticationMechanism.Jwt.Signed::class, name = "JWT"),
+    JsonSubTypes.Type(value = AuthenticationMechanism.Jwt.Unsigned::class, name = "UNSIGNED_JWT"),
 )
 sealed class AuthenticationMechanism {
   abstract val issuer: String?
@@ -21,16 +22,29 @@ sealed class AuthenticationMechanism {
       val domain: String,
   ) : AuthenticationMechanism()
 
-  data class Jwt(
-      override val issuer: String,
-      override val leeway: Long,
-      @JsonDeserialize(using = ConfigStringDeserializer::class)
-      val secret: String,
-  ) : AuthenticationMechanism()
+  sealed class Jwt : AuthenticationMechanism() {
+    abstract fun createAlgorithm(): JwtAlgorithm
 
-  data class UnsignedJwt(
-      override val leeway: Long,
-  ) : AuthenticationMechanism() {
-    override val issuer: Nothing? = null
+    data class Signed(
+        override val issuer: String,
+        override val leeway: Long,
+        val algorithm: Algorithm,
+        @JsonDeserialize(using = ConfigStringDeserializer::class)
+        val secret: String
+    ) : Jwt() {
+      enum class Algorithm { HMAC256 }
+
+      override fun createAlgorithm(): JwtAlgorithm = when (algorithm) {
+        Algorithm.HMAC256 -> JwtAlgorithm.HMAC256(secret)
+      }
+    }
+
+    data class Unsigned(
+        override val leeway: Long,
+    ) : Jwt() {
+      override val issuer: Nothing? = null
+
+      override fun createAlgorithm(): JwtAlgorithm = JwtAlgorithm.none()
+    }
   }
 }
