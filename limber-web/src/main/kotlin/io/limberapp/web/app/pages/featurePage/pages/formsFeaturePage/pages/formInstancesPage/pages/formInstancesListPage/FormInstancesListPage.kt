@@ -3,6 +3,7 @@ package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.form
 import io.limberapp.web.app.components.layout.components.layoutTitle.layoutTitle
 import io.limberapp.web.app.components.limberButton.Style
 import io.limberapp.web.app.components.limberButton.limberButton
+import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceAnswerPage.FormInstanceAnswerPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstanceViewPage.FormInstanceViewPage
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable.formInstancesTable
 import io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formTemplateSelectorModal.formTemplateSelectorModal
@@ -49,7 +50,13 @@ private fun RBuilder.component(props: Props) {
   }
   formInstancesTable(
     formInstances = formInstances.values.toSet(),
-    onRowClick = { formInstanceGuid -> history.push(FormInstanceViewPage.path(feature.path, formInstanceGuid)) }
+    onRowClick = { formInstance ->
+      if (formInstance.submittedDate == null) {
+        history.push(FormInstanceAnswerPage.path(feature.path, formInstance.guid))
+      } else {
+        history.push(FormInstanceViewPage.path(feature.path, formInstance.guid))
+      }
+    }
   )
 
   if (isTemplateSelectorModalOpen) {

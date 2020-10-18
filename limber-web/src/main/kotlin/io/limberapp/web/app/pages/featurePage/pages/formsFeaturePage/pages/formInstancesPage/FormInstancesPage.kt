@@ -61,7 +61,7 @@ private fun RBuilder.component(props: Props) {
       route(path = match.path, exact = true) {
         buildElement { formInstancesListPage() }
       }
-      route(path = match.path + FormInstanceAnswerPage.subpath, exact = true) {
+      route(path = FormInstanceAnswerPage.path(feature.path, null), exact = true) {
         buildElement { formInstanceAnswerPage() }
       }
       route(path = FormInstanceViewPage.path(feature.path, null), exact = true) {

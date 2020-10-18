@@ -1,7 +1,6 @@
 package io.limberapp.web.app.pages.featurePage.pages.formsFeaturePage.pages.formInstancesPage.pages.formInstancesListPage.components.formInstancesTable
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.common.types.UUID
 import io.limberapp.common.util.date.prettyRelative
 import io.limberapp.web.app.components.limberTable.components.limberTableCell.limberTableCell
 import io.limberapp.web.app.components.limberTable.components.limberTableRow.limberTableRow
@@ -21,15 +20,15 @@ import react.dom.*
 import styled.getClassName
 
 internal fun RBuilder.formInstancesTable(
-  formInstances: Set<FormInstanceRep.Summary>,
-  onRowClick: (UUID) -> Unit,
+    formInstances: Set<FormInstanceRep.Summary>,
+    onRowClick: (FormInstanceRep.Summary) -> Unit,
 ) {
   child(component, Props(formInstances, onRowClick))
 }
 
 internal data class Props(
-  val formInstances: Set<FormInstanceRep.Summary>,
-  val onRowClick: (UUID) -> Unit,
+    val formInstances: Set<FormInstanceRep.Summary>,
+    val onRowClick: (FormInstanceRep.Summary) -> Unit,
 ) : RProps
 
 private class S : Styles("FormInstancesTable") {
@@ -79,7 +78,7 @@ private fun RBuilder.component(props: Props) {
     limberTable(headers = listOf("#", "Submitted", null, "Type", "Creator")) {
       // TODO: Sort by unique sort key
       props.formInstances.forEach { formInstance ->
-        limberTableRow(classes = s.c { it::row }, onClick = { props.onRowClick(formInstance.guid) }) {
+        limberTableRow(classes = s.c { it::row }, onClick = { props.onRowClick(formInstance) }) {
           attrs.key = formInstance.guid
           limberTableCell(classes = s.c { it::cell }) {
             val number = formInstance.number?.toString() ?: ""

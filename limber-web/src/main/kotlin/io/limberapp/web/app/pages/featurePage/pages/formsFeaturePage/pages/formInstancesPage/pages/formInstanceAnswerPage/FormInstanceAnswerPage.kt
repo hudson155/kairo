@@ -43,8 +43,12 @@ private data class FormAnswerProps(
 internal object FormInstanceAnswerPage : Page {
   internal data class PageParams(val formInstanceGuid: UUID) : RProps
 
-  // TODO ENG-43: Potentially convert this to an absolute path function
-  val subpath = "/:${PageParams::formInstanceGuid.name}/edit"
+  fun path(featurePath: String, formInstanceGuid: UUID?) = listOf(
+      featurePath,
+      "instances",
+      formInstanceGuid ?: ":${PageParams::formInstanceGuid.name}",
+      "edit",
+  ).joinToString("/")
 }
 
 private class S : Styles("FormInstanceAnswerPage") {
