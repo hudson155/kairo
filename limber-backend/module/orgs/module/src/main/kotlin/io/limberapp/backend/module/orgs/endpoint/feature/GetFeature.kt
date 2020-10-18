@@ -27,7 +27,7 @@ internal class GetFeature @Inject constructor(
 
   override suspend fun Handler.handle(command: FeatureApi.Get): FeatureRep.Complete {
     Authorization.FeatureMember(command.featureGuid).authorize()
-    val feature = featureService.findOnlyOrNull { featureGuid(command.featureGuid) } ?: throw FeatureNotFound()
+    val feature = featureService.get(command.featureGuid) ?: throw FeatureNotFound()
     return featureMapper.completeRep(feature)
   }
 }

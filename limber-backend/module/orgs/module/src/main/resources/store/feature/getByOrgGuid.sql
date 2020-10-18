@@ -1,4 +1,4 @@
 SELECT *
 FROM orgs.feature
-WHERE <conditions>
+WHERE org_guid = :orgGuid
 ORDER BY rank

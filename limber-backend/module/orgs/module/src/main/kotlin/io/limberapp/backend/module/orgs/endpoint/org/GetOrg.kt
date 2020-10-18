@@ -30,7 +30,7 @@ internal class GetOrg @Inject constructor(
   override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {
     Authorization.OrgMember(command.orgGuid).authorize()
     val org = orgService.get(command.orgGuid) ?: throw OrgNotFound()
-    val features = featureService.findAsList { orgGuid(command.orgGuid) }
+    val features = featureService.getByOrgGuid(command.orgGuid)
     return orgMapper.completeRep(org, features)
   }
 }

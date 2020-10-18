@@ -6,13 +6,10 @@ import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
 import io.limberapp.backend.module.orgs.exception.feature.FeaturePathIsNotUnique
 import io.limberapp.backend.module.orgs.exception.feature.FeatureRankIsNotUnique
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
-import io.limberapp.backend.module.orgs.model.feature.FeatureFinder
 import io.limberapp.backend.module.orgs.model.feature.FeatureModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.isUniqueConstraintViolation
-import io.limberapp.common.store.withFinder
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -24,7 +21,7 @@ private const val UNIQ_PATH = "uniq__feature__path"
 private const val UNIQ_RANK = "uniq__feature__rank"
 
 @Singleton
-internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<FeatureModel, FeatureFinder> {
+internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FeatureModel): FeatureModel =
       withHandle { handle ->
         try {
@@ -37,12 +34,20 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
         }
       }
 
-  override fun <R> find(result: (Iterable<FeatureModel>) -> R, query: FeatureFinder.() -> Unit): R =
+  fun get(featureGuid: UUID): FeatureModel? =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/feature/find.sql"))
-            .withFinder(FeatureQueryBuilder().apply(query))
+        handle.createQuery(sqlResource("/store/feature/get.sql"))
+            .bind("featureGuid", featureGuid)
             .mapTo(FeatureModel::class.java)
-            .let(result)
+            .singleNullOrThrow()
+      }
+
+  fun getByOrgGuid(orgGuid: UUID): List<FeatureModel> =
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/feature/getByOrgGuid.sql"))
+            .bind("orgGuid", orgGuid)
+            .mapTo(FeatureModel::class.java)
+            .toList()
       }
 
   fun update(orgGuid: UUID, featureGuid: UUID, update: FeatureModel.Update): FeatureModel =
