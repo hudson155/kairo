@@ -17,9 +17,7 @@ import kotlin.reflect.typeOf
 private const val UNIQ_ORG_ROLE_GUID = "uniq__feature_role__org_role_guid"
 
 @Singleton
-internal class FeatureRoleStore @Inject constructor(
-    jdbi: Jdbi,
-) : SqlStore(jdbi) {
+internal class FeatureRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FeatureRoleModel): FeatureRoleModel =
       withHandle { handle ->
         try {
