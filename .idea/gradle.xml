@@ -60,7 +60,6 @@
             <option value="$PROJECT_DIR$/limber-backend/module/orgs/client" />
             <option value="$PROJECT_DIR$/limber-backend/module/orgs/interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/orgs/module" />
-            <option value="$PROJECT_DIR$/limber-backend/module/orgs/service-interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/users" />
             <option value="$PROJECT_DIR$/limber-backend/module/users/client" />
             <option value="$PROJECT_DIR$/limber-backend/module/users/interface" />

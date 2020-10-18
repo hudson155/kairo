@@ -41,7 +41,6 @@ include(":limber-backend:module:health-check:module")
 include(":limber-backend:module:orgs:client")
 include(":limber-backend:module:orgs:interface")
 include(":limber-backend:module:orgs:module")
-include(":limber-backend:module:orgs:service-interface")
 
 include(":limber-backend:module:users:client")
 include(":limber-backend:module:users:interface")
