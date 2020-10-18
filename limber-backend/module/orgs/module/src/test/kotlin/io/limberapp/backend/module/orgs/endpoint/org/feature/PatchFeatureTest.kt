@@ -52,13 +52,13 @@ internal class PatchFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
-    val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
@@ -80,13 +80,13 @@ internal class PatchFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
-    val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
@@ -108,13 +108,13 @@ internal class PatchFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
-    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
@@ -140,11 +140,11 @@ internal class PatchFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
 
-    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) }
 
@@ -168,11 +168,11 @@ internal class PatchFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
 
-    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation())) }
 
@@ -196,13 +196,13 @@ internal class PatchFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, 1)
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
-    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, 2)
+    var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))

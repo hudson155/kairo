@@ -16,6 +16,13 @@ class FeatureClient @Inject constructor(private val httpClient: LimberHttpClient
   }
 
   suspend operator fun invoke(
+      endpoint: FeatureApi.Get,
+      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+  ) = httpClient.request(endpoint, builder) {
+    it?.let { readValue<FeatureRep.Complete>(it) }
+  }
+
+  suspend operator fun invoke(
       endpoint: FeatureApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
   ) = httpClient.request(endpoint, builder) {

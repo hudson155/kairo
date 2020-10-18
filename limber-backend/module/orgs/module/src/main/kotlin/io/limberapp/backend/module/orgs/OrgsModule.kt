@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.orgs
 
+import io.limberapp.backend.module.orgs.endpoint.feature.GetFeature
 import io.limberapp.backend.module.orgs.endpoint.org.DeleteOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrg
 import io.limberapp.backend.module.orgs.endpoint.org.GetOrgByOwnerUserGuid
@@ -21,9 +22,11 @@ class OrgsModule : ApplicationModule() {
       GetOrgByOwnerUserGuid::class.java,
       PatchOrg::class.java,
       DeleteOrg::class.java,
+
       PostFeature::class.java,
+      GetFeature::class.java,
       PatchFeature::class.java,
-      DeleteFeature::class.java
+      DeleteFeature::class.java,
   )
 
   override fun bindServices() {

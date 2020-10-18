@@ -34,7 +34,7 @@ internal class PostFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
+    orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1))
     setup {
       featureClient(FeatureApi.Post(orgGuid = orgRep.guid, rep = FeatureRepFixtures.homeFixture.creation()))
     }
@@ -58,7 +58,7 @@ internal class PostFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, 1))
+    orgRep = orgRep.copy(features = orgRep.features + FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1))
     setup {
       featureClient(FeatureApi.Post(
           orgGuid = orgRep.guid,
@@ -85,7 +85,7 @@ internal class PostFeatureTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    val featureRep = FeatureRepFixtures.formsFixture.complete(this, 1)
+    val featureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = orgRep.features + featureRep)
     test(expectResult = featureRep) {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))

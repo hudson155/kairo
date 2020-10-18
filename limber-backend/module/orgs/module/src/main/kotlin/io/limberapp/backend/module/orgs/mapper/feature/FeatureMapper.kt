@@ -26,6 +26,7 @@ internal class FeatureMapper @Inject constructor(
   fun completeRep(model: FeatureModel) = FeatureRep.Complete(
       guid = model.guid,
       createdDate = model.createdDate,
+      orgGuid = model.orgGuid,
       rank = model.rank,
       name = model.name,
       path = model.path,

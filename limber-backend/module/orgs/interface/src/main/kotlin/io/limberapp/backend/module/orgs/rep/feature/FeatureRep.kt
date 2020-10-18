@@ -30,6 +30,7 @@ object FeatureRep {
   data class Complete(
       val guid: UUID,
       override val createdDate: LocalDateTime,
+      val orgGuid: UUID,
       val rank: Int,
       val name: String,
       val path: String,

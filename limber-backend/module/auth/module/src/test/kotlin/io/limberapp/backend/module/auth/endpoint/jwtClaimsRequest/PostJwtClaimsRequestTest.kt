@@ -35,11 +35,13 @@ internal class PostJwtClaimsRequestTest(
 ) : IntegrationTest(engine, limberServer) {
   @Test
   fun happyPathUserDoesNotExist() {
+    val orgGuid = UUID.randomUUID()
     val userGuid = UUID.randomUUID()
     val emailAddress = "jhudson@jhudson.ca"
     val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
         createdDate = LocalDateTime.now(clock),
+        orgGuid = orgGuid,
         rank = 0,
         name = "Forms",
         path = "/forms",
@@ -47,7 +49,7 @@ internal class PostJwtClaimsRequestTest(
         isDefaultFeature = true
     )
     val existingOrg = OrgRep.Complete(
-        guid = UUID.randomUUID(),
+        guid = orgGuid,
         createdDate = LocalDateTime.now(clock),
         name = "Cranky Pasta",
         ownerUserGuid = UUID.randomUUID(),
@@ -130,9 +132,11 @@ internal class PostJwtClaimsRequestTest(
 
   @Test
   fun happyPathUserExists() {
+    val orgGuid = UUID.randomUUID()
     val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
         createdDate = LocalDateTime.now(clock),
+        orgGuid = orgGuid,
         rank = 0,
         name = "Forms",
         path = "/forms",
@@ -140,7 +144,7 @@ internal class PostJwtClaimsRequestTest(
         isDefaultFeature = true
     )
     val existingOrg = OrgRep.Complete(
-        guid = UUID.randomUUID(),
+        guid = orgGuid,
         createdDate = LocalDateTime.now(clock),
         name = "Cranky Pasta",
         ownerUserGuid = UUID.randomUUID(),

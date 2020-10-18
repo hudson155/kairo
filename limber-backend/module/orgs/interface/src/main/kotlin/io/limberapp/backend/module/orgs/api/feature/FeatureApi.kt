@@ -11,17 +11,22 @@ object FeatureApi {
   data class Post(val orgGuid: UUID, val rep: FeatureRep.Creation?) : LimberEndpoint(
       httpMethod = HttpMethod.Post,
       path = "/orgs/${enc(orgGuid)}/features",
-      body = rep
+      body = rep,
+  )
+
+  data class Get(val featureGuid: UUID) : LimberEndpoint(
+      httpMethod = HttpMethod.Get,
+      path = "/features/${enc(featureGuid)}",
   )
 
   data class Patch(val orgGuid: UUID, val featureGuid: UUID, val rep: FeatureRep.Update?) : LimberEndpoint(
       httpMethod = HttpMethod.Patch,
       path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}",
-      body = rep
+      body = rep,
   )
 
   data class Delete(val orgGuid: UUID, val featureGuid: UUID) : LimberEndpoint(
       httpMethod = HttpMethod.Delete,
-      path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}"
+      path = "/orgs/${enc(orgGuid)}/features/${enc(featureGuid)}",
   )
 }
