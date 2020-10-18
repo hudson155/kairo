@@ -5,19 +5,16 @@ import com.google.inject.Singleton
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceQuestionNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
-import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionFinder
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceDateQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceTextQuestionModel
 import io.limberapp.backend.module.forms.model.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.sql.PolymorphicRowMapper
 import io.limberapp.common.sql.bindNullForMissingArguments
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
-import io.limberapp.common.store.withFinder
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -37,9 +34,7 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormInstanceQ
 }
 
 @Singleton
-internal class FormInstanceQuestionStore @Inject constructor(
-    jdbi: Jdbi,
-) : SqlStore(jdbi), Finder<FormInstanceQuestionModel, FormInstanceQuestionFinder> {
+internal class FormInstanceQuestionStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
@@ -58,15 +53,13 @@ internal class FormInstanceQuestionStore @Inject constructor(
         } ?: throw FormInstanceQuestionNotFound()
       }
 
-  override fun <R> find(
-      result: (Iterable<FormInstanceQuestionModel>) -> R,
-      query: FormInstanceQuestionFinder.() -> Unit,
-  ) =
+  fun getByFormInstanceGuid(featureGuid: UUID, formInstanceGuid: UUID): Set<FormInstanceQuestionModel> =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/formInstanceQuestion/find.sql"))
-            .withFinder(FormInstanceQuestionQueryBuilder().apply(query))
+        handle.createQuery(sqlResource("/store/formInstanceQuestion/getByFormInstanceGuid.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formInstanceGuid", formInstanceGuid)
             .mapTo(FormInstanceQuestionModel::class.java)
-            .let(result)
+            .toSet()
       }
 
   fun delete(featureGuid: UUID, formInstanceGuid: UUID, questionGuid: UUID): Unit =

@@ -31,9 +31,10 @@ internal class FormInstanceServiceImpl @Inject constructor(
     val formTemplateQuestions = formTemplateQuestionService.findAsSet {
       formTemplateGuid(formInstance.formTemplateGuid)
     }
-    val formInstanceQuestions = formInstanceQuestionService.findAsSet {
-      formInstanceGuid(formInstanceGuid)
-    }.associateBy { it.questionGuid }
+    val formInstanceQuestions = formInstanceQuestionService.getByFormInstanceGuid(
+        featureGuid = featureGuid,
+        formInstanceGuid = formInstanceGuid
+    ).associateBy { it.questionGuid }
     val requiredQuestions = formTemplateQuestions.filter { it.required }
     val allRequiredQuestionsAreAnswered = requiredQuestions.all { it.guid in formInstanceQuestions }
     if (!allRequiredQuestionsAreAnswered) throw CannotSubmitFormBeforeAnsweringAllRequiredQuestions()

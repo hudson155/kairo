@@ -36,10 +36,10 @@ internal class PostFormInstance @Inject constructor(
     ).authorize()
     Authorization.User(rep.creatorAccountGuid).authorize()
     val formInstance = formInstanceService.create(formInstanceMapper.model(command.featureGuid, rep))
-    val questions = formInstanceQuestionService.findAsSet {
-      featureGuid(command.featureGuid)
-      formInstanceGuid(formInstance.guid)
-    }
+    val questions = formInstanceQuestionService.getByFormInstanceGuid(
+        featureGuid = command.featureGuid,
+        formInstanceGuid = formInstance.guid
+    )
     return formInstanceMapper.completeRep(formInstance, questions)
   }
 }
