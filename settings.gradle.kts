@@ -26,7 +26,6 @@ include(":limber-backend:deprecated:common:sql:testing")
 include(":limber-backend:module:auth:client")
 include(":limber-backend:module:auth:interface")
 include(":limber-backend:module:auth:module")
-include(":limber-backend:module:auth:service-interface")
 
 include(":limber-backend:module:forms:client")
 include(":limber-backend:module:forms:interface")

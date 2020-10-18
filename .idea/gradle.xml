@@ -45,7 +45,6 @@
             <option value="$PROJECT_DIR$/limber-backend/module/auth/client" />
             <option value="$PROJECT_DIR$/limber-backend/module/auth/interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/auth/module" />
-            <option value="$PROJECT_DIR$/limber-backend/module/auth/service-interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/forms" />
             <option value="$PROJECT_DIR$/limber-backend/module/forms/client" />
             <option value="$PROJECT_DIR$/limber-backend/module/forms/interface" />
