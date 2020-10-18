@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.auth.service.org
 
-import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipFinder
 import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipModel
-import io.limberapp.common.finder.Finder
 import java.util.*
 
-interface OrgRoleMembershipService : Finder<OrgRoleMembershipModel, OrgRoleMembershipFinder> {
+interface OrgRoleMembershipService {
   fun create(orgGuid: UUID, model: OrgRoleMembershipModel): OrgRoleMembershipModel
+
+  fun getByOrgRoleGuid(orgGuid: UUID, orgRoleGuid: UUID): Set<OrgRoleMembershipModel>
 
   fun delete(orgGuid: UUID, orgRoleGuid: UUID, accountGuid: UUID)
 }

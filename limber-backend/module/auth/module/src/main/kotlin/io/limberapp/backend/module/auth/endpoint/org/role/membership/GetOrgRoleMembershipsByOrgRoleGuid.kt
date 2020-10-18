@@ -30,10 +30,10 @@ internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(
       command: OrgRoleMembershipApi.GetByOrgRoleGuid,
   ): Set<OrgRoleMembershipRep.Complete> {
     Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS).authorize()
-    val orgRoleMemberships = orgRoleMembershipService.findAsSet {
-      orgGuid(command.orgGuid)
-      orgRoleGuid(command.orgRoleGuid)
-    }
+    val orgRoleMemberships = orgRoleMembershipService.getByOrgRoleGuid(
+        orgGuid = command.orgGuid,
+        orgRoleGuid = command.orgRoleGuid
+    )
     return orgRoleMemberships.map { orgRoleMembershipMapper.completeRep(it) }.toSet()
   }
 }
