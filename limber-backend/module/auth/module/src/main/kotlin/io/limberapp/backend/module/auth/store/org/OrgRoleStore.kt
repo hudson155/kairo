@@ -4,12 +4,9 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNameIsNotUnique
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
-import io.limberapp.backend.module.auth.model.org.OrgRoleFinder
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isUniqueConstraintViolation
-import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
@@ -18,7 +15,7 @@ import java.util.*
 private const val UNIQ_NAME = "uniq__org_role__name"
 
 @Singleton
-internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Finder<OrgRoleModel, OrgRoleFinder> {
+internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: OrgRoleModel): OrgRoleModel =
       withHandle { handle ->
         try {
@@ -31,12 +28,21 @@ internal class OrgRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi), Fi
         }
       }
 
-  override fun <R> find(result: (Iterable<OrgRoleModel>) -> R, query: OrgRoleFinder.() -> Unit): R =
+  fun getByAccountGuid(orgGuid: UUID, accountGuid: UUID): Set<OrgRoleModel> =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/orgRole/find.sql"))
-            .withFinder(OrgRoleQueryBuilder().apply(query))
+        handle.createQuery(sqlResource("/store/orgRole/getByAccountGuid.sql"))
+            .bind("orgGuid", orgGuid)
+            .bind("accountGuid", accountGuid)
             .mapTo(OrgRoleModel::class.java)
-            .let(result)
+            .toSet()
+      }
+
+  fun getByOrgGuid(orgGuid: UUID): Set<OrgRoleModel> =
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/orgRole/getByOrgGuid.sql"))
+            .bind("orgGuid", orgGuid)
+            .mapTo(OrgRoleModel::class.java)
+            .toSet()
       }
 
   fun update(orgGuid: UUID, orgRoleGuid: UUID, update: OrgRoleModel.Update): OrgRoleModel =
