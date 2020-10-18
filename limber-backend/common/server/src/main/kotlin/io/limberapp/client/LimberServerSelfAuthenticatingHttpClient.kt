@@ -6,8 +6,8 @@ import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
 import com.google.common.cache.LoadingCache
 import io.ktor.http.HttpHeaders
-import io.limberapp.auth.jwt.Jwt
-import io.limberapp.auth.jwt.withJwt
+import io.limberapp.common.auth.jwt.Jwt
+import io.limberapp.common.auth.jwt.withJwt
 import io.limberapp.permissions.AccountRole
 import java.time.Duration
 import java.time.ZonedDateTime

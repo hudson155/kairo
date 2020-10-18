@@ -1,4 +1,4 @@
-package io.limberapp.util.darb
+package io.limberapp.common.util.darb
 
 import org.slf4j.LoggerFactory
 

@@ -1,4 +1,4 @@
-package io.limberapp.auth.jwt
+package io.limberapp.common.auth.jwt
 
 import java.util.*
 

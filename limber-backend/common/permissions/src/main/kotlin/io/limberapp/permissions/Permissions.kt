@@ -1,8 +1,8 @@
 package io.limberapp.permissions
 
 import com.fasterxml.jackson.annotation.JsonValue
-import io.limberapp.util.darb.BitStringEncoder
-import io.limberapp.util.darb.DarbEncoder
+import io.limberapp.common.util.darb.BitStringEncoder
+import io.limberapp.common.util.darb.DarbEncoder
 
 /**
  * Generic class to represent a set of permissions.

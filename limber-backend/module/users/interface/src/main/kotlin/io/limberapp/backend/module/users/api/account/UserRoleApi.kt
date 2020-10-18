@@ -2,8 +2,8 @@ package io.limberapp.backend.module.users.api.account
 
 import io.ktor.http.HttpMethod
 import io.limberapp.common.restInterface.LimberEndpoint
+import io.limberapp.common.util.url.enc
 import io.limberapp.permissions.AccountRole
-import io.limberapp.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")

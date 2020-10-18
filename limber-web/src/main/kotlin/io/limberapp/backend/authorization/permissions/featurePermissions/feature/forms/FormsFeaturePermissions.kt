@@ -1,7 +1,7 @@
 package io.limberapp.backend.authorization.permissions.featurePermissions.feature.forms
 
 import io.limberapp.backend.authorization.permissions.featurePermissions.FeaturePermissions
-import io.limberapp.util.darb.BitStringEncoder
+import io.limberapp.common.util.darb.BitStringEncoder
 
 /**
  * All forms feature permissions, in the correct order, with a quick sanity check on the digits.

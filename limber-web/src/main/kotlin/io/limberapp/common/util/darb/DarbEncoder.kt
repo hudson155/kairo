@@ -1,4 +1,4 @@
-package io.limberapp.util.darb
+package io.limberapp.common.util.darb
 
 /**
  * Converts between boolean lists and the DARB string format. The DARB string format is a format invented by Limber. It

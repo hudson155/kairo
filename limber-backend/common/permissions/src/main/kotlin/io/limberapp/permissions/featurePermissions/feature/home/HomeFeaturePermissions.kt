@@ -1,7 +1,7 @@
 package io.limberapp.permissions.featurePermissions.feature.home
 
+import io.limberapp.common.util.darb.BitStringEncoder
 import io.limberapp.permissions.featurePermissions.FeaturePermissions
-import io.limberapp.util.darb.BitStringEncoder
 
 /**
  * All home feature permissions, in the correct order, with a quick sanity check on the digits.

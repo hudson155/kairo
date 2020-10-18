@@ -4,9 +4,9 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.auth.jwt.Jwt
-import io.limberapp.auth.jwt.JwtClaims
 import io.limberapp.backend.authorization.principal.JwtPrincipal
+import io.limberapp.common.auth.jwt.Jwt
+import io.limberapp.common.auth.jwt.JwtClaims
 import io.limberapp.common.ktorAuth.LimberAuthVerifier
 import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.config.authentication.AuthenticationConfig

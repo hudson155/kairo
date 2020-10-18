@@ -1,6 +1,6 @@
 package io.limberapp.common.validator
 
-import io.limberapp.util.darb.DarbEncoder
+import io.limberapp.common.util.darb.DarbEncoder
 
 /**
  * This object contains methods to validate primitive inputs.

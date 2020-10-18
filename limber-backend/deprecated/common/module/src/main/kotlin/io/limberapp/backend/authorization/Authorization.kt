@@ -1,7 +1,7 @@
 package io.limberapp.backend.authorization
 
-import io.limberapp.auth.jwt.Jwt
 import io.limberapp.backend.authorization.principal.JwtPrincipal
+import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.authorization.LimberAuthorization
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermission

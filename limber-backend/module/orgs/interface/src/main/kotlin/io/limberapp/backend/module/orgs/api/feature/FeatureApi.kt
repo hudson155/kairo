@@ -3,7 +3,7 @@ package io.limberapp.backend.module.orgs.api.feature
 import io.ktor.http.HttpMethod
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.util.url.enc
+import io.limberapp.common.util.url.enc
 import java.util.*
 
 @Suppress("StringLiteralDuplication")

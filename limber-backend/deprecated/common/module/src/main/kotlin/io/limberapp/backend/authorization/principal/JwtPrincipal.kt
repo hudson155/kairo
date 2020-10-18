@@ -1,7 +1,7 @@
 package io.limberapp.backend.authorization.principal
 
 import io.ktor.auth.Principal
-import io.limberapp.auth.jwt.Jwt
+import io.limberapp.common.auth.jwt.Jwt
 
 data class JwtPrincipal(
     internal val jwt: Jwt,

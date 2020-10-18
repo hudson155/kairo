@@ -1,9 +1,6 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
-import io.limberapp.auth.jwt.JwtFeature
-import io.limberapp.auth.jwt.JwtOrg
-import io.limberapp.auth.jwt.JwtUser
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
@@ -17,6 +14,9 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.common.auth.jwt.JwtFeature
+import io.limberapp.common.auth.jwt.JwtOrg
+import io.limberapp.common.auth.jwt.JwtUser
 import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions

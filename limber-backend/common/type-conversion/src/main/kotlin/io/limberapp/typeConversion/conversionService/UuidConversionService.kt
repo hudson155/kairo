@@ -1,8 +1,8 @@
 package io.limberapp.typeConversion.conversionService
 
+import io.limberapp.common.util.uuid.uuidFromBase64Encoded
 import io.limberapp.common.validator.Validator
 import io.limberapp.typeConversion.TypeConversionService
-import io.limberapp.util.uuid.uuidFromBase64Encoded
 import java.util.*
 
 object UuidConversionService : TypeConversionService<UUID> {

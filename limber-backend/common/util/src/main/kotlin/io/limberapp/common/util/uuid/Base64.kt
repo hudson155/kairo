@@ -1,4 +1,4 @@
-package io.limberapp.util.uuid
+package io.limberapp.common.util.uuid
 
 import java.util.*
 
