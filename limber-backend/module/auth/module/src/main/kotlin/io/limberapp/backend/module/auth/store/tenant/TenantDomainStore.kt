@@ -5,13 +5,10 @@ import com.google.inject.Singleton
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
-import io.limberapp.backend.module.auth.model.tenant.TenantDomainFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.isUniqueConstraintViolation
-import io.limberapp.common.store.withFinder
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -22,9 +19,7 @@ private const val FK_ORG_GUID = "fk__tenant_domain__org_guid"
 private const val UNIQ_DOMAIN = "uniq__tenant_domain__domain"
 
 @Singleton
-internal class TenantDomainStore @Inject constructor(
-    jdbi: Jdbi,
-) : SqlStore(jdbi), Finder<TenantDomainModel, TenantDomainFinder> {
+internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: TenantDomainModel): TenantDomainModel =
       withHandle { handle ->
         try {
@@ -37,12 +32,12 @@ internal class TenantDomainStore @Inject constructor(
         }
       }
 
-  override fun <R> find(result: (Iterable<TenantDomainModel>) -> R, query: TenantDomainFinder.() -> Unit): R =
+  fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel> =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/tenantDomain/find.sql"))
-            .withFinder(TenantDomainQueryBuilder().apply(query))
+        handle.createQuery(sqlResource("/store/tenantDomain/getByOrgGuid.sql"))
+            .bind("orgGuid", orgGuid)
             .mapTo(TenantDomainModel::class.java)
-            .let(result)
+            .toSet()
       }
 
   fun delete(orgGuid: UUID, domain: String): Unit =

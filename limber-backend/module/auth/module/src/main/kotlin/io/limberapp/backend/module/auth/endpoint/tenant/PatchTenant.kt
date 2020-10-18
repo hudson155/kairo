@@ -32,7 +32,7 @@ internal class PatchTenant @Inject constructor(
     val rep = command.rep.required()
     Authorization.Role(AccountRole.SUPERUSER).authorize()
     val tenant = tenantService.update(command.orgGuid, tenantMapper.update(rep))
-    val domains = tenantDomainService.findAsSet { orgGuid(tenant.orgGuid) }
+    val domains = tenantDomainService.getByOrgGuid(command.orgGuid)
     return tenantMapper.completeRep(tenant, domains)
   }
 }

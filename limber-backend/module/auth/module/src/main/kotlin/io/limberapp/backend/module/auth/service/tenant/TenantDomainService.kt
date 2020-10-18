@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.auth.service.tenant
 
-import io.limberapp.backend.module.auth.model.tenant.TenantDomainFinder
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
-import io.limberapp.common.finder.Finder
 import java.util.*
 
-interface TenantDomainService : Finder<TenantDomainModel, TenantDomainFinder> {
+interface TenantDomainService {
   fun create(model: TenantDomainModel): TenantDomainModel
+
+  fun getByOrgGuid(orgGuid: UUID): Set<TenantDomainModel>
 
   fun delete(orgGuid: UUID, domain: String)
 }
