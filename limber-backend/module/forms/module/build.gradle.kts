@@ -18,9 +18,8 @@ dependencies {
   implementation(Dependencies.Apache.csv)
   implementation(Dependencies.Jackson.annotations)
 
+  testImplementation(project(":limber-backend:common:sql:testing"))
   testImplementation(project(":limber-backend:common:testing:integration"))
-
-  testImplementation(project(":limber-backend:deprecated:common:sql:testing"))
 
   testImplementation(project(":limber-backend:module:forms:client"))
 

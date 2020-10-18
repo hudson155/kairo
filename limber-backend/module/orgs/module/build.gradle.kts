@@ -13,9 +13,8 @@ dependencies {
 
   api(project(":limber-backend:module:orgs:interface"))
 
+  testImplementation(project(":limber-backend:common:sql:testing"))
   testImplementation(project(":limber-backend:common:testing:integration"))
-
-  testImplementation(project(":limber-backend:deprecated:common:sql:testing"))
 
   testImplementation(project(":limber-backend:module:orgs:client"))
 

@@ -29,6 +29,7 @@
             <option value="$PROJECT_DIR$/limber-backend/common/serialization" />
             <option value="$PROJECT_DIR$/limber-backend/common/server" />
             <option value="$PROJECT_DIR$/limber-backend/common/sql" />
+            <option value="$PROJECT_DIR$/limber-backend/common/sql/testing" />
             <option value="$PROJECT_DIR$/limber-backend/common/testing" />
             <option value="$PROJECT_DIR$/limber-backend/common/testing/integration" />
             <option value="$PROJECT_DIR$/limber-backend/common/testing/unit" />
@@ -38,8 +39,6 @@
             <option value="$PROJECT_DIR$/limber-backend/deprecated" />
             <option value="$PROJECT_DIR$/limber-backend/deprecated/common" />
             <option value="$PROJECT_DIR$/limber-backend/deprecated/common/module" />
-            <option value="$PROJECT_DIR$/limber-backend/deprecated/common/sql" />
-            <option value="$PROJECT_DIR$/limber-backend/deprecated/common/sql/testing" />
             <option value="$PROJECT_DIR$/limber-backend/module" />
             <option value="$PROJECT_DIR$/limber-backend/module/auth" />
             <option value="$PROJECT_DIR$/limber-backend/module/auth/client" />
