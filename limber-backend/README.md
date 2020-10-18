@@ -4,6 +4,9 @@
 
 ```
 io.limberapp
+├── auth
+│   └── jwt: Classes representing and regarding JWTs (see the common:auth
+│            module).
 └── util
     ├── darb: Code relating to the Dense(ish) Albeit Readable Binary format
     │         (see the common:util module, especially the DarbEncoder class).
