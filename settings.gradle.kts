@@ -30,7 +30,6 @@ include(":limber-backend:module:auth:module")
 include(":limber-backend:module:forms:client")
 include(":limber-backend:module:forms:interface")
 include(":limber-backend:module:forms:module")
-include(":limber-backend:module:forms:service-interface")
 
 include(":limber-backend:module:graphql:client")
 include(":limber-backend:module:graphql:interface")

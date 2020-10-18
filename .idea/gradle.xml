@@ -49,7 +49,6 @@
             <option value="$PROJECT_DIR$/limber-backend/module/forms/client" />
             <option value="$PROJECT_DIR$/limber-backend/module/forms/interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/forms/module" />
-            <option value="$PROJECT_DIR$/limber-backend/module/forms/service-interface" />
             <option value="$PROJECT_DIR$/limber-backend/module/graphql" />
             <option value="$PROJECT_DIR$/limber-backend/module/graphql/client" />
             <option value="$PROJECT_DIR$/limber-backend/module/graphql/interface" />
