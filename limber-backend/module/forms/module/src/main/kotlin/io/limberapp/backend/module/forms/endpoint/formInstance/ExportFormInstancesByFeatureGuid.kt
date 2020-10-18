@@ -9,7 +9,8 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exporter.formInstance.FormInstanceExporter
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
-import io.limberapp.backend.module.orgs.service.feature.FeatureService
+import io.limberapp.backend.module.orgs.api.feature.FeatureApi
+import io.limberapp.backend.module.orgs.client.feature.FeatureClient
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.common.finder.SortableFinder
@@ -20,8 +21,8 @@ import java.util.*
 
 internal class ExportFormInstancesByFeatureGuid @Inject constructor(
     application: Application,
-    private val featureService: FeatureService,
     private val formInstanceService: FormInstanceService,
+    private val featureClient: FeatureClient,
     private val userClient: UserClient,
 ) : LimberApiEndpoint<FormInstanceApi.ExportByFeatureGuid, String>(
     application = application,
@@ -49,7 +50,7 @@ internal class ExportFormInstancesByFeatureGuid @Inject constructor(
       command.creatorAccountGuid?.let { creatorAccountGuid(it) }
       sortBy(FormInstanceFinder.SortBy.NUMBER, SortableFinder.SortDirection.ASCENDING)
     }
-    val feature = featureService.findOnlyOrThrow { featureGuid(command.featureGuid) }
+    val feature = checkNotNull(featureClient(FeatureApi.Get(command.featureGuid)))
     val users = userClient(UserApi.GetByOrgGuid(feature.orgGuid))
     return FormInstanceExporter(
         users = users.associateBy { it.guid },

@@ -12,7 +12,7 @@ dependencies {
 
   api(project(":limber-backend:module:forms:interface"))
   api(project(":limber-backend:module:forms:service-interface"))
-  implementation(project(":limber-backend:module:orgs:service-interface"))
+  implementation(project(":limber-backend:module:orgs:client"))
   implementation(project(":limber-backend:module:users:client"))
 
   implementation(Dependencies.Apache.csv)

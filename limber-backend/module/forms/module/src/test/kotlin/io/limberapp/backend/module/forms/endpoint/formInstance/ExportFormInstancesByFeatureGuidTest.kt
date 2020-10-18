@@ -7,8 +7,9 @@ import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
-import io.limberapp.backend.module.orgs.model.feature.FeatureModel
-import io.limberapp.backend.module.orgs.service.feature.FeatureService
+import io.limberapp.backend.module.orgs.api.feature.FeatureApi
+import io.limberapp.backend.module.orgs.client.feature.FeatureClient
+import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.backend.module.users.rep.account.UserRep
@@ -33,8 +34,8 @@ object ExportFormInstancesByFeatureGuidTest {
       val orgGuid = UUID.randomUUID()
       val featureGuid = UUID.randomUUID()
 
-      val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      val existingFeature = mockk<FeatureRep.Complete>().apply { every { this@apply.orgGuid } returns orgGuid }
+      coEvery { mocks[FeatureClient::class](FeatureApi.Get(featureGuid)) } returns existingFeature
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -62,8 +63,8 @@ object ExportFormInstancesByFeatureGuidTest {
       val orgGuid = UUID.randomUUID()
       val featureGuid = UUID.randomUUID()
 
-      val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      val existingFeature = mockk<FeatureRep.Complete>().apply { every { this@apply.orgGuid } returns orgGuid }
+      coEvery { mocks[FeatureClient::class](FeatureApi.Get(featureGuid)) } returns existingFeature
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -129,8 +130,8 @@ object ExportFormInstancesByFeatureGuidTest {
       val orgGuid = UUID.randomUUID()
       val featureGuid = UUID.randomUUID()
 
-      val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      val existingFeature = mockk<FeatureRep.Complete>().apply { every { this@apply.orgGuid } returns orgGuid }
+      coEvery { mocks[FeatureClient::class](FeatureApi.Get(featureGuid)) } returns existingFeature
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
@@ -177,8 +178,8 @@ object ExportFormInstancesByFeatureGuidTest {
       val orgGuid = UUID.randomUUID()
       val featureGuid = UUID.randomUUID()
 
-      val existingFeature = mockk<FeatureModel>().apply { every { this@apply.orgGuid } returns orgGuid }
-      every { mocks[FeatureService::class].findOnlyOrThrow(any()) } returns existingFeature
+      val existingFeature = mockk<FeatureRep.Complete>().apply { every { this@apply.orgGuid } returns orgGuid }
+      coEvery { mocks[FeatureClient::class](FeatureApi.Get(featureGuid)) } returns existingFeature
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
