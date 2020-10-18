@@ -8,6 +8,7 @@ import { TenantRepComplete } from '../rep/Tenant';
 
 import AppFeatureRouter from './AppFeatureRouter';
 import AppUnauthenticatedRouter from './AppUnauthenticatedRouter';
+import MainAppNavbar from './components/MainAppNavbar';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import SignOutPage from './pages/SignOutPage/SignOutPage';
@@ -28,11 +29,14 @@ function AppRootRouter(props: Props): ReactElement {
   ) : <Route exact={false} path={app.rootPath}><AppUnauthenticatedRouter name={props.tenant.name} /></Route>;
 
   return (
-    <Switch>
-      <Route component={SignInPage} exact={true} path="/signin" />
-      <Route component={SignOutPage} exact={true} path="/signout" />
-      {subRouter}
-    </Switch>
+    <>
+      <MainAppNavbar />
+      <Switch>
+        <Route component={SignInPage} exact={true} path="/signin" />
+        <Route component={SignOutPage} exact={true} path="/signout" />
+        {subRouter}
+      </Switch>
+    </>
   );
 }
 

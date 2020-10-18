@@ -7,10 +7,10 @@ const styles = {
   toggle: (theme: EmotionTheme): CSSObject => ({
     position: 'relative',
     cursor: 'pointer',
-    height: theme.size.$24,
-    width: theme.size.$48,
+    height: theme.size.$16,
+    width: theme.size.$32,
     padding: theme.size.$2,
-    borderRadius: theme.size.$24,
+    borderRadius: theme.size.$16,
     background: theme.colors.grey400,
   }),
   toggleEnabled: (theme: EmotionTheme): CSSObject => ({
@@ -19,8 +19,8 @@ const styles = {
   slider: (theme: EmotionTheme): CSSObject => ({
     position: 'absolute',
     backgroundColor: theme.colors.grey50,
-    height: theme.size.$24,
-    width: theme.size.$24,
+    height: theme.size.$16,
+    width: theme.size.$16,
     borderRadius: '100%',
     transition: 'transform 0.15s ease-in-out',
   }),
