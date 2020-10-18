@@ -32,6 +32,7 @@ export interface EmotionTheme {
     red700: string;
   };
   size: {
+    $1: string;
     $2: string;
     $4: string;
     $6: string;
@@ -112,6 +113,7 @@ const EmotionThemeColorsLight = {
 };
 
 const EmotionThemeSizes = {
+  $1: '1px',
   $2: '2px',
   $4: '4px',
   $6: '6px',
