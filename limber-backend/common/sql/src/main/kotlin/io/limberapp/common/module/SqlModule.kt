@@ -1,8 +1,8 @@
 package io.limberapp.common.module
 
+import io.limberapp.common.config.database.SqlDatabaseConfig
 import io.limberapp.common.sql.registerJdbiType
 import io.limberapp.common.sql.type.JdbiRegexType
-import io.limberapp.config.database.SqlDatabaseConfig
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin

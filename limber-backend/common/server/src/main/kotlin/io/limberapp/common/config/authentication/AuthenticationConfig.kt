@@ -1,4 +1,4 @@
-package io.limberapp.config.authentication
+package io.limberapp.common.config.authentication
 
 /**
  * There can be multiple ways to authenticate with an application. This configuration class encapsulates all

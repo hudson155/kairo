@@ -5,8 +5,8 @@ import io.ktor.application.Application
 import io.limberapp.backend.module.LimberSqlModule
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.shutDown
-import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
 import java.util.*

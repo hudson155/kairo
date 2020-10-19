@@ -27,9 +27,9 @@ import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.module.SqlWrapper
 import io.limberapp.common.shutDown
-import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
 import io.limberapp.permissions.orgPermissions.OrgPermissions

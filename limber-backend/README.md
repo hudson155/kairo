@@ -9,6 +9,8 @@ io.limberapp
 │            module).
 ├── client: HTTP client for interaction with other services (see the
 │           common:client module).
+├── config: Classes representing and regarding application configuration (see
+│           the common:config module).
 └── util
     ├── darb: Code relating to the Dense(ish) Albeit Readable Binary format
     │         (see the common:util module, especially the DarbEncoder class).

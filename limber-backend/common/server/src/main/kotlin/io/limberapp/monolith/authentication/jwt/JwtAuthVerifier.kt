@@ -7,10 +7,10 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.limberapp.backend.authorization.principal.JwtPrincipal
 import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.JwtClaims
+import io.limberapp.common.config.authentication.AuthenticationConfig
+import io.limberapp.common.config.authentication.AuthenticationMechanism
 import io.limberapp.common.ktorAuth.LimberAuthVerifier
 import io.limberapp.common.serialization.limberObjectMapper
-import io.limberapp.config.authentication.AuthenticationConfig
-import io.limberapp.config.authentication.AuthenticationMechanism
 import org.slf4j.LoggerFactory
 
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVerifier<JwtPrincipal> {

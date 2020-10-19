@@ -4,7 +4,7 @@ import io.ktor.application.Application
 import io.limberapp.backend.module.TestSqlModule
 import io.limberapp.backend.module.users.UsersModule
 import io.limberapp.common.LimberApplication
-import io.limberapp.config.ConfigLoader
+import io.limberapp.common.config.ConfigLoader
 import io.limberapp.monolith.config.LimberMonolithConfig
 import io.limberapp.testing.integration.LimberIntegrationTestExtension
 import org.junit.jupiter.api.extension.ExtensionContext

@@ -1,9 +1,9 @@
-package io.limberapp.config.authentication
+package io.limberapp.common.config.authentication
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import io.limberapp.config.ConfigStringDeserializer
+import io.limberapp.common.config.ConfigStringDeserializer
 import com.auth0.jwt.algorithms.Algorithm as JwtAlgorithm
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
@@ -30,7 +30,7 @@ sealed class AuthenticationMechanism {
         override val leeway: Long,
         val algorithm: Algorithm,
         @JsonDeserialize(using = ConfigStringDeserializer::class)
-        val secret: String
+        val secret: String,
     ) : Jwt() {
       enum class Algorithm { HMAC256 }
 

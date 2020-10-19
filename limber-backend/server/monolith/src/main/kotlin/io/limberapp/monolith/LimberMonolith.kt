@@ -2,8 +2,8 @@ package io.limberapp.monolith
 
 import io.ktor.application.Application
 import io.limberapp.backend.module.LimberSqlModule
+import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.module.healthCheck.HealthCheckModule
-import io.limberapp.config.ConfigLoader
 import io.limberapp.module.monolith.MonolithModule
 
 internal class LimberMonolith(application: Application) : BaseLimberApp(

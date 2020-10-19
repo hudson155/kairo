@@ -1,4 +1,4 @@
-package io.limberapp.config.authentication
+package io.limberapp.common.config.authentication
 
 data class UuidsConfig(
     val generation: Generation,

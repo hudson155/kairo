@@ -13,8 +13,8 @@ import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.shutDown
-import io.limberapp.config.ConfigLoader
 import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
 import io.limberapp.permissions.orgPermissions.OrgPermission

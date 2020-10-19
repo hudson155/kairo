@@ -28,13 +28,13 @@ import io.ktor.routing.route
 import io.ktor.routing.routing
 import io.ktor.server.engine.ApplicationEngineEnvironment
 import io.limberapp.backend.authorization.principal.JwtPrincipal
+import io.limberapp.common.config.Config
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.ApplicationModule
 import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.common.util.conversionService
-import io.limberapp.config.Config
 import io.limberapp.exception.LimberException
 import io.limberapp.exceptionMapping.ExceptionMapper
 import io.limberapp.module.main.MainModule

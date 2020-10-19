@@ -1,9 +1,9 @@
 package io.limberapp.module.graphql.config
 
-import io.limberapp.config.Config
-import io.limberapp.config.authentication.AuthenticationConfig
-import io.limberapp.config.authentication.ClockConfig
-import io.limberapp.config.authentication.UuidsConfig
+import io.limberapp.common.config.Config
+import io.limberapp.common.config.authentication.AuthenticationConfig
+import io.limberapp.common.config.authentication.ClockConfig
+import io.limberapp.common.config.authentication.UuidsConfig
 
 internal data class GraphqlModuleConfig(
     override val monolithBaseUrl: String,

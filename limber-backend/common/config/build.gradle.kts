@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(Dependencies.Jackson.databind)
+  api(Dependencies.Jackson.databind)
   implementation(Dependencies.Logging.slf4j)
 }
 
