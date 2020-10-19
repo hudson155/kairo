@@ -26,11 +26,11 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
       featureGuid(featureGuid)
       formInstanceGuid(formInstanceGuid)
     } ?: throw FormInstanceQuestionNotFound()
-    val formTemplateQuestion = formTemplateQuestionService.findOnlyOrNull {
-      featureGuid(featureGuid)
-      formTemplateGuid(formInstance.formTemplateGuid)
-      questionGuid(questionGuid)
-    } ?: throw FormInstanceQuestionNotFound()
+    val formTemplateQuestion = formTemplateQuestionService.get(
+        featureGuid = featureGuid,
+        formTemplateGuid = formInstance.formTemplateGuid,
+        questionGuid = questionGuid,
+    ) ?: throw FormInstanceQuestionNotFound()
     if (formTemplateQuestion.required && formInstance.submittedDate != null) throw CannotDeleteRequiredQuestion()
     formInstanceQuestionStore.delete(featureGuid, formInstanceGuid, questionGuid)
   }

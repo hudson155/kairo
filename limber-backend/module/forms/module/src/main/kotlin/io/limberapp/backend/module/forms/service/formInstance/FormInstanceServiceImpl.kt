@@ -28,9 +28,10 @@ internal class FormInstanceServiceImpl @Inject constructor(
     val formInstance = formInstanceStore.findOnlyOrNull { featureGuid(featureGuid); formInstanceGuid(formInstanceGuid) }
         ?: throw FormInstanceNotFound()
     if (formInstance.submittedDate != null) throw CannotReSubmitFormInstance()
-    val formTemplateQuestions = formTemplateQuestionService.findAsSet {
-      formTemplateGuid(formInstance.formTemplateGuid)
-    }
+    val formTemplateQuestions = formTemplateQuestionService.getByFormTemplateGuid(
+        featureGuid = featureGuid,
+        formTemplateGuid = formInstance.formTemplateGuid,
+    )
     val formInstanceQuestions = formInstanceQuestionService.getByFormInstanceGuid(
         featureGuid = featureGuid,
         formInstanceGuid = formInstanceGuid

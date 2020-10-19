@@ -34,10 +34,10 @@ internal class GetFormTemplate @Inject constructor(
       featureGuid(command.featureGuid)
       formTemplateGuid(command.formTemplateGuid)
     } ?: throw FormTemplateNotFound()
-    val questions = formTemplateQuestionService.findAsList {
-      featureGuid(command.featureGuid)
-      formTemplateGuid(formTemplate.guid)
-    }
+    val questions = formTemplateQuestionService.getByFormTemplateGuid(
+        featureGuid = command.featureGuid,
+        formTemplateGuid = formTemplate.guid,
+    )
     return formTemplateMapper.completeRep(formTemplate, questions)
   }
 }

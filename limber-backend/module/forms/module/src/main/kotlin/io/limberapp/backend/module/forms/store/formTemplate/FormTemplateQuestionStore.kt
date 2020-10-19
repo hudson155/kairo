@@ -4,19 +4,16 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateQuestionNotFound
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateDateQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateRadioSelectorQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateTextQuestionModel
 import io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.sql.PolymorphicRowMapper
 import io.limberapp.common.sql.bindNullForMissingArguments
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.isNotNullConstraintViolation
-import io.limberapp.common.store.withFinder
 import io.limberapp.exception.badRequest.RankOutOfBounds
 import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
@@ -37,9 +34,7 @@ private class FormTemplateQuestionRowMapper : PolymorphicRowMapper<FormTemplateQ
 }
 
 @Singleton
-internal class FormTemplateQuestionStore @Inject constructor(
-    jdbi: Jdbi,
-) : SqlStore(jdbi), Finder<FormTemplateQuestionModel, FormTemplateQuestionFinder> {
+internal class FormTemplateQuestionStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   init {
     jdbi.registerRowMapper(FormTemplateQuestionRowMapper())
   }
@@ -81,15 +76,23 @@ internal class FormTemplateQuestionStore @Inject constructor(
     }
   }
 
-  override fun <R> find(
-      result: (Iterable<FormTemplateQuestionModel>) -> R,
-      query: FormTemplateQuestionFinder.() -> Unit,
-  ) =
+  fun get(featureGuid: UUID, formTemplateGuid: UUID, questionGuid: UUID): FormTemplateQuestionModel? =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/formTemplateQuestion/find.sql"))
-            .withFinder(FormTemplateQuestionQueryBuilder().apply(query))
+        handle.createQuery(sqlResource("/store/formTemplateQuestion/get.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
+            .bind("questionGuid", questionGuid)
             .mapTo(FormTemplateQuestionModel::class.java)
-            .let(result)
+            .singleNullOrThrow()
+      }
+
+  fun getByFormTemplateGuid(featureGuid: UUID, formTemplateGuid: UUID): List<FormTemplateQuestionModel> =
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formTemplateQuestion/getByFormTemplateGuid.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
+            .mapTo(FormTemplateQuestionModel::class.java)
+            .toList()
       }
 
   fun update(
