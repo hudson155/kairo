@@ -36,9 +36,6 @@
             <option value="$PROJECT_DIR$/limber-backend/common/type-conversion" />
             <option value="$PROJECT_DIR$/limber-backend/common/util" />
             <option value="$PROJECT_DIR$/limber-backend/common/validation" />
-            <option value="$PROJECT_DIR$/limber-backend/deprecated" />
-            <option value="$PROJECT_DIR$/limber-backend/deprecated/common" />
-            <option value="$PROJECT_DIR$/limber-backend/deprecated/common/module" />
             <option value="$PROJECT_DIR$/limber-backend/module" />
             <option value="$PROJECT_DIR$/limber-backend/module/auth" />
             <option value="$PROJECT_DIR$/limber-backend/module/auth/client" />

@@ -7,8 +7,6 @@ dependencies {
   implementation(project(":limber-backend:common:module"))
   implementation(project(":limber-backend:common:reps"))
 
-  implementation(project(":limber-backend:deprecated:common:module"))
-
   api(project(":limber-backend:module:graphql:interface"))
 
   testImplementation(project(":limber-backend:common:testing:integration"))

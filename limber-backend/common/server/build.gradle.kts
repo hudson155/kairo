@@ -14,8 +14,6 @@ dependencies {
   implementation(project(":limber-backend:common:type-conversion"))
   api(project(":limber-backend:common:util"))
 
-  api(project(":limber-backend:deprecated:common:module"))
-
   implementation(Dependencies.Google.guice)
   implementation(Dependencies.Jackson.dataFormatYaml)
   implementation(Dependencies.Jwt.auth0JavaJwt)

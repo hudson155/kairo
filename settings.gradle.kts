@@ -21,8 +21,6 @@ include(":limber-backend:common:type-conversion")
 include(":limber-backend:common:util")
 include(":limber-backend:common:validation")
 
-include(":limber-backend:deprecated:common:module")
-
 include(":limber-backend:module:auth:client")
 include(":limber-backend:module:auth:interface")
 include(":limber-backend:module:auth:module")
