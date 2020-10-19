@@ -1,17 +1,21 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
 import io.limberapp.backend.module.forms.store.formTemplate.FormTemplateStore
-import io.limberapp.common.finder.Finder
 import java.util.*
 
 internal class FormTemplateServiceImpl @Inject constructor(
     private val formTemplateStore: FormTemplateStore,
-) : FormTemplateService, Finder<FormTemplateModel, FormTemplateFinder> by formTemplateStore {
+) : FormTemplateService {
   override fun create(model: FormTemplateModel) =
       formTemplateStore.create(model)
+
+  override fun get(featureGuid: UUID, formTemplateGuid: UUID) =
+      formTemplateStore.get(featureGuid, formTemplateGuid)
+
+  override fun getByFeatureGuid(featureGuid: UUID) =
+      formTemplateStore.getByFeatureGuid(featureGuid)
 
   override fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update) =
       formTemplateStore.update(featureGuid, formTemplateGuid, update)

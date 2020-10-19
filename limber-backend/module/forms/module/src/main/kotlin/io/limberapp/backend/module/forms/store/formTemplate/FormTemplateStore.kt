@@ -3,19 +3,14 @@ package io.limberapp.backend.module.forms.store.formTemplate
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import io.limberapp.backend.module.forms.exception.formTemplate.FormTemplateNotFound
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
-import io.limberapp.common.finder.Finder
 import io.limberapp.common.store.SqlStore
-import io.limberapp.common.store.withFinder
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.*
 
 @Singleton
-internal class FormTemplateStore @Inject constructor(
-    jdbi: Jdbi,
-) : SqlStore(jdbi), Finder<FormTemplateModel, FormTemplateFinder> {
+internal class FormTemplateStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   fun create(model: FormTemplateModel): FormTemplateModel =
       withHandle { handle ->
         handle.createQuery(sqlResource("/store/formTemplate/create.sql"))
@@ -24,12 +19,21 @@ internal class FormTemplateStore @Inject constructor(
             .single()
       }
 
-  override fun <R> find(result: (Iterable<FormTemplateModel>) -> R, query: FormTemplateFinder.() -> Unit): R =
+  fun get(featureGuid: UUID, formTemplateGuid: UUID): FormTemplateModel? =
       withHandle { handle ->
-        handle.createQuery(sqlResource("/store/formTemplate/find.sql"))
-            .withFinder(FormTemplateQueryBuilder().apply(query))
+        handle.createQuery(sqlResource("/store/formTemplate/get.sql"))
+            .bind("featureGuid", featureGuid)
+            .bind("formTemplateGuid", formTemplateGuid)
             .mapTo(FormTemplateModel::class.java)
-            .let(result)
+            .singleNullOrThrow()
+      }
+
+  fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel> =
+      withHandle { handle ->
+        handle.createQuery(sqlResource("/store/formTemplate/getByFeatureGuid.sql"))
+            .bind("featureGuid", featureGuid)
+            .mapTo(FormTemplateModel::class.java)
+            .toSet()
       }
 
   fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel =

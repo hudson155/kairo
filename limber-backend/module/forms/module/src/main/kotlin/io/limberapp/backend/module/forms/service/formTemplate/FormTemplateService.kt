@@ -1,12 +1,14 @@
 package io.limberapp.backend.module.forms.service.formTemplate
 
-import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateFinder
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
-import io.limberapp.common.finder.Finder
 import java.util.*
 
-interface FormTemplateService : Finder<FormTemplateModel, FormTemplateFinder> {
+interface FormTemplateService {
   fun create(model: FormTemplateModel): FormTemplateModel
+
+  fun get(featureGuid: UUID, formTemplateGuid: UUID): FormTemplateModel?
+
+  fun getByFeatureGuid(featureGuid: UUID): Set<FormTemplateModel>
 
   fun update(featureGuid: UUID, formTemplateGuid: UUID, update: FormTemplateModel.Update): FormTemplateModel
 
