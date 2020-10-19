@@ -4,8 +4,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
-import io.limberapp.client.LimberHttpClient
-import io.limberapp.client.LimberHttpClientRequestBuilder
+import io.limberapp.common.client.LimberHttpClient
+import io.limberapp.common.client.LimberHttpClientRequestBuilder
 
 class FormInstanceClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(

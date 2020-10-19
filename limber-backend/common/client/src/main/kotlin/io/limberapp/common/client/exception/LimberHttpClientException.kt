@@ -1,4 +1,4 @@
-package io.limberapp.client.exception
+package io.limberapp.common.client.exception
 
 import io.limberapp.error.LimberError
 

@@ -1,4 +1,4 @@
-package io.limberapp.client
+package io.limberapp.common.client
 
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders

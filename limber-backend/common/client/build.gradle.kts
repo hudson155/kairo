@@ -8,8 +8,9 @@ dependencies {
   api(project(":limber-backend:common:rest-interface"))
   api(project(":limber-backend:common:serialization"))
 
-  api(Dependencies.Google.guice)
+  api(Dependencies.Google.guice) // Not used by this module - provided to consumers.
   implementation(Dependencies.Ktor.clientCio)
+  implementation(Dependencies.Logging.slf4j)
 }
 
 detekt {

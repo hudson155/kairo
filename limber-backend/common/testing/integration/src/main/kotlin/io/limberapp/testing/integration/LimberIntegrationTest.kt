@@ -2,9 +2,9 @@ package io.limberapp.testing.integration
 
 import io.ktor.server.testing.TestApplicationCall
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.client.LimberHttpClient
-import io.limberapp.client.exception.LimberHttpClientException
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.client.LimberHttpClient
+import io.limberapp.common.client.exception.LimberHttpClientException
 import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.exception.LimberException
 import io.limberapp.exceptionMapping.ExceptionMapper

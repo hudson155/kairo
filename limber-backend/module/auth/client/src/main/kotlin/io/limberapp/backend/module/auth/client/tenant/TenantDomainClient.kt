@@ -4,8 +4,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
-import io.limberapp.client.LimberHttpClient
-import io.limberapp.client.LimberHttpClientRequestBuilder
+import io.limberapp.common.client.LimberHttpClient
+import io.limberapp.common.client.LimberHttpClientRequestBuilder
 
 class TenantDomainClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(

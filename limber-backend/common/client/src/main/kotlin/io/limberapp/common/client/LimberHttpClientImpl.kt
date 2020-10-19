@@ -1,4 +1,4 @@
-package io.limberapp.client
+package io.limberapp.common.client
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

@@ -1,4 +1,4 @@
-package io.limberapp.client.exception
+package io.limberapp.common.client.exception
 
 class LimberHttpClientInternalException(
     override val cause: Exception,

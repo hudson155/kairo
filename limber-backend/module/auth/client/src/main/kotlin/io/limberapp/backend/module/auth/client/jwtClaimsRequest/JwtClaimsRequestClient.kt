@@ -4,8 +4,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.rep.jwtClaimsRequest.JwtClaimsRequestRep
-import io.limberapp.client.LimberHttpClient
-import io.limberapp.client.LimberHttpClientRequestBuilder
+import io.limberapp.common.client.LimberHttpClient
+import io.limberapp.common.client.LimberHttpClientRequestBuilder
 
 class JwtClaimsRequestClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(

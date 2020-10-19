@@ -1,8 +1,8 @@
 package io.limberapp.module.main
 
 import io.ktor.application.Application
-import io.limberapp.client.LimberHttpClient
-import io.limberapp.client.LimberServerSelfAuthenticatingHttpClient
+import io.limberapp.common.client.LimberHttpClient
+import io.limberapp.common.client.LimberServerSelfAuthenticatingHttpClient
 import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.util.uuid.DeterministicUuidGenerator
 import io.limberapp.common.util.uuid.RandomUuidGenerator
