@@ -11,14 +11,12 @@ class TenantDomainClient @Inject constructor(private val httpClient: LimberHttpC
   suspend operator fun invoke(
       endpoint: TenantDomainApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<TenantDomainRep.Complete>(checkNotNull(it))
-  }
+  ): TenantDomainRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: TenantDomainApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

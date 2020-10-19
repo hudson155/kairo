@@ -11,21 +11,18 @@ class FormTemplateQuestionClient @Inject constructor(private val httpClient: Lim
   suspend operator fun invoke(
       endpoint: FormTemplateQuestionApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<FormTemplateQuestionRep.Complete>(checkNotNull(it))
-  }
+  ): FormTemplateQuestionRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FormTemplateQuestionApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<FormTemplateQuestionRep.Complete>(it) }
-  }
+  ): FormTemplateQuestionRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: FormTemplateQuestionApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

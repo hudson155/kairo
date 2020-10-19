@@ -11,42 +11,36 @@ class UserClient @Inject constructor(private val httpClient: LimberHttpClient) {
   suspend operator fun invoke(
       endpoint: UserApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<UserRep.Complete>(checkNotNull(it))
-  }
+  ): UserRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: UserApi.Get,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<UserRep.Complete>(it) }
-  }
+  ): UserRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: UserApi.GetByOrgGuidAndEmailAddress,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<UserRep.Complete>(it) }
-  }
+  ): UserRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: UserApi.GetByOrgGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<Set<UserRep.Summary>>(checkNotNull(it))
-  }
+  ): Set<UserRep.Summary> =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: UserApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<UserRep.Complete>(it) }
-  }
+  ): UserRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: UserApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

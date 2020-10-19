@@ -11,14 +11,12 @@ class FormInstanceQuestionClient @Inject constructor(private val httpClient: Lim
   suspend operator fun invoke(
       endpoint: FormInstanceQuestionApi.Put,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<FormInstanceQuestionRep.Complete>(checkNotNull(it))
-  }
+  ): FormInstanceQuestionRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FormInstanceQuestionApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

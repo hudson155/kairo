@@ -11,42 +11,36 @@ class FormInstanceClient @Inject constructor(private val httpClient: LimberHttpC
   suspend operator fun invoke(
       endpoint: FormInstanceApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<FormInstanceRep.Complete>(checkNotNull(it))
-  }
+  ): FormInstanceRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.Get,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<FormInstanceRep.Complete>(it) }
-  }
+  ): FormInstanceRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.GetByFeatureGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<List<FormInstanceRep.Summary>>(checkNotNull(it))
-  }
+  ): List<FormInstanceRep.Summary> =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.ExportByFeatureGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    checkNotNull(it)
-  }
+  ): String =
+      httpClient.request(endpoint, builder) { checkNotNull(it) }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<FormInstanceRep.Summary>(it) }
-  }
+  ): FormInstanceRep.Summary? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: FormInstanceApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

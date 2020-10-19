@@ -11,21 +11,18 @@ class OrgRoleMembershipClient @Inject constructor(private val httpClient: Limber
   suspend operator fun invoke(
       endpoint: OrgRoleMembershipApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<OrgRoleMembershipRep.Complete>(checkNotNull(it))
-  }
+  ): OrgRoleMembershipRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: OrgRoleMembershipApi.GetByOrgRoleGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<Set<OrgRoleMembershipRep.Complete>>(checkNotNull(it))
-  }
+  ): Set<OrgRoleMembershipRep.Complete> =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: OrgRoleMembershipApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

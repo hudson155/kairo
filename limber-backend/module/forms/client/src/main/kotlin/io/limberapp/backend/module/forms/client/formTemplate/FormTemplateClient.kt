@@ -11,35 +11,30 @@ class FormTemplateClient @Inject constructor(private val httpClient: LimberHttpC
   suspend operator fun invoke(
       endpoint: FormTemplateApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<FormTemplateRep.Complete>(checkNotNull(it))
-  }
+  ): FormTemplateRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FormTemplateApi.Get,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<FormTemplateRep.Complete>(it) }
-  }
+  ): FormTemplateRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: FormTemplateApi.GetByFeatureGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<Set<FormTemplateRep.Summary>>(checkNotNull(it))
-  }
+  ): Set<FormTemplateRep.Summary> =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FormTemplateApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<FormTemplateRep.Summary>(it) }
-  }
+  ): FormTemplateRep.Summary? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: FormTemplateApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

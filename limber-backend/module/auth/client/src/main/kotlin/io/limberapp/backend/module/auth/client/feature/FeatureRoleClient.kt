@@ -11,28 +11,24 @@ class FeatureRoleClient @Inject constructor(private val httpClient: LimberHttpCl
   suspend operator fun invoke(
       endpoint: FeatureRoleApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<FeatureRoleRep.Complete>(checkNotNull(it))
-  }
+  ): FeatureRoleRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FeatureRoleApi.GetByFeatureGuid,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<Set<FeatureRoleRep.Complete>>(checkNotNull(it))
-  }
+  ): Set<FeatureRoleRep.Complete> =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: FeatureRoleApi.Patch,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<FeatureRoleRep.Complete>(it) }
-  }
+  ): FeatureRoleRep.Complete? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: FeatureRoleApi.Delete,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    it?.let { readValue<Unit>(it) }
-  }
+  ): Unit? =
+      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

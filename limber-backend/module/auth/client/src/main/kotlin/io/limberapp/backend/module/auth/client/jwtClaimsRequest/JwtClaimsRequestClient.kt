@@ -11,7 +11,6 @@ class JwtClaimsRequestClient @Inject constructor(private val httpClient: LimberH
   suspend operator fun invoke(
       endpoint: JwtClaimsRequestApi.Post,
       builder: LimberHttpClientRequestBuilder.() -> Unit = {},
-  ) = httpClient.request(endpoint, builder) {
-    readValue<JwtClaimsRequestRep.Complete>(checkNotNull(it))
-  }
+  ): JwtClaimsRequestRep.Complete =
+      httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 }
