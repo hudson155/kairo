@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:common:finder"))
   implementation(project(":limber-backend:common:reps"))
   implementation(project(":limber-backend:common:serialization"))
   implementation(project(":limber-backend:common:sql"))
