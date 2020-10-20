@@ -10,8 +10,8 @@ import AppFeatureRouter from './AppFeatureRouter';
 import AppUnauthenticatedRouter from './AppUnauthenticatedRouter';
 import MainAppNavbar from './components/MainAppNavbar';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
-import SignInPage from './pages/SignInPage/SignInPage';
-import SignOutPage from './pages/SignOutPage/SignOutPage';
+import SignInPage, { signInPagePath } from './pages/SignInPage/SignInPage';
+import SignOutPage, { signOutPagePath } from './pages/SignOutPage/SignOutPage';
 
 interface Props {
   readonly tenant: TenantRepComplete;
@@ -37,8 +37,8 @@ function AppRootRouter(props: Props): ReactElement {
   return (
     <>
       <Switch>
-        <Route component={SignInPage} exact={true} path="/signin" />
-        <Route component={SignOutPage} exact={true} path="/signout" />
+        <Route component={SignInPage} exact={true} path={signInPagePath()} />
+        <Route component={SignOutPage} exact={true} path={signOutPagePath()} />
         {subRouter}
       </Switch>
     </>

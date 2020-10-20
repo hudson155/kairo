@@ -8,6 +8,7 @@ import { useOrg } from '../../provider/OrgProvider';
 import { FeatureRepComplete } from '../../rep/Feature';
 import limberLogo from '../../resources/images/limber_logo.png';
 import { EmotionTheme } from '../EmotionTheme';
+import { signInPagePath } from '../pages/SignInPage/SignInPage';
 
 import LimberToggle from './LimberToggle';
 
@@ -79,10 +80,6 @@ function MainAppNavbar(): ReactElement {
   const location = useLocation();
   const org = useOrg();
 
-  const signIn = () => {
-    auth.loginWithRedirect({ appState: { returnTo: location.pathname } });
-  };
-
   return (
     <div css={theme => styles.root(theme)}>
       <img alt="logo" css={styles.logo} src={String(limberLogo)} />
@@ -92,7 +89,7 @@ function MainAppNavbar(): ReactElement {
       <div css={theme => styles.right(theme)}>
         {auth.isAuthenticated
           ? <MainAppNavbarSettingsDropdown />
-          : <a css={styles.signIn()} onClick={signIn}>Sign in</a>
+          : <a css={styles.signIn()} href={signInPagePath(location.pathname)}>Sign in</a>
         }
       </div>
     </div>);

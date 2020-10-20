@@ -3,10 +3,15 @@ import { ReactElement } from 'react';
 
 import { app } from '../../../app';
 
+function signOutPagePath(): string {
+  return `/signout`;
+}
+
 function SignOutPage(): ReactElement | null {
   const auth = useAuth0();
   auth.logout({ returnTo: app.rootUrl });
   return null;
 }
 
+export { signOutPagePath }
 export default SignOutPage;

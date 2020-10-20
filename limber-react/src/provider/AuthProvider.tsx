@@ -1,5 +1,6 @@
 import { Auth0Provider } from '@auth0/auth0-react';
 import { AppState } from '@auth0/auth0-react/dist/auth0-provider';
+import { Base64 } from 'js-base64';
 import React, { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -17,7 +18,8 @@ function AuthProvider(props: Props) {
   const history = useHistory();
 
   const onRedirectCallback = (appState: AppState) => {
-    history.push(appState?.returnTo || window.location.pathname);
+    const returnTo = appState?.returnTo != null ? Base64.decode(appState.returnTo) : null;
+    history.push(returnTo || window.location.pathname);
   };
 
   return (
