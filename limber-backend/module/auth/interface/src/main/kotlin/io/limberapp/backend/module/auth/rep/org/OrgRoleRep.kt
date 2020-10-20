@@ -1,6 +1,5 @@
 package io.limberapp.backend.module.auth.rep.org
 
-import io.limberapp.common.util.url.slugify
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.common.validation.ifPresent
@@ -26,12 +25,11 @@ object OrgRoleRep {
       val guid: UUID,
       override val createdDate: ZonedDateTime,
       val name: String,
+      val slug: String,
       val permissions: OrgPermissions,
       val isDefault: Boolean,
       val memberCount: Int,
-  ) : CompleteRep {
-    val slug get() = name.slugify()
-  }
+  ) : CompleteRep
 
   data class Update(
       val name: String? = null,

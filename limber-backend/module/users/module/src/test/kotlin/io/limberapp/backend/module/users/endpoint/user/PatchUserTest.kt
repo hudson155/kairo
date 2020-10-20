@@ -6,6 +6,7 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.util.string.joinNames
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -31,7 +32,7 @@ internal class PatchUserTest(
       userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
     }
 
-    userRep = userRep.copy(firstName = "Gunner")
+    userRep = userRep.copy(firstName = "Gunner", fullName = listOfNotNull("Gunner", userRep.lastName).joinNames())
     test(expectResult = userRep) {
       userClient(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner")))
     }

@@ -26,6 +26,7 @@ internal class OrgRoleMapper @Inject constructor(
       guid = model.guid,
       createdDate = model.createdDate,
       name = model.name,
+      slug = model.slug,
       permissions = model.permissions,
       isDefault = model.isDefault,
       memberCount = model.memberCount,

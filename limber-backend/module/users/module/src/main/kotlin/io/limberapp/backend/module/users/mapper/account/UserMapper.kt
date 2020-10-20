@@ -30,6 +30,7 @@ internal class UserMapper @Inject constructor(
       orgGuid = model.orgGuid,
       firstName = model.firstName,
       lastName = model.lastName,
+      fullName = model.fullName,
       profilePhotoUrl = model.profilePhotoUrl
   )
 
@@ -40,6 +41,7 @@ internal class UserMapper @Inject constructor(
       orgGuid = model.orgGuid,
       firstName = model.firstName,
       lastName = model.lastName,
+      fullName = model.fullName,
       emailAddress = model.emailAddress,
       profilePhotoUrl = model.profilePhotoUrl
   )

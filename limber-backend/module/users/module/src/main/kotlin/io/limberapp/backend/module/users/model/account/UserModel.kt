@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.model.account
 
+import io.limberapp.common.util.string.joinNames
 import io.limberapp.permissions.AccountRole
 import java.time.ZonedDateTime
 import java.util.*
@@ -15,6 +16,8 @@ data class UserModel(
     val emailAddress: String,
     val profilePhotoUrl: String?,
 ) {
+  val fullName = listOfNotNull(firstName, lastName).joinNames()
+
   fun hasRole(role: AccountRole) = when (role) {
     AccountRole.IDENTITY_PROVIDER -> identityProvider
     AccountRole.LIMBER_SERVER -> false // Users can't be servers.

@@ -158,6 +158,7 @@ internal class PostJwtClaimsRequestTest(
         orgGuid = existingOrg.guid,
         firstName = "Summer",
         lastName = "Kavan",
+        fullName = "Summer Kavan",
         emailAddress = "jhudson@jhudson.ca",
         profilePhotoUrl = null
     )

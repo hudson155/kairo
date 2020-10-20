@@ -32,10 +32,9 @@ object UserRep {
       val orgGuid: UUID,
       val firstName: String?,
       val lastName: String?,
+      val fullName: String?,
       val profilePhotoUrl: String?,
-  ) : CompleteRep {
-    val fullName get() = listOfNotNull(firstName, lastName).joinToString(" ")
-  }
+  ) : CompleteRep
 
   data class Complete(
       val guid: UUID,
@@ -44,11 +43,10 @@ object UserRep {
       val orgGuid: UUID,
       val firstName: String?,
       val lastName: String?,
+      val fullName: String?,
       val emailAddress: String,
       val profilePhotoUrl: String?,
-  ) : CompleteRep {
-    val fullName get() = listOfNotNull(firstName, lastName).joinToString(" ")
-  }
+  ) : CompleteRep
 
   data class Update(
       val firstName: String? = null,

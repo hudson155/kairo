@@ -40,13 +40,11 @@ object ExportFormInstancesByFeatureGuidTest {
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Jeff"
-        every { this@apply.lastName } returns "Hudson"
+        every { this@apply.fullName } returns "Jeff Hudson"
       }
       val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Bill"
-        every { this@apply.lastName } returns "Gates"
+        every { this@apply.fullName } returns "Bill Gates"
       }
       coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
@@ -69,13 +67,11 @@ object ExportFormInstancesByFeatureGuidTest {
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Jeff"
-        every { this@apply.lastName } returns "Hudson"
+        every { this@apply.fullName } returns "Jeff Hudson"
       }
       val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Bill"
-        every { this@apply.lastName } returns "Gates"
+        every { this@apply.fullName } returns "Bill Gates"
       }
       coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
@@ -136,13 +132,11 @@ object ExportFormInstancesByFeatureGuidTest {
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Jeff"
-        every { this@apply.lastName } returns "Hudson"
+        every { this@apply.fullName } returns "Jeff Hudson"
       }
       val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Bill"
-        every { this@apply.lastName } returns "Gates"
+        every { this@apply.fullName } returns "Bill Gates"
       }
       coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 
@@ -184,13 +178,11 @@ object ExportFormInstancesByFeatureGuidTest {
 
       val existingUser0 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Jeff"
-        every { this@apply.lastName } returns "Hudson"
+        every { this@apply.fullName } returns "Jeff Hudson"
       }
       val existingUser1 = mockk<UserRep.Summary>().apply {
         every { this@apply.guid } returns UUID.randomUUID()
-        every { this@apply.firstName } returns "Bill"
-        every { this@apply.lastName } returns "Gates"
+        every { this@apply.fullName } returns "Bill Gates"
       }
       coEvery { mocks[UserClient::class](UserApi.GetByOrgGuid(orgGuid)) } returns setOf(existingUser0, existingUser1)
 

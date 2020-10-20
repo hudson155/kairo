@@ -47,8 +47,6 @@ internal class FormInstanceExporter(
       val zonedSubmittedDate = if (timeZone != null) submittedDate.withZoneSameInstant(timeZone) else submittedDate
       return@let zonedSubmittedDate.format(DATE_TIME_FORMATTER)
     } ?: ""
-    CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).let {
-      return@let listOfNotNull(it.firstName, it.lastName).joinToString(" ")
-    }
+    CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).fullName ?: ""
   }
 }

@@ -28,6 +28,7 @@ internal object UserRepFixtures {
         orgGuid = orgGuid,
         firstName = "Jeff",
         lastName = "Hudson",
+        fullName = "Jeff Hudson",
         emailAddress = "jhudson@jhudson.ca",
         profilePhotoUrl = null
     )
@@ -49,6 +50,7 @@ internal object UserRepFixtures {
         orgGuid = orgGuid,
         firstName = "Bill",
         lastName = "Gates",
+        fullName = "Bill Gates",
         emailAddress = "bill.gates@microsoft.com",
         profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg"
     )
@@ -61,5 +63,6 @@ internal fun UserRep.Complete.summary() = UserRep.Summary(
     orgGuid = orgGuid,
     firstName = firstName,
     lastName = lastName,
+    fullName = fullName,
     profilePhotoUrl = profilePhotoUrl
 )

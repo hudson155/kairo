@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.auth.model.org
 
+import io.limberapp.common.util.url.slugify
 import io.limberapp.permissions.orgPermissions.OrgPermissions
 import java.time.ZonedDateTime
 import java.util.*
@@ -13,6 +14,8 @@ data class OrgRoleModel(
     val isDefault: Boolean,
     val memberCount: Int,
 ) {
+  val slug = name.slugify()
+
   data class Update(
       val name: String?,
       val permissions: OrgPermissions?,
