@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory
 class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVerifier<JwtPrincipal> {
   private val logger = LoggerFactory.getLogger(JwtAuthVerifier::class.java)
 
-  private val objectMapper = limberObjectMapper()
+  private val objectMapper = limberObjectMapper(allowUnknownProperties = true)
 
   private val providers = authenticationConfig.mechanisms.associate { mechanism ->
     val provider = when (mechanism) {

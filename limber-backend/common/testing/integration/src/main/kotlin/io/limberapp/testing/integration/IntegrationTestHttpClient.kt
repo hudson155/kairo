@@ -16,7 +16,9 @@ import io.limberapp.common.client.LimberHttpClientRequestBuilder
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.permissions.AccountRole
 
-class IntegrationTestHttpClient(private val engine: TestApplicationEngine) : LimberHttpClient() {
+class IntegrationTestHttpClient(
+    private val engine: TestApplicationEngine,
+) : LimberHttpClient(allowUnknownProperties = false) {
   override suspend fun request(
       endpoint: LimberEndpoint,
       builder: LimberHttpClientRequestBuilder.() -> Unit,

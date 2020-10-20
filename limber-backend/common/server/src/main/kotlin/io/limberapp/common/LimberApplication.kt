@@ -164,7 +164,7 @@ abstract class LimberApplication<C : Config>(application: Application, protected
     install(ContentNegotiation) {
       register(
           contentType = ContentType.Application.Json,
-          converter = JacksonConverter(limberObjectMapper(prettyPrint = true))
+          converter = JacksonConverter(limberObjectMapper(prettyPrint = true)),
       )
     }
   }

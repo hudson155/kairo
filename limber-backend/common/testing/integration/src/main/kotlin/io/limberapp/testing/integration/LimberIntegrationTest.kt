@@ -7,7 +7,6 @@ import io.limberapp.common.client.LimberHttpClient
 import io.limberapp.common.client.exception.LimberHttpClientException
 import io.limberapp.common.exception.ExceptionMapper
 import io.limberapp.common.exception.LimberException
-import io.limberapp.common.serialization.limberObjectMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.reflect.KClass
@@ -25,8 +24,6 @@ abstract class LimberIntegrationTest(
   }
 
   protected val httpClient: LimberHttpClient = IntegrationTestHttpClient(engine)
-
-  protected val objectMapper = limberObjectMapper(prettyPrint = true)
 
   protected val mocks = LimberIntegrationTestMocks()
 
