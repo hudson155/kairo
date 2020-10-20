@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":limber-backend:common:util"))
+  implementation(project(":limber-backend:common:util"))
 }
 
 detekt {
