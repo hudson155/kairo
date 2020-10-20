@@ -13,6 +13,8 @@ io.limberapp
 │           the common:config module).
 ├── finder: The finder interface, related interfaces, and supporting classes
 │           (see the common:finder module).
+├── serialization: Shared JSON serialization code (see the common:serialization
+│                  module).
 └── util
     ├── darb: Code relating to the Dense(ish) Albeit Readable Binary format
     │         (see the common:util module, especially the DarbEncoder class).
