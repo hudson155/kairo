@@ -8,7 +8,7 @@ import io.limberapp.permissions.orgPermissions.OrgPermissions
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.rep.UpdateRep
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 object OrgRoleRep {
@@ -24,7 +24,7 @@ object OrgRoleRep {
 
   data class Complete(
       val guid: UUID,
-      override val createdDate: LocalDateTime,
+      override val createdDate: ZonedDateTime,
       val name: String,
       val permissions: OrgPermissions,
       val isDefault: Boolean,

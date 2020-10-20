@@ -2,7 +2,8 @@ package io.limberapp.backend.module.orgs.testing.fixtures.feature
 
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 import java.util.*
 
 internal object FeatureRepFixtures {
@@ -18,7 +19,7 @@ internal object FeatureRepFixtures {
       { orgGuid, idSeed ->
         FeatureRep.Complete(
             guid = uuidGenerator[idSeed],
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             orgGuid = orgGuid,
             rank = 0,
             name = "Home",
@@ -36,7 +37,7 @@ internal object FeatureRepFixtures {
       { orgGuid, idSeed ->
         FeatureRep.Complete(
             guid = uuidGenerator[idSeed],
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             orgGuid = orgGuid,
             rank = 1,
             name = "Forms",

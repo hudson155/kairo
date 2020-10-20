@@ -5,14 +5,14 @@ import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 internal class TenantMapper @Inject constructor(
     private val clock: Clock,
     private val tenantDomainMapper: TenantDomainMapper,
 ) {
   fun model(rep: TenantRep.Creation) = TenantModel(
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       orgGuid = rep.orgGuid,
       name = rep.name,
       auth0ClientId = rep.auth0ClientId

@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class OrgRoleMapper @Inject constructor(
@@ -14,7 +14,7 @@ internal class OrgRoleMapper @Inject constructor(
 ) {
   fun model(orgGuid: UUID, rep: OrgRoleRep.Creation) = OrgRoleModel(
       guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       orgGuid = orgGuid,
       name = rep.name,
       permissions = rep.permissions,

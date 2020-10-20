@@ -14,8 +14,9 @@ import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTempl
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
 import io.limberapp.common.endpoint.exception.ValidationException
+import io.limberapp.common.util.time.inUTC
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class PatchFormInstanceTest(
@@ -136,7 +137,7 @@ internal class PatchFormInstanceTest(
       ))
     }
 
-    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = ZonedDateTime.now(clock).inUTC())
     setup {
       formInstanceClient(FormInstanceApi.Patch(
           featureGuid = featureGuid,
@@ -176,7 +177,7 @@ internal class PatchFormInstanceTest(
       ))
     }
 
-    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = ZonedDateTime.now(clock).inUTC())
     test(expectResult = formInstanceRep.summary()) {
       formInstanceClient(FormInstanceApi.Patch(
           featureGuid = featureGuid,

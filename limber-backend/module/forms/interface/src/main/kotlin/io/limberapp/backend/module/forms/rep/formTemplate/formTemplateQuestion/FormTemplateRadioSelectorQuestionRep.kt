@@ -4,7 +4,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRe
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.common.validation.ifPresent
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 object FormTemplateRadioSelectorQuestionRep {
@@ -26,7 +26,7 @@ object FormTemplateRadioSelectorQuestionRep {
 
   data class Complete(
       override val guid: UUID,
-      override val createdDate: LocalDateTime,
+      override val createdDate: ZonedDateTime,
       override val label: String,
       override val helpText: String?,
       override val required: Boolean,

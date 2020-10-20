@@ -8,7 +8,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 object FormInstanceQuestionRep {
@@ -29,7 +29,7 @@ object FormInstanceQuestionRep {
       JsonSubTypes.Type(value = FormInstanceYesNoQuestionRep.Complete::class, name = "YES_NO"),
   )
   interface Complete : CompleteRep {
-    override val createdDate: LocalDateTime
+    override val createdDate: ZonedDateTime
     val questionGuid: UUID?
   }
 }

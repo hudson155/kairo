@@ -2,7 +2,8 @@ package io.limberapp.backend.module.orgs.testing.fixtures.org
 
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.orgs.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 
 internal object OrgRepFixtures {
   data class Fixture(
@@ -15,7 +16,7 @@ internal object OrgRepFixtures {
   }, { idSeed ->
     OrgRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         name = "Cranky Pasta",
         ownerUserGuid = null,
         features = emptyList(),
@@ -27,7 +28,7 @@ internal object OrgRepFixtures {
   }, { idSeed ->
     OrgRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         name = "Dynamic Tennis",
         ownerUserGuid = null,
         features = emptyList(),

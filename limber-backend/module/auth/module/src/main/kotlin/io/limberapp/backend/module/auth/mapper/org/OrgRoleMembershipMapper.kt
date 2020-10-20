@@ -4,14 +4,14 @@ import com.google.inject.Inject
 import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipModel
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class OrgRoleMembershipMapper @Inject constructor(
     private val clock: Clock,
 ) {
   fun model(orgRoleGuid: UUID, rep: OrgRoleMembershipRep.Creation) = OrgRoleMembershipModel(
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       orgRoleGuid = orgRoleGuid,
       accountGuid = rep.accountGuid
   )

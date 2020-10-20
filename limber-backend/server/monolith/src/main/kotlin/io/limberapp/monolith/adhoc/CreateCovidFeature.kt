@@ -20,7 +20,7 @@ import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
 import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 private object CreateCovidFeatureArgs {
@@ -49,7 +49,7 @@ internal fun Adhoc.createCovidFeature() {
       val featureService = injector.getInstance(FeatureService::class.java)
       return featureService.create(FeatureModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           orgGuid = CreateCovidFeatureArgs.orgGuid,
           rank = 0,
           name = "COVID-19",
@@ -63,14 +63,14 @@ internal fun Adhoc.createCovidFeature() {
       val featureRoleService = injector.getInstance(FeatureRoleService::class.java)
       featureRoleService.create(FeatureRoleModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           featureGuid = featureGuid,
           orgRoleGuid = CreateCovidFeatureArgs.membersOrgRoleGuid,
           permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
       ))
       featureRoleService.create(FeatureRoleModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           featureGuid = featureGuid,
           orgRoleGuid = CreateCovidFeatureArgs.managersOrgRoleGuid,
           permissions = FormsFeaturePermissions(setOf(
@@ -86,14 +86,14 @@ internal fun Adhoc.createCovidFeature() {
       val formTemplateQuestionService = injector.getInstance(FormTemplateQuestionService::class.java)
       val formTemplateGuid = formTemplateService.create(FormTemplateModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           featureGuid = featureGuid,
           title = "Pre-screening self-assessment",
           description = null,
       )).guid
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = """Are you experiencing any of the following:
           - severe difficulty breathing (e.g., struggling for each breath, speaking in single words)
@@ -106,7 +106,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = """Are you experiencing any of the following:
           - shortness of breath at rest
@@ -117,7 +117,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = """In the past 10 days, have you experienced any of the following:
           - fever
@@ -131,7 +131,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = """Do you have any of the following:
           - chills
@@ -148,7 +148,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "In the past 14 days, did you return from travel outside of Canada, or did you have close contact with someone who is confirmed as having COVID-19?",
           helpText = null,
@@ -162,14 +162,14 @@ internal fun Adhoc.createCovidFeature() {
       val formTemplateQuestionService = injector.getInstance(FormTemplateQuestionService::class.java)
       val formTemplateGuid = formTemplateService.create(FormTemplateModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           featureGuid = featureGuid,
           title = "Workplace inspection",
           description = null,
       )).guid
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Has the COVID-19 Policy been communicated?",
           helpText = "e.g. Through visible signage, via email, discussed in meetings, etc.",
@@ -177,7 +177,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Have the COVID-19 social distancing requirements been communicated?",
           helpText = "e.g. Through visible signage, via email, discussed in meetings, etc.",
@@ -185,7 +185,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Has it been communicated that anyone experiencing symptoms of COVID-19 is not allowed on the" +
               " premises (unless symptoms are related to known, unrelated health conditions)?",
@@ -194,7 +194,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Is hand sanitizer readily available?",
           helpText = null,
@@ -202,7 +202,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Are cleaning and sanitization supplies available?",
           helpText = null,
@@ -210,7 +210,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Is the work area clean, sanitized and free of debris?",
           helpText = null,
@@ -218,7 +218,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Have high touch areas been cleaned and sanitized?",
           helpText = null,
@@ -226,7 +226,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Have equipment and tools been cleaned and sanitized?",
           helpText = null,
@@ -234,7 +234,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Have all non-food contact surfaces been disinfected?",
           helpText = null,
@@ -242,7 +242,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Have all food contact surfaces been disinfected?",
           helpText = null,
@@ -250,7 +250,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Are all staff wearing required PPE?",
           helpText = null,
@@ -258,7 +258,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateYesNoQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Is social distancing practiced?",
           helpText = null,
@@ -266,7 +266,7 @@ internal fun Adhoc.createCovidFeature() {
       ))
       formTemplateQuestionService.create(featureGuid, FormTemplateTextQuestionModel(
           guid = UUID.randomUUID(),
-          createdDate = LocalDateTime.now(),
+          createdDate = ZonedDateTime.now(),
           formTemplateGuid = formTemplateGuid,
           label = "Other observations and comments:",
           helpText = null,

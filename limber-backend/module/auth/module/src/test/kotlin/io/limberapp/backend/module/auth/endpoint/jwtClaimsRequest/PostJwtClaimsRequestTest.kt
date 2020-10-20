@@ -21,12 +21,13 @@ import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.util.time.inUTC
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
 import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.mockk.coEvery
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class PostJwtClaimsRequestTest(
@@ -40,7 +41,7 @@ internal class PostJwtClaimsRequestTest(
     val emailAddress = "jhudson@jhudson.ca"
     val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         orgGuid = orgGuid,
         rank = 0,
         name = "Forms",
@@ -50,7 +51,7 @@ internal class PostJwtClaimsRequestTest(
     )
     val existingOrg = OrgRep.Complete(
         guid = orgGuid,
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         name = "Cranky Pasta",
         ownerUserGuid = UUID.randomUUID(),
         features = listOf(existingFeature)
@@ -61,7 +62,7 @@ internal class PostJwtClaimsRequestTest(
     coEvery {
       mocks[UserClient::class](any<UserApi.Post>())
     } answers {
-      checkNotNull(firstArg<UserApi.Post>().rep).complete(guid = userGuid, createdDate = LocalDateTime.now())
+      checkNotNull(firstArg<UserApi.Post>().rep).complete(guid = userGuid, createdDate = ZonedDateTime.now())
     }
     coEvery {
       mocks[OrgClient::class](OrgApi.Get(existingOrg.guid))
@@ -135,7 +136,7 @@ internal class PostJwtClaimsRequestTest(
     val orgGuid = UUID.randomUUID()
     val existingFeature = FeatureRep.Complete(
         guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         orgGuid = orgGuid,
         rank = 0,
         name = "Forms",
@@ -145,14 +146,14 @@ internal class PostJwtClaimsRequestTest(
     )
     val existingOrg = OrgRep.Complete(
         guid = orgGuid,
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         name = "Cranky Pasta",
         ownerUserGuid = UUID.randomUUID(),
         features = listOf(existingFeature)
     )
     val existingUser = UserRep.Complete(
         guid = UUID.randomUUID(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         roles = setOf(AccountRole.SUPERUSER),
         orgGuid = existingOrg.guid,
         firstName = "Summer",

@@ -1,8 +1,9 @@
 package io.limberapp.backend.module.users.testing.fixtures.account
 
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.common.util.time.inUTC
 import io.limberapp.testing.integration.LimberIntegrationTest
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal object UserRepFixtures {
@@ -22,7 +23,7 @@ internal object UserRepFixtures {
   }, { orgGuid, idSeed ->
     UserRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         roles = emptySet(),
         orgGuid = orgGuid,
         firstName = "Jeff",
@@ -43,7 +44,7 @@ internal object UserRepFixtures {
   }, { orgGuid, idSeed ->
     UserRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         roles = emptySet(),
         orgGuid = orgGuid,
         firstName = "Bill",

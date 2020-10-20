@@ -5,7 +5,7 @@ import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class FeatureRoleMapper @Inject constructor(
@@ -14,7 +14,7 @@ internal class FeatureRoleMapper @Inject constructor(
 ) {
   fun model(featureGuid: UUID, rep: FeatureRoleRep.Creation) = FeatureRoleModel(
       guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       featureGuid = featureGuid,
       orgRoleGuid = rep.orgRoleGuid,
       permissions = rep.permissions,

@@ -2,9 +2,10 @@ package io.limberapp.backend.module.auth.testing.fixtures.org
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
+import io.limberapp.common.util.time.inUTC
 import io.limberapp.permissions.orgPermissions.OrgPermission
 import io.limberapp.permissions.orgPermissions.OrgPermissions
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 internal object OrgRoleRepFixtures {
   data class Fixture(
@@ -23,7 +24,7 @@ internal object OrgRoleRepFixtures {
       { idSeed ->
         OrgRoleRep.Complete(
             guid = uuidGenerator[idSeed],
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             name = "Admins",
             permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
             isDefault = false,
@@ -43,7 +44,7 @@ internal object OrgRoleRepFixtures {
       { idSeed ->
         OrgRoleRep.Complete(
             guid = uuidGenerator[idSeed],
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             name = "Maintainer",
             permissions = OrgPermissions(setOf(OrgPermission.MANAGE_ORG_ROLES)),
             isDefault = false,
@@ -63,7 +64,7 @@ internal object OrgRoleRepFixtures {
       { idSeed ->
         OrgRoleRep.Complete(
             guid = uuidGenerator[idSeed],
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             name = "Members",
             permissions = OrgPermissions(setOf(OrgPermission.MODIFY_OWN_METADATA)),
             isDefault = true,

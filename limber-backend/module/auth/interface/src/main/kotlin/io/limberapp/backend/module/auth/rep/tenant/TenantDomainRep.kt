@@ -4,7 +4,7 @@ import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 object TenantDomainRep {
   data class Creation(
@@ -16,7 +16,7 @@ object TenantDomainRep {
   }
 
   data class Complete(
-      override val createdDate: LocalDateTime,
+      override val createdDate: ZonedDateTime,
       val domain: String,
   ) : CompleteRep
 }

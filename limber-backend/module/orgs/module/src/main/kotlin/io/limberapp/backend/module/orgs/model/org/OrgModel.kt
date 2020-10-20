@@ -1,11 +1,11 @@
 package io.limberapp.backend.module.orgs.model.org
 
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 data class OrgModel(
     val guid: UUID,
-    val createdDate: LocalDateTime,
+    val createdDate: ZonedDateTime,
     val name: String,
     val ownerUserGuid: UUID?,
 ) {

@@ -2,7 +2,8 @@ package io.limberapp.backend.module.auth.testing.fixtures.tenant
 
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 
 internal object TenantDomainRepFixtures {
   data class Fixture(
@@ -13,12 +14,12 @@ internal object TenantDomainRepFixtures {
   val limberappFixture = Fixture({
     TenantDomainRep.Creation("limberapp.io")
   }, {
-    TenantDomainRep.Complete(createdDate = LocalDateTime.now(clock), domain = "limberapp.io")
+    TenantDomainRep.Complete(createdDate = ZonedDateTime.now(clock).inUTC(), domain = "limberapp.io")
   })
 
   val someclientFixture = Fixture({
     TenantDomainRep.Creation("limber.someclient.com")
   }, {
-    TenantDomainRep.Complete(createdDate = LocalDateTime.now(clock), domain = "limber.someclient.com")
+    TenantDomainRep.Complete(createdDate = ZonedDateTime.now(clock).inUTC(), domain = "limber.someclient.com")
   })
 }

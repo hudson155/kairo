@@ -2,9 +2,10 @@ package io.limberapp.backend.module.auth.testing.fixtures.feature
 
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
+import io.limberapp.common.util.time.inUTC
 import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal object FeatureRoleRepFixtures {
@@ -23,7 +24,7 @@ internal object FeatureRoleRepFixtures {
       { orgRoleGuid: UUID, idSeed ->
         FeatureRoleRep.Complete(
             guid = uuidGenerator[idSeed],
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             orgRoleGuid = orgRoleGuid,
             permissions = FormsFeaturePermissions(setOf(FormsFeaturePermission.CREATE_FORM_INSTANCES)),
         )

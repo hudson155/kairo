@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.rep.org
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 object OrgRoleMembershipRep {
@@ -14,7 +14,7 @@ object OrgRoleMembershipRep {
   }
 
   data class Complete(
-      override val createdDate: LocalDateTime,
+      override val createdDate: ZonedDateTime,
       val accountGuid: UUID,
   ) : CompleteRep
 }

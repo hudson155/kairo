@@ -13,7 +13,7 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -27,7 +27,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
   fun model(formTemplateGuid: UUID, rep: FormTemplateQuestionRep.Creation) = when (rep) {
     is FormTemplateDateQuestionRep.Creation -> FormTemplateDateQuestionModel(
         guid = uuidGenerator.generate(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formTemplateGuid = formTemplateGuid,
         label = rep.label,
         helpText = rep.helpText,
@@ -37,7 +37,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     )
     is FormTemplateRadioSelectorQuestionRep.Creation -> FormTemplateRadioSelectorQuestionModel(
         guid = uuidGenerator.generate(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formTemplateGuid = formTemplateGuid,
         label = rep.label,
         helpText = rep.helpText,
@@ -46,7 +46,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     )
     is FormTemplateTextQuestionRep.Creation -> FormTemplateTextQuestionModel(
         guid = uuidGenerator.generate(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formTemplateGuid = formTemplateGuid,
         label = rep.label,
         helpText = rep.helpText,
@@ -57,7 +57,7 @@ internal class FormTemplateQuestionMapper @Inject constructor(
     )
     is FormTemplateYesNoQuestionRep.Creation -> FormTemplateYesNoQuestionModel(
         guid = uuidGenerator.generate(),
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formTemplateGuid = formTemplateGuid,
         label = rep.label,
         helpText = rep.helpText,

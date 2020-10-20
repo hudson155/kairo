@@ -2,7 +2,8 @@ package io.limberapp.backend.module.auth.testing.fixtures.org
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 import java.util.*
 
 internal object OrgRoleMembershipRepFixtures {
@@ -18,7 +19,7 @@ internal object OrgRoleMembershipRepFixtures {
       },
       { accountGuid ->
         OrgRoleMembershipRep.Complete(
-            createdDate = LocalDateTime.now(clock),
+            createdDate = ZonedDateTime.now(clock).inUTC(),
             accountGuid = accountGuid
         )
       }

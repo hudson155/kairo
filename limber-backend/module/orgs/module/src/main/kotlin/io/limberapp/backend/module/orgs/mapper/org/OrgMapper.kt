@@ -7,7 +7,7 @@ import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 internal class OrgMapper @Inject constructor(
     private val clock: Clock,
@@ -16,7 +16,7 @@ internal class OrgMapper @Inject constructor(
 ) {
   fun model(rep: OrgRep.Creation) = OrgModel(
       guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       name = rep.name,
       ownerUserGuid = null,
   )

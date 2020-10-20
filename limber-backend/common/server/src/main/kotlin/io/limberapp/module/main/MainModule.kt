@@ -13,8 +13,8 @@ import io.limberapp.common.util.uuid.DeterministicUuidGenerator
 import io.limberapp.common.util.uuid.RandomUuidGenerator
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.Instant
 import java.time.ZoneId
+import java.time.ZonedDateTime
 
 internal class MainModule(
     private val application: Application,
@@ -35,7 +35,11 @@ internal class MainModule(
   }
 
   private fun clock() = when (config.clock.type) {
-    ClockConfig.Type.FIXED -> Clock.fixed(Instant.parse("2007-12-03T10:15:30.00Z"), ZoneId.of("America/New_York"))
+    ClockConfig.Type.FIXED -> run {
+      val zoneId = ZoneId.of("America/New_York")
+      val instant = ZonedDateTime.of(2007, 12, 3, 5, 15, 30, 789_000_000, zoneId).toInstant()
+      return@run Clock.fixed(instant, zoneId)
+    }
     ClockConfig.Type.REAL -> Clock.systemUTC()
   }
 

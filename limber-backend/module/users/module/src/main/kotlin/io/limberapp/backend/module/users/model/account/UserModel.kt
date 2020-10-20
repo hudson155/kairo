@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.users.model.account
 
 import io.limberapp.permissions.AccountRole
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 data class UserModel(
     val guid: UUID,
-    val createdDate: LocalDateTime,
+    val createdDate: ZonedDateTime,
     val identityProvider: Boolean,
     val superuser: Boolean,
     val orgGuid: UUID,

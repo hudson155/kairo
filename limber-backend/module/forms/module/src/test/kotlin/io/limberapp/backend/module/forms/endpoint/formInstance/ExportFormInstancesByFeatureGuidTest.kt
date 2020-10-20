@@ -14,15 +14,16 @@ import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.util.time.inUTC
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.util.*
 
-private const val FIXED_CLOCK_FORMATTED_VALUE = "Sun, Dec 2, 2007 at 22:15 MST"
+private const val FIXED_CLOCK_FORMATTED_VALUE = "Mon, Dec 3, 2007 at 3:15 MST"
 
 object ExportFormInstancesByFeatureGuidTest {
   internal class Default(
@@ -91,7 +92,7 @@ object ExportFormInstancesByFeatureGuidTest {
         ))
       }
 
-      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = ZonedDateTime.now(clock).inUTC())
       setup {
         formInstanceClient(FormInstanceApi.Patch(
             featureGuid = featureGuid,
@@ -206,7 +207,7 @@ object ExportFormInstancesByFeatureGuidTest {
         ))
       }
 
-      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+      formInstance0Rep = formInstance0Rep.copy(number = 1, submittedDate = ZonedDateTime.now(clock).inUTC())
       setup {
         formInstanceClient(FormInstanceApi.Patch(
             featureGuid = featureGuid,

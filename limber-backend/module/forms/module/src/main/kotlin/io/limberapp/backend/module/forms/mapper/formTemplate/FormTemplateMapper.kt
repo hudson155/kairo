@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestion
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class FormTemplateMapper @Inject constructor(
@@ -16,7 +16,7 @@ internal class FormTemplateMapper @Inject constructor(
 ) {
   fun model(featureGuid: UUID, rep: FormTemplateRep.Creation) = FormTemplateModel(
       guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       featureGuid = featureGuid,
       title = rep.title,
       description = rep.description

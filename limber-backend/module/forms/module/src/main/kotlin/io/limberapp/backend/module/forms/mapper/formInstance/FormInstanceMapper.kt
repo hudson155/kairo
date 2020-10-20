@@ -6,7 +6,7 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceQuestion
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class FormInstanceMapper @Inject constructor(
@@ -16,7 +16,7 @@ internal class FormInstanceMapper @Inject constructor(
 ) {
   fun model(featureGuid: UUID, rep: FormInstanceRep.Creation) = FormInstanceModel(
       guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       featureGuid = featureGuid,
       formTemplateGuid = rep.formTemplateGuid,
       number = null,
@@ -45,6 +45,6 @@ internal class FormInstanceMapper @Inject constructor(
 
   fun update(rep: FormInstanceRep.Update) = FormInstanceModel.Update(
       setNumber = rep.submitted == true,
-      submittedDate = if (rep.submitted == true) LocalDateTime.now(clock) else null
+      submittedDate = if (rep.submitted == true) ZonedDateTime.now(clock) else null
   )
 }

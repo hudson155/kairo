@@ -6,7 +6,7 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.util.uuid.UuidGenerator
 import io.limberapp.permissions.AccountRole
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 internal class UserMapper @Inject constructor(
     private val clock: Clock,
@@ -14,7 +14,7 @@ internal class UserMapper @Inject constructor(
 ) {
   fun model(rep: UserRep.Creation) = UserModel(
       guid = uuidGenerator.generate(),
-      createdDate = LocalDateTime.now(clock),
+      createdDate = ZonedDateTime.now(clock),
       identityProvider = false,
       superuser = false,
       orgGuid = rep.orgGuid,

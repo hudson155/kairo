@@ -1,7 +1,7 @@
 package io.limberapp.common.module.healthCheck.rep.healthCheck
 
 import io.limberapp.rep.CompleteRep
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 internal object HealthCheckRep {
   enum class State {
@@ -10,7 +10,7 @@ internal object HealthCheckRep {
   }
 
   data class Complete(
-      override val createdDate: LocalDateTime,
+      override val createdDate: ZonedDateTime,
       val state: State,
   ) : CompleteRep
 }

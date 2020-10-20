@@ -3,7 +3,8 @@ package io.limberapp.backend.module.auth.testing.fixtures.tenant
 import io.limberapp.backend.module.auth.rep.tenant.TenantDomainRep
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 import java.util.*
 
 internal object TenantRepFixtures {
@@ -21,13 +22,13 @@ internal object TenantRepFixtures {
     )
   }, { orgGuid ->
     TenantRep.Complete(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         orgGuid = orgGuid,
         name = "Limber",
         auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
         domains = setOf(
             TenantDomainRep.Complete(
-                createdDate = LocalDateTime.now(clock),
+                createdDate = ZonedDateTime.now(clock).inUTC(),
                 domain = "limberapp.io"
             )
         )
@@ -43,13 +44,13 @@ internal object TenantRepFixtures {
     )
   }, { orgGuid ->
     TenantRep.Complete(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         orgGuid = orgGuid,
         name = "Some Client",
         auth0ClientId = "01234567890123456789012345678901",
         domains = setOf(
             TenantDomainRep.Complete(
-                createdDate = LocalDateTime.now(clock),
+                createdDate = ZonedDateTime.now(clock).inUTC(),
                 domain = "limber.someclient.com"
             )
         )

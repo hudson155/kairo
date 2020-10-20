@@ -6,8 +6,9 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
+import io.limberapp.common.util.time.inUTC
 import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal object FormInstanceQuestionRepFixtures {
@@ -22,7 +23,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceDateQuestionRep.Complete(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         questionGuid = questionGuid,
         date = LocalDate.now(clock),
     )
@@ -34,7 +35,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceRadioSelectorQuestionRep.Complete(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         questionGuid = questionGuid,
         selection = "Option 1",
     )
@@ -46,7 +47,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceTextQuestionRep.Complete(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         questionGuid = questionGuid,
         text = "Nothing significant to add.",
     )
@@ -58,7 +59,7 @@ internal object FormInstanceQuestionRepFixtures {
     )
   }, { questionGuid ->
     FormInstanceYesNoQuestionRep.Complete(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         questionGuid = questionGuid,
         yes = true,
     )

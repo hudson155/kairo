@@ -2,7 +2,8 @@ package io.limberapp.backend.module.forms.testing.fixtures.formTemplate
 
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 
 internal object FormTemplateRepFixtures {
   data class Fixture(
@@ -17,7 +18,7 @@ internal object FormTemplateRepFixtures {
   }, { idSeed ->
     FormTemplateRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         title = "Example form",
         description = null,
         questions = emptyList()
@@ -31,7 +32,7 @@ internal object FormTemplateRepFixtures {
   }, { idSeed ->
     FormTemplateRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         title = "Vehicle Inspection",
         description = null,
         questions = emptyList()

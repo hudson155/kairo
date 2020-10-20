@@ -6,7 +6,8 @@ import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.F
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formTemplate.formTemplateQuestion.FormTemplateYesNoQuestionRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
-import java.time.LocalDateTime
+import io.limberapp.common.util.time.inUTC
+import java.time.ZonedDateTime
 
 internal object FormTemplateQuestionRepFixtures {
   data class Fixture(
@@ -25,7 +26,7 @@ internal object FormTemplateQuestionRepFixtures {
   }, { idSeed ->
     FormTemplateDateQuestionRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         label = "Date",
         helpText = null,
         required = false,
@@ -44,7 +45,7 @@ internal object FormTemplateQuestionRepFixtures {
   }, { idSeed ->
     FormTemplateRadioSelectorQuestionRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         label = "Options",
         helpText = null,
         required = false,
@@ -64,7 +65,7 @@ internal object FormTemplateQuestionRepFixtures {
   }, { idSeed ->
     FormTemplateTextQuestionRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         label = "Worker name",
         helpText = null,
         required = true,
@@ -84,7 +85,7 @@ internal object FormTemplateQuestionRepFixtures {
   }, { idSeed ->
     FormTemplateYesNoQuestionRep.Complete(
         guid = uuidGenerator[idSeed],
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock).inUTC(),
         label = "Healthy?",
         helpText = null,
         required = true,

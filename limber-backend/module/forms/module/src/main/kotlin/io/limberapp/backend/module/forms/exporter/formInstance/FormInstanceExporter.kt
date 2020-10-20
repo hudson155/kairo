@@ -44,8 +44,7 @@ internal class FormInstanceExporter(
   private fun FormInstanceModel.getValue(column: CsvColumn): String = when (column) {
     CsvColumn.NUMBER -> number.toString()
     CsvColumn.SUBMITTED_DATE -> submittedDate?.let { submittedDate ->
-      var zonedSubmittedDate = submittedDate.atZone(ZoneId.of("UTC"))
-      if (timeZone != null) zonedSubmittedDate = zonedSubmittedDate.withZoneSameInstant(timeZone)
+      val zonedSubmittedDate = if (timeZone != null) submittedDate.withZoneSameInstant(timeZone) else submittedDate
       return@let zonedSubmittedDate.format(DATE_TIME_FORMATTER)
     } ?: ""
     CsvColumn.CREATOR_NAME -> checkNotNull(users[creatorAccountGuid]).let {

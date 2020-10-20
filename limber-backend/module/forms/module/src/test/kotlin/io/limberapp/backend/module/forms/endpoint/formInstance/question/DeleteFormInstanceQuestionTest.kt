@@ -13,8 +13,9 @@ import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInsta
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.util.time.inUTC
 import org.junit.jupiter.api.Test
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 internal class DeleteFormInstanceQuestionTest(
@@ -218,7 +219,7 @@ internal class DeleteFormInstanceQuestionTest(
       ))
     }
 
-    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = LocalDateTime.now(clock))
+    formInstanceRep = formInstanceRep.copy(number = 1, submittedDate = ZonedDateTime.now(clock).inUTC())
     setup {
       formInstanceClient(FormInstanceApi.Patch(
           featureGuid = featureGuid,

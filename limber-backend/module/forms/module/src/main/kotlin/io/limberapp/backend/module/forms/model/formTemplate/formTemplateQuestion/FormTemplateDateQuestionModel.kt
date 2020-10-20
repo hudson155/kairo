@@ -2,12 +2,12 @@ package io.limberapp.backend.module.forms.model.formTemplate.formTemplateQuestio
 
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateQuestionModel
 import java.time.LocalDate
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 
 data class FormTemplateDateQuestionModel(
     override val guid: UUID,
-    override val createdDate: LocalDateTime,
+    override val createdDate: ZonedDateTime,
     override val formTemplateGuid: UUID,
     override val label: String,
     override val helpText: String?,

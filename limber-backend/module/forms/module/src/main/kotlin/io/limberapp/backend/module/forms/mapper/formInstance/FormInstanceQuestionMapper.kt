@@ -12,7 +12,7 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
 import java.time.Clock
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -21,25 +21,25 @@ internal class FormInstanceQuestionMapper @Inject constructor(
 ) {
   fun model(formInstanceGuid: UUID, questionGuid: UUID, rep: FormInstanceQuestionRep.Creation) = when (rep) {
     is FormInstanceDateQuestionRep.Creation -> FormInstanceDateQuestionModel(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formInstanceGuid = formInstanceGuid,
         questionGuid = questionGuid,
         date = rep.date,
     )
     is FormInstanceRadioSelectorQuestionRep.Creation -> FormInstanceRadioSelectorQuestionModel(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formInstanceGuid = formInstanceGuid,
         questionGuid = questionGuid,
         selections = listOf(rep.selection),
     )
     is FormInstanceTextQuestionRep.Creation -> FormInstanceTextQuestionModel(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formInstanceGuid = formInstanceGuid,
         questionGuid = questionGuid,
         text = rep.text,
     )
     is FormInstanceYesNoQuestionRep.Creation -> FormInstanceYesNoQuestionModel(
-        createdDate = LocalDateTime.now(clock),
+        createdDate = ZonedDateTime.now(clock),
         formInstanceGuid = formInstanceGuid,
         questionGuid = questionGuid,
         yes = rep.yes,
