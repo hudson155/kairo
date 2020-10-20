@@ -6,7 +6,7 @@ import io.limberapp.common.module.healthCheck.service.healthCheck.HealthCheckSer
 import io.limberapp.module.monolith.service.healthCheck.HealthCheckServiceImpl
 
 internal class MonolithModule : ApplicationModule() {
-  override val endpoints = emptyList<Class<out ApiEndpoint<*, *, *>>>()
+  override val endpoints = emptyList<Class<out ApiEndpoint<*, *>>>()
 
   override fun bindServices() {
     bind(HealthCheckService::class.java).to(HealthCheckServiceImpl::class.java).asEagerSingleton()

@@ -31,7 +31,7 @@ internal class FormInstanceQuestionServiceImpl @Inject constructor(
         formTemplateGuid = formInstance.formTemplateGuid,
         questionGuid = questionGuid,
     ) ?: throw FormInstanceQuestionNotFound()
-    if (formTemplateQuestion.required && formInstance.submittedDate != null) throw CannotDeleteRequiredQuestion()
+    if (formTemplateQuestion.required && formInstance.isSubmitted) throw CannotDeleteRequiredQuestion()
     formInstanceQuestionStore.delete(featureGuid, formInstanceGuid, questionGuid)
   }
 }

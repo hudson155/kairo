@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.tenant
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.Auth
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
@@ -27,7 +27,7 @@ internal class GetTenantByDomain @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: TenantApi.GetByDomain): TenantRep.Complete {
-    Authorization.Public.authorize()
+    auth { Auth.Allow }
     val tenant = tenantService.getByDomain(command.domain) ?: throw TenantNotFound()
     val domains = tenantDomainService.getByOrgGuid(tenant.orgGuid)
     return tenantMapper.completeRep(tenant, domains)

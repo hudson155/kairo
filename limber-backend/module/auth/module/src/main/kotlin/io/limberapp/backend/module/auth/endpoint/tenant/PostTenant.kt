@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.tenant
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthAccountRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.mapper.tenant.TenantDomainMapper
@@ -30,7 +30,7 @@ internal class PostTenant @Inject constructor(
 
   override suspend fun Handler.handle(command: TenantApi.Post): TenantRep.Complete {
     val rep = command.rep.required()
-    Authorization.Role(AccountRole.SUPERUSER).authorize()
+    auth { AuthAccountRole(AccountRole.SUPERUSER) }
     val tenant = tenantService.create(tenantMapper.model(rep))
     val domain = tenantDomainService.create(tenantDomainMapper.model(tenant.orgGuid, rep.domain))
     return tenantMapper.completeRep(tenant, setOf(domain))

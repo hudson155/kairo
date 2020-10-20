@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.tenant.domain
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthAccountRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantDomainApi
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
@@ -24,7 +24,7 @@ internal class DeleteTenantDomain @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: TenantDomainApi.Delete) {
-    Authorization.Role(AccountRole.SUPERUSER).authorize()
+    auth { AuthAccountRole(AccountRole.SUPERUSER) }
     tenantDomainService.delete(command.orgGuid, command.domain)
   }
 }

@@ -3,7 +3,7 @@ package io.limberapp.backend.module.orgs.endpoint.feature
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.exception.feature.FeatureNotFound
@@ -26,7 +26,7 @@ internal class GetFeature @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FeatureApi.Get): FeatureRep.Complete {
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    auth { AuthFeatureMember(command.featureGuid) }
     val feature = featureService.get(command.featureGuid) ?: throw FeatureNotFound()
     return featureMapper.completeRep(feature)
   }

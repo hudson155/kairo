@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.org.role
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.service.org.OrgRoleService
@@ -24,7 +24,7 @@ internal class DeleteOrgRole @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: OrgRoleApi.Delete) {
-    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
+    auth { AuthFeatureMember(command.orgGuid, permission = OrgPermission.MANAGE_ORG_ROLES) }
     orgRoleService.delete(command.orgGuid, command.orgRoleGuid)
   }
 }

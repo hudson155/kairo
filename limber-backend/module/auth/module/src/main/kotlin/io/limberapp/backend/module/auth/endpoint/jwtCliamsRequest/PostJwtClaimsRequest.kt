@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.jwtCliamsRequest
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthAccountRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.mapper.jwtClaimsRequest.JwtClaimsRequestMapper
@@ -26,7 +26,7 @@ internal class PostJwtClaimsRequest @Inject constructor(
 
   override suspend fun Handler.handle(command: JwtClaimsRequestApi.Post): JwtClaimsRequestRep.Complete {
     val rep = command.rep.required()
-    Authorization.Role(AccountRole.IDENTITY_PROVIDER).authorize()
+    auth { AuthAccountRole(AccountRole.IDENTITY_PROVIDER) }
     val claims = jwtClaimsRequestService.requestJwtClaims(jwtClaimsRequestMapper.model(rep))
     return jwtClaimsRequestMapper.completeRep(claims)
   }

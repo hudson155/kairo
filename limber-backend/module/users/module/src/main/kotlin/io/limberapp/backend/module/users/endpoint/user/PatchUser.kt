@@ -3,7 +3,10 @@ package io.limberapp.backend.module.users.endpoint.user
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.Auth
+import io.limberapp.backend.authorization.authorization.AuthAccountRole
+import io.limberapp.backend.authorization.authorization.AuthOrgMember
+import io.limberapp.backend.authorization.authorization.AuthUser
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.mapper.account.UserMapper
@@ -29,9 +32,13 @@ internal class PatchUser @Inject constructor(
 
   override suspend fun Handler.handle(command: UserApi.Patch): UserRep.Complete {
     val rep = command.rep.required()
-    Authorization.User(command.userGuid).authorize()
-    Authorization.WithOrgPermission(OrgPermission.MODIFY_OWN_METADATA, ignoreOrgGuid = true).authorize()
-    if (rep.specifiesAccountRoleAdditions) Authorization.Role(AccountRole.SUPERUSER).authorize()
+    auth {
+      Auth.All(
+          AuthUser(command.userGuid),
+          AuthOrgMember(null, permission = OrgPermission.MODIFY_OWN_METADATA),
+          if (rep.specifiesAccountRoleAdditions) AuthAccountRole(AccountRole.SUPERUSER) else null,
+      )
+    }
     val user = userService.update(command.userGuid, userMapper.update(rep))
     return userMapper.completeRep(user)
   }

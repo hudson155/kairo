@@ -3,7 +3,8 @@ package io.limberapp.backend.module.forms.endpoint.formInstance.question
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
+import io.limberapp.backend.authorization.authorization.AuthFormInstance
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceQuestionApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
@@ -34,18 +35,17 @@ internal class PutFormInstanceQuestion @Inject constructor(
 
   override suspend fun Handler.handle(command: FormInstanceQuestionApi.Put): FormInstanceQuestionRep.Complete {
     val rep = command.rep.required()
-    val formInstance = formInstanceService.findOnlyOrNull {
-      featureGuid(command.featureGuid)
-      formInstanceGuid(command.formInstanceGuid)
-    } ?: throw FormInstanceNotFound().unprocessable()
-    Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = when (formInstance.creatorAccountGuid) {
-          principal?.userGuid -> FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES
-          else -> FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES
-        }
-    ).authorize()
-    if (formInstance.submittedDate == null) Authorization.User(formInstance.creatorAccountGuid).authorize()
+    auth { AuthFeatureMember(command.featureGuid) }
+    auth {
+      AuthFormInstance(
+          formInstance = formInstanceService.findOnlyOrNull {
+            featureGuid(command.featureGuid)
+            formInstanceGuid(command.formInstanceGuid)
+          } ?: throw FormInstanceNotFound().unprocessable(),
+          ifIsOwnFormInstance = FormsFeaturePermission.MODIFY_OWN_FORM_INSTANCES,
+          ifIsNotOwnFormInstance = FormsFeaturePermission.MODIFY_OTHERS_FORM_INSTANCES,
+      )
+    }
     val formInstanceQuestion = formInstanceQuestionService.upsert(
         featureGuid = command.featureGuid,
         model = formInstanceQuestionMapper.model(command.formInstanceGuid, command.questionGuid, rep)

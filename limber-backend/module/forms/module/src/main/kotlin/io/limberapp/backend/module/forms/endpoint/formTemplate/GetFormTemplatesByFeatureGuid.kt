@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
@@ -25,7 +25,7 @@ internal class GetFormTemplatesByFeatureGuid @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.GetByFeatureGuid): Set<FormTemplateRep.Summary> {
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    auth { AuthFeatureMember(command.featureGuid) }
     val formTemplates = formTemplateService.getByFeatureGuid(command.featureGuid)
     return formTemplates.map { formTemplateMapper.summaryRep(it) }.toSet()
   }

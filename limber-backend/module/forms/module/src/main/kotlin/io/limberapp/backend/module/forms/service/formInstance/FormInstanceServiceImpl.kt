@@ -27,7 +27,7 @@ internal class FormInstanceServiceImpl @Inject constructor(
   private fun validateBeforeSubmission(featureGuid: UUID, formInstanceGuid: UUID) {
     val formInstance = formInstanceStore.findOnlyOrNull { featureGuid(featureGuid); formInstanceGuid(formInstanceGuid) }
         ?: throw FormInstanceNotFound()
-    if (formInstance.submittedDate != null) throw CannotReSubmitFormInstance()
+    if (formInstance.isSubmitted) throw CannotReSubmitFormInstance()
     val formTemplateQuestions = formTemplateQuestionService.getByFormTemplateGuid(
         featureGuid = featureGuid,
         formTemplateGuid = formInstance.formTemplateGuid,

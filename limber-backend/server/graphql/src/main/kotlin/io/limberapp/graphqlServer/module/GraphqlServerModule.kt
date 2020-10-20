@@ -6,7 +6,7 @@ import io.limberapp.common.module.healthCheck.service.healthCheck.HealthCheckSer
 import io.limberapp.graphqlServer.module.service.healthCheck.HealthCheckServiceImpl
 
 internal class GraphqlServerModule : ApplicationModule() {
-  override val endpoints = emptyList<Class<out ApiEndpoint<*, *, *>>>()
+  override val endpoints = emptyList<Class<out ApiEndpoint<*, *>>>()
 
   override fun bindServices() {
     bind(HealthCheckService::class.java).to(HealthCheckServiceImpl::class.java).asEagerSingleton()

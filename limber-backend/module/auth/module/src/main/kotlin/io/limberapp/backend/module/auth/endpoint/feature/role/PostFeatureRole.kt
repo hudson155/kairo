@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.feature.role
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.mapper.feature.FeatureRoleMapper
@@ -28,7 +28,7 @@ internal class PostFeatureRole @Inject constructor(
 
   override suspend fun Handler.handle(command: FeatureRoleApi.Post): FeatureRoleRep.Complete {
     val rep = command.rep.required()
-    Authorization.FeatureMemberWithOrgPermission(command.featureGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
+    auth { AuthFeatureMember(command.featureGuid, permission = OrgPermission.MANAGE_ORG_ROLES) }
     val orgRole = featureRoleService.create(featureRoleMapper.model(command.featureGuid, rep))
     return featureRoleMapper.completeRep(orgRole)
   }

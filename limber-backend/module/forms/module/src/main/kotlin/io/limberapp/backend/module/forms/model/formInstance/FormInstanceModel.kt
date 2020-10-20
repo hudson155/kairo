@@ -12,6 +12,9 @@ data class FormInstanceModel(
     val submittedDate: ZonedDateTime?,
     val creatorAccountGuid: UUID,
 ) {
+  val isSubmitted = submittedDate != null
+  val isDraft = submittedDate == null
+
   data class Update(
       val setNumber: Boolean,
       val submittedDate: ZonedDateTime?,

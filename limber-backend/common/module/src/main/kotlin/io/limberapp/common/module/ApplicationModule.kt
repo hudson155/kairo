@@ -14,7 +14,7 @@ abstract class ApplicationModule : GuiceModule() {
   /**
    * Endpoints are automatically wired up.
    */
-  abstract val endpoints: List<Class<out ApiEndpoint<*, *, *>>>
+  abstract val endpoints: List<Class<out ApiEndpoint<*, *>>>
 
   final override fun configure() {
     configureEndpoints()

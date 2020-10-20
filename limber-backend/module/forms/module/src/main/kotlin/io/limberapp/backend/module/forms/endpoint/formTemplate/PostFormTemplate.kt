@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
@@ -29,11 +29,9 @@ internal class PostFormTemplate @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormTemplateApi.Post): FormTemplateRep.Complete {
-    Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
-    ).authorize()
-    val formTemplate = formTemplateService.create(formTemplateMapper.model(command.featureGuid, command.rep.required()))
+    val rep = command.rep.required()
+    auth { AuthFeatureMember(command.featureGuid, permission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES) }
+    val formTemplate = formTemplateService.create(formTemplateMapper.model(command.featureGuid, rep))
     val questions = formTemplateQuestionService.getByFormTemplateGuid(
         featureGuid = command.featureGuid,
         formTemplateGuid = formTemplate.guid,

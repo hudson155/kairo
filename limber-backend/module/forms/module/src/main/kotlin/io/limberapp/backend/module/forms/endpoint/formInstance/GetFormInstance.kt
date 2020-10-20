@@ -3,7 +3,8 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
+import io.limberapp.backend.authorization.authorization.AuthFormInstance
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
@@ -30,16 +31,17 @@ internal class GetFormInstance @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Get): FormInstanceRep.Complete {
-    Authorization.FeatureMember(command.featureGuid).authorize()
+    auth { AuthFeatureMember(command.featureGuid) }
     val formInstance = formInstanceService.findOnlyOrNull {
       featureGuid(command.featureGuid)
       formInstanceGuid(command.formInstanceGuid)
     } ?: throw FormInstanceNotFound()
-    if (formInstance.creatorAccountGuid != principal?.userGuid) {
-      Authorization.FeatureMemberWithFeaturePermission(
-          featureGuid = command.featureGuid,
-          featurePermission = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES
-      ).authorize()
+    auth {
+      AuthFormInstance(
+          formInstance = formInstance,
+          ifIsOwnFormInstance = null,
+          ifIsNotOwnFormInstance = FormsFeaturePermission.SEE_OTHERS_FORM_INSTANCES,
+      )
     }
     val questions = formInstanceQuestionService.getByFormInstanceGuid(
         featureGuid = command.featureGuid,

@@ -3,7 +3,7 @@ package io.limberapp.backend.module.forms.endpoint.formTemplate.question
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
@@ -25,10 +25,7 @@ internal class DeleteFormTemplateQuestion @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormTemplateQuestionApi.Delete) {
-    Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES
-    ).authorize()
+    auth { AuthFeatureMember(command.featureGuid, permission = FormsFeaturePermission.MANAGE_FORM_TEMPLATES) }
     formTemplateQuestionService.delete(command.featureGuid, command.formTemplateGuid, command.questionGuid)
   }
 }

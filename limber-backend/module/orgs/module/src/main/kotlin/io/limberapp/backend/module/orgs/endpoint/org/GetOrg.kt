@@ -3,7 +3,7 @@ package io.limberapp.backend.module.orgs.endpoint.org
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthOrgMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.exception.org.OrgNotFound
@@ -28,7 +28,7 @@ internal class GetOrg @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: OrgApi.Get): OrgRep.Complete {
-    Authorization.OrgMember(command.orgGuid).authorize()
+    auth { AuthOrgMember(command.orgGuid) }
     val org = orgService.get(command.orgGuid) ?: throw OrgNotFound()
     val features = featureService.getByOrgGuid(command.orgGuid)
     return orgMapper.completeRep(org, features)

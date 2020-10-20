@@ -3,7 +3,8 @@ package io.limberapp.backend.module.forms.endpoint.formInstance
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
+import io.limberapp.backend.authorization.authorization.AuthFormInstance
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
@@ -25,17 +26,17 @@ internal class DeleteFormInstance @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: FormInstanceApi.Delete) {
-    val formInstance = formInstanceService.findOnlyOrNull {
-      featureGuid(command.featureGuid)
-      formInstanceGuid(command.formInstanceGuid)
-    } ?: throw FormInstanceNotFound()
-    Authorization.FeatureMemberWithFeaturePermission(
-        featureGuid = command.featureGuid,
-        featurePermission = when (formInstance.creatorAccountGuid) {
-          principal?.userGuid -> FormsFeaturePermission.DELETE_OWN_FORM_INSTANCES
-          else -> FormsFeaturePermission.DELETE_OTHERS_FORM_INSTANCES
-        }
-    ).authorize()
+    auth { AuthFeatureMember(command.featureGuid) }
+    auth {
+      AuthFormInstance(
+          formInstance = formInstanceService.findOnlyOrNull {
+            featureGuid(command.featureGuid)
+            formInstanceGuid(command.formInstanceGuid)
+          } ?: throw FormInstanceNotFound(),
+          ifIsOwnFormInstance = FormsFeaturePermission.DELETE_OWN_FORM_INSTANCES,
+          ifIsNotOwnFormInstance = FormsFeaturePermission.DELETE_OTHERS_FORM_INSTANCES,
+      )
+    }
     formInstanceService.delete(command.featureGuid, command.formInstanceGuid)
   }
 }

@@ -3,7 +3,6 @@ package io.limberapp.common.endpoint
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
-import io.ktor.auth.Principal
 import io.ktor.auth.authenticate
 import io.ktor.auth.authentication
 import io.ktor.features.conversionService
@@ -18,7 +17,8 @@ import io.ktor.routing.Route
 import io.ktor.routing.createRouteFromPath
 import io.ktor.routing.routing
 import io.ktor.util.pipeline.ContextDsl
-import io.limberapp.common.authorization.LimberAuthorization
+import io.limberapp.backend.authorization.Auth
+import io.limberapp.backend.authorization.principal.JwtPrincipal
 import io.limberapp.common.endpoint.exception.ParameterConversionException
 import io.limberapp.common.endpoint.exception.ValidationException
 import io.limberapp.common.exception.badRequest.BodyRequired
@@ -34,13 +34,13 @@ import kotlin.reflect.full.cast
  * Each ApiEndpoint class handles requests to a single endpoint (unique by path and method) of the API. The handler() is
  * called for each request.
  */
-abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseType : Any>(
+abstract class ApiEndpoint<Endpoint : LimberEndpoint, ResponseType : Any>(
     private val application: Application,
     private val endpointTemplate: LimberEndpointTemplate,
 ) {
   private val logger = LoggerFactory.getLogger(ApiEndpoint::class.java)
 
-  inner class Handler(private val endpoint: Endpoint, val principal: P?) {
+  inner class Handler(private val endpoint: Endpoint, val principal: JwtPrincipal?) {
     private var authorized = false
 
     internal suspend fun handle(): Pair<HttpStatusCode?, ResponseType> {
@@ -51,8 +51,8 @@ abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseTyp
       return Pair(responseCode, result)
     }
 
-    fun LimberAuthorization<P>.authorize() {
-      if (!authorize(principal)) throw ForbiddenException()
+    fun auth(function: () -> Auth) {
+      if (!function().authorize(principal)) throw ForbiddenException()
       authorized = true
     }
 
@@ -100,7 +100,7 @@ abstract class ApiEndpoint<P : Principal, Endpoint : LimberEndpoint, ResponseTyp
         val command = determineCommand(call)
 
         @Suppress("UNCHECKED_CAST")
-        val principal = call.authentication.principal as? P
+        val principal = call.authentication.principal as? JwtPrincipal
         val result = Handler(command, principal).handle()
         call.respond(result.first ?: HttpStatusCode.OK, result.second)
       }

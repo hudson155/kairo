@@ -3,7 +3,7 @@ package io.limberapp.backend.module.auth.endpoint.org.role
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.org.OrgRoleApi
 import io.limberapp.backend.module.auth.mapper.org.OrgRoleMapper
@@ -26,7 +26,7 @@ internal class GetOrgRolesByOrgGuid @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: OrgRoleApi.GetByOrgGuid): Set<OrgRoleRep.Complete> {
-    Authorization.OrgMemberWithPermission(command.orgGuid, OrgPermission.MANAGE_ORG_ROLES).authorize()
+    auth { AuthFeatureMember(command.orgGuid, permission = OrgPermission.MANAGE_ORG_ROLES) }
     val orgRoles = orgRoleService.getByOrgGuid(command.orgGuid)
     return orgRoles.map { orgRoleMapper.completeRep(it) }.toSet()
   }

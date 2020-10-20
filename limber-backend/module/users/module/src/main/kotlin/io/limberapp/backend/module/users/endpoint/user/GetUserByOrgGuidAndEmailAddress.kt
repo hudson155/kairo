@@ -3,7 +3,8 @@ package io.limberapp.backend.module.users.endpoint.user
 import com.google.inject.Inject
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
-import io.limberapp.backend.authorization.Authorization
+import io.limberapp.backend.authorization.authorization.AuthOrgMember
+import io.limberapp.backend.authorization.authorization.AuthUser
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.exception.account.UserNotFound
@@ -27,9 +28,9 @@ internal class GetUserByOrgGuidAndEmailAddress @Inject constructor(
   )
 
   override suspend fun Handler.handle(command: UserApi.GetByOrgGuidAndEmailAddress): UserRep.Complete {
-    Authorization.OrgMember(command.orgGuid).authorize()
-    val user = userService.getByEmailAddress(command.orgGuid, command.emailAddress)
-    Authorization.User(user?.guid).authorize()
-    return userMapper.completeRep(user ?: throw UserNotFound())
+    auth { AuthOrgMember(command.orgGuid) }
+    val user = userService.getByEmailAddress(command.orgGuid, command.emailAddress) ?: throw UserNotFound()
+    auth { AuthUser(user.guid) }
+    return userMapper.completeRep(user)
   }
 }
