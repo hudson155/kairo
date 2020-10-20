@@ -47,10 +47,8 @@ internal class UserMapper @Inject constructor(
   )
 
   fun update(rep: UserRep.Update) = UserModel.Update(
-      // Roles (identityProvider and superuser) are updated by role endpoints, not by the user update rep.
-      identityProvider = null,
-      superuser = null,
-
+      identityProvider = rep.identityProvider,
+      superuser = rep.superuser,
       firstName = rep.firstName,
       lastName = rep.lastName
   )

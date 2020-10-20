@@ -1,5 +1,6 @@
 package io.limberapp.backend.module.users.rep.account
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.common.validation.ifPresent
@@ -49,9 +50,14 @@ object UserRep {
   ) : CompleteRep
 
   data class Update(
+      val identityProvider: Boolean? = null,
+      val superuser: Boolean? = null,
       val firstName: String? = null,
       val lastName: String? = null,
   ) : UpdateRep {
+    val specifiesAccountRoleAdditions: Boolean
+      @JsonIgnore get() = setOf(identityProvider, superuser).any { it == true }
+
     override fun validate() = RepValidation {
       validate(Update::firstName) { ifPresent { Validator.humanName(value) } }
       validate(Update::lastName) { ifPresent { Validator.humanName(value) } }

@@ -10,6 +10,7 @@ import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.restInterface.template
+import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
@@ -30,6 +31,7 @@ internal class PatchUser @Inject constructor(
     val rep = command.rep.required()
     Authorization.User(command.userGuid).authorize()
     Authorization.WithOrgPermission(OrgPermission.MODIFY_OWN_METADATA, ignoreOrgGuid = true).authorize()
+    if (rep.specifiesAccountRoleAdditions) Authorization.Role(AccountRole.SUPERUSER).authorize()
     val user = userService.update(command.userGuid, userMapper.update(rep))
     return userMapper.completeRep(user)
   }

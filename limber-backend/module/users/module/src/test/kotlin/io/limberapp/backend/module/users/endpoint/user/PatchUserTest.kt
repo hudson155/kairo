@@ -7,6 +7,7 @@ import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
 import io.limberapp.common.util.string.joinNames
+import io.limberapp.permissions.AccountRole
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -24,7 +25,7 @@ internal class PatchUserTest(
   }
 
   @Test
-  fun happyPath() {
+  fun happyPathName() {
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
@@ -35,6 +36,25 @@ internal class PatchUserTest(
     userRep = userRep.copy(firstName = "Gunner", fullName = listOfNotNull("Gunner", userRep.lastName).joinNames())
     test(expectResult = userRep) {
       userClient(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner")))
+    }
+
+    test(expectResult = userRep) {
+      userClient(UserApi.Get(userRep.guid))
+    }
+  }
+
+  @Test
+  fun happyPathRole() {
+    val orgGuid = UUID.randomUUID()
+
+    var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
+    setup {
+      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
+    }
+
+    userRep = userRep.copy(roles = userRep.roles + AccountRole.SUPERUSER)
+    test(expectResult = userRep) {
+      userClient(UserApi.Patch(userRep.guid, UserRep.Update(superuser = true)))
     }
 
     test(expectResult = userRep) {

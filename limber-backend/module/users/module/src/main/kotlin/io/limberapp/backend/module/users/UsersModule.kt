@@ -6,8 +6,6 @@ import io.limberapp.backend.module.users.endpoint.user.GetUserByOrgGuidAndEmailA
 import io.limberapp.backend.module.users.endpoint.user.GetUsersByOrgGuid
 import io.limberapp.backend.module.users.endpoint.user.PatchUser
 import io.limberapp.backend.module.users.endpoint.user.PostUser
-import io.limberapp.backend.module.users.endpoint.user.role.DeleteUserRole
-import io.limberapp.backend.module.users.endpoint.user.role.PutUserRole
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.backend.module.users.service.account.UserServiceImpl
 import io.limberapp.common.module.ApplicationModule
@@ -19,8 +17,6 @@ class UsersModule : ApplicationModule() {
       GetUserByOrgGuidAndEmailAddress::class.java,
       GetUsersByOrgGuid::class.java,
       PatchUser::class.java,
-      PutUserRole::class.java,
-      DeleteUserRole::class.java,
       DeleteUser::class.java
   )
 
