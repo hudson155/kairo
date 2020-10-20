@@ -6,9 +6,9 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.http.HttpStatusCode
 import io.limberapp.common.client.exception.LimberHttpClientException
 import io.limberapp.common.client.exception.LimberHttpClientInternalException
+import io.limberapp.common.rep.LimberError
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.serialization.limberObjectMapper
-import io.limberapp.error.LimberError
 import org.slf4j.LoggerFactory
 import java.io.Closeable
 

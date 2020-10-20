@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":limber-backend:common:exceptions"))
+  api(project(":limber-backend:common:exceptions"))
   implementation(project(":limber-backend:common:util"))
 
   implementation(Dependencies.Ktor.httpJvm)

@@ -1,13 +1,12 @@
-package io.limberapp.exceptionMapping
+package io.limberapp.common.exception
 
 import io.ktor.http.HttpStatusCode
-import io.limberapp.error.LimberError
-import io.limberapp.exception.LimberException
-import io.limberapp.exception.badRequest.BadRequestException
-import io.limberapp.exception.conflict.ConflictException
-import io.limberapp.exception.forbidden.ForbiddenException
-import io.limberapp.exception.notFound.NotFoundException
-import io.limberapp.exception.unprocessableEntity.UnprocessableEntityException
+import io.limberapp.common.exception.badRequest.BadRequestException
+import io.limberapp.common.exception.conflict.ConflictException
+import io.limberapp.common.exception.forbidden.ForbiddenException
+import io.limberapp.common.exception.notFound.NotFoundException
+import io.limberapp.common.exception.unprocessableEntity.UnprocessableEntityException
+import io.limberapp.common.rep.LimberError
 
 object ExceptionMapper {
   fun handle(e: LimberException): LimberError {

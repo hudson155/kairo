@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.exception.tenant
 
-import io.limberapp.exception.conflict.ConflictException
+import io.limberapp.common.exception.conflict.ConflictException
 
 class OrgAlreadyHasTenant : ConflictException(
     message = "The org with UUID already has a tenant.",

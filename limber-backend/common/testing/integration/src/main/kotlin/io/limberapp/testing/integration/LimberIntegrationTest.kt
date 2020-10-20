@@ -5,9 +5,9 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.common.LimberApplication
 import io.limberapp.common.client.LimberHttpClient
 import io.limberapp.common.client.exception.LimberHttpClientException
+import io.limberapp.common.exception.ExceptionMapper
+import io.limberapp.common.exception.LimberException
 import io.limberapp.common.serialization.limberObjectMapper
-import io.limberapp.exception.LimberException
-import io.limberapp.exceptionMapping.ExceptionMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.ExtendWith
 import kotlin.reflect.KClass

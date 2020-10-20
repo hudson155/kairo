@@ -1,6 +1,6 @@
-package io.limberapp.exception.conflict
+package io.limberapp.common.exception.conflict
 
-import io.limberapp.exception.LimberException
+import io.limberapp.common.exception.LimberException
 
 abstract class ConflictException(
     message: String,

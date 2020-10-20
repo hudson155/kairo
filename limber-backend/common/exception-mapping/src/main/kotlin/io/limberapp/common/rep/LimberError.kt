@@ -1,4 +1,4 @@
-package io.limberapp.error
+package io.limberapp.common.rep
 
 /**
  * This class is the only JSON error that is returned as an HTTP response body.

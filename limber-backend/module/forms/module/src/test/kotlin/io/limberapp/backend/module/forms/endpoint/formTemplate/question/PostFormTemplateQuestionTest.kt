@@ -8,8 +8,8 @@ import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
-import io.limberapp.exception.badRequest.RankOutOfBounds
-import io.limberapp.exception.unprocessableEntity.unprocessable
+import io.limberapp.common.exception.badRequest.RankOutOfBounds
+import io.limberapp.common.exception.unprocessableEntity.unprocessable
 import org.junit.jupiter.api.Test
 import java.util.*
 

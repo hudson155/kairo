@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.exception.feature
 
-import io.limberapp.exception.conflict.ConflictException
+import io.limberapp.common.exception.conflict.ConflictException
 
 class FeatureRoleOrgRoleIsNotUnique : ConflictException(
     message = "The feature role already exists.",

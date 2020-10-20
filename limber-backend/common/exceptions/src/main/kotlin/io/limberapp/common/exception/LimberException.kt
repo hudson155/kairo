@@ -1,4 +1,4 @@
-package io.limberapp.exception
+package io.limberapp.common.exception
 
 abstract class LimberException(
     override val message: String,

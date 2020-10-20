@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.users.exception.account
 
-import io.limberapp.exception.conflict.ConflictException
+import io.limberapp.common.exception.conflict.ConflictException
 
 class EmailAddressAlreadyTaken : ConflictException(
     message = "The email address is already taken.",

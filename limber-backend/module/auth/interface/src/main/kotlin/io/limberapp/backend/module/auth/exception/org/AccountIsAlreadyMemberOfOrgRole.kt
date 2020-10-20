@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.exception.org
 
-import io.limberapp.exception.conflict.ConflictException
+import io.limberapp.common.exception.conflict.ConflictException
 
 class AccountIsAlreadyMemberOfOrgRole : ConflictException(
     message = "The account is already a member of the org role.",

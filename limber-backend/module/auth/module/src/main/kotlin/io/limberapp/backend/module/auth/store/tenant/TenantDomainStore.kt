@@ -6,10 +6,10 @@ import io.limberapp.backend.module.auth.exception.tenant.TenantDomainAlreadyRegi
 import io.limberapp.backend.module.auth.exception.tenant.TenantDomainNotFound
 import io.limberapp.backend.module.auth.exception.tenant.TenantNotFound
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
+import io.limberapp.common.exception.unprocessableEntity.unprocessable
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.isUniqueConstraintViolation
-import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException

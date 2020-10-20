@@ -11,8 +11,14 @@ io.limberapp
 │           common:client module).
 ├── config: Classes representing and regarding application configuration (see
 │           the common:config module).
+├── exception: Application semantic exceptions, broken down by HTTP response
+│              error code (see the common:exceptions module). Also, code to map
+│              these exceptions to HTTP response body errors (see the
+│              common:exception-mapping module).
 ├── finder: The finder interface, related interfaces, and supporting classes
 │           (see the common:finder module).
+├── reps: Base classes representing HTTP request and response bodies, including
+│         errors (see the common:exception-mapping module).
 ├── serialization: Shared JSON serialization code (see the common:serialization
 │                  module).
 └── util

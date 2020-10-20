@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.forms.exception.formInstance
 
-import io.limberapp.exception.conflict.ConflictException
+import io.limberapp.common.exception.conflict.ConflictException
 
 class CannotDeleteRequiredQuestion : ConflictException(
     message = "You can't delete this question - it is required. Update it instead.",

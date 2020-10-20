@@ -6,10 +6,10 @@ import io.limberapp.backend.module.auth.exception.org.AccountIsAlreadyMemberOfOr
 import io.limberapp.backend.module.auth.exception.org.OrgRoleMembershipNotFound
 import io.limberapp.backend.module.auth.exception.org.OrgRoleNotFound
 import io.limberapp.backend.module.auth.model.org.OrgRoleMembershipModel
+import io.limberapp.common.exception.unprocessableEntity.unprocessable
 import io.limberapp.common.store.SqlStore
 import io.limberapp.common.store.isForeignKeyViolation
 import io.limberapp.common.store.isUniqueConstraintViolation
-import io.limberapp.exception.unprocessableEntity.unprocessable
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
