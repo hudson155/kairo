@@ -1,4 +1,3 @@
-import { Auth0Provider } from '@auth0/auth0-react';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,6 +6,7 @@ import { LimberApi } from '../api/LimberApi';
 import { app } from '../app';
 import { env } from '../env';
 import ApiProvider from '../provider/ApiProvider';
+import AuthProvider from '../provider/AuthProvider';
 import LimberThemeProvider from '../provider/LimberThemeProvider';
 import { environment as relayEnvironment } from '../relay-env';
 import { TenantRepComplete } from '../rep/Tenant';
@@ -25,22 +25,17 @@ function App(): ReactElement {
 
   return (
     <LimberThemeProvider>
-      {tenant == null ? <LoadingPage message="Loading tenant..." /> : (
-        <Auth0Provider
-          audience={`https://${env.AUTH0_DOMAIN}/api/v2/`}
-          clientId={tenant.auth0ClientId}
-          domain={env.AUTH0_DOMAIN}
-          redirectUri={app.rootUrl}
-        >
-          <ApiProvider>
-            <RelayEnvironmentProvider environment={relayEnvironment}>
-              <BrowserRouter>
+      <BrowserRouter>
+        {tenant == null ? <LoadingPage message="Loading tenant..." /> : (
+          <AuthProvider tenant={tenant}>
+            <ApiProvider>
+              <RelayEnvironmentProvider environment={relayEnvironment}>
                 <AppRootRouter tenant={tenant} />
-              </BrowserRouter>
-            </RelayEnvironmentProvider>
-          </ApiProvider>
-        </Auth0Provider>
-      )}
+              </RelayEnvironmentProvider>
+            </ApiProvider>
+          </AuthProvider>
+        )}
+      </BrowserRouter>
     </LimberThemeProvider>
   );
 }

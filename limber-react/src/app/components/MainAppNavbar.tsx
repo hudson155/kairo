@@ -1,6 +1,7 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { ClassNames, CSSObject } from '@emotion/core';
 import React, { ReactElement } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { useLimberTheme } from '../../provider/LimberThemeProvider';
 import { useOrg } from '../../provider/OrgProvider';
@@ -16,7 +17,7 @@ const styles = {
     color: theme.colors.grey800,
     height: theme.size.$32,
     fontSize: theme.size.$16,
-    fontStyle: 'bold',
+    fontWeight: 'bold',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -27,7 +28,7 @@ const styles = {
     height: 'inherit',
     marginRight: theme.size.$12,
   }),
-  darkModeToggle: (theme: EmotionTheme): CSSObject => ({
+  right: (theme: EmotionTheme): CSSObject => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -37,13 +38,15 @@ const styles = {
   }),
   nav: (theme: EmotionTheme): CSSObject => ({
     flexGrow: 1,
-    fontWeight: 'bold',
     'a:not(:last-child)': {
       marginRight: theme.size.$12,
     },
   }),
   activeNavLink: (theme: EmotionTheme): CSSObject => ({
     borderBottom: `${theme.size.$2} solid ${theme.colors.special.copper}`,
+  }),
+  signIn: (): CSSObject => ({
+    cursor: 'pointer',
   }),
 };
 
@@ -61,9 +64,24 @@ function MainAppNavbarItem(props: {
   );
 }
 
-function MainAppNavbar(): ReactElement {
+function MainAppNavbarSettingsDropdown(): ReactElement {
   const { isLightTheme, setIsLightTheme } = useLimberTheme();
+  return (
+    <>
+      <span>Dark mode</span>
+      <LimberToggle enabled={!isLightTheme} onToggle={enabled => setIsLightTheme(!enabled)} />
+    </>
+  );
+}
+
+function MainAppNavbar(): ReactElement {
+  const auth = useAuth0();
+  const location = useLocation();
   const org = useOrg();
+
+  const signIn = () => {
+    auth.loginWithRedirect({ appState: { returnTo: location.pathname } });
+  };
 
   return (
     <div css={theme => styles.root(theme)}>
@@ -71,9 +89,11 @@ function MainAppNavbar(): ReactElement {
       <ul css={theme => styles.nav(theme)}>
         {org && org.features.map(feature => (<MainAppNavbarItem feature={feature} key={feature.guid} />))}
       </ul>
-      <div css={theme => styles.darkModeToggle(theme)}>
-        <span>Dark mode</span>
-        <LimberToggle enabled={!isLightTheme} onToggle={enabled => setIsLightTheme(!enabled)} />
+      <div css={theme => styles.right(theme)}>
+        {auth.isAuthenticated
+          ? <MainAppNavbarSettingsDropdown />
+          : <a css={styles.signIn()} onClick={signIn}>Sign in</a>
+        }
       </div>
     </div>);
 }
