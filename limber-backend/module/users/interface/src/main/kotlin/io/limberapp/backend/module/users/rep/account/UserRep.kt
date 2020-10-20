@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.users.rep.account
 
-import io.limberapp.common.validator.Validator
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validation.Validator
+import io.limberapp.common.validation.ifPresent
 import io.limberapp.permissions.AccountRole
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
 import io.limberapp.rep.UpdateRep
-import io.limberapp.validation.RepValidation
-import io.limberapp.validation.ifPresent
 import java.time.LocalDateTime
 import java.util.*
 

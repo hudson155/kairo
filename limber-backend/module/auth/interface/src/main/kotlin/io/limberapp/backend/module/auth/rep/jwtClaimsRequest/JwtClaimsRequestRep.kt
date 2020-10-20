@@ -1,9 +1,9 @@
 package io.limberapp.backend.module.auth.rep.jwtClaimsRequest
 
-import io.limberapp.common.validator.Validator
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validation.Validator
+import io.limberapp.common.validation.ifPresent
 import io.limberapp.rep.CreationRep
-import io.limberapp.validation.RepValidation
-import io.limberapp.validation.ifPresent
 
 object JwtClaimsRequestRep {
   data class Creation(

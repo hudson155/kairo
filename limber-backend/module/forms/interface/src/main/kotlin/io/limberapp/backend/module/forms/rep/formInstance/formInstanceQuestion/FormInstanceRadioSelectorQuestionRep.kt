@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion
 
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceQuestionRep
-import io.limberapp.common.validator.Validator
-import io.limberapp.validation.RepValidation
+import io.limberapp.common.validation.RepValidation
+import io.limberapp.common.validation.Validator
 import java.time.LocalDateTime
 import java.util.*
 

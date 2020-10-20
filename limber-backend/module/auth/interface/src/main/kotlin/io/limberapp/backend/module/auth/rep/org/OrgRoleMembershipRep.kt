@@ -1,8 +1,8 @@
 package io.limberapp.backend.module.auth.rep.org
 
+import io.limberapp.common.validation.RepValidation
 import io.limberapp.rep.CompleteRep
 import io.limberapp.rep.CreationRep
-import io.limberapp.validation.RepValidation
 import java.time.LocalDateTime
 import java.util.*
 

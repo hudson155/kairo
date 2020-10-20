@@ -1,4 +1,4 @@
-package io.limberapp.validation
+package io.limberapp.common.validation
 
 import io.limberapp.rep.ValidatedRep
 import kotlin.reflect.KProperty1

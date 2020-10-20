@@ -1,4 +1,4 @@
-package io.limberapp.validation
+package io.limberapp.common.validation
 
 data class ValueValidation<T>(val name: String, val value: T)
 

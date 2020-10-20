@@ -1,4 +1,4 @@
-package io.limberapp.common.validator
+package io.limberapp.common.validation
 
 import io.limberapp.common.util.darb.DarbEncoder
 
