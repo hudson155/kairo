@@ -6,6 +6,7 @@ import io.limberapp.backend.module.forms.api.formInstance.FormInstanceQuestionAp
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.exception.formInstance.CannotDeleteRequiredQuestion
+import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.testing.IntegrationTest
 import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInstanceQuestionRepFixtures
@@ -13,6 +14,7 @@ import io.limberapp.backend.module.forms.testing.fixtures.formInstance.FormInsta
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateQuestionRepFixtures
 import io.limberapp.backend.module.forms.testing.fixtures.formTemplate.FormTemplateRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.exception.unprocessableEntity.unprocessable
 import io.limberapp.common.util.time.inUTC
 import org.junit.jupiter.api.Test
 import java.time.ZonedDateTime
@@ -31,7 +33,7 @@ internal class DeleteFormInstanceQuestionTest(
       formTemplateClient(FormTemplateApi.Post(featureGuid, FormTemplateRepFixtures.exampleFormFixture.creation()))
     }
 
-    test(expectResult = null) {
+    test(expectError = FormInstanceNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Delete(featureGuid, formInstanceGuid, UUID.randomUUID()))
     }
   }
@@ -113,7 +115,7 @@ internal class DeleteFormInstanceQuestionTest(
       ))
     }
 
-    test(expectResult = null) {
+    test(expectError = FormInstanceNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Delete(
           featureGuid = UUID.randomUUID(),
           formInstanceGuid = formInstanceRep.guid,
@@ -166,7 +168,7 @@ internal class DeleteFormInstanceQuestionTest(
       ))
     }
 
-    test(expectResult = null) {
+    test(expectError = FormInstanceNotFound().unprocessable()) {
       formInstanceQuestionClient(FormInstanceQuestionApi.Delete(
           featureGuid = featureGuid,
           formInstanceGuid = UUID.randomUUID(),
