@@ -24,13 +24,18 @@ function AppRootRouter(props: Props): ReactElement {
 
   const subRouter: ReactNode = auth.isAuthenticated ? (
     <GlobalStateProvider orgGuid={props.tenant.orgGuid}>
+      <MainAppNavbar />
       <Route component={AppFeatureRouter} exact={false} path={app.rootPath} />
     </GlobalStateProvider>
-  ) : <Route exact={false} path={app.rootPath}><AppUnauthenticatedRouter name={props.tenant.name} /></Route>;
+  ) : (
+    <Route exact={false} path={app.rootPath}>
+      <MainAppNavbar />
+      <AppUnauthenticatedRouter name={props.tenant.name} />
+    </Route>
+  );
 
   return (
     <>
-      <MainAppNavbar />
       <Switch>
         <Route component={SignInPage} exact={true} path="/signin" />
         <Route component={SignOutPage} exact={true} path="/signout" />

@@ -30,6 +30,9 @@ export interface EmotionTheme {
     red500: string;
     red600: string;
     red700: string;
+    special: {
+      copper: string;
+    };
   };
   size: {
     $1: string;
@@ -126,13 +129,23 @@ const EmotionThemeSizes = {
   $64: '64px',
 };
 
+const EmotionThemeSpecialColors = {
+  copper: '#CD8E72',
+}
+
 const EmotionThemeDark: EmotionTheme = {
-  colors: EmotionThemeColorsDark,
+  colors: {
+    ...EmotionThemeColorsDark,
+    special: EmotionThemeSpecialColors,
+  },
   size: EmotionThemeSizes,
 };
 
 const EmotionThemeLight: EmotionTheme = {
-  colors: EmotionThemeColorsLight,
+  colors: {
+    ...EmotionThemeColorsLight,
+    special: EmotionThemeSpecialColors,
+  },
   size: EmotionThemeSizes,
 };
 
