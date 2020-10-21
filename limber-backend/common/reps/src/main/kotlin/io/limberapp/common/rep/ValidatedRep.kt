@@ -1,4 +1,4 @@
-package io.limberapp.rep
+package io.limberapp.common.rep
 
 import io.limberapp.common.validation.RepValidation
 

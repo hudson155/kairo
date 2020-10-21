@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.orgs.rep.org
 
 import io.limberapp.backend.module.orgs.rep.feature.FeatureRep
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.rep.UpdateRep
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.common.validation.ifPresent
-import io.limberapp.rep.CompleteRep
-import io.limberapp.rep.CreationRep
-import io.limberapp.rep.UpdateRep
 import java.time.ZonedDateTime
 import java.util.*
 

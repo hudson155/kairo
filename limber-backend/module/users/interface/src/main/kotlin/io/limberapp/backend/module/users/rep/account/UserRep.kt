@@ -1,13 +1,13 @@
 package io.limberapp.backend.module.users.rep.account
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
+import io.limberapp.common.rep.UpdateRep
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.common.validation.ifPresent
 import io.limberapp.permissions.AccountRole
-import io.limberapp.rep.CompleteRep
-import io.limberapp.rep.CreationRep
-import io.limberapp.rep.UpdateRep
 import java.time.ZonedDateTime
 import java.util.*
 

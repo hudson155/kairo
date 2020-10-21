@@ -23,9 +23,9 @@ import io.limberapp.common.endpoint.exception.ParameterConversionException
 import io.limberapp.common.endpoint.exception.ValidationException
 import io.limberapp.common.exception.badRequest.BodyRequired
 import io.limberapp.common.exception.forbidden.ForbiddenException
+import io.limberapp.common.rep.ValidatedRep
 import io.limberapp.common.restInterface.LimberEndpoint
 import io.limberapp.common.restInterface.LimberEndpointTemplate
-import io.limberapp.rep.ValidatedRep
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.cast

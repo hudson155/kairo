@@ -6,8 +6,8 @@ import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.F
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceRadioSelectorQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceTextQuestionRep
 import io.limberapp.backend.module.forms.rep.formInstance.formInstanceQuestion.FormInstanceYesNoQuestionRep
-import io.limberapp.rep.CompleteRep
-import io.limberapp.rep.CreationRep
+import io.limberapp.common.rep.CompleteRep
+import io.limberapp.common.rep.CreationRep
 import java.time.ZonedDateTime
 import java.util.*
 

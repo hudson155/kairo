@@ -1,6 +1,6 @@
 package io.limberapp.common.validation
 
-import io.limberapp.rep.ValidatedRep
+import io.limberapp.common.rep.ValidatedRep
 import kotlin.reflect.KProperty1
 
 /**
@@ -26,9 +26,7 @@ class RepValidation(validation: Builder.() -> Unit) {
      * Validates a sub-rep.
      */
     @JvmName("validateRep")
-    fun <R : ValidatedRep, T : ValidatedRep> R.validate(
-        property: KProperty1<R, T>,
-    ) {
+    fun <R : ValidatedRep, T : ValidatedRep> R.validate(property: KProperty1<R, T>) {
       validate(property.get(this).validate())
     }
 
@@ -36,9 +34,7 @@ class RepValidation(validation: Builder.() -> Unit) {
      * Validates a list of sub-reps.
      */
     @JvmName("validateReps")
-    fun <R : ValidatedRep, T : List<ValidatedRep>> R.validate(
-        property: KProperty1<R, T>,
-    ) {
+    fun <R : ValidatedRep, T : List<ValidatedRep>> R.validate(property: KProperty1<R, T>) {
       property.get(this).forEach { validate(it.validate()) }
     }
   }

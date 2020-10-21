@@ -17,8 +17,9 @@ io.limberapp
 │              common:exception-mapping module).
 ├── finder: The finder interface, related interfaces, and supporting classes
 │           (see the common:finder module).
-├── reps: Base classes representing HTTP request and response bodies, including
-│         errors (see the common:exception-mapping module).
+├── rep: Base classes representing HTTP request and response bodies (see the
+│        common:reps module), including errors (see the
+│        common:exception-mapping module).
 ├── serialization: Shared JSON serialization code (see the common:serialization
 │                  module).
 ├── util
@@ -28,7 +29,8 @@ io.limberapp
 │   │        manipulation (see the common:util module).
 │   └── uuid: Code relating to UUIDs, including encoding (see the common:util
 │             module).
-└── validation: Syntactic input validation (see the common:validation module).
+└── validation: Syntactic input validation (see the common:validation module)
+                and rep validation (see the common:reps module).
 
 kotlin: Custom extensions to the Kotlin standard library (see the common:util
         module).
