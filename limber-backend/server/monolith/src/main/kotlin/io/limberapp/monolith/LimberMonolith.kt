@@ -1,7 +1,7 @@
 package io.limberapp.monolith
 
 import io.ktor.application.Application
-import io.limberapp.backend.module.LimberSqlModule
+import io.limberapp.backend.module.SqlModule
 import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.module.healthCheck.HealthCheckModule
 import io.limberapp.module.monolith.MonolithModule
@@ -12,5 +12,5 @@ internal class LimberMonolith(application: Application) : BaseLimberApp(
 ) {
   override fun getApplicationModules() = listOf(MonolithModule(), HealthCheckModule()) + allLimberModules()
 
-  override fun getAdditionalModules() = listOf(LimberSqlModule(config.sqlDatabase, runMigrations = true))
+  override fun getAdditionalModules() = listOf(SqlModule(config.sqlDatabase, runMigrations = true))
 }

@@ -4,7 +4,7 @@ package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.module.LimberSqlModule
+import io.limberapp.backend.module.SqlModule
 import io.limberapp.backend.module.auth.model.feature.FeatureRoleModel
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
 import io.limberapp.backend.module.forms.model.formTemplate.FormTemplateModel
@@ -35,7 +35,7 @@ internal fun Adhoc.createCovidFeature() {
   object : BaseLimberApp(application, config) {
     override fun getApplicationModules() = allLimberModules()
 
-    override fun getAdditionalModules() = listOf(LimberSqlModule(config.sqlDatabase, runMigrations = false))
+    override fun getAdditionalModules() = listOf(SqlModule(config.sqlDatabase, runMigrations = false))
 
     override fun afterStart(application: Application, injector: Injector) {
       val featureGuid = createFeature(injector)

@@ -4,7 +4,7 @@ package io.limberapp.monolith.adhoc
 
 import com.google.inject.Injector
 import io.ktor.application.Application
-import io.limberapp.backend.module.LimberSqlModule
+import io.limberapp.backend.module.SqlModule
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.model.tenant.TenantDomainModel
 import io.limberapp.backend.module.auth.model.tenant.TenantModel
@@ -34,7 +34,7 @@ internal fun Adhoc.onboard() {
   object : BaseLimberApp(application, config) {
     override fun getApplicationModules() = allLimberModules()
 
-    override fun getAdditionalModules() = listOf(LimberSqlModule(config.sqlDatabase, runMigrations = false))
+    override fun getAdditionalModules() = listOf(SqlModule(config.sqlDatabase, runMigrations = false))
 
     override fun afterStart(application: Application, injector: Injector) {
       val orgGuid = createOrg(injector)

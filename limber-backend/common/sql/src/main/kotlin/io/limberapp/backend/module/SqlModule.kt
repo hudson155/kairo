@@ -1,6 +1,10 @@
-package io.limberapp.common.module
+package io.limberapp.backend.module
 
+import io.limberapp.backend.sql.type.JdbiFeaturePermissionsType
+import io.limberapp.backend.sql.type.JdbiOrgPermissionsType
 import io.limberapp.common.config.database.SqlDatabaseConfig
+import io.limberapp.common.module.GuiceModule
+import io.limberapp.common.module.SqlWrapper
 import io.limberapp.common.sql.registerJdbiType
 import io.limberapp.common.sql.type.JdbiRegexType
 import org.jdbi.v3.core.Jdbi
@@ -11,7 +15,6 @@ import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
 /**
  * SqlModule configures bindings for an SQL database.
  */
-@Suppress("LateinitUsage")
 open class SqlModule(config: SqlDatabaseConfig, private val runMigrations: Boolean) : GuiceModule() {
   protected val wrapper = SqlWrapper(config)
 
@@ -26,9 +29,8 @@ open class SqlModule(config: SqlDatabaseConfig, private val runMigrations: Boole
       .installPlugin(KotlinSqlObjectPlugin())
       .installPlugin(PostgresPlugin())
       .registerJdbiType(JdbiRegexType)
-      .apply { configureJdbi() }
-
-  protected open fun Jdbi.configureJdbi() {}
+      .registerJdbiType(JdbiFeaturePermissionsType)
+      .registerJdbiType(JdbiOrgPermissionsType)
 
   override fun unconfigure() {
     wrapper.disconnect()
