@@ -23,6 +23,8 @@ io.limberapp
 ├── rep: Base classes representing HTTP request and response bodies (see the
 │        common:reps module), including errors (see the
 │        common:exception-mapping module).
+├── restInterface: Shared endpoint specification code (see the
+│                  common:rest-interface module).
 ├── serialization: Shared JSON serialization code (see the common:serialization
 │                  module).
 ├── util

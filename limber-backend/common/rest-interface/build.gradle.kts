@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("reflect"))
-
   api(project(":limber-backend:common:reps"))
   implementation(project(":limber-backend:common:util"))
 
