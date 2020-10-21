@@ -3,7 +3,7 @@ package io.limberapp.monolith.authentication.jwt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.exceptions.JWTVerificationException
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.convertValue
 import io.limberapp.backend.authorization.principal.JwtPrincipal
 import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.JwtClaims
@@ -39,12 +39,12 @@ class JwtAuthVerifier(authenticationConfig: AuthenticationConfig) : LimberAuthVe
       null
     } ?: return null
     val jwt = Jwt(
-        org = decodedJwt.getClaim(JwtClaims.org).asString()
-            ?.let { objectMapper.readValue(it) },
-        roles = requireNotNull(decodedJwt.getClaim(JwtClaims.roles).asString())
-            .let { objectMapper.readValue(it) },
-        user = decodedJwt.getClaim(JwtClaims.user).asString()
-            ?.let { objectMapper.readValue(it) }
+        org = decodedJwt.getClaim(JwtClaims.org).asMap()
+            ?.let { objectMapper.convertValue(it) },
+        roles = requireNotNull(decodedJwt.getClaim(JwtClaims.roles).asList(String::class.java))
+            .let { objectMapper.convertValue(it) },
+        user = decodedJwt.getClaim(JwtClaims.user).asMap()
+            ?.let { objectMapper.convertValue(it) }
     )
     return JwtPrincipal(jwt)
   }

@@ -21,10 +21,4 @@ object JwtClaimsRequestRep {
       validate(Creation::profilePhotoUrl) { ifPresent { Validator.url(value) } }
     }
   }
-
-  data class Complete(
-      val org: String?,
-      val roles: String,
-      val user: String,
-  ) : Any()
 }

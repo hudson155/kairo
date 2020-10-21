@@ -1,7 +1,6 @@
 package io.limberapp.backend.module.auth.service.jwtClaimsRequest
 
 import com.google.inject.Inject
-import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsModel
 import io.limberapp.backend.module.auth.model.jwtClaimsRequest.JwtClaimsRequestModel
 import io.limberapp.backend.module.auth.model.org.OrgRoleModel
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
@@ -14,10 +13,10 @@ import io.limberapp.backend.module.orgs.rep.org.OrgRep
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.JwtFeature
 import io.limberapp.common.auth.jwt.JwtOrg
 import io.limberapp.common.auth.jwt.JwtUser
-import io.limberapp.common.serialization.limberObjectMapper
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
@@ -36,9 +35,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val orgClient: OrgClient,
     private val userClient: UserClient,
 ) : JwtClaimsRequestService {
-  private val objectMapper = limberObjectMapper()
-
-  override suspend fun requestJwtClaims(request: JwtClaimsRequestModel): JwtClaimsModel {
+  override suspend fun requestJwtClaims(request: JwtClaimsRequestModel): Jwt {
     val user = getAccountOrCreateUser(request)
     return requestJwtClaimsForUser(user)
   }
@@ -60,14 +57,14 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     ))
   }
 
-  private suspend fun requestJwtClaimsForUser(user: UserRep.Complete): JwtClaimsModel {
+  private suspend fun requestJwtClaimsForUser(user: UserRep.Complete): Jwt {
     val org = checkNotNull(orgClient(OrgApi.Get(user.orgGuid)))
     val (orgRoles, isOwner, permissions) = getPermissions(org, user.guid)
     val orgRoleGuids = orgRoles.map { it.guid }.toSet()
     val jwtFeatures = org.features
         .mapNotNull { feature -> getPermissions(feature, orgRoleGuids)?.let { Pair(feature.guid, JwtFeature(it)) } }
         .associate { it }
-    return convertJwtToModel(
+    return Jwt(
         org = JwtOrg(org.guid, org.name, isOwner, permissions, jwtFeatures),
         roles = AccountRole.values().filter { it in user.roles }.toSet(),
         user = JwtUser(user.guid, user.firstName, user.lastName)
@@ -87,10 +84,4 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     val featurePermissions = featureRoles.map { it.permissions }
     return featurePermissions.unionIfSameType()
   }
-
-  private fun convertJwtToModel(org: JwtOrg, roles: Set<AccountRole>, user: JwtUser) = JwtClaimsModel(
-      org = objectMapper.writeValueAsString(org),
-      roles = objectMapper.writeValueAsString(roles),
-      user = objectMapper.writeValueAsString(user)
-  )
 }

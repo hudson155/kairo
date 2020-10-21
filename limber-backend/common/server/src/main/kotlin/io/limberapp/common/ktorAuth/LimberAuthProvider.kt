@@ -7,11 +7,9 @@ import io.ktor.auth.AuthenticationFailedCause
 import io.ktor.auth.AuthenticationPipeline
 import io.ktor.auth.AuthenticationProvider
 import io.ktor.auth.Principal
-import io.ktor.auth.UnauthorizedResponse
 import io.ktor.auth.parseAuthorizationHeader
 import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.request.ApplicationRequest
-import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineContext
 import org.slf4j.LoggerFactory
 
@@ -29,13 +27,11 @@ internal class LimberAuthProvider<P : Principal> internal constructor(
   }
 
   private fun PipelineContext<AuthenticationContext, ApplicationCall>.intercept(context: AuthenticationContext) {
-    val token = call.request.parseAuthorizationHeaderOrNull()
-        ?: return context.bearerChallenge(AuthenticationFailedCause.NoCredentials)
+    val token = call.request.parseAuthorizationHeaderOrNull() ?: return
 
     @Suppress("TooGenericExceptionCaught") // ktor-auth-jwt does this so we do it too.
     try {
-      val principal = getPrincipal(token)
-          ?: return context.bearerChallenge(AuthenticationFailedCause.InvalidCredentials)
+      val principal = getPrincipal(token) ?: return
       context.principal(principal)
     } catch (e: Exception) {
       context.handleError(e)
@@ -52,18 +48,7 @@ internal class LimberAuthProvider<P : Principal> internal constructor(
   private fun getPrincipal(token: HttpAuthHeader): P? {
     if (token !is HttpAuthHeader.Single) return null
     val verifier = config.verifiers[token.authScheme] ?: return null
-    return verifier.verify(token.blob) ?: return null
-  }
-
-  private fun AuthenticationContext.bearerChallenge(
-      e: AuthenticationFailedCause,
-  ) = challenge(config.authKey, e) {
-    val challenge = HttpAuthHeader.Parameterized(
-        authScheme = config.defaultScheme,
-        parameters = mapOf(HttpAuthHeader.Parameters.Realm to config.realm)
-    )
-    call.respond(UnauthorizedResponse(challenge))
-    if (!it.completed && call.response.status() != null) it.complete()
+    return verifier.verify(token.blob)
   }
 
   private fun AuthenticationContext.handleError(e: Exception) {

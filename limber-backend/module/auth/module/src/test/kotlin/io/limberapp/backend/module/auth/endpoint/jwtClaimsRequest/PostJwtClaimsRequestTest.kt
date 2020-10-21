@@ -21,6 +21,10 @@ import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.auth.jwt.Jwt
+import io.limberapp.common.auth.jwt.JwtFeature
+import io.limberapp.common.auth.jwt.JwtOrg
+import io.limberapp.common.auth.jwt.JwtUser
 import io.limberapp.common.util.time.inUTC
 import io.limberapp.permissions.AccountRole
 import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
@@ -109,23 +113,20 @@ internal class PostJwtClaimsRequestTest(
         emailAddress = emailAddress,
         profilePhotoUrl = null
     )
-    test(expectResult = JwtClaimsRequestRep.Complete(
-        org = "{" +
-            "\"guid\":\"${existingOrg.guid}\"," +
-            "\"name\":\"${existingOrg.name}\"," +
-            "\"isOwner\":false," +
-            "\"permissions\":\"${orgPermissions.asDarb()}\"," +
-            "\"features\":{" +
-            "\"${existingFeature.guid}\":{" +
-            "\"permissions\":\"${featurePermissions.asDarb()}\"" +
-            "}" +
-            "}" +
-            "}",
-        roles = "[]",
-        user = "{" +
-            "\"guid\":\"$userGuid\"," +
-            "\"firstName\":\"${jwtRequest.firstName}\"," +
-            "\"lastName\":\"${jwtRequest.lastName}\"}"
+    test(expectResult = Jwt(
+        org = JwtOrg(
+            guid = existingOrg.guid,
+            name = existingOrg.name,
+            isOwner = false,
+            permissions = orgPermissions,
+            features = mapOf(existingFeature.guid to JwtFeature(featurePermissions)),
+        ),
+        roles = emptySet(),
+        user = JwtUser(
+            guid = userGuid,
+            firstName = jwtRequest.firstName,
+            lastName = jwtRequest.lastName,
+        ),
     )) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(jwtRequest))
     }
@@ -208,19 +209,20 @@ internal class PostJwtClaimsRequestTest(
         emailAddress = "jhudson@jhudson.ca",
         profilePhotoUrl = null
     )
-    test(expectResult = JwtClaimsRequestRep.Complete(
-        org = "{" +
-            "\"guid\":\"${existingOrg.guid}\"," +
-            "\"name\":\"${existingOrg.name}\"," +
-            "\"isOwner\":false," +
-            "\"permissions\":\"${orgPermissions.asDarb()}\"," +
-            "\"features\":{}" +
-            "}",
-        roles = "[\"${AccountRole.SUPERUSER}\"]",
-        user = "{" +
-            "\"guid\":\"${existingUser.guid}\"," +
-            "\"firstName\":\"${existingUser.firstName}\"," +
-            "\"lastName\":\"${existingUser.lastName}\"}"
+    test(expectResult = Jwt(
+        org = JwtOrg(
+            guid = existingOrg.guid,
+            name = existingOrg.name,
+            isOwner = false,
+            permissions = orgPermissions,
+            features = emptyMap(),
+        ),
+        roles = setOf(AccountRole.SUPERUSER),
+        user = JwtUser(
+            guid = existingUser.guid,
+            firstName = existingUser.firstName,
+            lastName = existingUser.lastName,
+        ),
     )) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(jwtRequest))
     }

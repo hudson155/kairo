@@ -20,7 +20,7 @@ function customizeJwt(user, context, callback) {
       return callback(new Error(`API returned ${response.statusCode} response code.`));
     }
     Object.entries(body).forEach(([key, value]) => {
-      context.accessToken[`https://limberapp.io/${key}`] = value;
+      context.accessToken[key] = value;
     });
     return callback(null, user, context);
   });
