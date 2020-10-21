@@ -7,7 +7,7 @@ import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.common.LimberApplication
-import io.limberapp.permissions.orgPermissions.OrgPermissions
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import org.junit.jupiter.api.Test
 import java.util.*
 

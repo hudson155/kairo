@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.auth.model.org
 
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import io.limberapp.common.util.url.slugify
-import io.limberapp.permissions.orgPermissions.OrgPermissions
 import java.time.ZonedDateTime
 import java.util.*
 

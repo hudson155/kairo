@@ -12,8 +12,8 @@ import io.limberapp.backend.module.forms.model.formInstance.FormInstanceFinder
 import io.limberapp.backend.module.forms.rep.formInstance.FormInstanceRep
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
 import io.limberapp.common.finder.SortableFinder
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import java.util.*
 
 internal class GetFormInstancesByFeatureGuid @Inject constructor(

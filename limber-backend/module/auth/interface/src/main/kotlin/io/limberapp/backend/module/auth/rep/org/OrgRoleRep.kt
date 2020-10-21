@@ -1,12 +1,12 @@
 package io.limberapp.backend.module.auth.rep.org
 
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import io.limberapp.common.rep.CompleteRep
 import io.limberapp.common.rep.CreationRep
 import io.limberapp.common.rep.UpdateRep
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.Validator
 import io.limberapp.common.validation.ifPresent
-import io.limberapp.permissions.orgPermissions.OrgPermissions
 import java.time.ZonedDateTime
 import java.util.*
 

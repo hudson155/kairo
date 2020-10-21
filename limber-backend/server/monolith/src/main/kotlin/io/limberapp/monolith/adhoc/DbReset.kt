@@ -29,10 +29,10 @@ import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.service.account.UserService
 import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.module.SqlWrapper
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import io.limberapp.common.shutDown
 import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
-import io.limberapp.permissions.orgPermissions.OrgPermissions
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.util.*

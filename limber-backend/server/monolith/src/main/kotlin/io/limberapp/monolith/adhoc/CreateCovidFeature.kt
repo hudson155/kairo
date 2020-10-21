@@ -15,11 +15,11 @@ import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateServic
 import io.limberapp.backend.module.orgs.model.feature.FeatureModel
 import io.limberapp.backend.module.orgs.service.feature.FeatureService
 import io.limberapp.common.config.ConfigLoader
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.common.shutDown
 import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import java.time.ZonedDateTime
 import java.util.*
 

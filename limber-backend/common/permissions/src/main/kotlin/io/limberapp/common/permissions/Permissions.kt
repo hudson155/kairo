@@ -1,4 +1,4 @@
-package io.limberapp.permissions
+package io.limberapp.common.permissions
 
 import com.fasterxml.jackson.annotation.JsonValue
 import io.limberapp.common.util.darb.BitStringEncoder

@@ -17,6 +17,9 @@ io.limberapp
 │              common:exception-mapping module).
 ├── finder: The finder interface, related interfaces, and supporting classes
 │           (see the common:finder module).
+├── permissions: Defines permissions for the entire app, including account
+│                roles and both org-level and feature-level granular
+│                permissions (see the common:permissions module).
 ├── rep: Base classes representing HTTP request and response bodies (see the
 │        common:reps module), including errors (see the
 │        common:exception-mapping module).

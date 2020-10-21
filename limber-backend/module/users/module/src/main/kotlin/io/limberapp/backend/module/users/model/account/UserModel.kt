@@ -1,7 +1,7 @@
 package io.limberapp.backend.module.users.model.account
 
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.util.string.joinNames
-import io.limberapp.permissions.AccountRole
 import java.time.ZonedDateTime
 import java.util.*
 

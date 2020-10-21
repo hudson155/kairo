@@ -2,8 +2,8 @@ package io.limberapp.backend.authorization.authorization
 
 import io.limberapp.backend.authorization.Auth
 import io.limberapp.common.auth.jwt.Jwt
-import io.limberapp.permissions.featurePermissions.FeaturePermission
-import io.limberapp.permissions.orgPermissions.OrgPermission
+import io.limberapp.common.permissions.featurePermissions.FeaturePermission
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 class AuthFeatureMember private constructor(

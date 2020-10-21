@@ -14,11 +14,11 @@ import io.limberapp.backend.module.auth.service.tenant.TenantService
 import io.limberapp.backend.module.orgs.model.org.OrgModel
 import io.limberapp.backend.module.orgs.service.org.OrgService
 import io.limberapp.common.config.ConfigLoader
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import io.limberapp.common.shutDown
 import io.limberapp.monolith.BaseLimberApp
 import io.limberapp.monolith.config.LimberMonolithConfig
-import io.limberapp.permissions.orgPermissions.OrgPermission
-import io.limberapp.permissions.orgPermissions.OrgPermissions
 import java.time.ZonedDateTime
 import java.util.*
 

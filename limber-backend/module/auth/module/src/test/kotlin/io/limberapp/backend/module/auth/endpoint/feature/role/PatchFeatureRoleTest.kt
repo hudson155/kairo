@@ -8,7 +8,7 @@ import io.limberapp.backend.module.auth.testing.IntegrationTest
 import io.limberapp.backend.module.auth.testing.fixtures.feature.FeatureRoleRepFixtures
 import io.limberapp.backend.module.auth.testing.fixtures.org.OrgRoleRepFixtures
 import io.limberapp.common.LimberApplication
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import org.junit.jupiter.api.Test
 import java.util.*
 

@@ -7,8 +7,8 @@ import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class DeleteFeatureRole @Inject constructor(

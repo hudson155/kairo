@@ -2,7 +2,7 @@ package io.limberapp.backend.authorization.authorization
 
 import io.limberapp.backend.authorization.Auth
 import io.limberapp.common.auth.jwt.Jwt
-import io.limberapp.permissions.orgPermissions.OrgPermission
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 class AuthOrgMember private constructor(

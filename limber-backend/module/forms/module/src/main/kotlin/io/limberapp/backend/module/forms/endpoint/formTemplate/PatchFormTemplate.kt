@@ -9,8 +9,8 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateApi
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateService
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import java.util.*
 
 internal class PatchFormTemplate @Inject constructor(

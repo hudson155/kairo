@@ -15,8 +15,8 @@ import io.limberapp.backend.module.orgs.client.feature.FeatureClient
 import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.client.account.UserClient
 import io.limberapp.common.finder.SortableFinder
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import java.time.ZoneId
 import java.util.*
 

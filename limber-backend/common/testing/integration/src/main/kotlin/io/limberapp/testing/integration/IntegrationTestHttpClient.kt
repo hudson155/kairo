@@ -13,8 +13,8 @@ import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.withJwt
 import io.limberapp.common.client.LimberHttpClient
 import io.limberapp.common.client.LimberHttpClientRequestBuilder
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.restInterface.LimberEndpoint
-import io.limberapp.permissions.AccountRole
 
 class IntegrationTestHttpClient(
     private val engine: TestApplicationEngine,

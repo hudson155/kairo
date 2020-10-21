@@ -6,7 +6,7 @@ plugins {
 dependencies {
   implementation(project(":limber-backend:common:util"))
 
-  implementation(Dependencies.Jackson.databind)
+  api(Dependencies.Jackson.databind)
 }
 
 detekt {

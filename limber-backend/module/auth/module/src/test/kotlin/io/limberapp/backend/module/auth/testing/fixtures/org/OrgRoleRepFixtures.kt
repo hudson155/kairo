@@ -2,9 +2,9 @@ package io.limberapp.backend.module.auth.testing.fixtures.org
 
 import io.limberapp.backend.module.auth.rep.org.OrgRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import io.limberapp.common.util.time.inUTC
-import io.limberapp.permissions.orgPermissions.OrgPermission
-import io.limberapp.permissions.orgPermissions.OrgPermissions
 import java.time.ZonedDateTime
 
 internal object OrgRoleRepFixtures {

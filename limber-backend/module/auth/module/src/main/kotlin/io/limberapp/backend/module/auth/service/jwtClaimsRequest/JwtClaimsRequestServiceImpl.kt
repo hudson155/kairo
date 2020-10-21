@@ -17,12 +17,12 @@ import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.JwtFeature
 import io.limberapp.common.auth.jwt.JwtOrg
 import io.limberapp.common.auth.jwt.JwtUser
-import io.limberapp.permissions.AccountRole
-import io.limberapp.permissions.featurePermissions.FeaturePermissions
-import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
-import io.limberapp.permissions.orgPermissions.OrgPermission
-import io.limberapp.permissions.orgPermissions.OrgPermissions
-import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
+import io.limberapp.common.permissions.AccountRole
+import io.limberapp.common.permissions.featurePermissions.FeaturePermissions
+import io.limberapp.common.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions.Companion.union
 import java.util.*
 
 private val ORG_OWNER_ORG_ROLE =

@@ -1,6 +1,6 @@
 package io.limberapp.common.auth.jwt
 
-import io.limberapp.permissions.orgPermissions.OrgPermissions
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions
 import java.util.*
 
 data class JwtOrg(

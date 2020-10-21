@@ -1,6 +1,6 @@
-package io.limberapp.permissions.featurePermissions.feature.home
+package io.limberapp.common.permissions.featurePermissions.feature.home
 
-import io.limberapp.permissions.featurePermissions.FeaturePermission
+import io.limberapp.common.permissions.featurePermissions.FeaturePermission
 
 @Suppress("MagicNumber")
 enum class HomeFeaturePermission(

@@ -7,8 +7,8 @@ import io.limberapp.backend.authorization.authorization.AuthAccountRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.auth.api.tenant.TenantApi
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.AccountRole
 import java.util.*
 
 internal class DeleteTenant @Inject constructor(

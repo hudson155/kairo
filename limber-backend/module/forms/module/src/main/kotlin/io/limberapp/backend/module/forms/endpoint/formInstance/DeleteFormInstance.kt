@@ -9,8 +9,8 @@ import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formInstance.FormInstanceApi
 import io.limberapp.backend.module.forms.exception.formInstance.FormInstanceNotFound
 import io.limberapp.backend.module.forms.service.formInstance.FormInstanceService
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import java.util.*
 
 internal class DeleteFormInstance @Inject constructor(

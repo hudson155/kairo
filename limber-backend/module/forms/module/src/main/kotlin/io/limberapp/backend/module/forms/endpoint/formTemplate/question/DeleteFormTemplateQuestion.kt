@@ -7,8 +7,8 @@ import io.limberapp.backend.authorization.authorization.AuthFeatureMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionApi
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import java.util.*
 
 internal class DeleteFormTemplateQuestion @Inject constructor(

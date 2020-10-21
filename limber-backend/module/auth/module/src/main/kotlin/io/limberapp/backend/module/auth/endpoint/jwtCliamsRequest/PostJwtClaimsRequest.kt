@@ -9,8 +9,8 @@ import io.limberapp.backend.module.auth.api.jwtClaimsRequest.JwtClaimsRequestApi
 import io.limberapp.backend.module.auth.mapper.jwtClaimsRequest.JwtClaimsRequestMapper
 import io.limberapp.backend.module.auth.service.jwtClaimsRequest.JwtClaimsRequestService
 import io.limberapp.common.auth.jwt.Jwt
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.AccountRole
 
 internal class PostJwtClaimsRequest @Inject constructor(
     application: Application,

@@ -12,9 +12,9 @@ import io.limberapp.backend.module.users.api.account.UserApi
 import io.limberapp.backend.module.users.mapper.account.UserMapper
 import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.service.account.UserService
+import io.limberapp.common.permissions.AccountRole
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.AccountRole
-import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class PatchUser @Inject constructor(

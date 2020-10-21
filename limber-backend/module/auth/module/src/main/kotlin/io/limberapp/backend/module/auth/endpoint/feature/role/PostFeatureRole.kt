@@ -9,8 +9,8 @@ import io.limberapp.backend.module.auth.api.feature.FeatureRoleApi
 import io.limberapp.backend.module.auth.mapper.feature.FeatureRoleMapper
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.service.feature.FeatureRoleService
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class PostFeatureRole @Inject constructor(

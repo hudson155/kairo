@@ -11,8 +11,8 @@ import io.limberapp.backend.module.auth.mapper.tenant.TenantMapper
 import io.limberapp.backend.module.auth.rep.tenant.TenantRep
 import io.limberapp.backend.module.auth.service.tenant.TenantDomainService
 import io.limberapp.backend.module.auth.service.tenant.TenantService
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.AccountRole
 
 internal class PostTenant @Inject constructor(
     application: Application,

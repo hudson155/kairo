@@ -2,9 +2,9 @@ package io.limberapp.backend.module.auth.testing.fixtures.feature
 
 import io.limberapp.backend.module.auth.rep.feature.FeatureRoleRep
 import io.limberapp.backend.module.auth.testing.IntegrationTest
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import io.limberapp.common.util.time.inUTC
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
 import java.time.ZonedDateTime
 import java.util.*
 

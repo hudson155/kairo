@@ -3,8 +3,8 @@ package io.limberapp.backend.module.users.mapper.account
 import com.google.inject.Inject
 import io.limberapp.backend.module.users.model.account.UserModel
 import io.limberapp.backend.module.users.rep.account.UserRep
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.util.uuid.UuidGenerator
-import io.limberapp.permissions.AccountRole
 import java.time.Clock
 import java.time.ZonedDateTime
 

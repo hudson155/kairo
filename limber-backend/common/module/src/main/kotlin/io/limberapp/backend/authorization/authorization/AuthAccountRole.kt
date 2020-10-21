@@ -2,7 +2,7 @@ package io.limberapp.backend.authorization.authorization
 
 import io.limberapp.backend.authorization.Auth
 import io.limberapp.common.auth.jwt.Jwt
-import io.limberapp.permissions.AccountRole
+import io.limberapp.common.permissions.AccountRole
 
 class AuthAccountRole(private val role: AccountRole) : Auth() {
   override fun authorizeInternal(jwt: Jwt?): Boolean {

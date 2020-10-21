@@ -25,10 +25,10 @@ import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.JwtFeature
 import io.limberapp.common.auth.jwt.JwtOrg
 import io.limberapp.common.auth.jwt.JwtUser
+import io.limberapp.common.permissions.AccountRole
+import io.limberapp.common.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
+import io.limberapp.common.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.limberapp.common.util.time.inUTC
-import io.limberapp.permissions.AccountRole
-import io.limberapp.permissions.featurePermissions.FeaturePermissions.Companion.unionIfSameType
-import io.limberapp.permissions.orgPermissions.OrgPermissions.Companion.union
 import io.mockk.coEvery
 import org.junit.jupiter.api.Test
 import java.time.ZonedDateTime

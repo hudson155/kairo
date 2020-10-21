@@ -9,8 +9,8 @@ import io.limberapp.backend.module.auth.api.org.OrgRoleMembershipApi
 import io.limberapp.backend.module.auth.mapper.org.OrgRoleMembershipMapper
 import io.limberapp.backend.module.auth.rep.org.OrgRoleMembershipRep
 import io.limberapp.backend.module.auth.service.org.OrgRoleMembershipService
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class GetOrgRoleMembershipsByOrgRoleGuid @Inject constructor(

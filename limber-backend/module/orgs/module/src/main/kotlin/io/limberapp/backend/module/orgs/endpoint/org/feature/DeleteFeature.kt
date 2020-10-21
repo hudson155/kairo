@@ -7,8 +7,8 @@ import io.limberapp.backend.authorization.authorization.AuthOrgMember
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.feature.FeatureApi
 import io.limberapp.backend.module.orgs.service.feature.FeatureService
+import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.orgPermissions.OrgPermission
 import java.util.*
 
 internal class DeleteFeature @Inject constructor(

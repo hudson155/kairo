@@ -3,8 +3,8 @@ package io.limberapp.common.auth.jwt
 import com.auth0.jwt.JWTCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.convertValue
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.serialization.limberObjectMapper
-import io.limberapp.permissions.AccountRole
 
 data class Jwt(
     @JsonProperty(JwtClaims.org)

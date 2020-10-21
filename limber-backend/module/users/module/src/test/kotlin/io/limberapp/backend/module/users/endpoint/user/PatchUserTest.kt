@@ -6,8 +6,8 @@ import io.limberapp.backend.module.users.rep.account.UserRep
 import io.limberapp.backend.module.users.testing.IntegrationTest
 import io.limberapp.backend.module.users.testing.fixtures.account.UserRepFixtures
 import io.limberapp.common.LimberApplication
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.util.string.joinNames
-import io.limberapp.permissions.AccountRole
 import org.junit.jupiter.api.Test
 import java.util.*
 

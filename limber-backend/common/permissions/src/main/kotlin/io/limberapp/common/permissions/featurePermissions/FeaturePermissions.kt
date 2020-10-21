@@ -1,18 +1,18 @@
-package io.limberapp.permissions.featurePermissions
+package io.limberapp.common.permissions.featurePermissions
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import io.limberapp.common.permissions.Permissions
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FORMS_FEATURE_PREFIX
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermissions.Companion.union
+import io.limberapp.common.permissions.featurePermissions.feature.home.HOME_FEATURE_PREFIX
+import io.limberapp.common.permissions.featurePermissions.feature.home.HomeFeaturePermissions
+import io.limberapp.common.permissions.featurePermissions.feature.home.HomeFeaturePermissions.Companion.union
 import io.limberapp.common.util.darb.BitStringEncoder
 import io.limberapp.common.util.darb.DarbEncoder
-import io.limberapp.permissions.Permissions
-import io.limberapp.permissions.featurePermissions.feature.forms.FORMS_FEATURE_PREFIX
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermissions.Companion.union
-import io.limberapp.permissions.featurePermissions.feature.home.HOME_FEATURE_PREFIX
-import io.limberapp.permissions.featurePermissions.feature.home.HomeFeaturePermissions
-import io.limberapp.permissions.featurePermissions.feature.home.HomeFeaturePermissions.Companion.union
 
 /**
  * Permissions that only apply to a specific organization feature.

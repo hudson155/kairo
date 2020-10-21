@@ -1,6 +1,6 @@
-package io.limberapp.permissions.orgPermissions
+package io.limberapp.common.permissions.orgPermissions
 
-import io.limberapp.permissions.Permission
+import io.limberapp.common.permissions.Permission
 
 @Suppress("MagicNumber")
 enum class OrgPermission(

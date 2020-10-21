@@ -1,6 +1,6 @@
 package io.limberapp.backend.module.auth.model.feature
 
-import io.limberapp.permissions.featurePermissions.FeaturePermissions
+import io.limberapp.common.permissions.featurePermissions.FeaturePermissions
 import java.time.ZonedDateTime
 import java.util.*
 

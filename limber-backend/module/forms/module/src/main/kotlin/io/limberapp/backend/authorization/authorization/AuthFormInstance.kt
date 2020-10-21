@@ -3,7 +3,7 @@ package io.limberapp.backend.authorization.authorization
 import io.limberapp.backend.authorization.Auth
 import io.limberapp.backend.module.forms.model.formInstance.FormInstanceModel
 import io.limberapp.common.auth.jwt.Jwt
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 
 class AuthFormInstance(
     private val formInstance: FormInstanceModel,

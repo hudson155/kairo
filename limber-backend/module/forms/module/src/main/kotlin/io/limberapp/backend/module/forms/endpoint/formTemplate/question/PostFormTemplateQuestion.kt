@@ -9,8 +9,8 @@ import io.limberapp.backend.module.forms.api.formTemplate.FormTemplateQuestionAp
 import io.limberapp.backend.module.forms.mapper.formTemplate.FormTemplateQuestionMapper
 import io.limberapp.backend.module.forms.rep.formTemplate.FormTemplateQuestionRep
 import io.limberapp.backend.module.forms.service.formTemplate.FormTemplateQuestionService
+import io.limberapp.common.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.featurePermissions.feature.forms.FormsFeaturePermission
 import java.util.*
 
 internal class PostFormTemplateQuestion @Inject constructor(

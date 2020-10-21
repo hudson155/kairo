@@ -7,8 +7,8 @@ import io.limberapp.backend.authorization.authorization.AuthAccountRole
 import io.limberapp.backend.endpoint.LimberApiEndpoint
 import io.limberapp.backend.module.orgs.api.org.OrgApi
 import io.limberapp.backend.module.orgs.service.org.OrgService
+import io.limberapp.common.permissions.AccountRole
 import io.limberapp.common.restInterface.template
-import io.limberapp.permissions.AccountRole
 import java.util.*
 
 internal class DeleteOrg @Inject constructor(

@@ -1,4 +1,4 @@
-package io.limberapp.permissions
+package io.limberapp.common.permissions
 
 interface Permission {
   val bit: Int
