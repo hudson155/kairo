@@ -19,6 +19,8 @@ io.limberapp
     │       (see the common:exception-mapping module).
     ├── restInterface: Shared endpoint specification code (see the common:rest-interface module).
     ├── serialization: Shared JSON serialization code (see the common:serialization module).
+    ├── typeConversion: Classes supporting conversion between various classes and strings, for database and
+    │       serialization (see the common:type-conversion module).
     ├── util
     │   ├── darb: Code relating to the Dense(ish) Albeit Readable Binary format (see the common:util module, especially
     │   │       the DarbEncoder class).

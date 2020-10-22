@@ -1,4 +1,4 @@
-package io.limberapp.typeConversion.exception
+package io.limberapp.common.typeConversion.exception
 
 import kotlin.reflect.KClass
 

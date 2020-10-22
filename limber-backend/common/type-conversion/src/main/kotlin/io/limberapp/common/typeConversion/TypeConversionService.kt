@@ -1,4 +1,4 @@
-package io.limberapp.typeConversion
+package io.limberapp.common.typeConversion
 
 import kotlin.reflect.KClass
 

@@ -1,6 +1,6 @@
-package io.limberapp.typeConversion.conversionService
+package io.limberapp.common.typeConversion.conversionService
 
-import io.limberapp.typeConversion.TypeConversionService
+import io.limberapp.common.typeConversion.TypeConversionService
 
 object RegexConversionService : TypeConversionService<Regex> {
   override val kClass = Regex::class

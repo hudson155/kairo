@@ -1,8 +1,8 @@
 package io.limberapp.common.util
 
 import io.ktor.util.ConversionService
-import io.limberapp.typeConversion.TypeConversionService
-import io.limberapp.typeConversion.exception.TypeConversionException
+import io.limberapp.common.typeConversion.TypeConversionService
+import io.limberapp.common.typeConversion.exception.TypeConversionException
 import java.lang.reflect.Type
 
 fun <T : Any> conversionService(typeConversionService: TypeConversionService<T>) = object : ConversionService {

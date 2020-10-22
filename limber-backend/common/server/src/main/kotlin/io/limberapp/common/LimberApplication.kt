@@ -36,11 +36,11 @@ import io.limberapp.common.ktorAuth.limberAuth
 import io.limberapp.common.module.ApplicationModule
 import io.limberapp.common.module.GuiceModule
 import io.limberapp.common.serialization.limberObjectMapper
+import io.limberapp.common.typeConversion.conversionService.TimeZoneConversionService
+import io.limberapp.common.typeConversion.conversionService.UuidConversionService
 import io.limberapp.common.util.conversionService
 import io.limberapp.module.main.MainModule
 import io.limberapp.monolith.authentication.jwt.JwtAuthVerifier
-import io.limberapp.typeConversion.conversionService.TimeZoneConversionService
-import io.limberapp.typeConversion.conversionService.UuidConversionService
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 import java.time.ZoneId
