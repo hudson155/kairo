@@ -1,30 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-plugins {
-  kotlin("jvm")
-  id(Plugins.detekt)
-}
-
-dependencies {
-  implementation(kotlin("reflect"))
-
-  implementation(Dependencies.Logging.slf4j)
-
-  testImplementation(project(":limber-backend:common:testing:unit"))
-}
-
-tasks.withType<KotlinCompile<*>>().configureEach {
+tasks.withType<KotlinCompile>().configureEach {
   kotlinOptions.freeCompilerArgs += "-Xallow-kotlin-package"
-}
-
-tasks.test {
-  useJUnitPlatform()
-  testLogging {
-    events("passed", "skipped", "failed")
-  }
-}
-
-detekt {
-  config = files("$rootDir/.detekt/config.yaml")
-  input = files("src/main/kotlin", "src/test/kotlin")
 }

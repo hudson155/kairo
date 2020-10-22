@@ -1,9 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 plugins {
-  kotlin("js")
+  kotlin("js") version Versions.kotlin
   kotlin("plugin.serialization") version Versions.kotlin
-  id(Plugins.detekt)
+  id(Plugins.detekt) version Versions.detekt
+}
+
+repositories {
+  maven(url = "https://kotlin.bintray.com/kotlin-js-wrappers/")
 }
 
 group = "io.limberapp.web"

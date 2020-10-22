@@ -1,8 +1,3 @@
-plugins {
-  kotlin("jvm")
-  id(Plugins.detekt)
-}
-
 dependencies {
   api(project(":limber-backend:common:auth"))
   api(project(":limber-backend:common:config"))
@@ -11,14 +6,7 @@ dependencies {
   implementation(project(":limber-backend:common:reps"))
   api(project(":limber-backend:common:rest-interface"))
   api(project(":limber-backend:common:serialization"))
-  api(project(":limber-backend:common:util"))
-
   api(Dependencies.Google.guice)
   api(Dependencies.Ktor.auth)
   api(Dependencies.Ktor.serverCore)
-}
-
-detekt {
-  config = files("$rootDir/.detekt/config.yaml")
-  input = files("src/main/kotlin", "src/test/kotlin")
 }

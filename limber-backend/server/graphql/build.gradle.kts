@@ -1,9 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-  kotlin("jvm")
   application
-  id(Plugins.detekt)
   id(Plugins.shadow).version(Versions.shadow)
 }
 
@@ -15,26 +13,10 @@ application {
 
 dependencies {
   implementation(project(":limber-backend:common:server"))
-
   implementation(project(":limber-backend:module:graphql:module"))
   implementation(project(":limber-backend:module:health-check:module"))
-
   implementation(Dependencies.Ktor.serverCio)
   implementation(Dependencies.Logging.logbackClassic)
-
-  testImplementation(project(":limber-backend:common:testing:integration"))
-}
-
-tasks.test {
-  useJUnitPlatform()
-  testLogging {
-    events("passed", "skipped", "failed")
-  }
-}
-
-detekt {
-  config = files("$rootDir/.detekt/config.yaml")
-  input = files("src/main/kotlin", "src/test/kotlin")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
