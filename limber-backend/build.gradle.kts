@@ -1,13 +1,13 @@
 import io.gitlab.arturbosch.detekt.DetektPlugin
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version Versions.kotlin
-  id(Plugins.detekt) version Versions.detekt
+  kotlin("jvm")
+  id(Plugins.detekt)
 }
 
-subprojects {
+allprojects {
   apply<KotlinPlatformJvmPlugin>()
   apply<DetektPlugin>()
 
@@ -22,7 +22,7 @@ subprojects {
     implementation(Dependencies.Logging.slf4j)
   }
 
-  tasks.withType<KotlinCompile>().configureEach {
+  tasks.withType<KotlinJvmCompile>().configureEach {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalStdlibApi"

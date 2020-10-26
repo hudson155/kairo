@@ -296,6 +296,7 @@ performance:
   active: true
   ArrayPrimitive:
     active: true
+    excludes: "**/src/jsMain/**/*.kt"
   ForEachOnRange:
     active: true
   SpreadOperator:

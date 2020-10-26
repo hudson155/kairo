@@ -1,4 +1,6 @@
 plugins {
+  kotlin("multiplatform") version Versions.kotlin apply false
+  id(Plugins.detekt) version Versions.detekt apply false
   idea
 }
 

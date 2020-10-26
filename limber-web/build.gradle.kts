@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 plugins {
-  kotlin("js") version Versions.kotlin
+  kotlin("js")
   kotlin("plugin.serialization") version Versions.kotlin
-  id(Plugins.detekt) version Versions.detekt
+  id(Plugins.detekt)
 }
 
 repositories {
