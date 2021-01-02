@@ -6,32 +6,35 @@ Limber is a highly dynamic application built on Ktor and React.
 
 ## Setup
 
-Prerequisites:
-Java, Postgres, and IntelliJ
-(all can be installed through Homebrew).
+### Prerequisites
+
+You should already have Java, Node, Postgres, and IntelliJ installed.
 
 1. Clone the repo and `cd` into it.
-1. `adhoc/dbReset.sh localhost/limber`.
-1. From IntelliJ, run the `[backend] Run (dev)` config.
-1. `echo "REACT_APP_AUTH_MECHANISM=LOCAL_STORAGE_JWT" > limber-web/.env.local`
-1. From IntelliJ, run the `[web] Run` config.
-1. In the browser console, run the following
-    ```javascript
-   localStorage.setItem('jwt', {jwt})
+1. Initialize the database using
     ```
+    LIMBER_CONFIG=dev LIMBER_TASK=dbReset ./gradlew limber-backend:server:monolith:run
+    ```
+1. Initialize the test database using the same command, but with `test` instead of `dev`.
+1. Open the project in IntelliJ and use the run configurations to run the monolith, GraphQL server, React app, or
+    whatever else.
 
 ## Modules
 
 * [`limber-backend-common`](/limber-backend/common):
     Limber's backend framework, built on Ktor.
 * [`limber-monolith-server`](/limber-backend/server/monolith):
-    Limber's backend implementation.
+    Limber's backend implementation, written in Kotlin.
     Currently a monolith, but broken into modules to allow simplified refactoring
     when moving to microservices becomes necessary.
+* [`limber-graphql-server`](/limber-backend/server/graphql):
+    Limber's GraphQL backend, written in Kotlin.
 * [`limber-web`](/limber-web):
-    Limber's web frontend.
+    Limber's web frontend, written in TypeScript and React.
 
 ## Conventions
+
+### Kotlin
 
 1. Refer to exceptions as exceptions, not as errors.
     Do not create classes called SomethingError. Favor Something Exception instead.
@@ -73,8 +76,3 @@ Java, Postgres, and IntelliJ
    val something = makeSomething() ?: return null
    return transform(something)
    ```
-## React Class Styling
-
-All react classes should follow a predefined ordering of contents. See the 
-[`Kotlin React`](/.idea/fileTemplates/Kotlin%20React.kt) template for 
-an example.
