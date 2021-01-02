@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:11
+        image: postgres:12
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -20,29 +20,24 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - uses: actions/checkout@v2.3.1
-      - uses: actions/setup-java@v1.4.0
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/setup-java@v1.4.3
         with:
-          java-version: 11
-      - uses: actions/cache@v2.1.0
+          java-version: 15
+      - uses: actions/cache@v2.1.3
         with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper-v2-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-      - uses: actions/cache@v2.1.0
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-dependencies-v3-${{ hashFiles('**/*.gradle.kts') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-dependencies-v2-
-      - run: ./gradlew --info --stacktrace downloadDependencies
-      - run: ./gradlew --info --stacktrace classes
-      - run: ./gradlew --info --stacktrace testClasses
+            ${{ runner.os }}-gradle-
       - run: ./gradlew --info --stacktrace test
         env:
           LIMBER_TEST_POSTGRES_USERNAME: postgres
           LIMBER_TEST_POSTGRES_PASSWORD: postgres
       - run: ./gradlew --info --stacktrace detekt
-      - run: ./gradlew --info --stacktrace build
+      - run: ./gradlew --info --stacktrace build -x test -x detekt
         env:
           ENV: production
       - run: docker build -t registry.digitalocean.com/limber/limber-graphql-server:$(git rev-parse HEAD) limber-backend/server/graphql
@@ -52,11 +47,11 @@ jobs:
     name: Build web
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
-      - uses: actions/setup-node@v1.4.3
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/setup-node@v1.4.4
         with:
-          node-version: 12
-      - uses: actions/cache@v2.1.0
+          node-version: 14
+      - uses: actions/cache@v2.1.3
         with:
           path: ~/limber-react/node_modules
           key: ${{ runner.os }}-node-modules-v2-${{ hashFiles('**/yarn.lock') }}
