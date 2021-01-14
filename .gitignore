@@ -1,0 +1,10 @@
+*.bak
+*.lock
+*.log
+*.swp
+
+.DS_Store
+
+.gradle/
+build/
+out/
