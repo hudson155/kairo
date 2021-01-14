@@ -16,7 +16,13 @@ allprojects {
     jvm()
 
     sourceSets {
-      val commonMain by getting
+      val commonMain by getting {
+        dependencies {
+          if (path != ":limber-multiplatform:logging") {
+            implementation(project(":limber-multiplatform:logging"))
+          }
+        }
+      }
       val commonTest by getting {
         dependencies {
           implementation(kotlin("test-annotations-common"))
