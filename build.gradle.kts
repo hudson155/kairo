@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.DetektPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 
@@ -7,10 +8,13 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
  */
 plugins {
   kotlin("multiplatform") version Versions.kotlin apply false
+  id(Plugins.detekt) version Versions.detekt
   idea // This plugin allows the Gradle project to work seamlessly with IntelliJ IDEA.
 }
 
 allprojects {
+  apply<DetektPlugin>()
+
   repositories {
     jcenter()
   }
@@ -34,5 +38,10 @@ allprojects {
 
   tasks.withType<Test> {
     useJUnitPlatform()
+  }
+
+  detekt {
+    config = files("$rootDir/.detekt/config.yaml")
+    input = files(file("src").listFiles()?.map { "src/${it.name}/kotlin" })
   }
 }

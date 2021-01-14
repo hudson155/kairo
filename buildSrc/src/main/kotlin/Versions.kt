@@ -1,4 +1,7 @@
 object Versions {
+  // https://github.com/detekt/detekt/releases
+  const val detekt = "1.15.0"
+
   // https://github.com/junit-team/junit5/releases
   const val junit = "5.7.0"
 
