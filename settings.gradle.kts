@@ -7,3 +7,4 @@ include(":limber-backend:common:validation")
 
 include(":limber-multiplatform:darb")
 include(":limber-multiplatform:logging")
+include(":limber-multiplatform:permissions")

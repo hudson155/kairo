@@ -1,0 +1,53 @@
+package io.limberapp.common.permissions.limberPermissions
+
+import io.limberapp.common.permissions.featurePermissions.TestFeaturePermissions
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+
+internal class LimberPermissionsTest {
+  @Test
+  fun none() {
+    with(LimberPermissions.none()) {
+      assertEquals("2.0", asDarb())
+      assertEquals("00", asBitString())
+      assertFalse(LimberPermission.IDENTITY_PROVIDER in this)
+      assertFalse(LimberPermission.ORG_ACCESS_OVERRIDE in this)
+    }
+  }
+
+  @Test
+  fun fromDarb() {
+    with(LimberPermissions.fromDarb("2.C")) {
+      assertEquals("2.C", asDarb())
+      assertEquals("11", asBitString())
+      assertTrue(LimberPermission.IDENTITY_PROVIDER in this)
+      assertTrue(LimberPermission.ORG_ACCESS_OVERRIDE in this)
+    }
+    with(LimberPermissions.fromDarb("1.C")) {
+      assertEquals("2.8", asDarb())
+      assertEquals("10", asBitString())
+      assertTrue(LimberPermission.IDENTITY_PROVIDER in this)
+      assertFalse(LimberPermission.ORG_ACCESS_OVERRIDE in this)
+    }
+    assertFails { TestFeaturePermissions.fromDarb("2.G") }
+  }
+
+  @Test
+  fun fromBitString() {
+    with(LimberPermissions.fromBitString("10")) {
+      assertEquals("2.8", asDarb())
+      assertEquals("10", asBitString())
+      assertTrue(LimberPermission.IDENTITY_PROVIDER in this)
+      assertFalse(LimberPermission.ORG_ACCESS_OVERRIDE in this)
+    }
+    with(LimberPermissions.fromBitString("1")) {
+      assertEquals("2.8", asDarb())
+      assertEquals("10", asBitString())
+      assertTrue(LimberPermission.IDENTITY_PROVIDER in this)
+      assertFalse(LimberPermission.ORG_ACCESS_OVERRIDE in this)
+    }
+  }
+}
