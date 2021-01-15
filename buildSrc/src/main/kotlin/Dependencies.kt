@@ -1,4 +1,8 @@
 object Dependencies {
+  object Google {
+    const val guice = "com.google.inject:guice:${Versions.guice}"
+  }
+
   object JUnit {
     const val engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
   }
