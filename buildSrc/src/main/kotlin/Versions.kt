@@ -11,6 +11,9 @@ object Versions {
   // https://github.com/JetBrains/kotlin/releases
   const val kotlin = "1.4.21"
 
+  // https://github.com/ktorio/ktor/releases
+  const val ktor = "1.5.0"
+
   // https://github.com/qos-ch/slf4j/releases
   const val slf4j = "1.7.30"
 }

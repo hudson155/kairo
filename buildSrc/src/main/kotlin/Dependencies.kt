@@ -10,6 +10,10 @@ object Dependencies {
     const val moduleKotlin = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}"
   }
 
+  object Ktor {
+    const val httpJvm = "io.ktor:ktor-http-jvm:${Versions.ktor}"
+  }
+
   object Logging {
     const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
   }
