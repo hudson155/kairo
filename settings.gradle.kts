@@ -2,6 +2,7 @@ rootProject.name = "limber"
 
 include(":limber-backend:common:config")
 include(":limber-backend:common:exceptions")
+include(":limber-backend:common:jwt")
 include(":limber-backend:common:reps")
 include(":limber-backend:common:rest-interface")
 include(":limber-backend:common:serialization")
