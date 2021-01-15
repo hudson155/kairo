@@ -12,7 +12,7 @@ allprojects {
     if (path != ":limber-backend:common:util") {
       implementation(project(":limber-backend:common:util"))
     }
-    implementation(project(":limber-multiplatform:logging"))
+    implementation(Dependencies.Logging.slf4j)
     testImplementation(kotlin("test-junit5"))
     testRuntimeOnly(Dependencies.JUnit.engine)
   }

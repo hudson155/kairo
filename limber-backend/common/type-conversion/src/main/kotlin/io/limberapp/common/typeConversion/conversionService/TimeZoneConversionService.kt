@@ -1,11 +1,11 @@
 package io.limberapp.common.typeConversion.conversionService
 
-import io.limberapp.common.logging.LoggerFactory
 import io.limberapp.common.typeConversion.TypeConversionService
+import org.slf4j.LoggerFactory
 import java.time.ZoneId
 
 object TimeZoneConversionService : TypeConversionService<ZoneId> {
-  private val logger = LoggerFactory.getLogger(TimeZoneConversionService::class)
+  private val logger = LoggerFactory.getLogger(TimeZoneConversionService::class.java)
 
   override val kClass = ZoneId::class
 

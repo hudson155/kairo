@@ -3,7 +3,6 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>org.junit</name>
-      <name>org.slf4j.LoggerFactory</name>
     </excluded-names>
   </component>
 </project>
