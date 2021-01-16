@@ -1,3 +1,4 @@
+@Suppress("Reformat") // One line per dependency is preferred here.
 object Dependencies {
   object Google {
     const val guice: String = "com.google.inject:guice:${Versions.guice}"
