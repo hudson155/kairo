@@ -12,7 +12,7 @@ Modules come in 2 flavors:
     is one that enables interaction with a certain type of database.
 - **Feature modules** are modules that extend the `Feature` class.
     The feature class is not provided by this library.
-    Rather, it's provided by the feature library.
+    Rather, it's provided by the [feature library](/limber-backend/common/feature).
     Feature modules define functionality and API endpoints
     for a particular feature of the application.
     Feature modules often rely on one or more pure modules.
