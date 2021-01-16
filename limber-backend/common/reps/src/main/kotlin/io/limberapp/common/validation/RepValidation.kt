@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty1
  */
 class RepValidation(validation: Builder.() -> Unit) {
   class Builder internal constructor() {
-    private val validations: MutableList<ValueValidation<*>> = mutableListOf<ValueValidation<*>>()
+    private val validations: MutableList<ValueValidation<*>> = mutableListOf()
 
     fun <R : ValidatedRep, T : Any?> R.validate(
         property: KProperty1<R, T>,

@@ -13,6 +13,7 @@ fun uuidFromString(string: String): UUID {
   if (string.length == UUID_LENGTH_WITH_DASHES) return UUID.fromString(string)
   val withNoDashes = string.replace("-", "")
   check(withNoDashes.length == UUID_LENGTH_WITHOUT_DASHES)
+  @Suppress("ReplaceSubstringWithTake")
   val withDashes = listOf(
       withNoDashes.substring(0, 8),
       withNoDashes.substring(8, 12),

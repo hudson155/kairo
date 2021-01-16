@@ -9,6 +9,7 @@ internal class RegexConversionServiceTest {
     assertEquals(Regex("").toString(), RegexConversionService.parseString("").toString())
     assertEquals(Regex("abc").toString(), RegexConversionService.parseString("abc").toString())
     assertEquals(Regex("^abc$").toString(), RegexConversionService.parseString("^abc$").toString())
+    @Suppress("RegExpUnexpectedAnchor")
     assertEquals(Regex("\$a^").toString(), RegexConversionService.parseString("\$a^").toString())
   }
 
@@ -17,6 +18,7 @@ internal class RegexConversionServiceTest {
     assertEquals("", RegexConversionService.writeString(Regex("")))
     assertEquals("abc", RegexConversionService.writeString(Regex("abc")))
     assertEquals("^abc$", RegexConversionService.writeString(Regex("^abc$")))
+    @Suppress("RegExpUnexpectedAnchor")
     assertEquals("\$a^", RegexConversionService.writeString(Regex("\$a^")))
   }
 }

@@ -9,29 +9,54 @@ import kotlin.test.assertTrue
 internal class RepValidationTest {
   @Test
   fun `happy path`(): Unit = assertValid(
-      rep = TestRep("abc", -3, TestSubRep(true), listOf(TestSubRep(true), TestSubRep(true))),
+      rep = TestRep(
+          str = "abc",
+          int = -3,
+          sub = TestSubRep(bool = true),
+          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+      ),
   )
 
   @Test
   fun `happy path - missing ifPresent`(): Unit = assertValid(
-      rep = TestRep("abc", null, TestSubRep(true), listOf(TestSubRep(true), TestSubRep(true))),
+      rep = TestRep(
+          str = "abc",
+          int = null,
+          sub = TestSubRep(bool = true),
+          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+      ),
   )
 
   @Test
   fun `multiple errors`(): Unit = assertInvalid(
-      rep = TestRep("ab", 3, TestSubRep(true), listOf(TestSubRep(true), TestSubRep(true))),
+      rep = TestRep(
+          str = "ab",
+          int = 3,
+          sub = TestSubRep(bool = true),
+          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+      ),
       invalidPropertyNames = listOf("str", "int"),
   )
 
   @Test
   fun `error in sub-rep (single)`(): Unit = assertInvalid(
-      rep = TestRep("abc", -3, TestSubRep(false), listOf(TestSubRep(true), TestSubRep(true))),
+      rep = TestRep(
+          str = "abc",
+          int = -3,
+          sub = TestSubRep(bool = false),
+          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+      ),
       invalidPropertyNames = listOf("sub.bool"),
   )
 
   @Test
   fun `error in sub-rep (list)`(): Unit = assertInvalid(
-      rep = TestRep("abc", -3, TestSubRep(true), listOf(TestSubRep(true), TestSubRep(false))),
+      rep = TestRep(
+          str = "abc",
+          int = -3,
+          sub = TestSubRep(bool = true),
+          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = false)),
+      ),
       invalidPropertyNames = listOf("subs[1].bool"),
   )
 

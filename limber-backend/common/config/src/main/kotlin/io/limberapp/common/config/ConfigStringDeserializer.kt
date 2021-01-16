@@ -24,8 +24,7 @@ class ConfigStringDeserializer : StdDeserializer<String>(String::class.java) {
 
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
     logger.info("Deserializing config string...")
-    val configString = p.readValueAs(ConfigString::class.java)
-    return when (configString) {
+    return when (val configString = p.readValueAs(ConfigString::class.java)) {
       is ConfigString.Plaintext -> run {
         logger.info("Config string value is plaintext: ${configString.value}.")
         return@run configString.value
