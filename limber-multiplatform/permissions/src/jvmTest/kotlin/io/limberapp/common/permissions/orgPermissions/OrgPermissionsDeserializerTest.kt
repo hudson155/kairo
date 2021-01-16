@@ -1,5 +1,6 @@
 package io.limberapp.common.permissions.orgPermissions
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -8,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
 internal class OrgPermissionsDeserializerTest {
-  private val objectMapper = jacksonObjectMapper()
+  private val objectMapper: ObjectMapper = jacksonObjectMapper()
       .registerModule(SimpleModule()
           .addDeserializer(OrgPermissions::class.java, OrgPermissionsDeserializer()))
 

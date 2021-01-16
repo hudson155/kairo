@@ -1,15 +1,18 @@
 package io.limberapp.common.typeConversion.conversionService
 
 import io.limberapp.common.typeConversion.TypeConversionService
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
+import kotlin.reflect.KClass
 
 object TimeZoneConversionService : TypeConversionService<ZoneId> {
-  private val logger = LoggerFactory.getLogger(TimeZoneConversionService::class.java)
+  private val logger: Logger = LoggerFactory.getLogger(TimeZoneConversionService::class.java)
 
-  override val kClass = ZoneId::class
+  override val kClass: KClass<ZoneId> = ZoneId::class
 
-  override fun isValid(value: String) = true // It's not practical to validate time zones statically.
+  // It's not practical to validate time zones statically.
+  override fun isValid(value: String): Boolean = true
 
   override fun parseString(value: String): ZoneId {
     val zoneId = ZoneId.of(value)

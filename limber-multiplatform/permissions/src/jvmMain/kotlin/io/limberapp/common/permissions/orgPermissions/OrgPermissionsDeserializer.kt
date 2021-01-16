@@ -6,6 +6,6 @@ import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
 
 class OrgPermissionsDeserializer :
     StdScalarDeserializer<OrgPermissions>(OrgPermissions::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext) =
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): OrgPermissions =
       OrgPermissions.fromDarb(p.text)
 }

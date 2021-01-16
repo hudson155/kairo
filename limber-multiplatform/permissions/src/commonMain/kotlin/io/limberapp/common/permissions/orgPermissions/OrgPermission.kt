@@ -11,8 +11,8 @@ enum class OrgPermission(
   MANAGE_ORG_ROLES(
       index = 0,
       title = "Manage roles",
-      description = "Manage the organization's roles and permissions, as well as manage permissions" +
-          " for features.",
+      description = "Manage the organization's roles and permissions, as well as manage" +
+          " permissions for features.",
   ),
   MANAGE_ORG_ROLE_MEMBERSHIPS(
       index = 1,

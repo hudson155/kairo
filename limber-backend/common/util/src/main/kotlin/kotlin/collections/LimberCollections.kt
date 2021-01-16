@@ -29,4 +29,4 @@ fun <T> Iterable<T>.isNotEmpty(): Boolean {
   }
 }
 
-fun Any?.ifNull(function: () -> Nothing) = this ?: function()
+fun Any?.ifNull(function: () -> Nothing): Any = this ?: function()

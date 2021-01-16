@@ -6,6 +6,6 @@ import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer
 
 class LimberPermissionsDeserializer :
     StdScalarDeserializer<LimberPermissions>(LimberPermissions::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext) =
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LimberPermissions =
       LimberPermissions.fromDarb(p.text)
 }

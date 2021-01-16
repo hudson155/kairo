@@ -8,4 +8,5 @@ class UnprocessableEntityException internal constructor(
     cause: Exception? = null,
 ) : LimberException(message, null, cause)
 
-fun EntityNotFound.unprocessable() = UnprocessableEntityException(message, cause)
+fun EntityNotFound.unprocessable(): UnprocessableEntityException =
+    UnprocessableEntityException(message, cause)

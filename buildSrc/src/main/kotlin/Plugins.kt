@@ -1,3 +1,3 @@
 object Plugins {
-  const val detekt = "io.gitlab.arturbosch.detekt"
+  const val detekt: String = "io.gitlab.arturbosch.detekt"
 }

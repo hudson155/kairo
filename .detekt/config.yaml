@@ -481,8 +481,7 @@ style:
   OptionalAbstractKeyword:
     active: true
   OptionalUnit:
-    active: true
-    excludes: '**/src/main/**/*Store.kt'
+    active: false
   OptionalWhenBraces:
     active: false
   PreferToOverPairSyntax:

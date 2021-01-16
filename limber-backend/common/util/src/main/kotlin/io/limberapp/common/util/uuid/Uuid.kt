@@ -2,8 +2,8 @@ package io.limberapp.common.util.uuid
 
 import java.util.UUID
 
-private const val UUID_LENGTH_WITH_DASHES = 36
-private const val UUID_LENGTH_WITHOUT_DASHES = 32
+private const val UUID_LENGTH_WITH_DASHES: Int = 36
+private const val UUID_LENGTH_WITHOUT_DASHES: Int = 32
 
 /**
  * This function is preferred it [UUID.fromString] because it correctly handles UUIDs without

@@ -12,7 +12,7 @@ fun enc(value: Any): String = URLEncoder.encode(value.toString(), "UTF-8")
  * Makes a string appropriate for URL usage. There are no checks on string length. An empty string
  * may be returned.
  */
-fun slugify(string: String) = Normalizer.normalize(string, Normalizer.Form.NFD)
+fun slugify(string: String): String = Normalizer.normalize(string, Normalizer.Form.NFD)
     .replace(Regex("[^A-Za-z0-9\\s\\-.@]+"), "")
     .replace(Regex("[\\s\\-.@]+"), "-")
     .trim('-')

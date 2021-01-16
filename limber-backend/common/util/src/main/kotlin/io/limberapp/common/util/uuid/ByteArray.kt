@@ -3,7 +3,7 @@ package io.limberapp.common.util.uuid
 import java.nio.ByteBuffer
 import java.util.UUID
 
-private const val UUID_BYTES = 16
+private const val UUID_BYTES: Int = 16
 
 /**
  * https://stackoverflow.com/questions/17893609/convert-uuid-to-byte-that-works-when-using-uuid-nameuuidfrombytesb.

@@ -1,22 +1,24 @@
 package io.limberapp.common.validation
 
+import kotlin.text.Regex
+
 internal object Regex {
-  val auth0ClientId = Regex("[A-Za-z0-9]{32}")
+  val auth0ClientId: Regex = Regex("[A-Za-z0-9]{32}")
 
-  val base64EncodedUuid = Regex("[A-Za-z0-9+/]{21}[AQgw]==")
+  val base64EncodedUuid: Regex = Regex("[A-Za-z0-9+/]{21}[AQgw]==")
 
-  val hostname = run {
+  val hostname: Regex = run {
     val portion = Regex("[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])")
     return@run Regex("$portion?(?:\\.$portion?)+")
   }
 
-  val emailAddress = Regex("[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@$hostname")
+  val emailAddress: Regex = Regex("[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@$hostname")
 
-  private val urlChar = Regex("[A-Za-z0-9\\-_.%]")
+  private val urlChar: Regex = Regex("[A-Za-z0-9\\-_.%]")
 
-  val path = Regex("(?:/$urlChar+)*/?")
+  val path: Regex = Regex("(?:/$urlChar+)*/?")
 
-  val url = run {
+  val url: Regex = run {
     val protocol = Regex("[Hh][Tt][Tt][Pp][Ss]?://")
     val queryString =
         Regex("(?:\\?$urlChar+=$urlChar*(?:&$urlChar+=$urlChar*)*)?")
@@ -24,7 +26,7 @@ internal object Regex {
     return@run Regex(listOf(protocol, hostname, path, queryString, hash).joinToString(""))
   }
 
-  private val hex = Regex("[A-Fa-f0-9]")
+  private val hex: Regex = Regex("[A-Fa-f0-9]")
 
-  val uuid = Regex("$hex{8}-?$hex{4}-?$hex{4}-?$hex{4}-?$hex{12}")
+  val uuid: Regex = Regex("$hex{8}-?$hex{4}-?$hex{4}-?$hex{4}-?$hex{12}")
 }

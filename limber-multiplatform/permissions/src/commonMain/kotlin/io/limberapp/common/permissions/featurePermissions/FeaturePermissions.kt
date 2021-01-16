@@ -12,9 +12,9 @@ abstract class FeaturePermissions<P : FeaturePermission>(
 ) : Permissions<P>(permissions) {
   abstract val prefix: Char
 
-  final override fun asDarb() = "$prefix." + super.asDarb()
+  final override fun asDarb(): String = "$prefix." + super.asDarb()
 
-  final override fun asBitString() = prefix + super.asBitString()
+  final override fun asBitString(): String = prefix + super.asBitString()
 
   abstract class Companion<P : FeaturePermission, S : FeaturePermissions<P>>(
       values: Array<P>,

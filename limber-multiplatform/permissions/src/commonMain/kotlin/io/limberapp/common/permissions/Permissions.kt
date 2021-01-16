@@ -19,9 +19,9 @@ abstract class Permissions<P : Permission> internal constructor(
    */
   protected abstract fun asBooleanList(): List<Boolean>
 
-  open fun asDarb() = DarbEncoder.encode(asBooleanList())
+  open fun asDarb(): String = DarbEncoder.encode(asBooleanList())
 
-  open fun asBitString() = BitStringEncoder.encode(asBooleanList())
+  open fun asBitString(): String = BitStringEncoder.encode(asBooleanList())
 
   abstract class Companion<P : Permission, S : Permissions<P>>(
       protected val values: Array<P>,
@@ -31,7 +31,7 @@ abstract class Permissions<P : Permission> internal constructor(
       check(values.map { permission -> permission.index } == values.indices.toList())
     }
 
-    fun none() =
+    fun none(): S =
         fromBooleanList(emptyList())
 
     open fun fromDarb(darb: String): S =

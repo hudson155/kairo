@@ -1,5 +1,6 @@
 package io.limberapp.common.permissions
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
@@ -7,7 +8,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class PermissionsSerializerTest {
-  private val objectMapper = jacksonObjectMapper()
+  private val objectMapper: ObjectMapper = jacksonObjectMapper()
       .registerModule(SimpleModule()
           .addSerializer(Permissions::class.java, PermissionsSerializer()))
 

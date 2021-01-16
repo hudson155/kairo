@@ -12,5 +12,5 @@ abstract class Endpoint(
     val contentType: ContentType = ContentType.Application.Json,
     val body: ValidatedRep? = null,
 ) {
-  val href = href(path, queryParams)
+  val href: String = href(path, queryParams)
 }

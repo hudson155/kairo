@@ -3,6 +3,7 @@ package io.limberapp.common.config
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 @RequiresOptIn
@@ -19,7 +20,7 @@ internal var getEnv: (name: String) -> String? = System::getenv
   @EnvironmentManipulation set
 
 class ConfigStringDeserializer : StdDeserializer<String>(String::class.java) {
-  private val logger = LoggerFactory.getLogger(ConfigStringDeserializer::class.java)
+  private val logger: Logger = LoggerFactory.getLogger(ConfigStringDeserializer::class.java)
 
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
     logger.info("Deserializing config string...")

@@ -1,15 +1,16 @@
 package io.limberapp.common.util.darb
 
+import io.limberapp.common.logging.Logger
 import io.limberapp.common.logging.LoggerFactory
 
 /**
  * Converts between boolean lists and the DARB string format.
  */
 object DarbEncoder {
-  private val logger = LoggerFactory.getLogger(DarbEncoder::class)
+  private val logger: Logger = LoggerFactory.getLogger(DarbEncoder::class)
 
-  private const val CHUNK_SIZE = 4 // Warning, changing this alone will break the code.
-  private val HEX = Regex("^[A-Fa-f0-9]*$")
+  private const val CHUNK_SIZE: Int = 4 // Warning, changing this alone will break the code.
+  private val HEX: Regex = Regex("^[A-Fa-f0-9]*$")
 
   fun encode(booleanList: List<Boolean>): String {
     val bitString = BitStringEncoder.encode(booleanList)
@@ -90,7 +91,8 @@ object DarbEncoder {
 
     // The second component is the hex, the length of which must correlate with the size.
     val hex = components[1]
-    if (hex.length != (size + CHUNK_SIZE - 1) / CHUNK_SIZE) return null // This math works due to integer rounding.
+    // This math works due to integer rounding.
+    if (hex.length != (size + CHUNK_SIZE - 1) / CHUNK_SIZE) return null
     if (!HEX.matches(hex)) return null
     return Pair(size, hex)
   }

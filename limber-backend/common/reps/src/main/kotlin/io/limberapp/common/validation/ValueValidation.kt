@@ -1,7 +1,7 @@
 package io.limberapp.common.validation
 
 internal data class ValueValidation<T>(val name: String, val value: T, val isValid: Boolean) {
-  fun withNamePrefix(prefix: String) = copy(name = prefix + name)
+  fun withNamePrefix(prefix: String): ValueValidation<T> = copy(name = prefix + name)
 }
 
 fun <T : Any> T?.ifPresent(validator: T.() -> Boolean): Boolean {

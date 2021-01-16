@@ -1,5 +1,6 @@
 package io.limberapp.common.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -8,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 internal class ConfigStringDeserializerTest {
-  private val objectMapper = jacksonObjectMapper()
+  private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
   data class Plaintext(
       @JsonDeserialize(using = ConfigStringDeserializer::class)

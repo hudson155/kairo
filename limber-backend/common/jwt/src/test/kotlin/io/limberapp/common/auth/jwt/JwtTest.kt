@@ -1,5 +1,6 @@
 package io.limberapp.common.auth.jwt
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -15,26 +16,26 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class JwtTest {
-  private val objectMapper = jacksonObjectMapper()
+  private val objectMapper: ObjectMapper = jacksonObjectMapper()
       .registerModule(SimpleModule()
           .addSerializer(Permissions::class.java, PermissionsSerializer())
           .addDeserializer(LimberPermissions::class.java, LimberPermissionsDeserializer())
           .addDeserializer(OrgPermissions::class.java, OrgPermissionsDeserializer())
           .addDeserializer(FeaturePermissions::class.java, TestFeaturePermissionsDeserializer()))
 
-  private val orgGuid = UUID.randomUUID()
-  private val featureAGuid = UUID.randomUUID()
-  private val featureBGuid = UUID.randomUUID()
-  private val userGuid = UUID.randomUUID()
+  private val orgGuid: UUID = UUID.randomUUID()
+  private val featureAGuid: UUID = UUID.randomUUID()
+  private val featureBGuid: UUID = UUID.randomUUID()
+  private val userGuid: UUID = UUID.randomUUID()
 
-  private val emptyJwtString = "{" +
+  private val emptyJwtString: String = "{" +
       "\"https://limberapp.io/permissions\":\"2.0\"," +
       "\"https://limberapp.io/org\":null," +
       "\"https://limberapp.io/features\":null," +
       "\"https://limberapp.io/user\":null" +
       "}"
 
-  private val fullJwtString = "{" +
+  private val fullJwtString: String = "{" +
       "\"https://limberapp.io/permissions\":\"2.8\"," +
       "\"https://limberapp.io/org\":{" +
       "\"guid\":\"$orgGuid\"," +
@@ -57,14 +58,14 @@ internal class JwtTest {
       "}" +
       "}"
 
-  private val emptyJwt = Jwt(
+  private val emptyJwt: Jwt = Jwt(
       permissions = LimberPermissions.none(),
       org = null,
       features = null,
       user = null,
   )
 
-  private val fullJwt = Jwt(
+  private val fullJwt: Jwt = Jwt(
       permissions = LimberPermissions.fromBitString("1"),
       org = JwtOrg(
           guid = orgGuid,
