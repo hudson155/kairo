@@ -2,8 +2,14 @@ package io.limberapp.common.typeConversion.typeConverter
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 internal class RegexTypeConverterTest {
+  @Test
+  fun isValid() {
+    assertNull(RegexTypeConverter.isValid(""))
+  }
+
   @Test
   fun parseString() {
     assertEquals(Regex("").toString(), RegexTypeConverter.parseString("").toString())

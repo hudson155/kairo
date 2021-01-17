@@ -35,3 +35,14 @@ From coarsest-grained to finest-grained, the permission layers are:
     using base classes from this library.
 
 Looking at the permission enum classes will provide more color.
+    
+### Type conversion
+
+This library also provides type converters,
+which can be used for serialization
+(using the [serialization library](/limber-backend/common/module) or for the database).
+Register the type converters to do so.
+
+Note: Deserializing a `FeaturePermissions` string may yield `UnknownFeaturePermissions`.
+This happens when the permissions are for
+a feature with a prefix unknown to the deserializer.

@@ -12,7 +12,7 @@ object TimeZoneTypeConverter : TypeConverter<ZoneId> {
   override val kClass: KClass<ZoneId> = ZoneId::class
 
   // It's not practical to validate time zones statically.
-  override fun isValid(value: String): Boolean = true
+  override fun isValid(value: String): Boolean? = null
 
   override fun parseString(value: String): ZoneId {
     val zoneId = ZoneId.of(value)

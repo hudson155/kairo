@@ -18,32 +18,42 @@ internal class FeaturePermissionsTest {
   }
 
   @Test
-  fun fromDarb() {
-    with(TestFeaturePermissions.fromDarb("T.2.C")) {
+  fun all() {
+    with(TestFeaturePermissions.all()) {
       assertEquals("T.2.C", asDarb())
       assertEquals("T11", asBitString())
       assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_1 in this)
       assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_2 in this)
     }
-    with(TestFeaturePermissions.fromDarb("T.1.C")) {
+  }
+
+  @Test
+  fun fromDarb() {
+    with(TestFeaturePermissions.fromDarb("2.C")) {
+      assertEquals("T.2.C", asDarb())
+      assertEquals("T11", asBitString())
+      assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_1 in this)
+      assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_2 in this)
+    }
+    with(TestFeaturePermissions.fromDarb("1.C")) {
       assertEquals("T.2.8", asDarb())
       assertEquals("T10", asBitString())
       assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_1 in this)
       assertFalse(TestFeaturePermission.TEST_FEATURE_PERMISSION_2 in this)
     }
-    assertFails { TestFeaturePermissions.fromDarb("2.C") }
-    assertFails { TestFeaturePermissions.fromDarb("T.2.G") }
+    assertFails { TestFeaturePermissions.fromDarb("T.2.C") }
+    assertFails { TestFeaturePermissions.fromDarb("2.G") }
   }
 
   @Test
   fun fromBitString() {
-    with(TestFeaturePermissions.fromBitString("T10")) {
+    with(TestFeaturePermissions.fromBitString("10")) {
       assertEquals("T.2.8", asDarb())
       assertEquals("T10", asBitString())
       assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_1 in this)
       assertFalse(TestFeaturePermission.TEST_FEATURE_PERMISSION_2 in this)
     }
-    with(TestFeaturePermissions.fromBitString("T1")) {
+    with(TestFeaturePermissions.fromBitString("1")) {
       assertEquals("T.2.8", asDarb())
       assertEquals("T10", asBitString())
       assertTrue(TestFeaturePermission.TEST_FEATURE_PERMISSION_1 in this)

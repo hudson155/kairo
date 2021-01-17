@@ -1,17 +1,20 @@
 package io.limberapp.common.permissions.featurePermissions
 
+import io.limberapp.common.permissions.Permission
+import io.limberapp.common.permissions.Permissions
+
 internal data class TestFeaturePermissions(
     private val permissions: Set<TestFeaturePermission>,
-) : FeaturePermissions<TestFeaturePermission>(permissions) {
-  override val prefix: Char = Companion.prefix
+) : FeaturePermissions() {
+  override val prefix: Char = 'T'
 
-  override fun asBooleanList(): List<Boolean> = values.map { it in this }
+  override fun contains(permission: Permission): Boolean = permission in permissions
 
-  companion object : FeaturePermissions.Companion<TestFeaturePermission, TestFeaturePermissions>(
+  override fun asBooleanList(): List<Boolean> = values.map { it in permissions }
+
+  companion object : Permissions.Companion<TestFeaturePermission, TestFeaturePermissions>(
       values = TestFeaturePermission.values(),
   ) {
-    override val prefix: Char = 'T'
-
     override fun fromBooleanList(booleanList: List<Boolean>): TestFeaturePermissions =
         TestFeaturePermissions(from(booleanList))
   }

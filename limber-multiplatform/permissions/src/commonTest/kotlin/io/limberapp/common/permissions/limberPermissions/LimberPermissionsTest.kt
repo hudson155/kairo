@@ -9,6 +9,16 @@ import kotlin.test.assertTrue
 
 internal class LimberPermissionsTest {
   @Test
+  fun all() {
+    with(LimberPermissions.all()) {
+      assertEquals("2.C", asDarb())
+      assertEquals("11", asBitString())
+      assertTrue(LimberPermission.IDENTITY_PROVIDER in this)
+      assertTrue(LimberPermission.ORG_ACCESS_OVERRIDE in this)
+    }
+  }
+
+  @Test
   fun none() {
     with(LimberPermissions.none()) {
       assertEquals("2.0", asDarb())

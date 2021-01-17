@@ -7,12 +7,7 @@ kotlin {
     }
     jvmMain {
       dependencies {
-        api(Dependencies.Jackson.databind)
-      }
-    }
-    jvmTest {
-      dependencies {
-        implementation(Dependencies.Jackson.moduleKotlin)
+        api(project(":limber-backend:common:type-conversion:interface"))
       }
     }
   }

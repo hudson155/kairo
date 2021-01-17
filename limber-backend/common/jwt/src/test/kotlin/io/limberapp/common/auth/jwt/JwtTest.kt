@@ -1,16 +1,21 @@
 package io.limberapp.common.auth.jwt
 
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.limberapp.common.permissions.Permissions
-import io.limberapp.common.permissions.PermissionsSerializer
-import io.limberapp.common.permissions.featurePermissions.FeaturePermissions
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
-import io.limberapp.common.permissions.limberPermissions.LimberPermissionsDeserializer
 import io.limberapp.common.permissions.orgPermissions.OrgPermissions
-import io.limberapp.common.permissions.orgPermissions.OrgPermissionsDeserializer
+import io.limberapp.common.typeConversion.TypeConverter
+import io.limberapp.common.typeConversion.typeConverter.FeaturePermissionsTypeConverter
+import io.limberapp.common.typeConversion.typeConverter.LimberPermissionsTypeConverter
+import io.limberapp.common.typeConversion.typeConverter.OrgPermissionsTypeConverter
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,10 +23,14 @@ import kotlin.test.assertEquals
 internal class JwtTest {
   private val objectMapper: ObjectMapper = jacksonObjectMapper()
       .registerModule(SimpleModule()
-          .addSerializer(Permissions::class.java, PermissionsSerializer())
-          .addDeserializer(LimberPermissions::class.java, LimberPermissionsDeserializer())
-          .addDeserializer(OrgPermissions::class.java, OrgPermissionsDeserializer())
-          .addDeserializer(FeaturePermissions::class.java, TestFeaturePermissionsDeserializer()))
+          .registerTypeConverter(LimberPermissionsTypeConverter)
+          .registerTypeConverter(OrgPermissionsTypeConverter)
+          .registerTypeConverter(OrgPermissionsTypeConverter)
+          .registerTypeConverter(FeaturePermissionsTypeConverter(mapOf(
+              'A' to TestFeaturePermissionsA,
+              'B' to TestFeaturePermissionsB,
+          )))
+      )
 
   private val orgGuid: UUID = UUID.randomUUID()
   private val featureAGuid: UUID = UUID.randomUUID()
@@ -74,8 +83,8 @@ internal class JwtTest {
           permissions = OrgPermissions.fromBitString("0110"),
       ),
       features = mapOf(
-          featureAGuid to JwtFeature(TestFeaturePermissionsA.fromBitString("A01")),
-          featureBGuid to JwtFeature(TestFeaturePermissionsB.fromBitString("B1")),
+          featureAGuid to JwtFeature(TestFeaturePermissionsA.fromBitString("01")),
+          featureBGuid to JwtFeature(TestFeaturePermissionsB.fromBitString("1")),
       ),
       user = JwtUser(
           guid = userGuid,
@@ -103,4 +112,21 @@ internal class JwtTest {
   fun `deserialize - full`() {
     assertEquals(fullJwt, objectMapper.readValue(fullJwtString))
   }
+}
+
+private fun <T : Any, C : TypeConverter<T>> SimpleModule.registerTypeConverter(
+    typeConverter: C,
+): SimpleModule {
+  addSerializer(
+      object : StdSerializer<T>(typeConverter.kClass.java) {
+        override fun serialize(value: T, gen: JsonGenerator, provider: SerializerProvider) {
+          gen.writeString(typeConverter.writeString(value))
+        }
+      })
+  addDeserializer(typeConverter.kClass.java,
+      object : StdDeserializer<T>(typeConverter.kClass.java) {
+        override fun deserialize(p: JsonParser, ctxt: DeserializationContext): T =
+            typeConverter.parseString(p.text)
+      })
+  return this
 }

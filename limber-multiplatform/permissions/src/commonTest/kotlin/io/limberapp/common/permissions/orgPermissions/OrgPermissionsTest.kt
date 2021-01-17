@@ -9,6 +9,16 @@ import kotlin.test.assertTrue
 
 internal class OrgPermissionsTest {
   @Test
+  fun all() {
+    with(OrgPermissions.all()) {
+      assertEquals("4.F", asDarb())
+      assertEquals("1111", asBitString())
+      assertTrue(OrgPermission.MANAGE_ORG_ROLE_MEMBERSHIPS in this)
+      assertTrue(OrgPermission.MANAGE_ORG_METADATA in this)
+    }
+  }
+
+  @Test
   fun none() {
     with(OrgPermissions.none()) {
       assertEquals("4.0", asDarb())

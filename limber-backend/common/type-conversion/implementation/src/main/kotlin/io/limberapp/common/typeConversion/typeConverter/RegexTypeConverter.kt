@@ -7,7 +7,7 @@ object RegexTypeConverter : TypeConverter<Regex> {
   override val kClass: KClass<Regex> = Regex::class
 
   // It's impossible to validate Regex statically.
-  override fun isValid(value: String): Boolean = true
+  override fun isValid(value: String): Boolean? = null
 
   override fun parseString(value: String): Regex = Regex(value)
 

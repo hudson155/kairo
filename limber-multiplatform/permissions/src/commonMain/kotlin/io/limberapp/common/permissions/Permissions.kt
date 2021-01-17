@@ -4,18 +4,24 @@ import io.limberapp.common.util.darb.BitStringEncoder
 import io.limberapp.common.util.darb.DarbEncoder
 
 /**
- * Generic class to represent a set of permissions. Permissions are serialized using DARB.
+ * Abstract class to represent a set of permissions. Permissions are serialized using DARB.
  */
-abstract class Permissions<P : Permission> internal constructor(
-    private val permissions: Set<P>,
-) : Set<P> by permissions {
+abstract class Permissions internal constructor() {
+  /**
+   * Must return whether or not the instance contains the given permission.
+   *
+   * The implementation should typically look like:
+   * override fun contains(permission: Permission): Boolean = permission in permissions
+   */
+  abstract operator fun contains(permission: Permission): Boolean
+
   /**
    * Must return all permissions in order. The order used here is the order used for encoding and
-   * serialization, so it must be consistent. If the permission class [P] has n permissions, a list
-   * of length n is expected, in ascending order of bits.
+   * serialization, so it must be consistent. If the permission class has n permissions, a list of
+   * length n is expected, in ascending order of bits.
    *
-   * The implementation should invariably look like:
-   * override fun asBooleanList() = values.map { it in this }
+   * The implementation should typically look like:
+   * override fun asBooleanList(): List<Boolean> = values.map { it in permissions }
    */
   protected abstract fun asBooleanList(): List<Boolean>
 
@@ -23,7 +29,7 @@ abstract class Permissions<P : Permission> internal constructor(
 
   open fun asBitString(): String = BitStringEncoder.encode(asBooleanList())
 
-  abstract class Companion<P : Permission, S : Permissions<P>>(
+  abstract class Companion<P : Permission, S : Permissions>(
       protected val values: Array<P>,
   ) {
     init {
@@ -31,13 +37,14 @@ abstract class Permissions<P : Permission> internal constructor(
       check(values.map { permission -> permission.index } == values.indices.toList())
     }
 
-    fun none(): S =
-        fromBooleanList(emptyList())
+    fun none(): S = fromBooleanList(emptyList())
 
-    open fun fromDarb(darb: String): S =
+    fun all(): S = fromBooleanList(List(values.size) { true })
+
+    fun fromDarb(darb: String): S =
         fromBooleanList(DarbEncoder.decode(darb))
 
-    open fun fromBitString(bitString: String): S =
+    fun fromBitString(bitString: String): S =
         fromBooleanList(BitStringEncoder.decode(bitString))
 
     protected abstract fun fromBooleanList(booleanList: List<Boolean>): S

@@ -1,5 +1,5 @@
 dependencies {
   api(project(":limber-multiplatform:permissions"))
-  testImplementation(Dependencies.Jackson.databind)
-  testImplementation(Dependencies.Jackson.moduleKotlin)
+  implementation(Dependencies.Jackson.annotations)
+  testImplementation(project(":limber-backend:common:serialization"))
 }

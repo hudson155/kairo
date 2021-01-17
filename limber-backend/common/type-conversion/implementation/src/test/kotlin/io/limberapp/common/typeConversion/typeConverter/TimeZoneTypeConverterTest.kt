@@ -5,8 +5,14 @@ import java.time.ZoneOffset
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
+import kotlin.test.assertNull
 
 internal class TimeZoneTypeConverterTest {
+  @Test
+  fun isValid() {
+    assertNull(TimeZoneTypeConverter.isValid(""))
+  }
+
   @Test
   fun parseString() {
     assertFails { TimeZoneTypeConverter.parseString("") }
