@@ -1,6 +1,4 @@
-package io.limberapp.common.auth.jwt
-
-import io.limberapp.common.permissions.featurePermissions.FeaturePermission
+package io.limberapp.common.permissions.featurePermissions
 
 internal enum class TestFeaturePermissionA(
     override val index: Int,

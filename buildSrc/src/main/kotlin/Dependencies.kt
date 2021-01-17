@@ -11,6 +11,7 @@ object Dependencies {
   object Jackson {
     const val annotations: String = "com.fasterxml.jackson.core:jackson-annotations:${Versions.jackson}"
     const val databind: String = "com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}"
+    const val dataformatYaml: String = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.jackson}"
     const val datatypeJsr310: String = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jackson}"
     const val moduleKotlin: String = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}"
   }

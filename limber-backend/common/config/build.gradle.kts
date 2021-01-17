@@ -1,4 +1,4 @@
 dependencies {
   api(Dependencies.Jackson.databind)
-  testImplementation(Dependencies.Jackson.moduleKotlin)
+  testImplementation(project(":limber-backend:common:serialization"))
 }
