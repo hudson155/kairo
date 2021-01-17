@@ -2,7 +2,6 @@ package io.limberapp.common.util.uuid
 
 import java.util.UUID
 
-private const val UUID_LENGTH_WITH_DASHES: Int = 36
 private const val UUID_LENGTH_WITHOUT_DASHES: Int = 32
 
 /**
@@ -10,7 +9,6 @@ private const val UUID_LENGTH_WITHOUT_DASHES: Int = 32
  * dashes, whereas [UUID.fromString] does not.
  */
 fun uuidFromString(string: String): UUID {
-  if (string.length == UUID_LENGTH_WITH_DASHES) return UUID.fromString(string)
   val withNoDashes = string.replace("-", "")
   check(withNoDashes.length == UUID_LENGTH_WITHOUT_DASHES)
   @Suppress("ReplaceSubstringWithTake")
