@@ -1,9 +1,9 @@
-package io.limberapp.common.typeConversion.conversionService
+package io.limberapp.common.typeConversion.typeConverter
 
-import io.limberapp.common.typeConversion.TypeConversionService
+import io.limberapp.common.typeConversion.TypeConverter
 import kotlin.reflect.KClass
 
-object RegexConversionService : TypeConversionService<Regex> {
+object RegexTypeConverter : TypeConverter<Regex> {
   override val kClass: KClass<Regex> = Regex::class
 
   // It's impossible to validate Regex statically.

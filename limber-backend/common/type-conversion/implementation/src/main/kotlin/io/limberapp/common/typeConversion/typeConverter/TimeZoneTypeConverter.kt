@@ -1,13 +1,13 @@
-package io.limberapp.common.typeConversion.conversionService
+package io.limberapp.common.typeConversion.typeConverter
 
-import io.limberapp.common.typeConversion.TypeConversionService
+import io.limberapp.common.typeConversion.TypeConverter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
 import kotlin.reflect.KClass
 
-object TimeZoneConversionService : TypeConversionService<ZoneId> {
-  private val logger: Logger = LoggerFactory.getLogger(TimeZoneConversionService::class.java)
+object TimeZoneTypeConverter : TypeConverter<ZoneId> {
+  private val logger: Logger = LoggerFactory.getLogger(TimeZoneTypeConverter::class.java)
 
   override val kClass: KClass<ZoneId> = ZoneId::class
 

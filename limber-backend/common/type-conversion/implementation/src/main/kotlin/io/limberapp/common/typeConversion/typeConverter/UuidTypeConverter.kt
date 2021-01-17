@@ -1,6 +1,6 @@
-package io.limberapp.common.typeConversion.conversionService
+package io.limberapp.common.typeConversion.typeConverter
 
-import io.limberapp.common.typeConversion.TypeConversionService
+import io.limberapp.common.typeConversion.TypeConverter
 import io.limberapp.common.util.uuid.uuidFromBase64Encoded
 import io.limberapp.common.util.uuid.uuidFromString
 import io.limberapp.common.validation.Validator
@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory
 import java.util.UUID
 import kotlin.reflect.KClass
 
-object UuidConversionService : TypeConversionService<UUID> {
-  private val logger: Logger = LoggerFactory.getLogger(UuidConversionService::class.java)
+object UuidTypeConverter : TypeConverter<UUID> {
+  private val logger: Logger = LoggerFactory.getLogger(UuidTypeConverter::class.java)
 
   override val kClass: KClass<UUID> = UUID::class
 
