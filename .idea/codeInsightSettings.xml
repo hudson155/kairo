@@ -2,7 +2,44 @@
 <project version="4">
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
-      <name>org.junit</name>
+      <name>org.junit.After</name>
+      <name>org.junit.AfterAll</name>
+      <name>org.junit.AfterClass</name>
+      <name>org.junit.AfterEach</name>
+      <name>org.junit.Assert</name>
+      <name>org.junit.Assertions</name>
+      <name>org.junit.Before</name>
+      <name>org.junit.BeforeAll</name>
+      <name>org.junit.BeforeClass</name>
+      <name>org.junit.BeforeEach</name>
+      <name>org.junit.Disabled</name>
+      <name>org.junit.Ignore</name>
+      <name>org.junit.Test</name>
+      <name>org.junit.assertAll</name>
+      <name>org.junit.assertDoesNotThrow</name>
+      <name>org.junit.assertThrows</name>
+      <name>org.junit.assertTimeout</name>
+      <name>org.junit.assertTimeoutPreemptively</name>
+      <name>org.junit.fail</name>
+      <name>org.junit.jupiter.api.After</name>
+      <name>org.junit.jupiter.api.AfterAll</name>
+      <name>org.junit.jupiter.api.AfterClass</name>
+      <name>org.junit.jupiter.api.AfterEach</name>
+      <name>org.junit.jupiter.api.Assert</name>
+      <name>org.junit.jupiter.api.Assertions</name>
+      <name>org.junit.jupiter.api.Before</name>
+      <name>org.junit.jupiter.api.BeforeAll</name>
+      <name>org.junit.jupiter.api.BeforeClass</name>
+      <name>org.junit.jupiter.api.BeforeEach</name>
+      <name>org.junit.jupiter.api.Disabled</name>
+      <name>org.junit.jupiter.api.Ignore</name>
+      <name>org.junit.jupiter.api.Test</name>
+      <name>org.junit.jupiter.api.assertAll</name>
+      <name>org.junit.jupiter.api.assertDoesNotThrow</name>
+      <name>org.junit.jupiter.api.assertThrows</name>
+      <name>org.junit.jupiter.api.assertTimeout</name>
+      <name>org.junit.jupiter.api.assertTimeoutPreemptively</name>
+      <name>org.junit.jupiter.api.fail</name>
     </excluded-names>
   </component>
 </project>

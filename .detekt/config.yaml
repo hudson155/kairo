@@ -58,10 +58,7 @@ complexity:
   LongMethod:
     active: true
     excludes:
-      - '**/src/commonTest/**/*Test.kt'
-      - '**/src/jsTest/**/*Test.kt'
-      - '**/src/jvmTest/**/*Test.kt'
-      - '**/src/test/**/*Test.kt'
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
     threshold: 40
   LongParameterList:
     active: true
@@ -71,7 +68,9 @@ complexity:
     ignoreDataClasses: true
   MethodOverloading:
     active: true
-    threshold: 6
+    excludes:
+      - '**/src/main/kotlin/io/limberapp/backend/client/**/*Client.kt' # Clients
+    threshold: 4
   NamedArguments:
     active: true
     threshold: 3
@@ -83,12 +82,8 @@ complexity:
   StringLiteralDuplication:
     active: true
     excludes:
-      - '**/src/commonMain/**/*Api.kt'
-      - '**/src/commonTest/**/*Test.kt'
-      - '**/src/jsTest/**/*Test.kt'
-      - '**/src/jvmTest/**/*Test.kt'
-      - '**/src/main/**/*Api.kt'
-      - '**/src/test/**/*Test.kt'
+      - '**/src/main/**/*Api.kt' # APIs
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
     threshold: 3
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: false
@@ -175,12 +170,11 @@ exceptions:
   TooGenericExceptionCaught:
     active: true
     excludes:
-      - '**/src/commonTest/**/*Test.kt'
-      - '**/src/jsTest/**/*Test.kt'
-      - '**/src/jvmTest/**/*Test.kt'
-      - '**/src/test/**/*Test.kt'
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
   TooGenericExceptionThrown:
     active: true
+    excludes:
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**' # All test files
 
 formatting:
   active: true
@@ -284,10 +278,7 @@ naming:
   FunctionMaxLength:
     active: true
     excludes:
-      - '**/src/commonTest/**/*Test.kt'
-      - '**/src/jsTest/**/*Test.kt'
-      - '**/src/jvmTest/**/*Test.kt'
-      - '**/src/test/**/*Test.kt'
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
     maximumFunctionNameLength: 32
   FunctionMinLength:
     active: true
@@ -325,7 +316,8 @@ performance:
   active: true
   ArrayPrimitive:
     active: true
-    excludes: '**/src/jsMain/**/*.kt'
+    excludes:
+      - '**/src/jsMain/**' # JS Code
   ForEachOnRange:
     active: true
   SpreadOperator:
@@ -384,10 +376,7 @@ potential-bugs:
   UnsafeCast:
     active: true
     excludes:
-      - '**/src/commonTest/**/*Test.kt'
-      - '**/src/jsTest/**/*Test.kt'
-      - '**/src/jvmTest/**/*Test.kt'
-      - '**/src/test/**/*Test.kt'
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
   UselessPostfixExpression:
     active: true
   WrongEqualsTypeParameter:
@@ -398,7 +387,7 @@ style:
   ClassOrdering:
     active: false
   CollapsibleIfStatements:
-    active: true
+    active: false
   DataClassContainsFunctions:
     active: false
     conversionFunctionPrefix: 'to'
@@ -419,7 +408,7 @@ style:
     active: false
   ForbiddenImport:
     active: true
-    forbiddenPatterns: '(org\.junit\..*)'
+    forbiddenPatterns: '^(org\.junit\.(jupiter\.api\.)?(Test|(Disabled|Ignore)|((Before|After)(All|Class|Each)?)|(Assert(ions)?|assert(All|Throws|DoesNotThrow|Timeout(Preemptively)?)|fail)))$'
   ForbiddenMethodCall:
     active: true
     methods:
@@ -444,10 +433,7 @@ style:
   MagicNumber:
     active: true
     excludes:
-      - '**/src/commonTest/**/*Test.kt'
-      - '**/src/jsTest/**/*Test.kt'
-      - '**/src/jvmTest/**/*Test.kt'
-      - '**/src/test/**/*Test.kt'
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
     ignoreNumbers: [ '-1', '0', '1', '2' ]
     ignoreHashCodeFunction: true
     ignorePropertyDeclaration: true
