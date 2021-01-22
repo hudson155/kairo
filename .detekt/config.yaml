@@ -82,7 +82,7 @@ complexity:
   StringLiteralDuplication:
     active: true
     excludes:
-      - '**/src/main/**/*Api.kt' # APIs
+      - '**/src/{main,test}/**/*Api.kt' # APIs
       - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
     threshold: 3
     ignoreAnnotation: true

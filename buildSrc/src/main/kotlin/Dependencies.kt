@@ -17,6 +17,9 @@ object Dependencies {
   }
 
   object Ktor {
+    const val clientCio: String = "io.ktor:ktor-client-cio:${Versions.ktor}"
+    const val clientJackson: String = "io.ktor:ktor-client-jackson:${Versions.ktor}"
+    const val clientMock: String = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val httpJvm: String = "io.ktor:ktor-http-jvm:${Versions.ktor}"
   }
 

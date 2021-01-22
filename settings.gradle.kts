@@ -1,6 +1,7 @@
 rootProject.name = "limber"
 
 // Common
+include(":limber-backend:common:client")
 include(":limber-backend:common:config")
 include(":limber-backend:common:exceptions")
 include(":limber-backend:common:jwt")
