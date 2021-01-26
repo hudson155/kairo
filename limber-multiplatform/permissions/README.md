@@ -12,7 +12,7 @@ From coarsest-grained to finest-grained, the permission layers are:
     Some examples of Limber permissions include:
 
     - `IDENTITY_PROVIDER`: Used for Auth0.
-    - `ORG_ACCESS_OVERRIDE`: Allows internal users to access all orgs.
+    - `SUPERUSER`: Allows internal users to access all orgs.
 
     Limber permissions are defined in this library.
 

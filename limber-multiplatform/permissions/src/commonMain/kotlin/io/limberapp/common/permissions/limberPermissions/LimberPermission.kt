@@ -14,10 +14,11 @@ enum class LimberPermission(
       description = "Grants access to for all accounts' metadata, specifically that which is" +
           " necessary to issue JWTs.",
   ),
-  ORG_ACCESS_OVERRIDE(
+  SUPERUSER(
       index = 1,
-      title = "Org access override",
-      description = "Grants access to all orgs, including all org permissions and feature" +
-          " permissions. Does not grant any access defined by other Limber permissions.",
+      title = "Superuser",
+      description = "Overrides user, org, and feature checks. Users with this permission can" +
+          " essentially impersonate any other user, but don't implicitly receive any other Limber" +
+          " permissions.",
   );
 }

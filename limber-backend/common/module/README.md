@@ -1,4 +1,4 @@
-# Limber Module
+# Limber Modules
 
 Limber modules are the base unit of a Limber application.
 An application will have a module for each distinct concept within it.
@@ -17,7 +17,7 @@ Modules come in 2 flavors:
     for a particular feature of the application.
     Feature modules often rely on one or more pure modules.
     An example of a feature module
-    is one that implements defines payment processing endpoints.
+    is one that defines payment processing endpoints.
 
 A small application with 3 features might have 1 module for each feature,
 plus one module for the database.

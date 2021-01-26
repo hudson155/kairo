@@ -7,7 +7,7 @@ abstract class Module : AbstractModule() {
     bind()
   }
 
-  abstract fun cleanUp()
-
   protected abstract fun bind()
+
+  abstract fun cleanUp()
 }
