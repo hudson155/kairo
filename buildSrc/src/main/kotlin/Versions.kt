@@ -17,6 +17,9 @@ object Versions {
   // https://github.com/ktorio/ktor/releases
   const val ktor: String = "1.5.0"
 
+  // https://github.com/qos-ch/logback/releases
+  const val logback: String = "1.2.3"
+
   // https://github.com/qos-ch/slf4j/releases
   const val slf4j: String = "1.7.30"
 }
