@@ -23,6 +23,7 @@ object Dependencies {
     const val clientMock: String = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val httpJvm: String = "io.ktor:ktor-http-jvm:${Versions.ktor}"
     const val serverCore: String = "io.ktor:ktor-server-core:${Versions.ktor}"
+    const val serverTest: String = "io.ktor:ktor-server-test-host:${Versions.ktor}"
   }
 
   object Logging {

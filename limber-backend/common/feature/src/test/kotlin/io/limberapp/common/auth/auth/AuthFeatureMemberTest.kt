@@ -3,10 +3,10 @@ package io.limberapp.common.auth.auth
 import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.auth.jwt.JwtFeature
 import io.limberapp.common.auth.jwt.JwtOrg
-import io.limberapp.common.permissions.featurePermissions.TestFeaturePermissionA
-import io.limberapp.common.permissions.featurePermissions.TestFeaturePermissionB
-import io.limberapp.common.permissions.featurePermissions.TestFeaturePermissionsA
-import io.limberapp.common.permissions.featurePermissions.TestFeaturePermissionsB
+import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionA
+import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionB
+import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionsA
+import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionsB
 import io.limberapp.common.permissions.limberPermissions.LimberPermission
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
 import io.limberapp.common.permissions.orgPermissions.OrgPermission

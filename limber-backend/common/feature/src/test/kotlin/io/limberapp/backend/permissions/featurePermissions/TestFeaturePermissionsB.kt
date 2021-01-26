@@ -1,7 +1,8 @@
-package io.limberapp.common.permissions.featurePermissions
+package io.limberapp.backend.permissions.featurePermissions
 
 import io.limberapp.common.permissions.Permission
 import io.limberapp.common.permissions.Permissions
+import io.limberapp.common.permissions.featurePermissions.FeaturePermissions
 
 internal data class TestFeaturePermissionsB(
     private val permissions: Set<TestFeaturePermissionB>,
