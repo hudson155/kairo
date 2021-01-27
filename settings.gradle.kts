@@ -10,6 +10,7 @@ include(":limber-backend:common:module")
 include(":limber-backend:common:reps")
 include(":limber-backend:common:rest-interface")
 include(":limber-backend:common:serialization")
+include(":limber-backend:common:server")
 include(
     ":limber-backend:common:type-conversion:implementation",
     ":limber-backend:common:type-conversion:interface")

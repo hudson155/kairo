@@ -46,8 +46,6 @@ data class LimberObjectMapper(
     configure(SerializationFeature.INDENT_OUTPUT, prettyPrint)
     configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, prettyPrint)
     configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-    configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, true)
-    configure(DeserializationFeature.FAIL_ON_NULL_CREATOR_PROPERTIES, true)
     configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true)
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, !allowUnknownProperties)
     // Custom modules.

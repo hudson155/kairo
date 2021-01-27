@@ -16,6 +16,10 @@ object Dependencies {
     const val moduleKotlin: String = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.jackson}"
   }
 
+  object Jwt {
+    const val auth0JavaJwt: String = "com.auth0:java-jwt:${Versions.auth0JavaJwt}"
+  }
+
   object Ktor {
     const val auth: String = "io.ktor:ktor-auth:${Versions.ktor}"
     const val clientCio: String = "io.ktor:ktor-client-cio:${Versions.ktor}"

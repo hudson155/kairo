@@ -1,0 +1,33 @@
+{
+  "authentication": {
+    "mechanisms": [
+      {
+        "type": "JWT",
+        "issuer": "https://limberapp.io/",
+        "leeway": 20,
+        "algorithm": "HMAC256",
+        "secret": {
+          "type": "PLAINTEXT",
+          "value": "supersecret"
+        }
+      },
+      {
+        "type": "JWK",
+        "issuer": "https://limber.auth0.com/",
+        "leeway": 20,
+        "domain": "limber.auth0.com"
+      }
+    ]
+  },
+  "clock": {
+    "type": "REAL"
+  },
+  "customProperty": "custom value",
+  "hosts": {
+    "something": "http://limber-something-server"
+  },
+  "shutDownTimeoutSeconds": 10,
+  "uuids": {
+    "generation": "RANDOM"
+  }
+}

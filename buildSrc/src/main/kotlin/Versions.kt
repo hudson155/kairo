@@ -1,4 +1,7 @@
 object Versions {
+  // https://github.com/auth0/java-jwt/releases
+  const val auth0JavaJwt: String = "3.12.1"
+
   // https://github.com/detekt/detekt/releases
   const val detekt: String = "1.15.0"
 
