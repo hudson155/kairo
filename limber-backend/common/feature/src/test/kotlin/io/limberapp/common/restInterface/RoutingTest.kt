@@ -124,10 +124,8 @@ internal class RoutingTest {
   @ContextDsl
   private fun Routing.route(endpoint: KClass<out Endpoint>) {
     route(endpoint.template()) {
-      handle {
-        // Always respond with the endpoint name.
-        call.respondText(checkNotNull(endpoint.simpleName))
-      }
+      // Always respond with the endpoint name.
+      call.respondText(checkNotNull(endpoint.simpleName))
     }
   }
 }

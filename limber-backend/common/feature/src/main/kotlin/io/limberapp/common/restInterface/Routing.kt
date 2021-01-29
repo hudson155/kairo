@@ -1,11 +1,13 @@
 package io.limberapp.common.restInterface
 
+import io.ktor.application.ApplicationCall
 import io.ktor.routing.HttpAcceptRouteSelector
 import io.ktor.routing.HttpMethodRouteSelector
 import io.ktor.routing.ParameterRouteSelector
 import io.ktor.routing.Route
 import io.ktor.routing.createRouteFromPath
 import io.ktor.util.pipeline.ContextDsl
+import io.ktor.util.pipeline.PipelineInterceptor
 
 /**
  * Builds a Ktor route to match specified [endpointTemplate]. This should be used to easily wire up
@@ -14,13 +16,13 @@ import io.ktor.util.pipeline.ContextDsl
 @ContextDsl
 fun Route.route(
     endpointTemplate: EndpointTemplate<*>,
-    build: Route.() -> Unit,
-): Route {
+    body: PipelineInterceptor<Unit, ApplicationCall>,
+) {
   val pathRoute = createRouteFromPath(endpointTemplate.pathTemplate)
       .createChild(HttpAcceptRouteSelector(endpointTemplate.contentType))
       .createChild(HttpMethodRouteSelector(endpointTemplate.httpMethod))
   val fullRoute = endpointTemplate.requiredQueryParams.fold(pathRoute) { route, queryParam ->
     route.createChild(ParameterRouteSelector(queryParam))
   }
-  return fullRoute.apply(build)
+  fullRoute.handle(body)
 }
