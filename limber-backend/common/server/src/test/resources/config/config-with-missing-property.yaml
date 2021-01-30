@@ -12,9 +12,6 @@ authentication:
       leeway: 20 # 20 seconds
       domain: limber.auth0.com
 
-clock:
-  type: REAL
-
 customProperty: custom value
 
 hosts:

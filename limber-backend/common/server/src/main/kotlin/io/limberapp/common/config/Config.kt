@@ -9,6 +9,5 @@ interface Config {
   val authentication: AuthenticationConfig
   val clock: ClockConfig
   val hosts: Hosts
-  val shutDownTimeoutSeconds: Long
   val uuids: UuidsConfig
 }

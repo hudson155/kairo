@@ -5,6 +5,5 @@ internal data class TestConfig(
     override val clock: ClockConfig,
     val customProperty: String,
     override val hosts: TestHosts,
-    override val shutDownTimeoutSeconds: Long,
     override val uuids: UuidsConfig,
 ) : Config

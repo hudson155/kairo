@@ -20,7 +20,5 @@ customProperty: custom value
 hosts:
   something: http://limber-something-server
 
-shutDownTimeoutSeconds: 10
-
 uuids:
   generation: RANDOM

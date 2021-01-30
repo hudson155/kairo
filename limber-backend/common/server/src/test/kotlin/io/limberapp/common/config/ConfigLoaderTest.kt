@@ -31,7 +31,6 @@ internal class ConfigLoaderTest {
         clock = ClockConfig(type = ClockConfig.Type.REAL),
         customProperty = "custom value",
         hosts = TestHosts("http://limber-something-server"),
-        shutDownTimeoutSeconds = 10L,
         uuids = UuidsConfig(generation = UuidsConfig.Generation.RANDOM),
     ), config)
   }
@@ -62,7 +61,7 @@ internal class ConfigLoaderTest {
       ConfigLoader.load<TestConfig>("config-with-missing-property")
     }.let {
       val message = assertNotNull(it.message)
-      assertTrue(message.startsWith("Missing required creator property 'shutDownTimeoutSeconds'"),
+      assertTrue(message.contains("missing (therefore NULL) value for creator parameter clock"),
           message = message)
     }
   }

@@ -22,7 +22,5 @@ customProperty2: I don't belong!
 hosts:
   something: http://limber-something-server
 
-shutDownTimeoutSeconds: 10
-
 uuids:
   generation: RANDOM
