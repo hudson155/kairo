@@ -102,7 +102,7 @@ internal class EndpointTest {
     )
     assertFails { TestEndpoint::class.template() }.let {
       val message = assertNotNull(it.message)
-      assertTrue(message.contains(" contains more than 1 match of "))
+      assertTrue(message.contains(" contains more than 1 match of "), message = message)
     }
   }
 
@@ -117,7 +117,7 @@ internal class EndpointTest {
       val cause = assertNotNull(it.cause)
       assertTrue(cause is NullPointerException)
       val message = assertNotNull(cause.message)
-      assertTrue(message.startsWith("Parameter specified as non-null is null: "))
+      assertTrue(message.startsWith("Parameter specified as non-null is null: "), message = message)
     }
   }
 }
