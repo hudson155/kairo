@@ -18,6 +18,7 @@ object Dependencies {
 
   object Jwt {
     const val auth0JavaJwt: String = "com.auth0:java-jwt:${Versions.auth0JavaJwt}"
+    const val auth0JwksRsa: String = "com.auth0:jwks-rsa:${Versions.auth0JwksRsa}"
   }
 
   object Ktor {
