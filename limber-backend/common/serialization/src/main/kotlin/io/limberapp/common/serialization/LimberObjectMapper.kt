@@ -19,7 +19,7 @@ import io.limberapp.common.typeConversion.TypeConverter
 
 data class LimberObjectMapper(
     private val factory: Factory = Factory.JSON,
-    private val typeConverters: List<TypeConverter<*>> = emptyList(),
+    private val typeConverters: Set<TypeConverter<*>> = emptySet(),
     private val allowUnknownProperties: Boolean = false,
     private val prettyPrint: Boolean = false,
 ) : ObjectMapper(when (factory) {

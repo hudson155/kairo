@@ -31,7 +31,7 @@ import kotlin.test.assertEquals
 
 internal class AuthTest {
   private val objectMapper: LimberObjectMapper =
-      LimberObjectMapper(typeConverters = listOf(LimberPermissionsTypeConverter))
+      LimberObjectMapper(typeConverters = setOf(LimberPermissionsTypeConverter))
 
   private val path: String = "/test"
 

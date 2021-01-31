@@ -14,7 +14,7 @@ import java.util.UUID
 import kotlin.test.assertEquals
 
 internal class JwtTest {
-  private val objectMapper: LimberObjectMapper = LimberObjectMapper(typeConverters = listOf(
+  private val objectMapper: LimberObjectMapper = LimberObjectMapper(typeConverters = setOf(
       LimberPermissionsTypeConverter,
       OrgPermissionsTypeConverter,
       FeaturePermissionsTypeConverter(mapOf(

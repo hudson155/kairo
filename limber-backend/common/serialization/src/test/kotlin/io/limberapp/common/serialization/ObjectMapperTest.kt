@@ -63,7 +63,7 @@ internal class ObjectMapperTest {
 
   @Test
   fun `mapper with type converter - happy path`() {
-    val objectMapper = LimberObjectMapper(typeConverters = listOf(UuidTypeConverter))
+    val objectMapper = LimberObjectMapper(typeConverters = setOf(UuidTypeConverter))
 
     assertEquals(
         expected = TestClass2(UUID.fromString("a0709f3f-bb5e-4dea-bcd0-c88664de3497"), 42),
