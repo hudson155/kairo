@@ -1,7 +1,7 @@
 package io.limberapp.common.util.uuid
 
+import org.junit.jupiter.api.Test
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 

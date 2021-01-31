@@ -1,14 +1,14 @@
 package io.limberapp.common.module
 
 import com.google.inject.Guice
-import io.limberapp.backend.endpoint.test.SingletonEndpointHandler
 import io.limberapp.backend.endpoint.test.RequiredQueryParamFooEndpointHandler
+import io.limberapp.backend.endpoint.test.SingletonEndpointHandler
 import io.limberapp.backend.service.test.TestService
 import io.limberapp.backend.service.test.TestServiceImpl
 import io.limberapp.common.restInterface.EndpointHandler
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 import kotlin.test.assertFails
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -32,7 +32,7 @@ internal class FeatureTest {
 
   private var cleanedUp: Boolean = true
 
-  @BeforeTest
+  @BeforeEach
   fun before() {
     cleanedUp = true
   }

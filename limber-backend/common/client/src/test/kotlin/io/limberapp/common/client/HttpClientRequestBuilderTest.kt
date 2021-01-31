@@ -2,7 +2,7 @@ package io.limberapp.common.client
 
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 

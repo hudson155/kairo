@@ -26,7 +26,7 @@ import io.limberapp.common.config.AuthenticationMechanism
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
 import io.limberapp.common.serialization.LimberObjectMapper
 import io.limberapp.common.typeConversion.typeConverter.LimberPermissionsTypeConverter
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class AuthTest {

@@ -1,18 +1,18 @@
 package io.limberapp.common.auth.auth
 
-import io.limberapp.common.auth.jwt.Jwt
-import io.limberapp.common.auth.jwt.JwtFeature
-import io.limberapp.common.auth.jwt.JwtOrg
 import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionA
 import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionB
 import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionsA
 import io.limberapp.backend.permissions.featurePermissions.TestFeaturePermissionsB
+import io.limberapp.common.auth.jwt.Jwt
+import io.limberapp.common.auth.jwt.JwtFeature
+import io.limberapp.common.auth.jwt.JwtOrg
 import io.limberapp.common.permissions.limberPermissions.LimberPermission
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
 import io.limberapp.common.permissions.orgPermissions.OrgPermission
 import io.limberapp.common.permissions.orgPermissions.OrgPermissions
+import org.junit.jupiter.api.Test
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

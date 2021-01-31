@@ -1,8 +1,8 @@
 package io.limberapp.common.typeConversion.typeConverter
 
+import org.junit.jupiter.api.Test
 import java.time.ZoneId
 import java.time.ZoneOffset
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertNull

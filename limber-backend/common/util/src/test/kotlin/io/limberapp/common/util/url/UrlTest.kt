@@ -1,6 +1,6 @@
 package io.limberapp.common.util.url
 
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class UrlTest {

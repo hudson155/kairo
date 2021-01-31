@@ -3,9 +3,9 @@ package io.limberapp.common.server.feature
 import io.ktor.util.ConversionService
 import io.limberapp.common.typeConversion.typeConverter.UuidTypeConverter
 import io.limberapp.common.util.uuid.base64Encode
+import org.junit.jupiter.api.Test
 import java.lang.reflect.Type
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertNull

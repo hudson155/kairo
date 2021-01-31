@@ -1,8 +1,8 @@
 package io.limberapp.common.typeConversion.typeConverter
 
 import io.limberapp.common.util.uuid.base64Encode
+import org.junit.jupiter.api.Test
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFalse

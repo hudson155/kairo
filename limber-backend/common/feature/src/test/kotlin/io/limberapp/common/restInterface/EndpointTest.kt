@@ -6,10 +6,10 @@ import io.limberapp.common.rep.CreationRep
 import io.limberapp.common.util.url.enc
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.ifPresent
+import org.junit.jupiter.api.Test
 import java.lang.reflect.InvocationTargetException
 import java.time.ZoneId
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFailsWith

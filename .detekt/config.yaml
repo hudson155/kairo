@@ -407,8 +407,7 @@ style:
   ForbiddenComment:
     active: false
   ForbiddenImport:
-    active: true
-    forbiddenPatterns: '^(org\.junit\.(jupiter\.api\.)?(Test|(Disabled|Ignore)|((Before|After)(All|Class|Each)?)|(Assert(ions)?|assert(All|Throws|DoesNotThrow|Timeout(Preemptively)?)|fail)))$'
+    active: false
   ForbiddenMethodCall:
     active: true
     methods:

@@ -15,7 +15,7 @@ import io.limberapp.backend.rep.typicodePost.TypicodePostRep
 import io.limberapp.common.client.exception.LimberHttpClientException
 import io.limberapp.common.serialization.LimberObjectMapper
 import kotlinx.coroutines.runBlocking
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 

@@ -1,9 +1,9 @@
 package io.limberapp.common.util.time
 
+import org.junit.jupiter.api.Test
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
-import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 

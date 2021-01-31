@@ -1,8 +1,8 @@
 package io.limberapp.common.module
 
 import com.google.inject.Guice
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import kotlin.test.assertFails
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -25,7 +25,7 @@ internal class ModuleTest {
 
   private var cleanedUp: Boolean = true
 
-  @BeforeTest
+  @BeforeEach
   fun before() {
     cleanedUp = true
   }

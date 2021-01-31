@@ -3,8 +3,8 @@ package io.limberapp.common.auth.auth
 import io.limberapp.common.auth.jwt.Jwt
 import io.limberapp.common.permissions.limberPermissions.LimberPermission
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
+import org.junit.jupiter.api.Test
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

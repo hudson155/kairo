@@ -9,8 +9,8 @@ import io.limberapp.common.serialization.LimberObjectMapper
 import io.limberapp.common.typeConversion.typeConverter.FeaturePermissionsTypeConverter
 import io.limberapp.common.typeConversion.typeConverter.LimberPermissionsTypeConverter
 import io.limberapp.common.typeConversion.typeConverter.OrgPermissionsTypeConverter
+import org.junit.jupiter.api.Test
 import java.util.UUID
-import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class JwtTest {

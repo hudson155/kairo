@@ -1,6 +1,6 @@
 package io.limberapp.common.auth
 
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
