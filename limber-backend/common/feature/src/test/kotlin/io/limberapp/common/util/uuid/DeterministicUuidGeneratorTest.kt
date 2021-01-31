@@ -1,10 +1,16 @@
 package io.limberapp.common.util.uuid
 
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 internal class DeterministicUuidGeneratorTest {
   private val uuidGenerator: DeterministicUuidGenerator = DeterministicUuidGenerator()
+
+  @BeforeEach
+  fun beforeEach() {
+    uuidGenerator.reset()
+  }
 
   @Test
   fun `sanity check - should be valid`() {
@@ -18,9 +24,9 @@ internal class DeterministicUuidGeneratorTest {
 
   @Test
   fun `sanity check - should be consistent`() {
-    val list1 = uuidGenerator.generate()
+    val guid1 = uuidGenerator.generate()
     uuidGenerator.reset()
-    val list2 = uuidGenerator.generate()
-    assertEquals(list1, list2)
+    val guid2 = uuidGenerator.generate()
+    assertEquals(guid1, guid2)
   }
 }
