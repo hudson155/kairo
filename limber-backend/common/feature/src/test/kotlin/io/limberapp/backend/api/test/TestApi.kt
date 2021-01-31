@@ -2,7 +2,6 @@ package io.limberapp.backend.api.test
 
 import io.ktor.http.HttpMethod
 import io.limberapp.common.restInterface.Endpoint
-import io.limberapp.common.util.url.enc
 
 internal object TestApi {
   internal object Singleton : Endpoint(HttpMethod.Get, "/singleton")
@@ -14,25 +13,13 @@ internal object TestApi {
 
   internal data class RequiredQueryParamFoo(
       val foo: String,
-  ) : Endpoint(
-      httpMethod = HttpMethod.Get,
-      path = "/reqqp",
-      queryParams = listOf("foo" to enc(foo)),
-  )
+  ) : Endpoint(HttpMethod.Get, "/reqqp", qp = listOf("foo" to foo))
 
   internal data class RequiredQueryParamBar(
       val bar: String,
-  ) : Endpoint(
-      httpMethod = HttpMethod.Get,
-      path = "/reqqp",
-      queryParams = listOf("bar" to enc(bar)),
-  )
+  ) : Endpoint(HttpMethod.Get, "/reqqp", qp = listOf("bar" to bar))
 
   internal data class OptionalQueryParam(
       val optional: String?,
-  ) : Endpoint(
-      httpMethod = HttpMethod.Get,
-      path = "/optqp",
-      queryParams = listOfNotNull(optional?.let { "optional" to enc(it) }),
-  )
+  ) : Endpoint(HttpMethod.Get, "/optqp", qp = listOfNotNull(optional?.let { "optional" to it }))
 }

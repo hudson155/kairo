@@ -2,15 +2,22 @@ package io.limberapp.common.restInterface
 
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import io.ktor.http.encodeURLPath
+import io.ktor.http.formUrlEncode
 import io.limberapp.common.rep.ValidatedRep
-import io.limberapp.common.util.url.href
 
 abstract class Endpoint(
     val httpMethod: HttpMethod,
-    val path: String,
-    val queryParams: List<Pair<String, String>> = emptyList(),
+    rawPath: String,
+    qp: List<Pair<String, String>> = emptyList(),
     val contentType: ContentType = ContentType.Application.Json,
     val body: ValidatedRep? = null,
 ) {
-  val href: String = href(path, queryParams)
+  val path: String = rawPath.encodeURLPath()
+  val href: String = run {
+    val queryString = qp.formUrlEncode()
+    var href = path
+    if (queryString.isNotEmpty()) href += "?$queryString"
+    return@run href
+  }
 }

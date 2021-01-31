@@ -3,7 +3,6 @@ package io.limberapp.common.restInterface
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import io.limberapp.common.rep.CreationRep
-import io.limberapp.common.util.url.enc
 import io.limberapp.common.validation.RepValidation
 import io.limberapp.common.validation.ifPresent
 import org.junit.jupiter.api.Test
@@ -21,10 +20,7 @@ internal class EndpointTest {
    * This singleton is declared as a field because singletons can't be locals. Local classes should
    * be preferred everywhere they are allowed in this test class.
    */
-  internal object SingletonEndpoint : Endpoint(
-      httpMethod = HttpMethod.Get,
-      path = "/foo/bar/baz",
-  )
+  internal object SingletonEndpoint : Endpoint(HttpMethod.Get, "/foo/bar/baz")
 
   internal enum class Enum1 { OPT_A, OPT_B }
 
@@ -54,10 +50,7 @@ internal class EndpointTest {
 
   @Test
   fun `happy path - simple class`() {
-    data class TestEndpoint(val bar: String) : Endpoint(
-        httpMethod = HttpMethod.Get,
-        path = "/foo/$bar/baz",
-    )
+    data class TestEndpoint(val bar: String) : Endpoint(HttpMethod.Get, "/foo/$bar/baz")
     assertEquals(EndpointTemplate(
         httpMethod = HttpMethod.Get,
         pathTemplate = "/foo/{bar}/baz",
@@ -75,13 +68,13 @@ internal class EndpointTest {
     ) : Endpoint(
         httpMethod = HttpMethod.Post,
         // The path is inconsistent on purpose.
-        path = "/${enc(varA)}/b/${enc(varB)}/c/${enc(varC)}/${enc(varD)}/e/${enc(varE)}",
-        queryParams = listOfNotNull(
-            "qpf" to enc(varF),
-            varG?.let { "qpg" to enc(it) },
-            varH?.let { "qph" to enc(it) },
-            "qpi" to enc(varI),
-            varJ?.let { "qph" to enc(it) },
+        rawPath = "/$varA/b/$varB/c/$varC/$varD/e/$varE",
+        qp = listOfNotNull(
+            "qpf" to varF.toString(),
+            varG?.let { "qpg" to it },
+            varH?.let { "qph" to it.toString() },
+            "qpi" to varI.toString(),
+            varJ?.let { "qph" to it.toString() },
         ),
         contentType = ContentType.Text.CSV,
         body = varK,
@@ -96,10 +89,7 @@ internal class EndpointTest {
 
   @Test
   fun `negative - var is used twice`() {
-    data class TestEndpoint(val bar: String) : Endpoint(
-        httpMethod = HttpMethod.Get,
-        path = "/foo/$bar/$bar",
-    )
+    data class TestEndpoint(val bar: String) : Endpoint(HttpMethod.Get, "/foo/$bar/$bar")
     assertFails { TestEndpoint::class.template() }.let {
       val message = assertNotNull(it.message)
       assertTrue(message.contains(" contains more than 1 match of "), message = message)
@@ -108,11 +98,7 @@ internal class EndpointTest {
 
   @Test
   fun `negative - rep is not nullable`() {
-    data class TestEndpoint(val rep: TestRep) : Endpoint(
-        httpMethod = HttpMethod.Get,
-        path = "/foo/bar/baz",
-        body = rep,
-    )
+    data class TestEndpoint(val rep: TestRep) : Endpoint(HttpMethod.Get, "/foo/bar/baz", body = rep)
     assertFailsWith<InvocationTargetException> { TestEndpoint::class.template() }.let {
       val cause = assertNotNull(it.cause)
       assertTrue(cause is NullPointerException)

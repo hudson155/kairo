@@ -1,7 +1,6 @@
 package io.limberapp.common.restInterface
 
 import io.limberapp.common.rep.ValidatedRep
-import io.limberapp.common.util.url.enc
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
@@ -79,7 +78,7 @@ private fun <E : Endpoint> E.toTemplate(): EndpointTemplate<E> {
   return EndpointTemplate(
       httpMethod = httpMethod,
       pathTemplate = path,
-      requiredQueryParams = queryParams.map { it.first }.toSet(),
+      requiredQueryParams = emptySet(), // Not supported for singletons.
       contentType = contentType,
   )
 }
@@ -100,29 +99,29 @@ private fun generateArgsAndReplacements(
       // Generate a random integer.
       kClass == Int::class -> Random.nextInt().also {
         // Integers should go into arg replacements.
-        argReplacements[argName] = enc(it.toString())
+        argReplacements[argName] = it.toString()
       }
       // Generate a random string.
       kClass == String::class -> UUID.randomUUID().toString().also {
         // Strings should go into arg replacements.
-        argReplacements[argName] = enc(it)
+        argReplacements[argName] = it
       }
       // Generate a random time zone.
       kClass == ZoneId::class -> ZoneId.of(ZoneId.getAvailableZoneIds().random()).also {
         // Time zones should go into arg replacements.
-        argReplacements[argName] = enc(it.toString())
+        argReplacements[argName] = it.toString()
       }
       // Generate a random UUID.
       kClass == UUID::class -> UUID.randomUUID().also {
         // UUIDs should go into arg replacements.
-        argReplacements[argName] = enc(it.toString())
+        argReplacements[argName] = it.toString()
       }
       // Just use the first value in the enum. This will cause code below to break if there are
       // multiple args with the same enum type, but we can cross that bridge if and when we come to
       // it.
       kClass.isSubclassOf(Enum::class) -> kClass.java.enumConstants.first().also {
         // Enums should go into arg replacements.
-        argReplacements[argName] = enc(it.toString())
+        argReplacements[argName] = it.toString()
       }
       // Rep args must be nullable for this to work, so we'll just pass null. If this causes an NPE,
       // don't update this code, make the rep arg nullable!
