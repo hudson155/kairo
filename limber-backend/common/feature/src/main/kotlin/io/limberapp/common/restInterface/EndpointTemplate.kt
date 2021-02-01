@@ -12,4 +12,11 @@ data class EndpointTemplate<E : Endpoint>(
     val pathTemplate: String,
     val requiredQueryParams: Set<String>,
     val contentType: ContentType,
-)
+) {
+  override fun toString(): String =
+      listOfNotNull(
+          httpMethod,
+          pathTemplate,
+          requiredQueryParams.let { if (it.isNotEmpty()) "(${it.joinToString()})" else null },
+      ).joinToString(" ")
+}

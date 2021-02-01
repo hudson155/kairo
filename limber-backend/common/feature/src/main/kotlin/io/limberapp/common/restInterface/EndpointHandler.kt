@@ -12,6 +12,7 @@ import io.limberapp.common.auth.Auth
 import io.limberapp.common.auth.principal.JwtPrincipal
 import io.limberapp.common.exception.badRequest.BodyRequired
 import io.limberapp.common.exception.forbidden.ForbiddenException
+import io.limberapp.common.exception.unauthorized.UnauthorizedException
 import io.limberapp.common.rep.ValidatedRep
 import io.limberapp.common.restInterface.EndpointHandler.Handler
 import io.limberapp.common.restInterface.exception.BodyConversionException
@@ -56,7 +57,10 @@ abstract class EndpointHandler<E : Endpoint, R : Any>(val template: EndpointTemp
      * is false, they will be forbidden.
      */
     fun auth(block: () -> Auth) {
-      if (!block().authorize(principal?.jwt)) throw ForbiddenException()
+      if (!block().authorize(principal?.jwt)) {
+        if (principal == null) throw UnauthorizedException()
+        throw ForbiddenException()
+      }
       authorized = true
     }
 

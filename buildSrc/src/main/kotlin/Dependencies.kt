@@ -27,7 +27,10 @@ object Dependencies {
     const val clientJackson: String = "io.ktor:ktor-client-jackson:${Versions.ktor}"
     const val clientMock: String = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val httpJvm: String = "io.ktor:ktor-http-jvm:${Versions.ktor}"
+    const val jackson: String = "io.ktor:ktor-jackson:${Versions.ktor}"
+    const val serverCio: String = "io.ktor:ktor-server-cio:${Versions.ktor}"
     const val serverCore: String = "io.ktor:ktor-server-core:${Versions.ktor}"
+    const val serverHostCommon: String = "io.ktor:ktor-server-host-common:${Versions.ktor}"
     const val serverTest: String = "io.ktor:ktor-server-test-host:${Versions.ktor}"
   }
 

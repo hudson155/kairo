@@ -12,7 +12,10 @@ object Versions {
   const val guice: String = "4.2.3"
 
   // https://github.com/FasterXML/jackson-core/releases
-  const val jackson: String = "2.11.4"
+  // TODO: There seems to be a bug in newer versions of Jackson that causes deserialization of Unit
+  //  to not use the singleton instance.
+  //  https://github.com/FasterXML/jackson-module-kotlin/issues/196#issuecomment-760759070.
+  const val jackson: String = "2.10.5"
 
   // https://github.com/junit-team/junit5/releases
   const val junit: String = "5.7.0"

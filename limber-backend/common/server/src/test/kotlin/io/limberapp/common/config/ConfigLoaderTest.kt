@@ -2,6 +2,7 @@ package io.limberapp.common.config
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -57,7 +58,7 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `missing config property`() {
-    assertFailsWith<MismatchedInputException> {
+    assertFailsWith<MissingKotlinParameterException> {
       ConfigLoader.load<TestConfig>("config-with-missing-property")
     }.let {
       val message = assertNotNull(it.message)

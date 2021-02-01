@@ -69,7 +69,7 @@ complexity:
   MethodOverloading:
     active: true
     excludes:
-      - '**/src/main/kotlin/io/limberapp/backend/client/**/*Client.kt' # Clients
+      - '**/src/{main,test}/**/*Client.kt' # Clients
     threshold: 4
   NamedArguments:
     active: true
@@ -90,6 +90,8 @@ complexity:
     ignoreStringsRegex: '^guid|[A-Za-z]+Guid$'
   TooManyFunctions:
     active: true
+    excludes:
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
     thresholdInFiles: 16
     thresholdInClasses: 16
     thresholdInInterfaces: 16
@@ -354,6 +356,8 @@ potential-bugs:
     active: true
   LateinitUsage:
     active: true
+    excludes:
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
   MapGetWithNotNullAssertionOperator:
     active: true
   MissingWhenCase:

@@ -22,7 +22,7 @@ sealed class AuthenticationMechanism {
   ) : AuthenticationMechanism()
 
   sealed class Jwt : AuthenticationMechanism() {
-    abstract fun createAlgorithm(): JwtAlgorithm
+    internal abstract fun createAlgorithm(): JwtAlgorithm
 
     data class Signed(
         override val issuer: String,

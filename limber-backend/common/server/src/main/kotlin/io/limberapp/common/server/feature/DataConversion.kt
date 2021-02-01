@@ -1,9 +1,18 @@
 package io.limberapp.common.server.feature
 
+import io.ktor.application.Application
+import io.ktor.application.install
+import io.ktor.features.DataConversion
 import io.ktor.util.ConversionService
 import io.limberapp.common.typeConversion.TypeConverter
 import io.limberapp.common.typeConversion.exception.TypeConversionException
 import java.lang.reflect.Type
+
+internal fun Application.configureDataConversion(typeConverters: Set<TypeConverter<*>>) {
+  install(DataConversion) {
+    typeConverters.forEach { convert(it.kClass, conversionService(it)) }
+  }
+}
 
 internal fun <T : Any> conversionService(
     typeConverter: TypeConverter<T>,
