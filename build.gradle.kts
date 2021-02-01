@@ -37,9 +37,7 @@ allprojects {
   }
 
   tasks.withType<Test> {
-    useJUnitPlatform {
-      systemProperty("junit.jupiter.testinstance.lifecycle.default", "per_class")
-    }
+    useJUnitPlatform()
   }
 
   detekt {

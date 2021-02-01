@@ -21,11 +21,13 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import java.net.ConnectException
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class ServerTest {
   internal class TestServer(application: Application) :
       Server<TestConfig>(application, listOf(TestFeature), TestConfig)
