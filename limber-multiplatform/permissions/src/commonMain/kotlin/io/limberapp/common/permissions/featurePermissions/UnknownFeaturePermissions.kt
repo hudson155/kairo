@@ -14,6 +14,11 @@ data class UnknownFeaturePermissions(
     override val prefix: Char,
     private val permissions: List<Boolean>,
 ) : FeaturePermissions() {
+  companion object {
+    fun fromDarb(prefix: Char, darb: String): UnknownFeaturePermissions =
+        UnknownFeaturePermissions(prefix, DarbEncoder.decode(darb))
+  }
+
   private val logger: Logger = LoggerFactory.getLogger(UnknownFeaturePermissions::class)
 
   override fun contains(permission: Permission): Boolean {
@@ -22,9 +27,4 @@ data class UnknownFeaturePermissions(
   }
 
   override fun asBooleanList(): List<Boolean> = permissions
-
-  companion object {
-    fun fromDarb(prefix: Char, darb: String): UnknownFeaturePermissions =
-        UnknownFeaturePermissions(prefix, DarbEncoder.decode(darb))
-  }
 }

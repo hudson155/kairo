@@ -20,6 +20,10 @@ internal class JwtAuthVerifier(
     authenticationConfig: AuthenticationConfig,
     private val objectMapper: ObjectMapper,
 ) : AuthVerifier {
+  companion object {
+    const val scheme: String = "Bearer"
+  }
+
   /**
    * [JwtVerifierProvider]s are keyed by issuer. The key is nullable since issuer is not a required
    * JWT claim.
@@ -76,9 +80,5 @@ internal class JwtAuthVerifier(
   private fun Claim.allowNull(): Claim? {
     if (this.isNull) return null
     return this
-  }
-
-  companion object {
-    const val scheme: String = "Bearer"
   }
 }
