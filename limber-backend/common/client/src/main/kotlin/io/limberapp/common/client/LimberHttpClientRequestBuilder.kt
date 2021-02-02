@@ -6,13 +6,12 @@ import io.ktor.http.HttpHeaders
 typealias RequestBuilder = LimberHttpClientRequestBuilder.() -> Unit
 
 class LimberHttpClientRequestBuilder(accept: ContentType) {
-  private val mutableHeaders: MutableMap<String, Any?> = mutableMapOf(HttpHeaders.Accept to accept)
+  private val mutableHeaders: MutableMap<String, Any> = mutableMapOf(HttpHeaders.Accept to accept)
 
   val headers: Map<String, String>
     get() = mutableHeaders
         .mapNotNull { header ->
           val value = when (val value = header.value) {
-            null -> null
             is Function0<*> -> value()?.toString()
             else -> value.toString()
           }
@@ -25,7 +24,7 @@ class LimberHttpClientRequestBuilder(accept: ContentType) {
    * be invoked and its response will be used as the header value. Otherwise, the [value] itself
    * will be used.
    */
-  fun putHeader(key: String, value: String) {
+  fun putHeader(key: String, value: Any) {
     check(!HttpHeaders.isUnsafe(key))
     mutableHeaders[key] = value
   }

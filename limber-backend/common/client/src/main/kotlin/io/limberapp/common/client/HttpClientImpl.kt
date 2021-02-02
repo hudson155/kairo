@@ -21,6 +21,12 @@ import io.ktor.client.HttpClient as KtorHttpClient
 /**
  * The primary constructor should only be used for testing. There's no need to specify an engine
  * factory in production code - [CIO] will be used.
+ *
+ * Note: This implementation results in duplicate Accept headers. [JsonFeature] expects us to set
+ * [JsonFeature.acceptContentTypes], but it can't be set to an empty list. [HttpClientImpl] manages
+ * the Accept header on a per-request basis, so we end up doubling up the header. e.g. passing in an
+ * Accept value of text/csv will result in Accept=[text/csv, application/json], and passing in an
+ * Accept value of application/json will result in Accept=[application/json, application/json].
  */
 class HttpClientImpl internal constructor(
     engineFactory: HttpClientEngineFactory<*>,

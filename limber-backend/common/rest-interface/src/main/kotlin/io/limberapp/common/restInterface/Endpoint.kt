@@ -6,7 +6,7 @@ import io.ktor.http.encodeURLPath
 import io.ktor.http.formUrlEncode
 import io.limberapp.common.rep.ValidatedRep
 
-abstract class Endpoint(
+open class Endpoint(
     val httpMethod: HttpMethod,
     rawPath: String,
     qp: List<Pair<String, String>> = emptyList(),

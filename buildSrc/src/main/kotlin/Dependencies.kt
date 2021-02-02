@@ -5,6 +5,7 @@ object Dependencies {
   }
 
   object JUnit {
+    const val api: String = "org.junit.jupiter:junit-jupiter-api:${Versions.junit}"
     const val engine: String = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
   }
 

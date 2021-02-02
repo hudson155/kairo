@@ -1,6 +1,7 @@
 package io.limberapp.common.server
 
 import com.google.inject.Guice
+import com.google.inject.Injector
 import com.google.inject.Stage
 import io.ktor.application.Application
 import io.ktor.auth.authenticate
@@ -36,7 +37,8 @@ private val DEFAULT_TYPE_CONVERTERS: Set<TypeConverter<out Any>> = setOf(
     UuidTypeConverter,
 )
 
-abstract class Server<C : Config>(
+@Suppress("LateinitUsage")
+open class Server<C : Config>(
     application: Application,
     modules: List<Module>,
     protected val config: C,
@@ -45,20 +47,24 @@ abstract class Server<C : Config>(
 
   private val typeConverters: Set<TypeConverter<*>> =
       DEFAULT_TYPE_CONVERTERS + modules.flatMap { it.typeConverters }
+
   private val modules: List<Module> = run {
     val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
     val mainModule = MainModule(config.clock, config.uuids, objectMapper)
     return@run modules + mainModule
   }
+
   private val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> =
       modules.flatMap { (it as? Feature)?.apiEndpoints.orEmpty() }
+
+  lateinit var injector: Injector
 
   init {
     KtorDelegateServer(application, configure = ::configure, cleanUp = ::cleanUp)
   }
 
   private fun configure(application: Application) {
-    val injector = Guice.createInjector(Stage.PRODUCTION, modules)
+    injector = Guice.createInjector(Stage.PRODUCTION, modules)
     val objectMapper = injector.getInstance(LimberObjectMapper::class.java)
 
     application.configureAuthentication(config.authentication, objectMapper)
