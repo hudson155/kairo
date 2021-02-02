@@ -40,8 +40,8 @@ internal class ConfigLoaderTest {
   fun `missing config`() {
     assertFailsWith<IllegalStateException> {
       ConfigLoader.load<TestConfig>("missing-config")
-    }.let {
-      assertEquals("Config missing-config not found.", it.message)
+    }.let { e ->
+      assertEquals("Config missing-config not found.", e.message)
     }
   }
 
@@ -49,8 +49,8 @@ internal class ConfigLoaderTest {
   fun `extra config property`() {
     assertFailsWith<UnrecognizedPropertyException> {
       ConfigLoader.load<TestConfig>("config-with-extra-property")
-    }.let {
-      val message = assertNotNull(it.message)
+    }.let { e ->
+      val message = assertNotNull(e.message)
       assertTrue(message.startsWith("Unrecognized field \"customProperty2\""),
           message = message)
     }
@@ -60,8 +60,8 @@ internal class ConfigLoaderTest {
   fun `missing config property`() {
     assertFailsWith<MissingKotlinParameterException> {
       ConfigLoader.load<TestConfig>("config-with-missing-property")
-    }.let {
-      val message = assertNotNull(it.message)
+    }.let { e ->
+      val message = assertNotNull(e.message)
       assertTrue(message.contains("missing (therefore NULL) value for creator parameter clock"),
           message = message)
     }
@@ -71,8 +71,8 @@ internal class ConfigLoaderTest {
   fun `invalid config property (wrong type)`() {
     assertFailsWith<MismatchedInputException> {
       ConfigLoader.load<TestConfig>("config-with-invalid-property")
-    }.let {
-      val message = assertNotNull(it.message)
+    }.let { e ->
+      val message = assertNotNull(e.message)
       assertTrue(message.startsWith("Cannot deserialize instance of"),
           message = message)
     }
@@ -82,8 +82,8 @@ internal class ConfigLoaderTest {
   fun `JSON config`() {
     assertFailsWith<IllegalStateException> {
       ConfigLoader.load<TestConfig>("valid-test-json-config")
-    }.let {
-      assertEquals("Config valid-test-json-config not found.", it.message)
+    }.let { e ->
+      assertEquals("Config valid-test-json-config not found.", e.message)
     }
   }
 }

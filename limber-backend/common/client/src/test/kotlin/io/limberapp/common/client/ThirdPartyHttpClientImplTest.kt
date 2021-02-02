@@ -94,8 +94,8 @@ internal class ThirdPartyHttpClientImplTest {
       )), null) {
         it?.let { readValue(it) }
       }
-    }.let {
-      assertTrue(it.errorMessage.contains("SyntaxError: Unexpected token : in JSON"))
+    }.let { e ->
+      assertTrue(e.errorMessage.contains("SyntaxError: Unexpected token : in JSON"))
     }
   }
 }

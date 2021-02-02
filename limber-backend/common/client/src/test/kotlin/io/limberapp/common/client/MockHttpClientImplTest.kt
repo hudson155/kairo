@@ -106,8 +106,8 @@ internal class MockHttpClientImplTest {
       httpClient.request(TypicodePostApi.Conflict, null) {
         readValue(checkNotNull(it))
       }
-    }.let {
-      assertEquals(HttpStatusCode.Conflict, it.statusCode)
+    }.let { e ->
+      assertEquals(HttpStatusCode.Conflict, e.statusCode)
       assertEquals(Request(
           url = "http://mock.tld/conflict",
           method = "GET",
@@ -117,7 +117,7 @@ internal class MockHttpClientImplTest {
           ),
           contentType = null,
           body = null,
-      ), objectMapper.readValue(it.errorMessage))
+      ), objectMapper.readValue(e.errorMessage))
     }
   }
 }

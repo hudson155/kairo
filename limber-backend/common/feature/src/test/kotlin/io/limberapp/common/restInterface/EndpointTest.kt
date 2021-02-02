@@ -99,8 +99,8 @@ internal class EndpointTest {
   @Test
   fun `negative - rep is not nullable`() {
     data class TestEndpoint(val rep: TestRep) : Endpoint(HttpMethod.Get, "/foo/bar/baz", body = rep)
-    assertFailsWith<InvocationTargetException> { TestEndpoint::class.template() }.let {
-      val cause = assertNotNull(it.cause)
+    assertFailsWith<InvocationTargetException> { TestEndpoint::class.template() }.let { e ->
+      val cause = assertNotNull(e.cause)
       assertTrue(cause is NullPointerException)
       val message = assertNotNull(cause.message)
       assertTrue(message.startsWith("Parameter specified as non-null is null: "), message = message)

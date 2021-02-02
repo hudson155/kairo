@@ -81,8 +81,8 @@ internal class ServerTest {
   fun `Endpoint without auth`(): Unit = runBlocking {
     assertFailsWith<LimberHttpClientException> {
       client(TestApi.EndpointWithoutAuth, authHeader(null))
-    }.let {
-      assertEquals(HttpStatusCode.InternalServerError, it.statusCode)
+    }.let { e ->
+      assertEquals(HttpStatusCode.InternalServerError, e.statusCode)
     }
   }
 
@@ -90,8 +90,8 @@ internal class ServerTest {
   fun `Endpoint requires permission, no JWT`(): Unit = runBlocking {
     assertFailsWith<LimberHttpClientException> {
       client(TestApi.RequiresPermission, authHeader(null))
-    }.let {
-      assertEquals(HttpStatusCode.Unauthorized, it.statusCode)
+    }.let { e ->
+      assertEquals(HttpStatusCode.Unauthorized, e.statusCode)
     }
   }
 
@@ -99,8 +99,8 @@ internal class ServerTest {
   fun `Endpoint requires permission, JWT without permission`(): Unit = runBlocking {
     assertFailsWith<LimberHttpClientException> {
       client(TestApi.RequiresPermission, authHeader(LimberPermissions.none()))
-    }.let {
-      assertEquals(HttpStatusCode.Forbidden, it.statusCode)
+    }.let { e ->
+      assertEquals(HttpStatusCode.Forbidden, e.statusCode)
     }
   }
 
@@ -121,8 +121,8 @@ internal class ServerTest {
   fun `Required query param with QP missing`(): Unit = runBlocking {
     assertFailsWith<LimberHttpClientException> {
       client(TestApi.RequiredQp(null), authHeader(null))
-    }.let {
-      assertEquals(HttpStatusCode.BadRequest, it.statusCode)
+    }.let { e ->
+      assertEquals(HttpStatusCode.BadRequest, e.statusCode)
     }
   }
 
@@ -148,8 +148,8 @@ internal class ServerTest {
   fun `Required body (POST) with body missing`(): Unit = runBlocking {
     assertFailsWith<LimberHttpClientException> {
       client(TestApi.RequiredBody(null), authHeader(null))
-    }.let {
-      assertEquals(HttpStatusCode.BadRequest, it.statusCode)
+    }.let { e ->
+      assertEquals(HttpStatusCode.BadRequest, e.statusCode)
     }
   }
 
