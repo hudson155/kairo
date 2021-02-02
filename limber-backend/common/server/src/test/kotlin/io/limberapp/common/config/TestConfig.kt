@@ -4,6 +4,6 @@ internal data class TestConfig(
     override val authentication: AuthenticationConfig,
     override val clock: ClockConfig,
     val customProperty: String,
-    override val hosts: TestHosts,
+    val hosts: TestHosts,
     override val uuids: UuidsConfig,
 ) : Config

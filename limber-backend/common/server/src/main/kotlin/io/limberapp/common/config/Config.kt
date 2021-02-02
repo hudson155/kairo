@@ -8,6 +8,5 @@ package io.limberapp.common.config
 interface Config {
   val authentication: AuthenticationConfig
   val clock: ClockConfig
-  val hosts: Hosts
   val uuids: UuidsConfig
 }
