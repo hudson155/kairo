@@ -37,7 +37,7 @@ class HttpClientImpl internal constructor(
 
   override suspend fun request(
       endpoint: Endpoint,
-      builder: (LimberHttpClientRequestBuilder.() -> Unit)?,
+      builder: RequestBuilder?,
   ): Pair<HttpStatusCode, String> {
     val httpResponse = try {
       httpClient.request<HttpResponse> {

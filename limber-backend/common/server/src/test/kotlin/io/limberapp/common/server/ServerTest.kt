@@ -10,7 +10,7 @@ import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.limberapp.common.auth.jwt.JwtClaims
 import io.limberapp.common.client.HttpClientImpl
-import io.limberapp.common.client.LimberHttpClientRequestBuilder
+import io.limberapp.common.client.RequestBuilder
 import io.limberapp.common.client.exception.LimberHttpClientException
 import io.limberapp.common.permissions.limberPermissions.LimberPermission
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
@@ -185,9 +185,7 @@ internal class ServerTest {
     assertNull(result)
   }
 
-  private fun authHeader(
-      permissions: LimberPermissions?,
-  ): LimberHttpClientRequestBuilder.() -> Unit = {
+  private fun authHeader(permissions: LimberPermissions?): RequestBuilder = {
     if (permissions != null) {
       val jwt = JWT.create()
           .withClaim(JwtClaims.permissions, permissions.asDarb())

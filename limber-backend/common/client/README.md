@@ -37,19 +37,19 @@ object UserApi {
 class UserClient @Inject constructor(private val httpClient: HttpClient) {
   suspend operator fun invoke(
       endpoint: UserApi.Post,
-      builder: (LimberHttpClientRequestBuilder.() -> Unit)? = null,
+      builder: RequestBuilder? = null,
   ): UserRep.Complete =
       httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: UserApi.Get,
-      builder: (LimberHttpClientRequestBuilder.() -> Unit)? = null,
+      builder: RequestBuilder? = null,
   ): UserRep.Complete? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: UserApi.GetByEmailAddress,
-      builder: (LimberHttpClientRequestBuilder.() -> Unit)? = null,
+      builder: RequestBuilder? = null,
   ): UserRep.Complete? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

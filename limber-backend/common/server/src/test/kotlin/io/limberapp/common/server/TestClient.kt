@@ -3,66 +3,66 @@ package io.limberapp.common.server
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
 import io.limberapp.common.client.HttpClient
-import io.limberapp.common.client.LimberHttpClientRequestBuilder
+import io.limberapp.common.client.RequestBuilder
 
 internal class TestClient @Inject constructor(private val httpClient: HttpClient) {
   suspend operator fun invoke(
       endpoint: TestApi.NoopGet,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): Unit? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: TestApi.EndpointWithoutAuth,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): Unit? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: TestApi.RequiresPermission,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): Unit? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: TestApi.UnusualStatusCode,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): Unit? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
       endpoint: TestApi.PathParam,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): TestRep.Complete =
       httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: TestApi.RequiredQp,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): TestRep.Complete =
       httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: TestApi.OptionalQp,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): TestRep.Complete =
       httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: TestApi.RequiredBody,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): TestRep.Complete =
       httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: TestApi.OptionalBody,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): TestRep.Complete =
       httpClient.request(endpoint, builder) { readValue(checkNotNull(it)) }
 
   suspend operator fun invoke(
       endpoint: TestApi.Missing,
-      builder: LimberHttpClientRequestBuilder.() -> Unit = {},
+      builder: RequestBuilder = {},
   ): Unit? =
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 }

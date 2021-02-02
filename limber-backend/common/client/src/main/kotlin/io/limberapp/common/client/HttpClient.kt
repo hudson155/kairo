@@ -11,7 +11,7 @@ val SUCCESSFUL_RESPONSE_RANGE: IntRange = 200..299
 abstract class HttpClient(protected val objectMapper: LimberObjectMapper) : Closeable {
   suspend fun <T> request(
       endpoint: Endpoint,
-      builder: (LimberHttpClientRequestBuilder.() -> Unit)?,
+      builder: RequestBuilder?,
       parseResponse: LimberObjectMapper.(responseBody: String?) -> T,
   ): T {
     val (statusCode, responseBody) = try {
@@ -36,6 +36,6 @@ abstract class HttpClient(protected val objectMapper: LimberObjectMapper) : Clos
    */
   protected abstract suspend fun request(
       endpoint: Endpoint,
-      builder: (LimberHttpClientRequestBuilder.() -> Unit)?,
+      builder: RequestBuilder?,
   ): Pair<HttpStatusCode, String>
 }

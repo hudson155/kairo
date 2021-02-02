@@ -3,6 +3,8 @@ package io.limberapp.common.client
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 
+typealias RequestBuilder = LimberHttpClientRequestBuilder.() -> Unit
+
 class LimberHttpClientRequestBuilder(accept: ContentType) {
   private val mutableHeaders: MutableMap<String, Any?> = mutableMapOf(HttpHeaders.Accept to accept)
 
