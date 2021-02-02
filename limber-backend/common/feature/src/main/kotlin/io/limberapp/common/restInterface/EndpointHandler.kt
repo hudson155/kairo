@@ -35,8 +35,7 @@ import kotlin.reflect.full.cast
  *   request, and for determining the response. Authorization is performed by calling [Handler.auth]
  *   and using [Auth] implementations within the block. There's no valid use case for not calling
  *   [Handler.auth] at least once. If it's not called, the endpoint will return a 500 error. A
- *   response can be provided by returning it from the method. Setting the response status code is
- *   done by setting [Handler.statusCode].
+ *   response can be provided by returning it from the method.
  */
 abstract class EndpointHandler<E : Endpoint, R : Any>(val template: EndpointTemplate<E>) {
   inner class Handler(private val endpoint: E, private val principal: JwtPrincipal?) {
@@ -48,7 +47,7 @@ abstract class EndpointHandler<E : Endpoint, R : Any>(val template: EndpointTemp
         "Every endpoint needs to implement authorization." +
             " ${this@EndpointHandler::class.simpleName} does not."
       }
-      return Pair(statusCode, result)
+      return Pair(HttpStatusCode.OK, result)
     }
 
     /**
@@ -63,8 +62,6 @@ abstract class EndpointHandler<E : Endpoint, R : Any>(val template: EndpointTemp
       }
       authorized = true
     }
-
-    var statusCode: HttpStatusCode = HttpStatusCode.OK
   }
 
   suspend fun PipelineContext<Unit, ApplicationCall>.handle() {

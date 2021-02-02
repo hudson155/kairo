@@ -11,8 +11,6 @@ internal object TestApi {
 
   internal object RequiresPermission : Endpoint(HttpMethod.Get, "/requires-permission")
 
-  internal object UnusualStatusCode : Endpoint(HttpMethod.Get, "/unusual-status-code")
-
   internal data class PathParam(
       val foo: String,
   ) : Endpoint(HttpMethod.Get, "/path/${foo.encodeURLPath()}/param")

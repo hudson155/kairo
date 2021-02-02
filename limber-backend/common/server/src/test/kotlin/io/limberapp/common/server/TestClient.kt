@@ -25,12 +25,6 @@ internal class TestClient @Inject constructor(private val httpClient: HttpClient
       httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
 
   suspend operator fun invoke(
-      endpoint: TestApi.UnusualStatusCode,
-      builder: RequestBuilder = {},
-  ): Unit? =
-      httpClient.request(endpoint, builder) { it?.let { readValue(it) } }
-
-  suspend operator fun invoke(
       endpoint: TestApi.PathParam,
       builder: RequestBuilder = {},
   ): TestRep.Complete =

@@ -9,7 +9,6 @@ internal object TestFeature : Feature() {
       NoopGetHandler::class,
       EndpointWithoutAuthHandler::class,
       RequiresPermissionHandler::class,
-      UnusualStatusCodeHandler::class,
       PathParamHandler::class,
       RequiredQpHandler::class,
       OptionalQpHandler::class,

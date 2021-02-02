@@ -112,12 +112,6 @@ internal class ServerTest {
   }
 
   @Test
-  fun `Endpoint returns an unusual (successful) status code`(): Unit = runBlocking {
-    val result = client(TestApi.UnusualStatusCode, authHeader(null))
-    assertEquals(Unit, result)
-  }
-
-  @Test
   fun `Path param`(): Unit = runBlocking {
     val result = client(TestApi.PathParam("foo value"), authHeader(null))
     assertEquals(TestRep.Complete("foo value"), result)
