@@ -12,6 +12,7 @@ import io.limberapp.common.auth.jwt.JwtClaims
 import io.limberapp.common.client.HttpClientImpl
 import io.limberapp.common.client.RequestBuilder
 import io.limberapp.common.client.exception.LimberHttpClientException
+import io.limberapp.common.module.Module
 import io.limberapp.common.permissions.limberPermissions.LimberPermission
 import io.limberapp.common.permissions.limberPermissions.LimberPermissions
 import io.limberapp.common.serialization.LimberObjectMapper
@@ -30,7 +31,9 @@ import kotlin.test.assertNull
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class ServerTest {
   internal class TestServer(application: Application) :
-      Server<TestConfig>(application, listOf(TestFeature), TestConfig)
+      Server<TestConfig>(application, TestConfig) {
+    override val modules: List<Module> = listOf(TestFeature)
+  }
 
   private val objectMapper: LimberObjectMapper =
       LimberObjectMapper(typeConverters = setOf(LimberPermissionsTypeConverter))

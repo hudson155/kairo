@@ -7,6 +7,7 @@ import io.limberapp.common.config.ConfigLoader
 import io.limberapp.common.exception.badRequest.RankOutOfBounds
 import io.limberapp.common.exception.forbidden.ForbiddenException
 import io.limberapp.common.exception.unauthorized.UnauthorizedException
+import io.limberapp.common.module.Module
 import io.limberapp.common.server.Server
 import kotlinx.coroutines.delay
 import org.junit.jupiter.api.Test
@@ -41,11 +42,12 @@ internal class IntegrationTest(
     override fun Application.main(): Server<TestConfig> {
       assertEquals(0, serverStartupCount)
       serverStartupCount++
-      return Server(
+      return object : Server<TestConfig>(
           application = this,
-          modules = emptyList(),
           config = ConfigLoader.load("test"),
-      )
+      ) {
+        override val modules: List<Module> = emptyList()
+      }
     }
   }
 

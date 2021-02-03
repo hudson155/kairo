@@ -38,24 +38,13 @@ private val DEFAULT_TYPE_CONVERTERS: Set<TypeConverter<out Any>> = setOf(
 )
 
 @Suppress("LateinitUsage")
-open class Server<C : Config>(
+abstract class Server<C : Config>(
     application: Application,
-    modules: List<Module>,
     protected val config: C,
 ) {
   private val logger: Logger = LoggerFactory.getLogger(Server::class.java)
 
-  private val typeConverters: Set<TypeConverter<*>> =
-      DEFAULT_TYPE_CONVERTERS + modules.flatMap { it.typeConverters }
-
-  private val modules: List<Module> = run {
-    val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
-    val mainModule = MainModule(config.clock, config.uuids, objectMapper)
-    return@run modules + mainModule
-  }
-
-  private val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> =
-      modules.flatMap { (it as? Feature)?.apiEndpoints.orEmpty() }
+  abstract val modules: List<Module>
 
   lateinit var injector: Injector
 
@@ -64,6 +53,16 @@ open class Server<C : Config>(
   }
 
   private fun configure(application: Application) {
+    val typeConverters: Set<TypeConverter<*>> =
+        DEFAULT_TYPE_CONVERTERS + modules.flatMap { it.typeConverters }
+    val modules: List<Module> = run {
+      val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
+      val mainModule = MainModule(config.clock, config.uuids, objectMapper)
+      return@run modules + mainModule
+    }
+    val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> =
+        modules.flatMap { (it as? Feature)?.apiEndpoints.orEmpty() }
+
     injector = Guice.createInjector(Stage.PRODUCTION, modules)
     val objectMapper = injector.getInstance(LimberObjectMapper::class.java)
 

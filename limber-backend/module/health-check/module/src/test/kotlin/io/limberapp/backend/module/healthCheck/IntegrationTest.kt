@@ -6,22 +6,24 @@ import io.limberapp.backend.client.healthCheck.HealthCheckClient
 import io.limberapp.backend.server.test.config.TestConfig
 import io.limberapp.backend.service.healthCheck.TestHealthCheckService
 import io.limberapp.common.config.ConfigLoader
+import io.limberapp.common.module.Module
 import io.limberapp.common.server.Server
-import io.limberapp.testing.integration.LimberIntegrationTest
-import io.limberapp.testing.integration.LimberIntegrationTestExtension
+import io.limberapp.testing.integration.AbstractIntegrationTest
+import io.limberapp.testing.integration.AbstractIntegrationTestExtension
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(IntegrationTest.Extension::class)
 internal abstract class IntegrationTest(
     engine: TestApplicationEngine,
     server: Server<*>,
-) : LimberIntegrationTest(engine, server) {
-  internal class Extension : LimberIntegrationTestExtension() {
-    override fun Application.main(): Server<TestConfig> = Server(
+) : AbstractIntegrationTest(engine, server) {
+  internal class Extension : AbstractIntegrationTestExtension() {
+    override fun Application.main(): Server<TestConfig> = object : Server<TestConfig>(
         application = this,
-        modules = listOf(HealthCheckFeature(TestHealthCheckService::class)),
         config = ConfigLoader.load("test"),
-    )
+    ) {
+      override val modules: List<Module> = listOf(HealthCheckFeature(TestHealthCheckService::class))
+    }
   }
 
   protected val healthCheckClient: HealthCheckClient by lazy {
