@@ -46,7 +46,7 @@ internal class IntegrationTest(
           application = this,
           config = ConfigLoader.load("test"),
       ) {
-        override val modules: List<Module> = emptyList()
+        override val modules: Set<Module> = emptySet()
       }
     }
   }

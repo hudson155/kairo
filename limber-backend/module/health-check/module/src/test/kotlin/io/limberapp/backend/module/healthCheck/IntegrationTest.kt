@@ -22,7 +22,7 @@ internal abstract class IntegrationTest(
         application = this,
         config = ConfigLoader.load("test"),
     ) {
-      override val modules: List<Module> = listOf(HealthCheckFeature(TestHealthCheckService::class))
+      override val modules: Set<Module> = setOf(HealthCheckFeature(TestHealthCheckService::class))
     }
   }
 

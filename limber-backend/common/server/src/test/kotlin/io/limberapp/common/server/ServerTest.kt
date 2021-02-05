@@ -32,7 +32,7 @@ import kotlin.test.assertNull
 internal class ServerTest {
   internal class TestServer(application: Application) :
       Server<TestConfig>(application, TestConfig) {
-    override val modules: List<Module> = listOf(TestFeature)
+    override val modules: Set<Module> = setOf(TestFeature)
   }
 
   private val objectMapper: LimberObjectMapper =

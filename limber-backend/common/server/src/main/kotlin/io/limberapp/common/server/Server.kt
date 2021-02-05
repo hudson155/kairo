@@ -44,7 +44,7 @@ abstract class Server<C : Config>(
 ) {
   private val logger: Logger = LoggerFactory.getLogger(Server::class.java)
 
-  abstract val modules: List<Module>
+  abstract val modules: Set<Module>
 
   lateinit var injector: Injector
 
@@ -55,7 +55,7 @@ abstract class Server<C : Config>(
   private fun configure(application: Application) {
     val typeConverters: Set<TypeConverter<*>> =
         DEFAULT_TYPE_CONVERTERS + modules.flatMap { it.typeConverters }
-    val modules: List<Module> = run {
+    val modules: Set<Module> = run {
       val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
       val mainModule = MainModule(config.clock, config.uuids, objectMapper)
       return@run modules + mainModule
