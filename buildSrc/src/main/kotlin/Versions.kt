@@ -21,7 +21,7 @@ object Versions {
   const val junit: String = "5.7.0"
 
   // https://github.com/JetBrains/kotlin/releases
-  const val kotlin: String = "1.4.21"
+  const val kotlin: String = "1.4.30"
 
   // https://github.com/ktorio/ktor/releases
   const val ktor: String = "1.5.0"
