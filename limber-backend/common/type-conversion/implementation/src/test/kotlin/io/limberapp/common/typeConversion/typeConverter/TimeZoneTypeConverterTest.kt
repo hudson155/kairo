@@ -1,13 +1,25 @@
 package io.limberapp.common.typeConversion.typeConverter
 
+import io.limberapp.common.typeConversion.TypeConverter
 import org.junit.jupiter.api.Test
 import java.time.ZoneId
 import java.time.ZoneOffset
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
+@OptIn(TypeConverter.Unsafe::class)
 internal class TimeZoneTypeConverterTest {
+  @Test
+  fun canConvert() {
+    assertFalse(TimeZoneTypeConverter.canConvert(String::class.java))
+    assertTrue(TimeZoneTypeConverter.canConvert(ZoneId::class.java))
+    assertTrue(TimeZoneTypeConverter.canConvert(ZoneOffset::class.java))
+  }
+
   @Test
   fun isValid() {
     assertNull(TimeZoneTypeConverter.isValid(""))
@@ -45,6 +57,31 @@ internal class TimeZoneTypeConverterTest {
     assertFails { TimeZoneTypeConverter.parseString("America/Calgary") }
 
     assertFails { TimeZoneTypeConverter.parseString("!@#$%^&*()") }
+  }
+
+  @Test
+  fun writeStringUnsafe() {
+    assertFailsWith<ClassCastException> { TimeZoneTypeConverter.writeStringUnsafe("") }
+
+    assertEquals("Z", TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.UTC))
+
+    assertEquals("-07:00",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.ofHours(-7)))
+    assertEquals("-07:00",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.ofHoursMinutes(-7, 0)))
+    assertEquals("+11:00",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.ofHours(11)))
+    assertEquals("-03:30",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.ofHoursMinutes(-3, -30)))
+    assertEquals("-03:30",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.ofHoursMinutesSeconds(-3, -30, 0)))
+    assertEquals("+12:34:56",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneOffset.ofHoursMinutesSeconds(12, 34, 56)))
+
+    assertEquals("America/New_York",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneId.of("America/New_York")))
+    assertEquals("America/Edmonton",
+        TimeZoneTypeConverter.writeStringUnsafe(ZoneId.of("America/Edmonton")))
   }
 
   @Test

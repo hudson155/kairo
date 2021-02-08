@@ -1,14 +1,23 @@
 package io.limberapp.common.typeConversion.typeConverter
 
+import io.limberapp.common.typeConversion.TypeConverter
 import io.limberapp.common.util.uuid.base64Encode
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+@OptIn(TypeConverter.Unsafe::class)
 internal class UuidTypeConverterTest {
+  @Test
+  fun canConvert() {
+    assertFalse(UuidTypeConverter.canConvert(String::class.java))
+    assertTrue(UuidTypeConverter.canConvert(UUID::class.java))
+  }
+
   @Test
   fun isValid() {
     assertFalse(UuidTypeConverter.isValid(""))
@@ -35,6 +44,17 @@ internal class UuidTypeConverterTest {
     assertEquals(UUID.fromString("feb6b425-69a6-4a6a-b866-8f3e856e54d6"),
         UuidTypeConverter.parseString("/ra0JWmmSmq4Zo8+hW5U1g=="))
     assertFails { UuidTypeConverter.parseString("invalid") }
+  }
+
+  @Test
+  fun writeStringUnsafe() {
+    assertFailsWith<ClassCastException> { UuidTypeConverter.writeStringUnsafe("") }
+
+    List(10) { UUID.randomUUID() }.forEach { uuid ->
+      assertEquals(uuid.toString(), UuidTypeConverter.writeStringUnsafe(uuid))
+    }
+    assertEquals("feb6b425-69a6-4a6a-b866-8f3e856e54d6",
+        UuidTypeConverter.writeStringUnsafe(UUID.fromString("feb6b425-69a6-4a6a-b866-8f3e856e54d6")))
   }
 
   @Test
