@@ -5,7 +5,6 @@ dependencies {
   implementation(project(":limber-backend:common:jwt"))
   implementation(project(":limber-backend:common:module"))
   implementation(project(":limber-backend:common:serialization"))
-  implementation(project(":limber-backend:common:type-conversion:implementation"))
   implementation(Dependencies.Google.guice)
   implementation(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
@@ -15,5 +14,6 @@ dependencies {
   implementation(Dependencies.Ktor.serverCore)
   implementation(Dependencies.Ktor.serverHostCommon)
   testImplementation(project(":limber-backend:common:client"))
+  testImplementation(project(":limber-backend:common:type-conversion:implementation"))
   testImplementation(Dependencies.Ktor.serverTest)
 }

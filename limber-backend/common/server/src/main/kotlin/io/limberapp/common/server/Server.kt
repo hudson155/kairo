@@ -12,6 +12,7 @@ import io.limberapp.common.config.Config
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.module.Feature
 import io.limberapp.common.module.Module
+import io.limberapp.common.module.typeConverters
 import io.limberapp.common.restInterface.EndpointHandler
 import io.limberapp.common.restInterface.route
 import io.limberapp.common.serialization.LimberObjectMapper
@@ -24,18 +25,9 @@ import io.limberapp.common.server.feature.configureDataConversion
 import io.limberapp.common.server.feature.configureDefaultHeaders
 import io.limberapp.common.server.feature.configureStatusPages
 import io.limberapp.common.typeConversion.TypeConverter
-import io.limberapp.common.typeConversion.typeConverter.LimberPermissionsTypeConverter
-import io.limberapp.common.typeConversion.typeConverter.TimeZoneTypeConverter
-import io.limberapp.common.typeConversion.typeConverter.UuidTypeConverter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
-
-private val DEFAULT_TYPE_CONVERTERS: Set<TypeConverter<out Any>> = setOf(
-    LimberPermissionsTypeConverter,
-    TimeZoneTypeConverter,
-    UuidTypeConverter,
-)
 
 @Suppress("LateinitUsage")
 abstract class Server<C : Config>(
@@ -53,8 +45,7 @@ abstract class Server<C : Config>(
   }
 
   private fun configure(application: Application) {
-    val typeConverters: Set<TypeConverter<*>> =
-        DEFAULT_TYPE_CONVERTERS + modules.flatMap { it.typeConverters }
+    val typeConverters: Set<TypeConverter<*>> = modules.typeConverters
     val modules: Set<Module> = run {
       val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
       val mainModule = MainModule(config.clock, config.uuids, objectMapper)
