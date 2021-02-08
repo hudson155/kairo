@@ -9,6 +9,7 @@ import io.limberapp.common.exception.forbidden.ForbiddenException
 import io.limberapp.common.exception.unauthorized.UnauthorizedException
 import io.limberapp.common.module.Module
 import io.limberapp.common.server.Server
+import io.limberapp.testing.integration.IntegrationTest.Extension
 import kotlinx.coroutines.delay
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

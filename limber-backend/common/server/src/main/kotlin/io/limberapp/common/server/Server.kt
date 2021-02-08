@@ -24,7 +24,6 @@ import io.limberapp.common.server.feature.configureCors
 import io.limberapp.common.server.feature.configureDataConversion
 import io.limberapp.common.server.feature.configureDefaultHeaders
 import io.limberapp.common.server.feature.configureStatusPages
-import io.limberapp.common.typeConversion.TypeConverter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
@@ -37,7 +36,6 @@ abstract class Server<C : Config>(
   private val logger: Logger = LoggerFactory.getLogger(Server::class.java)
 
   abstract val modules: Set<Module>
-
   lateinit var injector: Injector
 
   init {
@@ -45,12 +43,13 @@ abstract class Server<C : Config>(
   }
 
   private fun configure(application: Application) {
-    val typeConverters: Set<TypeConverter<*>> = modules.typeConverters
+    val typeConverters = modules.typeConverters
+
     val guiceModules: Set<AbstractModule> = run {
-      val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
-      val mainModule = MainModule(config, objectMapper)
+      val mainModule = MainModule(config, typeConverters)
       return@run modules + mainModule
     }
+
     val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> =
         modules.flatMap { (it as? Feature)?.apiEndpoints.orEmpty() }
 

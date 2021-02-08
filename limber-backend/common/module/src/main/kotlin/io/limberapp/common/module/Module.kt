@@ -1,6 +1,7 @@
 package io.limberapp.common.module
 
 import com.google.inject.AbstractModule
+import com.google.inject.TypeLiteral
 import io.limberapp.common.typeConversion.TypeConverter
 import io.limberapp.common.typeConversion.typeConverter.LimberPermissionsTypeConverter
 import io.limberapp.common.typeConversion.typeConverter.TimeZoneTypeConverter
@@ -26,3 +27,6 @@ abstract class Module : AbstractModule() {
 
 val Set<Module>.typeConverters: Set<TypeConverter<*>>
   get() = DEFAULT_TYPE_CONVERTERS + flatMap { it.typeConverters }
+
+inline fun <reified T : Any> typeLiteral(): TypeLiteral<T> =
+    object : TypeLiteral<T>() {}
