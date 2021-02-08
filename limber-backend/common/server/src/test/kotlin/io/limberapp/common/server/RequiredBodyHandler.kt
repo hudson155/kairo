@@ -1,11 +1,13 @@
 package io.limberapp.common.server
 
+import com.google.inject.Inject
 import io.ktor.application.ApplicationCall
 import io.limberapp.common.auth.Auth
 import io.limberapp.common.restInterface.EndpointHandler
 import io.limberapp.common.restInterface.template
 
-internal class RequiredBodyHandler : EndpointHandler<TestApi.RequiredBody, TestRep.Complete>(
+internal class RequiredBodyHandler @Inject constructor(
+) : EndpointHandler<TestApi.RequiredBody, TestRep.Complete>(
     template = TestApi.RequiredBody::class.template(),
 ) {
   override suspend fun endpoint(call: ApplicationCall): TestApi.RequiredBody =

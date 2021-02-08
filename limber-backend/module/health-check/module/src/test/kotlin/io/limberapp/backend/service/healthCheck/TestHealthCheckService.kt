@@ -1,12 +1,13 @@
 package io.limberapp.backend.service.healthCheck
 
+import com.google.inject.Inject
 import io.limberapp.backend.model.healthCheck.HealthCheckModel
 
 /**
  * This health check implementation alternates indicating healthy and unhealthy, starting with
  * healthy. Not very useful in the real world, but pretty useful for tests.
  */
-internal class TestHealthCheckService : HealthCheckService() {
+internal class TestHealthCheckService @Inject constructor() : HealthCheckService() {
   private var healthy: Boolean = false // Note: Not thread-safe.
   override fun healthCheck(): HealthCheckModel {
     healthy = !healthy

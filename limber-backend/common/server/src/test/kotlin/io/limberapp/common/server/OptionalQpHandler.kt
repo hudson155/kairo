@@ -1,11 +1,13 @@
 package io.limberapp.common.server
 
+import com.google.inject.Inject
 import io.ktor.application.ApplicationCall
 import io.limberapp.common.auth.Auth
 import io.limberapp.common.restInterface.EndpointHandler
 import io.limberapp.common.restInterface.template
 
-internal class OptionalQpHandler : EndpointHandler<TestApi.OptionalQp, TestRep.Complete>(
+internal class OptionalQpHandler @Inject constructor(
+) : EndpointHandler<TestApi.OptionalQp, TestRep.Complete>(
     template = TestApi.OptionalQp::class.template(),
 ) {
   override suspend fun endpoint(call: ApplicationCall): TestApi.OptionalQp =

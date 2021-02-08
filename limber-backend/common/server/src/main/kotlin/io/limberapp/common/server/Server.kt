@@ -1,5 +1,6 @@
 package io.limberapp.common.server
 
+import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Stage
@@ -7,7 +8,6 @@ import io.ktor.application.Application
 import io.ktor.auth.authenticate
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import io.limberapp.backend.module.main.MainModule
 import io.limberapp.common.config.Config
 import io.limberapp.common.exception.EndpointNotFound
 import io.limberapp.common.module.Feature
@@ -46,15 +46,15 @@ abstract class Server<C : Config>(
 
   private fun configure(application: Application) {
     val typeConverters: Set<TypeConverter<*>> = modules.typeConverters
-    val modules: Set<Module> = run {
+    val guiceModules: Set<AbstractModule> = run {
       val objectMapper = LimberObjectMapper(typeConverters = typeConverters)
-      val mainModule = MainModule(config.clock, config.uuids, objectMapper)
+      val mainModule = MainModule(config, objectMapper)
       return@run modules + mainModule
     }
     val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> =
         modules.flatMap { (it as? Feature)?.apiEndpoints.orEmpty() }
 
-    injector = Guice.createInjector(Stage.PRODUCTION, modules)
+    injector = Guice.createInjector(Stage.PRODUCTION, guiceModules)
     val objectMapper = injector.getInstance(LimberObjectMapper::class.java)
 
     application.configureAuthentication(config.authentication, objectMapper)
