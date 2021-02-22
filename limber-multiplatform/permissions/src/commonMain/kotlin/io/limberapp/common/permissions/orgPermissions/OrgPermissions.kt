@@ -5,7 +5,7 @@ import io.limberapp.common.permissions.Permissions
 
 data class OrgPermissions(
     private val permissions: Set<OrgPermission>,
-) : Permissions(), Set<OrgPermission> by permissions {
+) : Permissions() {
   companion object : Permissions.Companion<OrgPermission, OrgPermissions>(
       values = OrgPermission.values(),
   ) {

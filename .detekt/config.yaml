@@ -167,6 +167,8 @@ exceptions:
     active: true
   ThrowingExceptionsWithoutMessageOrCause:
     active: true
+    excludes:
+      - '**/src/{commonTest,jsTest,jvmTest,test}/**/*Test.kt' # Tests
   ThrowingNewInstanceOfSameException:
     active: true
   TooGenericExceptionCaught:

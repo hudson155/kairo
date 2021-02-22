@@ -39,4 +39,13 @@ object Dependencies {
     const val logbackClassic: String = "ch.qos.logback:logback-classic:${Versions.logback}"
     const val slf4j: String = "org.slf4j:slf4j-api:${Versions.slf4j}"
   }
+
+  object Sql {
+    const val flyway: String = "org.flywaydb:flyway-core:${Versions.flyway}"
+    const val hikari: String = "com.zaxxer:HikariCP:${Versions.hikari}"
+    const val jdbi3Kotlin: String = "org.jdbi:jdbi3-kotlin:${Versions.jdbi3}"
+    const val jdbi3KotlinSqlobject: String = "org.jdbi:jdbi3-kotlin-sqlobject:${Versions.jdbi3}"
+    const val jdbi3Postgres: String = "org.jdbi:jdbi3-postgres:${Versions.jdbi3}"
+    const val postgres: String = "org.postgresql:postgresql:${Versions.postgres}"
+  }
 }

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory
 @RequiresOptIn
 internal annotation class EnvironmentManipulation
 
+internal val DEFAULT_GET_ENV: (String) -> String = System::getenv
+
 /**
  * The [getEnv] getter defines how environment variables should be fetched for this entire library.
  * [System.getenv] should always be used in production code. Using this as a delegate function,
@@ -16,7 +18,7 @@ internal annotation class EnvironmentManipulation
  * fetched in production, the [EnvironmentManipulation] annotation prevents modification without
  * explicit opt-in, which should only be in test code.
  */
-internal var getEnv: (name: String) -> String? = System::getenv
+internal var getEnv: (name: String) -> String? = DEFAULT_GET_ENV
   @EnvironmentManipulation set
 
 class ConfigStringDeserializer : StdDeserializer<String>(String::class.java) {

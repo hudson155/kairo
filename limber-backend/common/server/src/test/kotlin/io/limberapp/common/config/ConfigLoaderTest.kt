@@ -38,10 +38,10 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `missing config`() {
-    assertFailsWith<IllegalStateException> {
+    assertFailsWith<IllegalArgumentException> {
       ConfigLoader.load<TestConfig>("missing-config")
     }.let { e ->
-      assertEquals("Config missing-config not found.", e.message)
+      assertEquals("resource config/missing-config.yaml not found.", e.message)
     }
   }
 
@@ -80,10 +80,10 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `JSON config`() {
-    assertFailsWith<IllegalStateException> {
+    assertFailsWith<IllegalArgumentException> {
       ConfigLoader.load<TestConfig>("valid-test-json-config")
     }.let { e ->
-      assertEquals("Config valid-test-json-config not found.", e.message)
+      assertEquals("resource config/valid-test-json-config.yaml not found.", e.message)
     }
   }
 }

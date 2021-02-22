@@ -13,6 +13,9 @@ include(":limber-backend:common:rest-interface")
 include(":limber-backend:common:serialization")
 include(":limber-backend:common:server")
 include(
+    ":limber-backend:common:sql",
+    ":limber-backend:common:sql:testing")
+include(
     ":limber-backend:common:type-conversion:implementation",
     ":limber-backend:common:type-conversion:interface")
 include(":limber-backend:common:util")

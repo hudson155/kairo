@@ -68,10 +68,10 @@ internal class ConfigStringDeserializerTest {
   @OptIn(EnvironmentManipulation::class)
   private fun withEnvironmentVariable(name: String, value: String, function: () -> Unit) {
     try {
-      getEnv = { if (it == name) value else System.getenv(it) }
+      getEnv = { if (it == name) value else DEFAULT_GET_ENV(it) }
       function()
     } finally {
-      getEnv = System::getenv
+      getEnv = DEFAULT_GET_ENV
     }
   }
 }
