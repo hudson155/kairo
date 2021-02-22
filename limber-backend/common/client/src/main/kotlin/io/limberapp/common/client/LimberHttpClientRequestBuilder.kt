@@ -24,6 +24,7 @@ class LimberHttpClientRequestBuilder(accept: ContentType) {
    * be invoked and its response will be used as the header value. Otherwise, the [value] itself
    * will be used.
    */
+  @Suppress("KDocUnresolvedReference")
   fun putHeader(key: String, value: Any) {
     check(!HttpHeaders.isUnsafe(key))
     mutableHeaders[key] = value

@@ -66,4 +66,4 @@ if (user == null) {
 ### Testing
 
 For testing, see `IntegrationTestHttpClient` in
-the [integration testing library](/limber-backend/common/testing/integration).
+the [integration testing library](/limber-backend/common/integration-testing).
