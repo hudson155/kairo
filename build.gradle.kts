@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 
 /**
- * Specifies plugins common to the entire project. Plugins with "apply false" simply define the plugin version without
- * actually applying it to the root project.
+ * Specifies plugins common to the entire project. Plugins with "apply false" simply define the
+ * plugin version without actually applying it to the root project.
  */
 plugins {
   kotlin("multiplatform") version Versions.kotlin apply false
@@ -16,7 +16,9 @@ allprojects {
   apply<DetektPlugin>()
 
   repositories {
-    jcenter()
+    mavenCentral()
+    // https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/.
+    jcenter() // JCenter is EOL.
   }
 
   tasks.withType<KotlinJsCompile> {
