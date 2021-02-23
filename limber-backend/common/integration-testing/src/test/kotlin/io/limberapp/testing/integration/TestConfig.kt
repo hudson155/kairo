@@ -1,9 +1,9 @@
 package io.limberapp.testing.integration
 
-import io.limberapp.common.config.AuthenticationConfig
-import io.limberapp.common.config.ClockConfig
-import io.limberapp.common.config.Config
-import io.limberapp.common.config.UuidsConfig
+import io.limberapp.config.AuthenticationConfig
+import io.limberapp.config.ClockConfig
+import io.limberapp.config.Config
+import io.limberapp.config.UuidsConfig
 
 internal data class TestConfig(
     override val authentication: AuthenticationConfig,

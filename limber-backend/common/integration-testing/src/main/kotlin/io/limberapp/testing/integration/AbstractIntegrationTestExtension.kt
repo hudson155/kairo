@@ -4,7 +4,7 @@ import io.ktor.application.Application
 import io.ktor.application.ApplicationStarted
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.createTestEnvironment
-import io.limberapp.common.server.Server
+import io.limberapp.server.Server
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext

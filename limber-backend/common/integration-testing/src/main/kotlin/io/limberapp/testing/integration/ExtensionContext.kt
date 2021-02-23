@@ -1,7 +1,7 @@
 package io.limberapp.testing.integration
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.common.server.Server
+import io.limberapp.server.Server
 import org.junit.jupiter.api.extension.ExtensionContext
 
 internal val TEST_CONTEXT: Map<Class<out Any>, String> = listOf(

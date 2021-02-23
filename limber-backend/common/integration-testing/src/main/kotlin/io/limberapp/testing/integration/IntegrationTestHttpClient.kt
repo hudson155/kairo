@@ -9,16 +9,16 @@ import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody
-import io.limberapp.common.auth.jwt.JwtClaims
-import io.limberapp.common.client.HttpClient
-import io.limberapp.common.client.LimberHttpClientRequestBuilder
-import io.limberapp.common.client.RequestBuilder
-import io.limberapp.common.client.SUCCESSFUL_RESPONSE_RANGE
-import io.limberapp.common.client.exception.LimberHttpClientException
-import io.limberapp.common.permissions.limberPermissions.LimberPermission
-import io.limberapp.common.permissions.limberPermissions.LimberPermissions
-import io.limberapp.common.restInterface.Endpoint
-import io.limberapp.common.serialization.LimberObjectMapper
+import io.limberapp.auth.jwt.JwtClaims
+import io.limberapp.client.HttpClient
+import io.limberapp.client.LimberHttpClientRequestBuilder
+import io.limberapp.client.RequestBuilder
+import io.limberapp.client.SUCCESSFUL_RESPONSE_RANGE
+import io.limberapp.client.exception.LimberHttpClientException
+import io.limberapp.permissions.limber.LimberPermission
+import io.limberapp.permissions.limber.LimberPermissions
+import io.limberapp.restInterface.Endpoint
+import io.limberapp.serialization.LimberObjectMapper
 
 /**
  * Instead of sending requests to an actual server, interfaces directly with a Ktor

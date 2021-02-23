@@ -4,7 +4,7 @@ As the name suggests, this library contains utilities.
 **This library should have no dependencies.**
 All backend code has access to this library by default.
 
-All utilities should be in `io.limberapp.common.util.somePackage`,
+All utilities should be in `io.limberapp.util.somePackage`,
 where `somePackage` is a logical grouping.
 Some utilities may be Limber-specific.
 

@@ -2,13 +2,13 @@ package io.limberapp.testing.integration
 
 import io.ktor.application.Application
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.common.client.exception.LimberHttpClientException
-import io.limberapp.common.config.ConfigLoader
-import io.limberapp.common.exception.badRequest.RankOutOfBounds
-import io.limberapp.common.exception.forbidden.ForbiddenException
-import io.limberapp.common.exception.unauthorized.UnauthorizedException
-import io.limberapp.common.module.Module
-import io.limberapp.common.server.Server
+import io.limberapp.client.exception.LimberHttpClientException
+import io.limberapp.config.ConfigLoader
+import io.limberapp.exception.ForbiddenException
+import io.limberapp.exception.RankOutOfBounds
+import io.limberapp.exception.UnauthorizedException
+import io.limberapp.module.Module
+import io.limberapp.server.Server
 import io.limberapp.testing.integration.IntegrationTest.Extension
 import kotlinx.coroutines.delay
 import org.junit.jupiter.api.Test

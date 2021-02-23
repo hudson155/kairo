@@ -12,11 +12,11 @@ import io.ktor.routing.Routing
 import io.ktor.routing.route
 import io.ktor.server.testing.withTestApplication
 import io.ktor.util.toMap
-import io.limberapp.backend.api.post.PostApi
-import io.limberapp.backend.rep.post.PostRep
-import io.limberapp.common.client.HttpClient
-import io.limberapp.common.client.exception.LimberHttpClientException
-import io.limberapp.common.serialization.LimberObjectMapper
+import io.limberapp.api.post.PostApi
+import io.limberapp.client.HttpClient
+import io.limberapp.client.exception.LimberHttpClientException
+import io.limberapp.rep.post.PostRep
+import io.limberapp.serialization.LimberObjectMapper
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

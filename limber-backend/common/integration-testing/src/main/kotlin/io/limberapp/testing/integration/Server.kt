@@ -1,8 +1,8 @@
 package io.limberapp.testing.integration
 
-import io.limberapp.common.server.Server
-import io.limberapp.common.util.uuid.DeterministicUuidGenerator
-import io.limberapp.common.util.uuid.UuidGenerator
+import io.limberapp.server.Server
+import io.limberapp.util.uuid.DeterministicUuidGenerator
+import io.limberapp.util.uuid.UuidGenerator
 import java.time.Clock
 
 internal val Server<*>.uuidGenerator: DeterministicUuidGenerator
