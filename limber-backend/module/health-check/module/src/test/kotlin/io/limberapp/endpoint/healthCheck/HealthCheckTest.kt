@@ -10,8 +10,8 @@ import io.limberapp.service.healthCheck.TestHealthCheckService
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
-import kotlin.test.Test
 
 /**
  * These tests must be run in order, because the [TestHealthCheckService] alternates indicating

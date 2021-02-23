@@ -1,7 +1,7 @@
 package io.limberapp.permissions.limber
 
 import io.limberapp.typeConversion.typeConverter.LimberPermissionsTypeConverter
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertNull

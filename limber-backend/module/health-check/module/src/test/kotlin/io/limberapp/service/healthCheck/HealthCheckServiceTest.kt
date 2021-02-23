@@ -1,7 +1,7 @@
 package io.limberapp.service.healthCheck
 
 import io.limberapp.model.healthCheck.HealthCheckModel
-import kotlin.test.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
