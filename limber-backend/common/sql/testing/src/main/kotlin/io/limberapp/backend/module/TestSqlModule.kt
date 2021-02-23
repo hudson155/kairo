@@ -7,7 +7,7 @@ import java.sql.Connection
 class TestSqlModule(
     sqlWrapper: SqlWrapper,
     private val schemaName: String,
-) : SqlModule(sqlWrapper, runMigrations = false) {
+) : SqlModule(sqlWrapper, runMigrations = true) {
   fun truncateSchema() {
     checkNotNull(wrapper.dataSource).connection.use { connection ->
       connection.truncateAllTables(schemaName)

@@ -110,7 +110,7 @@ internal class MockHttpClientImplTest {
             }
           }
         }, test = {
-      val httpClient: HttpClient = IntegrationTestHttpClient(this)
+      val httpClient: HttpClient = IntegrationTestHttpClient(this, LimberObjectMapper())
       runBlocking { block(httpClient) }
     })
   }

@@ -10,7 +10,7 @@ fun SqlDatabaseConfig.createDataSource(): HikariDataSource {
     this@createDataSource.jdbcUrl.let {
       jdbcUrl = it
     }
-    this@createDataSource.defaultSchema.let {
+    this@createDataSource.defaultSchema?.let {
       schema = it
     }
     this@createDataSource.username.let {

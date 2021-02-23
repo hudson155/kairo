@@ -8,6 +8,6 @@ dependencies {
   api(Dependencies.Sql.jdbi3Kotlin)
   implementation(Dependencies.Sql.jdbi3KotlinSqlobject)
   implementation(Dependencies.Sql.jdbi3Postgres)
-  implementation(Dependencies.Sql.postgres)
+  api(Dependencies.Sql.postgres)
   testImplementation(project(":limber-backend:common:type-conversion:implementation"))
 }

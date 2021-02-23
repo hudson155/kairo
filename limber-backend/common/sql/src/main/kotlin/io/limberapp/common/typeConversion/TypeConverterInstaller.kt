@@ -28,6 +28,6 @@ internal object TypeConverterInstaller {
         OrgPermissions::class -> SqlHandling.AS_STRING
         Regex::class -> SqlHandling.AS_STRING
         UUID::class -> null // UUIDs are mapped automatically by the Postgres driver.
-        else -> unknownType(TypeConverter::class, typeConverter::class)
+        else -> null
       }
 }

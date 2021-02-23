@@ -1,10 +1,12 @@
 package io.limberapp.testing.integration
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.inject.Key
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.common.client.HttpClient
 import io.limberapp.common.client.exception.LimberHttpClientException
 import io.limberapp.common.exception.LimberException
+import io.limberapp.common.module.typeLiteral
 import io.limberapp.common.serialization.LimberObjectMapper
 import io.limberapp.common.server.Server
 import io.limberapp.common.util.uuid.DeterministicUuidGenerator
@@ -19,8 +21,11 @@ abstract class AbstractIntegrationTest(
     engine: TestApplicationEngine,
     private val server: Server<*>,
 ) {
-  protected val objectMapper: LimberObjectMapper = LimberObjectMapper(prettyPrint = true)
-  protected val httpClient: HttpClient = IntegrationTestHttpClient(engine)
+  protected val objectMapper: LimberObjectMapper = LimberObjectMapper(
+      prettyPrint = true,
+      typeConverters = server.injector.getInstance(Key.get(typeLiteral())),
+  )
+  protected val httpClient: HttpClient = IntegrationTestHttpClient(engine, objectMapper)
 
   val guids: DeterministicUuidGenerator get() = server.uuidGenerator
   val clock: Clock get() = server.clock

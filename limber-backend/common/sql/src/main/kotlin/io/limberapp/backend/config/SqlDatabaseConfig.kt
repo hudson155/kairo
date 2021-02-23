@@ -9,7 +9,7 @@ import io.limberapp.common.config.ConfigStringDeserializer
 data class SqlDatabaseConfig(
     @JsonDeserialize(using = ConfigStringDeserializer::class)
     val jdbcUrl: String,
-    val defaultSchema: String,
+    val defaultSchema: String? = null,
     @JsonDeserialize(using = ConfigStringDeserializer::class)
     val username: String,
     @JsonDeserialize(using = ConfigStringDeserializer::class)

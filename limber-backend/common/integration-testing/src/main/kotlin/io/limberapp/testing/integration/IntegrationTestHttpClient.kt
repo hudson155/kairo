@@ -26,7 +26,8 @@ import io.limberapp.common.serialization.LimberObjectMapper
  */
 class IntegrationTestHttpClient(
     private val engine: TestApplicationEngine,
-) : HttpClient(LimberObjectMapper()) {
+    objectMapper: LimberObjectMapper,
+) : HttpClient(objectMapper) {
   internal val jwt: String = run {
     val permissions = LimberPermissions(setOf(LimberPermission.SUPERUSER))
     return@run JWT.create()
