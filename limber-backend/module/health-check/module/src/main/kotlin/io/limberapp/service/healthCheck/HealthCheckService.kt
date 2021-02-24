@@ -7,19 +7,17 @@ import org.slf4j.LoggerFactory
 abstract class HealthCheckService {
   private val logger: Logger = LoggerFactory.getLogger(HealthCheckService::class.java)
 
-  abstract fun healthCheck(): HealthCheckModel
-
-  @Suppress("TooGenericExceptionCaught")
-  protected fun healthTry(
-      name: String,
-      function: () -> Unit,
-  ): HealthCheckModel.Unhealthy? {
-    try {
-      function()
-    } catch (e: Exception) {
-      logger.warn("$name health check failed.", e)
-      return HealthCheckModel.Unhealthy("$name health check failed.", e)
+  fun healthCheck(): HealthCheckModel {
+    healthChecks.forEach { healthCheck ->
+      try {
+        healthCheck.check()
+      } catch (e: Exception) {
+        logger.warn("${healthCheck.name} health check failed.", e)
+        return@healthCheck HealthCheckModel.Unhealthy("${healthCheck.name} health check failed.", e)
+      }
     }
-    return null
+    return HealthCheckModel.Healthy
   }
+
+  abstract val healthChecks: List<HealthCheck>
 }

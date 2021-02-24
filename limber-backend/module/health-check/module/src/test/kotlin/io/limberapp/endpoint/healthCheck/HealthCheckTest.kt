@@ -33,7 +33,7 @@ internal class HealthCheckTest(
   @Test
   @Order(2)
   fun unhealthy(): Unit = runBlocking {
-    test(expectError = HealthCheckFailed("fake check health check failed.", null)) {
+    test(expectError = HealthCheckFailed("Fake Check health check failed.", null)) {
       healthCheckClient(HealthCheckApi.Get)
     }
   }

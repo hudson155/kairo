@@ -7,46 +7,30 @@ import kotlin.test.assertTrue
 
 internal class HealthCheckServiceTest {
   @Test
-  fun `healthy (trivial case)`() {
+  fun healthy() {
     val healthCheckService: HealthCheckService = object : HealthCheckService() {
-      override fun healthCheck(): HealthCheckModel = HealthCheckModel.Healthy
+      override val healthChecks: List<HealthCheck> = listOf(
+          object : HealthCheck("First Check") {
+            override fun check(): Unit = Unit
+          }
+      )
     }
     assertEquals(HealthCheckModel.Healthy, healthCheckService.healthCheck())
   }
 
   @Test
-  fun `unhealthy (trivial case)`() {
+  fun unhealthy() {
     val healthCheckService: HealthCheckService = object : HealthCheckService() {
-      override fun healthCheck(): HealthCheckModel = HealthCheckModel.Unhealthy("abcde is why!")
-    }
-    assertEquals(HealthCheckModel.Unhealthy("abcde is why!"), healthCheckService.healthCheck())
-  }
-
-  @Test
-  fun `healthy (no exception thrown)`() {
-    val healthCheckService: HealthCheckService = object : HealthCheckService() {
-      override fun healthCheck(): HealthCheckModel {
-        healthTry("first check") {}
-        return HealthCheckModel.Healthy
-      }
-    }
-    assertEquals(HealthCheckModel.Healthy, healthCheckService.healthCheck())
-  }
-
-  @Test
-  fun `unhealthy (exception thrown)`() {
-    val healthCheckService: HealthCheckService = object : HealthCheckService() {
-      override fun healthCheck(): HealthCheckModel {
-        healthTry("First Check") {
-          throw RuntimeException("something bad :'(")
-        }?.let { return@healthCheck it }
-        return HealthCheckModel.Healthy
-      }
+      override val healthChecks: List<HealthCheck> = listOf(
+          object : HealthCheck("First Check") {
+            override fun check(): Nothing = error("abcde is why!")
+          }
+      )
     }
     healthCheckService.healthCheck().let {
       assertTrue(it is HealthCheckModel.Unhealthy)
       assertEquals("First Check health check failed.", it.reason)
-      assertEquals("something bad :'(", it.e?.message)
+      assertEquals("abcde is why!", it.e?.message)
     }
   }
 }

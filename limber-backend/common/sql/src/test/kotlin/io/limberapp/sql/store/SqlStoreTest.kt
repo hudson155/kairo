@@ -38,14 +38,6 @@ internal class SqlStoreTest : SqlStore(
   }
 
   @Test
-  fun asInt() {
-    withHandle { handle ->
-      handle.createQuery("SELECT 3")
-          .asInt()
-    }.let { assertEquals(3, it) }
-  }
-
-  @Test
   fun `serverErrorMessage - isNotNullConstraintViolation`() {
     inTransaction { handle ->
       handle.createUpdate("CREATE TABLE sql_store_test (col TEXT NOT NULL)")

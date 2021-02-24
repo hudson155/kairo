@@ -2,7 +2,6 @@ package io.limberapp.module.sql
 
 import com.google.inject.Inject
 import com.google.inject.Provider
-import io.limberapp.config.SqlDatabaseConfig
 import io.limberapp.module.Module
 import io.limberapp.sql.SqlWrapper
 import io.limberapp.typeConversion.TypeConverter
@@ -16,9 +15,6 @@ open class SqlModule(
     protected val wrapper: SqlWrapper,
     private val runMigrations: Boolean,
 ) : Module() {
-  constructor(config: SqlDatabaseConfig, runMigrations: Boolean) :
-      this(SqlWrapper(config), runMigrations)
-
   final override fun bind() {
     wrapper.connect()
     if (runMigrations) wrapper.runMigrations()

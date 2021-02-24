@@ -8,14 +8,15 @@ A server may use this endpoint to easily implement its own health checks.
 1. Add a dependency on this module.
 1. Create a `HealthCheckService` implementation.
     ```kotlin
-    internal class HealthCheckServiceImpl @Inject constructor() : HealthCheckService {
-      override fun healthCheck(): HealthCheckModel {
-        healthTry("custom thing", ::customThingCheck)?.let { return@healthCheck it }
-        return HealthCheckModel.Healthy
-      }
+    internal class HealthCheckServiceImpl @Inject constructor() : HealthCheckService() {
+      override val healthChecks: List<HealthCheck> = listOf(
+          CustomThingHealthCheck(),
+      )
     
-      private fun customThingCheck() {
-        TODO("Throw an exception if unhealthy")
+      inner class CustomThingHealthCheck : HealthCheck("Custom Thing") {
+        override fun check() {
+          TODO("Throw an exception if unhealthy")
+        }
       }
     }
     ```

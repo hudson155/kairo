@@ -12,7 +12,7 @@ import io.limberapp.module.users.service.user.UserServiceImpl
 import io.limberapp.restInterface.EndpointHandler
 import kotlin.reflect.KClass
 
-class UsersModule : Feature() {
+class UsersFeature : Feature() {
   override val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> = listOf(
       PostUser::class,
       GetUser::class,

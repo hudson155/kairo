@@ -35,6 +35,7 @@ include(
     ":limber-backend:module:users:module")
 
 // Server
+include(":limber-backend:server:monolith")
 
 // Multiplatform
 include(":limber-multiplatform:darb")

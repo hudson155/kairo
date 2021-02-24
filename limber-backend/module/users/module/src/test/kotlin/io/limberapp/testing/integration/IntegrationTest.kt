@@ -6,7 +6,7 @@ import io.limberapp.client.user.UserClient
 import io.limberapp.config.ConfigLoader
 import io.limberapp.config.TestConfig
 import io.limberapp.module.sql.TestSqlModule
-import io.limberapp.module.users.UsersModule
+import io.limberapp.module.users.UsersFeature
 import io.limberapp.server.Server
 import io.limberapp.sql.SqlWrapper
 import org.junit.jupiter.api.extension.ExtendWith
@@ -22,18 +22,14 @@ internal abstract class IntegrationTest(
 ) {
   internal class Extension : AbstractIntegrationTestExtension() {
     companion object {
-      val config: TestConfig = ConfigLoader.load<TestConfig>("test")
-
-      val sqlModule: TestSqlModule = run {
-        val sqlDatabaseConfig = config.sqlDatabase
-        val sqlWrapper = SqlWrapper(sqlDatabaseConfig)
-        return@run TestSqlModule(sqlWrapper, schemaName = "users")
-      }
+      val config: TestConfig = ConfigLoader.load("test")
+      val sqlModule: TestSqlModule =
+          TestSqlModule(SqlWrapper(config.sqlDatabase), schemaName = "users")
     }
 
     override fun Application.main(): Server<*> {
       return object : Server<TestConfig>(this, config) {
-        override val modules = setOf(UsersModule(), sqlModule)
+        override val modules = setOf(UsersFeature(), sqlModule)
       }
     }
 

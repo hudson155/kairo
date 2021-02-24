@@ -42,6 +42,9 @@ object Versions {
   // https://github.com/pgjdbc/pgjdbc/releases
   const val postgres: String = "42.2.19"
 
+  // https://github.com/johnrengelman/shadow/releases
+  const val shadow: String = "6.1.0"
+
   // https://github.com/qos-ch/slf4j/releases
   const val slf4j: String = "1.7.30"
 }

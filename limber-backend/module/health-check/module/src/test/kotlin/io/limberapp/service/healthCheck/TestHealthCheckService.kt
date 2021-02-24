@@ -1,7 +1,6 @@
 package io.limberapp.service.healthCheck
 
 import com.google.inject.Inject
-import io.limberapp.model.healthCheck.HealthCheckModel
 
 /**
  * This health check implementation alternates indicating healthy and unhealthy, starting with
@@ -9,11 +8,12 @@ import io.limberapp.model.healthCheck.HealthCheckModel
  */
 internal class TestHealthCheckService @Inject constructor() : HealthCheckService() {
   private var healthy: Boolean = false // Note: Not thread-safe.
-  override fun healthCheck(): HealthCheckModel {
-    healthy = !healthy
-    healthTry("fake check") {
-      if (!healthy) throw RuntimeException("Not healthy... maybe next time.")
-    }?.let { return@healthCheck it }
-    return HealthCheckModel.Healthy
-  }
+  override val healthChecks: List<HealthCheck> = listOf(
+      object : HealthCheck("Fake Check") {
+        override fun check() {
+          healthy = !healthy
+          if (!healthy) throw RuntimeException("Not healthy... maybe next time.")
+        }
+      }
+  )
 }

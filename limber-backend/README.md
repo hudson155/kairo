@@ -41,7 +41,8 @@ io.limberapp
 ├── serialization: JSON-serialization library code.
 ├── server: Server library code.
 │   ├── exception
-│   └── feature: Ktor feature library code (for server library code).
+│   ├── feature: Ktor feature library code (for server library code).
+│   └── <server>: Server implementations and their main entrypoints.
 ├── service
 │   └── <entity>: Per-entity services.
 ├── sql: SQL library code.

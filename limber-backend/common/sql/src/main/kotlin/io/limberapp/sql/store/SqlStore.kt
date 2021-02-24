@@ -2,7 +2,6 @@ package io.limberapp.sql.store
 
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
-import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.jdbi.v3.core.statement.Update
 import org.postgresql.util.PSQLException
@@ -27,10 +26,6 @@ abstract class SqlStore(private val jdbi: Jdbi) {
   }
 
   protected fun sqlResource(path: String): String = resourceCache[path]
-
-  protected fun Query.asInt(): Int? = map { rs, _ ->
-    rs.getInt(1).let { if (rs.wasNull()) null else it }
-  }.singleNullOrThrow()
 
   protected val UnableToExecuteStatementException.serverErrorMessage: ServerErrorMessage?
     get() {
