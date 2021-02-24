@@ -1,7 +1,7 @@
 package io.limberapp.endpoint.user
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.module.users.api.user.UserApi
+import io.limberapp.api.user.UserApi
 import io.limberapp.rep.user.UserRepFixtures
 import io.limberapp.rep.user.summary
 import io.limberapp.server.Server

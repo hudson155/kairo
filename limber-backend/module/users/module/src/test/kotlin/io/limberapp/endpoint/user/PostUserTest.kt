@@ -1,8 +1,8 @@
 package io.limberapp.endpoint.user
 
 import io.ktor.server.testing.TestApplicationEngine
-import io.limberapp.module.users.api.user.UserApi
-import io.limberapp.module.users.exception.user.EmailAddressAlreadyTaken
+import io.limberapp.api.user.UserApi
+import io.limberapp.exception.user.EmailAddressAlreadyTaken
 import io.limberapp.rep.user.UserRepFixtures
 import io.limberapp.server.Server
 import io.limberapp.testing.integration.IntegrationTest

@@ -1,6 +1,5 @@
 package io.limberapp.rep.user
 
-import io.limberapp.module.users.rep.user.UserRep
 import io.limberapp.permissions.limber.LimberPermissions
 import io.limberapp.testing.integration.AbstractIntegrationTest
 import java.util.UUID
