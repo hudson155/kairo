@@ -2,9 +2,9 @@ package io.limberapp.client.user
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.inject.Inject
+import io.limberapp.api.user.UserApi
 import io.limberapp.client.HttpClient
 import io.limberapp.client.LimberHttpClientRequestBuilder
-import io.limberapp.api.user.UserApi
 import io.limberapp.rep.user.UserRep
 
 class UserClient @Inject constructor(private val httpClient: HttpClient) {

@@ -14,6 +14,6 @@ internal class NoopGetHandler @Inject constructor(
       TestApi.NoopGet
 
   override suspend fun Handler.handle(endpoint: TestApi.NoopGet) {
-    auth { Auth.Allow }
+    auth(Auth.Allow)
   }
 }

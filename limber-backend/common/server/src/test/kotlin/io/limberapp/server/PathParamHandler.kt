@@ -14,7 +14,7 @@ internal class PathParamHandler @Inject constructor(
       TestApi.PathParam(foo = call.getParam(String::class, "foo"))
 
   override suspend fun Handler.handle(endpoint: TestApi.PathParam): TestRep.Complete {
-    auth { Auth.Allow }
+    auth(Auth.Allow)
     return TestRep.Complete(foo = endpoint.foo)
   }
 }

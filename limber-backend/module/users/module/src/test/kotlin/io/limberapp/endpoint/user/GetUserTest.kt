@@ -10,8 +10,8 @@ import java.util.UUID
 
 internal class GetUserTest(
     engine: TestApplicationEngine,
-    limberServer: Server<*>,
-) : IntegrationTest(engine, limberServer) {
+    server: Server<*>,
+) : IntegrationTest(engine, server) {
   @Test
   fun doesNotExist() {
     val userGuid = UUID.randomUUID()

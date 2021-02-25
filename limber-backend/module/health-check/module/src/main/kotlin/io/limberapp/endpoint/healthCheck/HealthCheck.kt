@@ -22,7 +22,7 @@ internal class HealthCheck @Inject constructor(
       HealthCheckApi.Get
 
   override suspend fun Handler.handle(endpoint: HealthCheckApi.Get): HealthCheckRep.Complete {
-    auth { Auth.Allow }
+    auth(Auth.Allow)
     when (val healthCheck = healthCheckService.healthCheck()) {
       is HealthCheckModel.Unhealthy -> throw HealthCheckFailed(healthCheck.reason, healthCheck.e)
       is HealthCheckModel.Healthy -> return healthCheckMapper.completeRep(healthCheck)

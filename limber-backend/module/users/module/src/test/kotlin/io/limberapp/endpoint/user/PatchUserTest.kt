@@ -2,8 +2,8 @@ package io.limberapp.endpoint.user
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.api.user.UserApi
-import io.limberapp.rep.user.UserRep
 import io.limberapp.permissions.limber.LimberPermission
+import io.limberapp.rep.user.UserRep
 import io.limberapp.rep.user.UserRepFixtures
 import io.limberapp.server.Server
 import io.limberapp.testing.integration.IntegrationTest
@@ -13,8 +13,8 @@ import java.util.UUID
 
 internal class PatchUserTest(
     engine: TestApplicationEngine,
-    limberServer: Server<*>,
-) : IntegrationTest(engine, limberServer) {
+    server: Server<*>,
+) : IntegrationTest(engine, server) {
   @Test
   fun doesNotExist() {
     val userGuid = UUID.randomUUID()

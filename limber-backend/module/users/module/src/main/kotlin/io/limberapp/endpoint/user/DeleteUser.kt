@@ -2,12 +2,11 @@ package io.limberapp.endpoint.user
 
 import com.google.inject.Inject
 import io.ktor.application.ApplicationCall
-import io.limberapp.auth.auth.AuthLimberPermission
 import io.limberapp.api.user.UserApi
-import io.limberapp.service.user.UserService
-import io.limberapp.permissions.limber.LimberPermission
+import io.limberapp.auth.auth.AuthSuperuser
 import io.limberapp.restInterface.EndpointHandler
 import io.limberapp.restInterface.template
+import io.limberapp.service.user.UserService
 import java.util.UUID
 
 internal class DeleteUser @Inject constructor(
@@ -19,7 +18,7 @@ internal class DeleteUser @Inject constructor(
       UserApi.Delete(userGuid = call.getParam(UUID::class, "userGuid"))
 
   override suspend fun Handler.handle(endpoint: UserApi.Delete) {
-    auth { AuthLimberPermission(LimberPermission.SUPERUSER) }
+    auth(AuthSuperuser)
     userService.delete(endpoint.userGuid)
   }
 }

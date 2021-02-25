@@ -62,6 +62,14 @@ abstract class EndpointHandler<E : Endpoint, R : Any>(val template: EndpointTemp
       }
       authorized = true
     }
+
+    fun auth(auth: Auth) {
+      auth { auth }
+    }
+
+    fun authAll(vararg auths: Auth) {
+      auth { Auth.All(*auths) }
+    }
   }
 
   suspend fun PipelineContext<Unit, ApplicationCall>.handle() {

@@ -2,8 +2,8 @@ package io.limberapp.mapper.user
 
 import com.google.inject.Inject
 import io.limberapp.model.user.UserModel
-import io.limberapp.rep.user.UserRep
 import io.limberapp.permissions.limber.LimberPermissions
+import io.limberapp.rep.user.UserRep
 import io.limberapp.util.uuid.UuidGenerator
 import java.time.Clock
 import java.time.ZonedDateTime

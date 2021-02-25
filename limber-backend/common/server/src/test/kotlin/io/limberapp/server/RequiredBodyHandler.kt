@@ -15,7 +15,7 @@ internal class RequiredBodyHandler @Inject constructor(
 
   override suspend fun Handler.handle(endpoint: TestApi.RequiredBody): TestRep.Complete {
     val rep = endpoint.rep.required()
-    auth { Auth.Allow }
+    auth(Auth.Allow)
     return TestRep.Complete(foo = rep.foo)
   }
 }

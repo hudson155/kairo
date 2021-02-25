@@ -10,8 +10,8 @@ import java.util.UUID
 
 internal class GetUserByOrgGuidAndEmailAddressTest(
     engine: TestApplicationEngine,
-    limberServer: Server<*>,
-) : IntegrationTest(engine, limberServer) {
+    server: Server<*>,
+) : IntegrationTest(engine, server) {
   @Test
   fun emailAddressDoesNotExist() {
     val orgGuid = UUID.randomUUID()

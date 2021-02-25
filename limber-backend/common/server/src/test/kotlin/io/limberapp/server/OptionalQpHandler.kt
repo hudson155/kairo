@@ -14,7 +14,7 @@ internal class OptionalQpHandler @Inject constructor(
       TestApi.OptionalQp(foo = call.getParam(String::class, "foo", optional = true))
 
   override suspend fun Handler.handle(endpoint: TestApi.OptionalQp): TestRep.Complete {
-    auth { Auth.Allow }
+    auth(Auth.Allow)
     return TestRep.Complete(foo = endpoint.foo ?: "qp missing")
   }
 }

@@ -11,8 +11,8 @@ import java.util.UUID
 
 internal class GetUsersByOrgGuidTest(
     engine: TestApplicationEngine,
-    limberServer: Server<*>,
-) : IntegrationTest(engine, limberServer) {
+    server: Server<*>,
+) : IntegrationTest(engine, server) {
   @Test
   fun happyPathNoneFound() {
     val orgGuid = UUID.randomUUID()

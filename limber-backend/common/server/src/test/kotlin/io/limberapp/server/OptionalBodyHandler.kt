@@ -15,7 +15,7 @@ internal class OptionalBodyHandler @Inject constructor(
 
   override suspend fun Handler.handle(endpoint: TestApi.OptionalBody): TestRep.Complete {
     val rep = endpoint.rep
-    auth { Auth.Allow }
+    auth(Auth.Allow)
     return TestRep.Complete(foo = rep?.foo ?: "body missing")
   }
 }

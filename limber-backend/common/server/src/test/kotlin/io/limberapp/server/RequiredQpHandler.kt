@@ -14,7 +14,7 @@ internal class RequiredQpHandler @Inject constructor(
       TestApi.RequiredQp(foo = call.getParam(String::class, "foo"))
 
   override suspend fun Handler.handle(endpoint: TestApi.RequiredQp): TestRep.Complete {
-    auth { Auth.Allow }
+    auth(Auth.Allow)
     // checkNotNull should not normally be required, but "foo" is nullable for test purposes.
     return TestRep.Complete(foo = checkNotNull(endpoint.foo))
   }

@@ -15,10 +15,10 @@ import org.junit.jupiter.api.extension.ExtensionContext
 @ExtendWith(IntegrationTest.Extension::class)
 internal abstract class IntegrationTest(
     engine: TestApplicationEngine,
-    limberServer: Server<*>,
+    server: Server<*>,
 ) : AbstractIntegrationTest(
     engine = engine,
-    server = limberServer,
+    server = server,
 ) {
   internal class Extension : AbstractIntegrationTestExtension() {
     companion object {

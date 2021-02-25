@@ -11,8 +11,8 @@ import java.util.UUID
 
 internal class PostUserTest(
     engine: TestApplicationEngine,
-    limberServer: Server<*>,
-) : IntegrationTest(engine, limberServer) {
+    server: Server<*>,
+) : IntegrationTest(engine, server) {
   @Test
   fun duplicateEmailAddress() {
     val orgGuid = UUID.randomUUID()
