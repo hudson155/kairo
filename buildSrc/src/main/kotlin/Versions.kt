@@ -31,10 +31,10 @@ object Versions {
   const val junit: String = "5.7.1"
 
   // https://github.com/JetBrains/kotlin/releases
-  const val kotlin: String = "1.4.30"
+  const val kotlin: String = "1.4.31"
 
   // https://github.com/ktorio/ktor/releases
-  const val ktor: String = "1.5.1"
+  const val ktor: String = "1.5.2"
 
   // https://github.com/qos-ch/logback/releases
   const val logback: String = "1.2.3"
