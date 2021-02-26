@@ -13,7 +13,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest(
     server: Server<*>,
 ) : IntegrationTest(engine, server) {
   @Test
-  fun emailAddressDoesNotExist() {
+  fun `email address does not exist`() {
     val orgGuid = UUID.randomUUID()
 
     setup {
@@ -26,7 +26,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest(
   }
 
   @Test
-  fun emailAddressExistsInDifferentOrg() {
+  fun `email address exists in different org`() {
     val org0Guid = UUID.randomUUID()
     val org1Guid = UUID.randomUUID()
 
@@ -41,7 +41,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest(
   }
 
   @Test
-  fun happyPath() {
+  fun `email address exists`() {
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)

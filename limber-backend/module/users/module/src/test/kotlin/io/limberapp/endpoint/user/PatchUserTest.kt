@@ -16,7 +16,7 @@ internal class PatchUserTest(
     server: Server<*>,
 ) : IntegrationTest(engine, server) {
   @Test
-  fun doesNotExist() {
+  fun `user does not exist`() {
     val userGuid = UUID.randomUUID()
 
     test(expectResult = null) {
@@ -25,7 +25,7 @@ internal class PatchUserTest(
   }
 
   @Test
-  fun happyPathName() {
+  fun `name changed`() {
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
@@ -47,7 +47,7 @@ internal class PatchUserTest(
   }
 
   @Test
-  fun happyPathRole() {
+  fun `permissions changed`() {
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)

@@ -14,7 +14,7 @@ internal class GetUsersByOrgGuidTest(
     server: Server<*>,
 ) : IntegrationTest(engine, server) {
   @Test
-  fun happyPathNoneFound() {
+  fun `no users found`() {
     val orgGuid = UUID.randomUUID()
 
     test(expectResult = emptySet()) {
@@ -23,7 +23,7 @@ internal class GetUsersByOrgGuidTest(
   }
 
   @Test
-  fun happyPathMultipleFound() {
+  fun `multiple users found`() {
     val orgGuid = UUID.randomUUID()
 
     val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)

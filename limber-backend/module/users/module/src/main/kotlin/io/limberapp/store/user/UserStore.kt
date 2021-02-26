@@ -33,7 +33,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
         handle.createQuery(sqlResource("store/user/get.sql"))
             .bind("userGuid", userGuid)
             .mapTo(UserModel::class.java)
-            .singleOrNull()
+            .singleNullOrThrow()
       }
 
   fun getByEmailAddress(orgGuid: UUID, emailAddress: String): UserModel? =
@@ -42,7 +42,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
             .bind("orgGuid", orgGuid)
             .bind("emailAddress", emailAddress)
             .mapTo(UserModel::class.java)
-            .singleOrNull()
+            .singleNullOrThrow()
       }
 
   fun getByOrgGuid(orgGuid: UUID): Set<UserModel> =

@@ -14,7 +14,7 @@ internal class PostUserTest(
     server: Server<*>,
 ) : IntegrationTest(engine, server) {
   @Test
-  fun duplicateEmailAddress() {
+  fun `duplicate email address - same org`() {
     val orgGuid = UUID.randomUUID()
 
     val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
@@ -31,7 +31,7 @@ internal class PostUserTest(
   }
 
   @Test
-  fun duplicateInDifferentOrg() {
+  fun `duplicate email address - different org`() {
     val org0Guid = UUID.randomUUID()
     val org1Guid = UUID.randomUUID()
 
@@ -44,7 +44,7 @@ internal class PostUserTest(
   }
 
   @Test
-  fun happyPath() {
+  fun `happy path`() {
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)

@@ -13,7 +13,7 @@ internal class GetUserTest(
     server: Server<*>,
 ) : IntegrationTest(engine, server) {
   @Test
-  fun doesNotExist() {
+  fun `user does not exist`() {
     val userGuid = UUID.randomUUID()
 
     test(expectResult = null) {
@@ -22,7 +22,7 @@ internal class GetUserTest(
   }
 
   @Test
-  fun happyPath() {
+  fun `user exists`() {
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
