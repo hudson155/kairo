@@ -9,6 +9,7 @@ abstract class HealthCheckService {
 
   fun healthCheck(): HealthCheckModel {
     healthChecks.forEach { healthCheck ->
+      @Suppress("TooGenericExceptionCaught")
       try {
         healthCheck.check()
       } catch (e: Exception) {

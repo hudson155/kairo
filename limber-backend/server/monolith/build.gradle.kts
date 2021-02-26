@@ -8,7 +8,7 @@ plugins {
 group = "io.limberapp.server"
 version = "0-SNAPSHOT"
 application {
-  mainClass.set("io.ktor.server.cio.EngineMain")
+  mainClassName ="io.ktor.server.cio.EngineMain" // Shadow requires use of deprecated mainClassName.
 }
 
 dependencies {
