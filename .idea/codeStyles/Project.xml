@@ -5,10 +5,10 @@
     <option name="RIGHT_MARGIN" value="100" />
     <option name="FORMATTER_TAGS_ENABLED" value="true" />
     <option name="SOFT_MARGINS" value="80" />
-    <DB2CodeStyleSettings version="2">
+    <DB2CodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -18,10 +18,10 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </DB2CodeStyleSettings>
-    <DerbyCodeStyleSettings version="2">
+    <DerbyCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -31,10 +31,10 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </DerbyCodeStyleSettings>
-    <H2CodeStyleSettings version="2">
+    <H2CodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -44,10 +44,10 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </H2CodeStyleSettings>
-    <HSQLCodeStyleSettings version="2">
+    <HSQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -93,10 +93,10 @@
       <option name="ALLOW_TRAILING_COMMA" value="true" />
       <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
     </JetCodeStyleSettings>
-    <MSSQLCodeStyleSettings version="2">
+    <MSSQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -105,10 +105,10 @@
       <option name="SUBQUERY_CLOSING" value="1" />
       <option name="INSERT_INTO_NL" value="2" />
     </MSSQLCodeStyleSettings>
-    <MySQLCodeStyleSettings version="2">
+    <MySQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -118,10 +118,10 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </MySQLCodeStyleSettings>
-    <OracleCodeStyleSettings version="2">
+    <OracleCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -130,10 +130,10 @@
       <option name="SUBQUERY_CLOSING" value="1" />
       <option name="INSERT_INTO_NL" value="2" />
     </OracleCodeStyleSettings>
-    <PostgresCodeStyleSettings version="2">
+    <PostgresCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -143,10 +143,10 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </PostgresCodeStyleSettings>
-    <SQLiteCodeStyleSettings version="2">
+    <SQLiteCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -156,10 +156,9 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </SQLiteCodeStyleSettings>
-    <SqlCodeStyleSettings version="2">
+    <SqlCodeStyleSettings version="5">
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
@@ -169,10 +168,10 @@
       <option name="INSERT_INTO_NL" value="2" />
       <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
     </SqlCodeStyleSettings>
-    <SybaseCodeStyleSettings version="2">
+    <SybaseCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="CUSTOM_TYPE_CASE" value="0" />
       <option name="ALIAS_CASE" value="1" />
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
       <option name="QUOTE_IDENTIFIER" value="1" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
