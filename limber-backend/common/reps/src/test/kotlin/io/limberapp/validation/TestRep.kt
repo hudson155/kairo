@@ -8,12 +8,14 @@ internal data class TestRep(
     val str: String,
     val int: Int?,
     val sub: TestSubRep,
-    val subs: List<TestSubRep>,
+    val subList: List<TestSubRep>,
+    val subSet: Set<TestSubRep>,
 ) : ValidatedRep {
   override fun validate(): RepValidation = RepValidation {
     validate(TestRep::str) { length == REQUIRED_STR_LENGTH }
     validate(TestRep::int) { ifPresent { this < 0 } }
     validate(TestRep::sub)
-    validate(TestRep::subs)
+    validate(TestRep::subList)
+    validate(TestRep::subSet)
   }
 }

@@ -77,10 +77,10 @@ internal class TestSqlModuleTest : IntegrationTest() {
   }
 
   private fun assertTableHasContents(tableName: String, hasContents: Boolean) {
-    val tableContents = jdbi.withHandle<List<String>, Exception> { handle ->
+    val tableContents = jdbi.withHandle<Set<String>, Exception> { handle ->
       handle.createQuery("SELECT col FROM $tableName")
           .mapTo(String::class.java)
-          .toList()
+          .toSet()
     }
     assertEquals(hasContents, tableContents.isNotEmpty())
   }

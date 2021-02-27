@@ -15,6 +15,7 @@ dependencies {
   implementation(project(":limber-backend:common:server"))
   implementation(project(":limber-backend:common:sql"))
   implementation(project(":limber-backend:module:health-check:module"))
+  implementation(project(":limber-backend:module:orgs:module"))
   implementation(project(":limber-backend:module:users:module"))
 }
 

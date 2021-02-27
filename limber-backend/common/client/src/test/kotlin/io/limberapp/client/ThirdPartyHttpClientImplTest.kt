@@ -44,11 +44,11 @@ internal class ThirdPartyHttpClientImplTest {
 
   @Test
   fun `GetByUserId - found`(): Unit = runBlocking {
-    val result: List<TypicodePostRep.Complete> =
+    val result: Set<TypicodePostRep.Complete> =
         httpClient.request(TypicodePostApi.GetByUserId(userId = 1), null) {
           readValue(checkNotNull(it))
         }
-    assertEquals(TypicodePostFixtures.values.filter { it.userId == 1 }, result)
+    assertEquals(TypicodePostFixtures.values.filter { it.userId == 1 }.toSet(), result)
   }
 
   @Test

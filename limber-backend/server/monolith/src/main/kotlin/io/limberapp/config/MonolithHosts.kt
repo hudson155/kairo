@@ -1,5 +1,5 @@
 package io.limberapp.config
 
-data class MonolithHosts(
+internal data class MonolithHosts(
     val monolith: String,
 )

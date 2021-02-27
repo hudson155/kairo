@@ -26,7 +26,7 @@ class RepValidation(validation: Builder.() -> Unit) {
     }
 
     @JvmName("validateReps")
-    fun <R : ValidatedRep, T : List<ValidatedRep>> R.validate(property: KProperty1<R, T>) {
+    fun <R : ValidatedRep, T : Collection<ValidatedRep>> R.validate(property: KProperty1<R, T>) {
       property.get(this).forEachIndexed { i, rep ->
         val subValidations = rep.validate().validations
         validations.addAll(subValidations.map { it.withNamePrefix("${property.name}[$i].") })

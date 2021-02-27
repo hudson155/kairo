@@ -1,12 +1,12 @@
 CREATE TABLE users.user
 (
-    guid              UUID      NOT NULL,
-    created_date      TIMESTAMP NOT NULL,
-    permissions       VARCHAR   NOT NULL,
-    org_guid          UUID      NOT NULL,
-    email_address     VARCHAR   NOT NULL,
-    first_name        VARCHAR   NOT NULL,
-    last_name         VARCHAR   NOT NULL,
+    guid              UUID        NOT NULL,
+    created_date      TIMESTAMPTZ NOT NULL,
+    permissions       VARCHAR     NOT NULL,
+    org_guid          UUID        NOT NULL,
+    email_address     VARCHAR     NOT NULL,
+    first_name        VARCHAR     NOT NULL,
+    last_name         VARCHAR     NOT NULL,
     profile_photo_url VARCHAR
 );
 

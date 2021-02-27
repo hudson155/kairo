@@ -13,7 +13,8 @@ internal class RepValidationTest {
           str = "abc",
           int = -3,
           sub = TestSubRep(bool = true),
-          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subList = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subSet = setOf(TestSubRep(bool = true), TestSubRep(bool = true)),
       ),
   )
 
@@ -23,7 +24,8 @@ internal class RepValidationTest {
           str = "abc",
           int = null,
           sub = TestSubRep(bool = true),
-          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subList = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subSet = setOf(TestSubRep(bool = true), TestSubRep(bool = true)),
       ),
   )
 
@@ -33,7 +35,8 @@ internal class RepValidationTest {
           str = "ab",
           int = 3,
           sub = TestSubRep(bool = true),
-          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subList = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subSet = setOf(TestSubRep(bool = true), TestSubRep(bool = true)),
       ),
       invalidPropertyNames = listOf("str", "int"),
   )
@@ -44,7 +47,8 @@ internal class RepValidationTest {
           str = "abc",
           int = -3,
           sub = TestSubRep(bool = false),
-          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subList = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subSet = setOf(TestSubRep(bool = true), TestSubRep(bool = true)),
       ),
       invalidPropertyNames = listOf("sub.bool"),
   )
@@ -55,9 +59,22 @@ internal class RepValidationTest {
           str = "abc",
           int = -3,
           sub = TestSubRep(bool = true),
-          subs = listOf(TestSubRep(bool = true), TestSubRep(bool = false)),
+          subList = listOf(TestSubRep(bool = true), TestSubRep(bool = false)),
+          subSet = setOf(TestSubRep(bool = true), TestSubRep(bool = true)),
       ),
-      invalidPropertyNames = listOf("subs[1].bool"),
+      invalidPropertyNames = listOf("subList[1].bool"),
+  )
+
+  @Test
+  fun `error in sub-rep (set)`(): Unit = assertInvalid(
+      rep = TestRep(
+          str = "abc",
+          int = -3,
+          sub = TestSubRep(bool = true),
+          subList = listOf(TestSubRep(bool = true), TestSubRep(bool = true)),
+          subSet = setOf(TestSubRep(bool = true), TestSubRep(bool = false)),
+      ),
+      invalidPropertyNames = listOf("subSet[1].bool"),
   )
 
   private fun assertValid(rep: TestRep) {

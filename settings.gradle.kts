@@ -30,6 +30,10 @@ include(
     ":limber-backend:module:health-check:interface",
     ":limber-backend:module:health-check:module")
 include(
+    ":limber-backend:module:orgs:client",
+    ":limber-backend:module:orgs:interface",
+    ":limber-backend:module:orgs:module")
+include(
     ":limber-backend:module:users:client",
     ":limber-backend:module:users:interface",
     ":limber-backend:module:users:module")
