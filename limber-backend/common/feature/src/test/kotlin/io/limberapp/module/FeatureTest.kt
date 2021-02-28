@@ -21,7 +21,10 @@ internal class FeatureTest {
     )
 
     override fun bind() {
-      bind(TestService::class.java).to(TestServiceImpl::class.java).asEagerSingleton()
+      with(TestService::class.java) {
+        bind(this).to(TestServiceImpl::class.java).asEagerSingleton()
+        expose(this)
+      }
       cleanedUp = false
     }
 

@@ -14,7 +14,10 @@ internal class ModuleTest {
 
   private inner class TestModule : Module() {
     override fun bind() {
-      bind(TestInterface::class.java).to(TestInterfaceImpl::class.java).asEagerSingleton()
+      with(TestInterface::class.java) {
+        bind(this).to(TestInterfaceImpl::class.java).asEagerSingleton()
+        expose(this)
+      }
       cleanedUp = false
     }
 

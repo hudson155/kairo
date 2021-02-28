@@ -1,4 +1,5 @@
 dependencies {
+  api(project(":limber-backend:common:client"))
   api(project(":limber-backend:common:config"))
   implementation(project(":limber-backend:common:exceptions"))
   implementation(project(":limber-backend:common:feature"))
@@ -6,7 +7,7 @@ dependencies {
   implementation(project(":limber-backend:common:module"))
   implementation(project(":limber-backend:common:serialization"))
   implementation(Dependencies.Google.guice)
-  implementation(Dependencies.Jwt.auth0JavaJwt)
+  api(Dependencies.Jwt.auth0JavaJwt)
   implementation(Dependencies.Jwt.auth0JwksRsa)
   implementation(Dependencies.Ktor.auth)
   implementation(Dependencies.Ktor.jackson)

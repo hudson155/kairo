@@ -1,11 +1,10 @@
 package io.limberapp.server
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.google.inject.Inject
 import io.limberapp.client.HttpClient
 import io.limberapp.client.RequestBuilder
 
-internal class TestClient @Inject constructor(private val httpClient: HttpClient) {
+internal class TestClient(private val httpClient: HttpClient) {
   suspend operator fun invoke(
       endpoint: TestApi.NoopGet,
       builder: RequestBuilder = {},

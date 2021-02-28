@@ -6,7 +6,10 @@ import kotlin.reflect.KClass
 
 abstract class AbstractMockModule : Module() {
   protected inline fun <reified T : Any> mock(kClass: KClass<T>) {
-    bind(kClass.java).toInstance(mockk())
+    with(kClass.java) {
+      bind(this).toInstance(mockk())
+      expose(this)
+    }
   }
 
   final override fun cleanUp(): Unit = Unit

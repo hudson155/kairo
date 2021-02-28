@@ -18,7 +18,12 @@ open class SqlModule(
   final override fun bind() {
     wrapper.connect()
     if (runMigrations) wrapper.runMigrations()
-    bind(Jdbi::class.java).toProvider(JdbiProvider::class.java).asEagerSingleton()
+
+    with(Jdbi::class.java) {
+      bind(this).toProvider(JdbiProvider::class.java).asEagerSingleton()
+      expose(this)
+    }
+
     bind(SqlWrapper::class.java).toInstance(wrapper)
   }
 

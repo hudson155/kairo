@@ -1,6 +1,6 @@
 package io.limberapp.server
 
-import com.google.inject.AbstractModule
+import com.google.inject.PrivateModule
 import io.limberapp.config.ClockConfig
 import io.limberapp.config.Config
 import io.limberapp.config.UuidsConfig
@@ -17,14 +17,29 @@ import java.time.ZonedDateTime
 internal class MainModule(
     private val config: Config,
     private val typeConverters: Set<TypeConverter<*>>,
-) : AbstractModule() {
+) : PrivateModule() {
   override fun configure() {
     binder().requireAtInjectOnConstructors()
 
-    bind(typeLiteral<Set<TypeConverter<*>>>()).toInstance(typeConverters)
-    bind(LimberObjectMapper::class.java).toInstance(createObjectMapper())
-    bind(Clock::class.java).toInstance(createClock())
-    bind(UuidGenerator::class.java).toInstance(createUuidGenerator())
+    with(typeLiteral<Set<TypeConverter<*>>>()) {
+      bind(this).toInstance(typeConverters)
+      expose(this)
+    }
+
+    with(LimberObjectMapper::class.java) {
+      bind(this).toInstance(createObjectMapper())
+      expose(this)
+    }
+
+    with(Clock::class.java) {
+      bind(this).toInstance(createClock())
+      expose(this)
+    }
+
+    with(UuidGenerator::class.java) {
+      bind(this).toInstance(createUuidGenerator())
+      expose(this)
+    }
   }
 
   private fun createObjectMapper(): LimberObjectMapper =

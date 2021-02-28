@@ -34,7 +34,7 @@ object UserApi {
   )
 }
 
-class UserClient @Inject constructor(private val httpClient: HttpClient) {
+class UserClient(private val httpClient: HttpClient) {
   suspend operator fun invoke(
       endpoint: UserApi.Post,
       builder: RequestBuilder? = null,

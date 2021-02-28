@@ -1,6 +1,6 @@
 package io.limberapp.module
 
-import com.google.inject.AbstractModule
+import com.google.inject.PrivateModule
 import com.google.inject.TypeLiteral
 import io.limberapp.typeConversion.TypeConverter
 import io.limberapp.typeConversion.typeConverter.LimberPermissionsTypeConverter
@@ -13,7 +13,7 @@ private val DEFAULT_TYPE_CONVERTERS: Set<TypeConverter<out Any>> = setOf(
     UuidTypeConverter,
 )
 
-abstract class Module : AbstractModule() {
+abstract class Module : PrivateModule() {
   open val typeConverters: Set<TypeConverter<*>> = emptySet()
 
   override fun configure() {

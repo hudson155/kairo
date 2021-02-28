@@ -28,7 +28,7 @@ import io.ktor.client.HttpClient as KtorHttpClient
  * Accept value of text/csv will result in Accept=[text/csv, application/json], and passing in an
  * Accept value of application/json will result in Accept=[application/json, application/json].
  */
-class HttpClientImpl internal constructor(
+open class HttpClientImpl internal constructor(
     engineFactory: HttpClientEngineFactory<*>,
     private val baseUrl: String,
     objectMapper: LimberObjectMapper,
@@ -50,6 +50,7 @@ class HttpClientImpl internal constructor(
         method = endpoint.httpMethod
         url(baseUrl + endpoint.href)
         val requestBuilder = LimberHttpClientRequestBuilder(accept = endpoint.contentType).apply {
+          rootBuilder?.let { it() }
           builder?.let { it() }
         }
         requestBuilder.headers.forEach { (key, value) -> header(key, value) }
@@ -65,6 +66,8 @@ class HttpClientImpl internal constructor(
     }
     return Pair(httpResponse.status, httpResponse.readText())
   }
+
+  protected open val rootBuilder: RequestBuilder? = null
 
   override fun close(): Unit = httpClient.close()
 }

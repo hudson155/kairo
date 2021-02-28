@@ -17,6 +17,11 @@ abstract class Feature : Module() {
 
   private fun configureEndpoints() {
     logger.info("Binding ${apiEndpoints.size} endpoints for feature ${this::class.simpleName}...")
-    apiEndpoints.forEach { bind(it.java).asEagerSingleton() }
+    apiEndpoints.forEach {
+      with(it.java) {
+        bind(this).asEagerSingleton()
+        expose(this)
+      }
+    }
   }
 }

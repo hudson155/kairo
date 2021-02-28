@@ -1,8 +1,8 @@
 package io.limberapp.server
 
-import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Injector
+import com.google.inject.PrivateModule
 import com.google.inject.Stage
 import io.ktor.application.Application
 import io.ktor.auth.authenticate
@@ -45,7 +45,7 @@ abstract class Server<C : Config>(
   private fun configure(application: Application) {
     val typeConverters = modules.typeConverters
 
-    val guiceModules: Set<AbstractModule> = run {
+    val guiceModules: Set<PrivateModule> = run {
       val mainModule = MainModule(config, typeConverters)
       return@run modules + mainModule
     }
