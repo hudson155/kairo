@@ -1,6 +1,7 @@
 dependencies {
   api(project(":limber-backend:common:feature"))
   implementation(project(":limber-backend:common:sql"))
+  api(project(":limber-backend:module:orgs:client"))
   api(project(":limber-backend:module:users:interface"))
   testImplementation(project(":limber-backend:common:integration-testing"))
   testImplementation(project(":limber-backend:common:sql:testing"))

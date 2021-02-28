@@ -13,6 +13,7 @@ import io.limberapp.util.uuid.DeterministicUuidGenerator
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.extension.ExtendWith
 import java.time.Clock
+import kotlin.reflect.KClass
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
@@ -21,11 +22,17 @@ abstract class AbstractIntegrationTest(
     engine: TestApplicationEngine,
     private val server: Server<*>,
 ) {
+  inner class LimberIntegrationTestMocks {
+    operator fun <T : Any> get(key: KClass<T>): T = server.injector.getInstance(key.java)
+  }
+
   protected val objectMapper: LimberObjectMapper = LimberObjectMapper(
       prettyPrint = true,
       typeConverters = server.injector.getInstance(Key.get(typeLiteral())),
   )
   protected val httpClient: HttpClient = IntegrationTestHttpClient(engine, objectMapper)
+
+  protected val mocks: LimberIntegrationTestMocks = LimberIntegrationTestMocks()
 
   val guids: DeterministicUuidGenerator get() = server.uuidGenerator
   val clock: Clock get() = server.clock

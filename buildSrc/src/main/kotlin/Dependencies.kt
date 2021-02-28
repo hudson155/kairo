@@ -40,6 +40,10 @@ object Dependencies {
     const val slf4j: String = "org.slf4j:slf4j-api:${Versions.slf4j}"
   }
 
+  object MockK {
+    const val mockK: String = "io.mockk:mockk:${Versions.mockK}"
+  }
+
   object Sql {
     const val flyway: String = "org.flywaydb:flyway-core:${Versions.flyway}"
     const val hikari: String = "com.zaxxer:HikariCP:${Versions.hikari}"

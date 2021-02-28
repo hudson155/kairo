@@ -5,6 +5,7 @@ import io.ktor.application.ApplicationStarted
 import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.createTestEnvironment
 import io.limberapp.server.Server
+import io.mockk.clearAllMocks
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -36,6 +37,7 @@ abstract class AbstractIntegrationTestExtension :
   override fun beforeEach(context: ExtensionContext) {
     val server = context[Server::class.java]
     server.uuidGenerator.reset()
+    clearAllMocks()
   }
 
   override fun close() {

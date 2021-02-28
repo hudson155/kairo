@@ -1,11 +1,15 @@
 package io.limberapp.service.user
 
 import com.google.inject.Inject
+import io.limberapp.api.org.OrgApi
+import io.limberapp.client.org.OrgClient
+import io.limberapp.exception.user.CannotDeleteOrgOwner
 import io.limberapp.model.user.UserModel
 import io.limberapp.store.user.UserStore
 import java.util.UUID
 
 internal class UserServiceImpl @Inject constructor(
+    private val orgClient: OrgClient,
     private val userStore: UserStore,
 ) : UserService {
   override fun create(model: UserModel): UserModel =
@@ -24,6 +28,7 @@ internal class UserServiceImpl @Inject constructor(
       userStore.update(userGuid, update)
 
   override suspend fun delete(userGuid: UUID) {
+    if (orgClient(OrgApi.GetByOwnerUserGuid(userGuid)) != null) throw CannotDeleteOrgOwner()
     userStore.delete(userGuid)
   }
 }

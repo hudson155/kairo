@@ -29,7 +29,7 @@ internal abstract class IntegrationTest(
 
     override fun Application.main(): Server<*> {
       return object : Server<TestConfig>(this, config) {
-        override val modules = setOf(UsersFeature(), sqlModule)
+        override val modules = setOf(UsersFeature(), sqlModule, MockModule)
       }
     }
 

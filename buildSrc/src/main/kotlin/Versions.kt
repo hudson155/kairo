@@ -39,6 +39,9 @@ object Versions {
   // https://github.com/qos-ch/logback/releases
   const val logback: String = "1.2.3"
 
+  // https://github.com/mockk/mockk/releases
+  const val mockK: String = "1.10.6"
+
   // https://github.com/pgjdbc/pgjdbc/releases
   const val postgres: String = "42.2.19"
 
