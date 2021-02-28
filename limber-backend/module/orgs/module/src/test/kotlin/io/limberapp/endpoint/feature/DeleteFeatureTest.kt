@@ -40,18 +40,18 @@ internal class DeleteFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
 
-    orgRep = orgRep.copy(features = orgRep.features - formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     test(expectResult = Unit) {
       featureClient(FeatureApi.Delete(formsFeatureRep.guid))
     }

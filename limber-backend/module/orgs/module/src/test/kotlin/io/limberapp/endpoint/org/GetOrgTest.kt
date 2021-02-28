@@ -1,7 +1,9 @@
 package io.limberapp.endpoint.org
 
 import io.ktor.server.testing.TestApplicationEngine
+import io.limberapp.api.feature.FeatureApi
 import io.limberapp.api.org.OrgApi
+import io.limberapp.rep.feature.FeatureRepFixtures
 import io.limberapp.rep.org.OrgRepFixtures
 import io.limberapp.server.Server
 import io.limberapp.testing.integration.IntegrationTest
@@ -23,8 +25,12 @@ internal class GetOrgTest(
 
   @Test
   fun `org exists`() {
-    val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
+    var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
     setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
+
+    val featureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
+    orgRep = orgRep.copy(features = listOf(featureRep))
+    setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
 
     test(expectResult = orgRep) {
       orgClient(OrgApi.Get(orgRep.guid))

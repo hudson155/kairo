@@ -44,11 +44,11 @@ internal class PatchFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
@@ -73,18 +73,17 @@ internal class PatchFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
 
-    formsFeatureRep = formsFeatureRep.copy(name = "Renamed").also {
-      orgRep = orgRep.copy(features = orgRep.features - formsFeatureRep + it)
-    }
+    formsFeatureRep = formsFeatureRep.copy(name = "Renamed")
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(
           featureGuid = formsFeatureRep.guid,
@@ -105,13 +104,13 @@ internal class PatchFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
@@ -136,18 +135,17 @@ internal class PatchFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
 
-    formsFeatureRep = formsFeatureRep.copy(path = "/renamed").also {
-      orgRep = orgRep.copy(features = orgRep.features - formsFeatureRep + it)
-    }
+    formsFeatureRep = formsFeatureRep.copy(path = "/renamed")
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(formsFeatureRep.guid, FeatureRep.Update(path = "/renamed")))
     }
@@ -165,13 +163,13 @@ internal class PatchFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
@@ -196,20 +194,19 @@ internal class PatchFeatureTest(
     }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
 
-    formsFeatureRep = formsFeatureRep.copy(rank = 3).also {
-      orgRep = orgRep.copy(features = orgRep.features - formsFeatureRep + it)
-    }
+    formsFeatureRep = formsFeatureRep.copy(rank = 3)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     test(expectResult = formsFeatureRep) {
       featureClient(FeatureApi.Patch(formsFeatureRep.guid, FeatureRep.Update(rank = 3)))
     }
@@ -227,13 +224,13 @@ internal class PatchFeatureTest(
     }
 
     var homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    orgRep = orgRep.copy(features = orgRep.features + homeFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
     }
 
     var formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
-    orgRep = orgRep.copy(features = orgRep.features + formsFeatureRep)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     setup {
       featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
     }
