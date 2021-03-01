@@ -26,6 +26,10 @@ include(":limber-backend:db:limber")
 
 // Module
 include(
+    ":limber-backend:module:auth:client",
+    ":limber-backend:module:auth:interface",
+    ":limber-backend:module:auth:module")
+include(
     ":limber-backend:module:health-check:client",
     ":limber-backend:module:health-check:interface",
     ":limber-backend:module:health-check:module")

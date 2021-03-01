@@ -1,5 +1,9 @@
 @Suppress("Reformat") // One line per dependency is preferred here.
 object Dependencies {
+  object Bcrypt {
+    const val jbcrypt: String = "org.mindrot:jbcrypt:${Versions.jbcrypt}"
+  }
+
   object Google {
     const val guice: String = "com.google.inject:guice:${Versions.guice}"
   }

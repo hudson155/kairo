@@ -5,6 +5,7 @@ import io.limberapp.config.AuthenticationMechanism
 import io.limberapp.config.ConfigLoader
 import io.limberapp.config.MonolithConfig
 import io.limberapp.module.Module
+import io.limberapp.module.auth.AuthFeature
 import io.limberapp.module.clients.ClientsModule
 import io.limberapp.module.healthCheck.HealthCheckFeature
 import io.limberapp.module.orgs.OrgsFeature
@@ -32,6 +33,7 @@ internal class MonolithServer(application: Application) : Server<MonolithConfig>
   override val modules: Set<Module> = setOf(
       clientsModule,
       HealthCheckFeature(HealthCheckServiceImpl::class),
+      AuthFeature(),
       OrgsFeature(),
       UsersFeature(),
       SqlModule(SqlWrapper(config.sqlDatabase), runMigrations = true),

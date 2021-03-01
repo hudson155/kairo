@@ -24,6 +24,9 @@ object Versions {
   //  https://github.com/FasterXML/jackson-module-kotlin/issues/196#issuecomment-760759070.
   const val jackson: String = "2.10.5"
 
+  // https://github.com/jeremyh/jBCrypt/releases
+  const val jbcrypt: String = "0.4"
+
   // https://github.com/jdbi/jdbi/releases
   const val jdbi3: String = "3.18.0"
 
