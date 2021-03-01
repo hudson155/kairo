@@ -57,9 +57,7 @@ internal class PostTenantDomainTest(
       ))
     }
 
-    test(expectResult = someclientTenantRep) {
-      tenantClient(TenantApi.Get(someclientOrgGuid))
-    }
+    test(expectResult = someclientTenantRep) { tenantClient(TenantApi.Get(someclientOrgGuid)) }
   }
 
   @Test
@@ -67,9 +65,7 @@ internal class PostTenantDomainTest(
     val orgGuid = UUID.randomUUID()
 
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup {
-      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-    }
+    setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
     val limberappTenantDomainRep = TenantDomainRepFixtures.limberappFixture.complete(this)
     tenantRep = tenantRep.copy(domains = setOf(limberappTenantDomainRep))
@@ -89,8 +85,6 @@ internal class PostTenantDomainTest(
       ))
     }
 
-    test(expectResult = tenantRep) {
-      tenantClient(TenantApi.Get(orgGuid))
-    }
+    test(expectResult = tenantRep) { tenantClient(TenantApi.Get(orgGuid)) }
   }
 }

@@ -18,14 +18,12 @@ internal class PostUserTest(
     val orgGuid = UUID.randomUUID()
 
     val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     test(expectError = EmailAddressAlreadyTaken()) {
       userClient(UserApi.Post(
           rep = UserRepFixtures.billGatesFixture.creation(orgGuid)
-              .copy(emailAddress = jeffHudsonUserRep.emailAddress)
+              .copy(emailAddress = jeffHudsonUserRep.emailAddress),
       ))
     }
   }
@@ -52,8 +50,6 @@ internal class PostUserTest(
       userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
     }
 
-    test(expectResult = userRep) {
-      userClient(UserApi.Get(userRep.guid))
-    }
+    test(expectResult = userRep) { userClient(UserApi.Get(userRep.guid)) }
   }
 }

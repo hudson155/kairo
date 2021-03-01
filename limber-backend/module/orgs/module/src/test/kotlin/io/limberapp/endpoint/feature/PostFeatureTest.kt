@@ -24,124 +24,87 @@ internal class PostFeatureTest(
     val orgGuid = UUID.randomUUID()
 
     test(expectError = OrgNotFound().unprocessable()) {
-      featureClient(FeatureApi.Post(orgGuid, FeatureRepFixtures.formsFixture.creation()))
+      featureClient(FeatureApi.Post(FeatureRepFixtures.formsFixture.creation(orgGuid)))
     }
   }
 
   @Test
   fun `duplicate name`() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
-    orgRep = orgRep.copy(
-        features = listOf(FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)),
-    )
-    setup {
-      featureClient(FeatureApi.Post(
-          orgGuid = orgRep.guid,
-          rep = FeatureRepFixtures.homeFixture.creation(),
-      ))
-    }
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid))) }
 
     test(expectError = FeatureNameIsNotUnique()) {
       featureClient(FeatureApi.Post(
-          orgGuid = orgRep.guid,
-          rep = FeatureRepFixtures.formsFixture.creation().copy(
-              name = FeatureRepFixtures.homeFixture.creation().name,
+          rep = FeatureRepFixtures.formsFixture.creation(orgRep.guid).copy(
+              name = homeFeatureRep.name,
           ),
       ))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 
   @Test
   fun `duplicate path`() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
-    orgRep = orgRep.copy(
-        features = listOf(FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)),
-    )
-    setup {
-      featureClient(FeatureApi.Post(
-          orgGuid = orgRep.guid,
-          rep = FeatureRepFixtures.homeFixture.creation(),
-      ))
-    }
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid))) }
 
     test(expectError = FeaturePathIsNotUnique()) {
       featureClient(FeatureApi.Post(
-          orgGuid = orgRep.guid,
-          rep = FeatureRepFixtures.formsFixture.creation().copy(
-              path = FeatureRepFixtures.homeFixture.creation().path,
+          rep = FeatureRepFixtures.formsFixture.creation(orgRep.guid).copy(
+              path = homeFeatureRep.path,
           ),
       ))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 
   @Test
   fun `duplicate rank`() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
-    orgRep = orgRep.copy(
-        features = listOf(FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)),
-    )
-    setup {
-      featureClient(FeatureApi.Post(
-          orgGuid = orgRep.guid,
-          rep = FeatureRepFixtures.homeFixture.creation(),
-      ))
-    }
+    val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
+    orgRep = orgRep.copy(features = listOf(homeFeatureRep))
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid))) }
 
     test(expectError = FeatureRankIsNotUnique()) {
       featureClient(FeatureApi.Post(
-          orgGuid = orgRep.guid,
-          rep = FeatureRepFixtures.formsFixture.creation().copy(
-              rank = FeatureRepFixtures.homeFixture.creation().rank,
+          rep = FeatureRepFixtures.formsFixture.creation(orgRep.guid).copy(
+              rank = homeFeatureRep.rank,
           ),
       ))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 
   @Test
   fun `happy path`() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = listOf(homeFeatureRep))
     test(expectResult = homeFeatureRep) {
-      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
+      featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid)))
     }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
     test(expectResult = formsFeatureRep) {
-      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
+      featureClient(FeatureApi.Post(FeatureRepFixtures.formsFixture.creation(orgRep.guid)))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 }

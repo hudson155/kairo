@@ -18,9 +18,7 @@ internal class GetTenantTest(
   fun `tenant does not exist`() {
     val orgGuid = UUID.randomUUID()
 
-    test(expectResult = null) {
-      tenantClient(TenantApi.Get(orgGuid))
-    }
+    test(expectResult = null) { tenantClient(TenantApi.Get(orgGuid)) }
   }
 
   @Test
@@ -28,9 +26,7 @@ internal class GetTenantTest(
     val orgGuid = UUID.randomUUID()
 
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup {
-      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-    }
+    setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
     val tenantDomainRep = TenantDomainRepFixtures.limberappFixture.complete(this)
     tenantRep = tenantRep.copy(domains = setOf(tenantDomainRep))
@@ -41,8 +37,6 @@ internal class GetTenantTest(
       ))
     }
 
-    test(expectResult = tenantRep) {
-      tenantClient(TenantApi.Get(orgGuid))
-    }
+    test(expectResult = tenantRep) { tenantClient(TenantApi.Get(orgGuid)) }
   }
 }

@@ -29,9 +29,7 @@ internal class PatchUserTest(
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     userRep = userRep.copy(
         firstName = "Gunner",
@@ -41,9 +39,7 @@ internal class PatchUserTest(
       userClient(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner")))
     }
 
-    test(expectResult = userRep) {
-      userClient(UserApi.Get(userRep.guid))
-    }
+    test(expectResult = userRep) { userClient(UserApi.Get(userRep.guid)) }
   }
 
   @Test
@@ -51,18 +47,16 @@ internal class PatchUserTest(
     val orgGuid = UUID.randomUUID()
 
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     userRep = userRep.copy(permissions = userRep.permissions + LimberPermission.SUPERUSER)
     test(expectResult = userRep) {
-      userClient(UserApi.Patch(userRep.guid,
-          UserRep.Update(permissions = userRep.permissions.plus(LimberPermission.SUPERUSER))))
+      userClient(UserApi.Patch(
+          userGuid = userRep.guid,
+          rep = UserRep.Update(permissions = userRep.permissions.plus(LimberPermission.SUPERUSER)),
+      ))
     }
 
-    test(expectResult = userRep) {
-      userClient(UserApi.Get(userRep.guid))
-    }
+    test(expectResult = userRep) { userClient(UserApi.Get(userRep.guid)) }
   }
 }

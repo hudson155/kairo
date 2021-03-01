@@ -3,10 +3,10 @@ package io.limberapp.endpoint.healthCheck
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.api.healthCheck.HealthCheckApi
 import io.limberapp.exception.healthCheck.HealthCheckFailed
-import io.limberapp.testing.integration.IntegrationTest
 import io.limberapp.rep.healthCheck.HealthCheckRep
 import io.limberapp.server.Server
 import io.limberapp.service.healthCheck.TestHealthCheckService
+import io.limberapp.testing.integration.IntegrationTest
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order

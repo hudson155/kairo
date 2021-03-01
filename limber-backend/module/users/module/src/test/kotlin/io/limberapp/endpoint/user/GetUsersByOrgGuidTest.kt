@@ -17,9 +17,7 @@ internal class GetUsersByOrgGuidTest(
   fun `no users found`() {
     val orgGuid = UUID.randomUUID()
 
-    test(expectResult = emptySet()) {
-      userClient(UserApi.GetByOrgGuid(orgGuid))
-    }
+    test(expectResult = emptySet()) { userClient(UserApi.GetByOrgGuid(orgGuid)) }
   }
 
   @Test
@@ -27,14 +25,10 @@ internal class GetUsersByOrgGuidTest(
     val orgGuid = UUID.randomUUID()
 
     val jeffHudsonUserRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     val billGatesUserRep = UserRepFixtures.billGatesFixture.complete(this, orgGuid, 1)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) }
 
     test(expectResult = setOf(jeffHudsonUserRep.summary(), billGatesUserRep.summary())) {
       userClient(UserApi.GetByOrgGuid(orgGuid))

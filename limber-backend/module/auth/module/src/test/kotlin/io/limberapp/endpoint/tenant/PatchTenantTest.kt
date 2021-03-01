@@ -54,9 +54,7 @@ internal class PatchTenantTest(
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup {
-      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-    }
+    setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
     tenantRep = tenantRep.copy(auth0ClientId = "zyxwvutsrqponmlkjihgfedcbazyxwvu")
     test(expectResult = tenantRep) {
@@ -66,8 +64,6 @@ internal class PatchTenantTest(
       ))
     }
 
-    test(expectResult = tenantRep) {
-      tenantClient(TenantApi.Get(orgGuid))
-    }
+    test(expectResult = tenantRep) { tenantClient(TenantApi.Get(orgGuid)) }
   }
 }

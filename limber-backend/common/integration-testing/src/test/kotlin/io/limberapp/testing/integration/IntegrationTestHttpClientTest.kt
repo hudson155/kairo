@@ -52,7 +52,7 @@ internal class MockHttpClientImplTest {
   @Test
   fun post(): Unit = test { httpClient ->
     val result: Request = httpClient.request(PostApi.Post(
-        rep = PostRep.Creation(title = "foo", body = "bar", userId = 1)
+        rep = PostRep.Creation(title = "foo", body = "bar", userId = 1),
     ), null) {
       readValue(checkNotNull(it))
     }

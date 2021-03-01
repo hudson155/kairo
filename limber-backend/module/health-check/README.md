@@ -1,7 +1,7 @@
 # Health Check Feature
 
-This is a Limber feature module that defines a health check endpoint.
-A server may use this endpoint to easily implement its own health checks.
+This is a Limber feature module that defines a health check endpoint. A server may use this endpoint
+to easily implement its own health checks.
 
 ### Implementation
 

@@ -2,10 +2,10 @@ package io.limberapp.store.tenant
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import io.limberapp.model.tenant.TenantModel
 import io.limberapp.exception.tenant.Auth0ClientIdAlreadyRegistered
 import io.limberapp.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.exception.tenant.TenantNotFound
+import io.limberapp.model.tenant.TenantModel
 import io.limberapp.sql.store.SqlStore
 import io.limberapp.sql.store.isUniqueConstraintViolation
 import org.jdbi.v3.core.Jdbi

@@ -26,18 +26,14 @@ internal class PatchOrgTest(
   @Test
   fun `name changed`() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
     orgRep = orgRep.copy(name = "Standing Teeth")
     test(expectResult = orgRep) {
       orgClient(OrgApi.Patch(orgRep.guid, OrgRep.Update(name = "Standing Teeth")))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 
   @Test
@@ -45,14 +41,10 @@ internal class PatchOrgTest(
     val ownerUserGuid = UUID.randomUUID()
 
     var crankyPastaOrgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
     val dynamicTennisOrgRep = OrgRepFixtures.dynamicTennisFixture.complete(this, 1)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.dynamicTennisFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.dynamicTennisFixture.creation())) }
 
     crankyPastaOrgRep = crankyPastaOrgRep.copy(ownerUserGuid = ownerUserGuid)
     setup {
@@ -75,17 +67,13 @@ internal class PatchOrgTest(
     val ownerUserGuid = UUID.randomUUID()
 
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
     orgRep = orgRep.copy(ownerUserGuid = ownerUserGuid)
     test(expectResult = orgRep) {
       orgClient(OrgApi.Patch(orgRep.guid, OrgRep.Update(ownerUserGuid = ownerUserGuid)))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 }

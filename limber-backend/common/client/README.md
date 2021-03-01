@@ -1,19 +1,18 @@
 # HTTP Client
 
-`HttpClient` (uing `HttpClientImpl`) allows interaction with HTTP endpoints.
-When constructing an HTTP client, it takes a base URL.
-The intention is that an HTTP client is used for a single API,
-so the base URL might be `https://api.example.com`.
-This way, using the HTTP client does not require repeated passing of the base URL.
-enables implementation of client classes
-that interact with Limber service APIs.
+`HttpClient` (uing `HttpClientImpl`) allows interaction with HTTP endpoints. When constructing an
+HTTP client, it takes a base URL. The intention is that an HTTP client is used for a single API, so
+the base URL might be `https://api.example.com`. This way, using the HTTP client does not require
+repeated passing of the base URL. enables implementation of client classes that interact with Limber
+service APIs.
 
-Each Limber module generally implements a client for use by other services,
-as well as by its own tests.
+Each Limber module generally implements a client for use by other services, as well as by its own
+tests.
 
 ### Example
 
 A simple example looks something like this.
+
 ```kotlin
 object UserApi {
   data class Post(val rep: UserRep.Creation) : Endpoint(

@@ -2,11 +2,11 @@ package io.limberapp.store.tenant
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import io.limberapp.model.tenant.TenantDomainModel
 import io.limberapp.exception.tenant.TenantDomainAlreadyRegistered
 import io.limberapp.exception.tenant.TenantDomainNotFound
 import io.limberapp.exception.tenant.TenantNotFound
 import io.limberapp.exception.unprocessable
+import io.limberapp.model.tenant.TenantDomainModel
 import io.limberapp.sql.store.SqlStore
 import io.limberapp.sql.store.isForeignKeyViolation
 import io.limberapp.sql.store.isUniqueConstraintViolation

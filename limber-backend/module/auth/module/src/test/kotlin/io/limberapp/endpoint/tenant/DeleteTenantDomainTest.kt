@@ -19,9 +19,7 @@ internal class DeleteTenantDomainTest(
     val orgGuid = UUID.randomUUID()
     val tenantDomain = "fakedomain.com"
 
-    test(expectResult = null) {
-      tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomain))
-    }
+    test(expectResult = null) { tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomain)) }
   }
 
   @Test
@@ -29,9 +27,7 @@ internal class DeleteTenantDomainTest(
     val orgGuid = UUID.randomUUID()
 
     val tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup {
-      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-    }
+    setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
     test(expectResult = null) {
       tenantDomainClient(TenantDomainApi.Delete(
@@ -40,9 +36,7 @@ internal class DeleteTenantDomainTest(
       ))
     }
 
-    test(expectResult = tenantRep) {
-      tenantClient(TenantApi.Get(orgGuid))
-    }
+    test(expectResult = tenantRep) { tenantClient(TenantApi.Get(orgGuid)) }
   }
 
   @Test
@@ -50,9 +44,7 @@ internal class DeleteTenantDomainTest(
     val orgGuid = UUID.randomUUID()
 
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup {
-      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-    }
+    setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
     val limberappTenantDomainRep = TenantDomainRepFixtures.limberappFixture.complete(this)
     tenantRep = tenantRep.copy(domains = setOf(limberappTenantDomainRep))
@@ -77,8 +69,6 @@ internal class DeleteTenantDomainTest(
       tenantDomainClient(TenantDomainApi.Delete(orgGuid, someclientTenantDomainRep.domain))
     }
 
-    test(expectResult = tenantRep) {
-      tenantClient(TenantApi.Get(orgGuid))
-    }
+    test(expectResult = tenantRep) { tenantClient(TenantApi.Get(orgGuid)) }
   }
 }

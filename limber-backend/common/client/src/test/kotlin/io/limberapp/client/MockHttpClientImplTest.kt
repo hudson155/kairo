@@ -84,7 +84,7 @@ internal class MockHttpClientImplTest {
   @Test
   fun post(): Unit = runBlocking {
     val result: Request = httpClient.request(TypicodePostApi.Post(
-        rep = TypicodePostRep.Creation(title = "foo", body = "bar", userId = 1)
+        rep = TypicodePostRep.Creation(title = "foo", body = "bar", userId = 1),
     ), null) {
       readValue(checkNotNull(it))
     }

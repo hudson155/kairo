@@ -16,9 +16,7 @@ internal class GetUserTest(
   fun `user does not exist`() {
     val userGuid = UUID.randomUUID()
 
-    test(expectResult = null) {
-      userClient(UserApi.Get(userGuid))
-    }
+    test(expectResult = null) { userClient(UserApi.Get(userGuid)) }
   }
 
   @Test
@@ -26,12 +24,8 @@ internal class GetUserTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
-    test(expectResult = userRep) {
-      userClient(UserApi.Get(userRep.guid))
-    }
+    test(expectResult = userRep) { userClient(UserApi.Get(userRep.guid)) }
   }
 }

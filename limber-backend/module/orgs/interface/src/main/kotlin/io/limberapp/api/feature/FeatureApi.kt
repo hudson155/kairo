@@ -6,9 +6,9 @@ import io.limberapp.restInterface.Endpoint
 import java.util.UUID
 
 object FeatureApi {
-  data class Post(val orgGuid: UUID, val rep: FeatureRep.Creation?) : Endpoint(
+  data class Post(val rep: FeatureRep.Creation?) : Endpoint(
       httpMethod = HttpMethod.Post,
-      rawPath = "/orgs/$orgGuid/features",
+      rawPath = "/features",
       body = rep,
   )
 

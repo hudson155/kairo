@@ -16,9 +16,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest(
   fun `email address does not exist`() {
     val orgGuid = UUID.randomUUID()
 
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.billGatesFixture.creation(orgGuid))) }
 
     test(expectResult = null) {
       userClient(UserApi.GetByOrgGuidAndEmailAddress(orgGuid, "jeff.hudson@limberapp.io"))
@@ -31,9 +29,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest(
     val org1Guid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, org0Guid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(org0Guid))) }
 
     test(expectResult = null) {
       userClient(UserApi.GetByOrgGuidAndEmailAddress(org1Guid, userRep.emailAddress))
@@ -45,9 +41,7 @@ internal class GetUserByOrgGuidAndEmailAddressTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     test(expectResult = userRep) {
       userClient(UserApi.GetByOrgGuidAndEmailAddress(orgGuid, userRep.emailAddress))

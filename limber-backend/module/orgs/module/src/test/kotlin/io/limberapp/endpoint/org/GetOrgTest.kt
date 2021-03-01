@@ -18,9 +18,7 @@ internal class GetOrgTest(
   fun `org does not exist`() {
     val orgGuid = UUID.randomUUID()
 
-    test(expectResult = null) {
-      orgClient(OrgApi.Get(orgGuid))
-    }
+    test(expectResult = null) { orgClient(OrgApi.Get(orgGuid)) }
   }
 
   @Test
@@ -30,10 +28,8 @@ internal class GetOrgTest(
 
     val featureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = listOf(featureRep))
-    setup { featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation())) }
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid))) }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 }

@@ -18,25 +18,17 @@ internal class GetFeatureTest(
   fun `feature does not exist`() {
     val featureGuid = UUID.randomUUID()
 
-    test(expectResult = null) {
-      featureClient(FeatureApi.Get(featureGuid))
-    }
+    test(expectResult = null) { featureClient(FeatureApi.Get(featureGuid)) }
   }
 
   @Test
   fun `feature exists`() {
     val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
-    setup {
-      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
-    }
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid))) }
 
-    test(expectResult = homeFeatureRep) {
-      featureClient(FeatureApi.Get(homeFeatureRep.guid))
-    }
+    test(expectResult = homeFeatureRep) { featureClient(FeatureApi.Get(homeFeatureRep.guid)) }
   }
 }

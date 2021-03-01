@@ -54,7 +54,7 @@ internal class ThirdPartyHttpClientImplTest {
   @Test
   fun `Post - valid`(): Unit = runBlocking {
     val result: TypicodePostRep.Complete? = httpClient.request(TypicodePostApi.Post(
-        rep = TypicodePostRep.Creation(title = "foo", body = "bar", userId = 1)
+        rep = TypicodePostRep.Creation(title = "foo", body = "bar", userId = 1),
     ), null) {
       it?.let { readValue(it) }
     }

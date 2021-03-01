@@ -15,6 +15,7 @@ object FeatureRep {
   }
 
   data class Creation(
+      val orgGuid: UUID,
       val name: String,
       val path: String,
       val type: Type,

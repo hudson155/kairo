@@ -19,45 +19,29 @@ internal class DeleteFeatureTest(
     val featureGuid = UUID.randomUUID()
 
     val orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
-    test(expectResult = null) {
-      featureClient(FeatureApi.Delete(featureGuid))
-    }
+    test(expectResult = null) { featureClient(FeatureApi.Delete(featureGuid)) }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 
   @Test
   fun `feature exists`() {
     var orgRep = OrgRepFixtures.crankyPastaFixture.complete(this, 0)
-    setup {
-      orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
-    }
+    setup { orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation())) }
 
     val homeFeatureRep = FeatureRepFixtures.homeFixture.complete(this, orgRep.guid, 1)
     orgRep = orgRep.copy(features = listOf(homeFeatureRep))
-    setup {
-      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.homeFixture.creation()))
-    }
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.homeFixture.creation(orgRep.guid))) }
 
     val formsFeatureRep = FeatureRepFixtures.formsFixture.complete(this, orgRep.guid, 2)
     orgRep = orgRep.copy(features = listOf(homeFeatureRep, formsFeatureRep))
-    setup {
-      featureClient(FeatureApi.Post(orgRep.guid, FeatureRepFixtures.formsFixture.creation()))
-    }
+    setup { featureClient(FeatureApi.Post(FeatureRepFixtures.formsFixture.creation(orgRep.guid))) }
 
     orgRep = orgRep.copy(features = listOf(homeFeatureRep))
-    test(expectResult = Unit) {
-      featureClient(FeatureApi.Delete(formsFeatureRep.guid))
-    }
+    test(expectResult = Unit) { featureClient(FeatureApi.Delete(formsFeatureRep.guid)) }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 }

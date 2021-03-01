@@ -5,12 +5,12 @@ import java.util.UUID
 
 internal object FeatureRepFixtures {
   data class Fixture(
-      val creation: () -> FeatureRep.Creation,
+      val creation: (orgGuid: UUID) -> FeatureRep.Creation,
       val complete: IntegrationTest.(orgGuid: UUID, idSeed: Int) -> FeatureRep.Complete,
   )
 
-  val homeFixture: Fixture = Fixture({
-    FeatureRep.Creation("Home", "/home", FeatureRep.Type.HOME, 0)
+  val homeFixture: Fixture = Fixture({ orgGuid ->
+    FeatureRep.Creation(orgGuid, "Home", "/home", FeatureRep.Type.HOME, 0)
   }, { orgGuid, idSeed ->
     FeatureRep.Complete(
         guid = guids[idSeed],
@@ -23,8 +23,8 @@ internal object FeatureRepFixtures {
     )
   })
 
-  val formsFixture: Fixture = Fixture({
-    FeatureRep.Creation("Forms", "/forms", FeatureRep.Type.FORMS, 1)
+  val formsFixture: Fixture = Fixture({ orgGuid ->
+    FeatureRep.Creation(orgGuid, "Forms", "/forms", FeatureRep.Type.FORMS, 1)
   }, { orgGuid, idSeed ->
     FeatureRep.Complete(
         guid = guids[idSeed],

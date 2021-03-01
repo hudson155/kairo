@@ -18,8 +18,6 @@ internal class PostOrgTest(
       orgClient(OrgApi.Post(OrgRepFixtures.crankyPastaFixture.creation()))
     }
 
-    test(expectResult = orgRep) {
-      orgClient(OrgApi.Get(orgRep.guid))
-    }
+    test(expectResult = orgRep) { orgClient(OrgApi.Get(orgRep.guid)) }
   }
 }

@@ -23,9 +23,7 @@ internal class DeleteUserTest(
 
     coEvery { mocks[OrgClient::class](OrgApi.GetByOwnerUserGuid(userGuid)) } returns null
 
-    test(expectResult = null) {
-      userClient(UserApi.Delete(userGuid))
-    }
+    test(expectResult = null) { userClient(UserApi.Delete(userGuid)) }
   }
 
   @Test
@@ -33,19 +31,13 @@ internal class DeleteUserTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     coEvery { mocks[OrgClient::class](OrgApi.GetByOwnerUserGuid(userRep.guid)) } returns mockk()
 
-    test(expectError = CannotDeleteOrgOwner()) {
-      userClient(UserApi.Delete(userRep.guid))
-    }
+    test(expectError = CannotDeleteOrgOwner()) { userClient(UserApi.Delete(userRep.guid)) }
 
-    test(expectResult = userRep) {
-      userClient(UserApi.Get(userRep.guid))
-    }
+    test(expectResult = userRep) { userClient(UserApi.Get(userRep.guid)) }
   }
 
   @Test
@@ -53,18 +45,12 @@ internal class DeleteUserTest(
     val orgGuid = UUID.randomUUID()
 
     val userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
-    setup {
-      userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid)))
-    }
+    setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
     coEvery { mocks[OrgClient::class](OrgApi.GetByOwnerUserGuid(userRep.guid)) } returns null
 
-    test(expectResult = Unit) {
-      userClient(UserApi.Delete(userRep.guid))
-    }
+    test(expectResult = Unit) { userClient(UserApi.Delete(userRep.guid)) }
 
-    test(expectResult = null) {
-      userClient(UserApi.Get(userRep.guid))
-    }
+    test(expectResult = null) { userClient(UserApi.Get(userRep.guid)) }
   }
 }

@@ -18,9 +18,7 @@ internal class GetTenantByDomainTest(
   fun `tenant and domain don't exist`() {
     val tenantDomain = "fakedomain.com"
 
-    test(expectResult = null) {
-      tenantClient(TenantApi.GetByDomain(tenantDomain))
-    }
+    test(expectResult = null) { tenantClient(TenantApi.GetByDomain(tenantDomain)) }
   }
 
   @Test
@@ -28,9 +26,7 @@ internal class GetTenantByDomainTest(
     val orgGuid = UUID.randomUUID()
 
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
-    setup {
-      tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid)))
-    }
+    setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
     val tenantDomainRep = TenantDomainRepFixtures.limberappFixture.complete(this)
     tenantRep = tenantRep.copy(domains = setOf(tenantDomainRep))
@@ -41,8 +37,6 @@ internal class GetTenantByDomainTest(
       ))
     }
 
-    test(expectResult = tenantRep) {
-      tenantClient(TenantApi.GetByDomain(tenantDomainRep.domain))
-    }
+    test(expectResult = tenantRep) { tenantClient(TenantApi.GetByDomain(tenantDomainRep.domain)) }
   }
 }
