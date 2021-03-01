@@ -3,6 +3,8 @@ package io.limberapp.endpoint.tenant
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.api.tenant.TenantApi
 import io.limberapp.api.tenant.TenantDomainApi
+import io.limberapp.exception.tenant.TenantNotFound
+import io.limberapp.exception.unprocessable
 import io.limberapp.rep.tenant.TenantDomainRepFixtures
 import io.limberapp.rep.tenant.TenantRepFixtures
 import io.limberapp.server.Server
@@ -19,7 +21,9 @@ internal class DeleteTenantDomainTest(
     val orgGuid = UUID.randomUUID()
     val tenantDomain = "fakedomain.com"
 
-    test(expectResult = null) { tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomain)) }
+    test(expectError = TenantNotFound().unprocessable()) {
+      tenantDomainClient(TenantDomainApi.Delete(orgGuid, tenantDomain))
+    }
   }
 
   @Test
