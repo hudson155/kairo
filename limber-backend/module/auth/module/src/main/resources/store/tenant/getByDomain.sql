@@ -1,4 +1,6 @@
 SELECT tenant.*
 FROM auth.tenant
-         JOIN auth.tenant_domain ON tenant.org_guid = tenant_domain.org_guid
-WHERE LOWER(domain) = LOWER(:domain)
+WHERE EXISTS(SELECT 1
+             FROM auth.tenant_domain
+             WHERE tenant_domain.org_guid = tenant.org_guid
+               AND LOWER(tenant_domain.domain) = LOWER(:domain))

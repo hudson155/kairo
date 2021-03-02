@@ -17,10 +17,7 @@ import org.junit.jupiter.api.extension.ExtensionContext
 internal abstract class IntegrationTest(
     engine: TestApplicationEngine,
     server: Server<*>,
-) : AbstractIntegrationTest(
-    engine = engine,
-    server = server,
-) {
+) : AbstractIntegrationTest(engine, server) {
   internal class Extension : AbstractIntegrationTestExtension() {
     companion object {
       val config: TestConfig = ConfigLoader.load("test")

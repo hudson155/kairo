@@ -2,6 +2,8 @@ package io.limberapp.testing.integration
 
 import io.ktor.application.Application
 import io.ktor.server.testing.TestApplicationEngine
+import io.limberapp.client.org.OrgRoleClient
+import io.limberapp.client.org.OrgRoleMembershipClient
 import io.limberapp.client.tenant.TenantClient
 import io.limberapp.client.tenant.TenantDomainClient
 import io.limberapp.config.ConfigLoader
@@ -17,10 +19,7 @@ import org.junit.jupiter.api.extension.ExtensionContext
 internal abstract class IntegrationTest(
     engine: TestApplicationEngine,
     server: Server<*>,
-) : AbstractIntegrationTest(
-    engine = engine,
-    server = server,
-) {
+) : AbstractIntegrationTest(engine, server) {
   internal class Extension : AbstractIntegrationTestExtension() {
     companion object {
       val config: TestConfig = ConfigLoader.load("test")
@@ -38,6 +37,14 @@ internal abstract class IntegrationTest(
       super.beforeEach(context)
       sqlModule.truncateSchema()
     }
+  }
+
+  protected val orgRoleClient: OrgRoleClient by lazy {
+    OrgRoleClient(httpClient)
+  }
+
+  protected val orgRoleMembershipClient: OrgRoleMembershipClient by lazy {
+    OrgRoleMembershipClient(httpClient)
   }
 
   protected val tenantClient: TenantClient by lazy {

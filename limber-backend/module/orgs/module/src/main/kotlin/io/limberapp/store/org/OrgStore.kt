@@ -57,7 +57,7 @@ internal class OrgStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       inTransaction { handle ->
         handle.createUpdate(sqlResource("store/org/delete.sql"))
             .bind("orgGuid", orgGuid)
-            .update() ?: throw OrgNotFound()
+            .singleNullOrThrow() ?: throw OrgNotFound()
       }
 
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {

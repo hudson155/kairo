@@ -66,7 +66,7 @@ internal class UserStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       inTransaction { handle ->
         handle.createUpdate(sqlResource("store/user/delete.sql"))
             .bind("userGuid", userGuid)
-            .update() ?: throw UserNotFound()
+            .singleNullOrThrow() ?: throw UserNotFound()
       }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

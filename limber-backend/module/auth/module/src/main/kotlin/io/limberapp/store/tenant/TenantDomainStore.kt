@@ -45,7 +45,7 @@ internal class TenantDomainStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi
         handle.createUpdate(sqlResource("store/tenantDomain/delete.sql"))
             .bind("orgGuid", orgGuid)
             .bind("domain", domain)
-            .update() ?: throw TenantDomainNotFound()
+            .singleNullOrThrow() ?: throw TenantDomainNotFound()
       }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

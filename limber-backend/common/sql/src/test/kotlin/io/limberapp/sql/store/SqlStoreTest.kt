@@ -147,14 +147,14 @@ internal class SqlStoreTest : SqlStore(
     }
     withHandle { handle ->
       handle.createUpdate("UPDATE sql_store_test SET col = 'new val'")
-          .update()
+          .singleNullOrThrow()
           .let { assertNull(it) }
     }
     withHandle { handle ->
       handle.createUpdate("INSERT INTO sql_store_test (col) VALUES ('val1')")
           .execute()
       handle.createUpdate("UPDATE sql_store_test SET col = 'new val'")
-          .update()
+          .singleNullOrThrow()
           .let { assertEquals(Unit, it) }
     }
     withHandle { handle ->
@@ -162,7 +162,7 @@ internal class SqlStoreTest : SqlStore(
           .execute()
       assertFailsWith<IllegalStateException> {
         handle.createUpdate("UPDATE sql_store_test SET col = 'new val'")
-            .update()
+            .singleNullOrThrow()
       }
     }
   }

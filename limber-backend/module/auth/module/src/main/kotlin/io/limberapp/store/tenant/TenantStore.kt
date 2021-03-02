@@ -71,7 +71,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       inTransaction { handle ->
         handle.createUpdate(sqlResource("store/tenant/delete.sql"))
             .bind("orgGuid", orgGuid)
-            .update() ?: throw TenantNotFound()
+            .singleNullOrThrow() ?: throw TenantNotFound()
       }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {

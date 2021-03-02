@@ -40,7 +40,7 @@ abstract class SqlStore(private val jdbi: Jdbi) {
 
   fun <R> inTransaction(callback: (Handle) -> R): R = jdbi.inTransaction<R, Exception>(callback)
 
-  protected fun Update.update(): Unit? {
+  protected fun Update.singleNullOrThrow(): Unit? {
     return when (execute()) {
       0 -> null
       1 -> Unit

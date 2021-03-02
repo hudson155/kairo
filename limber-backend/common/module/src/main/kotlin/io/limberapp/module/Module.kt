@@ -4,11 +4,13 @@ import com.google.inject.PrivateModule
 import com.google.inject.TypeLiteral
 import io.limberapp.typeConversion.TypeConverter
 import io.limberapp.typeConversion.typeConverter.LimberPermissionsTypeConverter
+import io.limberapp.typeConversion.typeConverter.OrgPermissionsTypeConverter
 import io.limberapp.typeConversion.typeConverter.TimeZoneTypeConverter
 import io.limberapp.typeConversion.typeConverter.UuidTypeConverter
 
 private val DEFAULT_TYPE_CONVERTERS: Set<TypeConverter<out Any>> = setOf(
     LimberPermissionsTypeConverter,
+    OrgPermissionsTypeConverter,
     TimeZoneTypeConverter,
     UuidTypeConverter,
 )

@@ -1,8 +1,8 @@
 CREATE TABLE auth.tenant
 (
-    created_date    TIMESTAMP NOT NULL,
-    org_guid        UUID      NOT NULL,
-    auth0_client_id VARCHAR   NOT NULL
+    created_date    TIMESTAMPTZ NOT NULL,
+    org_guid        UUID        NOT NULL,
+    auth0_client_id VARCHAR     NOT NULL
 );
 
 CREATE UNIQUE INDEX uniq__tenant__org_guid
@@ -13,9 +13,9 @@ CREATE UNIQUE INDEX uniq__tenant__auth0_client_id
 
 CREATE TABLE auth.tenant_domain
 (
-    created_date TIMESTAMP NOT NULL,
-    org_guid     UUID      NOT NULL,
-    domain       VARCHAR   NOT NULL
+    created_date TIMESTAMPTZ NOT NULL,
+    org_guid     UUID        NOT NULL,
+    domain       VARCHAR     NOT NULL
 );
 
 CREATE INDEX idx__tenant_domain__org_guid

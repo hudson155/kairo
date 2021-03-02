@@ -74,7 +74,7 @@ internal class FeatureStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
       inTransaction { handle ->
         handle.createUpdate(sqlResource("store/feature/delete.sql"))
             .bind("featureGuid", featureGuid)
-            .update() ?: throw FeatureNotFound()
+            .singleNullOrThrow() ?: throw FeatureNotFound()
       }
 
   private fun handleCreateError(e: UnableToExecuteStatementException): Nothing {
