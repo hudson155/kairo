@@ -16,7 +16,7 @@ import kotlin.test.assertTrue
 
 internal class SqlStoreTest : SqlStore(
     jdbi = Jdbi.create(SqlDatabaseConfig(
-        jdbcUrl = "jdbc:postgresql://localhost/limber",
+        jdbcUrl = "jdbc:postgresql://localhost/limber_test",
         defaultSchema = "sqltest",
         username = System.getenv("LIMBER_TEST_POSTGRES_USERNAME") ?: "postgres",
         password = System.getenv("LIMBER_TEST_POSTGRES_PASSWORD"),

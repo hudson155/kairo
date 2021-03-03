@@ -13,7 +13,7 @@ internal abstract class IntegrationTest {
   private val testSchemaName = "sqltest"
 
   private val config = SqlDatabaseConfig(
-      jdbcUrl = "jdbc:postgresql://localhost/limber",
+      jdbcUrl = "jdbc:postgresql://localhost/limber_test",
       defaultSchema = testSchemaName,
       username = System.getenv("LIMBER_TEST_POSTGRES_USERNAME") ?: "postgres",
       password = System.getenv("LIMBER_TEST_POSTGRES_PASSWORD"),
