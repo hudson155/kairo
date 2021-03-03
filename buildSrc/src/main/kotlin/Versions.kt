@@ -13,7 +13,7 @@ object Versions {
   const val flyway: String = "7.5.4"
 
   // https://github.com/google/guice/releases
-  const val guice: String = "4.2.3"
+  const val guice: String = "5.0.1"
 
   // https://github.com/brettwooldridge/HikariCP/releases
   const val hikari: String = "4.0.2"
