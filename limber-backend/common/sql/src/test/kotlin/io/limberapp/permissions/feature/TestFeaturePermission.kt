@@ -1,6 +1,4 @@
-package io.limberapp.typeConversion
-
-import io.limberapp.permissions.feature.FeaturePermission
+package io.limberapp.permissions.feature
 
 internal enum class TestFeaturePermission(
     override val index: Int,

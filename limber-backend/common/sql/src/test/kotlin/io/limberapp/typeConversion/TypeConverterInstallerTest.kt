@@ -1,5 +1,7 @@
 package io.limberapp.typeConversion
 
+import io.limberapp.permissions.feature.TestFeaturePermission
+import io.limberapp.permissions.feature.TestFeaturePermissions
 import io.limberapp.permissions.limber.LimberPermission
 import io.limberapp.permissions.limber.LimberPermissions
 import io.limberapp.permissions.org.OrgPermission

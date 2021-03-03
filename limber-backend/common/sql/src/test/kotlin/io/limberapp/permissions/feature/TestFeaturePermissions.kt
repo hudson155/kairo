@@ -1,8 +1,7 @@
-package io.limberapp.typeConversion
+package io.limberapp.permissions.feature
 
 import io.limberapp.permissions.Permission
 import io.limberapp.permissions.Permissions
-import io.limberapp.permissions.feature.FeaturePermissions
 
 internal data class TestFeaturePermissions(
     private val permissions: Set<TestFeaturePermission>,
