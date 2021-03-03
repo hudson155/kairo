@@ -9,7 +9,6 @@ internal object OrgRoleMembershipRepFixtures {
       val complete: IntegrationTest.(userGuid: UUID) -> OrgRoleMembershipRep.Complete,
   )
 
-  // There's only 1 fixture here (it's parameterized), but it's still useful for code brevity and timestamp creation.
   val fixture: Fixture = Fixture({ userGuid ->
     OrgRoleMembershipRep.Creation(userGuid)
   }, { userGuid ->

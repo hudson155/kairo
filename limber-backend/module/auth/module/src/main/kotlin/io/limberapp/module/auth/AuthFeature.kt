@@ -1,5 +1,9 @@
 package io.limberapp.module.auth
 
+import io.limberapp.endpoint.feature.DeleteFeatureRole
+import io.limberapp.endpoint.feature.GetFeatureRolesByFeatureGuid
+import io.limberapp.endpoint.feature.PatchFeatureRole
+import io.limberapp.endpoint.feature.PostFeatureRole
 import io.limberapp.endpoint.org.DeleteOrgRole
 import io.limberapp.endpoint.org.DeleteOrgRoleMembership
 import io.limberapp.endpoint.org.GetOrgRoleMembershipsByOrgRoleGuid
@@ -16,6 +20,8 @@ import io.limberapp.endpoint.tenant.PostTenant
 import io.limberapp.endpoint.tenant.PostTenantDomain
 import io.limberapp.module.Feature
 import io.limberapp.restInterface.EndpointHandler
+import io.limberapp.service.feature.FeatureRoleService
+import io.limberapp.service.feature.FeatureRoleServiceImpl
 import io.limberapp.service.org.OrgRoleMembershipService
 import io.limberapp.service.org.OrgRoleMembershipServiceImpl
 import io.limberapp.service.org.OrgRoleService
@@ -28,6 +34,11 @@ import kotlin.reflect.KClass
 
 class AuthFeature : Feature() {
   override val apiEndpoints: List<KClass<out EndpointHandler<*, *>>> = listOf(
+      PostFeatureRole::class,
+      GetFeatureRolesByFeatureGuid::class,
+      PatchFeatureRole::class,
+      DeleteFeatureRole::class,
+
       PostOrgRole::class,
       GetOrgRolesByOrgGuid::class,
       PatchOrgRole::class,
@@ -46,6 +57,9 @@ class AuthFeature : Feature() {
   )
 
   override fun bind() {
+    bind(FeatureRoleService::class.java).to(FeatureRoleServiceImpl::class.java)
+        .asEagerSingleton()
+
     bind(OrgRoleService::class.java).to(OrgRoleServiceImpl::class.java)
         .asEagerSingleton()
     bind(OrgRoleMembershipService::class.java).to(OrgRoleMembershipServiceImpl::class.java)
