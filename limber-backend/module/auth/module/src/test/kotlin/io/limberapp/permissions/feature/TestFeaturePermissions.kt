@@ -18,4 +18,9 @@ internal data class TestFeaturePermissions(
   override fun contains(permission: Permission): Boolean = permission in permissions
 
   override fun asBooleanList(): List<Boolean> = values.map { it in permissions }
+
+  override fun plus(other: FeaturePermissions): FeaturePermissions {
+    check(other is TestFeaturePermissions)
+    return TestFeaturePermissions(permissions + other.permissions)
+  }
 }

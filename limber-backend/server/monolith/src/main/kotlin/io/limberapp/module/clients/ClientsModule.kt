@@ -10,6 +10,7 @@ import io.limberapp.config.AuthenticationMechanism
 import io.limberapp.config.Hosts
 import io.limberapp.module.Module
 import io.limberapp.module.orgs.ORGS_FEATURE
+import io.limberapp.module.users.USERS_FEATURE
 import io.limberapp.serialization.LimberObjectMapper
 
 internal class ClientsModule(
@@ -21,6 +22,11 @@ internal class ClientsModule(
     bind(AuthenticationMechanism.Jwt::class.java).toInstance(internalMechanism)
 
     with(Key.get(HttpClient::class.java, Names.named(ORGS_FEATURE))) {
+      bind(this).toProvider(MonolithHttpClient::class.java).asEagerSingleton()
+      expose(this)
+    }
+
+    with(Key.get(HttpClient::class.java, Names.named(USERS_FEATURE))) {
       bind(this).toProvider(MonolithHttpClient::class.java).asEagerSingleton()
       expose(this)
     }

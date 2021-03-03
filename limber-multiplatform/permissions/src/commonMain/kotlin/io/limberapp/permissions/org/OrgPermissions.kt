@@ -17,9 +17,12 @@ data class OrgPermissions(
 
   override fun asBooleanList(): List<Boolean> = values.map { it in permissions }
 
+  operator fun plus(other: OrgPermissions): OrgPermissions =
+      OrgPermissions(permissions = permissions + other.permissions)
+
   operator fun plus(permission: OrgPermission): OrgPermissions =
-      copy(permissions = permissions.plus(permission))
+      OrgPermissions(permissions = permissions + permission)
 
   operator fun minus(permission: OrgPermission): OrgPermissions =
-      copy(permissions = permissions.minus(permission))
+      OrgPermissions(permissions = permissions - permission)
 }

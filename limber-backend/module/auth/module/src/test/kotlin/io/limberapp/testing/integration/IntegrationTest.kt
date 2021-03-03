@@ -3,6 +3,7 @@ package io.limberapp.testing.integration
 import io.ktor.application.Application
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.client.feature.FeatureRoleClient
+import io.limberapp.client.jwtClaimsRequest.JwtClaimsRequestClient
 import io.limberapp.client.org.OrgRoleClient
 import io.limberapp.client.org.OrgRoleMembershipClient
 import io.limberapp.client.tenant.TenantClient
@@ -30,7 +31,7 @@ internal abstract class IntegrationTest(
 
     override fun Application.main(): Server<*> {
       return object : Server<TestConfig>(this, config) {
-        override val modules = setOf(AuthFeature(), sqlModule, TypeConversionModule)
+        override val modules = setOf(AuthFeature(), sqlModule, MockModule, TypeConversionModule)
       }
     }
 
@@ -42,6 +43,10 @@ internal abstract class IntegrationTest(
 
   protected val featureRoleClient: FeatureRoleClient by lazy {
     FeatureRoleClient(httpClient)
+  }
+
+  protected val jwtClaimsRequestClient: JwtClaimsRequestClient by lazy {
+    JwtClaimsRequestClient(httpClient)
   }
 
   protected val orgRoleClient: OrgRoleClient by lazy {

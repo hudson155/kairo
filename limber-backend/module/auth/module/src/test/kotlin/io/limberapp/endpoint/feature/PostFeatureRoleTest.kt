@@ -25,8 +25,8 @@ internal class PostFeatureRoleTest(
       orgRoleClient(OrgRoleApi.Post(OrgRoleRepFixtures.adminFixture.creation(adminOrgRoleRep.guid)))
     }
 
-    val adminFeatureRoleRep =
-        FeatureRoleRepFixtures.fixture.complete(this, featureGuid, adminOrgRoleRep.guid, 1)
+    val adminFeatureRoleRep = FeatureRoleRepFixtures.fixture.complete(this,
+        featureGuid, adminOrgRoleRep.guid, 1)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
           rep = FeatureRoleRepFixtures.fixture.creation(featureGuid, adminOrgRoleRep.guid),
@@ -54,8 +54,8 @@ internal class PostFeatureRoleTest(
       orgRoleClient(OrgRoleApi.Post(OrgRoleRepFixtures.adminFixture.creation(orgGuid)))
     }
 
-    val adminFeatureRoleRep =
-        FeatureRoleRepFixtures.fixture.complete(this, featureGuid, adminOrgRoleRep.guid, 1)
+    val adminFeatureRoleRep = FeatureRoleRepFixtures.fixture.complete(this,
+        featureGuid, adminOrgRoleRep.guid, 1)
     test(expectResult = adminFeatureRoleRep) {
       featureRoleClient(FeatureRoleApi.Post(
           rep = FeatureRoleRepFixtures.fixture.creation(featureGuid, adminOrgRoleRep.guid),

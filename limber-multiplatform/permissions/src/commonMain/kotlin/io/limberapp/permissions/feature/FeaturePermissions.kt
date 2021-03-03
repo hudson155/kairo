@@ -13,4 +13,6 @@ abstract class FeaturePermissions : Permissions() {
   override fun asDarb(): String = "$prefix." + super.asDarb()
 
   override fun asBitString(): String = prefix + super.asBitString()
+
+  abstract operator fun plus(other: FeaturePermissions): FeaturePermissions
 }

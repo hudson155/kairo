@@ -33,24 +33,24 @@ internal class DeleteFeatureRoleTest(
     val memberOrgRoleRep = OrgRoleRepFixtures.memberFixture.complete(this, orgGuid, 1)
     setup { orgRoleClient(OrgRoleApi.Post(OrgRoleRepFixtures.memberFixture.creation(orgGuid))) }
 
-    val feature0AdminRoleRep =
-        FeatureRoleRepFixtures.fixture.complete(this, feature0Guid, adminOrgRoleRep.guid, 2)
+    val feature0AdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this,
+        feature0Guid, adminOrgRoleRep.guid, 2)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
           rep = FeatureRoleRepFixtures.fixture.creation(feature0Guid, adminOrgRoleRep.guid),
       ))
     }
 
-    val feature0MemberRoleRep =
-        FeatureRoleRepFixtures.fixture.complete(this, feature0Guid, memberOrgRoleRep.guid, 3)
+    val feature0MemberRoleRep = FeatureRoleRepFixtures.fixture.complete(this,
+        feature0Guid, memberOrgRoleRep.guid, 3)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
           rep = FeatureRoleRepFixtures.fixture.creation(feature0Guid, memberOrgRoleRep.guid),
       ))
     }
 
-    val feature1AdminRoleRep =
-        FeatureRoleRepFixtures.fixture.complete(this, feature1Guid, adminOrgRoleRep.guid, 4)
+    val feature1AdminRoleRep = FeatureRoleRepFixtures.fixture.complete(this,
+        feature1Guid, adminOrgRoleRep.guid, 4)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
           rep = FeatureRoleRepFixtures.fixture.creation(feature1Guid, adminOrgRoleRep.guid),

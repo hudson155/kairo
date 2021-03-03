@@ -15,7 +15,6 @@ import io.limberapp.client.LimberHttpClientRequestBuilder
 import io.limberapp.client.RequestBuilder
 import io.limberapp.client.SUCCESSFUL_RESPONSE_RANGE
 import io.limberapp.client.exception.LimberHttpClientException
-import io.limberapp.permissions.limber.LimberPermission
 import io.limberapp.permissions.limber.LimberPermissions
 import io.limberapp.restInterface.Endpoint
 import io.limberapp.serialization.LimberObjectMapper
@@ -29,7 +28,7 @@ class IntegrationTestHttpClient(
     objectMapper: LimberObjectMapper,
 ) : HttpClient(objectMapper) {
   internal val jwt: String = run {
-    val permissions = LimberPermissions(setOf(LimberPermission.SUPERUSER))
+    val permissions = LimberPermissions.all()
     return@run JWT.create()
         .withClaim(JwtClaims.permissions, permissions.asDarb())
         .sign(Algorithm.none())

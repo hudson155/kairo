@@ -18,8 +18,8 @@ data class LimberPermissions(
   override fun asBooleanList(): List<Boolean> = values.map { it in permissions }
 
   operator fun plus(permission: LimberPermission): LimberPermissions =
-      copy(permissions = permissions.plus(permission))
+      LimberPermissions(permissions = permissions + permission)
 
   operator fun minus(permission: LimberPermission): LimberPermissions =
-      copy(permissions = permissions.minus(permission))
+      LimberPermissions(permissions = permissions - permission)
 }

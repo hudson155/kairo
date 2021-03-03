@@ -36,8 +36,8 @@ internal class PatchFeatureRoleTest(
     val orgRoleRep = OrgRoleRepFixtures.adminFixture.complete(this, orgGuid, 0)
     setup { orgRoleClient(OrgRoleApi.Post(OrgRoleRepFixtures.adminFixture.creation(orgGuid))) }
 
-    var featureRoleRep =
-        FeatureRoleRepFixtures.fixture.complete(this, featureGuid, orgRoleRep.guid, 1)
+    var featureRoleRep = FeatureRoleRepFixtures.fixture.complete(this,
+        featureGuid, orgRoleRep.guid, 1)
     setup {
       featureRoleClient(FeatureRoleApi.Post(
           rep = FeatureRoleRepFixtures.fixture.creation(featureGuid, orgRoleRep.guid),

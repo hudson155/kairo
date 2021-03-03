@@ -27,4 +27,9 @@ data class UnknownFeaturePermissions(
   }
 
   override fun asBooleanList(): List<Boolean> = permissions
+
+  override fun plus(other: FeaturePermissions): FeaturePermissions {
+    logger.error("Attempted to combine unknown permission sets.")
+    return UnknownFeaturePermissions(prefix, emptyList())
+  }
 }
