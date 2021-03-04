@@ -1,0 +1,67 @@
+name: Pull request
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+
+      postgres:
+        # Postgres config inspired by
+        # https://docs.github.com/en/actions/guides/creating-postgresql-service-containers
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: limber_test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    env:
+      IMAGE_NAME: gcr.io/limberio/limber-monolith-server
+
+    steps:
+
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Cache Gradle packages
+        # Caching inspired by
+        # https://docs.github.com/en/actions/guides/building-and-testing-java-with-gradle#caching-dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts', '**/gradle.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build project
+        run: ./gradlew --info --stacktrace build
+        env:
+          LIMBER_TEST_POSTGRES_USERNAME: postgres
+          LIMBER_TEST_POSTGRES_PASSWORD: postgres
+
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:$(git rev-parse HEAD) limber-backend/server/monolith
+
+      - name: Clean up Gradle cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
