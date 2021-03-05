@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.limberapp.server"
-version = "0-SNAPSHOT"
+version = "1-SNAPSHOT"
 application {
   // Shadow requires use of deprecated mainClassName.
   mainClassName = "io.ktor.server.cio.EngineMain"

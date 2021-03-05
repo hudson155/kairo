@@ -1,0 +1,52 @@
+/* Box sizing rules. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default padding. */
+ul, ol {
+  padding: 0;
+}
+
+/* Remove default margin. */
+body, h1, h2, h3, h4, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* Set core body defaults. */
+body {
+  min-height: 100vh;
+  font-family: Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  line-height: 1.5;
+  text-decoration-skip-ink: auto;
+}
+
+/* Remove list styles from lists. */
+ul, ol {
+  list-style: none;
+}
+
+/* Anchor elements should not be styled by default. */
+a {
+  color: unset;
+  text-decoration: unset;
+}
+
+/* Make images easier to work with. */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons. */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Collapse table borders. */
+table {
+  border-collapse: collapse;
+}
