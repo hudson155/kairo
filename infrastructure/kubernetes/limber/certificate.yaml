@@ -1,0 +1,13 @@
+# Defines a TLS certificate that Google manages completely on our behalf.
+# https://cloud.google.com/kubernetes-engine/docs/how-to/managed-certs.
+
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: limber
+  namespace: limber
+  labels:
+    instance: limber
+spec:
+  domains:
+    - api.limberapp.io

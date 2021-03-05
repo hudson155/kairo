@@ -64,7 +64,7 @@ jobs:
           export_default_credentials: true
 
       - name: Configure Docker for GCP
-        run: gcloud auth configure-docker --quiet
+        run: gcloud --quiet auth configure-docker
 
       - name: Build Docker image
         run: |
@@ -75,6 +75,18 @@ jobs:
         run: |
           docker push $IMAGE_NAME:master
           docker push $IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Configure the Kubernetes CLI
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: limber
+          location: northamerica-northeast1-a
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image --namespace limber \
+              deployment/limber-monolith-server \
+              limber-monolith-server=$IMAGE_NAME:$(git rev-parse HEAD)
 
       - name: Clean up Gradle cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
