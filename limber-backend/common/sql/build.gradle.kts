@@ -1,8 +1,12 @@
+plugins {
+  id("limber-jvm-library")
+}
+
 dependencies {
   implementation(project(":limber-backend:common:config"))
   api(project(":limber-backend:common:module"))
+  implementation(project(":limber-backend:common:permissions"))
   implementation(project(":limber-backend:common:type-conversion:interface"))
-  implementation(project(":limber-multiplatform:permissions"))
   implementation(Dependencies.Sql.flyway)
   implementation(Dependencies.Sql.hikari)
   api(Dependencies.Sql.jdbi3Kotlin)

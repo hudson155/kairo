@@ -1,15 +1,5 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
-  application
-  id(Plugins.shadow).version(Versions.shadow)
-}
-
-group = "io.limberapp.server"
-version = "1-SNAPSHOT"
-application {
-  // Shadow requires use of deprecated mainClassName.
-  mainClassName = "io.ktor.server.cio.EngineMain"
+  id("limber-jvm-server")
 }
 
 dependencies {
@@ -20,12 +10,4 @@ dependencies {
   implementation(project(":limber-backend:module:health-check:module"))
   implementation(project(":limber-backend:module:orgs:module"))
   implementation(project(":limber-backend:module:users:module"))
-}
-
-tasks.named<ShadowJar>("shadowJar") {
-  archiveFileName.set("limber-monolith-server.jar")
-  mergeServiceFiles()
-  manifest {
-    attributes(mapOf("MainClass" to application.mainClassName))
-  }
 }

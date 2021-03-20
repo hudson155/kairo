@@ -3,11 +3,14 @@ rootProject.name = "limber"
 // Common
 include(":limber-backend:common:client")
 include(":limber-backend:common:config")
+include(":limber-backend:common:darb")
 include(":limber-backend:common:exceptions")
 include(":limber-backend:common:feature")
 include(":limber-backend:common:integration-testing")
 include(":limber-backend:common:jwt")
 include(":limber-backend:common:module")
+include(":limber-backend:common:multiplatform-logging")
+include(":limber-backend:common:permissions")
 include(":limber-backend:common:reps")
 include(":limber-backend:common:rest-interface")
 include(":limber-backend:common:serialization")
@@ -44,8 +47,3 @@ include(
 
 // Server
 include(":limber-backend:server:monolith")
-
-// Multiplatform
-include(":limber-multiplatform:darb")
-include(":limber-multiplatform:logging")
-include(":limber-multiplatform:permissions")

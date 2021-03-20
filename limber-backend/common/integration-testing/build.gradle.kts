@@ -1,3 +1,7 @@
+plugins {
+  id("limber-jvm-library")
+}
+
 dependencies {
   api(project(":limber-backend:common:client"))
   implementation(project(":limber-backend:common:jwt"))

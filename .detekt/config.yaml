@@ -293,6 +293,8 @@ naming:
     active: true
   InvalidPackageDeclaration:
     active: true
+    excludes:
+      - '**/src/jsMain/**' # JS Code
   MatchingDeclarationName:
     active: true
     mustBeFirst: true

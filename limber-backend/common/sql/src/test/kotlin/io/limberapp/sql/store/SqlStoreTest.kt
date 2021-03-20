@@ -25,6 +25,8 @@ internal class SqlStoreTest : SqlStore(
   @BeforeEach
   fun beforeEach() {
     withHandle { handle ->
+      handle.createUpdate("CREATE SCHEMA IF NOT EXISTS sqltest")
+          .execute()
       val tableNames = listOf("sql_store_test", "sql_store_test_1", "sql_store_test_2")
       handle.createUpdate("DROP TABLE IF EXISTS ${tableNames.joinToString()}")
           .execute()

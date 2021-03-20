@@ -6,9 +6,6 @@ object Versions {
   // TODO: 0.16.0 is released but doesn't seem to be available.
   const val auth0JwksRsa: String = "0.15.0"
 
-  // https://github.com/detekt/detekt/releases
-  const val detekt: String = "1.15.0"
-
   // https://github.com/flyway/flyway/releases
   const val flyway: String = "7.6.0"
 
@@ -33,9 +30,6 @@ object Versions {
   // https://github.com/junit-team/junit5/releases
   const val junit: String = "5.7.1"
 
-  // https://github.com/JetBrains/kotlin/releases
-  const val kotlin: String = "1.4.31"
-
   // https://github.com/ktorio/ktor/releases
   const val ktor: String = "1.5.2"
 
@@ -47,9 +41,6 @@ object Versions {
 
   // https://github.com/pgjdbc/pgjdbc/releases
   const val postgres: String = "42.2.19"
-
-  // https://github.com/johnrengelman/shadow/releases
-  const val shadow: String = "6.1.0"
 
   // https://github.com/qos-ch/slf4j/releases
   const val slf4j: String = "1.7.30"

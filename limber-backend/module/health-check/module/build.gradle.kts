@@ -1,3 +1,7 @@
+plugins {
+  id("limber-jvm-library")
+}
+
 dependencies {
   api(project(":limber-backend:common:feature"))
   api(project(":limber-backend:module:health-check:interface"))
