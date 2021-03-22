@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-function App(): ReactElement {
+const App: React.FC = () => {
   return (<>
     <h1>Limber</h1>
     <p>This is Limber.</p>
   </>);
-}
+};
 
 export default App;
