@@ -3,22 +3,25 @@ import { BrowserRouter } from 'react-router-dom';
 import { UnauthenticatedLimberApiProvider } from '../limberApi/LimberApiProvider';
 import AuthProvider from '../provider/AuthProvider';
 import TenantProvider, { useTenant } from '../provider/TenantProvider';
+import LimberThemeProvider from '../theme/LimberThemeProvider';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import LoadingPage from './pages/LoadingPage/LoadingPage';
 
 const App: React.FC = () => {
   return (
-    <UnauthenticatedLimberApiProvider>
-      <BrowserRouter>
-        <TenantProvider>
-          <ErrorBoundary fallback={<ErrorPage debugMessage="Tenant failed to load." />}>
-            <Suspense fallback={<LoadingPage debugMessage="Loading tenant." />}>
-              <LoadedApp />
-            </Suspense>
-          </ErrorBoundary>
-        </TenantProvider>
-      </BrowserRouter>
-    </UnauthenticatedLimberApiProvider>
+    <LimberThemeProvider>
+      <UnauthenticatedLimberApiProvider>
+        <BrowserRouter>
+          <TenantProvider>
+            <ErrorBoundary fallback={<ErrorPage debugMessage="Tenant failed to load." />}>
+              <Suspense fallback={<LoadingPage debugMessage="Loading tenant." />}>
+                <LoadedApp />
+              </Suspense>
+            </ErrorBoundary>
+          </TenantProvider>
+        </BrowserRouter>
+      </UnauthenticatedLimberApiProvider>
+    </LimberThemeProvider>
   );
 };
 
