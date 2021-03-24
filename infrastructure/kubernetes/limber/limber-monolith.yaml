@@ -89,7 +89,7 @@ items:
                 successThreshold: 6
                 failureThreshold: 12
             - name: cloud-sql-proxy
-              image: gcr.io/cloudsql-docker/gce-proxy:1.20.0
+              image: gcr.io/cloudsql-docker/gce-proxy:1.20.2
               command:
                 - "/cloud_sql_proxy"
                 - "-instances=limberio:us-central1:limber=tcp:5432"
