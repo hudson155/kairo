@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-  // https://github.com/JetBrains/kotlin/releases
+  // https://kotlinlang.org/docs/releases.html#release-details
   api(kotlin("gradle-plugin", "1.4.31"))
 
   // https://github.com/detekt/detekt/releases
