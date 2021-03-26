@@ -1,19 +1,31 @@
-import React, { useContext, useState } from 'react';
+import React, { ReactNode, useContext, useEffect } from 'react';
 import app from '../app';
 import { useLimberApi } from '../limberApi/LimberApiProvider';
-import { TenantRep } from '../rep/TenantRep';
-import Readable from './Readable';
+import TenantRep from '../rep/TenantRep';
+import useLoadingState from '../util/LoadingState';
+import { checkNotUndefined } from '../util/Util';
 
-const Context = React.createContext<Readable<TenantRep | undefined>>(undefined as unknown as Readable<TenantRep | undefined>);
+const Context = React.createContext<TenantRep>(undefined as unknown as TenantRep);
 
-const TenantProvider: React.FC = ({ children }) => {
+interface TenantProviderProps {
+  readonly fallback: ReactNode;
+}
+
+const TenantProvider: React.FC<TenantProviderProps> = ({ fallback, children }) => {
   const api = useLimberApi();
 
-  const [tenant] = useState(new Readable(api.getTenant(app.rootDomain)));
+  const [tenant, setTenant, setError] = useLoadingState<TenantRep | undefined>();
 
-  return <Context.Provider value={tenant}>{children}</Context.Provider>;
+  useEffect(() => {
+    api.tenant.getByDomain(app.rootDomain).then(setTenant, setError);
+  }, []);
+
+  if (tenant.isLoading) return <>{fallback}</>;
+
+  const value = checkNotUndefined(tenant.get(), 'Tenant not found.');
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
 export default TenantProvider;
 
-export const useTenant = (): Readable<TenantRep | undefined> => useContext(Context);
+export const useTenant = (): TenantRep => useContext(Context);

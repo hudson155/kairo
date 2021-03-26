@@ -1,45 +1,50 @@
 import { ThemeProvider } from '@emotion/react';
-import React, { ReactElement, ReactNode, useContext, useEffect } from 'react';
-
+import React, { useContext, useEffect } from 'react';
+import usePersistentState from '../util/PersistentState';
 import { EmotionThemeDark, EmotionThemeLight } from './EmotionTheme';
-import usePersistentState from './PersistentState';
 
-const LIMBER_THEME_KEY = 'LIMBER_IS_LIGHT_THEME_KEY';
+const LIMBER_THEME_KEY = 'LIMBER_THEME';
 
-interface Props {
-  readonly children: ReactNode;
-}
+type LimberThemeType = 'DARK' | 'LIGHT';
 
 interface LimberThemeContext {
-  readonly isLightTheme: boolean;
-  readonly setIsLightTheme: (isLightTheme: boolean) => void;
+  readonly themeType: LimberThemeType;
+  readonly setThemeType: (themeType: LimberThemeType) => void;
 }
 
-const Context = React.createContext<LimberThemeContext>({
-  isLightTheme: true,
-  setIsLightTheme: () => {
-  },
-});
+const Context = React.createContext<LimberThemeContext>(undefined as unknown as LimberThemeContext);
 
-function LimberThemeProvider(props: Props): ReactElement {
-  const [isLightTheme, setIsLightTheme] = usePersistentState(LIMBER_THEME_KEY, true);
-  const theme = isLightTheme ? EmotionThemeLight : EmotionThemeDark;
+const LimberThemeProvider: React.FC = ({ children }) => {
+  const [themeType, setThemeType] = usePersistentState<LimberThemeType>(LIMBER_THEME_KEY, 'LIGHT');
+  const theme = themeFromType(themeType);
 
   // General whole app theming. Should occur before any components are returned.
-  // TODO (ENG-82): Complete the base default theming
+  // TODO: Finish the base default theming.
   useEffect(() => {
     document.body.style.backgroundColor = theme.colors.grey100;
     document.body.style.color = theme.colors.grey800;
-  }, [theme]);
+  }, [themeType]);
 
   return (
-    <Context.Provider value={{ isLightTheme, setIsLightTheme }}>
+    <Context.Provider value={{ themeType, setThemeType }}>
       <ThemeProvider theme={theme}>
-        {props.children}
+        {children}
       </ThemeProvider>
     </Context.Provider>
   );
+};
+
+function themeFromType(themeType: LimberThemeType) {
+  switch (themeType) {
+    case 'DARK':
+      return EmotionThemeDark;
+    case 'LIGHT':
+      return EmotionThemeLight;
+    default:
+      throw new Error(`Unknown theme type: ${themeType}.`);
+  }
 }
 
-export const useLimberTheme = (): LimberThemeContext => useContext(Context);
 export default LimberThemeProvider;
+
+export const useLimberTheme = (): LimberThemeContext => useContext(Context);

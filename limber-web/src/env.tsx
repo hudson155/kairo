@@ -6,7 +6,6 @@ interface Env {
   COPYRIGHT_HOLDER: string;
 }
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 const env: Env = {
   LIMBER_API_BASE_URL: process.env.REACT_APP_LIMBER_API_BASE_URL!,
   SHOW_DEBUG_MESSAGES: Boolean(process.env.REACT_APP_SHOW_DEBUG_MESSAGES!),

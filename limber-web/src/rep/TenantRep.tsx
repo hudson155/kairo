@@ -1,5 +1,3 @@
-import React from 'react';
-
-export interface TenantRep {
+export default interface TenantRep {
   readonly auth0ClientId: string;
 }

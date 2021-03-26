@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
 import env from '../env';
 
-interface DebugSettings {
-  readonly showDebugMessages: boolean;
-  readonly additionalLimberApiLatencyMs: number;
-}
-
-const Context = React.createContext<DebugSettings>({
+/**
+ * Debug settings are currently hardcoded by environment (see the .env file), but this is structured
+ * to look like a hook so that the settings could be configurable by user and/or stored in local
+ * storage.
+ */
+const debugSettings = {
   showDebugMessages: env.SHOW_DEBUG_MESSAGES,
   additionalLimberApiLatencyMs: env.ADDITIONAL_LIMBER_API_LATENCY_MS,
-});
+};
 
-export const useDebugSettings = (): DebugSettings => useContext(Context);
+export const useDebugSettings = () => debugSettings;
