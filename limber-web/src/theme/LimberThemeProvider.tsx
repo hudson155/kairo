@@ -21,8 +21,8 @@ const LimberThemeProvider: React.FC = ({ children }) => {
   // General whole app theming. Should occur before any components are returned.
   // TODO: Finish the base default theming.
   useEffect(() => {
-    document.body.style.backgroundColor = theme.colors.grey100;
-    document.body.style.color = theme.colors.grey800;
+    document.body.style.backgroundColor = theme.color.grey100;
+    document.body.style.color = theme.color.grey800;
   }, [themeType]);
 
   return (
