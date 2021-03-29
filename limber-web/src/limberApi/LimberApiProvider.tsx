@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { useDebugSettings } from '../provider/DebugSettingsProvider';
 import LimberApi from './LimberApi';
 
-const Context = React.createContext<LimberApi>(undefined as unknown as LimberApi);
+const Context = React.createContext<LimberApi>(
+  undefined as unknown as LimberApi);
 
-export namespace LimberApiProvider {
+namespace LimberApiProvider {
   export const Unauthenticated: React.FC = ({ children }) => {
     const { additionalLimberApiLatencyMs } = useDebugSettings();
 
@@ -13,5 +14,7 @@ export namespace LimberApiProvider {
     return <Context.Provider value={api}>{children}</Context.Provider>;
   };
 }
+
+export default LimberApiProvider;
 
 export const useLimberApi = (): LimberApi => useContext(Context);

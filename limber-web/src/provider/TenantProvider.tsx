@@ -5,7 +5,8 @@ import TenantRep from '../rep/TenantRep';
 import useLoadingState from '../util/LoadingState';
 import { checkNotUndefined } from '../util/Util';
 
-const Context = React.createContext<TenantRep>(undefined as unknown as TenantRep);
+const Context = React.createContext<TenantRep.Complete>(
+  undefined as unknown as TenantRep.Complete);
 
 interface TenantProviderProps {
   readonly fallback: ReactNode;
@@ -14,7 +15,7 @@ interface TenantProviderProps {
 const TenantProvider: React.FC<TenantProviderProps> = ({ fallback, children }) => {
   const api = useLimberApi();
 
-  const [tenant, setTenant, setError] = useLoadingState<TenantRep | undefined>();
+  const [tenant, setTenant, setError] = useLoadingState<TenantRep.Complete | undefined>();
 
   useEffect(() => {
     api.tenant.getByDomain(app.rootDomain).then(setTenant, setError);
@@ -28,4 +29,4 @@ const TenantProvider: React.FC<TenantProviderProps> = ({ fallback, children }) =
 
 export default TenantProvider;
 
-export const useTenant = (): TenantRep => useContext(Context);
+export const useTenant = (): TenantRep.Complete => useContext(Context);

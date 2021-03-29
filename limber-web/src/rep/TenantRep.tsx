@@ -1,3 +1,7 @@
-export default interface TenantRep {
-  readonly auth0ClientId: string;
+namespace TenantRep {
+  export interface Complete {
+    readonly auth0ClientId: string;
+  }
 }
+
+export default TenantRep;

@@ -8,9 +8,9 @@ export default class TenantApi {
     this.api = api;
   }
 
-  async getByDomain(tenantDomain: string): Promise<TenantRep | undefined> {
+  async getByDomain(tenantDomain: string): Promise<TenantRep.Complete | undefined> {
     const url = '/tenants';
     const params = { domain: tenantDomain };
-    return await this.api.request<TenantRep>('GET', url, params);
+    return await this.api.request<TenantRep.Complete>('GET', url, params);
   }
 }

@@ -12,7 +12,8 @@ interface LimberThemeContext {
   readonly setThemeType: (themeType: LimberThemeType) => void;
 }
 
-const Context = React.createContext<LimberThemeContext>(undefined as unknown as LimberThemeContext);
+const Context = React.createContext<LimberThemeContext>(
+  undefined as unknown as LimberThemeContext);
 
 const LimberThemeProvider: React.FC = ({ children }) => {
   const [themeType, setThemeType] = usePersistentState<LimberThemeType>(LIMBER_THEME_KEY, 'LIGHT');

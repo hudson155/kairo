@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from '../auth/AuthProvider';
-import { LimberApiProvider } from '../limberApi/LimberApiProvider';
+import LimberApiProvider from '../limberApi/LimberApiProvider';
 import TenantProvider from '../provider/TenantProvider';
 import LimberThemeProvider from '../theme/LimberThemeProvider';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
