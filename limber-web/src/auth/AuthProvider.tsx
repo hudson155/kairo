@@ -17,8 +17,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ fallback, children }) => {
   const history = useHistory();
   const tenant = useTenant();
 
-  const onRedirectCallback = (appState: AppState) => {
-    history.push(appState.returnTo ?? window.location.pathname);
+  const onRedirectCallback = (appState?: AppState) => {
+    history.replace(appState?.returnTo ?? window.location.pathname);
   };
 
   return (

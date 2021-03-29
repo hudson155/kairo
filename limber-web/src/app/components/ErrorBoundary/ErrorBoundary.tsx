@@ -5,7 +5,7 @@ interface ErrorBoundaryProps {
 }
 
 interface ErrorBoundaryState {
-  readonly error?: Error;
+  readonly error: Error | undefined;
 }
 
 /**
