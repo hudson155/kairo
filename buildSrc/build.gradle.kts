@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
   // https://kotlinlang.org/docs/releases.html#release-details
-  api(kotlin("gradle-plugin", "1.4.31"))
+  api(kotlin("gradle-plugin", "1.4.32"))
 
   // https://github.com/detekt/detekt/releases
   api("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.15.0")
