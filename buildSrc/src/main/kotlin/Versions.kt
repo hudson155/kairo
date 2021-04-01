@@ -6,7 +6,7 @@ object Versions {
   const val auth0JwksRsa: String = "0.16.0"
 
   // https://github.com/flyway/flyway/releases
-  const val flyway: String = "7.7.1"
+  const val flyway: String = "7.7.2"
 
   // https://github.com/google/guice/releases
   const val guice: String = "5.0.1"
