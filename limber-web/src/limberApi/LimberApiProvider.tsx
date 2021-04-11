@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import React, { useContext } from 'react';
 import { useDebugSettings } from '../provider/DebugSettingsProvider';
 import LimberApi from './LimberApi';
@@ -10,6 +11,15 @@ namespace LimberApiProvider {
     const { additionalLimberApiLatencyMs } = useDebugSettings();
 
     const api = new LimberApi(() => Promise.resolve(undefined), additionalLimberApiLatencyMs);
+
+    return <Context.Provider value={api}>{children}</Context.Provider>;
+  };
+
+  export const Authenticated: React.FC = ({ children }) => {
+    const auth = useAuth0();
+    const { additionalLimberApiLatencyMs } = useDebugSettings();
+
+    const api = new LimberApi(auth.getAccessTokenSilently, additionalLimberApiLatencyMs);
 
     return <Context.Provider value={api}>{children}</Context.Provider>;
   };

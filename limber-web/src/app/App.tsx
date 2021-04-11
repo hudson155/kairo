@@ -17,7 +17,9 @@ const App: React.FC = () => {
           <LimberApiProvider.Unauthenticated>
             <TenantProvider fallback={<LoadingPage debugMessage="Loading tenant." />}>
               <AuthProvider fallback={<LoadingPage debugMessage="Identifying with Auth0." />}>
-                <RootRouter />
+                <LimberApiProvider.Authenticated>
+                  <RootRouter />
+                </LimberApiProvider.Authenticated>
               </AuthProvider>
             </TenantProvider>
           </LimberApiProvider.Unauthenticated>
