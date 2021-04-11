@@ -67,12 +67,12 @@ internal val DEFAULT_COMMON_DEPENDENCIES: List<Dependency> = emptyList()
 internal val DEFAULT_COMMON_TEST_DEPENDENCIES: List<Dependency> = listOf(
     Dependency.Kotlin(
         configuration = Dependency.Configuration.IMPLEMENTATION,
-        dependencyNotation = "test-annotations-common"
+        dependencyNotation = "test-annotations-common",
     ),
     Dependency.Kotlin(
         configuration = Dependency.Configuration.IMPLEMENTATION,
-        dependencyNotation = "test-common"
-    )
+        dependencyNotation = "test-common",
+    ),
 )
 
 private fun KotlinDependencyHandler.apply(dependency: Dependency) {

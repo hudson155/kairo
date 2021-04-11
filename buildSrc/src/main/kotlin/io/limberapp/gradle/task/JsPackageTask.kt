@@ -9,7 +9,7 @@ import org.gradle.api.Task
 class JsPackageTask : GradleTask() {
   override val name: String = "jsPackage"
 
-  override val dependencies: List<String> = listOf("jsProductionExecutableCompileSync")
+  override val dependencies: List<String> = listOf("jsPublicPackageJson")
 
   override val isDependencyOf: List<String> = listOf("assemble")
 

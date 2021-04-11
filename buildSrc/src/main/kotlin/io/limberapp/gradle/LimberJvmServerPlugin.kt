@@ -3,7 +3,6 @@ package io.limberapp.gradle
 import Plugins
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaApplication
 
 class LimberJvmServerPlugin : LimberJvmPlugin() {
   override val plugins: List<String>
@@ -25,7 +24,7 @@ class LimberJvmServerPlugin : LimberJvmPlugin() {
   }
 
   private fun configureShadowJarTask(project: Project) {
-    project.tasks.named("shadowJar", ShadowJar::class.java) {
+    project.tasks.withType(ShadowJar::class.java) {
       archiveFileName.set("limber-server.jar")
       mergeServiceFiles()
       manifest {

@@ -21,21 +21,21 @@ sealed class Dependency {
 
   data class Explicit(
       override val configuration: Configuration,
-      val dependencyNotation: String
+      val dependencyNotation: String,
   ) : Dependency() {
     override fun test(): Dependency = copy(configuration = configuration.test())
   }
 
   data class Kotlin(
       override val configuration: Configuration,
-      val dependencyNotation: String
+      val dependencyNotation: String,
   ) : Dependency() {
     override fun test(): Dependency = copy(configuration = configuration.test())
   }
 
   data class Project(
       override val configuration: Configuration,
-      val dependencyNotation: String
+      val dependencyNotation: String,
   ) : Dependency() {
     override fun test(): Dependency = copy(configuration = configuration.test())
   }
