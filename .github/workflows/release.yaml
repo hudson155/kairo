@@ -138,8 +138,6 @@ jobs:
         working-directory: limber-web
         env:
           CI: false # Don't treat warnings as errors.
-          REACT_APP_LIMBER_API_BASE_URL: https://api.limberapp.io
-          REACT_APP_SHOW_DEBUG_MESSAGES: false
         run: yarn build
 
       - name: Log in to GCP
