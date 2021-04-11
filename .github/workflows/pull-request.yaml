@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  build:
+  backend:
 
     runs-on: ubuntu-latest
 
@@ -57,7 +57,7 @@ jobs:
           LIMBER_TEST_POSTGRES_PASSWORD: postgres
 
       - name: Build Docker image
-        run: docker build -t $IMAGE_NAME:$(git rev-parse HEAD) limber-backend/server/monolith
+        run: docker build -t $IMAGE_NAME:$(git rev-parse HEAD) limber-backend/server/monolith/
 
       - name: Clean up Gradle cache
         # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
@@ -65,3 +65,53 @@ jobs:
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
+
+  web:
+
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: gcr.io/limberio/limber-web
+
+    steps:
+
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - name: Cache Node modules
+        # Caching inspired by
+        # https://docs.github.com/en/actions/guides/building-and-testing-nodejs#example-caching-dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        working-directory: limber-web
+        env:
+          CI: true # Enables immutable lockfile.
+        run: yarn install
+
+      - name: Run tests
+        working-directory: limber-web
+        env:
+          CI: true # Avoids interactive mode.
+        run: yarn test --passWithNoTests
+
+      - name: Build project
+        working-directory: limber-web
+        env:
+          CI: false # Don't treat warnings as errors.
+          REACT_APP_LIMBER_API_BASE_URL: https://api.limberapp.io
+          REACT_APP_SHOW_DEBUG_MESSAGES: false
+        run: yarn build
+
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:$(git rev-parse HEAD) limber-web/

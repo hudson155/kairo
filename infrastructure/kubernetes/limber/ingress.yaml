@@ -13,7 +13,7 @@ items:
         instance: limber
       annotations:
         kubernetes.io/ingress.global-static-ip-name: limber
-        networking.gke.io/managed-certificates: limber
+        networking.gke.io/managed-certificates: limber-certificate-2021-apr-11-v01
         networking.gke.io/v1beta1.FrontendConfig: limber-http-redirect
     spec:
       rules:
@@ -22,6 +22,12 @@ items:
             paths:
               - backend:
                   serviceName: limber-monolith-server
+                  servicePort: 80
+        - host: limber.limberapp.io
+          http:
+            paths:
+              - backend:
+                  serviceName: limber-web
                   servicePort: 80
 
   # Applying this to the ingress configures HTTP-to-HTTPS redirection.

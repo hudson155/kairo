@@ -4,10 +4,11 @@
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: limber
+  name: limber-certificate-2021-apr-11-v01
   namespace: limber
   labels:
     instance: limber
 spec:
   domains:
     - api.limberapp.io
+    - limber.limberapp.io

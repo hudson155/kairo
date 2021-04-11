@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  build:
+  backend:
 
     runs-on: ubuntu-latest
 
@@ -68,7 +68,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t $IMAGE_NAME:master limber-backend/server/monolith
+          docker build -t $IMAGE_NAME:master limber-backend/server/monolith/
           docker tag $IMAGE_NAME:master $IMAGE_NAME:$(git rev-parse HEAD)
 
       - name: Push Docker image
@@ -94,3 +94,82 @@ jobs:
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
+
+  web:
+
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: gcr.io/limberio/limber-web
+
+    steps:
+
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - name: Cache Node modules
+        # Caching inspired by
+        # https://docs.github.com/en/actions/guides/building-and-testing-nodejs#example-caching-dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        working-directory: limber-web
+        env:
+          CI: true # Enables immutable lockfile.
+        run: yarn install
+
+      - name: Run tests
+        working-directory: limber-web
+        env:
+          CI: true # Avoids interactive mode.
+        run: yarn test --passWithNoTests
+
+      - name: Build project
+        working-directory: limber-web
+        env:
+          CI: false # Don't treat warnings as errors.
+          REACT_APP_LIMBER_API_BASE_URL: https://api.limberapp.io
+          REACT_APP_SHOW_DEBUG_MESSAGES: false
+        run: yarn build
+
+      - name: Log in to GCP
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: limberio
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker for GCP
+        run: gcloud --quiet auth configure-docker
+
+      - name: Build Docker image
+        run: |
+          docker build -t $IMAGE_NAME:master limber-web/
+          docker tag $IMAGE_NAME:master $IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Push Docker image
+        run: |
+          docker push $IMAGE_NAME:master
+          docker push $IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Configure the Kubernetes CLI
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: limber
+          location: northamerica-northeast1-a
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image --namespace limber \
+              deployment/limber-web \
+              limber-web=$IMAGE_NAME:$(git rev-parse HEAD)

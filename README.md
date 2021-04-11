@@ -9,5 +9,6 @@
 - Kotlin 1.4
 - Ktor 1.5
 - Postgres 12
+- Node 12
 
 For other dependency versions, see `Versions.kt` and `package.json`.
