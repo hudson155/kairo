@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from '../auth/AuthProvider';
 import LimberApiProvider from '../limberApi/LimberApiProvider';
-import OrgProvider from '../provider/OrgProvider';
 import TenantProvider from '../provider/TenantProvider';
 import LimberThemeProvider from '../theme/LimberThemeProvider';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
@@ -18,11 +17,7 @@ const App: React.FC = () => {
           <LimberApiProvider.Unauthenticated>
             <TenantProvider fallback={<LoadingPage debugMessage="Loading tenant." />}>
               <AuthProvider fallback={<LoadingPage debugMessage="Identifying with Auth0." />}>
-                <LimberApiProvider.Authenticated>
-                  <OrgProvider fallback={<LoadingPage debugMessage="Loading org." />}>
-                    <RootRouter />
-                  </OrgProvider>
-                </LimberApiProvider.Authenticated>
+                <RootRouter />
               </AuthProvider>
             </TenantProvider>
           </LimberApiProvider.Unauthenticated>
