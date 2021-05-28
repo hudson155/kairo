@@ -4,7 +4,7 @@ items:
 
   # A GCE ingress (GKE's default), which is a GCP external load balancer.
   # https://cloud.google.com/kubernetes-engine/docs/how-to/load-balance-ingress.
-  - apiVersion: networking.k8s.io/v1beta1
+  - apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
       name: limber-ingress
@@ -20,15 +20,23 @@ items:
         - host: api.limberapp.io
           http:
             paths:
-              - backend:
-                  serviceName: limber-monolith-server
-                  servicePort: 80
+              - pathType: ImplementationSpecific
+                path: /*
+                backend:
+                  service:
+                    name: limber-monolith-server
+                    port:
+                      number: 80
         - host: limber.limberapp.io
           http:
             paths:
-              - backend:
-                  serviceName: limber-web
-                  servicePort: 80
+              - pathType: ImplementationSpecific
+                path: /*
+                backend:
+                  service:
+                    name: limber-web
+                    port:
+                      number: 80
 
   # Applying this to the ingress configures HTTP-to-HTTPS redirection.
   # https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#https_redirect.
