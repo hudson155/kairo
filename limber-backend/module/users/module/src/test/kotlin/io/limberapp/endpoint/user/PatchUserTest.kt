@@ -7,7 +7,6 @@ import io.limberapp.rep.user.UserRep
 import io.limberapp.rep.user.UserRepFixtures
 import io.limberapp.server.Server
 import io.limberapp.testing.integration.IntegrationTest
-import io.limberapp.util.string.fullName
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -20,7 +19,7 @@ internal class PatchUserTest(
     val userGuid = UUID.randomUUID()
 
     test(expectResult = null) {
-      userClient(UserApi.Patch(userGuid, UserRep.Update(firstName = "Gunner")))
+      userClient(UserApi.Patch(userGuid, UserRep.Update(fullName = "Gunner Hudson")))
     }
   }
 
@@ -31,12 +30,9 @@ internal class PatchUserTest(
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
-    userRep = userRep.copy(
-        firstName = "Gunner",
-        fullName = fullName("Gunner", userRep.lastName)
-    )
+    userRep = userRep.copy(fullName = "Gunner Hudson")
     test(expectResult = userRep) {
-      userClient(UserApi.Patch(userRep.guid, UserRep.Update(firstName = "Gunner")))
+      userClient(UserApi.Patch(userRep.guid, UserRep.Update(fullName = "Gunner Hudson")))
     }
 
     test(expectResult = userRep) { userClient(UserApi.Get(userRep.guid)) }

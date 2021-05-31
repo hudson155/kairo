@@ -14,8 +14,7 @@ internal object UserRepFixtures {
     UserRep.Creation(
         orgGuid = orgGuid,
         emailAddress = "jeff.hudson@limberapp.io",
-        firstName = "Jeff",
-        lastName = "Hudson",
+        fullName = "Jeff Hudson",
         profilePhotoUrl = null,
     )
   }, { orgGuid, idSeed ->
@@ -24,8 +23,6 @@ internal object UserRepFixtures {
         permissions = LimberPermissions.none(),
         orgGuid = orgGuid,
         emailAddress = "jeff.hudson@limberapp.io",
-        firstName = "Jeff",
-        lastName = "Hudson",
         fullName = "Jeff Hudson",
         profilePhotoUrl = null,
     )
@@ -35,8 +32,7 @@ internal object UserRepFixtures {
     UserRep.Creation(
         orgGuid = orgGuid,
         emailAddress = "bill.gates@microsoft.com",
-        firstName = "Bill",
-        lastName = "Gates",
+        fullName = "Bill Gates",
         profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg",
     )
   }, { orgGuid, idSeed ->
@@ -45,8 +41,6 @@ internal object UserRepFixtures {
         permissions = LimberPermissions.none(),
         orgGuid = orgGuid,
         emailAddress = "bill.gates@microsoft.com",
-        firstName = "Bill",
-        lastName = "Gates",
         fullName = "Bill Gates",
         profilePhotoUrl = "https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X_400x400.jpg",
     )
@@ -56,8 +50,6 @@ internal object UserRepFixtures {
 internal fun UserRep.Complete.summary(): UserRep.Summary = UserRep.Summary(
     guid = guid,
     orgGuid = orgGuid,
-    firstName = firstName,
-    lastName = lastName,
     fullName = fullName,
     profilePhotoUrl = profilePhotoUrl,
 )

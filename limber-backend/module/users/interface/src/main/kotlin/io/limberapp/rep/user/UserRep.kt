@@ -13,14 +13,12 @@ object UserRep {
   data class Creation(
       val orgGuid: UUID,
       val emailAddress: String,
-      val firstName: String,
-      val lastName: String,
+      val fullName: String,
       val profilePhotoUrl: String? = null,
   ) : CreationRep {
     override fun validate(): RepValidation = RepValidation {
       validate(Creation::emailAddress) { Validator.emailAddress(this) }
-      validate(Creation::firstName) { Validator.humanName(this) }
-      validate(Creation::lastName) { Validator.humanName(this) }
+      validate(Creation::fullName) { Validator.humanName(this) }
       validate(Creation::profilePhotoUrl) { ifPresent { Validator.url(this) } }
     }
   }
@@ -28,8 +26,6 @@ object UserRep {
   data class Summary(
       val guid: UUID,
       val orgGuid: UUID,
-      val firstName: String,
-      val lastName: String,
       val fullName: String,
       val profilePhotoUrl: String?,
   ) : CompleteRep
@@ -39,20 +35,16 @@ object UserRep {
       val permissions: LimberPermissions,
       val orgGuid: UUID,
       val emailAddress: String,
-      val firstName: String,
-      val lastName: String,
       val fullName: String,
       val profilePhotoUrl: String?,
   ) : CompleteRep
 
   data class Update(
       val permissions: LimberPermissions? = null,
-      val firstName: String? = null,
-      val lastName: String? = null,
+      val fullName: String? = null,
   ) : UpdateRep {
     override fun validate(): RepValidation = RepValidation {
-      validate(Update::firstName) { ifPresent { Validator.humanName(this) } }
-      validate(Update::lastName) { ifPresent { Validator.humanName(this) } }
+      validate(Update::fullName) { ifPresent { Validator.humanName(this) } }
     }
   }
 }

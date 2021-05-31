@@ -44,8 +44,7 @@ internal class PostJwtClaimsRequestTest(
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
               auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
-              firstName = "Jeff",
-              lastName = "Hudson",
+              fullName = "Jeff Hudson",
               emailAddress = "jeff.hudson@limberapp.io",
               profilePhotoUrl = null,
           ),
@@ -70,8 +69,7 @@ internal class PostJwtClaimsRequestTest(
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
               auth0ClientId = tenantRep.auth0ClientId,
-              firstName = "Jeff",
-              lastName = "Hudson",
+              fullName = "Jeff Hudson",
               emailAddress = "jeff.hudson@limberapp.io",
               profilePhotoUrl = null,
           ),
@@ -146,17 +144,12 @@ internal class PostJwtClaimsRequestTest(
             permissions = membershipOrgRoleRep.permissions,
         ),
         features = mapOf(existingFeature.guid to JwtFeature(featureRoleRep.permissions)),
-        user = JwtUser(
-            guid = userGuid,
-            firstName = "Jeff",
-            lastName = "Hudson",
-        ),
+        user = JwtUser(guid = userGuid, fullName = "Jeff Hudson"),
     )) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
               auth0ClientId = tenantRep.auth0ClientId,
-              firstName = "Jeff",
-              lastName = "Hudson",
+              fullName = "Jeff Hudson",
               emailAddress = emailAddress,
               profilePhotoUrl = null,
           ),
@@ -186,8 +179,6 @@ internal class PostJwtClaimsRequestTest(
         guid = UUID.randomUUID(),
         permissions = LimberPermissions(setOf(LimberPermission.SUPERUSER)),
         orgGuid = existingOrg.guid,
-        firstName = "Jeff",
-        lastName = "Hudson",
         fullName = "Jeff Hudson",
         emailAddress = "jeff.hudson@limberapp.io",
         profilePhotoUrl = null,
@@ -245,15 +236,13 @@ internal class PostJwtClaimsRequestTest(
         features = emptyMap(),
         user = JwtUser(
             guid = existingUser.guid,
-            firstName = existingUser.firstName,
-            lastName = existingUser.lastName,
+            fullName = existingUser.fullName,
         ),
     )) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
               auth0ClientId = tenantRep.auth0ClientId,
-              firstName = "Different first name",
-              lastName = "Different last name",
+              fullName = "Different full name",
               emailAddress = existingUser.emailAddress,
               profilePhotoUrl = null,
           ),

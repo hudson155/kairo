@@ -19,8 +19,7 @@ internal class UserMapper @Inject constructor(
           permissions = LimberPermissions.none(),
           orgGuid = rep.orgGuid,
           emailAddress = rep.emailAddress,
-          firstName = rep.firstName,
-          lastName = rep.lastName,
+          fullName = rep.fullName,
           profilePhotoUrl = rep.profilePhotoUrl,
       )
 
@@ -28,8 +27,6 @@ internal class UserMapper @Inject constructor(
       UserRep.Summary(
           guid = model.guid,
           orgGuid = model.orgGuid,
-          firstName = model.firstName,
-          lastName = model.lastName,
           fullName = model.fullName,
           profilePhotoUrl = model.profilePhotoUrl,
       )
@@ -40,8 +37,6 @@ internal class UserMapper @Inject constructor(
           permissions = model.permissions,
           orgGuid = model.orgGuid,
           emailAddress = model.emailAddress,
-          firstName = model.firstName,
-          lastName = model.lastName,
           fullName = model.fullName,
           profilePhotoUrl = model.profilePhotoUrl,
       )
@@ -49,7 +44,6 @@ internal class UserMapper @Inject constructor(
   fun update(rep: UserRep.Update): UserModel.Update =
       UserModel.Update(
           permissions = rep.permissions,
-          firstName = rep.firstName,
-          lastName = rep.lastName,
+          fullName = rep.fullName,
       )
 }

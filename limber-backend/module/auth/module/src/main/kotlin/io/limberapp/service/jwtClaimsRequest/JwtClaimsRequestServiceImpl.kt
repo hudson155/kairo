@@ -59,8 +59,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     return userClient(UserApi.Post(
         rep = UserRep.Creation(
             orgGuid = orgGuid,
-            firstName = request.firstName,
-            lastName = request.lastName,
+            fullName = request.fullName,
             emailAddress = request.emailAddress,
             profilePhotoUrl = request.profilePhotoUrl,
         ),
@@ -85,7 +84,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
         permissions = user.permissions,
         org = JwtOrg(org.guid, org.name, isOwner, orgPermissions.union()),
         features = jwtFeatures,
-        user = JwtUser(user.guid, user.firstName, user.lastName),
+        user = JwtUser(user.guid, user.fullName),
     )
   }
 

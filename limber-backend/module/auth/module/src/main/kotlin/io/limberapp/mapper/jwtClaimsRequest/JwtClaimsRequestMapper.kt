@@ -9,8 +9,7 @@ internal class JwtClaimsRequestMapper @Inject constructor() {
   fun model(rep: JwtClaimsRequestRep.Creation): JwtClaimsRequestModel =
       JwtClaimsRequestModel(
           auth0ClientId = rep.auth0ClientId,
-          firstName = rep.firstName,
-          lastName = rep.lastName,
+          fullName = rep.fullName,
           emailAddress = rep.emailAddress,
           profilePhotoUrl = rep.profilePhotoUrl,
       )

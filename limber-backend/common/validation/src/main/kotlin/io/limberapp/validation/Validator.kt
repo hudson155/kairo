@@ -23,7 +23,7 @@ object Validator {
       Regex.hostname.matches(value)
 
   fun humanName(value: String): Boolean =
-      value.length in 1..40
+      value.length in 1..60
 
   fun length1hundred(value: String, allowEmpty: Boolean): Boolean =
       value.length in (if (allowEmpty) 0 else 1)..100

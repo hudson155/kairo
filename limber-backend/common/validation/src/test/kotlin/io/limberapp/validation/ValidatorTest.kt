@@ -77,8 +77,8 @@ internal class ValidatorTest {
     assertFalse(Validator.humanName(""))
     assertFalse(Validator.humanName("A".repeat(0)))
     assertTrue(Validator.humanName("A".repeat(1)))
-    assertTrue(Validator.humanName("A".repeat(40)))
-    assertFalse(Validator.humanName("A".repeat(41)))
+    assertTrue(Validator.humanName("A".repeat(60)))
+    assertFalse(Validator.humanName("A".repeat(61)))
   }
 
   @Test

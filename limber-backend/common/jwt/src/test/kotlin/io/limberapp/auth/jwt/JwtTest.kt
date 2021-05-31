@@ -53,8 +53,7 @@ internal class JwtTest {
       "}," +
       "\"https://limberapp.io/user\":{" +
       "\"guid\":\"$userGuid\"," +
-      "\"firstName\":\"Jeff\"," +
-      "\"lastName\":\"Hudson\"" +
+      "\"fullName\":\"Jeff Hudson\"" +
       "}" +
       "}"
 
@@ -77,11 +76,7 @@ internal class JwtTest {
           featureAGuid to JwtFeature(TestFeaturePermissionsA.fromBitString("01")),
           featureBGuid to JwtFeature(TestFeaturePermissionsB.fromBitString("1")),
       ),
-      user = JwtUser(
-          guid = userGuid,
-          firstName = "Jeff",
-          lastName = "Hudson",
-      ),
+      user = JwtUser(guid = userGuid, fullName = "Jeff Hudson"),
   )
 
   @Test

@@ -5,8 +5,7 @@ CREATE TABLE users.user
     permissions       VARCHAR     NOT NULL,
     org_guid          UUID        NOT NULL,
     email_address     VARCHAR     NOT NULL,
-    first_name        VARCHAR     NOT NULL,
-    last_name         VARCHAR     NOT NULL,
+    full_name         VARCHAR     NOT NULL,
     profile_photo_url VARCHAR
 );
 

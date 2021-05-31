@@ -56,7 +56,6 @@ io.limberapp
 │   └── typeConverter: Type converter implementations (library code).
 ├── util
 │   ├── darb: DARB-related utility code.
-│   ├── string: String-related utility code.
 │   ├── time: Time-related utility code.
 │   ├── url: URL-related utility code.
 │   └── uuid: GUID-related utility code.

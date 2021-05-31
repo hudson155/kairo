@@ -37,7 +37,7 @@ internal class AuthUserTest {
         permissions = LimberPermissions.none(),
         org = null,
         features = null,
-        user = JwtUser(guid = UUID.randomUUID(), firstName = null, lastName = null),
+        user = JwtUser(guid = UUID.randomUUID(), fullName = null),
     )
     val result = AuthUser(requiredUserGuid).authorize(jwt)
     assertFalse(result)
@@ -50,7 +50,7 @@ internal class AuthUserTest {
         permissions = LimberPermissions.none(),
         org = null,
         features = null,
-        user = JwtUser(guid = requiredUserGuid, firstName = null, lastName = null),
+        user = JwtUser(guid = requiredUserGuid, fullName = null),
     )
     val result = AuthUser(requiredUserGuid).authorize(jwt)
     assertTrue(result)
