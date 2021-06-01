@@ -10,11 +10,13 @@ internal class ValidatorTest {
   @Test
   fun auth0ClientId() {
     assertFalse(Validator.auth0ClientId(""))
-    val valid = "ABCDEFGHIJ1234567890abcdefghij12"
+    val id = "yDiVK18hoeddya8J"
+    val valid = "org_$id"
     assertFalse(Validator.auth0ClientId(valid.dropLast(1)))
     assertTrue(Validator.auth0ClientId(valid))
     assertFalse(Validator.auth0ClientId(valid + "3"))
     assertFalse(Validator.auth0ClientId(valid.dropLast(1) + "."))
+    assertFalse(Validator.auth0ClientId("abc_$id"))
   }
 
   @Test

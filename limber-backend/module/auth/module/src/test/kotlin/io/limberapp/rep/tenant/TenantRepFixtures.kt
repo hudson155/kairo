@@ -12,12 +12,12 @@ internal object TenantRepFixtures {
   val limberappFixture: Fixture = Fixture({ orgGuid ->
     TenantRep.Creation(
         orgGuid = orgGuid,
-        auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
+        auth0ClientId = "org_abcdefghijklmnop",
     )
   }, { orgGuid ->
     TenantRep.Complete(
         orgGuid = orgGuid,
-        auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
+        auth0ClientId = "org_abcdefghijklmnop",
         domains = emptySet(),
     )
   })
@@ -25,12 +25,12 @@ internal object TenantRepFixtures {
   val someclientFixture: Fixture = Fixture({ orgGuid ->
     TenantRep.Creation(
         orgGuid = orgGuid,
-        auth0ClientId = "01234567890123456789012345678901",
+        auth0ClientId = "org_0123456789012345",
     )
   }, { orgGuid ->
     TenantRep.Complete(
         orgGuid = orgGuid,
-        auth0ClientId = "01234567890123456789012345678901",
+        auth0ClientId = "org_0123456789012345",
         domains = emptySet(),
     )
   })

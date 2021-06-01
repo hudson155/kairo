@@ -43,7 +43,7 @@ internal class PostJwtClaimsRequestTest(
     test(expectError = TenantNotFound().unprocessable()) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
-              auth0ClientId = "abcdefghijklmnopqrstuvwxyzabcdef",
+              auth0ClientId = "org_abcdefghijklmnop",
               fullName = "Jeff Hudson",
               emailAddress = "jeff.hudson@limberapp.io",
               profilePhotoUrl = null,
