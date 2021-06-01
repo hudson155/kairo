@@ -22,5 +22,12 @@
       <jdbc-url>jdbc:postgresql://35.202.128.219:5432/limber</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="limber@prod (super)" uuid="a5298300-34a3-4d58-a10e-db3bd031961a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://35.202.128.219:5432/limber</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
