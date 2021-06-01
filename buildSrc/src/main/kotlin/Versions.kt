@@ -1,9 +1,9 @@
 object Versions {
   // https://github.com/auth0/java-jwt/releases
-  const val auth0JavaJwt: String = "3.13.0"
+  const val auth0JavaJwt: String = "3.15.0"
 
   // https://github.com/auth0/jwks-rsa-java/releases
-  const val auth0JwksRsa: String = "0.16.0"
+  const val auth0JwksRsa: String = "0.18.0"
 
   // https://github.com/flyway/flyway/releases
   const val flyway: String = "7.7.2"
