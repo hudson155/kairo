@@ -3,9 +3,8 @@ plugins {
 }
 
 repositories {
+  gradlePluginPortal()
   mavenCentral()
-  // https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/.
-  jcenter() // JCenter is EOL.
 }
 
 dependencies {
@@ -16,5 +15,5 @@ dependencies {
   api("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.15.0")
 
   // https://github.com/johnrengelman/shadow/releases
-  api("com.github.jengelman.gradle.plugins:shadow:6.1.0")
+  api("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
 }
