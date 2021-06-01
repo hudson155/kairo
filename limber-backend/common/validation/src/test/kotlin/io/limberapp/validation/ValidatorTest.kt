@@ -150,7 +150,8 @@ internal class ValidatorTest {
     assertFalse(Validator.url("http://limberapp.io/foo?baz=q~x"))
     assertTrue(Validator.url("http://limberapp.io/foo#asdf"))
     assertTrue(Validator.url("http://limberapp.io/foo?baz=qux#asdf"))
-    assertFalse(Validator.url("http://limberapp.io/foo#asdf?baz=qux"))
+    assertTrue(Validator.url("http://limberapp.io/foo#asdf?baz=qux"))
+    assertTrue(Validator.url("http://limberapp.io/foo=?##?bar"))
   }
 
   @Test

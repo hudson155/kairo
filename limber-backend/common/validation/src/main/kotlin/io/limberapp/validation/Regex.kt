@@ -14,16 +14,13 @@ internal object Regex {
 
   val emailAddress: Regex = Regex("[A-Za-z0-9.!#\$%&'*+/=?^_`{|}~-]+@$hostname")
 
-  private val urlChar: Regex = Regex("[A-Za-z0-9\\-_.%]")
+  private val urlChar: Regex = Regex("[A-Za-z0-9\\-_.%?=#]")
 
   val path: Regex = Regex("(?:/$urlChar+)*/?")
 
   val url: Regex = run {
     val protocol = Regex("[Hh][Tt][Tt][Pp][Ss]?://")
-    val queryString =
-        Regex("(?:\\?$urlChar+=$urlChar*(?:&$urlChar+=$urlChar*)*)?")
-    val hash = Regex("(?:#$urlChar*)?")
-    return@run Regex(listOf(protocol, hostname, path, queryString, hash).joinToString(""))
+    return@run Regex(listOf(protocol, hostname, path).joinToString(""))
   }
 
   private val hex: Regex = Regex("[A-Fa-f0-9]")
