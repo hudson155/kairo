@@ -10,6 +10,7 @@ const EmotionThemeSizes = {
   $32: '32px',
   $48: '48px',
   $64: '64px',
+  $96: '96px',
 };
 
 export { EmotionThemeSizes };

@@ -4,7 +4,7 @@ import EmotionThemeColors, {
 } from './EmotionThemeColors';
 import { EmotionThemeSizes } from './EmotionThemeSizes';
 
-interface EmotionTheme {
+export default interface EmotionTheme {
   color: EmotionThemeColors;
   size: typeof EmotionThemeSizes;
 }

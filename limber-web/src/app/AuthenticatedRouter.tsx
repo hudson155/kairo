@@ -5,6 +5,8 @@ import LoadingPage from './pages/LoadingPage/LoadingPage';
 
 /**
  * TODO: Implement this properly.
+ *  - Add feature router
+ *  - Possibly replace OrgProvider with AuthenticatedStateProvider
  */
 const AuthenticatedRouter: React.FC = () => {
   return (

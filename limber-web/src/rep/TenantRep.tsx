@@ -1,7 +1,7 @@
 namespace TenantRep {
   export interface Complete {
     readonly orgGuid: string;
-    readonly auth0ClientId: string;
+    readonly auth0OrgId: string;
   }
 }
 

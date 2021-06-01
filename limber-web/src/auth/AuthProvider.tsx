@@ -24,7 +24,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ fallback, children }) => {
   return (
     <Auth0Provider
       audience={`https://${env.AUTH0_DOMAIN}/api/v2/`}
-      clientId={tenant.auth0ClientId}
+      clientId={env.AUTH0_CLIENT_ID}
+      organization={tenant.auth0OrgId}
       domain={env.AUTH0_DOMAIN}
       onRedirectCallback={onRedirectCallback}
       redirectUri={app.rootUrl}
