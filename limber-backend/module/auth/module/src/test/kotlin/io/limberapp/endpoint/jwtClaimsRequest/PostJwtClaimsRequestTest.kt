@@ -43,7 +43,7 @@ internal class PostJwtClaimsRequestTest(
     test(expectError = TenantNotFound().unprocessable()) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
-              auth0ClientId = "org_abcdefghijklmnop",
+              auth0OrgId = "org_abcdefghijklmnop",
               fullName = "Jeff Hudson",
               emailAddress = "jeff.hudson@limberapp.io",
               profilePhotoUrl = null,
@@ -68,7 +68,7 @@ internal class PostJwtClaimsRequestTest(
     test(expectError = OrgNotFound().unprocessable()) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
-              auth0ClientId = tenantRep.auth0ClientId,
+              auth0OrgId = tenantRep.auth0OrgId,
               fullName = "Jeff Hudson",
               emailAddress = "jeff.hudson@limberapp.io",
               profilePhotoUrl = null,
@@ -148,7 +148,7 @@ internal class PostJwtClaimsRequestTest(
     )) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
-              auth0ClientId = tenantRep.auth0ClientId,
+              auth0OrgId = tenantRep.auth0OrgId,
               fullName = "Jeff Hudson",
               emailAddress = emailAddress,
               profilePhotoUrl = null,
@@ -241,7 +241,7 @@ internal class PostJwtClaimsRequestTest(
     )) {
       jwtClaimsRequestClient(JwtClaimsRequestApi.Post(
           rep = JwtClaimsRequestRep.Creation(
-              auth0ClientId = tenantRep.auth0ClientId,
+              auth0OrgId = tenantRep.auth0OrgId,
               fullName = "Different full name",
               emailAddress = existingUser.emailAddress,
               profilePhotoUrl = null,

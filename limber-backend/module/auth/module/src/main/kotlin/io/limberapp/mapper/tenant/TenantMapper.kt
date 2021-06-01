@@ -15,16 +15,16 @@ internal class TenantMapper @Inject constructor(
       TenantModel(
           createdDate = ZonedDateTime.now(clock),
           orgGuid = rep.orgGuid,
-          auth0ClientId = rep.auth0ClientId,
+          auth0OrgId = rep.auth0OrgId,
       )
 
   fun completeRep(model: TenantModel, domains: Set<TenantDomainModel>): TenantRep.Complete =
       TenantRep.Complete(
           orgGuid = model.orgGuid,
-          auth0ClientId = model.auth0ClientId,
+          auth0OrgId = model.auth0OrgId,
           domains = domains.map { tenantDomainMapper.completeRep(it) }.toSet(),
       )
 
   fun update(rep: TenantRep.Update): TenantModel.Update =
-      TenantModel.Update(auth0ClientId = rep.auth0ClientId)
+      TenantModel.Update(auth0OrgId = rep.auth0OrgId)
 }

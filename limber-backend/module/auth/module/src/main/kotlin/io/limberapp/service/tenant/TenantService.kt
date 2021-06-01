@@ -8,7 +8,7 @@ interface TenantService {
 
   operator fun get(orgGuid: UUID): TenantModel?
 
-  fun getByAuth0ClientId(auth0ClientId: String): TenantModel?
+  fun getByAuth0OrgId(auth0OrgId: String): TenantModel?
 
   fun getByDomain(domain: String): TenantModel?
 

@@ -2,7 +2,7 @@ package io.limberapp.store.tenant
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import io.limberapp.exception.tenant.Auth0ClientIdAlreadyRegistered
+import io.limberapp.exception.tenant.Auth0OrgIdAlreadyRegistered
 import io.limberapp.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.exception.tenant.TenantNotFound
 import io.limberapp.model.tenant.TenantModel
@@ -14,7 +14,7 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import java.util.UUID
 
 private const val UNIQ_ORG_GUID = "uniq__tenant__org_guid"
-private const val UNIQ_AUTH0_CLIENT_ID = "uniq__tenant__auth0_client_id"
+private const val UNIQ_AUTH0_ORG_ID = "uniq__tenant__auth0_org_id"
 
 @Singleton
 internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
@@ -38,10 +38,10 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
             .singleNullOrThrow()
       }
 
-  fun getByAuth0ClientId(auth0ClientId: String): TenantModel? =
+  fun getByAuth0OrgId(auth0OrgId: String): TenantModel? =
       withHandle { handle ->
-        handle.createQuery(sqlResource("store/tenant/getByAuth0ClientId.sql"))
-            .bind("auth0ClientId", auth0ClientId)
+        handle.createQuery(sqlResource("store/tenant/getByAuth0OrgId.sql"))
+            .bind("auth0OrgId", auth0OrgId)
             .mapTo(TenantModel::class.java)
             .singleNullOrThrow()
       }
@@ -78,7 +78,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
     val error = e.serverErrorMessage ?: throw e
     when {
       error.isUniqueConstraintViolation(UNIQ_ORG_GUID) -> throw OrgAlreadyHasTenant()
-      error.isUniqueConstraintViolation(UNIQ_AUTH0_CLIENT_ID) -> throw Auth0ClientIdAlreadyRegistered()
+      error.isUniqueConstraintViolation(UNIQ_AUTH0_ORG_ID) -> throw Auth0OrgIdAlreadyRegistered()
       else -> throw e
     }
   }
@@ -86,7 +86,7 @@ internal class TenantStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
   private fun handleUpdateError(e: UnableToExecuteStatementException): Nothing {
     val error = e.serverErrorMessage ?: throw e
     when {
-      error.isUniqueConstraintViolation(UNIQ_AUTH0_CLIENT_ID) -> throw Auth0ClientIdAlreadyRegistered()
+      error.isUniqueConstraintViolation(UNIQ_AUTH0_ORG_ID) -> throw Auth0OrgIdAlreadyRegistered()
       else -> throw e
     }
   }

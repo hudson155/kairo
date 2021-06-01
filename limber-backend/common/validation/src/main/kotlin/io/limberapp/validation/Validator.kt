@@ -4,8 +4,8 @@ import io.limberapp.util.darb.DarbEncoder
 
 @Suppress("MagicNumber")
 object Validator {
-  fun auth0ClientId(value: String): Boolean =
-      Regex.auth0ClientId.matches(value)
+  fun auth0OrgId(value: String): Boolean =
+      Regex.auth0OrgId.matches(value)
 
   fun base64EncodedUuid(value: String): Boolean =
       Regex.base64EncodedUuid.matches(value)

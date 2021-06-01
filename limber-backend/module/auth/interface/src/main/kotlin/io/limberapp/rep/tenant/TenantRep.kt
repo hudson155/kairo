@@ -11,24 +11,24 @@ import java.util.UUID
 object TenantRep {
   data class Creation(
       val orgGuid: UUID,
-      val auth0ClientId: String,
+      val auth0OrgId: String,
   ) : CreationRep {
     override fun validate(): RepValidation = RepValidation {
-      validate(Creation::auth0ClientId) { Validator.auth0ClientId(this) }
+      validate(Creation::auth0OrgId) { Validator.auth0OrgId(this) }
     }
   }
 
   data class Complete(
       val orgGuid: UUID,
-      val auth0ClientId: String,
+      val auth0OrgId: String,
       val domains: Set<TenantDomainRep.Complete>,
   ) : CompleteRep
 
   data class Update(
-      val auth0ClientId: String? = null,
+      val auth0OrgId: String? = null,
   ) : UpdateRep {
     override fun validate(): RepValidation = RepValidation {
-      validate(Update::auth0ClientId) { ifPresent { Validator.auth0ClientId(this) } }
+      validate(Update::auth0OrgId) { ifPresent { Validator.auth0OrgId(this) } }
     }
   }
 }

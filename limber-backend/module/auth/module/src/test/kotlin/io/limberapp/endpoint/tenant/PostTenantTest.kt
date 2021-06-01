@@ -2,7 +2,7 @@ package io.limberapp.endpoint.tenant
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.api.tenant.TenantApi
-import io.limberapp.exception.tenant.Auth0ClientIdAlreadyRegistered
+import io.limberapp.exception.tenant.Auth0OrgIdAlreadyRegistered
 import io.limberapp.exception.tenant.OrgAlreadyHasTenant
 import io.limberapp.rep.tenant.TenantRepFixtures
 import io.limberapp.server.Server
@@ -33,7 +33,7 @@ internal class PostTenantTest(
   }
 
   @Test
-  fun `duplicate auth0 client id`() {
+  fun `duplicate auth0 org id`() {
     val limberappOrgGuid = UUID.randomUUID()
     val someclientOrgGuid = UUID.randomUUID()
 
@@ -42,10 +42,10 @@ internal class PostTenantTest(
       tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(limberappOrgGuid)))
     }
 
-    test(expectError = Auth0ClientIdAlreadyRegistered()) {
+    test(expectError = Auth0OrgIdAlreadyRegistered()) {
       tenantClient(TenantApi.Post(
           rep = TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)
-              .copy(auth0ClientId = limberappTenantRep.auth0ClientId),
+              .copy(auth0OrgId = limberappTenantRep.auth0OrgId),
       ))
     }
   }

@@ -2,7 +2,7 @@ package io.limberapp.endpoint.tenant
 
 import io.ktor.server.testing.TestApplicationEngine
 import io.limberapp.api.tenant.TenantApi
-import io.limberapp.exception.tenant.Auth0ClientIdAlreadyRegistered
+import io.limberapp.exception.tenant.Auth0OrgIdAlreadyRegistered
 import io.limberapp.rep.tenant.TenantRep
 import io.limberapp.rep.tenant.TenantRepFixtures
 import io.limberapp.server.Server
@@ -21,13 +21,13 @@ internal class PatchTenantTest(
     test(expectResult = null) {
       tenantClient(TenantApi.Patch(
           orgGuid = orgGuid,
-          rep = TenantRep.Update(auth0ClientId = "org_zyxwvutsrqponmlk"),
+          rep = TenantRep.Update(auth0OrgId = "org_zyxwvutsrqponmlk"),
       ))
     }
   }
 
   @Test
-  fun `auth0 client id - duplicate`() {
+  fun `auth0 org id - duplicate`() {
     val limberappOrgGuid = UUID.randomUUID()
     val someclientOrgGuid = UUID.randomUUID()
 
@@ -40,27 +40,27 @@ internal class PatchTenantTest(
       tenantClient(TenantApi.Post(TenantRepFixtures.someclientFixture.creation(someclientOrgGuid)))
     }
 
-    test(expectError = Auth0ClientIdAlreadyRegistered()) {
+    test(expectError = Auth0OrgIdAlreadyRegistered()) {
       tenantClient(TenantApi.Patch(
           orgGuid = someclientOrgGuid,
-          rep = TenantRep.Update(auth0ClientId = limberappTenantRep.auth0ClientId),
+          rep = TenantRep.Update(auth0OrgId = limberappTenantRep.auth0OrgId),
       ))
     }
   }
 
   @Test
-  fun `auth0 client id - happy path`() {
+  fun `auth0 org id - happy path`() {
     val orgGuid = UUID.randomUUID()
 
     val originalTenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     var tenantRep = TenantRepFixtures.limberappFixture.complete(this, orgGuid)
     setup { tenantClient(TenantApi.Post(TenantRepFixtures.limberappFixture.creation(orgGuid))) }
 
-    tenantRep = tenantRep.copy(auth0ClientId = "org_zyxwvutsrqponmlk")
+    tenantRep = tenantRep.copy(auth0OrgId = "org_zyxwvutsrqponmlk")
     test(expectResult = tenantRep) {
       tenantClient(TenantApi.Patch(
           orgGuid = originalTenantRep.orgGuid,
-          rep = TenantRep.Update(auth0ClientId = "org_zyxwvutsrqponmlk"),
+          rep = TenantRep.Update(auth0OrgId = "org_zyxwvutsrqponmlk"),
       ))
     }
 

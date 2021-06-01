@@ -8,15 +8,15 @@ import kotlin.test.assertTrue
 
 internal class ValidatorTest {
   @Test
-  fun auth0ClientId() {
-    assertFalse(Validator.auth0ClientId(""))
+  fun auth0OrgId() {
+    assertFalse(Validator.auth0OrgId(""))
     val id = "yDiVK18hoeddya8J"
     val valid = "org_$id"
-    assertFalse(Validator.auth0ClientId(valid.dropLast(1)))
-    assertTrue(Validator.auth0ClientId(valid))
-    assertFalse(Validator.auth0ClientId(valid + "3"))
-    assertFalse(Validator.auth0ClientId(valid.dropLast(1) + "."))
-    assertFalse(Validator.auth0ClientId("abc_$id"))
+    assertFalse(Validator.auth0OrgId(valid.dropLast(1)))
+    assertTrue(Validator.auth0OrgId(valid))
+    assertFalse(Validator.auth0OrgId(valid + "3"))
+    assertFalse(Validator.auth0OrgId(valid.dropLast(1) + "."))
+    assertFalse(Validator.auth0OrgId("abc_$id"))
   }
 
   @Test

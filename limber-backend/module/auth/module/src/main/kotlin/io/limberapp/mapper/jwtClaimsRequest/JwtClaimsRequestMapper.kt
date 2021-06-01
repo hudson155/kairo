@@ -8,7 +8,7 @@ import io.limberapp.rep.jwtClaimsRequest.JwtClaimsRequestRep
 internal class JwtClaimsRequestMapper @Inject constructor() {
   fun model(rep: JwtClaimsRequestRep.Creation): JwtClaimsRequestModel =
       JwtClaimsRequestModel(
-          auth0ClientId = rep.auth0ClientId,
+          auth0OrgId = rep.auth0OrgId,
           fullName = rep.fullName,
           emailAddress = rep.emailAddress,
           profilePhotoUrl = rep.profilePhotoUrl,

@@ -1,15 +1,15 @@
 CREATE TABLE auth.tenant
 (
-    created_date    TIMESTAMPTZ NOT NULL,
-    org_guid        UUID        NOT NULL,
-    auth0_client_id VARCHAR     NOT NULL
+    created_date TIMESTAMPTZ NOT NULL,
+    org_guid     UUID        NOT NULL,
+    auth0_org_id VARCHAR     NOT NULL
 );
 
 CREATE UNIQUE INDEX uniq__tenant__org_guid
     ON auth.tenant (org_guid);
 
-CREATE UNIQUE INDEX uniq__tenant__auth0_client_id
-    ON auth.tenant (auth0_client_id);
+CREATE UNIQUE INDEX uniq__tenant__auth0_org_id
+    ON auth.tenant (auth0_org_id);
 
 CREATE TABLE auth.tenant_domain
 (

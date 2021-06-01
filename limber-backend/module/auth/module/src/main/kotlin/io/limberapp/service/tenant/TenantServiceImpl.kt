@@ -14,8 +14,8 @@ internal class TenantServiceImpl @Inject constructor(
   override fun get(orgGuid: UUID): TenantModel? =
       tenantStore[orgGuid]
 
-  override fun getByAuth0ClientId(auth0ClientId: String): TenantModel? =
-      tenantStore.getByAuth0ClientId(auth0ClientId)
+  override fun getByAuth0OrgId(auth0OrgId: String): TenantModel? =
+      tenantStore.getByAuth0OrgId(auth0OrgId)
 
   override fun getByDomain(domain: String): TenantModel? =
       tenantStore.getByDomain(domain)

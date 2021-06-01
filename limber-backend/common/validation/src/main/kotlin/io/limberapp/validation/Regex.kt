@@ -3,7 +3,7 @@ package io.limberapp.validation
 import kotlin.text.Regex
 
 internal object Regex {
-  val auth0ClientId: Regex = Regex("org_[A-Za-z0-9]{16}")
+  val auth0OrgId: Regex = Regex("org_[A-Za-z0-9]{16}")
 
   val base64EncodedUuid: Regex = Regex("[A-Za-z0-9+/]{21}[AQgw]==")
 

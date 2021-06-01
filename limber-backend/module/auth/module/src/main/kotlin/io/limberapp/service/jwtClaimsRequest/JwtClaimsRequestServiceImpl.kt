@@ -38,7 +38,7 @@ internal class JwtClaimsRequestServiceImpl @Inject constructor(
     private val tenantService: TenantService,
 ) : JwtClaimsRequestService {
   override suspend fun requestJwtClaims(request: JwtClaimsRequestModel): Jwt {
-    val tenant = tenantService.getByAuth0ClientId(request.auth0ClientId)
+    val tenant = tenantService.getByAuth0OrgId(request.auth0OrgId)
         ?: throw TenantNotFound().unprocessable()
     val org = orgClient(OrgApi.Get(tenant.orgGuid))
         ?: throw OrgNotFound().unprocessable()
