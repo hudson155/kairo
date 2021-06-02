@@ -36,14 +36,16 @@ internal class FeatureRoleStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi)
             .singleNullOrThrow()
       }
 
-  fun getByOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel> =
-      withHandle { handle ->
-        handle.createQuery(sqlResource("store/featureRole/getByOrgRoleGuids.sql"))
-            .bind("featureGuid", featureGuid)
-            .bindList("orgRoleGuids", orgRoleGuids)
-            .mapTo(FeatureRoleModel::class.java)
-            .toSet()
-      }
+  fun getByOrgRoleGuids(featureGuid: UUID, orgRoleGuids: Set<UUID>): Set<FeatureRoleModel> {
+    if (orgRoleGuids.isEmpty()) return emptySet()
+    return withHandle { handle ->
+      handle.createQuery(sqlResource("store/featureRole/getByOrgRoleGuids.sql"))
+          .bind("featureGuid", featureGuid)
+          .bindList("orgRoleGuids", orgRoleGuids)
+          .mapTo(FeatureRoleModel::class.java)
+          .toSet()
+    }
+  }
 
   fun getByFeatureGuid(featureGuid: UUID): Set<FeatureRoleModel> =
       withHandle { handle ->
