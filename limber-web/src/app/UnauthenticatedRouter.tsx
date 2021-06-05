@@ -1,12 +1,12 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import TopLevelNavbar from './components/TopLevelNavbar';
 
+/**
+ * TODO: Put something here. On the root path we can just prompt for sign in. On other paths it
+ *  should show a 404-style page with the option to sign in.
+ */
 const UnauthenticatedRouter: React.FC = () => {
-  return (
-    <Switch>
-      <Route>{/* TODO: Create a fallback page */}</Route>
-    </Switch>
-  );
+  return <TopLevelNavbar />;
 };
 
 export default UnauthenticatedRouter;

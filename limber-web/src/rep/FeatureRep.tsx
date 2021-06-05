@@ -3,6 +3,7 @@ namespace FeatureRep {
     readonly guid: string;
     readonly name: string;
     readonly path: string;
+    readonly isDefaultFeature: boolean;
   }
 }
 

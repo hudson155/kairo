@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDebugSettings } from '../../../provider/DebugSettingsProvider';
+import { useDebugSettings } from '../../provider/DebugSettingsProvider';
 
 interface RedirectingPageProps {
   readonly debugMessage: string;
@@ -15,7 +15,7 @@ const RedirectingPage: React.FC<RedirectingPageProps> = ({ debugMessage }) => {
   return (
     <>
       <p>Redirecting...</p>
-      {showDebugMessages ? <p>{debugMessage}</p> : null}
+      {showDebugMessages && <p>{debugMessage}</p>}
     </>
   );
 };

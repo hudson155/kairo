@@ -1,19 +1,16 @@
 import React from 'react';
 import LimberApiProvider from '../limberApi/LimberApiProvider';
 import OrgProvider from '../provider/OrgProvider';
-import LoadingPage from './pages/LoadingPage/LoadingPage';
+import TopLevelNavbar from './components/TopLevelNavbar';
+import FeatureRouter from './FeatureRouter';
+import LoadingPage from './pages/LoadingPage';
 
-/**
- * TODO: Implement this properly.
- *  - Add feature router
- *  - Possibly replace OrgProvider with AuthenticatedStateProvider
- */
 const AuthenticatedRouter: React.FC = () => {
   return (
     <LimberApiProvider.Authenticated>
       <OrgProvider fallback={<LoadingPage debugMessage="Loading org." />}>
-        <h1>Limber</h1>
-        <p>This is Limber.</p>
+        <TopLevelNavbar />
+        <FeatureRouter />
       </OrgProvider>
     </LimberApiProvider.Authenticated>
   );

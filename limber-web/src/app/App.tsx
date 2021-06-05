@@ -4,9 +4,9 @@ import AuthProvider from '../auth/AuthProvider';
 import LimberApiProvider from '../limberApi/LimberApiProvider';
 import TenantProvider from '../provider/TenantProvider';
 import LimberThemeProvider from '../theme/LimberThemeProvider';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
-import ErrorPage from './pages/ErrorPage/ErrorPage';
-import LoadingPage from './pages/LoadingPage/LoadingPage';
+import ErrorBoundary from './components/ErrorBoundary';
+import ErrorPage from './pages/ErrorPage';
+import LoadingPage from './pages/LoadingPage';
 import RootRouter from './RootRouter';
 
 const App: React.FC = () => {

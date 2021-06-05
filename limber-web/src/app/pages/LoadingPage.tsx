@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDebugSettings } from '../../../provider/DebugSettingsProvider';
+import { useDebugSettings } from '../../provider/DebugSettingsProvider';
 
 interface LoadingPageProps {
   readonly debugMessage: string;
@@ -11,14 +11,14 @@ interface LoadingPageProps {
  *
  * TODO: This page is pretty ugly. Make it look nicer. Using ADDITIONAL_LIMBER_API_LATENCY_MS in the
  *  .env file is one way to artificially slow down loading time. It might be nice to avoid showing
- *  any components until 500ms have passed or something.
+ *  any components until 500ms have passed or something (the "fake progress bar" concept).
  */
 const LoadingPage: React.FC<LoadingPageProps> = ({ debugMessage }) => {
   const { showDebugMessages } = useDebugSettings();
   return (
     <>
       <p>Loading...</p>
-      {showDebugMessages ? <p>{debugMessage}</p> : null}
+      {showDebugMessages && <p>{debugMessage}</p>}
     </>
   );
 };

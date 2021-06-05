@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { LocationDescriptor } from 'history';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import RedirectingPage from '../RedirectingPage/RedirectingPage';
+import RedirectingPage from './RedirectingPage';
 
 export const signInPagePath: () => string = () => '/sign-in';
 
@@ -16,7 +16,9 @@ export const signInPageDescriptor: () => LocationDescriptor<SignInPageLocationSt
 });
 
 /**
- * Redirects the browser to Auth0 to handle sign in.
+ * Redirects the browser to Auth0 to handle sign in. Auth0 requires that there's a dedicated path
+ * that will always redirect to Auth0. For more information, see
+ * https://auth0.com/docs/universal-login/configure-default-login-routes.
  */
 const SignInPage: React.FC = () => {
   const auth = useAuth0();

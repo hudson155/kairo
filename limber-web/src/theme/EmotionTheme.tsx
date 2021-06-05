@@ -1,20 +1,13 @@
-import EmotionThemeColors, {
-  EmotionThemeColorsDark,
-  EmotionThemeColorsLight,
-} from './EmotionThemeColors';
+import { Theme } from '@emotion/react';
+import { EmotionThemeColorsDark, EmotionThemeColorsLight } from './EmotionThemeColors';
 import { EmotionThemeSizes } from './EmotionThemeSizes';
 
-export default interface EmotionTheme {
-  color: EmotionThemeColors;
-  size: typeof EmotionThemeSizes;
-}
-
-const EmotionThemeDark: EmotionTheme = {
+const EmotionThemeDark: Theme = {
   color: EmotionThemeColorsDark,
   size: EmotionThemeSizes,
 };
 
-const EmotionThemeLight: EmotionTheme = {
+const EmotionThemeLight: Theme = {
   color: EmotionThemeColorsLight,
   size: EmotionThemeSizes,
 };
