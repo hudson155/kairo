@@ -179,8 +179,9 @@ internal class PostJwtClaimsRequestTest(
         guid = UUID.randomUUID(),
         permissions = LimberPermissions(setOf(LimberPermission.SUPERUSER)),
         orgGuid = existingOrg.guid,
-        fullName = "Jeff Hudson",
         emailAddress = "jeff.hudson@limberapp.io",
+        fullName = "Jeff Hudson",
+        initials = "JH",
         profilePhotoUrl = null,
     )
 

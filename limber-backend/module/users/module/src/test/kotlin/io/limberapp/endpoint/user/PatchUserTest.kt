@@ -30,7 +30,7 @@ internal class PatchUserTest(
     var userRep = UserRepFixtures.jeffHudsonFixture.complete(this, orgGuid, 0)
     setup { userClient(UserApi.Post(UserRepFixtures.jeffHudsonFixture.creation(orgGuid))) }
 
-    userRep = userRep.copy(fullName = "Gunner Hudson")
+    userRep = userRep.copy(fullName = "Gunner Hudson", initials = "GH")
     test(expectResult = userRep) {
       userClient(UserApi.Patch(userRep.guid, UserRep.Update(fullName = "Gunner Hudson")))
     }

@@ -27,6 +27,7 @@ object UserRep {
       val guid: UUID,
       val orgGuid: UUID,
       val fullName: String,
+      val initials: String,
       val profilePhotoUrl: String?,
   ) : CompleteRep
 
@@ -36,6 +37,7 @@ object UserRep {
       val orgGuid: UUID,
       val emailAddress: String,
       val fullName: String,
+      val initials: String,
       val profilePhotoUrl: String?,
   ) : CompleteRep
 
