@@ -12,9 +12,7 @@ const FeatureNavLink: React.FC<FeatureNavLinkProps> = ({ feature }) => {
   return (
     <ClassNames>
       {({ css, theme }) =>
-        <NavLink key={feature.guid}
-                 to={feature.path}
-                 activeClassName={css(styles.activeLink(theme))}>
+        <NavLink to={feature.path} activeClassName={css(styles.activeLink(theme))}>
           {feature.name}
         </NavLink>
       }

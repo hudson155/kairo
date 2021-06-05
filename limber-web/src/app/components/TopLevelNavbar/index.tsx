@@ -17,7 +17,9 @@ const TopLevelNavbar: React.FC = () => {
   return (
     <header css={styles.root}>
       <ul css={styles.left}>
-        {org && org.features.map(feature => <FeatureNavLink feature={feature} />)}
+        {org && org.features.map(feature => (
+          <FeatureNavLink key={feature.guid} feature={feature} />
+        ))}
       </ul>
       <ul css={styles.right}>
         <SignInSignOutNavLink />
