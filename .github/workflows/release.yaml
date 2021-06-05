@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  backend:
+  limber:
 
     runs-on: ubuntu-latest
 
@@ -26,7 +26,8 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     env:
-      IMAGE_NAME: gcr.io/limberio/limber-monolith-server
+      BACKEND_IMAGE_NAME: gcr.io/limberio/limber-monolith-server
+      WEB_IMAGE_NAME: gcr.io/limberio/limber-web
 
     steps:
 
@@ -37,6 +38,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
 
       - name: Cache Gradle packages
         # Caching inspired by
@@ -50,68 +56,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build project
-        run: ./gradlew --info --stacktrace build
-        env:
-          LIMBER_TEST_POSTGRES_USERNAME: postgres
-          LIMBER_TEST_POSTGRES_PASSWORD: postgres
-
-      - name: Log in to GCP
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          project_id: limberio
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
-
-      - name: Configure Docker for GCP
-        run: gcloud --quiet auth configure-docker
-
-      - name: Build Docker image
-        run: |
-          docker build -t $IMAGE_NAME:master limber-backend/server/monolith/
-          docker tag $IMAGE_NAME:master $IMAGE_NAME:$(git rev-parse HEAD)
-
-      - name: Push Docker image
-        run: |
-          docker push $IMAGE_NAME:master
-          docker push $IMAGE_NAME:$(git rev-parse HEAD)
-
-      - name: Configure the Kubernetes CLI
-        uses: google-github-actions/get-gke-credentials@main
-        with:
-          cluster_name: limber
-          location: northamerica-northeast1-a
-
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl set image --namespace limber \
-              deployment/limber-monolith-server \
-              limber-monolith-server=$IMAGE_NAME:$(git rev-parse HEAD)
-
-      - name: Clean up Gradle cache
-        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
-        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
-        run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
-
-  web:
-
-    runs-on: ubuntu-latest
-
-    env:
-      IMAGE_NAME: gcr.io/limberio/limber-web
-
-    steps:
-
-      - name: Check out
-        uses: actions/checkout@v2
-
-      - name: Set up Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 12
-
       - name: Cache Node modules
         # Caching inspired by
         # https://docs.github.com/en/actions/guides/building-and-testing-nodejs#example-caching-dependencies
@@ -122,19 +66,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install dependencies
+      - name: Assemble backend
+        run: ./gradlew --info --stacktrace assemble
+
+      - name: Test backend
+        run: ./gradlew --info --stacktrace check -x assemble
+        env:
+          LIMBER_TEST_POSTGRES_USERNAME: postgres
+          LIMBER_TEST_POSTGRES_PASSWORD: postgres
+
+      - name: Build backend
+        run: ./gradlew --info --stacktrace build -x assemble -x check
+
+      - name: Install web dependencies
         working-directory: limber-web
         env:
           CI: true # Enables immutable lockfile.
         run: yarn install
 
-      - name: Run tests
+      - name: Run web tests
         working-directory: limber-web
         env:
           CI: true # Avoids interactive mode.
         run: yarn test
 
-      - name: Build project
+      - name: Build web
         working-directory: limber-web
         env:
           CI: false # Don't treat warnings as errors.
@@ -150,15 +106,25 @@ jobs:
       - name: Configure Docker for GCP
         run: gcloud --quiet auth configure-docker
 
-      - name: Build Docker image
+      - name: Build backend Docker image
         run: |
-          docker build -t $IMAGE_NAME:master limber-web/
-          docker tag $IMAGE_NAME:master $IMAGE_NAME:$(git rev-parse HEAD)
+          docker build -t $BACKEND_IMAGE_NAME:master limber-backend/server/monolith/
+          docker tag $BACKEND_IMAGE_NAME:master $BACKEND_IMAGE_NAME:$(git rev-parse HEAD)
 
-      - name: Push Docker image
+      - name: Build web Docker image
         run: |
-          docker push $IMAGE_NAME:master
-          docker push $IMAGE_NAME:$(git rev-parse HEAD)
+          docker build -t $WEB_IMAGE_NAME:master limber-web/
+          docker tag $WEB_IMAGE_NAME:master $WEB_IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Push backend Docker image
+        run: |
+          docker push $BACKEND_IMAGE_NAME:master
+          docker push $BACKEND_IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Push web Docker image
+        run: |
+          docker push $WEB_IMAGE_NAME:master
+          docker push $WEB_IMAGE_NAME:$(git rev-parse HEAD)
 
       - name: Configure the Kubernetes CLI
         uses: google-github-actions/get-gke-credentials@main
@@ -166,8 +132,21 @@ jobs:
           cluster_name: limber
           location: northamerica-northeast1-a
 
-      - name: Deploy to Kubernetes
+      - name: Deploy backend to Kubernetes
+        run: |
+          kubectl set image --namespace limber \
+              deployment/limber-monolith-server \
+              limber-monolith-server=$BACKEND_IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Deploy web to Kubernetes
         run: |
           kubectl set image --namespace limber \
               deployment/limber-web \
-              limber-web=$IMAGE_NAME:$(git rev-parse HEAD)
+              limber-web=$WEB_IMAGE_NAME:$(git rev-parse HEAD)
+
+      - name: Clean up Gradle cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties

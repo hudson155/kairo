@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import React from 'react';
-import { useOrg } from '../../../provider/OrgProvider';
+import { useOrg } from '../../../provider/AuthenticatedStateProvider/OrgProvider';
 import FeatureNavLink from './FeatureNavLink';
 import SignInSignOutNavLink from './SignInSignOutNavLink';
 import styles from './styles';

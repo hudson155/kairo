@@ -1,9 +1,19 @@
 plugins {
-  id("limber-jvm-library")
+  id("limber-multiplatform-library")
 }
 
-dependencies {
-  api(project(":limber-backend:common:permissions"))
-  implementation(Dependencies.Jackson.annotations)
-  testImplementation(project(":limber-backend:common:serialization"))
+kotlin {
+  sourceSets {
+    jvmMain {
+      dependencies {
+        api(project(":limber-backend:common:permissions"))
+        implementation(Dependencies.Jackson.annotations)
+      }
+    }
+    jvmTest {
+      dependencies {
+        implementation(project(":limber-backend:common:serialization"))
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { useOrg } from '../provider/OrgProvider';
+import { useOrg } from '../provider/AuthenticatedStateProvider/OrgProvider';
 import FeatureRep from '../rep/FeatureRep';
 import ErrorPage from './pages/ErrorPage';
 

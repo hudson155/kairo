@@ -1,17 +1,16 @@
 import React from 'react';
 import LimberApiProvider from '../limberApi/LimberApiProvider';
-import OrgProvider from '../provider/OrgProvider';
+import AuthenticatedStateProvider from '../provider/AuthenticatedStateProvider';
 import TopLevelNavbar from './components/TopLevelNavbar';
 import FeatureRouter from './FeatureRouter';
-import LoadingPage from './pages/LoadingPage';
 
 const AuthenticatedRouter: React.FC = () => {
   return (
     <LimberApiProvider.Authenticated>
-      <OrgProvider fallback={<LoadingPage debugMessage="Loading org." />}>
+      <AuthenticatedStateProvider>
         <TopLevelNavbar />
         <FeatureRouter />
-      </OrgProvider>
+      </AuthenticatedStateProvider>
     </LimberApiProvider.Authenticated>
   );
 };
