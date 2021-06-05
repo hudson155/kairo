@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { useOrg } from '../../../provider/AuthenticatedStateProvider/OrgProvider';
+import { useUser } from '../../../provider/AuthenticatedStateProvider/UserProvider';
+import ProfilePhoto from '../ProfilePhoto';
 import FeatureNavLink from './FeatureNavLink';
 import SignInSignOutNavLink from './SignInSignOutNavLink';
 import styles from './styles';
@@ -13,6 +15,7 @@ import styles from './styles';
  */
 const TopLevelNavbar: React.FC = () => {
   const org = useOrg();
+  const user = useUser();
 
   return (
     <header css={styles.root}>
@@ -22,6 +25,7 @@ const TopLevelNavbar: React.FC = () => {
         ))}
       </ul>
       <ul css={styles.right}>
+        {user && <ProfilePhoto placeholder={user.initials} url={user.profilePhotoUrl} />}
         <SignInSignOutNavLink />
       </ul>
     </header>

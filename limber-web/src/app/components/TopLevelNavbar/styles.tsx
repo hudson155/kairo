@@ -13,13 +13,17 @@ const styles = {
   }),
   left: (theme: Theme): CSSObject => ({
     flexGrow: 1,
-    'a:not(:last-child)': {
+    display: 'flex',
+    alignItems: 'flex-start',
+    '> *:not(:last-child)': {
       marginRight: theme.size.$12,
     },
   }),
   right: (theme: Theme): CSSObject => ({
+    display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row-reverse',
-    'a:not(:last-child)': {
+    '> *:not(:first-child)': {
       marginRight: theme.size.$12,
     },
   }),

@@ -3,6 +3,7 @@ namespace UserRep {
     readonly guid: string;
     readonly emailAddress: string;
     readonly fullName: string;
+    readonly initials: string;
     readonly profilePhotoUrl?: string;
   }
 }
