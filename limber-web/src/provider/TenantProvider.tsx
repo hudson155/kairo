@@ -8,11 +8,11 @@ import { checkNotUndefined } from '../util/Util';
 const Context = React.createContext<TenantRep.Complete>(
   undefined as unknown as TenantRep.Complete);
 
-interface TenantProviderProps {
+interface Props {
   readonly fallback: ReactNode;
 }
 
-const TenantProvider: React.FC<TenantProviderProps> = ({ fallback, children }) => {
+const TenantProvider: React.FC<Props> = ({ fallback, children }) => {
   const api = useLimberApi();
 
   const [tenant, setTenant, setError] = useLoadingState<TenantRep.Complete | undefined>();

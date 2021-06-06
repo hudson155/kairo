@@ -5,7 +5,7 @@ import app from '../app';
 import env from '../env';
 import { useTenant } from '../provider/TenantProvider';
 
-interface AuthProviderProps {
+interface Props {
   readonly fallback: ReactNode;
 }
 
@@ -13,7 +13,7 @@ interface AuthProviderProps {
  * Enables interaction with Auth0.
  * See https://auth0.com/blog/complete-guide-to-react-user-authentication/.
  */
-const AuthProvider: React.FC<AuthProviderProps> = ({ fallback, children }) => {
+const AuthProvider: React.FC<Props> = ({ fallback, children }) => {
   const history = useHistory();
   const tenant = useTenant();
 
@@ -37,7 +37,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ fallback, children }) => {
 
 export default AuthProvider;
 
-const InnerAuthProvider: React.FC<AuthProviderProps> = ({ fallback, children }) => {
+const InnerAuthProvider: React.FC<Props> = ({ fallback, children }) => {
   const auth = useAuth0();
 
   if (auth.isLoading) return <>{fallback}</>;

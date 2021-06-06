@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
-interface ErrorBoundaryProps {
+interface Props {
   readonly fallback: (error: Error) => ReactNode;
 }
 
-interface ErrorBoundaryState {
+interface State {
   readonly error: Error | undefined;
 }
 
@@ -12,7 +12,7 @@ interface ErrorBoundaryState {
  * See https://reactjs.org/docs/error-boundaries.html. This particular error boundary implementation
  * uses a fallback function that returns a ReactNode, allowing the fallback to see the error itself.
  */
-export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export default class ErrorBoundary extends React.Component<Props, State> {
   state = { error: undefined };
 
   static getDerivedStateFromError(error: Error) {

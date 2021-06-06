@@ -4,11 +4,11 @@ import { NavLink } from 'react-router-dom';
 import FeatureRep from '../../../rep/FeatureRep';
 import styles from './styles';
 
-interface FeatureNavLinkProps {
+interface Props {
   readonly feature: FeatureRep.Complete;
 }
 
-const FeatureNavLink: React.FC<FeatureNavLinkProps> = ({ feature }) => {
+const FeatureNavLink: React.FC<Props> = ({ feature }) => {
   return (
     <ClassNames>
       {({ css, theme }) =>

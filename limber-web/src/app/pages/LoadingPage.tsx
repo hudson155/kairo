@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDebugSettings } from '../../provider/DebugSettingsProvider';
 
-interface LoadingPageProps {
+interface Props {
   readonly debugMessage: string;
 }
 
@@ -13,7 +13,7 @@ interface LoadingPageProps {
  *  .env file is one way to artificially slow down loading time. It might be nice to avoid showing
  *  any components until 500ms have passed or something (the "fake progress bar" concept).
  */
-const LoadingPage: React.FC<LoadingPageProps> = ({ debugMessage }) => {
+const LoadingPage: React.FC<Props> = ({ debugMessage }) => {
   const { showDebugMessages } = useDebugSettings();
   return (
     <>

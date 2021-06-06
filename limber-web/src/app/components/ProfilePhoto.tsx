@@ -31,12 +31,12 @@ const styles = {
   }),
 };
 
-interface ProfilePhotoProps {
+interface Props {
   placeholder: string;
   url?: string;
 }
 
-const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ placeholder, url }) => {
+const ProfilePhoto: React.FC<Props> = ({ placeholder, url }) => {
   const croppedPlaceholder = cropPlaceholder(placeholder);
   return (
     <div css={styles.container}>

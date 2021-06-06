@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDebugSettings } from '../../provider/DebugSettingsProvider';
 
-interface RedirectingPageProps {
+interface Props {
   readonly debugMessage: string;
 }
 
@@ -10,7 +10,7 @@ interface RedirectingPageProps {
  *
  * TODO: This page is pretty ugly. Make it look nicer.
  */
-const RedirectingPage: React.FC<RedirectingPageProps> = ({ debugMessage }) => {
+const RedirectingPage: React.FC<Props> = ({ debugMessage }) => {
   const { showDebugMessages } = useDebugSettings();
   return (
     <>

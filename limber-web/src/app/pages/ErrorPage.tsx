@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDebugSettings } from '../../provider/DebugSettingsProvider';
 
-interface ErrorPageProps {
+interface Props {
   readonly errorMessage?: string;
   readonly error?: Error;
 }
@@ -12,7 +12,7 @@ interface ErrorPageProps {
  *
  * TODO: This page is pretty ugly. Make it look nicer.
  */
-const ErrorPage: React.FC<ErrorPageProps> = ({ errorMessage, error }) => {
+const ErrorPage: React.FC<Props> = ({ errorMessage, error }) => {
   const { showDebugMessages } = useDebugSettings();
   const errorStack = showDebugMessages ? error?.stack : undefined;
   return (

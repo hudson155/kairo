@@ -4,11 +4,11 @@ import OrgRep from '../../rep/OrgRep';
 const Context = React.createContext<OrgRep.Complete>(
   undefined as unknown as OrgRep.Complete);
 
-interface OrgProviderProps {
+interface Props {
   readonly org: OrgRep.Complete;
 }
 
-const OrgProvider: React.FC<OrgProviderProps> = ({ org, children }) => {
+const OrgProvider: React.FC<Props> = ({ org, children }) => {
   return <Context.Provider value={org}>{children}</Context.Provider>;
 };
 
