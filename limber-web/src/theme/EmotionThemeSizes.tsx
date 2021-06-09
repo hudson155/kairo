@@ -1,4 +1,4 @@
-const EmotionThemeSizes = {
+const sizes = {
   $1: '1px',
   $2: '2px',
   $4: '4px',
@@ -13,4 +13,8 @@ const EmotionThemeSizes = {
   $96: '96px',
 };
 
-export { EmotionThemeSizes };
+export const EmotionThemeSizes = {
+  ...sizes,
+  borderRadius: sizes.$4,
+  boxShadow: sizes.$4,
+};

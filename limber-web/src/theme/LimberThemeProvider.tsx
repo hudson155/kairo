@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
 import React, { useContext, useEffect } from 'react';
-import usePersistentState from '../util/PersistentState';
+import usePersistentState from '../hook/PersistentState';
 import { EmotionThemeDark, EmotionThemeLight } from './EmotionTheme';
 
 const LIMBER_THEME_KEY = 'LIMBER_THEME';
@@ -22,8 +22,8 @@ const LimberThemeProvider: React.FC = ({ children }) => {
   // General whole app theming. Should occur before any components are returned.
   // TODO: Finish the base default theming.
   useEffect(() => {
-    document.body.style.backgroundColor = theme.color.grey100;
-    document.body.style.color = theme.color.grey800;
+    document.body.style.backgroundColor = theme.color.app.background.normal;
+    document.body.style.color = theme.color.app.text.normal;
   }, [themeType]);
 
   return (

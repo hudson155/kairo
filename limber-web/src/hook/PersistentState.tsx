@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 export default function usePersistentState<T>(key: string, defaultValue: T): [T, (newValue: T) => void] {
   const [value, setValue] = useState(() => getPersistentState(key, defaultValue));
 
-  // If the key change, let's re-fetch the value.
+  // If the key changes, let's re-fetch the value.
   useEffect(() => {
     setValue(getPersistentState(key, defaultValue));
   }, [key]);

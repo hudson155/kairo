@@ -1,4 +1,7 @@
-export default interface EmotionThemeColors {
+/**
+ * These colors come from Adobe Spectrum and should not change.
+ */
+export default interface EmotionThemeThemeColors {
   grey50: string;
   grey75: string;
   grey100: string;
@@ -28,17 +31,10 @@ export default interface EmotionThemeColors {
   blue500: string;
   blue600: string;
   blue700: string;
-  special: {
-    copper: string;
-  };
 }
 
-const EmotionThemeSpecialColors = {
-  copper: '#CD8E72',
-};
-
 // Colors based on Adobe Spectrum: Dark https://spectrum.adobe.com/page/color/.
-const EmotionThemeColorsDark: EmotionThemeColors = {
+export const EmotionThemeThemeColorsDark: EmotionThemeThemeColors = {
   grey50: '#252525',
   grey75: '#2f2f2f',
   grey100: '#323232',
@@ -68,11 +64,10 @@ const EmotionThemeColorsDark: EmotionThemeColors = {
   blue500: '#378ef0',
   blue600: '#4b9cf5',
   blue700: '#5aa9fa',
-  special: EmotionThemeSpecialColors,
 };
 
 // Colors based on Adobe Spectrum: Light https://spectrum.adobe.com/page/color/.
-const EmotionThemeColorsLight: EmotionThemeColors = {
+export const EmotionThemeThemeColorsLight: EmotionThemeThemeColors = {
   grey50: '#FFFFFF',
   grey75: '#FAFAFA',
   grey100: '#F5F5F5',
@@ -102,10 +97,4 @@ const EmotionThemeColorsLight: EmotionThemeColors = {
   blue500: '#1473E6',
   blue600: '#0D66D0',
   blue700: '#095ABA',
-  special: EmotionThemeSpecialColors,
-};
-
-export {
-  EmotionThemeColorsDark,
-  EmotionThemeColorsLight,
 };

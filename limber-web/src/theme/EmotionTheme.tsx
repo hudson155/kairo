@@ -1,18 +1,19 @@
 import { Theme } from '@emotion/react';
 import { EmotionThemeColorsDark, EmotionThemeColorsLight } from './EmotionThemeColors';
 import { EmotionThemeSizes } from './EmotionThemeSizes';
+import { EmotionThemeUtil } from './EmotionThemeUtil';
+import { EmotionThemeZIndices } from './EmotionThemeZIndices';
 
-const EmotionThemeDark: Theme = {
+export const EmotionThemeDark: Theme = {
   color: EmotionThemeColorsDark,
   size: EmotionThemeSizes,
+  util: EmotionThemeUtil,
+  zIndex: EmotionThemeZIndices,
 };
 
-const EmotionThemeLight: Theme = {
+export const EmotionThemeLight: Theme = {
   color: EmotionThemeColorsLight,
   size: EmotionThemeSizes,
-};
-
-export {
-  EmotionThemeDark,
-  EmotionThemeLight,
+  util: EmotionThemeUtil,
+  zIndex: EmotionThemeZIndices,
 };

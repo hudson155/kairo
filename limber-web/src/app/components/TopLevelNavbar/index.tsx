@@ -1,35 +1,32 @@
 /** @jsxImportSource @emotion/react */
 
+import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
 import { useOrg } from '../../../provider/AuthenticatedStateProvider/OrgProvider';
-import { useUser } from '../../../provider/AuthenticatedStateProvider/UserProvider';
-import ProfilePhoto from '../ProfilePhoto';
+import AuthenticatedNavSection from './AuthenticatedNavSection';
 import FeatureNavLink from './FeatureNavLink';
-import SignInSignOutNavLink from './SignInSignOutNavLink';
-import styles from './styles';
+import Navbar from './GenericNavbar';
+import UnauthenticatedNavSection from './UnauthenticatedNavSetion';
 
 /**
- * The navbar to show at the very top of all pages.
+ * The navbar to show at the very top of all pages. As it gets more complex it can be broken down
+ * into more components.
  *
  * TODO: Add some kind of a logo. Perhaps the organization logo.
+ *
+ * TODO: Make this (and the settings nav dropdown) look good on mobile.
  */
 const TopLevelNavbar: React.FC = () => {
+  const auth = useAuth0();
   const org = useOrg();
-  const user = useUser();
 
-  return (
-    <header css={styles.root}>
-      <ul css={styles.left}>
-        {org && org.features.map(feature => (
-          <FeatureNavLink key={feature.guid} feature={feature} />
-        ))}
-      </ul>
-      <ul css={styles.right}>
-        {user && <ProfilePhoto placeholder={user.initials} url={user.profilePhotoUrl} />}
-        <SignInSignOutNavLink />
-      </ul>
-    </header>
-  );
+  const left = org && org.features.map(feature => (
+    <FeatureNavLink key={feature.guid} feature={feature} />
+  ));
+
+  const right = auth.isAuthenticated ? <AuthenticatedNavSection /> : <UnauthenticatedNavSection />;
+
+  return <Navbar left={left} right={right} />;
 };
 
 export default TopLevelNavbar;

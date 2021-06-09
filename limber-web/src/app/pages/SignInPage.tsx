@@ -6,11 +6,11 @@ import RedirectingPage from './RedirectingPage';
 
 export const signInPagePath: () => string = () => '/sign-in';
 
-interface SignInPageLocationState {
+interface State {
   readonly returnTo: string | undefined;
 }
 
-export const signInPageDescriptor: () => LocationDescriptor<SignInPageLocationState> = () => ({
+export const signInPageDescriptor: () => LocationDescriptor<State> = () => ({
   pathname: signInPagePath(),
   state: { returnTo: window.location.pathname + window.location.search + window.location.hash },
 });
@@ -22,7 +22,7 @@ export const signInPageDescriptor: () => LocationDescriptor<SignInPageLocationSt
  */
 const SignInPage: React.FC = () => {
   const auth = useAuth0();
-  const location = useLocation<SignInPageLocationState>();
+  const location = useLocation<State>();
 
   // noinspection JSIgnoredPromiseFromCall
   auth.loginWithRedirect({ appState: { returnTo: location.state.returnTo } });

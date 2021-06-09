@@ -9,6 +9,9 @@ import ErrorPage from './pages/ErrorPage';
 import LoadingPage from './pages/LoadingPage';
 import RootRouter from './RootRouter';
 
+/**
+ * The root of the whole app.
+ */
 const App: React.FC = () => {
   return (
     <LimberThemeProvider>

@@ -4,6 +4,9 @@ import AuthenticatedStateProvider from '../provider/AuthenticatedStateProvider';
 import TopLevelNavbar from './components/TopLevelNavbar';
 import FeatureRouter from './FeatureRouter';
 
+/**
+ * Routing specific to authenticated users.
+ */
 const AuthenticatedRouter: React.FC = () => {
   return (
     <LimberApiProvider.Authenticated>

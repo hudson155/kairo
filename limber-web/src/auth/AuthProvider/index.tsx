@@ -1,17 +1,19 @@
-import { AppState, Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { AppState, Auth0Provider } from '@auth0/auth0-react';
 import React, { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
-import app from '../app';
-import env from '../env';
-import { useTenant } from '../provider/TenantProvider';
+import app from '../../app';
+import env from '../../env';
+import { useTenant } from '../../provider/TenantProvider';
+import InnerAuthProvider from './InnerAuthProvider';
 
 interface Props {
   readonly fallback: ReactNode;
 }
 
 /**
- * Enables interaction with Auth0.
- * See https://auth0.com/blog/complete-guide-to-react-user-authentication/.
+ * Enables interaction with Auth0. See
+ * https://auth0.com/blog/complete-guide-to-react-user-authentication/ and other Auth0
+ * documentation.
  */
 const AuthProvider: React.FC<Props> = ({ fallback, children }) => {
   const history = useHistory();
@@ -36,10 +38,3 @@ const AuthProvider: React.FC<Props> = ({ fallback, children }) => {
 };
 
 export default AuthProvider;
-
-const InnerAuthProvider: React.FC<Props> = ({ fallback, children }) => {
-  const auth = useAuth0();
-
-  if (auth.isLoading) return <>{fallback}</>;
-  return <>{children}</>;
-};

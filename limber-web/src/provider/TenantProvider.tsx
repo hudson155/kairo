@@ -1,8 +1,8 @@
 import React, { ReactNode, useContext, useEffect } from 'react';
 import app from '../app';
+import useLoadingState from '../hook/LoadingState';
 import { useLimberApi } from '../limberApi/LimberApiProvider';
 import TenantRep from '../rep/TenantRep';
-import useLoadingState from '../util/LoadingState';
 import { checkNotUndefined } from '../util/Util';
 
 const Context = React.createContext<TenantRep.Complete>(
@@ -12,6 +12,10 @@ interface Props {
   readonly fallback: ReactNode;
 }
 
+/**
+ * Provides the tenant, based on the app's root domain. The provided value will never change
+ * throughout the app lifecycle.
+ */
 const TenantProvider: React.FC<Props> = ({ fallback, children }) => {
   const api = useLimberApi();
 

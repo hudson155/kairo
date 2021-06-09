@@ -1,8 +1,13 @@
-import { ClassNames } from '@emotion/react';
+import { ClassNames, CSSObject, Theme } from '@emotion/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import FeatureRep from '../../../rep/FeatureRep';
-import styles from './styles';
+
+const styles = {
+  activeLink: (theme: Theme): CSSObject => ({
+    borderBottom: `${theme.size.$2} solid ${theme.color.app.navigationHighlight}`,
+  }),
+};
 
 interface Props {
   readonly feature: FeatureRep.Complete;

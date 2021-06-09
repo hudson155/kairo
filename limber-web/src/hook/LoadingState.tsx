@@ -1,8 +1,16 @@
 import { useState } from 'react';
 
 interface Result<T> {
+  /**
+   * Initially true, until loading is complete. When loading is complete, false regardless of
+   * whether loading was successful or not.
+   */
   readonly isLoading: boolean;
 
+  /**
+   * If loading was unsuccessful, throws the error that occurred. If loading was successful, returns
+   * the loaded value.
+   */
   get(): T
 }
 

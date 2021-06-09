@@ -3,16 +3,20 @@ import decodeJwt from 'jwt-decode';
 import { JwtClaims } from 'limber-jwt';
 import React, { useEffect } from 'react';
 import LoadingPage from '../../app/pages/LoadingPage';
+import useLoadingState from '../../hook/LoadingState';
 import { useLimberApi } from '../../limberApi/LimberApiProvider';
 import Jwt from '../../rep/Jwt';
 import OrgRep from '../../rep/OrgRep';
 import UserRep from '../../rep/UserRep';
-import useLoadingState from '../../util/LoadingState';
 import { checkNotUndefined } from '../../util/Util';
 import { useTenant } from '../TenantProvider';
 import OrgProvider from './OrgProvider';
 import UserProvider from './UserProvider';
 
+/**
+ * Loads authenticated state in parallel, only rendering the component's children after it all
+ * finishes. This only works if the user is authenticated.
+ */
 const AuthenticatedStateProvider: React.FC = ({ children }) => {
   const api = useLimberApi();
   const auth = useAuth0();

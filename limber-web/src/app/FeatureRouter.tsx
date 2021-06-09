@@ -4,6 +4,9 @@ import { useOrg } from '../provider/AuthenticatedStateProvider/OrgProvider';
 import FeatureRep from '../rep/FeatureRep';
 import ErrorPage from './pages/ErrorPage';
 
+/**
+ * Dynamic router powered by the organization's features.
+ */
 const FeatureRouter: React.FC = () => {
   const { features } = useOrg();
   const defaultFeature = findDefaultFeature(features);
@@ -12,6 +15,7 @@ const FeatureRouter: React.FC = () => {
     return <ErrorPage errorMessage="No features are configured." />;
   }
 
+  // TODO: Implement routing dependent on feature type, and remove the boilerplate stuff.
   return (
     <>
       <h1>Limber</h1>
