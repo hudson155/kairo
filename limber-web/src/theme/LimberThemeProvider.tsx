@@ -42,7 +42,8 @@ function themeFromType(themeType: LimberThemeType) {
     case 'LIGHT':
       return EmotionThemeLight;
     default:
-      throw new Error(`Unknown theme type: ${themeType}.`);
+      console.error(`Unknown theme type: ${themeType}.`); // Fail gracefully.
+      return EmotionThemeLight
   }
 }
 

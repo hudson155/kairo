@@ -37,7 +37,11 @@ export default FeatureRouter;
 
 function findDefaultFeature(features: FeatureRep.Complete[]): FeatureRep.Complete | undefined {
   const defaultFeatures = features.filter(feature => feature.isDefaultFeature);
-  if (defaultFeatures.length === 0) return undefined;
-  if (defaultFeatures.length === 1) return defaultFeatures[0];
-  throw new Error('There are multiple default features.');
+  if (defaultFeatures.length === 0) {
+    return undefined;
+  }
+  if (defaultFeatures.length !== 1) {
+    console.error('There are multiple default features.'); // Fail gracefully.
+  }
+  return defaultFeatures[0];
 }
