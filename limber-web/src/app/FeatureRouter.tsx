@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { useOrg } from '../provider/AuthenticatedStateProvider/OrgProvider';
 import FeatureRep from '../rep/FeatureRep';
 import ErrorPage from './pages/ErrorPage';
+import OrgSettingsPage, { orgSettingsPagePath } from './pages/OrgSettingsPage';
 
 /**
  * Dynamic router powered by the organization's features.
@@ -21,6 +22,7 @@ const FeatureRouter: React.FC = () => {
       <h1>Limber</h1>
       <p>This is Limber.</p>
       <Switch>
+        <Route exact={true} path={orgSettingsPagePath()} component={OrgSettingsPage} />
         {features.map(feature => (
           <Route key={feature.guid} exact={true} path={feature.path}>{feature.name}</Route>
         ))}

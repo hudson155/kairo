@@ -4,6 +4,7 @@ import { CSSObject, Theme } from '@emotion/react';
 import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useEscapeKeyListener, useOutsideClickListener } from '../../../hook/FilteredEventListener';
+import { orgSettingsPagePath } from '../../pages/OrgSettingsPage';
 import { signOutPagePath } from '../../pages/SignOutPage';
 import SettingsSubnavItem from './SettingsSubnavItem';
 import SettingsSubnavSection from './SettingsSubnavSection';
@@ -57,7 +58,16 @@ const SettingsSubnav: React.FC<Props> = ({ onHide }) => {
       <div css={styles.subnav}>
         <SettingsSubnavSection>
           <SettingsSubnavItem>
-            <NavLink to={signOutPagePath()} css={styles.navLink}>Sign out</NavLink>
+            <NavLink to={orgSettingsPagePath()} onClick={onHide} css={styles.navLink}>
+              Organization settings
+            </NavLink>
+          </SettingsSubnavItem>
+        </SettingsSubnavSection>
+        <SettingsSubnavSection>
+          <SettingsSubnavItem>
+            <NavLink to={signOutPagePath()} onClick={onHide} css={styles.navLink}>
+              Sign out
+            </NavLink>
           </SettingsSubnavItem>
         </SettingsSubnavSection>
       </div>
