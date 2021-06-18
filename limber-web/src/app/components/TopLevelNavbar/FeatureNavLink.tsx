@@ -2,6 +2,7 @@ import { ClassNames, CSSObject, Theme } from '@emotion/react';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import FeatureRep from '../../../rep/FeatureRep';
+import NavbarItem from './NavbarItem';
 
 const styles = {
   activeLink: (theme: Theme): CSSObject => ({
@@ -15,13 +16,15 @@ interface Props {
 
 const FeatureNavLink: React.FC<Props> = ({ feature }) => {
   return (
-    <ClassNames>
-      {({ css, theme }) =>
-        <NavLink to={feature.path} activeClassName={css(styles.activeLink(theme))}>
-          {feature.name}
-        </NavLink>
-      }
-    </ClassNames>
+    <NavbarItem>
+      <ClassNames>
+        {({ css, theme }) =>
+          <NavLink to={feature.path} activeClassName={css(styles.activeLink(theme))}>
+            {feature.name}
+          </NavLink>
+        }
+      </ClassNames>
+    </NavbarItem>
   );
 };
 

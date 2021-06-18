@@ -17,13 +17,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    '> *:first-child': {
-      marginRight: theme.size.$4,
-    },
     cursor: 'pointer',
   }),
   caret: (theme: Theme): CSSObject => ({
-    color: theme.color.app.border.normal,
+    marginLeft: theme.size.$4,
   }),
 };
 

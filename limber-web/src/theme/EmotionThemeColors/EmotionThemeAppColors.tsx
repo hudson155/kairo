@@ -21,10 +21,6 @@ export default interface EmotionThemeAppColors {
   border: {
     normal: string;
   };
-  boxShadow: {
-    normal: string;
-    mild: string;
-  };
 }
 
 export const EmotionThemeAppColorsDark: EmotionThemeAppColors = appColors(EmotionThemeThemeColorsDark);
@@ -45,17 +41,13 @@ function appColors(theme: EmotionThemeThemeColors): EmotionThemeAppColors {
       normal: theme.grey800,
     },
     background: {
-      normal: theme.grey100,
+      normal: theme.grey75, // Keep this in-sync with the default CSS.
       accented: theme.grey50,
       accentedHover: theme.grey100,
       placeholderElement: theme.grey300,
     },
     border: {
-      normal: theme.grey600,
-    },
-    boxShadow: {
-      normal: theme.grey600,
-      mild: theme.grey400,
+      normal: theme.grey400,
     },
   };
 }

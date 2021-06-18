@@ -3,15 +3,18 @@
   box-sizing: border-box;
 }
 
+
 /* Remove default padding. */
 ul, ol {
   padding: 0;
 }
 
+
 /* Remove default margin. */
 body, h1, h2, h3, h4, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
   margin: 0;
 }
+
 
 /* Set core body defaults. */
 body {
@@ -24,10 +27,27 @@ body {
   text-decoration-skip-ink: auto;
 }
 
+
+/* Set default background color. This is done in pure CSS to avoid a "flash" of the wrong background
+ color when initially loading. If the Emotion theme background color changes, keep this in sync. */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #FAFAFA;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #2F2F2F;
+  }
+}
+
+
 /* Remove list styles from lists. */
 ul, ol {
   list-style: none;
 }
+
 
 /* Anchor elements should not be styled by default. */
 a {
@@ -35,16 +55,19 @@ a {
   text-decoration: unset;
 }
 
+
 /* Make images easier to work with. */
 img {
   max-width: 100%;
   display: block;
 }
 
+
 /* Inherit fonts for inputs and buttons. */
 input, button, textarea, select {
   font: inherit;
 }
+
 
 /* Collapse table borders. */
 table {

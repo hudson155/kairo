@@ -10,25 +10,19 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     padding: theme.size.$16,
-    boxShadow: `0 0 ${theme.size.boxShadow} ${theme.color.app.boxShadow.normal}`,
+    borderBottom: `${theme.size.$1} solid ${theme.color.app.border.normal}`,
     fontSize: theme.size.$16,
     fontWeight: 'bold',
   }),
-  left: (theme: Theme): CSSObject => ({
+  left: (): CSSObject => ({
     flexGrow: 1,
     display: 'flex',
     alignItems: 'flex-start',
-    '> *:not(:last-child)': {
-      marginRight: theme.size.$12,
-    },
   }),
-  right: (theme: Theme): CSSObject => ({
+  right: (): CSSObject => ({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
-    '> *:not(:last-child)': {
-      marginRight: theme.size.$12,
-    },
   }),
 };
 

@@ -5,7 +5,8 @@ import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useEscapeKeyListener, useOutsideClickListener } from '../../../hook/FilteredEventListener';
 import { signOutPagePath } from '../../pages/SignOutPage';
-import SettingsSubnavLink from './SettingsSubnavLink';
+import SettingsSubnavItem from './SettingsSubnavItem';
+import SettingsSubnavSection from './SettingsSubnavSection';
 
 const styles = {
   subnavContainer: (): CSSObject => ({
@@ -24,7 +25,6 @@ const styles = {
       zIndex: theme.zIndex.topLevelNavbarSubnav,
       backgroundColor: theme.color.app.background.accented,
       border: `${theme.size.$1} solid ${theme.color.app.border.normal}`,
-      boxShadow: `0 0 ${theme.size.boxShadow} ${theme.color.app.boxShadow.mild}`,
       borderRadius: theme.size.borderRadius,
       overflow: 'hidden',
       '::after': {
@@ -38,6 +38,9 @@ const styles = {
       },
     };
   },
+  navLink: (): CSSObject => ({
+    display: 'block',
+  }),
 };
 
 interface Props {
@@ -52,9 +55,11 @@ const SettingsSubnav: React.FC<Props> = ({ onHide }) => {
   return (
     <div ref={ref} css={styles.subnavContainer}>
       <div css={styles.subnav}>
-        <SettingsSubnavLink>
-          <NavLink to={signOutPagePath()}>Sign out</NavLink>
-        </SettingsSubnavLink>
+        <SettingsSubnavSection>
+          <SettingsSubnavItem>
+            <NavLink to={signOutPagePath()} css={styles.navLink}>Sign out</NavLink>
+          </SettingsSubnavItem>
+        </SettingsSubnavSection>
       </div>
     </div>
   );

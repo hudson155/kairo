@@ -11,7 +11,6 @@ const styles = {
     lineHeight: theme.size.$32,
     textAlign: 'center',
     borderRadius: theme.size.borderRadius,
-    boxShadow: `0 0 ${theme.size.boxShadow} ${theme.color.app.boxShadow.normal}`,
   }),
   placeholder: (theme: Theme): CSSObject => ({
     position: 'absolute',
