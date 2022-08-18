@@ -1,7 +1,0 @@
-# All resources should be in this namespace.
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: limber
-  labels:
-    instance: limber
