@@ -1,0 +1,5 @@
+evaluatePreconfiguredExpr('protocolattack-stable', [
+  'owasp-crs-v030001-id921150-protocolattack',
+  'owasp-crs-v030001-id921151-protocolattack',
+  'owasp-crs-v030001-id921170-protocolattack'
+])

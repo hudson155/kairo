@@ -1,0 +1,3 @@
+evaluatePreconfiguredExpr('rfi-stable', [
+  'owasp-crs-v030001-id931130-rfi'
+])

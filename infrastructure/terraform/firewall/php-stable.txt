@@ -1,0 +1,6 @@
+evaluatePreconfiguredExpr('php-stable', [
+  'owasp-crs-v030001-id933151-php',
+  'owasp-crs-v030001-id933131-php',
+  'owasp-crs-v030001-id933161-php',
+  'owasp-crs-v030001-id933111-php'
+])
