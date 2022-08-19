@@ -104,4 +104,11 @@ Other than the rules defined here, please follow the
 
 ## Chores
 
+- Update all versions according to the [versions](#versions) section.
 - Delete stale GitHub branches.
+- Ensure Terraform's [API list](/infrastructure/terraform/apis.tf) is up-to-date.
+
+## Versions
+
+- Terraform `hashicorp/google` provider:
+  [main.tf](/infrastructure/terraform/main.tf).
