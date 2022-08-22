@@ -15,14 +15,14 @@ resource "google_service_account_iam_binding" "limber" {
   ]
 }
 
-// The actual Kubernetes cluster
+// The actual Kubernetes cluster.
 resource "google_container_cluster" "limber" {
   name             = "limber"
   location         = "us-central1"
   enable_autopilot = true
   ip_allocation_policy {
     // TODO: This empty block is temporary, due to a Terraform bug.
-    //  https://github.com/hashicorp/terraform-provider-google/issues/10782#issuecomment-1024488630
+    //  https://github.com/hashicorp/terraform-provider-google/issues/10782#issuecomment-1024488630.
   }
   vertical_pod_autoscaling {
     enabled = true

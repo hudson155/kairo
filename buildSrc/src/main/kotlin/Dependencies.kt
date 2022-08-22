@@ -2,6 +2,7 @@ object Dependencies {
   object Detekt {
     val formatting: String = "io.gitlab.arturbosch.detekt:detekt-formatting"
       .version(Versions.detekt)
+  }
 
   object Logging {
     val kotlinLogging: String = "io.github.microutils:kotlin-logging-jvm"

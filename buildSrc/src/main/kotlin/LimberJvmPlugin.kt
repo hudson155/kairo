@@ -6,8 +6,10 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.testing.AbstractTestTask
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.kotlin.dsl.add
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.exclude
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.repositories
@@ -69,7 +71,9 @@ class LimberJvmPlugin : Plugin<Project> {
   private fun configureDetekt(target: Project) {
     target.pluginManager.apply("io.gitlab.arturbosch.detekt")
     target.dependencies {
-      add("detektPlugins", Dependencies.Detekt.formatting)
+      add("detektPlugins", Dependencies.Detekt.formatting) {
+        exclude("org.slf4j")
+      }
     }
     target.extensions.configure<DetektExtension> {
       toolVersion = Versions.detekt
