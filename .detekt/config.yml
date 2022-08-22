@@ -206,11 +206,11 @@ style:
     active: false
   ForbiddenImport:
     active: true
-    # Keep these in sync with IntelliJ auto-import exclusions.
+    # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'javax.inject.*'
       - 'org.slf4j.Logger'
       - 'org.slf4j.LoggerFactory'
-    forbiddenPatterns: 'javax\.inject\..*'
   ForbiddenMethodCall:
     active: true
     methods:
