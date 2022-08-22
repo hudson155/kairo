@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,6 +23,7 @@ class LimberJvmPlugin : Plugin<Project> {
     configureIdea(target)
     configureJvm(target)
     configureTesting(target)
+    configureDetekt(target)
   }
 
   private fun configureIdea(target: Project) {
@@ -59,6 +61,18 @@ class LimberJvmPlugin : Plugin<Project> {
       add("testImplementation", Dependencies.Testing.Junit.api)
       add("testRuntimeOnly", Dependencies.Testing.Junit.engine)
       add("testImplementation", Dependencies.Testing.Kotest.assertions)
+    }
+  }
+
+  private fun configureDetekt(target: Project) {
+    target.pluginManager.apply("io.gitlab.arturbosch.detekt")
+    target.dependencies {
+      add("detektPlugins", Dependencies.Detekt.formatting)
+    }
+    target.extensions.configure<DetektExtension> {
+      toolVersion = Versions.detekt
+      config = target.files("${target.rootDir}/.detekt/config.yml")
+      buildUponDefaultConfig = true
     }
   }
 }

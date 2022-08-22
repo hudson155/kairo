@@ -1,4 +1,9 @@
 object Dependencies {
+  object Detekt {
+    val formatting: String = "io.gitlab.arturbosch.detekt:detekt-formatting"
+      .version(Versions.detekt)
+  }
+
   object Testing {
     object Junit {
       val api: String = "org.junit.jupiter:junit-jupiter-api"
