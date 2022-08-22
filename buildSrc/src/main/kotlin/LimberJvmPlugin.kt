@@ -87,7 +87,7 @@ class LimberJvmPlugin : Plugin<Project> {
   private fun installProjectDependencies(target: Project) {
     target.dependencies {
       val paths = mutableSetOf<String>()
-      listOf(":common:logging").map { path ->
+      listOf(":common:logging", ":common:util").map { path ->
         paths += path
         if (target.path !in paths) add("implementation", project(path))
       }
