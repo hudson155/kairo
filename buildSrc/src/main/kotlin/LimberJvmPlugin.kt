@@ -15,6 +15,7 @@ import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 /**
  * Configures JVM Gradle modules.
@@ -46,6 +47,9 @@ class LimberJvmPlugin : Plugin<Project> {
     }
     target.extensions.configure<KotlinJvmProjectExtension> {
       explicitApi()
+    }
+    target.tasks.withType<KotlinJvmCompile> {
+      kotlinOptions.allWarningsAsErrors = true
     }
     target.dependencies {
       add("implementation", kotlin("reflect"))
