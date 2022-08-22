@@ -9,6 +9,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
@@ -24,6 +25,7 @@ class LimberJvmPlugin : Plugin<Project> {
     configureJvm(target)
     configureTesting(target)
     configureDetekt(target)
+    installProjectDependencies(target)
   }
 
   private fun configureIdea(target: Project) {
@@ -73,6 +75,22 @@ class LimberJvmPlugin : Plugin<Project> {
       toolVersion = Versions.detekt
       config = target.files("${target.rootDir}/.detekt/config.yml")
       buildUponDefaultConfig = true
+    }
+  }
+
+  /**
+   * Installs the list of dependencies in all Gradle modules.
+   * To avoid recursive dependency issues,
+   * modules listed here will only have those dependencies listed prior,
+   * but all modules not listed here will have the entire list.
+   */
+  private fun installProjectDependencies(target: Project) {
+    target.dependencies {
+      val paths = mutableSetOf<String>()
+      listOf(":common:logging").map { path ->
+        paths += path
+        if (target.path !in paths) add("implementation", project(path))
+      }
     }
   }
 }

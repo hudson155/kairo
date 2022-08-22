@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info"> <!-- Configuration.status is for internal Log4j2 logs. -->
+
+  <Appenders>
+    <Routing name="Console">
+      <Routes pattern="$${env:LOG_FORMAT:-PLAINTEXT}">
+
+        <Route key="PLAINTEXT">
+          <Console name="Plaintext" target="SYSTEM_OUT">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %c - %message %mdc%n"/>
+          </Console>
+        </Route>
+
+        <Route key="GCP_JSON">
+          <Console name="GcpJson" target="SYSTEM_OUT">
+            <JsonTemplateLayout eventTemplateUri="classpath:GcpLayout.json"/>
+          </Console>
+        </Route>
+
+      </Routes>
+    </Routing>
+  </Appenders>
+
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+
+</Configuration>

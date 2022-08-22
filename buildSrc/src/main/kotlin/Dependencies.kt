@@ -2,6 +2,19 @@ object Dependencies {
   object Detekt {
     val formatting: String = "io.gitlab.arturbosch.detekt:detekt-formatting"
       .version(Versions.detekt)
+
+  object Logging {
+    val kotlinLogging: String = "io.github.microutils:kotlin-logging-jvm"
+      .version(Versions.kotlinLogging)
+
+    object Log4j {
+      val core: String = "org.apache.logging.log4j:log4j-core"
+        .version(Versions.log4j)
+      val layoutTemplateJson: String = "org.apache.logging.log4j:log4j-layout-template-json"
+        .version(Versions.log4j)
+      val slf4jImpl: String = "org.apache.logging.log4j:log4j-slf4j-impl"
+        .version(Versions.log4j)
+    }
   }
 
   object Testing {
