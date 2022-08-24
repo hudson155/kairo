@@ -60,8 +60,6 @@ exceptions:
     active: true
 
 formatting:
-  AnnotationOnSeparateLine:
-    active: true
   AnnotationSpacing:
     active: true
   ArgumentListWrapping:

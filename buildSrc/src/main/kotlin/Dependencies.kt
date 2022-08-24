@@ -4,6 +4,26 @@ object Dependencies {
       .version(Versions.detekt)
   }
 
+  object Jackson {
+    val databind: String = "com.fasterxml.jackson.core:jackson-databind"
+      .version(Versions.jackson)
+
+    object DataFormat {
+      val yaml: String = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
+        .version(Versions.jackson)
+    }
+
+    object DataType {
+      val jsr310: String = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+        .version(Versions.jackson)
+    }
+
+    object Module {
+      val kotlin: String = "com.fasterxml.jackson.module:jackson-module-kotlin"
+        .version(Versions.jackson)
+    }
+  }
+
   object Logging {
     val kotlinLogging: String = "io.github.microutils:kotlin-logging-jvm"
       .version(Versions.kotlinLogging)

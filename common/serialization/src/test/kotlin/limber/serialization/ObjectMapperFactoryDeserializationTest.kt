@@ -8,6 +8,7 @@ import limber.time.inUtc
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
+@Suppress("ClassOrdering") // In this case it's nice to keep properties near their test methods.
 internal abstract class ObjectMapperFactoryDeserializationTest(
   dataFormat: ObjectMapperFactory.Format,
 ) : ObjectMapperFactoryTest(dataFormat) {

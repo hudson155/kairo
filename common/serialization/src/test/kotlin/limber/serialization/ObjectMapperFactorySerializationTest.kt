@@ -2,11 +2,11 @@ package limber.serialization
 
 import com.fasterxml.jackson.core.JacksonException
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers
-.shouldBe
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
+@Suppress("ClassOrdering") // In this case it's nice to keep properties near their test methods.
 internal abstract class ObjectMapperFactorySerializationTest(
   dataFormat: ObjectMapperFactory.Format,
 ) : ObjectMapperFactoryTest(dataFormat) {

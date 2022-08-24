@@ -2,6 +2,9 @@ object Versions {
   // https://github.com/detekt/detekt/releases.
   const val detekt = "1.21.0"
 
+  // https://github.com/FasterXML/jackson-core/tags.
+  const val jackson = "2.13.3"
+
   // https://github.com/junit-team/junit5/releases.
   const val junit = "5.9.0"
 

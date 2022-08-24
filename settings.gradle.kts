@@ -6,4 +6,6 @@ rootProject.name = "limber"
 
 include(":common:logging")
 
+include(":common:serialization")
+
 include(":common:util")
