@@ -8,4 +8,6 @@ include(":common:logging")
 
 include(":common:serialization")
 
+include(":common:type:protected-string")
+
 include(":common:util")
