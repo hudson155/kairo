@@ -32,28 +32,61 @@ internal class ProtectedConfigStringDeserializerTest {
 
   @Test
   fun `plaintext - value is set`() {
-    val map = mapOf("someValue" to mapOf("type" to "Plaintext", "value" to "the value"))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Plaintext",
+        "value" to "the value",
+      ),
+    )
     objectMapper.convertValue<Config>(map).someValue.shouldBe(ProtectedString("the value"))
   }
 
   @Test
   fun `plaintext - value not set`() {
-    val map = mapOf("someValue" to mapOf("type" to "Plaintext"))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Plaintext",
+      ),
+    )
     objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
   }
 
   @Test
   fun `environment variable - value is set`() {
     EnvironmentVariableSource.withOverride({ "val from env" }) {
-      val map = mapOf("someValue" to mapOf("type" to "EnvironmentVariable", "name" to "TEST_ENV_VAR"))
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+        ),
+      )
       objectMapper.convertValue<Config>(map).someValue.shouldBe(ProtectedString("val from env"))
     }
   }
 
   @Test
-  fun `environment variable - value not set`() {
+  fun `environment variable - value not set, has default`() {
     EnvironmentVariableSource.withOverride({ null }) {
-      val map = mapOf("someValue" to mapOf("type" to "EnvironmentVariable", "name" to "TEST_ENV_VAR"))
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+          "defaultValue" to "some default",
+        ),
+      )
+      objectMapper.convertValue<ConfigStringDeserializerTest.Config>(map).someValue.shouldBe("some default")
+    }
+  }
+
+  @Test
+  fun `environment variable - value not set, no default`() {
+    EnvironmentVariableSource.withOverride({ null }) {
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+        ),
+      )
       objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
     }
   }
@@ -62,7 +95,12 @@ internal class ProtectedConfigStringDeserializerTest {
   fun `gcp secret - value is set`() {
     EnvironmentVariableSource.withOverride({ "id" }) {
       GcpSecretSource.withOverride({ "val from gcp" }) {
-        val map = mapOf("someValue" to mapOf("type" to "GcpSecret", "environmentVariableName" to "TEST_ENV_VAR"))
+        val map = mapOf(
+          "someValue" to mapOf(
+            "type" to "GcpSecret",
+            "environmentVariableName" to "TEST_ENV_VAR",
+          ),
+        )
         objectMapper.convertValue<Config>(map).someValue.shouldBe(ProtectedString("val from gcp"))
       }
     }
@@ -72,7 +110,12 @@ internal class ProtectedConfigStringDeserializerTest {
   fun `gcp secret - secret is not set`() {
     EnvironmentVariableSource.withOverride({ "id" }) {
       GcpSecretSource.withOverride({ null }) {
-        val map = mapOf("someValue" to mapOf("type" to "GcpSecret", "environmentVariableName" to "TEST_ENV_VAR"))
+        val map = mapOf(
+          "someValue" to mapOf(
+            "type" to "GcpSecret",
+            "environmentVariableName" to "TEST_ENV_VAR",
+          ),
+        )
         objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
       }
     }
@@ -82,7 +125,12 @@ internal class ProtectedConfigStringDeserializerTest {
   fun `gcp secret - environment variable is not set`() {
     EnvironmentVariableSource.withOverride({ null }) {
       GcpSecretSource.withOverride({ "val from gcp" }) {
-        val map = mapOf("someValue" to mapOf("type" to "GcpSecret", "environmentVariableName" to "TEST_ENV_VAR"))
+        val map = mapOf(
+          "someValue" to mapOf(
+            "type" to "GcpSecret",
+            "environmentVariableName" to "TEST_ENV_VAR",
+          ),
+        )
         shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
       }
     }
@@ -90,13 +138,23 @@ internal class ProtectedConfigStringDeserializerTest {
 
   @Test
   fun `command - returns value`() {
-    val map = mapOf("someValue" to mapOf("type" to "Command", "command" to "echo \"val from cmd\""))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Command",
+        "command" to "echo \"val from cmd\"",
+      ),
+    )
     objectMapper.convertValue<Config>(map).someValue.shouldBe(ProtectedString("val from cmd"))
   }
 
   @Test
   fun `command - returns nothing`() {
-    val map = mapOf("someValue" to mapOf("type" to "Command", "command" to ";"))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Command",
+        "command" to ";",
+      ),
+    )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
   }
 }

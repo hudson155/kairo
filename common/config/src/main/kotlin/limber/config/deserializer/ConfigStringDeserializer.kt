@@ -26,9 +26,10 @@ public class ConfigStringDeserializer : StdDeserializer<String>(String::class.ja
       if (value != null) {
         logger.info { "Config string value is $value." }
         return value
+      } else {
+        logger.info { "Config string value was not provided. Using null." }
+        return null
       }
-      logger.info { "Config string value was not provided. Using null." }
-      return null
     }
 
     internal fun fromEnvironmentVariable(configString: ConfigString.EnvironmentVariable): String? {
@@ -36,13 +37,17 @@ public class ConfigStringDeserializer : StdDeserializer<String>(String::class.ja
         "Config string is from environment variable." +
           " Accessing environment variable with name ${configString.name}."
       }
-      val value = EnvironmentVariableSource.get(configString.name)
+      val value = EnvironmentVariableSource[configString.name]
       if (value != null) {
         logger.info { "Retrieved config string value from environment variable. Value is $value." }
         return value
+      } else if (configString.defaultValue != null) {
+        logger.info { "Environment variable was not set. Using default value of ${configString.defaultValue}." }
+        return configString.defaultValue
+      } else {
+        logger.info { "Environment variable was not set. Using null." }
+        return null
       }
-      logger.info { "Environment variable was not set. Using null." }
-      return null
     }
 
     private fun mustBeProtected(kClass: KClass<out ConfigString>): Nothing =

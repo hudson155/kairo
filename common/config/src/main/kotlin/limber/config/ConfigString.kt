@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 )
 internal sealed class ConfigString {
   internal data class Plaintext(val value: String?) : ConfigString()
-  internal data class EnvironmentVariable(val name: String) : ConfigString()
+  internal data class EnvironmentVariable(val name: String, val defaultValue: String?) : ConfigString()
   internal data class GcpSecret(val environmentVariableName: String) : ConfigString()
   internal data class Command(val command: String) : ConfigString()
 }

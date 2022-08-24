@@ -31,41 +31,84 @@ internal class ConfigStringDeserializerTest {
 
   @Test
   fun `plaintext - value is set`() {
-    val map = mapOf("someValue" to mapOf("type" to "Plaintext", "value" to "the value"))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Plaintext",
+        "value" to "the value",
+      ),
+    )
     objectMapper.convertValue<Config>(map).someValue.shouldBe("the value")
   }
 
   @Test
   fun `plaintext - value not set`() {
-    val map = mapOf("someValue" to mapOf("type" to "Plaintext"))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Plaintext",
+      ),
+    )
     objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
   }
 
   @Test
   fun `environment variable - value is set`() {
     EnvironmentVariableSource.withOverride({ "val from env" }) {
-      val map = mapOf("someValue" to mapOf("type" to "EnvironmentVariable", "name" to "TEST_ENV_VAR"))
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+        ),
+      )
       objectMapper.convertValue<Config>(map).someValue.shouldBe("val from env")
     }
   }
 
   @Test
-  fun `environment variable - value not set`() {
+  fun `environment variable - value not set, has default`() {
     EnvironmentVariableSource.withOverride({ null }) {
-      val map = mapOf("someValue" to mapOf("type" to "EnvironmentVariable", "name" to "TEST_ENV_VAR"))
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+          "defaultValue" to "some default",
+        ),
+      )
+      objectMapper.convertValue<Config>(map).someValue.shouldBe("some default")
+    }
+  }
+
+  @Test
+  fun `environment variable - value not set, no default`() {
+    EnvironmentVariableSource.withOverride({ null }) {
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+        ),
+      )
       objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
     }
   }
 
   @Test
   fun `gcp secret`() {
-    val map = mapOf("someValue" to mapOf("type" to "GcpSecret", "environmentVariableName" to "TEST_ENV_VAR"))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "GcpSecret",
+        "environmentVariableName" to "TEST_ENV_VAR",
+      ),
+    )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
   }
 
   @Test
   fun command() {
-    val map = mapOf("someValue" to mapOf("type" to "Command", "command" to "echo \"val from cmd\""))
+    val map = mapOf(
+      "someValue" to mapOf(
+        "type" to "Command",
+        "command" to "echo \"val from cmd\"",
+      ),
+    )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
   }
 }
