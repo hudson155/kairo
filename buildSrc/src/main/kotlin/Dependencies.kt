@@ -4,6 +4,11 @@ object Dependencies {
       .version(Versions.detekt)
   }
 
+  object Gcp {
+    val secretManager: String = "com.google.cloud:google-cloud-secretmanager"
+      .version(Versions.gcpSecretManager)
+  }
+
   object Jackson {
     val databind: String = "com.fasterxml.jackson.core:jackson-databind"
       .version(Versions.jackson)

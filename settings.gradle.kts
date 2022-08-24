@@ -4,6 +4,8 @@ rootProject.name = "limber"
 // Common.
 ////////////////////////////////////////////////////////////////////////////////
 
+include(":common:config")
+
 include(":common:logging")
 
 include(":common:serialization")

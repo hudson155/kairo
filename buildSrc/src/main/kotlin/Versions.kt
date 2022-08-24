@@ -2,6 +2,9 @@ object Versions {
   // https://github.com/detekt/detekt/releases.
   const val detekt = "1.21.0"
 
+  // https://github.com/googleapis/java-secretmanager/releases.
+  const val gcpSecretManager = "2.3.1"
+
   // https://github.com/FasterXML/jackson-core/tags.
   const val jackson = "2.13.3"
 
