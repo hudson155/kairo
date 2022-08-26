@@ -2,6 +2,10 @@ name: Kotlin CI
 
 on: pull_request
 
+concurrency:
+  group: kotlin-${{ github.event.number }}
+  cancel-in-progress: true
+
 jobs:
   Build:
     runs-on: ubuntu-22.04
