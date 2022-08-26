@@ -5,6 +5,9 @@ object Versions {
   // https://github.com/googleapis/java-secretmanager/releases.
   const val gcpSecretManager = "2.3.1"
 
+  // https://github.com/google/guice/releases.
+  const val guice = "5.1.0"
+
   // https://github.com/FasterXML/jackson-core/tags.
   const val jackson = "2.13.3"
 

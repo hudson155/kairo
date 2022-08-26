@@ -9,6 +9,11 @@ object Dependencies {
       .version(Versions.gcpSecretManager)
   }
 
+  object Google {
+    val guice: String = "com.google.inject:guice"
+      .version(Versions.guice)
+  }
+
   object Jackson {
     val databind: String = "com.fasterxml.jackson.core:jackson-databind"
       .version(Versions.jackson)
