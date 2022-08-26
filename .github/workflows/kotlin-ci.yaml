@@ -1,0 +1,43 @@
+name: Kotlin CI
+
+on: pull_request
+
+jobs:
+  Build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.0.2
+
+      - name: Set up Java
+        uses: actions/setup-java@v3.4.1
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: gradle
+
+      - name: Gradle assemble
+        run: ./gradlew assemble
+
+      - name: Gradle check
+        run: ./gradlew check -PignoreTestFailures # Ignore failures for a comprehensive JUnit report.
+
+      - name: Gradle build
+        run: ./gradlew build
+
+      - name: Test report
+        uses: dorny/test-reporter@v1.5.0
+        if: always()
+        with:
+          name: JUnit tests
+          path: '**/build/test-results/test/TEST-*.xml'
+          reporter: java-junit
+          fail-on-error: true # Test failures are ignored but this will fail the build on failed tests.
+
+      - name: Clean up Gradle cache
+        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
+        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties

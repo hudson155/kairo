@@ -64,6 +64,7 @@ class LimberJvmPlugin : Plugin<Project> {
     }
     target.tasks.withType<Test> {
       useJUnitPlatform()
+      ignoreFailures = project.hasProperty("ignoreTestFailures")
     }
     target.dependencies {
       add("testImplementation", Dependencies.Testing.Junit.api)
