@@ -6,9 +6,13 @@ rootProject.name = "limber"
 
 include(":common:config")
 
+include(":common:feature")
+
 include(":common:logging")
 
 include(":common:serialization")
+
+include(":common:server")
 
 include(":common:type:protected-string")
 

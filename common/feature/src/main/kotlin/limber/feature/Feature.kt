@@ -4,7 +4,15 @@ import com.google.inject.Injector
 import com.google.inject.PrivateBinder
 import com.google.inject.PrivateModule
 
+/**
+ * An Application is composed from a set of Features,
+ * each of which enables some specific functionality.
+ *
+ * See the root README for more detail.
+ */
 public abstract class Feature : PrivateModule() {
+  public val name: String = checkNotNull(this::class.simpleName)
+
   public abstract val priority: FeaturePriority
 
   final override fun configure() {
@@ -15,7 +23,7 @@ public abstract class Feature : PrivateModule() {
 
   /**
    * Primarily for dependency injection,
-   * the implementation should bind everything for the feature.
+   * the implementation should bind everything for the Feature.
    * It should not initialize anything stateful (such as connection pools).
    */
   public abstract fun PrivateBinder.bind()
@@ -34,8 +42,9 @@ public abstract class Feature : PrivateModule() {
 
   /**
    * Change state before shutdown.
+   * [injector] may be null if the Server did not start correctly.
    */
-  public open fun beforeStop(injector: Injector): Unit =
+  public open fun beforeStop(injector: Injector?): Unit =
     Unit
 
   /**
