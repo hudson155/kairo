@@ -5,14 +5,14 @@ to enable the development and hosting of multiple applications
 with minimal duplication of effort.
 
 The Limber Application Platform enables **high application repeatability**\
-**without sacrificing customizability**. This **saves time and money**
+**without sacrificing customizability**. This **saves time and money**\
 while **accelerating project timelines** and **increasing application reliability**.
 
 ## Architecture
 
 ### Features
 
-Limber' s modularity stems from its concept of Features.
+Limber's modularity stems from its concept of Features.
 An Application is composed from a set of Features,
 each of which enables some specific functionality.
 
@@ -32,6 +32,8 @@ By composing applications from Features,
 reusability and configurability are inherent.
 
 ### Servers
+
+A Server runs a collection of Features.
 
 All Features can run on a single shared Server to start,
 which keeps the Infrastructure side very simple.
@@ -56,7 +58,7 @@ potentially with their own UI themes.
   Each Limber application has a matching Auth0 organization,
   enabling maximum authentication flexibility.
   JWTs and user tokens are supported.
-- Authorization is managed using feature-specific permission schemas.
+- Authorization is managed using Feature-specific permission schemas.
 
 ### Infrastructure
 
