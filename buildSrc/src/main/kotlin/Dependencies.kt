@@ -60,6 +60,9 @@ object Dependencies {
       val assertions: String = "io.kotest:kotest-assertions-core"
         .version(Versions.kotest)
     }
+
+    val mockK: String = "io.mockk:mockk"
+      .version(Versions.mockK)
   }
 
   private fun String.version(version: String): String =

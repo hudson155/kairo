@@ -22,4 +22,7 @@ object Versions {
 
   // https://github.com/apache/logging-log4j2/tags.
   const val log4j = "2.17.2"
+
+  // https://github.com/mockk/mockk/releases.
+  const val mockK = "1.12.5"
 }
