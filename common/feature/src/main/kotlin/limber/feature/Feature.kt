@@ -18,7 +18,7 @@ public abstract class Feature : PrivateModule() {
   final override fun configure() {
     val binder = binder()
     binder.requireAtInjectOnConstructors()
-    binder.bind()
+    bind(binder)
   }
 
   /**
@@ -26,7 +26,8 @@ public abstract class Feature : PrivateModule() {
    * the implementation should bind everything for the Feature.
    * It should not initialize anything stateful (such as connection pools).
    */
-  public abstract fun PrivateBinder.bind()
+  public open fun bind(binder: PrivateBinder): Unit =
+    Unit
 
   /**
    * Startup work; initializing state (such as connection pools).
