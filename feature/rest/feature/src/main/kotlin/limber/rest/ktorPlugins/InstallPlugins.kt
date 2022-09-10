@@ -11,5 +11,6 @@ import io.ktor.server.application.Application
 internal fun Application.installPlugins(injector: Injector) {
   val objectMapper = injector.getInstance(ObjectMapper::class.java)
 
+  installRoutingPlugins()
   installHttpPlugins(objectMapper)
 }

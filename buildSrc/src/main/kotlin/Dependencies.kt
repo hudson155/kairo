@@ -53,6 +53,8 @@ object Dependencies {
     }
 
     object Server {
+      val autoHeadResponse: String = "io.ktor:ktor-server-auto-head-response"
+        .version(Versions.ktor)
       val contentNegotiation: String = "io.ktor:ktor-server-content-negotiation"
         .version(Versions.ktor)
       val coreJvm: String = "io.ktor:ktor-server-core-jvm"
