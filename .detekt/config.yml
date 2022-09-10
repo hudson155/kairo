@@ -121,7 +121,7 @@ naming:
     enumEntryPattern: '[A-Z][a-zA-Z0-9]*' # Enums should be PascalCase.
   FunctionMaxLength:
     active: true
-    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     maximumFunctionNameLength: 30
   FunctionMinLength:
     active: true
@@ -264,4 +264,4 @@ style:
     active: true
   WildcardImport:
     active: true
-    excludeImports: [ ]
+    excludeImports: []
