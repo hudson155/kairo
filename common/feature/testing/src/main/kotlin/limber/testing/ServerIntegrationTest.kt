@@ -7,6 +7,7 @@ import limber.feature.Feature
 import limber.feature.TestFeature
 import limber.feature.guid.DeterministicGuidGenerator
 import limber.feature.guid.GuidGenerator
+import limber.server.Server
 import limber.server.TestServer
 import org.junit.jupiter.api.AfterEach
 
@@ -15,7 +16,7 @@ public abstract class ServerIntegrationTest(
   private val supportingFeatures: Set<Feature>,
   featureUnderTest: Feature,
 ) {
-  private val server = TestServer(
+  private val server: Server<TestConfig> = TestServer(
     config = config,
     supportingFeatures = supportingFeatures,
     featureUnderTest = featureUnderTest,

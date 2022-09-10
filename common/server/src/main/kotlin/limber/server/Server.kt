@@ -6,6 +6,7 @@ import com.google.inject.Module
 import com.google.inject.Stage
 import limber.config.Config
 import limber.feature.Feature
+import mu.KLogger
 import mu.KotlinLogging
 
 /**
@@ -14,7 +15,7 @@ import mu.KotlinLogging
  * See the root README for more detail.
  */
 public abstract class Server<C : Config>(private val config: C) {
-  private val logger = KotlinLogging.logger {}
+  private val logger: KLogger = KotlinLogging.logger {}
 
   public abstract val features: Set<Feature>
 
@@ -64,7 +65,7 @@ public abstract class Server<C : Config>(private val config: C) {
         logger.info { "Starting start Feature: ${feature.name}." }
         feature.start(injector, features)
       }
-      Thread.sleep(config.server.startupDelayMs)
+      Thread.sleep(config.server.lifecycle.startupDelayMs)
       forEach { feature ->
         logger.info { "Server afterStart Feature: ${feature.name}." }
         feature.afterStart(injector)
@@ -78,7 +79,7 @@ public abstract class Server<C : Config>(private val config: C) {
         logger.info { "Server stop Feature: ${feature.name}." }
         feature.beforeStop(injector)
       }
-      Thread.sleep(config.server.shutdownDelayMs)
+      Thread.sleep(config.server.lifecycle.shutdownDelayMs)
       forEach { feature ->
         logger.info { "Server stop Feature: ${feature.name}." }
         feature.stop()

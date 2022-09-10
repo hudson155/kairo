@@ -19,3 +19,12 @@ include(":common:server:testing")
 include(":common:type:protected-string")
 
 include(":common:util")
+
+////////////////////////////////////////////////////////////////////////////////
+// Feature
+////////////////////////////////////////////////////////////////////////////////
+
+include(":feature:rest:client")
+include(":feature:rest:feature")
+include(":feature:rest:interface")
+include(":feature:rest:testing")

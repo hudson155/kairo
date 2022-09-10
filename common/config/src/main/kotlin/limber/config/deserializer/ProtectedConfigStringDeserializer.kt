@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import limber.config.ConfigString
 import limber.type.ProtectedString
+import mu.KLogger
 import mu.KotlinLogging
 
-private val logger = KotlinLogging.logger {}
+private val logger: KLogger = KotlinLogging.logger {}
 
 public class ProtectedConfigStringDeserializer : StdDeserializer<ProtectedString>(ProtectedString::class.java) {
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ProtectedString? {

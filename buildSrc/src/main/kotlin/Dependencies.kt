@@ -34,6 +34,38 @@ object Dependencies {
     }
   }
 
+  object Ktor {
+    val httpJvm: String = "io.ktor:ktor-http-jvm"
+      .version(Versions.ktor)
+
+    object Client {
+      val cio: String = "io.ktor:ktor-client-cio"
+        .version(Versions.ktor)
+      val contentNegotiation: String = "io.ktor:ktor-client-content-negotiation"
+        .version(Versions.ktor)
+      val coreJvm: String = "io.ktor:ktor-client-core-jvm"
+        .version(Versions.ktor)
+    }
+
+    object Serialization {
+      val jackson: String = "io.ktor:ktor-serialization-jackson"
+        .version(Versions.ktor)
+    }
+
+    object Server {
+      val contentNegotiation: String = "io.ktor:ktor-server-content-negotiation"
+        .version(Versions.ktor)
+      val coreJvm: String = "io.ktor:ktor-server-core-jvm"
+        .version(Versions.ktor)
+      val cio: String = "io.ktor:ktor-server-cio"
+        .version(Versions.ktor)
+      val dataConversion: String = "io.ktor:ktor-server-data-conversion"
+        .version(Versions.ktor)
+      val hostCommonJvm: String = "io.ktor:ktor-server-host-common-jvm"
+        .version(Versions.ktor)
+    }
+  }
+
   object Logging {
     val kotlinLogging: String = "io.github.microutils:kotlin-logging-jvm"
       .version(Versions.kotlinLogging)

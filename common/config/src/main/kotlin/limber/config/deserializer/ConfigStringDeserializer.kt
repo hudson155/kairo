@@ -4,10 +4,11 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import limber.config.ConfigString
+import mu.KLogger
 import mu.KotlinLogging
 import kotlin.reflect.KClass
 
-private val logger = KotlinLogging.logger {}
+private val logger: KLogger = KotlinLogging.logger {}
 
 public class ConfigStringDeserializer : StdDeserializer<String>(String::class.java) {
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
