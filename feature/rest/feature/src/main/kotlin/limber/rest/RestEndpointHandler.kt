@@ -1,5 +1,6 @@
 package limber.rest
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.response.respond
@@ -16,7 +17,7 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
   internal suspend fun handle(call: ApplicationCall) {
     val endpoint = template.endpoint(call)
     val result = handle(endpoint) ?: throw NotFoundException()
-    call.respond<Any>(result)
+    call.respond<Any>(status(result), result)
   }
 
   /**
@@ -24,4 +25,7 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
    * This is one from a LocalClient.
    */
   public abstract suspend fun handle(endpoint: E): R
+
+  public open fun status(result: R): HttpStatusCode =
+    HttpStatusCode.OK
 }
