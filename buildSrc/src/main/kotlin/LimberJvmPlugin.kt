@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.testing.AbstractTestTask
 import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.tasks.Jar
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.add
 import org.gradle.kotlin.dsl.configure
@@ -29,6 +30,7 @@ class LimberJvmPlugin : Plugin<Project> {
     configureTesting(target)
     configureDetekt(target)
     installProjectDependencies(target)
+    configureJar(target)
   }
 
   private fun configureIdea(target: Project) {
@@ -100,6 +102,14 @@ class LimberJvmPlugin : Plugin<Project> {
         paths += path
         if (target.path !in paths) add("implementation", project(path))
       }
+    }
+  }
+
+  private fun configureJar(target: Project) {
+    target.tasks.withType<Jar> {
+      // Archives (JARs) are named using the fully qualified project path in order to avoid
+      // collisions when multiple JARs are combined to form an application.
+      archiveBaseName.set(project.path.drop(1).replace(':', '-'))
     }
   }
 }
