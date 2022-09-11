@@ -58,6 +58,7 @@ class LimberJvmPlugin : Plugin<Project> {
     }
     target.dependencies {
       add("implementation", kotlin("reflect"))
+      add("implementation", Dependencies.Kotlinx.coroutines)
     }
   }
 

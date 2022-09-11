@@ -17,6 +17,9 @@ object Versions {
   // https://github.com/kotest/kotest/releases.
   const val kotest = "5.4.2"
 
+  // https://github.com/Kotlin/kotlinx.coroutines/releases
+  const val kotlinx = "1.6.4"
+
   // https://github.com/MicroUtils/kotlin-logging/releases.
   const val kotlinLogging = "2.1.23"
 

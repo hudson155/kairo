@@ -34,6 +34,11 @@ object Dependencies {
     }
   }
 
+  object Kotlinx {
+    val coroutines: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core"
+      .version(Versions.kotlinx)
+  }
+
   object Ktor {
     val httpJvm: String = "io.ktor:ktor-http-jvm"
       .version(Versions.ktor)
