@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":common:feature:testing")) // Make general feature testing available to library users.
+  api(project(":common:feature:testing"))
+  api(project(":feature:rest:feature"))
 }
