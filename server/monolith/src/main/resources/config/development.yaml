@@ -7,6 +7,7 @@ guids:
 name: monolith
 
 rest:
+  allowedHosts: []
   parallelization:
     connectionGroupSize: 4
     workerGroupSize: 8

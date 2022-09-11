@@ -1,6 +1,7 @@
 package limber.config
 
 public data class RestConfig(
+  val allowedHosts: List<String>,
   val parallelization: Parallelization,
   val port: Int,
   val shutDown: ShutDown,

@@ -60,13 +60,15 @@ object Dependencies {
     object Server {
       val autoHeadResponse: String = "io.ktor:ktor-server-auto-head-response"
         .version(Versions.ktor)
+      val cio: String = "io.ktor:ktor-server-cio"
+        .version(Versions.ktor)
       val compression: String = "io.ktor:ktor-server-compression"
         .version(Versions.ktor)
       val contentNegotiation: String = "io.ktor:ktor-server-content-negotiation"
         .version(Versions.ktor)
       val coreJvm: String = "io.ktor:ktor-server-core-jvm"
         .version(Versions.ktor)
-      val cio: String = "io.ktor:ktor-server-cio"
+      val cors: String = "io.ktor:ktor-server-cors"
         .version(Versions.ktor)
       val dataConversion: String = "io.ktor:ktor-server-data-conversion"
         .version(Versions.ktor)

@@ -7,8 +7,8 @@ dependencies {
   api(project(":feature:rest:interface"))
 
   // Ktor core.
-  api(Dependencies.Ktor.Server.coreJvm)
   implementation(Dependencies.Ktor.Server.cio)
+  api(Dependencies.Ktor.Server.coreJvm)
   implementation(Dependencies.Ktor.Server.hostCommonJvm)
 
   // Ktor plugins.
@@ -16,6 +16,7 @@ dependencies {
   implementation(Dependencies.Ktor.Server.autoHeadResponse)
   implementation(Dependencies.Ktor.Server.compression)
   implementation(Dependencies.Ktor.Server.contentNegotiation)
+  implementation(Dependencies.Ktor.Server.cors)
   implementation(Dependencies.Ktor.Server.dataConversion)
   implementation(Dependencies.Ktor.Server.doubleReceive)
   implementation(Dependencies.Ktor.Server.statusPages)

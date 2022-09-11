@@ -2,14 +2,17 @@ package limber.rest.ktorPlugins
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
 import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.dataconversion.DataConversion
 
-internal fun Application.installHttpPlugins(objectMapper: ObjectMapper) {
+internal fun Application.installHttpPlugins(objectMapper: ObjectMapper, allowedHosts: List<String>) {
   /**
    * https://ktor.io/docs/compression.html.
    *
@@ -36,4 +39,23 @@ internal fun Application.installHttpPlugins(objectMapper: ObjectMapper) {
   }
 
   install(DataConversion)
+
+  /**
+   * https://ktor.io/docs/cors.html.
+   *
+   * Allowing credentials is not required
+   * since we use the Authorization header instead of cookies or session information.
+   */
+  install(CORS) {
+    allowCredentials = false
+    allowedHosts.forEach { host ->
+      // DO NOT enable wildcard hosts without properly mitigating the BREACH vulnerability.
+      // See the installation of the [Compression] feature for more information.
+      require(host != "*")
+      allowHost(host)
+    }
+    allowHeader(HttpHeaders.Authorization)
+    allowHeader(HttpHeaders.ContentType)
+    HttpMethod.DefaultMethods.forEach { allowMethod(it) }
+  }
 }
