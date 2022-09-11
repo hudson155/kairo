@@ -67,6 +67,8 @@ object Dependencies {
         .version(Versions.ktor)
       val hostCommonJvm: String = "io.ktor:ktor-server-host-common-jvm"
         .version(Versions.ktor)
+      val statusPages: String = "io.ktor:ktor-server-status-pages"
+        .version(Versions.ktor)
     }
   }
 

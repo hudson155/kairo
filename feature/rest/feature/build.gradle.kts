@@ -17,6 +17,7 @@ dependencies {
   implementation(Dependencies.Ktor.Server.contentNegotiation)
   implementation(Dependencies.Ktor.Server.dataConversion)
   implementation(Dependencies.Ktor.Server.doubleReceive)
+  implementation(Dependencies.Ktor.Server.statusPages)
 
   // MockK is used in production code for endpoint template generation.
   implementation(Dependencies.Testing.mockK)
