@@ -76,6 +76,8 @@ object Dependencies {
         .version(Versions.ktor)
       val doubleReceive: String = "io.ktor:ktor-server-double-receive"
         .version(Versions.ktor)
+      val forwardedHeaders: String = "io.ktor:ktor-server-forwarded-header"
+        .version(Versions.ktor)
       val hostCommonJvm: String = "io.ktor:ktor-server-host-common-jvm"
         .version(Versions.ktor)
       val statusPages: String = "io.ktor:ktor-server-status-pages"

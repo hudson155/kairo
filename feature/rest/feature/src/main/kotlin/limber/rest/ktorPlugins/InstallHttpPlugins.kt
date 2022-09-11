@@ -12,6 +12,7 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.dataconversion.DataConversion
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
+import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
 
 internal fun Application.installHttpPlugins(
   objectMapper: ObjectMapper,
@@ -70,4 +71,9 @@ internal fun Application.installHttpPlugins(
   install(DefaultHeaders) {
     header(HttpHeaders.Server, serverName)
   }
+
+  /**
+   * https://ktor.io/docs/forward-headers.html.
+   */
+  install(ForwardedHeaders)
 }
