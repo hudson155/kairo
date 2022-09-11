@@ -18,6 +18,7 @@ dependencies {
   implementation(Dependencies.Ktor.Server.contentNegotiation)
   implementation(Dependencies.Ktor.Server.cors)
   implementation(Dependencies.Ktor.Server.dataConversion)
+  implementation(Dependencies.Ktor.Server.defaultHeaders)
   implementation(Dependencies.Ktor.Server.doubleReceive)
   implementation(Dependencies.Ktor.Server.statusPages)
 

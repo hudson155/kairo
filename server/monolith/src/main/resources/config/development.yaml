@@ -13,6 +13,7 @@ rest:
     workerGroupSize: 8
     callGroupSize: 16
   port: 8080
+  serverName: Limber
   shutDown:
     gracePeriodMillis: 400
     timeoutMillis: 5000 # 5 seconds.

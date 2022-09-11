@@ -4,6 +4,7 @@ public data class RestConfig(
   val allowedHosts: List<String>,
   val parallelization: Parallelization,
   val port: Int,
+  val serverName: String,
   val shutDown: ShutDown,
 ) {
   public data class Parallelization(

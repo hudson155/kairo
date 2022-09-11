@@ -11,8 +11,13 @@ import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.dataconversion.DataConversion
+import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 
-internal fun Application.installHttpPlugins(objectMapper: ObjectMapper, allowedHosts: List<String>) {
+internal fun Application.installHttpPlugins(
+  objectMapper: ObjectMapper,
+  allowedHosts: List<String>,
+  serverName: String,
+) {
   /**
    * https://ktor.io/docs/compression.html.
    *
@@ -57,5 +62,12 @@ internal fun Application.installHttpPlugins(objectMapper: ObjectMapper, allowedH
     allowHeader(HttpHeaders.Authorization)
     allowHeader(HttpHeaders.ContentType)
     HttpMethod.DefaultMethods.forEach { allowMethod(it) }
+  }
+
+  /**
+   * https://ktor.io/docs/default-headers.html.
+   */
+  install(DefaultHeaders) {
+    header(HttpHeaders.Server, serverName)
   }
 }

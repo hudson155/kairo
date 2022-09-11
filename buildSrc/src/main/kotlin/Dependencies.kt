@@ -72,6 +72,8 @@ object Dependencies {
         .version(Versions.ktor)
       val dataConversion: String = "io.ktor:ktor-server-data-conversion"
         .version(Versions.ktor)
+      val defaultHeaders: String = "io.ktor:ktor-server-default-headers"
+        .version(Versions.ktor)
       val doubleReceive: String = "io.ktor:ktor-server-double-receive"
         .version(Versions.ktor)
       val hostCommonJvm: String = "io.ktor:ktor-server-host-common-jvm"

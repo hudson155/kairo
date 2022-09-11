@@ -12,6 +12,7 @@ public class TestRestFeature(port: Int) : RestFeature(
       callGroupSize = 16,
     ),
     port = port,
+    serverName = "Testing",
     shutDown = RestConfig.ShutDown(
       gracePeriodMillis = 10,
       timeoutMillis = 2000, // 2 seconds.

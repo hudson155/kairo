@@ -13,5 +13,5 @@ internal fun Application.installPlugins(config: RestConfig, injector: Injector) 
   val objectMapper = injector.getInstance(ObjectMapper::class.java)
 
   installRoutingPlugins()
-  installHttpPlugins(objectMapper, config.allowedHosts)
+  installHttpPlugins(objectMapper, config.allowedHosts, config.serverName)
 }
