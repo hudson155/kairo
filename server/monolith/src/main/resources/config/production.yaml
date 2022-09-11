@@ -1,0 +1,28 @@
+clock:
+  type: Real
+
+guids:
+  generation: Random
+
+name: monolith
+
+rest:
+  allowedHosts: []
+  parallelization:
+    connectionGroupSize: 16
+    workerGroupSize: 32
+    callGroupSize: 64
+  port: 8080
+  serverName: Limber
+  shutDown:
+    gracePeriodMillis: 10000
+    timeoutMillis: 12000
+
+restClient:
+  baseUrls:
+    self: http://localhost:8080/ # Using K8s DNS would introduce a catch-22 for the readiness check.
+
+server:
+  lifecycle:
+    startupDelayMs: 2000 # 2 seconds.
+    shutdownDelayMs: 4000 # 4 seconds.

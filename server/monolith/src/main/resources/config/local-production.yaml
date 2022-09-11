@@ -1,0 +1,28 @@
+clock:
+  type: Real
+
+guids:
+  generation: Random
+
+name: monolith
+
+rest:
+  allowedHosts: []
+  parallelization:
+    connectionGroupSize: 4
+    workerGroupSize: 8
+    callGroupSize: 16
+  port: 8080
+  serverName: Limber
+  shutDown:
+    gracePeriodMillis: 10000
+    timeoutMillis: 12000
+
+restClient:
+  baseUrls:
+    self: http://localhost:8080/
+
+server:
+  lifecycle:
+    startupDelayMs: 400
+    shutdownDelayMs: 200
