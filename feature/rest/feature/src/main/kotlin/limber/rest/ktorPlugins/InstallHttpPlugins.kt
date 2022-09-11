@@ -5,10 +5,27 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.plugins.compression.Compression
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.dataconversion.DataConversion
 
 internal fun Application.installHttpPlugins(objectMapper: ObjectMapper) {
+  /**
+   * https://ktor.io/docs/compression.html.
+   *
+   * Compression risks introducing susceptibility to the BREACH vulnerability.
+   * This is mitigated by the fact that CORS rules prevent requests from unknown hosts.
+   *
+   * In order to allow traffic from all hosts, however (a public API),
+   * we should explore different solutions.
+   * HTB is an accepted solution (see https://ieeexplore.ieee.org/document/9754554),
+   * which I have filed an issue with JetBrains for.
+   * https://youtrack.jetbrains.com/issue/KTOR-4818/Server-HTTP-compression-HTB-solution-for-BREACH.
+   */
+  install(Compression) {
+    default()
+  }
+
   /**
    * https://ktor.io/docs/serialization.html.
    *
