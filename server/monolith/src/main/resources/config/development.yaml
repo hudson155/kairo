@@ -15,8 +15,8 @@ rest:
   port: 8080
   serverName: Limber
   shutDown:
-    gracePeriodMillis: 10000
-    timeoutMillis: 12000
+    gracePeriodMillis: 5000 # 5 seconds.
+    timeoutMillis: 12000 # 12 seconds.
 
 restClient:
   baseUrls:

@@ -23,7 +23,7 @@ comments:
   DeprecatedBlockTag:
     active: true
   EndOfSentenceFormat:
-    active: true
+    active: false
   OutdatedDocumentation:
     active: true
 

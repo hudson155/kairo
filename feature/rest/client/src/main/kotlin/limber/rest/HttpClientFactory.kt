@@ -27,7 +27,7 @@ public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
           register(contentType = ContentType.Application.Json, converter = JacksonConverter(objectMapper))
         }
         install(HttpTimeout) {
-          requestTimeoutMillis = 15_000
+          requestTimeoutMillis = 5000 // 5 seconds.
         }
         defaultRequest {
           url(baseUrl)
