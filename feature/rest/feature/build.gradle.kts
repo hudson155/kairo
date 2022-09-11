@@ -14,6 +14,7 @@ dependencies {
   // Ktor plugins.
   implementation(Dependencies.Ktor.Serialization.jackson)
   implementation(Dependencies.Ktor.Server.autoHeadResponse)
+  implementation(Dependencies.Ktor.Server.callLogging)
   implementation(Dependencies.Ktor.Server.compression)
   implementation(Dependencies.Ktor.Server.contentNegotiation)
   implementation(Dependencies.Ktor.Server.cors)

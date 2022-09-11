@@ -14,4 +14,5 @@ internal fun Application.installPlugins(config: RestConfig, injector: Injector) 
 
   installRoutingPlugins()
   installHttpPlugins(objectMapper, config.allowedHosts, config.serverName)
+  installMonitoringPlugins()
 }
