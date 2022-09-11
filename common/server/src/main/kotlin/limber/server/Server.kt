@@ -42,6 +42,7 @@ public abstract class Server<C : Config>(private val config: C) {
     } catch (e: Exception) {
       logger.error(e) { "Server startup failed." }
       stop()
+      throw e
     }
 
     if (wait) {
