@@ -8,6 +8,9 @@ import limber.config.Config
 import limber.feature.Feature
 import mu.KLogger
 import mu.KotlinLogging
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 /**
  * A Server runs a collection of Features.
@@ -16,6 +19,8 @@ import mu.KotlinLogging
  */
 public abstract class Server<C : Config>(private val config: C) {
   private val logger: KLogger = KotlinLogging.logger {}
+
+  private val lock: Lock = ReentrantLock()
 
   public abstract val features: Set<Feature>
 
@@ -27,22 +32,23 @@ public abstract class Server<C : Config>(private val config: C) {
    * If [wait] is passed, this call won't return until the JVM is terminated,
    * at which time [stop] will have already been called.
    */
-  @Synchronized
   public fun start(wait: Boolean = true) {
-    check(injector == null)
-    logger.info { "Starting Server: ${config.name}." }
+    lock.withLock {
+      check(injector == null)
+      logger.info { "Starting Server: ${config.name}." }
 
-    @Suppress("TooGenericExceptionCaught") // During startup we're okay catching a generic exception.
-    try {
-      logger.info { "Server Features: ${features.joinToString { it.name }}." }
-      val modules: Set<Module> = features + ServerModule(config)
-      val injector = Guice.createInjector(Stage.PRODUCTION, modules)
-      startFeatures(injector)
-      this.injector = injector
-    } catch (e: Exception) {
-      logger.error(e) { "Server startup failed." }
-      stop()
-      throw e
+      @Suppress("TooGenericExceptionCaught") // During startup we're okay catching a generic exception.
+      try {
+        logger.info { "Server Features: ${features.joinToString { it.name }}." }
+        val modules: Set<Module> = features + ServerModule(config)
+        val injector = Guice.createInjector(Stage.PRODUCTION, modules)
+        startFeatures(injector)
+        this.injector = injector
+      } catch (e: Exception) {
+        logger.error(e) { "Server startup failed." }
+        stop()
+        throw e
+      }
     }
 
     if (wait) {
@@ -53,11 +59,12 @@ public abstract class Server<C : Config>(private val config: C) {
   /**
    * Stops the Server.
    */
-  @Synchronized
   public fun stop() {
-    logger.info { "Stopping Server: ${config.name}." }
-    stopFeatures(injector)
-    injector = null
+    lock.withLock {
+      logger.info { "Stopping Server: ${config.name}." }
+      stopFeatures(injector)
+      injector = null
+    }
   }
 
   private fun startFeatures(injector: Injector) {
@@ -90,7 +97,7 @@ public abstract class Server<C : Config>(private val config: C) {
 
   private fun waitForJvmTermination() {
     logger.info { "Server will wait for JVM to terminate." }
-    Runtime.getRuntime().removeShutdownHook(Thread { stop() })
+    Runtime.getRuntime().addShutdownHook(Thread { stop() })
     Thread.currentThread().join() // Deadlocks the current thread until JVM termination.
   }
 }
