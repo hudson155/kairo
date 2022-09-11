@@ -39,7 +39,7 @@ complexity:
   NamedArguments:
     active: true
   NestedScopeFunctions:
-    active: true
+    active: false
   ReplaceSafeCallChainWithRun:
     active: true
   StringLiteralDuplication:

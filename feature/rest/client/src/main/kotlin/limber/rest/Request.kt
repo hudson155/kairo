@@ -11,6 +11,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 
+@Suppress("SuspendFunWithCoroutineScopeReceiver")
 public suspend inline fun <reified T> HttpClient.request(endpoint: RestEndpoint): T {
   val httpResponse = request {
     expectSuccess = true

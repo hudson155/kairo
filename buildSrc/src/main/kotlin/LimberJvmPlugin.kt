@@ -1,8 +1,10 @@
+import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.testing.AbstractTestTask
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.tasks.Jar
@@ -15,6 +17,7 @@ import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
+import org.gradle.language.base.plugins.LifecycleBasePlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
@@ -85,7 +88,23 @@ class LimberJvmPlugin : Plugin<Project> {
     target.extensions.configure<DetektExtension> {
       toolVersion = Versions.detekt
       config = target.files("${target.rootDir}/.detekt/config.yml")
+      parallel = true
       buildUponDefaultConfig = true
+    }
+    /**
+     * Detekt makes the "check" task depend on the "detekt" task automatically.
+     * However, since the "detekt" task doesn't support type resolution
+     * (at least, not until the next major version of Detekt),
+     * some issues get missed.
+     *
+     * Here, we remove the default dependency and replace it with "detektMain" and "detektTest"
+     * which do support type resolution.
+     *
+     * This can be removed once the next major version of Detekt is released.
+     */
+    target.tasks.matching { it.name == LifecycleBasePlugin.CHECK_TASK_NAME }.configureEach {
+      setDependsOn(dependsOn.filter { it !is TaskProvider<*> || it.name != DetektPlugin.DETEKT_TASK_NAME })
+      dependsOn("detektMain", "detektTest")
     }
   }
 

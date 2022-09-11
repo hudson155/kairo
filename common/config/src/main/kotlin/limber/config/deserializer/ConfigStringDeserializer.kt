@@ -51,6 +51,7 @@ public class ConfigStringDeserializer : StdDeserializer<String>(String::class.ja
       }
     }
 
+    @Suppress("NullableToStringCall")
     private fun mustBeProtected(kClass: KClass<out ConfigString>): Nothing =
       error("Config strings with source ${kClass.simpleName} must be protected.")
   }
