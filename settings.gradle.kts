@@ -21,8 +21,12 @@ include(":common:type:protected-string")
 include(":common:util")
 
 ////////////////////////////////////////////////////////////////////////////////
-// Feature
+// Feature.
 ////////////////////////////////////////////////////////////////////////////////
+
+include(":feature:health-check:client")
+include(":feature:health-check:feature")
+include(":feature:health-check:interface")
 
 include(":feature:rest:client")
 include(":feature:rest:feature")
