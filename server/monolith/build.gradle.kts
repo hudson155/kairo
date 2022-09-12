@@ -8,4 +8,6 @@ dependencies {
 
   implementation(project(":feature:health-check:feature"))
   implementation(project(":feature:rest:feature"))
+
+  testImplementation(project(":common:feature:testing"))
 }

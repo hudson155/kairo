@@ -5,8 +5,8 @@ import limber.feature.Feature
 
 public class TestServer(
   config: TestConfig,
-  supportingFeatures: Set<Feature>,
   featureUnderTest: Feature,
+  supportingFeatures: Set<Feature>,
 ) : Server<TestConfig>(config) {
   override val features: Set<Feature> = supportingFeatures + featureUnderTest
 

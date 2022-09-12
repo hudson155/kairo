@@ -10,13 +10,13 @@ private val config = HealthCheckFeatureTestConfig
 
 private const val PORT: Int = 8081
 
-internal abstract class IntegrationTest : ServerIntegrationTest(
+internal abstract class IntegrationTest : FeatureIntegrationTest(
   config = config,
-  supportingFeatures = setOf(TestRestFeature(port = PORT)),
   featureUnderTest = HealthCheckFeature(
     serviceKClass = TestHealthCheckService::class,
     baseUrl = "http://localhost:$PORT",
   ),
+  supportingFeatures = setOf(TestRestFeature(port = PORT)),
 ) {
   protected val healthCheckClient: HealthCheckClient =
     injector.getInstance(HealthCheckClient::class.java)
