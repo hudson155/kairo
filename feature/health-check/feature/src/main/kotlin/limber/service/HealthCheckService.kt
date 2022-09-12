@@ -1,16 +1,18 @@
 package limber.service
 
+import limber.api.HealthCheckApi
+import limber.client.HealthCheckClient
 import limber.model.HealthCheck
 import limber.rep.HealthCheckRep
 import mu.KLogger
 import mu.KotlinLogging
 
-public abstract class HealthCheckService {
+public abstract class HealthCheckService(private val healthCheckClient: HealthCheckClient) {
   private val logger: KLogger = KotlinLogging.logger {}
 
   public abstract val healthChecks: Map<String, HealthCheck>
 
-  public abstract var server: HealthCheckRep.State
+  public var server: HealthCheckRep.State = HealthCheckRep.State.Unhealthy
 
   /**
    * Executes all health checks in order, sequentially. Consider parallelizing these in the future.
@@ -24,6 +26,14 @@ public abstract class HealthCheckService {
         state = if (areAllHealthy) HealthCheckRep.State.Healthy else HealthCheckRep.State.Unhealthy,
         checks = checks,
       )
+    }
+
+  protected fun serverHealthCheck(): HealthCheckRep.State =
+    server
+
+  protected suspend fun httpHealthCheck(): HealthCheckRep.State =
+    healthyIfNoException {
+      healthCheckClient(HealthCheckApi.GetLiveness)
     }
 
   protected suspend fun healthyIfNoException(block: suspend () -> Unit): HealthCheckRep.State {
