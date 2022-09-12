@@ -1,9 +1,11 @@
 /**
- * Lists the APIs that are enabled for the project. This should be kept in sync with the result of
+ * Lists the APIs that are enabled for the project.
+ * This should be kept in sync with the result of
  * "gcloud services list" or https://console.cloud.google.com/apis/dashboard.
  *
- * If you see an error like "Error 403: API has not been used in project before or it is disabled.",
- * enable it here.
+ * If, while applying other changes, you see an error like
+ * "Error 403: API has not been used in project before or it is disabled.",
+ * enable the corresponding API here.
  */
 
 resource "google_project_service" "gcp_services" {

@@ -1,6 +1,6 @@
 /**
- * This project is temporary, under Highbeam's GCP account. Highbeam has enough GCP credits to
- * ensure that this is free.
+ * This project is temporary, under Highbeam's GCP account.
+ * Highbeam has enough GCP credits to ensure that this is free.
  */
 
 resource "google_project" "default" {
@@ -17,6 +17,7 @@ resource "google_project_iam_policy" "default" {
 }
 
 locals {
+  artifact_registry_service_agent         = "serviceAccount:service-${google_project.default.number}@gcp-sa-artifactregistry.iam.gserviceaccount.com"
   cloud_pub_sub_service_account           = "serviceAccount:service-${google_project.default.number}@gcp-sa-pubsub.iam.gserviceaccount.com"
   compute_engine_default_service_account  = "serviceAccount:${google_project.default.number}-compute@developer.gserviceaccount.com"
   compute_engine_service_agent            = "serviceAccount:service-${google_project.default.number}@compute-system.iam.gserviceaccount.com"

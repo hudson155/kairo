@@ -1,3 +1,8 @@
+/**
+ * This firewall implements a derived version of the OWASP ModSecurity Core Rule Set.
+ * See https://owasp.org/www-project-modsecurity-core-rule-set for more information.
+ */
+
 resource "google_compute_security_policy" "default" {
   name = "default"
   rule {
