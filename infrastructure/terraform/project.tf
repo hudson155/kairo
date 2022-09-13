@@ -44,12 +44,12 @@ data "google_iam_policy" "default" {
     ]
   }
   binding {
-    role    = "roles/artifactregistry.serviceAgent"
-    members = [local.artifact_registry_service_agent]
+    role    = "roles/artifactregistry.repoAdmin"
+    members = ["serviceAccount:${google_service_account.deployment.email}"]
   }
   binding {
-    role    = "roles/artifactregistry.writer"
-    members = ["serviceAccount:${google_service_account.deployment.email}"]
+    role    = "roles/artifactregistry.serviceAgent"
+    members = [local.artifact_registry_service_agent]
   }
   binding {
     role    = "roles/compute.serviceAgent"
