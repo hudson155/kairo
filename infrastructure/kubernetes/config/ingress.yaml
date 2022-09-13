@@ -24,7 +24,7 @@ items:
                 path: /*
                 backend:
                   service:
-                    name: hello
+                    name: limber-monolith-server
                     port:
                       number: 80
 
