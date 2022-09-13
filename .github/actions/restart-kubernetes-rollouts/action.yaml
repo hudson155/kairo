@@ -8,6 +8,6 @@ runs:
     - shell: bash
       run: |
         for d in server/*/; do
-          deployment_name="$(basename "$d")"
+          deployment_name="limber-$(basename "$d")-server"
           kubectl rollout restart deployment "$deployment_name" --namespace limber
         done

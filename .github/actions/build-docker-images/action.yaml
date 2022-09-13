@@ -7,5 +7,5 @@ runs:
       run: |
         for d in server/*/; do
           image_name="us-docker.pkg.dev/circular-genius/limber/limber-$(basename "$d")-server"
-          docker build -f server/Dockerfile -t "$image_name:$GITHUB_SHA_SHORT" "$d"
+          docker build -f server/Dockerfile -t "${image_name}:${GITHUB_SHA_SHORT}" "$d"
         done

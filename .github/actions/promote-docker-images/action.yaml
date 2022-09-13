@@ -7,5 +7,5 @@ runs:
       run: |
         for d in server/*/; do
           image_name="us-docker.pkg.dev/circular-genius/limber/limber-$(basename "$d")-server"
-          gcloud artifacts docker tags add "$image_name:$GITHUB_SHA_SHORT" "$image_name"
+          gcloud artifacts docker tags add "${image_name}:${GITHUB_SHA_SHORT}" "${image_name}:latest"
         done
