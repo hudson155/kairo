@@ -38,10 +38,7 @@ data "google_iam_policy" "default" {
   }
   binding {
     role    = "roles/editor"
-    members = [
-      local.compute_engine_default_service_account,
-      local.google_api_service_agent,
-    ]
+    members = [local.compute_engine_default_service_account, local.google_api_service_agent]
   }
   binding {
     role    = "roles/artifactregistry.repoAdmin"
