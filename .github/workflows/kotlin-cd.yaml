@@ -22,7 +22,7 @@ jobs:
       - name: Set commit hash
         uses: ./.github/actions/set-commit-hash
       - name: Promote Docker images
-        uses: ./github/actions/promote-docker-images
+        uses: ./.github/actions/promote-docker-images
 
   kubernetes:
     name: Kubernetes rollout
@@ -36,4 +36,4 @@ jobs:
         with:
           key: ${{ secrets.GCP_SA_KEY }}
       - name: Restart Kubernetes rollouts
-        uses: ./github/actions/restart-kubernetes-rollouts
+        uses: ./.github/actions/restart-kubernetes-rollouts
