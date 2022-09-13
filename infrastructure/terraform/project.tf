@@ -26,6 +26,11 @@ locals {
   kubernetes_engine_service_agent         = "serviceAccount:service-${google_project.default.number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
+resource "google_service_account" "deployment" {
+  account_id   = "deployment"
+  display_name = "Deployment"
+}
+
 data "google_iam_policy" "default" {
   binding {
     role    = "roles/owner"
@@ -41,6 +46,10 @@ data "google_iam_policy" "default" {
   binding {
     role    = "roles/artifactregistry.serviceAgent"
     members = [local.artifact_registry_service_agent]
+  }
+  binding {
+    role    = "roles/artifactregistry.writer"
+    members = ["serviceAccount:${google_service_account.deployment.email}"]
   }
   binding {
     role    = "roles/compute.serviceAgent"
