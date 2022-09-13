@@ -1,0 +1,21 @@
+name: Gradle build
+description: |
+  Builds the Gradle project, split across multiple steps.
+  Test failures are ignored so that all tests run, giving us a comprehensive JUnit report.
+  After tests finish, this report is uploaded and will cause failure if there are failing tests.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: ./gradlew assemble
+    - shell: bash
+      run: ./gradlew check -PignoreTestFailures # Ignore failures for a comprehensive JUnit report.
+    - shell: bash
+      run: ./gradlew build
+    - uses: dorny/test-reporter@v1.5.0
+      if: always()
+      with:
+        name: JUnit tests
+        path: '**/build/test-results/test/TEST-*.xml'
+        reporter: java-junit
+        fail-on-error: true # Test failures are ignored but this will fail the build on failed tests.

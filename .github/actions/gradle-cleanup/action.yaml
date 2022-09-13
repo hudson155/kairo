@@ -1,0 +1,11 @@
+name: Gradle cleanup
+description: |
+  Removes some Gradle files so they aren't cached by GitHub Actions.
+  These particular files might cause problems for future builds.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        rm -f ~/.gradle/caches/modules-2/modules-2.lock
+        rm -f ~/.gradle/caches/modules-2/gc.properties

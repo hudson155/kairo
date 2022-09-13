@@ -1,0 +1,13 @@
+name: Restart Kubernetes rollouts
+description: |
+  Restarts the Kubernetes rollouts,
+  resulting in the latest Docker image being rolled out for each Server.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        for d in server/*/; do
+          deployment_name="$(basename "$d")"
+          kubectl rollout restart deployment "$deployment_name" --namespace limber
+        done

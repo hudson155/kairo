@@ -3,45 +3,43 @@ name: Kotlin CI
 on: pull_request
 
 concurrency:
-  group: kotlin-${{ github.event.number }}
+  group: kotlin-ci-${{ github.event.number }}
   cancel-in-progress: true
 
 jobs:
-  Build:
-    runs-on: ubuntu-22.04
 
+  gradle:
+    name: Gradle build
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out
         uses: actions/checkout@v3.0.2
-
       - name: Set up Java
-        uses: actions/setup-java@v3.4.1
-        with:
-          java-version: 17
-          distribution: temurin
-          cache: gradle
-
-      - name: Gradle assemble
-        run: ./gradlew assemble
-
-      - name: Gradle check
-        run: ./gradlew check -PignoreTestFailures # Ignore failures for a comprehensive JUnit report.
-
+        uses: ./.github/actions/set-up-java
       - name: Gradle build
-        run: ./gradlew build
-
-      - name: Test report
-        uses: dorny/test-reporter@v1.5.0
+        uses: ./.github/actions/gradle-build
+      - name: Upload JAR files
+        uses: ./.github/actions/upload-jar-files
+      - name: Gradle cleanup
         if: always()
-        with:
-          name: JUnit tests
-          path: '**/build/test-results/test/TEST-*.xml'
-          reporter: java-junit
-          fail-on-error: true # Test failures are ignored but this will fail the build on failed tests.
+        uses: ./.github/actions/gradle-cleanup
 
-      - name: Clean up Gradle cache
-        # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
-        # Restoring these files from a GitHub Actions cache might cause problems for future builds.
-        run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
+  docker:
+    name: Docker build/push
+    runs-on: ubuntu-22.04
+    needs: [gradle]
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.0.2
+      - name: Set commit hash
+        uses: ./.github/actions/set-commit-hash
+      - name: Authenticate with GCP
+        uses: ./.github/actions/authenticate-with-gcp
+        with:
+          key: ${{ secrets.GCP_SA_KEY }}
+      - name: Download JAR files
+        uses: ./.github/actions/download-jar-files
+      - name: Build Docker images
+        uses: ./.github/actions/build-docker-images
+      - name: Push Docker images
+        uses: ./.github/actions/push-docker-images
