@@ -7,14 +7,14 @@ items:
   - apiVersion: networking.k8s.io/v1
     kind: Ingress
     metadata:
-      name: ingress
+      name: limber-ingress
       namespace: limber
       labels:
         instance: limber
       annotations:
         kubernetes.io/ingress.global-static-ip-name: kubernetes
         networking.gke.io/managed-certificates: 2022-aug-18-v01
-        networking.gke.io/v1beta1.FrontendConfig: http-redirect
+        networking.gke.io/v1beta1.FrontendConfig: frontend-config
     spec:
       rules:
         - host: api.limberapp.jhudson.ca
@@ -32,7 +32,7 @@ items:
   - apiVersion: cloud.google.com/v1
     kind: BackendConfig
     metadata:
-      name: firewall
+      name: backend-config
       namespace: limber
       labels:
         instance: limber
@@ -45,7 +45,7 @@ items:
   - apiVersion: networking.gke.io/v1beta1
     kind: FrontendConfig
     metadata:
-      name: http-redirect
+      name: frontend-config
       namespace: limber
       labels:
         instance: limber
