@@ -16,6 +16,7 @@ resource "google_project_service" "gcp_services" {
 
 locals {
   gcp_services = toset([
+    "artifactregistry.googleapis.com",
     "autoscaling.googleapis.com",
     "bigquery.googleapis.com",
     "bigquerymigration.googleapis.com",
@@ -30,5 +31,7 @@ locals {
     "oslogin.googleapis.com",
     "pubsub.googleapis.com",
     "storage-api.googleapis.com",
+    "storage-component.googleapis.com",
+    "storage.googleapis.com",
   ])
 }

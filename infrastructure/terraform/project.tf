@@ -39,6 +39,10 @@ data "google_iam_policy" "default" {
     ]
   }
   binding {
+    role    = "roles/artifactregistry.serviceAgent"
+    members = [local.artifact_registry_service_agent]
+  }
+  binding {
     role    = "roles/compute.serviceAgent"
     members = [local.compute_engine_service_agent]
   }
