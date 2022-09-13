@@ -56,6 +56,10 @@ data "google_iam_policy" "default" {
     members = [local.compute_engine_service_agent]
   }
   binding {
+    role    = "roles/container.developer"
+    members = ["serviceAccount:${google_service_account.deployment.email}"]
+  }
+  binding {
     role    = "roles/container.serviceAgent"
     members = [local.kubernetes_engine_service_agent]
   }
