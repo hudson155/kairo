@@ -101,6 +101,26 @@ object Dependencies {
     }
   }
 
+  object Sql {
+    val flyway: String = "org.flywaydb:flyway-core"
+      .version(Versions.flyway)
+
+    val hikari: String = "com.zaxxer:HikariCP"
+      .version(Versions.hikari)
+
+    object Jdbi3 {
+      val kotlin: String = "org.jdbi:jdbi3-kotlin"
+        .version(Versions.jdbi3)
+      val kotlinSqlobject: String = "org.jdbi:jdbi3-kotlin-sqlobject"
+        .version(Versions.jdbi3)
+      val postgres: String = "org.jdbi:jdbi3-postgres"
+        .version(Versions.jdbi3)
+    }
+
+    val postgres: String = "org.postgresql:postgresql"
+      .version(Versions.postgres)
+  }
+
   object Testing {
     object Junit {
       val api: String = "org.junit.jupiter:junit-jupiter-api"

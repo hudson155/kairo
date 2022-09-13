@@ -1,0 +1,18 @@
+package limber.sql
+
+import org.postgresql.util.ServerErrorMessage
+
+public fun ServerErrorMessage.isNotNullConstraintViolation(columnName: String): Boolean {
+  if (sqlState != "23502") return false
+  return column == columnName
+}
+
+public fun ServerErrorMessage.isForeignKeyViolation(constraintName: String): Boolean {
+  if (sqlState != "23503") return false
+  return constraint == constraintName
+}
+
+public fun ServerErrorMessage.isUniqueConstraintViolation(constraintName: String): Boolean {
+  if (sqlState != "23505") return false
+  return constraint == constraintName
+}
