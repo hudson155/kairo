@@ -71,4 +71,8 @@ data "google_iam_policy" "default" {
     role    = "roles/pubsub.serviceAgent"
     members = [local.cloud_pub_sub_service_account]
   }
+  binding {
+    role    = "roles/secretmanager.secretAccessor"
+    members = [local.compute_engine_default_service_account]
+  }
 }
