@@ -12,7 +12,6 @@ import java.util.UUID
 internal abstract class ObjectMapperFactoryDeserializationTest(
   dataFormat: ObjectMapperFactory.Format,
 ) : ObjectMapperFactoryTest(dataFormat) {
-
   protected data class InvalidData(val int: Int)
 
   protected abstract val invalidDataMissing: String

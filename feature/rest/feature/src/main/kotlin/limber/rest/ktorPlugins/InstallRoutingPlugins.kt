@@ -7,9 +7,10 @@ import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import mu.KLogger
 import mu.KotlinLogging
 
-private val logger = KotlinLogging.logger {}
+private val logger: KLogger = KotlinLogging.logger {}
 
 internal fun Application.installRoutingPlugins() {
   install(AutoHeadResponse)
