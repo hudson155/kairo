@@ -3,6 +3,7 @@ package limber.rest.ktorPlugins
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.plugins.statuspages.StatusPages
@@ -18,6 +19,9 @@ internal fun Application.installRoutingPlugins() {
   install(DoubleReceive)
 
   install(StatusPages) {
+    exception<NotFoundException> { call, _ ->
+      call.respond(HttpStatusCode.NotFound)
+    }
     exception<Throwable> { call, e ->
       logger.error(e) { "Request failed." }
       call.respond(HttpStatusCode.InternalServerError)
