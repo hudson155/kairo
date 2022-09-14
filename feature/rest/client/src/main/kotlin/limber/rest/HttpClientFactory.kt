@@ -16,6 +16,11 @@ import io.ktor.serialization.jackson.JacksonConverter
 
 private const val BASE_URL: String = "BASE_URL"
 
+/**
+ * [HttpClient]s are bound by [PrivateBinder.install]ing a child [PrivateModule]
+ * so that the base URL can be injected into the [HttpClient] [com.google.inject.Provider]
+ * without being [Named] uniquely.
+ */
 public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
   public class Provider @Inject constructor(
     @Named(BASE_URL) private val baseUrl: String,
@@ -43,11 +48,10 @@ public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
   }
 }
 
-/**
- * [HttpClient]s are bound by [PrivateBinder.install]ing a child [PrivateModule]
- * so that the base URL can be injected into the [HttpClient] [com.google.inject.Provider]
- * without being [Named] uniquely.
- */
+public fun PrivateBinder.bindHttpClient(rest: RestImplementation) {
+  if (rest is RestImplementation.Http) bindHttpClient(rest.baseUrl)
+}
+
 public fun PrivateBinder.bindHttpClient(baseUrl: String) {
   install(HttpClientFactory(baseUrl))
 }

@@ -7,7 +7,7 @@ import limber.client.HttpHealthCheckClient
 import limber.endpoint.GetHealthCheckLiveness
 import limber.endpoint.GetHealthCheckReadiness
 import limber.rep.HealthCheckRep
-import limber.rest.bindClient
+import limber.rest.bindClients
 import limber.rest.bindHttpClient
 import limber.rest.bindRestEndpoint
 import limber.service.HealthCheckService
@@ -20,15 +20,8 @@ public class HealthCheckFeature(
   override val priority: FeaturePriority = FeaturePriority.Normal
 
   override fun bind(binder: PrivateBinder) {
-    binder.bindRestEndpoint(GetHealthCheckLiveness::class)
-    binder.bindRestEndpoint(GetHealthCheckReadiness::class)
-
-    // HealthCheckService must be a singleton because it stores state.
-    binder.bind(HealthCheckService::class.java).to(serviceKClass.java).asEagerSingleton()
-    binder.expose(HealthCheckService::class.java)
-
     binder.bindHttpClient(baseUrl)
-    binder.bindClient(HealthCheckClient::class, HttpHealthCheckClient::class)
+    bindHealthCheck(binder)
   }
 
   override fun afterStart(injector: Injector) {
@@ -40,5 +33,18 @@ public class HealthCheckFeature(
     injector ?: return
     injector.getInstance(HealthCheckService::class.java).server =
       HealthCheckRep.State.Unhealthy
+  }
+
+  private fun bindHealthCheck(binder: PrivateBinder) {
+    binder.bindRestEndpoint(GetHealthCheckLiveness::class)
+    binder.bindRestEndpoint(GetHealthCheckReadiness::class)
+
+    // HealthCheckService must be a singleton because it stores state.
+    binder.bind(HealthCheckService::class.java).to(serviceKClass.java).asEagerSingleton()
+    binder.expose(HealthCheckService::class.java)
+
+    binder.bindClients {
+      bind(HealthCheckClient::class) { HttpHealthCheckClient::class }
+    }
   }
 }
