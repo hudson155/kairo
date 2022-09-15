@@ -35,6 +35,7 @@ include(":feature:health-check:feature")
 include(":feature:health-check:interface")
 
 include(":feature:organization:client")
+include(":feature:organization:feature")
 include(":feature:organization:interface")
 
 include(":feature:rest:client")
