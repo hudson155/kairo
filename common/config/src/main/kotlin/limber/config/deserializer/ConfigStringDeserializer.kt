@@ -13,15 +13,16 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class ConfigStringDeserializer : StdDeserializer<String>(String::class.java) {
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
     logger.info { "Deserializing config string..." }
-    return when (val configString = p.readValueAs(ConfigString::class.java)) {
-      is ConfigString.Plaintext -> fromPlaintext(configString)
-      is ConfigString.EnvironmentVariable -> fromEnvironmentVariable(configString)
-      is ConfigString.GcpSecret, is ConfigString.Command -> mustBeProtected(configString::class)
+    val configString = p.readValueAs(ConfigString::class.java)
+    return when (configString.type) {
+      ConfigString.Type.Plaintext -> fromPlaintext(configString)
+      ConfigString.Type.EnvironmentVariable -> fromEnvironmentVariable(configString)
+      ConfigString.Type.GcpSecret, ConfigString.Type.Command -> mustBeProtected(configString::class)
     }
   }
 
   public companion object {
-    internal fun fromPlaintext(configString: ConfigString.Plaintext): String? {
+    internal fun fromPlaintext(configString: ConfigString): String? {
       logger.info { "Config string is from plaintext." }
       val value = configString.value
       if (value != null) {
@@ -33,18 +34,16 @@ public class ConfigStringDeserializer : StdDeserializer<String>(String::class.ja
       }
     }
 
-    internal fun fromEnvironmentVariable(configString: ConfigString.EnvironmentVariable): String? {
+    internal fun fromEnvironmentVariable(configString: ConfigString): String? {
+      requireNotNull(configString.value)
       logger.info {
         "Config string is from environment variable." +
-          " Accessing environment variable with name ${configString.name}."
+          " Accessing environment variable with name ${configString.value}."
       }
-      val value = EnvironmentVariableSource[configString.name]
+      val value = EnvironmentVariableSource[configString.value]
       if (value != null) {
         logger.info { "Retrieved config string value from environment variable. Value is $value." }
         return value
-      } else if (configString.defaultValue != null) {
-        logger.info { "Environment variable was not set. Using default value of ${configString.defaultValue}." }
-        return configString.defaultValue
       } else {
         logger.info { "Environment variable was not set. Using null." }
         return null

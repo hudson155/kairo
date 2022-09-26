@@ -4,10 +4,10 @@ sql:
     value: jdbc:postgresql://localhost/limber_test
   username:
     type: EnvironmentVariable
-    name: LIMBER_TEST_POSTGRES_USERNAME
+    value: LIMBER_TEST_SQL_USERNAME
   password:
     type: EnvironmentVariable
-    name: LIMBER_TEST_POSTGRES_PASSWORD
+    value: LIMBER_TEST_SQL_PASSWORD
   migrations:
     # Turning this on for tests means that migrations get run before every test.
     # It would be more efficient to only run migrations once, before any test runs.

@@ -17,8 +17,8 @@ runs:
       run: ./gradlew assemble
     - shell: bash
       env:
-        LIMBER_TEST_POSTGRES_USERNAME: ${{ inputs.postgresUsername }}
-        LIMBER_TEST_POSTGRES_PASSWORD: ${{ inputs.postgresPassword }}
+        LIMBER_TEST_SQL_USERNAME: ${{ inputs.postgresUsername }}
+        LIMBER_TEST_SQL_PASSWORD: ${{ inputs.postgresPassword }}
       run: ./gradlew check -PignoreTestFailures # Ignore failures for a comprehensive JUnit report.
     - shell: bash
       run: ./gradlew build

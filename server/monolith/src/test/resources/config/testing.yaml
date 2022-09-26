@@ -1,0 +1,6 @@
+extends: development
+
+rest:
+  type: Merge
+  value:
+    port: 8081

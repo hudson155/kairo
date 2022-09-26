@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+  api(project(":common:config"))
   api(project(":common:feature"))
   implementation(project(":common:serialization"))
 

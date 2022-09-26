@@ -1,9 +1,8 @@
 package limber.config
 
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldThrowAny
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldStartWith
@@ -24,6 +23,16 @@ internal class ConfigLoaderTest {
   }
 
   @Test
+  fun `valid config with extension`() {
+    val expected = config.copy(
+      name = "testing-overwritten",
+      server = config.server.let { server -> server.copy(lifecycle = server.lifecycle.copy(startupDelayMs = 0)) },
+    )
+    ConfigLoader.load<ConfigLoaderTestConfig>("valid-test-config-with-extension")
+      .shouldBe(expected)
+  }
+
+  @Test
   fun `missing config`() {
     val e = shouldThrow<IllegalArgumentException> {
       ConfigLoader.load<ConfigLoaderTestConfig>("missing-config")
@@ -33,25 +42,28 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `extra config property`() {
-    val e = shouldThrow<UnrecognizedPropertyException> {
+    val e = shouldThrowAny {
       ConfigLoader.load<ConfigLoaderTestConfig>("config-with-extra-property")
     }
-    e.message.shouldStartWith("Unrecognized field \"extraProperty\"")
+    val cause = e.cause.shouldNotBeNull()
+    cause.message.shouldStartWith("Unrecognized field \"extraProperty\"")
   }
 
   @Test
   fun `missing config property`() {
-    val e = shouldThrow<MissingKotlinParameterException> {
+    val e = shouldThrowAny {
       ConfigLoader.load<ConfigLoaderTestConfig>("config-with-missing-property")
     }
-    e.message.shouldContain("missing (therefore NULL) value for creator parameter clock")
+    val cause = e.cause.shouldNotBeNull()
+    cause.message.shouldContain("missing (therefore NULL) value for creator parameter clock")
   }
 
   @Test
   fun `invalid config property (wrong type)`() {
-    val e = shouldThrow<MismatchedInputException> {
+    val e = shouldThrowAny {
       ConfigLoader.load<ConfigLoaderTestConfig>("config-with-invalid-property")
     }
-    e.message.shouldStartWith("Cannot deserialize value of type")
+    val cause = e.cause.shouldNotBeNull()
+    cause.message.shouldStartWith("Cannot deserialize value of type")
   }
 }

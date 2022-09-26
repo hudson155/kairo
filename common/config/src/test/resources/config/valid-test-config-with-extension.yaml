@@ -1,0 +1,11 @@
+extends: valid-test-config
+
+name: testing-overwritten
+
+server:
+  type: Merge
+  value:
+    lifecycle:
+      type: Merge
+      value:
+        startupDelayMs: 0

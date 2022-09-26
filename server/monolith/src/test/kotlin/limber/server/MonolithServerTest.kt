@@ -5,7 +5,7 @@ import limber.config.ConfigLoader
 import limber.testing.ServerIntegrationTest
 import org.junit.jupiter.api.Test
 
-private val config = ConfigLoader.load<ConfigImpl>("development")
+private val config = ConfigLoader.load<ConfigImpl>("testing")
 
 internal class MonolithServerTest : ServerIntegrationTest() {
   override val server: Server<*> = MonolithServer(config)

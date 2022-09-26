@@ -1,28 +1,25 @@
-clock:
-  type: Real
-
-guids:
-  generation: Random
-
-name: monolith
+extends: production
 
 rest:
-  allowedHosts: []
-  parallelization:
-    connectionGroupSize: 4
-    workerGroupSize: 8
-    callGroupSize: 16
-  port: 8080
-  serverName: Limber
-  shutDown:
-    gracePeriodMillis: 400
-    timeoutMillis: 5000 # 5 seconds.
-
-restClient:
-  baseUrls:
-    self: http://localhost:8080/
+  type: Merge
+  value:
+    parallelization:
+      type: Replace
+      value:
+        connectionGroupSize: 4
+        workerGroupSize: 8
+        callGroupSize: 16
+    shutDown:
+      type: Replace
+      value:
+        gracePeriodMillis: 400
+        timeoutMillis: 5000 # 5 seconds.
 
 server:
-  lifecycle:
-    startupDelayMs: 400
-    shutdownDelayMs: 200
+  type: Merge
+  value:
+    lifecycle:
+      type: Replace
+      value:
+        startupDelayMs: 400
+        shutdownDelayMs: 200
