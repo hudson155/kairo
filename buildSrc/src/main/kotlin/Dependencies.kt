@@ -34,9 +34,14 @@ object Dependencies {
     }
   }
 
+  object JavaExpressionLanguage {
+    val expressly: String = "org.glassfish.expressly:expressly"
+      .version(Versions.expressly)
+  }
+
   object Kotlinx {
     val coroutines: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core"
-      .version(Versions.kotlinx)
+      .version(Versions.kotlinxCoroutines)
   }
 
   object Ktor {
@@ -136,6 +141,11 @@ object Dependencies {
 
     val mockK: String = "io.mockk:mockk"
       .version(Versions.mockK)
+  }
+
+  object Validation {
+    val hibernate: String = "org.hibernate.validator:hibernate-validator"
+      .version(Versions.hibernateValidator)
   }
 
   private fun String.version(version: String): String =

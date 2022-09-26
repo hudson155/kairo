@@ -1,6 +1,7 @@
 package limber.rest
 
 import com.google.inject.Injector
+import com.google.inject.PrivateBinder
 import io.ktor.http.ContentType
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
@@ -11,6 +12,7 @@ import io.ktor.server.routing.HttpAcceptRouteSelector
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.routing
+import jakarta.validation.Validator
 import limber.config.RestConfig
 import limber.feature.Feature
 import limber.feature.FeaturePriority
@@ -24,6 +26,11 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
   override val priority: FeaturePriority = FeaturePriority.Framework
 
   private var ktor: ApplicationEngine? = null
+
+  override fun bind(binder: PrivateBinder) {
+    binder.bind(Validator::class.java).toProvider(ValidatorProvider::class.java)
+    binder.expose(Validator::class.java)
+  }
 
   override fun start(injector: Injector, features: Set<Feature>) {
     if (ktor != null) {

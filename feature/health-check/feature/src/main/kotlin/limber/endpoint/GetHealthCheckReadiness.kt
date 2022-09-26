@@ -11,7 +11,7 @@ import limber.rep.HealthCheckRep as Rep
 internal class GetHealthCheckReadiness @Inject constructor(
   private val healthCheckService: HealthCheckService,
 ) : RestEndpointHandler<Api.GetReadiness, Rep>(Api.GetReadiness::class) {
-  override suspend fun handle(endpoint: Api.GetReadiness): Rep =
+  override suspend fun handler(endpoint: Api.GetReadiness): Rep =
     healthCheckService.healthCheck()
 
   override fun status(result: HealthCheckRep): HttpStatusCode {

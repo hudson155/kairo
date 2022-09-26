@@ -8,6 +8,8 @@ import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import jakarta.validation.ConstraintViolationException
+import limber.rep.ValidationErrorsRep
 import mu.KLogger
 import mu.KotlinLogging
 
@@ -22,6 +24,21 @@ internal fun Application.installRoutingPlugins() {
     exception<NotFoundException> { call, _ ->
       call.respond(HttpStatusCode.NotFound)
     }
+
+    exception<ConstraintViolationException> { call, e ->
+      call.respond(
+        status = HttpStatusCode.UnprocessableEntity,
+        message = ValidationErrorsRep(
+          errors = e.constraintViolations.map {
+            ValidationErrorsRep.ValidationError(
+              propertyPath = it.propertyPath.toString(),
+              message = it.message,
+            )
+          },
+        ),
+      )
+    }
+
     exception<Throwable> { call, e ->
       logger.error(e) { "Request failed." }
       call.respond(HttpStatusCode.InternalServerError)

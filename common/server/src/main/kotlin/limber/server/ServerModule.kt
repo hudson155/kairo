@@ -18,6 +18,7 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
     binder().requireAtInjectOnConstructors()
 
     bind(Clock::class.java).toInstance(createClock())
+    expose(Clock::class.java)
 
     bind(GuidGenerator::class.java).toInstance(createGuidGenerator())
     expose(GuidGenerator::class.java)

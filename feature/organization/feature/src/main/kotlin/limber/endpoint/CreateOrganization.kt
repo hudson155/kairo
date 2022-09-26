@@ -9,7 +9,7 @@ import limber.rep.OrganizationRep as Rep
 public class CreateOrganization @Inject constructor(
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.Create, Rep>(Api.Create::class) {
-  override suspend fun handle(endpoint: Api.Create): Rep {
+  override suspend fun handler(endpoint: Api.Create): Rep {
     return organizationService.create(endpoint.body)
   }
 }

@@ -34,7 +34,7 @@ import CelebrityRep as Rep
 
 public class ListCelebrities
 @Inject constructor() : RestEndpointHandler<Api.List, List<Rep>>(Api.List::class) {
-  override suspend fun handle(endpoint: Api.List): List<Rep> {
+  override suspend fun handler(endpoint: Api.List): List<Rep> {
     // In real usage, this list would probably come from a database.
     return listOf(
       Rep(name = "Johnny Depp", age = 59),
@@ -47,7 +47,7 @@ public class ListCelebrities
 
 public class GetCelebrity
 @Inject constructor() : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
-  override suspend fun handle(endpoint: Api.Get): Rep? {
+  override suspend fun handler(endpoint: Api.Get): Rep? {
     // In real usage, this value would probably come from a database.
     return Rep(name = "Johnny Depp", age = 59)
   }
