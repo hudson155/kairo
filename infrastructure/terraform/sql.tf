@@ -38,12 +38,12 @@ resource "google_sql_database_instance" "limber" {
     }
   }
 }
-
-// The Limber user.
 resource "google_sql_database" "limber_limber" {
   name     = "limber"
   instance = google_sql_database_instance.limber.id
 }
+
+// The Limber user.
 variable "sql_limber_limber_password" {
   description = "Password for the limber user on the limber database"
   type        = string
@@ -56,6 +56,14 @@ resource "google_sql_user" "limber_limber" {
   type     = "BUILT_IN"
 }
 
+// Roles for Cloud IAM users.
+resource "postgresql_role" "limber_user_read" {
+  name = "limber_user_read"
+}
+resource "postgresql_role" "limber_user_write" {
+  name = "limber_user_write"
+}
+
 // Cloud IAM users.
 resource "google_sql_user" "limber_iam" {
   for_each = toset([
@@ -64,4 +72,18 @@ resource "google_sql_user" "limber_iam" {
   name     = each.value
   instance = google_sql_database_instance.limber.id
   type     = "CLOUD_IAM_USER"
+}
+resource "postgresql_grant_role" "limber_user_read" {
+  for_each = toset([
+    "jeff@highbeam.co",
+  ])
+  role       = each.value
+  grant_role = postgresql_role.limber_user_read.name
+}
+resource "postgresql_grant_role" "limber_user_write" {
+  for_each = toset([
+    "jeff@highbeam.co",
+  ])
+  role       = each.value
+  grant_role = postgresql_role.limber_user_write.name
 }
