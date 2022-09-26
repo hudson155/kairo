@@ -30,13 +30,13 @@ server:
 sql:
   jdbcUrl:
     type: EnvironmentVariable
-    name: LIMBER_SQL_JDBC_URL
+    value: LIMBER_SQL_JDBC_URL
   username:
     type: EnvironmentVariable
-    name: LIMBER_SQL_USERNAME
+    value: LIMBER_SQL_USERNAME
   password:
     type: GcpSecret
-    environmentVariableName: LIMBER_SQL_PASSWORD_SECRET_ID
+    value: LIMBER_SQL_PASSWORD_SECRET_ID
   migrations:
     run: true
     cleanOnValidationError: false
