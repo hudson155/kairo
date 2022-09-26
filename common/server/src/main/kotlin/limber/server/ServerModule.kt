@@ -1,6 +1,5 @@
 package limber.server
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.PrivateModule
 import limber.config.ClockConfig
 import limber.config.Config
@@ -8,7 +7,6 @@ import limber.config.GuidsConfig
 import limber.feature.guid.DeterministicGuidGenerator
 import limber.feature.guid.GuidGenerator
 import limber.feature.guid.RandomGuidGenerator
-import limber.serialization.ObjectMapperFactory
 import java.time.Clock
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -22,9 +20,6 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
 
     bind(GuidGenerator::class.java).toInstance(createGuidGenerator())
     expose(GuidGenerator::class.java)
-
-    bind(ObjectMapper::class.java).toInstance(createObjectMapper())
-    expose(ObjectMapper::class.java)
   }
 
   private fun createClock(): Clock =
@@ -44,7 +39,4 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
       GuidsConfig.Generation.Deterministic -> DeterministicGuidGenerator()
       GuidsConfig.Generation.Random -> RandomGuidGenerator()
     }
-
-  private fun createObjectMapper(): ObjectMapper =
-    ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
 }

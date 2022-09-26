@@ -12,6 +12,7 @@ include(":common:feature:testing")
 include(":common:logging")
 
 include(":common:serialization")
+include(":common:serialization:interface")
 
 include(":common:server")
 include(":common:server:testing")

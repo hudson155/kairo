@@ -1,6 +1,5 @@
 package limber.rest
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.Inject
 import com.google.inject.PrivateBinder
 import com.google.inject.PrivateModule
@@ -13,6 +12,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.http.ContentType
 import io.ktor.serialization.jackson.JacksonConverter
+import limber.serialization.ObjectMapperFactory
 
 private const val BASE_URL: String = "BASE_URL"
 
@@ -24,10 +24,10 @@ private const val BASE_URL: String = "BASE_URL"
 public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
   public class Provider @Inject constructor(
     @Named(BASE_URL) private val baseUrl: String,
-    private val objectMapper: ObjectMapper,
   ) : com.google.inject.Provider<HttpClient> {
-    override fun get(): HttpClient =
-      HttpClient(CIO) {
+    override fun get(): HttpClient {
+      val objectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
+      return HttpClient(CIO) {
         install(ContentNegotiation) {
           register(contentType = ContentType.Application.Json, converter = JacksonConverter(objectMapper))
         }
@@ -38,6 +38,7 @@ public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
           url(baseUrl)
         }
       }
+    }
   }
 
   override fun configure() {

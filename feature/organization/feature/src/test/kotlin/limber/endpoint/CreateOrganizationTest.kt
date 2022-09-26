@@ -31,7 +31,7 @@ internal class CreateOrganizationTest : IntegrationTest() {
   fun `happy path`() {
     integrationTest {
       val organizationGuid = guidGenerator[0]
-      organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Limber")))
+      organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = " Limber ")))
         .shouldBe(OrganizationRep(guid = organizationGuid, name = "Limber"))
     }
   }

@@ -1,6 +1,5 @@
 package limber.rest.ktorPlugins
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
@@ -13,9 +12,10 @@ import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.dataconversion.DataConversion
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
+import limber.serialization.ObjectMapperFactory
+import limber.serialization.StringTrimModule
 
 internal fun Application.installHttpPlugins(
-  objectMapper: ObjectMapper,
   allowedHosts: List<String>,
   serverName: String,
 ) {
@@ -41,6 +41,9 @@ internal fun Application.installHttpPlugins(
    * We use Jackson for serialization. See the serialization library.
    */
   install(ContentNegotiation) {
+    val objectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).apply {
+      addModule(StringTrimModule)
+    }.build()
     register(contentType = ContentType.Application.Json, converter = JacksonConverter(objectMapper))
   }
 

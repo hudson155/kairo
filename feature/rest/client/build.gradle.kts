@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":common:serialization"))
   api(project(":feature:rest:interface"))
 
   api(Dependencies.Google.guice) // Make Guice available to library users.

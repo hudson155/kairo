@@ -63,7 +63,7 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
 
   private fun module(injector: Injector): Application.() -> Unit =
     {
-      installPlugins(config, injector)
+      installPlugins(config)
 
       val handlers = injector.bindings.mapNotNull { (key, binding) ->
         val isEndpointHandler = RestEndpointHandler::class.java.isAssignableFrom(key.typeLiteral.rawType)
