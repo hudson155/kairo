@@ -1,11 +1,11 @@
 package limber.endpoint
 
-import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import limber.api.OrganizationApi
 import limber.rep.OrganizationRep
 import limber.testing.IntegrationTest
 import limber.testing.integrationTest
+import limber.testing.should.shouldNotBeFound
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -13,8 +13,9 @@ internal class GetOrganizationTest : IntegrationTest() {
   @Test
   fun `organization does not exist`() {
     integrationTest {
-      organizationClient(OrganizationApi.Get(UUID.randomUUID()))
-        .shouldBeNull()
+      shouldNotBeFound {
+        organizationClient(OrganizationApi.Get(UUID.randomUUID()))
+      }
     }
   }
 
