@@ -7,4 +7,5 @@ internal data class ConfigImpl(
   val rest: RestConfig,
   val restClient: RestClientConfig<BaseUrls>,
   override val server: ServerConfig,
+  val sql: SqlConfig,
 ) : Config()

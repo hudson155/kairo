@@ -1,1 +1,24 @@
 extends: development
+
+sql:
+  type: Merge
+  value:
+    jdbcUrl:
+      type: Replace
+      value:
+        type: EnvironmentVariable
+        value: LIMBER_SQL_JDBC_URL
+    username:
+      type: Replace
+      value:
+        type: EnvironmentVariable
+        value: LIMBER_SQL_USERNAME
+    password:
+      type: Replace
+      value:
+        type: Command
+        value: gcloud auth print-access-token
+    migrations:
+      type: Merge
+      value:
+        run: false

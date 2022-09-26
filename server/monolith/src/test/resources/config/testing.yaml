@@ -4,3 +4,22 @@ rest:
   type: Merge
   value:
     port: 8081
+
+sql:
+  type: Merge
+  value:
+    jdbcUrl:
+      type: Replace
+      value:
+        type: Plaintext
+        value: jdbc:postgresql://localhost/limber_test
+    username:
+      type: Replace
+      value:
+        type: EnvironmentVariable
+        value: LIMBER_TEST_SQL_USERNAME
+    password:
+      type: Replace
+      value:
+        type: EnvironmentVariable
+        value: LIMBER_TEST_SQL_PASSWORD

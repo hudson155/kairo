@@ -23,3 +23,24 @@ server:
       value:
         startupDelayMs: 400
         shutdownDelayMs: 200
+
+sql:
+  type: Merge
+  value:
+    jdbcUrl:
+      type: Replace
+      value:
+        type: Plaintext
+        value: jdbc:postgresql://localhost/limber
+    username:
+      type: Remove
+    password:
+      type: Remove
+    migrations:
+      type: Merge
+      value:
+        locations:
+          - db/limber/migration/common
+    connectionTimeoutMs: 1000
+    minimumIdle: 2
+    maximumPoolSize: 8
