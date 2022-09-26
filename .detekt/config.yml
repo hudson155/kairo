@@ -206,6 +206,7 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'javax.inject.*'
+      - 'org.junit.jupiter.api.Assertions.*'
       - 'org.slf4j.Logger'
       - 'org.slf4j.LoggerFactory'
   ForbiddenMethodCall:

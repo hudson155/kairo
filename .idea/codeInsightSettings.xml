@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>javax.inject.*</name>
+      <name>org.junit.jupiter.api.Assertions.*</name>
       <name>org.slf4j.Logger</name>
       <name>org.slf4j.LoggerFactory</name>
     </excluded-names>

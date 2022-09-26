@@ -1,0 +1,12 @@
+clock:
+  type: Real
+
+guids:
+  generation: false
+
+name: testing
+
+server:
+  lifecycle:
+    startupDelayMs: 5000 # 5 seconds.
+    shutdownDelayMs: 12000 # 12 seconds.

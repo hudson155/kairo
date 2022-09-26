@@ -1,0 +1,14 @@
+clock:
+  type: Real
+
+extraProperty: extra value
+
+guids:
+  generation: Random
+
+name: testing
+
+server:
+  lifecycle:
+    startupDelayMs: 5000 # 5 seconds.
+    shutdownDelayMs: 12000 # 12 seconds.
