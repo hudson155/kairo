@@ -12,16 +12,16 @@ import kotlin.reflect.full.valueParameters
  * Represents a parameter for a REST endpoint.
  * Used during endpoint template generation (see [RestEndpointTemplateBuilder]).
  */
-internal sealed class Parameter(val delegate: KParameter) {
-  val name: String = checkNotNull(delegate.name)
+public sealed class Parameter(public val delegate: KParameter) {
+  public val name: String = checkNotNull(delegate.name)
 
-  abstract val random: () -> Any
+  internal abstract val random: () -> Any
 
-  internal class Body(delegate: KParameter) : Parameter(delegate) {
+  public class Body(delegate: KParameter) : Parameter(delegate) {
     override val random = { mockkClass(delegate.type.classifier as KClass<*>) }
   }
 
-  internal class Path(
+  public class Path(
     delegate: KParameter,
     override val random: () -> Any,
   ) : Parameter(delegate)

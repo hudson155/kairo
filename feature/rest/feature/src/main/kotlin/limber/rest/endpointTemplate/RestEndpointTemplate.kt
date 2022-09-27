@@ -16,7 +16,8 @@ import kotlin.reflect.KClass
 public data class RestEndpointTemplate<E : RestEndpoint>(
   val method: HttpMethod,
   val path: String,
-  val endpoint: suspend (call: ApplicationCall) -> E,
+  val parameters: suspend (call: ApplicationCall) -> Map<Parameter, Any?>,
+  val endpoint: suspend (parameters: Map<Parameter, Any?>) -> E,
 ) {
   /**
    * For pretty printing a list of endpoints.
@@ -31,7 +32,12 @@ public data class RestEndpointTemplate<E : RestEndpoint>(
   internal companion object {
     fun <E : RestEndpoint> from(kClass: KClass<E>): RestEndpointTemplate<E> {
       val builder = RestEndpointTemplateBuilder.from(kClass)
-      return RestEndpointTemplate(builder.method, builder.pathTemplate, builder::endpoint)
+      return RestEndpointTemplate(
+        method = builder.method,
+        path = builder.pathTemplate,
+        parameters = builder::parameters,
+        endpoint = builder::endpoint,
+      )
     }
   }
 }

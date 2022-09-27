@@ -28,7 +28,8 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
    * This is either an external call, or one from a RestClient.
    */
   internal suspend fun handle(call: ApplicationCall) {
-    val endpoint = template.endpoint(call)
+    val parameters = template.parameters(call)
+    val endpoint = template.endpoint(parameters)
     val result = handle(endpoint) ?: throw NotFoundException()
     call.respond<Any>(status(result), result)
   }

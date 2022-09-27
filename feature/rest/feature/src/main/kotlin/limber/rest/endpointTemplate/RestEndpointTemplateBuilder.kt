@@ -35,10 +35,16 @@ internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
   }
 
   /**
-   * This method should create a non-template instance of [RestEndpoint] from an [ApplicationCall].
+   * This method should determine the parameters from an [ApplicationCall].
    * It runs for each REST request.
    */
-  abstract suspend fun endpoint(call: ApplicationCall): E
+  abstract suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?>
+
+  /**
+   * This method should create a non-template instance of [RestEndpoint] from the parameters.
+   * It runs for each REST request.
+   */
+  abstract suspend fun endpoint(parameters: Map<Parameter, Any?>): E
 
   /**
    * The singleton object implementation is almost trivial (at least, comparatively).
@@ -49,7 +55,10 @@ internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
 
     override val templateInstance = checkNotNull(kClass.objectInstance)
 
-    override suspend fun endpoint(call: ApplicationCall): E =
+    override suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?> =
+      emptyMap()
+
+    override suspend fun endpoint(parameters: Map<Parameter, Any?>): E =
       templateInstance
   }
 
@@ -84,27 +93,27 @@ internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
       return Pair(args, argReplacements)
     }
 
-    override suspend fun endpoint(call: ApplicationCall): E {
-      return constructor.callBy(
-        parameters.associate { parameter ->
-          val value = when (parameter) {
-            is Parameter.Body -> call.receive(parameter.delegate.type.jvmErasure)
-            is Parameter.Path -> {
-              val conversionService = call.application.conversionService
-              call.parameters.getAll(checkNotNull(parameter.delegate.name))?.let { parameters ->
-                val typeInfo = TypeInfo(
-                  type = parameter.delegate.type.classifier as KClass<*>,
-                  reifiedType = parameter.delegate.type.javaType,
-                  kotlinType = parameter.delegate.type,
-                )
-                return@let conversionService.fromValues(parameters, typeInfo)
-              }
+    override suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?> =
+      parameters.associate { parameter ->
+        val value = when (parameter) {
+          is Parameter.Body -> call.receive(parameter.delegate.type.jvmErasure)
+          is Parameter.Path -> {
+            val conversionService = call.application.conversionService
+            call.parameters.getAll(parameter.name)?.let { parameters ->
+              val typeInfo = TypeInfo(
+                type = parameter.delegate.type.classifier as KClass<*>,
+                reifiedType = parameter.delegate.type.javaType,
+                kotlinType = parameter.delegate.type,
+              )
+              return@let conversionService.fromValues(parameters, typeInfo)
             }
           }
-          return@associate Pair(parameter.delegate, value)
-        },
-      )
-    }
+        }
+        return@associate Pair(parameter, value)
+      }
+
+    override suspend fun endpoint(parameters: Map<Parameter, Any?>): E =
+      constructor.callBy(parameters.mapKeys { (key, _) -> key.delegate })
   }
 
   internal companion object {
