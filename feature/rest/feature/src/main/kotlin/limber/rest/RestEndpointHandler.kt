@@ -4,11 +4,18 @@ import com.google.inject.Inject
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.plugins.NotFoundException
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.path
 import io.ktor.server.response.respond
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Validator
+import limber.rest.endpointTemplate.Parameter
 import limber.rest.endpointTemplate.RestEndpointTemplate
+import limber.rest.ktorPlugins.startTime
 import limber.rest.wrapper.withErrorHandling
+import limber.rest.wrapper.withMdc
+import mu.KLogger
+import mu.KotlinLogging
 import kotlin.reflect.KClass
 
 /**
@@ -19,6 +26,8 @@ import kotlin.reflect.KClass
  */
 @Suppress("LateinitUsage")
 public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: KClass<E>) {
+  private val logger: KLogger = KotlinLogging.logger {}
+
   @Inject
   public lateinit var validator: Validator
 
@@ -31,9 +40,14 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
   internal suspend fun handle(call: ApplicationCall) {
     val parameters = template.parameters(call)
     val endpoint = template.endpoint(parameters)
-    withErrorHandling(call) {
-      val result = handle(endpoint) ?: throw NotFoundException()
-      call.respond<Any>(status(result), result)
+    withMdc(mdc(call, parameters, endpoint)) {
+      withErrorHandling(call) {
+        val result = handle(endpoint) ?: throw NotFoundException()
+        call.respond<Any>(status(result), result)
+      }
+      logger.info {
+        "${call.response.status() ?: "Unhandled"}: ${call.request.httpMethod.value} - ${call.request.path()}"
+      }
     }
   }
 
@@ -45,6 +59,28 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
     validator.validate(endpoint).let { if (it.isNotEmpty()) throw ConstraintViolationException(it) }
     return handler(endpoint)
   }
+
+  private fun mdc(call: ApplicationCall, parameters: Map<Parameter, Any?>, endpoint: E): Map<String, Any> {
+    // These are included by default in every REST call.
+    val restMdc = mapOf(
+      "callStartTime" to call.startTime,
+      "httpMethod" to endpoint.method,
+      "httpPathTemplate" to template.path,
+    )
+
+    // Path parameters are extracted and included automatically.
+    val endpointMdc = parameters
+      .filterKeys { it is Parameter.Path }
+      .mapNotNull { (key, value) -> value?.let { Pair(key.name, it) } }
+
+    // Endpoints can add more custom MDC if they want.
+    val customMdc = mdc(endpoint)
+
+    return restMdc + endpointMdc + customMdc
+  }
+
+  protected open fun mdc(endpoint: E): Map<String, Any> =
+    emptyMap()
 
   protected abstract suspend fun handler(endpoint: E): R
 

@@ -65,8 +65,6 @@ object Dependencies {
     object Server {
       val autoHeadResponse: String = "io.ktor:ktor-server-auto-head-response"
         .version(Versions.ktor)
-      val callLogging: String = "io.ktor:ktor-server-call-logging"
-        .version(Versions.ktor)
       val cio: String = "io.ktor:ktor-server-cio"
         .version(Versions.ktor)
       val compression: String = "io.ktor:ktor-server-compression"
