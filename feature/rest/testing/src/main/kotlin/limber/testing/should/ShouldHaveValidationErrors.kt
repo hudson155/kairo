@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
-import io.ktor.http.HttpStatusCode.Companion.UnprocessableEntity
+import io.ktor.http.HttpStatusCode
 import limber.rep.ValidationErrorsRep
 
 public suspend fun shouldHaveValidationErrors(
@@ -12,7 +12,7 @@ public suspend fun shouldHaveValidationErrors(
   block: suspend () -> Any?,
 ) {
   val e = shouldThrow<ClientRequestException> { block() }
-  e.response.status.shouldBe(UnprocessableEntity)
+  e.response.status.shouldBe(HttpStatusCode.BadRequest)
   val expected = errors.map {
     ValidationErrorsRep.ValidationError(propertyPath = it.first, message = it.second)
   }
