@@ -12,22 +12,22 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
 @Singleton
-public class OrganizationStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
-  public fun create(creator: OrganizationRep): OrganizationRep =
+internal class OrganizationStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+  fun create(creator: OrganizationRep): OrganizationRep =
     jdbi.transaction { handle ->
       val query = handle.createQuery(rs("store/organization/create.sql"))
       query.bindKotlin(creator)
       return@transaction query.mapTo(OrganizationRep::class.java).single()
     }
 
-  public fun get(organizationGuid: UUID): OrganizationRep? =
+  fun get(organizationGuid: UUID): OrganizationRep? =
     jdbi.handle { handle ->
       val query = handle.createQuery(rs("store/organization/get.sql"))
       query.bind("organizationGuid", organizationGuid)
       return@handle query.mapTo(OrganizationRep::class.java).singleNullOrThrow()
     }
 
-  public fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep =
+  fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep =
     jdbi.transaction { handle ->
       val query = handle.createQuery(rs("store/organization/update.sql"))
       query.bind("organizationGuid", organizationGuid)

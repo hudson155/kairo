@@ -8,22 +8,22 @@ import mu.KLogger
 import mu.KotlinLogging
 import java.util.UUID
 
-public class OrganizationService @Inject constructor(
+internal class OrganizationService @Inject constructor(
   private val guidGenerator: GuidGenerator,
   private val organizationStore: OrganizationStore,
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  public fun create(creator: OrganizationRep.Creator): OrganizationRep {
+  fun create(creator: OrganizationRep.Creator): OrganizationRep {
     val organization = OrganizationRep(guid = guidGenerator.generate(), name = creator.name)
     logger.info { "Creating organization: $organization." }
     return organizationStore.create(organization)
   }
 
-  public fun get(organizationGuid: UUID): OrganizationRep? =
+  fun get(organizationGuid: UUID): OrganizationRep? =
     organizationStore.get(organizationGuid)
 
-  public fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
+  fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
     logger.info { "Updating organization: $updater." }
     return organizationStore.update(organizationGuid, updater)
   }

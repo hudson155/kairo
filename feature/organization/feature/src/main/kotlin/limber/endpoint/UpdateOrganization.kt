@@ -6,7 +6,7 @@ import limber.service.OrganizationService
 import limber.api.OrganizationApi as Api
 import limber.rep.OrganizationRep as Rep
 
-public class UpdateOrganization @Inject constructor(
+public class UpdateOrganization @Inject internal constructor(
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
