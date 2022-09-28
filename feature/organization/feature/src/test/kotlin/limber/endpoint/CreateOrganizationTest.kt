@@ -13,7 +13,7 @@ internal class CreateOrganizationTest : IntegrationTest() {
   fun `name is too short`() {
     integrationTest {
       shouldHaveValidationErrors("body.name" to "size must be between 3 and 255") {
-        organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Li")))
+        organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = " Li ")))
       }
     }
   }
