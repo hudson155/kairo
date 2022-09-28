@@ -11,3 +11,4 @@ metadata:
 spec:
   redirectToHttps:
     enabled: true
+  sslPolicy: limber
