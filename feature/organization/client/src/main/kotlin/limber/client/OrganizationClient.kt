@@ -11,4 +11,8 @@ public interface OrganizationClient {
   public suspend operator fun invoke(
     endpoint: OrganizationApi.Get,
   ): OrganizationRep?
+
+  public suspend operator fun invoke(
+    endpoint: OrganizationApi.Update,
+  ): OrganizationRep
 }

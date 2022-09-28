@@ -3,6 +3,7 @@ package limber.store
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import limber.rep.OrganizationRep
+import limber.rest.exception.UnprocessableException
 import limber.sql.SqlStore
 import limber.sql.handle
 import limber.sql.transaction
@@ -24,5 +25,14 @@ public class OrganizationStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) 
       val query = handle.createQuery(rs("store/organization/get.sql"))
       query.bind("organizationGuid", organizationGuid)
       return@handle query.mapTo(OrganizationRep::class.java).singleNullOrThrow()
+    }
+
+  public fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep =
+    jdbi.transaction { handle ->
+      val query = handle.createQuery(rs("store/organization/update.sql"))
+      query.bind("organizationGuid", organizationGuid)
+      query.bindKotlin(updater)
+      return@transaction query.mapTo(OrganizationRep::class.java).singleNullOrThrow()
+        ?: throw UnprocessableException()
     }
 }

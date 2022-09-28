@@ -10,4 +10,8 @@ public data class OrganizationRep(
   public data class Creator(
     @field:Size(min = 3, max = 255) val name: String,
   )
+
+  public data class Updater(
+    @field:Size(min = 3, max = 255) val name: String? = null,
+  )
 }

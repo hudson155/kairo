@@ -22,4 +22,9 @@ public class OrganizationService @Inject constructor(
 
   public fun get(organizationGuid: UUID): OrganizationRep? =
     organizationStore.get(organizationGuid)
+
+  public fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
+    logger.info { "Updating organization: $updater." }
+    return organizationStore.update(organizationGuid, updater)
+  }
 }

@@ -18,4 +18,12 @@ public object OrganizationApi {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/organizations/$organizationGuid"
   }
+
+  public data class Update(
+    val organizationGuid: UUID,
+    @field:Valid override val body: OrganizationRep.Updater,
+  ) : RestEndpoint() {
+    override val method: HttpMethod = HttpMethod.Patch
+    override val path: String = "/organizations/$organizationGuid"
+  }
 }

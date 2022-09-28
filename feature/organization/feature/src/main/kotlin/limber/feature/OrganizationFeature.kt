@@ -6,6 +6,7 @@ import limber.client.LocalOrganizationClient
 import limber.client.OrganizationClient
 import limber.endpoint.CreateOrganization
 import limber.endpoint.GetOrganization
+import limber.endpoint.UpdateOrganization
 import limber.rest.RestImplementation
 import limber.rest.bindClients
 import limber.rest.bindHttpClient
@@ -22,6 +23,7 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   private fun bindOrganization(binder: PrivateBinder) {
     binder.bindRestEndpoint(CreateOrganization::class)
     binder.bindRestEndpoint(GetOrganization::class)
+    binder.bindRestEndpoint(UpdateOrganization::class)
 
     binder.bindClients {
       bind(OrganizationClient::class) {
