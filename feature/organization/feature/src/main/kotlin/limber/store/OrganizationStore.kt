@@ -7,12 +7,11 @@ import limber.rest.exception.UnprocessableException
 import limber.sql.SqlStore
 import limber.sql.handle
 import limber.sql.transaction
-import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
 @Singleton
-internal class OrganizationStore @Inject constructor(jdbi: Jdbi) : SqlStore(jdbi) {
+internal class OrganizationStore @Inject constructor() : SqlStore() {
   fun create(creator: OrganizationRep): OrganizationRep =
     jdbi.transaction { handle ->
       val query = handle.createQuery(rs("store/organization/create.sql"))

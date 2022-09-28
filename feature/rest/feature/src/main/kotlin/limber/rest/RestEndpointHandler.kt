@@ -29,7 +29,7 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
   private val logger: KLogger = KotlinLogging.logger {}
 
   @Inject
-  public lateinit var validator: Validator
+  private lateinit var validator: Validator
 
   public val template: RestEndpointTemplate<E> = RestEndpointTemplate.from(endpoint)
 

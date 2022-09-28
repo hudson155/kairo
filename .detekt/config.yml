@@ -270,6 +270,9 @@ style:
     active: true
   UseIfInsteadOfWhen:
     active: true
+  VarCouldBeVal:
+    active: true
+    ignoreLateinitVar: true
   WildcardImport:
     active: true
     excludeImports: []
