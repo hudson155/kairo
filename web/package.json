@@ -2,6 +2,9 @@
   "name": "limber-web",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0 <17.0.0"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
