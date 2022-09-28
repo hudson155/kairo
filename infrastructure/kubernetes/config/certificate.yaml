@@ -15,7 +15,7 @@ items:
   - apiVersion: networking.gke.io/v1
     kind: ManagedCertificate
     metadata:
-      name: 2022-aug-18-v01
+      name: limber-certificate-2022-aug-18-v01
       namespace: limber
       labels:
         instance: limber

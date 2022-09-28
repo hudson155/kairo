@@ -1,0 +1,12 @@
+# Applies the Google Cloud Armor security policy.
+
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: limber-backend-config
+  namespace: limber
+  labels:
+    instance: limber
+spec:
+  securityPolicy:
+    name: default

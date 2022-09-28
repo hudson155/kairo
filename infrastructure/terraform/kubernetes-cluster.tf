@@ -11,7 +11,7 @@ resource "google_service_account_iam_binding" "limber" {
   service_account_id = "projects/${google_project.default.project_id}/serviceAccounts/${google_project.default.number}-compute@developer.gserviceaccount.com"
   role               = "roles/iam.workloadIdentityUser"
   members            = [
-    "serviceAccount:${google_project.default.project_id}.svc.id.goog[limber/limber]",
+    "serviceAccount:${google_project.default.project_id}.svc.id.goog[limber/limber-service-account]",
   ]
 }
 
