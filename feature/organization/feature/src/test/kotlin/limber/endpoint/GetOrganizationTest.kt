@@ -25,7 +25,7 @@ internal class GetOrganizationTest : IntegrationTest() {
       val organizationGuid = guidGenerator[0]
       organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Limber")))
       organizationClient(OrganizationApi.Get(organizationGuid))
-        .shouldBe(OrganizationRep(guid = organizationGuid, name = "Limber"))
+        .shouldBe(OrganizationRep(guid = organizationGuid, name = "Limber", hostnames = emptyList()))
     }
   }
 }
