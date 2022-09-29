@@ -16,7 +16,11 @@ internal class OrganizationService @Inject constructor(
 
   fun create(creator: OrganizationRep.Creator): OrganizationRep {
     logger.info { "Creating organization: $creator." }
-    return organizationStore.create(guidGenerator.generate(), creator)
+    val organization = OrganizationRep(
+      guid = guidGenerator.generate(),
+      name = creator.name,
+    )
+    return organizationStore.create(organization)
   }
 
   fun get(organizationGuid: UUID): OrganizationRep? =
@@ -25,7 +29,10 @@ internal class OrganizationService @Inject constructor(
   fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
     logger.info { "Updating organization: $updater." }
     return organizationStore.update(organizationGuid) { existing ->
-      OrganizationRep.Creator(name = updater.name ?: existing.name)
+      OrganizationRep(
+        guid = existing.guid,
+        name = updater.name ?: existing.name,
+      )
     }
   }
 }

@@ -7,12 +7,12 @@ import java.util.UUID
 internal class OrganizationStore : SqlCrudStore<OrganizationRep>(OrganizationRep::class) {
   override val tableName: String = "organization.organization"
 
-  fun create(guid: UUID, creator: OrganizationRep.Creator): OrganizationRep =
-    jdbi.create(guid, creator)
+  fun create(model: OrganizationRep): OrganizationRep =
+    jdbi.create(model)
 
   fun get(guid: UUID): OrganizationRep? =
     jdbi.get(guid)
 
-  fun update(guid: UUID, updater: (OrganizationRep) -> OrganizationRep.Creator): OrganizationRep =
+  fun update(guid: UUID, updater: (OrganizationRep) -> OrganizationRep): OrganizationRep =
     jdbi.update(guid, updater)
 }
