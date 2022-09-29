@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
   api(project(":common:serialization:interface"))
-  api(Dependencies.JavaExpressionLanguage.expressly)
+  api(project(":common:validation"))
   api(Dependencies.Ktor.httpJvm)
-  api(Dependencies.Validation.hibernate)
 }
