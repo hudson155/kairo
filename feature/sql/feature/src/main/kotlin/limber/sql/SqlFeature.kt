@@ -1,20 +1,26 @@
 package limber.sql
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.Injector
 import com.google.inject.PrivateBinder
+import com.google.inject.name.Names
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import limber.config.SqlConfig
 import limber.feature.Feature
 import limber.feature.FeaturePriority
+import limber.serialization.ObjectMapperFactory
 import mu.KLogger
 import mu.KotlinLogging
 import org.flywaydb.core.Flyway
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
+import org.jdbi.v3.jackson2.Jackson2Config
+import org.jdbi.v3.jackson2.Jackson2Plugin
 import org.jdbi.v3.postgres.PostgresPlugin
-import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
 import javax.sql.DataSource
+
+internal const val SQL_OBJECT_MAPPER = "SQL_OBJECT_MAPPER"
 
 public open class SqlFeature(private val config: SqlConfig) : Feature() {
   private val logger: KLogger = KotlinLogging.logger {}
@@ -24,6 +30,19 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
   protected var dataSource: HikariDataSource? = null
 
   final override fun bind(binder: PrivateBinder) {
+    val objectMapper = bindObjectMapper()
+    bindDataSource()
+    bindJdbi(objectMapper)
+  }
+
+  private fun bindObjectMapper(): ObjectMapper {
+    val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
+    bind(ObjectMapper::class.java).annotatedWith(Names.named(SQL_OBJECT_MAPPER)).toInstance(objectMapper)
+    expose(ObjectMapper::class.java).annotatedWith(Names.named(SQL_OBJECT_MAPPER))
+    return objectMapper
+  }
+
+  private fun bindDataSource() {
     logger.info { "Creating SQL data source..." }
     dataSource = HikariDataSource(
       HikariConfig().apply {
@@ -36,10 +55,15 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
       },
     )
     bind(DataSource::class.java).toInstance(dataSource)
+  }
 
+  private fun bindJdbi(objectMapper: ObjectMapper) {
     val jdbi = Jdbi.create(dataSource).apply {
+      installPlugin(Jackson2Plugin())
+      with(getConfig(Jackson2Config::class.java)) {
+        mapper = objectMapper
+      }
       installPlugin(KotlinPlugin())
-      installPlugin(KotlinSqlObjectPlugin())
       installPlugin(PostgresPlugin())
     }
     bind(Jdbi::class.java).toInstance(jdbi)

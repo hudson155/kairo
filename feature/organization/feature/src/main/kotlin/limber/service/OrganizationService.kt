@@ -15,9 +15,8 @@ internal class OrganizationService @Inject constructor(
   private val logger: KLogger = KotlinLogging.logger {}
 
   fun create(creator: OrganizationRep.Creator): OrganizationRep {
-    val organization = OrganizationRep(guid = guidGenerator.generate(), name = creator.name)
-    logger.info { "Creating organization: $organization." }
-    return organizationStore.create(organization)
+    logger.info { "Creating organization: $creator." }
+    return organizationStore.create(guidGenerator.generate(), creator)
   }
 
   fun get(organizationGuid: UUID): OrganizationRep? =
@@ -25,6 +24,8 @@ internal class OrganizationService @Inject constructor(
 
   fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
     logger.info { "Updating organization: $updater." }
-    return organizationStore.update(organizationGuid, updater)
+    return organizationStore.update(organizationGuid) { existing ->
+      OrganizationRep.Creator(name = updater.name ?: existing.name)
+    }
   }
 }

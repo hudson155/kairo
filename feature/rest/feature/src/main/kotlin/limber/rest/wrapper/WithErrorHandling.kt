@@ -5,8 +5,8 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.response.respond
 import jakarta.validation.ConstraintViolationException
+import limber.exception.UnprocessableException
 import limber.rep.ValidationErrorsRep
-import limber.rest.exception.UnprocessableException
 import mu.KLogger
 import mu.KotlinLogging
 
