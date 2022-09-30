@@ -25,7 +25,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
     integrationTest {
       val organizationGuid = guidGenerator[0]
       organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Limber")))
-      val organization = OrganizationRep(guid = organizationGuid, name = "Limber", hostnames = emptyList())
+      val organization = OrganizationRep(guid = organizationGuid, name = "Limber")
       organizationClient(OrganizationApi.Update(organizationGuid, OrganizationRep.Updater()))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organizationGuid))
@@ -34,7 +34,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
   }
 
   @Test
-  fun `name, too short`() {
+  fun `name updated, too short`() {
     integrationTest {
       val organizationGuid = guidGenerator[0]
       organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Limber")))
@@ -45,7 +45,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
   }
 
   @Test
-  fun `name, too long`() {
+  fun `name updated, too long`() {
     integrationTest {
       val organizationGuid = guidGenerator[0]
       organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Limber")))
@@ -56,11 +56,11 @@ internal class UpdateOrganizationTest : IntegrationTest() {
   }
 
   @Test
-  fun `name, happy path`() {
+  fun `name updated, happy path`() {
     integrationTest {
       val organizationGuid = guidGenerator[0]
       organizationClient(OrganizationApi.Create(OrganizationRep.Creator(name = "Limber")))
-      val organization = OrganizationRep(guid = organizationGuid, name = "Hotel", hostnames = emptyList())
+      val organization = OrganizationRep(guid = organizationGuid, name = "Hotel")
       organizationClient(OrganizationApi.Update(organizationGuid, OrganizationRep.Updater(name = " Hotel ")))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organizationGuid))

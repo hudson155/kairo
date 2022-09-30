@@ -19,7 +19,6 @@ internal class OrganizationService @Inject constructor(
     val organization = OrganizationRep(
       guid = guidGenerator.generate(),
       name = creator.name,
-      hostnames = listOfNotNull(creator.hostname),
     )
     return organizationStore.create(organization)
   }
@@ -33,7 +32,6 @@ internal class OrganizationService @Inject constructor(
       OrganizationRep(
         guid = existing.guid,
         name = updater.name ?: existing.name,
-        hostnames = existing.hostnames,
       )
     }
   }
