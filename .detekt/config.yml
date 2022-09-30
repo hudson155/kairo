@@ -173,6 +173,8 @@ potential-bugs:
     active: true
   LateinitUsage:
     active: true
+    ignoreAnnotated:
+      - 'com.google.inject.Inject'
   MissingPackageDeclaration:
     active: true
   NullCheckOnMutableProperty:
