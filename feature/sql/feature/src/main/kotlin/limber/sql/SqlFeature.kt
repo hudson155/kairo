@@ -13,7 +13,6 @@ import org.flywaydb.core.Flyway
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.kotlin.KotlinPlugin
 import org.jdbi.v3.postgres.PostgresPlugin
-import org.jdbi.v3.sqlobject.kotlin.KotlinSqlObjectPlugin
 import javax.sql.DataSource
 
 public open class SqlFeature(private val config: SqlConfig) : Feature() {
@@ -24,6 +23,11 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
   protected var dataSource: HikariDataSource? = null
 
   final override fun bind(binder: PrivateBinder) {
+    bindDataSource()
+    bindJdbi()
+  }
+
+  private fun bindDataSource() {
     logger.info { "Creating SQL data source..." }
     dataSource = HikariDataSource(
       HikariConfig().apply {
@@ -36,10 +40,11 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
       },
     )
     bind(DataSource::class.java).toInstance(dataSource)
+  }
 
+  private fun bindJdbi() {
     val jdbi = Jdbi.create(dataSource).apply {
       installPlugin(KotlinPlugin())
-      installPlugin(KotlinSqlObjectPlugin())
       installPlugin(PostgresPlugin())
     }
     bind(Jdbi::class.java).toInstance(jdbi)

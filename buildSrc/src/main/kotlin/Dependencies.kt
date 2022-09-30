@@ -114,8 +114,6 @@ object Dependencies {
     object Jdbi3 {
       val kotlin: String = "org.jdbi:jdbi3-kotlin"
         .version(Versions.jdbi3)
-      val kotlinSqlobject: String = "org.jdbi:jdbi3-kotlin-sqlobject"
-        .version(Versions.jdbi3)
       val postgres: String = "org.jdbi:jdbi3-postgres"
         .version(Versions.jdbi3)
     }
