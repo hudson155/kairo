@@ -12,8 +12,7 @@ private val defaultGetter: EnvironmentVariableGetter = System::getenv
 internal object EnvironmentVariableSource {
   private var delegate: EnvironmentVariableGetter = defaultGetter
 
-  operator fun get(name: String): String? =
-    delegate(name)
+  operator fun get(name: String): String? = delegate(name)
 
   @TestOnly
   fun withOverride(get: (name: String) -> String?, block: () -> Unit) {

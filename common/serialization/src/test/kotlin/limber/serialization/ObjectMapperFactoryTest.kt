@@ -28,8 +28,7 @@ internal abstract class ObjectMapperFactoryTest(dataFormat: ObjectMapperFactory.
     enum class Enum {
       Option1, Option2;
 
-      override fun toString(): String =
-        "unused"
+      override fun toString(): String = "unused"
     }
   }
 

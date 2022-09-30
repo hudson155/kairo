@@ -55,11 +55,9 @@ internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
 
     override val templateInstance = checkNotNull(kClass.objectInstance)
 
-    override suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?> =
-      emptyMap()
+    override suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?> = emptyMap()
 
-    override suspend fun endpoint(parameters: Map<Parameter, Any?>): E =
-      templateInstance
+    override suspend fun endpoint(parameters: Map<Parameter, Any?>): E = templateInstance
   }
 
   /**

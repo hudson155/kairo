@@ -14,8 +14,7 @@ import com.fasterxml.jackson.module.kotlin.kotlinModule
 public object ObjectMapperFactory {
   public enum class Format { JSON, YAML }
 
-  public fun builder(format: Format): Builder =
-    Builder(factory(format))
+  public fun builder(format: Format): Builder = Builder(factory(format))
 
   public class Builder internal constructor(
     factory: JsonFactory,

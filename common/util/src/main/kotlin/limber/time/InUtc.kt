@@ -5,5 +5,4 @@ import java.time.ZonedDateTime
 
 private val utcZoneId: ZoneId = ZoneId.of("UTC")
 
-public fun ZonedDateTime.inUtc(): ZonedDateTime =
-  withZoneSameInstant(utcZoneId)
+public fun ZonedDateTime.inUtc(): ZonedDateTime = withZoneSameInstant(utcZoneId)

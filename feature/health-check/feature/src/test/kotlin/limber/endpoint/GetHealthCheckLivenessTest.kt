@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test
 
 internal class GetHealthCheckLivenessTest : IntegrationTest() {
   @Test
-  fun healthy() {
-    integrationTest {
-      healthCheckClient(HealthCheckApi.GetLiveness)
-        .shouldBe(Unit)
-    }
+  fun healthy() = integrationTest {
+    healthCheckClient(HealthCheckApi.GetLiveness)
+      .shouldBe(Unit)
   }
 }

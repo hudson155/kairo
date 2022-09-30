@@ -26,31 +26,26 @@ public abstract class Feature : PrivateModule() {
    * the implementation should bind everything for the Feature.
    * It should not initialize anything stateful (such as connection pools).
    */
-  public open fun bind(binder: PrivateBinder): Unit =
-    Unit
+  public open fun bind(binder: PrivateBinder): Unit = Unit
 
   /**
    * Startup work; initializing state (such as connection pools).
    */
-  public open fun start(injector: Injector, features: Set<Feature>): Unit =
-    Unit
+  public open fun start(injector: Injector, features: Set<Feature>): Unit = Unit
 
   /**
    * Change state after startup.
    */
-  public open fun afterStart(injector: Injector): Unit =
-    Unit
+  public open fun afterStart(injector: Injector): Unit = Unit
 
   /**
    * Change state before shutdown.
    * [injector] may be null if the Server did not start correctly.
    */
-  public open fun beforeStop(injector: Injector?): Unit =
-    Unit
+  public open fun beforeStop(injector: Injector?): Unit = Unit
 
   /**
    * Clean up resources.
    */
-  public open fun stop(): Unit =
-    Unit
+  public open fun stop(): Unit = Unit
 }

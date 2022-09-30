@@ -23,8 +23,7 @@ private val defaultGetter: GcpSecretGetter = { id ->
 internal object GcpSecretSource {
   private var delegate: GcpSecretGetter = defaultGetter
 
-  operator fun get(name: String): String? =
-    delegate(name)
+  operator fun get(name: String): String? = delegate(name)
 
   @TestOnly
   fun withOverride(get: (name: String) -> String?, block: () -> Unit) {

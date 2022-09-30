@@ -13,35 +13,31 @@ import org.junit.jupiter.api.Test
 
 internal class GetHealthCheckReadinessTest : IntegrationTest() {
   @Test
-  fun healthy() {
-    integrationTest {
-      val expected = HealthCheckRep(
-        state = HealthCheckRep.State.Healthy,
-        checks = mapOf(
-          "http" to HealthCheckRep.Check("http", HealthCheckRep.State.Healthy),
-          "server" to HealthCheckRep.Check("server", HealthCheckRep.State.Healthy),
-        ),
-      )
-      healthCheckClient(HealthCheckApi.GetReadiness)
-        .shouldBe(expected)
-    }
+  fun healthy() = integrationTest {
+    val expected = HealthCheckRep(
+      state = HealthCheckRep.State.Healthy,
+      checks = mapOf(
+        "http" to HealthCheckRep.Check("http", HealthCheckRep.State.Healthy),
+        "server" to HealthCheckRep.Check("server", HealthCheckRep.State.Healthy),
+      ),
+    )
+    healthCheckClient(HealthCheckApi.GetReadiness)
+      .shouldBe(expected)
   }
 
   @Test
-  fun unhealthy() {
-    integrationTest {
-      injector.getInstance(HealthCheckService::class.java).server = HealthCheckRep.State.Unhealthy
-      val expected = HealthCheckRep(
-        state = HealthCheckRep.State.Unhealthy,
-        checks = mapOf(
-          "http" to HealthCheckRep.Check("http", HealthCheckRep.State.Healthy),
-          "server" to HealthCheckRep.Check("server", HealthCheckRep.State.Unhealthy),
-        ),
-      )
-      val e = shouldThrow<ServerResponseException> {
-        healthCheckClient(HealthCheckApi.GetReadiness)
-      }
-      e.response.body<HealthCheckRep>().shouldBe(expected)
+  fun unhealthy() = integrationTest {
+    injector.getInstance(HealthCheckService::class.java).server = HealthCheckRep.State.Unhealthy
+    val expected = HealthCheckRep(
+      state = HealthCheckRep.State.Unhealthy,
+      checks = mapOf(
+        "http" to HealthCheckRep.Check("http", HealthCheckRep.State.Healthy),
+        "server" to HealthCheckRep.Check("server", HealthCheckRep.State.Unhealthy),
+      ),
+    )
+    val e = shouldThrow<ServerResponseException> {
+      healthCheckClient(HealthCheckApi.GetReadiness)
     }
+    e.response.body<HealthCheckRep>().shouldBe(expected)
   }
 }

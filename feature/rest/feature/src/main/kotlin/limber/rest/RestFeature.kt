@@ -61,25 +61,24 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
     }
   }
 
-  private fun module(injector: Injector): Application.() -> Unit =
-    {
-      installPlugins(config)
+  private fun module(injector: Injector): Application.() -> Unit = {
+    installPlugins(config)
 
-      val handlers = injector.bindings.mapNotNull { (key, binding) ->
-        val isEndpointHandler = RestEndpointHandler::class.java.isAssignableFrom(key.typeLiteral.rawType)
-        if (!isEndpointHandler) return@mapNotNull null
-        return@mapNotNull binding.provider.get() as RestEndpointHandler<*, *>
-      }
+    val handlers = injector.bindings.mapNotNull { (key, binding) ->
+      val isEndpointHandler = RestEndpointHandler::class.java.isAssignableFrom(key.typeLiteral.rawType)
+      if (!isEndpointHandler) return@mapNotNull null
+      return@mapNotNull binding.provider.get() as RestEndpointHandler<*, *>
+    }
 
-      handlers.forEach { handler ->
-        val template = handler.template
-        logger.info { "Registering endpoint: $template." }
-        routing {
-          this.createRouteFromPath(template.path)
-            .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
-            .createChild(HttpMethodRouteSelector(template.method))
-            .handle { handler.handle(this.call) }
-        }
+    handlers.forEach { handler ->
+      val template = handler.template
+      logger.info { "Registering endpoint: $template." }
+      routing {
+        this.createRouteFromPath(template.path)
+          .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
+          .createChild(HttpMethodRouteSelector(template.method))
+          .handle { handler.handle(this.call) }
       }
     }
+  }
 }

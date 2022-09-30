@@ -87,6 +87,5 @@ internal class LimberStringDeserializerTest {
       if (withStringTrimModule) addModule(StringTrimModule)
     }.build()
 
-  private fun json(value: String): String =
-    "{\"string\":\"$value\"}"
+  private fun json(value: String): String = "{\"string\":\"$value\"}"
 }

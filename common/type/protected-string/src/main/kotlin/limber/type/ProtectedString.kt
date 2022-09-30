@@ -12,9 +12,7 @@ public class ProtectedString @JsonCreator(mode = JsonCreator.Mode.DELEGATING) co
     return value == other.value
   }
 
-  override fun hashCode(): Int =
-    value.hashCode()
+  override fun hashCode(): Int = value.hashCode()
 
-  override fun toString(): String =
-    "REDACTED"
+  override fun toString(): String = "REDACTED"
 }

@@ -28,8 +28,7 @@ public abstract class HealthCheckService(private val healthCheckClient: HealthCh
       )
     }
 
-  protected fun serverHealthCheck(): HealthCheckRep.State =
-    server
+  protected fun serverHealthCheck(): HealthCheckRep.State = server
 
   protected suspend fun httpHealthCheck(): HealthCheckRep.State =
     healthyIfNoException {

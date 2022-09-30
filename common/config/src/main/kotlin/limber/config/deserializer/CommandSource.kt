@@ -14,8 +14,7 @@ private val defaultGetter: CommandGetter = { command ->
 internal object CommandSource {
   private var delegate: CommandGetter = defaultGetter
 
-  operator fun get(name: String): String =
-    delegate(name)
+  operator fun get(name: String): String = delegate(name)
 
   @TestOnly
   fun withOverride(get: (name: String) -> String, block: () -> Unit) {

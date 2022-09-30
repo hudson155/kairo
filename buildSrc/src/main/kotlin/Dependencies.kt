@@ -146,6 +146,5 @@ object Dependencies {
       .version(Versions.hibernateValidator)
   }
 
-  private fun String.version(version: String): String =
-    "$this:$version"
+  private fun String.version(version: String): String = "$this:$version"
 }

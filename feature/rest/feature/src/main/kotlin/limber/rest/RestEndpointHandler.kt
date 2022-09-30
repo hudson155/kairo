@@ -72,11 +72,9 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
     return restMdc + endpointMdc + customMdc
   }
 
-  protected open fun mdc(endpoint: E): Map<String, Any> =
-    emptyMap()
+  protected open fun mdc(endpoint: E): Map<String, Any> = emptyMap()
 
   protected abstract suspend fun handler(endpoint: E): R
 
-  public open fun status(result: R): HttpStatusCode =
-    HttpStatusCode.OK
+  public open fun status(result: R): HttpStatusCode = HttpStatusCode.OK
 }
