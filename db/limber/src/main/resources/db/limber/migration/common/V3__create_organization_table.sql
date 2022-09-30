@@ -5,7 +5,7 @@ create table organization.organization
     created_at timestamptz not null default now(),
     updated_at timestamptz not null default now(),
 
-    document   jsonb       not null
+    name       text        not null
 );
 
 create trigger on_update__organization

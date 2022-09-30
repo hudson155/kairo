@@ -1,3 +1,3 @@
-package limber.exception
+package limber.rest.exception
 
 public class UnprocessableException : Exception()

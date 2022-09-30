@@ -18,6 +18,13 @@ import mu.KLogger
 import mu.KotlinLogging
 import kotlin.reflect.KClass
 
+/**
+ * This class uses [Inject] combined with lateinit to access injection.
+ * Constructor-based injection is typically preferred due to immutability,
+ * but in this case we get the nice advantage of
+ * not requiring each implementation to bloat its constructor.
+ */
+@Suppress("LateinitUsage")
 public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: KClass<E>) {
   private val logger: KLogger = KotlinLogging.logger {}
 
