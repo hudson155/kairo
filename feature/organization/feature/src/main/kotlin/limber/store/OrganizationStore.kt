@@ -1,37 +1,39 @@
 package limber.store
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
+import limber.exception.UnprocessableException
 import limber.rep.OrganizationRep
-import limber.rest.exception.UnprocessableException
 import limber.sql.SqlStore
-import limber.sql.handle
-import limber.sql.transaction
+import limber.sql.Updater
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
-@Singleton
-internal class OrganizationStore @Inject constructor() : SqlStore() {
-  fun create(creator: OrganizationRep): OrganizationRep =
-    jdbi.transaction { handle ->
+internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::class) {
+  fun create(model: OrganizationRep): OrganizationRep =
+    transaction { handle ->
       val query = handle.createQuery(rs("store/organization/create.sql"))
-      query.bindKotlin(creator)
-      return@transaction query.mapTo(OrganizationRep::class.java).single()
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
     }
 
-  fun get(organizationGuid: UUID): OrganizationRep? =
-    jdbi.handle { handle ->
+  fun get(guid: UUID): OrganizationRep? =
+    get(guid, forUpdate = false)
+
+  private fun get(guid: UUID, forUpdate: Boolean): OrganizationRep? =
+    handle { handle ->
       val query = handle.createQuery(rs("store/organization/get.sql"))
-      query.bind("organizationGuid", organizationGuid)
-      return@handle query.mapTo(OrganizationRep::class.java).singleNullOrThrow()
+      query.define("lockingClause", if (forUpdate) "for update" else "")
+      query.bind("guid", guid)
+      return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep =
-    jdbi.transaction { handle ->
+  fun update(guid: UUID, updater: Updater<OrganizationRep>): OrganizationRep =
+    transaction { handle ->
+      val model = updater(get(guid, forUpdate = true) ?: organizationDoesNotExist())
       val query = handle.createQuery(rs("store/organization/update.sql"))
-      query.bind("organizationGuid", organizationGuid)
-      query.bindKotlin(updater)
-      return@transaction query.mapTo(OrganizationRep::class.java).singleNullOrThrow()
-        ?: throw UnprocessableException()
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
     }
+
+  private fun organizationDoesNotExist(): Nothing =
+    throw UnprocessableException("Organization does not exist.")
 }

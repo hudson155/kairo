@@ -1,4 +1,4 @@
 update organization.organization
-set name = coalesce(:name, name)
-where guid = :organizationGuid
+set name = :name
+where guid = :guid
 returning *

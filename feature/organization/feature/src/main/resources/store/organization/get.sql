@@ -1,3 +1,4 @@
 select *
 from organization.organization
-where guid = :organizationGuid
+where guid = :guid
+<lockingClause>
