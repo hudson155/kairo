@@ -1,0 +1,44 @@
+package limber.store
+
+import limber.exception.ConflictException
+import limber.exception.UnprocessableException
+import limber.rep.OrganizationHostnameRep
+import limber.sql.SqlStore
+import limber.sql.isForeignKeyViolation
+import limber.sql.isUniqueViolation
+import org.jdbi.v3.core.kotlin.bindKotlin
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException
+import org.postgresql.util.ServerErrorMessage
+import java.util.UUID
+
+internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(OrganizationHostnameRep::class) {
+  fun create(model: OrganizationHostnameRep): OrganizationHostnameRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
+    }
+
+  fun get(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep? =
+    handle { handle ->
+      val query = handle.createQuery(rs("store/organizationHostname/get.sql"))
+      query.bind("organizationGuid", organizationGuid)
+      query.bind("guid", guid)
+      return@handle query.mapToType().singleNullOrThrow()
+    }
+
+  override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
+    when {
+      isForeignKeyViolation("fk__organization_hostname__organization_guid") ->
+        organizationDoesNotExist()
+      isUniqueViolation("uq__organization_hostname__hostname") ->
+        hostnameAlreadyTaken()
+    }
+  }
+
+  private fun organizationDoesNotExist(): Nothing =
+    throw UnprocessableException("Organization does not exist.")
+
+  private fun hostnameAlreadyTaken(): Nothing =
+    throw ConflictException("Hostname already taken.")
+}

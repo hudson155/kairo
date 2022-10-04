@@ -1,6 +1,7 @@
 package limber.testing
 
 import limber.client.OrganizationClient
+import limber.client.OrganizationHostnameClient
 import limber.config.ConfigLoader
 import limber.config.OrganizationFeatureTestConfig
 import limber.feature.OrganizationFeature
@@ -22,6 +23,9 @@ internal abstract class IntegrationTest : FeatureIntegrationTest(
     TestSqlFeature(config.sql, schemaName = "organization"),
   ),
 ) {
+  protected val hostnameClient: OrganizationHostnameClient =
+    injector.getInstance(OrganizationHostnameClient::class.java)
+
   protected val organizationClient: OrganizationClient =
     injector.getInstance(OrganizationClient::class.java)
 }
