@@ -38,8 +38,8 @@ public sealed class Parameter(public val delegate: KParameter) {
           return@map Body(parameter)
         }
 
-        @Suppress("UseIfInsteadOfWhen") // More conditions are coming soon.
         return@map when (kClass) {
+          String::class -> Path(parameter) { UUID.randomUUID().toString() }
           UUID::class -> Path(parameter) { UUID.randomUUID() }
           else -> error("${kClass.simpleName} is not a supported endpoint parameter type.")
         }
