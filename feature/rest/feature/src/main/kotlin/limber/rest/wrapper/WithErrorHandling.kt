@@ -5,7 +5,10 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.response.respond
 import jakarta.validation.ConstraintViolationException
+import limber.exception.ConflictException
 import limber.exception.UnprocessableException
+import limber.rep.ConflictErrorRep
+import limber.rep.UnprocessableErrorRep
 import limber.rep.ValidationErrorsRep
 import mu.KLogger
 import mu.KotlinLogging
@@ -15,6 +18,8 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal suspend fun withErrorHandling(call: ApplicationCall, block: suspend () -> Unit) {
   try {
     block()
+  } catch (e: ConflictException) {
+    call.handleConflict(e)
   } catch (e: ConstraintViolationException) {
     call.handleConstraintViolation(e)
   } catch (e: NotFoundException) {
@@ -22,6 +27,14 @@ internal suspend fun withErrorHandling(call: ApplicationCall, block: suspend () 
   } catch (e: UnprocessableException) {
     call.handleUnprocessable(e)
   }
+}
+
+private suspend fun ApplicationCall.handleConflict(e: ConflictException) {
+  logger.debug(e) { "Conflict." }
+  respond(
+    status = HttpStatusCode.Conflict,
+    message = ConflictErrorRep(e.message),
+  )
 }
 
 private suspend fun ApplicationCall.handleConstraintViolation(e: ConstraintViolationException) {
@@ -46,5 +59,8 @@ private suspend fun ApplicationCall.handleNotFound(e: NotFoundException) {
 
 private suspend fun ApplicationCall.handleUnprocessable(e: UnprocessableException) {
   logger.debug(e) { "Unprocessable." }
-  respond(HttpStatusCode.UnprocessableEntity)
+  respond(
+    status = HttpStatusCode.UnprocessableEntity,
+    message = UnprocessableErrorRep(e.message),
+  )
 }

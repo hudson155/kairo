@@ -5,10 +5,10 @@ import io.kotest.matchers.shouldBe
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
-import limber.rep.UnprocessableErrorRep
+import limber.rep.ConflictErrorRep
 
-public suspend inline fun shouldBeUnprocessable(message: String, block: () -> Any?) {
+public suspend inline fun shouldBeConflict(message: String, block: () -> Any?) {
   val e = shouldThrow<ClientRequestException> { block() }
-  e.response.status.shouldBe(HttpStatusCode.UnprocessableEntity)
-  e.response.body<UnprocessableErrorRep>().message.shouldBe(message)
+  e.response.status.shouldBe(HttpStatusCode.Conflict)
+  e.response.body<ConflictErrorRep>().message.shouldBe(message)
 }

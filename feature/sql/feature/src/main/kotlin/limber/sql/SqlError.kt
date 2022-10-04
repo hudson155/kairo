@@ -2,7 +2,11 @@ package limber.sql
 
 import org.postgresql.util.ServerErrorMessage
 
-public fun ServerErrorMessage.isNotNullConstraintViolation(columnName: String): Boolean {
+/**
+ * Refer to https://www.postgresql.org/docs/8.3/errcodes-appendix.html for the error codes used here.
+ */
+
+public fun ServerErrorMessage.isNotNullViolation(columnName: String): Boolean {
   if (sqlState != "23502") return false
   return column == columnName
 }
@@ -12,7 +16,7 @@ public fun ServerErrorMessage.isForeignKeyViolation(constraintName: String): Boo
   return constraint == constraintName
 }
 
-public fun ServerErrorMessage.isUniqueConstraintViolation(constraintName: String): Boolean {
+public fun ServerErrorMessage.isUniqueViolation(constraintName: String): Boolean {
   if (sqlState != "23505") return false
   return constraint == constraintName
 }
