@@ -1,3 +1,5 @@
+package limber.gradle
+
 object Dependencies {
   object Detekt {
     val formatting: String = "io.gitlab.arturbosch.detekt:detekt-formatting"

@@ -1,3 +1,5 @@
+package limber.gradle
+
 object Versions {
   // https://github.com/detekt/detekt/releases.
   const val detekt = "1.21.0"

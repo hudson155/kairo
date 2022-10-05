@@ -1,5 +1,9 @@
+package limber.gradle.plugin
+
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import limber.gradle.Dependencies
+import limber.gradle.Versions
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
