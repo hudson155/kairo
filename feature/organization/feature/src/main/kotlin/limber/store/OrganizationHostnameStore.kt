@@ -27,6 +27,14 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(Org
       return@handle query.mapToType().singleNullOrThrow()
     }
 
+  fun delete(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
+      query.bind("organizationGuid", organizationGuid)
+      query.bind("guid", guid)
+      return@transaction query.mapToType().singleNullOrThrow() ?: hostnameDoesNotExist()
+    }
+
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__organization_hostname__organization_guid") ->
@@ -38,6 +46,9 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(Org
 
   private fun organizationDoesNotExist(): Nothing =
     throw UnprocessableException("Organization does not exist.")
+
+  private fun hostnameDoesNotExist(): Nothing =
+    throw UnprocessableException("Hostname does not exist.")
 
   private fun hostnameAlreadyTaken(): Nothing =
     throw ConflictException("Hostname already taken.")

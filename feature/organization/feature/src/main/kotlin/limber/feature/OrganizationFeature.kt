@@ -9,6 +9,7 @@ import limber.client.OrganizationClient
 import limber.client.OrganizationHostnameClient
 import limber.endpoint.CreateOrganization
 import limber.endpoint.CreateOrganizationHostname
+import limber.endpoint.DeleteOrganizationHostname
 import limber.endpoint.GetOrganization
 import limber.endpoint.GetOrganizationByHostname
 import limber.endpoint.GetOrganizationHostname
@@ -46,6 +47,7 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   private fun bindOrganizationHostname(binder: PrivateBinder) {
     binder.bindRestEndpoint(CreateOrganizationHostname::class)
     binder.bindRestEndpoint(GetOrganizationHostname::class)
+    binder.bindRestEndpoint(DeleteOrganizationHostname::class)
 
     binder.bindClients {
       bind(OrganizationHostnameClient::class) {

@@ -19,4 +19,9 @@ public object OrganizationHostnameApi {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/organizations/$organizationGuid/hostnames/$hostnameGuid"
   }
+
+  public data class Delete(val organizationGuid: UUID, val hostnameGuid: UUID) : RestEndpoint() {
+    override val method: HttpMethod = HttpMethod.Delete
+    override val path: String = "/organizations/$organizationGuid/hostnames/$hostnameGuid"
+  }
 }

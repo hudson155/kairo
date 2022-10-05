@@ -26,4 +26,9 @@ internal class OrganizationHostnameService @Inject constructor(
 
   fun get(organizationGuid: UUID, hostnameGuid: UUID): OrganizationHostnameRep? =
     hostnameStore.get(organizationGuid, hostnameGuid)
+
+  fun delete(organizationGuid: UUID, hostnameGuid: UUID): OrganizationHostnameRep {
+    logger.info { "Deleting organization hostname." }
+    return hostnameStore.delete(organizationGuid, hostnameGuid)
+  }
 }

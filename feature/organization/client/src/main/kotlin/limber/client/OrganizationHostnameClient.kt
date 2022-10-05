@@ -11,4 +11,8 @@ public interface OrganizationHostnameClient {
   public suspend operator fun invoke(
     endpoint: OrganizationHostnameApi.Get,
   ): OrganizationHostnameRep?
+
+  public suspend operator fun invoke(
+    endpoint: OrganizationHostnameApi.Delete,
+  ): OrganizationHostnameRep
 }
