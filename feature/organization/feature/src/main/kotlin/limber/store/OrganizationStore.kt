@@ -26,6 +26,13 @@ internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::cl
       return@handle query.mapToType().singleNullOrThrow()
     }
 
+  fun getByHostname(hostname: String): OrganizationRep? =
+    handle { handle ->
+      val query = handle.createQuery(rs("store/organization/getByHostname.sql"))
+      query.bind("hostname", hostname)
+      return@handle query.mapToType().singleNullOrThrow()
+    }
+
   fun update(guid: UUID, updater: Updater<OrganizationRep>): OrganizationRep =
     transaction { handle ->
       val model = updater(get(guid, forUpdate = true) ?: organizationDoesNotExist())
