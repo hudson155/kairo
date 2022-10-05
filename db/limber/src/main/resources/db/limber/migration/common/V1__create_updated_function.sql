@@ -1,8 +1,8 @@
 create function updated()
-    returns trigger as
+  returns trigger as
 $$
 begin
-    new.updated_at = now();
-    return new;
+  new.updated_at = now();
+  return new;
 end;
 $$ language 'plpgsql';
