@@ -10,6 +10,7 @@ import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.routing.HttpAcceptRouteSelector
 import io.ktor.server.routing.HttpMethodRouteSelector
+import io.ktor.server.routing.ParameterRouteSelector
 import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.routing
 import jakarta.validation.Validator
@@ -74,10 +75,15 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
       val template = handler.template
       logger.info { "Registering endpoint: $template." }
       routing {
-        this.createRouteFromPath(template.path)
+        createRouteFromPath(template.path)
           .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
           .createChild(HttpMethodRouteSelector(template.method))
-          .handle { handler.handle(this.call) }
+          .let {
+            template.requiredQueryParams.fold(it) { route, queryParam ->
+              route.createChild(ParameterRouteSelector(queryParam))
+            }
+          }
+          .handle { handler.handle(call) }
       }
     }
   }

@@ -1,29 +1,25 @@
 package limber.rest.endpointTemplate
 
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.ktor.http.HttpMethod
+import limber.rest.QueryParam
 import limber.rest.RestEndpoint
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class RestEndpointTemplateBuilderTest {
-  internal object List : RestEndpoint() {
-    override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/celebrities"
-  }
-
-  internal data class Get(val celebrityGuid: UUID) : RestEndpoint() {
+  internal data class Get(val celebrityGuid: UUID, val eventGuid: UUID) : RestEndpoint() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/celebrities/$celebrityGuid"
+    override val qp: List<QueryParam> = listOf(::eventGuid)
   }
 
-  @Test
-  fun `object instance`() {
-    RestEndpointTemplate.from(List::class).should { template ->
-      template.method.shouldBe(HttpMethod.Get)
-      template.path.shouldBe("/celebrities")
-    }
+  internal object GetAll : RestEndpoint() {
+    override val method: HttpMethod = HttpMethod.Get
+    override val path: String = "/celebrities"
   }
 
   @Test
@@ -31,6 +27,16 @@ internal class RestEndpointTemplateBuilderTest {
     RestEndpointTemplate.from(Get::class).should { template ->
       template.method.shouldBe(HttpMethod.Get)
       template.path.shouldBe("/celebrities/{celebrityGuid}")
+      template.requiredQueryParams.shouldContainExactlyInAnyOrder("eventGuid")
+    }
+  }
+
+  @Test
+  fun `object instance`() {
+    RestEndpointTemplate.from(GetAll::class).should { template ->
+      template.method.shouldBe(HttpMethod.Get)
+      template.path.shouldBe("/celebrities")
+      template.requiredQueryParams.shouldBeEmpty()
     }
   }
 }

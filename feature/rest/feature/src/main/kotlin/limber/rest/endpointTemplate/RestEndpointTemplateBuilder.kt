@@ -1,8 +1,8 @@
 package limber.rest.endpointTemplate
 
-import io.ktor.http.HttpMethod
 import io.ktor.server.application.ApplicationCall
-import io.ktor.server.plugins.dataconversion.conversionService
+import io.ktor.server.application.plugin
+import io.ktor.server.plugins.dataconversion.DataConversion
 import io.ktor.server.request.receive
 import io.ktor.util.reflect.TypeInfo
 import limber.rest.RestEndpoint
@@ -18,21 +18,9 @@ import kotlin.reflect.jvm.jvmErasure
  * but they do follow similar patterns.
  */
 internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
-  protected abstract val argReplacements: Map<String, String>
+  internal abstract val argReplacements: Map<String, String>
 
-  protected abstract val templateInstance: E
-
-  val method: HttpMethod by lazy { templateInstance.method }
-
-  val pathTemplate: String by lazy {
-    var pathTemplate = templateInstance.path
-    argReplacements.forEach { (name, value) ->
-      val split = pathTemplate.split(value)
-      if (split.size == 2) pathTemplate = split.joinToString("{$name}")
-      else error("${templateInstance.path} contains more than 1 match of $value.")
-    }
-    return@lazy pathTemplate
-  }
+  internal abstract val templateInstance: E
 
   /**
    * This method should determine the parameters from an [ApplicationCall].
@@ -91,12 +79,14 @@ internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
       return Pair(args, argReplacements)
     }
 
-    override suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?> =
-      parameters.associate { parameter ->
+    override suspend fun parameters(call: ApplicationCall): Map<Parameter, Any?> {
+      val conversionService = call.application.plugin(DataConversion)
+
+      return parameters.associate { parameter ->
         val value = when (parameter) {
-          is Parameter.Body -> call.receive(parameter.delegate.type.jvmErasure)
-          is Parameter.Path -> {
-            val conversionService = call.application.conversionService
+          is Parameter.Body ->
+            call.receive(parameter.delegate.type.jvmErasure)
+          is Parameter.Path ->
             call.parameters.getAll(parameter.name)?.let { parameters ->
               val typeInfo = TypeInfo(
                 type = parameter.delegate.type.classifier as KClass<*>,
@@ -105,10 +95,10 @@ internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
               )
               return@let conversionService.fromValues(parameters, typeInfo)
             }
-          }
         }
         return@associate Pair(parameter, value)
       }
+    }
 
     override suspend fun endpoint(parameters: Map<Parameter, Any?>): E =
       constructor.callBy(parameters.mapKeys { (key, _) -> key.delegate })

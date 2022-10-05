@@ -7,6 +7,7 @@ import com.google.inject.name.Named
 import com.google.inject.name.Names
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.DataConversion
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -31,6 +32,7 @@ public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
         install(ContentNegotiation) {
           register(contentType = ContentType.Application.Json, converter = JacksonConverter(objectMapper))
         }
+        install(DataConversion)
         install(HttpTimeout) {
           requestTimeoutMillis = 5000 // 5 seconds.
         }
