@@ -1,7 +1,11 @@
+import limber.gradle.main
+
 plugins {
   id("limber-jvm")
 }
 
-dependencies {
-  api(project(":feature:rest:interface"))
+main {
+  dependencies {
+    api(project(":feature:rest:interface"))
+  }
 }

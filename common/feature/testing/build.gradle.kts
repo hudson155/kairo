@@ -1,13 +1,16 @@
 import limber.gradle.Dependencies
+import limber.gradle.main
 
 plugins {
   id("limber-jvm")
 }
 
-dependencies {
-  api(project(":common:server:testing"))
+main {
+  dependencies {
+    api(project(":common:server:testing"))
 
-  implementation(Dependencies.Testing.Junit.api)
-  api(Dependencies.Testing.Kotest.assertions)
-  api(Dependencies.Testing.mockK)
+    implementation(Dependencies.Testing.Junit.api)
+    api(Dependencies.Testing.Kotest.assertions)
+    api(Dependencies.Testing.mockK)
+  }
 }

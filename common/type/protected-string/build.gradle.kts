@@ -1,7 +1,11 @@
+import limber.gradle.main
+
 plugins {
   id("limber-jvm")
 }
 
-dependencies {
-  implementation(project(":common:serialization"))
+main {
+  dependencies {
+    implementation(project(":common:serialization"))
+  }
 }

@@ -1,7 +1,11 @@
+import limber.gradle.main
+
 plugins {
   id("limber-jvm")
 }
 
-dependencies {
-  api(project(":common:server"))
+main {
+  dependencies {
+    api(project(":common:server"))
+  }
 }

@@ -1,10 +1,13 @@
 import limber.gradle.Dependencies
+import limber.gradle.main
 
 plugins {
   id("limber-jvm")
 }
 
-dependencies {
-  api(Dependencies.JavaExpressionLanguage.expressly)
-  api(Dependencies.Validation.hibernate)
+main {
+  dependencies {
+    api(Dependencies.JavaExpressionLanguage.expressly)
+    api(Dependencies.Validation.hibernate)
+  }
 }
