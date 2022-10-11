@@ -137,16 +137,6 @@ naming:
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][A-Za-z0-9]*' # Enums should be PascalCase.
-  FunctionMaxLength:
-    active: true
-    excludes:
-      - '**/test/**'
-      - '**/androidTest/**'
-      - '**/commonTest/**'
-      - '**/jvmTest/**'
-      - '**/jsTest/**'
-      - '**/iosTest/**'
-    maximumFunctionNameLength: 30
   FunctionMinLength:
     active: true
     minimumFunctionNameLength: 3
