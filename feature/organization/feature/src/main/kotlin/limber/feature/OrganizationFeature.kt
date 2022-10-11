@@ -3,11 +3,14 @@ package limber.feature
 import com.google.inject.PrivateBinder
 import limber.client.FeatureClient
 import limber.client.HttpFeatureClient
+import limber.client.HttpOrganizationAuthClient
 import limber.client.HttpOrganizationClient
 import limber.client.HttpOrganizationHostnameClient
 import limber.client.LocalFeatureClient
+import limber.client.LocalOrganizationAuthClient
 import limber.client.LocalOrganizationClient
 import limber.client.LocalOrganizationHostnameClient
+import limber.client.OrganizationAuthClient
 import limber.client.OrganizationClient
 import limber.client.OrganizationHostnameClient
 import limber.endpoint.CreateFeature
@@ -18,8 +21,10 @@ import limber.endpoint.DeleteOrganizationHostname
 import limber.endpoint.GetFeature
 import limber.endpoint.GetFeaturesByOrganization
 import limber.endpoint.GetOrganization
+import limber.endpoint.GetOrganizationAuthByOrganization
 import limber.endpoint.GetOrganizationByHostname
 import limber.endpoint.GetOrganizationHostname
+import limber.endpoint.SetOrganizationAuth
 import limber.endpoint.UpdateFeature
 import limber.endpoint.UpdateOrganization
 import limber.rest.RestImplementation
@@ -33,6 +38,7 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   override fun bind(binder: PrivateBinder) {
     binder.bindHttpClient(rest)
     bindOrganization(binder)
+    bindOrganizationAuth(binder)
     bindOrganizationHostname(binder)
     bindFeature(binder)
   }
@@ -48,6 +54,20 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
         when (rest) {
           is RestImplementation.Local -> LocalOrganizationClient::class
           is RestImplementation.Http -> HttpOrganizationClient::class
+        }
+      }
+    }
+  }
+
+  private fun bindOrganizationAuth(binder: PrivateBinder) {
+    binder.bindRestEndpoint(SetOrganizationAuth::class)
+    binder.bindRestEndpoint(GetOrganizationAuthByOrganization::class)
+
+    binder.bindClients {
+      bind(OrganizationAuthClient::class) {
+        when (rest) {
+          is RestImplementation.Local -> LocalOrganizationAuthClient::class
+          is RestImplementation.Http -> HttpOrganizationAuthClient::class
         }
       }
     }
