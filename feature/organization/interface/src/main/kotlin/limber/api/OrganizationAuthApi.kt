@@ -19,4 +19,9 @@ public object OrganizationAuthApi {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/organizations/$organizationGuid/auth"
   }
+
+  public data class DeleteByOrganization(val organizationGuid: UUID) : RestEndpoint() {
+    override val method: HttpMethod = HttpMethod.Delete
+    override val path: String = "/organizations/$organizationGuid/auth"
+  }
 }

@@ -26,6 +26,13 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(Organizatio
       return@handle query.mapToType().singleNullOrThrow()
     }
 
+  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/organizationAuth/deleteByOrganization.sql"))
+      query.bind("organizationGuid", organizationGuid)
+      return@transaction query.mapToType().singleNullOrThrow() ?: authDoesNotExist()
+    }
+
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__organization_auth__organization_guid") ->
@@ -37,6 +44,9 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(Organizatio
 
   private fun organizationDoesNotExist(): Nothing =
     throw UnprocessableException("Organization does not exist.")
+
+  private fun authDoesNotExist(): Nothing =
+    throw UnprocessableException("Auth does not exist.")
 
   private fun auth0OrganizationIdAlreadyTaken(): Nothing =
     throw ConflictException("Auth0 organization ID already taken.")

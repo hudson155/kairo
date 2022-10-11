@@ -26,4 +26,9 @@ internal class OrganizationAuthService @Inject constructor(
 
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
     authStore.getByOrganization(organizationGuid)
+
+  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthRep {
+    logger.info { "Deleting organization." }
+    return authStore.deleteByOrganization(organizationGuid)
+  }
 }
