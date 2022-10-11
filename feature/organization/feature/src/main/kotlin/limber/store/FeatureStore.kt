@@ -4,6 +4,7 @@ import limber.exception.ConflictException
 import limber.exception.UnprocessableException
 import limber.rep.FeatureRep
 import limber.sql.SqlStore
+import limber.sql.Updater
 import limber.sql.isForeignKeyViolation
 import limber.sql.isUniqueViolation
 import org.jdbi.v3.core.kotlin.bindKotlin
@@ -43,6 +44,22 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
       return@handle query.mapToType().toList()
     }
 
+  fun setDefaultByOrganization(organizationGuid: UUID, guid: UUID): List<FeatureRep> =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/feature/setDefaultByOrganization.sql"))
+      query.bind("organizationGuid", organizationGuid)
+      query.bind("guid", guid)
+      return@transaction query.mapToType().toList()
+    }
+
+  fun update(organizationGuid: UUID, guid: UUID, updater: Updater<FeatureRep>): FeatureRep =
+    transaction { handle ->
+      val model = updater(get(organizationGuid, guid, forUpdate = true) ?: featureDoesNotExist())
+      val query = handle.createQuery(rs("store/feature/update.sql"))
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
+    }
+
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__feature__organization_guid") ->
@@ -54,6 +71,9 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
 
   private fun organizationDoesNotExist(): Nothing =
     throw UnprocessableException("Organization does not exist.")
+
+  private fun featureDoesNotExist(): Nothing =
+    throw UnprocessableException("Feature does not exist.")
 
   private fun rootPathAlreadyTaken(): Nothing =
     throw ConflictException("Root path already taken.")

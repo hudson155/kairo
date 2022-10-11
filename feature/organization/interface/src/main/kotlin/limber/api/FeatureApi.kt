@@ -24,4 +24,13 @@ public object FeatureApi {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/organizations/$organizationGuid/features"
   }
+
+  public data class Update(
+    val organizationGuid: UUID,
+    val featureGuid: UUID,
+    @field:Valid override val body: FeatureRep.Updater,
+  ) : RestEndpoint() {
+    override val method: HttpMethod = HttpMethod.Patch
+    override val path: String = "/organizations/$organizationGuid/features/$featureGuid"
+  }
 }

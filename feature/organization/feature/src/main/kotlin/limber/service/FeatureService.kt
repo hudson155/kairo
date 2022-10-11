@@ -31,4 +31,20 @@ internal class FeatureService @Inject constructor(
 
   fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
     featureStore.getByOrganization(organizationGuid)
+
+  fun update(organizationGuid: UUID, guid: UUID, updater: FeatureRep.Updater): FeatureRep {
+    logger.info { "Updating feature: $updater." }
+    if (updater.isDefault == true) {
+      featureStore.setDefaultByOrganization(organizationGuid, guid)
+    }
+    return featureStore.update(organizationGuid, guid) { existing ->
+      FeatureRep(
+        organizationGuid = existing.organizationGuid,
+        guid = existing.guid,
+        isDefault = existing.isDefault,
+        type = existing.type,
+        rootPath = updater.rootPath ?: existing.rootPath,
+      )
+    }
+  }
 }
