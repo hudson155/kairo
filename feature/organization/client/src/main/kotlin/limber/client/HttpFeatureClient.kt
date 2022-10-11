@@ -28,4 +28,9 @@ public class HttpFeatureClient @Inject constructor(
     endpoint: FeatureApi.Update,
   ): FeatureRep =
     client.request(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: FeatureApi.Delete,
+  ): FeatureRep =
+    client.request(endpoint)
 }

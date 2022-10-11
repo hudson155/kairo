@@ -33,4 +33,9 @@ public object FeatureApi {
     override val method: HttpMethod = HttpMethod.Patch
     override val path: String = "/organizations/$organizationGuid/features/$featureGuid"
   }
+
+  public data class Delete(val organizationGuid: UUID, val featureGuid: UUID) : RestEndpoint() {
+    override val method: HttpMethod = HttpMethod.Delete
+    override val path: String = "/organizations/$organizationGuid/features/$featureGuid"
+  }
 }

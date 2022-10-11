@@ -60,6 +60,14 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
       return@transaction query.mapToType().single()
     }
 
+  fun delete(organizationGuid: UUID, guid: UUID): FeatureRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/feature/delete.sql"))
+      query.bind("organizationGuid", organizationGuid)
+      query.bind("guid", guid)
+      return@transaction query.mapToType().singleNullOrThrow() ?: featureDoesNotExist()
+    }
+
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__feature__organization_guid") ->

@@ -3,6 +3,7 @@ package limber.client
 import com.google.inject.Inject
 import limber.api.FeatureApi
 import limber.endpoint.CreateFeature
+import limber.endpoint.DeleteFeature
 import limber.endpoint.GetFeature
 import limber.endpoint.GetFeaturesByOrganization
 import limber.endpoint.UpdateFeature
@@ -13,6 +14,7 @@ public class LocalFeatureClient @Inject constructor(
   private val getFeature: GetFeature,
   private val getFeaturesByOrganization: GetFeaturesByOrganization,
   private val updateFeature: UpdateFeature,
+  private val deleteFeature: DeleteFeature,
 ) : FeatureClient {
   override suspend operator fun invoke(
     endpoint: FeatureApi.Create,
@@ -33,4 +35,9 @@ public class LocalFeatureClient @Inject constructor(
     endpoint: FeatureApi.Update,
   ): FeatureRep =
     updateFeature.handle(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: FeatureApi.Delete,
+  ): FeatureRep =
+    deleteFeature.handle(endpoint)
 }

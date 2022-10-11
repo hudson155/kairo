@@ -19,4 +19,8 @@ public interface FeatureClient {
   public suspend operator fun invoke(
     endpoint: FeatureApi.Update,
   ): FeatureRep
+
+  public suspend operator fun invoke(
+    endpoint: FeatureApi.Delete,
+  ): FeatureRep
 }

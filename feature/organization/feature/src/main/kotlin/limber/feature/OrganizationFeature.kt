@@ -13,6 +13,7 @@ import limber.client.OrganizationHostnameClient
 import limber.endpoint.CreateFeature
 import limber.endpoint.CreateOrganization
 import limber.endpoint.CreateOrganizationHostname
+import limber.endpoint.DeleteFeature
 import limber.endpoint.DeleteOrganizationHostname
 import limber.endpoint.GetFeature
 import limber.endpoint.GetFeaturesByOrganization
@@ -72,6 +73,7 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
     binder.bindRestEndpoint(GetFeature::class)
     binder.bindRestEndpoint(GetFeaturesByOrganization::class)
     binder.bindRestEndpoint(UpdateFeature::class)
+    binder.bindRestEndpoint(DeleteFeature::class)
 
     binder.bindClients {
       bind(FeatureClient::class) {

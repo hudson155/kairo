@@ -247,9 +247,10 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     test {
-      // Testing string trimming and case-insensitivity.
       val updater = FeatureRep.Updater(rootPath = " /Newholder ")
-      feature = feature.copy(rootPath = "/newholder")
+      feature = feature.copy(
+        rootPath = "/newholder", // Root path should be trimmed and lowercased.
+      )
       featureClient(FeatureApi.Update(organizationGuid, feature.guid, updater))
         .shouldBe(feature)
       featureClient(FeatureApi.Get(organizationGuid, feature.guid))

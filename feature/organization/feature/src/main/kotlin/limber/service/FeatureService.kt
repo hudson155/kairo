@@ -47,4 +47,9 @@ internal class FeatureService @Inject constructor(
       )
     }
   }
+
+  fun delete(organizationGuid: UUID, guid: UUID): FeatureRep {
+    logger.info { "Deleting feature." }
+    return featureStore.delete(organizationGuid, guid)
+  }
 }
