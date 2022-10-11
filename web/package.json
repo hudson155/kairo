@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_DEBUG_GIT_SHA=$(git rev-parse --short=8 HEAD) react-scripts start",
     "test": "react-scripts test",
     "lint": "yarn lint:eslint",
     "lint:eslint": "eslint src",
