@@ -9,28 +9,28 @@ import limber.endpoint.UpdateOrganization
 import limber.rep.OrganizationRep
 
 public class LocalOrganizationClient @Inject constructor(
-  private val createOrganization: CreateOrganization,
-  private val getOrganization: GetOrganization,
-  private val getOrganizationByHostname: GetOrganizationByHostname,
-  private val updateOrganization: UpdateOrganization,
+  private val create: CreateOrganization,
+  private val get: GetOrganization,
+  private val getByHostname: GetOrganizationByHostname,
+  private val update: UpdateOrganization,
 ) : OrganizationClient {
   override suspend operator fun invoke(
     endpoint: OrganizationApi.Create,
   ): OrganizationRep =
-    createOrganization.handle(endpoint)
+    create.handle(endpoint)
 
   override suspend operator fun invoke(
     endpoint: OrganizationApi.Get,
   ): OrganizationRep? =
-    getOrganization.handle(endpoint)
+    get.handle(endpoint)
 
   override suspend operator fun invoke(
     endpoint: OrganizationApi.GetByHostname,
   ): OrganizationRep? =
-    getOrganizationByHostname.handle(endpoint)
+    getByHostname.handle(endpoint)
 
   override suspend operator fun invoke(
     endpoint: OrganizationApi.Update,
   ): OrganizationRep =
-    updateOrganization.handle(endpoint)
+    update.handle(endpoint)
 }
