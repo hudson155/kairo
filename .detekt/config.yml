@@ -52,6 +52,7 @@ complexity:
   StringLiteralDuplication:
     active: true
     excludes:
+      - '**/kotlin/limber/api/*Api.kt' # Paths necessitate string duplication.
       - '**/kotlin/limber/store/*Store.kt' # Binding arguments necessitates string duplication.
       - '**/test/**'
       - '**/androidTest/**'
