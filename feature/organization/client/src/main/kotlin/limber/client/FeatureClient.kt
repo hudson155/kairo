@@ -11,4 +11,8 @@ public interface FeatureClient {
   public suspend operator fun invoke(
     endpoint: FeatureApi.Get,
   ): FeatureRep?
+
+  public suspend operator fun invoke(
+    endpoint: FeatureApi.GetByOrganization,
+  ): List<FeatureRep>
 }

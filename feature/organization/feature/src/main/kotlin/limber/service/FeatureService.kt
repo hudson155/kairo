@@ -28,4 +28,7 @@ internal class FeatureService @Inject constructor(
 
   fun get(organizationGuid: UUID, hostnameGuid: UUID): FeatureRep? =
     featureStore.get(organizationGuid, hostnameGuid)
+
+  fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
+    featureStore.getByOrganization(organizationGuid)
 }

@@ -36,7 +36,7 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  private fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
+  fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
     handle { handle ->
       val query = handle.createQuery(rs("store/feature/getByOrganization.sql"))
       query.bind("organizationGuid", organizationGuid)

@@ -18,4 +18,9 @@ public class HttpFeatureClient @Inject constructor(
     endpoint: FeatureApi.Get,
   ): FeatureRep? =
     client.request(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: FeatureApi.GetByOrganization,
+  ): List<FeatureRep> =
+    client.request(endpoint)
 }
