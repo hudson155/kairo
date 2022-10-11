@@ -5,8 +5,8 @@ import limber.validation.Regex
 import java.util.UUID
 
 public data class OrganizationHostnameRep(
-  val guid: UUID,
   val organizationGuid: UUID,
+  val guid: UUID,
   val hostname: String,
 ) {
   public data class Creator(

@@ -71,8 +71,8 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
     test {
       val creator = OrganizationHostnameRep.Creator(hostname = " FOO.BAR.BAZ ")
       val hostname = OrganizationHostnameRep(
-        guid = guidGenerator[1],
         organizationGuid = organizationGuid,
+        guid = guidGenerator[1],
         hostname = "foo.bar.baz", // Hostname should be trimmed and lowercased.
       )
       hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))

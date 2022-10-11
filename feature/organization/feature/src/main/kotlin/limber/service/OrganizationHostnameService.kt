@@ -17,8 +17,8 @@ internal class OrganizationHostnameService @Inject constructor(
   fun create(organizationGuid: UUID, creator: OrganizationHostnameRep.Creator): OrganizationHostnameRep {
     logger.info { "Creating organization hostname: $creator." }
     val organization = OrganizationHostnameRep(
-      guid = guidGenerator.generate(),
       organizationGuid = organizationGuid,
+      guid = guidGenerator.generate(),
       hostname = creator.hostname,
     )
     return hostnameStore.create(organization)

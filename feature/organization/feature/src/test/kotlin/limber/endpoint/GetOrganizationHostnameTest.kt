@@ -38,8 +38,8 @@ internal class GetOrganizationHostnameTest : IntegrationTest() {
       val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
       hostnameClient.invoke(OrganizationHostnameApi.Create(organizationGuid, creator))
       return@testSetup OrganizationHostnameRep(
-        guid = guidGenerator[1],
         organizationGuid = organizationGuid,
+        guid = guidGenerator[1],
         hostname = "foo.bar.baz",
       )
     }
