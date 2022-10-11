@@ -29,11 +29,7 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
 
   @Test
   fun `hostname, malformed`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
-    }
+    val organizationGuid = UUID.randomUUID()
 
     test {
       shouldHaveValidationErrors("body.hostname" to "must be a valid hostname") {
@@ -73,11 +69,11 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
     }
 
     test {
-      val creator = OrganizationHostnameRep.Creator(hostname = "FOO.BAR.BAZ")
+      val creator = OrganizationHostnameRep.Creator(hostname = " FOO.BAR.BAZ ")
       val hostname = OrganizationHostnameRep(
         guid = guidGenerator[1],
         organizationGuid = organizationGuid,
-        hostname = "foo.bar.baz",
+        hostname = "foo.bar.baz", // Hostname should be trimmed and lowercased.
       )
       hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
         .shouldBe(hostname)

@@ -51,7 +51,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
 
     test {
       shouldHaveValidationErrors("body.name" to "size must be between 3 and 255") {
-        val updater = OrganizationRep.Updater(name = " Ho ")
+        val updater = OrganizationRep.Updater(name = " Li ")
         organizationClient(OrganizationApi.Update(organizationGuid, updater))
       }
     }
@@ -74,7 +74,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
   }
 
   @Test
-  fun `name, happy path`() {
+  fun `name, happy`() {
     var organization = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
       organizationClient(OrganizationApi.Create(creator))
@@ -83,7 +83,9 @@ internal class UpdateOrganizationTest : IntegrationTest() {
 
     test {
       val updater = OrganizationRep.Updater(name = " Hotel ")
-      organization = organization.copy(name = "Hotel")
+      organization = organization.copy(
+        name = "Hotel", // Name should be trimmed.
+      )
       organizationClient(OrganizationApi.Update(organization.guid, updater))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organization.guid))

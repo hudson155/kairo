@@ -31,7 +31,7 @@ internal class GetOrganizationByHostnameTest : IntegrationTest() {
       return@testSetup OrganizationRep(guid = guidGenerator[0], name = "Limber")
     }
 
-    val hostname = testSetup("Create hostname") {
+    testSetup("Create hostname") {
       val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
       hostnameClient.invoke(OrganizationHostnameApi.Create(organization.guid, creator))
       return@testSetup OrganizationHostnameRep(
@@ -42,8 +42,8 @@ internal class GetOrganizationByHostnameTest : IntegrationTest() {
     }
 
     test {
-      // Calling uppercase() on the hostname to test case-insensitivity.
-      organizationClient(OrganizationApi.GetByHostname(hostname.hostname.uppercase()))
+      // Testing case-insensitivity.
+      organizationClient(OrganizationApi.GetByHostname("FOO.BAR.BAZ"))
         .shouldBe(organization)
     }
   }

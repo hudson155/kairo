@@ -33,7 +33,10 @@ internal class CreateOrganizationTest : IntegrationTest() {
   fun happy() {
     test {
       val creator = OrganizationRep.Creator(name = " Limber ")
-      val organization = OrganizationRep(guid = guidGenerator[0], name = "Limber")
+      val organization = OrganizationRep(
+        guid = guidGenerator[0],
+        name = "Limber", // Name should be trimmed.
+      )
       organizationClient(OrganizationApi.Create(creator))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organization.guid))
