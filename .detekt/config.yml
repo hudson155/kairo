@@ -33,6 +33,7 @@ complexity:
     threshold: 300
   LongMethod:
     active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     threshold: 30
   MethodOverloading:
     active: true
