@@ -1,6 +1,10 @@
 import { DebugSettings } from 'hook/useDebugSettings';
 
 interface Env {
+  auth0: {
+    clientId: string;
+    domain: string;
+  };
   debug: DebugSettings;
   limber: {
     apiBaseUrl: string;
@@ -8,6 +12,10 @@ interface Env {
 }
 
 const env: Env = {
+  auth0: {
+    clientId: process.env.REACT_APP_AUTH0_CLIENT_ID!,
+    domain: process.env.REACT_APP_AUTH0_DOMAIN!,
+  },
   debug: {
     gitSha: process.env.REACT_APP_DEBUG_GIT_SHA!,
     showDebugMessages: JSON.parse(process.env.REACT_APP_DEBUG_SHOW_DEBUG_MESSAGES!),
