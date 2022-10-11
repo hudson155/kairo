@@ -59,6 +59,8 @@ complexity:
       - '**/jvmTest/**'
       - '**/jsTest/**'
       - '**/iosTest/**'
+  TooManyFunctions:
+    active: false
 
 coroutines:
   GlobalCoroutineUsage:
