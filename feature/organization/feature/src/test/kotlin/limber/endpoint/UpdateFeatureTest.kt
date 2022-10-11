@@ -40,7 +40,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     val feature = testSetup("Create feature") {
       val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient.invoke(FeatureApi.Create(organizationGuid, creator))
+      featureClient(FeatureApi.Create(organizationGuid, creator))
       return@testSetup FeatureRep(
         organizationGuid = organizationGuid,
         guid = guidGenerator[1],
@@ -167,7 +167,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     val feature = testSetup("Create feature") {
       val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient.invoke(FeatureApi.Create(organizationGuid, creator))
+      featureClient(FeatureApi.Create(organizationGuid, creator))
       return@testSetup FeatureRep(
         organizationGuid = organizationGuid,
         guid = guidGenerator[1],
@@ -236,7 +236,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     var feature = testSetup("Create feature") {
       val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/Placeholder")
-      featureClient.invoke(FeatureApi.Create(organizationGuid, creator))
+      featureClient(FeatureApi.Create(organizationGuid, creator))
       return@testSetup FeatureRep(
         organizationGuid = organizationGuid,
         guid = guidGenerator[1],

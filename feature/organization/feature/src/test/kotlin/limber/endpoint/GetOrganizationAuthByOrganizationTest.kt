@@ -28,13 +28,13 @@ internal class GetOrganizationAuthByOrganizationTest : IntegrationTest() {
   fun `auth exists`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
     val auth = testSetup("Create hostname") {
       val creator = OrganizationAuthRep.Creator(auth0OrganizationId = "org_abcdefghijklmnop")
-      authClient.invoke(OrganizationAuthApi.Set(organizationGuid, creator))
+      authClient(OrganizationAuthApi.Set(organizationGuid, creator))
       return@testSetup OrganizationAuthRep(
         organizationGuid = organizationGuid,
         guid = guidGenerator[1],

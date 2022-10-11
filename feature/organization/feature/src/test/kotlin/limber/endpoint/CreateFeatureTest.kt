@@ -43,7 +43,7 @@ internal class CreateFeatureTest : IntegrationTest() {
   fun `root path, duplicate`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
@@ -64,7 +64,7 @@ internal class CreateFeatureTest : IntegrationTest() {
   fun `happy, first feature`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
@@ -88,7 +88,7 @@ internal class CreateFeatureTest : IntegrationTest() {
   fun `happy, additional feature`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 

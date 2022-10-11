@@ -31,13 +31,13 @@ internal class DeleteOrganizationHostnameTest : IntegrationTest() {
   fun `hostname exists`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
     val hostname = testSetup("Create hostname") {
       val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
-      hostnameClient.invoke(OrganizationHostnameApi.Create(organizationGuid, creator))
+      hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
       return@testSetup OrganizationHostnameRep(
         organizationGuid = organizationGuid,
         guid = guidGenerator[1],

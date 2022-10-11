@@ -29,7 +29,7 @@ internal class SetOrganizationAuthTest : IntegrationTest() {
   fun `happy, initial auth`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
@@ -51,7 +51,7 @@ internal class SetOrganizationAuthTest : IntegrationTest() {
   fun `happy, subsequent auth`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 

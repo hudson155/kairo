@@ -31,13 +31,13 @@ internal class DeleteFeatureTest : IntegrationTest() {
   fun `feature exists`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
     val feature = testSetup("Create feature") {
       val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient.invoke(FeatureApi.Create(organizationGuid, creator))
+      featureClient(FeatureApi.Create(organizationGuid, creator))
       return@testSetup FeatureRep(
         organizationGuid = organizationGuid,
         guid = guidGenerator[1],

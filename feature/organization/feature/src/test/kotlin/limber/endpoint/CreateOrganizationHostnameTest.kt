@@ -43,7 +43,7 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
   fun `hostname, duplicate`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
@@ -64,7 +64,7 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
   fun happy() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 

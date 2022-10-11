@@ -27,7 +27,7 @@ internal class GetFeaturesByOrganizationTest : IntegrationTest() {
   fun `features exist`() {
     val organizationGuid = testSetup("Create organization") {
       val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient.invoke(OrganizationApi.Create(creator))
+      organizationClient(OrganizationApi.Create(creator))
       return@testSetup guidGenerator[0]
     }
 
