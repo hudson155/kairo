@@ -33,7 +33,13 @@ complexity:
     threshold: 300
   LongMethod:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
     threshold: 30
   MethodOverloading:
     active: true
@@ -45,6 +51,14 @@ complexity:
     active: true
   StringLiteralDuplication:
     active: true
+    excludes:
+      - '**/kotlin/limber/store/*Store.kt' # Binding arguments necessitates string duplication.
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
 
 coroutines:
   GlobalCoroutineUsage:
@@ -122,7 +136,13 @@ naming:
     enumEntryPattern: '[A-Z][A-Za-z0-9]*' # Enums should be PascalCase.
   FunctionMaxLength:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/commonTest/**'
+      - '**/jvmTest/**'
+      - '**/jsTest/**'
+      - '**/iosTest/**'
     maximumFunctionNameLength: 30
   FunctionMinLength:
     active: true
