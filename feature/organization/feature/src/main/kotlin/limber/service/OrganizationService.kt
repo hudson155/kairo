@@ -23,15 +23,15 @@ internal class OrganizationService @Inject constructor(
     return organizationStore.create(organization)
   }
 
-  fun get(organizationGuid: UUID): OrganizationRep? =
-    organizationStore.get(organizationGuid)
+  fun get(guid: UUID): OrganizationRep? =
+    organizationStore.get(guid)
 
   fun getByHostname(hostname: String): OrganizationRep? =
     organizationStore.getByHostname(hostname)
 
-  fun update(organizationGuid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
+  fun update(guid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
     logger.info { "Updating organization: $updater." }
-    return organizationStore.update(organizationGuid) { existing ->
+    return organizationStore.update(guid) { existing ->
       OrganizationRep(
         guid = existing.guid,
         name = updater.name ?: existing.name,

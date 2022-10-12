@@ -16,19 +16,19 @@ internal class OrganizationHostnameService @Inject constructor(
 
   fun create(organizationGuid: UUID, creator: OrganizationHostnameRep.Creator): OrganizationHostnameRep {
     logger.info { "Creating organization hostname: $creator." }
-    val organization = OrganizationHostnameRep(
+    val hostname = OrganizationHostnameRep(
       organizationGuid = organizationGuid,
       guid = guidGenerator.generate(),
       hostname = creator.hostname,
     )
-    return hostnameStore.create(organization)
+    return hostnameStore.create(hostname)
   }
 
-  fun get(organizationGuid: UUID, hostnameGuid: UUID): OrganizationHostnameRep? =
-    hostnameStore.get(organizationGuid, hostnameGuid)
+  fun get(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep? =
+    hostnameStore.get(organizationGuid, guid)
 
-  fun delete(organizationGuid: UUID, hostnameGuid: UUID): OrganizationHostnameRep {
+  fun delete(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep {
     logger.info { "Deleting organization hostname." }
-    return hostnameStore.delete(organizationGuid, hostnameGuid)
+    return hostnameStore.delete(organizationGuid, guid)
   }
 }
