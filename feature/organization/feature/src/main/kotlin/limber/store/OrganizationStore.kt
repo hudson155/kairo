@@ -21,7 +21,7 @@ internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::cl
   private fun get(guid: UUID, forUpdate: Boolean): OrganizationRep? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organization/get.sql"))
-      query.define("lockingClause", if (forUpdate) "for update" else "")
+      query.define("lockingClause", if (forUpdate) "for no key update" else "")
       query.bind("guid", guid)
       return@handle query.mapToType().singleNullOrThrow()
     }
