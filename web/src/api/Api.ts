@@ -1,6 +1,6 @@
 import axios, { Axios } from 'axios';
+import env from 'env';
 import { selector } from 'recoil';
-import { rootUrl } from '../metadata';
 
 export interface Request {
   method: 'GET',
@@ -11,7 +11,7 @@ export interface Request {
 
 export default class Api {
   private readonly axios: Axios = axios.create({
-    baseURL: rootUrl,
+    baseURL: env.limber.apiBaseUrl,
     timeout: 10_000,
     validateStatus: (status) => (status >= 200 && status < 300) || status === 404,
   });
