@@ -1,4 +1,4 @@
-import createAuth0Client, { Auth0Client } from '@auth0/auth0-spa-js';
+import { Auth0Client, createAuth0Client } from '@auth0/auth0-spa-js';
 import env from 'env';
 import { rootUrl } from 'metadata';
 import { selector } from 'recoil';
@@ -7,11 +7,14 @@ const auth0ClientState = selector<Auth0Client>({
   key: 'auth/auth0Client',
   get: async () =>
     await createAuth0Client({
-      audience: `https://${env.auth0.domain}/api/v2/`,
-      client_id: env.auth0.clientId,
+      authorizationParams: {
+        audience: `https://${env.auth0.domain}/api/v2/`,
+        redirect_uri: rootUrl,
+      },
       domain: env.auth0.domain,
-      redirect_uri: rootUrl,
+      clientId: env.auth0.clientId,
     }),
+  dangerouslyAllowMutability: true,
 });
 
 export default auth0ClientState;
