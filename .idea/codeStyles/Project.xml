@@ -41,7 +41,6 @@
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
       <option name="SUBQUERY_OPENING" value="1" />
-      <option name="SUBQUERY_CONTENT" value="2" />
       <option name="SUBQUERY_CLOSING" value="1" />
       <option name="INSERT_INTO_NL" value="2" />
       <option name="SELECT_USE_AS_WORD" value="1" />
@@ -58,15 +57,31 @@
       <option name="FORCE_QUOTE_STYlE" value="true" />
       <option name="ENFORCE_TRAILING_COMMA" value="WhenMultiline" />
       <option name="VAR_DECLARATION_WRAP" value="0" />
+      <option name="IMPORTS_WRAP" value="0" />
       <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
       <option name="IMPORT_SORT_MODULE_NAME" value="true" />
+      <option name="IMPORT_PREFER_ABSOLUTE_PATH" value="TRUE" />
     </TypeScriptCodeStyleSettings>
     <XML>
       <option name="XML_ATTRIBUTE_WRAP" value="4" />
       <option name="XML_KEEP_BLANK_LINES" value="1" />
       <option name="XML_WHITE_SPACE_AROUND_CDATA" value="1" />
     </XML>
+    <codeStyleSettings language="CSS">
+      <arrangement>
+        <rules>
+          <section>
+            <rule>
+              <match>
+                <NAME>.*</NAME>
+              </match>
+              <order>BY_NAME</order>
+            </rule>
+          </section>
+        </rules>
+      </arrangement>
+    </codeStyleSettings>
     <codeStyleSettings language="HCL-Terraform">
       <option name="KEEP_LINE_BREAKS" value="false" />
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
@@ -96,6 +111,20 @@
         <option name="TAB_SIZE" value="2" />
       </indentOptions>
     </codeStyleSettings>
+    <codeStyleSettings language="SCSS">
+      <arrangement>
+        <rules>
+          <section>
+            <rule>
+              <match>
+                <NAME>.*</NAME>
+              </match>
+              <order>BY_NAME</order>
+            </rule>
+          </section>
+        </rules>
+      </arrangement>
+    </codeStyleSettings>
     <codeStyleSettings language="SQL">
       <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
       <indentOptions>
@@ -116,8 +145,6 @@
       <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
       <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
       <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
-      <option name="PARENTHESES_EXPRESSION_LPAREN_WRAP" value="true" />
-      <option name="PARENTHESES_EXPRESSION_RPAREN_WRAP" value="true" />
       <option name="BINARY_OPERATION_SIGN_ON_NEXT_LINE" value="true" />
       <option name="TERNARY_OPERATION_WRAP" value="5" />
       <option name="TERNARY_OPERATION_SIGNS_ON_NEXT_LINE" value="true" />

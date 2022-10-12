@@ -13,7 +13,7 @@ const LogoutPage: React.FC = () => {
         returnTo: rootUrl,
       },
     });
-  }, [auth0.logout]);
+  }, [auth0]);
 
   return null;
 };
