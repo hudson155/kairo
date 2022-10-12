@@ -7,7 +7,7 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
 import limber.rep.ValidationErrorsRep
 
-public suspend inline fun shouldHaveValidationErrors(vararg errors: Pair<String, String>, block: () -> Any?) {
+public suspend inline fun shouldHaveValidationErrors(vararg errors: Pair<String, String>, block: () -> Unit) {
   val e = shouldThrow<ClientRequestException> { block() }
   e.response.status.shouldBe(HttpStatusCode.BadRequest)
   val expected = errors.map {
