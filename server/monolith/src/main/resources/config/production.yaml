@@ -7,7 +7,8 @@ guids:
 name: monolith
 
 rest:
-  allowedHosts: []
+  allowedHosts:
+    - localhost:3000
   parallelization:
     connectionGroupSize: 16
     workerGroupSize: 32
