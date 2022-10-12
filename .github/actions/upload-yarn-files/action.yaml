@@ -1,0 +1,10 @@
+name: Upload Yarn files
+description: Uploads all Yarn build files.
+runs:
+  using: composite
+  steps:
+    - uses: actions/upload-artifact@v3.1.0
+      with:
+        name: yarn-files
+        path: web/build/
+        retention-days: 1

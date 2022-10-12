@@ -34,7 +34,20 @@ jobs:
           postgresUsername: limber
           postgresPassword: limber
       - name: Upload JAR files
-        uses: ./.github/actions/upload-jar-files
+        uses: ./.github/actions/upload-gradle-files
       - name: Gradle cleanup
         if: always()
         uses: ./.github/actions/gradle-cleanup
+
+  yarn:
+    name: Yarn build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.0.2
+      - name: Set up
+        uses: ./.github/actions/set-up-node
+      - name: Yarn build
+        uses: ./.github/actions/yarn-build
+      - name: Upload JAR files
+        uses: ./.github/actions/upload-yarn-files

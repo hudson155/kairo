@@ -1,0 +1,20 @@
+name: Yarn build
+description: Builds the Yarn project, split across multiple steps.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: yarn
+      working-directory: web/
+    - shell: bash
+      if: always()
+      run: yarn test --passWithNoTests
+      working-directory: web/
+    - shell: bash
+      if: always()
+      run: yarn lint
+      working-directory: web/
+    - shell: bash
+      if: always()
+      run: yarn build
+      working-directory: web/
