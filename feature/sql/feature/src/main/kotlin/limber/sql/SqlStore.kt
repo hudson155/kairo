@@ -7,6 +7,7 @@ import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.result.ResultIterable
 import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
+import org.jdbi.v3.core.transaction.TransactionIsolationLevel
 import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
@@ -49,7 +50,7 @@ public abstract class SqlStore<T : Any>(private val type: KClass<T>) {
 }
 
 public fun <R> Jdbi.transaction(callback: (Handle) -> R): R =
-  inTransaction<R, Exception>(callback)
+  inTransaction<R, Exception>(TransactionIsolationLevel.REPEATABLE_READ, callback)
 
 public fun <R> Jdbi.handle(callback: (Handle) -> R): R =
   withHandle<R, Exception>(callback)
