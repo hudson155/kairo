@@ -1,1 +1,2 @@
-export const rootUrl: string = `${window.location.protocol}//${window.location.host}`;
+export const rootHost: string = window.location.host;
+export const rootUrl: string = `${window.location.protocol}//${rootHost}`;
