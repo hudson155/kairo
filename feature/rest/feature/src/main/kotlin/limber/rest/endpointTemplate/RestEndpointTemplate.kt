@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
  * Whereas an instance of [RestEndpoint] represents a specific call to a specific endpoint,
  * an instance of [RestEndpointTemplate] represents a parameterized (templated) endpoint.
  *
- * Instances of this class are created for each bound endpoint during server startup,
+ * Instances of this class are created for each bound endpoint during Server startup,
  * and are used to tell Ktor what method, parameterized path, and other endpoint metadata
  * to look for in request mapping.
  */

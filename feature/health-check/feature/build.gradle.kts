@@ -7,8 +7,8 @@ plugins {
 
 main {
   dependencies {
-    // The health check REST feature uses the HTTP client implementation by default.
-    // Most REST features use the Local HTTP client implementation by default.
+    // The health check REST Feature uses the HTTP client implementation by default.
+    // Most REST Features use the Local HTTP client implementation by default.
     // This is why the client module is exposed in the API.
     api(project(":feature:health-check:client"))
 

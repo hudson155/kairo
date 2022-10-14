@@ -19,7 +19,7 @@ internal class FeatureService @Inject constructor(
     val feature = FeatureRep(
       organizationGuid = organizationGuid,
       guid = guidGenerator.generate(),
-      isDefault = false, // The store will change this to true if it's the only Feature.
+      isDefault = false, // The store will change this to true if it's the only feature.
       type = creator.type,
       rootPath = creator.rootPath,
     )

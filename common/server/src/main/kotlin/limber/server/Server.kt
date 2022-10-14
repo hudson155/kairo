@@ -70,7 +70,7 @@ public abstract class Server<C : Config>(private val config: C) {
   private fun startFeatures(injector: Injector) {
     with(features.sortedBy { it.priority.ordinal }) {
       forEach { feature ->
-        logger.info { "Starting start Feature: ${feature.name}." }
+        logger.info { "Server start Feature: ${feature.name}." }
         feature.start(injector, features)
       }
       Thread.sleep(config.server.lifecycle.startupDelayMs)
