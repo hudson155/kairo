@@ -67,7 +67,7 @@ resource "postgresql_role" "limber_user_write" {
 // Cloud IAM users.
 resource "google_sql_user" "limber_iam" {
   for_each = toset([
-    "jeff@highbeam.co",
+    "jhudson@jhudson.ca",
   ])
   name     = each.value
   instance = google_sql_database_instance.limber.id
@@ -75,14 +75,14 @@ resource "google_sql_user" "limber_iam" {
 }
 resource "postgresql_grant_role" "limber_user_read" {
   for_each = toset([
-    "jeff@highbeam.co",
+    "jhudson@jhudson.ca",
   ])
   role       = each.value
   grant_role = postgresql_role.limber_user_read.name
 }
 resource "postgresql_grant_role" "limber_user_write" {
   for_each = toset([
-    "jeff@highbeam.co",
+    "jhudson@jhudson.ca",
   ])
   role       = each.value
   grant_role = postgresql_role.limber_user_write.name

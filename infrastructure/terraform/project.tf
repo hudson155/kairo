@@ -1,8 +1,3 @@
-/**
- * This project is temporary, under Highbeam's GCP account.
- * Highbeam has enough GCP credits to ensure that this is free.
- */
-
 resource "google_project" "default" {
   name            = "Jeff's playground"
   project_id      = "circular-genius"
@@ -34,7 +29,7 @@ resource "google_service_account" "deployment" {
 data "google_iam_policy" "default" {
   binding {
     role    = "roles/owner"
-    members = ["user:jeff@highbeam.co"]
+    members = ["user:jhudson@jhudson.ca"]
   }
   binding {
     role    = "roles/editor"
