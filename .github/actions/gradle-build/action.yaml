@@ -22,7 +22,7 @@ runs:
       run: ./gradlew check -PignoreTestFailures # Ignore failures for a comprehensive JUnit report.
     - shell: bash
       run: ./gradlew build
-    - uses: dorny/test-reporter@v1.5.0
+    - uses: dorny/test-reporter@v1.6.0 # https://github.com/dorny/test-reporter/releases.
       if: always()
       with:
         name: JUnit tests

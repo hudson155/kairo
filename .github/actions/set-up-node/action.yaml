@@ -3,7 +3,7 @@ description: Sets up Node.js.
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v3.5.0
+    - uses: actions/setup-node@v3.5.1 # https://github.com/actions/setup-node/tags.
       with:
         node-version-file: web/.nvmrc
         cache: yarn
