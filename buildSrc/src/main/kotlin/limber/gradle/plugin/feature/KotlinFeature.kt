@@ -10,6 +10,9 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+/**
+ * [KotlinFeature] configures the Kotlin language and closely-related aspects of the build.
+ */
 class KotlinFeature(private val kotlinPluginId: String) : PluginFeature {
   override fun configure(target: Project, context: PluginFeature.Context) {
     target.pluginManager.apply(kotlinPluginId)

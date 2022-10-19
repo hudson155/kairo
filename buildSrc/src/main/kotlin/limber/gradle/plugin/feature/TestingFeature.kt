@@ -6,6 +6,9 @@ import org.gradle.api.tasks.testing.AbstractTestTask
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.withType
 
+/**
+ * [TestingFeature] configures testing and installs the necessary dependencies.
+ */
 object TestingFeature : PluginFeature {
   override fun configure(target: Project, context: PluginFeature.Context) {
     target.tasks.withType<AbstractTestTask> {
@@ -15,7 +18,7 @@ object TestingFeature : PluginFeature {
     }
     target.tasks.withType<Test> {
       useJUnitPlatform()
-      ignoreFailures = project.hasProperty("ignoreTestFailures")
+      ignoreFailures = project.hasProperty("ignoreTestFailures") // This property may be set during CI.
     }
     context.commonTest(target).configure {
       dependencies {

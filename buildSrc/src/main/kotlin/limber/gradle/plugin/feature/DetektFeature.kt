@@ -12,20 +12,27 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.exclude
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
+/**
+ * [DetektFeature] installs and configures Detekt.
+ * Detekt will run as part of Gradle's "check" task.
+ */
 object DetektFeature : PluginFeature {
   override fun configure(target: Project, context: PluginFeature.Context) {
     target.pluginManager.apply("io.gitlab.arturbosch.detekt")
+
     target.dependencies {
       add("detektPlugins", Dependencies.Detekt.formatting) {
         exclude("org.slf4j")
       }
     }
+
     target.extensions.configure<DetektExtension> {
       toolVersion = Versions.detekt
       config = target.files("${target.rootDir}/.detekt/config.yml")
       parallel = true
       buildUponDefaultConfig = true
     }
+
     /**
      * Detekt makes the "check" task depend on the "detekt" task automatically.
      * However, since the "detekt" task doesn't support type resolution
