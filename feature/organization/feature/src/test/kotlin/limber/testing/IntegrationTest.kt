@@ -1,17 +1,17 @@
 package limber.testing
 
-import limber.client.FeatureClient
-import limber.client.OrganizationAuthClient
-import limber.client.OrganizationClient
-import limber.client.OrganizationHostnameClient
+import limber.client.feature.FeatureClient
+import limber.client.organization.OrganizationClient
+import limber.client.organizationAuth.OrganizationAuthClient
+import limber.client.organizationHostname.OrganizationHostnameClient
+import limber.config.ConfigImpl
 import limber.config.ConfigLoader
-import limber.config.OrganizationFeatureTestConfig
-import limber.feature.OrganizationFeature
 import limber.feature.TestRestFeature
-import limber.rest.RestImplementation
-import limber.sql.TestSqlFeature
+import limber.feature.organization.OrganizationFeature
+import limber.feature.rest.RestImplementation
+import limber.feature.sql.TestSqlFeature
 
-private val config = ConfigLoader.load<OrganizationFeatureTestConfig>("testing")
+private val config = ConfigLoader.load<ConfigImpl>("testing")
 
 private const val PORT: Int = 8081
 

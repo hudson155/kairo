@@ -4,9 +4,9 @@ import com.google.inject.PrivateModule
 import limber.config.ClockConfig
 import limber.config.Config
 import limber.config.GuidsConfig
-import limber.feature.guid.DeterministicGuidGenerator
-import limber.feature.guid.GuidGenerator
-import limber.feature.guid.RandomGuidGenerator
+import limber.util.guid.DeterministicGuidGenerator
+import limber.util.guid.GuidGenerator
+import limber.util.guid.RandomGuidGenerator
 import java.time.Clock
 import java.time.ZoneId
 import java.time.ZonedDateTime

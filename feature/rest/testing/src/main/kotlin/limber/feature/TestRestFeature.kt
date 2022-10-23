@@ -1,7 +1,7 @@
 package limber.feature
 
-import limber.config.RestConfig
-import limber.rest.RestFeature
+import limber.config.rest.RestConfig
+import limber.feature.rest.RestFeature
 
 public class TestRestFeature(port: Int) : RestFeature(
   RestConfig(

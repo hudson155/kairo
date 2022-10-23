@@ -1,12 +1,12 @@
 package limber.testing
 
-import limber.client.HealthCheckClient
-import limber.config.HealthCheckFeatureTestConfig
-import limber.feature.HealthCheckFeature
+import limber.client.healthCheck.HealthCheckClient
+import limber.config.ConfigImpl
 import limber.feature.TestRestFeature
-import limber.service.TestHealthCheckService
+import limber.feature.healthCheck.HealthCheckFeature
+import limber.service.healthCheck.TestHealthCheckService
 
-private val config = HealthCheckFeatureTestConfig
+private val config = ConfigImpl
 
 private const val PORT: Int = 8081
 

@@ -1,11 +1,10 @@
 package limber.service.healthCheck
 
 import com.google.inject.Inject
-import limber.client.HealthCheckClient
-import limber.model.HealthCheck
-import limber.rep.HealthCheckRep
-import limber.service.HealthCheckService
-import limber.sql.handle
+import limber.client.healthCheck.HealthCheckClient
+import limber.feature.sql.handle
+import limber.model.healthCheck.HealthCheck
+import limber.rep.healthCheck.HealthCheckRep
 import org.jdbi.v3.core.Jdbi
 
 internal class HealthCheckServiceImpl @Inject constructor(

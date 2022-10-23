@@ -3,10 +3,10 @@ package limber.testing
 import com.google.inject.Injector
 import limber.config.TestConfig
 import limber.feature.Feature
-import limber.feature.guid.DeterministicGuidGenerator
-import limber.feature.guid.GuidGenerator
 import limber.server.Server
 import limber.server.TestServer
+import limber.util.guid.DeterministicGuidGenerator
+import limber.util.guid.GuidGenerator
 
 public abstract class FeatureIntegrationTest(
   config: TestConfig,

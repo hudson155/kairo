@@ -1,5 +1,9 @@
 package limber.config
 
+import limber.config.rest.RestClientConfig
+import limber.config.rest.RestConfig
+import limber.config.sql.SqlConfig
+
 internal data class ConfigImpl(
   override val clock: ClockConfig,
   override val guids: GuidsConfig,
