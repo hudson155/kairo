@@ -3,7 +3,7 @@ package limber.sql
 import org.postgresql.util.ServerErrorMessage
 
 /**
- * Refer to https://www.postgresql.org/docs/8.3/errcodes-appendix.html for the error codes used here.
+ * Refer to https://www.postgresql.org/docs/current/errcodes-appendix.html for the error codes used here.
  */
 
 public fun ServerErrorMessage.isNotNullViolation(columnName: String): Boolean {
