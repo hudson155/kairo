@@ -29,6 +29,30 @@ internal class CreateFeatureTest : IntegrationTest() {
   }
 
   @Test
+  fun `name, too short`() {
+    val organizationGuid = UUID.randomUUID()
+
+    test {
+      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
+        val creator = FeatureFixture.home.creator.copy(name = " Ho ")
+        featureClient(FeatureApi.Create(organizationGuid, creator))
+      }
+    }
+  }
+
+  @Test
+  fun `name, too long`() {
+    val organizationGuid = UUID.randomUUID()
+
+    test {
+      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
+        val creator = FeatureFixture.home.creator.copy(name = "A".repeat(32))
+        featureClient(FeatureApi.Create(organizationGuid, creator))
+      }
+    }
+  }
+
+  @Test
   fun `root path, malformed`() {
     val organizationGuid = UUID.randomUUID()
 

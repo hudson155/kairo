@@ -32,6 +32,9 @@ alter table organization.feature
   add column type text not null;
 
 alter table organization.feature
+  add column name text not null;
+
+alter table organization.feature
   add column root_path text not null;
 alter table organization.feature
   add constraint cs__feature__root_path

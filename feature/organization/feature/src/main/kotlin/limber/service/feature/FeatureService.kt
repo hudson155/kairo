@@ -21,6 +21,7 @@ internal class FeatureService @Inject constructor(
       guid = guidGenerator.generate(),
       isDefault = false, // The store will change this to true if it's the only feature.
       type = creator.type,
+      name = creator.name,
       rootPath = creator.rootPath,
     )
     return featureStore.create(feature)
@@ -43,6 +44,7 @@ internal class FeatureService @Inject constructor(
         guid = existing.guid,
         isDefault = existing.isDefault,
         type = existing.type,
+        name = updater.name ?: existing.name,
         rootPath = updater.rootPath ?: existing.rootPath,
       )
     }

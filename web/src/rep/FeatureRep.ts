@@ -3,5 +3,6 @@ export default interface FeatureRep {
   guid: string;
   isDefault: boolean;
   type: 'Placeholder' | 'Forms';
+  name: string;
   rootPath: string;
 }

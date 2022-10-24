@@ -114,6 +114,62 @@ internal class UpdateFeatureTest : IntegrationTest() {
   }
 
   @Test
+  fun `name, too short`() {
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
+    }
+
+    val feature = testSetup("Create feature") {
+      create(organization.guid, FeatureFixture.home)
+    }
+
+    test {
+      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
+        val updater = FeatureRep.Updater(name = " Ho ")
+        featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      }
+    }
+  }
+
+  @Test
+  fun `name, too long`() {
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
+    }
+
+    val feature = testSetup("Create feature") {
+      create(organization.guid, FeatureFixture.home)
+    }
+
+    test {
+      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
+        val updater = FeatureRep.Updater(name = "A".repeat(32))
+        featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      }
+    }
+  }
+
+  @Test
+  fun `name, happy`() {
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
+    }
+
+    var feature = testSetup("Create feature") {
+      create(organization.guid, FeatureFixture.home)
+    }
+
+    test {
+      val updater = FeatureRep.Updater(name = "New name")
+      feature = feature.copy(name = "New name")
+      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+        .shouldBe(feature)
+      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+        .shouldBe(feature)
+    }
+  }
+
+  @Test
   fun `root path, malformed`() {
     val organization = testSetup("Create organization") {
       create(OrganizationFixture.acmeCo)
