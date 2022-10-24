@@ -2,7 +2,7 @@ package limber.endpoint.organization
 
 import io.kotest.matchers.shouldBe
 import limber.api.organization.OrganizationApi
-import limber.rep.organization.OrganizationRep
+import limber.fixture.organization.OrganizationFixture
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldHaveValidationErrors
 import limber.testing.test
@@ -13,7 +13,7 @@ internal class CreateOrganizationTest : IntegrationTest() {
   fun `name, too short`() {
     test {
       shouldHaveValidationErrors("body.name" to "size must be between 3 and 255") {
-        val creator = OrganizationRep.Creator(name = " Li ")
+        val creator = OrganizationFixture.acmeCo.creator.copy(name = " Li ")
         organizationClient(OrganizationApi.Create(creator))
       }
     }
@@ -23,7 +23,7 @@ internal class CreateOrganizationTest : IntegrationTest() {
   fun `name, too long`() {
     test {
       shouldHaveValidationErrors("body.name" to "size must be between 3 and 255") {
-        val creator = OrganizationRep.Creator(name = "A".repeat(256))
+        val creator = OrganizationFixture.acmeCo.creator.copy(name = "A".repeat(256))
         organizationClient(OrganizationApi.Create(creator))
       }
     }
@@ -32,13 +32,8 @@ internal class CreateOrganizationTest : IntegrationTest() {
   @Test
   fun happy() {
     test {
-      val creator = OrganizationRep.Creator(name = " Limber ")
-      val organization = OrganizationRep(
-        guid = guidGenerator[0],
-        name = "Limber", // Name should be trimmed.
-      )
-      organizationClient(OrganizationApi.Create(creator))
-        .shouldBe(organization)
+      val organization = organizationClient(OrganizationApi.Create(OrganizationFixture.acmeCo.creator))
+      organization.shouldBe(OrganizationFixture.acmeCo(guid = guidGenerator[0]))
       organizationClient(OrganizationApi.Get(organization.guid))
         .shouldBe(organization)
     }

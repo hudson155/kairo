@@ -1,10 +1,11 @@
 package limber.endpoint.organizationHostname
 
 import io.kotest.matchers.shouldBe
-import limber.api.organization.OrganizationApi
 import limber.api.organizationHostname.OrganizationHostnameApi
-import limber.rep.organization.OrganizationRep
-import limber.rep.organizationHostname.OrganizationHostnameRep
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
+import limber.fixture.organizationHostname.OrganizationHostnameFixture
+import limber.fixture.organizationHostname.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeConflict
 import limber.testing.should.shouldBeUnprocessable
@@ -21,7 +22,7 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
-        val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
+        val creator = OrganizationHostnameFixture.fooBarBaz.creator
         hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
       }
     }
@@ -33,7 +34,7 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
 
     test {
       shouldHaveValidationErrors("body.hostname" to "must be a valid hostname") {
-        val creator = OrganizationHostnameRep.Creator(hostname = "foo~bar~baz")
+        val creator = OrganizationHostnameFixture.fooBarBaz.creator.copy(hostname = "foo~bar~baz")
         hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
       }
     }
@@ -41,43 +42,33 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
 
   @Test
   fun `hostname, duplicate`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
-    testSetup("Create hostname") {
-      val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
-      hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
+    val hostname = testSetup("Create hostname") {
+      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
     }
 
     test {
       shouldBeConflict("Hostname already taken.") {
-        val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
-        hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
+        val creator = OrganizationHostnameFixture.barBazQux.creator.copy(hostname = hostname.hostname)
+        hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
       }
     }
   }
 
   @Test
   fun happy() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     test {
-      val creator = OrganizationHostnameRep.Creator(hostname = " FOO.BAR.BAZ ")
-      val hostname = OrganizationHostnameRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        hostname = "foo.bar.baz", // Hostname should be trimmed and lowercased.
-      )
-      hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
-        .shouldBe(hostname)
-      hostnameClient(OrganizationHostnameApi.Get(organizationGuid, hostname.guid))
+      val creator = OrganizationHostnameFixture.fooBarBaz.creator
+      val hostname = hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
+      hostname.shouldBe(OrganizationHostnameFixture.fooBarBaz(organization.guid, guidGenerator[1]))
+      hostnameClient(OrganizationHostnameApi.Get(organization.guid, hostname.guid))
         .shouldBe(hostname)
     }
   }

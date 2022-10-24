@@ -1,10 +1,11 @@
 package limber.endpoint.organizationHostname
 
 import io.kotest.matchers.shouldBe
-import limber.api.organization.OrganizationApi
 import limber.api.organizationHostname.OrganizationHostnameApi
-import limber.rep.organization.OrganizationRep
-import limber.rep.organizationHostname.OrganizationHostnameRep
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
+import limber.fixture.organizationHostname.OrganizationHostnameFixture
+import limber.fixture.organizationHostname.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeUnprocessable
 import limber.testing.should.shouldNotBeFound
@@ -29,27 +30,19 @@ internal class DeleteOrganizationHostnameTest : IntegrationTest() {
 
   @Test
   fun `hostname exists`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     val hostname = testSetup("Create hostname") {
-      val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
-      hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
-      return@testSetup OrganizationHostnameRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        hostname = "foo.bar.baz",
-      )
+      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
     }
 
     test {
-      hostnameClient(OrganizationHostnameApi.Delete(organizationGuid, hostname.guid))
+      hostnameClient(OrganizationHostnameApi.Delete(organization.guid, hostname.guid))
         .shouldBe(hostname)
       shouldNotBeFound {
-        hostnameClient(OrganizationHostnameApi.Get(organizationGuid, hostname.guid))
+        hostnameClient(OrganizationHostnameApi.Get(organization.guid, hostname.guid))
       }
     }
   }

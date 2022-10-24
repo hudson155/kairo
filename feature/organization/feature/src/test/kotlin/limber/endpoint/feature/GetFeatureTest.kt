@@ -2,9 +2,10 @@ package limber.endpoint.feature
 
 import io.kotest.matchers.shouldBe
 import limber.api.feature.FeatureApi
-import limber.api.organization.OrganizationApi
-import limber.rep.feature.FeatureRep
-import limber.rep.organization.OrganizationRep
+import limber.fixture.feature.FeatureFixture
+import limber.fixture.feature.create
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldNotBeFound
 import limber.testing.test
@@ -28,26 +29,16 @@ internal class GetFeatureTest : IntegrationTest() {
 
   @Test
   fun `feature exists`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     val feature = testSetup("Create feature") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true,
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+      create(organization.guid, FeatureFixture.home)
     }
 
     test {
-      featureClient(FeatureApi.Get(organizationGuid, feature.guid))
+      featureClient(FeatureApi.Get(organization.guid, feature.guid))
         .shouldBe(feature)
     }
   }

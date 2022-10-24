@@ -1,10 +1,11 @@
 package limber.endpoint.organizationAuth
 
 import io.kotest.matchers.shouldBe
-import limber.api.organization.OrganizationApi
 import limber.api.organizationAuth.OrganizationAuthApi
-import limber.rep.organization.OrganizationRep
-import limber.rep.organizationAuth.OrganizationAuthRep
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
+import limber.fixture.organizationAuth.OrganizationAuthFixture
+import limber.fixture.organizationAuth.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldNotBeFound
 import limber.testing.test
@@ -26,24 +27,16 @@ internal class GetOrganizationAuthByOrganizationTest : IntegrationTest() {
 
   @Test
   fun `auth exists`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     val auth = testSetup("Create auth") {
-      val creator = OrganizationAuthRep.Creator(auth0OrganizationId = "org_abcdefghijklmnop")
-      authClient(OrganizationAuthApi.Set(organizationGuid, creator))
-      return@testSetup OrganizationAuthRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        auth0OrganizationId = "org_abcdefghijklmnop",
-      )
+      create(organization.guid, OrganizationAuthFixture.acmeCo)
     }
 
     test {
-      authClient(OrganizationAuthApi.GetByOrganization(organizationGuid))
+      authClient(OrganizationAuthApi.GetByOrganization(organization.guid))
         .shouldBe(auth)
     }
   }

@@ -25,15 +25,15 @@ internal abstract class IntegrationTest : FeatureIntegrationTest(
     TestSqlFeature(config.sql, schemaName = "organization"),
   ),
 ) {
-  protected val organizationClient: OrganizationClient =
+  internal val organizationClient: OrganizationClient =
     injector.getInstance(OrganizationClient::class.java)
 
-  protected val authClient: OrganizationAuthClient =
+  internal val authClient: OrganizationAuthClient =
     injector.getInstance(OrganizationAuthClient::class.java)
 
-  protected val hostnameClient: OrganizationHostnameClient =
+  internal val hostnameClient: OrganizationHostnameClient =
     injector.getInstance(OrganizationHostnameClient::class.java)
 
-  protected val featureClient: FeatureClient =
+  internal val featureClient: FeatureClient =
     injector.getInstance(FeatureClient::class.java)
 }

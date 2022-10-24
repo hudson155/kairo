@@ -1,10 +1,11 @@
 package limber.endpoint.organizationAuth
 
 import io.kotest.matchers.shouldBe
-import limber.api.organization.OrganizationApi
 import limber.api.organizationAuth.OrganizationAuthApi
-import limber.rep.organization.OrganizationRep
-import limber.rep.organizationAuth.OrganizationAuthRep
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
+import limber.fixture.organizationAuth.OrganizationAuthFixture
+import limber.fixture.organizationAuth.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeUnprocessable
 import limber.testing.test
@@ -19,7 +20,7 @@ internal class SetOrganizationAuthTest : IntegrationTest() {
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
-        val creator = OrganizationAuthRep.Creator(auth0OrganizationId = "org_abcdefghijklmnop")
+        val creator = OrganizationAuthFixture.acmeCo.creator
         authClient(OrganizationAuthApi.Set(organizationGuid, creator))
       }
     }
@@ -27,54 +28,35 @@ internal class SetOrganizationAuthTest : IntegrationTest() {
 
   @Test
   fun `happy, initial auth`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     test {
-      val creator = OrganizationAuthRep.Creator(auth0OrganizationId = "org_abcdefghijklmnop")
-      val auth = OrganizationAuthRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        auth0OrganizationId = "org_abcdefghijklmnop",
-      )
-      authClient(OrganizationAuthApi.Set(organizationGuid, creator))
-        .shouldBe(auth)
-      authClient(OrganizationAuthApi.GetByOrganization(organizationGuid))
-        .shouldBe(auth)
+      val creator = OrganizationAuthFixture.acmeCo.creator
+      authClient(OrganizationAuthApi.Set(organization.guid, creator))
+        .shouldBe(OrganizationAuthFixture.acmeCo(organization.guid, guidGenerator[1]))
     }
   }
 
   @Test
   fun `happy, subsequent auth`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     testSetup("Create auth") {
-      val creator = OrganizationAuthRep.Creator(auth0OrganizationId = "org_abcdefghijklmnop")
-      OrganizationAuthRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        auth0OrganizationId = "org_abcdefghijklmnop",
-      )
-      authClient(OrganizationAuthApi.Set(organizationGuid, creator))
+      create(organization.guid, OrganizationAuthFixture.acmeCo)
     }
 
     test {
-      val creator = OrganizationAuthRep.Creator(auth0OrganizationId = "org_bcdefghijklmnopq")
-      val auth = OrganizationAuthRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        auth0OrganizationId = "org_bcdefghijklmnopq",
+      val creator = OrganizationAuthFixture.acmeCo.creator.copy(auth0OrganizationId = "org_bcdefghijklmnopq")
+      val auth = authClient(OrganizationAuthApi.Set(organization.guid, creator))
+      auth.shouldBe(
+        OrganizationAuthFixture.acmeCo(organization.guid, guidGenerator[1])
+          .copy(auth0OrganizationId = "org_bcdefghijklmnopq"),
       )
-      authClient(OrganizationAuthApi.Set(organizationGuid, creator))
-        .shouldBe(auth)
-      authClient(OrganizationAuthApi.GetByOrganization(organizationGuid))
+      authClient(OrganizationAuthApi.GetByOrganization(organization.guid))
         .shouldBe(auth)
     }
   }

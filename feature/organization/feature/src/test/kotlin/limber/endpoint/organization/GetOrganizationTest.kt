@@ -2,7 +2,8 @@ package limber.endpoint.organization
 
 import io.kotest.matchers.shouldBe
 import limber.api.organization.OrganizationApi
-import limber.rep.organization.OrganizationRep
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldNotBeFound
 import limber.testing.test
@@ -25,9 +26,7 @@ internal class GetOrganizationTest : IntegrationTest() {
   @Test
   fun `organization exists`() {
     val organization = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup OrganizationRep(guid = guidGenerator[0], name = "Limber")
+      create(OrganizationFixture.acmeCo)
     }
 
     test {

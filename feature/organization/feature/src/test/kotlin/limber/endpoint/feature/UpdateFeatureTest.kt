@@ -3,9 +3,11 @@ package limber.endpoint.feature
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import limber.api.feature.FeatureApi
-import limber.api.organization.OrganizationApi
+import limber.fixture.feature.FeatureFixture
+import limber.fixture.feature.create
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
 import limber.rep.feature.FeatureRep
-import limber.rep.organization.OrganizationRep
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeConflict
 import limber.testing.should.shouldBeUnprocessable
@@ -32,29 +34,19 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
   @Test
   fun `no updates`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     val feature = testSetup("Create feature") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true,
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+      create(organization.guid, FeatureFixture.home)
     }
 
     test {
       val updater = FeatureRep.Updater()
-      featureClient(FeatureApi.Update(organizationGuid, feature.guid, updater))
+      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organizationGuid, feature.guid))
+      featureClient(FeatureApi.Get(organization.guid, feature.guid))
         .shouldBe(feature)
     }
   }
@@ -75,185 +67,108 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
   @Test
   fun `is default, happy`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
-    var feature0 = testSetup("Create feature (0)") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Forms, rootPath = "/forms")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true, // The first feature should be default.
-        type = FeatureRep.Type.Forms,
-        rootPath = "/forms",
-      )
+    var homeFeature = testSetup("Create feature (Home)") {
+      create(organization.guid, FeatureFixture.home)
     }
 
-    var feature1 = testSetup("Create feature (1)") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[2],
-        isDefault = false, // An additional feature should not be default.
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+    var myFormsFeature = testSetup("Create feature (My forms)") {
+      create(organization.guid, FeatureFixture.myForms)
     }
 
     test {
       val updater = FeatureRep.Updater(isDefault = true)
-      feature0 = feature0.copy(isDefault = false)
-      feature1 = feature1.copy(isDefault = true)
-      featureClient(FeatureApi.Update(organizationGuid, feature1.guid, updater))
-        .shouldBe(feature1)
-      featureClient(FeatureApi.GetByOrganization(organizationGuid))
-        .shouldContainExactlyInAnyOrder(feature0, feature1)
+      homeFeature = homeFeature.copy(isDefault = false)
+      myFormsFeature = myFormsFeature.copy(isDefault = true)
+      featureClient(FeatureApi.Update(organization.guid, myFormsFeature.guid, updater))
+        .shouldBe(myFormsFeature)
+      featureClient(FeatureApi.GetByOrganization(organization.guid))
+        .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }
 
   @Test
   fun `is default, happy, idempotent`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
-    val feature0 = testSetup("Create feature (0)") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Forms, rootPath = "/forms")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true, // The first feature should be default.
-        type = FeatureRep.Type.Forms,
-        rootPath = "/forms",
-      )
+    val homeFeature = testSetup("Create feature (Home)") {
+      create(organization.guid, FeatureFixture.home)
     }
 
-    val feature1 = testSetup("Create feature (1)") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[2],
-        isDefault = false, // An additional feature should not be default.
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+    val myFormsFeature = testSetup("Create feature (My forms)") {
+      create(organization.guid, FeatureFixture.myForms)
     }
 
     test {
       val updater = FeatureRep.Updater(isDefault = true)
-      featureClient(FeatureApi.Update(organizationGuid, feature0.guid, updater))
-        .shouldBe(feature0)
-      featureClient(FeatureApi.GetByOrganization(organizationGuid))
-        .shouldContainExactlyInAnyOrder(feature0, feature1)
+      featureClient(FeatureApi.Update(organization.guid, homeFeature.guid, updater))
+        .shouldBe(homeFeature)
+      featureClient(FeatureApi.GetByOrganization(organization.guid))
+        .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }
 
   @Test
   fun `root path, malformed`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     val feature = testSetup("Create feature") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true,
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+      create(organization.guid, FeatureFixture.home)
     }
 
     test {
       shouldHaveValidationErrors("body.rootPath" to "must be a valid path") {
         val updater = FeatureRep.Updater(rootPath = "/place~holder")
-        featureClient(FeatureApi.Update(organizationGuid, feature.guid, updater))
+        featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
       }
     }
   }
 
   @Test
   fun `root path, duplicate`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
-    testSetup("Create feature (0)") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Forms, rootPath = "/forms")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true, // The first feature should be default.
-        type = FeatureRep.Type.Forms,
-        rootPath = "/forms",
-      )
+    val homeFeature = testSetup("Create feature (Home)") {
+      create(organization.guid, FeatureFixture.home)
     }
 
-    val feature1 = testSetup("Create feature (1)") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[2],
-        isDefault = false, // An additional feature should not be default.
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+    val myFormsFeature = testSetup("Create feature (My forms)") {
+      create(organization.guid, FeatureFixture.myForms)
     }
 
     test {
       shouldBeConflict("Root path already taken.") {
-        // Testing string trimming and case-insensitivity.
-        val updater = FeatureRep.Updater(rootPath = " /Forms ")
-        featureClient(FeatureApi.Update(organizationGuid, feature1.guid, updater))
+        val updater = FeatureRep.Updater(rootPath = homeFeature.rootPath)
+        featureClient(FeatureApi.Update(organization.guid, myFormsFeature.guid, updater))
       }
     }
   }
 
   @Test
   fun `root path, happy`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     var feature = testSetup("Create feature") {
-      val creator = FeatureRep.Creator(type = FeatureRep.Type.Placeholder, rootPath = "/Placeholder")
-      featureClient(FeatureApi.Create(organizationGuid, creator))
-      return@testSetup FeatureRep(
-        organizationGuid = organizationGuid,
-        guid = guidGenerator[1],
-        isDefault = true,
-        type = FeatureRep.Type.Placeholder,
-        rootPath = "/placeholder",
-      )
+      create(organization.guid, FeatureFixture.home)
     }
 
     test {
-      val updater = FeatureRep.Updater(rootPath = " /Newholder ")
-      feature = feature.copy(
-        rootPath = "/newholder", // Root path should be trimmed and lowercased.
-      )
-      featureClient(FeatureApi.Update(organizationGuid, feature.guid, updater))
+      val updater = FeatureRep.Updater(rootPath = "/new-path")
+      feature = feature.copy(rootPath = "/new-path")
+      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organizationGuid, feature.guid))
+      featureClient(FeatureApi.Get(organization.guid, feature.guid))
         .shouldBe(feature)
     }
   }

@@ -2,6 +2,8 @@ package limber.endpoint.organization
 
 import io.kotest.matchers.shouldBe
 import limber.api.organization.OrganizationApi
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
 import limber.rep.organization.OrganizationRep
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeUnprocessable
@@ -12,13 +14,14 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class UpdateOrganizationTest : IntegrationTest() {
+  private val updater: OrganizationRep.Updater = OrganizationRep.Updater(name = " Hotel ")
+
   @Test
   fun `organization does not exist`() {
     val organizationGuid = UUID.randomUUID()
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
-        val updater = OrganizationRep.Updater(name = "Hotel")
         organizationClient(OrganizationApi.Update(organizationGuid, updater))
       }
     }
@@ -27,9 +30,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
   @Test
   fun `no updates`() {
     val organization = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup OrganizationRep(guid = guidGenerator[0], name = "Limber")
+      create(OrganizationFixture.acmeCo)
     }
 
     test {
@@ -43,32 +44,28 @@ internal class UpdateOrganizationTest : IntegrationTest() {
 
   @Test
   fun `name, too short`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     test {
       shouldHaveValidationErrors("body.name" to "size must be between 3 and 255") {
-        val updater = OrganizationRep.Updater(name = " Li ")
-        organizationClient(OrganizationApi.Update(organizationGuid, updater))
+        val updater = updater.copy(name = " Li ")
+        organizationClient(OrganizationApi.Update(organization.guid, updater))
       }
     }
   }
 
   @Test
   fun `name, too long`() {
-    val organizationGuid = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup guidGenerator[0]
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
     }
 
     test {
       shouldHaveValidationErrors("body.name" to "size must be between 3 and 255") {
-        val updater = OrganizationRep.Updater(name = "A".repeat(256))
-        organizationClient(OrganizationApi.Update(organizationGuid, updater))
+        val updater = updater.copy(name = "A".repeat(256))
+        organizationClient(OrganizationApi.Update(organization.guid, updater))
       }
     }
   }
@@ -76,16 +73,11 @@ internal class UpdateOrganizationTest : IntegrationTest() {
   @Test
   fun `name, happy`() {
     var organization = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup OrganizationRep(guid = guidGenerator[0], name = "Hotel")
+      create(OrganizationFixture.acmeCo)
     }
 
     test {
-      val updater = OrganizationRep.Updater(name = " Hotel ")
-      organization = organization.copy(
-        name = "Hotel", // Name should be trimmed.
-      )
+      organization = organization.copy(name = "Hotel")
       organizationClient(OrganizationApi.Update(organization.guid, updater))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organization.guid))

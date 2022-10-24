@@ -2,9 +2,10 @@ package limber.endpoint.organization
 
 import io.kotest.matchers.shouldBe
 import limber.api.organization.OrganizationApi
-import limber.api.organizationHostname.OrganizationHostnameApi
-import limber.rep.organization.OrganizationRep
-import limber.rep.organizationHostname.OrganizationHostnameRep
+import limber.fixture.organization.OrganizationFixture
+import limber.fixture.organization.create
+import limber.fixture.organizationHostname.OrganizationHostnameFixture
+import limber.fixture.organizationHostname.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldNotBeFound
 import limber.testing.test
@@ -26,24 +27,15 @@ internal class GetOrganizationByHostnameTest : IntegrationTest() {
   @Test
   fun `organization exists`() {
     val organization = testSetup("Create organization") {
-      val creator = OrganizationRep.Creator(name = "Limber")
-      organizationClient(OrganizationApi.Create(creator))
-      return@testSetup OrganizationRep(guid = guidGenerator[0], name = "Limber")
+      create(OrganizationFixture.acmeCo)
     }
 
     testSetup("Create hostname") {
-      val creator = OrganizationHostnameRep.Creator(hostname = "foo.bar.baz")
-      hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
-      return@testSetup OrganizationHostnameRep(
-        organizationGuid = organization.guid,
-        guid = guidGenerator[1],
-        hostname = "foo.bar.baz",
-      )
+      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
     }
 
     test {
-      // Testing case-insensitivity.
-      organizationClient(OrganizationApi.GetByHostname("FOO.BAR.BAZ"))
+      organizationClient(OrganizationApi.GetByHostname("foo.bar.baz"))
         .shouldBe(organization)
     }
   }

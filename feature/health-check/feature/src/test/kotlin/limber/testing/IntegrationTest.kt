@@ -18,6 +18,6 @@ internal abstract class IntegrationTest : FeatureIntegrationTest(
   ),
   supportingFeatures = setOf(TestRestFeature(port = PORT)),
 ) {
-  protected val healthCheckClient: HealthCheckClient =
+  internal val healthCheckClient: HealthCheckClient =
     injector.getInstance(HealthCheckClient::class.java)
 }
