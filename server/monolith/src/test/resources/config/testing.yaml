@@ -17,9 +17,9 @@ sql:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_TEST_SQL_USERNAME
+        value: LIMBER_TEST_SQL_USERNAME # Used by CI.
     password:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_TEST_SQL_PASSWORD
+        value: LIMBER_TEST_SQL_PASSWORD # Used by CI.

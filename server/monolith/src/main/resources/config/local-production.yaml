@@ -7,12 +7,12 @@ sql:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_SQL_JDBC_URL
+        value: LIMBER_SQL_JDBC_URL # This must be set in the environment for the config to work.
     username:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_SQL_USERNAME
+        value: LIMBER_SQL_USERNAME # This must be set in the environment for the config to work.
     password:
       type: Replace
       value:

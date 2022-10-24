@@ -4,7 +4,7 @@ import limber.config.rest.RestClientConfig
 import limber.config.rest.RestConfig
 import limber.config.sql.SqlConfig
 
-internal data class ConfigImpl(
+internal data class MonolithServerConfig(
   override val clock: ClockConfig,
   override val guids: GuidsConfig,
   override val name: String,
