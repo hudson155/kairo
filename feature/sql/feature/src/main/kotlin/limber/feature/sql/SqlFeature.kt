@@ -60,6 +60,7 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
     logger.info { "Running SQL migrations..." }
     val flyway = Flyway.configure()
       .cleanOnValidationError(config.migrations.cleanOnValidationError)
+      .cleanDisabled(config.migrations.cleanDisabled)
       .locations(*config.migrations.locations.toTypedArray())
       .defaultSchema(config.migrations.defaultSchema)
       .schemas(*config.migrations.schemas.toTypedArray())

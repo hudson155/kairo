@@ -22,6 +22,7 @@ public data class SqlConfig(
   public data class Migrations(
     val run: Boolean,
     val cleanOnValidationError: Boolean,
+    val cleanDisabled: Boolean,
     val locations: List<String>,
     val defaultSchema: String,
     val schemas: List<String>,

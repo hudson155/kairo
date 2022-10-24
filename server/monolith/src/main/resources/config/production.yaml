@@ -41,6 +41,7 @@ sql:
   migrations:
     run: true
     cleanOnValidationError: false
+    cleanDisabled: true
     locations:
       - db/limber/migration/common
       - db/limber/migration/gcp
