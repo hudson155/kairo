@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.exclude
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 /**
- * [DetektFeature] installs and configures Detekt.
+ * Installs and configures Detekt.
  * Detekt will run as part of Gradle's "check" task.
  */
 object DetektFeature : PluginFeature {

@@ -7,7 +7,7 @@ import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.withType
 
 /**
- * [TestingFeature] configures testing and installs the necessary dependencies.
+ * Configures testing and installs the necessary dependencies.
  */
 object TestingFeature : PluginFeature {
   override fun configure(target: Project, context: PluginFeature.Context) {

@@ -4,7 +4,7 @@ import limber.gradle.Dependencies
 import org.gradle.api.Project
 
 /**
- * [DependenciesFeature] installs default dependencies.
+ * Installs default dependencies.
  * These will apply for every module that uses the plugin.
  */
 object DependenciesFeature : PluginFeature {

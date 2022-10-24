@@ -3,7 +3,7 @@ package limber.gradle.plugin.feature
 import org.gradle.api.Project
 
 /**
- * [ProjectDependenciesFeature] installs a list of project dependencies in all Gradle modules.
+ * Installs a list of project dependencies in all Gradle modules.
  * To avoid recursive dependency issues,
  * modules listed here will only have those dependencies listed prior,
  * but all modules not listed here will have the entire list.
