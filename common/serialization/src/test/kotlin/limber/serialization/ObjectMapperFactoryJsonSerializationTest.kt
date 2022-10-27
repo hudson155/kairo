@@ -1,7 +1,7 @@
 package limber.serialization
 
 internal class ObjectMapperFactoryJsonSerializationTest : ObjectMapperFactorySerializationTest(
-  dataFormat = ObjectMapperFactory.Format.JSON,
+  dataFormat = ObjectMapperFactory.Format.Json,
 ) {
   override val simpleData = "{\"string\":\"val\",\"int\":42,\"boolean\":true}"
   override val simpleDataNull = "{\"string\":null,\"int\":null,\"boolean\":null}"

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
 
 public object ObjectMapperFactory {
-  public enum class Format { JSON, YAML }
+  public enum class Format { Json, Yaml }
 
   public fun builder(format: Format): Builder = Builder(factory(format))
 
@@ -42,8 +42,8 @@ public object ObjectMapperFactory {
 
 private fun factory(format: ObjectMapperFactory.Format): JsonFactory =
   when (format) {
-    ObjectMapperFactory.Format.JSON -> JsonFactory()
-    ObjectMapperFactory.Format.YAML -> YAMLFactory()
+    ObjectMapperFactory.Format.Json -> JsonFactory()
+    ObjectMapperFactory.Format.Yaml -> YAMLFactory()
       .configure(YAMLGenerator.Feature.WRITE_DOC_START_MARKER, false)
       .configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true)
       .configure(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR, true)

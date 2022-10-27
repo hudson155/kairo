@@ -11,7 +11,7 @@ import limber.type.ProtectedString
 import org.junit.jupiter.api.Test
 
 internal class ProtectedConfigStringDeserializerTest {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
 
   data class Config(
     @JsonDeserialize(using = ProtectedConfigStringDeserializer::class)

@@ -10,7 +10,7 @@ import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
 
 internal class ConfigStringDeserializerTest {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
 
   data class Config(
     @JsonDeserialize(using = ConfigStringDeserializer::class)

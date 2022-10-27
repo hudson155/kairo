@@ -1,7 +1,7 @@
 package limber.serialization
 
 internal class ObjectMapperFactoryJsonDeserializationTest : ObjectMapperFactoryDeserializationTest(
-  dataFormat = ObjectMapperFactory.Format.JSON,
+  dataFormat = ObjectMapperFactory.Format.Json,
 ) {
   override val invalidDataMissing = "{}\n"
   override val invalidDataNull = """

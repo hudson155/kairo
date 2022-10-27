@@ -8,7 +8,7 @@ import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
 
 internal class ProtectedStringTest {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
 
   @Test
   fun `equals method`() {

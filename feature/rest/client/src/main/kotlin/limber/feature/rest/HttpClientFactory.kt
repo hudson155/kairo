@@ -27,7 +27,7 @@ public class HttpClientFactory(private val baseUrl: String) : PrivateModule() {
     @Named(BASE_URL) private val baseUrl: String,
   ) : com.google.inject.Provider<HttpClient> {
     override fun get(): HttpClient {
-      val objectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).build()
+      val objectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
       return HttpClient(CIO) {
         install(ContentNegotiation) {
           register(contentType = ContentType.Application.Json, converter = JacksonConverter(objectMapper))

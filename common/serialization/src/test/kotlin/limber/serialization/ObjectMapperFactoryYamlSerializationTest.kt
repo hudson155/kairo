@@ -1,7 +1,7 @@
 package limber.serialization
 
 internal class ObjectMapperFactoryYamlSerializationTest : ObjectMapperFactorySerializationTest(
-  dataFormat = ObjectMapperFactory.Format.YAML,
+  dataFormat = ObjectMapperFactory.Format.Yaml,
 ) {
   override val simpleData = """
     string: val

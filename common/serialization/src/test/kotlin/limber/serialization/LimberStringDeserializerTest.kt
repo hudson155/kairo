@@ -83,7 +83,7 @@ internal class LimberStringDeserializerTest {
   }
 
   private fun objectMapper(withStringTrimModule: Boolean): ObjectMapper =
-    ObjectMapperFactory.builder(ObjectMapperFactory.Format.JSON).apply {
+    ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).apply {
       if (withStringTrimModule) addModule(StringTrimModule)
     }.build()
 

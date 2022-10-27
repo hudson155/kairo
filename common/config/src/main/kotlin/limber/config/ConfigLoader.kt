@@ -14,7 +14,7 @@ import kotlin.reflect.KClass
  * Loads configs from YAML files.
  */
 public object ConfigLoader {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.YAML).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Yaml).build()
 
   public inline fun <reified C : Config> load(configName: String): C =
     load(configName, C::class)
