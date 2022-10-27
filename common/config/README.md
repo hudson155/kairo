@@ -1,8 +1,27 @@
 # Config library
 
 Servers are configured by YAML files.
-While these map directly to data classes (hence no library code is required),
-sometimes it's necessary for config values to come from indirect sources.
+These YAML files should be placed in the `resources` folder
+```
+resources/
+└─ config/
+   ├─ development.yaml
+   └─ production.yaml
+```
+
+The config for a Server will correspond with a data class extending `Config`.
+
+## Loading configs
+
+Use `ConfigLoader` to load configs.
+```kotlin
+// Will load the config/production.yaml resource.
+ConfigLoader.load<MyServerConfig>("production")
+```
+
+## Special deserialization
+
+Sometimes it's necessary for config values to come from indirect sources.
 
 This library supports the following sources:
 
