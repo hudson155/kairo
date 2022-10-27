@@ -9,8 +9,8 @@ main {
   dependencies {
     api(project(":common:server:testing"))
 
-    implementation(Dependencies.Testing.Junit.api)
-    api(Dependencies.Testing.Kotest.assertions)
-    api(Dependencies.Testing.mockK)
+    api(Dependencies.Testing.Junit.api) // Make this available to library users.
+    api(Dependencies.Testing.Kotest.assertions) // Make this available to library users.
+    api(Dependencies.Testing.mockK) // Make this available to library users.
   }
 }
