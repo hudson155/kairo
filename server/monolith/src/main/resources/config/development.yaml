@@ -41,6 +41,7 @@ sql:
       value:
         locations:
           - db/limber/migration/common
+          - db/limber/migration/fixtures
     connectionTimeoutMs: 1000
     minimumIdle: 2
     maximumPoolSize: 8
