@@ -3,7 +3,7 @@
 Adding `RestFeature` to a Server allows for HTTP endpoints to be bound.
 This is necessary for all Servers, even if the Server is not inherently RESTful
 (such as Servers that handle asynchronous event processing)
-because a health check GET endpoint is necessary.
+because a health check GET endpoints are necessary.
 
 ## Usage
 
@@ -54,7 +54,7 @@ public class GetCelebrity
 }
 ```
 
-Now, bind this endpoint handlers in the respective Feature.
+Now, bind these endpoint handlers in the respective Feature.
 
 ```kotlin
 bindRestEndpoint(ListCelebrities::class)

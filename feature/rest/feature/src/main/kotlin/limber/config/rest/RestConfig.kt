@@ -1,12 +1,18 @@
 package limber.config.rest
 
 public data class RestConfig(
+  /**
+   * CORS restrictions will only allow browser requests from hosts in this list.
+   */
   val allowedHosts: List<String>,
   val parallelization: Parallelization,
   val port: Int,
   val serverName: String,
   val shutDown: ShutDown,
 ) {
+  /**
+   * See the Netty documentation for more detail about how these work.
+   */
   public data class Parallelization(
     val connectionGroupSize: Int,
     val workerGroupSize: Int,
