@@ -1,4 +1,3 @@
-import limber.gradle.Dependencies
 import limber.gradle.main
 
 plugins {
@@ -7,11 +6,7 @@ plugins {
 
 main {
   dependencies {
-    api(project(":common:config"))
-    api(project(":common:feature"))
-    implementation(project(":common:serialization"))
-
-    implementation(Dependencies.Logging.Log4j.core)
-    implementation(Dependencies.Logging.Log4j.slf4jImpl)
+    api(project(":common:config")) // Make the config library available to all Servers.
+    api(project(":common:feature")) // Make the feature library available to all Servers.
   }
 }
