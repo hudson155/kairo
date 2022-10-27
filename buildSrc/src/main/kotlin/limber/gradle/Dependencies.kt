@@ -130,6 +130,8 @@ object Dependencies {
         .version(Versions.junit)
       val engine: String = "org.junit.jupiter:junit-jupiter-engine"
         .version(Versions.junit)
+      val params: String = "org.junit.jupiter:junit-jupiter-params"
+        .version(Versions.junit)
     }
 
     object Kotest {

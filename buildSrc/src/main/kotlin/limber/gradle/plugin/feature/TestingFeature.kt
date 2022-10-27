@@ -29,6 +29,7 @@ object TestingFeature : PluginFeature {
       dependencies {
         implementation(Dependencies.Testing.Junit.api)
         runtimeOnly(Dependencies.Testing.Junit.engine)
+        implementation(Dependencies.Testing.Junit.params)
       }
     }
   }
