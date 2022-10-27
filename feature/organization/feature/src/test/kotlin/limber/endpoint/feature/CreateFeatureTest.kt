@@ -57,7 +57,7 @@ internal class CreateFeatureTest : IntegrationTest() {
     val organizationGuid = UUID.randomUUID()
 
     test {
-      shouldHaveValidationErrors("body.rootPath" to "must be a valid path") {
+      shouldHaveValidationErrors("body.rootPath" to "must be a valid feature path") {
         val creator = FeatureFixture.home.creator.copy(rootPath = "/place~holder")
         featureClient(FeatureApi.Create(organizationGuid, creator))
       }

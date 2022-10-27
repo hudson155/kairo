@@ -1,7 +1,7 @@
 package limber.rep.organizationHostname
 
 import jakarta.validation.constraints.Pattern
-import limber.validation.Regex
+import limber.validation.HostnameValidator
 import java.util.UUID
 
 public data class OrganizationHostnameRep(
@@ -10,6 +10,9 @@ public data class OrganizationHostnameRep(
   val hostname: String,
 ) {
   public data class Creator(
-    @field:Pattern(regexp = Regex.Hostname.regex, message = Regex.Hostname.message) val hostname: String,
+    @field:Pattern(
+      regexp = HostnameValidator.pattern,
+      message = HostnameValidator.message,
+    ) val hostname: String,
   )
 }

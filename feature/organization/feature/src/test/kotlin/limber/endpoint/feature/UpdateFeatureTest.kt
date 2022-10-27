@@ -180,7 +180,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     test {
-      shouldHaveValidationErrors("body.rootPath" to "must be a valid path") {
+      shouldHaveValidationErrors("body.rootPath" to "must be a valid feature path") {
         val updater = FeatureRep.Updater(rootPath = "/place~holder")
         featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
       }
