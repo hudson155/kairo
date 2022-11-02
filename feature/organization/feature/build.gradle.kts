@@ -7,6 +7,7 @@ plugins {
 
 main {
   dependencies {
+    implementation(project(":feature:organization:auth"))
     api(project(":feature:organization:interface"))
     implementation(project(":feature:organization:client"))
 
