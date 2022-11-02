@@ -15,6 +15,11 @@ public class HttpOrganizationAuthClient @Inject constructor(
     client.request(endpoint)
 
   override suspend operator fun invoke(
+    endpoint: OrganizationAuthApi.GetByHostname,
+  ): OrganizationAuthRep? =
+    client.request(endpoint)
+
+  override suspend operator fun invoke(
     endpoint: OrganizationAuthApi.Set,
   ): OrganizationAuthRep =
     client.request(endpoint)

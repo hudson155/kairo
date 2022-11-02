@@ -9,6 +9,10 @@ public interface OrganizationAuthClient {
   ): OrganizationAuthRep?
 
   public suspend operator fun invoke(
+    endpoint: OrganizationAuthApi.GetByHostname,
+  ): OrganizationAuthRep?
+
+  public suspend operator fun invoke(
     endpoint: OrganizationAuthApi.Set,
   ): OrganizationAuthRep
 

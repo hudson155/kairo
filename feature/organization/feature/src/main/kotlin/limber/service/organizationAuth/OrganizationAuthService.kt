@@ -17,6 +17,9 @@ internal class OrganizationAuthService @Inject constructor(
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
     authStore.getByOrganization(organizationGuid)
 
+  fun getByHostname(hostname: String): OrganizationAuthRep? =
+    authStore.getByHostname(hostname)
+
   fun set(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthRep {
     logger.info { "Setting organization auth: $creator." }
     val organization = OrganizationAuthRep(

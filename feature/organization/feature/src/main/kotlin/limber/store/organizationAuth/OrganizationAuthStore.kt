@@ -20,6 +20,13 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(Organizatio
       return@handle query.mapToType().singleNullOrThrow()
     }
 
+  fun getByHostname(hostname: String): OrganizationAuthRep? =
+    handle { handle ->
+      val query = handle.createQuery(rs("store/organizationAuth/getByHostname.sql"))
+      query.bind("hostname", hostname)
+      return@handle query.mapToType().singleNullOrThrow()
+    }
+
   fun set(model: OrganizationAuthRep): OrganizationAuthRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/set.sql"))
