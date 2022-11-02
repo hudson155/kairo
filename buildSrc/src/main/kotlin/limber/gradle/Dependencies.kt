@@ -44,6 +44,8 @@ object Dependencies {
   object Kotlinx {
     val coroutines: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core"
       .version(Versions.kotlinxCoroutines)
+    val slf4j: String = "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j"
+      .version(Versions.kotlinxCoroutines)
   }
 
   object Ktor {
