@@ -11,6 +11,7 @@ import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Validator
 import kotlinx.coroutines.withContext
 import limber.auth.RestContextFactory
+import limber.auth.getRestContext
 import limber.feature.rest.endpointTemplate.Parameter
 import limber.feature.rest.endpointTemplate.RestEndpointTemplate
 import limber.feature.rest.ktorPlugins.startTime
@@ -41,7 +42,14 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
     withMdc(mdc(call, parameters, endpoint)) {
       withErrorHandling(call) {
         val result = withContext(restContextFactory.create(call)) {
-          handle(endpoint)
+          val result = handle(endpoint)
+          if (!getRestContext().hasAttemptdAuthorization) {
+            // The purpose of this check is to help discover DURING TESTING
+            // that an endpoint doesn't implement authorization.
+            // It should never happen in production.
+            error("This endpoint does not implement authorization.")
+          }
+          return@withContext result
         }
         result ?: throw NotFoundException()
         call.respond<Any>(status(result), result)

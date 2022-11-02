@@ -32,9 +32,17 @@ public class RestContext(
   public val hasPrincipal: Boolean = principal != null
 
   /**
+   * Indicates whether authorization has been attempted,
+   * NOT whether it has succeeded.
+   */
+  public var hasAttemptdAuthorization: Boolean = false
+    private set
+
+  /**
    * Returns whether authorization is successful.
    */
   public fun auth(auth: Auth): Boolean {
+    hasAttemptdAuthorization = true
     if (!authorize) return true
     return auth.authorize(this)
   }
@@ -55,12 +63,15 @@ public class RestContext(
   public companion object Key : CoroutineContext.Key<RestContext>
 }
 
+public suspend fun getRestContext(): RestContext = checkNotNull(coroutineContext[RestContext])
+
 /**
  * Call this from within a REST endpoint handler to check authorization.
  */
 public suspend inline fun auth(auth: Auth, block: (RestContext) -> Nothing) {
-  val restContext = checkNotNull(coroutineContext[RestContext])
-  if (!restContext.auth(auth)) {
-    block(restContext)
+  getRestContext().let { restContext ->
+    if (!restContext.auth(auth)) {
+      block(restContext)
+    }
   }
 }

@@ -68,8 +68,10 @@ Auth needs to be enabled through the `RestConfig`.
 Authentication uses JWTs.
 Authorization is implemented using JWT claims.
 
-When auth is enabled, the JWT is available at any time during an endpoint handler's lifecycle.
+When auth is enabled, the JWT is available at any time during an endpoint handler's lifecycle,
+but should usually only be checked within the endpoint handler directly.
 Authorization can be checked using `auth()` and passing one of the `Auth` implementations.
+Every endpoint must check authorization.
 
 Custom `Auth` implementations should live within their respective Features.
 
