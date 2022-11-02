@@ -9,6 +9,11 @@ name: monolith
 rest:
   allowedHosts:
     - localhost:3000
+  auth:
+    jwtClaimPrefix: https://limberapp.io/
+    jwtIssuer: https://limber.auth0.com/
+    jwtLeeway: 20 # 20 seconds.
+    jwkDomain: limber.auth0.com
   parallelization:
     connectionGroupSize: 16
     workerGroupSize: 32

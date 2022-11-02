@@ -9,6 +9,8 @@ import io.ktor.server.request.path
 import io.ktor.server.response.respond
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Validator
+import kotlinx.coroutines.withContext
+import limber.auth.RestContextFactory
 import limber.feature.rest.endpointTemplate.Parameter
 import limber.feature.rest.endpointTemplate.RestEndpointTemplate
 import limber.feature.rest.ktorPlugins.startTime
@@ -20,6 +22,9 @@ import kotlin.reflect.KClass
 
 public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: KClass<E>) {
   private val logger: KLogger = KotlinLogging.logger {}
+
+  @Inject
+  private lateinit var restContextFactory: RestContextFactory
 
   @Inject
   private lateinit var validator: Validator
@@ -35,7 +40,10 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
     val endpoint = template.endpoint(parameters)
     withMdc(mdc(call, parameters, endpoint)) {
       withErrorHandling(call) {
-        val result = handle(endpoint) ?: throw NotFoundException()
+        val result = withContext(restContextFactory.create(call)) {
+          handle(endpoint)
+        }
+        result ?: throw NotFoundException()
         call.respond<Any>(status(result), result)
       }
       logger.info {

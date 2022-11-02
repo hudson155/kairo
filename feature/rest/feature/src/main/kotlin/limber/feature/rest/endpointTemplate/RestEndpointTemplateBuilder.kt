@@ -53,7 +53,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
    * It generates random argument values and uses them to construct an instance of [RestEndpoint].
    * The resulting path is then manipulated; the randomly generated values are replaced by their argument names.
    */
-  internal class DataClass<E : RestEndpoint>(kClass: KClass<E>) : RestEndpointTemplateBuilder<E>() {
+  internal class DataClass<out E : RestEndpoint>(kClass: KClass<E>) : RestEndpointTemplateBuilder<E>() {
     private val constructor: KFunction<E> = checkNotNull(kClass.primaryConstructor)
     private val parameters: List<Parameter> = Parameter.from(constructor)
 

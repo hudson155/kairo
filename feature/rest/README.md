@@ -61,6 +61,18 @@ bindRestEndpoint(ListCelebrities::class)
 bindRestEndpoint(GetCelebrity::class)
 ```
 
+## Auth
+
+Auth needs to be enabled through the `RestConfig`.
+
+Authentication uses JWTs.
+Authorization is implemented using JWT claims.
+
+When auth is enabled, the JWT is available at any time during an endpoint handler's lifecycle.
+Authorization can be checked using `auth()` and passing one of the `Auth` implementations.
+
+Custom `Auth` implementations should live within their respective Features.
+
 ## Implementation notes and limitations
 
 [Ktor](https://ktor.io/) is used as the underlying Server implementation.

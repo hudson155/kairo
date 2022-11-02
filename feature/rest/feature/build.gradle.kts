@@ -18,6 +18,7 @@ main {
 
     // Ktor plugins.
     implementation(Dependencies.Ktor.Serialization.jackson)
+    implementation(Dependencies.Ktor.Server.authJvm)
     implementation(Dependencies.Ktor.Server.autoHeadResponse)
     implementation(Dependencies.Ktor.Server.compression)
     implementation(Dependencies.Ktor.Server.contentNegotiation)
@@ -27,6 +28,11 @@ main {
     implementation(Dependencies.Ktor.Server.doubleReceive)
     implementation(Dependencies.Ktor.Server.forwardedHeaders)
     implementation(Dependencies.Ktor.Server.statusPages)
+
+    // Auth
+    api(Dependencies.Auth.auth0JavaJwt)
+    implementation(Dependencies.Auth.auth0JwksRsa)
+    api(Dependencies.Ktor.Server.authJwt)
 
     // MockK is used in production code for endpoint template generation.
     implementation(Dependencies.Testing.mockK)

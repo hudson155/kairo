@@ -5,15 +5,20 @@ import com.google.inject.PrivateBinder
 import io.ktor.http.ContentType
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.principal
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.routing.HttpAcceptRouteSelector
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.ParameterRouteSelector
+import io.ktor.server.routing.Route
 import io.ktor.server.routing.createRouteFromPath
 import io.ktor.server.routing.routing
 import jakarta.validation.Validator
+import limber.auth.RestContext
+import limber.auth.RestContextFactory
 import limber.config.rest.RestConfig
 import limber.feature.Feature
 import limber.feature.FeaturePriority
@@ -29,6 +34,18 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
   private var ktor: ApplicationEngine? = null
 
   override fun bind(binder: PrivateBinder) {
+    binder.bind(RestContextFactory::class.java).toProvider {
+      RestContextFactory { call ->
+        val authConfig = config.auth
+        return@RestContextFactory RestContext(
+          authorize = authConfig != null,
+          claimPrefix = authConfig?.let { it.jwtClaimPrefix }.orEmpty(),
+          principal = call.principal(),
+        )
+      }
+    }
+    binder.expose(RestContextFactory::class.java)
+
     binder.bind(Validator::class.java).toProvider(ValidatorProvider::class.java)
     binder.expose(Validator::class.java)
   }
@@ -75,16 +92,23 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
       val template = handler.template
       logger.info { "Registering endpoint: $template." }
       routing {
-        createRouteFromPath(template.path)
-          .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
-          .createChild(HttpMethodRouteSelector(template.method))
-          .let {
-            template.requiredQueryParams.fold(it) { route, queryParam ->
-              route.createChild(ParameterRouteSelector(queryParam))
+        optionallyAuthenticate(config.auth != null) {
+          createRouteFromPath(template.path)
+            .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
+            .createChild(HttpMethodRouteSelector(template.method))
+            .let {
+              template.requiredQueryParams.fold(it) { route, queryParam ->
+                route.createChild(ParameterRouteSelector(queryParam))
+              }
             }
-          }
-          .handle { handler.handle(call) }
+            .handle { handler.handle(call) }
+        }
       }
     }
   }
+}
+
+private fun Route.optionallyAuthenticate(authenticate: Boolean, build: Route.() -> Unit) {
+  if (authenticate) authenticate(optional = true, build = build)
+  else build()
 }

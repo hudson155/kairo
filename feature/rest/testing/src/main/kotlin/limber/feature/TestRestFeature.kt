@@ -6,6 +6,7 @@ import limber.feature.rest.RestFeature
 public class TestRestFeature(port: Int) : RestFeature(
   RestConfig(
     allowedHosts = emptyList(),
+    auth = null,
     parallelization = RestConfig.Parallelization(
       connectionGroupSize = 4,
       workerGroupSize = 8,

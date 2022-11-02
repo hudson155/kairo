@@ -8,6 +8,7 @@ import limber.config.rest.RestConfig
  * The categories below match the categories from that site.
  */
 internal fun Application.installPlugins(config: RestConfig) {
+  installSecurityPlugins(config.auth)
   installRoutingPlugins()
   installHttpPlugins(config.allowedHosts, config.serverName)
   installMonitoringPlugins()

@@ -3,6 +3,12 @@ extends: production
 rest:
   type: Merge
   value:
+    auth:
+      type: Merge
+      value:
+        jwtLeeway:
+          type: Replace
+          value: 300 # 5 minutes.
     parallelization:
       type: Replace
       value:

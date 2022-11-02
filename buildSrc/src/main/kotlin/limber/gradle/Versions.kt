@@ -1,6 +1,12 @@
 package limber.gradle
 
 object Versions {
+  // https://github.com/auth0/java-jwt/releases.
+  const val auth0JavaJwt = "4.2.1"
+
+  // https://github.com/auth0/jwks-rsa-java/releases.
+  const val auth0JwksRsa = "0.21.2"
+
   // https://github.com/detekt/detekt/releases.
   const val detekt = "1.21.0"
 

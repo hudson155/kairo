@@ -1,6 +1,13 @@
 package limber.gradle
 
 object Dependencies {
+  object Auth {
+    val auth0JavaJwt: String = "com.auth0:java-jwt"
+      .version(Versions.auth0JavaJwt)
+    val auth0JwksRsa: String = "com.auth0:jwks-rsa"
+      .version(Versions.auth0JwksRsa)
+  }
+
   object Detekt {
     val formatting: String = "io.gitlab.arturbosch.detekt:detekt-formatting"
       .version(Versions.detekt)
@@ -67,6 +74,10 @@ object Dependencies {
     }
 
     object Server {
+      val authJwt: String = "io.ktor:ktor-server-auth-jwt"
+        .version(Versions.ktor)
+      val authJvm: String = "io.ktor:ktor-server-auth-jvm"
+        .version(Versions.ktor)
       val autoHeadResponse: String = "io.ktor:ktor-server-auto-head-response"
         .version(Versions.ktor)
       val cio: String = "io.ktor:ktor-server-cio"

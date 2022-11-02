@@ -5,11 +5,19 @@ public data class RestConfig(
    * CORS restrictions will only allow browser requests from hosts in this list.
    */
   val allowedHosts: List<String>,
+  val auth: Auth?,
   val parallelization: Parallelization,
   val port: Int,
   val serverName: String,
   val shutDown: ShutDown,
 ) {
+  public data class Auth(
+    val jwtClaimPrefix: String,
+    val jwtIssuer: String,
+    val jwtLeeway: Long,
+    val jwkDomain: String,
+  )
+
   /**
    * See the Netty documentation for more detail about how these work.
    */
