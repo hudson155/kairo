@@ -1,6 +1,6 @@
 package limber.store.organization
 
-import limber.exception.UnprocessableException
+import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.Updater
 import limber.rep.organization.OrganizationRep
@@ -35,12 +35,9 @@ internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::cl
 
   fun update(guid: UUID, updater: Updater<OrganizationRep>): OrganizationRep =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: organizationDoesNotExist())
+      val model = updater(get(guid, forUpdate = true) ?: throw OrganizationDoesNotExist())
       val query = handle.createQuery(rs("store/organization/update.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
     }
-
-  private fun organizationDoesNotExist(): Nothing =
-    throw UnprocessableException("Organization does not exist.")
 }

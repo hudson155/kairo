@@ -51,7 +51,7 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
     }
 
     test {
-      shouldBeConflict("Hostname already taken.") {
+      shouldBeConflict("Organization hostname already taken.") {
         val creator = OrganizationHostnameFixture.barBazQux.creator.copy(hostname = hostname.hostname)
         hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
       }

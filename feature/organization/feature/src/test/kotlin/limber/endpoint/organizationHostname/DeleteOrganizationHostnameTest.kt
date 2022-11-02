@@ -22,7 +22,7 @@ internal class DeleteOrganizationHostnameTest : IntegrationTest() {
     val hostnameGuid = UUID.randomUUID()
 
     test {
-      shouldBeUnprocessable("Hostname does not exist.") {
+      shouldBeUnprocessable("Organization hostname does not exist.") {
         hostnameClient(OrganizationHostnameApi.Delete(organizationGuid, hostnameGuid))
       }
     }

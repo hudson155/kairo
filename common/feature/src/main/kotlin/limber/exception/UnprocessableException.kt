@@ -1,3 +1,3 @@
 package limber.exception
 
-public class UnprocessableException(override val message: String) : Exception(message)
+public abstract class UnprocessableException(override val message: String) : Exception(message)

@@ -1,7 +1,8 @@
 package limber.store.feature
 
-import limber.exception.ConflictException
-import limber.exception.UnprocessableException
+import limber.exception.feature.FeatureDoesNotExist
+import limber.exception.feature.RootPathAlreadyTaken
+import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.Updater
 import limber.feature.sql.isForeignKeyViolation
@@ -54,7 +55,7 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
 
   fun update(organizationGuid: UUID, guid: UUID, updater: Updater<FeatureRep>): FeatureRep =
     transaction { handle ->
-      val model = updater(get(organizationGuid, guid, forUpdate = true) ?: featureDoesNotExist())
+      val model = updater(get(organizationGuid, guid, forUpdate = true) ?: throw FeatureDoesNotExist())
       val query = handle.createQuery(rs("store/feature/update.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
@@ -65,24 +66,15 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
       val query = handle.createQuery(rs("store/feature/delete.sql"))
       query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
-      return@transaction query.mapToType().singleNullOrThrow() ?: featureDoesNotExist()
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw FeatureDoesNotExist()
     }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__feature__organization_guid") ->
-        organizationDoesNotExist()
+        throw OrganizationDoesNotExist()
       isUniqueViolation("uq__feature__root_path") ->
-        rootPathAlreadyTaken()
+        throw RootPathAlreadyTaken()
     }
   }
-
-  private fun organizationDoesNotExist(): Nothing =
-    throw UnprocessableException("Organization does not exist.")
-
-  private fun featureDoesNotExist(): Nothing =
-    throw UnprocessableException("Feature does not exist.")
-
-  private fun rootPathAlreadyTaken(): Nothing =
-    throw ConflictException("Root path already taken.")
 }

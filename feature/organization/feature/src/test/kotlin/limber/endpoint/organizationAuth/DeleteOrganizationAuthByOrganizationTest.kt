@@ -20,7 +20,7 @@ internal class DeleteOrganizationAuthByOrganizationTest : IntegrationTest() {
     val organizationGuid = UUID.randomUUID()
 
     test {
-      shouldBeUnprocessable("Auth does not exist.") {
+      shouldBeUnprocessable("Organization auth does not exist.") {
         authClient(OrganizationAuthApi.DeleteByOrganization(organizationGuid))
       }
     }

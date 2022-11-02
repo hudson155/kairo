@@ -29,7 +29,7 @@ internal class CelebrityStore : SqlStore<CelebrityRep>(CelebrityRep::class) {
 
   fun update(guid: UUID, updater: Updater<CelebrityRep>): CelebrityRep =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: celebrityDoesNotExist())
+      val model = updater(get(guid, forUpdate = true) ?: throw CelebrityDoesNotExist())
       val query = handle.createQuery(rs("store/celebrity/update.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
@@ -39,11 +39,8 @@ internal class CelebrityStore : SqlStore<CelebrityRep>(CelebrityRep::class) {
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/delete.sql"))
       query.bind("guid", guid)
-      return@transaction query.mapToType().singleNullOrThrow() ?: celebrityDoesNotExist()
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw CelebrityDoesNotExist()()
     }
-
-  private fun celebrityDoesNotExist(): Nothing =
-    throw UnprocessableException("Celebrity does not exist.")
 }
 ```
 

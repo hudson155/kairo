@@ -1,7 +1,8 @@
 package limber.store.organizationAuth
 
-import limber.exception.ConflictException
-import limber.exception.UnprocessableException
+import limber.exception.organization.OrganizationDoesNotExist
+import limber.exception.organizationAuth.Auth0OrganizationIdAlreadyTaken
+import limber.exception.organizationAuth.OrganizationAuthDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
@@ -30,24 +31,15 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(Organizatio
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/deleteByOrganization.sql"))
       query.bind("organizationGuid", organizationGuid)
-      return@transaction query.mapToType().singleNullOrThrow() ?: authDoesNotExist()
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
     }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__organization_auth__organization_guid") ->
-        organizationDoesNotExist()
+        throw OrganizationDoesNotExist()
       isUniqueViolation("uq__organization_auth__auth0_organization_id") ->
-        auth0OrganizationIdAlreadyTaken()
+        throw Auth0OrganizationIdAlreadyTaken()
     }
   }
-
-  private fun organizationDoesNotExist(): Nothing =
-    throw UnprocessableException("Organization does not exist.")
-
-  private fun authDoesNotExist(): Nothing =
-    throw UnprocessableException("Auth does not exist.")
-
-  private fun auth0OrganizationIdAlreadyTaken(): Nothing =
-    throw ConflictException("Auth0 organization ID already taken.")
 }

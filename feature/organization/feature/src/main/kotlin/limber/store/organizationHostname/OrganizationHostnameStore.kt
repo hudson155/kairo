@@ -1,7 +1,8 @@
 package limber.store.organizationHostname
 
-import limber.exception.ConflictException
-import limber.exception.UnprocessableException
+import limber.exception.organization.OrganizationDoesNotExist
+import limber.exception.organizationHostname.OrganizationHostnameAlreadyTaken
+import limber.exception.organizationHostname.OrganizationHostnameDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
@@ -32,24 +33,15 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(Org
       val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
       query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
-      return@transaction query.mapToType().singleNullOrThrow() ?: hostnameDoesNotExist()
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
     }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
       isForeignKeyViolation("fk__organization_hostname__organization_guid") ->
-        organizationDoesNotExist()
+        throw OrganizationDoesNotExist()
       isUniqueViolation("uq__organization_hostname__hostname") ->
-        hostnameAlreadyTaken()
+        throw OrganizationHostnameAlreadyTaken()
     }
   }
-
-  private fun organizationDoesNotExist(): Nothing =
-    throw UnprocessableException("Organization does not exist.")
-
-  private fun hostnameDoesNotExist(): Nothing =
-    throw UnprocessableException("Hostname does not exist.")
-
-  private fun hostnameAlreadyTaken(): Nothing =
-    throw ConflictException("Hostname already taken.")
 }
