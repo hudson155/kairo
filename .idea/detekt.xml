@@ -6,12 +6,5 @@
         <option value="$PROJECT_DIR$/.detekt/config.yml" />
       </set>
     </option>
-    <option name="enableFormatting" value="true" />
-    <option name="pluginJarPaths">
-      <set>
-        <option value="" />
-      </set>
-    </option>
-    <option name="treatAsErrors" value="true" />
   </component>
 </project>
