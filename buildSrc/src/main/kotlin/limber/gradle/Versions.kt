@@ -4,7 +4,7 @@ object Versions {
   // https://github.com/detekt/detekt/releases.
   const val detekt = "1.21.0"
 
-  // https://github.com/eclipse-ee4j/expressly/releases
+  // https://github.com/eclipse-ee4j/expressly/releases.
   const val expressly = "5.0.0"
 
   // https://github.com/flyway/flyway/releases.
@@ -16,7 +16,7 @@ object Versions {
   // https://github.com/google/guice/releases.
   const val guice = "5.1.0"
 
-  // https://github.com/hibernate/hibernate-validator/tags
+  // https://github.com/hibernate/hibernate-validator/tags.
   const val hibernateValidator = "8.0.0.Final"
 
   // https://github.com/brettwooldridge/HikariCP/tags.
@@ -34,7 +34,7 @@ object Versions {
   // https://github.com/kotest/kotest/releases.
   const val kotest = "5.5.1"
 
-  // https://github.com/Kotlin/kotlinx.coroutines/releases
+  // https://github.com/Kotlin/kotlinx.coroutines/releases.
   const val kotlinxCoroutines = "1.6.4"
 
   // https://github.com/MicroUtils/kotlin-logging/releases.
