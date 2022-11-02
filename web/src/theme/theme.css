@@ -1,0 +1,38 @@
+:root {
+  /**
+   * Border sizes.
+   *
+   * Float px values may render differently on different browsers. This is okay.
+   */
+  --borderSize-m: 1.5px;
+
+  /**
+   * Colors.
+   *
+   * Colors use HSL so they're easy to reason with.
+   */
+  --color-background: hsl(240deg, 10%, 99%);
+  --color-backgroundAccent: hsl(240deg, 10%, 92%);
+  --color-backgroundActive: hsl(240deg, 10%, 94%);
+  --color-backgroundHover: hsl(240deg, 10%, 92%);
+  --color-block: hsl(240deg, 10%, 52%);
+  --color-border: hsl(240deg, 10%, 91%);
+  --color-font: hsl(240deg, 10%, 17%);
+
+  /**
+   * Durations.
+   */
+  --duration-transition: 150ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: hsl(240deg, 10%, 15%);
+    --color-backgroundAccent: hsl(240deg, 10%, 26%);
+    --color-backgroundActive: hsl(240deg, 10%, 23%);
+    --color-backgroundHover: hsl(240deg, 10%, 26%);
+    --color-block: hsl(240deg, 10%, 75%);
+    --color-border: hsl(240deg, 10%, 23%);
+    --color-font: hsl(240deg, 10%, 87%);
+  }
+}
