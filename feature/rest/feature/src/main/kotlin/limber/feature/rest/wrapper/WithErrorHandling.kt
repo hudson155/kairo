@@ -5,10 +5,13 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.response.respond
 import jakarta.validation.ConstraintViolationException
+import limber.exception.AuthException
 import limber.exception.ConflictException
 import limber.exception.UnprocessableException
 import limber.rep.ConflictErrorRep
+import limber.rep.ForbiddenErrorRep
 import limber.rep.NotFoundErrorRep
+import limber.rep.UnauthorizedErrorRep
 import limber.rep.UnprocessableErrorRep
 import limber.rep.ValidationErrorsRep
 import mu.KLogger
@@ -19,6 +22,8 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal suspend fun withErrorHandling(call: ApplicationCall, block: suspend () -> Unit) {
   try {
     block()
+  } catch (e: AuthException) {
+    call.handleAuth(e)
   } catch (e: ConflictException) {
     call.handleConflict(e)
   } catch (e: ConstraintViolationException) {
@@ -27,6 +32,20 @@ internal suspend fun withErrorHandling(call: ApplicationCall, block: suspend () 
     call.handleNotFound(e)
   } catch (e: UnprocessableException) {
     call.handleUnprocessable(e)
+  }
+}
+
+private suspend fun ApplicationCall.handleAuth(e: AuthException) {
+  logger.debug(e) { "${e.status}." }
+  when (e.status) {
+    AuthException.Status.Unauthorized -> respond(
+      status = HttpStatusCode.Unauthorized,
+      message = UnauthorizedErrorRep,
+    )
+    AuthException.Status.Forbidden -> respond(
+      status = HttpStatusCode.Forbidden,
+      message = ForbiddenErrorRep,
+    )
   }
 }
 
