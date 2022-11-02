@@ -47,9 +47,9 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   }
 
   private fun bindOrganization(binder: PrivateBinder) {
-    binder.bindRestEndpoint(CreateOrganization::class)
     binder.bindRestEndpoint(GetOrganization::class)
     binder.bindRestEndpoint(GetOrganizationByHostname::class)
+    binder.bindRestEndpoint(CreateOrganization::class)
     binder.bindRestEndpoint(UpdateOrganization::class)
 
     binder.bindClients {
@@ -63,8 +63,8 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   }
 
   private fun bindOrganizationAuth(binder: PrivateBinder) {
-    binder.bindRestEndpoint(SetOrganizationAuth::class)
     binder.bindRestEndpoint(GetOrganizationAuthByOrganization::class)
+    binder.bindRestEndpoint(SetOrganizationAuth::class)
     binder.bindRestEndpoint(DeleteOrganizationAuthByOrganization::class)
 
     binder.bindClients {
@@ -78,8 +78,8 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   }
 
   private fun bindOrganizationHostname(binder: PrivateBinder) {
-    binder.bindRestEndpoint(CreateOrganizationHostname::class)
     binder.bindRestEndpoint(GetOrganizationHostname::class)
+    binder.bindRestEndpoint(CreateOrganizationHostname::class)
     binder.bindRestEndpoint(DeleteOrganizationHostname::class)
 
     binder.bindClients {
@@ -93,9 +93,9 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
   }
 
   private fun bindFeature(binder: PrivateBinder) {
-    binder.bindRestEndpoint(CreateFeature::class)
     binder.bindRestEndpoint(GetFeature::class)
     binder.bindRestEndpoint(GetFeaturesByOrganization::class)
+    binder.bindRestEndpoint(CreateFeature::class)
     binder.bindRestEndpoint(UpdateFeature::class)
     binder.bindRestEndpoint(DeleteFeature::class)
 

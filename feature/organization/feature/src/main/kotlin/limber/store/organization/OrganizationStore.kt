@@ -8,13 +8,6 @@ import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
 internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::class) {
-  fun create(model: OrganizationRep): OrganizationRep =
-    transaction { handle ->
-      val query = handle.createQuery(rs("store/organization/create.sql"))
-      query.bindKotlin(model)
-      return@transaction query.mapToType().single()
-    }
-
   fun get(guid: UUID): OrganizationRep? =
     get(guid, forUpdate = false)
 
@@ -31,6 +24,13 @@ internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::cl
       val query = handle.createQuery(rs("store/organization/getByHostname.sql"))
       query.bind("hostname", hostname)
       return@handle query.mapToType().singleNullOrThrow()
+    }
+
+  fun create(model: OrganizationRep): OrganizationRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/organization/create.sql"))
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
     }
 
   fun update(guid: UUID, updater: Updater<OrganizationRep>): OrganizationRep =

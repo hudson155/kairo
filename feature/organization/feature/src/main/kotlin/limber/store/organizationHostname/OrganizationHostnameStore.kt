@@ -13,19 +13,19 @@ import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
 internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(OrganizationHostnameRep::class) {
-  fun create(model: OrganizationHostnameRep): OrganizationHostnameRep =
-    transaction { handle ->
-      val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
-      query.bindKotlin(model)
-      return@transaction query.mapToType().single()
-    }
-
   fun get(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/get.sql"))
       query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
       return@handle query.mapToType().singleNullOrThrow()
+    }
+
+  fun create(model: OrganizationHostnameRep): OrganizationHostnameRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
     }
 
   fun delete(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep =

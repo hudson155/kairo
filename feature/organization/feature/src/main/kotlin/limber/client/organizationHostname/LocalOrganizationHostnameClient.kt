@@ -8,19 +8,19 @@ import limber.endpoint.organizationHostname.GetOrganizationHostname
 import limber.rep.organizationHostname.OrganizationHostnameRep
 
 public class LocalOrganizationHostnameClient @Inject constructor(
-  private val create: CreateOrganizationHostname,
   private val get: GetOrganizationHostname,
+  private val create: CreateOrganizationHostname,
   private val delete: DeleteOrganizationHostname,
 ) : OrganizationHostnameClient {
-  override suspend operator fun invoke(
-    endpoint: OrganizationHostnameApi.Create,
-  ): OrganizationHostnameRep =
-    create.handle(endpoint)
-
   override suspend operator fun invoke(
     endpoint: OrganizationHostnameApi.Get,
   ): OrganizationHostnameRep? =
     get.handle(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: OrganizationHostnameApi.Create,
+  ): OrganizationHostnameRep =
+    create.handle(endpoint)
 
   override suspend operator fun invoke(
     endpoint: OrganizationHostnameApi.Delete,

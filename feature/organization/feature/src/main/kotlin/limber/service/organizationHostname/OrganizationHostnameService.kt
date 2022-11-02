@@ -14,6 +14,9 @@ internal class OrganizationHostnameService @Inject constructor(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
+  fun get(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep? =
+    hostnameStore.get(organizationGuid, guid)
+
   fun create(organizationGuid: UUID, creator: OrganizationHostnameRep.Creator): OrganizationHostnameRep {
     logger.info { "Creating organization hostname: $creator." }
     val hostname = OrganizationHostnameRep(
@@ -23,9 +26,6 @@ internal class OrganizationHostnameService @Inject constructor(
     )
     return hostnameStore.create(hostname)
   }
-
-  fun get(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep? =
-    hostnameStore.get(organizationGuid, guid)
 
   fun delete(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep {
     logger.info { "Deleting organization hostname." }

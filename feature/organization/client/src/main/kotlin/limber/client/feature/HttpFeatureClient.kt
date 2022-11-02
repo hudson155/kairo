@@ -10,11 +10,6 @@ public class HttpFeatureClient @Inject constructor(
   private val client: HttpClient,
 ) : FeatureClient {
   override suspend operator fun invoke(
-    endpoint: FeatureApi.Create,
-  ): FeatureRep =
-    client.request(endpoint)
-
-  override suspend operator fun invoke(
     endpoint: FeatureApi.Get,
   ): FeatureRep? =
     client.request(endpoint)
@@ -22,6 +17,11 @@ public class HttpFeatureClient @Inject constructor(
   override suspend operator fun invoke(
     endpoint: FeatureApi.GetByOrganization,
   ): List<FeatureRep> =
+    client.request(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: FeatureApi.Create,
+  ): FeatureRep =
     client.request(endpoint)
 
   override suspend operator fun invoke(

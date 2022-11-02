@@ -13,18 +13,18 @@ import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
 internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(OrganizationAuthRep::class) {
-  fun set(model: OrganizationAuthRep): OrganizationAuthRep =
-    transaction { handle ->
-      val query = handle.createQuery(rs("store/organizationAuth/set.sql"))
-      query.bindKotlin(model)
-      return@transaction query.mapToType().single()
-    }
-
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))
       query.bind("organizationGuid", organizationGuid)
       return@handle query.mapToType().singleNullOrThrow()
+    }
+
+  fun set(model: OrganizationAuthRep): OrganizationAuthRep =
+    transaction { handle ->
+      val query = handle.createQuery(rs("store/organizationAuth/set.sql"))
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
     }
 
   fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthRep =

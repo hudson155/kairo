@@ -14,6 +14,9 @@ internal class OrganizationAuthService @Inject constructor(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
+  fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
+    authStore.getByOrganization(organizationGuid)
+
   fun set(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthRep {
     logger.info { "Setting organization auth: $creator." }
     val organization = OrganizationAuthRep(
@@ -23,9 +26,6 @@ internal class OrganizationAuthService @Inject constructor(
     )
     return authStore.set(organization)
   }
-
-  fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
-    authStore.getByOrganization(organizationGuid)
 
   fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthRep {
     logger.info { "Deleting organization." }

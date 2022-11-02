@@ -14,6 +14,12 @@ internal class FeatureService @Inject constructor(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
+  fun get(organizationGuid: UUID, hostnameGuid: UUID): FeatureRep? =
+    featureStore.get(organizationGuid, hostnameGuid)
+
+  fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
+    featureStore.getByOrganization(organizationGuid)
+
   fun create(organizationGuid: UUID, creator: FeatureRep.Creator): FeatureRep {
     logger.info { "Creating feature: $creator." }
     val feature = FeatureRep(
@@ -26,12 +32,6 @@ internal class FeatureService @Inject constructor(
     )
     return featureStore.create(feature)
   }
-
-  fun get(organizationGuid: UUID, hostnameGuid: UUID): FeatureRep? =
-    featureStore.get(organizationGuid, hostnameGuid)
-
-  fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
-    featureStore.getByOrganization(organizationGuid)
 
   fun update(organizationGuid: UUID, guid: UUID, updater: FeatureRep.Updater): FeatureRep {
     logger.info { "Updating feature: $updater." }

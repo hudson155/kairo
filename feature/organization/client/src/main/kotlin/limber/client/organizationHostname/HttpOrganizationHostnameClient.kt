@@ -10,13 +10,13 @@ public class HttpOrganizationHostnameClient @Inject constructor(
   private val client: HttpClient,
 ) : OrganizationHostnameClient {
   override suspend operator fun invoke(
-    endpoint: OrganizationHostnameApi.Create,
-  ): OrganizationHostnameRep =
+    endpoint: OrganizationHostnameApi.Get,
+  ): OrganizationHostnameRep? =
     client.request(endpoint)
 
   override suspend operator fun invoke(
-    endpoint: OrganizationHostnameApi.Get,
-  ): OrganizationHostnameRep? =
+    endpoint: OrganizationHostnameApi.Create,
+  ): OrganizationHostnameRep =
     client.request(endpoint)
 
   override suspend operator fun invoke(

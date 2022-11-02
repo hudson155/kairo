@@ -15,9 +15,9 @@ Other than the rules defined here, please follow the
   It also applies within bulleted and numbered lists.
 
 - **Ordering:**
-  Alphabetize lists that have no other natural order.
-  This applies to both copy and to code (such as parameter/method lists and documentation).
-  In code, it's better to organize by CRUD order than alphabetically.
+  - Order members in code by **read-create-update-delete** where possible.
+  - Order lists alphabetically when there is no other natural order.
+    This applies to both copy and to code (such as parameter/method lists and documentation).
 
 - **Product terminology:**
   The words _Feature_, _Server_, and _Application_
