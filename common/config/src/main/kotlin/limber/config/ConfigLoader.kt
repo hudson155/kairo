@@ -1,5 +1,6 @@
 package limber.config
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
@@ -45,7 +46,7 @@ public object ConfigLoader {
             extends.set(fieldName, merged)
           }
           CascadeType.Remove -> extends.remove(fieldName)
-          CascadeType.Replace -> extends.set(fieldName, objectMapper.convertValue<ObjectNode>(fieldValue["value"]))
+          CascadeType.Replace -> extends.set(fieldName, objectMapper.convertValue<JsonNode>(fieldValue["value"]))
         }
         else -> error("Unsupported JsonNode type: ${fieldValue::class.simpleName}.")
       }

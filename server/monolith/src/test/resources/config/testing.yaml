@@ -23,3 +23,10 @@ sql:
       value:
         type: EnvironmentVariable
         value: LIMBER_TEST_SQL_PASSWORD # Used by CI.
+    migrations:
+      type: Merge
+      value:
+        locations:
+          type: Replace
+          value:
+            - db/limber/migration/common
