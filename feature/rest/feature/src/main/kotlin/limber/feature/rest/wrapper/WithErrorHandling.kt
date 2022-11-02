@@ -8,6 +8,7 @@ import jakarta.validation.ConstraintViolationException
 import limber.exception.ConflictException
 import limber.exception.UnprocessableException
 import limber.rep.ConflictErrorRep
+import limber.rep.NotFoundErrorRep
 import limber.rep.UnprocessableErrorRep
 import limber.rep.ValidationErrorsRep
 import mu.KLogger
@@ -54,7 +55,10 @@ private suspend fun ApplicationCall.handleConstraintViolation(e: ConstraintViola
 
 private suspend fun ApplicationCall.handleNotFound(e: NotFoundException) {
   logger.debug(e) { "Not found." }
-  respond(HttpStatusCode.NotFound)
+  respond(
+    status = HttpStatusCode.NotFound,
+    message = NotFoundErrorRep,
+  )
 }
 
 private suspend fun ApplicationCall.handleUnprocessable(e: UnprocessableException) {

@@ -7,6 +7,7 @@ import io.ktor.server.plugins.autohead.AutoHeadResponse
 import io.ktor.server.plugins.doublereceive.DoubleReceive
 import io.ktor.server.plugins.statuspages.StatusPages
 import io.ktor.server.response.respond
+import limber.rep.InternalServerErrorRep
 import mu.KLogger
 import mu.KotlinLogging
 
@@ -20,7 +21,10 @@ internal fun Application.installRoutingPlugins() {
   install(StatusPages) {
     exception<Throwable> { call, e ->
       logger.error(e) { "Request failed." }
-      call.respond(HttpStatusCode.InternalServerError)
+      call.respond(
+        status = HttpStatusCode.InternalServerError,
+        message = InternalServerErrorRep,
+      )
     }
   }
 }
