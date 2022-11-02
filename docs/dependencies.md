@@ -79,7 +79,7 @@ This should upgrade automatically.
 ## Postgres
 
 - [GCP through Terraform](/infrastructure/terraform/sql.tf).
-- The [Kotlin CI GitHub workflow](/.github/workflows/kotlin-ci.yaml).
+- The [CI GitHub workflow](/.github/workflows/ci.yaml).
 - [Versions.kt](/buildSrc/src/main/kotlin/limber/gradle/Versions.kt).
 
 ## Shadow
