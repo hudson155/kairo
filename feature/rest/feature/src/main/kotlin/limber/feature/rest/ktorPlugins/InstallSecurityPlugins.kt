@@ -16,7 +16,7 @@ internal fun Application.installSecurityPlugins(authConfig: RestConfig.Auth?) {
   if (authConfig != null) {
     install(Authentication) {
       jwt {
-        verifier(UrlJwkProvider(authConfig.jwkDomain), authConfig.jwkDomain) {
+        verifier(UrlJwkProvider(authConfig.jwkDomain), authConfig.jwtIssuer) {
           acceptLeeway(authConfig.jwtLeeway)
         }
         validate { credential ->
