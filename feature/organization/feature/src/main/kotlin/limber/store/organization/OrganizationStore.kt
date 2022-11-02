@@ -19,13 +19,6 @@ internal class OrganizationStore : SqlStore<OrganizationRep>(OrganizationRep::cl
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun getByHostname(hostname: String): OrganizationRep? =
-    handle { handle ->
-      val query = handle.createQuery(rs("store/organization/getByHostname.sql"))
-      query.bind("hostname", hostname)
-      return@handle query.mapToType().singleNullOrThrow()
-    }
-
   fun create(model: OrganizationRep): OrganizationRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organization/create.sql"))

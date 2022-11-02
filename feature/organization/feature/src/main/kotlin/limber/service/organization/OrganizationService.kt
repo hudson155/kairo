@@ -17,9 +17,6 @@ internal class OrganizationService @Inject constructor(
   fun get(guid: UUID): OrganizationRep? =
     organizationStore.get(guid)
 
-  fun getByHostname(hostname: String): OrganizationRep? =
-    organizationStore.getByHostname(hostname)
-
   fun create(creator: OrganizationRep.Creator): OrganizationRep {
     logger.info { "Creating organization: $creator." }
     val organization = OrganizationRep(

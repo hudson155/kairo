@@ -20,7 +20,6 @@ import limber.endpoint.feature.GetFeaturesByOrganization
 import limber.endpoint.feature.UpdateFeature
 import limber.endpoint.organization.CreateOrganization
 import limber.endpoint.organization.GetOrganization
-import limber.endpoint.organization.GetOrganizationByHostname
 import limber.endpoint.organization.UpdateOrganization
 import limber.endpoint.organizationAuth.DeleteOrganizationAuthByOrganization
 import limber.endpoint.organizationAuth.GetOrganizationAuthByOrganization
@@ -48,7 +47,6 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
 
   private fun bindOrganization(binder: PrivateBinder) {
     binder.bindRestEndpoint(GetOrganization::class)
-    binder.bindRestEndpoint(GetOrganizationByHostname::class)
     binder.bindRestEndpoint(CreateOrganization::class)
     binder.bindRestEndpoint(UpdateOrganization::class)
 
