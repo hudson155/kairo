@@ -76,11 +76,11 @@ internal class ShouldBeUnprocessableTest {
     runBlocking {
       val e = shouldThrow<AssertionError> {
         shouldBeUnprocessable("expected message") {
-          val repsonse = createHttpResponse(
+          val response = createHttpResponse(
             statusCode = HttpStatusCode.UnprocessableEntity,
             body = UnprocessableErrorRep("actual message"),
           )
-          throw ClientRequestException(repsonse, "")
+          throw ClientRequestException(response, "")
         }
       }
       e.shouldHaveMessage("expected:<\"expected message\"> but was:<\"actual message\">")
@@ -91,11 +91,11 @@ internal class ShouldBeUnprocessableTest {
   fun `happy path`() {
     runBlocking {
       shouldBeUnprocessable("expected message") {
-        val repsonse = createHttpResponse(
+        val response = createHttpResponse(
           statusCode = HttpStatusCode.UnprocessableEntity,
           body = UnprocessableErrorRep("expected message"),
         )
-        throw ClientRequestException(repsonse, "")
+        throw ClientRequestException(response, "")
       }
     }
   }

@@ -2,6 +2,7 @@
 
 Servers are configured by YAML files.
 These YAML files should be placed in the `resources` folder
+
 ```
 resources/
 └─ config/
@@ -14,6 +15,7 @@ The config for a Server will correspond with a data class extending `Config`.
 ## Loading configs
 
 Use `ConfigLoader` to load configs.
+
 ```kotlin
 // Will load the config/production.yaml resource.
 ConfigLoader.load<MyServerConfig>("production")
@@ -27,7 +29,7 @@ This library supports the following sources:
 
 - **Plaintext:**
   The YAML file provides the value directly.
-- **Envionment variable:**
+- **Environment variable:**
   The value is fetched from environment variables.
 - **GCP secret:**
   The value is fetched from GCP Secret Manager

@@ -14,7 +14,7 @@ internal class GetHealthCheckReadiness @Inject constructor(
   override suspend fun handler(endpoint: Api.GetReadiness): Rep =
     healthCheckService.healthCheck()
 
-  override fun status(result: HealthCheckRep): HttpStatusCode {
+  override fun status(result: Rep): HttpStatusCode {
     if (result.state != HealthCheckRep.State.Healthy) return HttpStatusCode.InternalServerError
     return super.status(result)
   }

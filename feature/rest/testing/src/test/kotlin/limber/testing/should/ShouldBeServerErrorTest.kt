@@ -75,11 +75,11 @@ internal class ShouldBeServerErrorTest {
     runBlocking {
       val e = shouldThrow<AssertionError> {
         shouldBeServerError("expected message") {
-          val repsonse = createHttpResponse(
+          val response = createHttpResponse(
             statusCode = HttpStatusCode.InternalServerError,
             body = "actual message",
           )
-          throw ServerResponseException(repsonse, "")
+          throw ServerResponseException(response, "")
         }
       }
       e.shouldHaveMessage("expected:<\"expected message\"> but was:<\"actual message\">")
@@ -90,11 +90,11 @@ internal class ShouldBeServerErrorTest {
   fun `happy path`() {
     runBlocking {
       shouldBeServerError("expected message") {
-        val repsonse = createHttpResponse(
+        val response = createHttpResponse(
           statusCode = HttpStatusCode.InternalServerError,
           body = "expected message",
         )
-        throw ServerResponseException(repsonse, "")
+        throw ServerResponseException(response, "")
       }
     }
   }

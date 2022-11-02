@@ -5,6 +5,6 @@ plugins {
 }
 
 tasks.withType<KotlinJvmCompile> {
-  // Some utilities are in the Kotlin package so they don't need to be imported explicitly.
+  // Some utilities are in the Kotlin package, so they don't need to be imported explicitly.
   kotlinOptions.freeCompilerArgs += "-Xallow-kotlin-package"
 }

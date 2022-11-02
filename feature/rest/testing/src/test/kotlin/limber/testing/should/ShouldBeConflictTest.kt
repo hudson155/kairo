@@ -76,11 +76,11 @@ internal class ShouldBeConflictTest {
     runBlocking {
       val e = shouldThrow<AssertionError> {
         shouldBeConflict("expected message") {
-          val repsonse = createHttpResponse(
+          val response = createHttpResponse(
             statusCode = HttpStatusCode.Conflict,
             body = ConflictErrorRep("actual message"),
           )
-          throw ClientRequestException(repsonse, "")
+          throw ClientRequestException(response, "")
         }
       }
       e.shouldHaveMessage("expected:<\"expected message\"> but was:<\"actual message\">")
@@ -91,11 +91,11 @@ internal class ShouldBeConflictTest {
   fun `happy path`() {
     runBlocking {
       shouldBeConflict("expected message") {
-        val repsonse = createHttpResponse(
+        val response = createHttpResponse(
           statusCode = HttpStatusCode.Conflict,
           body = ConflictErrorRep("expected message"),
         )
-        throw ClientRequestException(repsonse, "")
+        throw ClientRequestException(response, "")
       }
     }
   }

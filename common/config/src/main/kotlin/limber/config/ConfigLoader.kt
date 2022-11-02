@@ -29,7 +29,7 @@ public object ConfigLoader {
     val stream = Resources.getResource("config/$configName.yaml")
     val config = objectMapper.readValue<ObjectNode>(stream)
     val extends = config["extends"].let { extends ->
-      extends ?: return config
+      extends ?: return@loadAsJson config
       config.remove("extends")
       return@let loadAsJson(extends.textValue())
     }

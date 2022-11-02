@@ -59,7 +59,8 @@ spec:
             successThreshold: 6
             failureThreshold: 12
         - name: cloud-sql-proxy
-          image: gcr.io/cloudsql-docker/gce-proxy:1.32.0 # https://github.com/GoogleCloudPlatform/cloudsql-proxy/releases
+          # https://github.com/GoogleCloudPlatform/cloudsql-proxy/releases
+          image: gcr.io/cloudsql-docker/gce-proxy:1.32.0
           command:
             - "/cloud_sql_proxy"
             - "-instances=circular-genius:us-central1:limber=tcp:5432"

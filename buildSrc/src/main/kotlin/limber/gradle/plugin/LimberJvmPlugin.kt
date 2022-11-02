@@ -1,6 +1,6 @@
 package limber.gradle.plugin
 
-import limber.gradle.main
+import limber.gradle.plugin.main
 import limber.gradle.plugin.feature.DependenciesFeature
 import limber.gradle.plugin.feature.DetektFeature
 import limber.gradle.plugin.feature.IdeaFeature
@@ -8,7 +8,7 @@ import limber.gradle.plugin.feature.JarFeature
 import limber.gradle.plugin.feature.KotlinFeature
 import limber.gradle.plugin.feature.ProjectDependenciesFeature
 import limber.gradle.plugin.feature.TestingFeature
-import limber.gradle.test
+import limber.gradle.plugin.test
 import org.gradle.api.Project
 
 /**

@@ -65,7 +65,7 @@ where guid = :guid
 ```postgresql
 update celebrity.celebrity
 set name = :name,
-    age = :age
+    age  = :age
 where guid = :guid
 returning *
 ```
@@ -87,6 +87,7 @@ For example, the `OutfitRep` for a `CelebrityRep` might have its own GUID,
 but if authorization was based on the celebrity's GUID,
 outfit queries need to be conditioned as follows.
 They cannot be conditioned only on the outfit's GUID.
+
 ```postgresql
 where celebrity_guid = :celebrityGuid
   and guid = :guid

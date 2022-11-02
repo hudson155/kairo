@@ -1,5 +1,5 @@
-import limber.gradle.main
-import limber.gradle.test
+import limber.gradle.plugin.main
+import limber.gradle.plugin.test
 
 plugins {
   id("limber-jvm")

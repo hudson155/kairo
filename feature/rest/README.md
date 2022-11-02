@@ -63,12 +63,12 @@ bindRestEndpoint(GetCelebrity::class)
 
 ## Implementation notes and limitations
 
-[Ktor](https://ktor.io/) is used as the underlying server implementation.
+[Ktor](https://ktor.io/) is used as the underlying Server implementation.
 
 In order to tell Ktor what endpoint template to use
 (what method, parameterized path, and other endpoint metadata to look for in request mapping),
 an instance of the `RestEndpoint` implementation (`CelebrityApi` in the example above)
-is created during server startup, using randomized parameters.
+is created during Server startup, using randomized parameters.
 **One important limitation of this approach is that
 `RestEndpoint` implementations must plainly represent endpoints**.
 They must not apply transformations to parameters,

@@ -1,4 +1,4 @@
-import limber.gradle.main
+import limber.gradle.plugin.main
 
 plugins {
   id("limber-jvm")

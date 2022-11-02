@@ -19,7 +19,7 @@ export default class Api {
   async request<T>(request: Request): Promise<T> {
     const response = await this.axios.request({
       url: request.path,
-      headers: this.headers(request),
+      headers: Api.headers(request),
       params: request.qp,
       data: request.body,
     });
@@ -27,7 +27,7 @@ export default class Api {
     return response.data;
   }
 
-  private headers(request: Request): Record<string, string> {
+  private static headers(request: Request): Record<string, string> {
     const result: Record<string, string> = {
       'Accept': 'application/json',
     };

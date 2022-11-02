@@ -5,7 +5,7 @@ import com.google.inject.PrivateBinder
 import com.google.inject.PrivateModule
 
 /**
- * An Application is composed from a set of Features,
+ * An Application is composed of a set of Features,
  * each of which enables some specific functionality.
  *
  * See the root README for more detail.

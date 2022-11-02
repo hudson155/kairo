@@ -76,7 +76,7 @@ internal class ShouldHaveValidationErrorsTest {
     runBlocking {
       val e = shouldThrow<AssertionError> {
         shouldHaveValidationErrors("property.path" to "expected message") {
-          val repsonse = createHttpResponse(
+          val response = createHttpResponse(
             statusCode = HttpStatusCode.BadRequest,
             body = ValidationErrorsRep(
               errors = listOf(
@@ -87,7 +87,7 @@ internal class ShouldHaveValidationErrorsTest {
               ),
             ),
           )
-          throw ClientRequestException(repsonse, "")
+          throw ClientRequestException(response, "")
         }
       }
       e.shouldHaveMessage(
@@ -102,7 +102,7 @@ internal class ShouldHaveValidationErrorsTest {
   fun `happy path`() {
     runBlocking {
       shouldHaveValidationErrors("property.path" to "expected message") {
-        val repsonse = createHttpResponse(
+        val response = createHttpResponse(
           statusCode = HttpStatusCode.BadRequest,
           body = ValidationErrorsRep(
             errors = listOf(
@@ -113,7 +113,7 @@ internal class ShouldHaveValidationErrorsTest {
             ),
           ),
         )
-        throw ClientRequestException(repsonse, "")
+        throw ClientRequestException(response, "")
       }
     }
   }

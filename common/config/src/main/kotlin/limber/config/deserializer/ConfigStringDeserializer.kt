@@ -28,10 +28,9 @@ public class ConfigStringDeserializer : StdDeserializer<String>(String::class.ja
       if (value != null) {
         logger.info { "Config string value is $value." }
         return value
-      } else {
-        logger.info { "Config string value was not provided. Using null." }
-        return null
       }
+      logger.info { "Config string value was not provided. Using null." }
+      return null
     }
 
     internal fun fromEnvironmentVariable(configString: ConfigString): String? {
@@ -44,10 +43,9 @@ public class ConfigStringDeserializer : StdDeserializer<String>(String::class.ja
       if (value != null) {
         logger.info { "Retrieved config string value from environment variable. Value is $value." }
         return value
-      } else {
-        logger.info { "Environment variable was not set. Using null." }
-        return null
       }
+      logger.info { "Environment variable was not set. Using null." }
+      return null
     }
 
     @Suppress("NullableToStringCall")

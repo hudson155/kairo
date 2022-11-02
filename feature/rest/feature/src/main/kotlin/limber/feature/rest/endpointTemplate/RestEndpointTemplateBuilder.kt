@@ -17,7 +17,7 @@ import kotlin.reflect.jvm.jvmErasure
  * The implementations differ for singleton objects and for data classes,
  * but they do follow similar patterns.
  */
-internal sealed class RestEndpointTemplateBuilder<E : RestEndpoint> {
+internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
   internal abstract val argReplacements: Map<String, String>
 
   internal abstract val templateInstance: E

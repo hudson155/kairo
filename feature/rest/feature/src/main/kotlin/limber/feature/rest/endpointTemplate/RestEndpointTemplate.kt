@@ -13,7 +13,7 @@ import kotlin.reflect.KClass
  * and are used to tell Ktor what method, parameterized path, and other endpoint metadata
  * to look for in request mapping.
  */
-public data class RestEndpointTemplate<E : RestEndpoint>(
+public data class RestEndpointTemplate<out E : RestEndpoint>(
   val method: HttpMethod,
   val path: String,
   val requiredQueryParams: Set<String>,

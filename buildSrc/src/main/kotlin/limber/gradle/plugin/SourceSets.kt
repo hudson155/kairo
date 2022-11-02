@@ -1,4 +1,4 @@
-package limber.gradle
+package limber.gradle.plugin
 
 import org.gradle.api.NamedDomainObjectProvider
 import org.gradle.api.Project

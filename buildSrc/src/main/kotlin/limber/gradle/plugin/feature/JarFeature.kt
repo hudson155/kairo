@@ -6,8 +6,8 @@ import org.gradle.kotlin.dsl.withType
 
 /**
  * By default, JAR archives are named according to the Gradle module name.
- * This causes colisions when multiple Gradle modules have the same name,
- * which can happen with nested multi-module projects.
+ * This causes collisions when multiple Gradle modules have the same name,
+ * which can happen with nested multimodule projects.
  *
  * This plugin changes the archive name to be the fully-qualified project path instead,
  * which helps avoid these colisions.

@@ -38,13 +38,12 @@ public class ProtectedConfigStringDeserializer : StdDeserializer<ProtectedString
       if (value != null) {
         logger.info { "Retrieved config string from GCP secret. Not logging due to sensitivity." }
         return ProtectedString(value)
-      } else {
-        logger.info { "GCP secret was not set. Using null." }
-        return null
       }
+      logger.info { "GCP secret was not set. Using null." }
+      return null
     }
 
-    private fun fromCommand(configString: ConfigString): ProtectedString? {
+    private fun fromCommand(configString: ConfigString): ProtectedString {
       requireNotNull(configString.value)
       logger.info { "Config string is from command. Running command \"${configString.value}\"." }
       val value = CommandSource[configString.value]
