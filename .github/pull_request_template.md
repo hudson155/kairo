@@ -18,6 +18,7 @@
 - [ ] All code should be tested.
   API endpoints should be integration tested,
   and other complex code should be unit tested.
+- [ ] Frontend components should have Storybook stories.
 
 **Infrastructure changes:**
 

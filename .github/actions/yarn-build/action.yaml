@@ -18,3 +18,7 @@ runs:
       if: always()
       run: yarn build
       working-directory: web/
+    - shell: bash
+      if: always()
+      run: yarn build-storybook
+      working-directory: web/
