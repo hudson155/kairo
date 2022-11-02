@@ -10,6 +10,6 @@ public class GetFeature @Inject internal constructor(
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
-    return featureService.get(endpoint.organizationGuid, endpoint.featureGuid)
+    return featureService.get(endpoint.featureGuid)
   }
 }

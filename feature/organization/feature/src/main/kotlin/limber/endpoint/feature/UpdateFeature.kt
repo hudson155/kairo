@@ -10,6 +10,6 @@ public class UpdateFeature @Inject internal constructor(
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
-    return featureService.update(endpoint.organizationGuid, endpoint.featureGuid, endpoint.body)
+    return featureService.update(endpoint.featureGuid, endpoint.body)
   }
 }

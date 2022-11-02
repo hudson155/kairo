@@ -10,6 +10,6 @@ public class DeleteFeature @Inject internal constructor(
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
-    return featureService.delete(endpoint.organizationGuid, endpoint.featureGuid)
+    return featureService.delete(endpoint.featureGuid)
   }
 }

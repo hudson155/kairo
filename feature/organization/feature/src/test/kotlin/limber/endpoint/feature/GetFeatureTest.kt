@@ -16,13 +16,11 @@ import java.util.UUID
 internal class GetFeatureTest : IntegrationTest() {
   @Test
   fun `feature does not exist`() {
-    val organizationGuid = UUID.randomUUID()
-
     val featureGuid = UUID.randomUUID()
 
     test {
       shouldNotBeFound {
-        featureClient(FeatureApi.Get(organizationGuid, featureGuid))
+        featureClient(FeatureApi.Get(featureGuid))
       }
     }
   }
@@ -38,7 +36,7 @@ internal class GetFeatureTest : IntegrationTest() {
     }
 
     test {
-      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+      featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
   }

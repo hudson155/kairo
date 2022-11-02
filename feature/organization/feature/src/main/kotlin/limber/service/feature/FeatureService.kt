@@ -14,8 +14,8 @@ internal class FeatureService @Inject constructor(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun get(organizationGuid: UUID, hostnameGuid: UUID): FeatureRep? =
-    featureStore.get(organizationGuid, hostnameGuid)
+  fun get(guid: UUID): FeatureRep? =
+    featureStore.get(guid)
 
   fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
     featureStore.getByOrganization(organizationGuid)
@@ -33,12 +33,12 @@ internal class FeatureService @Inject constructor(
     return featureStore.create(feature)
   }
 
-  fun update(organizationGuid: UUID, guid: UUID, updater: FeatureRep.Updater): FeatureRep {
+  fun update(guid: UUID, updater: FeatureRep.Updater): FeatureRep {
     logger.info { "Updating feature: $updater." }
     if (updater.isDefault == true) {
-      featureStore.setDefaultByOrganization(organizationGuid, guid)
+      featureStore.setDefaultByOrganization(guid)
     }
-    return featureStore.update(organizationGuid, guid) { existing ->
+    return featureStore.update(guid) { existing ->
       FeatureRep(
         organizationGuid = existing.organizationGuid,
         guid = existing.guid,
@@ -50,8 +50,8 @@ internal class FeatureService @Inject constructor(
     }
   }
 
-  fun delete(organizationGuid: UUID, guid: UUID): FeatureRep {
+  fun delete(guid: UUID): FeatureRep {
     logger.info { "Deleting feature." }
-    return featureStore.delete(organizationGuid, guid)
+    return featureStore.delete(guid)
   }
 }
