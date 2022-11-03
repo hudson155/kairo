@@ -1,4 +1,4 @@
-import LoginPage from 'page/LoginPage/LoginPage';
+import LoginPage from 'page/loginPage/LoginPage';
 import { Route } from 'react-router-dom';
 
 const loginRoute = () => <Route path="/login" element={<LoginPage />} />;

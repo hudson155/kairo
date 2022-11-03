@@ -1,5 +1,5 @@
-import loginRoute from 'page/LoginPage/loginRoute';
-import logoutRoute from 'page/LogoutPage/logoutRoute';
+import loginRoute from 'page/loginPage/loginRoute';
+import logoutRoute from 'page/logoutPage/logoutRoute';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import FeatureRouter from './FeatureRouter';
