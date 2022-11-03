@@ -23,6 +23,16 @@
    * Durations.
    */
   --duration-transition: 150ms;
+
+  /**
+   * Font sizes.
+   */
+  --fontSize-h1: 2.13rem;
+  --fontSize-h2: 1.63rem;
+  --fontSize-h3: 1.44rem;
+  --fontSize-h4: 1.25rem;
+  --fontSize-normal: 0.94rem;
+  --fontSize-small: 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {
