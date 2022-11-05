@@ -3,7 +3,7 @@ import featureState from 'state/core/feature';
 
 const featureGuidState = selector<string>({
   key: 'core/featureGuid',
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const feature = get(featureState);
     return feature.guid;
   },

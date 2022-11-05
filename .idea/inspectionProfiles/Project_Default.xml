@@ -299,7 +299,6 @@
     <inspection_tool class="UnusedMainParameter" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="UseExpressionBody" enabled="true" level="WEAK WARNING" enabled_by_default="true" editorAttributes="INFO_ATTRIBUTES" />
     <inspection_tool class="UseWithIndex" enabled="true" level="WEAK WARNING" enabled_by_default="true" editorAttributes="INFO_ATTRIBUTES" />
-    <inspection_tool class="VoidExpressionJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="VulnerableCodeUsages" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="WarningOnMainUnusedParameterMigration" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES" />
     <inspection_tool class="WhenWithOnlyElse" enabled="true" level="WEAK WARNING" enabled_by_default="true" />

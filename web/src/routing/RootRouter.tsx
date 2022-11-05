@@ -9,8 +9,7 @@ const RootRouter: React.FC = () => {
     <Routes>
       {loginRoute()}
       {logoutRoute()}
-
-      <Route path="/*" element={<FeatureRouter />} />
+      <Route element={<FeatureRouter />} path="/*" />
     </Routes>
   );
 };

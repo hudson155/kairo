@@ -7,8 +7,7 @@ const LogoutPage: React.FC = () => {
   const auth0 = useRecoilValue(auth0ClientState);
 
   useEffect(() => {
-    // noinspection JSIgnoredPromiseFromCall
-    auth0.logout({
+    void auth0.logout({
       logoutParams: {
         returnTo: rootUrl,
       },

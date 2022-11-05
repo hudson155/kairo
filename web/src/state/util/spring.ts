@@ -15,12 +15,12 @@ interface SpringOptions<T> {
  *   1. The value can be set using [useSetRecoilState].
  *   2. The value can be reset using [useResetRecoilState].
  */
-export default function spring<T>(options: SpringOptions<T>): RecoilState<T> {
+function spring<T>(options: SpringOptions<T>): RecoilState<T> { // eslint-disable-line func-style
   /**
    * The value of [refreshState] can be incremented to force-refresh the spring upon reset.
    */
   const refreshState = atom<number>({
-    key: options.key + '-refresh',
+    key: `${options.key}-refresh`,
     default: 0,
   });
 
@@ -28,12 +28,12 @@ export default function spring<T>(options: SpringOptions<T>): RecoilState<T> {
    * The value of [localState] can be set to override the spring's selector value.
    */
   const localState = atom<T>({
-    key: options.key + '-atom',
+    key: `${options.key}-atom`,
     default: undefined,
   });
 
   return selector<T>({
-    key: options.key + '-selector',
+    key: `${options.key}-selector`,
     get: (opts) => {
       // If there's a local value set, we use it.
       const localValue = opts.get(localState);
@@ -51,6 +51,9 @@ export default function spring<T>(options: SpringOptions<T>): RecoilState<T> {
       }
     },
     dangerouslyAllowMutability: options.dangerouslyAllowMutability ?? false,
-    cachePolicy_UNSTABLE: { eviction: 'most-recent' }, // Caching is not useful here.
+    // Caching is not useful here.
+    cachePolicy_UNSTABLE: { eviction: 'most-recent' }, // eslint-disable-line @typescript-eslint/naming-convention
   });
 }
+
+export default spring;

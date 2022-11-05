@@ -1,8 +1,10 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, ReactNode } from 'react';
 import styles from './Heading.module.scss';
 
-type Props = HTMLAttributes<HTMLHeadingElement>
+interface Props extends HTMLAttributes<HTMLHeadingElement> {
+  children: ReactNode;
+}
 
 /**
  * Use semantic headings. Don't skip levels.

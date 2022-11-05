@@ -10,6 +10,7 @@ export default {
   title: 'Text',
 } as ComponentMeta<typeof Text>;
 
+// eslint-disable-next-line max-lines-per-function
 const Template: ComponentStory<typeof Text> = () => {
   return (
     <>

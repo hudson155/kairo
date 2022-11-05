@@ -11,7 +11,7 @@ class OrganizationAuthApi {
 
   async getByOrganization(organizationGuid: string): Promise<OrganizationAuthRep | undefined> {
     const path = `/organizations/${organizationGuid}/auth`;
-    return this.api.request<OrganizationAuthRep | undefined>({ method: 'GET', path });
+    return await this.api.request<OrganizationAuthRep | undefined>({ method: 'GET', path });
   }
 }
 

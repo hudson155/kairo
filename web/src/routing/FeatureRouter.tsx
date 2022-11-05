@@ -12,16 +12,18 @@ const FeatureRouter: React.FC = () => {
   return (
     <Routes>
       <Route
-        path="/"
         element={<Navigate to={defaultFeature.rootPath} />}
+        path="/"
       />
-      {features.map(feature => (
-        <Route
-          key={feature.guid}
-          path={`${feature.rootPath}/*`}
-          element={<Feature feature={feature} />}
-        />
-      ))}
+      {
+        features.map((feature) => (
+          <Route
+            key={feature.guid}
+            element={<Feature feature={feature} />}
+            path={`${feature.rootPath}/*`}
+          />
+        ))
+      }
     </Routes>
   );
 };

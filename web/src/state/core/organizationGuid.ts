@@ -3,7 +3,7 @@ import organizationState from 'state/core/organization';
 
 const organizationGuidState = selector<string>({
   key: 'core/organizationGuid',
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const organization = get(organizationState);
     return organization.guid;
   },

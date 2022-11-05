@@ -1,6 +1,7 @@
 import LoginPage from 'page/loginPage/LoginPage';
+import { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
 
-const loginRoute = () => <Route path="/login" element={<LoginPage />} />;
+const loginRoute = (): ReactNode => <Route element={<LoginPage />} path="/login" />;
 
 export default loginRoute;

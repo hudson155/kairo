@@ -11,7 +11,7 @@ const auth0ClientState = selector<Auth0Client>({
       authorizationParams: {
         audience: `https://${env.auth0.domain}/api/v2/`,
         organization: get(organizationAuth0IdState),
-        redirect_uri: rootUrl,
+        redirect_uri: rootUrl, // eslint-disable-line @typescript-eslint/naming-convention
       },
       domain: env.auth0.domain,
       clientId: env.auth0.clientId,

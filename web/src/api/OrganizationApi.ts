@@ -12,7 +12,7 @@ class OrganizationApi {
   async getByHostname(hostname: string): Promise<OrganizationRep | undefined> {
     const path = '/organizations';
     const qp = new URLSearchParams({ hostname });
-    return this.api.request<OrganizationRep | undefined>({ method: 'GET', path, qp });
+    return await this.api.request<OrganizationRep | undefined>({ method: 'GET', path, qp });
   }
 }
 

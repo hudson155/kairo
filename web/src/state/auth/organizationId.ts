@@ -3,7 +3,7 @@ import organizationAuthState from 'state/core/organizationAuth';
 
 const organizationAuth0IdState = selector<string>({
   key: 'auth/organizationAuth0Id',
-  get: async ({ get }) => {
+  get: ({ get }) => {
     const auth = get(organizationAuthState);
     return auth.auth0OrganizationId;
   },

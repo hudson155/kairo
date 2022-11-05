@@ -6,12 +6,11 @@ const LoginPage: React.FC = () => {
   const auth0 = useRecoilValue(auth0ClientState);
 
   useEffect(() => {
-    // noinspection JSIgnoredPromiseFromCall
-    auth0.loginWithRedirect({
+    void auth0.loginWithRedirect({
       authorizationParams: {
         prompt: 'login',
         redirectMethod: 'replace',
-        screen_hint: 'login',
+        screen_hint: 'login', // eslint-disable-line @typescript-eslint/naming-convention
       },
     });
   }, [auth0]);

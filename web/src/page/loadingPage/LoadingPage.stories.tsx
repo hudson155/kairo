@@ -6,6 +6,8 @@ export default {
   component: LoadingPage,
 } as ComponentMeta<typeof LoadingPage>;
 
-const Template: ComponentStory<typeof LoadingPage> = (args) => <LoadingPage {...args} />;
+const Template: ComponentStory<typeof LoadingPage> = () => {
+  return <LoadingPage />;
+};
 
 export const Default = Template.bind({});
