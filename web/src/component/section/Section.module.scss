@@ -1,0 +1,11 @@
+.section {
+  margin-bottom: 32px;
+  padding: 0 8px;
+
+  &:not(:first-of-type)::before {
+    border-bottom: var(--borderSize-m) solid var(--color-border);
+    content: "";
+    display: block;
+    margin-bottom: 24px;
+  }
+}

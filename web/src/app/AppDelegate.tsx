@@ -1,12 +1,15 @@
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import RootRouter from 'routing/RootRouter';
 
 const AppDelegate: React.FC = () => {
   return (
-    <BrowserRouter>
-      <RootRouter />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <RootRouter />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 };
 
