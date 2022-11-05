@@ -9,13 +9,17 @@ class OrganizationAuthApi {
     this.api = api;
   }
 
-  async getByOrganization(organizationGuid: string): Promise<OrganizationAuthRep | undefined> {
-    const path = `/organizations/${organizationGuid}/auth`;
-    return await this.api.request<OrganizationAuthRep | undefined>({ method: 'GET', path });
+  async getByHostname(hostname: string): Promise<OrganizationAuthRep | undefined> {
+    const path = '/organization-auths';
+    const qp = new URLSearchParams({ hostname });
+    return await this.api.request<OrganizationAuthRep>({ method: 'GET', path, qp });
   }
 }
 
 export const organizationAuthApiState = selector<OrganizationAuthApi>({
   key: 'api/organizationAuth',
-  get: ({ get }) => new OrganizationAuthApi(get(apiState)),
+  get: ({ get }) => {
+    const api = get(apiState({ authenticated: false }));
+    return new OrganizationAuthApi(api);
+  },
 });

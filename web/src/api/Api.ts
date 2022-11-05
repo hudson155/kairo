@@ -1,6 +1,7 @@
 import axios, { Axios } from 'axios';
 import env from 'env';
-import { selector } from 'recoil';
+import { selectorFamily } from 'recoil';
+import auth0ClientState from 'state/auth/auth0Client';
 
 export interface Request<Req> {
   method: 'GET';
@@ -16,10 +17,17 @@ export default class Api {
     validateStatus: (status) => (status >= 200 && status < 300) || status === 404,
   });
 
+  private readonly getJwt: (() => Promise<string | undefined>) | undefined;
+
+  constructor(getJwt?: () => Promise<string | undefined>) {
+    this.getJwt = getJwt;
+  }
+
   async request<Res, Req = undefined>(request: Request<Req>): Promise<Res> {
     const response = await this.axios.request({
       url: request.path,
-      headers: Api.headers(request),
+      method: request.method,
+      headers: await this.headers(request),
       params: request.qp,
       data: request.body as Req,
     });
@@ -28,10 +36,12 @@ export default class Api {
   }
 
   /* eslint-disable */
-  private static headers(request: Request<unknown>): Record<string, string> {
+  private async headers(request: Request<unknown>): Promise<Record<string, string>> {
+    const jwt = await this.getJwt?.();
     const result: Record<string, string> = {
       'Accept': 'application/json',
     };
+    if (jwt) result['Authorization'] = `Bearer ${jwt}`;
     if (request.body) result['Content-Type'] = 'application/json';
     return result;
   }
@@ -39,7 +49,23 @@ export default class Api {
   /* eslint-enable */
 }
 
-export const apiState = selector<Api>({
+export const apiState = selectorFamily<Api, {
+  /**
+   * Passing [true] will result in an authenticated API (that passes a JWT with each request).
+   * This is used for most requests.
+   *
+   * Passing [false] will result in an unauthenticated API.
+   * This is useful when there is no user session.
+   */
+  authenticated: boolean;
+}>({
   key: 'api/api',
-  get: () => new Api(),
+  get: ({ authenticated }) => ({ get }) => {
+    let getJwt: () => Promise<string | undefined> = () => Promise.resolve(undefined);
+    if (authenticated) {
+      const auth0Client = get(auth0ClientState);
+      getJwt = () => auth0Client.getTokenSilently();
+    }
+    return new Api(getJwt);
+  },
 });

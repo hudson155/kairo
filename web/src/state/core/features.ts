@@ -9,9 +9,18 @@ const featuresState = spring<FeatureRep[]>({
     const featureApi = get(featureApiState);
     const organizationGuid = get(organizationGuidState);
     const features = await featureApi.getByOrganization(organizationGuid);
-    if (features.length === 0) throw new Error('No Features found.');
-    return features;
+    return sortFeatures(features);
   },
 });
 
 export default featuresState;
+
+/**
+ * Features are sorted in a stable order, with the default feature first.
+ */
+const sortFeatures = (features: FeatureRep[]): FeatureRep[] => {
+  if (features.length === 0) throw new Error('No Features found.');
+  const defaultFeature = features.find((feature) => feature.isDefault);
+  if (!defaultFeature) throw new Error('No default feature found.');
+  return [defaultFeature, ...features.filter((feature) => feature.guid !== defaultFeature.guid)];
+};

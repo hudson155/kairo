@@ -215,7 +215,7 @@ rules:
   no-bitwise: error
   no-caller: error
   no-confusing-arrow: error
-  no-console: warn
+  no-console: [warn, { allow: [error] }]
   no-div-regex: error
   no-else-return: [warn, { allowElseIf: false }]
   no-empty: warn
@@ -253,7 +253,6 @@ rules:
   no-script-url: warn
   no-sequences: [error, { allowInParentheses: false }]
   no-throw-literal: error
-  no-undef-init: error
   no-underscore-dangle: [error, { allowFunctionParams: false }]
   no-unneeded-ternary: [warn, { defaultAssignment: false }]
   no-unused-labels: warn

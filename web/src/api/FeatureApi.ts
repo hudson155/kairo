@@ -17,5 +17,8 @@ class FeatureApi {
 
 export const featureApiState = selector<FeatureApi>({
   key: 'api/feature',
-  get: ({ get }) => new FeatureApi(get(apiState)),
+  get: ({ get }) => {
+    const api = get(apiState({ authenticated: true }));
+    return new FeatureApi(api);
+  },
 });
