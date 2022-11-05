@@ -1,18 +1,27 @@
-name: CI
+name: CI (Kotlin)
 
 on:
   pull_request:
+    paths:
+      - .detekt/**
+      - .github/**
+      - buildSrc/**
+      - common/**
+      - db/**
+      - feature/**
+      - gradle/**
+      - server/**
+      - gradlew
+      - settings.gradle.kts
   push:
     branches: [main]
 
 concurrency:
-  group: kotlin-ci-${{ github.event.number }}
+  group: ci-kotlin-${{ github.event.number }}
   cancel-in-progress: true
 
 jobs:
-
-  gradle:
-    name: Gradle build
+  ci:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -38,16 +47,3 @@ jobs:
       - name: Gradle cleanup
         if: always()
         uses: ./.github/actions/gradle-cleanup
-
-  yarn:
-    name: Yarn build
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3.0.2
-      - name: Set up
-        uses: ./.github/actions/set-up-node
-      - name: Yarn build
-        uses: ./.github/actions/yarn-build
-      - name: Upload JAR files
-        uses: ./.github/actions/upload-yarn-files

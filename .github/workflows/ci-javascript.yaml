@@ -1,0 +1,26 @@
+name: CI (JavaScript)
+
+on:
+  pull_request:
+    paths:
+      - .github/**
+      - web/**
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-javascript-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3.0.2
+      - name: Set up
+        uses: ./.github/actions/set-up-node
+      - name: Yarn build
+        uses: ./.github/actions/yarn-build
+      - name: Upload JAR files
+        uses: ./.github/actions/upload-yarn-files
