@@ -10,6 +10,10 @@ export interface Request<Req> {
   body?: Req;
 }
 
+/**
+ * This is the base API class for interacting with the backend.
+ * It holds the shared logic, but individual endpoints are defined in other files in this folder.
+ */
 export default class Api {
   private readonly axios: Axios = axios.create({
     baseURL: env.limber.apiBaseUrl, // eslint-disable-line @typescript-eslint/naming-convention
@@ -17,9 +21,9 @@ export default class Api {
     validateStatus: (status) => (status >= 200 && status < 300) || status === 404,
   });
 
-  private readonly getJwt: (() => Promise<string | undefined>) | undefined;
+  private readonly getJwt: (() => Promise<string | undefined>);
 
-  constructor(getJwt?: () => Promise<string | undefined>) {
+  constructor(getJwt: () => Promise<string | undefined>) {
     this.getJwt = getJwt;
   }
 
@@ -31,13 +35,14 @@ export default class Api {
       params: request.qp,
       data: request.body as Req,
     });
+    // Update [validateStatus] above if we need to handle more statuses here.
     if (response.status === 404) return undefined as Res;
     return response.data as Res;
   }
 
   /* eslint-disable */
   private async headers(request: Request<unknown>): Promise<Record<string, string>> {
-    const jwt = await this.getJwt?.();
+    const jwt = await this.getJwt();
     const result: Record<string, string> = {
       'Accept': 'application/json',
     };
