@@ -15,15 +15,12 @@ interface Props extends HTMLAttributes<HTMLSpanElement> {
  * Use this to adjust how text looks without adding additional spacing.
  * For document text that needs proper spacing, use [Paragraph] instead.
  */
-const Text: React.FC<Props> =
-  React.forwardRef<HTMLSpanElement, Props>(({ size, className, children, ...props }, ref) => {
-    return (
-      <span className={classNames(size ? styles[size] : undefined, className)}
-            ref={ref}
-            {...props}>
-        {children}
-      </span>
-    );
-  });
+const Text: React.FC<Props> = ({ size, className, children, ...props }) => {
+  return (
+    <span className={classNames(size ? styles[size] : undefined, className)} {...props}>
+      {children}
+    </span>
+  );
+};
 
 export default Text;

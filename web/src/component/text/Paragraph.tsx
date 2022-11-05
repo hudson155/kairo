@@ -14,15 +14,12 @@ interface Props extends HTMLAttributes<HTMLParagraphElement> {
  * Use this for paragraphs of text.
  * No need to add [Text] inside, except to change how text looks.
  */
-const Paragraph: React.FC<Props> =
-  React.forwardRef<HTMLParagraphElement, Props>(({ size, className, children, ...props }, ref) => {
-    return (
-      <p className={classNames(styles.p, size ? styles[size] : undefined, className)}
-         ref={ref}
-         {...props}>
-        {children}
-      </p>
-    );
-  });
+const Paragraph: React.FC<Props> = ({ size, className, children, ...props }) => {
+  return (
+    <p className={classNames(styles.p, size ? styles[size] : undefined, className)}{...props}>
+      {children}
+    </p>
+  );
+};
 
 export default Paragraph;

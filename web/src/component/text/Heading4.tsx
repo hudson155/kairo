@@ -7,9 +7,12 @@ type Props = HTMLAttributes<HTMLHeadingElement>
 /**
  * Use semantic headings. Don't skip levels.
  */
-const Heading4: React.FC<Props> =
-  React.forwardRef<HTMLHeadingElement, Props>(({ className, children, ...props }, ref) => {
-    return <h4 className={classNames(styles.h4, className)} ref={ref} {...props}>{children}</h4>;
-  });
+const Heading4: React.FC<Props> = ({ className, children, ...props }) => {
+  return (
+    <h4 className={classNames(styles.h4, className)} {...props}>
+      {children}
+    </h4>
+  );
+};
 
 export default Heading4;
