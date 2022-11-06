@@ -52,7 +52,7 @@ function spring<T>(options: SpringOptions<T>): RecoilState<T> { // eslint-disabl
     },
     dangerouslyAllowMutability: options.dangerouslyAllowMutability ?? false,
     // Caching is not useful here.
-    cachePolicy_UNSTABLE: { eviction: 'most-recent' }, // eslint-disable-line @typescript-eslint/naming-convention
+    cachePolicy_UNSTABLE: { eviction: `most-recent` }, // eslint-disable-line @typescript-eslint/naming-convention
   });
 }
 

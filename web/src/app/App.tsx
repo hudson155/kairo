@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
 import 'the-new-css-reset/css/reset.css';
 
-const AppDelegate = React.lazy(() => import('./AppDelegate'));
+const AppDelegate = React.lazy(() => import(`./AppDelegate`));
 
 /**
  * This component is extremely minimal to provide the quickest possible first paint performance.

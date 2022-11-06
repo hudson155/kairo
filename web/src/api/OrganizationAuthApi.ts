@@ -10,14 +10,14 @@ class OrganizationAuthApi {
   }
 
   async getByHostname(hostname: string): Promise<OrganizationAuthRep | undefined> {
-    const path = '/organization-auths';
+    const path = `/organization-auths`;
     const qp = new URLSearchParams({ hostname });
-    return await this.api.request<OrganizationAuthRep>({ method: 'GET', path, qp });
+    return await this.api.request<OrganizationAuthRep>({ method: `GET`, path, qp });
   }
 }
 
 export const organizationAuthApiState = selector<OrganizationAuthApi>({
-  key: 'api/organizationAuth',
+  key: `api/organizationAuth`,
   get: ({ get }) => {
     const api = get(apiState({ authenticated: false }));
     return new OrganizationAuthApi(api);

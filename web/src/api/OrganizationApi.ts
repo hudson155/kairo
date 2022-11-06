@@ -11,12 +11,12 @@ class OrganizationApi {
 
   async get(organizationGuid: string): Promise<OrganizationRep | undefined> {
     const path = `/organizations/${organizationGuid}`;
-    return await this.api.request<OrganizationRep | undefined>({ method: 'GET', path });
+    return await this.api.request<OrganizationRep | undefined>({ method: `GET`, path });
   }
 }
 
 export const organizationApiState = selector<OrganizationApi>({
-  key: 'api/organization',
+  key: `api/organization`,
   get: ({ get }) => {
     const api = get(apiState({ authenticated: true }));
     return new OrganizationApi(api);

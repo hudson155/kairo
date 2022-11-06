@@ -64,7 +64,7 @@ export const apiState = selectorFamily<Api, {
    */
   authenticated: boolean;
 }>({
-  key: 'api/api',
+  key: `api/api`,
   get: ({ authenticated }) => ({ get }) => {
     let getJwt: () => Promise<string | undefined> = () => Promise.resolve(undefined);
     if (authenticated) {
