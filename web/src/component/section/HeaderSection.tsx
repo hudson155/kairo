@@ -16,7 +16,7 @@ const HeaderSection: React.FC<Props> = ({ title, children }) => {
   return (
     <Section>
       <Helmet>
-        <title>{title} | Limber</title>
+        <title>{pageTitle(title)}</title>
       </Helmet>
       <Heading1>{title}</Heading1>
       {children}
@@ -25,3 +25,5 @@ const HeaderSection: React.FC<Props> = ({ title, children }) => {
 };
 
 export default HeaderSection;
+
+const pageTitle = (title: string): string => `${title} | Limber`;

@@ -88,6 +88,7 @@ rules:
   react/jsx-no-constructed-context-values: warn
   react/jsx-no-duplicate-props: [error, { ignoreCase: true }]
   react/jsx-no-leaked-render: [warn, { validStrategies: [ternary] }]
+  react/jsx-no-literals: error
   react/jsx-no-script-url: warn
   react/jsx-no-target-blank:
     - warn
@@ -464,3 +465,6 @@ overrides:
     rules:
       spaced-comment: off
       unicorn/filename-case: off
+  - files: '*.stories.tsx'
+    rules:
+      react/jsx-no-literals: off
