@@ -60,7 +60,7 @@
     "lint:eslint": "eslint src --max-warnings=0",
     "build": "react-scripts build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "STORYBOOK_DEBUG_GIT_SHA=$(git rev-parse --short=8 HEAD) start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "browserslist": {

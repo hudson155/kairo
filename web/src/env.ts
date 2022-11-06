@@ -13,13 +13,18 @@ interface Env {
   };
 }
 
+/**
+ * Environment variables must be prefixed by REACT_APP.
+ * Those passed via the command must also be prefixed.
+ * However, Storybook only allows the STORYBOOK prefix, not REACT_APP.
+ */
 const env: Env = {
   auth0: {
     clientId: process.env.REACT_APP_AUTH0_CLIENT_ID!,
     domain: process.env.REACT_APP_AUTH0_DOMAIN!,
   },
   debug: {
-    gitSha: process.env.REACT_APP_DEBUG_GIT_SHA!,
+    gitSha: (process.env.REACT_APP_DEBUG_GIT_SHA ?? process.env.STORYBOOK_DEBUG_GIT_SHA)!,
     showDebugMessages: JSON.parse(process.env.REACT_APP_DEBUG_SHOW_DEBUG_MESSAGES!) as boolean,
   },
   limber: {

@@ -1,3 +1,5 @@
+// noinspection ES6ConvertModuleExportToExport
+
 module.exports = {
   'stories': [
     '../src/**/*.stories.tsx',
