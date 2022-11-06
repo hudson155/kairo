@@ -4,7 +4,7 @@
 
 **Breaking API changes:**
 
-- [ ] All API changes should be backwards-compatible.
+- [ ] All API changes should be **backwards-compatible**.
 
 **Documentation:**
 
@@ -16,9 +16,11 @@
 **Tests:**
 
 - [ ] All code should be tested.
-  API endpoints should be integration tested,
-  and other complex code should be unit tested.
-- [ ] Frontend components should have Storybook stories.
+  API endpoints should be **integration tested**,
+  and other complex code should be **unit tested**.
+- [ ] Frontend components should have **Storybook stories**.
+- [ ] Frontend components should be tested in both
+  **dark mode** and **light mode**
 
 **Infrastructure changes:**
 
