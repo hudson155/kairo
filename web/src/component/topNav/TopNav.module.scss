@@ -1,0 +1,14 @@
+.header {
+  align-items: center;
+  border-bottom: var(--borderSize-m) solid var(--color-border);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
+.left, .right {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}

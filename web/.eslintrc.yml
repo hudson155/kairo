@@ -61,7 +61,11 @@ rules:
   react/jsx-child-element-spacing: warn
   react/jsx-closing-bracket-location: [warn, line-aligned]
   react/jsx-closing-tag-location: warn
-  react/jsx-curly-brace-presence: [warn, never]
+  react/jsx-curly-brace-presence:
+    - warn
+    - props: never
+      children: always
+      propElementValues: always
   react/jsx-curly-newline:
     - warn
     - multiline: require
@@ -266,7 +270,6 @@ rules:
   no-useless-rename: warn
   no-useless-return: error
   no-var: error
-  no-void: [error, { allowAsStatement: true }]
   object-shorthand: warn
   one-var: [error, never]
   operator-assignment: warn
@@ -467,4 +470,9 @@ overrides:
       unicorn/filename-case: off
   - files: '*.stories.tsx'
     rules:
+      react/jsx-curly-brace-presence:
+        - warn
+        - props: never
+          children: ignore
+          propElementValues: always
       react/jsx-no-literals: off
