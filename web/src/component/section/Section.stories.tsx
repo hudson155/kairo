@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import SectionSpacer from 'component/section/SectionSpacer';
 import Paragraph from 'component/text/Paragraph';
 import { HelmetProvider } from 'react-helmet-async';
 import HeaderSection from './HeaderSection';
 import Section from './Section';
+import SectionSpacer from './SectionSpacer';
 
 export default {
   title: 'Section',
