@@ -3,7 +3,6 @@ import LoadingPage from './LoadingPage';
 
 export default {
   title: `page/LoadingPage`,
-  component: LoadingPage,
 } as ComponentMeta<typeof LoadingPage>;
 
 const Template: ComponentStory<typeof LoadingPage> = () => {
