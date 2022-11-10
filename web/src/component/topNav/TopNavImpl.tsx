@@ -1,11 +1,8 @@
-import { Auth0Client } from '@auth0/auth0-spa-js';
 import Button from 'component/button/Button';
 import TopNav from 'component/topNav/TopNav';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
-import FeatureRep from 'rep/FeatureRep';
-import OrganizationRep from 'rep/OrganizationRep';
 import auth0ClientState from 'state/auth/auth0Client';
 import defaultFeatureState from 'state/core/defaultFeature';
 import organizationState from 'state/core/organization';
@@ -15,27 +12,34 @@ import organizationState from 'state/core/organization';
  * It uses [useRecoilValueLoadable] to ensure it can render even in an erroneous state.
  */
 const TopNavImpl: React.FC = () => {
-  const organization = useRecoilValueLoadable(organizationState);
-  const defaultFeature = useRecoilValueLoadable(defaultFeatureState);
-  const auth0 = useRecoilValueLoadable(auth0ClientState);
-
   return (
     <TopNav
-      left={left(organization.valueMaybe(), defaultFeature.valueMaybe())}
-      right={right(auth0.valueMaybe())}
+      left={<Left />}
+      right={<Right />}
     />
   );
 };
 
 export default TopNavImpl;
 
-const left = (organization: OrganizationRep | undefined, defaultFeature: FeatureRep | undefined): ReactNode => {
+const Left: React.FC = () => {
+  const organization = useRecoilValueLoadable(organizationState).valueMaybe();
+  const defaultFeature = useRecoilValueLoadable(defaultFeatureState).valueMaybe();
+
   if (!organization) return null;
-  if (!defaultFeature) return organization.name;
-  return <Link to={defaultFeature.rootPath}>{organization.name}</Link>;
+  return (
+    <>
+      {
+        defaultFeature
+          ? <Link to={defaultFeature.rootPath}>{organization.name}</Link>
+          : organization.name
+      }
+    </>
+  );
 };
 
-const right = (auth0: Auth0Client | undefined): ReactNode => {
+const Right: React.FC = () => {
+  const auth0 = useRecoilValueLoadable(auth0ClientState).valueMaybe();
   if (!auth0) return null;
   return <Button variant="unstyled" onClick={() => void auth0.logout()}>{`Log out`}</Button>;
 };

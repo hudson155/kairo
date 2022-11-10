@@ -14,10 +14,25 @@ const COPYRIGHT_TEXT = `© Jeff Hudson. All rights reserved.`;
  * It uses [useRecoilValueLoadable] to ensure it can render even in an erroneous state.
  */
 const Footer: React.FC = () => {
-  const { gitSha, showDebugMessages } = useDebugSettings();
+  const { showDebugMessages } = useDebugSettings();
+
+  return (
+    <footer className={styles.outer}>
+      <div className={styles.inner}>
+        <Paragraph size="small">{COPYRIGHT_TEXT}</Paragraph>
+        {showDebugMessages ? <DebugInfo /> : null}
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+const DebugInfo: React.FC = () => {
+  const { gitSha } = useDebugSettings();
   const organizationGuid = useRecoilValueLoadable(organizationGuidState);
 
-  const debugInfo = (
+  return (
     <>
       <Paragraph size="small">
         {`Git SHA: `}<Code>{gitSha}</Code>
@@ -27,15 +42,4 @@ const Footer: React.FC = () => {
       </Paragraph>
     </>
   );
-
-  return (
-    <footer className={styles.outer}>
-      <div className={styles.inner}>
-        <Paragraph size="small">{COPYRIGHT_TEXT}</Paragraph>
-        {showDebugMessages ? debugInfo : null}
-      </div>
-    </footer>
-  );
 };
-
-export default Footer;
