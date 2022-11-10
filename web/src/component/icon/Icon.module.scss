@@ -1,0 +1,20 @@
+/**
+ * These font sizes align with Google's recommendations for icon sizes.
+ * They intentionally use px (not rem) since we don't want icons to scale with fonts.
+ */
+
+.small {
+  font-size: 18px;
+}
+
+.medium {
+  font-size: 24px;
+}
+
+.large {
+  font-size: 36px;
+}
+
+.extraLarge {
+  font-size: 48px;
+}
