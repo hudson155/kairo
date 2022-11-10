@@ -12,7 +12,7 @@ const initializeState = ({ set }: MutableSnapshot): void => {
 };
 
 export default {
-  title: `Footer`,
+  title: `component/Footer`,
   decorators: [(story) => <RecoilRoot initializeState={initializeState}>{story()}</RecoilRoot>],
 } as ComponentMeta<typeof Footer>;
 

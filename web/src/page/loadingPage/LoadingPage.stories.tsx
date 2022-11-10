@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import LoadingPage from './LoadingPage';
 
 export default {
-  title: `LoadingPage`,
+  title: `page/LoadingPage`,
   component: LoadingPage,
 } as ComponentMeta<typeof LoadingPage>;
 

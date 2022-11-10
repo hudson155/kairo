@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import TopNav from './TopNav';
 
 export default {
-  title: `TopNav`,
+  title: `component/TopNav`,
 } as ComponentMeta<typeof TopNav>;
 
 const Template: ComponentStory<typeof TopNav> = () => {

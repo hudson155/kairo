@@ -3,7 +3,7 @@ import Paragraph from 'component/text/Paragraph';
 import Code from './Code';
 
 export default {
-  title: `Code`,
+  title: `component/Code`,
 } as ComponentMeta<typeof Code>;
 
 const Template: ComponentStory<typeof Code> = () => {

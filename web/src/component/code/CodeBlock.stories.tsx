@@ -3,7 +3,7 @@ import Paragraph from 'component/text/Paragraph';
 import CodeBlock from './CodeBlock';
 
 export default {
-  title: `CodeBlock`,
+  title: `component/CodeBlock`,
 } as ComponentMeta<typeof CodeBlock>;
 
 const Template: ComponentStory<typeof CodeBlock> = () => {

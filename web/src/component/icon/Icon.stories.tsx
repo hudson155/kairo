@@ -4,7 +4,7 @@ import React from 'react';
 import Icon, { Size } from './Icon';
 
 export default {
-  title: `Icon`,
+  title: `component/Icon`,
 } as ComponentMeta<typeof Icon>;
 
 const Template: ComponentStory<typeof Icon> = () => {

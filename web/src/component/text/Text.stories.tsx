@@ -7,7 +7,7 @@ import Paragraph from './Paragraph';
 import Text from './Text';
 
 export default {
-  title: `Text`,
+  title: `component/Text`,
 } as ComponentMeta<typeof Text>;
 
 // eslint-disable-next-line max-lines-per-function
