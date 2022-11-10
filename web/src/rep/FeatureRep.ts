@@ -1,8 +1,10 @@
+export type FeatureType = 'Placeholder' | 'Form';
+
 export default interface FeatureRep {
   organizationGuid: string;
   guid: string;
   isDefault: boolean;
-  type: 'Placeholder' | 'Forms';
+  type: FeatureType;
   name: string;
   rootPath: string;
 }

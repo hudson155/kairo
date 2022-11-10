@@ -9,4 +9,4 @@ values ((select guid from organization.organization), gen_random_uuid(), 'localh
 
 insert into organization.feature (organization_guid, guid, is_default, type, name, root_path)
 values ((select guid from organization.organization), gen_random_uuid(), true, 'Placeholder', 'Home', '/placeholder'),
-       ((select guid from organization.organization), gen_random_uuid(), false, 'Forms', 'My forms', '/forms');
+       ((select guid from organization.organization), gen_random_uuid(), false, 'Form', 'My forms', '/forms');

@@ -27,14 +27,14 @@ internal abstract class FeatureFixture {
 
     val myForms: FeatureFixture = object : FeatureFixture() {
       override val creator: FeatureRep.Creator =
-        FeatureRep.Creator(type = FeatureRep.Type.Forms, name = " My forms ", rootPath = " /Forms ")
+        FeatureRep.Creator(type = FeatureRep.Type.Form, name = " My forms ", rootPath = " /Forms ")
 
       override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
         FeatureRep(
           organizationGuid = organizationGuid,
           guid = guid,
           isDefault = false, // May need to be updated after returned.
-          type = FeatureRep.Type.Forms,
+          type = FeatureRep.Type.Form,
           name = "My forms",
           rootPath = "/forms",
         )

@@ -19,6 +19,11 @@ Other than the rules defined here, please follow the
   - Order lists alphabetically when there is no other natural order.
     This applies to both copy and to code (such as parameter/method lists and documentation).
 
+- **Plurality:**
+  For naming, singular forms should be preferred over plural forms where possible.
+  This includes for folder, package, and feature names.
+  REST paths should be plural, due to convention.
+
 - **Product terminology:**
   The words _Feature_, _Server_, and _Application_
   should be capitalized when they refer to the Limber-specific definitions of those terms.

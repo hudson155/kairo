@@ -14,7 +14,7 @@ public data class FeatureRep(
   val name: String,
   val rootPath: String,
 ) {
-  public enum class Type { Placeholder, Forms }
+  public enum class Type { Placeholder, Form }
 
   public data class Creator(
     val type: Type,
