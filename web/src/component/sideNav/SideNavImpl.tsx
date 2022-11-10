@@ -20,6 +20,7 @@ const SideNavImpl: React.FC = () => {
             key={feature.guid}
             label={feature.name}
             to={feature.rootPath}
+            onClick={() => setIsOpen(false)}
           />
         ))
       }
