@@ -1,0 +1,24 @@
+.backdrop {
+  background-color: var(--color-overlay);
+  inset: 0;
+  position: fixed;
+}
+
+.nav {
+  border-right: var(--borderSize-m) solid var(--color-border);
+  overflow-y: auto;
+  padding: 24px;
+  width: 256px;
+
+  &.collapsible {
+    background-color: var(--color-background);
+    inset: 0;
+    position: fixed;
+  }
+}
+
+.ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+}

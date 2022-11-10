@@ -18,6 +18,7 @@
   --color-block: hsl(240deg, 10%, 52%);
   --color-border: hsl(240deg, 10%, 91%);
   --color-font: hsl(240deg, 10%, 17%);
+  --color-overlay: hsla(240deg, 10%, 35%, 80%);
 
   /**
    * Durations.
@@ -44,5 +45,6 @@
     --color-block: hsl(240deg, 10%, 75%);
     --color-border: hsl(240deg, 10%, 23%);
     --color-font: hsl(240deg, 10%, 87%);
+    --color-overlay: hsla(240deg, 10%, 5%, 80%);
   }
 }

@@ -1,0 +1,20 @@
+.link {
+  border-radius: 4px;
+  display: block;
+  padding: 4px 8px;
+
+  /**
+   * The [active] class is applied automatically by React Router.
+   */
+  &:global(.active) {
+    background-color: var(--color-backgroundCurrent);
+  }
+
+  &:hover {
+    background-color: var(--color-backgroundHover);
+  }
+
+  &:active {
+    background-color: var(--color-backgroundActive);
+  }
+}

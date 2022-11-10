@@ -3,6 +3,9 @@
 This is a non-comprehensive list of technical debt.
 It is not sorted.
 
+- **Lacking transitions:**
+  The side navigation bar does not have a transition.
+
 - **Passwords stored in plaintext:**
   [Terraform stores sensitive values in plaintext in the state file](https://github.com/hashicorp/terraform/issues/516).
   If Terraform changes this, great.
