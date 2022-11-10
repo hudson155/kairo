@@ -101,7 +101,12 @@ rules:
       forms: true
   react/jsx-no-useless-fragment: [warn, { allowExpressions: true }]
   react/jsx-pascal-case: warn
-  react/jsx-props-no-spreading: [warn, { html: ignore }]
+  react/jsx-props-no-spreading:
+    - warn
+    - html: ignore
+      exceptions:
+        - Transition
+        - Transition.Child
   react/jsx-sort-default-props: [warn, { ignoreCase: true }]
   react/jsx-sort-props:
     - warn
@@ -132,7 +137,7 @@ rules:
   react/no-did-mount-set-state: [warn, disallow-in-func]
   react/no-did-update-set-state: [warn, disallow-in-func]
   react/no-invalid-html-attribute: error
-  react/no-multi-comp: [error, { ignoreStateless: true}]
+  react/no-multi-comp: [error, { ignoreStateless: true }]
   react/no-namespace: error
   react/no-redundant-should-component-update: warn
   react/no-string-refs: [error, { noTemplateLiterals: true }]

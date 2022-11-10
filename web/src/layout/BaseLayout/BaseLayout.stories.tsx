@@ -4,13 +4,23 @@ import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
 import React, { useState } from 'react';
+import { MutableSnapshot } from 'recoil';
+import organizationAuth from 'state/core/organizationAuth';
 import * as Decorator from 'story/Decorator';
 import BaseLayout from './BaseLayout';
+
+const initializeState = ({ set }: MutableSnapshot): void => {
+  set(organizationAuth, {
+    organizationGuid: crypto.randomUUID(),
+    guid: crypto.randomUUID(),
+    auth0OrganizationId: `org_abcdefghijklmnop`,
+  });
+};
 
 export default {
   title: `layout/BaseLayout`,
   decorators: [
-    Decorator.recoilRoot(),
+    Decorator.recoilRoot(initializeState),
     Decorator.browserRouter(),
   ],
 } as ComponentMeta<typeof BaseLayout>;

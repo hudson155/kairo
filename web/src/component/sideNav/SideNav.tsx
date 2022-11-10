@@ -1,7 +1,8 @@
-import { Dialog } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { useResizeObserver } from 'hook/useResizeObserver';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
+import { transitions } from 'style/transitions';
 import styles from './SideNav.module.scss';
 
 /**
@@ -37,12 +38,18 @@ const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
   }
 
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-      <div aria-hidden={true} className={styles.backdrop} />
-      <Dialog.Panel as="nav" className={classNames(styles.nav, { [styles.collapsible]: sideNavIsCollapsible })}>
-        <ul className={styles.ul}>{children}</ul>
-      </Dialog.Panel>
-    </Dialog>
+    <Transition as={Fragment} show={isOpen}>
+      <Dialog onClose={() => setIsOpen(false)}>
+        <Transition.Child as={Fragment} {...transitions(`fadeIn`, `fadeOut`)}>
+          <div aria-hidden={true} className={styles.backdrop} />
+        </Transition.Child>
+        <Transition.Child as={Fragment} {...transitions(`slideIn`, `slideOut`)}>
+          <Dialog.Panel as="nav" className={classNames(styles.nav, { [styles.collapsible]: sideNavIsCollapsible })}>
+            <ul className={styles.ul}>{children}</ul>
+          </Dialog.Panel>
+        </Transition.Child>
+      </Dialog>
+    </Transition>
   );
 };
 

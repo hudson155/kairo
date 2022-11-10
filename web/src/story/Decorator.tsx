@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 
-import { DecoratorFunction } from '@storybook/csf/dist/story';
+import { DecoratorFunction } from '@storybook/csf';
 import { ReactFramework } from '@storybook/react';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';

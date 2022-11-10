@@ -1,0 +1,24 @@
+.transition {
+  transition-duration: var(--duration-transition);
+  transition-property: all;
+}
+
+.fadeIn {
+  &.off {
+    opacity: 0;
+  }
+
+  &.on {
+    opacity: 1;
+  }
+}
+
+.slideIn {
+  &.off {
+    transform: translateX(-100%);
+  }
+
+  &.on {
+    transform: translateX(0);
+  }
+}
