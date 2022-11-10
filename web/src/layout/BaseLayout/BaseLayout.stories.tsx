@@ -4,18 +4,14 @@ import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
+import * as Decorator from 'story/Decorator';
 import BaseLayout from './BaseLayout';
 
 export default {
   title: `layout/BaseLayout`,
   decorators: [
-    (story) => (
-      <RecoilRoot>
-        <BrowserRouter>{story()}</BrowserRouter>
-      </RecoilRoot>
-    ),
+    Decorator.recoilRoot(),
+    Decorator.browserRouter(),
   ],
 } as ComponentMeta<typeof BaseLayout>;
 

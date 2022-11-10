@@ -1,13 +1,13 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Paragraph from 'component/text/Paragraph';
-import { HelmetProvider } from 'react-helmet-async';
+import * as Decorator from 'story/Decorator';
 import HeaderSection from './HeaderSection';
 import Section from './Section';
 import SectionSpacer from './SectionSpacer';
 
 export default {
   title: `component/Section`,
-  decorators: [(story) => <HelmetProvider>{story()}</HelmetProvider>],
+  decorators: [Decorator.helmetProvider()],
 } as ComponentMeta<typeof Section>;
 
 const Template: ComponentStory<typeof Section> = () => {

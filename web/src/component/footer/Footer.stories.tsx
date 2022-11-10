@@ -1,6 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { MutableSnapshot, RecoilRoot } from 'recoil';
+import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';
+import * as Decorator from 'story/Decorator';
 import Footer from './Footer';
 
 const initializeState = ({ set }: MutableSnapshot): void => {
@@ -13,7 +14,7 @@ const initializeState = ({ set }: MutableSnapshot): void => {
 
 export default {
   title: `component/Footer`,
-  decorators: [(story) => <RecoilRoot initializeState={initializeState}>{story()}</RecoilRoot>],
+  decorators: [Decorator.recoilRoot(initializeState)],
 } as ComponentMeta<typeof Footer>;
 
 const Template: ComponentStory<typeof Footer> = () => {

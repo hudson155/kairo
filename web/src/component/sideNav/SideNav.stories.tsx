@@ -3,12 +3,12 @@ import Button from 'component/button/Button';
 import Section from 'component/section/Section';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import * as Decorator from 'story/Decorator';
 import SideNav, { useCollapsibleSideNav } from './SideNav';
 
 export default {
   title: `component/SideNav`,
-  decorators: [(story) => <BrowserRouter>{story()}</BrowserRouter>],
+  decorators: [Decorator.browserRouter()],
 } as ComponentMeta<typeof SideNav>;
 
 const Template: ComponentStory<typeof Section> = () => {
