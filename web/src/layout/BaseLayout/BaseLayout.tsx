@@ -1,6 +1,8 @@
 import Footer from 'component/footer/Footer';
 import SideNavImpl from 'component/sideNav/SideNavImpl';
 import TopNavImpl from 'component/topNav/TopNavImpl';
+import ErrorBoundary from 'page/errorPage/ErrorBoundary';
+import ErrorMain from 'page/errorPage/ErrorMain';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import styles from './BaseLayout.module.scss';
 
@@ -18,7 +20,9 @@ const BaseLayout: React.FC<Props> = ({ sideNav = <SideNavImpl />, topNav = <TopN
         {sideNav}
         <div className={styles.inner}>
           <main className={styles.main}>
-            {children}
+            <ErrorBoundary fallback={ErrorMain.fallback}>
+              {children}
+            </ErrorBoundary>
           </main>
           <Footer />
         </div>

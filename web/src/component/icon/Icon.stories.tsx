@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import Text from 'component/text/Text';
+import Paragraph from 'component/text/Paragraph';
 import React from 'react';
 import Icon, { Size } from './Icon';
 
@@ -10,7 +10,7 @@ export default {
 const Template: ComponentStory<typeof Icon> = () => {
   return (
     <>
-      <Text>These are just some examples. It isn&apos;t comprehensive</Text>
+      <Paragraph>These are just some examples. It isn&apos;t comprehensive</Paragraph>
       <Icons size="small" />
       <Icons />
       <Icons size="large" />
