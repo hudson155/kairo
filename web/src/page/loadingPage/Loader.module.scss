@@ -12,14 +12,11 @@
   animation: inner 0.5s linear infinite;
   border: 3px solid;
   border-radius: 50%;
-  bottom: 0;
   content: "";
   height: 24px;
-  left: 0;
+  inset: 0;
   margin: auto;
   position: absolute;
-  right: 0;
-  top: 0;
   transform-origin: center center;
   width: 24px;
 }
