@@ -2,6 +2,9 @@
   margin-bottom: 32px;
   padding: 0 8px;
 
+  /**
+   * ::before acts as the border between sections.
+   */
   &:not(:first-of-type)::before {
     border-bottom: var(--borderSize-m) solid var(--color-border);
     content: "";

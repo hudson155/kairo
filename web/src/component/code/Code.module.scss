@@ -1,5 +1,5 @@
 .code {
-  all: unset;
+  all: unset; // Ignore browser defaults.
   background-color: var(--color-backgroundAccent);
   border-radius: 2px;
   font-family: "Roboto Mono", monospace;

@@ -1,4 +1,4 @@
 .code {
   display: inline-block;
-  white-space: pre;
+  white-space: pre-wrap; // Preserves whitespace (including newlines) but allows wrapping.
 }
