@@ -1,4 +1,6 @@
-import React from 'react';
+import BaseLayout from 'layout/BaseLayout/BaseLayout';
+import LoadingPage from 'page/loadingPage/LoadingPage';
+import React, { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Feature from 'routing/Feature';
@@ -25,10 +27,14 @@ const FeatureRouter: React.FC = () => {
   ));
 
   return (
-    <Routes>
-      {defaultFeatureRedirect}
-      {featureRoutes}
-    </Routes>
+    <BaseLayout>
+      <Suspense fallback={<LoadingPage />}>
+        <Routes>
+          {defaultFeatureRedirect}
+          {featureRoutes}
+        </Routes>
+      </Suspense>
+    </BaseLayout>
   );
 };
 
