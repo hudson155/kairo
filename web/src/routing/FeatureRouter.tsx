@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import Feature from 'routing/Feature';
 import defaultFeatureState from 'state/core/defaultFeature';
 import featuresState from 'state/core/features';
-import Feature from './Feature';
 
 const FeatureRouter: React.FC = () => {
   const features = useRecoilValue(featuresState);

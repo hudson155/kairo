@@ -5,21 +5,21 @@ import { Helmet } from 'react-helmet-async';
 
 interface Props extends PropsWithChildren {
   title: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 /**
  * A special type of [Section] that appears first within the main area of a page.
  * Has a built-in heading, and sets the page title to match.
  */
-const HeaderSection: React.FC<Props> = ({ title, children }) => {
+const HeaderSection: React.FC<Props> = ({ title, children = undefined }) => {
   return (
     <Section>
       <Helmet>
         <title>{pageTitle(title)}</title>
       </Helmet>
       <Heading1>{title}</Heading1>
-      {children}
+      {children ?? null}
     </Section>
   );
 };
