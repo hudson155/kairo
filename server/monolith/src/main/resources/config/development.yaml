@@ -45,6 +45,8 @@ sql:
     migrations:
       type: Merge
       value:
+        cleanOnValidationError: true
+        cleanDisabled: false
         locations:
           - db/limber/migration/common
           - db/limber/migration/fixtures
