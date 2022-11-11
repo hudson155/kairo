@@ -1,6 +1,6 @@
 import { Auth0Client, createAuth0Client } from '@auth0/auth0-spa-js';
 import env from 'env';
-import { rootUrl } from 'metadata';
+import { getRootUrl } from 'metadata';
 import { selector } from 'recoil';
 import organizationAuthState from 'state/core/organizationAuth';
 
@@ -35,7 +35,7 @@ const createClient = async (organizationId: string): Promise<Auth0Client> => {
     authorizationParams: {
       audience: `https://${env.auth0.domain}/api/v2/`,
       organization: organizationId,
-      redirect_uri: rootUrl, // eslint-disable-line @typescript-eslint/naming-convention
+      redirect_uri: getRootUrl(), // eslint-disable-line @typescript-eslint/naming-convention
     },
     domain: env.auth0.domain,
     clientId: env.auth0.clientId,

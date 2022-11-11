@@ -1,4 +1,4 @@
-import { rootUrl } from 'metadata';
+import { getRootUrl } from 'metadata';
 import React, { ReactNode, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -10,7 +10,7 @@ const LogoutPage: React.FC = () => {
   useEffect(() => {
     void auth0.logout({
       logoutParams: {
-        returnTo: rootUrl,
+        returnTo: getRootUrl(),
       },
     });
   }, [auth0]);
