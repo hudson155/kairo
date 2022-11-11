@@ -1,4 +1,7 @@
 .button {
+  align-items: center;
   all: unset; // Ignore browser defaults.
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
 }
