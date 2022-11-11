@@ -66,7 +66,7 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
       .schemas(*config.migrations.schemas.toTypedArray())
       .dataSource(dataSource)
       .load()
-    check(flyway.migrate().success) { "Migration was unsuccessful." }
+    flyway.migrate()
   }
 
   final override fun stop() {
