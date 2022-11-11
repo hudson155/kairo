@@ -13,7 +13,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class ProtectedConfigStringDeserializer : StdDeserializer<ProtectedString>(ProtectedString::class.java) {
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ProtectedString? {
     logger.info { "Deserializing config string..." }
-    val configString = p.readValueAs(ConfigString::class.java)
+    val configString = p.readValueAs(ConfigString::class.java) ?: return null
     return when (configString.type) {
       ConfigString.Type.Plaintext -> ConfigStringDeserializer.fromPlaintext(configString)
         ?.let { ProtectedString(it) }
