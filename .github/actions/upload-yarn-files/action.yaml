@@ -3,7 +3,7 @@ description: Uploads all Yarn build files.
 runs:
   using: composite
   steps:
-    - uses: actions/upload-artifact@v3.1.0 # https://github.com/actions/upload-artifact/releases.
+    - uses: actions/upload-artifact@v3.1.1 # https://github.com/actions/upload-artifact/releases.
       with:
         name: yarn-files
         path: web/build/

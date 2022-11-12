@@ -3,7 +3,7 @@ description: Downloads all Server JAR files.
 runs:
   using: composite
   steps:
-    - uses: actions/download-artifact@v3.0.0 # https://github.com/actions/download-artifact/releases.
+    - uses: actions/download-artifact@v3.0.1 # https://github.com/actions/download-artifact/releases.
       with:
         name: jar-files
         path: server/

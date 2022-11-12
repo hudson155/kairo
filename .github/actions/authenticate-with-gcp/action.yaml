@@ -9,12 +9,12 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: google-github-actions/auth@v0.8.2 # https://github.com/google-github-actions/auth/releases.
+    - uses: google-github-actions/auth@v1.0.0 # https://github.com/google-github-actions/auth/releases.
       with:
         credentials_json: ${{ inputs.key }}
     - shell: bash
       run: gcloud --quiet auth configure-docker us-docker.pkg.dev
-    - uses: google-github-actions/get-gke-credentials@v0.7.0
+    - uses: google-github-actions/get-gke-credentials@v0.8.2 # https://github.com/google-github-actions/get-gke-credentials/releases.
       with:
         project_id: circular-genius
         cluster_name: limber

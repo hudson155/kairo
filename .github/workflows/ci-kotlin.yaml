@@ -34,7 +34,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Check out
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.1.0 # https://github.com/actions/checkout/releases.
       - name: Set up Java
         uses: ./.github/actions/set-up-java
       - name: Gradle build
