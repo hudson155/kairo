@@ -114,7 +114,7 @@ object Dependencies {
         .version(Versions.log4j)
       val layoutTemplateJson: String = "org.apache.logging.log4j:log4j-layout-template-json"
         .version(Versions.log4j)
-      val slf4jImpl: String = "org.apache.logging.log4j:log4j-slf4j-impl"
+      val slf4jImpl: String = "org.apache.logging.log4j:log4j-slf4j2-impl"
         .version(Versions.log4j)
     }
   }
