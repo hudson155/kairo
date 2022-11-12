@@ -1,16 +1,28 @@
 package limber.auth
 
-import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.junit.jupiter.api.Test
 
 internal class PublicAuthTest {
   @Test
   fun test() {
     val context = context()
-    Auth.Public.authorize(context)
-      .shouldBeTrue()
+    shouldNotThrowAny {
+      test(context, Auth.Public)
+    }
   }
 
-  private fun context(): RestContext = mockk()
+  private fun context(): RestContext =
+    RestContext(authorize = true, claimPrefix = "", principal = mockk())
+
+  private fun test(context: RestContext, auth: Auth.Public) {
+    runBlocking {
+      withContext(context) {
+        auth(auth)
+      }
+    }
+  }
 }

@@ -8,7 +8,7 @@ plugins {
 main {
   dependencies {
     api(project(":common:feature"))
-    implementation(project(":common:serialization"))
+    api(project(":common:serialization"))
     api(project(":feature:rest:interface"))
 
     // Ktor core.

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import io.ktor.server.auth.jwt.JWTPrincipal
+import limber.exception.AuthException
 import limber.serialization.ObjectMapperFactory
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
@@ -27,7 +28,7 @@ public class RestContext(
   /**
    * This is the JWT used for the current request.
    */
-  private val principal: JWTPrincipal?,
+  public val principal: JWTPrincipal?,
 ) : AbstractCoroutineContextElement(Key) {
   public val hasPrincipal: Boolean = principal != null
 
@@ -35,26 +36,25 @@ public class RestContext(
    * Indicates whether authorization has been attempted,
    * NOT whether it has succeeded.
    */
-  public var hasAttemptdAuthorization: Boolean = false
+  public var hasAttemptedAuthorization: Boolean = false
     private set
 
   /**
-   * Returns whether authorization is successful.
+   * Returns the result of authorization.
    */
-  public fun auth(auth: Auth): Boolean {
-    hasAttemptdAuthorization = true
-    if (!authorize) return true
+  public fun auth(auth: Auth): AuthResult {
+    hasAttemptedAuthorization = true
+    if (!authorize) return AuthResult.Authorized
     return auth.authorize(this)
   }
 
   /**
    * Call this from an [Auth] implementation to get the value of a (namespaced) claim.
    */
-  public inline fun <reified T : Any> getClaim(name: String): T? =
-    getClaim(name, jacksonTypeRef())
+  public inline fun <reified T : Any> getClaim(principal: JWTPrincipal, name: String): T? =
+    getClaim(principal, name, jacksonTypeRef())
 
-  public fun <T : Any> getClaim(name: String, typeRef: TypeReference<T>): T? {
-    principal ?: return null
+  public fun <T : Any> getClaim(principal: JWTPrincipal, name: String, typeRef: TypeReference<T>): T? {
     val claim = principal.payload.getClaim(claimPrefix + name)
     if (claim.isMissing || claim.isNull) return null
     return objectMapper.readValue(claim.toString(), typeRef)
@@ -68,10 +68,13 @@ public suspend fun getRestContext(): RestContext = checkNotNull(coroutineContext
 /**
  * Call this from within a REST endpoint handler to check authorization.
  */
-public suspend inline fun auth(auth: Auth, block: (RestContext) -> Nothing) {
+public suspend inline fun auth(auth: Auth, block: () -> Nothing) {
   getRestContext().let { restContext ->
-    if (!restContext.auth(auth)) {
-      block(restContext)
+    when (val result = restContext.auth(auth)) {
+      is AuthResult.Unauthorized -> throw AuthException(AuthException.Status.Unauthorized, result.message)
+      is AuthResult.Forbidden -> throw AuthException(AuthException.Status.Forbidden, result.message)
+      is AuthResult.Authorized -> Unit
+      is AuthResult.Failed -> block()
     }
   }
 }

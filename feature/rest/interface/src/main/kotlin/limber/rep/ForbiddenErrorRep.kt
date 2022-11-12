@@ -1,5 +1,5 @@
 package limber.rep
 
-public object ForbiddenErrorRep : ErrorRep() {
-  override val message: String = "Forbidden."
+public data class ForbiddenErrorRep(val userMessage: String) : ErrorRep() {
+  override val message: String = "Forbidden: $userMessage"
 }

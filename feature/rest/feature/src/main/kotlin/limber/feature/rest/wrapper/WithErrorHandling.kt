@@ -40,11 +40,11 @@ private suspend fun ApplicationCall.handleAuth(e: AuthException) {
   when (e.status) {
     AuthException.Status.Unauthorized -> respond(
       status = HttpStatusCode.Unauthorized,
-      message = UnauthorizedErrorRep,
+      message = UnauthorizedErrorRep(e.userMessage),
     )
     AuthException.Status.Forbidden -> respond(
       status = HttpStatusCode.Forbidden,
-      message = ForbiddenErrorRep,
+      message = ForbiddenErrorRep(e.userMessage),
     )
   }
 }

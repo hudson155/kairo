@@ -43,7 +43,7 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
       withErrorHandling(call) {
         val result = withContext(restContextFactory.create(call)) {
           val result = handle(endpoint)
-          if (!getRestContext().hasAttemptdAuthorization) {
+          if (!getRestContext().hasAttemptedAuthorization) {
             // The purpose of this check is to help discover DURING TESTING
             // that an endpoint doesn't implement authorization.
             // It should never happen in production.
