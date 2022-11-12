@@ -7,7 +7,7 @@
    * The [active] class is applied automatically by React Router.
    */
   &:global(.active) {
-    background-color: var(--color-backgroundCurrent);
+    background-color: var(--color-backgroundActive);
   }
 
   &:hover {
