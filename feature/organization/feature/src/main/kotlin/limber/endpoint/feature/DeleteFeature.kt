@@ -1,7 +1,7 @@
 package limber.endpoint.feature
 
 import com.google.inject.Inject
-import limber.auth.FeatureAuth
+import limber.auth.OrganizationAuth
 import limber.auth.PlatformPermission
 import limber.auth.PlatformPermissionAuth
 import limber.auth.auth
@@ -16,7 +16,7 @@ public class DeleteFeature @Inject internal constructor(
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.FeatureDelete))
-    auth(FeatureAuth(endpoint.featureGuid)) { throw FeatureDoesNotExist() }
-    return featureService.delete(endpoint.featureGuid)
+    auth(OrganizationAuth(endpoint.organizationGuid)) { throw FeatureDoesNotExist() }
+    return featureService.delete(endpoint.organizationGuid, endpoint.featureGuid)
   }
 }

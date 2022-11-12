@@ -1,7 +1,7 @@
 package limber.endpoint.feature
 
 import com.google.inject.Inject
-import limber.auth.FeatureAuth
+import limber.auth.OrganizationAuth
 import limber.auth.PlatformPermission
 import limber.auth.PlatformPermissionAuth
 import limber.auth.auth
@@ -16,7 +16,7 @@ public class UpdateFeature @Inject internal constructor(
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.FeatureUpdate))
-    auth(FeatureAuth(endpoint.featureGuid)) { throw FeatureDoesNotExist() }
-    return featureService.update(endpoint.featureGuid, endpoint.body)
+    auth(OrganizationAuth(endpoint.organizationGuid)) { throw FeatureDoesNotExist() }
+    return featureService.update(endpoint.organizationGuid, endpoint.featureGuid, endpoint.body)
   }
 }

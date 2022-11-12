@@ -14,13 +14,14 @@ import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
 internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
-  fun get(guid: UUID): FeatureRep? =
-    get(guid, forUpdate = false)
+  fun get(organizationGuid: UUID, guid: UUID): FeatureRep? =
+    get(organizationGuid, guid, forUpdate = false)
 
-  private fun get(guid: UUID, forUpdate: Boolean): FeatureRep? =
+  private fun get(organizationGuid: UUID, guid: UUID, forUpdate: Boolean): FeatureRep? =
     handle { handle ->
       val query = handle.createQuery(rs("store/feature/get.sql"))
       query.define("lockingClause", if (forUpdate) "for no key update" else "")
+      query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
       return@handle query.mapToType().singleNullOrThrow()
     }
@@ -44,24 +45,26 @@ internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
       return@transaction query.mapToType().single()
     }
 
-  fun setDefaultByOrganization(guid: UUID): List<FeatureRep> =
+  fun setDefaultByOrganization(organizationGuid: UUID, guid: UUID): List<FeatureRep> =
     transaction { handle ->
       val query = handle.createQuery(rs("store/feature/setDefaultByOrganization.sql"))
+      query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
       return@transaction query.mapToType().toList()
     }
 
-  fun update(guid: UUID, updater: Updater<FeatureRep>): FeatureRep =
+  fun update(organizationGuid: UUID, guid: UUID, updater: Updater<FeatureRep>): FeatureRep =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: throw FeatureDoesNotExist())
+      val model = updater(get(organizationGuid, guid, forUpdate = true) ?: throw FeatureDoesNotExist())
       val query = handle.createQuery(rs("store/feature/update.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): FeatureRep =
+  fun delete(organizationGuid: UUID, guid: UUID): FeatureRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/feature/delete.sql"))
+      query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw FeatureDoesNotExist()
     }
