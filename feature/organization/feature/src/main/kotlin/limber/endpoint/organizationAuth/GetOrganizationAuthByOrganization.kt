@@ -13,6 +13,7 @@ public class GetOrganizationAuthByOrganization @Inject internal constructor(
 ) : RestEndpointHandler<Api.GetByOrganization, Rep?>(Api.GetByOrganization::class) {
   override suspend fun handler(endpoint: Api.GetByOrganization): Rep? {
     auth(Auth.Public)
+
     return authService.getByOrganization(endpoint.organizationGuid)
   }
 }

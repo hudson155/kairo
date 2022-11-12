@@ -7,12 +7,16 @@ private const val ORGANIZATION_CLAIM_NAME = "organization"
 
 public data class OrganizationClaim(
   val guid: UUID,
+  val permissions: List<OrganizationPermission>,
 )
 
 /**
  * Protects an endpoint to only members of the organization.
  */
-public class OrganizationAuth(private val organizationGuid: UUID) : Auth() {
+public class OrganizationAuth(
+  private val organizationGuid: UUID,
+  private val permission: OrganizationPermission,
+) : Auth() {
   override fun authorize(context: RestContext): AuthResult {
     val principal = context.principal
       ?: return AuthResult.Unauthorized.noPrincipal()
@@ -22,6 +26,9 @@ public class OrganizationAuth(private val organizationGuid: UUID) : Auth() {
 
     if (organization.guid != organizationGuid) {
       return AuthResult.Failed
+    }
+    if (permission !in organization.permissions) {
+      return AuthResult.Forbidden("Missing required permission ${permission.value}.")
     }
     return AuthResult.Authorized
   }

@@ -13,6 +13,7 @@ public class GetOrganizationAuthByHostname @Inject internal constructor(
 ) : RestEndpointHandler<Api.GetByHostname, Rep?>(Api.GetByHostname::class) {
   override suspend fun handler(endpoint: Api.GetByHostname): Rep? {
     auth(Auth.Public)
+
     return authService.getByHostname(endpoint.hostname)
   }
 }

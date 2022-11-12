@@ -15,6 +15,7 @@ internal class GetHealthCheckReadiness @Inject constructor(
 ) : RestEndpointHandler<Api.GetReadiness, Rep>(Api.GetReadiness::class) {
   override suspend fun handler(endpoint: Api.GetReadiness): Rep {
     auth(Auth.Public)
+
     return healthCheckService.healthCheck()
   }
 

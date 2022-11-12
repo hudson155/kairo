@@ -1,24 +1,19 @@
 package limber.auth
 
+import com.fasterxml.jackson.annotation.JsonValue
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 
+/**
+ * Represents permissions that apply across the platform
+ * (rather than to a particular Organization or Feature).
+ */
 @JsonDeserialize(using = PlatformPermission.Deserializer::class)
-public enum class PlatformPermission(internal val value: String) {
-  FeatureRead("feature:read"),
-  FeatureCreate("feature:create"),
-  FeatureUpdate("feature:update"),
-  FeatureDelete("feature:delete"),
-  OrganizationRead("organization:read"),
+public enum class PlatformPermission(@JsonValue internal val value: String) {
   OrganizationCreate("organization:create"),
-  OrganizationUpdate("organization:update"),
-  OrganizationAuthSet("organizationAuth:set"),
-  OrganizationAuthDelete("organizationAuth:delete"),
-  OrganizationHostnameRead("organizationHostname:read"),
-  OrganizationHostnameCreate("organizationHostname:create"),
-  OrganizationHostnameDelete("organizationHostname:delete");
+  OrganizationDelete("organization:delete");
 
   /**
    * Uses [PlatformPermission]'s [value] field to deserialize.

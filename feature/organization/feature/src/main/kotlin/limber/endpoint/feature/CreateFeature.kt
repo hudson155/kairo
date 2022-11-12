@@ -2,8 +2,7 @@ package limber.endpoint.feature
 
 import com.google.inject.Inject
 import limber.auth.OrganizationAuth
-import limber.auth.PlatformPermission
-import limber.auth.PlatformPermissionAuth
+import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.rest.RestEndpointHandler
@@ -15,8 +14,14 @@ public class CreateFeature @Inject internal constructor(
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Create, Rep>(Api.Create::class) {
   override suspend fun handler(endpoint: Api.Create): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.FeatureCreate))
-    auth(OrganizationAuth(endpoint.organizationGuid)) { throw OrganizationDoesNotExist() }
+    auth(
+      auth = OrganizationAuth(
+        organizationGuid = endpoint.organizationGuid,
+        permission = OrganizationPermission.FeatureCreate,
+      ),
+      onFail = { throw OrganizationDoesNotExist() },
+    )
+
     return featureService.create(endpoint.organizationGuid, endpoint.body)
   }
 }

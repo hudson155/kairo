@@ -43,8 +43,8 @@ internal class FeatureAuthTest {
   @Test
   fun `non-overlapping features`() {
     val featureGuid = UUID.randomUUID()
-    val context = context(principal(mapOf(UUID.randomUUID() to FeatureClaim)))
-    test(context, FeatureAuth(featureGuid)).shouldBeFalse()
+    val context = context(principal(mapOf(featureGuid to FeatureClaim)))
+    test(context, FeatureAuth(UUID.randomUUID())).shouldBeFalse()
   }
 
   @Test

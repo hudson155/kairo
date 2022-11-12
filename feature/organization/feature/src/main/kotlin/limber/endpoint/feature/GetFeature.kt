@@ -2,8 +2,7 @@ package limber.endpoint.feature
 
 import com.google.inject.Inject
 import limber.auth.OrganizationAuth
-import limber.auth.PlatformPermission
-import limber.auth.PlatformPermissionAuth
+import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
 import limber.service.feature.FeatureService
@@ -14,8 +13,14 @@ public class GetFeature @Inject internal constructor(
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
-    auth(PlatformPermissionAuth(PlatformPermission.FeatureRead))
-    auth(OrganizationAuth(endpoint.organizationGuid)) { return@handler null }
+    auth(
+      auth = OrganizationAuth(
+        organizationGuid = endpoint.organizationGuid,
+        permission = OrganizationPermission.FeatureRead,
+      ),
+      onFail = { return@handler null },
+    )
+
     return featureService.get(endpoint.organizationGuid, endpoint.featureGuid)
   }
 }

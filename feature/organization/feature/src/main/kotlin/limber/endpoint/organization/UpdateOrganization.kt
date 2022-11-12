@@ -2,8 +2,7 @@ package limber.endpoint.organization
 
 import com.google.inject.Inject
 import limber.auth.OrganizationAuth
-import limber.auth.PlatformPermission
-import limber.auth.PlatformPermissionAuth
+import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.rest.RestEndpointHandler
@@ -15,8 +14,14 @@ public class UpdateOrganization @Inject internal constructor(
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationUpdate))
-    auth(OrganizationAuth(endpoint.organizationGuid)) { throw OrganizationDoesNotExist() }
+    auth(
+      auth = OrganizationAuth(
+        organizationGuid = endpoint.organizationGuid,
+        permission = OrganizationPermission.OrganizationUpdate,
+      ),
+      onFail = { throw OrganizationDoesNotExist() },
+    )
+
     return organizationService.update(endpoint.organizationGuid, endpoint.body)
   }
 }

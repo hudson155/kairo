@@ -68,13 +68,13 @@ public suspend fun getRestContext(): RestContext = checkNotNull(coroutineContext
 /**
  * Call this from within a REST endpoint handler to check authorization.
  */
-public suspend inline fun auth(auth: Auth, block: () -> Nothing) {
+public suspend inline fun auth(auth: Auth, onFail: () -> Nothing) {
   getRestContext().let { restContext ->
     when (val result = restContext.auth(auth)) {
       is AuthResult.Unauthorized -> throw AuthException(AuthException.Status.Unauthorized, result.message)
       is AuthResult.Forbidden -> throw AuthException(AuthException.Status.Forbidden, result.message)
       is AuthResult.Authorized -> Unit
-      is AuthResult.Failed -> block()
+      is AuthResult.Failed -> onFail()
     }
   }
 }

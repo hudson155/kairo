@@ -20,7 +20,7 @@ internal class PlatformPermissionAuthTest {
   fun `no token`() {
     val context = context(null)
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.FeatureDelete))
+      test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No token provided.")
@@ -30,7 +30,7 @@ internal class PlatformPermissionAuthTest {
   fun `null permissions`() {
     val context = context(principal(null))
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.FeatureDelete))
+      test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No permissions claim on the provided token.")
@@ -38,26 +38,28 @@ internal class PlatformPermissionAuthTest {
 
   @Test
   fun `non-overlapping permissions`() {
-    val context = context(principal(listOf("feature:create")))
+    val permissions = listOf(PlatformPermission.OrganizationCreate)
+    val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.FeatureDelete))
+      test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
     }
     e.status.shouldBe(AuthException.Status.Forbidden)
-    e.userMessage.shouldBe("Missing required permission feature:delete.")
+    e.userMessage.shouldBe("Missing required permission organization:delete.")
   }
 
   @Test
   fun `overlapping permissions`() {
-    val context = context(principal(listOf("feature:create", "feature:delete")))
+    val permissions = listOf(PlatformPermission.OrganizationCreate, PlatformPermission.OrganizationDelete)
+    val context = context(principal(permissions))
     shouldNotThrowAny {
-      test(context, PlatformPermissionAuth(PlatformPermission.FeatureDelete))
+      test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
     }
   }
 
   private fun context(principal: JWTPrincipal?): RestContext =
     RestContext(authorize = true, claimPrefix = "", principal = principal)
 
-  private fun principal(permissions: List<String>?): JWTPrincipal =
+  private fun principal(permissions: List<PlatformPermission>?): JWTPrincipal =
     mockk {
       every { payload } returns mockk {
         every { getClaim("permissions") } returns mockk mockkClaim@{

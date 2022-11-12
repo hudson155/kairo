@@ -23,7 +23,7 @@ internal class OrganizationAuthTest {
     val organizationGuid = UUID.randomUUID()
     val context = context(null)
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(organizationGuid))
+      test(context, OrganizationAuth(organizationGuid, OrganizationPermission.OrganizationHostnameDelete))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No token provided.")
@@ -34,24 +34,46 @@ internal class OrganizationAuthTest {
     val organizationGuid = UUID.randomUUID()
     val context = context(principal(null))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(organizationGuid))
+      test(context, OrganizationAuth(organizationGuid, OrganizationPermission.OrganizationHostnameDelete))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No organization claim on the provided token.")
   }
 
   @Test
+  fun `non-overlapping permissions`() {
+    val organizationGuid = UUID.randomUUID()
+    val permissions = listOf(OrganizationPermission.OrganizationHostnameCreate)
+    val context = context(principal(OrganizationClaim(organizationGuid, permissions)))
+    val e = shouldThrow<AuthException> {
+      test(context, OrganizationAuth(organizationGuid, OrganizationPermission.OrganizationHostnameDelete))
+    }
+    e.status.shouldBe(AuthException.Status.Forbidden)
+    e.userMessage.shouldBe("Missing required permission organizationHostname:delete.")
+  }
+
+  @Test
   fun `different organization guid`() {
     val organizationGuid = UUID.randomUUID()
-    val context = context(principal(OrganizationClaim(UUID.randomUUID())))
-    test(context, OrganizationAuth(organizationGuid)).shouldBeFalse()
+    val permissions = listOf(
+      OrganizationPermission.OrganizationHostnameCreate,
+      OrganizationPermission.OrganizationHostnameDelete,
+    )
+    val context = context(principal(OrganizationClaim(organizationGuid, permissions)))
+    test(context, OrganizationAuth(UUID.randomUUID(), OrganizationPermission.OrganizationHostnameDelete))
+      .shouldBeFalse()
   }
 
   @Test
   fun `same organization guid`() {
     val organizationGuid = UUID.randomUUID()
-    val context = context(principal(OrganizationClaim(organizationGuid)))
-    test(context, OrganizationAuth(organizationGuid)).shouldBeTrue()
+    val permissions = listOf(
+      OrganizationPermission.OrganizationHostnameCreate,
+      OrganizationPermission.OrganizationHostnameDelete,
+    )
+    val context = context(principal(OrganizationClaim(organizationGuid, permissions)))
+    test(context, OrganizationAuth(organizationGuid, OrganizationPermission.OrganizationHostnameDelete))
+      .shouldBeTrue()
   }
 
   private fun context(principal: JWTPrincipal?): RestContext =
