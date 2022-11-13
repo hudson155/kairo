@@ -21,21 +21,17 @@ interface Props extends PropsWithChildren {
 /**
  * This component styles the side navigation bar, but defines no functionality.
  * Functionality is defined in [SideNavImpl].
- *
- * DUPLICATE CODE ALERT: When updating this component,
- * there is some duplicate code to look out for.
- * This is necessitated by Headless UI's Dialog implementation.
  */
 const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
   const sideNavIsCollapsible = useCollapsibleSideNav();
 
-  if (!sideNavIsCollapsible) {
-    return (
-      <nav className={classNames(styles.nav, { [styles.collapsible]: sideNavIsCollapsible })}>
-        <ul className={styles.ul}>{children}</ul>
-      </nav>
-    );
-  }
+  const delegate = (
+    <nav className={classNames(styles.nav, { [styles.collapsible]: sideNavIsCollapsible })}>
+      <ul className={styles.ul}>{children}</ul>
+    </nav>
+  );
+
+  if (!sideNavIsCollapsible) return delegate;
 
   return (
     <Transition as={Fragment} show={isOpen}>
@@ -44,8 +40,8 @@ const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
           <div aria-hidden={true} className={styles.backdrop} />
         </Transition.Child>
         <Transition.Child as={Fragment} {...transitions(`slideIn`, `slideOut`)}>
-          <Dialog.Panel as="nav" className={classNames(styles.nav, { [styles.collapsible]: sideNavIsCollapsible })}>
-            <ul className={styles.ul}>{children}</ul>
+          <Dialog.Panel as={Fragment}>
+            {delegate}
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
