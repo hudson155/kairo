@@ -34,6 +34,11 @@
   --fontSize-h4: 1.25rem;
   --fontSize-normal: 0.94rem;
   --fontSize-small: 0.75rem;
+
+  /**
+   * Z-indices.
+   */
+  --zIndex-sideNav: 1;
 }
 
 @media (prefers-color-scheme: dark) {

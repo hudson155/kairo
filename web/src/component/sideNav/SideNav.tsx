@@ -39,7 +39,7 @@ const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
 
   return (
     <Transition as={Fragment} show={isOpen}>
-      <Dialog onClose={() => setIsOpen(false)}>
+      <Dialog className={styles.dialog} onClose={() => setIsOpen(false)}>
         <Transition.Child as={Fragment} {...transitions(`fadeIn`, `fadeOut`)}>
           <div aria-hidden={true} className={styles.backdrop} />
         </Transition.Child>

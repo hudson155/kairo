@@ -1,3 +1,7 @@
+.dialog {
+  z-index: var(--zIndex-sideNav);
+}
+
 .backdrop {
   background-color: var(--color-overlay);
   inset: 0;
