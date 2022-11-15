@@ -33,6 +33,8 @@ object Dependencies {
     }
 
     object DataType {
+      val jdk8: String = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
+        .version(Versions.jackson)
       val jsr310: String = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
         .version(Versions.jackson)
     }

@@ -19,6 +19,7 @@ internal class ProtectedStringTest {
   @Test
   fun `hashCode method`() {
     ProtectedString("1").hashCode().shouldBe("1".hashCode())
+    ProtectedString("1").hashCode().shouldNotBe("2".hashCode())
   }
 
   @Test

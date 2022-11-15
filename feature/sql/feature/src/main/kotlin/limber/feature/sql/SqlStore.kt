@@ -17,7 +17,6 @@ public abstract class SqlStore<T : Any>(private val type: KClass<T>) {
   @Inject
   private lateinit var jdbi: Jdbi
 
-  @Suppress("FunctionMinLength") // Short for the purpose of brevity due to frequent reuse.
   protected fun rs(resourceName: String): String =
     Resources.getResource(resourceName).readText()
 

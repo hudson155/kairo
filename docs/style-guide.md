@@ -28,3 +28,6 @@ Other than the rules defined here, please follow the
   The words _Feature_, _Server_, and _Application_
   should be capitalized when they refer to the Limber-specific definitions of those terms.
   _Feature_ should not be capitalized when it refers to [organization features](/feature/organization/README.md).
+
+- **Not null:**
+  Prefer the term "not null" to "non-null".

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
@@ -25,6 +26,9 @@ public object ObjectMapperFactory {
           configure(KotlinFeature.SingletonSupport, true)
         },
         JavaTimeModule(),
+        Jdk8Module().apply {
+          configureReadAbsentAsNull(true)
+        },
       )
 
       configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)

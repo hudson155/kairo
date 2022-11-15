@@ -17,6 +17,7 @@ include(":common:serialization:interface")
 include(":common:server")
 include(":common:server:testing")
 
+include(":common:type:optional")
 include(":common:type:protected-string")
 
 include(":common:util")

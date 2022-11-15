@@ -139,7 +139,7 @@ naming:
     enumEntryPattern: '[A-Z][A-Za-z0-9]*' # Enums should be PascalCase.
   FunctionMinLength:
     active: true
-    minimumFunctionNameLength: 3
+    minimumFunctionNameLength: 2
   InvalidPackageDeclaration:
     active: true
     rootPackage: 'limber'

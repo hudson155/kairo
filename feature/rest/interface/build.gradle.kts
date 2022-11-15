@@ -8,6 +8,7 @@ plugins {
 main {
   dependencies {
     api(project(":common:serialization:interface"))
+    api(project(":common:type:optional"))
     api(project(":common:validation"))
     api(Dependencies.Ktor.httpJvm)
   }
