@@ -5,6 +5,14 @@
 
 .small {
   font-size: 18px;
+
+  &.before, &.both {
+    margin-left: 4px;
+  }
+
+  &.after, &.both {
+    margin-right: 4px;
+  }
 }
 
 .medium {

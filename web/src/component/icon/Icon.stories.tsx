@@ -21,15 +21,17 @@ const Template: ComponentStory<typeof Icon> = () => {
 
 export const Default = Template.bind({});
 
-const Icons: React.FC<{ size?: Size }> = ({ size = undefined }) => (
-  <div>
-    <Icon name="search" size={size} />
-    <Icon name="home" size={size} />
-    <Icon name="menu" size={size} />
-    <Icon name="close" size={size} />
-    <Icon name="settings" size={size} />
-    <Icon name="expand_more" size={size} />
-    <Icon name="done" size={size} />
-    <Icon name="check_circle" size={size} />
-  </div>
-);
+const Icons: React.FC<{ size?: Size }> = ({ size = undefined }) => {
+  return (
+    <div>
+      <Icon name="search" size={size} />
+      <Icon name="home" size={size} />
+      <Icon name="menu" size={size} />
+      <Icon name="close" size={size} />
+      <Icon name="settings" size={size} />
+      <Icon name="expand_more" size={size} />
+      <Icon name="done" size={size} />
+      <Icon name="check_circle" size={size} />
+    </div>
+  );
+};
