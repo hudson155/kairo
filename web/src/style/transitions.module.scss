@@ -1,6 +1,5 @@
 .transition {
   transition-duration: var(--duration-transition);
-  transition-property: all;
 }
 
 .fadeIn {
@@ -10,6 +9,26 @@
 
   &.on {
     opacity: 1;
+  }
+}
+
+.moveDownIn {
+  &.off {
+    transform: translateY(-6px);
+  }
+
+  &.on {
+    transform: translateY(0);
+  }
+}
+
+.moveUpOut {
+  &.off {
+    transform: translateY(-6px);
+  }
+
+  &.on {
+    transform: translateY(0);
   }
 }
 

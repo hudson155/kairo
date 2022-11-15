@@ -1,0 +1,22 @@
+.menu {
+  position: relative;
+}
+
+.container {
+  background-color: var(--color-background);
+  border: var(--borderSize-m) solid var(--color-border);
+  border-radius: 4px;
+  margin-top: 8px;
+  min-width: 160px;
+  position: absolute;
+  width: max-content;
+  z-index: var(--zIndex-menu);
+
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
+}

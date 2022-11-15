@@ -2,7 +2,7 @@ import { TransitionClasses } from '@headlessui/react';
 import classNames from 'classnames';
 import styles from './transitions.module.scss';
 
-type TransitionType = 'fadeIn' | 'fadeOut' | 'slideIn' | 'slideOut';
+type TransitionType = 'fadeIn' | 'fadeOut' | 'moveDownIn' | 'moveUpOut' | 'slideIn' | 'slideOut';
 
 /**
  * Returns properties matching Headless UI's expectations for transitions.

@@ -38,7 +38,8 @@
   /**
    * Z-indices.
    */
-  --zIndex-sideNav: 1;
+  --zIndex-menu: 1;
+  --zIndex-sideNav: 2;
 }
 
 @media (prefers-color-scheme: dark) {

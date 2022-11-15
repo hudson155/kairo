@@ -1,0 +1,15 @@
+.item {
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  padding: 4px 12px;
+  align-items: center;
+
+  &:hover {
+    background-color: var(--color-backgroundHover);
+  }
+
+  &:active {
+    background-color: var(--color-backgroundActive);
+  }
+}
