@@ -24,6 +24,8 @@ object Dependencies {
   }
 
   object Jackson {
+    val annotations: String = "com.fasterxml.jackson.core:jackson-annotations"
+      .version(Versions.jackson)
     val databind: String = "com.fasterxml.jackson.core:jackson-databind"
       .version(Versions.jackson)
 

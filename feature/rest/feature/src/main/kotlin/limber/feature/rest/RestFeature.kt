@@ -23,6 +23,7 @@ import limber.config.rest.RestConfig
 import limber.feature.Feature
 import limber.feature.FeaturePriority
 import limber.feature.rest.ktorPlugins.installPlugins
+import limber.validation.ValidatorProvider
 import mu.KLogger
 import mu.KotlinLogging
 

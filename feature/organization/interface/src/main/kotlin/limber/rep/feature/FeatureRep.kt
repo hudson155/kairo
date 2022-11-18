@@ -1,5 +1,6 @@
 package limber.rep.feature
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import jakarta.validation.constraints.AssertTrue
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
@@ -25,6 +26,7 @@ public data class FeatureRep(
     ) val rootPath: String,
   )
 
+  @JsonInclude(value = JsonInclude.Include.NON_NULL)
   public data class Updater(
     @field:AssertTrue val isDefault: Boolean? = null,
     @field:Size(min = 3, max = 31) val name: String? = null,
