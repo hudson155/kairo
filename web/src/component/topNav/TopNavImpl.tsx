@@ -2,10 +2,10 @@ import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
 import { useCollapsibleSideNav } from 'component/sideNav/SideNav';
 import TopNav from 'component/topNav/TopNav';
+import TopNavMenu from 'component/topNav/TopNavMenu';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import auth0ClientState from 'state/auth/auth0Client';
 import defaultFeatureState from 'state/core/defaultFeature';
 import organizationState from 'state/core/organization';
 import sideNavIsOpenState from 'state/nav/sideNavIsOpen';
@@ -15,12 +15,7 @@ import sideNavIsOpenState from 'state/nav/sideNavIsOpen';
  * It uses [useRecoilValueLoadable] to ensure it can render even in an erroneous state.
  */
 const TopNavImpl: React.FC = () => {
-  return (
-    <TopNav
-      left={<Left />}
-      right={<Right />}
-    />
-  );
+  return <TopNav left={<Left />} right={<TopNavMenu />} />;
 };
 
 export default TopNavImpl;
@@ -55,10 +50,4 @@ const SideNavCollapseButton: React.FC = () => {
       <Icon name={sideNavIsOpen ? `menu_open` : `menu`} />
     </Button>
   );
-};
-
-const Right: React.FC = () => {
-  const auth0 = useRecoilValueLoadable(auth0ClientState).valueMaybe();
-  if (!auth0) return null;
-  return <Button variant="unstyled" onClick={() => void auth0.logout()}>{`Log out`}</Button>;
 };
