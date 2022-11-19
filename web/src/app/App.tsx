@@ -1,5 +1,5 @@
 import 'index.scss';
-import LoadingPage from 'page/loadingPage/LoadingPage';
+import LoadingPage from 'page/loading/LoadingPage';
 import React, { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
 import 'the-new-css-reset/css/reset.css';

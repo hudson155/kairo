@@ -1,13 +1,13 @@
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
-import LoadingPage from 'page/loadingPage/LoadingPage';
+import FeaturePage from 'page/feature/FeaturePage';
+import LoadingPage from 'page/loading/LoadingPage';
 import React, { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import Feature from 'routing/Feature';
 import defaultFeatureState from 'state/core/defaultFeature';
 import featuresState from 'state/core/features';
 
-const FeatureRouter: React.FC = () => {
+const AuthenticatedRouter: React.FC = () => {
   const features = useRecoilValue(featuresState);
   const defaultFeature = useRecoilValue(defaultFeatureState);
 
@@ -21,7 +21,7 @@ const FeatureRouter: React.FC = () => {
   const featureRoutes = features.map((feature) => (
     <Route
       key={feature.guid}
-      element={<Feature feature={feature} />}
+      element={<FeaturePage feature={feature} />}
       path={`${feature.rootPath}/*`}
     />
   ));
@@ -38,4 +38,4 @@ const FeatureRouter: React.FC = () => {
   );
 };
 
-export default FeatureRouter;
+export default AuthenticatedRouter;

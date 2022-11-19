@@ -1,5 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import auth0ClientState from 'state/auth/auth0Client';
 
@@ -20,5 +19,3 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
-
-export const loginRoute = (): ReactNode => <Route element={<LoginPage />} path="/login" />;

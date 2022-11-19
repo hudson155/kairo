@@ -1,8 +1,8 @@
 import Footer from 'component/footer/Footer';
 import SideNavImpl from 'component/sideNav/SideNavImpl';
 import TopNavImpl from 'component/topNav/TopNavImpl';
-import ErrorBoundary from 'page/errorPage/ErrorBoundary';
-import ErrorMain from 'page/errorPage/ErrorMain';
+import ErrorBoundary from 'page/error/ErrorBoundary';
+import ErrorMain from 'page/error/ErrorMain';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import styles from './BaseLayout.module.scss';
 

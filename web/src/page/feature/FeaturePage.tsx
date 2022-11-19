@@ -1,14 +1,14 @@
 import React from 'react';
 import FeatureRep from 'rep/FeatureRep';
 
-const FormFeature = React.lazy(() => import(`routing/FormFeature`));
-const PlaceholderFeature = React.lazy(() => import(`routing/PlaceholderFeature`));
+const FormFeature = React.lazy(() => import(`page/feature/FormFeature`));
+const PlaceholderFeature = React.lazy(() => import(`page/feature/PlaceholderFeature`));
 
 interface Props {
   feature: FeatureRep;
 }
 
-const Feature: React.FC<Props> = ({ feature }) => {
+const FeaturePage: React.FC<Props> = ({ feature }) => {
   switch (feature.type) {
   case `Form`:
     return <FormFeature feature={feature} />;
@@ -19,4 +19,4 @@ const Feature: React.FC<Props> = ({ feature }) => {
   }
 };
 
-export default Feature;
+export default FeaturePage;

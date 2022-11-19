@@ -1,14 +1,14 @@
 import AuthenticationRequired from 'app/AuthenticationRequired';
-import { loginRoute } from 'page/LoginPage';
-import { logoutRoute } from 'page/LogoutPage';
+import { loginRoute } from 'page/login/LoginRoute';
+import { logoutRoute } from 'page/logout/LogoutRoute';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import FeatureRouter from 'routing/FeatureRouter';
+import AuthenticatedRouter from 'routing/AuthenticatedRouter';
 
 const RootRouter: React.FC = () => {
   const featureRouter = (
     <AuthenticationRequired>
-      <FeatureRouter />
+      <AuthenticatedRouter />
     </AuthenticationRequired>
   );
 

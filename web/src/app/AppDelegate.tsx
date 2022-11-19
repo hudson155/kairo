@@ -1,5 +1,5 @@
-import ErrorBoundary from 'page/errorPage/ErrorBoundary';
-import ErrorPage from 'page/errorPage/ErrorPage';
+import ErrorBoundary from 'page/error/ErrorBoundary';
+import ErrorPage from 'page/error/ErrorPage';
 import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';

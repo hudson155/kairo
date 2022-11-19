@@ -1,6 +1,5 @@
 import { getRootUrl } from 'metadata';
-import React, { ReactNode, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import auth0ClientState from 'state/auth/auth0Client';
 
@@ -19,5 +18,3 @@ const LogoutPage: React.FC = () => {
 };
 
 export default LogoutPage;
-
-export const logoutRoute = (): ReactNode => <Route element={<LogoutPage />} path="/logout" />;

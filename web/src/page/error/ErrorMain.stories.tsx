@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import ErrorMain from 'page/errorPage/ErrorMain';
+import ErrorMain from 'page/error/ErrorMain';
 import { useRef } from 'react';
 import * as Decorator from 'story/Decorator';
 
