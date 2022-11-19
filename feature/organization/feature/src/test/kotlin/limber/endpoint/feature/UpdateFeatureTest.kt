@@ -14,6 +14,7 @@ import limber.testing.should.shouldBeUnprocessable
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
+import java.util.Optional
 import java.util.UUID
 
 internal class UpdateFeatureTest : IntegrationTest() {
@@ -111,6 +112,46 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val updater = FeatureRep.Updater(name = "New name")
       feature = feature.copy(name = "New name")
+      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+        .shouldBe(feature)
+      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+        .shouldBe(feature)
+    }
+  }
+
+  @Test
+  fun `icon name, happy, change`() {
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
+    }
+
+    var feature = testSetup("Create feature") {
+      create(organization.guid, FeatureFixture.home)
+    }
+
+    test {
+      val updater = FeatureRep.Updater(iconName = Optional.of(" assignment "))
+      feature = feature.copy(iconName = "assignment")
+      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+        .shouldBe(feature)
+      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+        .shouldBe(feature)
+    }
+  }
+
+  @Test
+  fun `icon name, happy, remove`() {
+    val organization = testSetup("Create organization") {
+      create(OrganizationFixture.acmeCo)
+    }
+
+    var feature = testSetup("Create feature") {
+      create(organization.guid, FeatureFixture.home)
+    }
+
+    test {
+      val updater = FeatureRep.Updater(iconName = Optional.empty())
+      feature = feature.copy(iconName = null)
       featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
         .shouldBe(feature)
       featureClient(FeatureApi.Get(organization.guid, feature.guid))

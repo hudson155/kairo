@@ -3,6 +3,7 @@ package limber.service.feature
 import com.google.inject.Inject
 import limber.rep.feature.FeatureRep
 import limber.store.feature.FeatureStore
+import limber.type.or
 import limber.util.guid.GuidGenerator
 import mu.KLogger
 import mu.KotlinLogging
@@ -28,6 +29,7 @@ internal class FeatureService @Inject constructor(
       isDefault = false, // The store will change this to true if it's the only feature.
       type = creator.type,
       name = creator.name,
+      iconName = creator.iconName,
       rootPath = creator.rootPath,
     )
     return featureStore.create(feature)
@@ -45,6 +47,7 @@ internal class FeatureService @Inject constructor(
         isDefault = existing.isDefault,
         type = existing.type,
         name = updater.name ?: existing.name,
+        iconName = updater.iconName.or(existing.iconName),
         rootPath = updater.rootPath ?: existing.rootPath,
       )
     }

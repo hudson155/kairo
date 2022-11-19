@@ -7,6 +7,9 @@ values ((select guid from organization.organization), gen_random_uuid(), 'org_yD
 insert into organization.organization_hostname (organization_guid, guid, hostname)
 values ((select guid from organization.organization), gen_random_uuid(), 'localhost:3000');
 
-insert into organization.feature (organization_guid, guid, is_default, type, name, root_path)
-values ((select guid from organization.organization), gen_random_uuid(), true, 'Placeholder', 'Home', '/placeholder'),
-       ((select guid from organization.organization), gen_random_uuid(), false, 'Form', 'My forms', '/forms');
+insert into organization.feature (organization_guid, guid, is_default,
+                                  type, name, icon_name, root_path)
+values ((select guid from organization.organization), gen_random_uuid(), true,
+        'Placeholder', 'Home', 'home', '/placeholder'),
+       ((select guid from organization.organization), gen_random_uuid(), false,
+        'Form', 'My forms', 'assignment', '/forms');

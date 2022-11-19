@@ -12,7 +12,12 @@ internal abstract class FeatureFixture {
   internal companion object {
     val home: FeatureFixture = object : FeatureFixture() {
       override val creator: FeatureRep.Creator =
-        FeatureRep.Creator(type = FeatureRep.Type.Placeholder, name = " Home ", rootPath = " /Home ")
+        FeatureRep.Creator(
+          type = FeatureRep.Type.Placeholder,
+          name = " Home ",
+          iconName = " home ",
+          rootPath = " /Home ",
+        )
 
       override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
         FeatureRep(
@@ -21,13 +26,19 @@ internal abstract class FeatureFixture {
           isDefault = false, // May need to be updated after returned.
           type = FeatureRep.Type.Placeholder,
           name = "Home",
+          iconName = "home",
           rootPath = "/home",
         )
     }
 
     val myForms: FeatureFixture = object : FeatureFixture() {
       override val creator: FeatureRep.Creator =
-        FeatureRep.Creator(type = FeatureRep.Type.Form, name = " My forms ", rootPath = " /Forms ")
+        FeatureRep.Creator(
+          type = FeatureRep.Type.Form,
+          name = " My forms ",
+          iconName = null,
+          rootPath = " /Forms ",
+        )
 
       override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
         FeatureRep(
@@ -36,6 +47,7 @@ internal abstract class FeatureFixture {
           isDefault = false, // May need to be updated after returned.
           type = FeatureRep.Type.Form,
           name = "My forms",
+          iconName = null,
           rootPath = "/forms",
         )
     }
