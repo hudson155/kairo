@@ -1,6 +1,7 @@
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
 import FeaturePage from 'page/feature/FeaturePage';
 import LoadingPage from 'page/loading/LoadingPage';
+import { settingsRoute } from 'page/settings/SettingsPageRoute';
 import React, { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -31,6 +32,7 @@ const AuthenticatedRouter: React.FC = () => {
       <Suspense fallback={<LoadingPage />}>
         <Routes>
           {defaultFeatureRedirect}
+          {settingsRoute()}
           {featureRoutes}
         </Routes>
       </Suspense>
