@@ -1,3 +1,5 @@
+@use "src/style/focus";
+
 .item {
   align-items: center;
   border-radius: 4px;
@@ -11,5 +13,9 @@
 
   &:hover {
     background-color: var(--color-backgroundHover);
+  }
+
+  &.focus {
+    @include focus.focus;
   }
 }

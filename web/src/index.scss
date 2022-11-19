@@ -1,4 +1,5 @@
-@use "style/theme";
+@use "src/style/focus";
+@use "src/style/theme";
 
 html, body, #root {
   height: 100%;
@@ -10,4 +11,15 @@ body {
   color: var(--color-font);
   font-family: "Roboto", sans-serif;
   font-size: var(--fontSize-normal);
+}
+
+a, area, button, input, select, textarea {
+  /**
+   * A 2px border-radius was chosen to align the focus state of unstyled buttons with anchor elements.
+   */
+  border-radius: 2px;
+
+  &:focus {
+    @include focus.focus;
+  }
 }

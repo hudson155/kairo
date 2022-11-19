@@ -1,0 +1,6 @@
+/**
+ * For a11y, elements should have a visual indication when they're focused.
+ */
+@mixin focus {
+  box-shadow: 0 0 0 1px var(--color-outline);
+}
