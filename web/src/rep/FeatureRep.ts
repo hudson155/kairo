@@ -6,5 +6,6 @@ export default interface FeatureRep {
   isDefault: boolean;
   type: FeatureType;
   name: string;
+  iconName: string;
   rootPath: string;
 }
