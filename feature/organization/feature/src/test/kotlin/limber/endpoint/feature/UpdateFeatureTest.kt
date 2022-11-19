@@ -11,7 +11,6 @@ import limber.rep.feature.FeatureRep
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeConflict
 import limber.testing.should.shouldBeUnprocessable
-import limber.testing.should.shouldHaveValidationErrors
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
@@ -48,20 +47,6 @@ internal class UpdateFeatureTest : IntegrationTest() {
         .shouldBe(feature)
       featureClient(FeatureApi.Get(organization.guid, feature.guid))
         .shouldBe(feature)
-    }
-  }
-
-  @Test
-  fun `is default, false`() {
-    val organizationGuid = UUID.randomUUID()
-
-    val featureGuid = UUID.randomUUID()
-
-    test {
-      shouldHaveValidationErrors("body.isDefault" to "must be true") {
-        val updater = FeatureRep.Updater(isDefault = false)
-        featureClient(FeatureApi.Update(organizationGuid, featureGuid, updater))
-      }
     }
   }
 
@@ -114,42 +99,6 @@ internal class UpdateFeatureTest : IntegrationTest() {
   }
 
   @Test
-  fun `name, too short`() {
-    val organization = testSetup("Create organization") {
-      create(OrganizationFixture.acmeCo)
-    }
-
-    val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
-    }
-
-    test {
-      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
-        val updater = FeatureRep.Updater(name = " Ho ")
-        featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
-      }
-    }
-  }
-
-  @Test
-  fun `name, too long`() {
-    val organization = testSetup("Create organization") {
-      create(OrganizationFixture.acmeCo)
-    }
-
-    val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
-    }
-
-    test {
-      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
-        val updater = FeatureRep.Updater(name = "A".repeat(32))
-        featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
-      }
-    }
-  }
-
-  @Test
   fun `name, happy`() {
     val organization = testSetup("Create organization") {
       create(OrganizationFixture.acmeCo)
@@ -166,24 +115,6 @@ internal class UpdateFeatureTest : IntegrationTest() {
         .shouldBe(feature)
       featureClient(FeatureApi.Get(organization.guid, feature.guid))
         .shouldBe(feature)
-    }
-  }
-
-  @Test
-  fun `root path, malformed`() {
-    val organization = testSetup("Create organization") {
-      create(OrganizationFixture.acmeCo)
-    }
-
-    val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
-    }
-
-    test {
-      shouldHaveValidationErrors("body.rootPath" to "must be a valid feature path") {
-        val updater = FeatureRep.Updater(rootPath = "/place~holder")
-        featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
-      }
     }
   }
 

@@ -9,19 +9,20 @@ import jakarta.validation.constraints.Pattern
 import kotlin.reflect.KClass
 
 /**
- * Validates a hostname.
- * It should be more-or-less correct, but feel free to make adjustments if required.
+ * Validates feature names.
+ * Feature names are currently limited to 31 characters
+ * so that they show up fine in the side navigation bar.
  */
 @Target(AnnotationTarget.FIELD)
 @Constraint(validatedBy = [])
 @ReportAsSingleViolation
-@Pattern(regexp = HostnameValidator.pattern)
-public annotation class HostnameValidator(
-  val message: String = "Must be a valid hostname ($pattern).",
+@Pattern(regexp = FeatureNameValidator.pattern)
+public annotation class FeatureNameValidator(
+  val message: String = "Must be a valid feature name ($pattern).",
   val groups: Array<KClass<*>> = [],
   val payload: Array<KClass<out Payload>> = [],
 ) {
   public companion object {
-    internal const val pattern: String = "$HOSTNAME_PORTION?(\\.$HOSTNAME_PORTION?)*"
+    internal const val pattern: String = "$CHAR{3,31}"
   }
 }

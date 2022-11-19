@@ -221,6 +221,7 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'jakarta.validation.constraints.*'
       - 'javax.inject.*'
       - 'org.junit.jupiter.api.Assertions.*'
       - 'org.slf4j.Logger'

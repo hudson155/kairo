@@ -9,7 +9,6 @@ import limber.fixture.organization.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeConflict
 import limber.testing.should.shouldBeUnprocessable
-import limber.testing.should.shouldHaveValidationErrors
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
@@ -23,42 +22,6 @@ internal class CreateFeatureTest : IntegrationTest() {
     test {
       shouldBeUnprocessable("Organization does not exist.") {
         val creator = FeatureFixture.home.creator
-        featureClient(FeatureApi.Create(organizationGuid, creator))
-      }
-    }
-  }
-
-  @Test
-  fun `name, too short`() {
-    val organizationGuid = UUID.randomUUID()
-
-    test {
-      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
-        val creator = FeatureFixture.home.creator.copy(name = " Ho ")
-        featureClient(FeatureApi.Create(organizationGuid, creator))
-      }
-    }
-  }
-
-  @Test
-  fun `name, too long`() {
-    val organizationGuid = UUID.randomUUID()
-
-    test {
-      shouldHaveValidationErrors("body.name" to "size must be between 3 and 31") {
-        val creator = FeatureFixture.home.creator.copy(name = "A".repeat(32))
-        featureClient(FeatureApi.Create(organizationGuid, creator))
-      }
-    }
-  }
-
-  @Test
-  fun `root path, malformed`() {
-    val organizationGuid = UUID.randomUUID()
-
-    test {
-      shouldHaveValidationErrors("body.rootPath" to "must be a valid feature path") {
-        val creator = FeatureFixture.home.creator.copy(rootPath = "/place~holder")
         featureClient(FeatureApi.Create(organizationGuid, creator))
       }
     }

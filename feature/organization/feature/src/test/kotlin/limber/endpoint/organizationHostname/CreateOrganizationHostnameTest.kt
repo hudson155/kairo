@@ -9,7 +9,6 @@ import limber.fixture.organizationHostname.create
 import limber.testing.IntegrationTest
 import limber.testing.should.shouldBeConflict
 import limber.testing.should.shouldBeUnprocessable
-import limber.testing.should.shouldHaveValidationErrors
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
@@ -23,18 +22,6 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
     test {
       shouldBeUnprocessable("Organization does not exist.") {
         val creator = OrganizationHostnameFixture.fooBarBaz.creator
-        hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
-      }
-    }
-  }
-
-  @Test
-  fun `hostname, malformed`() {
-    val organizationGuid = UUID.randomUUID()
-
-    test {
-      shouldHaveValidationErrors("body.hostname" to "must be a valid hostname") {
-        val creator = OrganizationHostnameFixture.fooBarBaz.creator.copy(hostname = "foo~bar~baz")
         hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
       }
     }

@@ -1,10 +1,9 @@
 package limber.rep.feature
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import jakarta.validation.constraints.AssertTrue
-import jakarta.validation.constraints.Pattern
-import jakarta.validation.constraints.Size
+import limber.validation.FeatureNameValidator
 import limber.validation.FeaturePathValidator
+import limber.validation.TrueValidator
 import java.util.UUID
 
 public data class FeatureRep(
@@ -19,20 +18,14 @@ public data class FeatureRep(
 
   public data class Creator(
     val type: Type,
-    @field:Size(min = 3, max = 31) val name: String,
-    @field:Pattern(
-      regexp = FeaturePathValidator.pattern,
-      message = FeaturePathValidator.message,
-    ) val rootPath: String,
+    @FeatureNameValidator val name: String,
+    @FeaturePathValidator val rootPath: String,
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
   public data class Updater(
-    @field:AssertTrue val isDefault: Boolean? = null,
-    @field:Size(min = 3, max = 31) val name: String? = null,
-    @field:Pattern(
-      regexp = FeaturePathValidator.pattern,
-      message = FeaturePathValidator.message,
-    ) val rootPath: String? = null,
+    @TrueValidator val isDefault: Boolean? = null,
+    @FeatureNameValidator val name: String? = null,
+    @FeaturePathValidator val rootPath: String? = null,
   )
 }

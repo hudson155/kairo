@@ -1,35 +1,33 @@
 package limber.validation
 
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldNotBeEmpty
+import jakarta.validation.Validator
+import org.junit.jupiter.api.Test
+import java.time.Clock
 
 internal class FeaturePathValidatorTest {
-  @ParameterizedTest
-  @ValueSource(
-    strings = [
-      "/foo",
-      "/foo-bar",
-      "/foo/bar",
-    ],
+  private data class WrapperClass(
+    @FeaturePathValidator val value: String,
   )
-  fun valid(value: String) {
-    FeaturePathValidator.regex.matches(value).shouldBeTrue()
+
+  private val validator: Validator = ValidatorProvider(Clock.systemUTC()).get()
+
+  @Test
+  fun valid() {
+    validator.validate(WrapperClass("/foo")).shouldBeEmpty()
+    validator.validate(WrapperClass("/foo-bar")).shouldBeEmpty()
+    validator.validate(WrapperClass("/foo/bar")).shouldBeEmpty()
   }
 
-  @ParameterizedTest
-  @ValueSource(
-    strings = [
-      "",
-      "/",
-      "/-foo",
-      "/foo-",
-      "/foo/",
-      "/foo/bar/",
-    ],
-  )
-  fun invalid(value: String) {
-    FeaturePathValidator.regex.matches(value).shouldBeFalse()
+  @Test
+  fun invalid() {
+    validator.validate(WrapperClass("")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("foo")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("/")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("/-foo")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("/foo-")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("/foo/")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("/foo/bar/")).shouldNotBeEmpty()
   }
 }

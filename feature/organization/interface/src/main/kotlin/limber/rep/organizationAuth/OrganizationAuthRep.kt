@@ -1,5 +1,6 @@
 package limber.rep.organizationAuth
 
+import limber.validation.Auth0OrganizationIdValidator
 import java.util.UUID
 
 public data class OrganizationAuthRep(
@@ -8,6 +9,6 @@ public data class OrganizationAuthRep(
   val auth0OrganizationId: String,
 ) {
   public data class Creator(
-    val auth0OrganizationId: String,
+    @Auth0OrganizationIdValidator val auth0OrganizationId: String,
   )
 }

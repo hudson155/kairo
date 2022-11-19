@@ -7,7 +7,7 @@ import jakarta.validation.Validator
 import org.hibernate.validator.HibernateValidator
 import java.time.Clock
 
-internal class ValidatorProvider @Inject constructor(
+public class ValidatorProvider @Inject constructor(
   private val clock: Clock,
 ) : Provider<Validator> {
   override fun get(): Validator =

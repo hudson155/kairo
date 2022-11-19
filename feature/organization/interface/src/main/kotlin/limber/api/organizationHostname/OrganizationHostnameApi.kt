@@ -14,7 +14,7 @@ public object OrganizationHostnameApi {
 
   public data class Create(
     val organizationGuid: UUID,
-    @field:Valid override val body: OrganizationHostnameRep.Creator,
+    @Valid override val body: OrganizationHostnameRep.Creator,
   ) : RestEndpoint() {
     override val method: HttpMethod = HttpMethod.Post
     override val path: String = "/organizations/$organizationGuid/hostnames"

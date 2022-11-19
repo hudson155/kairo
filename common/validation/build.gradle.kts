@@ -7,6 +7,7 @@ plugins {
 
 main {
   dependencies {
+    api(Dependencies.Google.guice)
     api(Dependencies.JavaExpressionLanguage.expressly)
     api(Dependencies.Validation.hibernate)
   }

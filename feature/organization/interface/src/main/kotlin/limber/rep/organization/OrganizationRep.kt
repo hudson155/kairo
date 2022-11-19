@@ -1,7 +1,7 @@
 package limber.rep.organization
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import jakarta.validation.constraints.Size
+import limber.validation.OrganizationNameValidator
 import java.util.UUID
 
 public data class OrganizationRep(
@@ -9,11 +9,11 @@ public data class OrganizationRep(
   val name: String,
 ) {
   public data class Creator(
-    @field:Size(min = 3, max = 255) val name: String,
+    @OrganizationNameValidator val name: String,
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
   public data class Updater(
-    @field:Size(min = 3, max = 255) val name: String? = null,
+    @OrganizationNameValidator val name: String? = null,
   )
 }

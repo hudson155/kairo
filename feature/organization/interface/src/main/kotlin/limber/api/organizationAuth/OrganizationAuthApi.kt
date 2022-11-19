@@ -21,7 +21,7 @@ public object OrganizationAuthApi {
 
   public data class Set(
     val organizationGuid: UUID,
-    @field:Valid override val body: OrganizationAuthRep.Creator,
+    @Valid override val body: OrganizationAuthRep.Creator,
   ) : RestEndpoint() {
     override val method: HttpMethod = HttpMethod.Put
     override val path: String = "/organizations/$organizationGuid/auth"

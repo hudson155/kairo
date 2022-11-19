@@ -13,7 +13,7 @@ public object OrganizationApi {
   }
 
   public data class Create(
-    @field:Valid override val body: OrganizationRep.Creator,
+    @Valid override val body: OrganizationRep.Creator,
   ) : RestEndpoint() {
     override val method: HttpMethod = HttpMethod.Post
     override val path: String = "/organizations"
@@ -21,7 +21,7 @@ public object OrganizationApi {
 
   public data class Update(
     val organizationGuid: UUID,
-    @field:Valid override val body: OrganizationRep.Updater,
+    @Valid override val body: OrganizationRep.Updater,
   ) : RestEndpoint() {
     override val method: HttpMethod = HttpMethod.Patch
     override val path: String = "/organizations/$organizationGuid"
