@@ -1,0 +1,8 @@
+.container {
+  align-items: center;
+  border-bottom: var(--borderSize-m) solid var(--color-border);
+  display: flex;
+  flex-direction: row;
+  min-height: calc(48px + var(--borderSize-m)); // Matches the [TopNav].
+  padding: 12px 24px;
+}
