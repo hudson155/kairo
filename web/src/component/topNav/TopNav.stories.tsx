@@ -1,9 +1,10 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
+import { ComponentProps } from 'react';
 import TopNav from './TopNav';
 
 export default {} as ComponentMeta<typeof TopNav>;
 
-const Template: ComponentStory<typeof TopNav> = () => {
+const Template: Story<ComponentProps<typeof TopNav>> = () => {
   return <TopNav left="Left" right="Right" />;
 };
 

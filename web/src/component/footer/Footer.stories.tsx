@@ -1,4 +1,5 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
+import { ComponentProps } from 'react';
 import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';
 import * as Decorator from 'story/Decorator';
@@ -16,7 +17,7 @@ export default {
   decorators: [Decorator.recoilRoot(initializeState)],
 } as ComponentMeta<typeof Footer>;
 
-const Template: ComponentStory<typeof Footer> = () => {
+const Template: Story<ComponentProps<typeof Footer>> = () => {
   return <Footer />;
 };
 

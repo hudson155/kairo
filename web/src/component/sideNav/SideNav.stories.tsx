@@ -1,7 +1,7 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
-import { MouseEventHandler, useState } from 'react';
+import { ComponentProps, MouseEventHandler, useState } from 'react';
 import * as Decorator from 'story/Decorator';
 import SideNav, { useCollapsibleSideNav } from './SideNav';
 
@@ -9,7 +9,7 @@ export default {
   decorators: [Decorator.browserRouter()],
 } as ComponentMeta<typeof SideNav>;
 
-const Template: ComponentStory<typeof SideNav> = () => {
+const Template: Story<ComponentProps<typeof SideNav>> = () => {
   const sideNavIsCollapsible = useCollapsibleSideNav();
   const [isOpen, setIsOpen] = useState(false);
 

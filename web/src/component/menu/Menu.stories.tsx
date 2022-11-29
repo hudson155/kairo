@@ -1,10 +1,10 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import { Delegate as ProfilePhoto } from 'component/profilePhoto/ProfilePhoto';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
 import * as Decorator from 'story/Decorator';
 import Menu from './Menu';
@@ -14,7 +14,7 @@ export default {
   decorators: [Decorator.browserRouter()],
 } as ComponentMeta<typeof Menu>;
 
-const Template: ComponentStory<typeof Menu> = () => {
+const Template: Story<ComponentProps<typeof Menu>> = () => {
   return (
     <div className={styles.container}>
       <MenuImpl />

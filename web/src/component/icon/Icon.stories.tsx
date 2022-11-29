@@ -1,11 +1,11 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentMeta, Story } from '@storybook/react';
 import Paragraph from 'component/text/Paragraph';
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import Icon, { Size } from './Icon';
 
 export default {} as ComponentMeta<typeof Icon>;
 
-const Template: ComponentStory<typeof Icon> = () => {
+const Template: Story<ComponentProps<typeof Icon>> = () => {
   return (
     <>
       <Paragraph>These are just some examples. It isn&apos;t comprehensive</Paragraph>
