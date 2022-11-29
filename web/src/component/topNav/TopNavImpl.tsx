@@ -7,7 +7,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import defaultFeatureState from 'state/core/defaultFeature';
-import organizationState from 'state/core/organization';
+import organizationNameState from 'state/core/organizationName';
 import sideNavIsOpenState from 'state/nav/sideNavIsOpen';
 
 /**
@@ -21,20 +21,20 @@ const TopNavImpl: React.FC = () => {
 export default TopNavImpl;
 
 const Left: React.FC = () => {
-  const organization = useRecoilValueLoadable(organizationState).valueMaybe();
+  const organizationName = useRecoilValueLoadable(organizationNameState).valueMaybe();
   const defaultFeature = useRecoilValueLoadable(defaultFeatureState).valueMaybe();
 
   const sideNavIsCollapsible = useCollapsibleSideNav();
 
-  if (!organization) return null;
+  if (!organizationName) return null;
 
   return (
     <>
       {sideNavIsCollapsible ? <SideNavCollapseButton /> : null}
       {
         defaultFeature
-          ? <Link to={defaultFeature.rootPath}>{organization.name}</Link>
-          : organization.name
+          ? <Link to={defaultFeature.rootPath}>{organizationName}</Link>
+          : organizationName
       }
     </>
   );
