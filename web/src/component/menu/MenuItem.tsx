@@ -10,7 +10,7 @@ interface Props {
 const MenuItem: React.FC<Props> = ({ children }) => {
   return (
     <Delegate.Item as={Fragment}>
-      {({ active }) => children({ className: classNames(styles.item, { [styles.focus]: active }) })}
+      {({ active }) => children({ className: classNames(styles.item, { focus: active }) })}
     </Delegate.Item>
   );
 };

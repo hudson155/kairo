@@ -25,7 +25,7 @@
 
   .tooltip {
     background-color: var(--color-backgroundInverse);
-    border-radius: 3px;
+    border-radius: var(--borderRadius-normal);
     color: var(--color-fontInverse);
     padding: 8px 10px;
     white-space: nowrap;

@@ -7,8 +7,16 @@ $duration-transition: 150;
    * Border sizes.
    *
    * Float px values may render differently on different browsers. This is okay.
+   * The border and focus border sizes are the same,
+   * because some components (such as [Input]) use both, expecting only a color change on focus.
    */
-  --borderSize-m: 1.5px;
+  --borderSize-border: 1.5px;
+  --borderSize-focus: 1.5px;
+
+  /**
+   * Border radii.
+   */
+  --borderRadius-normal: 3px;
 
   /**
    * Colors.

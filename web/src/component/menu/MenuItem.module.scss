@@ -2,7 +2,7 @@
 
 .item {
   align-items: center;
-  border-radius: 4px;
+  border-radius: var(--borderRadius-normal);
   display: flex;
   flex-direction: row;
   padding: 4px 9px;
@@ -15,7 +15,5 @@
     background-color: var(--color-backgroundHover);
   }
 
-  &.focus {
-    @include focus.focus;
-  }
+  @include focus.focusable;
 }

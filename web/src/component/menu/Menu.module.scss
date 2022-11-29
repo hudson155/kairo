@@ -4,8 +4,8 @@
 
 .container {
   background-color: var(--color-background);
-  border: var(--borderSize-m) solid var(--color-border);
-  border-radius: 4px;
+  border: var(--borderSize-border) solid var(--color-border);
+  border-radius: var(--borderRadius-normal);
   margin-top: 8px;
   min-width: 160px;
   position: absolute;

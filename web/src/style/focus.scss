@@ -1,6 +1,24 @@
 /**
  * For a11y, elements should have a visual indication when they're focused.
+ *
+ * There's an intentional delay between the blur of one element and the focus of another,
+ * implemented using transitions.
+ * Focus uses box-shadow to avoid taking up any space.
+ *
+ * The focus selector and focus class, although identical, are implemented separately due to
+ * https://css-tricks.com/dont-comma-separate-focus-within-if-you-need-deep-browser-support/.
  */
-@mixin focus {
-  box-shadow: 0 0 0 1px var(--color-outline);
+@mixin focusable() {
+  transition-duration: var(--duration-focus);
+  transition-property: box-shadow;
+
+  &:focus {
+    transition-delay: var(--duration-focus); // TODO: I don't think this works right. Slow it down.
+    box-shadow: 0 0 0 var(--borderSize-border) var(--color-focus);
+  }
+
+  &:global(.focus) {
+    transition-delay: var(--duration-focus);
+    box-shadow: 0 0 0 var(--borderSize-focus) var(--color-focus);
+  }
 }

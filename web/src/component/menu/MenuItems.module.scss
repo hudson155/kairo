@@ -4,6 +4,6 @@
   padding: 4px;
 
   &:not(:first-of-type) {
-    border-top: var(--borderSize-m) solid var(--color-border);
+    border-top: var(--borderSize-border) solid var(--color-border);
   }
 }

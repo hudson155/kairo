@@ -1,6 +1,6 @@
 .link {
   align-items: center;
-  border-radius: 4px;
+  border-radius: var(--borderRadius-normal);
   display: flex;
   flex-direction: row;
   padding: 6px 12px;

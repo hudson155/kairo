@@ -13,13 +13,11 @@ body {
   font-size: var(--fontSize-normal);
 }
 
-a, area, button, input, select, textarea {
+a {
   /**
    * A 2px border-radius was chosen to align the focus state of unstyled buttons with anchor elements.
    */
-  border-radius: 2px;
+  border-radius: var(--borderRadius-normal);
 
-  &:focus {
-    @include focus.focus;
-  }
+  @include focus.focusable;
 }

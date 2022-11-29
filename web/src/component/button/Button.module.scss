@@ -1,13 +1,16 @@
+@use "src/style/focus";
+
 .button {
   align-items: center;
-  all: unset; // Ignore browser defaults.
   /**
    * A 2px border-radius was chosen to align the focus state of unstyled buttons with anchor elements.
    * When styled buttons are introduced, they may have a different border radius,
    * but unstyled buttons should stay the same.
    */
-  border-radius: 2px;
+  border-radius: var(--borderRadius-normal);
   cursor: pointer;
   display: flex;
   flex-direction: row;
+
+  @include focus.focusable;
 }

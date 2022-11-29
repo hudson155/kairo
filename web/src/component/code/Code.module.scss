@@ -1,7 +1,6 @@
 .code {
-  all: unset; // Ignore browser defaults.
   background-color: var(--color-backgroundAccent);
-  border-radius: 2px;
+  border-radius: var(--borderRadius-normal);
   font-family: "Roboto Mono", monospace;
   padding: 0 3px;
 }

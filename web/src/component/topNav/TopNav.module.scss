@@ -1,11 +1,11 @@
 .header {
   align-items: center;
   align-self: stretch;
-  border-bottom: var(--borderSize-m) solid var(--color-border);
+  border-bottom: var(--borderSize-border) solid var(--color-border);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  min-height: calc(48px + var(--borderSize-m)); // Matches the [SideNavHeader].
+  min-height: calc(48px + var(--borderSize-border)); // Matches the [SideNavHeader].
   padding: 12px 24px;
 }
 
