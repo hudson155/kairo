@@ -1,0 +1,54 @@
+.button {
+  padding: 6px;
+  position: relative;
+}
+
+.tooltipContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  inset: -42px 0 auto;
+  position: absolute;
+
+  /**
+   * This 8px square is rotated 45 degrees to look like a downward caret.
+   */
+  &::after {
+    background-color: var(--color-backgroundInverse);
+    content: "";
+    display: block;
+    height: 8px;
+    transform: translateY(-4px) rotate(45deg);
+    width: 8px;
+    z-index: -1;
+  }
+
+  .tooltip {
+    background-color: var(--color-backgroundInverse);
+    border-radius: 3px;
+    color: var(--color-fontInverse);
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+}
+
+.tooltipContainer {
+  .tooltip, &::after {
+    transition-duration: var(--duration-flash);
+    transition-property: background-color;
+  }
+
+  &.success {
+    .tooltip, &::after {
+      background-color: var(--color-success);
+      transition-duration: 0ms;
+    }
+  }
+
+  &.failure {
+    .tooltip, &::after {
+      background-color: var(--color-failure);
+      transition-duration: 0ms;
+    }
+  }
+}

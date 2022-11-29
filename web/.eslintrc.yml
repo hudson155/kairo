@@ -215,8 +215,8 @@ rules:
   logical-assignment-operators: warn
   max-depth: warn
   max-lines: warn
-  max-lines-per-function: warn
-  max-nested-callbacks: [warn, { max: 1 }]
+  max-lines-per-function: [warn, { max: 80 }]
+  max-nested-callbacks: [warn, { max: 2 }]
   max-params: [warn, { max: 5 }]
   multiline-comment-style: warn
   new-cap: warn
@@ -481,3 +481,4 @@ overrides:
           children: ignore
           propElementValues: always
       react/jsx-no-literals: off
+      react/prop-types: off

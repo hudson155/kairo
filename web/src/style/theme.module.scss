@@ -1,3 +1,7 @@
+$duration-focus: 50;
+$duration-flash: 200;
+$duration-transition: 150;
+
 :root {
   /**
    * Border sizes.
@@ -15,16 +19,22 @@
   --color-backgroundAccent: hsl(240deg, 10%, 92%);
   --color-backgroundActive: hsl(240deg, 10%, 94%);
   --color-backgroundHover: hsl(240deg, 10%, 92%);
+  --color-backgroundInverse: hsl(240deg, 10%, 16%);
   --color-block: hsl(240deg, 10%, 52%);
   --color-border: hsl(240deg, 10%, 91%);
+  --color-failure: hsl(0deg, 40%, 50%);
   --color-font: hsl(240deg, 10%, 17%);
+  --color-fontInverse: hsl(240deg, 10%, 87%);
   --color-outline: hsl(240deg, 10%, 50%);
   --color-overlay: hsla(240deg, 10%, 35%, 80%);
+  --color-success: hsl(105deg, 35%, 50%);
 
   /**
    * Durations.
    */
-  --duration-transition: 150ms;
+  --duration-focus: #{$duration-focus * 1ms};
+  --duration-flash: #{$duration-flash * 1ms};
+  --duration-transition: #{$duration-transition * 1ms};
 
   /**
    * Font sizes.
@@ -55,10 +65,16 @@
     --color-backgroundAccent: hsl(240deg, 10%, 26%);
     --color-backgroundActive: hsl(240deg, 10%, 23%);
     --color-backgroundHover: hsl(240deg, 10%, 26%);
+    --color-backgroundInverse: hsl(240deg, 10%, 92%);
     --color-block: hsl(240deg, 10%, 75%);
     --color-border: hsl(240deg, 10%, 23%);
     --color-font: hsl(240deg, 10%, 87%);
+    --color-fontInverse: hsl(240deg, 10%, 17%);
     --color-outline: hsl(240deg, 10%, 60%);
     --color-overlay: hsla(240deg, 10%, 5%, 80%);
   }
+}
+
+:export {
+  durationFlash: $duration-flash;
 }

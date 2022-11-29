@@ -22,6 +22,26 @@
   }
 }
 
+.moveDownOut {
+  &.off {
+    transform: translateY(0);
+  }
+
+  &.on {
+    transform: translateY(6px);
+  }
+}
+
+.moveUpIn {
+  &.off {
+    transform: translateY(6px);
+  }
+
+  &.on {
+    transform: translateY(0);
+  }
+}
+
 .moveUpOut {
   &.off {
     transform: translateY(-6px);
