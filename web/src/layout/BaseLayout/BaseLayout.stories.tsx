@@ -18,7 +18,6 @@ const initializeState = ({ set }: MutableSnapshot): void => {
 };
 
 export default {
-  title: `layout/BaseLayout`,
   decorators: [
     Decorator.recoilRoot(initializeState),
     Decorator.browserRouter(),

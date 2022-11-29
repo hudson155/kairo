@@ -1,9 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Delegate as ProfilePhoto } from './ProfilePhoto';
 
-export default {
-  title: `component/ProfilePhoto`,
-} as ComponentMeta<typeof ProfilePhoto>;
+export default {} as ComponentMeta<typeof ProfilePhoto>;
 
 const Template: ComponentStory<typeof ProfilePhoto> = () => {
   return (

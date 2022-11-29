@@ -8,9 +8,7 @@ const Story: React.FC = () => {
   return <Paragraph>{isSmall ? `Small` : `Large`}</Paragraph>;
 };
 
-export default {
-  title: `hook/useResizeObserver`,
-} as ComponentMeta<typeof Story>;
+export default {} as ComponentMeta<typeof Story>;
 
 const Template: ComponentStory<typeof Story> = () => {
   return <Story />;

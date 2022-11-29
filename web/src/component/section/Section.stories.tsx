@@ -6,7 +6,6 @@ import Section from './Section';
 import SectionSpacer from './SectionSpacer';
 
 export default {
-  title: `component/Section`,
   decorators: [Decorator.helmetProvider()],
 } as ComponentMeta<typeof Section>;
 

@@ -4,17 +4,28 @@ import Icon from 'component/icon/Icon';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import { Delegate as ProfilePhoto } from 'component/profilePhoto/ProfilePhoto';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Decorator from 'story/Decorator';
 import Menu from './Menu';
 import styles from './Menu.stories.module.scss';
 
 export default {
-  title: `component/Menu`,
   decorators: [Decorator.browserRouter()],
 } as ComponentMeta<typeof Menu>;
 
 const Template: ComponentStory<typeof Menu> = () => {
+  return (
+    <div className={styles.container}>
+      <MenuImpl />
+      <MenuImpl side="right" />
+    </div>
+  );
+};
+
+export const Default = Template.bind({});
+
+const MenuImpl: React.FC<{ side?: 'right' }> = ({ side = undefined }) => {
   const button = (
     <Button variant="unstyled">
       <ProfilePhoto url="https://avatars.githubusercontent.com/u/1360420" />
@@ -23,7 +34,7 @@ const Template: ComponentStory<typeof Menu> = () => {
   );
 
   return (
-    <Menu button={button}>
+    <Menu button={button} side={side}>
       <MenuItems>
         <MenuItem>
           {
@@ -61,5 +72,3 @@ const Template: ComponentStory<typeof Menu> = () => {
     </Menu>
   );
 };
-
-export const Default = Template.bind({});

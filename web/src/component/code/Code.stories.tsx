@@ -2,9 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Paragraph from 'component/text/Paragraph';
 import Code from './Code';
 
-export default {
-  title: `component/Code`,
-} as ComponentMeta<typeof Code>;
+export default {} as ComponentMeta<typeof Code>;
 
 const Template: ComponentStory<typeof Code> = () => {
   return (

@@ -2,9 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Paragraph from 'component/text/Paragraph';
 import CodeBlock from './CodeBlock';
 
-export default {
-  title: `component/CodeBlock`,
-} as ComponentMeta<typeof CodeBlock>;
+export default {} as ComponentMeta<typeof CodeBlock>;
 
 const Template: ComponentStory<typeof CodeBlock> = () => {
   const stackTrace = `Exception in thread "main" java.lang.NullPointerException\n` +

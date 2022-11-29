@@ -6,7 +6,6 @@ import * as Decorator from 'story/Decorator';
 import SideNav, { useCollapsibleSideNav } from './SideNav';
 
 export default {
-  title: `component/SideNav`,
   decorators: [Decorator.browserRouter()],
 } as ComponentMeta<typeof SideNav>;
 

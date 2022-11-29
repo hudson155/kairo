@@ -3,9 +3,7 @@ import Paragraph from 'component/text/Paragraph';
 import React from 'react';
 import Icon, { Size } from './Icon';
 
-export default {
-  title: `component/Icon`,
-} as ComponentMeta<typeof Icon>;
+export default {} as ComponentMeta<typeof Icon>;
 
 const Template: ComponentStory<typeof Icon> = () => {
   return (

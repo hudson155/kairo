@@ -6,9 +6,7 @@ import Heading4 from './Heading4';
 import Paragraph from './Paragraph';
 import Text from './Text';
 
-export default {
-  title: `component/Text`,
-} as ComponentMeta<typeof Text>;
+export default {} as ComponentMeta<typeof Text>;
 
 // eslint-disable-next-line max-lines-per-function
 const Template: ComponentStory<typeof Text> = () => {

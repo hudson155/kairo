@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import * as Decorator from 'story/Decorator';
 
 export default {
-  title: `page/ErrorMain`,
   decorators: [Decorator.helmetProvider()],
 } as ComponentMeta<typeof ErrorMain>;
 
