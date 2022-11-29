@@ -1,7 +1,15 @@
-.normal {
+.sizeSmall {
+  font-size: var(--fontSize-small);
+}
+
+.sizeNormal {
   font-size: var(--fontSize-normal);
 }
 
-.small {
-  font-size: var(--fontSize-small);
+.weightNormal {
+  font-weight: var(--fontWeight-normal);
+}
+
+.weightBold {
+  font-weight: var(--fontWeight-bold);
 }

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { TextSize } from 'component/text/Text';
+import { sizeClassName, TextSize } from 'component/text/Text';
 import React, { HTMLAttributes, ReactNode } from 'react';
 import styles from './Paragraph.module.scss';
 
@@ -18,7 +18,7 @@ interface Props extends HTMLAttributes<HTMLParagraphElement> {
  */
 const Paragraph: React.FC<Props> = ({ className, size = undefined, children, ...props }) => {
   return (
-    <p className={classNames(styles.p, size ? styles[size] : undefined, className)} {...props}>
+    <p className={classNames(styles.p, sizeClassName(size), className)} {...props}>
       {children}
     </p>
   );

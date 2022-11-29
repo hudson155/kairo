@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof Text> = () => {
       </Paragraph>
       <Heading2>Heading 2</Heading2>
       <Paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <Text weight="bold">Lorem ipsum</Text> dolor sit amet, consectetur adipiscing elit.
         Suspendisse quis erat erat.
         Donec iaculis feugiat sapien et commodo.
         Mauris ultrices odio quis odio elementum ultrices.
