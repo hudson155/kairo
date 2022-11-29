@@ -7,12 +7,12 @@
   flex-direction: row;
   padding: 4px 9px;
 
-  &:active {
-    background-color: var(--color-backgroundActive);
-  }
-
   &:hover {
     background-color: var(--color-backgroundHover);
+  }
+
+  &:active {
+    background-color: var(--color-backgroundActive);
   }
 
   @include focus.focusable;

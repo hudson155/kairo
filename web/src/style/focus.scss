@@ -12,13 +12,13 @@
   transition-duration: var(--duration-focus);
   transition-property: box-shadow;
 
-  &:focus {
-    transition-delay: var(--duration-focus); // TODO: I don't think this works right. Slow it down.
-    box-shadow: 0 0 0 var(--borderSize-border) var(--color-focus);
-  }
-
   &:global(.focus) {
     transition-delay: var(--duration-focus);
     box-shadow: 0 0 0 var(--borderSize-focus) var(--color-focus);
+  }
+
+  &:focus {
+    transition-delay: var(--duration-focus);
+    box-shadow: 0 0 0 var(--borderSize-border) var(--color-focus);
   }
 }

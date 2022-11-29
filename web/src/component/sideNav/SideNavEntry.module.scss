@@ -5,14 +5,18 @@
   flex-direction: row;
   padding: 6px 12px;
 
+  &:hover {
+    background-color: var(--color-backgroundHover);
+  }
+
   /**
    * The [active] class is applied automatically by React Router.
    */
-  &:active, &:global(.active) {
+  &:global(.active) {
     background-color: var(--color-backgroundActive);
   }
 
-  &:hover {
-    background-color: var(--color-backgroundHover);
+  &:active {
+    background-color: var(--color-backgroundActive);
   }
 }

@@ -1,6 +1,6 @@
 .container {
-  border: var(--borderSize-m) solid var(--color-border);
-  border-radius: 7px;
+  border: var(--borderSize-border) solid var(--color-border);
+  border-radius: var(--borderRadius-large);
   display: flex;
   flex-direction: column;
   padding: 0 16px 12px;
