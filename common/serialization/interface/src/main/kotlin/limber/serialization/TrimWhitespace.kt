@@ -10,6 +10,6 @@ public annotation class TrimWhitespace(val type: Type) {
     TrimNone(trimStart = false, trimEnd = false),
     TrimStart(trimStart = true, trimEnd = false),
     TrimEnd(trimStart = false, trimEnd = true),
-    TrimBoth(trimStart = true, trimEnd = true);
+    TrimBoth(trimStart = true, trimEnd = true),
   }
 }

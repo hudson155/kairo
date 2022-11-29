@@ -22,7 +22,8 @@ public enum class OrganizationPermission(@JsonValue internal val value: String) 
   OrganizationAuthDelete("organizationAuth:delete"),
   OrganizationHostnameRead("organizationHostname:read"),
   OrganizationHostnameCreate("organizationHostname:create"),
-  OrganizationHostnameDelete("organizationHostname:delete");
+  OrganizationHostnameDelete("organizationHostname:delete"),
+  ;
 
   /**
    * Uses [OrganizationPermission]'s [value] field to deserialize.

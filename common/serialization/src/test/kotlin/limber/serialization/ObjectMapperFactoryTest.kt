@@ -26,7 +26,9 @@ internal abstract class ObjectMapperFactoryTest(dataFormat: ObjectMapperFactory.
 
   protected data class EnumData(val enum: Enum?) {
     enum class Enum {
-      Option1, Option2;
+      Option1,
+      Option2,
+      ;
 
       override fun toString(): String = "unused"
     }

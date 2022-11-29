@@ -97,11 +97,7 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
           createRouteFromPath(template.path)
             .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
             .createChild(HttpMethodRouteSelector(template.method))
-            .let {
-              template.requiredQueryParams.fold(it) { route, queryParam ->
-                route.createChild(ParameterRouteSelector(queryParam))
-              }
-            }
+            .createChild(template.requiredQueryParams)
             .handle { handler.handle(call) }
         }
       }
@@ -110,6 +106,14 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
 }
 
 private fun Route.optionallyAuthenticate(authenticate: Boolean, build: Route.() -> Unit) {
-  if (authenticate) authenticate(optional = true, build = build)
-  else build()
+  if (authenticate) {
+    authenticate(optional = true, build = build)
+  } else {
+    build()
+  }
 }
+
+private fun Route.createChild(requiredQueryParams: Set<String>): Route =
+  requiredQueryParams.fold(this) { route, queryParam ->
+    route.createChild(ParameterRouteSelector(queryParam))
+  }

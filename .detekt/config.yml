@@ -28,6 +28,13 @@ comments:
     active: true
 
 complexity:
+  CognitiveComplexMethod:
+    active: true
+    threshold: 15
+  ComplexInterface:
+    active: true
+  CyclomaticComplexMethod:
+    active: false
   LargeClass:
     active: true
     threshold: 300
@@ -78,6 +85,8 @@ exceptions:
     active: true
 
 formatting:
+  AnnotationOnSeparateLine:
+    active: false
   AnnotationSpacing:
     active: true
   ArgumentListWrapping:
@@ -96,6 +105,10 @@ formatting:
     active: false # Overlaps with naming>MatchingDeclarationName.
   FunKeywordSpacing:
     active: true
+  FunctionReturnTypeSpacing:
+    active: true
+  FunctionStartOfBodySpacing:
+    active: true
   FunctionTypeReferenceSpacing:
     active: true
   Indentation:
@@ -110,7 +123,11 @@ formatting:
     active: true
   NoEmptyFirstLineInMethodBlock:
     active: true
+  NullableTypeSpacing:
+    active: true
   PackageName:
+    active: true
+  ParameterListSpacing:
     active: true
   SpacingAroundAngleBrackets:
     active: true
@@ -122,18 +139,20 @@ formatting:
     active: true
   SpacingBetweenDeclarationsWithComments:
     active: true
-  TrailingComma:
+  SpacingBetweenFunctionNameAndOpeningParenthesis:
     active: true
-    allowTrailingComma: true
-    allowTrailingCommaOnCallSite: true
+  TrailingCommaOnCallSite:
+    active: true
+  TrailingCommaOnDeclarationSite:
+    active: true
   TypeArgumentListSpacing:
+    active: true
+  TypeParameterListSpacing:
     active: true
   UnnecessaryParenthesesBeforeTrailingLambda:
     active: true
 
 naming:
-  BooleanPropertyNaming:
-    active: true
   EnumNaming:
     active: true
     enumEntryPattern: '[A-Z][A-Za-z0-9]*' # Enums should be PascalCase.
@@ -171,6 +190,8 @@ naming:
 performance:
   CouldBeSequence:
     active: true
+  UnnecessaryPartOfBinaryExpression:
+    active: true
 
 potential-bugs:
   CastToNullableType:
@@ -197,8 +218,12 @@ potential-bugs:
     active: true
   UnconditionalJumpStatementInLoop:
     active: true
+  UnnecessaryNotNullCheck:
+    active: true
 
 style:
+  AlsoCouldBeApply:
+    active: true
   CanBeNonNullable:
     active: true
   CascadingCallWrapping:
@@ -247,6 +272,9 @@ style:
     active: false # Overlaps with formatting>ModifierOrdering.
   MultilineLambdaItParameter:
     active: true
+  MultilineRawStringIndentation:
+    active: true
+    indentSize: 2
   NewLineAtEndOfFile:
     active: false # Overlaps with formatting>FinalNewline.
   NoTabs:
@@ -262,6 +290,8 @@ style:
   SpacingBetweenPackageAndImports:
     active: true
   TrailingWhitespace:
+    active: true
+  TrimMultilineRawString:
     active: true
   UnderscoresInNumericLiterals:
     active: true
@@ -286,6 +316,8 @@ style:
   UseIfEmptyOrIfBlank:
     active: true
   UseIfInsteadOfWhen:
+    active: true
+  UseSumOfInsteadOfFlatMapSize:
     active: true
   VarCouldBeVal:
     active: true

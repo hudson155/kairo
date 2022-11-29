@@ -13,7 +13,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 @JsonDeserialize(using = PlatformPermission.Deserializer::class)
 public enum class PlatformPermission(@JsonValue internal val value: String) {
   OrganizationCreate("organization:create"),
-  OrganizationDelete("organization:delete");
+  OrganizationDelete("organization:delete"),
+  ;
 
   /**
    * Uses [PlatformPermission]'s [value] field to deserialize.
