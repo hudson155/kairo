@@ -1,5 +1,5 @@
 @use "src/style/focus";
-@use "src/style/theme";
+@use "src/style/theme.module";
 
 html, body, #root {
   height: 100%;
