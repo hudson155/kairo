@@ -1,6 +1,5 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import { ComponentProps } from 'react';
-import * as Decorator from 'story/Decorator';
 import CopyButton from './CopyButton';
 import styles from './CopyButton.stories.module.scss';
 
@@ -9,7 +8,6 @@ interface Args {
 }
 
 export default {
-  decorators: [Decorator.browserRouter()],
   argTypes: {
     copy: {
       options: [`Success`, `Failure`],
