@@ -1,0 +1,7 @@
+.container {
+  border: var(--borderSize-m) solid var(--color-border);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 12px;
+}
