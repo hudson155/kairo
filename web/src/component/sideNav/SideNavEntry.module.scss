@@ -3,20 +3,25 @@
   border-radius: var(--borderRadius-normal);
   display: flex;
   flex-direction: row;
-  padding: 6px 12px;
+  flex-grow: 1;
+  padding: 6px 12px 6px 10px; // Left is reduced by 2px to account for the ::before indicator.
+
+  &::before {
+    align-self: stretch;
+    border-radius: 1px;
+    content: "";
+    display: block;
+    flex-basis: 2px;
+    flex-shrink: 0;
+    transform: translateX(-16px);
+
+  }
+
+  &:global(.active)::before {
+    background-color: var(--color-indicator);
+  }
 
   &:hover {
     background-color: var(--color-backgroundHover);
-  }
-
-  /**
-   * The [active] class is applied automatically by React Router.
-   */
-  &:global(.active) {
-    background-color: var(--color-backgroundActive);
-  }
-
-  &:active {
-    background-color: var(--color-backgroundActive);
   }
 }

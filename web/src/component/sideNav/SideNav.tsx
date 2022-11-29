@@ -49,7 +49,7 @@ const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
         <Transition.Child as={Fragment} {...transitions(`slideIn`, `slideOut`)}>
           <Dialog.Panel as={Fragment}>
             <div className={classNames(styles.container, { [styles.collapsible]: sideNavIsCollapsible })}>
-              <SideNavHeader />
+              <SideNavHeader onClose={() => setIsOpen(false)} />
               <nav className={styles.nav}>
                 <ul className={styles.ul}>{children}</ul>
               </nav>
