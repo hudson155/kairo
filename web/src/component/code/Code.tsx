@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import styles from './Code.module.scss';
 
-interface Props extends HTMLAttributes<HTMLElement> {
+interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
   selectAll?: boolean;
   children: ReactNode;
 }

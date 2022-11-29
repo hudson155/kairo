@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
-interface Props extends HTMLAttributes<HTMLButtonElement> {
+interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   type?: 'submit' | 'reset' | 'button';
   variant: 'unstyled';
   children: ReactNode;

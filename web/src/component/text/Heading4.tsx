@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import styles from './Heading.module.scss';
 
-interface Props extends HTMLAttributes<HTMLHeadingElement> {
+interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
   children: ReactNode;
 }
 

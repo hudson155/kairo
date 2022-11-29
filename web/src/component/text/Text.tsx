@@ -1,12 +1,12 @@
 import classNames from 'classnames';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import styles from './Text.module.scss';
 
 export type TextSize = 'small' | 'normal';
 
 type TextWeight = 'normal' | 'bold';
 
-interface Props extends HTMLAttributes<HTMLSpanElement> {
+interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
   /**
    * Don't provide this prop unless you need to override the text size.
    */

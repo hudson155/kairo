@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { sizeClassName, TextSize } from 'component/text/Text';
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import styles from './Paragraph.module.scss';
 
-interface Props extends HTMLAttributes<HTMLParagraphElement> {
+interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement> {
   /**
    * Don't provide this prop unless you need to override the text size.
    */
