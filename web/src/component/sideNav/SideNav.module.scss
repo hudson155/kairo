@@ -9,11 +9,11 @@
 }
 
 .container {
-  border-right: var(--borderSize-m) solid var(--color-border);
   width: 256px;
 
   &.collapsible {
     background-color: var(--color-background);
+    border-right: var(--borderSize-border) solid var(--color-border);
     inset: 0;
     position: fixed;
   }

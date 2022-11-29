@@ -1,5 +1,6 @@
 .header {
   align-items: center;
+  align-self: stretch;
   border-bottom: var(--borderSize-m) solid var(--color-border);
   display: flex;
   flex-direction: row;
