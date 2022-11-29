@@ -20,9 +20,11 @@ const BaseLayout: React.FC<Props> = ({ sideNav = <SideNavImpl />, topNav = <TopN
         {sideNav}
         <div className={styles.inner}>
           <main className={styles.main}>
-            <ErrorBoundary fallback={ErrorMain.fallback}>
-              {children}
-            </ErrorBoundary>
+            <div className={styles.mainInner}>
+              <ErrorBoundary fallback={ErrorMain.fallback}>
+                {children}
+              </ErrorBoundary>
+            </div>
           </main>
           <Footer />
         </div>
