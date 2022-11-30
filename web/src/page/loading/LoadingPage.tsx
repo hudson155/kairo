@@ -1,4 +1,4 @@
-import Loader from 'page/loading/Loader';
+import Loader from 'component/spinner/Loader';
 import React from 'react';
 import styles from './LoadingPage.module.scss';
 
