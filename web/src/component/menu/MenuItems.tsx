@@ -1,7 +1,7 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './MenuItems.module.scss';
 
-interface Props extends PropsWithChildren {
+interface Props {
   children: ReactNode;
 }
 

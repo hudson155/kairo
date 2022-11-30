@@ -33,7 +33,12 @@ type Props = SmallProps | NonSmallProps;
  * An icon, backed by Google Fonts' Material Icons: https://fonts.google.com/icons.
  * Only small icons may have [space] defined, which is why the types above are complex.
  */
-const Icon: React.FC<Props> = ({ className = undefined, name, size = `medium`, space = `none` }) => {
+const Icon: React.FC<Props> = ({
+  className = undefined,
+  name,
+  size = `medium`,
+  space = `none`,
+}) => {
   return (
     <span className={classNames(`material-icons`, styles[size], styles[space], className)}>
       {name}

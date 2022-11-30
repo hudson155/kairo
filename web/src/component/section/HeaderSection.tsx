@@ -1,9 +1,9 @@
 import Section from 'component/section/Section';
 import Heading1 from 'component/text/Heading1';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-interface Props extends PropsWithChildren {
+interface Props {
   title: string;
   children?: ReactNode;
 }

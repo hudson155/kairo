@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './Paper.module.scss';
 
-interface Props extends PropsWithChildren {
+interface Props {
   children: ReactNode;
 }
 
@@ -10,9 +10,9 @@ interface Props extends PropsWithChildren {
  * A container component that somewhat resembles a piece of paper.
  * Okay, not really. But what else are you gonna name it?
  */
-const Paper: React.FC<Props> = ({ children, ...props }) => {
+const Paper: React.FC<Props> = ({ children }) => {
   return (
-    <div className={classNames(styles.container)} {...props}>
+    <div className={classNames(styles.container)}>
       {children}
     </div>
   );

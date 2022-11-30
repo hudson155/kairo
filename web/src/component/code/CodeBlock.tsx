@@ -1,8 +1,8 @@
 import Code from 'component/code/Code';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './CodeBlock.module.scss';
 
-interface Props extends PropsWithChildren {
+interface Props {
   children: ReactNode;
 }
 

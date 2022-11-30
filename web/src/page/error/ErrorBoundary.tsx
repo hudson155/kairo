@@ -1,6 +1,6 @@
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
-interface Props extends PropsWithChildren {
+interface Props {
   fallback: (error: Error) => ReactNode;
   children: ReactNode;
 }

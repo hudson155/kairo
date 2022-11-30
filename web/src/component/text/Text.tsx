@@ -1,12 +1,14 @@
 import classNames from 'classnames';
-import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './Text.module.scss';
 
 export type TextSize = 'small' | 'normal';
 
 type TextWeight = 'normal' | 'bold';
 
-interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
+interface Props {
+  className?: string;
+
   /**
    * Don't provide this prop unless you need to override the text size.
    */
@@ -24,9 +26,14 @@ interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLS
  * Use this to adjust how text looks without adding additional spacing.
  * For document text that needs proper spacing, use [Paragraph] instead.
  */
-const Text: React.FC<Props> = ({ className, size = undefined, weight = undefined, children, ...props }) => {
+const Text: React.FC<Props> = ({
+  className = undefined,
+  size = undefined,
+  weight = undefined,
+  children,
+}) => {
   return (
-    <span className={classNames(sizeClassName(size), weightClassName(weight), className)} {...props}>
+    <span className={classNames(sizeClassName(size), weightClassName(weight), className)}>
       {children}
     </span>
   );

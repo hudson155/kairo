@@ -1,10 +1,16 @@
 import classNames from 'classnames';
-import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import React, { FocusEventHandler, MouseEventHandler, PointerEventHandler, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
-interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+interface Props {
+  className?: string;
   type?: 'submit' | 'reset' | 'button';
-  variant: 'unstyled';
+  variant: 'unstyled'; // eslint-disable-line react/no-unused-prop-types
+  onBlur?: FocusEventHandler<HTMLButtonElement>;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  onFocus?: FocusEventHandler<HTMLButtonElement>;
+  onMouseEnter?: PointerEventHandler<HTMLButtonElement>;
+  onMouseLeave?: PointerEventHandler<HTMLButtonElement>;
   children: ReactNode;
 }
 
@@ -15,9 +21,27 @@ interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTM
  * It currently only has an unstyled variant, but this will change in the future.
  */
 const Button: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
-  ({ type = `button`, className, children, ...props }, ref) => {
+  ({
+    type = `button`,
+    className = undefined,
+    onBlur = undefined,
+    onClick,
+    onFocus = undefined,
+    onMouseEnter = undefined,
+    onMouseLeave = undefined,
+    children,
+  }, ref) => {
     return (
-      <button ref={ref} className={classNames(styles.button, className)} type={type} {...props}>
+      <button
+        ref={ref}
+        className={classNames(styles.button, className)}
+        type={type}
+        onBlur={onBlur}
+        onClick={onClick}
+        onFocus={onFocus}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
         {children}
       </button>
     );

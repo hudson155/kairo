@@ -6,12 +6,13 @@ import MenuItems from 'component/menu/MenuItems';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhoto';
 import TopNavMenuLogoutButton from 'component/topNav/TopNavMenuLogoutButton';
 import TopNavMenuSettingsButton from 'component/topNav/TopNavMenuSettingsButton';
+import doNothing from 'helper/doNothing';
 import React from 'react';
 import styles from './TopNavMenu.module.scss';
 
 const TopNavMenu: React.FC = () => {
   const button = (
-    <Button variant="unstyled">
+    <Button variant="unstyled" onClick={doNothing}>
       <ProfilePhoto />
       <Icon className={styles.expandIcon} name="expand_more" />
     </Button>

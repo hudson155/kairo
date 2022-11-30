@@ -1,9 +1,11 @@
 import classNames from 'classnames';
 import { sizeClassName, TextSize } from 'component/text/Text';
-import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './Paragraph.module.scss';
 
-interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement> {
+interface Props {
+  className?: string;
+
   /**
    * Don't provide this prop unless you need to override the text size.
    */
@@ -16,9 +18,9 @@ interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, 
  * Use this for paragraphs of text.
  * No need to add [Text] inside, except to change how text looks.
  */
-const Paragraph: React.FC<Props> = ({ className, size = undefined, children, ...props }) => {
+const Paragraph: React.FC<Props> = ({ className = undefined, size = undefined, children }) => {
   return (
-    <p className={classNames(styles.p, sizeClassName(size), className)} {...props}>
+    <p className={classNames(styles.p, sizeClassName(size), className)}>
       {children}
     </p>
   );

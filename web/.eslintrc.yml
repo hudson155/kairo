@@ -103,8 +103,7 @@ rules:
   react/jsx-pascal-case: warn
   react/jsx-props-no-spreading:
     - warn
-    - html: ignore
-      exceptions:
+    - exceptions:
         - Transition
         - Transition.Child
   react/jsx-sort-default-props: [warn, { ignoreCase: true }]

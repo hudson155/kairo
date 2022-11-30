@@ -1,17 +1,18 @@
 import classNames from 'classnames';
-import React, { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './Heading.module.scss';
 
-interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
+interface Props {
+  className?: string;
   children: ReactNode;
 }
 
 /**
  * Use semantic headings. Don't skip levels.
  */
-const Heading4: React.FC<Props> = ({ className, children, ...props }) => {
+const Heading4: React.FC<Props> = ({ className = undefined, children }) => {
   return (
-    <h4 className={classNames(styles.h4, className)} {...props}>
+    <h4 className={classNames(styles.h4, className)}>
       {children}
     </h4>
   );

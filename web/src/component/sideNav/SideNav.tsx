@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import SideNavHeader from 'component/sideNav/SideNavHeader';
 import { useResizeObserver } from 'hook/useResizeObserver';
-import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { transitions } from 'style/transitions';
 import styles from './SideNav.module.scss';
 
@@ -13,7 +13,7 @@ import styles from './SideNav.module.scss';
  */
 export const useCollapsibleSideNav = (): boolean => useResizeObserver((size) => size < 992);
 
-interface Props extends PropsWithChildren {
+interface Props {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   children: ReactNode;

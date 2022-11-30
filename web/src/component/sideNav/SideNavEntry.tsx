@@ -10,7 +10,12 @@ interface Props {
   onClick: () => void;
 }
 
-const SideNavEntry: React.FC<Props> = ({ iconName = undefined, label, onClick = undefined, to }) => {
+const SideNavEntry: React.FC<Props> = ({
+  iconName = undefined,
+  label,
+  onClick = undefined,
+  to,
+}) => {
   return (
     <li>
       <NavLink className={styles.link} to={to} onClick={onClick}>{children(iconName, label)}</NavLink>

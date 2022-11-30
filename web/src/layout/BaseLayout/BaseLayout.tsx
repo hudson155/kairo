@@ -3,10 +3,10 @@ import SideNavImpl from 'component/sideNav/SideNavImpl';
 import TopNavImpl from 'component/topNav/TopNavImpl';
 import ErrorBoundary from 'page/error/ErrorBoundary';
 import ErrorMain from 'page/error/ErrorMain';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './BaseLayout.module.scss';
 
-interface Props extends PropsWithChildren {
+interface Props {
   sideNav?: ReactNode;
   topNav?: ReactNode;
   children: ReactNode;

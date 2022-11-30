@@ -4,6 +4,7 @@ import Icon from 'component/icon/Icon';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import { Delegate as ProfilePhoto } from 'component/profilePhoto/ProfilePhoto';
+import doNothing from 'helper/doNothing';
 import React, { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
 import * as Decorator from 'story/Decorator';
@@ -27,7 +28,7 @@ export const Default = Template.bind({});
 
 const MenuImpl: React.FC<{ side?: 'right' }> = ({ side = undefined }) => {
   const button = (
-    <Button variant="unstyled">
+    <Button variant="unstyled" onClick={doNothing}>
       <ProfilePhoto url="https://avatars.githubusercontent.com/u/1360420" />
       <Icon className={styles.expandIcon} name="expand_more" />
     </Button>
@@ -61,7 +62,7 @@ const MenuImpl: React.FC<{ side?: 'right' }> = ({ side = undefined }) => {
         <MenuItem>
           {
             ({ className }) => (
-              <Button className={className} variant="unstyled">
+              <Button className={className} variant="unstyled" onClick={doNothing}>
                 <Icon name="close" size="small" space="after" />
                 Third
               </Button>

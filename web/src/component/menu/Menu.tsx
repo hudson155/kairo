@@ -1,10 +1,10 @@
 import { Menu as Delegate, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { transitions } from 'style/transitions';
 import styles from './Menu.module.scss';
 
-interface Props extends PropsWithChildren {
+interface Props {
   button: ReactNode;
   side?: 'left' | 'right';
   children: ReactNode;
