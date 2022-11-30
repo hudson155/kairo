@@ -1,12 +1,32 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import doNothing from 'helper/doNothing';
 import { ComponentProps } from 'react';
-import Button from './Button';
+import Button, { Variant } from './ButtonDelegate';
 
-export default {} as ComponentMeta<typeof Button>;
+interface Args {
+  isSubmitting: boolean;
+  variant: Variant;
+}
 
-const Template: Story<ComponentProps<typeof Button>> = () => {
-  return <Button variant="unstyled" onClick={doNothing}>Button text</Button>;
+export default {
+  argTypes: {
+    variant: {
+      options: [`primary`, `unstyled`],
+      control: { type: `select` },
+    },
+  },
+} as ComponentMeta<typeof Button & Args>;
+
+const Template: Story<ComponentProps<typeof Button & Args>> = ({ isSubmitting, variant }) => {
+  return (
+    <Button isSubmitting={isSubmitting} type="button" variant={variant} onClick={doNothing}>
+      Button text
+    </Button>
+  );
 };
 
 export const Default = Template.bind({});
+Default.args = {
+  isSubmitting: false,
+  variant: `primary`,
+};

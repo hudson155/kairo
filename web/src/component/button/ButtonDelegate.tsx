@@ -1,9 +1,15 @@
-import ButtonDelegate, { Variant } from 'component/button/ButtonDelegate';
-import SubmitButton from 'component/button/SubmitButton';
+import classNames from 'classnames';
 import React, { FocusEventHandler, MouseEventHandler, PointerEventHandler, ReactNode } from 'react';
+import styles from './Button.module.scss';
+
+type Type = 'submit' | 'reset' | 'button';
+
+export type Variant = 'primary' | 'unstyled';
 
 interface Props {
   className?: string;
+  isSubmitting?: boolean;
+  type: Type;
   variant: Variant;
   onBlur?: FocusEventHandler<HTMLButtonElement>;
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -13,16 +19,11 @@ interface Props {
   children: ReactNode;
 }
 
-/**
- * This is a semantic button element
- * that should be used for pretty much anything clickable that isn't a link.
- *
- * Don't use it directly. Use [Button] instead.
- */
-
-const Button: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
+const ButtonDelegate: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
   ({
     className = undefined,
+    isSubmitting = false,
+    type,
     variant,
     onBlur = undefined,
     onClick,
@@ -32,11 +33,11 @@ const Button: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
     children,
   }, ref) => {
     return (
-      <ButtonDelegate
+      <button
         ref={ref}
-        className={className}
-        type="button"
-        variant={variant}
+        className={classNames(styles.button, variantClassName(variant), className)}
+        disabled={isSubmitting}
+        type={type}
         onBlur={onBlur}
         onClick={onClick}
         onFocus={onFocus}
@@ -44,9 +45,19 @@ const Button: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
         onMouseLeave={onMouseLeave}
       >
         {children}
-      </ButtonDelegate>
+      </button>
     );
   };
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export default Object.assign(React.forwardRef(Button), { Submit: SubmitButton });
+export default React.forwardRef(ButtonDelegate);
+
+export const variantClassName = (variant: Variant): string | undefined => {
+  switch (variant) {
+  case `unstyled`:
+    return undefined;
+  case `primary`:
+    return styles.primary;
+  default:
+    throw new Error(`Unsupported variant: ${variant}.`);
+  }
+};

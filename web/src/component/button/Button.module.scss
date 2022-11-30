@@ -2,15 +2,20 @@
 
 .button {
   align-items: center;
-  /**
-   * A 2px border-radius was chosen to align the focus state of unstyled buttons with anchor elements.
-   * When styled buttons are introduced, they may have a different border radius,
-   * but unstyled buttons should stay the same.
-   */
   border-radius: var(--borderRadius-normal);
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  position: relative;
+
+  &.primary {
+    background-color: var(--color-buttonPrimary);
+    box-shadow: 0 0 0 var(--borderSize-border) var(--color-border);
+    color: var(--color-fontLight);
+    height: 29.5px;
+    margin: var(--borderSize-border);
+    padding: 6px 12px;
+  }
 
   @include focus.focusable;
 }
