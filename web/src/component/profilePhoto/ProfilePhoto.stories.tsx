@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { Delegate as ProfilePhoto } from './ProfilePhoto';
+import ProfilePhoto from './ProfilePhotoDelegate';
 
 export default {} as ComponentMeta<typeof ProfilePhoto>;
 

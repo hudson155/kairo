@@ -3,7 +3,7 @@ import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
-import { Delegate as ProfilePhoto } from 'component/profilePhoto/ProfilePhoto';
+import ProfilePhoto from 'component/profilePhoto/ProfilePhotoDelegate';
 import doNothing from 'helper/doNothing';
 import React, { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
