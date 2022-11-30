@@ -1,7 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import { ComponentProps } from 'react';
 import CopyButton from './CopyButton';
-import styles from './CopyButton.stories.module.scss';
 
 interface Args {
   copy: 'Success' | 'Failure';
@@ -24,11 +23,7 @@ const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => 
     throw new Error(`Failed to copy.`);
   };
 
-  return (
-    <div className={styles.container}>
-      <CopyButton onCopy={handleCopy} />
-    </div>
-  );
+  return <CopyButton onCopy={handleCopy} />;
 };
 
 export const Default = Template.bind({});
