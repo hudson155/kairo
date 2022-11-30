@@ -35,15 +35,15 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
     try {
       await navigator.clipboard.writeText(onCopy()); // eslint-disable-line compat/compat
       setMessage(COPY_SUCCESS_MESSAGE);
-      setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 3000));
+      setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 1500));
       setMessageClassName(styles.success);
       setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 2 * durationFlash));
     } catch (e) {
       console.error(`Copy failed`, e);
       setMessage(COPY_FAILURE_MESSAGE);
-      setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 5000));
+      setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 3000));
       setMessageClassName(styles.failure);
-      setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 5000));
+      setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 3000));
     } finally {
       clearTimeout(messageTimeout);
       clearTimeout(messageClassNameTimeout);
