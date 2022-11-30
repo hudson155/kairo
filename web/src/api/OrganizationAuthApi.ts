@@ -10,9 +10,11 @@ class OrganizationAuthApi {
   }
 
   async getByHostname(hostname: string): Promise<OrganizationAuthRep | undefined> {
-    const path = `/organization-auths`;
-    const qp = new URLSearchParams({ hostname });
-    return await this.api.request<OrganizationAuthRep>({ method: `GET`, path, qp });
+    return await this.api.request<OrganizationAuthRep>({
+      method: `GET`,
+      path: `/organization-auths`,
+      qp: new URLSearchParams({ hostname }),
+    });
   }
 }
 

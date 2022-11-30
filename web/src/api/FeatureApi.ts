@@ -10,8 +10,10 @@ class FeatureApi {
   }
 
   async getByOrganization(organizationGuid: string): Promise<FeatureRep[]> {
-    const path = `/organizations/${organizationGuid}/features`;
-    return await this.api.request<FeatureRep[]>({ method: `GET`, path });
+    return await this.api.request<FeatureRep[]>({
+      method: `GET`,
+      path: `/organizations/${organizationGuid}/features`,
+    });
   }
 }
 
