@@ -1,5 +1,5 @@
 import Icon from 'component/icon/Icon';
-import React, { MouseEventHandler, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './SideNavEntry.module.scss';
 
@@ -7,7 +7,7 @@ interface Props {
   iconName?: string;
   label: string;
   to: string;
-  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  onClick: () => void;
 }
 
 const SideNavEntry: React.FC<Props> = ({ iconName = undefined, label, onClick = undefined, to }) => {

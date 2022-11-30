@@ -1,10 +1,10 @@
 import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import styles from './SideNavHeader.module.scss';
 
 interface Props {
-  onClose: MouseEventHandler<HTMLButtonElement>;
+  onClose: () => void;
 }
 
 const SideNavHeader: React.FC<Props> = ({ onClose }) => {

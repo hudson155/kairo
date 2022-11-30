@@ -3,6 +3,7 @@ import Button from 'component/button/Button';
 import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
+import doNothing from 'helper/doNothing';
 import React, { ComponentProps, MouseEventHandler, useState } from 'react';
 import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';
@@ -42,8 +43,8 @@ export const Default = Template.bind({});
 const SideNavImpl: React.FC<{ isOpen: boolean, setIsOpen: (isOpen: boolean) => void }> = ({ isOpen, setIsOpen }) => {
   return (
     <SideNav isOpen={isOpen} setIsOpen={setIsOpen}>
-      <SideNavEntry label="First" to="/first" />
-      <SideNavEntry label="Second" to="/second" />
+      <SideNavEntry label="First" to="/first" onClick={doNothing} />
+      <SideNavEntry label="Second" to="/second" onClick={doNothing} />
     </SideNav>
   );
 };
