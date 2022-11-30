@@ -1,5 +1,5 @@
 .button {
-  padding: 6px;
+  padding: 5px; // Low enough to not cause TextInputs to grow when they have a copy button.
   position: relative;
 }
 

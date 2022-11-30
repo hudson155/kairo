@@ -1,0 +1,10 @@
+.container {
+  align-items: flex-start;
+  display: inline-flex;
+  flex-direction: column;
+  row-gap: 1px;
+}
+
+.label {
+  margin-left: 3px;
+}

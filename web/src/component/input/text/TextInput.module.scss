@@ -1,0 +1,25 @@
+@use "src/style/focus";
+
+.container {
+  border-radius: var(--borderRadius-normal);
+  box-shadow: 0 0 0 var(--borderSize-border) var(--color-border);
+  display: inline-flex;
+  margin: var(--borderSize-border);
+  width: 240px;
+
+  @include focus.focusable;
+}
+
+.input {
+  flex-grow: 1;
+  font-weight: var(--fontWeight-light);
+  padding: 6px 12px;
+
+  /**
+   * Inputs with a copy button are a bit smaller,
+   * so we sacrifice a bit of the padding to compensate.
+   */
+  &.copyable {
+    padding-right: 6px;
+  }
+}
