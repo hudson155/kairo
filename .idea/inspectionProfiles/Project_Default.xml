@@ -67,7 +67,7 @@
     <inspection_tool class="ForLoopThatDoesntUseLoopVariableJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="FromClosedRangeMigration" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="FunctionName" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
-    <inspection_tool class="FunctionNamingConventionJS" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="FunctionNamingConventionJS" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="m_regex" value="[a-z][A-Za-z0-9]*" />
       <option name="m_minLength" value="1" />
       <option name="m_maxLength" value="255" />
@@ -124,7 +124,7 @@
     <inspection_tool class="JSCheckFunctionSignatures" enabled="true" level="ERROR" enabled_by_default="true" editorAttributes="ERRORS_ATTRIBUTES">
       <option name="myCheckGuessedTypes" value="true" />
     </inspection_tool>
-    <inspection_tool class="JSClassNamingConvention" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="JSClassNamingConvention" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="m_regex" value="[A-Z][A-Za-z0-9]*" />
       <option name="m_minLength" value="1" />
       <option name="m_maxLength" value="255" />
@@ -143,7 +143,7 @@
     <inspection_tool class="JSMethodCanBeStatic" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
     <inspection_tool class="JSMissingSwitchBranches" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
     <inspection_tool class="JSMissingSwitchDefault" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
-    <inspection_tool class="JSNonASCIINames" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="JSNonASCIINames" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="myAllowOnlyAscii" value="true" />
     </inspection_tool>
     <inspection_tool class="JSNonStrictModeUsed" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -175,7 +175,7 @@
     <inspection_tool class="LabeledStatementJS" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="LiftReturnOrAssignment" enabled="false" level="INFO" enabled_by_default="false" />
     <inspection_tool class="LocalVariableName" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
-    <inspection_tool class="LocalVariableNamingConventionJS" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="LocalVariableNamingConventionJS" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="m_regex" value="[a-z][A-Za-z0-9]*" />
       <option name="m_minLength" value="1" />
       <option name="m_maxLength" value="255" />
@@ -211,7 +211,7 @@
     <inspection_tool class="PackageName" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES">
       <option name="namePattern" value="[a-z][a-zA-Z\d]*(\.[a-z][a-zA-Z\d]*)*" />
     </inspection_tool>
-    <inspection_tool class="ParameterNamingConventionJS" enabled="true" level="WARNING" enabled_by_default="true">
+    <inspection_tool class="ParameterNamingConventionJS" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="m_regex" value="[a-z][A-Za-z0-9]*" />
       <option name="m_minLength" value="1" />
       <option name="m_maxLength" value="255" />
