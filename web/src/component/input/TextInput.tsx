@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import CopyButton from 'component/input/copy/CopyButton';
-import InputLabel from 'component/input/text/InputLabel';
+import InputLabel from 'component/input/label/InputLabel';
 import React, { ChangeEventHandler, FocusEventHandler, useState } from 'react';
 import styles from './TextInput.module.scss';
 

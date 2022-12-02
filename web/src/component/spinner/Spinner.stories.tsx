@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
-import Spinner from 'component/spinner/Spinner';
 import { ComponentProps } from 'react';
+import Spinner from './Spinner';
 
 export default {} as ComponentMeta<typeof Spinner>;
 
