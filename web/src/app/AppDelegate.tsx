@@ -1,3 +1,4 @@
+import ToastContainer from 'component/toast/ToastContainer';
 import ErrorBoundary from 'page/error/ErrorBoundary';
 import ErrorPage from 'page/error/ErrorPage';
 import React from 'react';
@@ -7,13 +8,16 @@ import RootRouter from 'routing/RootRouter';
 
 const AppDelegate: React.FC = () => {
   return (
-    <HelmetProvider>
-      <ErrorBoundary fallback={ErrorPage.fallback}>
-        <BrowserRouter>
-          <RootRouter />
-        </BrowserRouter>
-      </ErrorBoundary>
-    </HelmetProvider>
+    <>
+      <HelmetProvider>
+        <ErrorBoundary fallback={ErrorPage.fallback}>
+          <BrowserRouter>
+            <RootRouter />
+          </BrowserRouter>
+        </ErrorBoundary>
+      </HelmetProvider>
+      <ToastContainer />
+    </>
   );
 };
 

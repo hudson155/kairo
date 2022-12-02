@@ -1,0 +1,15 @@
+.container {
+  padding: 4px;
+  right: 16px;
+  top: calc(48px + var(--borderSize-border) + 16px); // Matches the [TopNav].
+  z-index: var(--zIndex-toast);
+}
+
+.toast {
+  background: var(--color-backgroundInverse);
+  border-radius: var(--borderRadius-normal);
+  color: var(--color-fontInverse);
+  font-family: unset;
+  margin-bottom: 16px;
+  padding: 8px;
+}
