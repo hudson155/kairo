@@ -15,6 +15,14 @@ class OrganizationApi {
       path: `/organizations/${organizationGuid}`,
     });
   }
+
+  async update(organizationGuid: string, updater: OrganizationRep.Updater): Promise<OrganizationRep> {
+    return await this.api.request<OrganizationRep, OrganizationRep.Updater>({
+      method: `PATCH`,
+      path: `/organizations/${organizationGuid}`,
+      body: updater,
+    });
+  }
 }
 
 export const organizationApiState = selector<OrganizationApi>({

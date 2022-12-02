@@ -472,6 +472,9 @@ overrides:
     rules:
       spaced-comment: off
       unicorn/filename-case: off
+  - files: 'src/rep/**/*Rep.ts'
+    rules:
+      '@typescript-eslint/no-namespace': off
   - files: '*.stories.tsx'
     rules:
       react/jsx-curly-brace-presence:
