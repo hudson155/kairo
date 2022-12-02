@@ -9,18 +9,18 @@ interface Args {
 export default {
   argTypes: {
     copy: {
-      options: [`Success`, `Failure`],
-      control: { type: `radio` },
+      options: ['Success', 'Failure'],
+      control: { type: 'radio' },
     },
   },
 } as ComponentMeta<typeof CopyButton & Args>;
 
 const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => {
   const handleCopy = (): string => {
-    if (copy === `Success`) {
-      return `Copied content.`;
+    if (copy === 'Success') {
+      return 'Copied content.';
     }
-    throw new Error(`Failed to copy.`);
+    throw new Error('Failed to copy.');
   };
 
   return <CopyButton onCopy={handleCopy} />;
@@ -28,5 +28,5 @@ const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => 
 
 export const Default = Template.bind({});
 Default.args = {
-  copy: `Success`,
+  copy: 'Success',
 };

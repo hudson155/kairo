@@ -11,8 +11,8 @@ interface Args {
 export default {
   argTypes: {
     variant: {
-      options: [`primary`, `unstyled`],
-      control: { type: `select` },
+      options: ['primary', 'unstyled'],
+      control: { type: 'select' },
     },
   },
 } as ComponentMeta<typeof Button & Args>;
@@ -28,5 +28,5 @@ const Template: Story<ComponentProps<typeof Button & Args>> = ({ isSubmitting, v
 export const Default = Template.bind({});
 Default.args = {
   isSubmitting: false,
-  variant: `primary`,
+  variant: 'primary',
 };

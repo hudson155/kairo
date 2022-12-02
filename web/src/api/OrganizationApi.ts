@@ -11,14 +11,14 @@ class OrganizationApi {
 
   async get(organizationGuid: string): Promise<OrganizationRep | undefined> {
     return await this.api.request<OrganizationRep | undefined>({
-      method: `GET`,
+      method: 'GET',
       path: `/organizations/${organizationGuid}`,
     });
   }
 
   async update(organizationGuid: string, updater: OrganizationRep.Updater): Promise<OrganizationRep> {
     return await this.api.request<OrganizationRep, OrganizationRep.Updater>({
-      method: `PATCH`,
+      method: 'PATCH',
       path: `/organizations/${organizationGuid}`,
       body: updater,
     });
@@ -26,7 +26,7 @@ class OrganizationApi {
 }
 
 export const organizationApiState = selector<OrganizationApi>({
-  key: `api/organization`,
+  key: 'api/organization',
   get: ({ get }) => {
     const api = get(apiState({ authenticated: true }));
     return new OrganizationApi(api);

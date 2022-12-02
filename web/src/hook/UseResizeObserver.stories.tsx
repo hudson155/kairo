@@ -13,5 +13,5 @@ export const Default = Template.bind({});
 
 const Impl: React.FC = () => {
   const isSmall = useResizeObserver((size) => size < 992);
-  return <Paragraph>{isSmall ? `Small` : `Large`}</Paragraph>;
+  return <Paragraph>{isSmall ? 'Small' : 'Large'}</Paragraph>;
 };

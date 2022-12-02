@@ -8,7 +8,7 @@ export default {
 } as ComponentMeta<typeof ErrorMain>;
 
 const Template: Story<ComponentProps<typeof ErrorMain>> = () => {
-  const error = useRef(new Error(`Something went wrong!`));
+  const error = useRef(new Error('Something went wrong!'));
   return <ErrorMain error={error.current} />;
 };
 

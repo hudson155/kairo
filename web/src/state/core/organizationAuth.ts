@@ -4,11 +4,11 @@ import OrganizationAuthRep from 'rep/OrganizationAuthRep';
 import spring from 'state/util/spring';
 
 const organizationAuthState = spring<OrganizationAuthRep>({
-  key: `core/organizationAuth`,
+  key: 'core/organizationAuth',
   get: async ({ get }) => {
     const authApi = get(organizationAuthApiState);
     const auth = await authApi.getByHostname(getRootHost());
-    if (!auth) throw new Error(`No auth found.`);
+    if (!auth) throw new Error('No auth found.');
     return auth;
   },
 });

@@ -8,7 +8,7 @@ export default {} as ComponentMeta<typeof Paper>;
 const Template: Story<ComponentProps<typeof Paper>> = () => {
   return (
     <Paper>
-      <Heading2>{`Some heading`}</Heading2>
+      <Heading2>{'Some heading'}</Heading2>
     </Paper>
   );
 };

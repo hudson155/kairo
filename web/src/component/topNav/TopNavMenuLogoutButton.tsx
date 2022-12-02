@@ -17,7 +17,7 @@ const TopNavMenuLogoutButton: React.ForwardRefRenderFunction<HTMLButtonElement, 
     return (
       <Button ref={ref} className={className} variant="unstyled" onClick={() => void auth0.logout()}>
         <Icon name="logout" size="small" space="after" />
-        {`Log out`}
+        {'Log out'}
       </Button>
     );
   };

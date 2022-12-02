@@ -404,7 +404,7 @@ rules:
   '@typescript-eslint/object-curly-spacing': [warn, always]
   '@typescript-eslint/quotes':
     - warn
-    - backtick
+    - single
     - avoidEscape: false
       allowTemplateLiterals: false
   '@typescript-eslint/return-await': [warn, always]

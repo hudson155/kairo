@@ -47,7 +47,7 @@ const SideNavCollapseButton: React.FC = () => {
 
   return (
     <Button variant="unstyled" onClick={toggleSideNav}>
-      <Icon name={sideNavIsOpen ? `menu_open` : `menu`} />
+      <Icon name={sideNavIsOpen ? 'menu_open' : 'menu'} />
     </Button>
   );
 };

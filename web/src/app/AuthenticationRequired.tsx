@@ -21,8 +21,8 @@ const AuthenticationRequired: React.FC<Props> = ({ children }) => {
           returnTo: getHref(),
         },
         authorizationParams: {
-          redirectMethod: `replace`,
-          screen_hint: `login`, // eslint-disable-line @typescript-eslint/naming-convention
+          redirectMethod: 'replace',
+          screen_hint: 'login', // eslint-disable-line @typescript-eslint/naming-convention
         },
       });
     }

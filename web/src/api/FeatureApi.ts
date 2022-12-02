@@ -11,14 +11,14 @@ class FeatureApi {
 
   async getByOrganization(organizationGuid: string): Promise<FeatureRep[]> {
     return await this.api.request<FeatureRep[]>({
-      method: `GET`,
+      method: 'GET',
       path: `/organizations/${organizationGuid}/features`,
     });
   }
 }
 
 export const featureApiState = selector<FeatureApi>({
-  key: `api/feature`,
+  key: 'api/feature',
   get: ({ get }) => {
     const api = get(apiState({ authenticated: true }));
     return new FeatureApi(api);

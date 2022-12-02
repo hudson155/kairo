@@ -8,9 +8,9 @@ import { durationFlash } from 'style/theme';
 import { transitions } from 'style/transitions';
 import styles from './CopyButton.module.scss';
 
-const COPY_MESSAGE = `Copy`;
-const COPY_SUCCESS_MESSAGE = `Copied!`;
-const COPY_FAILURE_MESSAGE = `Something went wrong!`;
+const COPY_MESSAGE = 'Copy';
+const COPY_SUCCESS_MESSAGE = 'Copied!';
+const COPY_FAILURE_MESSAGE = 'Something went wrong!';
 
 interface Props {
   onCopy: () => string;
@@ -39,7 +39,7 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
       setMessageClassName(styles.success);
       setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 2 * durationFlash));
     } catch (e) {
-      console.error(`Copy failed`, e);
+      console.error('Copy failed', e);
       setMessage(COPY_FAILURE_MESSAGE);
       setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 3000));
       setMessageClassName(styles.failure);
@@ -64,7 +64,7 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
       <Transition
         as={Fragment}
         show={Boolean(isFocused || isHovered)}
-        {...transitions(`fadeIn`, `moveUpIn`, `fadeOut`, `moveDownOut`)}
+        {...transitions('fadeIn', 'moveUpIn', 'fadeOut', 'moveDownOut')}
       >
         <div className={classNames(styles.tooltipContainer, messageClassName)}>
           <Text className={styles.tooltip} size="small">

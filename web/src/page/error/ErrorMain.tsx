@@ -17,12 +17,12 @@ const ErrorMain: React.FC<Props> = ({ error }) => {
 
   return (
     <HeaderSection title="Error">
-      <Paragraph>{`Something went wrong while loading the page.`}</Paragraph>
+      <Paragraph>{'Something went wrong while loading the page.'}</Paragraph>
       <SectionSpacer />
       {
         showDebugMessages
           ? <CodeBlock>{error.stack}</CodeBlock>
-          : <Paragraph>{`Our team has been notified.`}</Paragraph>
+          : <Paragraph>{'Our team has been notified.'}</Paragraph>
       }
     </HeaderSection>
   );

@@ -21,7 +21,7 @@ const Template: Story<ComponentProps<typeof SideNav>> = () => {
       {/* TODO: Use a styled button, once they exist. */}
       {
         sideNavIsCollapsible
-          ? <Button variant="unstyled" onClick={toggleSideNav}>{isOpen ? `Close` : `Open`}</Button>
+          ? <Button variant="unstyled" onClick={toggleSideNav}>{isOpen ? 'Close' : 'Open'}</Button>
           : null
       }
       <SideNav isOpen={isOpen} setIsOpen={setIsOpen}>

@@ -53,9 +53,9 @@ export default React.forwardRef(ButtonDelegate);
 
 export const variantClassName = (variant: Variant): string | undefined => {
   switch (variant) {
-  case `unstyled`:
+  case 'unstyled':
     return undefined;
-  case `primary`:
+  case 'primary':
     return styles.primary;
   default:
     throw new Error(`Unsupported variant: ${variant}.`);

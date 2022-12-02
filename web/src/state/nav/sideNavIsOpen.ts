@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 const sideNavIsOpenState = atom<boolean>({
-  key: `nav/sideNavIsOpen`,
+  key: 'nav/sideNavIsOpen',
   default: false,
 });
 

@@ -45,9 +45,9 @@ export const sizeClassName = (size: TextSize | undefined): string | undefined =>
   switch (size) {
   case undefined:
     return undefined;
-  case `small`:
+  case 'small':
     return styles.sizeSmall;
-  case `normal`:
+  case 'normal':
     return styles.sizeNormal;
   default:
     throw new Error(`Unsupported font size: ${size}.`);
@@ -58,9 +58,9 @@ export const weightClassName = (weight: TextWeight | undefined): string | undefi
   switch (weight) {
   case undefined:
     return undefined;
-  case `normal`:
+  case 'normal':
     return styles.weightNormal;
-  case `bold`:
+  case 'bold':
     return styles.weightBold;
   default:
     throw new Error(`Unsupported font weight: ${weight}.`);

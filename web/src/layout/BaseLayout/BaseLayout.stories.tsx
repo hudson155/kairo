@@ -14,7 +14,7 @@ const initializeState = ({ set }: MutableSnapshot): void => {
   set(organizationAuth, {
     organizationGuid: crypto.randomUUID(),
     guid: crypto.randomUUID(),
-    auth0OrganizationId: `org_abcdefghijklmnop`,
+    auth0OrganizationId: 'org_abcdefghijklmnop',
   });
 };
 
@@ -33,7 +33,7 @@ const Template: Story<ComponentProps<typeof BaseLayout>> = () => {
   return (
     <BaseLayout sideNav={<SideNavImpl isOpen={sideNavIsOpen} setIsOpen={setSideNavIsOpen} />} topNav={<TopNavImpl />}>
       {/* TODO: Use a styled button, once they exist. */}
-      <Button variant="unstyled" onClick={toggleSideNav}>{sideNavIsOpen ? `Close` : `Open`}</Button>
+      <Button variant="unstyled" onClick={toggleSideNav}>{sideNavIsOpen ? 'Close' : 'Open'}</Button>
     </BaseLayout>
   );
 };

@@ -11,7 +11,7 @@ const PlaceholderFeature: React.FC<Props> = ({ feature }) => {
   return (
     <HeaderSection title={feature.name}>
       <Paragraph>
-        {`This feature is just a placeholder. It's useful for development, but shouldn't be used in production.`}
+        {'This feature is just a placeholder. It\'s useful for development, but shouldn\'t be used in production.'}
       </Paragraph>
     </HeaderSection>
   );

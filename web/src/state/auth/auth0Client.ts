@@ -13,7 +13,7 @@ interface AppState {
 }
 
 const auth0ClientState = selector<Auth0Client>({
-  key: `auth/auth0Client`,
+  key: 'auth/auth0Client',
   get: async ({ get }) => {
     const { auth0OrganizationId: organizationId } = get(organizationAuthState);
     const auth0Client = await createClient(organizationId);
@@ -54,7 +54,7 @@ const handleRedirectCallback = async (auth0Client: Auth0Client): Promise<void> =
   try {
     ({ appState } = await auth0Client.handleRedirectCallback<AppState>());
   } catch (e) {
-    console.error(`Auth0 redirect callback failed.`, e);
+    console.error('Auth0 redirect callback failed.', e);
   }
   replaceState(appState?.returnTo);
 };

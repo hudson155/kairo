@@ -6,7 +6,7 @@ import { useRecoilValueLoadable } from 'recoil';
 import organizationGuidState from 'state/core/organizationGuid';
 import styles from './Footer.module.scss';
 
-const COPYRIGHT_TEXT = `© Jeff Hudson. All rights reserved.`;
+const COPYRIGHT_TEXT = '© Jeff Hudson. All rights reserved.';
 
 /**
  * The footer should show on most pages.
@@ -35,10 +35,10 @@ const DebugInfo: React.FC = () => {
   return (
     <>
       <Paragraph size="small">
-        {`Git SHA: `}<Code selectAll={true}>{gitSha}</Code>
+        {'Git SHA: '}<Code selectAll={true}>{gitSha}</Code>
       </Paragraph>
       <Paragraph size="small">
-        {`Organization GUID: `}<Code selectAll={true}>{organizationGuid.valueMaybe() ?? `?`}</Code>
+        {'Organization GUID: '}<Code selectAll={true}>{organizationGuid.valueMaybe() ?? '?'}</Code>
       </Paragraph>
     </>
   );

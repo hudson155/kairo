@@ -36,11 +36,11 @@ type Props = SmallProps | NonSmallProps;
 const Icon: React.FC<Props> = ({
   className = undefined,
   name,
-  size = `medium`,
-  space = `none`,
+  size = 'medium',
+  space = 'none',
 }) => {
   return (
-    <span className={classNames(`material-icons`, styles[size], styles[space], className)}>
+    <span className={classNames('material-icons', styles[size], styles[space], className)}>
       {name}
     </span>
   );

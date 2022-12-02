@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  document.querySelector(`#root`)!,
+  document.querySelector('#root')!,
 );
 root.render(
   <React.StrictMode>

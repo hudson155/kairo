@@ -12,7 +12,7 @@ const TopNavMenuSettingsButton: React.ForwardRefRenderFunction<HTMLAnchorElement
     return (
       <Link ref={ref} className={className} to={SETTINGS_PAGE_PATH}>
         <Icon name="settings" size="small" space="after" />
-        {`Organization settings`}
+        {'Organization settings'}
       </Link>
     );
   };
