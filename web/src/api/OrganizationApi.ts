@@ -9,8 +9,8 @@ class OrganizationApi {
     this.api = api;
   }
 
-  async get(organizationGuid: string): Promise<OrganizationRep | undefined> {
-    return await this.api.request<OrganizationRep | undefined>({
+  async get(organizationGuid: string): Promise<OrganizationRep | null> {
+    return await this.api.request<OrganizationRep | null>({
       method: 'GET',
       path: `/organizations/${organizationGuid}`,
     });

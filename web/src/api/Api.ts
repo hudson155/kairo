@@ -27,7 +27,7 @@ export default class Api {
     this.getJwt = getJwt;
   }
 
-  async request<Res, Req = undefined>(request: Request<Req>): Promise<Res> {
+  async request<Res, Req = null>(request: Request<Req>): Promise<Res> {
     const response = await this.axios.request({
       url: request.path,
       method: request.method,
@@ -36,7 +36,7 @@ export default class Api {
       data: request.body as Req,
     });
     // Update [validateStatus] above if we need to handle more statuses here.
-    if (response.status === 404) return undefined as Res;
+    if (response.status === 404) return null as Res;
     return response.data as Res;
   }
 

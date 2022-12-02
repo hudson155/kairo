@@ -31,3 +31,12 @@ Other than the rules defined here, please follow the
 
 - **Not null:**
   Prefer the term "not null" to "non-null".
+
+- **Null vs. undefined:**
+  JavaScript has 2 keywords that indicate the absence of a value.
+  It can sometimes be unclear which one to use.
+  In general, we should **prefer `undefined`**.
+  However, `null` has 2 valid use cases:
+  `null` should be used for React nodes, and in API interaction.
+  Specifically, `null` should be used for 404 responses
+  and to explicitly remove fields in PATCH requests.
