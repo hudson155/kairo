@@ -15,10 +15,6 @@ private val logger: KLogger = KotlinLogging.logger {}
 public class ConfigStringDeserializer : StdNodeBasedDeserializer<String>(
   String::class.java,
 ) {
-  internal data class Result<out T : Any>(val value: T?) {
-    fun <R : Any> map(transform: (value: T?) -> R?): Result<R> = Result(transform(value))
-  }
-
   override fun convert(root: JsonNode?, ctxt: DeserializationContext): String? {
     logger.info { "Deserializing config string..." }
     root ?: return null
@@ -27,33 +23,33 @@ public class ConfigStringDeserializer : StdNodeBasedDeserializer<String>(
   }
 
   public companion object {
-    internal fun from(json: JsonNode): Result<String>? =
+    internal fun from(json: JsonNode): ConfigResult<String>? =
       when (json) {
-        is NullNode -> Result(null)
-        is TextNode -> fromPlaintext(json)
+        is NullNode -> ConfigResult(null)
+        is TextNode -> fromRaw(json)
         is ObjectNode -> fromObject(json)
         else -> null
       }
 
-    private fun fromObject(json: ObjectNode): Result<String>? =
+    private fun fromObject(json: ObjectNode): ConfigResult<String>? =
       when (json["type"].textValue()) {
         "EnvironmentVariable" -> fromEnvironmentVariable(json)
         else -> null
       }
 
-    private fun fromPlaintext(json: TextNode): Result<String> {
-      logger.info { "Config string is from plaintext." }
+    private fun fromRaw(json: TextNode): ConfigResult<String> {
+      logger.info { "Config string is from raw." }
       val value = json.textValue()
-      logger.info { "Config string is from plaintext. Value is $value." }
-      return Result(value)
+      logger.info { "Config string is from raw. Value is $value." }
+      return ConfigResult(value)
     }
 
-    private fun fromEnvironmentVariable(json: ObjectNode): Result<String> {
+    private fun fromEnvironmentVariable(json: ObjectNode): ConfigResult<String> {
       val name = requireNotNull(json["name"]?.textValue())
       logger.info { "Config string is from environment variable. Accessing variable with name $name." }
       val value = EnvironmentVariableSource[name]
       logger.info { "Retrieved config string from environment variable. Not logging due to possible sensitivity." }
-      return Result(value)
+      return ConfigResult(value)
     }
   }
 }

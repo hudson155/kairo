@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser
@@ -15,11 +16,15 @@ import com.fasterxml.jackson.module.kotlin.kotlinModule
 public object ObjectMapperFactory {
   public enum class Format { Json, Yaml }
 
-  public fun builder(format: Format): Builder = Builder(factory(format))
+  public fun builder(format: Format, block: Builder.() -> Unit = {}): Builder =
+    Builder(factory(format), block)
 
   public class Builder internal constructor(
     factory: JsonFactory,
+    block: Builder.() -> Unit,
   ) : JsonMapper.Builder(JsonMapper(factory)) {
+    public val module: SimpleModule = SimpleModule()
+
     init {
       addModules(
         kotlinModule {
@@ -40,6 +45,10 @@ public object ObjectMapperFactory {
       configure(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY, true)
       configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true)
       configure(DeserializationFeature.ACCEPT_FLOAT_AS_INT, false)
+
+      block()
+
+      addModule(module)
     }
   }
 }

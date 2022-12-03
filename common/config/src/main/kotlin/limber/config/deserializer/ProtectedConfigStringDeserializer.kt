@@ -22,7 +22,7 @@ public class ProtectedConfigStringDeserializer : StdNodeBasedDeserializer<Protec
   }
 
   public companion object {
-    internal fun from(json: JsonNode): ConfigStringDeserializer.Result<ProtectedString>? {
+    internal fun from(json: JsonNode): ConfigResult<ProtectedString>? {
       when (json) {
         is ObjectNode -> fromObject(json)?.let { return@from it }
       }
@@ -30,27 +30,27 @@ public class ProtectedConfigStringDeserializer : StdNodeBasedDeserializer<Protec
       return ConfigStringDeserializer.from(json)?.map { value -> value?.let { ProtectedString(it) } }
     }
 
-    private fun fromObject(json: ObjectNode): ConfigStringDeserializer.Result<ProtectedString>? =
+    private fun fromObject(json: ObjectNode): ConfigResult<ProtectedString>? =
       when (json["type"].textValue()) {
         "GcpSecret" -> fromGcpSecret(json)
         "Command" -> fromCommand(json)
         else -> null
       }
 
-    private fun fromGcpSecret(json: ObjectNode): ConfigStringDeserializer.Result<ProtectedString> {
+    private fun fromGcpSecret(json: ObjectNode): ConfigResult<ProtectedString> {
       val id = requireNotNull(json["id"]?.textValue())
       logger.info { "Config string is from GCP secret. Accessing secret with ID $id." }
       val value = GcpSecretSource[id]
       logger.info { "Retrieved config string from GCP secret. Not logging due to sensitivity." }
-      return ConfigStringDeserializer.Result(ProtectedString(value))
+      return ConfigResult(ProtectedString(value))
     }
 
-    private fun fromCommand(json: ObjectNode): ConfigStringDeserializer.Result<ProtectedString> {
+    private fun fromCommand(json: ObjectNode): ConfigResult<ProtectedString> {
       val command = requireNotNull(json["command"]?.textValue())
       logger.info { "Config string is from command. Running command \"$command\"." }
       val value = CommandSource[command]
       logger.info { "Retrieved config string from command. Not logging due to possible sensitivity." }
-      return ConfigStringDeserializer.Result(ProtectedString(value))
+      return ConfigResult(ProtectedString(value))
     }
   }
 }

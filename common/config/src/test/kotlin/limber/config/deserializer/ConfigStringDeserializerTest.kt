@@ -1,21 +1,20 @@
 package limber.config.deserializer
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.convertValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import limber.config.addConfigDeserializers
 import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
 
 internal class ConfigStringDeserializerTest {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json) {
+    module.addConfigDeserializers()
+  }.build()
 
-  data class Config(
-    @JsonDeserialize(using = ConfigStringDeserializer::class)
-    val someValue: String?,
-  )
+  data class Config(val someValue: String?)
 
   init {
     CommandSource.withOverride({ " " }) {}
@@ -72,7 +71,7 @@ internal class ConfigStringDeserializerTest {
     val map = mapOf(
       "someValue" to mapOf(
         "type" to "GcpSecret",
-        "name" to "TEST_ENV_VAR",
+        "id" to "projects/123/secrets/my-secret",
       ),
     )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
@@ -83,7 +82,7 @@ internal class ConfigStringDeserializerTest {
     val map = mapOf(
       "someValue" to mapOf(
         "type" to "Command",
-        "name" to "echo \"val from cmd\"",
+        "command" to "echo \"val from cmd\"",
       ),
     )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }

@@ -1,22 +1,21 @@
 package limber.config.deserializer
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.convertValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
+import limber.config.addConfigDeserializers
 import limber.serialization.ObjectMapperFactory
 import limber.type.ProtectedString
 import org.junit.jupiter.api.Test
 
 internal class ProtectedConfigStringDeserializerTest {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json) {
+    module.addConfigDeserializers()
+  }.build()
 
-  data class Config(
-    @JsonDeserialize(using = ProtectedConfigStringDeserializer::class)
-    val someValue: ProtectedString?,
-  )
+  data class Config(val someValue: ProtectedString?)
 
   init {
     CommandSource.withOverride({ " " }) {}

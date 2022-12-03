@@ -2,20 +2,26 @@ package limber.config
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
+import limber.config.deserializer.ConfigStringDeserializer
+import limber.config.deserializer.ProtectedConfigStringDeserializer
 import limber.serialization.ObjectMapperFactory
+import limber.type.ProtectedString
 import kotlin.reflect.KClass
 
 /**
  * Loads configs from YAML files.
  */
 public object ConfigLoader {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Yaml).build()
+  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Yaml) {
+    module.addConfigDeserializers()
+  }.build()
 
   public inline fun <reified C : Config> load(configName: String): C =
     load(configName, C::class)
@@ -53,4 +59,9 @@ public object ConfigLoader {
     }
     return extends
   }
+}
+
+internal fun SimpleModule.addConfigDeserializers() {
+  addDeserializer(ProtectedString::class.java, ProtectedConfigStringDeserializer())
+  addDeserializer(String::class.java, ConfigStringDeserializer())
 }
