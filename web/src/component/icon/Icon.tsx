@@ -2,7 +2,9 @@ import classNames from 'classnames';
 import React from 'react';
 import styles from './Icon.module.scss';
 
-export type Size = 'small' | 'medium' | 'large' | 'extraLarge';
+export type Size = 'small' | 'medium' | 'large' | 'extra-large';
+
+export type Space = 'none' | 'before' | 'after' | 'both';
 
 interface BaseProps {
   className?: string;
@@ -15,7 +17,7 @@ interface BaseProps {
 
   size?: Size;
 
-  space?: 'none' | 'before' | 'after' | 'both';
+  space?: Space;
 }
 
 interface SmallProps extends BaseProps {
@@ -40,10 +42,40 @@ const Icon: React.FC<Props> = ({
   space = 'none',
 }) => {
   return (
-    <span className={classNames('material-icons', styles[size], styles[space], className)}>
+    <span className={classNames('material-icons', sizeClassName(size), spaceClassName(space), className)}>
       {name}
     </span>
   );
 };
 
 export default Icon;
+
+export const sizeClassName = (size: Size): string => {
+  switch (size) {
+  case 'small':
+    return styles.small;
+  case 'medium':
+    return styles.medium;
+  case 'large':
+    return styles.large;
+  case 'extra-large':
+    return styles.extraLarge;
+  default:
+    throw new Error(`Unsupported size: ${size}.`);
+  }
+};
+
+export const spaceClassName = (space: Space): string[] => {
+  switch (space) {
+  case 'none':
+    return [];
+  case 'before':
+    return [styles.before];
+  case 'after':
+    return [styles.after];
+  case 'both':
+    return [styles.before, styles.after];
+  default:
+    throw new Error(`Unsupported space: ${space}.`);
+  }
+};

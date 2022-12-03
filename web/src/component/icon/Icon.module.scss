@@ -6,11 +6,11 @@
 .small {
   font-size: 18px;
 
-  &.before, &.both {
+  &.before {
     margin-left: 4px;
   }
 
-  &.after, &.both {
+  &.after {
     margin-right: 4px;
   }
 }

@@ -12,7 +12,7 @@ const Template: Story<ComponentProps<typeof Icon>> = () => {
       <Icons size="small" />
       <Icons />
       <Icons size="large" />
-      <Icons size="extraLarge" />
+      <Icons size="extra-large" />
     </>
   );
 };

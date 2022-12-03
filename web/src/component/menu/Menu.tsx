@@ -4,9 +4,11 @@ import React, { Fragment, ReactNode } from 'react';
 import { transitions } from 'style/transitions';
 import styles from './Menu.module.scss';
 
+type Side = 'left' | 'right';
+
 interface Props {
   button: ReactNode;
-  side?: 'left' | 'right';
+  side?: Side;
   children: ReactNode;
 }
 
@@ -19,10 +21,23 @@ const Menu: React.FC<Props> = ({ button, side = 'left', children }) => {
     <Delegate as="div" className={styles.menu}>
       <Delegate.Button as={Fragment}>{button}</Delegate.Button>
       <Transition as={Fragment} {...transitions('fadeIn', 'moveDownIn', 'fadeOut', 'moveUpOut')}>
-        <Delegate.Items as="div" className={classNames(styles.container, styles[side])}>{children}</Delegate.Items>
+        <Delegate.Items as="div" className={classNames(styles.container, sideClassName(side))}>
+          {children}
+        </Delegate.Items>
       </Transition>
     </Delegate>
   );
 };
 
 export default Menu;
+
+export const sideClassName = (side: Side): string => {
+  switch (side) {
+  case 'left':
+    return styles.left;
+  case 'right':
+    return styles.right;
+  default:
+    throw new Error(`Unsupported side: ${side}.`);
+  }
+};
