@@ -3,13 +3,13 @@ import { ComponentProps } from 'react';
 import CopyButton from './CopyButton';
 
 interface Args {
-  copy: 'Success' | 'Failure';
+  copy: 'Success' | 'NothingToCopy' | 'Failure';
 }
 
 export default {
   argTypes: {
     copy: {
-      options: ['Success', 'Failure'],
+      options: ['Success', 'NothingToCopy', 'Failure'],
       control: { type: 'radio' },
     },
   },
@@ -19,6 +19,9 @@ const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => 
   const handleCopy = (): string => {
     if (copy === 'Success') {
       return 'Copied content.';
+    }
+    if (copy === 'NothingToCopy') {
+      return '';
     }
     throw new Error('Failed to copy.');
   };

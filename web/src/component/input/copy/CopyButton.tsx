@@ -9,8 +9,9 @@ import { transitions } from 'style/transitions';
 import styles from './CopyButton.module.scss';
 
 const COPY_MESSAGE = 'Copy';
-const COPY_SUCCESS_MESSAGE = 'Copied!';
-const COPY_FAILURE_MESSAGE = 'Something went wrong!';
+const NOTHING_TO_COPY_MESSAGE = 'Nothing to copy';
+const COPY_SUCCESS_MESSAGE = 'Copied';
+const COPY_FAILURE_MESSAGE = 'Something went wrong';
 
 interface Props {
   onCopy: () => string;
@@ -33,7 +34,15 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
 
   const handleCopy: MouseEventHandler<HTMLButtonElement> = () => void (async () => {
     try {
-      await navigator.clipboard.writeText(onCopy()); // eslint-disable-line compat/compat
+      const data = onCopy();
+      if (!data) {
+        setMessage(NOTHING_TO_COPY_MESSAGE);
+        setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 3000));
+        setMessageClassName(styles.failure);
+        setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 2 * durationFlash));
+        return;
+      }
+      await navigator.clipboard.writeText(data); // eslint-disable-line compat/compat
       setMessage(COPY_SUCCESS_MESSAGE);
       setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 1500));
       setMessageClassName(styles.success);
