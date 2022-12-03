@@ -8,6 +8,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule
  */
 public object StringTrimModule : SimpleModule() {
   init {
-    addDeserializer(String::class.java, LimberStringDeserializer(TrimWhitespace.Type.TrimBoth))
+    addDeserializer(String::class.javaObjectType, LimberStringDeserializer(TrimWhitespace.Type.TrimBoth))
   }
 }

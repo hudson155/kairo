@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
+import limber.config.deserializer.ConfigIntegerDeserializer
 import limber.config.deserializer.ConfigStringDeserializer
 import limber.config.deserializer.ProtectedConfigStringDeserializer
 import limber.serialization.ObjectMapperFactory
@@ -62,6 +63,7 @@ public object ConfigLoader {
 }
 
 internal fun SimpleModule.addConfigDeserializers() {
-  addDeserializer(ProtectedString::class.java, ProtectedConfigStringDeserializer())
-  addDeserializer(String::class.java, ConfigStringDeserializer())
+  addDeserializer(Int::class.javaObjectType, ConfigIntegerDeserializer())
+  addDeserializer(ProtectedString::class.javaObjectType, ProtectedConfigStringDeserializer())
+  addDeserializer(String::class.javaObjectType, ConfigStringDeserializer())
 }
