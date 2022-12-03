@@ -232,8 +232,6 @@ style:
     active: true
   CollapsibleIfStatements:
     active: true
-  DataClassContainsFunctions:
-    active: true
   DataClassShouldBeImmutable:
     active: true
   EqualsOnSignatureLine:

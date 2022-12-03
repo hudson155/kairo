@@ -32,9 +32,7 @@ This library supports the following sources:
 - **Environment variable:**
   The value is fetched from environment variables.
 - **GCP secret:**
-  The value is fetched from GCP Secret Manager
-  using a secret ID provided in an environment variable
-  (this source relies on the environment variable source).
+  The value is fetched from GCP Secret Manager.
 - **Command:**
   Runs a shell command to get the value.
   _There may be unknown security concerns with this._

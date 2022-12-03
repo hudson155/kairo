@@ -1,55 +1,59 @@
 package limber.config.deserializer
 
-import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer
-import limber.config.ConfigString
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.deser.std.StdNodeBasedDeserializer
+import com.fasterxml.jackson.databind.node.NullNode
+import com.fasterxml.jackson.databind.node.ObjectNode
+import com.fasterxml.jackson.databind.node.TextNode
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.reflect.KClass
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public class ConfigStringDeserializer : StdDeserializer<String>(String::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
+@Suppress("UseIfInsteadOfWhen")
+public class ConfigStringDeserializer : StdNodeBasedDeserializer<String>(
+  String::class.java,
+) {
+  internal data class Result<out T : Any>(val value: T?) {
+    fun <R : Any> map(transform: (value: T?) -> R?): Result<R> = Result(transform(value))
+  }
+
+  override fun convert(root: JsonNode?, ctxt: DeserializationContext): String? {
     logger.info { "Deserializing config string..." }
-    val configString = p.readValueAs(ConfigString::class.java) ?: return null
-    return when (configString.type) {
-      ConfigString.Type.Plaintext -> fromPlaintext(configString)
-      ConfigString.Type.EnvironmentVariable -> fromEnvironmentVariable(configString)
-      ConfigString.Type.GcpSecret, ConfigString.Type.Command -> mustBeProtected(configString::class)
-    }
+    root ?: return null
+    val result = from(root) ?: error("Could not deserialize config string.")
+    return result.value
   }
 
   public companion object {
-    internal fun fromPlaintext(configString: ConfigString): String? {
+    internal fun from(json: JsonNode): Result<String>? =
+      when (json) {
+        is NullNode -> Result(null)
+        is TextNode -> fromPlaintext(json)
+        is ObjectNode -> fromObject(json)
+        else -> null
+      }
+
+    private fun fromObject(json: ObjectNode): Result<String>? =
+      when (json["type"].textValue()) {
+        "EnvironmentVariable" -> fromEnvironmentVariable(json)
+        else -> null
+      }
+
+    private fun fromPlaintext(json: TextNode): Result<String> {
       logger.info { "Config string is from plaintext." }
-      val value = configString.value
-      if (value != null) {
-        logger.info { "Config string value is $value." }
-        return value
-      }
-      logger.info { "Config string value was not provided. Using null." }
-      return null
+      val value = json.textValue()
+      logger.info { "Config string is from plaintext. Value is $value." }
+      return Result(value)
     }
 
-    internal fun fromEnvironmentVariable(configString: ConfigString): String? {
-      requireNotNull(configString.value)
-      logger.info {
-        "Config string is from environment variable." +
-          " Accessing environment variable with name ${configString.value}."
-      }
-      val value = EnvironmentVariableSource[configString.value]
-      if (value != null) {
-        logger.info { "Retrieved config string value from environment variable. Value is $value." }
-        return value
-      }
-      logger.info { "Environment variable was not set. Using null." }
-      return null
+    private fun fromEnvironmentVariable(json: ObjectNode): Result<String> {
+      val name = requireNotNull(json["name"]?.textValue())
+      logger.info { "Config string is from environment variable. Accessing variable with name $name." }
+      val value = EnvironmentVariableSource[name]
+      logger.info { "Retrieved config string from environment variable. Not logging due to possible sensitivity." }
+      return Result(value)
     }
-
-    @Suppress("NullableToStringCall")
-    private fun mustBeProtected(kClass: KClass<out ConfigString>): Nothing =
-      error("Config strings with source ${kClass.simpleName} must be protected.")
   }
 }

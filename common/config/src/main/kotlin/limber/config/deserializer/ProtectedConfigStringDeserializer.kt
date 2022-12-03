@@ -1,54 +1,56 @@
 package limber.config.deserializer
 
-import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer
-import limber.config.ConfigString
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.deser.std.StdNodeBasedDeserializer
+import com.fasterxml.jackson.databind.node.ObjectNode
 import limber.type.ProtectedString
 import mu.KLogger
 import mu.KotlinLogging
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public class ProtectedConfigStringDeserializer : StdDeserializer<ProtectedString>(ProtectedString::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ProtectedString? {
-    logger.info { "Deserializing config string..." }
-    val configString = p.readValueAs(ConfigString::class.java) ?: return null
-    return when (configString.type) {
-      ConfigString.Type.Plaintext -> ConfigStringDeserializer.fromPlaintext(configString)
-        ?.let { ProtectedString(it) }
-      ConfigString.Type.EnvironmentVariable -> ConfigStringDeserializer.fromEnvironmentVariable(configString)
-        ?.let { ProtectedString(it) }
-      ConfigString.Type.GcpSecret -> fromGcpSecret(configString)
-      ConfigString.Type.Command -> fromCommand(configString)
-    }
+@Suppress("UseIfInsteadOfWhen")
+public class ProtectedConfigStringDeserializer : StdNodeBasedDeserializer<ProtectedString>(
+  ProtectedString::class.java,
+) {
+  override fun convert(root: JsonNode?, ctxt: DeserializationContext): ProtectedString? {
+    logger.info { "Deserializing protected config string..." }
+    root ?: return null
+    val result = from(root) ?: error("Could not deserialize protected config string.")
+    return result.value
   }
 
   public companion object {
-    private fun fromGcpSecret(configString: ConfigString): ProtectedString? {
-      requireNotNull(configString.value)
-      logger.info {
-        "Config string is from GCP secret." +
-          " Accessing environment variable with name ${configString.value}."
+    internal fun from(json: JsonNode): ConfigStringDeserializer.Result<ProtectedString>? {
+      when (json) {
+        is ObjectNode -> fromObject(json)?.let { return@from it }
       }
-      val secretId = EnvironmentVariableSource[configString.value]
-        ?: error("Environment variable was not set.")
-      logger.info { "Accessing GCP secret with ID $secretId." }
-      val value = GcpSecretSource[secretId]
-      if (value != null) {
-        logger.info { "Retrieved config string from GCP secret. Not logging due to sensitivity." }
-        return ProtectedString(value)
-      }
-      logger.info { "GCP secret was not set. Using null." }
-      return null
+      logger.debug { "Falling back to ConfigStringDeserializer." }
+      return ConfigStringDeserializer.from(json)?.map { value -> value?.let { ProtectedString(it) } }
     }
 
-    private fun fromCommand(configString: ConfigString): ProtectedString {
-      requireNotNull(configString.value)
-      logger.info { "Config string is from command. Running command \"${configString.value}\"." }
-      val value = CommandSource[configString.value]
+    private fun fromObject(json: ObjectNode): ConfigStringDeserializer.Result<ProtectedString>? =
+      when (json["type"].textValue()) {
+        "GcpSecret" -> fromGcpSecret(json)
+        "Command" -> fromCommand(json)
+        else -> null
+      }
+
+    private fun fromGcpSecret(json: ObjectNode): ConfigStringDeserializer.Result<ProtectedString> {
+      val id = requireNotNull(json["id"]?.textValue())
+      logger.info { "Config string is from GCP secret. Accessing secret with ID $id." }
+      val value = GcpSecretSource[id]
+      logger.info { "Retrieved config string from GCP secret. Not logging due to sensitivity." }
+      return ConfigStringDeserializer.Result(ProtectedString(value))
+    }
+
+    private fun fromCommand(json: ObjectNode): ConfigStringDeserializer.Result<ProtectedString> {
+      val command = requireNotNull(json["command"]?.textValue())
+      logger.info { "Config string is from command. Running command \"$command\"." }
+      val value = CommandSource[command]
       logger.info { "Retrieved config string from command. Not logging due to possible sensitivity." }
-      return ProtectedString(value)
+      return ConfigStringDeserializer.Result(ProtectedString(value))
     }
   }
 }

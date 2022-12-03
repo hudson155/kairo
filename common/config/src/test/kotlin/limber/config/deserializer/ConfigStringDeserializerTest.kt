@@ -24,29 +24,20 @@ internal class ConfigStringDeserializerTest {
   }
 
   @Test
-  fun `used incorrectly (with raw string)`() {
-    val map = mapOf("someValue" to "the value")
-    shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
-  }
-
-  @Test
   fun `plaintext - value is set`() {
-    val map = mapOf(
-      "someValue" to mapOf(
-        "type" to "Plaintext",
-        "value" to "the value",
-      ),
-    )
+    val map = mapOf("someValue" to "the value")
     objectMapper.convertValue<Config>(map).someValue.shouldBe("the value")
   }
 
   @Test
+  fun `plaintext - value is null`() {
+    val map = mapOf("someValue" to null)
+    objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
+  }
+
+  @Test
   fun `plaintext - value not set`() {
-    val map = mapOf(
-      "someValue" to mapOf(
-        "type" to "Plaintext",
-      ),
-    )
+    val map = emptyMap<String, String>()
     objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
   }
 
@@ -56,7 +47,7 @@ internal class ConfigStringDeserializerTest {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "EnvironmentVariable",
-          "value" to "TEST_ENV_VAR",
+          "name" to "TEST_ENV_VAR",
         ),
       )
       objectMapper.convertValue<Config>(map).someValue.shouldBe("val from env")
@@ -69,7 +60,7 @@ internal class ConfigStringDeserializerTest {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "EnvironmentVariable",
-          "value" to "TEST_ENV_VAR",
+          "name" to "TEST_ENV_VAR",
         ),
       )
       objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
@@ -81,7 +72,7 @@ internal class ConfigStringDeserializerTest {
     val map = mapOf(
       "someValue" to mapOf(
         "type" to "GcpSecret",
-        "value" to "TEST_ENV_VAR",
+        "name" to "TEST_ENV_VAR",
       ),
     )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
@@ -92,7 +83,7 @@ internal class ConfigStringDeserializerTest {
     val map = mapOf(
       "someValue" to mapOf(
         "type" to "Command",
-        "value" to "echo \"val from cmd\"",
+        "name" to "echo \"val from cmd\"",
       ),
     )
     shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }

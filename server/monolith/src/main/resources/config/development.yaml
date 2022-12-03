@@ -35,9 +35,7 @@ sql:
   value:
     jdbcUrl:
       type: Replace
-      value:
-        type: Plaintext
-        value: jdbc:postgresql://localhost/limber
+      value: jdbc:postgresql://localhost/limber
     username:
       type: Remove
     password:

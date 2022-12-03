@@ -10,19 +10,17 @@ sql:
   value:
     jdbcUrl:
       type: Replace
-      value:
-        type: Plaintext
-        value: jdbc:postgresql://localhost/limber_test
+      value: jdbc:postgresql://localhost/limber_test
     username:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_TEST_SQL_USERNAME # Used by CI.
+        name: LIMBER_TEST_SQL_USERNAME # Used by CI.
     password:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_TEST_SQL_PASSWORD # Used by CI.
+        name: LIMBER_TEST_SQL_PASSWORD # Used by CI.
     migrations:
       type: Merge
       value:

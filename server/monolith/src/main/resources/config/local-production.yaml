@@ -7,17 +7,17 @@ sql:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_SQL_JDBC_URL # This must be set in the environment for the config to work.
+        name: LIMBER_SQL_JDBC_URL # This must be set in the environment for the config to work.
     username:
       type: Replace
       value:
         type: EnvironmentVariable
-        value: LIMBER_SQL_USERNAME # This must be set in the environment for the config to work.
+        name: LIMBER_SQL_USERNAME # This must be set in the environment for the config to work.
     password:
       type: Replace
       value:
         type: Command
-        value: gcloud auth print-access-token
+        command: gcloud auth print-access-token
     migrations:
       type: Merge
       value:
