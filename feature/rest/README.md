@@ -13,12 +13,14 @@ This goes in the interface module of a Feature.
 
 ```kotlin
 public object CelebrityApi {
-  public object List : RestEndpoint() {
+  public object List : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/celebrities"
   }
 
-  public data class Get(val celebrityGuid: UUID) : RestEndpoint() {
+  public data class Get(
+    val celebrityGuid: UUID,
+  ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/celebrities/$celebrityGuid"
   }

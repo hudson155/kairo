@@ -22,6 +22,6 @@ public class SetOrganizationAuth @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    return authService.set(endpoint.organizationGuid, endpoint.body)
+    return authService.set(endpoint.organizationGuid, getBody(endpoint))
   }
 }

@@ -22,6 +22,6 @@ public class UpdateOrganization @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    return organizationService.update(endpoint.organizationGuid, endpoint.body)
+    return organizationService.update(endpoint.organizationGuid, getBody(endpoint))
   }
 }

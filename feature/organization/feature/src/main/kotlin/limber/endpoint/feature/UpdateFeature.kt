@@ -22,6 +22,6 @@ public class UpdateFeature @Inject internal constructor(
       onFail = { throw FeatureDoesNotExist() },
     )
 
-    return featureService.update(endpoint.organizationGuid, endpoint.featureGuid, endpoint.body)
+    return featureService.update(endpoint.organizationGuid, endpoint.featureGuid, getBody(endpoint))
   }
 }

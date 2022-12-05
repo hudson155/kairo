@@ -11,13 +11,16 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class RestEndpointTemplateBuilderTest {
-  internal data class Get(val celebrityGuid: UUID, val eventGuid: UUID) : RestEndpoint() {
+  internal data class Get(
+    val celebrityGuid: UUID,
+    val eventGuid: UUID,
+  ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/celebrities/$celebrityGuid"
     override val qp: List<QueryParam> = listOf(::eventGuid)
   }
 
-  internal object GetAll : RestEndpoint() {
+  internal object GetAll : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/celebrities"
   }

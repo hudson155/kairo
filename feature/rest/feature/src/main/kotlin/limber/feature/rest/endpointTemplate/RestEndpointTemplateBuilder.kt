@@ -17,7 +17,7 @@ import kotlin.reflect.jvm.jvmErasure
  * The implementations differ for singleton objects and for data classes,
  * but they do follow similar patterns.
  */
-internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
+internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint<*>> {
   internal abstract val argReplacements: Map<String, String>
 
   internal abstract val templateInstance: E
@@ -38,7 +38,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
    * The singleton object implementation is almost trivial (at least, comparatively).
    * Due to the singleton nature, the [KClass.objectInstance] will be defined and can be used.
    */
-  internal class ObjectInstance<E : RestEndpoint>(kClass: KClass<E>) : RestEndpointTemplateBuilder<E>() {
+  internal class ObjectInstance<out E : RestEndpoint<*>>(kClass: KClass<E>) : RestEndpointTemplateBuilder<E>() {
     override val argReplacements: Map<String, String> = emptyMap()
 
     override val templateInstance = checkNotNull(kClass.objectInstance)
@@ -53,11 +53,11 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
    * It generates random argument values and uses them to construct an instance of [RestEndpoint].
    * The resulting path is then manipulated; the randomly generated values are replaced by their argument names.
    */
-  internal class DataClass<out E : RestEndpoint>(kClass: KClass<E>) : RestEndpointTemplateBuilder<E>() {
+  internal class DataClass<out E : RestEndpoint<*>>(kClass: KClass<E>) : RestEndpointTemplateBuilder<E>() {
     private val constructor: KFunction<E> = checkNotNull(kClass.primaryConstructor)
     private val parameters: List<Parameter> = Parameter.from(constructor)
 
-    private val args: Map<Parameter, Any>
+    private val args: Map<Parameter, Any?>
     override val argReplacements: Map<String, String>
 
     override val templateInstance: E
@@ -69,7 +69,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
       this.templateInstance = constructor.callBy(args.entries.associate { Pair(it.key.delegate, it.value) })
     }
 
-    private fun generateArgsAndReplacements(): Pair<Map<Parameter, Any>, Map<String, String>> {
+    private fun generateArgsAndReplacements(): Pair<Map<Parameter, Any?>, Map<String, String>> {
       val argReplacements = mutableMapOf<String, String>()
       val args = parameters.associateWith { parameter ->
         val value = parameter.random()
@@ -105,7 +105,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint> {
   }
 
   internal companion object {
-    fun <E : RestEndpoint> from(kClass: KClass<E>): RestEndpointTemplateBuilder<E> =
+    fun <E : RestEndpoint<*>> from(kClass: KClass<E>): RestEndpointTemplateBuilder<E> =
       when {
         kClass.objectInstance !== null -> ObjectInstance(kClass)
         kClass.isData -> DataClass(kClass)

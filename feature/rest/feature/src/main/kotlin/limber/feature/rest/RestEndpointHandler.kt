@@ -21,7 +21,7 @@ import mu.KLogger
 import mu.KotlinLogging
 import kotlin.reflect.KClass
 
-public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: KClass<E>) {
+public abstract class RestEndpointHandler<E : RestEndpoint<*>, R : Any?>(endpoint: KClass<E>) {
   private val logger: KLogger = KotlinLogging.logger {}
 
   @Inject
@@ -68,6 +68,8 @@ public abstract class RestEndpointHandler<E : RestEndpoint, R : Any?>(endpoint: 
     validator.validate(endpoint).let { if (it.isNotEmpty()) throw ConstraintViolationException(it) }
     return handler(endpoint)
   }
+
+  protected fun <T : Any> getBody(endpoint: RestEndpoint<T>): T = checkNotNull(endpoint.body)
 
   private fun mdc(call: ApplicationCall, parameters: Map<Parameter, Any?>, endpoint: E): Map<String, Any> {
     // These are included by default in every REST call.

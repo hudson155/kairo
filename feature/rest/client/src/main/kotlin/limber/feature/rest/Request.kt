@@ -20,10 +20,10 @@ import io.ktor.http.formUrlEncode
 import io.ktor.util.reflect.TypeInfo
 import io.ktor.util.reflect.typeInfo
 
-public suspend inline fun <reified T> HttpClient.request(endpoint: RestEndpoint): T =
+public suspend inline fun <reified T> HttpClient.request(endpoint: RestEndpoint<*>): T =
   request(endpoint, typeInfo<T>())
 
-public suspend fun <T> HttpClient.request(endpoint: RestEndpoint, typeInfo: TypeInfo): T {
+public suspend fun <T> HttpClient.request(endpoint: RestEndpoint<*>, typeInfo: TypeInfo): T {
   val httpResponse = try {
     request {
       expectSuccess = true
@@ -45,7 +45,7 @@ public suspend fun <T> HttpClient.request(endpoint: RestEndpoint, typeInfo: Type
   return httpResponse.body(typeInfo)
 }
 
-private fun HttpClient.href(endpoint: RestEndpoint): String {
+private fun HttpClient.href(endpoint: RestEndpoint<*>): String {
   val conversionService = plugin(DataConversion)
 
   var result = endpoint.path

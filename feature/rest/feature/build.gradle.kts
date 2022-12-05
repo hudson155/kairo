@@ -1,5 +1,6 @@
 import limber.gradle.Dependencies
 import limber.gradle.plugin.main
+import limber.gradle.plugin.test
 
 plugins {
   id("limber-jvm")
@@ -33,8 +34,11 @@ main {
     api(Dependencies.Auth.auth0JavaJwt)
     implementation(Dependencies.Auth.auth0JwksRsa)
     api(Dependencies.Ktor.Server.authJwt)
+  }
+}
 
-    // MockK is used in production code for endpoint template generation.
+test {
+  dependencies {
     implementation(Dependencies.Testing.mockK)
   }
 }

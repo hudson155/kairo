@@ -22,6 +22,6 @@ public class CreateFeature @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    return featureService.create(endpoint.organizationGuid, endpoint.body)
+    return featureService.create(endpoint.organizationGuid, getBody(endpoint))
   }
 }

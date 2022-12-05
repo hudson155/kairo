@@ -1,6 +1,5 @@
 package limber.feature.rest.endpointTemplate
 
-import io.mockk.mockkClass
 import limber.feature.rest.RestEndpoint
 import java.util.UUID
 import kotlin.reflect.KClass
@@ -15,10 +14,10 @@ import kotlin.reflect.full.valueParameters
 public sealed class Parameter(public val delegate: KParameter) {
   public val name: String = checkNotNull(delegate.name)
 
-  internal abstract val random: () -> Any
+  internal abstract val random: () -> Any?
 
   public class Body(delegate: KParameter) : Parameter(delegate) {
-    override val random = { mockkClass(delegate.type.classifier as KClass<*>) }
+    override val random = { null }
   }
 
   public class Path(
@@ -30,11 +29,11 @@ public sealed class Parameter(public val delegate: KParameter) {
     /**
      * Generates a list of [Parameter]s for a [RestEndpoint], given its class reference.
      */
-    fun from(constructor: KFunction<RestEndpoint>): List<Parameter> =
+    fun from(constructor: KFunction<RestEndpoint<*>>): List<Parameter> =
       constructor.valueParameters.map { parameter ->
         val kClass = parameter.type.classifier as KClass<*>
 
-        if (parameter.name == RestEndpoint::body.name) {
+        if (parameter.name == RestEndpoint<*>::body.name) {
           return@map Body(parameter)
         }
 

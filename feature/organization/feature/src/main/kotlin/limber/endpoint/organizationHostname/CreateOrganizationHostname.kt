@@ -22,6 +22,6 @@ public class CreateOrganizationHostname @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    return hostnameService.create(endpoint.organizationGuid, endpoint.body)
+    return hostnameService.create(endpoint.organizationGuid, getBody(endpoint))
   }
 }
