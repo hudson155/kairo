@@ -8,6 +8,8 @@
       <option name="ENFORCE_QUOTES_ON_FORMAT" value="true" />
     </CssCodeStyleSettings>
     <HCL-Terraform>
+      <option name="PROPERTY_ALIGNMENT" value="0" />
+      <option name="PROPERTY_LINE_COMMENTER_CHARACTER" value="0" />
       <option name="OBJECT_WRAPPING" value="5" />
       <option name="ARRAY_WRAPPING" value="5" />
     </HCL-Terraform>
@@ -132,11 +134,19 @@
         </rules>
       </arrangement>
     </codeStyleSettings>
-    <codeStyleSettings language="HCL-Terraform">
-      <option name="KEEP_LINE_BREAKS" value="false" />
+    <codeStyleSettings language="HCL">
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+      <option name="SPACE_WITHIN_BRACES" value="true" />
       <indentOptions>
-        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
+        <option name="TAB_SIZE" value="2" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="HCL-Terraform">
+      <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+      <option name="SPACE_WITHIN_BRACES" value="true" />
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />
       </indentOptions>
     </codeStyleSettings>
