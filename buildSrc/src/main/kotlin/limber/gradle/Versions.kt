@@ -16,6 +16,9 @@ object Versions {
   // https://github.com/flyway/flyway/releases.
   const val flyway = "9.8.1"
 
+  // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases.
+  const val gcpPostgresSocketFactory = "1.7.2"
+
   // https://github.com/googleapis/java-secretmanager/releases.
   const val gcpSecretManager = "2.3.10"
 

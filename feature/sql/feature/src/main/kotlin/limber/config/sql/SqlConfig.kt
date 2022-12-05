@@ -6,6 +6,7 @@ public data class SqlConfig(
   val jdbcUrl: String,
   val username: String? = null,
   val password: ProtectedString? = null,
+  val properties: Map<String, String> = emptyMap(),
 
   val migrations: Migrations,
 

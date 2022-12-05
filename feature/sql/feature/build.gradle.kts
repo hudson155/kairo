@@ -10,6 +10,7 @@ main {
     api(project(":common:config"))
     api(project(":common:feature"))
 
+    implementation(Dependencies.Gcp.postgresSocketFactory)
     implementation(Dependencies.Sql.flyway)
     implementation(Dependencies.Sql.hikari)
     api(Dependencies.Sql.Jdbi3.kotlin)

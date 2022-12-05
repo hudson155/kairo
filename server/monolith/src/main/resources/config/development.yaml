@@ -40,6 +40,8 @@ sql:
       type: Remove
     password:
       type: Remove
+    properties:
+      type: Remove
     migrations:
       type: Merge
       value:

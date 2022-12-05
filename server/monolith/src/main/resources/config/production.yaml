@@ -43,6 +43,12 @@ sql:
   password:
     type: GcpSecret
     name: LIMBER_SQL_PASSWORD_SECRET_ID
+  properties:
+    socketFactory: com.google.cloud.sql.postgres.SocketFactory
+    cloudSqlInstance:
+      type: EnvironmentVariable
+      name: LIMBER_SQL_INSTANCE_NAME
+      ipTypes: PUBLIC
   migrations:
     run: true
     cleanOnValidationError: false

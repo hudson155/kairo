@@ -34,6 +34,9 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
         jdbcUrl = config.jdbcUrl
         config.username?.let { username = it }
         config.password?.let { password = it.value }
+        config.properties.forEach { (propertyName, value) ->
+          addDataSourceProperty(propertyName, value)
+        }
         connectionTimeout = config.connectionTimeoutMs
         minimumIdle = config.minimumIdle
         maximumPoolSize = config.maximumPoolSize
