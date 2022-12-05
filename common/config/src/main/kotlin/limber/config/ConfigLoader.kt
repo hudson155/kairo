@@ -64,6 +64,7 @@ public object ConfigLoader {
 
 internal fun SimpleModule.addConfigDeserializers() {
   addDeserializer(Int::class.javaObjectType, ConfigIntegerDeserializer())
+  addDeserializer(Int::class.javaPrimitiveType, ConfigIntegerDeserializer())
   addDeserializer(ProtectedString::class.javaObjectType, ProtectedConfigStringDeserializer())
   addDeserializer(String::class.javaObjectType, ConfigStringDeserializer())
 }
