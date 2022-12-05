@@ -1,4 +1,0 @@
-evaluatePreconfiguredExpr('scannerdetection-stable', [
-  'owasp-crs-v030001-id913101-scannerdetection',
-  'owasp-crs-v030001-id913102-scannerdetection'
-])

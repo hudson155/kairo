@@ -1,6 +1,0 @@
-evaluatePreconfiguredExpr('xss-stable', [
-  'owasp-crs-v030001-id941150-xss',
-  'owasp-crs-v030001-id941320-xss',
-  'owasp-crs-v030001-id941330-xss',
-  'owasp-crs-v030001-id941340-xss'
-])
