@@ -1,6 +1,7 @@
 package limber.server
 
 import limber.config.MonolithServerConfig
+import limber.feature.googleAppEngine.GoogleAppEngineFeature
 import limber.feature.healthCheck.HealthCheckFeature
 import limber.feature.organization.OrganizationFeature
 import limber.feature.rest.RestFeature
@@ -10,6 +11,7 @@ import limber.service.healthCheck.HealthCheckServiceImpl
 
 internal class MonolithServer(config: MonolithServerConfig) : Server<MonolithServerConfig>(config) {
   override val features = setOf(
+    GoogleAppEngineFeature(config.restClient.baseUrls.self),
     HealthCheckFeature(HealthCheckServiceImpl::class, config.restClient.baseUrls.self),
     OrganizationFeature(RestImplementation.Local),
     RestFeature(config.rest),

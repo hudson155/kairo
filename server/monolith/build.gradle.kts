@@ -10,6 +10,7 @@ main {
   dependencies {
     implementation(project(":common:server"))
 
+    implementation(project(":feature:google-app-engine:feature"))
     implementation(project(":feature:health-check:feature"))
     implementation(project(":feature:organization:feature"))
     implementation(project(":feature:rest:feature"))
