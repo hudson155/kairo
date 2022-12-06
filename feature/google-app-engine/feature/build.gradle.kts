@@ -7,14 +7,16 @@ plugins {
 
 main {
   dependencies {
-    api(project(":feature:health-check:interface"))
-    // The health check REST Feature uses the HTTP client implementation by default.
+    api(project(":feature:google-app-engine:interface"))
+    // The Google App Engine REST Feature uses the HTTP client implementation by default.
     // Most REST Features use the Local HTTP client implementation by default.
     // This is why the client module is exposed in the API.
-    api(project(":feature:health-check:client"))
+    api(project(":feature:google-app-engine:client"))
 
     api(project(":common:feature"))
     implementation(project(":feature:rest:feature"))
+
+    implementation(project(":feature:health-check:feature"))
   }
 }
 

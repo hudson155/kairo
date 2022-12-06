@@ -11,6 +11,7 @@ main {
     api(project(":feature:organization:interface"))
     implementation(project(":feature:organization:client"))
 
+    api(project(":common:feature"))
     implementation(project(":feature:rest:feature"))
 
     implementation(project(":feature:sql:feature"))

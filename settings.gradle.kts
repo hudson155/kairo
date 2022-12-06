@@ -34,6 +34,10 @@ include(":db:limber")
 // Feature.
 // -----------------------------------------------------------------------------
 
+include(":feature:google-app-engine:client")
+include(":feature:google-app-engine:feature")
+include(":feature:google-app-engine:interface")
+
 include(":feature:health-check:client")
 include(":feature:health-check:feature")
 include(":feature:health-check:interface")
