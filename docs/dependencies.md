@@ -18,10 +18,6 @@ then follow the instructions in [.detekt/config.yml](/.detekt/config.yml)
 to update to the new rule set.
 Ensure `./gradlew check` runs Detekt and passes.
 
-## GCP Cloud SQL proxy
-
-- Deployment files in the [Kubernetes Server directory](/infrastructure/kubernetes/config/server).
-
 ## GitHub Actions
 
 - Files in the [GitHub Actions directory](/.github/actions).
@@ -41,7 +37,7 @@ Don't commit the `.bat` file (delete it).
 
 - The [Java setup GitHub Action](/.github/actions/set-up-java/action.yaml).
 - [KotlinFeature](/buildSrc/src/main/kotlin/limber/gradle/plugin/feature/KotlinFeature.kt).
-- The [Dockerfile](/server/Dockerfile).
+- The `app.yaml` files for each Server.
 - IntelliJ's [misc.xml file](/.idea/misc.xml).
 
 References to Java 8 or Java 1.8 should not be upgraded,
@@ -64,12 +60,6 @@ Upgrade major versions one at a time.
 
 - The [buildSrc build file](/buildSrc/build.gradle.kts).
 - IntelliJ's [kotlinc.xml file](/.idea/kotlinc.xml).
-
-## Kubernetes
-
-- GCP.
-
-This should upgrade automatically.
 
 ## Node.js
 

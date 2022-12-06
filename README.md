@@ -65,7 +65,7 @@ potentially with their own UI themes.
 Infrastructure is natively decoupled from Applications.
 A single Server may serve requests for multiple Applications and multiple Features.
 This keeps cost down.
-Autoscaling is managed automatically by Kubernetes.
+Autoscaling is managed automatically by Google App Engine.
 Each Server can scale independently, including Application-specific Servers.
 
 Limber works with multiple datastores.

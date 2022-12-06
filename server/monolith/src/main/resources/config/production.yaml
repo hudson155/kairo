@@ -26,7 +26,7 @@ rest:
 
 restClient:
   baseUrls:
-    self: http://localhost:8080/ # Using K8s DNS would introduce a catch-22 for the readiness check.
+    self: http://localhost:8080/
 
 server:
   lifecycle:
