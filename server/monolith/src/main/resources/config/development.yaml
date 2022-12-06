@@ -6,15 +6,14 @@ rest:
     auth:
       type: Merge
       value:
-        jwtLeeway:
-          type: Replace
-          value: 300 # 5 minutes.
+        jwtLeeway: 300 # 5 minutes.
     parallelization:
       type: Replace
       value:
         connectionGroupSize: 4
         workerGroupSize: 8
         callGroupSize: 16
+    port: 8080
     shutDown:
       type: Replace
       value:
@@ -33,9 +32,7 @@ server:
 sql:
   type: Merge
   value:
-    jdbcUrl:
-      type: Replace
-      value: jdbc:postgresql://localhost/limber
+    jdbcUrl: jdbc:postgresql://localhost/limber
     username:
       type: Remove
     password:

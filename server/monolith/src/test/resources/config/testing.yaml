@@ -8,9 +8,7 @@ rest:
 sql:
   type: Merge
   value:
-    jdbcUrl:
-      type: Replace
-      value: jdbc:postgresql://localhost/limber_test
+    jdbcUrl: jdbc:postgresql://localhost/limber_test
     username:
       type: Replace
       value:
@@ -25,6 +23,4 @@ sql:
       type: Merge
       value:
         locations:
-          type: Replace
-          value:
-            - db/limber/migration/common
+          - db/limber/migration/common
