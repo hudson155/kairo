@@ -16,12 +16,6 @@ internal class ConfigIntDeserializerTest {
 
   data class Config(val someValue: Int?)
 
-  init {
-    CommandSource.withOverride({ " " }) {}
-    EnvironmentVariableSource.withOverride({ " " }) {}
-    GcpSecretSource.withOverride({ " " }) {}
-  }
-
   @Test
   fun `plaintext - value is set`() {
     val map = mapOf("someValue" to 42)
@@ -41,21 +35,8 @@ internal class ConfigIntDeserializerTest {
   }
 
   @Test
-  fun `environment variable - value is set`() {
-    EnvironmentVariableSource.withOverride({ "42" }) {
-      val map = mapOf(
-        "someValue" to mapOf(
-          "type" to "EnvironmentVariable",
-          "name" to "TEST_ENV_VAR",
-        ),
-      )
-      objectMapper.convertValue<Config>(map).someValue.shouldBe(42)
-    }
-  }
-
-  @Test
   fun `environment variable - value not set`() {
-    EnvironmentVariableSource.withOverride({ null }) {
+    EnvironmentVariableSource.withOverrides(emptyMap()) {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "EnvironmentVariable",
@@ -63,6 +44,19 @@ internal class ConfigIntDeserializerTest {
         ),
       )
       objectMapper.convertValue<Config>(map).someValue.shouldBeNull()
+    }
+  }
+
+  @Test
+  fun `environment variable - value set`() {
+    EnvironmentVariableSource.withOverrides(mapOf("TEST_ENV_VAR" to "42")) {
+      val map = mapOf(
+        "someValue" to mapOf(
+          "type" to "EnvironmentVariable",
+          "name" to "TEST_ENV_VAR",
+        ),
+      )
+      objectMapper.convertValue<Config>(map).someValue.shouldBe(42)
     }
   }
 

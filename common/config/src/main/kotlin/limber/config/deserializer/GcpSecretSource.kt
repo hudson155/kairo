@@ -21,8 +21,8 @@ internal object GcpSecretSource {
   operator fun get(name: String): String = delegate(name)
 
   @TestOnly
-  fun withOverride(get: (name: String) -> String, block: () -> Unit) {
-    delegate = get
+  fun withOverrides(overrides: Map<String, String>, block: () -> Unit) {
+    delegate = { requireNotNull(overrides[it]) }
     block()
     delegate = defaultGetter
   }

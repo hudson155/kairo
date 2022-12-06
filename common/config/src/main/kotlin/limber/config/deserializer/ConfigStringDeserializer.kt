@@ -46,9 +46,15 @@ public class ConfigStringDeserializer : StdNodeBasedDeserializer<String>(
 
     private fun fromEnvironmentVariable(json: ObjectNode): ConfigResult<String> {
       val name = requireNotNull(json["name"]?.textValue())
-      logger.info { "Config value is from environment variable. Accessing variable with name $name." }
+      logger.info {
+        "Config value is from environment variable." +
+          " Accessing environment variable with name $name."
+      }
       val value = EnvironmentVariableSource[name]
-      logger.info { "Retrieved config value from environment variable. Not logging due to possible sensitivity." }
+      logger.info {
+        "Retrieved config value from environment variable." +
+          " Not logging due to possible sensitivity."
+      }
       return ConfigResult(value)
     }
   }

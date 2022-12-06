@@ -17,12 +17,6 @@ internal class ProtectedConfigStringDeserializerTest {
 
   data class Config(val someValue: ProtectedString?)
 
-  init {
-    CommandSource.withOverride({ " " }) {}
-    EnvironmentVariableSource.withOverride({ " " }) {}
-    GcpSecretSource.withOverride({ " " }) {}
-  }
-
   @Test
   fun `plaintext - value is set`() {
     val map = mapOf("someValue" to "the value")
@@ -43,7 +37,7 @@ internal class ProtectedConfigStringDeserializerTest {
 
   @Test
   fun `environment variable - value is set`() {
-    EnvironmentVariableSource.withOverride({ "val from env" }) {
+    EnvironmentVariableSource.withOverrides(mapOf("TEST_ENV_VAR" to "val from env")) {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "EnvironmentVariable",
@@ -56,7 +50,7 @@ internal class ProtectedConfigStringDeserializerTest {
 
   @Test
   fun `environment variable - value not set`() {
-    EnvironmentVariableSource.withOverride({ null }) {
+    EnvironmentVariableSource.withOverrides(emptyMap()) {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "EnvironmentVariable",
@@ -68,21 +62,21 @@ internal class ProtectedConfigStringDeserializerTest {
   }
 
   @Test
-  fun `gcp secret - value is set`() {
-    GcpSecretSource.withOverride({ "val from gcp" }) {
+  fun `gcp secret - environment variable not set`() {
+    GcpSecretSource.withOverrides(mapOf("projects/123/secrets/my-secret" to "val from gcp")) {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "GcpSecret",
-          "id" to "projects/123/secrets/my-secret",
+          "id" to "TEST_ENV_VAR",
         ),
       )
-      objectMapper.convertValue<Config>(map).someValue.shouldBe(ProtectedString("val from gcp"))
+      shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
     }
   }
 
   @Test
-  fun `gcp secret - value not set`() {
-    GcpSecretSource.withOverride({ error("message") }) {
+  fun `gcp secret - secret not found`() {
+    EnvironmentVariableSource.withOverrides(mapOf("TEST_ENV_VAR" to "projects/123/secrets/my-secret")) {
       val map = mapOf(
         "someValue" to mapOf(
           "type" to "GcpSecret",
@@ -90,6 +84,21 @@ internal class ProtectedConfigStringDeserializerTest {
         ),
       )
       shouldThrow<IllegalArgumentException> { objectMapper.convertValue<Config>(map) }
+    }
+  }
+
+  @Test
+  fun `gcp secret - secret found`() {
+    EnvironmentVariableSource.withOverrides(mapOf("TEST_ENV_VAR" to "projects/123/secrets/my-secret")) {
+      GcpSecretSource.withOverrides(mapOf("projects/123/secrets/my-secret" to "val from gcp")) {
+        val map = mapOf(
+          "someValue" to mapOf(
+            "type" to "GcpSecret",
+            "name" to "TEST_ENV_VAR",
+          ),
+        )
+        objectMapper.convertValue<Config>(map).someValue.shouldBe(ProtectedString("val from gcp"))
+      }
     }
   }
 
