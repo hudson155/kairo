@@ -18,7 +18,9 @@ rest:
     connectionGroupSize: 16
     workerGroupSize: 32
     callGroupSize: 64
-  port: 8080
+  port:
+    type: EnvironmentVariable
+    name: PORT
   serverName: Limber
   shutDown:
     gracePeriodMillis: 5000 # 5 seconds.
@@ -42,7 +44,7 @@ sql:
     name: LIMBER_SQL_USERNAME
   password:
     type: GcpSecret
-    name: LIMBER_SQL_PASSWORD_SECRET_ID
+    name: LIMBER_SQL_PASSWORD
   properties:
     socketFactory: com.google.cloud.sql.postgres.SocketFactory
     cloudSqlInstance:

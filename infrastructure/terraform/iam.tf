@@ -10,4 +10,60 @@ data "google_iam_policy" "limberapp_io" {
       "user:jeff.hudson@limberapp.io",
     ]
   }
+  binding {
+    role = "roles/editor"
+    members = [
+      "serviceAccount:${google_project.limberapp_io.project_id}@appspot.gserviceaccount.com",
+      "serviceAccount:${google_project.limberapp_io.number}@cloudservices.gserviceaccount.com",
+      "serviceAccount:${google_project.limberapp_io.number}-compute@developer.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/appengine.serviceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@gcp-gae-service.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/cloudbuild.builds.builder"
+    members = [
+      "serviceAccount:${google_project.limberapp_io.number}@cloudbuild.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/cloudbuild.serviceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@gcp-sa-cloudbuild.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/compute.serviceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@compute-system.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/containerregistry.ServiceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@containerregistry.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/firestore.serviceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@gcp-sa-firestore.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/secretmanager.secretAccessor"
+    members = [
+      "serviceAccount:${google_project.limberapp_io.project_id}@appspot.gserviceaccount.com",
+    ]
+  }
+  binding {
+    role = "roles/storage.objectViewer"
+    members = [
+      "serviceAccount:${google_project.limberapp_io.number}@cloudbuild.gserviceaccount.com",
+    ]
+  }
 }
