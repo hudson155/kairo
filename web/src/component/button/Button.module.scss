@@ -11,10 +11,9 @@
 
   &.primary {
     background-color: var(--color-buttonPrimary);
-    box-shadow: 0 0 0 var(--borderSize-border) var(--color-border);
+    border: var(--borderSize-border) solid var(--color-border);
     color: var(--color-fontLight);
-    height: 29.5px;
-    margin: var(--borderSize-border);
+    height: calc(30px + 2 * var(--borderSize-border));
     padding: 6px 12px;
   }
 

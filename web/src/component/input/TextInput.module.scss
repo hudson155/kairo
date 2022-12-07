@@ -1,10 +1,9 @@
 @use "src/style/focus";
 
 .container {
+  border: var(--borderSize-border) solid var(--color-border);
   border-radius: var(--borderRadius-normal);
-  box-shadow: 0 0 0 var(--borderSize-border) var(--color-border);
   display: inline-flex;
-  margin: var(--borderSize-border);
   width: 240px;
 
   @include focus.focusable;
@@ -13,6 +12,7 @@
 .input {
   flex-grow: 1;
   font-weight: var(--fontWeight-light);
+  height: 30px;
   padding: 6px 12px;
 
   /**

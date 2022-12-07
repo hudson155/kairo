@@ -6,5 +6,5 @@
 }
 
 .label {
-  margin-left: 3px;
+  padding: var(--borderSize-border) 3px; // The horizontal padding matches [InputErrorMessage].
 }
