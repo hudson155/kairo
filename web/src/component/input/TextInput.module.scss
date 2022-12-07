@@ -22,4 +22,8 @@
   &.copyable {
     padding-right: 6px;
   }
+
+  &::placeholder {
+    color: var(--color-fontFaded);
+  }
 }

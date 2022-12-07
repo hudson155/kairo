@@ -35,6 +35,7 @@ $duration-transition: 150;
   --color-failure: hsl(0deg, 40%, 50%);
   --color-focus: hsl(210deg, 80%, 60%);
   --color-font: hsl(240deg, 10%, 17%);
+  --color-fontFaded: hsl(240deg, 10%, 56%);
   --color-fontInverse: hsl(240deg, 10%, 93%);
   --color-fontLight: hsl(240deg, 10%, 93%);
   --color-indicator: hsl(210deg, 80%, 60%);
@@ -84,6 +85,7 @@ $duration-transition: 150;
     --color-border: hsl(240deg, 10%, 23%);
     --color-buttonPrimary: hsl(215deg, 50%, 50%);
     --color-font: hsl(240deg, 10%, 93%);
+    --color-fontFaded: hsl(240deg, 10%, 58%);
     --color-fontInverse: hsl(240deg, 10%, 17%);
     --color-overlay: hsla(240deg, 10%, 5%, 80%);
   }

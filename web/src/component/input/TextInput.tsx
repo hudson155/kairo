@@ -7,6 +7,7 @@ import styles from './TextInput.module.scss';
 interface Props {
   copyButton?: boolean;
   label: string;
+  placeholder: string | undefined;
   value: string;
   onChange: (newValue: string) => void;
 }
@@ -15,6 +16,7 @@ const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
   ({
     copyButton = false,
     label,
+    placeholder,
     value,
     onChange,
   }, ref) => {
@@ -34,6 +36,7 @@ const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
           <input
             ref={ref}
             className={classNames(styles.input, { [styles.copyable]: copyButton })}
+            placeholder={placeholder}
             value={value}
             onBlur={handleBlur}
             onChange={handleChange}

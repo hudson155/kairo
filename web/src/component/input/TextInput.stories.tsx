@@ -11,7 +11,15 @@ export default {} as ComponentMeta<typeof TextInput & Args>;
 const Template: Story<ComponentProps<typeof TextInput & Args>> = ({ copyButton }) => {
   const [value, setValue] = useState('Limber');
 
-  return <TextInput copyButton={copyButton} label="Name" value={value} onChange={setValue} />;
+  return (
+    <TextInput
+      copyButton={copyButton}
+      label="Name"
+      placeholder="Acme Co."
+      value={value}
+      onChange={setValue}
+    />
+  );
 };
 
 export const Default = Template.bind({});
