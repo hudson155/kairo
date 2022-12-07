@@ -1,3 +1,5 @@
+import HttpError from 'api/HttpError';
+import ValidationErrorsError, { ValidationError } from 'api/ValidationErrorsError';
 import axios, { Axios } from 'axios';
 import env from 'env';
 import { selectorFamily } from 'recoil';
@@ -18,7 +20,7 @@ export default class Api {
   private readonly axios: Axios = axios.create({
     baseURL: env.limber.apiBaseUrl, // eslint-disable-line @typescript-eslint/naming-convention
     timeout: 10_000,
-    validateStatus: (status) => (status >= 200 && status < 300) || status === 404,
+    validateStatus: undefined, // Never throws [AxiosError].
   });
 
   private readonly getJwt: (() => Promise<string | undefined>);
@@ -27,6 +29,7 @@ export default class Api {
     this.getJwt = getJwt;
   }
 
+  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
   async request<Res, Req = null>(request: Request<Req>): Promise<Res> {
     const response = await this.axios.request({
       url: request.path,
@@ -35,12 +38,22 @@ export default class Api {
       params: request.qp,
       data: request.body as Req,
     });
-    // Update [validateStatus] above if we need to handle more statuses here.
-    if (response.status === 404) return null as Res;
-    return response.data as Res;
+    if (response.status >= 200 && response.status <= 299) {
+      return response.data as Res;
+    }
+    // The body parameters accessed here correspond with errors from Limber's backend.
+    if (response.status === 404 && response.data.message === 'Not found.') {
+      return null as Res;
+    }
+    if (response.status === 400 && response.data.message === 'Validation errors.') {
+      throw new ValidationErrorsError(response.data.errors as ValidationError[]);
+    }
+    throw new HttpError(response);
   }
 
-  /* eslint-disable */
+  /* eslint-enable */
+
+  /* eslint-disable @typescript-eslint/dot-notation, @typescript-eslint/naming-convention, quote-props */
   private async headers(request: Request<unknown>): Promise<Record<string, string>> {
     const jwt = await this.getJwt();
     const result: Record<string, string> = {
