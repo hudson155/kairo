@@ -1,5 +1,4 @@
 import ButtonDelegate from 'component/button/ButtonDelegate';
-import ButtonSubmittingOverlay from 'component/button/ButtonSubmittingOverlay';
 import doNothing from 'helper/doNothing';
 import React, { ReactNode } from 'react';
 
@@ -21,7 +20,6 @@ const SubmitButton: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
         onClick={doNothing}
       >
         {children}
-        {isSubmitting ? <ButtonSubmittingOverlay /> : null}
       </ButtonDelegate>
     );
   };

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import ButtonSubmittingOverlay from 'component/button/ButtonSubmittingOverlay';
 import React, { FocusEventHandler, MouseEventHandler, PointerEventHandler, ReactNode } from 'react';
 import styles from './Button.module.scss';
 
@@ -45,6 +46,7 @@ const ButtonDelegate: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
         onMouseLeave={onMouseLeave}
       >
         {children}
+        {isSubmitting ? <ButtonSubmittingOverlay /> : null}
       </button>
     );
   };
