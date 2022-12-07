@@ -18,11 +18,7 @@ public enum class OrganizationPermission(@JsonValue internal val value: String) 
   FeatureDelete("feature:delete"),
   OrganizationRead("organization:read"),
   OrganizationUpdate("organization:update"),
-  OrganizationAuthSet("organizationAuth:set"),
-  OrganizationAuthDelete("organizationAuth:delete"),
   OrganizationHostnameRead("organizationHostname:read"),
-  OrganizationHostnameCreate("organizationHostname:create"),
-  OrganizationHostnameDelete("organizationHostname:delete"),
   ;
 
   /**

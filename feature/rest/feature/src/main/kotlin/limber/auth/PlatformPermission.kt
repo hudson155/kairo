@@ -14,6 +14,10 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 public enum class PlatformPermission(@JsonValue internal val value: String) {
   OrganizationCreate("organization:create"),
   OrganizationDelete("organization:delete"),
+  OrganizationAuthSet("organizationAuth:set"),
+  OrganizationAuthDelete("organizationAuth:delete"),
+  OrganizationHostnameCreate("organizationHostname:create"),
+  OrganizationHostnameDelete("organizationHostname:delete"),
   ;
 
   /**
