@@ -2,6 +2,7 @@ create table organization.feature
 (
   guid       uuid
     constraint pkey__feature primary key,
+  version    bigint      not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
