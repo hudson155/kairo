@@ -10,6 +10,8 @@
   position: relative;
   width: fit-content;
 
+  @include focus.focusable;
+
   &.primary {
     background-color: var(--color-buttonPrimary);
     border: var(--borderSize-border) solid var(--color-border);
@@ -17,6 +19,4 @@
     height: calc(var(--size-inputHeight) + 2 * var(--borderSize-border));
     padding: var(--gap-normalHalf) var(--gap-normal);
   }
-
-  @include focus.focusable;
 }

@@ -5,6 +5,10 @@
   display: inline-flex;
   flex-direction: column;
   row-gap: 1px;
+
+  &.width2 {
+    grid-column: span 2;
+  }
 }
 
 .label {

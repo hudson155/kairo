@@ -1,0 +1,7 @@
+.container {
+  align-items: flex-start;
+  display: grid;
+  flex-direction: column;
+  gap: var(--gap-normal);
+  grid-template-columns: 1fr 1fr;
+}
