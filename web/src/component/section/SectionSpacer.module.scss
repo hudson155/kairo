@@ -1,3 +1,5 @@
+@use "./vars" as sectionVars;
+
 .spacer {
-  height: 32px;
+  height: sectionVars.$space;
 }

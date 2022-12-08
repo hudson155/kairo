@@ -1,23 +1,23 @@
 .h1 {
   font-size: var(--fontSize-h1);
-  margin-bottom: 5px;
-  margin-top: 16px;
+  margin-bottom: var(--gap-normal);
+  margin-top: 17px;
 }
 
 .h2 {
   font-size: var(--fontSize-h2);
-  margin-bottom: 5px;
-  margin-top: 15px;
+  margin-bottom: var(--gap-normal);
+  margin-top: 16px;
 }
 
 .h3 {
   font-size: var(--fontSize-h3);
-  margin-bottom: 5px;
-  margin-top: 14px;
+  margin-bottom: var(--gap-normal);
+  margin-top: 15px;
 }
 
 .h4 {
   font-size: var(--fontSize-h4);
-  margin-bottom: 5px;
-  margin-top: 13px;
+  margin-bottom: var(--gap-normal);
+  margin-top: 14px;
 }

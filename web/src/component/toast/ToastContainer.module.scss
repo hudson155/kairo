@@ -1,7 +1,9 @@
+@use "src/component/topNav/vars" as topNavVars;
+
 .container {
   padding: 4px;
   right: 16px;
-  top: calc(48px + var(--borderSize-border) + 16px); // Matches the [TopNav].
+  top: calc(#{topNavVars.$height} + var(--borderSize-border) + 16px);
   z-index: var(--zIndex-toast);
 }
 

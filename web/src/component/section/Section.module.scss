@@ -1,8 +1,10 @@
+@use "./vars" as sectionVars;
+
 .section {
-  margin-bottom: 32px;
+  margin-bottom: sectionVars.$space;
   padding: 0 8px;
 
   &:not(:first-of-type) {
-    margin-top: 12px;
+    margin-top: var(--gap-normal);
   }
 }

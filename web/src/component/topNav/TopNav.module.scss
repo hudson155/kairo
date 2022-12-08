@@ -1,3 +1,5 @@
+@use "src/component/topNav/vars" as topNavVars;
+
 .header {
   align-items: center;
   align-self: stretch;
@@ -5,7 +7,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  min-height: calc(48px + var(--borderSize-border)); // Matches the [SideNavHeader].
+  min-height: calc(#{topNavVars.$height} + var(--borderSize-border));
   padding: 12px 24px;
 }
 

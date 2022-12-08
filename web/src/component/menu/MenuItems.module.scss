@@ -1,7 +1,8 @@
 .items {
   display: flex;
   flex-direction: column;
-  padding: 4px;
+  padding: calc(3 * var(--borderSize-border));
+  row-gap: calc(2 * var(--borderSize-border));
 
   &:not(:first-of-type) {
     border-top: var(--borderSize-border) solid var(--color-border);

@@ -1,6 +1,6 @@
 @use "./Text.module" as *;
 
 .p {
-  margin-bottom: 5px;
-  margin-top: 5px;
+  margin-bottom: var(--gap-normal);
+  margin-top: var(--gap-normal);
 }

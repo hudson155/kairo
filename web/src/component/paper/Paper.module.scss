@@ -3,5 +3,5 @@
   border-radius: var(--borderRadius-large);
   display: flex;
   flex-direction: column;
-  padding: 0 16px 12px;
+  padding: 0 16px calc(16px - var(--gap-normal));
 }

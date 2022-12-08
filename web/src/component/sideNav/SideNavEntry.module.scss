@@ -1,20 +1,22 @@
+@use "./vars" as sideNavVars;
+
 .link {
   align-items: center;
   border-radius: var(--borderRadius-normal);
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-  padding: 6px 12px 6px 10px; // Left is reduced by 2px to account for the ::before indicator.
+  padding: var(--gap-smallHalf) var(--gap-small);
+  padding-left: calc(var(--gap-small) - #{sideNavVars.$indicator-width});
 
   &::before {
     align-self: stretch;
-    border-radius: 1px;
+    border-radius: #{sideNavVars.$indicator-width / 2};
     content: "";
     display: block;
-    flex-basis: 2px;
+    flex-basis: sideNavVars.$indicator-width;
     flex-shrink: 0;
-    transform: translateX(-16px);
-
+    transform: translateX(-1 * sideNavVars.$indicator-offset);
   }
 
   &:global(.active)::before {

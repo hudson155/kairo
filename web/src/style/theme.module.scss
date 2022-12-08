@@ -6,12 +6,11 @@ $duration-transition: 150;
   /**
    * Border sizes.
    *
-   * Float px values may render differently on different browsers. This is okay.
    * The border and focus border sizes are the same,
    * because some components (such as [Input]) use both, expecting only a color change on focus.
    */
-  --borderSize-border: 1.5px;
-  --borderSize-focus: 1.5px;
+  --borderSize-border: 2px;
+  --borderSize-focus: 2px;
 
   /**
    * Border radii.
@@ -60,11 +59,26 @@ $duration-transition: 150;
   --fontSize-small: 0.75rem;
 
   /**
+   * Gaps.
+   */
+  --gap-smallHalf: 4px;
+  --gap-small: 8px;
+  --gap-normalHalf: 6px;
+  --gap-normal: 12px;
+  --gap-largeHalf: 12px;
+  --gap-large: 24px;
+
+  /**
    * Font weights.
    */
   --fontWeight-light: 300;
   --fontWeight-normal: 400;
   --fontWeight-bold: 700;
+
+  /**
+   * Sizes
+   */
+  --size-inputHeight: 30px;
 
   /**
    * Z-indices.

@@ -14,8 +14,8 @@
     background-color: var(--color-buttonPrimary);
     border: var(--borderSize-border) solid var(--color-border);
     color: var(--color-fontLight);
-    height: calc(30px + 2 * var(--borderSize-border));
-    padding: 6px 12px;
+    height: calc(var(--size-inputHeight) + 2 * var(--borderSize-border));
+    padding: var(--gap-normalHalf) var(--gap-normal);
   }
 
   @include focus.focusable;

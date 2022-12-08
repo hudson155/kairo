@@ -5,7 +5,7 @@
   border-radius: var(--borderRadius-normal);
   display: flex;
   flex-direction: row;
-  padding: 4px 9px;
+  padding: var(--gap-smallHalf) var(--gap-small);
   width: auto; // Fill the container horizontally.
 
   &:hover {

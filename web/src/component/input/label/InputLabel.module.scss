@@ -1,3 +1,5 @@
+@use "../vars" as inputVars;
+
 .container {
   align-items: flex-start;
   display: inline-flex;
@@ -6,5 +8,5 @@
 }
 
 .label {
-  padding: var(--borderSize-border) 3px; // The horizontal padding matches [InputErrorMessage].
+  padding: var(--borderSize-border) inputVars.$input-label-offset;
 }

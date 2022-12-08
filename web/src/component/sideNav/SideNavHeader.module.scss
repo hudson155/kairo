@@ -1,8 +1,10 @@
+@use "src/component/topNav/vars" as topNavVars;
+
 .container {
   align-items: center;
   border-bottom: var(--borderSize-border) solid var(--color-border);
   display: flex;
   flex-direction: row;
-  min-height: calc(48px + var(--borderSize)); // Matches the [TopNav].
-  padding: 12px 24px;
+  min-height: calc(#{topNavVars.$height} + var(--borderSize));
+  padding: var(--gap-largeHalf) var(--gap-large);
 }
