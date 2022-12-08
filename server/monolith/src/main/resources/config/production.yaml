@@ -57,6 +57,7 @@ sql:
     cleanDisabled: true
     locations:
       - db/limber/migration/common
+      - db/limber/migration/fixtures # TODO: Remove once migrations are stable.
       - db/limber/migration/gcp
     defaultSchema: public
     schemas: [organization]

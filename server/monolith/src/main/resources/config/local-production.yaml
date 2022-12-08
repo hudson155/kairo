@@ -21,4 +21,10 @@ sql:
     migrations:
       type: Merge
       value:
-        run: false
+        run: true # TODO: Disable once migrations are stable.
+        cleanOnValidationError: true # TODO: Disable once migrations are stable.
+        cleanDisabled: false # TODO: Enable once migrations are stable.
+        locations:
+          - db/limber/migration/common
+          - db/limber/migration/fixtures # TODO: Remove once migrations are stable.
+          - db/limber/migration/gcp

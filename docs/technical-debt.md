@@ -56,6 +56,12 @@ It is not sorted.
 
 ## Dev experience
 
+- **Production database acts as a local database:**
+  For quick iteration, the production database acts as a local database.
+  Specifically, it self-cleans on migration conflicts,
+  and it includes database fixtures.
+  To resolve, search for comments containing "once migrations are stable".
+
 - **No CSS linting:**
   Although IntelliJ is opinionated about CSS formatting
   (specifically, property ordering),
@@ -79,5 +85,6 @@ It is not sorted.
 - **Missing functional READMEs:**
   Backend and web should have functional READMEs
   explaining how to set up the repo, run tests, lint, storybook, etc.
+  Include how to set up the `local-production` config.
 
 - **Missing Feature and Server creation guides.**
