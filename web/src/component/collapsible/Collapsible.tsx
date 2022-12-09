@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { durationTransition } from 'style/theme';
+import { durationCssDelay, durationTransition } from 'style/theme';
 import styles from './Collapsible.module.scss';
 
 interface Props {
@@ -26,15 +26,18 @@ const Collapsible: React.FC<Props> = ({ isOpen, children }) => {
       setContent(children);
       setTimeout(() => {
         element.style.height = `${element.scrollHeight}px`;
-      }, 0);
+      }, durationCssDelay);
+      setContentTimeout(setTimeout(() => {
+        element.style.height = 'auto';
+      }, durationCssDelay + durationTransition));
     } else {
       element.style.height = `${element.scrollHeight}px`;
       setTimeout(() => {
         element.style.height = '0';
-      }, 0);
+      }, durationCssDelay);
       setContentTimeout(setTimeout(() => {
         setContent(null);
-      }, durationTransition));
+      }, durationCssDelay + durationTransition));
     }
     clearTimeout(contentTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
