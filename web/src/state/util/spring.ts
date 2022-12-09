@@ -15,7 +15,8 @@ interface SpringOptions<T> {
  *   1. The value can be set using [useSetRecoilState].
  *   2. The value can be reset using [useResetRecoilState].
  */
-function spring<T>(options: SpringOptions<T>): RecoilState<T> { // eslint-disable-line func-style
+// eslint-disable-next-line func-style
+function spring<T>(options: SpringOptions<T>): RecoilState<T> {
   /**
    * The value of [refreshState] can be incremented to force-refresh the spring upon reset.
    */

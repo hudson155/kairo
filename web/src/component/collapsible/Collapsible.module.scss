@@ -1,0 +1,5 @@
+.container {
+  height: 0;
+  overflow: hidden;
+  transition: height var(--duration-transition);
+}
