@@ -15,9 +15,9 @@ export default {
       control: { type: 'select' },
     },
   },
-} as ComponentMeta<typeof Button & Args>;
+} as ComponentMeta<typeof Button>;
 
-const Template: Story<ComponentProps<typeof Button & Args>> = ({ isSubmitting, variant }) => {
+const Template: Story<ComponentProps<typeof Button> & Args> = ({ isSubmitting, variant }) => {
   return (
     <Button isSubmitting={isSubmitting} type="button" variant={variant} onClick={doNothing}>
       Button text

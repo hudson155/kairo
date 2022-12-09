@@ -13,7 +13,7 @@ export default {
       control: { type: 'radio' },
     },
   },
-} as ComponentMeta<typeof CopyButton & Args>;
+} as ComponentMeta<typeof CopyButton>;
 
 const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => {
   const handleCopy = (): string => {

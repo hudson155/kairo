@@ -8,9 +8,9 @@ interface Args {
   isOpen: boolean;
 }
 
-export default {} as ComponentMeta<typeof Impl & Args>;
+export default {} as ComponentMeta<typeof Impl>;
 
-const Template: Story<ComponentProps<typeof Impl & Args>> = ({ isOpen }) => {
+const Template: Story<ComponentProps<typeof Impl> & Args> = ({ isOpen }) => {
   return <Impl isOpen={isOpen} />;
 };
 
