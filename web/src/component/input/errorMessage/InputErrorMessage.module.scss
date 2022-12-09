@@ -1,0 +1,10 @@
+@use "../vars" as inputVars;
+
+.outer {
+  width: 100%;
+}
+
+.inner {
+  color: var(--color-failure);
+  padding: var(--borderSize-border) inputVars.$input-label-offset;
+}
