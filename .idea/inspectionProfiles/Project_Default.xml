@@ -137,7 +137,7 @@
     <inspection_tool class="JSFileReferences" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myIgnoreComplexCases" value="false" />
     </inspection_tool>
-    <inspection_tool class="JSFunctionExpressionToArrowFunction" enabled="true" level="WEAK WARNING" enabled_by_default="true" editorAttributes="INFO_ATTRIBUTES" />
+    <inspection_tool class="JSFunctionExpressionToArrowFunction" enabled="true" level="INFORMATION" enabled_by_default="true" editorAttributes="INFORMATION_ATTRIBUTES" />
     <inspection_tool class="JSIncompatibleTypesComparison" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
     <inspection_tool class="JSJoinVariableDeclarationAndAssignment" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
     <inspection_tool class="JSMethodCanBeStatic" enabled="true" level="WARNING" enabled_by_default="true" editorAttributes="WARNING_ATTRIBUTES" />
