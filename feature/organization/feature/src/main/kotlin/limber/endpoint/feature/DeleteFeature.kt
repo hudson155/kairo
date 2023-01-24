@@ -16,7 +16,7 @@ public class DeleteFeature @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Delete): Rep {
     auth(
       auth = OrganizationAuth(
-        organizationGuid = endpoint.organizationGuid,
+        organizationGuid = { featureService.get(endpoint.organizationGuid, endpoint.featureGuid)?.organizationGuid },
         permission = OrganizationPermission.FeatureDelete,
       ),
       onFail = { throw FeatureDoesNotExist() },

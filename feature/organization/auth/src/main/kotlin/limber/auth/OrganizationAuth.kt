@@ -14,15 +14,22 @@ public data class OrganizationClaim(
  * Protects an endpoint to only members of the organization.
  */
 public class OrganizationAuth(
-  private val organizationGuid: UUID,
+  private val organizationGuid: UUID?,
   private val permission: OrganizationPermission,
 ) : Auth() {
+  public constructor(
+    organizationGuid: () -> UUID?,
+    permission: OrganizationPermission,
+  ) : this(organizationGuid(), permission)
+
   override fun authorize(context: RestContext): AuthResult {
     val principal = context.principal
       ?: return AuthResult.Unauthorized.noPrincipal()
 
     val organization = getOrganizationClaim(context, principal)
       ?: return AuthResult.Unauthorized.noClaim(ORGANIZATION_CLAIM_NAME)
+
+    if (organizationGuid == null) return AuthResult.Failed
 
     if (organization.guid != organizationGuid) {
       return AuthResult.Failed
