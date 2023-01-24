@@ -2,6 +2,7 @@ package limber.type
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
@@ -22,7 +23,7 @@ internal class OptionalOrTest {
   @Test
   fun `specified as null`() {
     objectMapper.readValue<OptionalWrapper.Nullable>("{\"optional\":null}").optional.or("existing")
-      .shouldBe(null)
+      .shouldBeNull()
   }
 
   @Test
