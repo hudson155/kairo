@@ -13,18 +13,10 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
-internal class FeatureStore : SqlStore<FeatureRep>(FeatureRep::class) {
-  fun get(guid: UUID): FeatureRep? =
-    get(guid, forUpdate = false)
-
-  private fun get(guid: UUID, forUpdate: Boolean): FeatureRep? =
-    handle { handle ->
-      val query = handle.createQuery(rs("store/feature/get.sql"))
-      query.define("lockingClause", if (forUpdate) "for no key update" else "")
-      query.bind("guid", guid)
-      return@handle query.mapToType().singleNullOrThrow()
-    }
-
+internal class FeatureStore : SqlStore<FeatureRep>(
+  tableName = "organization.feature",
+  type = FeatureRep::class,
+) {
   fun getByOrganization(organizationGuid: UUID): List<FeatureRep> =
     handle { handle ->
       val query = handle.createQuery(rs("store/feature/getByOrganization.sql"))

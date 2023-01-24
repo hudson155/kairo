@@ -12,14 +12,10 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
-internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(OrganizationHostnameRep::class) {
-  fun get(guid: UUID): OrganizationHostnameRep? =
-    handle { handle ->
-      val query = handle.createQuery(rs("store/organizationHostname/get.sql"))
-      query.bind("guid", guid)
-      return@handle query.mapToType().singleNullOrThrow()
-    }
-
+internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(
+  tableName = "organization.organization_hostname",
+  type = OrganizationHostnameRep::class,
+) {
   fun create(model: OrganizationHostnameRep): OrganizationHostnameRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/create.sql"))

@@ -12,7 +12,10 @@ import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
-internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(OrganizationAuthRep::class) {
+internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(
+  tableName = "organization.organization_auth",
+  type = OrganizationAuthRep::class,
+) {
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))

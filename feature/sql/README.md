@@ -8,23 +8,15 @@ This is currently intended for Postgres.
 To access the database, create a store for your model.
 
 ```kotlin
-internal class CelebrityStore : SqlStore<CelebrityRep>(CelebrityRep::class) {
+internal class CelebrityStore : SqlStore<CelebrityRep>(
+  tableName = "pop_culture.celebrity",
+  type = CelebrityRep::class,
+) {
   fun create(model: CelebrityRep): CelebrityRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/create.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
-    }
-
-  fun get(guid: UUID): CelebrityRep? =
-    get(guid, forUpdate = false)
-
-  private fun get(guid: UUID, forUpdate: Boolean): CelebrityRep? =
-    handle { handle ->
-      val query = handle.createQuery(rs("store/celebrity/get.sql"))
-      query.define("lockingClause", if (forUpdate) "for no key update" else "")
-      query.bind("guid", guid)
-      return@handle query.mapToType().singleNullOrThrow()
     }
 
   fun update(guid: UUID, updater: Updater<CelebrityRep>): CelebrityRep =
@@ -53,13 +45,6 @@ returning *
 ```
 
 ```postgresql
-select *
-from celebrity.celebrity
-where guid = :guid
-<lockingClause>
-```
-
-```postgresql
 update celebrity.celebrity
 set name = :name,
     age  = :age
@@ -74,18 +59,7 @@ where guid = :guid
 returning *
 ```
 
-## Implementation notes and limitations
+## Implementation notes
 
 [JDBI](https://jdbi.org/) is used as the underlying implementation.
 It runs on top of [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html).
-
-Models should always be accessed and updated using some authorized identifier.
-For example, the `OutfitRep` for a `CelebrityRep` might have its own GUID,
-but if authorization was based on the celebrity's GUID,
-outfit queries need to be conditioned as follows.
-They cannot be conditioned only on the outfit's GUID.
-
-```postgresql
-where celebrity_guid = :celebrityGuid
-  and guid = :guid
-```

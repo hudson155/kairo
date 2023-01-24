@@ -1,4 +1,4 @@
 select *
-from organization.organization
+from <tableName>
 where guid = :guid
 <lockingClause>
