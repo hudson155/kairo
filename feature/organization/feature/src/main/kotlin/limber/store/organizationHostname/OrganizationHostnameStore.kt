@@ -13,10 +13,9 @@ import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
 internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(OrganizationHostnameRep::class) {
-  fun get(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep? =
+  fun get(guid: UUID): OrganizationHostnameRep? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/get.sql"))
-      query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
       return@handle query.mapToType().singleNullOrThrow()
     }
@@ -28,10 +27,9 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(Org
       return@transaction query.mapToType().single()
     }
 
-  fun delete(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep =
+  fun delete(guid: UUID): OrganizationHostnameRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
-      query.bind("organizationGuid", organizationGuid)
       query.bind("guid", guid)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
     }

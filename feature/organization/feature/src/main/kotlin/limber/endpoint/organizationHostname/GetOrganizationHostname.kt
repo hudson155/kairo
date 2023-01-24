@@ -15,12 +15,12 @@ public class GetOrganizationHostname @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(
       auth = OrganizationAuth(
-        organizationGuid = { hostnameService.get(endpoint.organizationGuid, endpoint.hostnameGuid)?.organizationGuid },
+        organizationGuid = { hostnameService.get(endpoint.hostnameGuid)?.organizationGuid },
         permission = OrganizationPermission.OrganizationHostnameRead,
       ),
       onFail = { return@handler null },
     )
 
-    return hostnameService.get(endpoint.organizationGuid, endpoint.hostnameGuid)
+    return hostnameService.get(endpoint.hostnameGuid)
   }
 }
