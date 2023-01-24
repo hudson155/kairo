@@ -16,13 +16,11 @@ import java.util.UUID
 internal class GetOrganizationHostnameTest : IntegrationTest() {
   @Test
   fun `hostname does not exist`() {
-    val organizationGuid = UUID.randomUUID()
-
     val hostnameGuid = UUID.randomUUID()
 
     test {
       shouldNotBeFound {
-        hostnameClient(OrganizationHostnameApi.Get(organizationGuid, hostnameGuid))
+        hostnameClient(OrganizationHostnameApi.Get(hostnameGuid))
       }
     }
   }
@@ -38,7 +36,7 @@ internal class GetOrganizationHostnameTest : IntegrationTest() {
     }
 
     test {
-      hostnameClient(OrganizationHostnameApi.Get(organization.guid, hostname.guid))
+      hostnameClient(OrganizationHostnameApi.Get(hostname.guid))
         .shouldBe(hostname)
     }
   }

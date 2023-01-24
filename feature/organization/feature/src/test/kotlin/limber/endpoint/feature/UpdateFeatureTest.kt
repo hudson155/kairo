@@ -20,14 +20,12 @@ import java.util.UUID
 internal class UpdateFeatureTest : IntegrationTest() {
   @Test
   fun `feature does not exist`() {
-    val organizationGuid = UUID.randomUUID()
-
     val featureGuid = UUID.randomUUID()
 
     test {
       shouldBeUnprocessable("Feature does not exist.") {
         val updater = FeatureRep.Updater(rootPath = "/newholder")
-        featureClient(FeatureApi.Update(organizationGuid, featureGuid, updater))
+        featureClient(FeatureApi.Update(featureGuid, updater))
       }
     }
   }
@@ -44,9 +42,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     test {
       val updater = FeatureRep.Updater()
-      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      featureClient(FeatureApi.Update(feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+      featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
   }
@@ -69,7 +67,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
       val updater = FeatureRep.Updater(isDefault = true)
       homeFeature = homeFeature.copy(isDefault = false)
       myFormsFeature = myFormsFeature.copy(isDefault = true)
-      featureClient(FeatureApi.Update(organization.guid, myFormsFeature.guid, updater))
+      featureClient(FeatureApi.Update(myFormsFeature.guid, updater))
         .shouldBe(myFormsFeature)
       featureClient(FeatureApi.GetByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
@@ -92,7 +90,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     test {
       val updater = FeatureRep.Updater(isDefault = true)
-      featureClient(FeatureApi.Update(organization.guid, homeFeature.guid, updater))
+      featureClient(FeatureApi.Update(homeFeature.guid, updater))
         .shouldBe(homeFeature)
       featureClient(FeatureApi.GetByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
@@ -112,9 +110,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val updater = FeatureRep.Updater(name = "New name")
       feature = feature.copy(name = "New name")
-      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      featureClient(FeatureApi.Update(feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+      featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
   }
@@ -132,9 +130,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val updater = FeatureRep.Updater(iconName = Optional.of(" assignment "))
       feature = feature.copy(iconName = "assignment")
-      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      featureClient(FeatureApi.Update(feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+      featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
   }
@@ -152,9 +150,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val updater = FeatureRep.Updater(iconName = Optional.empty())
       feature = feature.copy(iconName = null)
-      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      featureClient(FeatureApi.Update(feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+      featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
   }
@@ -176,7 +174,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       shouldBeConflict("Root path already taken.") {
         val updater = FeatureRep.Updater(rootPath = homeFeature.rootPath)
-        featureClient(FeatureApi.Update(organization.guid, myFormsFeature.guid, updater))
+        featureClient(FeatureApi.Update(myFormsFeature.guid, updater))
       }
     }
   }
@@ -194,9 +192,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val updater = FeatureRep.Updater(rootPath = "/new-path")
       feature = feature.copy(rootPath = "/new-path")
-      featureClient(FeatureApi.Update(organization.guid, feature.guid, updater))
+      featureClient(FeatureApi.Update(feature.guid, updater))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(organization.guid, feature.guid))
+      featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
   }

@@ -8,11 +8,10 @@ import java.util.UUID
 
 public object OrganizationHostnameApi {
   public data class Get(
-    val organizationGuid: UUID,
     val hostnameGuid: UUID,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/organizations/$organizationGuid/hostnames/$hostnameGuid"
+    override val path: String = "/hostnames/$hostnameGuid"
   }
 
   public data class Create(
@@ -24,10 +23,9 @@ public object OrganizationHostnameApi {
   }
 
   public data class Delete(
-    val organizationGuid: UUID,
     val hostnameGuid: UUID,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Delete
-    override val path: String = "/organizations/$organizationGuid/hostnames/$hostnameGuid"
+    override val path: String = "/hostnames/$hostnameGuid"
   }
 }

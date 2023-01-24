@@ -17,13 +17,11 @@ import java.util.UUID
 internal class DeleteOrganizationHostnameTest : IntegrationTest() {
   @Test
   fun `hostname does not exist`() {
-    val organizationGuid = UUID.randomUUID()
-
     val hostnameGuid = UUID.randomUUID()
 
     test {
       shouldBeUnprocessable("Organization hostname does not exist.") {
-        hostnameClient(OrganizationHostnameApi.Delete(organizationGuid, hostnameGuid))
+        hostnameClient(OrganizationHostnameApi.Delete(hostnameGuid))
       }
     }
   }
@@ -39,10 +37,10 @@ internal class DeleteOrganizationHostnameTest : IntegrationTest() {
     }
 
     test {
-      hostnameClient(OrganizationHostnameApi.Delete(organization.guid, hostname.guid))
+      hostnameClient(OrganizationHostnameApi.Delete(hostname.guid))
         .shouldBe(hostname)
       shouldNotBeFound {
-        hostnameClient(OrganizationHostnameApi.Get(organization.guid, hostname.guid))
+        hostnameClient(OrganizationHostnameApi.Get(hostname.guid))
       }
     }
   }

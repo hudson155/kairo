@@ -17,13 +17,11 @@ import java.util.UUID
 internal class DeleteFeatureTest : IntegrationTest() {
   @Test
   fun `feature does not exist`() {
-    val organizationGuid = UUID.randomUUID()
-
     val featureGuid = UUID.randomUUID()
 
     test {
       shouldBeUnprocessable("Feature does not exist.") {
-        featureClient(FeatureApi.Delete(organizationGuid, featureGuid))
+        featureClient(FeatureApi.Delete(featureGuid))
       }
     }
   }
@@ -39,10 +37,10 @@ internal class DeleteFeatureTest : IntegrationTest() {
     }
 
     test {
-      featureClient(FeatureApi.Delete(organization.guid, feature.guid))
+      featureClient(FeatureApi.Delete(feature.guid))
         .shouldBe(FeatureFixture.home(organization.guid, guidGenerator[1]).copy(isDefault = true))
       shouldNotBeFound {
-        featureClient(FeatureApi.Get(organization.guid, feature.guid))
+        featureClient(FeatureApi.Get(feature.guid))
       }
     }
   }
