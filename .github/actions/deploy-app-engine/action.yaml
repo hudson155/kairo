@@ -1,0 +1,11 @@
+name: Deploy App Engine
+description: Deploys the server JAR file to Google App Engine.
+runs:
+  using: composite
+  steps:
+    - uses: google-github-actions/deploy-appengine@v1.1.0 # https://github.com/google-github-actions/deploy-appengine/releases.
+      with:
+        project_id: limberapp-io
+        working_directory: server/monolith/
+        deliverables: build/libs/server.jar
+        flags: --appyaml=app.yaml

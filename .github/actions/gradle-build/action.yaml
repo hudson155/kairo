@@ -4,11 +4,11 @@ description: |
   Test failures are ignored so that all tests run, giving us a comprehensive JUnit report.
   After tests finish, this report is uploaded and will cause failure if there are failing tests.
 inputs:
-  postgresUsername:
-    description: Username for the locally running Postgres instance.
-    required: true
   postgresPassword:
     description: Password for the locally running Postgres instance.
+    required: true
+  postgresUsername:
+    description: Username for the locally running Postgres instance.
     required: true
 runs:
   using: composite
