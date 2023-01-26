@@ -69,7 +69,7 @@ Upgrade major versions one at a time.
 ## Postgres
 
 - [GCP through Terraform](/infrastructure/terraform/sql.tf).
-- The [Kotlin CI GitHub workflow](/.github/workflows/ci-kotlin.yaml).
+- The [Kotlin CI GitHub workflow](/.github/workflows/kotlin.yaml).
 - [Versions.kt](/buildSrc/src/main/kotlin/limber/gradle/Versions.kt).
 
 ## Shadow
