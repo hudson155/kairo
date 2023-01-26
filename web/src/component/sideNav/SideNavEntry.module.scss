@@ -11,7 +11,7 @@
 
   &::before {
     align-self: stretch;
-    border-radius: #{sideNavVars.$indicator-width / 2};
+    border-radius: calc(#{sideNavVars.$indicator-width} / 2);
     content: "";
     display: block;
     flex-basis: sideNavVars.$indicator-width;
