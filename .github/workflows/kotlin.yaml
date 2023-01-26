@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
 
-  CI:
+  kotlin-build:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -53,9 +53,9 @@ jobs:
         if: always()
         uses: ./.github/actions/gradle-cleanup
 
-  CD:
+  kotlin-deploy:
     runs-on: ubuntu-22.04
-    needs: ci
+    needs: kotlin-build
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Check out
