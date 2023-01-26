@@ -1,4 +1,4 @@
-name: CI (JavaScript)
+name: JavaScript
 
 on:
   pull_request:
@@ -14,14 +14,18 @@ concurrency:
 
 jobs:
 
-  ci:
+  CI:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out
-        uses: actions/checkout@v3.1.0 # https://github.com/actions/checkout/releases.
+        uses: actions/checkout@v3.1.0
       - name: Set up
         uses: ./.github/actions/set-up-node
       - name: Yarn build
         uses: ./.github/actions/yarn-build
-      - name: Upload JAR files
-        uses: ./.github/actions/upload-yarn-files
+      - name: Upload Yarn files
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: yarn-files
+          path: web/build/
+          retention-days: 1
