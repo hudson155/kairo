@@ -81,8 +81,8 @@ export const apiState = selectorFamily<Api, {
   get: ({ authenticated }) => ({ get }) => {
     let getJwt: () => Promise<string | undefined> = () => Promise.resolve(undefined);
     if (authenticated) {
-      const auth0Client = get(auth0ClientState);
-      getJwt = () => auth0Client.getTokenSilently();
+      const auth0 = get(auth0ClientState);
+      getJwt = () => auth0.getTokenSilently();
     }
     return new Api(getJwt);
   },

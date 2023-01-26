@@ -11,12 +11,12 @@ interface Props {
 }
 
 const AuthenticationRequired: React.FC<Props> = ({ children }) => {
-  const auth0Client = useRecoilValue(auth0ClientState);
+  const auth0 = useRecoilValue(auth0ClientState);
   const isAuthenticated = useRecoilValue(isAuthenticatedState);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      void auth0Client.loginWithRedirect({
+      void auth0.loginWithRedirect({
         appState: {
           returnTo: getHref(),
         },
@@ -26,7 +26,7 @@ const AuthenticationRequired: React.FC<Props> = ({ children }) => {
         },
       });
     }
-  }, [auth0Client, isAuthenticated]);
+  }, [auth0, isAuthenticated]);
 
   if (!isAuthenticated) return null;
 

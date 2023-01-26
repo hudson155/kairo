@@ -16,11 +16,11 @@ const auth0ClientState = selector<Auth0Client>({
   key: 'auth/auth0Client',
   get: async ({ get }) => {
     const { auth0OrganizationId: organizationId } = get(organizationAuthState);
-    const auth0Client = await createClient(organizationId);
+    const auth0 = await createClient(organizationId);
     if (hasAuthParams()) {
-      await handleRedirectCallback(auth0Client);
+      await handleRedirectCallback(auth0);
     }
-    return auth0Client;
+    return auth0;
   },
   dangerouslyAllowMutability: true,
 });

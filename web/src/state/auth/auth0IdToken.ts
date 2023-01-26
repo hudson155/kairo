@@ -5,8 +5,8 @@ import auth0ClientState from 'state/auth/auth0Client';
 const auth0IdTokenState = selector<IdToken | undefined>({
   key: 'auth/auth0IdToken',
   get: async ({ get }) => {
-    const auth0Client = get(auth0ClientState);
-    return await auth0Client.getIdTokenClaims();
+    const auth0 = get(auth0ClientState);
+    return await auth0.getIdTokenClaims();
   },
   // The Auth0 client has its own cache.
   cachePolicy_UNSTABLE: { eviction: 'most-recent' }, // eslint-disable-line @typescript-eslint/naming-convention
