@@ -50,6 +50,12 @@ data "google_iam_policy" "limberapp_io" {
     ]
   }
   binding {
+    role = "roles/container.serviceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@container-engine-robot.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
     role = "roles/containerregistry.ServiceAgent"
     members = [
       "serviceAccount:service-${google_project.limberapp_io.number}@containerregistry.iam.gserviceaccount.com",
