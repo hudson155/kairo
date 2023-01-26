@@ -19,6 +19,12 @@ data "google_iam_policy" "limberapp_io" {
     ]
   }
   binding {
+    role = "roles/appengine.appAdmin"
+    members = [
+      google_service_account.deployment.member,
+    ]
+  }
+  binding {
     role = "roles/appengine.serviceAgent"
     members = [
       "serviceAccount:service-${google_project.limberapp_io.number}@gcp-gae-service.iam.gserviceaccount.com",
@@ -28,6 +34,7 @@ data "google_iam_policy" "limberapp_io" {
     role = "roles/cloudbuild.builds.builder"
     members = [
       "serviceAccount:${google_project.limberapp_io.number}@cloudbuild.gserviceaccount.com",
+      google_service_account.deployment.member,
     ]
   }
   binding {
@@ -55,6 +62,12 @@ data "google_iam_policy" "limberapp_io" {
     ]
   }
   binding {
+    role = "roles/iam.serviceAccountUser"
+    members = [
+      google_service_account.deployment.member,
+    ]
+  }
+  binding {
     role = "roles/secretmanager.secretAccessor"
     members = [
       "serviceAccount:${google_project.limberapp_io.project_id}@appspot.gserviceaccount.com",
@@ -66,4 +79,9 @@ data "google_iam_policy" "limberapp_io" {
       "serviceAccount:${google_project.limberapp_io.number}@cloudbuild.gserviceaccount.com",
     ]
   }
+}
+
+resource "google_service_account" "deployment" {
+  account_id = "deployment"
+  display_name = "Deployment"
 }
