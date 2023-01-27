@@ -6,24 +6,24 @@ import limber.exception.organizationHostname.OrganizationHostnameDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
-import limber.rep.organizationHostname.OrganizationHostnameRep
+import limber.model.organizationHostname.OrganizationHostnameModel
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
-internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameRep>(
+internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
   tableName = "organization.organization_hostname",
-  type = OrganizationHostnameRep::class,
+  type = OrganizationHostnameModel::class,
 ) {
-  fun create(model: OrganizationHostnameRep): OrganizationHostnameRep =
+  fun create(model: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): OrganizationHostnameRep =
+  fun delete(guid: UUID): OrganizationHostnameModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
       query.bind("guid", guid)

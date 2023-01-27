@@ -15,7 +15,7 @@ internal abstract class OrganizationHostnameFixture {
         OrganizationHostnameRep.Creator(hostname = " foo.BAR.baz ")
 
       override fun invoke(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep =
-        OrganizationHostnameRep(organizationGuid = organizationGuid, guid = guid, hostname = "foo.bar.baz")
+        OrganizationHostnameRep(guid = guid, organizationGuid = organizationGuid, hostname = "foo.bar.baz")
     }
 
     val barBazQux: OrganizationHostnameFixture = object : OrganizationHostnameFixture() {
@@ -23,7 +23,7 @@ internal abstract class OrganizationHostnameFixture {
         OrganizationHostnameRep.Creator(hostname = " bar.BAZ.qux ")
 
       override fun invoke(organizationGuid: UUID, guid: UUID): OrganizationHostnameRep =
-        OrganizationHostnameRep(organizationGuid = organizationGuid, guid = guid, hostname = "foo.bar.baz")
+        OrganizationHostnameRep(guid = guid, organizationGuid = organizationGuid, hostname = "foo.bar.baz")
     }
   }
 }

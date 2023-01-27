@@ -5,11 +5,13 @@ import limber.auth.OrganizationAuth
 import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
+import limber.mapper.organizationHostname.OrganizationHostnameMapper
 import limber.service.organizationHostname.OrganizationHostnameService
 import limber.api.organizationHostname.OrganizationHostnameApi as Api
 import limber.rep.organizationHostname.OrganizationHostnameRep as Rep
 
 public class GetOrganizationHostname @Inject internal constructor(
+  private val hostnameMapper: OrganizationHostnameMapper,
   private val hostnameService: OrganizationHostnameService,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
@@ -21,6 +23,7 @@ public class GetOrganizationHostname @Inject internal constructor(
       onFail = { return@handler null },
     )
 
-    return hostnameService.get(endpoint.hostnameGuid)
+    val hostname = hostnameService.get(endpoint.hostnameGuid)
+    return hostname?.let { hostnameMapper(it) }
   }
 }
