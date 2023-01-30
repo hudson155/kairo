@@ -1,3 +1,17 @@
 package limber.feature.sql
 
-public typealias Updater<T> = (T) -> T
+import java.util.Optional
+
+public typealias OldUpdater<T> = (T) -> T
+
+public typealias Updater<M, U> = (M) -> U
+
+public fun <T : Any> update(existing: T, new: T?): T {
+  if (new == null) return existing
+  return new
+}
+
+public fun <T : Any> update(existing: T?, new: Optional<T>?): T? {
+  if (new == null) return existing
+  return new.orElse(null)
+}

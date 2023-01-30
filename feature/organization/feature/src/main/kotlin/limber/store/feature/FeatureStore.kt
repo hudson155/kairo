@@ -3,8 +3,8 @@ package limber.store.feature
 import limber.exception.feature.FeatureDoesNotExist
 import limber.exception.feature.RootPathAlreadyTaken
 import limber.exception.organization.OrganizationDoesNotExist
+import limber.feature.sql.OldUpdater
 import limber.feature.sql.SqlStore
-import limber.feature.sql.Updater
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
 import limber.rep.feature.FeatureRep
@@ -43,7 +43,7 @@ internal class FeatureStore : SqlStore<FeatureRep>(
       return@transaction query.mapToType().toList()
     }
 
-  fun update(guid: UUID, updater: Updater<FeatureRep>): FeatureRep =
+  fun update(guid: UUID, updater: OldUpdater<FeatureRep>): FeatureRep =
     transaction { handle ->
       val model = updater(get(guid, forUpdate = true) ?: throw FeatureDoesNotExist())
       val query = handle.createQuery(rs("store/feature/update.sql"))
