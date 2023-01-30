@@ -38,7 +38,7 @@ internal class DeleteFeatureTest : IntegrationTest() {
 
     test {
       featureClient(FeatureApi.Delete(feature.guid))
-        .shouldBe(FeatureFixture.home(organization.guid, guidGenerator[1]).copy(isDefault = true))
+        .shouldBe(FeatureFixture.home(organization.guid, guidGenerator[1], isDefault = true))
       shouldNotBeFound {
         featureClient(FeatureApi.Get(feature.guid))
       }

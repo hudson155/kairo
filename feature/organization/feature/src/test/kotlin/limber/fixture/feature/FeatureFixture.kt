@@ -7,7 +7,7 @@ import java.util.UUID
 
 internal abstract class FeatureFixture {
   abstract val creator: FeatureRep.Creator
-  abstract operator fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep
+  abstract operator fun invoke(organizationGuid: UUID, guid: UUID, isDefault: Boolean = false): FeatureRep
 
   internal companion object {
     val home: FeatureFixture = object : FeatureFixture() {
@@ -19,11 +19,11 @@ internal abstract class FeatureFixture {
           rootPath = " /Home ",
         )
 
-      override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
+      override fun invoke(organizationGuid: UUID, guid: UUID, isDefault: Boolean): FeatureRep =
         FeatureRep(
           guid = guid,
           organizationGuid = organizationGuid,
-          isDefault = false, // May need to be updated after returned.
+          isDefault = isDefault,
           type = FeatureRep.Type.Placeholder,
           name = "Home",
           iconName = "home",
@@ -40,11 +40,11 @@ internal abstract class FeatureFixture {
           rootPath = " /Forms ",
         )
 
-      override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
+      override fun invoke(organizationGuid: UUID, guid: UUID, isDefault: Boolean): FeatureRep =
         FeatureRep(
           guid = guid,
           organizationGuid = organizationGuid,
-          isDefault = false, // May need to be updated after returned.
+          isDefault = isDefault,
           type = FeatureRep.Type.Form,
           name = "My forms",
           iconName = null,

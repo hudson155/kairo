@@ -54,7 +54,7 @@ internal class CreateFeatureTest : IntegrationTest() {
     test {
       val creator = FeatureFixture.home.creator
       val feature = featureClient(FeatureApi.Create(organization.guid, creator))
-      feature.shouldBe(FeatureFixture.home(organization.guid, guidGenerator[1]).copy(isDefault = true))
+      feature.shouldBe(FeatureFixture.home(organization.guid, guidGenerator[1], isDefault = true))
       featureClient(FeatureApi.Get(feature.guid))
         .shouldBe(feature)
     }
