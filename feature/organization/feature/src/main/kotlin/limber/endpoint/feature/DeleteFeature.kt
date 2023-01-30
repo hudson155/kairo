@@ -6,11 +6,13 @@ import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.exception.feature.FeatureDoesNotExist
 import limber.feature.rest.RestEndpointHandler
+import limber.mapper.feature.FeatureMapper
 import limber.service.feature.FeatureService
 import limber.api.feature.FeatureApi as Api
 import limber.rep.feature.FeatureRep as Rep
 
 public class DeleteFeature @Inject internal constructor(
+  private val featureMapper: FeatureMapper,
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
@@ -22,6 +24,7 @@ public class DeleteFeature @Inject internal constructor(
       onFail = { throw FeatureDoesNotExist() },
     )
 
-    return featureService.delete(endpoint.featureGuid)
+    val feature = featureService.delete(endpoint.featureGuid)
+    return featureMapper(feature)
   }
 }

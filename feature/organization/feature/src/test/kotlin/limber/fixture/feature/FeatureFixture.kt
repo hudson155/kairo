@@ -21,8 +21,8 @@ internal abstract class FeatureFixture {
 
       override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
         FeatureRep(
-          organizationGuid = organizationGuid,
           guid = guid,
+          organizationGuid = organizationGuid,
           isDefault = false, // May need to be updated after returned.
           type = FeatureRep.Type.Placeholder,
           name = "Home",
@@ -42,8 +42,8 @@ internal abstract class FeatureFixture {
 
       override fun invoke(organizationGuid: UUID, guid: UUID): FeatureRep =
         FeatureRep(
-          organizationGuid = organizationGuid,
           guid = guid,
+          organizationGuid = organizationGuid,
           isDefault = false, // May need to be updated after returned.
           type = FeatureRep.Type.Form,
           name = "My forms",

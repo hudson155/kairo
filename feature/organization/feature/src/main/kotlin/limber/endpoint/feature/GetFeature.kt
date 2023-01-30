@@ -5,11 +5,13 @@ import limber.auth.OrganizationAuth
 import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
+import limber.mapper.feature.FeatureMapper
 import limber.service.feature.FeatureService
 import limber.api.feature.FeatureApi as Api
 import limber.rep.feature.FeatureRep as Rep
 
 public class GetFeature @Inject internal constructor(
+  private val featureMapper: FeatureMapper,
   private val featureService: FeatureService,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
@@ -21,6 +23,7 @@ public class GetFeature @Inject internal constructor(
       onFail = { return@handler null },
     )
 
-    return featureService.get(endpoint.featureGuid)
+    val feature = featureService.get(endpoint.featureGuid)
+    return feature?.let { featureMapper(it) }
   }
 }
