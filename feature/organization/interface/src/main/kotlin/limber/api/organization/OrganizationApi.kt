@@ -2,8 +2,10 @@ package limber.api.organization
 
 import io.ktor.http.HttpMethod
 import jakarta.validation.Valid
+import limber.feature.rest.QueryParam
 import limber.feature.rest.RestEndpoint
 import limber.rep.organization.OrganizationRep
+import limber.validation.SearchValidator
 import java.util.UUID
 
 public object OrganizationApi {
@@ -17,6 +19,14 @@ public object OrganizationApi {
   public object GetAll : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/organizations"
+  }
+
+  public data class Search(
+    @SearchValidator val search: String,
+  ) : RestEndpoint<Nothing>() {
+    override val method: HttpMethod = HttpMethod.Get
+    override val path: String = "/organizations"
+    override val qp: List<QueryParam> = listOf(::search)
   }
 
   public data class Create(

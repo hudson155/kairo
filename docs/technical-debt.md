@@ -10,6 +10,13 @@ It is not sorted.
   If Terraform changes this, great.
   Otherwise, we may want to resolve it by moving to [Atlantis](https://www.runatlantis.io/) or something.
 
+## Scale
+
+- **Organization search is not scaleable:**
+  Organization search is implemented using a very rudimentary Postgres query.
+  It should instead use something more robust and faster,
+  able to sort results by their closeness to the query.
+
 ## UX
 
 - **Toasts use default styling:**

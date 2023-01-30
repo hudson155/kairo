@@ -13,6 +13,10 @@ public interface OrganizationClient {
   ): List<OrganizationRep>
 
   public suspend operator fun invoke(
+    endpoint: OrganizationApi.Search,
+  ): List<OrganizationRep>
+
+  public suspend operator fun invoke(
     endpoint: OrganizationApi.Create,
   ): OrganizationRep
 

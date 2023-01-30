@@ -17,6 +17,13 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       return@handle query.mapToType().toList()
     }
 
+  fun search(search: String): List<OrganizationModel> =
+    handle { handle ->
+      val query = handle.createQuery(rs("store/organization/search.sql"))
+      query.bind("search", search)
+      return@handle query.mapToType().toList()
+    }
+
   fun create(model: OrganizationModel.Creator): OrganizationModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organization/create.sql"))

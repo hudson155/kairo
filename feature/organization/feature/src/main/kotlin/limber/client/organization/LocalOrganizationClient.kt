@@ -5,12 +5,14 @@ import limber.api.organization.OrganizationApi
 import limber.endpoint.organization.CreateOrganization
 import limber.endpoint.organization.GetAllOrganizations
 import limber.endpoint.organization.GetOrganization
+import limber.endpoint.organization.SearchOrganizations
 import limber.endpoint.organization.UpdateOrganization
 import limber.rep.organization.OrganizationRep
 
 public class LocalOrganizationClient @Inject constructor(
   private val get: GetOrganization,
   private val getAll: GetAllOrganizations,
+  private val search: SearchOrganizations,
   private val create: CreateOrganization,
   private val update: UpdateOrganization,
 ) : OrganizationClient {
@@ -23,6 +25,11 @@ public class LocalOrganizationClient @Inject constructor(
     endpoint: OrganizationApi.GetAll,
   ): List<OrganizationRep> =
     getAll.handle(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: OrganizationApi.Search,
+  ): List<OrganizationRep> =
+    search.handle(endpoint)
 
   override suspend operator fun invoke(
     endpoint: OrganizationApi.Create,

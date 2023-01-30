@@ -22,6 +22,9 @@ internal class OrganizationService @Inject constructor(
   fun getAll(): List<OrganizationModel> =
     organizationStore.getAll()
 
+  fun search(search: String): List<OrganizationModel> =
+    organizationStore.search(search)
+
   fun create(creator: OrganizationRep.Creator): OrganizationModel {
     logger.info { "Creating organization: $creator." }
     return organizationStore.create(organizationMapper(creator))
