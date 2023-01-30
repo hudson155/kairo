@@ -17,9 +17,7 @@ public class CreateOrganizationHostname @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Create): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostnameCreate))
 
-    val hostname = hostnameService.create(
-      creator = hostnameMapper(endpoint.organizationGuid, getBody(endpoint)),
-    )
+    val hostname = hostnameService.create(endpoint.organizationGuid, getBody(endpoint))
     return hostnameMapper(hostname)
   }
 }
