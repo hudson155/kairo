@@ -16,8 +16,8 @@ internal abstract class OrganizationAuthFixture {
 
       override fun invoke(organizationGuid: UUID, guid: UUID): OrganizationAuthRep =
         OrganizationAuthRep(
-          organizationGuid = organizationGuid,
           guid = guid,
+          organizationGuid = organizationGuid,
           auth0OrganizationId = "org_abcdefghijklmnop",
         )
     }

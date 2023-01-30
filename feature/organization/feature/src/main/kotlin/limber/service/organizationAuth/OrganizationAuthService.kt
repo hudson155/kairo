@@ -1,36 +1,32 @@
 package limber.service.organizationAuth
 
 import com.google.inject.Inject
+import limber.mapper.organizationAuth.OrganizationAuthMapper
+import limber.model.organizationAuth.OrganizationAuthModel
 import limber.rep.organizationAuth.OrganizationAuthRep
 import limber.store.organizationAuth.OrganizationAuthStore
-import limber.util.guid.GuidGenerator
 import mu.KLogger
 import mu.KotlinLogging
 import java.util.UUID
 
 internal class OrganizationAuthService @Inject constructor(
-  private val guidGenerator: GuidGenerator,
+  private val authMapper: OrganizationAuthMapper,
   private val authStore: OrganizationAuthStore,
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
+  fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
     authStore.getByOrganization(organizationGuid)
 
-  fun getByHostname(hostname: String): OrganizationAuthRep? =
+  fun getByHostname(hostname: String): OrganizationAuthModel? =
     authStore.getByHostname(hostname)
 
-  fun set(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthRep {
+  fun set(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthModel {
     logger.info { "Setting organization auth: $creator." }
-    val organization = OrganizationAuthRep(
-      organizationGuid = organizationGuid,
-      guid = guidGenerator.generate(),
-      auth0OrganizationId = creator.auth0OrganizationId,
-    )
-    return authStore.set(organization)
+    return authStore.set(authMapper(organizationGuid, creator))
   }
 
-  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthRep {
+  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthModel {
     logger.info { "Deleting organization." }
     return authStore.deleteByOrganization(organizationGuid)
   }

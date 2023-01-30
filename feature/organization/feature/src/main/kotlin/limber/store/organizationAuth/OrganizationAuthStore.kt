@@ -6,38 +6,38 @@ import limber.exception.organizationAuth.OrganizationAuthDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
-import limber.rep.organizationAuth.OrganizationAuthRep
+import limber.model.organizationAuth.OrganizationAuthModel
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
 import java.util.UUID
 
-internal class OrganizationAuthStore : SqlStore<OrganizationAuthRep>(
+internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
   tableName = "organization.organization_auth",
-  type = OrganizationAuthRep::class,
+  type = OrganizationAuthModel::class,
 ) {
-  fun getByOrganization(organizationGuid: UUID): OrganizationAuthRep? =
+  fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))
       query.bind("organizationGuid", organizationGuid)
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun getByHostname(hostname: String): OrganizationAuthRep? =
+  fun getByHostname(hostname: String): OrganizationAuthModel? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByHostname.sql"))
       query.bind("hostname", hostname)
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun set(model: OrganizationAuthRep): OrganizationAuthRep =
+  fun set(model: OrganizationAuthModel.Creator): OrganizationAuthModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/set.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
     }
 
-  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthRep =
+  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/deleteByOrganization.sql"))
       query.bind("organizationGuid", organizationGuid)
