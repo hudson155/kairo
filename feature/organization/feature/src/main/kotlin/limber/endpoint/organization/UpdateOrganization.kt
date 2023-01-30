@@ -6,11 +6,13 @@ import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.rest.RestEndpointHandler
+import limber.mapper.organization.OrganizationMapper
 import limber.service.organization.OrganizationService
 import limber.api.organization.OrganizationApi as Api
 import limber.rep.organization.OrganizationRep as Rep
 
 public class UpdateOrganization @Inject internal constructor(
+  private val organizationMapper: OrganizationMapper,
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
@@ -22,6 +24,7 @@ public class UpdateOrganization @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    return organizationService.update(endpoint.organizationGuid, getBody(endpoint))
+    val organization = organizationService.update(endpoint.organizationGuid, getBody(endpoint))
+    return organizationMapper(organization)
   }
 }

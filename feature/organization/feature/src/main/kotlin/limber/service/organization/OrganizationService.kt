@@ -1,37 +1,34 @@
 package limber.service.organization
 
 import com.google.inject.Inject
+import limber.feature.sql.update
+import limber.mapper.organization.OrganizationMapper
+import limber.model.organization.OrganizationModel
 import limber.rep.organization.OrganizationRep
 import limber.store.organization.OrganizationStore
-import limber.util.guid.GuidGenerator
 import mu.KLogger
 import mu.KotlinLogging
 import java.util.UUID
 
 internal class OrganizationService @Inject constructor(
-  private val guidGenerator: GuidGenerator,
+  private val organizationMapper: OrganizationMapper,
   private val organizationStore: OrganizationStore,
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun get(guid: UUID): OrganizationRep? =
+  fun get(guid: UUID): OrganizationModel? =
     organizationStore.get(guid)
 
-  fun create(creator: OrganizationRep.Creator): OrganizationRep {
+  fun create(creator: OrganizationRep.Creator): OrganizationModel {
     logger.info { "Creating organization: $creator." }
-    val organization = OrganizationRep(
-      guid = guidGenerator.generate(),
-      name = creator.name,
-    )
-    return organizationStore.create(organization)
+    return organizationStore.create(organizationMapper(creator))
   }
 
-  fun update(guid: UUID, updater: OrganizationRep.Updater): OrganizationRep {
+  fun update(guid: UUID, updater: OrganizationRep.Updater): OrganizationModel {
     logger.info { "Updating organization: $updater." }
     return organizationStore.update(guid) { existing ->
-      OrganizationRep(
-        guid = existing.guid,
-        name = updater.name ?: existing.name,
+      OrganizationModel.Updater(
+        name = update(existing = existing.name, new = updater.name),
       )
     }
   }

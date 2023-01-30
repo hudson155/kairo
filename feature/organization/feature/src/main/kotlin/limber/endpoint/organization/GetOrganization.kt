@@ -5,11 +5,13 @@ import limber.auth.OrganizationAuth
 import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
+import limber.mapper.organization.OrganizationMapper
 import limber.service.organization.OrganizationService
 import limber.api.organization.OrganizationApi as Api
 import limber.rep.organization.OrganizationRep as Rep
 
 public class GetOrganization @Inject internal constructor(
+  private val organizationMapper: OrganizationMapper,
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
@@ -21,6 +23,7 @@ public class GetOrganization @Inject internal constructor(
       onFail = { return@handler null },
     )
 
-    return organizationService.get(endpoint.organizationGuid)
+    val organization = organizationService.get(endpoint.organizationGuid)
+    return organization?.let { organizationMapper(it) }
   }
 }
