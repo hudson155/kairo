@@ -40,7 +40,12 @@ const Template: Story<ComponentProps<typeof BaseLayout>> = () => {
 
 export const Default = Template.bind({});
 
-const SideNavImpl: React.FC<{ isOpen: boolean, setIsOpen: (isOpen: boolean) => void }> = ({ isOpen, setIsOpen }) => {
+interface Props {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const SideNavImpl: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   return (
     <SideNav isOpen={isOpen} setIsOpen={setIsOpen}>
       <SideNavEntry label="First" to="/first" onClick={doNothing} />

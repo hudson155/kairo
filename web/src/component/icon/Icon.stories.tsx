@@ -19,7 +19,11 @@ const Template: Story<ComponentProps<typeof Icon>> = () => {
 
 export const Default = Template.bind({});
 
-const Icons: React.FC<{ size?: Size }> = ({ size = undefined }) => {
+interface Props {
+  size?: Size;
+}
+
+const Icons: React.FC<Props> = ({ size = undefined }) => {
   return (
     <div>
       <Icon name="search" size={size} />

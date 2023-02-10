@@ -26,7 +26,11 @@ const Template: Story<ComponentProps<typeof Menu>> = () => {
 
 export const Default = Template.bind({});
 
-const MenuImpl: React.FC<{ side?: 'right' }> = ({ side = undefined }) => {
+interface Props {
+  side?: 'right';
+}
+
+const MenuImpl: React.FC<Props> = ({ side = undefined }) => {
   const button = (
     <Button variant="unstyled" onClick={doNothing}>
       <ProfilePhoto url="https://avatars.githubusercontent.com/u/1360420" />
