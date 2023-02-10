@@ -210,7 +210,7 @@ rules:
   func-names: warn
   func-style: warn
   guard-for-in: warn
-  id-length: [warn, { max: 30, exceptions: [e] }]
+  id-length: [warn, { exceptions: [e] }]
   logical-assignment-operators: warn
   max-depth: warn
   max-lines: warn
