@@ -2,6 +2,7 @@
 
 import { DecoratorFunction } from '@storybook/csf';
 import { ReactFramework } from '@storybook/react';
+import ToastContainer from 'component/toast/ToastContainer';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
@@ -21,4 +22,9 @@ export const recoilRoot: (
 ) => DecoratorFunction<ReactFramework> =
   (initializeState) => (story) => {
     return <RecoilRoot initializeState={initializeState}>{story()}</RecoilRoot>;
+  };
+
+export const toastProvider: () => DecoratorFunction<ReactFramework> =
+  () => (story) => {
+    return <>{story()}<ToastContainer /></>;
   };
