@@ -5,7 +5,7 @@ import InputLabel, { InputWidth } from 'component/input/label/InputLabel';
 import React, { ChangeEventHandler, FocusEventHandler, useState } from 'react';
 import styles from './TextInput.module.scss';
 
-interface Props {
+export interface Props {
   copyButton?: boolean;
   errorMessage?: string;
   label: string;
