@@ -5,8 +5,8 @@ import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhoto';
 import AdminSettingsButton from 'component/topNav/AdminSettingsButton';
+import OrganizationSettingsButton from 'component/topNav/OrganizationSettingsButton';
 import TopNavMenuLogoutButton from 'component/topNav/TopNavMenuLogoutButton';
-import TopNavMenuSettingsButton from 'component/topNav/TopNavMenuSettingsButton';
 import doNothing from 'helper/doNothing';
 import React from 'react';
 import styles from './TopNavMenu.module.scss';
@@ -23,15 +23,15 @@ const TopNavMenu: React.FC = () => {
     <Menu button={button} side="right">
       <MenuItems>
         <MenuItem>
-          {({ className }) => <TopNavMenuSettingsButton className={className} />}
+          {({ className, close }) => <OrganizationSettingsButton className={className} onClick={close} />}
         </MenuItem>
         <MenuItem>
-          {({ className }) => <AdminSettingsButton className={className} />}
+          {({ className, close }) => <AdminSettingsButton className={className} onClick={close} />}
         </MenuItem>
       </MenuItems>
       <MenuItems>
         <MenuItem>
-          {({ className }) => <TopNavMenuLogoutButton className={className} />}
+          {({ className, close }) => <TopNavMenuLogoutButton className={className} onClick={close} />}
         </MenuItem>
       </MenuItems>
     </Menu>

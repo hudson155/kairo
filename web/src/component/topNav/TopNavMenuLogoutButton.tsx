@@ -6,16 +6,22 @@ import auth0ClientState from 'state/auth/auth0Client';
 
 interface Props {
   className: string;
+  onClick: () => void;
 }
 
 const TopNavMenuLogoutButton: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
-  ({ className }, ref) => {
+  ({ className, onClick }, ref) => {
     const auth0 = useRecoilValueLoadable(auth0ClientState).valueMaybe();
 
     if (!auth0) return null;
 
+    const handleClick = () => {
+      onClick();
+      void auth0.logout();
+    };
+
     return (
-      <Button ref={ref} className={className} variant="unstyled" onClick={() => void auth0.logout()}>
+      <Button ref={ref} className={className} variant="unstyled" onClick={handleClick}>
         <Icon name="logout" size="small" space="after" />
         {'Log out'}
       </Button>

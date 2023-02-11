@@ -4,13 +4,13 @@ import React, { Fragment, ReactElement } from 'react';
 import styles from './MenuItem.module.scss';
 
 interface Props {
-  children: (propArg: { className: string }) => ReactElement;
+  children: (propArg: { className: string; close: () => void }) => ReactElement;
 }
 
 const MenuItem: React.FC<Props> = ({ children }) => {
   return (
     <Delegate.Item as={Fragment}>
-      {({ active }) => children({ className: classNames(styles.item, { focus: active }) })}
+      {({ active, close }) => children({ className: classNames(styles.item, { focus: active }), close })}
     </Delegate.Item>
   );
 };
