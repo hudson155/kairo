@@ -1,4 +1,5 @@
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
+import { adminSettingsRoute } from 'page/adminSettings/AdminSettingsPageRoute';
 import FeaturePage from 'page/feature/FeaturePage';
 import LoadingPage from 'page/loading/LoadingPage';
 import { organizationSettingsRoute } from 'page/organizationSettings/OrganizationSettingsPageRoute';
@@ -33,6 +34,7 @@ const AuthenticatedRouter: React.FC = () => {
         <Routes>
           {defaultFeatureRedirect}
           {organizationSettingsRoute()}
+          {adminSettingsRoute()}
           {featureRoutes}
         </Routes>
       </Suspense>
