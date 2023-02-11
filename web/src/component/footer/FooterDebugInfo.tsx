@@ -15,13 +15,13 @@ const FooterDebugInfo: React.FC = () => {
   const organizationGuid = useRecoilValueLoadable(organizationGuidState).valueMaybe();
 
   const lines: Line[] = [{ label: 'Git SHA', value: gitSha }];
-  if (organizationGuid) lines.push({ label: 'Organization GUID: ', value: organizationGuid });
+  if (organizationGuid) lines.push({ label: 'Organization GUID', value: organizationGuid });
 
   return (
     <Paragraph size="small">
       {
         lines.map((line) => (
-          <React.Fragment key={line.label}>{line.label}
+          <React.Fragment key={line.label}>{`${line.label}: `}
             <Code selectAll={true}>{line.value}</Code>
             <br />
           </React.Fragment>
