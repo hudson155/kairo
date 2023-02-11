@@ -10,11 +10,11 @@ import limber.service.feature.FeatureService
 import limber.api.feature.FeatureApi as Api
 import limber.rep.feature.FeatureRep as Rep
 
-public class GetFeaturesByOrganization @Inject internal constructor(
+public class ListFeaturesByOrganization @Inject internal constructor(
   private val featureMapper: FeatureMapper,
   private val featureService: FeatureService,
-) : RestEndpointHandler<Api.GetByOrganization, List<Rep>>(Api.GetByOrganization::class) {
-  override suspend fun handler(endpoint: Api.GetByOrganization): List<Rep> {
+) : RestEndpointHandler<Api.ListByOrganization, List<Rep>>(Api.ListByOrganization::class) {
+  override suspend fun handler(endpoint: Api.ListByOrganization): List<Rep> {
     auth(
       auth = OrganizationAuth(
         organizationGuid = endpoint.organizationGuid,
@@ -23,7 +23,7 @@ public class GetFeaturesByOrganization @Inject internal constructor(
       onFail = { return@handler emptyList() },
     )
 
-    val features = featureService.getByOrganization(endpoint.organizationGuid)
+    val features = featureService.listByOrganization(endpoint.organizationGuid)
     return features.map { featureMapper(it) }
   }
 }

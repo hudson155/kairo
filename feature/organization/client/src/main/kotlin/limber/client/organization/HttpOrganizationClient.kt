@@ -15,7 +15,7 @@ public class HttpOrganizationClient @Inject constructor(
     client.request(endpoint)
 
   override suspend operator fun invoke(
-    endpoint: OrganizationApi.GetAll,
+    endpoint: OrganizationApi.ListAll,
   ): List<OrganizationRep> =
     client.request(endpoint)
 

@@ -16,11 +16,11 @@ import limber.client.organizationHostname.OrganizationHostnameClient
 import limber.endpoint.feature.CreateFeature
 import limber.endpoint.feature.DeleteFeature
 import limber.endpoint.feature.GetFeature
-import limber.endpoint.feature.GetFeaturesByOrganization
+import limber.endpoint.feature.ListFeaturesByOrganization
 import limber.endpoint.feature.UpdateFeature
 import limber.endpoint.organization.CreateOrganization
-import limber.endpoint.organization.GetAllOrganizations
 import limber.endpoint.organization.GetOrganization
+import limber.endpoint.organization.ListAllOrganizations
 import limber.endpoint.organization.SearchOrganizations
 import limber.endpoint.organization.UpdateOrganization
 import limber.endpoint.organizationAuth.DeleteOrganizationAuthByOrganization
@@ -50,7 +50,7 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
 
   private fun bindOrganization(binder: PrivateBinder) {
     binder.bindRestEndpoint(GetOrganization::class)
-    binder.bindRestEndpoint(GetAllOrganizations::class)
+    binder.bindRestEndpoint(ListAllOrganizations::class)
     binder.bindRestEndpoint(SearchOrganizations::class)
     binder.bindRestEndpoint(CreateOrganization::class)
     binder.bindRestEndpoint(UpdateOrganization::class)
@@ -98,7 +98,7 @@ public class OrganizationFeature(private val rest: RestImplementation) : Feature
 
   private fun bindFeature(binder: PrivateBinder) {
     binder.bindRestEndpoint(GetFeature::class)
-    binder.bindRestEndpoint(GetFeaturesByOrganization::class)
+    binder.bindRestEndpoint(ListFeaturesByOrganization::class)
     binder.bindRestEndpoint(CreateFeature::class)
     binder.bindRestEndpoint(UpdateFeature::class)
     binder.bindRestEndpoint(DeleteFeature::class)

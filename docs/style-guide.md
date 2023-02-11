@@ -40,3 +40,7 @@ Other than the rules defined here, please follow the
   `null` should be used for React nodes, and in API interaction.
   Specifically, `null` should be used for 404 responses
   and to explicitly remove fields in PATCH requests.
+
+- **Get vs. list:**
+  The term "get" should be used when fetching a particular entity.
+  The term "list" should be used when fetching multiple entities.

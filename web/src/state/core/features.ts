@@ -8,7 +8,7 @@ const featuresState = spring<FeatureRep[]>({
   get: async ({ get }) => {
     const featureApi = get(featureApiState);
     const organizationGuid = get(organizationGuidState);
-    const features = await featureApi.getByOrganization(organizationGuid);
+    const features = await featureApi.listByOrganization(organizationGuid);
     return sortFeatures(features);
   },
 });

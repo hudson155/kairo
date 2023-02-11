@@ -14,7 +14,7 @@ public object FeatureApi {
     override val path: String = "/features/$featureGuid"
   }
 
-  public data class GetByOrganization(
+  public data class ListByOrganization(
     val organizationGuid: UUID,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get

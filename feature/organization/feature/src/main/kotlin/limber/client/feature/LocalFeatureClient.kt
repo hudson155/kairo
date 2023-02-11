@@ -5,13 +5,13 @@ import limber.api.feature.FeatureApi
 import limber.endpoint.feature.CreateFeature
 import limber.endpoint.feature.DeleteFeature
 import limber.endpoint.feature.GetFeature
-import limber.endpoint.feature.GetFeaturesByOrganization
+import limber.endpoint.feature.ListFeaturesByOrganization
 import limber.endpoint.feature.UpdateFeature
 import limber.rep.feature.FeatureRep
 
 public class LocalFeatureClient @Inject constructor(
   private val get: GetFeature,
-  private val getByOrganization: GetFeaturesByOrganization,
+  private val getByOrganization: ListFeaturesByOrganization,
   private val create: CreateFeature,
   private val update: UpdateFeature,
   private val delete: DeleteFeature,
@@ -22,7 +22,7 @@ public class LocalFeatureClient @Inject constructor(
     get.handle(endpoint)
 
   override suspend operator fun invoke(
-    endpoint: FeatureApi.GetByOrganization,
+    endpoint: FeatureApi.ListByOrganization,
   ): List<FeatureRep> =
     getByOrganization.handle(endpoint)
 

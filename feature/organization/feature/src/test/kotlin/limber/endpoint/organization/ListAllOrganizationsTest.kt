@@ -10,11 +10,11 @@ import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
 
-internal class GetAllOrganizationsTest : IntegrationTest() {
+internal class ListAllOrganizationsTest : IntegrationTest() {
   @Test
   fun `no organizations`() {
     test {
-      organizationClient(OrganizationApi.GetAll)
+      organizationClient(OrganizationApi.ListAll)
         .shouldBeEmpty()
     }
   }
@@ -26,7 +26,7 @@ internal class GetAllOrganizationsTest : IntegrationTest() {
     }
 
     test {
-      organizationClient(OrganizationApi.GetAll)
+      organizationClient(OrganizationApi.ListAll)
         .shouldContainExactlyInAnyOrder(organization)
     }
   }

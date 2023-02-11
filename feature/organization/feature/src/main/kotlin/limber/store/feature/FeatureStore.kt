@@ -17,9 +17,9 @@ internal class FeatureStore : SqlStore<FeatureModel>(
   tableName = "organization.feature",
   type = FeatureModel::class,
 ) {
-  fun getByOrganization(organizationGuid: UUID): List<FeatureModel> =
+  fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
     handle { handle ->
-      val query = handle.createQuery(rs("store/feature/getByOrganization.sql"))
+      val query = handle.createQuery(rs("store/feature/listByOrganization.sql"))
       query.bind("organizationGuid", organizationGuid)
       return@handle query.mapToType().toList()
     }
@@ -27,7 +27,7 @@ internal class FeatureStore : SqlStore<FeatureModel>(
   fun create(creator: FeatureModel.Creator): FeatureModel =
     transaction { handle ->
       var updated = creator
-      if (getByOrganization(updated.organizationGuid).none { it.isDefault }) {
+      if (listByOrganization(updated.organizationGuid).none { it.isDefault }) {
         // If the organization doesn't have a default feature, this one should be it!
         updated = updated.copy(isDefault = true)
       }

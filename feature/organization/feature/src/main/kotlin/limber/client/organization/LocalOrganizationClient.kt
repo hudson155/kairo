@@ -3,15 +3,15 @@ package limber.client.organization
 import com.google.inject.Inject
 import limber.api.organization.OrganizationApi
 import limber.endpoint.organization.CreateOrganization
-import limber.endpoint.organization.GetAllOrganizations
 import limber.endpoint.organization.GetOrganization
+import limber.endpoint.organization.ListAllOrganizations
 import limber.endpoint.organization.SearchOrganizations
 import limber.endpoint.organization.UpdateOrganization
 import limber.rep.organization.OrganizationRep
 
 public class LocalOrganizationClient @Inject constructor(
   private val get: GetOrganization,
-  private val getAll: GetAllOrganizations,
+  private val getAll: ListAllOrganizations,
   private val search: SearchOrganizations,
   private val create: CreateOrganization,
   private val update: UpdateOrganization,
@@ -22,7 +22,7 @@ public class LocalOrganizationClient @Inject constructor(
     get.handle(endpoint)
 
   override suspend operator fun invoke(
-    endpoint: OrganizationApi.GetAll,
+    endpoint: OrganizationApi.ListAll,
   ): List<OrganizationRep> =
     getAll.handle(endpoint)
 

@@ -10,14 +10,14 @@ import limber.service.organization.OrganizationService
 import limber.api.organization.OrganizationApi as Api
 import limber.rep.organization.OrganizationRep as Rep
 
-public class GetAllOrganizations @Inject internal constructor(
+public class ListAllOrganizations @Inject internal constructor(
   private val organizationMapper: OrganizationMapper,
   private val organizationService: OrganizationService,
-) : RestEndpointHandler<Api.GetAll, List<Rep>>(Api.GetAll::class) {
-  override suspend fun handler(endpoint: Api.GetAll): List<Rep> {
+) : RestEndpointHandler<Api.ListAll, List<Rep>>(Api.ListAll::class) {
+  override suspend fun handler(endpoint: Api.ListAll): List<Rep> {
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationList))
 
-    val organizations = organizationService.getAll()
+    val organizations = organizationService.listAll()
     return organizations.map { organizationMapper(it) }
   }
 }

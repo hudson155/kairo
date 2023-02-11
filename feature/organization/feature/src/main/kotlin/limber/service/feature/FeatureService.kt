@@ -19,8 +19,8 @@ internal class FeatureService @Inject constructor(
   fun get(guid: UUID): FeatureModel? =
     featureStore.get(guid)
 
-  fun getByOrganization(organizationGuid: UUID): List<FeatureModel> =
-    featureStore.getByOrganization(organizationGuid)
+  fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
+    featureStore.listByOrganization(organizationGuid)
 
   fun create(organizationGuid: UUID, creator: FeatureRep.Creator): FeatureModel {
     logger.info { "Creating feature: $creator." }

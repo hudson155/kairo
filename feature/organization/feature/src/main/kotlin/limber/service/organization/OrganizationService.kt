@@ -19,8 +19,8 @@ internal class OrganizationService @Inject constructor(
   fun get(guid: UUID): OrganizationModel? =
     organizationStore.get(guid)
 
-  fun getAll(): List<OrganizationModel> =
-    organizationStore.getAll()
+  fun listAll(): List<OrganizationModel> =
+    organizationStore.listAll()
 
   fun search(search: String): List<OrganizationModel> =
     organizationStore.search(search)

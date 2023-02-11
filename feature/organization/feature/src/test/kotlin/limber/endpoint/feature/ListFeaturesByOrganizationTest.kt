@@ -13,13 +13,13 @@ import limber.testing.testSetup
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
-internal class GetFeaturesByOrganizationTest : IntegrationTest() {
+internal class ListFeaturesByOrganizationTest : IntegrationTest() {
   @Test
   fun `no features`() {
     val organizationGuid = UUID.randomUUID()
 
     test {
-      featureClient(FeatureApi.GetByOrganization(organizationGuid))
+      featureClient(FeatureApi.ListByOrganization(organizationGuid))
         .shouldBeEmpty()
     }
   }
@@ -39,7 +39,7 @@ internal class GetFeaturesByOrganizationTest : IntegrationTest() {
     }
 
     test {
-      featureClient(FeatureApi.GetByOrganization(organization.guid))
+      featureClient(FeatureApi.ListByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }

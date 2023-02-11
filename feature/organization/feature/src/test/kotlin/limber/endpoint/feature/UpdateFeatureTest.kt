@@ -69,7 +69,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
       myFormsFeature = myFormsFeature.copy(isDefault = true)
       featureClient(FeatureApi.Update(myFormsFeature.guid, updater))
         .shouldBe(myFormsFeature)
-      featureClient(FeatureApi.GetByOrganization(organization.guid))
+      featureClient(FeatureApi.ListByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }
@@ -92,7 +92,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
       val updater = FeatureRep.Updater(isDefault = true)
       featureClient(FeatureApi.Update(homeFeature.guid, updater))
         .shouldBe(homeFeature)
-      featureClient(FeatureApi.GetByOrganization(organization.guid))
+      featureClient(FeatureApi.ListByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }

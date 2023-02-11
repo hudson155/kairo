@@ -9,7 +9,7 @@ public interface OrganizationClient {
   ): OrganizationRep?
 
   public suspend operator fun invoke(
-    endpoint: OrganizationApi.GetAll,
+    endpoint: OrganizationApi.ListAll,
   ): List<OrganizationRep>
 
   public suspend operator fun invoke(
