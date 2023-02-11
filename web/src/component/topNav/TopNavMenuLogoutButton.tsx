@@ -1,6 +1,6 @@
 import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import auth0ClientState from 'state/auth/auth0Client';
 
@@ -15,7 +15,7 @@ const TopNavMenuLogoutButton: React.ForwardRefRenderFunction<HTMLButtonElement, 
 
     if (!auth0) return null;
 
-    const handleClick = () => {
+    const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
       onClick();
       void auth0.logout();
     };
