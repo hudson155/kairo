@@ -16,10 +16,9 @@ public class GetOrganizationHostname @Inject internal constructor(
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(
-      auth = OrganizationAuth(
-        organizationGuid = { hostnameService.get(endpoint.hostnameGuid)?.organizationGuid },
-        permission = OrganizationPermission.OrganizationHostnameRead,
-      ),
+      auth = OrganizationAuth(OrganizationPermission.OrganizationHostnameRead) {
+        hostnameService.get(endpoint.hostnameGuid)?.organizationGuid
+      },
       onFail = { return@handler null },
     )
 

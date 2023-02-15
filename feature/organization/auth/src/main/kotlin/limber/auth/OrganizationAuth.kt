@@ -1,48 +1,29 @@
 package limber.auth
 
-import io.ktor.server.auth.jwt.JWTPrincipal
 import java.util.UUID
-
-private const val ORGANIZATION_CLAIM_NAME = "organization"
-
-public data class OrganizationClaim(
-  val guid: UUID,
-  val permissions: List<OrganizationPermission>,
-)
 
 /**
  * Protects an endpoint to only members of the organization.
  */
 public class OrganizationAuth(
-  private val organizationGuid: UUID?,
   private val permission: OrganizationPermission,
+  private val organizationGuid: UUID?,
 ) : Auth() {
   public constructor(
-    organizationGuid: () -> UUID?,
     permission: OrganizationPermission,
-  ) : this(organizationGuid(), permission)
+    organizationGuid: () -> UUID?,
+  ) : this(permission, organizationGuid())
 
   override fun authorize(context: RestContext): AuthResult {
     val principal = context.principal
       ?: return AuthResult.Unauthorized.noPrincipal()
 
-    val organization = getOrganizationClaim(context, principal)
-      ?: return AuthResult.Unauthorized.noClaim(ORGANIZATION_CLAIM_NAME)
+    val permissions = context.getPermissions(principal)
+      ?: return AuthResult.Unauthorized.noClaim(PERMISSIONS_CLAIM_NAME)
+    val permissionValue = permissions[permission.value]
+      ?: return AuthResult.Forbidden("Missing required permission ${permission.value}.")
 
-    if (organizationGuid == null) return AuthResult.Failed
-
-    if (organization.guid != organizationGuid) {
-      return AuthResult.Failed
-    }
-    if (permission !in organization.permissions) {
-      return AuthResult.Forbidden("Missing required permission ${permission.value}.")
-    }
+    if (organizationGuid == null || organizationGuid !in permissionValue) return AuthResult.Failed
     return AuthResult.Authorized
   }
-
-  private fun getOrganizationClaim(
-    context: RestContext,
-    principal: JWTPrincipal,
-  ): OrganizationClaim? =
-    context.getClaim(principal, ORGANIZATION_CLAIM_NAME)
 }

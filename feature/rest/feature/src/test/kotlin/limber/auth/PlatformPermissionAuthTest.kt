@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
 import limber.exception.AuthException
 import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
+import java.util.UUID
 
 internal class PlatformPermissionAuthTest {
   private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
@@ -38,7 +39,9 @@ internal class PlatformPermissionAuthTest {
 
   @Test
   fun `non-overlapping permissions`() {
-    val permissions = listOf(PlatformPermission.OrganizationCreate)
+    val permissions = mapOf(
+      PlatformPermission.OrganizationCreate.value to PermissionValue.All,
+    )
     val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
       test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
@@ -49,17 +52,34 @@ internal class PlatformPermissionAuthTest {
 
   @Test
   fun `overlapping permissions`() {
-    val permissions = listOf(PlatformPermission.OrganizationCreate, PlatformPermission.OrganizationDelete)
+    val permissions = mapOf(
+      PlatformPermission.OrganizationCreate.value to PermissionValue.All,
+      PlatformPermission.OrganizationDelete.value to PermissionValue.All,
+    )
     val context = context(principal(permissions))
     shouldNotThrowAny {
       test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
     }
   }
 
+  @Test
+  fun `non-star`() {
+    val permissions = mapOf(
+      PlatformPermission.OrganizationCreate.value to PermissionValue.All,
+      PlatformPermission.OrganizationDelete.value to PermissionValue.Some(setOf(UUID.randomUUID())),
+    )
+    val context = context(principal(permissions))
+    val e = shouldThrow<AuthException> {
+      test(context, PlatformPermissionAuth(PlatformPermission.OrganizationDelete))
+    }
+    e.status.shouldBe(AuthException.Status.Forbidden)
+    e.userMessage.shouldBe("Missing required permission organization:delete.")
+  }
+
   private fun context(principal: JWTPrincipal?): RestContext =
     RestContext(authorize = true, claimPrefix = "", principal = principal)
 
-  private fun principal(permissions: List<PlatformPermission>?): JWTPrincipal =
+  private fun principal(permissions: Permissions?): JWTPrincipal =
     mockk {
       every { payload } returns mockk {
         every { getClaim("permissions") } returns mockk mockkClaim@{

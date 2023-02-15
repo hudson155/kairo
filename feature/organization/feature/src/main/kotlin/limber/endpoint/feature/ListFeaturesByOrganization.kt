@@ -16,10 +16,7 @@ public class ListFeaturesByOrganization @Inject internal constructor(
 ) : RestEndpointHandler<Api.ListByOrganization, List<Rep>>(Api.ListByOrganization::class) {
   override suspend fun handler(endpoint: Api.ListByOrganization): List<Rep> {
     auth(
-      auth = OrganizationAuth(
-        organizationGuid = endpoint.organizationGuid,
-        permission = OrganizationPermission.FeatureRead,
-      ),
+      auth = OrganizationAuth(OrganizationPermission.FeatureRead, endpoint.organizationGuid),
       onFail = { return@handler emptyList() },
     )
 

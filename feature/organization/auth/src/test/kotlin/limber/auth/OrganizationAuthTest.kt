@@ -23,30 +23,32 @@ internal class OrganizationAuthTest {
     val organizationGuid = UUID.randomUUID()
     val context = context(null)
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(organizationGuid, OrganizationPermission.FeatureDelete))
+      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No token provided.")
   }
 
   @Test
-  fun `null organization`() {
+  fun `null permissions`() {
     val organizationGuid = UUID.randomUUID()
     val context = context(principal(null))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(organizationGuid, OrganizationPermission.FeatureDelete))
+      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
-    e.userMessage.shouldBe("No organization claim on the provided token.")
+    e.userMessage.shouldBe("No permissions claim on the provided token.")
   }
 
   @Test
   fun `non-overlapping permissions`() {
     val organizationGuid = UUID.randomUUID()
-    val permissions = listOf(OrganizationPermission.FeatureCreate)
-    val context = context(principal(OrganizationClaim(organizationGuid, permissions)))
+    val permissions = mapOf(
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
+    )
+    val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(organizationGuid, OrganizationPermission.FeatureDelete))
+      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
     }
     e.status.shouldBe(AuthException.Status.Forbidden)
     e.userMessage.shouldBe("Missing required permission feature:delete.")
@@ -55,37 +57,49 @@ internal class OrganizationAuthTest {
   @Test
   fun `different organization guid`() {
     val organizationGuid = UUID.randomUUID()
-    val permissions = listOf(
-      OrganizationPermission.FeatureCreate,
-      OrganizationPermission.FeatureDelete,
+    val permissions = mapOf(
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationGuid)),
     )
-    val context = context(principal(OrganizationClaim(organizationGuid, permissions)))
-    test(context, OrganizationAuth(UUID.randomUUID(), OrganizationPermission.FeatureDelete))
+    val context = context(principal(permissions))
+    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, UUID.randomUUID()))
       .shouldBeFalse()
   }
 
   @Test
   fun `same organization guid`() {
     val organizationGuid = UUID.randomUUID()
-    val permissions = listOf(
-      OrganizationPermission.FeatureCreate,
-      OrganizationPermission.FeatureDelete,
+    val permissions = mapOf(
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationGuid)),
     )
-    val context = context(principal(OrganizationClaim(organizationGuid, permissions)))
-    test(context, OrganizationAuth(organizationGuid, OrganizationPermission.FeatureDelete))
+    val context = context(principal(permissions))
+    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
+      .shouldBeTrue()
+  }
+
+  @Test
+  fun star() {
+    val organizationGuid = UUID.randomUUID()
+    val permissions = mapOf(
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureDelete.value to PermissionValue.All,
+    )
+    val context = context(principal(permissions))
+    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
       .shouldBeTrue()
   }
 
   private fun context(principal: JWTPrincipal?): RestContext =
     RestContext(authorize = true, claimPrefix = "", principal = principal)
 
-  private fun principal(organization: OrganizationClaim?): JWTPrincipal =
+  private fun principal(permissions: Permissions?): JWTPrincipal =
     mockk {
       every { payload } returns mockk {
-        every { getClaim("organization") } returns mockk mockkClaim@{
-          every { isMissing } returns (organization == null)
-          every { isNull } returns (organization == null)
-          every { this@mockkClaim.toString() } returns objectMapper.writeValueAsString(organization)
+        every { getClaim("permissions") } returns mockk mockkClaim@{
+          every { isMissing } returns (permissions == null)
+          every { isNull } returns (permissions == null)
+          every { this@mockkClaim.toString() } returns objectMapper.writeValueAsString(permissions)
         }
       }
     }

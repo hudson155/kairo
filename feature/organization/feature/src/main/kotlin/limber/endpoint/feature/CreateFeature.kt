@@ -17,10 +17,7 @@ public class CreateFeature @Inject internal constructor(
 ) : RestEndpointHandler<Api.Create, Rep>(Api.Create::class) {
   override suspend fun handler(endpoint: Api.Create): Rep {
     auth(
-      auth = OrganizationAuth(
-        organizationGuid = endpoint.organizationGuid,
-        permission = OrganizationPermission.FeatureCreate,
-      ),
+      auth = OrganizationAuth(OrganizationPermission.FeatureCreate, endpoint.organizationGuid),
       onFail = { throw OrganizationDoesNotExist() },
     )
 

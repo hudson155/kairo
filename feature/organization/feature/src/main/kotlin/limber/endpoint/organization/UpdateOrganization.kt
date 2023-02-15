@@ -17,10 +17,7 @@ public class UpdateOrganization @Inject internal constructor(
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(
-      auth = OrganizationAuth(
-        organizationGuid = endpoint.organizationGuid,
-        permission = OrganizationPermission.OrganizationUpdate,
-      ),
+      auth = OrganizationAuth(OrganizationPermission.OrganizationUpdate, endpoint.organizationGuid),
       onFail = { throw OrganizationDoesNotExist() },
     )
 

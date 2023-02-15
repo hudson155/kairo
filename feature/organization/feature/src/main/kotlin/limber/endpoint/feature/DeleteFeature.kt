@@ -17,10 +17,9 @@ public class DeleteFeature @Inject internal constructor(
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
     auth(
-      auth = OrganizationAuth(
-        organizationGuid = { featureService.get(endpoint.featureGuid)?.organizationGuid },
-        permission = OrganizationPermission.FeatureDelete,
-      ),
+      auth = OrganizationAuth(OrganizationPermission.FeatureDelete) {
+        featureService.get(endpoint.featureGuid)?.organizationGuid
+      },
       onFail = { throw FeatureDoesNotExist() },
     )
 

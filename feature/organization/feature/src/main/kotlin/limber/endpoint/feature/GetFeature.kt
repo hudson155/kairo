@@ -16,10 +16,9 @@ public class GetFeature @Inject internal constructor(
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(
-      auth = OrganizationAuth(
-        organizationGuid = { featureService.get(endpoint.featureGuid)?.organizationGuid },
-        permission = OrganizationPermission.FeatureRead,
-      ),
+      auth = OrganizationAuth(OrganizationPermission.FeatureRead) {
+        featureService.get(endpoint.featureGuid)?.organizationGuid
+      },
       onFail = { return@handler null },
     )
 
