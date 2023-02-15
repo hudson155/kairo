@@ -1,15 +1,33 @@
+-- Acme Co.
+
 insert into organization.organization (guid, name)
 values ('9d45d538-8131-44cc-aeba-9bef4e045d21', 'Acme Co.');
 
-insert into organization.organization_auth (organization_guid, guid, auth0_organization_id)
-values ('9d45d538-8131-44cc-aeba-9bef4e045d21', gen_random_uuid(), 'org_yDiVK18hoeddya8J');
+insert into organization.organization_auth (guid, organization_guid, auth0_organization_id)
+values (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', 'org_yDiVK18hoeddya8J');
 
-insert into organization.organization_hostname (organization_guid, guid, hostname)
-values ('9d45d538-8131-44cc-aeba-9bef4e045d21', gen_random_uuid(), 'localhost:3000');
+insert into organization.organization_hostname (guid, organization_guid, hostname)
+values (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', 'localhost:3000');
 
-insert into organization.feature (organization_guid, guid, is_default,
+insert into organization.feature (guid, organization_guid, is_default,
                                   type, name, icon_name, root_path)
-values ((select guid from organization.organization), '9b76e07a-7e1e-4617-a184-35f3c64f6ce4', true,
+values (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', true,
         'Placeholder', 'Home', 'home', '/placeholder'),
-       ((select guid from organization.organization), 'f16a3df1-cd27-4c0f-bd8e-0d7d4ab23046', false,
+       (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', false,
         'Form', 'My forms', 'assignment', '/forms');
+
+-- Universal Exports.
+
+insert into organization.organization (guid, name)
+values ('15cf1689-6322-40a3-92cb-058834d1c8df', 'Universal Exports');
+
+insert into organization.organization_auth (guid, organization_guid, auth0_organization_id)
+values (gen_random_uuid(), '15cf1689-6322-40a3-92cb-058834d1c8df', 'org_Ro0Fat17RkcY4ldL');
+
+insert into organization.organization_hostname (guid, organization_guid, hostname)
+values (gen_random_uuid(), '15cf1689-6322-40a3-92cb-058834d1c8df', 'localhost:3001');
+
+insert into organization.feature (guid, organization_guid, is_default,
+                                  type, name, icon_name, root_path)
+values (gen_random_uuid(), '15cf1689-6322-40a3-92cb-058834d1c8df', true,
+        'Form', 'Exports', 'assignment', '/exports');

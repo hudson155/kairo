@@ -17,6 +17,14 @@ internal abstract class OrganizationFixture {
       override fun invoke(guid: UUID): OrganizationRep =
         OrganizationRep(guid = guid, name = "Acme Co.")
     }
+
+    val universalExports: OrganizationFixture = object : OrganizationFixture() {
+      override val creator: OrganizationRep.Creator =
+        OrganizationRep.Creator(name = " Universal Exports ")
+
+      override fun invoke(guid: UUID): OrganizationRep =
+        OrganizationRep(guid = guid, name = "Universal Exports")
+    }
   }
 }
 
