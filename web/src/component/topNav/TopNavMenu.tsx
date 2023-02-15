@@ -7,7 +7,7 @@ import ProfilePhoto from 'component/profilePhoto/ProfilePhoto';
 import AdminSettingsButton from 'component/topNav/AdminSettingsButton';
 import OrganizationSettingsButton from 'component/topNav/OrganizationSettingsButton';
 import TopNavMenuLogoutButton from 'component/topNav/TopNavMenuLogoutButton';
-import doNothing from 'helper/doNothing';
+import { doNothing } from 'helper/doNothing';
 import React from 'react';
 import styles from './TopNavMenu.module.scss';
 

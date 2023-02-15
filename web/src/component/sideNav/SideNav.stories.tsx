@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
-import doNothing from 'helper/doNothing';
+import { doNothing } from 'helper/doNothing';
 import { ComponentProps, MouseEventHandler, useState } from 'react';
 import * as Decorator from 'story/Decorator';
 import SideNav, { useCollapsibleSideNav } from './SideNav';

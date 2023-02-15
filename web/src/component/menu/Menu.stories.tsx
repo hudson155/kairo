@@ -4,7 +4,7 @@ import Icon from 'component/icon/Icon';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhotoDelegate';
-import doNothing from 'helper/doNothing';
+import { doNothing } from 'helper/doNothing';
 import React, { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
 import * as Decorator from 'story/Decorator';

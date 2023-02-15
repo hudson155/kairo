@@ -1,5 +1,5 @@
 import ButtonDelegate from 'component/button/ButtonDelegate';
-import doNothing from 'helper/doNothing';
+import { doNothing } from 'helper/doNothing';
 import React, { ReactNode } from 'react';
 
 interface Props {

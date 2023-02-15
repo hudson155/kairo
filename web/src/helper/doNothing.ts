@@ -1,5 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-function, no-empty-function, unicorn/empty-brace-spaces
-const doNothing = (): void => {
+/* eslint-disable @typescript-eslint/no-empty-function, no-empty-function, unicorn/empty-brace-spaces */
+
+export const doNothing = (): void => {
 };
 
-export default doNothing;
+export const doNothingAsync = async (): Promise<void> => {
+};

@@ -3,7 +3,7 @@ import Button from 'component/button/Button';
 import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
-import doNothing from 'helper/doNothing';
+import { doNothing } from 'helper/doNothing';
 import React, { ComponentProps, MouseEventHandler, useState } from 'react';
 import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';

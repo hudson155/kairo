@@ -1,5 +1,5 @@
 import { ComponentMeta, Story } from '@storybook/react';
-import doNothing from 'helper/doNothing';
+import { doNothing } from 'helper/doNothing';
 import { ComponentProps } from 'react';
 import Button, { Variant } from './ButtonDelegate';
 
