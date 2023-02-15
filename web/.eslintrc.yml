@@ -370,7 +370,9 @@ rules:
       format: [StrictPascalCase]
       leadingUnderscore: forbid
       trailingUnderscore: forbid
+  '@typescript-eslint/no-empty-interface': off
   '@typescript-eslint/no-inferrable-types': off
+  '@typescript-eslint/no-namespace': off
   '@typescript-eslint/restrict-template-expressions': off
 
   # TSLint - Extension Rules.
@@ -472,9 +474,6 @@ overrides:
     rules:
       spaced-comment: off
       unicorn/filename-case: off
-  - files: 'src/rep/**/*Rep.ts'
-    rules:
-      '@typescript-eslint/no-namespace': off
   - files: '*.stories.tsx'
     rules:
       react/jsx-curly-brace-presence:
