@@ -41,6 +41,11 @@ Other than the rules defined here, please follow the
   Specifically, `null` should be used for 404 responses
   and to explicitly remove fields in PATCH requests.
 
+- **GUIDs:**
+  Although the Java and Postgres types are `UUID` and `uuid`, respectively,
+  we refer to these types of identifiers as GUIDs,
+  since GUID is easier to pronounce than UUID.
+
 - **Get vs. list:**
   The term "get" should be used when fetching a particular entity.
   The term "list" should be used when fetching multiple entities.
