@@ -109,7 +109,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint<*>> {
       when {
         kClass.objectInstance !== null -> ObjectInstance(kClass)
         kClass.isData -> DataClass(kClass)
-        else -> @Suppress("NullableToStringCall") error("Unsupported REST endpoint class: ${kClass.simpleName}.")
+        else -> error("Unsupported REST endpoint class: ${kClass.simpleName}.")
       }
   }
 }

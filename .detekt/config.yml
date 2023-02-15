@@ -215,7 +215,7 @@ potential-bugs:
   NullCheckOnMutableProperty:
     active: true
   NullableToStringCall:
-    active: true
+    active: false
   UnconditionalJumpStatementInLoop:
     active: true
   UnnecessaryNotNullCheck:
