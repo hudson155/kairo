@@ -2,18 +2,25 @@ package limber.client.organizationAuth
 
 import com.google.inject.Inject
 import limber.api.organizationAuth.OrganizationAuthApi
-import limber.endpoint.organizationAuth.DeleteOrganizationAuthByOrganization
+import limber.endpoint.organizationAuth.CreateOrganizationAuth
+import limber.endpoint.organizationAuth.DeleteOrganizationAuth
+import limber.endpoint.organizationAuth.GetOrganizationAuth
 import limber.endpoint.organizationAuth.GetOrganizationAuthByHostname
 import limber.endpoint.organizationAuth.GetOrganizationAuthByOrganization
-import limber.endpoint.organizationAuth.SetOrganizationAuth
 import limber.rep.organizationAuth.OrganizationAuthRep
 
 public class LocalOrganizationAuthClient @Inject constructor(
+  private val get: GetOrganizationAuth,
   private val getByOrganization: GetOrganizationAuthByOrganization,
   private val getByHostname: GetOrganizationAuthByHostname,
-  private val set: SetOrganizationAuth,
-  private val deleteByOrganization: DeleteOrganizationAuthByOrganization,
+  private val create: CreateOrganizationAuth,
+  private val delete: DeleteOrganizationAuth,
 ) : OrganizationAuthClient {
+  override suspend operator fun invoke(
+    endpoint: OrganizationAuthApi.Get,
+  ): OrganizationAuthRep? =
+    get.handle(endpoint)
+
   override suspend operator fun invoke(
     endpoint: OrganizationAuthApi.GetByOrganization,
   ): OrganizationAuthRep? =
@@ -25,12 +32,12 @@ public class LocalOrganizationAuthClient @Inject constructor(
     getByHostname.handle(endpoint)
 
   override suspend operator fun invoke(
-    endpoint: OrganizationAuthApi.Set,
+    endpoint: OrganizationAuthApi.Create,
   ): OrganizationAuthRep =
-    set.handle(endpoint)
+    create.handle(endpoint)
 
   override suspend operator fun invoke(
-    endpoint: OrganizationAuthApi.DeleteByOrganization,
+    endpoint: OrganizationAuthApi.Delete,
   ): OrganizationAuthRep =
-    deleteByOrganization.handle(endpoint)
+    delete.handle(endpoint)
 }

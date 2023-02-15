@@ -8,11 +8,18 @@ import limber.rep.organizationAuth.OrganizationAuthRep
 import java.util.UUID
 
 public object OrganizationAuthApi {
+  public data class Get(
+    val authGuid: UUID,
+  ) : RestEndpoint<Nothing>() {
+    override val method: HttpMethod = HttpMethod.Get
+    override val path: String = "/organization-auths/$authGuid"
+  }
+
   public data class GetByOrganization(
     val organizationGuid: UUID,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/organizations/$organizationGuid/auth"
+    override val path: String = "/organizations/$organizationGuid/auths"
   }
 
   public data class GetByHostname(
@@ -23,18 +30,18 @@ public object OrganizationAuthApi {
     override val qp: List<QueryParam> = listOf(::hostname)
   }
 
-  public data class Set(
+  public data class Create(
     val organizationGuid: UUID,
     @Valid override val body: OrganizationAuthRep.Creator?,
   ) : RestEndpoint<OrganizationAuthRep.Creator>() {
-    override val method: HttpMethod = HttpMethod.Put
-    override val path: String = "/organizations/$organizationGuid/auth"
+    override val method: HttpMethod = HttpMethod.Post
+    override val path: String = "/organizations/$organizationGuid/auths"
   }
 
-  public data class DeleteByOrganization(
-    val organizationGuid: UUID,
+  public data class Delete(
+    val authGuid: UUID,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Delete
-    override val path: String = "/organizations/$organizationGuid/auth"
+    override val path: String = "/organization-auths/$authGuid"
   }
 }

@@ -2,6 +2,7 @@ package limber.store.organizationAuth
 
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.exception.organizationAuth.Auth0OrganizationIdAlreadyTaken
+import limber.exception.organizationAuth.OrganizationAlreadyHasOrganizationAuth
 import limber.exception.organizationAuth.OrganizationAuthDoesNotExist
 import limber.feature.sql.SqlStore
 import limber.feature.sql.isForeignKeyViolation
@@ -30,17 +31,17 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun set(model: OrganizationAuthModel.Creator): OrganizationAuthModel =
+  fun create(model: OrganizationAuthModel.Creator): OrganizationAuthModel =
     transaction { handle ->
-      val query = handle.createQuery(rs("store/organizationAuth/set.sql"))
+      val query = handle.createQuery(rs("store/organizationAuth/create.sql"))
       query.bindKotlin(model)
       return@transaction query.mapToType().single()
     }
 
-  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthModel =
+  fun delete(authGuid: UUID): OrganizationAuthModel =
     transaction { handle ->
-      val query = handle.createQuery(rs("store/organizationAuth/deleteByOrganization.sql"))
-      query.bind("organizationGuid", organizationGuid)
+      val query = handle.createQuery(rs("store/organizationAuth/delete.sql"))
+      query.bind("authGuid", authGuid)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
     }
 
@@ -48,6 +49,8 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
     when {
       isForeignKeyViolation("fk__organization_auth__organization_guid") ->
         throw OrganizationDoesNotExist()
+      isUniqueViolation("uq__organization_auth__organization_guid") ->
+        throw OrganizationAlreadyHasOrganizationAuth()
       isUniqueViolation("uq__organization_auth__auth0_organization_id") ->
         throw Auth0OrganizationIdAlreadyTaken()
     }

@@ -1,4 +1,4 @@
 delete
 from organization.organization_auth
-where organization_guid = :organizationGuid
+where guid = :authGuid
 returning *

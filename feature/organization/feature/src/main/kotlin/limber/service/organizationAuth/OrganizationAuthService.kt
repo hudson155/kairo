@@ -15,19 +15,22 @@ internal class OrganizationAuthService @Inject constructor(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
+  fun get(authGuid: UUID): OrganizationAuthModel? =
+    authStore.get(authGuid)
+
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
     authStore.getByOrganization(organizationGuid)
 
   fun getByHostname(hostname: String): OrganizationAuthModel? =
     authStore.getByHostname(hostname)
 
-  fun set(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthModel {
-    logger.info { "Setting organization auth: $creator." }
-    return authStore.set(authMapper(organizationGuid, creator))
+  fun create(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthModel {
+    logger.info { "Creating organization auth: $creator." }
+    return authStore.create(authMapper(organizationGuid, creator))
   }
 
-  fun deleteByOrganization(organizationGuid: UUID): OrganizationAuthModel {
+  fun delete(authGuid: UUID): OrganizationAuthModel {
     logger.info { "Deleting organization." }
-    return authStore.deleteByOrganization(organizationGuid)
+    return authStore.delete(authGuid)
   }
 }

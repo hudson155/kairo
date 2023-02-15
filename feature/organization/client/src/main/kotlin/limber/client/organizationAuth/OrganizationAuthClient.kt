@@ -5,6 +5,10 @@ import limber.rep.organizationAuth.OrganizationAuthRep
 
 public interface OrganizationAuthClient {
   public suspend operator fun invoke(
+    endpoint: OrganizationAuthApi.Get,
+  ): OrganizationAuthRep?
+
+  public suspend operator fun invoke(
     endpoint: OrganizationAuthApi.GetByOrganization,
   ): OrganizationAuthRep?
 
@@ -13,10 +17,10 @@ public interface OrganizationAuthClient {
   ): OrganizationAuthRep?
 
   public suspend operator fun invoke(
-    endpoint: OrganizationAuthApi.Set,
+    endpoint: OrganizationAuthApi.Create,
   ): OrganizationAuthRep
 
   public suspend operator fun invoke(
-    endpoint: OrganizationAuthApi.DeleteByOrganization,
+    endpoint: OrganizationAuthApi.Delete,
   ): OrganizationAuthRep
 }

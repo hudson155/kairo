@@ -15,7 +15,7 @@ public enum class PlatformPermission(@JsonValue internal val value: String) {
   OrganizationList("organization:list"),
   OrganizationCreate("organization:create"),
   OrganizationDelete("organization:delete"),
-  OrganizationAuthSet("organizationAuth:set"),
+  OrganizationAuthCreate("organizationAuth:create"),
   OrganizationAuthDelete("organizationAuth:delete"),
   OrganizationHostnameCreate("organizationHostname:create"),
   OrganizationHostnameDelete("organizationHostname:delete"),

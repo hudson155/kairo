@@ -10,14 +10,14 @@ import limber.service.organizationAuth.OrganizationAuthService
 import limber.api.organizationAuth.OrganizationAuthApi as Api
 import limber.rep.organizationAuth.OrganizationAuthRep as Rep
 
-public class SetOrganizationAuth @Inject internal constructor(
+public class DeleteOrganizationAuth @Inject internal constructor(
   private val authMapper: OrganizationAuthMapper,
   private val authService: OrganizationAuthService,
-) : RestEndpointHandler<Api.Set, Rep>(Api.Set::class) {
-  override suspend fun handler(endpoint: Api.Set): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthSet))
+) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
+  override suspend fun handler(endpoint: Api.Delete): Rep {
+    auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthDelete))
 
-    val auth = authService.set(endpoint.organizationGuid, getBody(endpoint))
+    val auth = authService.delete(endpoint.authGuid)
     return authMapper(auth)
   }
 }

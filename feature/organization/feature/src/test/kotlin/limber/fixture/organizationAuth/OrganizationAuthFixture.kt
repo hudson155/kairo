@@ -40,4 +40,4 @@ internal suspend fun IntegrationTest.create(
   organizationGuid: UUID,
   fixture: OrganizationAuthFixture,
 ): OrganizationAuthRep =
-  authClient(OrganizationAuthApi.Set(organizationGuid, fixture.creator))
+  authClient(OrganizationAuthApi.Create(organizationGuid, fixture.creator))
