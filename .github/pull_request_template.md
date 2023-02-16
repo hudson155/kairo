@@ -16,7 +16,7 @@
 
 **Frontend components:**
 
-- **Loading, empty, and error states** should all be implemented.
+- [ ] **Loading, empty, and error states** should all be implemented.
 
 **Tests:**
 
