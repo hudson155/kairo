@@ -20,5 +20,6 @@ public data class OrganizationAuthModel(
 
   public data class Updater(
     val auth0OrganizationId: String?,
+    val auth0OrganizationName: String?,
   )
 }

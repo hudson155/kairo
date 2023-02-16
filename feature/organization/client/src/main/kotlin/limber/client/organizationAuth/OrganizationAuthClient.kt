@@ -21,6 +21,10 @@ public interface OrganizationAuthClient {
   ): OrganizationAuthRep
 
   public suspend operator fun invoke(
+    endpoint: OrganizationAuthApi.Update,
+  ): OrganizationAuthRep
+
+  public suspend operator fun invoke(
     endpoint: OrganizationAuthApi.Delete,
   ): OrganizationAuthRep
 }

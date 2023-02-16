@@ -3,6 +3,7 @@ package limber.service.organizationAuth
 import com.google.inject.Inject
 import limber.feature.auth0.Auth0ManagementApi
 import limber.feature.sql.transaction
+import limber.feature.sql.update
 import limber.mapper.organizationAuth.OrganizationAuthMapper
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.rep.organizationAuth.OrganizationAuthRep
@@ -36,11 +37,34 @@ internal class OrganizationAuthService @Inject constructor(
       val auth0OrganizationId = auth0ManagementApi.createOrganization(
         name = auth.auth0OrganizationName,
       )
-      return@transaction authStore.update(auth.guid) {
+      return@transaction authStore.update(auth.guid) { existing ->
         OrganizationAuthModel.Updater(
           auth0OrganizationId = auth0OrganizationId,
+          auth0OrganizationName = existing.auth0OrganizationName,
         )
       }
+    }
+  }
+
+  fun update(guid: UUID, updater: OrganizationAuthRep.Updater): OrganizationAuthModel {
+    logger.info { "Updating organization auth: $updater." }
+    return jdbi.transaction {
+      val auth = authStore.update(guid) { existing ->
+        OrganizationAuthModel.Updater(
+          auth0OrganizationId = existing.auth0OrganizationId,
+          auth0OrganizationName = update(
+            existing = existing.auth0OrganizationName,
+            new = updater.auth0OrganizationName,
+          ),
+        )
+      }
+      auth0ManagementApi.updateOrganization(
+        organizationId = checkNotNull(auth.auth0OrganizationId) {
+          "The Auth0 organization ID should only be null during the creation process."
+        },
+        name = auth.auth0OrganizationName,
+      )
+      return@transaction auth
     }
   }
 

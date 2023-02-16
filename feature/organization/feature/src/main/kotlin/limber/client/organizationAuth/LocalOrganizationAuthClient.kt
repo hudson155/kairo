@@ -7,6 +7,7 @@ import limber.endpoint.organizationAuth.DeleteOrganizationAuth
 import limber.endpoint.organizationAuth.GetOrganizationAuth
 import limber.endpoint.organizationAuth.GetOrganizationAuthByHostname
 import limber.endpoint.organizationAuth.GetOrganizationAuthByOrganization
+import limber.endpoint.organizationAuth.UpdateOrganizationAuth
 import limber.rep.organizationAuth.OrganizationAuthRep
 
 public class LocalOrganizationAuthClient @Inject constructor(
@@ -14,6 +15,7 @@ public class LocalOrganizationAuthClient @Inject constructor(
   private val getByOrganization: GetOrganizationAuthByOrganization,
   private val getByHostname: GetOrganizationAuthByHostname,
   private val create: CreateOrganizationAuth,
+  private val update: UpdateOrganizationAuth,
   private val delete: DeleteOrganizationAuth,
 ) : OrganizationAuthClient {
   override suspend operator fun invoke(
@@ -35,6 +37,11 @@ public class LocalOrganizationAuthClient @Inject constructor(
     endpoint: OrganizationAuthApi.Create,
   ): OrganizationAuthRep =
     create.handle(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: OrganizationAuthApi.Update,
+  ): OrganizationAuthRep =
+    update.handle(endpoint)
 
   override suspend operator fun invoke(
     endpoint: OrganizationAuthApi.Delete,

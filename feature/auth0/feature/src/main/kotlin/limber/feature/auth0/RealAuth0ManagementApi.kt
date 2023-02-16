@@ -33,4 +33,13 @@ internal class RealAuth0ManagementApi @Inject constructor(
     val result = request.execute().body
     return result.id
   }
+
+  override fun updateOrganization(organizationId: String, name: String?) {
+    val organization = Organization().apply {
+      name?.let { this.name = it }
+    }
+
+    val request = managementApi.get().organizations().update(organizationId, organization)
+    request.execute()
+  }
 }

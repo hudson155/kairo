@@ -13,14 +13,13 @@ import org.junit.jupiter.api.Test
 import java.util.UUID
 
 internal class UpdateOrganizationTest : IntegrationTest() {
-  private val updater: OrganizationRep.Updater = OrganizationRep.Updater(name = " Hotel ")
-
   @Test
   fun `organization does not exist`() {
     val organizationGuid = UUID.randomUUID()
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
+        val updater = OrganizationRep.Updater(name = " Hotel ")
         organizationClient(OrganizationApi.Update(organizationGuid, updater))
       }
     }
@@ -48,6 +47,7 @@ internal class UpdateOrganizationTest : IntegrationTest() {
     }
 
     test {
+      val updater = OrganizationRep.Updater(name = " Hotel ")
       organization = organization.copy(name = "Hotel")
       organizationClient(OrganizationApi.Update(organization.guid, updater))
         .shouldBe(organization)

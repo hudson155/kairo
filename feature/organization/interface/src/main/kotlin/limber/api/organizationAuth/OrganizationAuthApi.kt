@@ -38,6 +38,14 @@ public object OrganizationAuthApi {
     override val path: String = "/organizations/$organizationGuid/auths"
   }
 
+  public data class Update(
+    val authGuid: UUID,
+    @Valid override val body: OrganizationAuthRep.Updater?,
+  ) : RestEndpoint<OrganizationAuthRep.Updater>() {
+    override val method: HttpMethod = HttpMethod.Patch
+    override val path: String = "/organization-auths/$authGuid"
+  }
+
   public data class Delete(
     val authGuid: UUID,
   ) : RestEndpoint<Nothing>() {

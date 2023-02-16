@@ -12,4 +12,8 @@ public data class OrganizationAuthRep(
   public data class Creator(
     @Auth0OrganizationNameValidator val auth0OrganizationName: String,
   )
+
+  public data class Updater(
+    @Auth0OrganizationNameValidator val auth0OrganizationName: String? = null,
+  )
 }
