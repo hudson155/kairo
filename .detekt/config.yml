@@ -48,8 +48,6 @@ complexity:
       - '**/jsTest/**'
       - '**/iosTest/**'
     threshold: 30
-  MethodOverloading:
-    active: true
   NamedArguments:
     active: true
   NestedScopeFunctions:
@@ -214,8 +212,6 @@ potential-bugs:
     active: true
   NullCheckOnMutableProperty:
     active: true
-  NullableToStringCall:
-    active: false
   UnconditionalJumpStatementInLoop:
     active: true
   UnnecessaryNotNullCheck:
