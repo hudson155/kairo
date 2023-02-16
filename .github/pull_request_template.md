@@ -2,8 +2,9 @@
 
 ### Checklist
 
-**Breaking API changes:**
+**API changes:**
 
+- [ ] All API changes should be reflected in both the **backend and frontends**.
 - [ ] All API changes should be **backwards-compatible**.
 
 **Documentation:**
@@ -12,6 +13,10 @@
 - [ ] **Gradle module READMEs** should be up-to-date.
 - [ ] **Technical debt** should be documented.
 - [ ] **Dependency locations** should be documented.
+
+**Frontend components:**
+
+- **Loading, empty, and error states** should all be implemented.
 
 **Tests:**
 
