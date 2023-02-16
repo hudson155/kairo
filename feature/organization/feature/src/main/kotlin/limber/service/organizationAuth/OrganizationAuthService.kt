@@ -70,6 +70,14 @@ internal class OrganizationAuthService @Inject constructor(
 
   fun delete(authGuid: UUID): OrganizationAuthModel {
     logger.info { "Deleting organization." }
-    return authStore.delete(authGuid)
+    return jdbi.transaction {
+      val auth = authStore.delete(authGuid)
+      auth0ManagementApi.deleteOrganization(
+        organizationId = checkNotNull(auth.auth0OrganizationId) {
+          "The Auth0 organization ID should only be null during the creation process."
+        },
+      )
+      return@transaction auth
+    }
   }
 }

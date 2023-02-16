@@ -10,4 +10,6 @@ internal class FakeAuth0ManagementApi @Inject constructor(
     guidGenerator.generate().toString()
 
   override fun updateOrganization(organizationId: String, name: String?): Unit = Unit
+
+  override fun deleteOrganization(organizationId: String): Unit = Unit
 }

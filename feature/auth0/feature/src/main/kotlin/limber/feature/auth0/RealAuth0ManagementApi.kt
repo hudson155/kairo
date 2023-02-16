@@ -42,4 +42,9 @@ internal class RealAuth0ManagementApi @Inject constructor(
     val request = managementApi.get().organizations().update(organizationId, organization)
     request.execute()
   }
+
+  override fun deleteOrganization(organizationId: String) {
+    val request = managementApi.get().organizations().delete(organizationId)
+    request.execute()
+  }
 }
