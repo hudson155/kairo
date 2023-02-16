@@ -35,6 +35,7 @@ include(":db:limber")
 // -----------------------------------------------------------------------------
 
 include(":feature:auth0:feature")
+include(":feature:auth0:testing")
 
 include(":feature:google-app-engine:client")
 include(":feature:google-app-engine:feature")
