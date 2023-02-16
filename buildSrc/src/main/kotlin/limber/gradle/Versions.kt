@@ -1,6 +1,9 @@
 package limber.gradle
 
 object Versions {
+  // https://github.com/auth0/auth0-java/releases
+  const val auth0 = "2.0.0-beta.2"
+
   // https://github.com/auth0/java-jwt/releases.
   const val auth0JavaJwt = "4.2.1"
 

@@ -1,5 +1,11 @@
 extends: local-production
 
+auth0:
+  type: Replace
+  value:
+    managementApi:
+      type: Fake
+
 sql:
   type: Merge
   value:

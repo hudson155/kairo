@@ -8,6 +8,11 @@ object Dependencies {
       .version(Versions.auth0JwksRsa)
   }
 
+  object Auth0 {
+    val auth0: String = "com.auth0:auth0"
+      .version(Versions.auth0)
+  }
+
   object Detekt {
     val formatting: String = "io.gitlab.arturbosch.detekt:detekt-formatting"
       .version(Versions.detekt)
