@@ -18,7 +18,7 @@ const SideNavImpl: React.FC = () => {
         features.map((feature) => (
           <SideNavEntry
             key={feature.guid}
-            iconName={feature.iconName}
+            iconName={feature.iconName ?? undefined}
             label={feature.name}
             to={feature.rootPath}
             onClick={() => setIsOpen(false)}
