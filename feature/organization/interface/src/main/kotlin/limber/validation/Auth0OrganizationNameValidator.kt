@@ -21,6 +21,6 @@ public annotation class Auth0OrganizationNameValidator(
   val payload: Array<KClass<out Payload>> = [],
 ) {
   public companion object {
-    internal const val pattern: String = "(?=.{3,50}$)[a-z0-9](-?[a-z0-9])*"
+    internal const val pattern: String = "(?=.{3,50}$)[A-Za-z0-9](-?[A-Za-z0-9])*"
   }
 }

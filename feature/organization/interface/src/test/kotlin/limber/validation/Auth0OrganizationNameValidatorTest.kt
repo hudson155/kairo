@@ -16,6 +16,7 @@ internal class Auth0OrganizationNameValidatorTest {
   @Test
   fun valid() {
     validator.validate(WrapperClass("abc")).shouldBeEmpty()
+    validator.validate(WrapperClass("ABC")).shouldBeEmpty()
     validator.validate(WrapperClass("123")).shouldBeEmpty()
     validator.validate(WrapperClass("a-c")).shouldBeEmpty()
     validator.validate(WrapperClass("1-3")).shouldBeEmpty()

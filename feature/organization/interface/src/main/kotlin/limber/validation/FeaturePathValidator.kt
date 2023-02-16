@@ -22,6 +22,6 @@ public annotation class FeaturePathValidator(
   val payload: Array<KClass<out Payload>> = [],
 ) {
   public companion object {
-    internal const val pattern: String = "(/[A-Za-z0-9](-?[A-Za-z0-9])*)+"
+    internal const val pattern: String = "/(?=.{3,31}\$)[A-Za-z0-9](-?[A-Za-z0-9])*"
   }
 }
