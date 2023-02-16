@@ -1,30 +1,50 @@
-extends: development
+extends: production
+
+rest:
+  type: Merge
+  value:
+    auth:
+      type: Merge
+      value:
+        jwtLeeway: 300 # 5 minutes.
+    parallelization:
+      type: Replace
+      value:
+        connectionGroupSize: 4
+        workerGroupSize: 8
+        callGroupSize: 16
+    port: 8080
+    shutDown:
+      type: Replace
+      value:
+        gracePeriodMillis: 400
+        timeoutMillis: 5000 # 5 seconds.
+
+server:
+  type: Merge
+  value:
+    lifecycle:
+      type: Replace
+      value:
+        startupDelayMs: 400
+        shutdownDelayMs: 200
 
 sql:
   type: Merge
   value:
-    jdbcUrl:
-      type: Replace
-      value:
-        type: EnvironmentVariable
-        name: LIMBER_SQL_JDBC_URL # This must be set in the environment for the config to work.
-    username:
-      type: Replace
-      value:
-        type: EnvironmentVariable
-        name: LIMBER_SQL_USERNAME # This must be set in the environment for the config to work.
     password:
       type: Replace
       value:
         type: Command
         command: gcloud auth print-access-token
+    properties:
+      type: Remove
     migrations:
       type: Merge
       value:
         run: true # TODO: Disable once migrations are stable.
         cleanOnValidationError: true # TODO: Disable once migrations are stable.
         cleanDisabled: false # TODO: Enable once migrations are stable.
-        locations:
-          - db/limber/migration/common
-          - db/limber/migration/fixtures # TODO: Remove once migrations are stable.
-          - db/limber/migration/gcp
+    connectionTimeoutMs: 1000
+    minimumIdle: 2
+    maximumPoolSize: 8
