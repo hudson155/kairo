@@ -23,7 +23,10 @@ internal object GcpSecretSource {
   @TestOnly
   fun withOverrides(overrides: Map<String, String>, block: () -> Unit) {
     delegate = { requireNotNull(overrides[it]) }
-    block()
-    delegate = defaultGetter
+    try {
+      block()
+    } finally {
+      delegate = defaultGetter
+    }
   }
 }

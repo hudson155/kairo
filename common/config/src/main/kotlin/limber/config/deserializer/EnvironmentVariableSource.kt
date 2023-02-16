@@ -17,7 +17,10 @@ internal object EnvironmentVariableSource {
   @TestOnly
   fun withOverrides(overrides: Map<String, String>, block: () -> Unit) {
     delegate = { overrides[it] }
-    block()
-    delegate = defaultGetter
+    try {
+      block()
+    } finally {
+      delegate = defaultGetter
+    }
   }
 }
