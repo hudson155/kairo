@@ -2,9 +2,11 @@ package limber.store.organizationAuth
 
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.exception.organizationAuth.Auth0OrganizationIdAlreadyTaken
+import limber.exception.organizationAuth.Auth0OrganizationNameAlreadyTaken
 import limber.exception.organizationAuth.OrganizationAlreadyHasOrganizationAuth
 import limber.exception.organizationAuth.OrganizationAuthDoesNotExist
 import limber.feature.sql.SqlStore
+import limber.feature.sql.Updater
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
 import limber.model.organizationAuth.OrganizationAuthModel
@@ -38,10 +40,22 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(authGuid: UUID): OrganizationAuthModel =
+  fun update(
+    guid: UUID,
+    updater: Updater<OrganizationAuthModel, OrganizationAuthModel.Updater>,
+  ): OrganizationAuthModel =
+    transaction { handle ->
+      val model = updater(get(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist())
+      val query = handle.createQuery(rs("store/organizationAuth/update.sql"))
+      query.bind("guid", guid)
+      query.bindKotlin(model)
+      return@transaction query.mapToType().single()
+    }
+
+  fun delete(guid: UUID): OrganizationAuthModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/delete.sql"))
-      query.bind("authGuid", authGuid)
+      query.bind("guid", guid)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
     }
 
@@ -53,6 +67,8 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
         throw OrganizationAlreadyHasOrganizationAuth()
       isUniqueViolation("uq__organization_auth__auth0_organization_id") ->
         throw Auth0OrganizationIdAlreadyTaken()
+      isUniqueViolation("uq__organization_auth__auth0_organization_name") ->
+        throw Auth0OrganizationNameAlreadyTaken()
     }
   }
 }

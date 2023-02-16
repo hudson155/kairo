@@ -9,11 +9,16 @@ public data class OrganizationAuthModel(
   val createdAt: ZonedDateTime,
   val updatedAt: ZonedDateTime,
   val organizationGuid: UUID,
-  val auth0OrganizationId: String,
+  val auth0OrganizationId: String?,
+  val auth0OrganizationName: String,
 ) {
   public data class Creator(
     val guid: UUID,
     val organizationGuid: UUID,
-    val auth0OrganizationId: String,
+    val auth0OrganizationName: String,
+  )
+
+  public data class Updater(
+    val auth0OrganizationId: String?,
   )
 }

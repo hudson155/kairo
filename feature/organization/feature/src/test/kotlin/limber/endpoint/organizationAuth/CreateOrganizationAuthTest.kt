@@ -45,7 +45,7 @@ internal class CreateOrganizationAuthTest : IntegrationTest() {
   }
 
   @Test
-  fun `auth0 organization id, duplicate`() {
+  fun `auth0 organization name, duplicate`() {
     val (acmeCo, universalExports) = testSetup("Create organizations") {
       listOf(OrganizationFixture.acmeCo, OrganizationFixture.universalExports).map { create(it) }
     }
@@ -55,7 +55,7 @@ internal class CreateOrganizationAuthTest : IntegrationTest() {
     }
 
     test {
-      shouldBeConflict("Auth0 organization ID already taken.") {
+      shouldBeConflict("Auth0 organization name already taken.") {
         authClient(OrganizationAuthApi.Create(universalExports.guid, OrganizationAuthFixture.acmeCo.creator))
       }
     }
@@ -70,7 +70,7 @@ internal class CreateOrganizationAuthTest : IntegrationTest() {
     test {
       val creator = OrganizationAuthFixture.acmeCo.creator
       authClient(OrganizationAuthApi.Create(organization.guid, creator))
-        .shouldBe(OrganizationAuthFixture.acmeCo(organization.guid, guidGenerator[1]))
+        .shouldBe(OrganizationAuthFixture.acmeCo(organization.guid, guidGenerator[1], guidGenerator[2]))
     }
   }
 }

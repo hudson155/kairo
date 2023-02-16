@@ -2,6 +2,7 @@ package limber.feature.auth0
 
 import com.auth0.client.auth.AuthAPI
 import com.auth0.client.mgmt.ManagementAPI
+import com.auth0.json.mgmt.organizations.Organization
 import com.google.common.base.Supplier
 import com.google.common.base.Suppliers
 import com.google.inject.Inject
@@ -14,7 +15,6 @@ internal class RealAuth0ManagementApi @Inject constructor(
   private val authApi: AuthAPI =
     AuthAPI.newBuilder(config.domain, config.clientId, config.clientSecret.value).build()
 
-  @Suppress("UnusedPrivateMember")
   private val managementApi: Supplier<ManagementAPI> =
     Suppliers.memoizeWithExpiration(::createManagementApi, 6, TimeUnit.HOURS)
 
@@ -22,5 +22,15 @@ internal class RealAuth0ManagementApi @Inject constructor(
     val request = authApi.requestToken("https://${config.domain}/api/v2/")
     val result = request.execute().body
     return ManagementAPI.newBuilder(config.domain, result.accessToken).build()
+  }
+
+  override fun createOrganization(name: String): String {
+    val organization = Organization().apply {
+      this.name = name
+    }
+
+    val request = managementApi.get().organizations().create(organization)
+    val result = request.execute().body
+    return result.id
   }
 }

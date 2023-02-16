@@ -15,6 +15,7 @@ const initializeState = ({ set }: MutableSnapshot): void => {
     organizationGuid: crypto.randomUUID(),
     guid: crypto.randomUUID(),
     auth0OrganizationId: 'org_yDiVK18hoeddya8J',
+    auth0OrganizationName: 'acme-co',
   });
 };
 

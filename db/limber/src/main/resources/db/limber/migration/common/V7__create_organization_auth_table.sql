@@ -25,7 +25,16 @@ alter table organization.organization_auth
     unique (organization_guid);
 
 alter table organization.organization_auth
-  add column auth0_organization_id text not null;
+  add column auth0_organization_id text;
 alter table organization.organization_auth
   add constraint uq__organization_auth__auth0_organization_id
     unique (auth0_organization_id);
+
+alter table organization.organization_auth
+  add column auth0_organization_name text not null;
+alter table organization.organization_auth
+  add constraint cs__organization_auth__auth0_organization_name
+    check (lower(auth0_organization_name) = auth0_organization_name);
+alter table organization.organization_auth
+  add constraint uq__organization_auth__auth0_organization_name
+    unique (auth0_organization_name);

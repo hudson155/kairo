@@ -13,7 +13,10 @@ internal class OrganizationAuthMapper @Inject constructor(
     OrganizationAuthRep(
       guid = model.guid,
       organizationGuid = model.organizationGuid,
-      auth0OrganizationId = model.auth0OrganizationId,
+      auth0OrganizationId = checkNotNull(model.auth0OrganizationId) {
+        "The Auth0 organization ID should only be null during the creation process."
+      },
+      auth0OrganizationName = model.auth0OrganizationName,
     )
 
   operator fun invoke(
@@ -23,6 +26,6 @@ internal class OrganizationAuthMapper @Inject constructor(
     OrganizationAuthModel.Creator(
       guid = guidGenerator.generate(),
       organizationGuid = organizationGuid,
-      auth0OrganizationId = creator.auth0OrganizationId,
+      auth0OrganizationName = creator.auth0OrganizationName,
     )
 }

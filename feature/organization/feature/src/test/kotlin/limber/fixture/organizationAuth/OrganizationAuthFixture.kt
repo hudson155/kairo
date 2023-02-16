@@ -7,30 +7,32 @@ import java.util.UUID
 
 internal abstract class OrganizationAuthFixture {
   abstract val creator: OrganizationAuthRep.Creator
-  abstract operator fun invoke(organizationGuid: UUID, guid: UUID): OrganizationAuthRep
+  abstract operator fun invoke(organizationGuid: UUID, guid: UUID, auth0OrganizationId: UUID): OrganizationAuthRep
 
   internal companion object {
     val acmeCo: OrganizationAuthFixture = object : OrganizationAuthFixture() {
       override val creator: OrganizationAuthRep.Creator =
-        OrganizationAuthRep.Creator(auth0OrganizationId = " org_yDiVK18hoeddya8J ")
+        OrganizationAuthRep.Creator(auth0OrganizationName = " ACME-CO ")
 
-      override fun invoke(organizationGuid: UUID, guid: UUID): OrganizationAuthRep =
+      override fun invoke(organizationGuid: UUID, guid: UUID, auth0OrganizationId: UUID): OrganizationAuthRep =
         OrganizationAuthRep(
           guid = guid,
           organizationGuid = organizationGuid,
-          auth0OrganizationId = "org_yDiVK18hoeddya8J",
+          auth0OrganizationId = auth0OrganizationId.toString(),
+          auth0OrganizationName = "acme-co",
         )
     }
 
     val universalExports: OrganizationAuthFixture = object : OrganizationAuthFixture() {
       override val creator: OrganizationAuthRep.Creator =
-        OrganizationAuthRep.Creator(auth0OrganizationId = " org_Ro0Fat17RkcY4ldL ")
+        OrganizationAuthRep.Creator(auth0OrganizationName = " UNIVERSAL-EXPORTS ")
 
-      override fun invoke(organizationGuid: UUID, guid: UUID): OrganizationAuthRep =
+      override fun invoke(organizationGuid: UUID, guid: UUID, auth0OrganizationId: UUID): OrganizationAuthRep =
         OrganizationAuthRep(
           guid = guid,
           organizationGuid = organizationGuid,
-          auth0OrganizationId = "org_Ro0Fat17RkcY4ldL",
+          auth0OrganizationId = auth0OrganizationId.toString(),
+          auth0OrganizationName = "universal-exports",
         )
     }
   }
