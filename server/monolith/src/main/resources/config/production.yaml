@@ -44,7 +44,7 @@ sql:
     name: LIMBER_SQL_USERNAME
   password:
     type: GcpSecret
-    name: LIMBER_SQL_PASSWORD
+    id: projects/225278732028/secrets/sql-limber-app-engine-password/versions/latest
   properties:
     socketFactory: com.google.cloud.sql.postgres.SocketFactory
     cloudSqlInstance:

@@ -19,5 +19,4 @@ env_variables:
   LIMBER_CONFIG: production
   LIMBER_SQL_JDBC_URL: jdbc:postgresql://localhost/limber
   LIMBER_SQL_USERNAME: app_engine
-  LIMBER_SQL_PASSWORD: projects/225278732028/secrets/sql-limber-app-engine-password/versions/latest
   LIMBER_SQL_INSTANCE_NAME: limberapp-io:us-central1:limber

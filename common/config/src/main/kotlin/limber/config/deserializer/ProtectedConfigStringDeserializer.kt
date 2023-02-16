@@ -38,13 +38,11 @@ public class ProtectedConfigStringDeserializer : StdNodeBasedDeserializer<Protec
       }
 
     private fun fromGcpSecret(json: ObjectNode): ConfigResult<ProtectedString> {
-      val name = requireNotNull(json["name"]?.textValue())
+      val id = requireNotNull(json["id"]?.textValue())
       logger.info {
         "Config value is from GCP secret." +
-          " Accessing environment variable with name $name."
+          " Accessing secret with ID $id."
       }
-      val id = requireNotNull(EnvironmentVariableSource[name])
-      logger.info { "Accessing secret with ID $id." }
       val value = GcpSecretSource[id]
       logger.info { "Retrieved config value from GCP secret. Not logging due to sensitivity." }
       return ConfigResult(ProtectedString(value))
