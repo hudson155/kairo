@@ -49,3 +49,6 @@ Other than the rules defined here, please follow the
 - **Get vs. list:**
   The term "get" should be used when fetching a particular entity.
   The term "list" should be used when fetching multiple entities.
+
+- **CSS spacing:**
+  Padding and gaps within containers should be used in place of margin.
