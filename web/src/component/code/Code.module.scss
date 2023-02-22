@@ -1,10 +1,10 @@
 .code {
-  background-color: var(--color-backgroundAccent);
+  background-color: var(--color-background-accent);
   border-radius: var(--borderRadius-normal);
   font-family: "Roboto Mono", monospace;
   padding: 0 3px;
-}
 
-.selectAll {
-  user-select: all;
+  &.selectAll {
+    user-select: all;
+  }
 }
