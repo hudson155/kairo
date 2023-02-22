@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
-import InputGroup from 'component/input/group/InputGroup';
-import { ComponentProps, MouseEventHandler } from 'react';
+import Container from 'component/container/Container';
+import { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
 import ToastContainer, { useToast } from './ToastContainer';
 
@@ -12,19 +12,19 @@ export default {
 const Template: Story<ComponentProps<typeof ToastContainer>> = () => {
   const toast = useToast();
 
-  const handleSuccessClick: MouseEventHandler<HTMLButtonElement> = () => {
+  const handleSuccessClick = () => {
     toast.success('Success!');
   };
 
-  const handleFailureClick: MouseEventHandler<HTMLButtonElement> = () => {
+  const handleFailureClick = () => {
     toast.failure('Failure!');
   };
 
   return (
-    <InputGroup>
+    <Container direction="horizontal">
       <Button variant="primary" onClick={handleSuccessClick}>Show success toast</Button>
       <Button variant="primary" onClick={handleFailureClick}>Show failure toast</Button>
-    </InputGroup>
+    </Container>
   );
 };
 

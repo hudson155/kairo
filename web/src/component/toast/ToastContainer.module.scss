@@ -1,17 +1,45 @@
-@use "src/component/topNav/vars" as topNavVars;
+@use "src/style/boxshadow";
 
 .container {
-  padding: 4px;
   right: 16px;
-  top: calc(#{topNavVars.$height} + var(--borderSize-border) + 16px);
-  z-index: var(--zIndex-toast);
+  top: calc(var(--size-topNav-height) + var(--borderSize-border-normal) + 16px);
+}
+
+:root {
+  --toastify-color-light: var(--colorLight-background-default);
+  --toastify-color-dark: var(--colorLight-background-default);
+  --toastify-color-success: var(--colorLight-status-success-background);
+  --toastify-color-warning: var(--colorLight-status-warning-background);
+  --toastify-color-error: var(--colorLight-status-danger-background);
+
+  --toastify-toast-background: var(--colorLight-background-default);
+
+  --toastify-font-family: unset;
+  --toastify-z-index: var(--zIndex-toast);
+
+  --toastify-text-color-light: var(--colorLight-font-default);
+  --toastify-text-color-dark: var(--colorLight-font-default);
+}
+
+:global {
+  .Toastify__close-button {
+    &--light, &--light:active {
+      color: var(--toastify-text-color-light);
+      opacity: 1;
+    }
+
+    &--dark, &--dark:active {
+      color: var(--toastify-text-color-dark);
+      opacity: 1;
+    }
+  }
 }
 
 .toast {
-  background: var(--color-backgroundInverse);
   border-radius: var(--borderRadius-normal);
-  color: var(--color-fontInverse);
   font-family: unset;
   margin-bottom: 16px;
   padding: 8px;
+
+  @include boxshadow.boxShadow();
 }

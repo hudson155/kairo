@@ -1,6 +1,8 @@
+/* IMPORTANT: Preserve CSS import order. */
+import 'react-toastify/dist/ReactToastify.css';
+
 import React, { ReactNode } from 'react';
 import { toast as delegate, ToastContainer as Delegate } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import styles from './ToastContainer.module.scss';
 
 interface Toast {
