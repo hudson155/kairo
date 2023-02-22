@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import styles from './Section.module.scss';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +9,7 @@ interface Props {
  */
 const Section: React.FC<Props> = ({ children }) => {
   return (
-    <section className={styles.section}>
+    <section>
       {children}
     </section>
   );

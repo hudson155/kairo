@@ -1,10 +1,10 @@
 import { ComponentMeta, Story } from '@storybook/react';
-import { ComponentProps } from 'react';
+import Container from 'component/container/Container';
 import Paragraph from 'component/text/Paragraph';
+import { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
 import HeaderSection from './HeaderSection';
 import Section from './Section';
-import SectionSpacer from './SectionSpacer';
 
 export default {
   decorators: [Decorator.helmetProvider()],
@@ -17,10 +17,10 @@ const Template: Story<ComponentProps<typeof Section>> = () => {
         <Paragraph>The content of the header section.</Paragraph>
       </HeaderSection>
       <Section>
-        <Paragraph>The content of a subsequent section.</Paragraph>
-        <Paragraph>Further content of the subsequent section.</Paragraph>
-        <SectionSpacer />
-        <Paragraph>Additional content of the subsequent section, after a section spacer.</Paragraph>
+        <Container direction="vertical">
+          <Paragraph>The content of a subsequent section.</Paragraph>
+          <Paragraph>Further content of the subsequent section.</Paragraph>
+        </Container>
       </Section>
     </>
   );

@@ -1,6 +1,5 @@
 import CodeBlock from 'component/code/CodeBlock';
 import HeaderSection from 'component/section/HeaderSection';
-import SectionSpacer from 'component/section/SectionSpacer';
 import Paragraph from 'component/text/Paragraph';
 import { useDebugSettings } from 'hook/useDebugSettings';
 import React, { ReactNode } from 'react';
@@ -18,7 +17,6 @@ const ErrorMain: React.FC<Props> = ({ error }) => {
   return (
     <HeaderSection title="Error">
       <Paragraph>{'Something went wrong while loading the page.'}</Paragraph>
-      <SectionSpacer />
       {
         showDebugMessages
           ? <CodeBlock>{error.stack}</CodeBlock>
