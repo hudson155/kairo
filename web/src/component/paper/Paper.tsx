@@ -12,7 +12,7 @@ interface Props {
  */
 const Paper: React.FC<Props> = ({ children }) => {
   return (
-    <div className={classNames(styles.container)}>
+    <div className={classNames(styles.paper)}>
       {children}
     </div>
   );

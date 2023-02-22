@@ -1,7 +1,5 @@
-.container {
-  border: var(--borderSize-border) solid var(--color-border);
+.paper {
+  border: var(--borderSize-border-normal) solid var(--color-border);
   border-radius: var(--borderRadius-large);
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px var(--gap-normal);
+  padding: var(--gap-normal) var(--gap-normalPlus);
 }
