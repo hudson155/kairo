@@ -1,4 +1,5 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Container from 'component/container/Container';
 import { ComponentProps } from 'react';
 import Heading1 from './Heading1';
 import Heading2 from './Heading2';
@@ -12,31 +13,32 @@ export default {} as ComponentMeta<typeof Text>;
 // eslint-disable-next-line max-lines-per-function
 const Template: Story<ComponentProps<typeof Text>> = () => {
   return (
-    <>
+    <Container direction="vertical">
       <Heading1>Text demonstration</Heading1>
       <Paragraph>
         This story is intended to demonstrate how various types of text look,
         including headings, paragraphs, and other styling.
       </Paragraph>
-      <Heading2>Heading 2</Heading2>
-      <Paragraph>
-        <Text weight="bold">Lorem ipsum</Text> dolor sit amet, consectetur adipiscing elit.
-        Suspendisse quis erat erat.
-        Donec iaculis feugiat sapien et commodo.
-        Mauris ultrices odio quis odio elementum ultrices.
-        Cras in ipsum quis arcu facilisis accumsan ut pretium neque.
-        Ut fringilla gravida auctor.
-        Aliquam rhoncus, quam nec dignissim congue, est nunc gravida nulla, ut tempus augue dui dictum nulla.
+      <Paragraph size="large">
+        Sometimes a paragraph is large.&nbsp;
+        <Text weight="light">It can have light text</Text>&nbsp;
+        <Text weight="bold">and bold text</Text>.
       </Paragraph>
       <Paragraph>
-        Donec volutpat augue mauris, ut luctus arcu dapibus sed.
-        Integer blandit fringilla dolor, in varius dolor.
-        Donec hendrerit libero eget turpis iaculis, in iaculis dolor posuere.
-        Morbi dapibus nunc eget quam elementum, scelerisque ornare sem lacinia.
-        Integer congue tortor libero, nec auctor purus eleifend eget.
-        Praesent nec felis sit amet sem bibendum consectetur.
-        Aliquam sed venenatis felis.
-        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+        Sometimes a paragraph is normal.&nbsp;
+        <Text weight="light">It can have light text</Text>&nbsp;
+        <Text weight="bold">and bold text</Text>.
+      </Paragraph>
+      <Paragraph size="small">
+        Sometimes a paragraph is small.&nbsp;
+        <Text weight="light">It can have light text</Text>&nbsp;
+        <Text weight="bold">and bold text</Text>.
+      </Paragraph>
+      <Heading2>Heading 2</Heading2>
+      <Paragraph>
+        <Text size="large">Other times,</Text>
+        &nbsp;a paragraph has multiple sizes&nbsp;
+        <Text size="small">all in one!</Text>
       </Paragraph>
       <Heading3>Heading 3</Heading3>
       <Paragraph>
@@ -58,7 +60,7 @@ const Template: Story<ComponentProps<typeof Text>> = () => {
         Sed enim leo, lobortis id condimentum id, malesuada sit amet mauris.
         In hac habitasse platea dictumst.
       </Paragraph>
-    </>
+    </Container>
   );
 };
 

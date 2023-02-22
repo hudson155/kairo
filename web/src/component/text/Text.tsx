@@ -2,23 +2,14 @@ import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 import styles from './Text.module.scss';
 
-export type TextSize = 'small' | 'normal';
+export type Size = 'small' | 'normal' | 'large';
 
-type TextWeight = 'normal' | 'bold';
+type Weight = 'light' | 'normal' | 'bold';
 
 interface Props {
   className?: string;
-
-  /**
-   * Don't provide this prop unless you need to override the text size.
-   */
-  size?: TextSize;
-
-  /**
-   * Don't provide this prop unless you need to override the text weight.
-   */
-  weight?: TextWeight;
-
+  size?: Size; // Don't provide this prop unless you need to override the text size.
+  weight?: Weight; // Don't provide this prop unless you need to override the text weight.
   children: ReactNode;
 }
 
@@ -41,7 +32,7 @@ const Text: React.FC<Props> = ({
 
 export default Text;
 
-export const sizeClassName = (size: TextSize | undefined): string | undefined => {
+export const sizeClassName = (size: Size | undefined): string | undefined => {
   switch (size) {
   case undefined:
     return undefined;
@@ -49,15 +40,19 @@ export const sizeClassName = (size: TextSize | undefined): string | undefined =>
     return styles.sizeSmall;
   case 'normal':
     return styles.sizeNormal;
+  case 'large':
+    return styles.sizeLarge;
   default:
     throw new Error(`Unsupported font size: ${size}.`);
   }
 };
 
-export const weightClassName = (weight: TextWeight | undefined): string | undefined => {
+export const weightClassName = (weight: Weight | undefined): string | undefined => {
   switch (weight) {
   case undefined:
     return undefined;
+  case 'light':
+    return styles.weightLight;
   case 'normal':
     return styles.weightNormal;
   case 'bold':
