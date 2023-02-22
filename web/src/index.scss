@@ -1,5 +1,6 @@
-@use "src/style/focus";
-@use "src/style/theme.module";
+/* IMPORTANT: Preserve CSS import order. */
+@use "./style/theme/theme.module";
+@use "./style/focus";
 
 html, body, #root {
   height: 100%;
@@ -7,16 +8,13 @@ html, body, #root {
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-font);
+  background-color: var(--color-background-default);
+  color: var(--color-font-default);
   font-family: "Roboto", sans-serif;
   font-size: var(--fontSize-normal);
 }
 
 a {
-  /**
-   * A 2px border-radius was chosen to align the focus state of unstyled buttons with anchor elements.
-   */
   border-radius: var(--borderRadius-normal);
 
   @include focus.focusable;

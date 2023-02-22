@@ -1,0 +1,17 @@
+:root {
+  --fontSize-h1: 2.13rem;
+  --fontSize-h2: 1.63rem;
+  --fontSize-h3: 1.44rem;
+  --fontSize-h4: 1.25rem;
+
+  --fontSize-large: 1.13rem;
+  --fontSize-normal: 0.94rem;
+  --fontSize-small: 0.75rem;
+
+  /**
+   * Note: Adjusting font weights requires updating HTML [link] tags to import the corresponding weight.
+   */
+  --fontWeight-light: 300;
+  --fontWeight-normal: 400;
+  --fontWeight-bold: 700;
+}

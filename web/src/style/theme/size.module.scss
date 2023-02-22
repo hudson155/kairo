@@ -1,0 +1,18 @@
+/**
+ * The size of some elements in the app needs to be referenced and/or standardized.
+ * By extracting the size of those key elements here, we can avoid using magic numbers.
+ */
+:root {
+  --size-icon-small: 18px;
+  --size-icon-medium: 24px;
+  --size-icon-large: 36px;
+  --size-icon-extraLarge: 48px;
+
+  --size-input-height: 30px;
+  --size-input-labelOffset: 3px;
+
+  --size-sideNav-indicatorOffset: 14px;
+  --size-sideNav-indicatorWidth: 2px;
+
+  --size-topNav-height: 48px;
+}

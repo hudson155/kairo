@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { durationCssDelay, durationTransition } from 'style/theme';
+import { durationCssDelay, durationTransition } from 'style/theme/duration';
 import styles from './Collapsible.module.scss';
 
 interface Props {

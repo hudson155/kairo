@@ -24,3 +24,13 @@
     outline-offset: var(--borderSize-focus);
   }
 }
+
+@mixin hideFocus() {
+  &:global(.focus) {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

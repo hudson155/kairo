@@ -1,0 +1,16 @@
+:root {
+  /**
+   * "Plus" gaps are 4/3 of their base. They should only be used for horizontal padding.
+   */
+  --gap-extraSmall: 3px;
+  --gap-extraSmallPlus: 4px;
+  --gap-small: 6px;
+  --gap-smallPlus: 8px;
+  --gap-normal: 12px;
+  --gap-normalPlus: 16px;
+  --gap-large: 24px;
+  --gap-largePlus: 32px;
+
+  --gap-page-small: 16px;
+  --gap-page-large: 32px;
+}

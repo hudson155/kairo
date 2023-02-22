@@ -1,8 +1,10 @@
+/* IMPORTANT: Preserve CSS import order. */
+import 'the-new-css-reset/css/reset.css';
 import 'index.scss';
+
 import LoadingPage from 'page/loading/LoadingPage';
 import React, { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
-import 'the-new-css-reset/css/reset.css';
 
 const AppDelegate = React.lazy(() => import('./AppDelegate'));
 

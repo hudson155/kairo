@@ -4,7 +4,7 @@ import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
 import Text from 'component/text/Text';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
-import { durationFlash } from 'style/theme';
+import { durationFlash } from 'style/theme/duration';
 import { transitions } from 'style/transitions';
 import styles from './CopyButton.module.scss';
 
