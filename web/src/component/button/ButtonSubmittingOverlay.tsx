@@ -1,6 +1,6 @@
+import styles from 'component/button/ButtonSubmittingOverlay.module.scss';
 import Spinner from 'component/spinner/Spinner';
 import React from 'react';
-import styles from './ButtonSubmittingOverlay.module.scss';
 
 const ButtonSubmittingOverlay: React.FC = () => {
   return (

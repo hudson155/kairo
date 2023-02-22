@@ -1,5 +1,5 @@
+import styles from 'component/page/Page.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Page.module.scss';
 
 interface Props {
   children: ReactNode;

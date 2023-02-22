@@ -1,9 +1,9 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
 import Container from 'component/container/Container';
+import ToastContainer, { useToast } from 'component/toast/ToastContainer';
 import { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
-import ToastContainer, { useToast } from './ToastContainer';
 
 export default {
   decorators: [Decorator.toastProvider()],

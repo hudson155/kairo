@@ -2,11 +2,11 @@ import { Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
+import styles from 'component/input/copy/CopyButton.module.scss';
 import Text from 'component/text/Text';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
 import { durationFlash } from 'style/theme/duration';
 import { transitions } from 'style/transitions';
-import styles from './CopyButton.module.scss';
 
 const COPY_MESSAGE = 'Copy';
 const NOTHING_TO_COPY_MESSAGE = 'Nothing to copy';

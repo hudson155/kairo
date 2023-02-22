@@ -1,7 +1,7 @@
 import classNames from 'classnames';
+import styles from 'component/input/label/InputLabel.module.scss';
 import Text from 'component/text/Text';
 import React, { ReactNode } from 'react';
-import styles from './InputLabel.module.scss';
 
 export type InputWidth = 1 | 2;
 

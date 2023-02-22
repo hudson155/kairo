@@ -1,5 +1,5 @@
+import styles from 'component/topNav/TopNav.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './TopNav.module.scss';
 
 interface Props {
   left: ReactNode;

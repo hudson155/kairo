@@ -1,7 +1,7 @@
 import classNames from 'classnames';
+import styles from 'component/button/Button.module.scss';
 import ButtonSubmittingOverlay from 'component/button/ButtonSubmittingOverlay';
 import React, { FocusEventHandler, MouseEventHandler, PointerEventHandler, ReactNode } from 'react';
-import styles from './Button.module.scss';
 
 type Type = 'submit' | 'reset' | 'button';
 

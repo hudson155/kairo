@@ -1,6 +1,6 @@
 import { TransitionClasses } from '@headlessui/react';
 import classNames from 'classnames';
-import styles from './transitions.module.scss';
+import styles from 'style/transitions.module.scss';
 
 type TransitionType =
   'fadeIn'

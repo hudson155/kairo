@@ -1,12 +1,12 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
+import Heading1 from 'component/text/Heading1';
+import Heading2 from 'component/text/Heading2';
+import Heading3 from 'component/text/Heading3';
+import Heading4 from 'component/text/Heading4';
+import Paragraph from 'component/text/Paragraph';
+import Text from 'component/text/Text';
 import { ComponentProps } from 'react';
-import Heading1 from './Heading1';
-import Heading2 from './Heading2';
-import Heading3 from './Heading3';
-import Heading4 from './Heading4';
-import Paragraph from './Paragraph';
-import Text from './Text';
 
 export default {} as ComponentMeta<typeof Text>;
 

@@ -1,10 +1,10 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
+import Page from 'component/page/Page';
 import Section from 'component/section/Section';
 import Heading1 from 'component/text/Heading1';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
-import Page from './Page';
 
 export default {} as ComponentMeta<typeof Page>;
 

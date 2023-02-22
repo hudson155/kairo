@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/icon/Icon.module.scss';
 import React from 'react';
-import styles from './Icon.module.scss';
 
 export type Size = 'small' | 'medium' | 'large' | 'extra-large';
 

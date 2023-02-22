@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/paper/Paper.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Paper.module.scss';
 
 interface Props {
   children: ReactNode;

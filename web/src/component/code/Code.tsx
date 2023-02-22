@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/code/Code.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Code.module.scss';
 
 interface Props {
   className?: string;

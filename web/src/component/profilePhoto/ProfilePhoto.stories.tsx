@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
+import ProfilePhoto from 'component/profilePhoto/ProfilePhotoDelegate';
 import { ComponentProps } from 'react';
-import ProfilePhoto from './ProfilePhotoDelegate';
 
 export default {} as ComponentMeta<typeof ProfilePhoto>;
 

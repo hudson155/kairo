@@ -6,10 +6,10 @@ import MenuItems from 'component/menu/MenuItems';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhoto';
 import AdminSettingsButton from 'component/topNav/AdminSettingsButton';
 import OrganizationSettingsButton from 'component/topNav/OrganizationSettingsButton';
+import styles from 'component/topNav/TopNavMenu.module.scss';
 import TopNavMenuLogoutButton from 'component/topNav/TopNavMenuLogoutButton';
 import { doNothing } from 'helper/doNothing';
 import React from 'react';
-import styles from './TopNavMenu.module.scss';
 
 const TopNavMenu: React.FC = () => {
   const button = (

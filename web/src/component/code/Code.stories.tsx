@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Code from 'component/code/Code';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
-import Code from './Code';
 
 interface Args {
   selectAll: boolean;

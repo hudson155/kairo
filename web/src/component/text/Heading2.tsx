@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/text/Heading.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Heading.module.scss';
 
 interface Props {
   className?: string;

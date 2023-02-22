@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import TopNav from 'component/topNav/TopNav';
 import { ComponentProps } from 'react';
-import TopNav from './TopNav';
 
 export default {} as ComponentMeta<typeof TopNav>;
 

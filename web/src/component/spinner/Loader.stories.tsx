@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Loader from 'component/spinner/Loader';
 import { ComponentProps } from 'react';
-import Loader from './Loader';
 
 export default {} as ComponentMeta<typeof Loader>;
 

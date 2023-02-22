@@ -1,7 +1,7 @@
 import Button from 'component/button/Button';
 import { useForm } from 'component/form/Form';
+import styles from 'component/form/FormSubmitButton.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './FormSubmitButton.module.scss';
 
 interface Props {
   children: ReactNode;

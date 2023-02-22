@@ -1,8 +1,8 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import CodeBlock from 'component/code/CodeBlock';
 import Container from 'component/container/Container';
-import { ComponentProps } from 'react';
 import Paragraph from 'component/text/Paragraph';
-import CodeBlock from './CodeBlock';
+import { ComponentProps } from 'react';
 
 export default {} as ComponentMeta<typeof CodeBlock>;
 

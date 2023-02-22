@@ -1,8 +1,8 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Collapsible from 'component/collapsible/Collapsible';
+import styles from 'component/collapsible/Collapsible.stories.module.scss';
 import Paragraph from 'component/text/Paragraph';
 import React, { ComponentProps } from 'react';
-import styles from './Collapsible.stories.module.scss';
 
 interface Args {
   isOpen: boolean;

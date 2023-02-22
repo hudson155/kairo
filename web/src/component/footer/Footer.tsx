@@ -1,8 +1,8 @@
+import styles from 'component/footer/Footer.module.scss';
 import FooterDebugInfo from 'component/footer/FooterDebugInfo';
 import Paragraph from 'component/text/Paragraph';
 import { useDebugSettings } from 'hook/useDebugSettings';
 import React from 'react';
-import styles from './Footer.module.scss';
 
 const COPYRIGHT_TEXT = '© Jeff Hudson. All rights reserved.';
 

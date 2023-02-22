@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/text/Text.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Text.module.scss';
 
 export type Size = 'small' | 'normal' | 'large';
 

@@ -1,6 +1,6 @@
 import Loader from 'component/spinner/Loader';
+import styles from 'page/loading/LoadingPage.module.scss';
 import React from 'react';
-import styles from './LoadingPage.module.scss';
 
 /**
  * This loading page is used while the root app is loading.

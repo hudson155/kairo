@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import CopyButton from 'component/input/copy/CopyButton';
 import { ComponentProps } from 'react';
-import CopyButton from './CopyButton';
 
 interface Args {
   copy: 'Success' | 'NothingToCopy' | 'Failure';

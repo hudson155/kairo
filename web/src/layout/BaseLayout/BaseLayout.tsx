@@ -1,10 +1,10 @@
 import Footer from 'component/footer/Footer';
 import SideNavImpl from 'component/sideNav/SideNavImpl';
 import TopNavImpl from 'component/topNav/TopNavImpl';
+import styles from 'layout/BaseLayout/BaseLayout.module.scss';
 import ErrorBoundary from 'page/error/ErrorBoundary';
 import ErrorMain from 'page/error/ErrorMain';
 import React, { ReactNode } from 'react';
-import styles from './BaseLayout.module.scss';
 
 interface Props {
   sideNav?: ReactNode;

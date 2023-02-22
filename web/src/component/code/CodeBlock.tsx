@@ -1,6 +1,6 @@
 import Code from 'component/code/Code';
+import styles from 'component/code/CodeBlock.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './CodeBlock.module.scss';
 
 interface Props {
   children: ReactNode;

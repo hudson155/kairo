@@ -1,10 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import classNames from 'classnames';
+import styles from 'component/sideNav/SideNav.module.scss';
 import SideNavHeader from 'component/sideNav/SideNavHeader';
 import { useResizeObserver } from 'hook/useResizeObserver';
 import React, { Fragment, ReactNode } from 'react';
 import { transitions } from 'style/transitions';
-import styles from './SideNav.module.scss';
 
 /**
  * For a11y reasons, the collapsible sidenav must render within a dialog.

@@ -1,6 +1,6 @@
 import Collapsible from 'component/collapsible/Collapsible';
+import styles from 'component/input/errorMessage/InputErrorMessage.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './InputErrorMessage.module.scss';
 
 interface Props {
   children: ReactNode;

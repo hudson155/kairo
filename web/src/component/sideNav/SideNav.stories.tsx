@@ -1,10 +1,10 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
+import SideNav, { useCollapsibleSideNav } from 'component/sideNav/SideNav';
+import SideNavEntry from 'component/sideNav/SideNavEntry';
 import { doNothing } from 'helper/doNothing';
 import { ComponentProps, MouseEventHandler, useState } from 'react';
 import * as Decorator from 'story/Decorator';
-import SideNav, { useCollapsibleSideNav } from './SideNav';
-import SideNavEntry from './SideNavEntry';
 
 export default {
   decorators: [Decorator.browserRouter()],

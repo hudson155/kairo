@@ -1,7 +1,7 @@
 import { Menu as Delegate } from '@headlessui/react';
 import classNames from 'classnames';
+import styles from 'component/menu/MenuItem.module.scss';
 import React, { Fragment, ReactElement } from 'react';
-import styles from './MenuItem.module.scss';
 
 interface Props {
   children: (propArg: { className: string; close: () => void }) => ReactElement;

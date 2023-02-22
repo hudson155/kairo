@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import TextInput from 'component/input/TextInput';
 import { ComponentProps, useState } from 'react';
-import TextInput from './TextInput';
 
 interface Args {
   copyButton: boolean;

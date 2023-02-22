@@ -1,5 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import ValidationErrorsError from 'api/ValidationErrorsError';
+import Form, { useForm } from 'component/form/Form';
 import { useFormField } from 'component/form/FormField';
 import FormFields from 'component/form/FormFields';
 import FormSubmitButton from 'component/form/FormSubmitButton';
@@ -7,7 +8,6 @@ import FormTextInput from 'component/form/input/FormTextInput';
 import InputGroup from 'component/input/group/InputGroup';
 import React, { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
-import Form, { useForm } from './Form';
 
 export default {
   decorators: [Decorator.toastProvider()],

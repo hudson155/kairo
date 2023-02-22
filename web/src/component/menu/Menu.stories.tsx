@@ -1,6 +1,8 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
+import Menu from 'component/menu/Menu';
+import styles from 'component/menu/Menu.stories.module.scss';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhotoDelegate';
@@ -8,8 +10,6 @@ import { doNothing } from 'helper/doNothing';
 import React, { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
 import * as Decorator from 'story/Decorator';
-import Menu from './Menu';
-import styles from './Menu.stories.module.scss';
 
 export default {
   decorators: [Decorator.browserRouter()],

@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import React, { ReactNode } from 'react';
 import { toast as delegate, ToastContainer as Delegate } from 'react-toastify';
-import styles from './ToastContainer.module.scss';
+import styles from 'component/toast/ToastContainer.module.scss';
 
 interface Toast {
   success(content: ReactNode): void;

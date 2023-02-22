@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Paragraph from 'component/text/Paragraph';
+import { useResizeObserver } from 'hook/useResizeObserver';
 import React, { ComponentProps } from 'react';
-import { useResizeObserver } from './useResizeObserver';
 
 export default {} as ComponentMeta<typeof Impl>;
 

@@ -1,5 +1,5 @@
+import styles from 'component/menu/MenuItems.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './MenuItems.module.scss';
 
 interface Props {
   children: ReactNode;

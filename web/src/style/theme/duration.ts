@@ -1,4 +1,4 @@
-import theme from './duration.module.scss';
+import theme from 'style/theme/duration.module.scss';
 
 /**
  * Changing CSS too quickly can cause transitions to be skipped.

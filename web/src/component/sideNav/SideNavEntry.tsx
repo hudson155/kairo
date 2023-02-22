@@ -1,7 +1,7 @@
 import Icon from 'component/icon/Icon';
+import styles from 'component/sideNav/SideNavEntry.module.scss';
 import React, { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from './SideNavEntry.module.scss';
 
 interface Props {
   iconName?: string;

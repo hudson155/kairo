@@ -1,5 +1,5 @@
+import styles from 'component/input/group/InputGroup.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './InputGroup.module.scss';
 
 interface Props {
   children: ReactNode;

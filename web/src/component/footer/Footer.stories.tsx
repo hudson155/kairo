@@ -1,9 +1,9 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Footer from 'component/footer/Footer';
 import { ComponentProps } from 'react';
 import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';
 import * as Decorator from 'story/Decorator';
-import Footer from './Footer';
 
 const initializeState = ({ set }: MutableSnapshot): void => {
   set(organizationAuth, {

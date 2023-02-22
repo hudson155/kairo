@@ -1,8 +1,8 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
+import Icon, { Size } from 'component/icon/Icon';
 import Paragraph from 'component/text/Paragraph';
 import React, { ComponentProps } from 'react';
-import Icon, { Size } from './Icon';
 
 export default {} as ComponentMeta<typeof Icon>;
 

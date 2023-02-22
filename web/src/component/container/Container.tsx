@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/container/Container.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Container.module.scss';
 
 type Density = 'very-compact' | 'compact' | 'normal' | 'relaxed';
 

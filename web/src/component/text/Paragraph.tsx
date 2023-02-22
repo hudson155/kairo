@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { sizeClassName, Size } from 'component/text/Text';
+import { Size, sizeClassName } from 'component/text/Text';
 import React, { ReactNode } from 'react';
 
 interface Props {

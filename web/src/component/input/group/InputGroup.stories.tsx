@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import InputGroup from 'component/input/group/InputGroup';
 import TextInput from 'component/input/TextInput';
 import { ComponentProps, useState } from 'react';
-import InputGroup from './InputGroup';
 
 export default {} as ComponentMeta<typeof InputGroup>;
 

@@ -1,9 +1,9 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
+import Paper from 'component/paper/Paper';
 import Heading2 from 'component/text/Heading2';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
-import Paper from './Paper';
 
 export default {} as ComponentMeta<typeof Paper>;
 

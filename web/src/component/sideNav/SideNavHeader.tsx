@@ -1,7 +1,7 @@
 import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
+import styles from 'component/sideNav/SideNavHeader.module.scss';
 import React from 'react';
-import styles from './SideNavHeader.module.scss';
 
 interface Props {
   onClose: () => void;

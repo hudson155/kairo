@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import CopyButton from 'component/input/copy/CopyButton';
 import InputErrorMessage from 'component/input/errorMessage/InputErrorMessage';
 import InputLabel, { InputWidth } from 'component/input/label/InputLabel';
+import styles from 'component/input/TextInput.module.scss';
 import React, { ChangeEventHandler, FocusEventHandler, useState } from 'react';
-import styles from './TextInput.module.scss';
 
 export interface Props {
   copyButton?: boolean;

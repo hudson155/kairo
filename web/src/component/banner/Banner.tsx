@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import styles from 'component/banner/Banner.module.scss';
 import React, { ReactNode } from 'react';
-import styles from './Banner.module.scss';
 
 type Variant = 'success' | 'warning' | 'danger';
 

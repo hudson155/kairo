@@ -4,11 +4,11 @@ import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
 import { doNothing } from 'helper/doNothing';
+import BaseLayout from 'layout/BaseLayout/BaseLayout';
 import React, { ComponentProps, MouseEventHandler, useState } from 'react';
 import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';
 import * as Decorator from 'story/Decorator';
-import BaseLayout from './BaseLayout';
 
 const initializeState = ({ set }: MutableSnapshot): void => {
   set(organizationAuth, {

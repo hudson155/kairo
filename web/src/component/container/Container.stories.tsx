@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Container from 'component/container/Container';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
-import Container from './Container';
 
 export default {
   argTypes: {

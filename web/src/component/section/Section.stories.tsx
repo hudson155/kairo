@@ -1,11 +1,11 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
 import Page from 'component/page/Page';
+import HeaderSection from 'component/section/HeaderSection';
+import Section from 'component/section/Section';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
-import HeaderSection from './HeaderSection';
-import Section from './Section';
 
 export default {
   decorators: [Decorator.helmetProvider()],

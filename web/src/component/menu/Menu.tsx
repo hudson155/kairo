@@ -1,8 +1,8 @@
 import { Menu as Delegate, Transition } from '@headlessui/react';
 import classNames from 'classnames';
+import styles from 'component/menu/Menu.module.scss';
 import React, { Fragment, ReactNode } from 'react';
 import { transitions } from 'style/transitions';
-import styles from './Menu.module.scss';
 
 type Side = 'left' | 'right';
 

@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Button, { Variant } from 'component/button/ButtonDelegate';
 import { doNothing } from 'helper/doNothing';
 import { ComponentProps } from 'react';
-import Button, { Variant } from './ButtonDelegate';
 
 interface Args {
   isSubmitting: boolean;

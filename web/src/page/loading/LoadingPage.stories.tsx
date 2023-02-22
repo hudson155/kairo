@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import LoadingPage from 'page/loading/LoadingPage';
 import { ComponentProps } from 'react';
-import LoadingPage from './LoadingPage';
 
 export default {} as ComponentMeta<typeof LoadingPage>;
 

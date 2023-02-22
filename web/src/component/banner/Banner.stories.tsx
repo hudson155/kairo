@@ -1,7 +1,7 @@
 import { ComponentMeta, Story } from '@storybook/react';
+import Banner from 'component/banner/Banner';
 import Container from 'component/container/Container';
 import { ComponentProps } from 'react';
-import Banner from './Banner';
 
 export default {} as ComponentMeta<typeof Banner>;
 

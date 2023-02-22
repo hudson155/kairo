@@ -1,6 +1,6 @@
 import Icon from 'component/icon/Icon';
+import styles from 'component/profilePhoto/ProfilePhoto.module.scss';
 import React from 'react';
-import styles from './ProfilePhoto.module.scss';
 
 interface Props {
   url: string | undefined;
