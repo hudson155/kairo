@@ -1,6 +1,6 @@
 .image {
   border-radius: 50%;
-  height: 24px;
+  height: var(--size-icon-medium);
   object-fit: cover;
-  width: 24px;
+  width: var(--size-icon-medium);
 }
