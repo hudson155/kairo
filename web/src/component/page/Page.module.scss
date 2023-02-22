@@ -1,0 +1,11 @@
+@use "src/style/breakpoints";
+
+.page {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--gap-page-large);
+
+  @include breakpoints.below(breakpoints.$breakpoint-sm) {
+    row-gap: var(--gap-page-small);
+  }
+}
