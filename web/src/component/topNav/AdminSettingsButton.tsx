@@ -12,7 +12,7 @@ const AdminSettingsButton: React.ForwardRefRenderFunction<HTMLAnchorElement, Pro
   ({ className, onClick }, ref) => {
     return (
       <Link ref={ref} className={className} to={ADMIN_SETTINGS_PAGE_PATH} onClick={onClick}>
-        <Icon name="admin_panel_settings" size="small" space="after" />
+        <Icon name="admin_panel_settings" size="small" />
         {'Admin settings'}
       </Link>
     );

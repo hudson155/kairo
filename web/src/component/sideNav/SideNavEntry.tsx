@@ -27,7 +27,7 @@ export default SideNavEntry;
 
 const children = (iconName: string | undefined, label: string): ReactNode => {
   const result: ReactNode[] = [];
-  if (iconName) result.push(<Icon key="icon" name={iconName} size="small" space="after" />);
+  if (iconName) result.push(<Icon key="icon" name={iconName} size="small" />);
   result.push(label);
   return <>{result}</>;
 };

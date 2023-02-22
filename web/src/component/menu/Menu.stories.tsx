@@ -45,7 +45,7 @@ const MenuImpl: React.FC<Props> = ({ side = undefined }) => {
           {
             ({ className }) => (
               <Link className={className} to="/first">
-                <Icon name="grade" size="small" space="after" />
+                <Icon name="grade" size="small" />
                 First
               </Link>
             )
@@ -55,7 +55,7 @@ const MenuImpl: React.FC<Props> = ({ side = undefined }) => {
           {
             ({ className }) => (
               <Link className={className} to="/second">
-                <Icon name="favorite" size="small" space="after" />
+                <Icon name="favorite" size="small" />
                 Second
               </Link>
             )
@@ -67,7 +67,7 @@ const MenuImpl: React.FC<Props> = ({ side = undefined }) => {
           {
             ({ className }) => (
               <Button className={className} variant="unstyled" onClick={doNothing}>
-                <Icon name="close" size="small" space="after" />
+                <Icon name="close" size="small" />
                 Third
               </Button>
             )

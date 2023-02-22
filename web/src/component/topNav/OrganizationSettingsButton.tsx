@@ -12,7 +12,7 @@ const OrganizationSettingsButton: React.ForwardRefRenderFunction<HTMLAnchorEleme
   ({ className, onClick }, ref) => {
     return (
       <Link ref={ref} className={className} to={ORGANIZATION_SETTINGS_PAGE_PATH} onClick={onClick}>
-        <Icon name="settings" size="small" space="after" />
+        <Icon name="settings" size="small" />
         {'Organization settings'}
       </Link>
     );
