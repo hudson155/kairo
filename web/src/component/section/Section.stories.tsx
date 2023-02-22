@@ -1,5 +1,6 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
+import Page from 'component/page/Page';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
@@ -12,7 +13,7 @@ export default {
 
 const Template: Story<ComponentProps<typeof Section>> = () => {
   return (
-    <>
+    <Page>
       <HeaderSection title="Section title">
         <Paragraph>The content of the header section.</Paragraph>
       </HeaderSection>
@@ -22,7 +23,7 @@ const Template: Story<ComponentProps<typeof Section>> = () => {
           <Paragraph>Further content of the subsequent section.</Paragraph>
         </Container>
       </Section>
-    </>
+    </Page>
   );
 };
 
