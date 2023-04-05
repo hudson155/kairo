@@ -1,33 +1,33 @@
 import Code from 'component/code/Code';
+import Container from 'component/container/Container';
 import Paragraph from 'component/text/Paragraph';
 import { useDebugSettings } from 'hook/useDebugSettings';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import organizationGuidState from 'state/core/organizationGuid';
 
 interface Line {
   label: string;
-  value: string;
+  value: ReactNode;
 }
 
 const FooterDebugInfo: React.FC = () => {
   const { gitSha } = useDebugSettings();
   const organizationGuid = useRecoilValueLoadable(organizationGuidState).valueMaybe();
 
-  const lines: Line[] = [{ label: 'Git SHA', value: gitSha }];
-  if (organizationGuid) lines.push({ label: 'Organization GUID', value: organizationGuid });
+  const lines: Line[] = [{ label: 'Git SHA', value: <Code selectAll={true}>{gitSha}</Code> }];
+  if (organizationGuid) {
+    lines.push({ label: 'Organization GUID', value: <Code selectAll={true}>{organizationGuid}</Code> });
+  }
 
   return (
-    <Paragraph size="small">
+    <Container density="very-compact" direction="vertical">
       {
-        lines.map((line) => (
-          <React.Fragment key={line.label}>{`${line.label}: `}
-            <Code selectAll={true}>{line.value}</Code>
-            <br />
-          </React.Fragment>
-        ))
+        lines.map((line) => {
+          return <Paragraph key={line.label} size="small">{`${line.label}: `}{line.value}</Paragraph>;
+        })
       }
-    </Paragraph>
+    </Container>
   );
 };
 

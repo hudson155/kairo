@@ -1,4 +1,4 @@
-import styles from 'component/footer/Footer.module.scss';
+import Container from 'component/container/Container';
 import FooterDebugInfo from 'component/footer/FooterDebugInfo';
 import Paragraph from 'component/text/Paragraph';
 import { useDebugSettings } from 'hook/useDebugSettings';
@@ -15,11 +15,11 @@ const Footer: React.FC = () => {
   const { showDebugMessages } = useDebugSettings();
 
   return (
-    <footer className={styles.outer}>
-      <div className={styles.inner}>
+    <footer>
+      <Container direction="vertical">
         <Paragraph size="small">{COPYRIGHT_TEXT}</Paragraph>
         {showDebugMessages ? <FooterDebugInfo /> : null}
-      </div>
+      </Container>
     </footer>
   );
 };
