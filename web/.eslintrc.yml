@@ -101,11 +101,6 @@ rules:
       forms: true
   react/jsx-no-useless-fragment: [warn, { allowExpressions: true }]
   react/jsx-pascal-case: warn
-  react/jsx-props-no-spreading:
-    - warn
-    - exceptions:
-        - Transition
-        - Transition.Child
   react/jsx-sort-default-props: [warn, { ignoreCase: true }]
   react/jsx-sort-props:
     - warn

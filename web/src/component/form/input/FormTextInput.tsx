@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-
 import FormField from 'component/form/FormField';
 import TextInput, { Props as TextInputProps } from 'component/input/TextInput';
 import React from 'react';
