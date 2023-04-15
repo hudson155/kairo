@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import CopyButton from 'component/input/copy/CopyButton';
 import InputErrorMessage from 'component/input/errorMessage/InputErrorMessage';
-import InputLabel, { InputWidth } from 'component/input/label/InputLabel';
+import InputLabel from 'component/input/label/InputLabel';
 import styles from 'component/input/TextInput.module.scss';
 import React, { ChangeEvent, useState } from 'react';
 
@@ -11,7 +11,6 @@ export interface Props {
   label: string;
   placeholder?: string;
   value: string;
-  width?: InputWidth;
   onChange: (newValue: string) => void;
 }
 
@@ -22,7 +21,6 @@ const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
     label,
     placeholder = undefined,
     value,
-    width = undefined,
     onChange,
   }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
@@ -36,7 +34,7 @@ const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
     };
 
     return (
-      <InputLabel label={label} width={width}>
+      <InputLabel label={label}>
         <div className={classNames(styles.container, { focus: isFocused, [styles.error]: Boolean(errorMessage) })}>
           <input
             ref={ref}

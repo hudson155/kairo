@@ -1,33 +1,33 @@
 @use "src/style/focus";
 
 .container {
-  border: var(--borderSize-border) solid var(--color-border);
+  border: var(--borderSize-border-normal) solid var(--color-border);
   border-radius: var(--borderRadius-normal);
-  display: inline-flex;
+  display: flex;
   width: 100%;
 
   @include focus.focusable;
 
   &.error {
-    border-color: var(--color-failure);
+    border-color: var(--color-status-danger-border);
   }
 }
 
 .input {
   flex-grow: 1;
   font-weight: var(--fontWeight-light);
-  height: var(--size-inputHeight);
-  padding: var(--gap-normalHalf) var(--gap-normal);
+  height: var(--size-input-height);
+  padding: var(--gap-small) var(--gap-smallPlus);
 
   /**
    * Inputs with a copy button are a bit smaller,
    * so we sacrifice a bit of the padding to compensate.
    */
   &.copyable {
-    padding-right: var(--gap-normalHalf);
+    padding-right: var(--gap-small);
   }
 
   &::placeholder {
-    color: var(--color-fontFaded);
+    color: var(--color-font-faded);
   }
 }

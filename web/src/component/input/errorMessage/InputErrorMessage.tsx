@@ -8,8 +8,8 @@ interface Props {
 
 const InputErrorMessage: React.FC<Props> = ({ children }) => {
   return (
-    <Collapsible className={styles.outer} isOpen={Boolean(children)}>
-      <div className={styles.inner}>
+    <Collapsible isOpen={Boolean(children)}>
+      <div className={styles.errorMessage}>
         {children}
       </div>
     </Collapsible>

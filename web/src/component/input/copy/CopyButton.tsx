@@ -38,7 +38,7 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
       if (!data) {
         setMessage(NOTHING_TO_COPY_MESSAGE);
         setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 3000));
-        setMessageClassName(styles.failure);
+        setMessageClassName(styles.warning);
         setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 2 * durationFlash));
         return;
       }
@@ -48,10 +48,10 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
       setMessageClassName(styles.success);
       setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 2 * durationFlash));
     } catch (e) {
-      console.error('Copy failed', e);
+      console.error('Copy failed.', e);
       setMessage(COPY_FAILURE_MESSAGE);
       setMessageTimeout(setTimeout(() => setMessage(COPY_MESSAGE), 3000));
-      setMessageClassName(styles.failure);
+      setMessageClassName(styles.danger);
       setMessageClassNameTimeout(setTimeout(() => setMessageClassName(undefined), 3000));
     } finally {
       clearTimeout(messageTimeout);

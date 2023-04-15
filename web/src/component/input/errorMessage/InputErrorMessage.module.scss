@@ -1,10 +1,4 @@
-@use "../vars" as inputVars;
-
-.outer {
-  width: 100%;
-}
-
-.inner {
-  color: var(--color-failure);
-  padding: var(--borderSize-border) inputVars.$input-label-offset;
+.errorMessage {
+  color: var(--color-status-danger-text);
+  padding: var(--size-input-labelOffsetY) var(--size-input-labelOffsetX) 0;
 }

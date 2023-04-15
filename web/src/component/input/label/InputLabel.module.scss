@@ -1,16 +1,4 @@
-@use "../vars" as inputVars;
-
-.container {
-  align-items: flex-start;
-  display: inline-flex;
-  flex-direction: column;
-  row-gap: 1px;
-
-  &.width2 {
-    grid-column: span 2;
-  }
-}
-
 .label {
-  padding: var(--borderSize-border) inputVars.$input-label-offset;
+  display: block;
+  padding: 0 var(--size-input-labelOffsetX) var(--size-input-labelOffsetY);
 }

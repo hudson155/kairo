@@ -1,9 +1,9 @@
 import useUpdateOrganization from 'action/updateOrganization';
+import Container from 'component/container/Container';
 import Form from 'component/form/Form';
 import { useFormField } from 'component/form/FormField';
 import FormFields from 'component/form/FormFields';
 import SubmitButton from 'component/form/submitButton/SubmitButton';
-import InputGroup from 'component/input/group/InputGroup';
 import Heading2 from 'component/text/Heading2';
 import OrganizationNameInput from 'page/organizationSettings/basicInformation/organizationName/OrganizationNameInput';
 import React from 'react';
@@ -27,10 +27,10 @@ const BasicInformation: React.FC = () => {
     <>
       <Heading2>{'Basic information'}</Heading2>
       <Form fields={fields} onSubmit={handleSubmit}>
-        <InputGroup>
+        <Container direction="vertical">
           <OrganizationNameInput />
           <SubmitButton>{'Save'}</SubmitButton>
-        </InputGroup>
+        </Container>
       </Form>
     </>
   );

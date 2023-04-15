@@ -14,7 +14,7 @@
    * This 8px square is rotated 45 degrees to look like a downward caret.
    */
   &::after {
-    background-color: var(--color-backgroundInverse);
+    background-color: var(--color-background-inverse);
     content: "";
     display: block;
     height: 8px;
@@ -24,10 +24,10 @@
   }
 
   .tooltip {
-    background-color: var(--color-backgroundInverse);
+    background-color: var(--color-background-inverse);
     border-radius: var(--borderRadius-normal);
-    color: var(--color-fontInverse);
-    padding: 8px 10px; // Deviates from theme gaps.
+    color: var(--color-font-inverse);
+    padding: 9px 12px; // Deviates from theme gaps, but follows the same rules.
     white-space: nowrap;
   }
 }
@@ -38,17 +38,27 @@
     transition-property: background-color;
   }
 
-  &.success {
+  &.success, &.warning, &.danger {
     .tooltip, &::after {
-      background-color: var(--color-success);
       transition-duration: 0ms;
     }
   }
 
-  &.failure {
+  &.success {
     .tooltip, &::after {
-      background-color: var(--color-failure);
-      transition-duration: 0ms;
+      background-color: var(--color-status-success-background);
+    }
+  }
+
+  &.warning {
+    .tooltip, &::after {
+      background-color: var(--color-status-warning-background);
+    }
+  }
+
+  &.danger {
+    .tooltip, &::after {
+      background-color: var(--color-status-danger-background);
     }
   }
 }

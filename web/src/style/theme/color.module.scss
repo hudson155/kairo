@@ -41,6 +41,7 @@
     --color-button-secondary-border: hsl(240deg, 10%, 44%);
 
     --color-font-default: var(--colorLight-font-default);
+    --color-font-faded: hsl(240deg, 10%, 62%);
     --color-font-inverse: var(--colorDark-font-default);
 
     --color-overlay: hsla(240deg, 10%, 91%, 75%); // Overlays indicate the background cannot be interacted with.
@@ -79,6 +80,7 @@
     --color-button-secondary-border: hsl(240deg, 10%, 38%);
 
     --color-font-default: var(--colorDark-font-default);
+    --color-font-faded: hsl(240deg, 10%, 51%);
     --color-font-inverse: var(--colorLight-font-default);
 
     --color-overlay: hsla(240deg, 10%, 22%, 75%); // Overlays indicate the background cannot be interacted with.
