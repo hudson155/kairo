@@ -1,11 +1,11 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import ValidationErrorsError from 'api/ValidationErrorsError';
+import Container from 'component/container/Container';
 import Form, { useForm } from 'component/form/Form';
 import { useFormField } from 'component/form/FormField';
 import FormFields from 'component/form/FormFields';
 import FormTextInput from 'component/form/input/FormTextInput';
 import SubmitButton from 'component/form/submitButton/SubmitButton';
-import InputGroup from 'component/input/group/InputGroup';
 import React, { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
 
@@ -32,10 +32,10 @@ const Template: Story<ComponentProps<typeof Form>> = () => {
 
   return (
     <Form fields={fields} onSubmit={handleSubmit}>
-      <InputGroup>
-        <Input field="body.name" label="Name" />
+      <Container direction="vertical">
+        <Input field="body.name" label="Name" placeholder="John Smith" />
         <SubmitButton>{'Save'}</SubmitButton>
-      </InputGroup>
+      </Container>
     </Form>
   );
 };
@@ -45,9 +45,10 @@ export const Default = Template.bind({});
 interface Props {
   field: string;
   label: string;
+  placeholder?: string;
 }
 
-const Input: React.FC<Props> = ({ field, label }) => {
+const Input: React.FC<Props> = ({ field, label, placeholder = undefined }) => {
   const { fields } = useForm();
-  return <FormTextInput field={fields.getString(field)} label={label} />;
+  return <FormTextInput field={fields.getString(field)} label={label} placeholder={placeholder} />;
 };
