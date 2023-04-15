@@ -6,11 +6,17 @@ import { toast as delegate, ToastContainer as Delegate } from 'react-toastify';
 import styles from 'component/toast/ToastContainer.module.scss';
 
 interface Toast {
+  error: {
+    generic: string;
+  };
   success(content: ReactNode): void;
   failure(content: ReactNode): void;
 }
 
 const toast: Toast = {
+  error: {
+    generic: 'Something went wrong, please try again.',
+  },
   success: (content) => delegate.success(content, { autoClose: 4000 }),
   failure: (content) => delegate.error(content, { autoClose: 7000 }),
 };

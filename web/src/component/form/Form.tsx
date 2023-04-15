@@ -70,7 +70,7 @@ const Form: React.FC<Props> = ({ fields, onSubmit, children }) => {
       return;
     }
 
-    toast.failure('Something went wrong! Please try again.');
+    toast.failure(toast.error.generic);
     throw e;
   };
 
