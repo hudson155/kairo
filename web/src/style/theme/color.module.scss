@@ -21,8 +21,8 @@
   :root {
     --color-background-default: var(--colorLight-background-default);
     --color-background-accent: hsl(240deg, 10%, 94%); // Highlights something important.
-    --color-background-active: hsl(240deg, 10%, 92%); // For CSS ":active".
-    --color-background-hoverClickable: hsl(240deg, 10%, 90%); // For CSS ":hover" on clickable elements.
+    --color-background-active: hsl(240deg, 10%, 89%); // For CSS ":active".
+    --color-background-hoverClickable: hsl(240deg, 10%, 92%); // For CSS ":hover" on clickable elements.
     --color-background-hoverNotClickable: hsl(240deg, 10%, 97%); // For CSS ":hover" on non-clickable elements.
     --color-background-inverse: var(--colorDark-background-default);
 
@@ -61,7 +61,7 @@
     --color-background-default: var(--colorDark-background-default);
     --color-background-accent: hsl(240deg, 10%, 24%); // Highlights something important.
     --color-background-active: hsl(240deg, 10%, 26%); // For CSS ":active".
-    --color-background-hoverClickable: hsl(240deg, 10%, 28%); // For CSS ":hover" on clickable elements.
+    --color-background-hoverClickable: hsl(240deg, 10%, 29%); // For CSS ":hover" on clickable elements.
     --color-background-hoverNotClickable: hsl(240deg, 10%, 17%); // For CSS ":hover" on non-clickable elements.
     --color-background-inverse: var(--colorLight-background-default);
 

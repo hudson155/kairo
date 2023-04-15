@@ -1,17 +1,14 @@
 import Icon from 'component/icon/Icon';
 import { ADMIN_SETTINGS_PAGE_PATH } from 'page/adminSettings/AdminSettingsPageRoute';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
 
-interface Props {
-  className: string;
-  onClick: () => void;
-}
+type Props = Omit<LinkProps, 'to' | 'children'>;
 
 const AdminSettingsButton: React.ForwardRefRenderFunction<HTMLAnchorElement, Props> =
-  ({ className, onClick }, ref) => {
+  ({ ...props }, ref) => {
     return (
-      <Link ref={ref} className={className} to={ADMIN_SETTINGS_PAGE_PATH} onClick={onClick}>
+      <Link ref={ref} to={ADMIN_SETTINGS_PAGE_PATH} {...props}>
         <Icon name="admin_panel_settings" size="small" />
         {'Admin settings'}
       </Link>

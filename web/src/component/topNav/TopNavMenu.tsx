@@ -23,15 +23,15 @@ const TopNavMenu: React.FC = () => {
     <Menu button={button} side="right">
       <MenuItems>
         <MenuItem>
-          {({ className, close }) => <OrganizationSettingsButton className={className} onClick={close} />}
+          <OrganizationSettingsButton />
         </MenuItem>
         <MenuItem>
-          {({ className, close }) => <AdminSettingsButton className={className} onClick={close} />}
+          <AdminSettingsButton />
         </MenuItem>
       </MenuItems>
       <MenuItems>
         <MenuItem>
-          {({ className, close }) => <TopNavMenuLogoutButton className={className} onClick={close} />}
+          <TopNavMenuLogoutButton />
         </MenuItem>
       </MenuItems>
     </Menu>

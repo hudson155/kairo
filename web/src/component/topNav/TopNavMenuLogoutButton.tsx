@@ -1,27 +1,24 @@
-import Button from 'component/button/Button';
+import Button, { Props as ButtonProps } from 'component/button/Button';
 import Icon from 'component/icon/Icon';
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import auth0ClientState from 'state/auth/auth0Client';
 
-interface Props {
-  className: string;
-  onClick: () => void;
-}
+type Props = Omit<ButtonProps, | 'variant' | 'children'>;
 
 const TopNavMenuLogoutButton: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
-  ({ className, onClick }, ref) => {
+  ({ onClick = undefined, ...props }, ref) => {
     const auth0 = useRecoilValueLoadable(auth0ClientState).valueMaybe();
 
     if (!auth0) return null;
 
-    const handleClick = () => {
-      onClick();
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event);
       void auth0.logout();
     };
 
     return (
-      <Button ref={ref} className={className} variant="unstyled" onClick={handleClick}>
+      <Button ref={ref} variant="unstyled" onClick={handleClick} {...props}>
         <Icon name="logout" size="small" />
         {'Log out'}
       </Button>

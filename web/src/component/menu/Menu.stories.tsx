@@ -6,7 +6,6 @@ import styles from 'component/menu/Menu.stories.module.scss';
 import MenuItem from 'component/menu/MenuItem';
 import MenuItems from 'component/menu/MenuItems';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhotoDelegate';
-import { doNothing } from 'helper/doNothing';
 import React, { ComponentProps } from 'react';
 import { Link } from 'react-router-dom';
 import * as Decorator from 'story/Decorator';
@@ -32,7 +31,7 @@ interface Props {
 
 const MenuImpl: React.FC<Props> = ({ side = undefined }) => {
   const button = (
-    <Button variant="unstyled" onClick={doNothing}>
+    <Button variant="unstyled">
       <ProfilePhoto url="https://avatars.githubusercontent.com/u/1360420" />
       <Icon className={styles.expandIcon} name="expand_more" />
     </Button>
@@ -42,36 +41,24 @@ const MenuImpl: React.FC<Props> = ({ side = undefined }) => {
     <Menu button={button} side={side}>
       <MenuItems>
         <MenuItem>
-          {
-            ({ className }) => (
-              <Link className={className} to="/first">
-                <Icon name="grade" size="small" />
-                First
-              </Link>
-            )
-          }
+          <Link to="/first">
+            <Icon name="grade" size="small" />
+            First
+          </Link>
         </MenuItem>
         <MenuItem>
-          {
-            ({ className }) => (
-              <Link className={className} to="/second">
-                <Icon name="favorite" size="small" />
-                Second
-              </Link>
-            )
-          }
+          <Link to="/second">
+            <Icon name="favorite" size="small" />
+            Second
+          </Link>
         </MenuItem>
       </MenuItems>
       <MenuItems>
         <MenuItem>
-          {
-            ({ className }) => (
-              <Button className={className} variant="unstyled" onClick={doNothing}>
-                <Icon name="close" size="small" />
-                Third
-              </Button>
-            )
-          }
+          <Button variant="unstyled">
+            <Icon name="close" size="small" />
+            Third
+          </Button>
         </MenuItem>
       </MenuItems>
     </Menu>

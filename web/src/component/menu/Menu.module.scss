@@ -3,8 +3,8 @@
 }
 
 .container {
-  background-color: var(--color-background);
-  border: var(--borderSize-border) solid var(--color-border);
+  background-color: var(--color-background-default);
+  border: var(--borderSize-border-normal) solid var(--color-border);
   border-radius: var(--borderRadius-normal);
   margin-top: 8px;
   min-width: 160px;
