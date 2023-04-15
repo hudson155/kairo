@@ -30,4 +30,17 @@
       background-color: var(--color-button-primary-backgroundActive);
     }
   }
+
+  &.secondary {
+    background-color: var(--color-button-secondary-background);
+    border-color: var(--color-button-secondary-border);
+
+    &:hover {
+      background-color: var(--color-button-secondary-backgroundHover);
+    }
+
+    &:active {
+      background-color: var(--color-button-secondary-backgroundActive);
+    }
+  }
 }

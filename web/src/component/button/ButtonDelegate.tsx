@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react';
 
 type Type = 'submit' | 'button';
 
-export type Variant = 'primary' | 'unstyled';
+export type Variant = 'primary' | 'secondary' | 'unstyled';
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isSubmitting: boolean;
@@ -46,6 +46,8 @@ const variantClassName = (variant: Variant): string | undefined => {
   switch (variant) {
   case 'primary':
     return styles.primary;
+  case 'secondary':
+    return styles.secondary;
   case 'unstyled':
     return styles.unstyled;
   default:

@@ -1,30 +1,18 @@
 import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
-import { Variant } from 'component/button/ButtonDelegate';
+import Container from 'component/container/Container';
 import { ComponentProps } from 'react';
 
-interface Args {
-  variant: Variant;
-}
+export default {} as ComponentMeta<typeof Button>;
 
-export default {
-  argTypes: {
-    variant: {
-      options: ['primary', 'unstyled'],
-      control: { type: 'select' },
-    },
-  },
-} as ComponentMeta<typeof Button>;
-
-const Template: Story<ComponentProps<typeof Button> & Args> = ({ variant }) => {
+const Template: Story<ComponentProps<typeof Button>> = () => {
   return (
-    <Button variant={variant}>
-      Button text
-    </Button>
+    <Container direction="vertical">
+      <Button variant="unstyled">Button text</Button>
+      <Button variant="primary">Button text</Button>
+      <Button variant="secondary">Button text</Button>
+    </Container>
   );
 };
 
 export const Default = Template.bind({});
-Default.args = {
-  variant: 'primary',
-};
