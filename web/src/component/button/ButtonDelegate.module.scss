@@ -1,0 +1,33 @@
+@use "src/style/focus";
+
+.button {
+  align-items: center;
+  border-radius: var(--borderRadius-normal);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: fit-content;
+
+  @include focus.focusable;
+
+  &:not(.unstyled) {
+    border: var(--borderSize-border-normal) solid;
+    color: var(--colorDark-font-default);
+    height: calc(var(--size-input-height) + 2 * var(--borderSize-border-normal));
+    padding: var(--gap-normal) var(--gap-normalPlus);
+  }
+
+  &.primary {
+    background-color: var(--color-button-primary-background);
+    border-color: var(--color-button-primary-border);
+
+    &:hover {
+      background-color: var(--color-button-primary-backgroundHover);
+    }
+
+    &:active {
+      background-color: var(--color-button-primary-backgroundActive);
+    }
+  }
+}

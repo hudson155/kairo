@@ -2,7 +2,7 @@ import useUpdateOrganization from 'action/updateOrganization';
 import Form from 'component/form/Form';
 import { useFormField } from 'component/form/FormField';
 import FormFields from 'component/form/FormFields';
-import FormSubmitButton from 'component/form/FormSubmitButton';
+import SubmitButton from 'component/form/submitButton/SubmitButton';
 import InputGroup from 'component/input/group/InputGroup';
 import Heading2 from 'component/text/Heading2';
 import OrganizationNameInput from 'page/organizationSettings/basicInformation/organizationName/OrganizationNameInput';
@@ -29,7 +29,7 @@ const BasicInformation: React.FC = () => {
       <Form fields={fields} onSubmit={handleSubmit}>
         <InputGroup>
           <OrganizationNameInput />
-          <FormSubmitButton>{'Save'}</FormSubmitButton>
+          <SubmitButton>{'Save'}</SubmitButton>
         </InputGroup>
       </Form>
     </>

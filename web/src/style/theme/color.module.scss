@@ -31,8 +31,10 @@
     --color-border: hsl(240deg, 10%, 91%);
     --color-boxShadow: hsla(240deg, 10%, 16%, 35%);
 
-    --color-button-primary-background: hsl(215deg, 45%, 55%);
-    --color-button-primary-border: hsl(215deg, 45%, 55%);
+    --color-button-primary-background: hsl(215deg, 50%, 54%);
+    --color-button-primary-backgroundActive: hsl(215deg, 50%, 52%);
+    --color-button-primary-backgroundHover: hsl(215deg, 50%, 58%);
+    --color-button-primary-border: hsl(215deg, 50%, 41%);
 
     --color-font-default: var(--colorLight-font-default);
     --color-font-inverse: var(--colorDark-font-default);
@@ -63,7 +65,9 @@
     --color-border: hsl(240deg, 10%, 26%);
     --color-boxShadow: hsla(240deg, 10%, 99%, 35%);
 
-    --color-button-primary-background: hsl(215deg, 50%, 50%);
+    --color-button-primary-background: hsl(215deg, 50%, 49%);
+    --color-button-primary-backgroundActive: hsl(215deg, 50%, 47%);
+    --color-button-primary-backgroundHover: hsl(215deg, 50%, 53%);
     --color-button-primary-border: hsl(215deg, 50%, 32%);
 
     --color-font-default: var(--colorDark-font-default);

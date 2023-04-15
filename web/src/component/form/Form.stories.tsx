@@ -3,8 +3,8 @@ import ValidationErrorsError from 'api/ValidationErrorsError';
 import Form, { useForm } from 'component/form/Form';
 import { useFormField } from 'component/form/FormField';
 import FormFields from 'component/form/FormFields';
-import FormSubmitButton from 'component/form/FormSubmitButton';
 import FormTextInput from 'component/form/input/FormTextInput';
+import SubmitButton from 'component/form/submitButton/SubmitButton';
 import InputGroup from 'component/input/group/InputGroup';
 import React, { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
@@ -34,7 +34,7 @@ const Template: Story<ComponentProps<typeof Form>> = () => {
     <Form fields={fields} onSubmit={handleSubmit}>
       <InputGroup>
         <Input field="body.name" label="Name" />
-        <FormSubmitButton>{'Save'}</FormSubmitButton>
+        <SubmitButton>{'Save'}</SubmitButton>
       </InputGroup>
     </Form>
   );

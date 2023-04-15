@@ -1,64 +1,53 @@
 import classNames from 'classnames';
-import styles from 'component/button/Button.module.scss';
-import ButtonSubmittingOverlay from 'component/button/ButtonSubmittingOverlay';
-import React, { FocusEventHandler, MouseEventHandler, PointerEventHandler, ReactNode } from 'react';
+import styles from 'component/button/ButtonDelegate.module.scss';
+import ButtonOverlay from 'component/button/ButtonOverlay';
+import React, { ReactNode } from 'react';
 
-type Type = 'submit' | 'reset' | 'button';
+type Type = 'submit' | 'button';
 
 export type Variant = 'primary' | 'unstyled';
 
-interface Props {
-  className?: string;
-  isSubmitting?: boolean;
+export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  isSubmitting: boolean;
   type: Type;
   variant: Variant;
-  onBlur?: FocusEventHandler<HTMLButtonElement>;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  onFocus?: FocusEventHandler<HTMLButtonElement>;
-  onMouseEnter?: PointerEventHandler<HTMLButtonElement>;
-  onMouseLeave?: PointerEventHandler<HTMLButtonElement>;
   children: ReactNode;
 }
 
+/**
+ * Although all props are destructured, [...props] is propagated in the button components
+ * to support library code that passes arbitrary props (such as Headless UI).
+ */
 const ButtonDelegate: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
   ({
     className = undefined,
-    isSubmitting = false,
-    type,
+    disabled = undefined,
+    isSubmitting,
     variant,
-    onBlur = undefined,
-    onClick,
-    onFocus = undefined,
-    onMouseEnter = undefined,
-    onMouseLeave = undefined,
     children,
+    ...props
   }, ref) => {
     return (
       <button
         ref={ref}
         className={classNames(styles.button, variantClassName(variant), className)}
-        disabled={isSubmitting}
-        type={type}
-        onBlur={onBlur}
-        onClick={onClick}
-        onFocus={onFocus}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        disabled={disabled}
+        {...props}
       >
         {children}
-        {isSubmitting ? <ButtonSubmittingOverlay /> : null}
+        {disabled || isSubmitting ? <ButtonOverlay isSubmitting={isSubmitting} /> : null}
       </button>
     );
   };
 
 export default React.forwardRef(ButtonDelegate);
 
-export const variantClassName = (variant: Variant): string | undefined => {
+const variantClassName = (variant: Variant): string | undefined => {
   switch (variant) {
-  case 'unstyled':
-    return undefined;
   case 'primary':
     return styles.primary;
+  case 'unstyled':
+    return styles.unstyled;
   default:
     throw new Error(`Unsupported variant: ${variant}.`);
   }
