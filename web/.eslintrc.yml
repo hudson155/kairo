@@ -96,8 +96,7 @@ rules:
   react/jsx-no-script-url: warn
   react/jsx-no-target-blank:
     - warn
-    - warnOnSpreadAttributes: true
-      links: true
+    - links: true
       forms: true
   react/jsx-no-useless-fragment: [warn, { allowExpressions: true }]
   react/jsx-pascal-case: warn
