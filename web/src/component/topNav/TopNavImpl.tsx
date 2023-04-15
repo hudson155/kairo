@@ -3,7 +3,7 @@ import Icon from 'component/icon/Icon';
 import { useCollapsibleSideNav } from 'component/sideNav/SideNav';
 import TopNav from 'component/topNav/TopNav';
 import TopNavMenu from 'component/topNav/TopNavMenu';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import defaultFeatureState from 'state/core/defaultFeature';
@@ -43,7 +43,7 @@ const Left: React.FC = () => {
 const SideNavCollapseButton: React.FC = () => {
   const [sideNavIsOpen, setSideNavIsOpen] = useRecoilState(sideNavIsOpenState);
 
-  const toggleSideNav: MouseEventHandler<HTMLButtonElement> = () => setSideNavIsOpen((currVal) => !currVal);
+  const toggleSideNav = () => setSideNavIsOpen((currVal) => !currVal);
 
   return (
     <Button variant="unstyled" onClick={toggleSideNav}>

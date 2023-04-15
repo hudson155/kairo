@@ -5,7 +5,7 @@ import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
 import { doNothing } from 'helper/doNothing';
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
-import React, { ComponentProps, MouseEventHandler, useState } from 'react';
+import React, { ComponentProps, useState } from 'react';
 import { MutableSnapshot } from 'recoil';
 import organizationAuth from 'state/core/organizationAuth';
 import * as Decorator from 'story/Decorator';
@@ -29,7 +29,7 @@ export default {
 const Template: Story<ComponentProps<typeof BaseLayout>> = () => {
   const [sideNavIsOpen, setSideNavIsOpen] = useState(false);
 
-  const toggleSideNav: MouseEventHandler<HTMLButtonElement> = () => setSideNavIsOpen((currVal) => !currVal);
+  const toggleSideNav = () => setSideNavIsOpen((currVal) => !currVal);
 
   return (
     <BaseLayout sideNav={<SideNavImpl isOpen={sideNavIsOpen} setIsOpen={setSideNavIsOpen} />} topNav={<TopNavImpl />}>

@@ -1,7 +1,7 @@
 import ValidationErrorsError from 'api/ValidationErrorsError';
 import FormFields from 'component/form/FormFields';
 import { useToast } from 'component/toast/ToastContainer';
-import React, { FormEventHandler, ReactNode, useContext, useMemo, useState } from 'react';
+import React, { FormEvent, ReactNode, useContext, useMemo, useState } from 'react';
 
 export interface FormContext {
   fields: FormFields;
@@ -27,7 +27,7 @@ const Form: React.FC<Props> = ({ fields, onSubmit, children }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent form default behaviour.
 
     if (isSubmitting) {

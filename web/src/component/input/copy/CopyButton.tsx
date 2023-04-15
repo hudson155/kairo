@@ -4,7 +4,7 @@ import Button from 'component/button/Button';
 import Icon from 'component/icon/Icon';
 import styles from 'component/input/copy/CopyButton.module.scss';
 import Text from 'component/text/Text';
-import React, { Fragment, MouseEventHandler, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { durationFlash } from 'style/theme/duration';
 import { transitions } from 'style/transitions';
 
@@ -32,7 +32,7 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
   const [messageClassName, setMessageClassName] = useState<string>();
   const [messageClassNameTimeout, setMessageClassNameTimeout] = useState<ReturnType<typeof setTimeout>>();
 
-  const handleCopy: MouseEventHandler<HTMLButtonElement> = () => void (async () => {
+  const handleCopy = () => void (async () => {
     try {
       const data = onCopy();
       if (!data) {

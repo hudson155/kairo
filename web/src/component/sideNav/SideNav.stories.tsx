@@ -3,7 +3,7 @@ import Button from 'component/button/Button';
 import SideNav, { useCollapsibleSideNav } from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import { doNothing } from 'helper/doNothing';
-import { ComponentProps, MouseEventHandler, useState } from 'react';
+import { ComponentProps, useState } from 'react';
 import * as Decorator from 'story/Decorator';
 
 export default {
@@ -14,7 +14,7 @@ const Template: Story<ComponentProps<typeof SideNav>> = () => {
   const sideNavIsCollapsible = useCollapsibleSideNav();
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSideNav: MouseEventHandler<HTMLButtonElement> = () => setIsOpen((currVal) => !currVal);
+  const toggleSideNav = () => setIsOpen((currVal) => !currVal);
 
   return (
     <>

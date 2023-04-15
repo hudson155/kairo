@@ -3,7 +3,7 @@ import CopyButton from 'component/input/copy/CopyButton';
 import InputErrorMessage from 'component/input/errorMessage/InputErrorMessage';
 import InputLabel, { InputWidth } from 'component/input/label/InputLabel';
 import styles from 'component/input/TextInput.module.scss';
-import React, { ChangeEventHandler, FocusEventHandler, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 export interface Props {
   copyButton?: boolean;
@@ -27,11 +27,11 @@ const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
   }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
 
-    const handleFocus: FocusEventHandler<HTMLInputElement> = () => setIsFocused(true);
+    const handleFocus = () => setIsFocused(true);
 
-    const handleBlur: FocusEventHandler<HTMLInputElement> = () => setIsFocused(false);
+    const handleBlur = () => setIsFocused(false);
 
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       onChange(event.target.value);
     };
 
