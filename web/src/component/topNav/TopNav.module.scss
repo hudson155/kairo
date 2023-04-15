@@ -1,19 +1,17 @@
-@use "src/component/topNav/vars" as topNavVars;
-
 .header {
   align-items: center;
   align-self: stretch;
-  border-bottom: var(--borderSize-border) solid var(--color-border);
+  border-bottom: var(--borderSize-border-normal) solid var(--color-border);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  min-height: calc(#{topNavVars.$height} + var(--borderSize-border));
-  padding: 12px 24px;
+  height: calc(var(--size-topNav-height) + var(--borderSize-border-normal));
+  padding: var(--gap-normal) var(--gap-normalPlus);
 }
 
 .left, .right {
   align-items: center;
-  column-gap: 12px;
+  column-gap: var(--gap-normal);
   display: flex;
   flex-direction: row;
 }
