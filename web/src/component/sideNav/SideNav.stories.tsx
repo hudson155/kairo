@@ -2,7 +2,6 @@ import { ComponentMeta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
 import SideNav, { useCollapsibleSideNav } from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
-import { doNothing } from 'helper/doNothing';
 import { ComponentProps, useState } from 'react';
 import * as Decorator from 'story/Decorator';
 
@@ -18,15 +17,14 @@ const Template: Story<ComponentProps<typeof SideNav>> = () => {
 
   return (
     <>
-      {/* TODO: Use a styled button, once they exist. */}
       {
         sideNavIsCollapsible
-          ? <Button variant="unstyled" onClick={toggleSideNav}>{isOpen ? 'Close' : 'Open'}</Button>
+          ? <Button variant="primary" onClick={toggleSideNav}>{isOpen ? 'Close' : 'Open'}</Button>
           : null
       }
       <SideNav isOpen={isOpen} setIsOpen={setIsOpen}>
-        <SideNavEntry label="First" to="/first" onClick={doNothing} />
-        <SideNavEntry label="Second" to="/second" onClick={doNothing} />
+        <SideNavEntry label="First" to="/first" />
+        <SideNavEntry label="Second" to="/second" />
       </SideNav>
     </>
   );

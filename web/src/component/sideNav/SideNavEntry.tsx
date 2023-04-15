@@ -1,33 +1,29 @@
 import Icon from 'component/icon/Icon';
 import styles from 'component/sideNav/SideNavEntry.module.scss';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface Props {
   iconName?: string;
   label: string;
   to: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SideNavEntry: React.FC<Props> = ({
   iconName = undefined,
   label,
-  onClick = undefined,
   to,
+  onClick = undefined,
 }) => {
   return (
     <li>
-      <NavLink className={styles.link} to={to} onClick={onClick}>{children(iconName, label)}</NavLink>
+      <NavLink className={styles.link} to={to} onClick={onClick}>
+        {iconName ? <Icon key="icon" name={iconName} size="small" /> : null}
+        {label}
+      </NavLink>
     </li>
   );
 };
 
 export default SideNavEntry;
-
-const children = (iconName: string | undefined, label: string): ReactNode => {
-  const result: ReactNode[] = [];
-  if (iconName) result.push(<Icon key="icon" name={iconName} size="small" />);
-  result.push(label);
-  return <>{result}</>;
-};

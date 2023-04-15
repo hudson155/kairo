@@ -28,11 +28,11 @@ interface Props {
  * This is necessitated by Headless UI's Dialog implementation.
  */
 const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
-  const sideNavIsCollapsible = useCollapsibleSideNav();
+  const isCollapsible = useCollapsibleSideNav();
 
-  if (!sideNavIsCollapsible) {
+  if (!isCollapsible) {
     return (
-      <div className={classNames(styles.container, { [styles.collapsible]: sideNavIsCollapsible })}>
+      <div className={classNames(styles.container, { [styles.collapsible]: isCollapsible })}>
         <nav className={styles.nav}>
           <ul className={styles.ul}>{children}</ul>
         </nav>
@@ -48,7 +48,7 @@ const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
         </Transition.Child>
         <Transition.Child as={Fragment} {...transitions('slideIn', 'slideOut')}>
           <Dialog.Panel as={Fragment}>
-            <div className={classNames(styles.container, { [styles.collapsible]: sideNavIsCollapsible })}>
+            <div className={classNames(styles.container, { [styles.collapsible]: isCollapsible })}>
               <SideNavHeader onClose={() => setIsOpen(false)} />
               <nav className={styles.nav}>
                 <ul className={styles.ul}>{children}</ul>

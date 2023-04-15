@@ -1,10 +1,8 @@
-@use "src/component/topNav/vars" as topNavVars;
-
 .container {
   align-items: center;
-  border-bottom: var(--borderSize-border) solid var(--color-border);
+  border-bottom: var(--borderSize-border-normal) solid var(--color-border);
   display: flex;
   flex-direction: row;
-  min-height: calc(#{topNavVars.$height} + var(--borderSize));
-  padding: var(--gap-largeHalf) var(--gap-large);
+  height: calc(var(--size-topNav-height) + var(--borderSize-border-normal));
+  padding: var(--gap-normal) var(--gap-normalPlus);
 }

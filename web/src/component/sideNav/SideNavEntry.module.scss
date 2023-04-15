@@ -1,29 +1,24 @@
-@use "./vars" as sideNavVars;
+@use "src/style/focus";
 
 .link {
   align-items: center;
   border-radius: var(--borderRadius-normal);
+  column-gap: var(--gap-small);
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
-  padding: var(--gap-smallHalf) var(--gap-small);
-  padding-left: calc(var(--gap-small) - #{sideNavVars.$indicator-width});
+  padding: var(--gap-small) var(--gap-smallPlus);
 
-  &::before {
-    align-self: stretch;
-    border-radius: calc(#{sideNavVars.$indicator-width} / 2);
-    content: "";
-    display: block;
-    flex-basis: sideNavVars.$indicator-width;
-    flex-shrink: 0;
-    transform: translateX(-1 * sideNavVars.$indicator-offset);
+  @include focus.hideFocus;
+
+  &:focus, &:hover {
+    background-color: var(--color-background-hoverClickable);
   }
 
-  &:global(.active)::before {
+  &:active {
+    background-color: var(--color-background-active);
+  }
+
+  &:global(.active) {
     background-color: var(--color-indicator);
-  }
-
-  &:hover {
-    background-color: var(--color-backgroundHover);
   }
 }
