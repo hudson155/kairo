@@ -1,3 +1,4 @@
+import Page from 'component/page/Page';
 import HeaderSection from 'component/section/HeaderSection';
 import React from 'react';
 import FeatureRep from 'rep/FeatureRep';
@@ -8,7 +9,9 @@ interface Props {
 
 const FormFeature: React.FC<Props> = ({ feature }) => {
   return (
-    <HeaderSection title={feature.name} />
+    <Page>
+      <HeaderSection title={feature.name} />
+    </Page>
   );
 };
 
