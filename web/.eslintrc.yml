@@ -433,6 +433,10 @@ rules:
   github/unescaped-html-literal: warn
   github/a11y-no-generic-link-text: warn
 
+  # Sonar.
+  # https://github.com/SonarSource/eslint-plugin-sonarjs#rules.
+  sonarjs/no-small-switch: off
+
   # Unicorn.
   # https://github.com/sindresorhus/eslint-plugin-unicorn#rules.
   unicorn/better-regex: off
