@@ -394,6 +394,11 @@ rules:
   '@typescript-eslint/no-invalid-this': [error, { capIsConstructor: false }]
   '@typescript-eslint/no-loop-func': warn
   '@typescript-eslint/no-redeclare': error
+  '@typescript-eslint/no-restricted-imports':
+    - error
+    - patterns:
+        - './*'
+        - '../*'
   '@typescript-eslint/no-shadow': warn
   '@typescript-eslint/no-unused-expressions': [warn, { enforceForJSX: true }]
   '@typescript-eslint/no-unused-vars': [warn, { args: all }]
