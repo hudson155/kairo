@@ -1,8 +1,8 @@
 import React from 'react';
 import FeatureRep from 'rep/FeatureRep';
 
-const FormFeature = React.lazy(() => import('page/feature/FormFeature'));
-const PlaceholderFeature = React.lazy(() => import('page/feature/PlaceholderFeature'));
+const FormFeature = React.lazy(() => import('./FormFeature'));
+const PlaceholderFeature = React.lazy(() => import('./PlaceholderFeature'));
 
 interface Props {
   feature: FeatureRep;

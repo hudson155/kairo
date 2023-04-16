@@ -1,8 +1,8 @@
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
-import { adminSettingsRoute } from 'page/adminSettings/AdminSettingsPageRoute';
+import adminSettingsRoute from 'page/adminSettings/adminSettingsRoute';
 import FeaturePage from 'page/feature/FeaturePage';
 import LoadingPage from 'page/loading/LoadingPage';
-import { organizationSettingsRoute } from 'page/organizationSettings/OrganizationSettingsPageRoute';
+import organizationSettingsRoute from 'page/organizationSettings/organizationSettingsRoute';
 import React, { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -33,8 +33,8 @@ const AuthenticatedRouter: React.FC = () => {
       <Suspense fallback={<LoadingPage />}>
         <Routes>
           {defaultFeatureRedirect}
-          {organizationSettingsRoute()}
-          {adminSettingsRoute()}
+          {organizationSettingsRoute.route}
+          {adminSettingsRoute.route}
           {featureRoutes}
         </Routes>
       </Suspense>

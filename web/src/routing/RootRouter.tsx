@@ -1,6 +1,6 @@
 import AuthenticationRequired from 'app/AuthenticationRequired';
-import { loginRoute } from 'page/login/LoginRoute';
-import { logoutRoute } from 'page/logout/LogoutRoute';
+import loginRoute from 'page/login/loginRoute';
+import logoutRoute from 'page/logout/logoutRoute';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AuthenticatedRouter from 'routing/AuthenticatedRouter';
@@ -14,8 +14,8 @@ const RootRouter: React.FC = () => {
 
   return (
     <Routes>
-      {loginRoute()}
-      {logoutRoute()}
+      {loginRoute.route}
+      {logoutRoute.route}
       <Route element={featureRouter} path="/*" />
     </Routes>
   );
