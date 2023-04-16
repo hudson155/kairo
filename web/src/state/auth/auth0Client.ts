@@ -28,7 +28,7 @@ const auth0ClientState = selector<Auth0Client>({
 export default auth0ClientState;
 
 /**
- * Creates the Limber-configured version of [Auth0Client].
+ * Creates the Limber-configured version of {@link Auth0Client}.
  */
 const createClient = async (organizationId: string): Promise<Auth0Client> => {
   return await createAuth0Client({
@@ -47,7 +47,7 @@ const hasAuthParams = (searchParams = window.location.search): boolean =>
 
 /**
  * After redirecting back from Auth0 upon login,
- * this function should be called to restore the [AppState].
+ * this function should be called to restore the {@link AppState}.
  */
 const handleRedirectCallback = async (auth0Client: Auth0Client): Promise<void> => {
   let appState: AppState | undefined = undefined;

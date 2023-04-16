@@ -10,7 +10,7 @@ interface Props {
 }
 
 /**
- * A special type of [Section] that appears first within the main area of a page.
+ * A special type of {@link Section} that appears first within the main area of a page.
  * Has a built-in heading, and sets the page title to match.
  */
 const HeaderSection: React.FC<Props> = ({ title, children = undefined }) => {

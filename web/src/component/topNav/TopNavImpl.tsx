@@ -12,7 +12,7 @@ import sideNavIsOpenState from 'state/nav/sideNavIsOpen';
 
 /**
  * This is the functional implementation of the top navigation bar.
- * It uses [useRecoilValueLoadable] to ensure it can render even in an erroneous state.
+ * It uses {@link useRecoilValueLoadable} to ensure it can render even in an erroneous state.
  */
 const TopNavImpl: React.FC = () => {
   return <TopNav left={<Left />} right={<TopNavMenu />} />;

@@ -15,7 +15,7 @@ export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /**
- * Although all props are destructured, [...props] is propagated in the button components
+ * Although all props are destructured, {@param props} is propagated in the button components
  * to support library code that passes arbitrary props (such as Headless UI).
  */
 const ButtonDelegate: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =

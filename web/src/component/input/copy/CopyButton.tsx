@@ -18,7 +18,7 @@ interface Props {
 }
 
 /**
- * When pressed, calls [onCopy] and copies the resulting content to the clipboard.
+ * When pressed, calls {@param onCopy} and copies the resulting content to the clipboard.
  * A tooltip will show when the button is focused or hovered.
  * The tooltip's content and color reflects the state of the copy operation.
  */

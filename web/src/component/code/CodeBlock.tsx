@@ -8,7 +8,7 @@ interface Props {
 
 /**
  * Use this to display a multi-line block of code.
- * For code inline within some text, use [Code] instead.
+ * For code inline within some text, use {@link Code} instead.
  *
  * The wrapping div serves to allow this component to display as a block element
  * without having the background of the code span the full width.

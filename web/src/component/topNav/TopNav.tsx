@@ -8,7 +8,7 @@ interface Props {
 
 /**
  * This component styles the top navigation bar, but defines no functionality.
- * Functionality is defined in [TopNavImpl].
+ * Functionality is defined in {@link TopNavImpl}.
  */
 const TopNav: React.FC<Props> = ({ left, right }) => {
   return (

@@ -11,6 +11,9 @@ interface Line {
   value: ReactNode;
 }
 
+/**
+ * Uses {@link useRecoilValueLoadable} to ensure it can render even in an erroneous state.
+ */
 const FooterDebugInfo: React.FC = () => {
   const { gitSha } = useDebugSettings();
   const organizationGuid = useRecoilValueLoadable(organizationGuidState).valueMaybe();

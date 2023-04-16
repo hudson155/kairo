@@ -14,7 +14,7 @@ interface Props {
 
 /**
  * A navigation component approximating a "drop-down menu",
- * The open button is arbitrary, but the children should use [MenuItems] and [MenuItem].
+ * The open button is arbitrary, but the children should use {@link MenuItems} and {@link MenuItem}.
  */
 const Menu: React.FC<Props> = ({ button, side = 'left', children }) => {
   return (

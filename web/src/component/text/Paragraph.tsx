@@ -10,7 +10,7 @@ interface Props {
 
 /**
  * Use this for paragraphs of text.
- * No need to add [Text] inside, except to change how text looks.
+ * No need to add {@link Text} inside, except to change how text looks.
  */
 const Paragraph: React.FC<Props> = ({ className = undefined, size = undefined, children }) => {
   return (

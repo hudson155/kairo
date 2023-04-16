@@ -15,7 +15,7 @@ interface Props {
 
 /**
  * Use this to adjust how text looks without adding additional spacing.
- * For document text that needs proper spacing, use [Paragraph] instead.
+ * For document text that needs proper spacing, use {@link Paragraph} instead.
  */
 const Text: React.FC<Props> = ({
   className = undefined,

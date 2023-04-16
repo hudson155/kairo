@@ -21,7 +21,7 @@ interface Props {
 
 /**
  * This component styles the side navigation bar, but defines no functionality.
- * Functionality is defined in [SideNavImpl].
+ * Functionality is defined in {@link SideNavImpl}.
  *
  * DUPLICATE CODE ALERT: When updating this component,
  * there is some duplicate code to look out for.

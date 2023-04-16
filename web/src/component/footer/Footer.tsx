@@ -9,7 +9,6 @@ const COPYRIGHT_TEXT = '© Jeff Hudson. All rights reserved.';
 /**
  * The footer should show on most pages.
  * It contains debug information when SHOW_DEBUG_MESSAGES is set.
- * It uses [useRecoilValueLoadable] to ensure it can render even in an erroneous state.
  */
 const Footer: React.FC = () => {
   const { showDebugMessages } = useDebugSettings();
