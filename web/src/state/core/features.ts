@@ -1,16 +1,19 @@
 import { featureApiState } from 'api/FeatureApi';
+import { atom, selector } from 'recoil';
 import FeatureRep from 'rep/FeatureRep';
 import organizationGuidState from 'state/core/organizationGuid';
-import spring from 'state/util/spring';
 
-const featuresState = spring<FeatureRep[]>({
+const featuresState = atom<FeatureRep[]>({
   key: 'core/features',
-  get: async ({ get }) => {
-    const featureApi = get(featureApiState);
-    const organizationGuid = get(organizationGuidState);
-    const features = await featureApi.listByOrganization(organizationGuid);
-    return sortFeatures(features);
-  },
+  default: selector({
+    key: 'core/features-default',
+    get: async ({ get }) => {
+      const featureApi = get(featureApiState);
+      const organizationGuid = get(organizationGuidState);
+      const features = await featureApi.listByOrganization(organizationGuid);
+      return sortFeatures(features);
+    },
+  }),
 });
 
 export default featuresState;

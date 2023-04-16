@@ -1,16 +1,19 @@
 import { organizationAuthApiState } from 'api/OrganizationAuthApi';
 import { getRootHost } from 'metadata';
+import { atom, selector } from 'recoil';
 import OrganizationAuthRep from 'rep/OrganizationAuthRep';
-import spring from 'state/util/spring';
 
-const organizationAuthState = spring<OrganizationAuthRep>({
+const organizationAuthState = atom<OrganizationAuthRep>({
   key: 'core/organizationAuth',
-  get: async ({ get }) => {
-    const authApi = get(organizationAuthApiState);
-    const auth = await authApi.getByHostname(getRootHost());
-    if (!auth) throw new Error('No auth found.');
-    return auth;
-  },
+  default: selector({
+    key: 'core/organizationAuth-default',
+    get: async ({ get }) => {
+      const authApi = get(organizationAuthApiState);
+      const auth = await authApi.getByHostname(getRootHost());
+      if (!auth) throw new Error('No auth found.');
+      return auth;
+    },
+  }),
 });
 
 export default organizationAuthState;
