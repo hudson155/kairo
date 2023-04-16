@@ -2,7 +2,7 @@ auth0:
   managementApi:
     type: Real
     domain: limber.auth0.com
-    clientId: 8KQdZpXBehiHZO28UjRMf7vGuAeTYlgx
+    clientId: XcqhJx3jOBJfMSVQFGkLSqdHQeuHIyzx
     clientSecret:
       type: GcpSecret
       id: projects/225278732028/secrets/auth0-client-secret/versions/latest
