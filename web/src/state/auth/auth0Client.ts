@@ -8,7 +8,7 @@ const CODE_RE = /[?&]code=[^&]+/u;
 const STATE_RE = /[?&]state=[^&]+/u;
 const ERROR_RE = /[?&]error=[^&]+/u;
 
-interface AppState {
+export interface AppState {
   returnTo?: string;
 }
 
@@ -50,13 +50,13 @@ const hasAuthParams = (searchParams = window.location.search): boolean =>
  * this function should be called to restore the {@link AppState}.
  */
 const handleRedirectCallback = async (auth0Client: Auth0Client): Promise<void> => {
-  let appState: AppState | undefined = undefined;
+  let state: AppState | undefined = undefined;
   try {
-    ({ appState } = await auth0Client.handleRedirectCallback<AppState>());
+    ({ appState: state } = await auth0Client.handleRedirectCallback<AppState>());
   } catch (e) {
     console.error('Auth0 redirect callback failed.', e);
   }
-  replaceState(appState?.returnTo);
+  replaceState(state?.returnTo);
 };
 
 const replaceState = (url?: string): void => {

@@ -1,7 +1,7 @@
 import { getHref } from 'metadata';
 import React, { ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import auth0ClientState from 'state/auth/auth0Client';
+import auth0ClientState, { AppState } from 'state/auth/auth0Client';
 import isAuthenticatedState from 'state/auth/isAuthenticated';
 
 interface Props {
@@ -14,13 +14,11 @@ const AuthenticationRequired: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (!isAuthenticated) {
+      const state: AppState = { returnTo: getHref() };
       void auth0.loginWithRedirect({
-        appState: {
-          returnTo: getHref(),
-        },
+        appState: state,
         authorizationParams: {
           redirectMethod: 'replace',
-          screen_hint: 'login', // eslint-disable-line @typescript-eslint/naming-convention
         },
       });
     }
