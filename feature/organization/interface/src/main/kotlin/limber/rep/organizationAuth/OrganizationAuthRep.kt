@@ -1,5 +1,6 @@
 package limber.rep.organizationAuth
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import limber.validation.Auth0OrganizationNameValidator
 import java.util.UUID
 
@@ -13,6 +14,7 @@ public data class OrganizationAuthRep(
     @Auth0OrganizationNameValidator val auth0OrganizationName: String,
   )
 
+  @JsonInclude(value = JsonInclude.Include.NON_NULL)
   public data class Updater(
     @Auth0OrganizationNameValidator val auth0OrganizationName: String? = null,
   )
