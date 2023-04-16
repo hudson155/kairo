@@ -1,3 +1,5 @@
+@use "src/style/breakpoints";
+
 :root {
   /**
    * "Plus" gaps are 4/3 of their base. They should only be used for horizontal padding.
@@ -11,6 +13,16 @@
   --gap-large: 24px;
   --gap-largePlus: 32px;
 
-  --gap-page-small: 16px;
-  --gap-page-large: 32px;
+  /**
+   * The layout gap is a special gap that is only for use at the page/layout level.
+   */
+  @include breakpoints.above(breakpoints.$breakpoint-md) {
+    --gap-layout: 40px;
+  }
+  @include breakpoints.below(breakpoints.$breakpoint-md) {
+    --gap-layout: 32px;
+  }
+  @include breakpoints.below(breakpoints.$breakpoint-sm) {
+    --gap-layout: 20px;
+  }
 }

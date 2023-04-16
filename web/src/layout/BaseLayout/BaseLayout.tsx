@@ -15,16 +15,14 @@ interface Props {
 const BaseLayout: React.FC<Props> = ({ sideNav = <SideNavImpl />, topNav = <TopNavImpl />, children }) => {
   return (
     <div className={styles.outer}>
-      {topNav}
+      <div className={styles.topNav}>{topNav}</div>
       <div className={styles.middle}>
-        {sideNav}
+        <div className={styles.sideNav}>{sideNav}</div>
         <div className={styles.inner}>
           <main className={styles.main}>
-            <div className={styles.mainInner}>
-              <ErrorBoundary fallback={ErrorMain.fallback}>
-                {children}
-              </ErrorBoundary>
-            </div>
+            <ErrorBoundary fallback={ErrorMain.fallback}>
+              {children}
+            </ErrorBoundary>
           </main>
           <Footer />
         </div>

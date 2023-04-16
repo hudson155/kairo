@@ -3,7 +3,6 @@ import Button from 'component/button/Button';
 import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
 import TopNav from 'component/topNav/TopNav';
-import { doNothing } from 'helper/doNothing';
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
 import React, { ComponentProps, useState } from 'react';
 import { MutableSnapshot } from 'recoil';
@@ -33,8 +32,7 @@ const Template: Story<ComponentProps<typeof BaseLayout>> = () => {
 
   return (
     <BaseLayout sideNav={<SideNavImpl isOpen={sideNavIsOpen} setIsOpen={setSideNavIsOpen} />} topNav={<TopNavImpl />}>
-      {/* TODO: Use a styled button, once they exist. */}
-      <Button variant="unstyled" onClick={toggleSideNav}>{sideNavIsOpen ? 'Close' : 'Open'}</Button>
+      <Button variant="primary" onClick={toggleSideNav}>{sideNavIsOpen ? 'Close' : 'Open'}</Button>
     </BaseLayout>
   );
 };
@@ -49,8 +47,8 @@ interface Props {
 const SideNavImpl: React.FC<Props> = ({ isOpen, setIsOpen }) => {
   return (
     <SideNav isOpen={isOpen} setIsOpen={setIsOpen}>
-      <SideNavEntry label="First" to="/first" onClick={doNothing} />
-      <SideNavEntry label="Second" to="/second" onClick={doNothing} />
+      <SideNavEntry label="First" to="/first" />
+      <SideNavEntry label="Second" to="/second" />
     </SideNav>
   );
 };

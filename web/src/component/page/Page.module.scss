@@ -3,9 +3,5 @@
 .page {
   display: flex;
   flex-direction: column;
-  row-gap: var(--gap-page-large);
-
-  @include breakpoints.below(breakpoints.$breakpoint-sm) {
-    row-gap: var(--gap-page-small);
-  }
+  gap: var(--gap-layout);
 }

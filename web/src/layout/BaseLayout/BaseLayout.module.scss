@@ -5,10 +5,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+}
 
-  > * {
-    flex-shrink: 0;
-  }
+.topNav {
+  align-self: stretch;
 }
 
 .middle {
@@ -20,9 +20,11 @@
   min-height: 0;
   position: relative;
   width: 1400px;
+}
 
-  > * {
-    flex-shrink: 0;
+.sideNav {
+  @include breakpoints.above(breakpoints.$breakpoint-md) {
+    padding: var(--gap-layout) 20px var(--gap-layout) var(--gap-layout);
   }
 }
 
@@ -32,15 +34,16 @@
   flex-grow: 1;
   flex-shrink: initial;
   overflow-y: auto;
+  padding: var(--gap-layout);
+  row-gap: 60px;
+
+  @include breakpoints.below(breakpoints.$breakpoint-md) {
+    row-gap: 48px;
+  }
 }
 
 .main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 32px;
-
-  @include breakpoints.below(breakpoints.$breakpoint-sm) {
-    padding: 16px;
-  }
 }
