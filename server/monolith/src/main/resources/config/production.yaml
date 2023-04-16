@@ -5,7 +5,7 @@ auth0:
     clientId: XcqhJx3jOBJfMSVQFGkLSqdHQeuHIyzx
     clientSecret:
       type: GcpSecret
-      id: projects/225278732028/secrets/auth0-client-secret/versions/latest
+      id: projects/225278732028/secrets/auth0-client-secret/versions/4
 
 clock:
   type: Real
@@ -53,7 +53,7 @@ sql:
     name: LIMBER_SQL_USERNAME
   password:
     type: GcpSecret
-    id: projects/225278732028/secrets/sql-limber-app-engine-password/versions/latest
+    id: projects/225278732028/secrets/sql-limber-app-engine-password/versions/3
   properties:
     socketFactory: com.google.cloud.sql.postgres.SocketFactory
     cloudSqlInstance:
