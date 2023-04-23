@@ -42,8 +42,7 @@ const Collapsible: React.FC<Props> = ({ className = undefined, isOpen, children 
       }, durationCssDelay + durationTransition));
     }
     clearTimeout(contentTimeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return <div ref={ref} className={classNames(styles.container, className)}>{content}</div>;
 };

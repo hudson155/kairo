@@ -8,8 +8,9 @@ export interface FormContext {
   isSubmitting: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export const Context = React.createContext<FormContext>(undefined as unknown as FormContext);
+const context = React.createContext<FormContext>(
+  undefined as unknown as FormContext,
+);
 
 interface Props {
   fields: FormFields;
@@ -77,16 +78,16 @@ const Form: React.FC<Props> = ({ fields, onSubmit, children }) => {
   const value: FormContext = useMemo(() => ({ fields, isSubmitting }), [fields, isSubmitting]);
 
   return (
-    <Context.Provider value={value}>
+    <context.Provider value={value}>
       <form onSubmit={handleSubmit}>
         {children}
       </form>
-    </Context.Provider>
+    </context.Provider>
   );
 };
 
 export default Form;
 
 export const useForm = (): FormContext => {
-  return useContext(Context);
+  return useContext(context);
 };
