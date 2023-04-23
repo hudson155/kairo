@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 export default class HttpError extends Error {
-  response: AxiosResponse;
+  readonly response: AxiosResponse;
 
   constructor(response: AxiosResponse) {
     super(`Request failed with status code ${response.status}.`);

@@ -1,5 +1,5 @@
 export default class ValidationErrorsError extends Error {
-  errors: ValidationError[];
+  readonly errors: ValidationError[];
 
   constructor(errors: ValidationError[]) {
     super('Validation errors.');
