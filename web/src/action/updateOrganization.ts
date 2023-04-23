@@ -1,8 +1,8 @@
 import { organizationApiState } from 'api/OrganizationApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import organizationState from 'state/core/organization';
-import organizationGuidState from 'state/core/organizationGuid';
+import organizationState from 'state/global/core/organization';
+import organizationGuidState from 'state/global/core/organizationGuid';
 
 const useUpdateOrganization = (): (updater: OrganizationRep.Updater) => Promise<void> => {
   const organizationApi = useRecoilValue(organizationApiState);

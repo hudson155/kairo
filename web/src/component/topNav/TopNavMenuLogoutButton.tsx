@@ -2,7 +2,7 @@ import Button, { Props as ButtonProps } from 'component/button/Button';
 import Icon from 'component/icon/Icon';
 import React, { MouseEvent } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import auth0ClientState from 'state/auth/auth0Client';
+import auth0ClientState from 'state/global/auth/auth0Client';
 
 type Props = Omit<ButtonProps, | 'variant' | 'children'>;
 

@@ -6,8 +6,8 @@ import organizationSettingsRoute from 'page/organizationSettings/organizationSet
 import React, { Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import defaultFeatureState from 'state/core/defaultFeature';
-import featuresState from 'state/core/features';
+import defaultFeatureState from 'state/global/core/defaultFeature';
+import featuresState from 'state/global/core/features';
 
 const AuthenticatedRouter: React.FC = () => {
   const features = useRecoilValue(featuresState);

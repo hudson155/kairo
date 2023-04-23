@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import organizationState from 'state/core/organization';
+import organizationState from 'state/global/core/organization';
 
 const organizationNameState = selector<string>({
   key: 'core/organizationName',

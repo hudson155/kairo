@@ -6,7 +6,7 @@ import Text from 'component/text/Text';
 import BasicInformation from 'page/organizationSettings/basicInformation/BasicInformation';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import organizationNameState from 'state/core/organizationName';
+import organizationNameState from 'state/global/core/organizationName';
 
 const OrganizationSettingsPage: React.FC = () => {
   const organizationName = useRecoilValue(organizationNameState);

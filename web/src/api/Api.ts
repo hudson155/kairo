@@ -3,7 +3,7 @@ import ValidationErrorsError, { ValidationError } from 'api/ValidationErrorsErro
 import axios, { Axios } from 'axios';
 import env from 'env';
 import { selectorFamily } from 'recoil';
-import auth0ClientState from 'state/auth/auth0Client';
+import auth0ClientState from 'state/global/auth/auth0Client';
 
 export interface Request<Req> {
   method: 'GET' | 'PATCH' | 'POST';

@@ -1,15 +1,14 @@
-import { IdToken } from '@auth0/auth0-spa-js';
 import { selector } from 'recoil';
-import auth0ClientState from 'state/auth/auth0Client';
+import auth0ClientState from 'state/global/auth/auth0Client';
 
-const auth0IdTokenState = selector<IdToken | undefined>({
-  key: 'auth/auth0IdToken',
+const jwtState = selector<string>({
+  key: 'auth/jwt',
   get: async ({ get }) => {
     const auth0 = get(auth0ClientState);
-    return await auth0.getIdTokenClaims();
+    return await auth0.getTokenSilently();
   },
   // The Auth0 client has its own cache.
   cachePolicy_UNSTABLE: { eviction: 'most-recent' }, // eslint-disable-line @typescript-eslint/naming-convention
 });
 
-export default auth0IdTokenState;
+export default jwtState;

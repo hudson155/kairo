@@ -1,7 +1,7 @@
 import { featureApiState } from 'api/FeatureApi';
 import { atom, selector } from 'recoil';
 import FeatureRep from 'rep/FeatureRep';
-import organizationGuidState from 'state/core/organizationGuid';
+import organizationGuidState from 'state/global/core/organizationGuid';
 
 const featuresState = atom<FeatureRep[]>({
   key: 'core/features',

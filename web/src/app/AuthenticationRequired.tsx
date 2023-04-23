@@ -1,8 +1,8 @@
 import { getHref } from 'metadata';
 import React, { ReactNode, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import auth0ClientState, { AppState } from 'state/auth/auth0Client';
-import isAuthenticatedState from 'state/auth/isAuthenticated';
+import auth0ClientState, { AppState } from 'state/global/auth/auth0Client';
+import isAuthenticatedState from 'state/global/auth/isAuthenticated';
 
 interface Props {
   children: ReactNode;

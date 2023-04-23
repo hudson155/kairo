@@ -8,7 +8,7 @@ import Heading2 from 'component/text/Heading2';
 import OrganizationNameInput from 'page/organizationSettings/basicInformation/organizationName/OrganizationNameInput';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import organizationNameState from 'state/core/organizationName';
+import organizationNameState from 'state/global/core/organizationName';
 
 const BasicInformation: React.FC = () => {
   const updateOrganization = useUpdateOrganization();

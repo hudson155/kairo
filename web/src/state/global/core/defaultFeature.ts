@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import FeatureRep from 'rep/FeatureRep';
-import featuresState from 'state/core/features';
+import featuresState from 'state/global/core/features';
 
 const defaultFeatureState = selector<FeatureRep>({
   key: 'core/defaultFeature',

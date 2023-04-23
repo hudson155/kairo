@@ -1,7 +1,7 @@
 import ProfilePhotoDelegate from 'component/profilePhoto/ProfilePhotoDelegate';
 import React from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import profilePhotoUrlState from 'state/auth/profilePhotoUrl';
+import profilePhotoUrlState from 'state/global/auth/profilePhotoUrl';
 
 /**
  * Displays the authenticated user's profile photo.
