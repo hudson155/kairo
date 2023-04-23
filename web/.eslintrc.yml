@@ -438,6 +438,12 @@ rules:
   github/unescaped-html-literal: warn
   github/a11y-no-generic-link-text: warn
 
+  # React Hooks
+  # https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks#advanced-configuration
+  react-hooks/exhaustive-deps:
+    - warn
+    - additionalHooks: (useLocalStateContext)
+
   # Sonar.
   # https://github.com/SonarSource/eslint-plugin-sonarjs#rules.
   sonarjs/no-small-switch: off
