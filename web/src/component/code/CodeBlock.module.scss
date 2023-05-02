@@ -1,4 +1,6 @@
 .codeBlock {
   display: inline-block;
-  white-space: pre-wrap; // Preserves whitespace (including newlines) but allows wrapping.
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre; // Preserves whitespace (including newlines).
 }
