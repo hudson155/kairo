@@ -19,7 +19,7 @@ export interface Request<Req> {
 export default class Api {
   private readonly axios: Axios = axios.create({
     baseURL: env.limber.apiBaseUrl, // eslint-disable-line @typescript-eslint/naming-convention
-    timeout: 10_000,
+    timeout: 30_000,
     validateStatus: undefined, // Never throws [AxiosError].
   });
 
