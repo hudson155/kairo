@@ -381,7 +381,6 @@ rules:
   '@typescript-eslint/default-param-last': warn
   '@typescript-eslint/func-call-spacing': warn
   '@typescript-eslint/indent': [warn, 2, { SwitchCase: 0 }]
-  '@typescript-eslint/init-declarations': error
   '@typescript-eslint/keyword-spacing': warn
   '@typescript-eslint/lines-between-class-members': warn
   '@typescript-eslint/no-dupe-class-members': error
