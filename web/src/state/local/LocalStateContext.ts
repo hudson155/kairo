@@ -19,7 +19,7 @@ export class LocalStateErrorContext<T> {
 
   readonly contents: unknown;
 
-  constructor(contents: T) {
+  constructor(contents: unknown) {
     this.contents = contents;
   }
 
@@ -74,7 +74,12 @@ export const useLocalStateContext = <T>(
   useEffect(() => {
     const promise = block();
     void (async () => {
-      const result = new LocalStateValueContext(await promise);
+      let result: LocalStateContext<T>;
+      try {
+        result = new LocalStateValueContext(await promise);
+      } catch (e) {
+        result = new LocalStateErrorContext<T>(e);
+      }
       setContents(result);
       return result;
     })();

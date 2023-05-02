@@ -1,5 +1,5 @@
+import ErrorMain from 'component/error/ErrorMain';
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
-import ErrorMain from 'page/error/ErrorMain';
 import React, { ReactNode } from 'react';
 
 interface Props {

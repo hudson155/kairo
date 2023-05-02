@@ -2,8 +2,8 @@ import Footer from 'component/footer/Footer';
 import SideNavImpl from 'component/sideNav/SideNavImpl';
 import TopNavImpl from 'component/topNav/TopNavImpl';
 import styles from 'layout/BaseLayout/BaseLayout.module.scss';
-import ErrorBoundary from 'page/error/ErrorBoundary';
-import ErrorMain from 'page/error/ErrorMain';
+import ErrorBoundary from 'component/error/ErrorBoundary';
+import ErrorMain from 'component/error/ErrorMain';
 import React, { ReactNode } from 'react';
 
 interface Props {

@@ -1,7 +1,5 @@
-import CodeBlock from 'component/code/CodeBlock';
+import ErrorContent from 'component/error/ErrorContent';
 import HeaderSection from 'component/section/HeaderSection';
-import Paragraph from 'component/text/Paragraph';
-import { useDebugSettings } from 'hook/useDebugSettings';
 import React, { ReactNode } from 'react';
 
 interface Props {
@@ -12,16 +10,9 @@ interface Props {
  * This error component should be shown when something goes wrong at the page-level.
  */
 const ErrorMain: React.FC<Props> = ({ error }) => {
-  const { showDebugMessages } = useDebugSettings();
-
   return (
     <HeaderSection title="Error">
-      <Paragraph>{'Something went wrong while loading the page.'}</Paragraph>
-      {
-        showDebugMessages
-          ? <CodeBlock>{error.stack}</CodeBlock>
-          : <Paragraph>{'Our team has been notified.'}</Paragraph>
-      }
+      <ErrorContent error={error} message="Something went wrong while loading the page." />
     </HeaderSection>
   );
 };

@@ -1,5 +1,5 @@
 import ToastContainer from 'component/toast/ToastContainer';
-import ErrorBoundary from 'page/error/ErrorBoundary';
+import ErrorBoundary from 'component/error/ErrorBoundary';
 import ErrorPage from 'page/error/ErrorPage';
 import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
