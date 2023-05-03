@@ -76,7 +76,7 @@ export const useLocalStateContext = <T>(
     void (async () => {
       let result: LocalStateContext<T>;
       try {
-        result = new LocalStateValueContext(await promise);
+        result = new LocalStateValueContext<T>(await promise);
       } catch (e) {
         result = new LocalStateErrorContext<T>(e);
       }
