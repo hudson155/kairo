@@ -1,0 +1,15 @@
+.container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap-normal) var(--gap-normalPlus);
+  row-gap: var(--gap-small);
+
+  &:not(:first-of-type) {
+    border-top: var(--borderSize-border-thin) solid var(--color-border);
+  }
+
+  &:hover {
+    background-color: var(--color-background-hoverNotClickable);
+  }
+}

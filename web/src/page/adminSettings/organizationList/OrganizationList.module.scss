@@ -1,0 +1,7 @@
+.list {
+  border: var(--borderSize-border-normal) solid var(--color-border);
+  border-radius: var(--borderRadius-large);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}

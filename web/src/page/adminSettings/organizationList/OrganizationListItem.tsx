@@ -1,0 +1,20 @@
+import Code from 'component/code/Code';
+import Text from 'component/text/Text';
+import styles from 'page/adminSettings/organizationList/OrganizationListItem.module.scss';
+import React from 'react';
+import OrganizationRep from 'rep/OrganizationRep';
+
+interface Props {
+  organization: OrganizationRep;
+}
+
+const OrganizationListItem: React.FC<Props> = ({ organization }) => {
+  return (
+    <div className={styles.container}>
+      <Text size="large">{organization.name}</Text>
+      <Text size="small"><Code selectAll={true}>{organization.guid}</Code></Text>
+    </div>
+  );
+};
+
+export default OrganizationListItem;

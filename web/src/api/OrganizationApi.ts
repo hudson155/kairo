@@ -16,6 +16,13 @@ class OrganizationApi {
     });
   }
 
+  async listAll(): Promise<OrganizationRep[]> {
+    return await this.api.request<OrganizationRep[]>({
+      method: 'GET',
+      path: '/organizations',
+    });
+  }
+
   async update(organizationGuid: string, updater: OrganizationRep.Updater): Promise<OrganizationRep> {
     return await this.api.request<OrganizationRep, OrganizationRep.Updater>({
       method: 'PATCH',
