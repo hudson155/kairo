@@ -1,17 +1,17 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Paragraph from 'component/text/Paragraph';
 import { useResizeObserver } from 'hook/useResizeObserver';
-import React, { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof Impl>;
+interface StoryProps {
+}
 
-const Template: Story<ComponentProps<typeof Impl>> = () => {
-  return <Impl />;
-};
+const story: Meta<StoryProps> = {};
 
-export const Default = Template.bind({});
+export default story;
 
-const Impl: React.FC = () => {
+const Template: Story<StoryProps> = () => {
   const isSmall = useResizeObserver((size) => size < 992);
   return <Paragraph>{isSmall ? 'Small' : 'Large'}</Paragraph>;
 };
+
+export const Default = Template.bind({});

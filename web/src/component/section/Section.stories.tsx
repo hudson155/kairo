@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
 import Page from 'component/page/Page';
 import HeaderSection from 'component/section/HeaderSection';
@@ -7,11 +7,15 @@ import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
 
-export default {
-  decorators: [Decorator.helmetProvider()],
-} as ComponentMeta<typeof Section>;
+type StoryProps = ComponentProps<typeof Section>;
 
-const Template: Story<ComponentProps<typeof Section>> = () => {
+const story: Meta<StoryProps> = {
+  decorators: [Decorator.helmetProvider()],
+};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return (
     <Page>
       <HeaderSection title="Section title">

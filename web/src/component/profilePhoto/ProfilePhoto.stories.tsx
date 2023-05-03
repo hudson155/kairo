@@ -1,11 +1,15 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
 import ProfilePhoto from 'component/profilePhoto/ProfilePhotoDelegate';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof ProfilePhoto>;
+type StoryProps = ComponentProps<typeof ProfilePhoto>;
 
-const Template: Story<ComponentProps<typeof ProfilePhoto>> = () => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return (
     <Container direction="horizontal">
       <ProfilePhoto url={undefined} />

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import SubmitButton from 'component/form/submitButton/SubmitButtonDelegate';
 import { ComponentProps } from 'react';
 
@@ -6,9 +6,13 @@ interface Args {
   isSubmitting: boolean;
 }
 
-export default {} as ComponentMeta<typeof SubmitButton>;
+type StoryProps = ComponentProps<typeof SubmitButton> & Args;
 
-const Template: Story<ComponentProps<typeof SubmitButton> & Args> = ({ isSubmitting }) => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = ({ isSubmitting }) => {
   return (
     <SubmitButton isSubmitting={isSubmitting}>Button text</SubmitButton>
   );

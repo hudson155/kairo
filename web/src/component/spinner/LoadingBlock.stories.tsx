@@ -1,10 +1,14 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import LoadingBlock from 'component/spinner/LoadingBlock';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof LoadingBlock>;
+type StoryProps = ComponentProps<typeof LoadingBlock>;
 
-const Template: Story<ComponentProps<typeof LoadingBlock>> = () => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return <LoadingBlock />;
 };
 

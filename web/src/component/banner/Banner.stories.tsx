@@ -1,11 +1,15 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Banner from 'component/banner/Banner';
 import Container from 'component/container/Container';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof Banner>;
+type StoryProps = ComponentProps<typeof Banner>;
 
-const Template: Story<ComponentProps<typeof Banner>> = () => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return (
     <Container direction="vertical">
       <Banner variant="success">Success banner.</Banner>

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Footer from 'component/footer/Footer';
 import { ComponentProps } from 'react';
 import { MutableSnapshot } from 'recoil';
@@ -14,11 +14,15 @@ const initializeState = ({ set }: MutableSnapshot): void => {
   });
 };
 
-export default {
-  decorators: [Decorator.recoilRoot(initializeState)],
-} as ComponentMeta<typeof Footer>;
+type StoryProps = ComponentProps<typeof Footer>;
 
-const Template: Story<ComponentProps<typeof Footer>> = () => {
+const story: Meta<StoryProps> = {
+  decorators: [Decorator.recoilRoot(initializeState)],
+};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return <Footer />;
 };
 

@@ -1,12 +1,16 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import CodeBlock from 'component/code/CodeBlock';
 import Container from 'component/container/Container';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof CodeBlock>;
+type StoryProps = ComponentProps<typeof CodeBlock>;
 
-const Template: Story<ComponentProps<typeof CodeBlock>> = () => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   const stackTrace = 'Exception in thread "main" java.lang.NullPointerException\n' +
     '        at com.example.myproject.Book.getTitle(Book.java:16)\n' +
     '        at com.example.myproject.Author.getBookTitles(Author.java:25)\n' +

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Code from 'component/code/Code';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
@@ -7,9 +7,13 @@ interface Args {
   selectAll: boolean;
 }
 
-export default {} as ComponentMeta<typeof Code>;
+type StoryProps = ComponentProps<typeof Code> & Args;
 
-const Template: Story<ComponentProps<typeof Code> & Args> = ({ selectAll }) => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = ({ selectAll }) => {
   return (
     <Paragraph>
       Use <Code selectAll={selectAll ? true : undefined}>yarn start</Code> to start the app.

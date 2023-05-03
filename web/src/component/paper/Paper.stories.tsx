@@ -1,13 +1,17 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
 import Paper from 'component/paper/Paper';
 import Heading2 from 'component/text/Heading2';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof Paper>;
+type StoryProps = ComponentProps<typeof Paper>;
 
-const Template: Story<ComponentProps<typeof Paper>> = () => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return (
     <Paper>
       <Container direction="vertical">

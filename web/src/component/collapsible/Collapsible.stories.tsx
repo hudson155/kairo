@@ -1,25 +1,20 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Collapsible from 'component/collapsible/Collapsible';
 import styles from 'component/collapsible/Collapsible.stories.module.scss';
 import Paragraph from 'component/text/Paragraph';
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 
 interface Args {
   isOpen: boolean;
 }
 
-export default {} as ComponentMeta<typeof Impl>;
+type StoryProps = ComponentProps<typeof Collapsible> & Args;
 
-const Template: Story<ComponentProps<typeof Impl> & Args> = ({ isOpen }) => {
-  return <Impl isOpen={isOpen} />;
-};
+const story: Meta<StoryProps> = {};
 
-export const Default = Template.bind({});
-Default.args = {
-  isOpen: false,
-};
+export default story;
 
-const Impl: React.FC<Args> = ({ isOpen }) => {
+const Template: Story<StoryProps> = ({ isOpen }) => {
   return (
     <Collapsible isOpen={isOpen}>
       <Paragraph className={styles.paragraph}>
@@ -27,4 +22,9 @@ const Impl: React.FC<Args> = ({ isOpen }) => {
       </Paragraph>
     </Collapsible>
   );
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  isOpen: false,
 };

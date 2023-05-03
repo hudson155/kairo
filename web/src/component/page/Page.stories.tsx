@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
 import Page from 'component/page/Page';
 import Section from 'component/section/Section';
@@ -6,9 +6,13 @@ import Heading1 from 'component/text/Heading1';
 import Paragraph from 'component/text/Paragraph';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof Page>;
+type StoryProps = ComponentProps<typeof Page>;
 
-const Template: Story<ComponentProps<typeof Page>> = () => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   return (
     <Page>
       <Section>

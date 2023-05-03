@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Container from 'component/container/Container';
 import Heading1 from 'component/text/Heading1';
 import Heading2 from 'component/text/Heading2';
@@ -8,10 +8,14 @@ import Paragraph from 'component/text/Paragraph';
 import Text from 'component/text/Text';
 import { ComponentProps } from 'react';
 
-export default {} as ComponentMeta<typeof Text>;
+type StoryProps = ComponentProps<typeof Text>;
+
+const story: Meta<StoryProps> = {};
+
+export default story;
 
 // eslint-disable-next-line max-lines-per-function
-const Template: Story<ComponentProps<typeof Text>> = () => {
+const Template: Story<StoryProps> = () => {
   return (
     <Container direction="vertical">
       <Heading1>Text demonstration</Heading1>

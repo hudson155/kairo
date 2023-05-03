@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import CopyButton from 'component/input/copy/CopyButton';
 import { ComponentProps } from 'react';
 
@@ -8,16 +8,20 @@ interface Args {
   state: State;
 }
 
-export default {
+type StoryProps = ComponentProps<typeof CopyButton> & Args;
+
+const story: Meta<StoryProps> = {
   argTypes: {
     state: {
       options: ['Success', 'NothingToCopy', 'Failure'],
       control: { type: 'radio' },
     },
   },
-} as ComponentMeta<typeof CopyButton>;
+};
 
-const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ state }) => {
+export default story;
+
+const Template: Story<StoryProps> = ({ state }) => {
   const handleCopy = (): string => {
     switch (state) {
     case 'Success':

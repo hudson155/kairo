@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import ValidationErrorsError from 'api/ValidationErrorsError';
 import Container from 'component/container/Container';
 import Form, { useForm } from 'component/form/Form';
@@ -9,11 +9,15 @@ import SubmitButton from 'component/form/submitButton/SubmitButton';
 import React, { ComponentProps } from 'react';
 import * as Decorator from 'story/Decorator';
 
-export default {
-  decorators: [Decorator.toastProvider()],
-} as ComponentMeta<typeof Form>;
+type StoryProps = ComponentProps<typeof Form>;
 
-const Template: Story<ComponentProps<typeof Form>> = () => {
+const story: Meta<StoryProps> = {
+  decorators: [Decorator.toastProvider()],
+};
+
+export default story;
+
+const Template: Story<StoryProps> = () => {
   const fields = new FormFields([
     ['body.name', useFormField('Jeff')],
   ]);

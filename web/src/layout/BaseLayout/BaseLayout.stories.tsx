@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import Button from 'component/button/Button';
 import SideNav from 'component/sideNav/SideNav';
 import SideNavEntry from 'component/sideNav/SideNavEntry';
@@ -18,14 +18,18 @@ const initializeState = ({ set }: MutableSnapshot): void => {
   });
 };
 
-export default {
+type StoryProps = ComponentProps<typeof BaseLayout>;
+
+const story: Meta<StoryProps> = {
   decorators: [
     Decorator.recoilRoot(initializeState),
     Decorator.browserRouter(),
   ],
-} as ComponentMeta<typeof BaseLayout>;
+};
 
-const Template: Story<ComponentProps<typeof BaseLayout>> = () => {
+export default story;
+
+const Template: Story<StoryProps> = () => {
   const [sideNavIsOpen, setSideNavIsOpen] = useState(false);
 
   const toggleSideNav = () => setSideNavIsOpen((currVal) => !currVal);

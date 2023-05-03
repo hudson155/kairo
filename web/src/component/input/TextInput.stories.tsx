@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from '@storybook/react';
+import { Meta, Story } from '@storybook/react';
 import TextInput from 'component/input/TextInput';
 import { ComponentProps, useState } from 'react';
 
@@ -7,9 +7,13 @@ interface Args {
   hasError: boolean;
 }
 
-export default {} as ComponentMeta<typeof TextInput>;
+type StoryProps = ComponentProps<typeof TextInput> & Args;
 
-const Template: Story<ComponentProps<typeof TextInput> & Args> = ({ copyButton, hasError }) => {
+const story: Meta<StoryProps> = {};
+
+export default story;
+
+const Template: Story<StoryProps> = ({ copyButton, hasError }) => {
   const [value, setValue] = useState('Limber');
 
   return (
