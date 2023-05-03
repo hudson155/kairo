@@ -2,28 +2,31 @@ import { ComponentMeta, Story } from '@storybook/react';
 import CopyButton from 'component/input/copy/CopyButton';
 import { ComponentProps } from 'react';
 
+type State = 'Success' | 'NothingToCopy' | 'Failure';
+
 interface Args {
-  copy: 'Success' | 'NothingToCopy' | 'Failure';
+  state: State;
 }
 
 export default {
   argTypes: {
-    copy: {
+    state: {
       options: ['Success', 'NothingToCopy', 'Failure'],
       control: { type: 'radio' },
     },
   },
 } as ComponentMeta<typeof CopyButton>;
 
-const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => {
+const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ state }) => {
   const handleCopy = (): string => {
-    if (copy === 'Success') {
+    switch (state) {
+    case 'Success':
       return 'Copied content.';
-    }
-    if (copy === 'NothingToCopy') {
+    case 'NothingToCopy':
       return '';
+    case 'Failure':
+      throw new Error('Failed to copy.');
     }
-    throw new Error('Failed to copy.');
   };
 
   return <CopyButton onCopy={handleCopy} />;
@@ -31,5 +34,5 @@ const Template: Story<ComponentProps<typeof CopyButton> & Args> = ({ copy }) => 
 
 export const Default = Template.bind({});
 Default.args = {
-  copy: 'Success',
+  state: 'Success',
 };
