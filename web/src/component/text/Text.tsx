@@ -42,8 +42,6 @@ export const sizeClassName = (size: Size | undefined): string | undefined => {
     return styles.sizeNormal;
   case 'large':
     return styles.sizeLarge;
-  default:
-    throw new Error(`Unsupported font size: ${size}.`);
   }
 };
 
@@ -57,7 +55,5 @@ export const weightClassName = (weight: Weight | undefined): string | undefined 
     return styles.weightNormal;
   case 'bold':
     return styles.weightBold;
-  default:
-    throw new Error(`Unsupported font weight: ${weight}.`);
   }
 };

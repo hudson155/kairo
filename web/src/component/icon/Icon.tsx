@@ -33,7 +33,5 @@ export const sizeClassName = (size: Size): string => {
     return styles.large;
   case 'extra-large':
     return styles.extraLarge;
-  default:
-    throw new Error(`Unsupported size: ${size}.`);
   }
 };

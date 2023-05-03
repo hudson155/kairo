@@ -50,7 +50,5 @@ const variantClassName = (variant: Variant): string | undefined => {
     return styles.secondary;
   case 'unstyled':
     return styles.unstyled;
-  default:
-    throw new Error(`Unsupported variant: ${variant}.`);
   }
 };

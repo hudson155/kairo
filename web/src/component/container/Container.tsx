@@ -35,8 +35,6 @@ const densityClassName = (density: Density): string => {
     return styles.densityNormal;
   case 'relaxed':
     return styles.densityRelaxed;
-  default:
-    throw new Error(`Unsupported density: ${density}.`);
   }
 };
 
@@ -46,7 +44,5 @@ const directionClassName = (direction: Direction): string => {
     return styles.directionHorizontal;
   case 'vertical':
     return styles.directionVertical;
-  default:
-    throw new Error(`Unsupported direction: ${direction}.`);
   }
 };

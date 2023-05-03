@@ -37,7 +37,5 @@ export const sideClassName = (side: Side): string => {
     return styles.left;
   case 'right':
     return styles.right;
-  default:
-    throw new Error(`Unsupported side: ${side}.`);
   }
 };

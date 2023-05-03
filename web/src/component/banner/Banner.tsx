@@ -30,7 +30,5 @@ const variantClassName = (variant: Variant): string => {
     return styles.warning;
   case 'danger':
     return styles.danger;
-  default:
-    throw new Error(`Unsupported variant: ${variant}.`);
   }
 };
