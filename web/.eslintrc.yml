@@ -450,6 +450,7 @@ rules:
   unicorn/catch-error-name: [error, { name: e }]
   unicorn/consistent-function-scoping: [error, { checkArrowFunctions: false }]
   unicorn/custom-error-definition: error
+  unicorn/empty-brace-spaces: off
   unicorn/expiring-todo-comments: off
   unicorn/filename-case:
     - error

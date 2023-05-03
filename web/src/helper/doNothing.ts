@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-empty-function, no-empty-function, unicorn/empty-brace-spaces */
+/* eslint-disable @typescript-eslint/no-empty-function, no-empty-function */
 
 export const doNothing = (): void => {
 };
