@@ -438,7 +438,7 @@ rules:
   # https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks#advanced-configuration
   react-hooks/exhaustive-deps:
     - warn
-    - additionalHooks: (useLocalStateContext)
+    - additionalHooks: ^useLocalStateContext$
 
   # Sonar.
   # https://github.com/SonarSource/eslint-plugin-sonarjs#rules.
