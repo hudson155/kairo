@@ -195,9 +195,7 @@ rules:
   capitalized-comments: [warn, always]
   class-methods-use-this: warn
   complexity: warn
-  consistent-return: error
   curly: [warn, multi-line, consistent]
-  default-case: error
   default-case-last: warn
   eqeqeq: error
   func-name-matching: warn
@@ -222,7 +220,6 @@ rules:
   no-div-regex: error
   no-else-return: [warn, { allowElseIf: false }]
   no-empty: warn
-  no-empty-function: warn
   no-eq-null: warn
   no-eval: error
   no-extend-native: error
