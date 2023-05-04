@@ -15,9 +15,9 @@ interface Props {
 const BaseLayout: React.FC<Props> = ({ sideNav = <SideNavImpl />, topNav = <TopNavImpl />, children }) => {
   return (
     <div className={styles.outer}>
-      <div className={styles.topNav}>{topNav}</div>
+      {topNav ? <div className={styles.topNav}>{topNav}</div> : null}
       <div className={styles.middle}>
-        <div className={styles.sideNav}>{sideNav}</div>
+        {sideNav ? <div className={styles.sideNav}>{sideNav}</div> : null}
         <div className={styles.inner}>
           <main className={styles.main}>
             <ErrorBoundary fallback={ErrorMain.fallback}>
