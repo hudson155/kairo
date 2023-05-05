@@ -470,7 +470,7 @@ rules:
   unicorn/prefer-string-replace-all: error
   unicorn/prevent-abbreviations: off
   unicorn/require-post-message-target-origin: error
-  unicorn/switch-case-braces: [error, avoid]
+  unicorn/switch-case-braces: off
 
 ignorePatterns:
   - src/reportWebVitals.ts
