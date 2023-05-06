@@ -3,18 +3,23 @@ import Container from 'component/container/Container';
 import Form from 'component/form/Form';
 import { useFormField } from 'component/form/FormField';
 import FormFields from 'component/form/FormFields';
-import SubmitButton from 'component/form/submitButton/SubmitButton';
+import FormSubmitButton from 'component/form/submitButton/SubmitButton';
+import Paper from 'component/paper/Paper';
+import Section from 'component/section/Section';
 import Heading2 from 'component/text/Heading2';
-import OrganizationNameInput from 'page/organizationSettings/basicInformation/organizationName/OrganizationNameInput';
+import OrganizationNameInput from 'page/organizationSettings/basicInformation/OrganizationNameInput';
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import organizationNameState from 'state/core/organizationName';
+import OrganizationRep from 'rep/OrganizationRep';
 
-const BasicInformation: React.FC = () => {
-  const updateOrganization = useUpdateOrganization();
+interface Props {
+  organization: OrganizationRep;
+}
+
+const BasicInformation: React.FC<Props> = ({ organization }) => {
+  const updateOrganization = useUpdateOrganization(organization.guid);
 
   const fields = new FormFields([
-    ['body.name', useFormField(useRecoilValue(organizationNameState))],
+    ['body.name', useFormField(organization.name)],
   ]);
 
   const handleSubmit = async () => {
@@ -24,15 +29,19 @@ const BasicInformation: React.FC = () => {
   };
 
   return (
-    <>
-      <Heading2>{'Basic information'}</Heading2>
-      <Form fields={fields} onSubmit={handleSubmit}>
+    <Section>
+      <Paper>
         <Container direction="vertical">
-          <OrganizationNameInput />
-          <SubmitButton>{'Save'}</SubmitButton>
+          <Heading2>{'Basic information'}</Heading2>
+          <Form fields={fields} onSubmit={handleSubmit}>
+            <Container direction="vertical">
+              <OrganizationNameInput />
+              <FormSubmitButton>{'Update'}</FormSubmitButton>
+            </Container>
+          </Form>
         </Container>
-      </Form>
-    </>
+      </Paper>
+    </Section>
   );
 };
 

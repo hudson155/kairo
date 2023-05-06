@@ -1,17 +1,27 @@
 import { organizationApiState } from 'api/OrganizationApi';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
+import organizationsState from 'state/admin/organizations';
 import organizationState from 'state/core/organization';
 import organizationGuidState from 'state/core/organizationGuid';
 
-const useUpdateOrganization = (): (updater: OrganizationRep.Updater) => Promise<void> => {
-  const organizationApi = useRecoilValue(organizationApiState);
-  const organizationGuid = useRecoilValue(organizationGuidState);
-  const setOrganization = useSetRecoilState(organizationState);
+type UpdateOrganization = (updater: OrganizationRep.Updater) => Promise<OrganizationRep>;
 
-  return async (updater): Promise<void> => {
+const useUpdateOrganization = (organizationGuid: string): UpdateOrganization => {
+  const organizationApi = useRecoilValue(organizationApiState);
+
+  const setOrganizations = useSetRecoilState(organizationsState);
+
+  const currentOrganizationGuid = useRecoilValue(organizationGuidState);
+  const setCurrentOrganization = useSetRecoilState(organizationState);
+
+  return async (updater): Promise<OrganizationRep> => {
     const organization = await organizationApi.update(organizationGuid, updater);
-    setOrganization(organization);
+    setOrganizations((currVal) => currVal.set(organization.guid, organization));
+    if (organizationGuid === currentOrganizationGuid) {
+      setCurrentOrganization(organization);
+    }
+    return organization;
   };
 };
 
