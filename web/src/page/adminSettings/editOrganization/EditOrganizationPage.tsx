@@ -5,6 +5,7 @@ import HeaderSection from 'component/section/HeaderSection';
 import LoadingBlock from 'component/spinner/LoadingBlock';
 import Paragraph from 'component/text/Paragraph';
 import Text from 'component/text/Text';
+import BasicInformation from 'page/organizationSettings/basicInformation/BasicInformation';
 import React, { ReactNode } from 'react';
 import { Loadable, useRecoilValueLoadable } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
@@ -52,7 +53,7 @@ const getContent = (organization: Loadable<OrganizationRep | undefined>): ReactN
     return <ErrorBanner error={organization.contents} operation="loading organizations" />;
   case 'hasValue': {
     if (!organization.contents) return <NotFoundBanner entity="organization" />;
-    return null;
+    return <BasicInformation organization={organization.contents} />;
   }
   }
 };
