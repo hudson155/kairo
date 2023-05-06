@@ -6,7 +6,7 @@ import TopNav from 'component/topNav/TopNav';
 import BaseLayout from 'layout/BaseLayout/BaseLayout';
 import React, { ComponentProps, useState } from 'react';
 import { MutableSnapshot } from 'recoil';
-import organizationAuth from 'state/global/core/organizationAuth';
+import organizationAuth from 'state/core/organizationAuth';
 import * as Decorator from 'story/Decorator';
 
 const initializeState = ({ set }: MutableSnapshot): void => {

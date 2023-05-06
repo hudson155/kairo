@@ -8,7 +8,7 @@ import Text from 'component/text/Text';
 import React, { ReactNode } from 'react';
 import { Loadable, useRecoilValueLoadable } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import organizationsOrganizationState from 'state/global/admin/organizationsOrganization';
+import organizationsOrganizationState from 'state/admin/organizationsOrganization';
 
 interface Props {
   organizationGuid: string;

@@ -7,7 +7,7 @@ import OrganizationList from 'page/adminSettings/organizationList/OrganizationLi
 import React, { ReactNode } from 'react';
 import { Loadable, useRecoilValueLoadable } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import organizationsState from 'state/global/admin/organizations';
+import organizationsState from 'state/admin/organizations';
 
 const OrganizationListPage: React.FC = () => {
   const organizations = useRecoilValueLoadable(organizationsState);

@@ -4,7 +4,7 @@ import Paragraph from 'component/text/Paragraph';
 import { useDebugSettings } from 'hook/useDebugSettings';
 import React, { ReactNode } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import organizationGuidState from 'state/global/core/organizationGuid';
+import organizationGuidState from 'state/core/organizationGuid';
 
 interface Line {
   label: string;

@@ -1,7 +1,7 @@
 import { organizationApiState } from 'api/OrganizationApi';
 import { atom, selector } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import organizationGuidState from 'state/global/core/organizationGuid';
+import organizationGuidState from 'state/core/organizationGuid';
 
 const organizationState = atom<OrganizationRep>({
   key: 'core/organization',

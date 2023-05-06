@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import auth0IdTokenState from 'state/global/auth/auth0IdToken';
+import auth0IdTokenState from 'state/auth/auth0IdToken';
 
 const profilePhotoUrlState = selector<string | undefined>({
   key: 'auth/profilePhotoUrl',

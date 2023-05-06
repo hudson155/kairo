@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import auth0ClientState from 'state/global/auth/auth0Client';
+import auth0ClientState from 'state/auth/auth0Client';
 
 const isAuthenticatedState = selector<boolean>({
   key: 'auth/isAuthenticated',

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import auth0ClientState from 'state/global/auth/auth0Client';
+import auth0ClientState from 'state/auth/auth0Client';
 
 const LoginPage: React.FC = () => {
   const auth0 = useRecoilValue(auth0ClientState);

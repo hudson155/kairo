@@ -2,7 +2,7 @@ import { Auth0Client, createAuth0Client } from '@auth0/auth0-spa-js';
 import env from 'env';
 import { getRootUrl } from 'metadata';
 import { selector } from 'recoil';
-import organizationAuthState from 'state/global/core/organizationAuth';
+import organizationAuthState from 'state/core/organizationAuth';
 
 const CODE_RE = /[?&]code=[^&]+/u;
 const STATE_RE = /[?&]state=[^&]+/u;

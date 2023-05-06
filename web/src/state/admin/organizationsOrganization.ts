@@ -1,6 +1,6 @@
 import { selectorFamily } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import organizationsState from 'state/global/admin/organizations';
+import organizationsState from 'state/admin/organizations';
 
 const organizationsOrganizationState = selectorFamily<OrganizationRep | undefined, string>({
   key: 'admin/organizationsOrganization',

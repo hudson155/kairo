@@ -6,9 +6,9 @@ import TopNavMenu from 'component/topNav/TopNavMenu';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import defaultFeatureState from 'state/global/core/defaultFeature';
-import organizationNameState from 'state/global/core/organizationName';
-import sideNavIsOpenState from 'state/global/nav/sideNavIsOpen';
+import defaultFeatureState from 'state/core/defaultFeature';
+import organizationNameState from 'state/core/organizationName';
+import sideNavIsOpenState from 'state/nav/sideNavIsOpen';
 
 /**
  * This is the functional implementation of the top navigation bar.
