@@ -1,6 +1,6 @@
 export default interface OrganizationAuthRep {
-  organizationGuid: string;
   guid: string;
+  organizationGuid: string;
   auth0OrganizationId: string;
   auth0OrganizationName: string;
 }
