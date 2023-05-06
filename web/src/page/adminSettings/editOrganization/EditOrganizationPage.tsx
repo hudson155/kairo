@@ -6,40 +6,36 @@ import LoadingBlock from 'component/spinner/LoadingBlock';
 import Paragraph from 'component/text/Paragraph';
 import Text from 'component/text/Text';
 import React, { ReactNode } from 'react';
+import { Loadable, useRecoilValueLoadable } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import LocalStateContext from 'state/local/LocalStateContext';
-import { useOrganizations } from 'state/local/organization/OrganizationProvider';
+import organizationsOrganizationState from 'state/global/admin/organizationsOrganization';
 
 interface Props {
   organizationGuid: string;
 }
 
 const EditOrganizationPage: React.FC<Props> = ({ organizationGuid }) => {
-  const organizations = useOrganizations();
+  const organization = useRecoilValueLoadable(organizationsOrganizationState(organizationGuid));
 
   return (
     <Page>
       <HeaderSection title="Edit organization">
-        {getSubtitle(organizations, organizationGuid)}
+        {getSubtitle(organization)}
       </HeaderSection>
-      {getContent(organizations, organizationGuid)}
+      {getContent(organization)}
     </Page>
   );
 };
 
 export default EditOrganizationPage;
 
-const getSubtitle = (
-  organizations: LocalStateContext<Map<string, OrganizationRep>>,
-  organizationGuid: string,
-): ReactNode => {
-  switch (organizations.state) {
+const getSubtitle = (organization: Loadable<OrganizationRep | undefined>): ReactNode => {
+  switch (organization.state) {
   case 'hasValue': {
-    const organization = organizations.contents.get(organizationGuid);
-    if (!organization) return null;
+    if (!organization.contents) return null;
     return (
       <Paragraph>
-        {'Manage settings for '}<Text weight="bold">{organization.name}</Text>
+        {'Manage settings for '}<Text weight="bold">{organization.contents.name}</Text>
       </Paragraph>
     );
   }
@@ -48,18 +44,14 @@ const getSubtitle = (
   }
 };
 
-const getContent = (
-  organizations: LocalStateContext<Map<string, OrganizationRep>>,
-  organizationGuid: string,
-): ReactNode => {
-  switch (organizations.state) {
+const getContent = (organization: Loadable<OrganizationRep | undefined>): ReactNode => {
+  switch (organization.state) {
   case 'loading':
     return <LoadingBlock />;
   case 'hasError':
-    return <ErrorBanner error={organizations.contents} operation="loading organizations" />;
+    return <ErrorBanner error={organization.contents} operation="loading organizations" />;
   case 'hasValue': {
-    const organization = organizations.contents.get(organizationGuid);
-    if (!organization) return <NotFoundBanner entity="organization" />;
+    if (!organization.contents) return <NotFoundBanner entity="organization" />;
     return null;
   }
   }

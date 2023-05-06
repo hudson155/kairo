@@ -5,12 +5,12 @@ import Section from 'component/section/Section';
 import LoadingBlock from 'component/spinner/LoadingBlock';
 import OrganizationList from 'page/adminSettings/organizationList/OrganizationList';
 import React, { ReactNode } from 'react';
+import { Loadable, useRecoilValueLoadable } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import LocalStateContext from 'state/local/LocalStateContext';
-import { useOrganizations } from 'state/local/organization/OrganizationProvider';
+import organizationsState from 'state/global/admin/organizations';
 
 const OrganizationListPage: React.FC = () => {
-  const organizations = useOrganizations();
+  const organizations = useRecoilValueLoadable(organizationsState);
 
   return (
     <Page>
@@ -24,7 +24,7 @@ const OrganizationListPage: React.FC = () => {
 
 export default OrganizationListPage;
 
-const getContent = (organizations: LocalStateContext<Map<string, OrganizationRep>>): ReactNode => {
+const getContent = (organizations: Loadable<Map<string, OrganizationRep>>): ReactNode => {
   switch (organizations.state) {
   case 'loading':
     return <LoadingBlock />;
