@@ -13,3 +13,9 @@
     background-color: var(--color-background-hoverNotClickable);
   }
 }
+
+.name {
+  &:hover {
+    color: var(--color-link);
+  }
+}

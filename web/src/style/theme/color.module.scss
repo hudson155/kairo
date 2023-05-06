@@ -44,6 +44,8 @@
     --color-font-faded: hsl(240deg, 10%, 62%);
     --color-font-inverse: var(--colorDark-font-default);
 
+    --color-link: hsl(210deg, 80%, 50%);
+
     --color-overlay: hsla(240deg, 10%, 91%, 75%); // Overlays indicate the background cannot be interacted with.
 
     --color-status-success-background: var(--colorLight-status-success-background);
@@ -82,6 +84,8 @@
     --color-font-default: var(--colorDark-font-default);
     --color-font-faded: hsl(240deg, 10%, 51%);
     --color-font-inverse: var(--colorLight-font-default);
+
+    --color-link: hsl(210deg, 80%, 70%);
 
     --color-overlay: hsla(240deg, 10%, 22%, 75%); // Overlays indicate the background cannot be interacted with.
 
