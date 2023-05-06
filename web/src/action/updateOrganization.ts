@@ -4,13 +4,14 @@ import OrganizationRep from 'rep/OrganizationRep';
 import organizationsState from 'state/admin/organizations';
 import organizationState from 'state/core/organization';
 import organizationGuidState from 'state/core/organizationGuid';
+import { useSetRecoilStateIfActive } from 'state/util/useSetRecoilStateIfActive';
 
 type UpdateOrganization = (updater: OrganizationRep.Updater) => Promise<OrganizationRep>;
 
 const useUpdateOrganization = (organizationGuid: string): UpdateOrganization => {
   const organizationApi = useRecoilValue(organizationApiState);
 
-  const setOrganizations = useSetRecoilState(organizationsState);
+  const setOrganizations = useSetRecoilStateIfActive(organizationsState);
 
   const currentOrganizationGuid = useRecoilValue(organizationGuidState);
   const setCurrentOrganization = useSetRecoilState(organizationState);
