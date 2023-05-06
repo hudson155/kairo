@@ -20,6 +20,10 @@
 **Frontend components:**
 
 - **Loading, empty, and error states** should all be implemented.
+- Frontend should be tested from
+  **iPhone SE** to **desktop** screen sizes.
+- Frontend should be tested in both
+  **dark mode** and **light mode**.
 
 **Tests:**
 
@@ -27,8 +31,6 @@
   API endpoints should be **integration tested**,
   and other complex code should be **unit tested**.
 - Frontend components should have **Storybook stories**.
-- Frontend components should be tested in both
-  **dark mode** and **light mode**
 
 **Infrastructure changes:**
 
