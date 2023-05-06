@@ -1,40 +1,25 @@
-import ErrorBanner from 'component/error/ErrorBanner';
-import LoadingBlock from 'component/spinner/LoadingBlock';
 import Paragraph from 'component/text/Paragraph';
 import styles from 'page/adminSettings/organizationList/OrganizationList.module.scss';
 import OrganizationListItem from 'page/adminSettings/organizationList/OrganizationListItem';
 import React from 'react';
 import OrganizationRep from 'rep/OrganizationRep';
-import { useOrganizations } from 'state/local/organization/OrganizationProvider';
 
-const OrganizationList: React.FC = () => {
-  const organizationsContext = useOrganizations();
+interface Props {
+  organizations: OrganizationRep[];
+}
 
-  if (organizationsContext.state === 'loading') {
-    return <LoadingBlock />;
-  }
-
-  if (organizationsContext.state === 'hasError') {
-    return <ErrorBanner error={organizationsContext.contents} operation="loading organizations" />;
-  }
-
-  const organizations = [...organizationsContext.getValue().values()];
-
-  if (organizations.length === 0) {
-    return <Paragraph>{'No organizations found.'}</Paragraph>;
-  }
-
+const OrganizationList: React.FC<Props> = ({ organizations }) => {
   return (
     <div className={styles.list}>
-      {organizationListItems(organizations)}
+      {
+        organizations.length > 0
+          ? organizations.map((organization) => {
+            return <OrganizationListItem key={organization.guid} organization={organization} />;
+          })
+          : <Paragraph>{'No organizations found.'}</Paragraph>
+      }
     </div>
   );
 };
 
 export default OrganizationList;
-
-const organizationListItems = (organizations: OrganizationRep[]): React.ReactNode => {
-  return organizations.map((organization) => {
-    return <OrganizationListItem key={organization.guid} organization={organization} />;
-  });
-};
