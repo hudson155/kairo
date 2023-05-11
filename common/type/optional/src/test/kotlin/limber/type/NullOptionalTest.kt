@@ -26,16 +26,16 @@ internal class NullOptionalTest : OptionalTest() {
 
   @Test
   override fun serialize() {
+    objectMapper.writeValueAsString(OptionalWrapper.Nullable(null))
+      .shouldBe("{}")
+  }
+
+  @Test
+  override fun deserialize() {
     objectMapper.readValue<OptionalWrapper.Nullable>("{}")
       .shouldBe(OptionalWrapper.Nullable(null))
     shouldThrow<MissingKotlinParameterException> {
       objectMapper.readValue<OptionalWrapper.NonNullable>("{}")
     }
-  }
-
-  @Test
-  override fun deserialize() {
-    objectMapper.writeValueAsString(OptionalWrapper.Nullable(null))
-      .shouldBe("{}")
   }
 }

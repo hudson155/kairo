@@ -30,18 +30,18 @@ internal class EmptyOptionalTest : OptionalTest() {
 
   @Test
   override fun serialize() {
+    objectMapper.writeValueAsString(OptionalWrapper.Nullable(Optional.empty()))
+      .shouldBe("{\"optional\":null}")
+    objectMapper.writeValueAsString(OptionalWrapper.NonNullable(Optional.empty()))
+      .shouldBe("{\"optional\":null}")
+  }
+
+  @Test
+  override fun deserialize() {
     objectMapper.readValue<OptionalWrapper.Nullable>("{\"optional\":null}")
       .shouldBe(OptionalWrapper.Nullable(Optional.empty()))
 
     objectMapper.readValue<OptionalWrapper.NonNullable>("{\"optional\":null}")
       .shouldBe(OptionalWrapper.NonNullable(Optional.empty()))
-  }
-
-  @Test
-  override fun deserialize() {
-    objectMapper.writeValueAsString(OptionalWrapper.Nullable(Optional.empty()))
-      .shouldBe("{\"optional\":null}")
-    objectMapper.writeValueAsString(OptionalWrapper.NonNullable(Optional.empty()))
-      .shouldBe("{\"optional\":null}")
   }
 }
