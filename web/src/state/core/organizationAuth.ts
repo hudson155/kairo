@@ -8,7 +8,7 @@ const organizationAuthState = atom<OrganizationAuthRep>({
   default: selector({
     key: 'core/organizationAuth-default',
     get: async ({ get }) => {
-      const authApi = get(organizationAuthApiState);
+      const authApi = get(organizationAuthApiState({ authenticated: false }));
       const auth = await authApi.getByHostname(getRootHost());
       if (!auth) throw new Error('No auth found.');
       return auth;
