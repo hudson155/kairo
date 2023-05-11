@@ -8,7 +8,7 @@ runs:
       working-directory: web/
     - shell: bash
       if: always()
-      run: yarn test --passWithNoTests
+      run: yarn test
       working-directory: web/
     - shell: bash
       if: always()
