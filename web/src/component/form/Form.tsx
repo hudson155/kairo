@@ -13,7 +13,7 @@ const context = React.createContext<FormContext>(
 );
 
 interface Props {
-  fields: FormFields;
+  fields?: FormFields;
   onSubmit: () => Promise<void>;
   children: ReactNode;
 }
@@ -23,7 +23,7 @@ interface Props {
  * To use this, create some form fields and a handleSubmit function at the root,
  * and access the fields using useForm().
  */
-const Form: React.FC<Props> = ({ fields, onSubmit, children }) => {
+const Form: React.FC<Props> = ({ fields = new FormFields(), onSubmit, children }) => {
   const toast = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
