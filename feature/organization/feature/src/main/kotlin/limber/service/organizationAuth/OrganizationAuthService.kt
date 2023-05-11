@@ -3,10 +3,9 @@ package limber.service.organizationAuth
 import com.google.inject.Inject
 import limber.feature.auth0.Auth0ManagementApi
 import limber.feature.sql.transaction
-import limber.feature.sql.update
 import limber.model.organizationAuth.OrganizationAuthModel
-import limber.rep.organizationAuth.OrganizationAuthRep
 import limber.store.organizationAuth.OrganizationAuthStore
+import limber.util.updater.Updater
 import mu.KLogger
 import mu.KotlinLogging
 import org.jdbi.v3.core.Jdbi
@@ -36,7 +35,7 @@ internal class OrganizationAuthService @Inject constructor(
         name = auth.auth0OrganizationName,
       )
       return@transaction authStore.update(auth.guid) { existing ->
-        OrganizationAuthModel.Updater(
+        OrganizationAuthModel.Update(
           auth0OrganizationId = auth0OrganizationId,
           auth0OrganizationName = existing.auth0OrganizationName,
         )
@@ -44,18 +43,10 @@ internal class OrganizationAuthService @Inject constructor(
     }
   }
 
-  fun update(guid: UUID, updater: OrganizationAuthRep.Updater): OrganizationAuthModel {
+  fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel {
     logger.info { "Updating organization auth: $updater." }
     return jdbi.transaction {
-      val auth = authStore.update(guid) { existing ->
-        OrganizationAuthModel.Updater(
-          auth0OrganizationId = existing.auth0OrganizationId,
-          auth0OrganizationName = update(
-            existing = existing.auth0OrganizationName,
-            new = updater.auth0OrganizationName,
-          ),
-        )
-      }
+      val auth = authStore.update(guid, updater)
       auth0ManagementApi.updateOrganization(
         organizationId = checkNotNull(auth.auth0OrganizationId) {
           "The Auth0 organization ID should only be null during the creation process."

@@ -6,10 +6,10 @@ import limber.exception.organizationAuth.Auth0OrganizationNameAlreadyTaken
 import limber.exception.organizationAuth.OrganizationAlreadyHasOrganizationAuth
 import limber.exception.organizationAuth.OrganizationAuthDoesNotExist
 import limber.feature.sql.SqlStore
-import limber.feature.sql.Updater
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
 import limber.model.organizationAuth.OrganizationAuthModel
+import limber.util.updater.Updater
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
@@ -40,15 +40,12 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(
-    guid: UUID,
-    updater: Updater<OrganizationAuthModel, OrganizationAuthModel.Updater>,
-  ): OrganizationAuthModel =
+  fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist())
+      val auth = get(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
       val query = handle.createQuery(rs("store/organizationAuth/update.sql"))
       query.bind("guid", guid)
-      query.bindKotlin(model)
+      query.bindKotlin(updater(OrganizationAuthModel.Update(auth)))
       return@transaction query.mapToType().single()
     }
 

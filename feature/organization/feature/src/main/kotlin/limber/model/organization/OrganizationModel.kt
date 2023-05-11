@@ -15,7 +15,11 @@ public data class OrganizationModel(
     val name: String,
   )
 
-  public data class Updater(
-    val name: String?,
-  )
+  public data class Update(
+    val name: String,
+  ) {
+    internal constructor(organization: OrganizationModel) : this(
+      name = organization.name,
+    )
+  }
 }

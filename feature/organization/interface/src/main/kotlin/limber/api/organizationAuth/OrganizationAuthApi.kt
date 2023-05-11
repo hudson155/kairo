@@ -40,8 +40,8 @@ public object OrganizationAuthApi {
 
   public data class Update(
     val authGuid: UUID,
-    @Valid override val body: OrganizationAuthRep.Updater?,
-  ) : RestEndpoint<OrganizationAuthRep.Updater>() {
+    @Valid override val body: OrganizationAuthRep.Update?,
+  ) : RestEndpoint<OrganizationAuthRep.Update>() {
     override val method: HttpMethod = HttpMethod.Patch
     override val path: String = "/organization-auths/$authGuid"
   }

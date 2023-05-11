@@ -31,8 +31,8 @@ public object FeatureApi {
 
   public data class Update(
     val featureGuid: UUID,
-    @Valid override val body: FeatureRep.Updater?,
-  ) : RestEndpoint<FeatureRep.Updater>() {
+    @Valid override val body: FeatureRep.Update?,
+  ) : RestEndpoint<FeatureRep.Update>() {
     override val method: HttpMethod = HttpMethod.Patch
     override val path: String = "/features/$featureGuid"
   }

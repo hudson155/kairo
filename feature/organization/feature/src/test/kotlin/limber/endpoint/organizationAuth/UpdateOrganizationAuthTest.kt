@@ -21,8 +21,8 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
 
     test {
       shouldBeUnprocessable("Organization auth does not exist.") {
-        val updater = OrganizationAuthRep.Updater(auth0OrganizationName = " NEW-CO ")
-        authClient(OrganizationAuthApi.Update(authGuid, updater))
+        val update = OrganizationAuthRep.Update(auth0OrganizationName = " NEW-CO ")
+        authClient(OrganizationAuthApi.Update(authGuid, update))
       }
     }
   }
@@ -38,8 +38,8 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
     }
 
     test {
-      val updater = OrganizationAuthRep.Updater()
-      authClient(OrganizationAuthApi.Update(auth.guid, updater))
+      val update = OrganizationAuthRep.Update()
+      authClient(OrganizationAuthApi.Update(auth.guid, update))
         .shouldBe(auth)
       authClient(OrganizationAuthApi.Get(auth.guid))
         .shouldBe(auth)
@@ -57,9 +57,9 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
     }
 
     test {
-      val updater = OrganizationAuthRep.Updater(auth0OrganizationName = " NEW-CO ")
+      val update = OrganizationAuthRep.Update(auth0OrganizationName = " NEW-CO ")
       auth = auth.copy(auth0OrganizationName = "new-co")
-      authClient(OrganizationAuthApi.Update(auth.guid, updater))
+      authClient(OrganizationAuthApi.Update(auth.guid, update))
         .shouldBe(auth)
       authClient(OrganizationAuthApi.Get(auth.guid))
         .shouldBe(auth)

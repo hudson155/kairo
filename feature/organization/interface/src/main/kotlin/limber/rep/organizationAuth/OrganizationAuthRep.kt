@@ -15,7 +15,7 @@ public data class OrganizationAuthRep(
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
-  public data class Updater(
+  public data class Update(
     @Auth0OrganizationNameValidator val auth0OrganizationName: String? = null,
   )
 }

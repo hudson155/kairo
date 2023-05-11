@@ -1,10 +1,10 @@
 package limber.service.feature
 
 import com.google.inject.Inject
-import limber.feature.sql.update
 import limber.model.feature.FeatureModel
-import limber.rep.feature.FeatureRep
 import limber.store.feature.FeatureStore
+import limber.util.updater.Updater
+import limber.util.updater.invoke
 import mu.KLogger
 import mu.KotlinLogging
 import java.util.UUID
@@ -25,18 +25,14 @@ internal class FeatureService @Inject constructor(
     return featureStore.create(creator)
   }
 
-  fun update(guid: UUID, updater: FeatureRep.Updater): FeatureModel {
+  fun update(guid: UUID, updater: Updater<FeatureModel.Update>): FeatureModel {
     logger.info { "Updating feature: $updater." }
-    if (updater.isDefault == true) {
-      featureStore.setDefault(guid)
-    }
-    return featureStore.update(guid) { existing ->
-      FeatureModel.Updater(
-        name = update(existing = existing.name, new = updater.name),
-        iconName = update(existing = existing.iconName, new = updater.iconName),
-        rootPath = update(existing = existing.rootPath, new = updater.rootPath),
-      )
-    }
+    return featureStore.update(
+      guid = guid,
+      updater = updater { update ->
+        if (update.isDefault) featureStore.setDefault(guid)
+      },
+    )
   }
 
   fun delete(guid: UUID): FeatureModel {

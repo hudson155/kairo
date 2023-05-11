@@ -18,8 +18,13 @@ public data class OrganizationAuthModel(
     val auth0OrganizationName: String,
   )
 
-  public data class Updater(
+  public data class Update(
     val auth0OrganizationId: String?,
-    val auth0OrganizationName: String?,
-  )
+    val auth0OrganizationName: String,
+  ) {
+    internal constructor(auth: OrganizationAuthModel) : this(
+      auth0OrganizationId = auth.auth0OrganizationId,
+      auth0OrganizationName = auth.auth0OrganizationName,
+    )
+  }
 }

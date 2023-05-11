@@ -7,7 +7,9 @@ import limber.auth.auth
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organization.OrganizationMapper
+import limber.model.organization.OrganizationModel
 import limber.service.organization.OrganizationService
+import limber.util.updater.update
 import limber.api.organization.OrganizationApi as Api
 import limber.rep.organization.OrganizationRep as Rep
 
@@ -21,7 +23,12 @@ public class UpdateOrganization @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    val organization = organizationService.update(endpoint.organizationGuid, getBody(endpoint))
+    val update = getBody(endpoint)
+    val organization = organizationService.update(endpoint.organizationGuid) { existing ->
+      OrganizationModel.Update(
+        name = update(existing.name, update.name),
+      )
+    }
 
     return organizationMapper(organization)
   }

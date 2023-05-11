@@ -19,11 +19,12 @@ internal class CelebrityStore : SqlStore<CelebrityRep>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(guid: UUID, updater: Updater<CelebrityRep>): CelebrityRep =
+  fun update(guid: UUID, updater: Updater<CelebrityRep.Update>): CelebrityRep =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: throw CelebrityDoesNotExist())
+      val celebrity = get(guid, forUpdate = true) ?: throw CelebrityDoesNotExist()
       val query = handle.createQuery(rs("store/celebrity/update.sql"))
-      query.bindKotlin(model)
+      query.bind("guid", guid)
+      query.bindKotlin(update(CelebrityRep.Update(celebrity)))
       return@transaction query.mapToType().single()
     }
 

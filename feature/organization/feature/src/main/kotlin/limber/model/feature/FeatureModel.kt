@@ -26,9 +26,17 @@ public data class FeatureModel(
     val rootPath: String,
   )
 
-  public data class Updater(
-    val name: String?,
+  public data class Update(
+    val isDefault: Boolean,
+    val name: String,
     val iconName: String?,
-    val rootPath: String?,
-  )
+    val rootPath: String,
+  ) {
+    internal constructor(feature: FeatureModel) : this(
+      isDefault = feature.isDefault,
+      name = feature.name,
+      iconName = feature.iconName,
+      rootPath = feature.rootPath,
+    )
+  }
 }

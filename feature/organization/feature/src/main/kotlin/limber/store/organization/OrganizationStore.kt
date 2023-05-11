@@ -2,8 +2,8 @@ package limber.store.organization
 
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.sql.SqlStore
-import limber.feature.sql.Updater
 import limber.model.organization.OrganizationModel
+import limber.util.updater.Updater
 import org.jdbi.v3.core.kotlin.bindKotlin
 import java.util.UUID
 
@@ -31,15 +31,12 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(
-    guid: UUID,
-    updater: Updater<OrganizationModel, OrganizationModel.Updater>,
-  ): OrganizationModel =
+  fun update(guid: UUID, updater: Updater<OrganizationModel.Update>): OrganizationModel =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: throw OrganizationDoesNotExist())
+      val organization = get(guid, forUpdate = true) ?: throw OrganizationDoesNotExist()
       val query = handle.createQuery(rs("store/organization/update.sql"))
       query.bind("guid", guid)
-      query.bindKotlin(model)
+      query.bindKotlin(updater(OrganizationModel.Update(organization)))
       return@transaction query.mapToType().single()
     }
 }

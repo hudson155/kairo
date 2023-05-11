@@ -6,7 +6,9 @@ import limber.auth.PlatformPermissionAuth
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organizationAuth.OrganizationAuthMapper
+import limber.model.organizationAuth.OrganizationAuthModel
 import limber.service.organizationAuth.OrganizationAuthService
+import limber.util.updater.update
 import limber.api.organizationAuth.OrganizationAuthApi as Api
 import limber.rep.organizationAuth.OrganizationAuthRep as Rep
 
@@ -17,7 +19,13 @@ public class UpdateOrganizationAuth @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthUpdate))
 
-    val auth = authService.update(endpoint.authGuid, getBody(endpoint))
+    val update = getBody(endpoint)
+    val auth = authService.update(endpoint.authGuid) { existing ->
+      OrganizationAuthModel.Update(
+        auth0OrganizationId = existing.auth0OrganizationId,
+        auth0OrganizationName = update(existing.auth0OrganizationName, update.auth0OrganizationName),
+      )
+    }
 
     return authMapper(auth)
   }

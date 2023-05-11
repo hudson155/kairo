@@ -4,10 +4,10 @@ import limber.exception.feature.FeatureDoesNotExist
 import limber.exception.feature.RootPathAlreadyTaken
 import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.sql.SqlStore
-import limber.feature.sql.Updater
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
 import limber.model.feature.FeatureModel
+import limber.util.updater.Updater
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
@@ -43,15 +43,12 @@ internal class FeatureStore : SqlStore<FeatureModel>(
       return@transaction query.mapToType().toList()
     }
 
-  fun update(
-    guid: UUID,
-    updater: Updater<FeatureModel, FeatureModel.Updater>,
-  ): FeatureModel =
+  fun update(guid: UUID, updater: Updater<FeatureModel.Update>): FeatureModel =
     transaction { handle ->
-      val model = updater(get(guid, forUpdate = true) ?: throw FeatureDoesNotExist())
+      val feature = get(guid, forUpdate = true) ?: throw FeatureDoesNotExist()
       val query = handle.createQuery(rs("store/feature/update.sql"))
       query.bind("guid", guid)
-      query.bindKotlin(model)
+      query.bindKotlin(updater(FeatureModel.Update(feature)))
       return@transaction query.mapToType().single()
     }
 

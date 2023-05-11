@@ -19,8 +19,8 @@ internal class UpdateOrganizationTest : IntegrationTest() {
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
-        val updater = OrganizationRep.Updater(name = " Hotel ")
-        organizationClient(OrganizationApi.Update(organizationGuid, updater))
+        val update = OrganizationRep.Update(name = " Hotel ")
+        organizationClient(OrganizationApi.Update(organizationGuid, update))
       }
     }
   }
@@ -32,8 +32,8 @@ internal class UpdateOrganizationTest : IntegrationTest() {
     }
 
     test {
-      val updater = OrganizationRep.Updater()
-      organizationClient(OrganizationApi.Update(organization.guid, updater))
+      val update = OrganizationRep.Update()
+      organizationClient(OrganizationApi.Update(organization.guid, update))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organization.guid))
         .shouldBe(organization)
@@ -47,9 +47,9 @@ internal class UpdateOrganizationTest : IntegrationTest() {
     }
 
     test {
-      val updater = OrganizationRep.Updater(name = " Hotel ")
+      val update = OrganizationRep.Update(name = " Hotel ")
       organization = organization.copy(name = "Hotel")
-      organizationClient(OrganizationApi.Update(organization.guid, updater))
+      organizationClient(OrganizationApi.Update(organization.guid, update))
         .shouldBe(organization)
       organizationClient(OrganizationApi.Get(organization.guid))
         .shouldBe(organization)

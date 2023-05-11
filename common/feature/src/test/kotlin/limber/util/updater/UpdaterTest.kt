@@ -1,4 +1,4 @@
-package limber.feature.sql
+package limber.util.updater
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -8,7 +8,7 @@ internal class UpdaterTest {
   @Test
   fun `update with explicit`() {
     fun update(existing: String, new: String?): String =
-      limber.feature.sql.update(existing = existing, new = new)
+      limber.util.updater.update(existing = existing, new = new)
 
     update("existing", null).shouldBe("existing")
     update("existing", "new").shouldBe("new")
@@ -17,7 +17,7 @@ internal class UpdaterTest {
   @Test
   fun `update with optional, originally null`() {
     fun update(existing: String?, new: Optional<String>?): String? =
-      limber.feature.sql.update(existing = existing, new = new)
+      limber.util.updater.update(existing = existing, new = new)
 
     update(null, null).shouldBe(null)
     update(null, Optional.empty()).shouldBe(null)
@@ -27,7 +27,7 @@ internal class UpdaterTest {
   @Test
   fun `update with optional, originally non-null`() {
     fun update(existing: String?, new: Optional<String>?): String? =
-      limber.feature.sql.update(existing = existing, new = new)
+      limber.util.updater.update(existing = existing, new = new)
 
     update("existing", null).shouldBe("existing")
     update("existing", Optional.empty()).shouldBe(null)

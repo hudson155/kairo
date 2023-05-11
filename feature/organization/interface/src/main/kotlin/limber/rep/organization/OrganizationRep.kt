@@ -13,7 +13,7 @@ public data class OrganizationRep(
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
-  public data class Updater(
+  public data class Update(
     @OrganizationNameValidator val name: String? = null,
   )
 }

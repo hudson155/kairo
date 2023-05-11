@@ -27,7 +27,7 @@ public data class FeatureRep(
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
-  public data class Updater(
+  public data class Update(
     @TrueValidator val isDefault: Boolean? = null,
     @FeatureNameValidator val name: String? = null,
     @IconNameValidator val iconName: Optional<String>? = null,
