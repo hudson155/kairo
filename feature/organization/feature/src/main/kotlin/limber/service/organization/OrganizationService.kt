@@ -2,7 +2,6 @@ package limber.service.organization
 
 import com.google.inject.Inject
 import limber.feature.sql.update
-import limber.mapper.organization.OrganizationMapper
 import limber.model.organization.OrganizationModel
 import limber.rep.organization.OrganizationRep
 import limber.store.organization.OrganizationStore
@@ -11,7 +10,6 @@ import mu.KotlinLogging
 import java.util.UUID
 
 internal class OrganizationService @Inject constructor(
-  private val organizationMapper: OrganizationMapper,
   private val organizationStore: OrganizationStore,
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
@@ -25,9 +23,9 @@ internal class OrganizationService @Inject constructor(
   fun search(search: String): List<OrganizationModel> =
     organizationStore.search(search)
 
-  fun create(creator: OrganizationRep.Creator): OrganizationModel {
+  fun create(creator: OrganizationModel.Creator): OrganizationModel {
     logger.info { "Creating organization: $creator." }
-    return organizationStore.create(organizationMapper(creator))
+    return organizationStore.create(creator)
   }
 
   fun update(guid: UUID, updater: OrganizationRep.Updater): OrganizationModel {

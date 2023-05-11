@@ -21,7 +21,9 @@ public class CreateFeature @Inject internal constructor(
       onFail = { throw OrganizationDoesNotExist() },
     )
 
-    val feature = featureService.create(endpoint.organizationGuid, getBody(endpoint))
+    val feature = featureService.create(
+      creator = featureMapper(endpoint.organizationGuid, getBody(endpoint)),
+    )
 
     return featureMapper(feature)
   }

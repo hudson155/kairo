@@ -33,10 +33,10 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun create(model: OrganizationAuthModel.Creator): OrganizationAuthModel =
+  fun create(auth: OrganizationAuthModel.Creator): OrganizationAuthModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/create.sql"))
-      query.bindKotlin(model)
+      query.bindKotlin(auth)
       return@transaction query.mapToType().single()
     }
 

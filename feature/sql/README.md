@@ -12,10 +12,10 @@ internal class CelebrityStore : SqlStore<CelebrityRep>(
   tableName = "pop_culture.celebrity",
   type = CelebrityRep::class,
 ) {
-  fun create(model: CelebrityRep): CelebrityRep =
+  fun create(celebrity: CelebrityRep): CelebrityRep =
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/create.sql"))
-      query.bindKotlin(model)
+      query.bindKotlin(celebrity)
       return@transaction query.mapToType().single()
     }
 

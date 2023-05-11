@@ -17,7 +17,9 @@ public class CreateOrganizationAuth @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Create): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthCreate))
 
-    val auth = authService.create(endpoint.organizationGuid, getBody(endpoint))
+    val auth = authService.create(
+      creator = authMapper(endpoint.organizationGuid, getBody(endpoint)),
+    )
 
     return authMapper(auth)
   }

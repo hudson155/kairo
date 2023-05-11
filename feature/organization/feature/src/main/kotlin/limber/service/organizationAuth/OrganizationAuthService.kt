@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import limber.feature.auth0.Auth0ManagementApi
 import limber.feature.sql.transaction
 import limber.feature.sql.update
-import limber.mapper.organizationAuth.OrganizationAuthMapper
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.rep.organizationAuth.OrganizationAuthRep
 import limber.store.organizationAuth.OrganizationAuthStore
@@ -14,7 +13,6 @@ import org.jdbi.v3.core.Jdbi
 import java.util.UUID
 
 internal class OrganizationAuthService @Inject constructor(
-  private val authMapper: OrganizationAuthMapper,
   private val authStore: OrganizationAuthStore,
   private val auth0ManagementApi: Auth0ManagementApi,
   private val jdbi: Jdbi,
@@ -30,10 +28,10 @@ internal class OrganizationAuthService @Inject constructor(
   fun getByHostname(hostname: String): OrganizationAuthModel? =
     authStore.getByHostname(hostname)
 
-  fun create(organizationGuid: UUID, creator: OrganizationAuthRep.Creator): OrganizationAuthModel {
+  fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel {
     logger.info { "Creating organization auth: $creator." }
     return jdbi.transaction {
-      val auth = authStore.create(authMapper(organizationGuid, creator))
+      val auth = authStore.create(creator)
       val auth0OrganizationId = auth0ManagementApi.createOrganization(
         name = auth.auth0OrganizationName,
       )

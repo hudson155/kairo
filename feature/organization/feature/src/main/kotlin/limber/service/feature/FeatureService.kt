@@ -2,7 +2,6 @@ package limber.service.feature
 
 import com.google.inject.Inject
 import limber.feature.sql.update
-import limber.mapper.feature.FeatureMapper
 import limber.model.feature.FeatureModel
 import limber.rep.feature.FeatureRep
 import limber.store.feature.FeatureStore
@@ -11,7 +10,6 @@ import mu.KotlinLogging
 import java.util.UUID
 
 internal class FeatureService @Inject constructor(
-  private val featureMapper: FeatureMapper,
   private val featureStore: FeatureStore,
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
@@ -22,9 +20,9 @@ internal class FeatureService @Inject constructor(
   fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
     featureStore.listByOrganization(organizationGuid)
 
-  fun create(organizationGuid: UUID, creator: FeatureRep.Creator): FeatureModel {
+  fun create(creator: FeatureModel.Creator): FeatureModel {
     logger.info { "Creating feature: $creator." }
-    return featureStore.create(featureMapper(organizationGuid, creator))
+    return featureStore.create(creator)
   }
 
   fun update(guid: UUID, updater: FeatureRep.Updater): FeatureModel {
