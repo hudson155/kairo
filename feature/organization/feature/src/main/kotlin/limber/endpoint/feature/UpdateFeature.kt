@@ -24,6 +24,7 @@ public class UpdateFeature @Inject internal constructor(
     )
 
     val feature = featureService.update(endpoint.featureGuid, getBody(endpoint))
+
     return featureMapper(feature)
   }
 }

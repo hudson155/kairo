@@ -18,6 +18,7 @@ public class DeleteOrganizationHostname @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostnameDelete))
 
     val hostname = hostnameService.delete(endpoint.hostnameGuid)
+
     return hostnameMapper(hostname)
   }
 }

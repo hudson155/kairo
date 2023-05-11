@@ -21,6 +21,7 @@ public class GetOrganization @Inject internal constructor(
     )
 
     val organization = organizationService.get(endpoint.organizationGuid)
+
     return organization?.let { organizationMapper(it) }
   }
 }

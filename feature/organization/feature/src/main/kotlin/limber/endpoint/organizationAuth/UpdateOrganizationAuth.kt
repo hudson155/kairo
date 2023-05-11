@@ -18,6 +18,7 @@ public class UpdateOrganizationAuth @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthUpdate))
 
     val auth = authService.update(endpoint.authGuid, getBody(endpoint))
+
     return authMapper(auth)
   }
 }

@@ -17,6 +17,7 @@ public class GetOrganizationAuthByHostname @Inject internal constructor(
     auth(Auth.Public)
 
     val auth = authService.getByHostname(endpoint.hostname)
+
     return auth?.let { authMapper(it) }
   }
 }

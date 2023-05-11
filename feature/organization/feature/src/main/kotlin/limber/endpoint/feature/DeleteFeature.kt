@@ -24,6 +24,7 @@ public class DeleteFeature @Inject internal constructor(
     )
 
     val feature = featureService.delete(endpoint.featureGuid)
+
     return featureMapper(feature)
   }
 }

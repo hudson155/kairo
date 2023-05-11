@@ -22,6 +22,7 @@ public class UpdateOrganization @Inject internal constructor(
     )
 
     val organization = organizationService.update(endpoint.organizationGuid, getBody(endpoint))
+
     return organizationMapper(organization)
   }
 }

@@ -18,6 +18,7 @@ public class CreateOrganizationHostname @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostnameCreate))
 
     val hostname = hostnameService.create(endpoint.organizationGuid, getBody(endpoint))
+
     return hostnameMapper(hostname)
   }
 }

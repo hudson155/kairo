@@ -18,6 +18,7 @@ public class DeleteOrganizationAuth @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthDelete))
 
     val auth = authService.delete(endpoint.authGuid)
+
     return authMapper(auth)
   }
 }

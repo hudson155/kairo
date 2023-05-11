@@ -23,6 +23,7 @@ public class GetFeature @Inject internal constructor(
     )
 
     val feature = featureService.get(endpoint.featureGuid)
+
     return feature?.let { featureMapper(it) }
   }
 }

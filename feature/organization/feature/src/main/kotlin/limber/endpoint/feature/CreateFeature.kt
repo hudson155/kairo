@@ -22,6 +22,7 @@ public class CreateFeature @Inject internal constructor(
     )
 
     val feature = featureService.create(endpoint.organizationGuid, getBody(endpoint))
+
     return featureMapper(feature)
   }
 }

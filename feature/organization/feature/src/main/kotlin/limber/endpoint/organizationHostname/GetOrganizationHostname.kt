@@ -23,6 +23,7 @@ public class GetOrganizationHostname @Inject internal constructor(
     )
 
     val hostname = hostnameService.get(endpoint.hostnameGuid)
+
     return hostname?.let { hostnameMapper(it) }
   }
 }

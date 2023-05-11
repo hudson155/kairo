@@ -18,6 +18,7 @@ public class CreateOrganizationAuth @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthCreate))
 
     val auth = authService.create(endpoint.organizationGuid, getBody(endpoint))
+
     return authMapper(auth)
   }
 }

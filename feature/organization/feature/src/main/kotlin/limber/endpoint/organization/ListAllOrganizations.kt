@@ -18,6 +18,7 @@ public class ListAllOrganizations @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationList))
 
     val organizations = organizationService.listAll()
+
     return organizations.map { organizationMapper(it) }
   }
 }

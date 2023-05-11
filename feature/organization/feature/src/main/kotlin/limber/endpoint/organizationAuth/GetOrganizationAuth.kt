@@ -17,6 +17,7 @@ public class GetOrganizationAuth @Inject internal constructor(
     auth(Auth.Public)
 
     val auth = authService.get(endpoint.authGuid)
+
     return auth?.let { authMapper(it) }
   }
 }

@@ -21,6 +21,7 @@ public class ListFeaturesByOrganization @Inject internal constructor(
     )
 
     val features = featureService.listByOrganization(endpoint.organizationGuid)
+
     return features.map { featureMapper(it) }
   }
 }

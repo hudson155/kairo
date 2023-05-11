@@ -18,6 +18,7 @@ public class SearchOrganizations @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationList))
 
     val organizations = organizationService.search(endpoint.search)
+
     return organizations.map { organizationMapper(it) }
   }
 }
