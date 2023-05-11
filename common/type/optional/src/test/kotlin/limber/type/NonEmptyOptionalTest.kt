@@ -14,9 +14,9 @@ internal class NonEmptyOptionalTest : OptionalTest() {
     OptionalWrapper.Nullable(Optional.of("42")).shouldNotBe(OptionalWrapper.Nullable(Optional.empty()))
     OptionalWrapper.Nullable(Optional.of("42")).shouldNotBe(OptionalWrapper.Nullable(Optional.of("")))
 
-    OptionalWrapper.NotNullable(Optional.of("42")).shouldBe(OptionalWrapper.NotNullable(Optional.of("42")))
-    OptionalWrapper.NotNullable(Optional.of("42")).shouldNotBe(OptionalWrapper.NotNullable(Optional.empty()))
-    OptionalWrapper.NotNullable(Optional.of("42")).shouldNotBe(OptionalWrapper.NotNullable(Optional.of("")))
+    OptionalWrapper.NonNullable(Optional.of("42")).shouldBe(OptionalWrapper.NonNullable(Optional.of("42")))
+    OptionalWrapper.NonNullable(Optional.of("42")).shouldNotBe(OptionalWrapper.NonNullable(Optional.empty()))
+    OptionalWrapper.NonNullable(Optional.of("42")).shouldNotBe(OptionalWrapper.NonNullable(Optional.of("")))
   }
 
   @Test
@@ -24,8 +24,8 @@ internal class NonEmptyOptionalTest : OptionalTest() {
     OptionalWrapper.Nullable(Optional.of("42")).toString()
       .shouldBe("Nullable(optional=Optional[42])")
 
-    OptionalWrapper.NotNullable(Optional.of("42")).toString()
-      .shouldBe("NotNullable(optional=Optional[42])")
+    OptionalWrapper.NonNullable(Optional.of("42")).toString()
+      .shouldBe("NonNullable(optional=Optional[42])")
   }
 
   @Test
@@ -33,15 +33,15 @@ internal class NonEmptyOptionalTest : OptionalTest() {
     objectMapper.readValue<OptionalWrapper.Nullable>("{\"optional\":\"42\"}")
       .shouldBe(OptionalWrapper.Nullable(Optional.of("42")))
 
-    objectMapper.readValue<OptionalWrapper.NotNullable>("{\"optional\":\"42\"}")
-      .shouldBe(OptionalWrapper.NotNullable(Optional.of("42")))
+    objectMapper.readValue<OptionalWrapper.NonNullable>("{\"optional\":\"42\"}")
+      .shouldBe(OptionalWrapper.NonNullable(Optional.of("42")))
   }
 
   @Test
   override fun deserialize() {
     objectMapper.writeValueAsString(OptionalWrapper.Nullable(Optional.of("42")))
       .shouldBe("{\"optional\":\"42\"}")
-    objectMapper.writeValueAsString(OptionalWrapper.NotNullable(Optional.of("42")))
+    objectMapper.writeValueAsString(OptionalWrapper.NonNullable(Optional.of("42")))
       .shouldBe("{\"optional\":\"42\"}")
   }
 }

@@ -25,7 +25,7 @@ internal class UpdaterTest {
   }
 
   @Test
-  fun `update with optional, originally not null`() {
+  fun `update with optional, originally non-null`() {
     fun update(existing: String?, new: Optional<String>?): String? =
       limber.feature.sql.update(existing = existing, new = new)
 

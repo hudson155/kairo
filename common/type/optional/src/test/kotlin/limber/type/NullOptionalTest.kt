@@ -29,7 +29,7 @@ internal class NullOptionalTest : OptionalTest() {
     objectMapper.readValue<OptionalWrapper.Nullable>("{}")
       .shouldBe(OptionalWrapper.Nullable(null))
     shouldThrow<MissingKotlinParameterException> {
-      objectMapper.readValue<OptionalWrapper.NotNullable>("{}")
+      objectMapper.readValue<OptionalWrapper.NonNullable>("{}")
     }
   }
 
