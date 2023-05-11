@@ -6,7 +6,7 @@ import { selectorFamily } from 'recoil';
 import auth0ClientState from 'state/auth/auth0Client';
 
 export interface Request<Req> {
-  method: 'GET' | 'PATCH' | 'POST';
+  method: 'GET' | 'DELETE' | 'PATCH' | 'POST';
   path: string;
   qp?: URLSearchParams;
   body?: Req;
