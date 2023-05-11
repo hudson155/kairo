@@ -8,17 +8,27 @@ interface Args {
 
 type StoryProps = ComponentProps<typeof SubmitButton> & Args;
 
-const story: Meta<StoryProps> = {};
+const story: Meta<StoryProps> = {
+  argTypes: {
+    variant: {
+      options: ['primary', 'danger'],
+      control: { type: 'select' },
+    },
+  },
+};
 
 export default story;
 
-const Template: Story<StoryProps> = ({ isSubmitting }) => {
+const Template: Story<StoryProps> = ({ isSubmitting, variant }) => {
   return (
-    <SubmitButton isSubmitting={isSubmitting}>Button text</SubmitButton>
+    <SubmitButton isSubmitting={isSubmitting} variant={variant === 'primary' ? undefined : variant}>
+      Button text
+    </SubmitButton>
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
   isSubmitting: false,
+  variant: 'primary',
 };

@@ -1,11 +1,13 @@
 import ButtonDelegate, { Props as DelegateProps } from 'component/button/ButtonDelegate';
 import React from 'react';
 
-export type Props = Omit<DelegateProps, 'onClick' | 'type' | 'variant'>;
+export interface Props extends Omit<DelegateProps, 'onClick' | 'type' | 'variant'> {
+  variant?: 'primary' | 'danger';
+}
 
 const SubmitButtonDelegate: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
-  ({ ...props }, ref) => {
-    return <ButtonDelegate ref={ref} type="submit" variant="primary" {...props} />;
+  ({ variant = 'primary', ...props }, ref) => {
+    return <ButtonDelegate ref={ref} type="submit" variant={variant} {...props} />;
   };
 
 export default React.forwardRef(SubmitButtonDelegate);

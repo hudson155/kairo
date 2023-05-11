@@ -12,9 +12,10 @@ export default story;
 const Template: Story<StoryProps> = () => {
   return (
     <Container direction="vertical">
-      <Button variant="unstyled">Button text</Button>
-      <Button variant="primary">Button text</Button>
-      <Button variant="secondary">Button text</Button>
+      <Button variant="primary">Primary button</Button>
+      <Button variant="secondary">Secondary button</Button>
+      <Button variant="danger">Danger button</Button>
+      <Button variant="unstyled">Unstyled button</Button>
     </Container>
   );
 };

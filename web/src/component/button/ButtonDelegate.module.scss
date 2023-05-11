@@ -43,4 +43,17 @@
       background-color: var(--color-button-secondary-backgroundActive);
     }
   }
+
+  &.danger {
+    background-color: var(--color-button-danger-background);
+    border-color: var(--color-button-danger-border);
+
+    &:hover {
+      background-color: var(--color-button-danger-backgroundHover);
+    }
+
+    &:active {
+      background-color: var(--color-button-danger-backgroundActive);
+    }
+  }
 }
