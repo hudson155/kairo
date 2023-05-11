@@ -7,6 +7,7 @@ type Density = 'very-compact' | 'compact' | 'normal' | 'relaxed';
 type Direction = 'horizontal' | 'vertical';
 
 interface Props {
+  className?: string;
   density?: Density;
   direction: Direction;
   children: ReactNode;
@@ -15,9 +16,23 @@ interface Props {
 /**
  * The standard spacing/layout container.
  */
-const Container: React.FC<Props> = ({ density = 'normal', direction, children }) => {
+const Container: React.FC<Props> = ({
+  className = undefined,
+  density = 'normal',
+  direction,
+  children,
+}) => {
   return (
-    <div className={classNames(styles.container, densityClassName(density), directionClassName(direction))}>
+    <div
+      className={
+        classNames(
+          styles.container,
+          densityClassName(density),
+          directionClassName(direction),
+          className,
+        )
+      }
+    >
       {children}
     </div>
   );
