@@ -1,10 +1,12 @@
 package limber.service.organizationAuth
 
 import com.google.inject.Inject
+import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.auth0.Auth0ManagementApi
 import limber.feature.auth0.rep.Auth0OrganizationRep
 import limber.feature.sql.transaction
 import limber.model.organizationAuth.OrganizationAuthModel
+import limber.service.organization.OrganizationService
 import limber.store.organizationAuth.OrganizationAuthStore
 import limber.util.updater.Updater
 import org.jdbi.v3.core.Jdbi
@@ -14,6 +16,7 @@ internal class OrganizationAuthService @Inject constructor(
   private val authStore: OrganizationAuthStore,
   private val auth0ManagementApi: Auth0ManagementApi,
   private val jdbi: Jdbi,
+  private val organizationService: OrganizationService,
 ) {
   fun get(authGuid: UUID): OrganizationAuthModel? =
     authStore.get(authGuid)
@@ -24,12 +27,15 @@ internal class OrganizationAuthService @Inject constructor(
   fun getByHostname(hostname: String): OrganizationAuthModel? =
     authStore.getByHostname(hostname)
 
-  fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel =
-    jdbi.transaction {
+  fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel {
+    val organization = organizationService.get(creator.organizationGuid) ?: throw OrganizationDoesNotExist()
+
+    return jdbi.transaction {
       val auth = authStore.create(creator)
       val auth0Organization = auth0ManagementApi.createOrganization(
         creator = Auth0OrganizationRep.Creator(
           name = auth.auth0OrganizationName,
+          displayName = organization.name,
         ),
       )
       return@transaction authStore.update(auth.guid) { existing ->
@@ -39,6 +45,7 @@ internal class OrganizationAuthService @Inject constructor(
         )
       }
     }
+  }
 
   fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     jdbi.transaction {

@@ -28,6 +28,7 @@ internal class RealAuth0ManagementApi @Inject constructor(
   override fun createOrganization(creator: Auth0OrganizationRep.Creator): Auth0OrganizationRep {
     val organization = Organization().apply {
       name = creator.name
+      displayName = creator.displayName
     }
 
     val request = managementApi.get().organizations().create(organization)
@@ -40,6 +41,7 @@ internal class RealAuth0ManagementApi @Inject constructor(
   ): Auth0OrganizationRep {
     val organization = Organization().apply {
       update.name?.let { name = it }
+      update.displayName?.let { displayName = it }
     }
 
     val request = managementApi.get().organizations().update(organizationId, organization)

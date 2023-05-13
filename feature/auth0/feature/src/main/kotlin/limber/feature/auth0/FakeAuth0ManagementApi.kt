@@ -14,6 +14,7 @@ internal class FakeAuth0ManagementApi @Inject constructor(
     Auth0OrganizationRep(
       id = guidGenerator.generate().toString(),
       name = creator.name,
+      displayName = creator.displayName,
     )
 
   override fun updateOrganization(
@@ -23,6 +24,7 @@ internal class FakeAuth0ManagementApi @Inject constructor(
     Auth0OrganizationRep(
       id = guidGenerator.generate().toString(),
       name = update(EXISTING_VALUE, update.name),
+      displayName = update(EXISTING_VALUE, update.displayName),
     )
 
   override fun deleteOrganization(organizationId: String): Unit = Unit
