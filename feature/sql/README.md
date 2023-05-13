@@ -8,31 +8,31 @@ This is currently intended for Postgres.
 To access the database, create a store for your model.
 
 ```kotlin
-internal class CelebrityStore : SqlStore<CelebrityRep>(
+internal class CelebrityStore : SqlStore<CelebrityModel>(
   tableName = "pop_culture.celebrity",
-  type = CelebrityRep::class,
+  type = CelebrityModel::class,
 ) {
-  fun create(celebrity: CelebrityRep): CelebrityRep =
+  fun create(creator: CelebrityModel.Creator): CelebrityModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/create.sql"))
-      query.bindKotlin(celebrity)
+      query.bindKotlin(creator)
       return@transaction query.mapToType().single()
     }
 
-  fun update(guid: UUID, updater: Updater<CelebrityRep.Update>): CelebrityRep =
+  fun update(guid: UUID, updater: Updater<CelebrityModel.Update>): CelebrityModel =
     transaction { handle ->
       val celebrity = get(guid, forUpdate = true) ?: throw CelebrityDoesNotExist()
       val query = handle.createQuery(rs("store/celebrity/update.sql"))
       query.bind("guid", guid)
-      query.bindKotlin(update(CelebrityRep.Update(celebrity)))
+      query.bindKotlin(updater(CelebrityModel.Update(celebrity)))
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): CelebrityRep =
+  fun delete(guid: UUID): CelebrityModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/delete.sql"))
       query.bind("guid", guid)
-      return@transaction query.mapToType().singleNullOrThrow() ?: throw CelebrityDoesNotExist()()
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw CelebrityDoesNotExist()
     }
 }
 ```

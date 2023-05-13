@@ -9,11 +9,11 @@ import java.util.UUID
 internal class OrganizationHostnameMapper @Inject constructor(
   private val guidGenerator: GuidGenerator,
 ) {
-  operator fun invoke(model: OrganizationHostnameModel): OrganizationHostnameRep =
+  operator fun invoke(hostname: OrganizationHostnameModel): OrganizationHostnameRep =
     OrganizationHostnameRep(
-      guid = model.guid,
-      organizationGuid = model.organizationGuid,
-      hostname = model.hostname,
+      guid = hostname.guid,
+      organizationGuid = hostname.organizationGuid,
+      hostname = hostname.hostname,
     )
 
   operator fun invoke(

@@ -9,15 +9,15 @@ import java.util.UUID
 internal class FeatureMapper @Inject constructor(
   private val guidGenerator: GuidGenerator,
 ) {
-  operator fun invoke(model: FeatureModel): FeatureRep =
+  operator fun invoke(feature: FeatureModel): FeatureRep =
     FeatureRep(
-      guid = model.guid,
-      organizationGuid = model.organizationGuid,
-      isDefault = model.isDefault,
-      type = model.type,
-      name = model.name,
-      iconName = model.iconName,
-      rootPath = model.rootPath,
+      guid = feature.guid,
+      organizationGuid = feature.organizationGuid,
+      isDefault = feature.isDefault,
+      type = feature.type,
+      name = feature.name,
+      iconName = feature.iconName,
+      rootPath = feature.rootPath,
     )
 
   operator fun invoke(

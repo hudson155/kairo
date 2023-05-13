@@ -8,10 +8,10 @@ import limber.util.guid.GuidGenerator
 internal class OrganizationMapper @Inject constructor(
   private val guidGenerator: GuidGenerator,
 ) {
-  operator fun invoke(model: OrganizationModel): OrganizationRep =
+  operator fun invoke(organization: OrganizationModel): OrganizationRep =
     OrganizationRep(
-      guid = model.guid,
-      name = model.name,
+      guid = organization.guid,
+      name = organization.name,
     )
 
   operator fun invoke(creator: OrganizationRep.Creator): OrganizationModel.Creator =

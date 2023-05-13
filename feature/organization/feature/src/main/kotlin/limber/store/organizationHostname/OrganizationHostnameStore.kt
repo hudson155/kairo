@@ -16,10 +16,10 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
   tableName = "organization.organization_hostname",
   type = OrganizationHostnameModel::class,
 ) {
-  fun create(hostname: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
+  fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
-      query.bindKotlin(hostname)
+      query.bindKotlin(creator)
       return@transaction query.mapToType().single()
     }
 

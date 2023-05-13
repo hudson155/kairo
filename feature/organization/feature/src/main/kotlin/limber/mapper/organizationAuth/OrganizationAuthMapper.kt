@@ -9,14 +9,14 @@ import java.util.UUID
 internal class OrganizationAuthMapper @Inject constructor(
   private val guidGenerator: GuidGenerator,
 ) {
-  operator fun invoke(model: OrganizationAuthModel): OrganizationAuthRep =
+  operator fun invoke(auth: OrganizationAuthModel): OrganizationAuthRep =
     OrganizationAuthRep(
-      guid = model.guid,
-      organizationGuid = model.organizationGuid,
-      auth0OrganizationId = checkNotNull(model.auth0OrganizationId) {
+      guid = auth.guid,
+      organizationGuid = auth.organizationGuid,
+      auth0OrganizationId = checkNotNull(auth.auth0OrganizationId) {
         "The Auth0 organization ID should only be null during the creation process."
       },
-      auth0OrganizationName = model.auth0OrganizationName,
+      auth0OrganizationName = auth.auth0OrganizationName,
     )
 
   operator fun invoke(

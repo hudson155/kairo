@@ -24,10 +24,10 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       return@handle query.mapToType().toList()
     }
 
-  fun create(organization: OrganizationModel.Creator): OrganizationModel =
+  fun create(creator: OrganizationModel.Creator): OrganizationModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/organization/create.sql"))
-      query.bindKotlin(organization)
+      query.bindKotlin(creator)
       return@transaction query.mapToType().single()
     }
 
