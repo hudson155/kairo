@@ -1,6 +1,7 @@
 package limber.mapper.organizationAuth
 
 import com.google.inject.Inject
+import limber.exception.organizationAuth.OrganizationAuthIdIsNull
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.rep.organizationAuth.OrganizationAuthRep
 import limber.util.guid.GuidGenerator
@@ -13,9 +14,7 @@ internal class OrganizationAuthMapper @Inject constructor(
     OrganizationAuthRep(
       guid = auth.guid,
       organizationGuid = auth.organizationGuid,
-      auth0OrganizationId = checkNotNull(auth.auth0OrganizationId) {
-        "The Auth0 organization ID should only be null during the creation process."
-      },
+      auth0OrganizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
       auth0OrganizationName = auth.auth0OrganizationName,
     )
 

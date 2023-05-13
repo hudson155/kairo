@@ -2,6 +2,7 @@ package limber.service.organizationAuth
 
 import com.google.inject.Inject
 import limber.exception.organization.OrganizationDoesNotExist
+import limber.exception.organizationAuth.OrganizationAuthIdIsNull
 import limber.feature.auth0.Auth0ManagementApi
 import limber.feature.auth0.rep.Auth0OrganizationRep
 import limber.feature.sql.transaction
@@ -51,9 +52,7 @@ internal class OrganizationAuthService @Inject constructor(
     jdbi.transaction {
       val auth = authStore.update(guid, updater)
       auth0ManagementApi.updateOrganization(
-        organizationId = checkNotNull(auth.auth0OrganizationId) {
-          "The Auth0 organization ID should only be null during the creation process."
-        },
+        organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
         update = Auth0OrganizationRep.Update(
           name = auth.auth0OrganizationName,
         ),
@@ -65,9 +64,7 @@ internal class OrganizationAuthService @Inject constructor(
     jdbi.transaction {
       val auth = authStore.delete(authGuid)
       auth0ManagementApi.deleteOrganization(
-        organizationId = checkNotNull(auth.auth0OrganizationId) {
-          "The Auth0 organization ID should only be null during the creation process."
-        },
+        organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
       )
       return@transaction auth
     }
