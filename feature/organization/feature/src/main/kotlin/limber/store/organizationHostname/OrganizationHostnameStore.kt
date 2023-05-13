@@ -7,6 +7,8 @@ import limber.feature.sql.SqlStore
 import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
 import limber.model.organizationHostname.OrganizationHostnameModel
+import mu.KLogger
+import mu.KotlinLogging
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
@@ -16,19 +18,22 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
   tableName = "organization.organization_hostname",
   type = OrganizationHostnameModel::class,
 ) {
+  private val logger: KLogger = KotlinLogging.logger {}
+
   fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
     transaction { handle ->
+      logger.info { "Creating organization hostname: $creator." }
       val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
       query.bindKotlin(creator)
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): OrganizationHostnameModel =
-    transaction { handle ->
-      val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
-      query.bind("guid", guid)
-      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
-    }
+  fun delete(guid: UUID): OrganizationHostnameModel = transaction { handle ->
+    logger.info { "Deleting organization hostname." }
+    val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
+    query.bind("guid", guid)
+    return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
+  }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {

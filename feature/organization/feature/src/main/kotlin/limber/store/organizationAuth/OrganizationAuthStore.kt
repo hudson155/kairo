@@ -10,6 +10,8 @@ import limber.feature.sql.isForeignKeyViolation
 import limber.feature.sql.isUniqueViolation
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.util.updater.Updater
+import mu.KLogger
+import mu.KotlinLogging
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
@@ -19,6 +21,8 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
   tableName = "organization.organization_auth",
   type = OrganizationAuthModel::class,
 ) {
+  private val logger: KLogger = KotlinLogging.logger {}
+
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))
@@ -35,6 +39,7 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
 
   fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel =
     transaction { handle ->
+      logger.info { "Creating organization auth: $creator." }
       val query = handle.createQuery(rs("store/organizationAuth/create.sql"))
       query.bindKotlin(creator)
       return@transaction query.mapToType().single()
@@ -43,14 +48,17 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
   fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     transaction { handle ->
       val auth = get(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
+      val update = updater(OrganizationAuthModel.Update(auth))
+      logger.info { "Updating organization auth: $update." }
       val query = handle.createQuery(rs("store/organizationAuth/update.sql"))
       query.bind("guid", guid)
-      query.bindKotlin(updater(OrganizationAuthModel.Update(auth)))
+      query.bindKotlin(update)
       return@transaction query.mapToType().single()
     }
 
   fun delete(guid: UUID): OrganizationAuthModel =
     transaction { handle ->
+      logger.info { "Deleting organization auth." }
       val query = handle.createQuery(rs("store/organizationAuth/delete.sql"))
       query.bind("guid", guid)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
