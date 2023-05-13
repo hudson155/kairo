@@ -7,6 +7,7 @@ import com.google.common.base.Supplier
 import com.google.common.base.Suppliers
 import com.google.inject.Inject
 import limber.config.auth0.Auth0Config
+import limber.feature.auth0.rep.Auth0OrganizationRep
 import java.util.concurrent.TimeUnit
 
 internal class RealAuth0ManagementApi @Inject constructor(
@@ -24,23 +25,25 @@ internal class RealAuth0ManagementApi @Inject constructor(
     return ManagementAPI.newBuilder(config.domain, result.accessToken).build()
   }
 
-  override fun createOrganization(name: String): String {
+  override fun createOrganization(creator: Auth0OrganizationRep.Creator): Auth0OrganizationRep {
     val organization = Organization().apply {
-      this.name = name
+      name = creator.name
     }
 
     val request = managementApi.get().organizations().create(organization)
-    val result = request.execute().body
-    return result.id
+    return Auth0OrganizationRep(request.execute().body)
   }
 
-  override fun updateOrganization(organizationId: String, name: String?) {
+  override fun updateOrganization(
+    organizationId: String,
+    update: Auth0OrganizationRep.Update,
+  ): Auth0OrganizationRep {
     val organization = Organization().apply {
-      name?.let { this.name = it }
+      update.name?.let { name = it }
     }
 
     val request = managementApi.get().organizations().update(organizationId, organization)
-    request.execute()
+    return Auth0OrganizationRep(request.execute().body)
   }
 
   override fun deleteOrganization(organizationId: String) {
