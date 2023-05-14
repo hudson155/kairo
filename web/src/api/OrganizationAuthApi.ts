@@ -39,6 +39,13 @@ class OrganizationAuthApi {
       body: updater,
     });
   }
+
+  async delete(authGuid: string): Promise<OrganizationAuthRep> {
+    return await this.api.request<OrganizationAuthRep>({
+      method: 'DELETE',
+      path: `/organization-auths/${authGuid}`,
+    });
+  }
 }
 
 export const organizationAuthApiState = selectorFamily<OrganizationAuthApi, { authenticated: boolean; }>({

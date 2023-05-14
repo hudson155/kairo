@@ -52,6 +52,7 @@
 
     // Overlays indicate the background cannot be interacted with.
     --color-overlay-default: hsla(240deg, 10%, 91%, 75%);
+    --color-overlay-danger: hsla(0deg, 45%, 73%, 95%);
 
     --color-status-success-background: var(--colorLight-status-success-background);
     --color-status-success-border: hsl(120deg, 45%, 34%);
@@ -98,6 +99,7 @@
 
     // Overlays indicate the background cannot be interacted with.
     --color-overlay-default: hsla(240deg, 10%, 22%, 75%);
+    --color-overlay-danger: hsla(0deg, 45%, 18%, 95%);
 
     --color-status-success-background: var(--colorDark-status-success-background);
     --color-status-success-border: hsl(120deg, 45%, 35%);

@@ -44,7 +44,7 @@ const getContent = (
     return <ErrorBanner error={auth.contents} operation="loading organization auth" />;
   case 'hasValue': {
     if (!auth.contents) return <CreateAuthInformation organization={organization} />;
-    return <UpdateAuthInformation auth={auth.contents} />;
+    return <UpdateAuthInformation auth={auth.contents} organizationName={organization.name} />;
   }
   }
 };
