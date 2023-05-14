@@ -13,7 +13,7 @@ interface Props {
 }
 
 const UpdateAuthInformation: React.FC<Props> = ({ auth }) => {
-  const updateAuth = useUpdateOrganizationAuth(auth.guid);
+  const updateAuth = useUpdateOrganizationAuth(auth.organizationGuid, auth.guid);
 
   const fields = new FormFields([
     ['body.auth0OrganizationName', useFormField(auth.auth0OrganizationName)],

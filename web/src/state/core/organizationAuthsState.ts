@@ -4,11 +4,11 @@ import OrganizationAuthRep from 'rep/OrganizationAuthRep';
 
 const organizationAuthsState = atomFamily<OrganizationAuthRep | undefined, string>({
   key: 'core/organizationAuths',
-  default: (authGuid) => selector<OrganizationAuthRep | undefined>({
-    key: `core/organizationAuths-default-${authGuid}`,
+  default: (organizationGuid) => selector<OrganizationAuthRep | undefined>({
+    key: `core/organizationAuths-default-${organizationGuid}`,
     get: async ({ get }) => {
       const authApi = get(organizationAuthApiState({ authenticated: false }));
-      return await authApi.get(authGuid) ?? undefined;
+      return await authApi.get(organizationGuid) ?? undefined;
     },
   }),
 });
