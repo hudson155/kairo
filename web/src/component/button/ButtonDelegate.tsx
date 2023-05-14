@@ -35,7 +35,11 @@ const ButtonDelegate: React.ForwardRefRenderFunction<HTMLButtonElement, Props> =
         {...props}
       >
         {children}
-        {disabled || isSubmitting ? <ButtonOverlay isSubmitting={isSubmitting} /> : null}
+        {
+          (disabled || isSubmitting) && variant !== 'unstyled'
+            ? <ButtonOverlay isSubmitting={isSubmitting} />
+            : null
+        }
       </button>
     );
   };

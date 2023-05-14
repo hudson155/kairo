@@ -11,6 +11,10 @@
 
   @include focus.focusable;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   &:not(.unstyled) {
     border: var(--borderSize-border-normal) solid;
     color: var(--colorDark-font-default);
@@ -22,11 +26,11 @@
     background-color: var(--color-button-primary-background);
     border-color: var(--color-button-primary-border);
 
-    &:hover {
+    &:enabled:hover {
       background-color: var(--color-button-primary-backgroundHover);
     }
 
-    &:active {
+    &:enabled:active {
       background-color: var(--color-button-primary-backgroundActive);
     }
   }
@@ -35,11 +39,11 @@
     background-color: var(--color-button-secondary-background);
     border-color: var(--color-button-secondary-border);
 
-    &:hover {
+    &:enabled:hover {
       background-color: var(--color-button-secondary-backgroundHover);
     }
 
-    &:active {
+    &:enabled:active {
       background-color: var(--color-button-secondary-backgroundActive);
     }
   }
@@ -48,11 +52,11 @@
     background-color: var(--color-button-danger-background);
     border-color: var(--color-button-danger-border);
 
-    &:hover {
+    &:enabled:hover {
       background-color: var(--color-button-danger-backgroundHover);
     }
 
-    &:active {
+    &:enabled:active {
       background-color: var(--color-button-danger-backgroundActive);
     }
   }

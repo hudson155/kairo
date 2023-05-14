@@ -9,15 +9,18 @@ const story: Meta<StoryProps> = {};
 
 export default story;
 
-const Template: Story<StoryProps> = () => {
+const Template: Story<StoryProps> = ({ disabled }) => {
   return (
     <Container direction="vertical">
-      <Button variant="primary">Primary button</Button>
-      <Button variant="secondary">Secondary button</Button>
-      <Button variant="danger">Danger button</Button>
-      <Button variant="unstyled">Unstyled button</Button>
+      <Button disabled={disabled} variant="primary">Primary button</Button>
+      <Button disabled={disabled} variant="secondary">Secondary button</Button>
+      <Button disabled={disabled} variant="danger">Danger button</Button>
+      <Button disabled={disabled} variant="unstyled">Unstyled button</Button>
     </Container>
   );
 };
 
 export const Default = Template.bind({});
+Default.args = {
+  disabled: false,
+};
