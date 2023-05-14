@@ -1,6 +1,7 @@
 import ValidationErrorsError from 'api/ValidationErrorsError';
 import FormFields from 'component/form/FormFields';
 import { useToast } from 'component/toast/ToastContainer';
+import UserError from 'error/UserError';
 import React, { FormEvent, ReactNode, useContext, useMemo, useState } from 'react';
 
 export interface FormContext {
@@ -59,6 +60,12 @@ const Form: React.FC<Props> = ({ fields = new FormFields(), onSubmit, children }
   };
 
   const handleFailure = (e: unknown) => {
+    if (e instanceof UserError) {
+      console.warn(e);
+      toast.failure(e.message);
+      return;
+    }
+
     if (e instanceof ValidationErrorsError) {
       console.warn(e);
       toast.failure('Please review the errors.');
