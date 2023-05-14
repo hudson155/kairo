@@ -59,9 +59,8 @@ const Form: React.FC<Props> = ({ fields = new FormFields(), onSubmit, children }
   };
 
   const handleFailure = (e: unknown) => {
-    console.error(e);
-
     if (e instanceof ValidationErrorsError) {
+      console.warn(e);
       toast.failure('Please review the errors.');
       for (const error of e.errors) {
         const field = fields.get(error.propertyPath);
@@ -71,6 +70,7 @@ const Form: React.FC<Props> = ({ fields = new FormFields(), onSubmit, children }
       return;
     }
 
+    console.error(e);
     toast.failure(toast.error.generic);
     throw e;
   };

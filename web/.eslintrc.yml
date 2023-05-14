@@ -216,7 +216,7 @@ rules:
   no-bitwise: error
   no-caller: error
   no-confusing-arrow: error
-  no-console: [warn, { allow: [error] }]
+  no-console: [warn, { allow: [warn, error] }]
   no-div-regex: error
   no-else-return: [warn, { allowElseIf: false }]
   no-empty: warn
