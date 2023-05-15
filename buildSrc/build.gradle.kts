@@ -14,7 +14,7 @@ java {
 
 dependencies {
   // https://kotlinlang.org/docs/releases.html#release-details.
-  api(kotlin("gradle-plugin", "1.7.20"))
+  api(kotlin("gradle-plugin", "1.8.21"))
 
   // https://plugins.gradle.org/plugin/io.gitlab.arturbosch.detekt.
   api("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0") // Bump in Versions.kt too.

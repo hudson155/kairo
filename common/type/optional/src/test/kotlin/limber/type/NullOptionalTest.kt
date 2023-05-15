@@ -1,6 +1,6 @@
 package limber.type
 
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -34,7 +34,7 @@ internal class NullOptionalTest : OptionalTest() {
   override fun deserialize() {
     objectMapper.readValue<OptionalWrapper.Nullable>("{}")
       .shouldBe(OptionalWrapper.Nullable(null))
-    shouldThrow<MissingKotlinParameterException> {
+    shouldThrow<MismatchedInputException> {
       objectMapper.readValue<OptionalWrapper.NonNullable>("{}")
     }
   }

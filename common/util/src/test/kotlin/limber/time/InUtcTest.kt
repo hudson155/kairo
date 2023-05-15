@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
 internal class InUtcTest {
@@ -17,7 +18,7 @@ internal class InUtcTest {
   private val utc: ZonedDateTime = run {
     val localDate = LocalDate.of(2007, 12, 3)
     val localTime = LocalTime.of(12, 15, 30, 789_000_000)
-    return@run ZonedDateTime.of(localDate, localTime, ZoneId.of("UTC"))
+    return@run ZonedDateTime.of(localDate, localTime, ZoneOffset.UTC)
   }
 
   @Test
