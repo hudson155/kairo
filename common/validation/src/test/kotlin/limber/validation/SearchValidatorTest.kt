@@ -15,16 +15,16 @@ internal class SearchValidatorTest {
 
   @Test
   fun valid() {
-    validator.validate(WrapperClass("Hom")).shouldBeEmpty()
-    validator.validate(WrapperClass("Forms!!! :)")).shouldBeEmpty()
+    validator.validate(WrapperClass("Que")).shouldBeEmpty()
+    validator.validate(WrapperClass("Search!!! :)")).shouldBeEmpty()
     validator.validate(WrapperClass("A".repeat(31))).shouldBeEmpty()
   }
 
   @Test
   fun invalid() {
     validator.validate(WrapperClass("")).shouldNotBeEmpty()
-    validator.validate(WrapperClass("Ho")).shouldNotBeEmpty()
-    validator.validate(WrapperClass("Forms £")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("Qu")).shouldNotBeEmpty()
+    validator.validate(WrapperClass("Search £")).shouldNotBeEmpty()
     validator.validate(WrapperClass("A".repeat(32))).shouldNotBeEmpty()
   }
 }

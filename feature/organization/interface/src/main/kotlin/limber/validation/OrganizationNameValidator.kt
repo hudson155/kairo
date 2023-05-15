@@ -18,7 +18,7 @@ import kotlin.reflect.KClass
 @ReportAsSingleViolation
 @Pattern(regexp = OrganizationNameValidator.pattern)
 public annotation class OrganizationNameValidator(
-  val message: String = "Must be a valid organization name.",
+  val message: String = "Must be a valid organization name ($pattern).",
   val groups: Array<KClass<*>> = [],
   val payload: Array<KClass<out Payload>> = [],
 ) {
