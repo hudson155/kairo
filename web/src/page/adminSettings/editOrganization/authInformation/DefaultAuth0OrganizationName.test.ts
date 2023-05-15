@@ -1,4 +1,4 @@
-import { defaultAuth0OrganizationName } from 'page/adminSettings/editOrganization/authInformation/CreateAuthInformation';
+import { defaultAuth0OrganizationName } from 'page/adminSettings/editOrganization/authInformation/CreateAuthInformationForm';
 
 it('defaultAuth0OrganizationName', () => {
   expect(defaultAuth0OrganizationName('   Pierre et Paul $ jouent aux dés'))
