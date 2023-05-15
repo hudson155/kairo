@@ -37,6 +37,11 @@ include(":db:limber")
 include(":feature:auth0:feature")
 include(":feature:auth0:testing")
 
+include(":feature:form:auth")
+include(":feature:form:client")
+include(":feature:form:feature")
+include(":feature:form:interface")
+
 include(":feature:google-app-engine:client")
 include(":feature:google-app-engine:feature")
 include(":feature:google-app-engine:interface")
