@@ -3,7 +3,7 @@ package limber.mapper.organizationHostname
 import com.google.inject.Inject
 import limber.model.organizationHostname.OrganizationHostnameModel
 import limber.rep.organizationHostname.OrganizationHostnameRep
-import limber.util.guid.GuidGenerator
+import limber.util.id.GuidGenerator
 import java.util.UUID
 
 internal class OrganizationHostnameMapper @Inject constructor(

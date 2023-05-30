@@ -1,4 +1,4 @@
-package limber.util.guid
+package limber.util.id
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

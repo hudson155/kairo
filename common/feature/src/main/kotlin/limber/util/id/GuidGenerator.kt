@@ -1,4 +1,4 @@
-package limber.util.guid
+package limber.util.id
 
 import java.util.UUID
 

@@ -3,7 +3,7 @@ package limber.mapper.organization
 import com.google.inject.Inject
 import limber.model.organization.OrganizationModel
 import limber.rep.organization.OrganizationRep
-import limber.util.guid.GuidGenerator
+import limber.util.id.GuidGenerator
 
 internal class OrganizationMapper @Inject constructor(
   private val guidGenerator: GuidGenerator,

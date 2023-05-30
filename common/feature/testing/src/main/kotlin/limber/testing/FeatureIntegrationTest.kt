@@ -5,8 +5,8 @@ import limber.config.TestConfig
 import limber.feature.Feature
 import limber.server.Server
 import limber.server.TestServer
-import limber.util.guid.DeterministicGuidGenerator
-import limber.util.guid.GuidGenerator
+import limber.util.id.DeterministicGuidGenerator
+import limber.util.id.GuidGenerator
 
 public abstract class FeatureIntegrationTest(
   config: TestConfig,

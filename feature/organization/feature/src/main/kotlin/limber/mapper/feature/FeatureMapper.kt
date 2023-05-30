@@ -3,7 +3,7 @@ package limber.mapper.feature
 import com.google.inject.Inject
 import limber.model.feature.FeatureModel
 import limber.rep.feature.FeatureRep
-import limber.util.guid.GuidGenerator
+import limber.util.id.GuidGenerator
 import java.util.UUID
 
 internal class FeatureMapper @Inject constructor(

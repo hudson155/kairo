@@ -2,7 +2,7 @@ package limber.feature.auth0
 
 import com.google.inject.Inject
 import limber.feature.auth0.rep.Auth0OrganizationRep
-import limber.util.guid.GuidGenerator
+import limber.util.id.GuidGenerator
 import limber.util.updater.update
 
 private const val EXISTING_VALUE = "The existing value is unknown."
