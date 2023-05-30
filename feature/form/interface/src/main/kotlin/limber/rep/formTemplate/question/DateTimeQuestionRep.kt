@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import limber.validation.FormTemplateQuestionLabelValidator
 import java.time.ZonedDateTime
-import java.util.UUID
 
 public data class DateTimeQuestionRep(
-  override val guid: UUID,
+  override val id: String,
   override val required: Required,
   @FormTemplateQuestionLabelValidator override val label: String,
   val min: Option?,
