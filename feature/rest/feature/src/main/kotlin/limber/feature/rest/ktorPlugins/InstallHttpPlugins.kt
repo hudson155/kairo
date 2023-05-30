@@ -12,13 +12,13 @@ import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.dataconversion.DataConversion
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.plugins.forwardedheaders.ForwardedHeaders
+import limber.feature.rest.applicationContext
 import limber.serialization.ObjectMapperFactory
 import limber.serialization.StringTrimModule
 
-internal fun Application.installHttpPlugins(
-  allowedHosts: List<String>,
-  serverName: String,
-) {
+internal fun Application.installHttpPlugins() {
+  val config = applicationContext.config
+
   /**
    * https://ktor.io/docs/compression.html.
    *
@@ -57,7 +57,7 @@ internal fun Application.installHttpPlugins(
    */
   install(CORS) {
     allowCredentials = false
-    allowedHosts.forEach { host ->
+    config.allowedHosts.forEach { host ->
       // DO NOT enable wildcard hosts without properly mitigating the BREACH vulnerability.
       // See the installation of the [Compression] feature for more information.
       require(host != "*")
@@ -72,7 +72,7 @@ internal fun Application.installHttpPlugins(
    * https://ktor.io/docs/default-headers.html.
    */
   install(DefaultHeaders) {
-    header(HttpHeaders.Server, serverName)
+    header(HttpHeaders.Server, config.serverName)
   }
 
   /**

@@ -2,20 +2,11 @@ package limber.feature.rest
 
 import com.google.inject.Injector
 import com.google.inject.PrivateBinder
-import io.ktor.http.ContentType
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
-import io.ktor.server.auth.authenticate
 import io.ktor.server.auth.principal
 import io.ktor.server.cio.CIO
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
-import io.ktor.server.routing.HttpAcceptRouteSelector
-import io.ktor.server.routing.HttpMethodRouteSelector
-import io.ktor.server.routing.ParameterRouteSelector
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.createRouteFromPath
-import io.ktor.server.routing.routing
 import jakarta.validation.Validator
 import limber.auth.RestContext
 import limber.auth.RestContextFactory
@@ -81,39 +72,8 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
   }
 
   private fun module(injector: Injector): Application.() -> Unit = {
-    installPlugins(config)
-
-    val handlers = injector.bindings.mapNotNull { (key, binding) ->
-      val isEndpointHandler = RestEndpointHandler::class.java.isAssignableFrom(key.typeLiteral.rawType)
-      if (!isEndpointHandler) return@mapNotNull null
-      return@mapNotNull binding.provider.get() as RestEndpointHandler<*, *>
-    }
-
-    handlers.forEach { handler ->
-      val template = handler.template
-      logger.info { "Registering endpoint: $template." }
-      routing {
-        optionallyAuthenticate(config.auth != null) {
-          createRouteFromPath(template.path)
-            .createChild(HttpAcceptRouteSelector(ContentType.Application.Json))
-            .createChild(HttpMethodRouteSelector(template.method))
-            .createChild(template.requiredQueryParams)
-            .handle { handler.handle(call) }
-        }
-      }
-    }
+    applicationContext = ApplicationContext(config, injector)
+    installPlugins()
+    registerEndpoints()
   }
 }
-
-private fun Route.optionallyAuthenticate(authenticate: Boolean, build: Route.() -> Unit) {
-  if (authenticate) {
-    authenticate(optional = true, build = build)
-  } else {
-    build()
-  }
-}
-
-private fun Route.createChild(requiredQueryParams: Set<String>): Route =
-  requiredQueryParams.fold(this) { route, queryParam ->
-    route.createChild(ParameterRouteSelector(queryParam))
-  }

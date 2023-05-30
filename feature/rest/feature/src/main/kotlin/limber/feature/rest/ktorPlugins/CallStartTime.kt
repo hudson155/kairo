@@ -7,7 +7,11 @@ import io.ktor.util.AttributeKey
 import java.time.Clock
 import java.time.ZonedDateTime
 
-internal val callStartTimeKey = AttributeKey<ZonedDateTime>("limber.ktor.attribute.callStartTime")
+private val callStartTimeKey =
+  AttributeKey<ZonedDateTime>(
+    name = "limber.ktor.attribute.callStartTime",
+  )
+
 internal var ApplicationCall.startTime: ZonedDateTime
   get() = attributes[callStartTimeKey]
   set(value) = attributes.put(callStartTimeKey, value)

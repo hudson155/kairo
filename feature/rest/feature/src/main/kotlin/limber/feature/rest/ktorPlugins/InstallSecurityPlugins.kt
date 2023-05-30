@@ -6,13 +6,15 @@ import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.ktor.server.auth.jwt.jwt
-import limber.config.rest.RestConfig
+import limber.feature.rest.applicationContext
 import mu.KLogger
 import mu.KotlinLogging
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-internal fun Application.installSecurityPlugins(authConfig: RestConfig.Auth?) {
+internal fun Application.installSecurityPlugins() {
+  val authConfig = applicationContext.config.auth
+
   if (authConfig != null) {
     install(Authentication) {
       jwt {
