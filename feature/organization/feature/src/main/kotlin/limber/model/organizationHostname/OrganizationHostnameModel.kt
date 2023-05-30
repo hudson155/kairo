@@ -4,7 +4,7 @@ import java.time.ZonedDateTime
 import java.util.UUID
 
 public data class OrganizationHostnameModel(
-  val guid: UUID,
+  val id: String,
   val version: Long,
   val createdAt: ZonedDateTime,
   val updatedAt: ZonedDateTime,
@@ -12,7 +12,7 @@ public data class OrganizationHostnameModel(
   val hostname: String,
 ) {
   public data class Creator(
-    val guid: UUID,
+    val id: String,
     val organizationGuid: UUID,
     val hostname: String,
   )

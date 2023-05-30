@@ -11,16 +11,15 @@ import limber.testing.should.shouldNotBeFound
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class GetOrganizationHostnameTest : IntegrationTest() {
   @Test
   fun `hostname does not exist`() {
-    val hostnameGuid = UUID.randomUUID()
+    val hostnameId = "host_0"
 
     test {
       shouldNotBeFound {
-        hostnameClient(OrganizationHostnameApi.Get(hostnameGuid))
+        hostnameClient(OrganizationHostnameApi.Get(hostnameId))
       }
     }
   }
@@ -36,7 +35,7 @@ internal class GetOrganizationHostnameTest : IntegrationTest() {
     }
 
     test {
-      hostnameClient(OrganizationHostnameApi.Get(hostname.guid))
+      hostnameClient(OrganizationHostnameApi.Get(hostname.id))
         .shouldBe(hostname)
     }
   }

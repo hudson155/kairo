@@ -3,15 +3,17 @@ package limber.mapper.organizationHostname
 import com.google.inject.Inject
 import limber.model.organizationHostname.OrganizationHostnameModel
 import limber.rep.organizationHostname.OrganizationHostnameRep
-import limber.util.id.GuidGenerator
+import limber.util.id.IdGenerator
 import java.util.UUID
 
 internal class OrganizationHostnameMapper @Inject constructor(
-  private val guidGenerator: GuidGenerator,
+  idGenerator: IdGenerator.Factory,
 ) {
+  private val idGenerator: IdGenerator = idGenerator("host")
+
   operator fun invoke(hostname: OrganizationHostnameModel): OrganizationHostnameRep =
     OrganizationHostnameRep(
-      guid = hostname.guid,
+      id = hostname.id,
       organizationGuid = hostname.organizationGuid,
       hostname = hostname.hostname,
     )
@@ -21,7 +23,7 @@ internal class OrganizationHostnameMapper @Inject constructor(
     creator: OrganizationHostnameRep.Creator,
   ): OrganizationHostnameModel.Creator =
     OrganizationHostnameModel.Creator(
-      guid = guidGenerator.generate(),
+      id = idGenerator.generate(),
       organizationGuid = organizationGuid,
       hostname = creator.hostname,
     )

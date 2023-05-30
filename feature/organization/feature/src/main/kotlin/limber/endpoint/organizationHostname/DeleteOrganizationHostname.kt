@@ -17,7 +17,7 @@ public class DeleteOrganizationHostname @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Delete): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostnameDelete))
 
-    val hostname = hostnameService.delete(endpoint.hostnameGuid)
+    val hostname = hostnameService.delete(endpoint.hostnameId)
 
     return hostnameMapper(hostname)
   }

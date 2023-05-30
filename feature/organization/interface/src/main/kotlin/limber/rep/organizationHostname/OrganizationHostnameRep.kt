@@ -4,7 +4,7 @@ import limber.validation.HostnameValidator
 import java.util.UUID
 
 public data class OrganizationHostnameRep(
-  val guid: UUID,
+  val id: String,
   val organizationGuid: UUID,
   val hostname: String,
 ) {

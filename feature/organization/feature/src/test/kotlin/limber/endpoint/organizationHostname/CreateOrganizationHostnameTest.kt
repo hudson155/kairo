@@ -54,8 +54,8 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
     test {
       val creator = OrganizationHostnameFixture.fooBarBaz.creator
       val hostname = hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
-      hostname.shouldBe(OrganizationHostnameFixture.fooBarBaz(organization.guid, guidGenerator[1]))
-      hostnameClient(OrganizationHostnameApi.Get(hostname.guid))
+      hostname.shouldBe(OrganizationHostnameFixture.fooBarBaz(organization.guid, "host_0"))
+      hostnameClient(OrganizationHostnameApi.Get(hostname.id))
         .shouldBe(hostname)
     }
   }

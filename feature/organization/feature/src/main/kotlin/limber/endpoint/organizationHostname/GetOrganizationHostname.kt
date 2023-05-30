@@ -17,12 +17,12 @@ public class GetOrganizationHostname @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(
       auth = OrganizationAuth(OrganizationPermission.OrganizationHostnameRead) {
-        hostnameService.get(endpoint.hostnameGuid)?.organizationGuid
+        hostnameService.get(endpoint.hostnameId)?.organizationGuid
       },
       onFail = { return@handler null },
     )
 
-    val hostname = hostnameService.get(endpoint.hostnameGuid)
+    val hostname = hostnameService.get(endpoint.hostnameId)
 
     return hostname?.let { hostnameMapper(it) }
   }

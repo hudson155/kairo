@@ -12,7 +12,6 @@ import mu.KotlinLogging
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
-import java.util.UUID
 
 internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
   tableName = "organization.organization_hostname",
@@ -28,10 +27,10 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): OrganizationHostnameModel = transaction { handle ->
+  fun delete(id: String): OrganizationHostnameModel = transaction { handle ->
     logger.info { "Deleting organization hostname." }
     val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
-    query.bind("guid", guid)
+    query.bind("id", id)
     return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
   }
 

@@ -12,16 +12,15 @@ import limber.testing.should.shouldNotBeFound
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class DeleteOrganizationHostnameTest : IntegrationTest() {
   @Test
   fun `hostname does not exist`() {
-    val hostnameGuid = UUID.randomUUID()
+    val hostnameId = "host_0"
 
     test {
       shouldBeUnprocessable("Organization hostname does not exist.") {
-        hostnameClient(OrganizationHostnameApi.Delete(hostnameGuid))
+        hostnameClient(OrganizationHostnameApi.Delete(hostnameId))
       }
     }
   }
@@ -37,10 +36,10 @@ internal class DeleteOrganizationHostnameTest : IntegrationTest() {
     }
 
     test {
-      hostnameClient(OrganizationHostnameApi.Delete(hostname.guid))
+      hostnameClient(OrganizationHostnameApi.Delete(hostname.id))
         .shouldBe(hostname)
       shouldNotBeFound {
-        hostnameClient(OrganizationHostnameApi.Get(hostname.guid))
+        hostnameClient(OrganizationHostnameApi.Get(hostname.id))
       }
     }
   }

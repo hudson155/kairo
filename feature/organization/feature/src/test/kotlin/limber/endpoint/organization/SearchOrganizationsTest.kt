@@ -51,7 +51,7 @@ internal class SearchOrganizationsTest : IntegrationTest() {
     val organization = createFixtures()
 
     test {
-      organizationClient(OrganizationApi.Search(guidGenerator[2].toString().takeLast(4)))
+      organizationClient(OrganizationApi.Search(guidGenerator[1].toString().takeLast(4)))
         .shouldContainExactlyInAnyOrder(organization)
     }
   }
