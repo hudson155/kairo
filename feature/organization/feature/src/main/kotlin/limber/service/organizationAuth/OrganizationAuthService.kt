@@ -19,8 +19,8 @@ internal class OrganizationAuthService @Inject constructor(
   private val jdbi: Jdbi,
   private val organizationService: OrganizationService,
 ) {
-  fun get(authGuid: UUID): OrganizationAuthModel? =
-    authStore.getByGuid(authGuid)
+  fun get(authId: String): OrganizationAuthModel? =
+    authStore.get(authId)
 
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
     authStore.getByOrganization(organizationGuid)
@@ -39,7 +39,7 @@ internal class OrganizationAuthService @Inject constructor(
           displayName = organization.name,
         ),
       )
-      return@transaction authStore.update(auth.guid) { existing ->
+      return@transaction authStore.update(auth.id) { existing ->
         OrganizationAuthModel.Update(
           auth0OrganizationId = auth0Organization.id,
           auth0OrganizationName = existing.auth0OrganizationName,
@@ -48,9 +48,9 @@ internal class OrganizationAuthService @Inject constructor(
     }
   }
 
-  fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
+  fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     jdbi.transaction {
-      val auth = authStore.update(guid, updater)
+      val auth = authStore.update(id, updater)
       auth0ManagementApi.updateOrganization(
         organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
         update = Auth0OrganizationRep.Update(
@@ -60,9 +60,9 @@ internal class OrganizationAuthService @Inject constructor(
       return@transaction auth
     }
 
-  fun delete(authGuid: UUID): OrganizationAuthModel =
+  fun delete(authId: String): OrganizationAuthModel =
     jdbi.transaction {
-      val auth = authStore.delete(authGuid)
+      val auth = authStore.delete(authId)
       auth0ManagementApi.deleteOrganization(
         organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
       )

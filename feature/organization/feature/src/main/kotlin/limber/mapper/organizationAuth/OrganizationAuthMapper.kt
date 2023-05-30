@@ -4,15 +4,17 @@ import com.google.inject.Inject
 import limber.exception.organizationAuth.OrganizationAuthIdIsNull
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.rep.organizationAuth.OrganizationAuthRep
-import limber.util.id.GuidGenerator
+import limber.util.id.IdGenerator
 import java.util.UUID
 
 internal class OrganizationAuthMapper @Inject constructor(
-  private val guidGenerator: GuidGenerator,
+  idGenerator: IdGenerator.Factory,
 ) {
+  private val idGenerator: IdGenerator = idGenerator("auth")
+
   operator fun invoke(auth: OrganizationAuthModel): OrganizationAuthRep =
     OrganizationAuthRep(
-      guid = auth.guid,
+      id = auth.id,
       organizationGuid = auth.organizationGuid,
       auth0OrganizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
       auth0OrganizationName = auth.auth0OrganizationName,
@@ -23,7 +25,7 @@ internal class OrganizationAuthMapper @Inject constructor(
     creator: OrganizationAuthRep.Creator,
   ): OrganizationAuthModel.Creator =
     OrganizationAuthModel.Creator(
-      guid = guidGenerator.generate(),
+      id = idGenerator.generate(),
       organizationGuid = organizationGuid,
       auth0OrganizationName = creator.auth0OrganizationName,
     )

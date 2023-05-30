@@ -12,17 +12,16 @@ import limber.testing.should.shouldBeUnprocessable
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class UpdateOrganizationAuthTest : IntegrationTest() {
   @Test
   fun `auth does not exist`() {
-    val authGuid = UUID.randomUUID()
+    val authId = "auth_0"
 
     test {
       shouldBeUnprocessable("Organization auth does not exist.") {
         val update = OrganizationAuthRep.Update(auth0OrganizationName = " NEW-CO ")
-        authClient(OrganizationAuthApi.Update(authGuid, update))
+        authClient(OrganizationAuthApi.Update(authId, update))
       }
     }
   }
@@ -39,9 +38,9 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
 
     test {
       val update = OrganizationAuthRep.Update()
-      authClient(OrganizationAuthApi.Update(auth.guid, update))
+      authClient(OrganizationAuthApi.Update(auth.id, update))
         .shouldBe(auth)
-      authClient(OrganizationAuthApi.Get(auth.guid))
+      authClient(OrganizationAuthApi.Get(auth.id))
         .shouldBe(auth)
     }
   }
@@ -59,9 +58,9 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
     test {
       val update = OrganizationAuthRep.Update(auth0OrganizationName = " NEW-CO ")
       auth = auth.copy(auth0OrganizationName = "new-co")
-      authClient(OrganizationAuthApi.Update(auth.guid, update))
+      authClient(OrganizationAuthApi.Update(auth.id, update))
         .shouldBe(auth)
-      authClient(OrganizationAuthApi.Get(auth.guid))
+      authClient(OrganizationAuthApi.Get(auth.id))
         .shouldBe(auth)
     }
   }

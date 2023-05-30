@@ -1,6 +1,6 @@
 create table organization.organization_auth
 (
-  guid       uuid
+  id         text
     constraint pkey__organization_auth primary key,
   version    bigint      not null default 0,
   created_at timestamptz not null default now(),

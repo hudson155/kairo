@@ -20,7 +20,7 @@ public class UpdateOrganizationAuth @Inject internal constructor(
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthUpdate))
 
     val update = getBody(endpoint)
-    val auth = authService.update(endpoint.authGuid) { existing ->
+    val auth = authService.update(endpoint.authId) { existing ->
       OrganizationAuthModel.Update(
         auth0OrganizationId = existing.auth0OrganizationId,
         auth0OrganizationName = update(existing.auth0OrganizationName, update.auth0OrganizationName),

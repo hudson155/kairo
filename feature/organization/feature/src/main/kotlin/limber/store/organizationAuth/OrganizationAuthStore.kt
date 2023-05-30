@@ -45,22 +45,22 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
+  fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     transaction { handle ->
-      val auth = getByGuid(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
+      val auth = get(id, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
       val update = updater(OrganizationAuthModel.Update(auth))
       logger.info { "Updating organization auth: $update." }
       val query = handle.createQuery(rs("store/organizationAuth/update.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       query.bindKotlin(update)
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): OrganizationAuthModel =
+  fun delete(id: String): OrganizationAuthModel =
     transaction { handle ->
       logger.info { "Deleting organization auth." }
       val query = handle.createQuery(rs("store/organizationAuth/delete.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
     }
 

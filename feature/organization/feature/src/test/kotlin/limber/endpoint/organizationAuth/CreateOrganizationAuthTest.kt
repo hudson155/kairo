@@ -70,7 +70,7 @@ internal class CreateOrganizationAuthTest : IntegrationTest() {
     test {
       val creator = OrganizationAuthFixture.acmeCo.creator
       authClient(OrganizationAuthApi.Create(organization.guid, creator))
-        .shouldBe(OrganizationAuthFixture.acmeCo(organization.guid, guidGenerator[1], guidGenerator[2]))
+        .shouldBe(OrganizationAuthFixture.acmeCo(organization.guid, "auth_0", guidGenerator[1]))
     }
   }
 }

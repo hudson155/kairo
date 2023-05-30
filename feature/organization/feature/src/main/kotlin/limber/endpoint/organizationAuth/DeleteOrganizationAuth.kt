@@ -17,7 +17,7 @@ public class DeleteOrganizationAuth @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Delete): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthDelete))
 
-    val auth = authService.delete(endpoint.authGuid)
+    val auth = authService.delete(endpoint.authId)
 
     return authMapper(auth)
   }

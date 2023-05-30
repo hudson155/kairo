@@ -12,16 +12,15 @@ import limber.testing.should.shouldNotBeFound
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class DeleteOrganizationAuthTest : IntegrationTest() {
   @Test
   fun `auth does not exist`() {
-    val authGuid = UUID.randomUUID()
+    val authId = "auth_0"
 
     test {
       shouldBeUnprocessable("Organization auth does not exist.") {
-        authClient(OrganizationAuthApi.Delete(authGuid))
+        authClient(OrganizationAuthApi.Delete(authId))
       }
     }
   }
@@ -37,7 +36,7 @@ internal class DeleteOrganizationAuthTest : IntegrationTest() {
     }
 
     test {
-      authClient(OrganizationAuthApi.Delete(auth.guid))
+      authClient(OrganizationAuthApi.Delete(auth.id))
         .shouldBe(auth)
       shouldNotBeFound {
         authClient(OrganizationAuthApi.GetByOrganization(organization.guid))

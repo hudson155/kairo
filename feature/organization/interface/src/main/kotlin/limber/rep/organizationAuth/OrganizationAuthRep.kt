@@ -5,7 +5,7 @@ import limber.validation.Auth0OrganizationNameValidator
 import java.util.UUID
 
 public data class OrganizationAuthRep(
-  val guid: UUID,
+  val id: String,
   val organizationGuid: UUID,
   val auth0OrganizationId: String,
   val auth0OrganizationName: String,
