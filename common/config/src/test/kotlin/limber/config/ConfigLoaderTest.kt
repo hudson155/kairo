@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class ConfigLoaderTest {
   private val config = ConfigLoaderTestConfig(
     clock = ClockConfig(type = ClockConfig.Type.Real),
-    guids = GuidsConfig(generation = GuidsConfig.Generation.Random),
+    ids = IdsConfig(generation = IdsConfig.Generation.Random),
     name = "testing",
     server = ServerConfig(ServerConfig.Lifecycle(5000, 12_000)),
   )

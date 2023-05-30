@@ -3,10 +3,13 @@ package limber.server
 import com.google.inject.PrivateModule
 import limber.config.ClockConfig
 import limber.config.Config
-import limber.config.GuidsConfig
+import limber.config.IdsConfig
 import limber.util.id.DeterministicGuidGenerator
+import limber.util.id.DeterministicIdGenerator
 import limber.util.id.GuidGenerator
+import limber.util.id.IdGenerator
 import limber.util.id.RandomGuidGenerator
+import limber.util.id.RandomIdGenerator
 import java.time.Clock
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -20,6 +23,9 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
 
     bind(GuidGenerator::class.java).toInstance(createGuidGenerator())
     expose(GuidGenerator::class.java)
+
+    bind(IdGenerator.Factory::class.java).toInstance(createIdGenerator())
+    expose(IdGenerator.Factory::class.java)
   }
 
   private fun createClock(): Clock =
@@ -35,8 +41,14 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
     }
 
   private fun createGuidGenerator(): GuidGenerator =
-    when (config.guids.generation) {
-      GuidsConfig.Generation.Deterministic -> DeterministicGuidGenerator()
-      GuidsConfig.Generation.Random -> RandomGuidGenerator()
+    when (config.ids.generation) {
+      IdsConfig.Generation.Deterministic -> DeterministicGuidGenerator()
+      IdsConfig.Generation.Random -> RandomGuidGenerator()
+    }
+
+  private fun createIdGenerator(): IdGenerator.Factory =
+    when (config.ids.generation) {
+      IdsConfig.Generation.Deterministic -> DeterministicIdGenerator.Factory()
+      IdsConfig.Generation.Random -> RandomIdGenerator.Factory()
     }
 }

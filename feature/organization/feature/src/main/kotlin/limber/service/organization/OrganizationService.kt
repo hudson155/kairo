@@ -10,7 +10,7 @@ internal class OrganizationService @Inject constructor(
   private val organizationStore: OrganizationStore,
 ) {
   fun get(guid: UUID): OrganizationModel? =
-    organizationStore.get(guid)
+    organizationStore.getByGuid(guid)
 
   fun listAll(): List<OrganizationModel> =
     organizationStore.listAll()

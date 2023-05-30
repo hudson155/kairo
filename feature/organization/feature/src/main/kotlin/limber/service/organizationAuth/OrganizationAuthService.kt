@@ -20,7 +20,7 @@ internal class OrganizationAuthService @Inject constructor(
   private val organizationService: OrganizationService,
 ) {
   fun get(authGuid: UUID): OrganizationAuthModel? =
-    authStore.get(authGuid)
+    authStore.getByGuid(authGuid)
 
   fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
     authStore.getByOrganization(organizationGuid)

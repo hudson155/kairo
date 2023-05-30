@@ -10,7 +10,7 @@ auth0:
 clock:
   type: Real
 
-guids:
+ids:
   generation: Random
 
 name: monolith

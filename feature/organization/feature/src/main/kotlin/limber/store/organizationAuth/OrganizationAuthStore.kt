@@ -47,7 +47,7 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
 
   fun update(guid: UUID, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     transaction { handle ->
-      val auth = get(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
+      val auth = getByGuid(guid, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
       val update = updater(OrganizationAuthModel.Update(auth))
       logger.info { "Updating organization auth: $update." }
       val query = handle.createQuery(rs("store/organizationAuth/update.sql"))

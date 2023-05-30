@@ -19,19 +19,19 @@ internal class CelebrityStore : SqlStore<CelebrityModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(guid: UUID, updater: Updater<CelebrityModel.Update>): CelebrityModel =
+  fun update(id: UUID, updater: Updater<CelebrityModel.Update>): CelebrityModel =
     transaction { handle ->
-      val celebrity = get(guid, forUpdate = true) ?: throw CelebrityDoesNotExist()
+      val celebrity = get(id, forUpdate = true) ?: throw CelebrityDoesNotExist()
       val query = handle.createQuery(rs("store/celebrity/update.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       query.bindKotlin(updater(CelebrityModel.Update(celebrity)))
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): CelebrityModel =
+  fun delete(id: UUID): CelebrityModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/delete.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw CelebrityDoesNotExist()
     }
 }
@@ -40,8 +40,8 @@ internal class CelebrityStore : SqlStore<CelebrityModel>(
 Then add the required SQL statements referenced from your store.
 
 ```postgresql
-insert into celebrity.celebrity (guid, name, age)
-values (:guid, :name, :age)
+insert into celebrity.celebrity (id, name, age)
+values (:id, :name, :age)
 returning *
 ```
 
@@ -49,14 +49,14 @@ returning *
 update celebrity.celebrity
 set name = :name,
     age  = :age
-where guid = :guid
+where id = :id
 returning *
 ```
 
 ```postgresql
 delete
 from celebrity.celebrity
-where guid = :guid
+where id = :id
 returning *
 ```
 

@@ -11,7 +11,7 @@ internal class FeatureService @Inject constructor(
   private val featureStore: FeatureStore,
 ) {
   fun get(guid: UUID): FeatureModel? =
-    featureStore.get(guid)
+    featureStore.getByGuid(guid)
 
   fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
     featureStore.listByOrganization(organizationGuid)

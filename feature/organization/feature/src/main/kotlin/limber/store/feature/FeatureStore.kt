@@ -50,7 +50,7 @@ internal class FeatureStore : SqlStore<FeatureModel>(
 
   fun update(guid: UUID, updater: Updater<FeatureModel.Update>): FeatureModel =
     transaction { handle ->
-      val feature = get(guid, forUpdate = true) ?: throw FeatureDoesNotExist()
+      val feature = getByGuid(guid, forUpdate = true) ?: throw FeatureDoesNotExist()
       val update = updater(FeatureModel.Update(feature))
       logger.info { "Updating feature: $update." }
       val query = handle.createQuery(rs("store/feature/update.sql"))

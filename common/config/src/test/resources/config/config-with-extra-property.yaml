@@ -3,7 +3,7 @@ clock:
 
 extraProperty: extra value
 
-guids:
+ids:
   generation: Random
 
 name: testing

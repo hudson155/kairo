@@ -8,16 +8,15 @@ import io.ktor.http.HttpMethod
 import limber.feature.rest.QueryParam
 import limber.feature.rest.RestEndpoint
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class RestEndpointTemplateBuilderTest {
   internal data class Get(
-    val celebrityGuid: UUID,
-    val eventGuid: UUID,
+    val celebrityId: String,
+    val eventId: String,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/celebrities/$celebrityGuid"
-    override val qp: List<QueryParam> = listOf(::eventGuid)
+    override val path: String = "/celebrities/$celebrityId"
+    override val qp: List<QueryParam> = listOf(::eventId)
   }
 
   internal object GetAll : RestEndpoint<Nothing>() {
@@ -29,8 +28,8 @@ internal class RestEndpointTemplateBuilderTest {
   fun `data class`() {
     RestEndpointTemplate.from(Get::class).should { template ->
       template.method.shouldBe(HttpMethod.Get)
-      template.path.shouldBe("/celebrities/{celebrityGuid}")
-      template.requiredQueryParams.shouldContainExactlyInAnyOrder("eventGuid")
+      template.path.shouldBe("/celebrities/{celebrityId}")
+      template.requiredQueryParams.shouldContainExactlyInAnyOrder("eventId")
     }
   }
 

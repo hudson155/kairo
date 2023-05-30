@@ -19,10 +19,10 @@ public object CelebrityApi {
   }
 
   public data class Get(
-    val celebrityGuid: UUID,
+    val celebrityId: String,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/celebrities/$celebrityGuid"
+    override val path: String = "/celebrities/$celebrityId"
   }
 }
 ```

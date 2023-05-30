@@ -1,7 +1,7 @@
 clock:
   type: Real
 
-guids:
+ids:
   generation: Random
 
 name: testing

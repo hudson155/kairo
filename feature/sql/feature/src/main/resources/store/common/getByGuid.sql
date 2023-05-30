@@ -1,4 +1,4 @@
 select *
 from <tableName>
-where id = :id
+where guid = :guid
 <lockingClause>

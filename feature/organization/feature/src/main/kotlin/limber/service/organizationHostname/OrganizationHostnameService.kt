@@ -9,7 +9,7 @@ internal class OrganizationHostnameService @Inject constructor(
   private val hostnameStore: OrganizationHostnameStore,
 ) {
   fun get(guid: UUID): OrganizationHostnameModel? =
-    hostnameStore.get(guid)
+    hostnameStore.getByGuid(guid)
 
   fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
     hostnameStore.create(creator)

@@ -8,7 +8,7 @@ import limber.config.sql.SqlConfig
 internal data class MonolithServerConfig(
   val auth0: Auth0Config,
   override val clock: ClockConfig,
-  override val guids: GuidsConfig,
+  override val ids: IdsConfig,
   override val name: String,
   val rest: RestConfig,
   val restClient: RestClientConfig<BaseUrls>,
