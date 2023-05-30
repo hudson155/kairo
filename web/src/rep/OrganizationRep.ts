@@ -1,5 +1,5 @@
 interface OrganizationRep {
-  guid: string;
+  id: string;
   name: string;
 }
 

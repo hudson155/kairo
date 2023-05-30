@@ -1,8 +1,8 @@
 export type FeatureType = 'Placeholder' | 'Form';
 
 export default interface FeatureRep {
-  guid: string;
-  organizationGuid: string;
+  id: string;
+  organizationId: string;
   isDefault: boolean;
   type: FeatureType;
   name: string;

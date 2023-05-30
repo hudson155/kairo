@@ -9,10 +9,10 @@ class OrganizationApi {
     this.api = api;
   }
 
-  async get(organizationGuid: string): Promise<OrganizationRep | null> {
+  async get(organizationId: string): Promise<OrganizationRep | null> {
     return await this.api.request<OrganizationRep | null>({
       method: 'GET',
-      path: `/organizations/${organizationGuid}`,
+      path: `/organizations/${organizationId}`,
     });
   }
 
@@ -23,10 +23,10 @@ class OrganizationApi {
     });
   }
 
-  async update(organizationGuid: string, updater: OrganizationRep.Updater): Promise<OrganizationRep> {
+  async update(organizationId: string, updater: OrganizationRep.Updater): Promise<OrganizationRep> {
     return await this.api.request<OrganizationRep, OrganizationRep.Updater>({
       method: 'PATCH',
-      path: `/organizations/${organizationGuid}`,
+      path: `/organizations/${organizationId}`,
       body: updater,
     });
   }

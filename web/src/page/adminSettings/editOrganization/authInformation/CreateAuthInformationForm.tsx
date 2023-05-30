@@ -16,7 +16,7 @@ interface Props {
 }
 
 const CreateAuthInformationForm: React.FC<Props> = ({ organization, onCancel }) => {
-  const createAuth = useCreateOrganizationAuth(organization.guid);
+  const createAuth = useCreateOrganizationAuth(organization.id);
 
   const fields = new FormFields([
     ['body.auth0OrganizationName', useFormField(defaultAuth0OrganizationName(organization.name))],

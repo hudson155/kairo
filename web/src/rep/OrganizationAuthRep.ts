@@ -1,6 +1,6 @@
 interface OrganizationAuthRep {
-  guid: string;
-  organizationGuid: string;
+  id: string;
+  organizationId: string;
   auth0OrganizationId: string;
   auth0OrganizationName: string;
 }

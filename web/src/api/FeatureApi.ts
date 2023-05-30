@@ -9,10 +9,10 @@ class FeatureApi {
     this.api = api;
   }
 
-  async listByOrganization(organizationGuid: string): Promise<FeatureRep[]> {
+  async listByOrganization(organizationId: string): Promise<FeatureRep[]> {
     return await this.api.request<FeatureRep[]>({
       method: 'GET',
-      path: `/organizations/${organizationGuid}/features`,
+      path: `/organizations/${organizationId}/features`,
     });
   }
 }

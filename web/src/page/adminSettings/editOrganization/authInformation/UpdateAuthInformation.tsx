@@ -12,7 +12,7 @@ import styles from 'page/adminSettings/editOrganization/authInformation/UpdateAu
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import OrganizationAuthRep from 'rep/OrganizationAuthRep';
-import organizationAuthGuidState from 'state/core/organizationAuthGuidState';
+import organizationAuthIdState from 'state/core/organizationAuthId';
 
 interface Props {
   auth: OrganizationAuthRep;
@@ -20,10 +20,10 @@ interface Props {
 }
 
 const UpdateAuthInformation: React.FC<Props> = ({ auth, organizationName }) => {
-  const currentAuthGuid = useRecoilValue(organizationAuthGuidState);
+  const currentAuthId = useRecoilValue(organizationAuthIdState);
 
-  const updateAuth = useUpdateOrganizationAuth(auth.organizationGuid, auth.guid);
-  const deleteAuth = useDeleteOrganizationAuth(auth.organizationGuid, auth.guid);
+  const updateAuth = useUpdateOrganizationAuth(auth.organizationId, auth.id);
+  const deleteAuth = useDeleteOrganizationAuth(auth.organizationId, auth.id);
 
   const fields = new FormFields([
     ['body.auth0OrganizationName', useFormField(auth.auth0OrganizationName)],
@@ -54,7 +54,7 @@ const UpdateAuthInformation: React.FC<Props> = ({ auth, organizationName }) => {
             <FormSubmitButton>{'Update'}</FormSubmitButton>
             <Button
               className={styles.deleteButton}
-              disabled={auth.guid === currentAuthGuid}
+              disabled={auth.id === currentAuthId}
               variant="danger"
               onClick={() => setIsDeleting(true)}
             >

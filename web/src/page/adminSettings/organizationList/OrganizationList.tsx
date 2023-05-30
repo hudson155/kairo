@@ -14,7 +14,7 @@ const OrganizationList: React.FC<Props> = ({ organizations }) => {
       {
         organizations.length > 0
           ? organizations.map((organization) => {
-            return <OrganizationListItem key={organization.guid} organization={organization} />;
+            return <OrganizationListItem key={organization.id} organization={organization} />;
           })
           : <Paragraph>{'No organizations found.'}</Paragraph>
       }

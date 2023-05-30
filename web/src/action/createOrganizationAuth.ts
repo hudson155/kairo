@@ -5,13 +5,13 @@ import organizationAuthsState from 'state/core/organizationAuthsState';
 
 type CreateOrganizationAuth = (creator: OrganizationAuthRep.Creator) => Promise<OrganizationAuthRep>;
 
-const useCreateOrganizationAuth = (organizationGuid: string): CreateOrganizationAuth => {
+const useCreateOrganizationAuth = (organizationId: string): CreateOrganizationAuth => {
   const authApi = useRecoilValue(organizationAuthApiState({ authenticated: true }));
 
-  const setAuth = useSetRecoilState(organizationAuthsState(organizationGuid));
+  const setAuth = useSetRecoilState(organizationAuthsState(organizationId));
 
   return async (creator): Promise<OrganizationAuthRep> => {
-    const auth = await authApi.create(organizationGuid, creator);
+    const auth = await authApi.create(organizationId, creator);
     setAuth(auth);
     return auth;
   };

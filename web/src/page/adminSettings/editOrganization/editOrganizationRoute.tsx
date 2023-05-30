@@ -4,10 +4,10 @@ import route from 'routing/route';
 
 const EditOrganizationPage = React.lazy(() => import('./EditOrganizationPage'));
 
-const ORGANIZATION_GUID_PARAM = 'organizationGuid';
+const ORGANIZATION_ID_PARAM = 'organizationId';
 
 export default route(() => {
   const params = useParams();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return <EditOrganizationPage organizationGuid={params[ORGANIZATION_GUID_PARAM]!} />;
-}, { path: `/:${ORGANIZATION_GUID_PARAM}` });
+  return <EditOrganizationPage organizationId={params[ORGANIZATION_ID_PARAM]!} />;
+}, { path: `/:${ORGANIZATION_ID_PARAM}` });

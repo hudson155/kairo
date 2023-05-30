@@ -12,10 +12,10 @@ interface Props {
 const OrganizationListItem: React.FC<Props> = ({ organization }) => {
   return (
     <div className={styles.container}>
-      <Link className={styles.name} to={organization.guid}>
+      <Link className={styles.name} to={organization.id}>
         <Text size="large">{organization.name}</Text>
       </Link>
-      <Text size="small"><Code selectAll={true}>{organization.guid}</Code></Text>
+      <Text size="small"><Code selectAll={true}>{organization.id}</Code></Text>
     </div>
   );
 };

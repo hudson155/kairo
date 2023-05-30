@@ -9,7 +9,7 @@ const organizationsState = atom<Map<string, OrganizationRep>>({
     get: async ({ get }) => {
       const organizationApi = get(organizationApiState);
       const organizations = await organizationApi.listAll();
-      return new Map(organizations.map((organization) => [organization.guid, organization]));
+      return new Map(organizations.map((organization) => [organization.id, organization]));
     },
   }),
 });

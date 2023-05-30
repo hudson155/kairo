@@ -4,7 +4,7 @@ import Paragraph from 'component/text/Paragraph';
 import { useDebugSettings } from 'hook/useDebugSettings';
 import React, { ReactNode } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
-import organizationGuidState from 'state/core/organizationGuid';
+import organizationIdState from 'state/core/organizationId';
 
 interface Line {
   label: string;
@@ -16,11 +16,11 @@ interface Line {
  */
 const FooterDebugInfo: React.FC = () => {
   const { gitSha } = useDebugSettings();
-  const organizationGuid = useRecoilValueLoadable(organizationGuidState).valueMaybe();
+  const organizationId = useRecoilValueLoadable(organizationIdState).valueMaybe();
 
   const lines: Line[] = [{ label: 'Git SHA', value: <Code selectAll={true}>{gitSha}</Code> }];
-  if (organizationGuid) {
-    lines.push({ label: 'Organization GUID', value: <Code selectAll={true}>{organizationGuid}</Code> });
+  if (organizationId) {
+    lines.push({ label: 'Organization ID', value: <Code selectAll={true}>{organizationId}</Code> });
   }
 
   return (

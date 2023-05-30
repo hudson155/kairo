@@ -13,11 +13,11 @@ import OrganizationRep from 'rep/OrganizationRep';
 import organizationsOrganizationState from 'state/admin/organizationsOrganization';
 
 interface Props {
-  organizationGuid: string;
+  organizationId: string;
 }
 
-const EditOrganizationPage: React.FC<Props> = ({ organizationGuid }) => {
-  const organization = useRecoilValueLoadable(organizationsOrganizationState(organizationGuid));
+const EditOrganizationPage: React.FC<Props> = ({ organizationId }) => {
+  const organization = useRecoilValueLoadable(organizationsOrganizationState(organizationId));
 
   return (
     <Page>

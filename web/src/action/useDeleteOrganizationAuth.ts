@@ -2,23 +2,23 @@ import { organizationAuthApiState } from 'api/OrganizationAuthApi';
 import UserError from 'error/UserError';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import OrganizationAuthRep from 'rep/OrganizationAuthRep';
-import organizationAuthGuidState from 'state/core/organizationAuthGuidState';
+import organizationAuthIdState from 'state/core/organizationAuthId';
 import organizationAuthsState from 'state/core/organizationAuthsState';
 
 type DeleteOrganizationAuth = () => Promise<OrganizationAuthRep>;
 
-const useDeleteOrganizationAuth = (organizationGuid: string, authGuid: string): DeleteOrganizationAuth => {
+const useDeleteOrganizationAuth = (organizationId: string, authId: string): DeleteOrganizationAuth => {
   const authApi = useRecoilValue(organizationAuthApiState({ authenticated: true }));
 
-  const setAuth = useSetRecoilState(organizationAuthsState(organizationGuid));
+  const setAuth = useSetRecoilState(organizationAuthsState(organizationId));
 
-  const currentAuthGuid = useRecoilValue(organizationAuthGuidState);
+  const currentAuthId = useRecoilValue(organizationAuthIdState);
 
   return async (): Promise<OrganizationAuthRep> => {
-    if (authGuid === currentAuthGuid) {
+    if (authId === currentAuthId) {
       throw new UserError('Can\'t delete the auth belonging to the current organization.');
     }
-    const auth = await authApi.delete(authGuid);
+    const auth = await authApi.delete(authId);
     setAuth(undefined);
     return auth;
   };

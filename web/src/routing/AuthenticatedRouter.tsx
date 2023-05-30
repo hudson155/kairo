@@ -23,7 +23,7 @@ const AuthenticatedRouter: React.FC = () => {
   const featureRoutes = features.map((feature) => {
     return (
       <Route
-        key={feature.guid}
+        key={feature.id}
         element={<FeaturePage feature={feature} />}
         path={`${feature.rootPath}/*`}
       />

@@ -17,7 +17,7 @@ interface Props {
 }
 
 const AuthInformation: React.FC<Props> = ({ organization }) => {
-  const auth = useRecoilValueLoadable(organizationAuthsState(organization.guid));
+  const auth = useRecoilValueLoadable(organizationAuthsState(organization.id));
 
   return (
     <Section>

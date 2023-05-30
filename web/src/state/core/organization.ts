@@ -1,7 +1,7 @@
 import { organizationApiState } from 'api/OrganizationApi';
 import { atom, selector } from 'recoil';
 import OrganizationRep from 'rep/OrganizationRep';
-import organizationGuidState from 'state/core/organizationGuid';
+import organizationIdState from 'state/core/organizationId';
 
 const organizationState = atom<OrganizationRep>({
   key: 'core/organization',
@@ -9,8 +9,8 @@ const organizationState = atom<OrganizationRep>({
     key: 'core/organization-default',
     get: async ({ get }) => {
       const organizationApi = get(organizationApiState);
-      const organizationGuid = get(organizationGuidState);
-      const organization = await organizationApi.get(organizationGuid);
+      const organizationId = get(organizationIdState);
+      const organization = await organizationApi.get(organizationId);
       if (!organization) throw new Error('No organization found.');
       return organization;
     },

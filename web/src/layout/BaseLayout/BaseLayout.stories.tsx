@@ -11,8 +11,8 @@ import * as Decorator from 'story/Decorator';
 
 const initializeState = ({ set }: MutableSnapshot): void => {
   set(organizationAuth, {
-    organizationGuid: crypto.randomUUID(),
-    guid: crypto.randomUUID(),
+    organizationId: 'org_0',
+    id: 'auth_0',
     auth0OrganizationId: 'org_yDiVK18hoeddya8J',
     auth0OrganizationName: 'acme-co',
   });

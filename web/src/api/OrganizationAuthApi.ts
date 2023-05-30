@@ -9,10 +9,10 @@ class OrganizationAuthApi {
     this.api = api;
   }
 
-  async get(organizationGuid: string): Promise<OrganizationAuthRep | null> {
+  async get(organizationId: string): Promise<OrganizationAuthRep | null> {
     return await this.api.request<OrganizationAuthRep | null>({
       method: 'GET',
-      path: `/organizations/${organizationGuid}/auths`,
+      path: `/organizations/${organizationId}/auths`,
     });
   }
 
@@ -24,26 +24,26 @@ class OrganizationAuthApi {
     });
   }
 
-  async create(organizationGuid: string, creator: OrganizationAuthRep.Creator): Promise<OrganizationAuthRep> {
+  async create(organizationId: string, creator: OrganizationAuthRep.Creator): Promise<OrganizationAuthRep> {
     return await this.api.request<OrganizationAuthRep, OrganizationAuthRep.Creator>({
       method: 'POST',
-      path: `/organizations/${organizationGuid}/auths`,
+      path: `/organizations/${organizationId}/auths`,
       body: creator,
     });
   }
 
-  async update(authGuid: string, updater: OrganizationAuthRep.Updater): Promise<OrganizationAuthRep> {
+  async update(authId: string, updater: OrganizationAuthRep.Updater): Promise<OrganizationAuthRep> {
     return await this.api.request<OrganizationAuthRep, OrganizationAuthRep.Updater>({
       method: 'PATCH',
-      path: `/organization-auths/${authGuid}`,
+      path: `/organization-auths/${authId}`,
       body: updater,
     });
   }
 
-  async delete(authGuid: string): Promise<OrganizationAuthRep> {
+  async delete(authId: string): Promise<OrganizationAuthRep> {
     return await this.api.request<OrganizationAuthRep>({
       method: 'DELETE',
-      path: `/organization-auths/${authGuid}`,
+      path: `/organization-auths/${authId}`,
     });
   }
 }

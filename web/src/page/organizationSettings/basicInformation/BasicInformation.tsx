@@ -16,7 +16,7 @@ interface Props {
 }
 
 const BasicInformation: React.FC<Props> = ({ organization }) => {
-  const updateOrganization = useUpdateOrganization(organization.guid);
+  const updateOrganization = useUpdateOrganization(organization.id);
 
   const fields = new FormFields([
     ['body.name', useFormField(organization.name)],

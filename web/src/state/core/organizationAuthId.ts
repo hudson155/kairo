@@ -1,12 +1,12 @@
 import { selector } from 'recoil';
 import organizationAuthState from 'state/core/organizationAuth';
 
-const organizationAuthGuidState = selector<string>({
-  key: 'core/organizationAuthGuid',
+const organizationAuthIdState = selector<string>({
+  key: 'core/organizationAuthId',
   get: ({ get }) => {
     const auth = get(organizationAuthState);
-    return auth.guid;
+    return auth.id;
   },
 });
 
-export default organizationAuthGuidState;
+export default organizationAuthIdState;
