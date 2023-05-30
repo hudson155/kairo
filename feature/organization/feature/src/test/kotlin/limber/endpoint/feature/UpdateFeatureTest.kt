@@ -15,17 +15,16 @@ import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
 import java.util.Optional
-import java.util.UUID
 
 internal class UpdateFeatureTest : IntegrationTest() {
   @Test
   fun `feature does not exist`() {
-    val featureGuid = UUID.randomUUID()
+    val featureId = "feat_0"
 
     test {
       shouldBeUnprocessable("Feature does not exist.") {
         val update = FeatureRep.Update(rootPath = "/newholder")
-        featureClient(FeatureApi.Update(featureGuid, update))
+        featureClient(FeatureApi.Update(featureId, update))
       }
     }
   }
@@ -42,9 +41,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     test {
       val update = FeatureRep.Update()
-      featureClient(FeatureApi.Update(feature.guid, update))
+      featureClient(FeatureApi.Update(feature.id, update))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(feature.guid))
+      featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
   }
@@ -67,7 +66,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
       val update = FeatureRep.Update(isDefault = true)
       homeFeature = homeFeature.copy(isDefault = false)
       myFormsFeature = myFormsFeature.copy(isDefault = true)
-      featureClient(FeatureApi.Update(myFormsFeature.guid, update))
+      featureClient(FeatureApi.Update(myFormsFeature.id, update))
         .shouldBe(myFormsFeature)
       featureClient(FeatureApi.ListByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
@@ -90,7 +89,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
 
     test {
       val update = FeatureRep.Update(isDefault = true)
-      featureClient(FeatureApi.Update(homeFeature.guid, update))
+      featureClient(FeatureApi.Update(homeFeature.id, update))
         .shouldBe(homeFeature)
       featureClient(FeatureApi.ListByOrganization(organization.guid))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
@@ -110,9 +109,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val update = FeatureRep.Update(name = "New name")
       feature = feature.copy(name = "New name")
-      featureClient(FeatureApi.Update(feature.guid, update))
+      featureClient(FeatureApi.Update(feature.id, update))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(feature.guid))
+      featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
   }
@@ -130,9 +129,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val update = FeatureRep.Update(iconName = Optional.of(" assignment "))
       feature = feature.copy(iconName = "assignment")
-      featureClient(FeatureApi.Update(feature.guid, update))
+      featureClient(FeatureApi.Update(feature.id, update))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(feature.guid))
+      featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
   }
@@ -150,9 +149,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val update = FeatureRep.Update(iconName = Optional.empty())
       feature = feature.copy(iconName = null)
-      featureClient(FeatureApi.Update(feature.guid, update))
+      featureClient(FeatureApi.Update(feature.id, update))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(feature.guid))
+      featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
   }
@@ -174,7 +173,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       shouldBeConflict("Root path already taken.") {
         val update = FeatureRep.Update(rootPath = homeFeature.rootPath)
-        featureClient(FeatureApi.Update(myFormsFeature.guid, update))
+        featureClient(FeatureApi.Update(myFormsFeature.id, update))
       }
     }
   }
@@ -192,9 +191,9 @@ internal class UpdateFeatureTest : IntegrationTest() {
     test {
       val update = FeatureRep.Update(rootPath = "/new-path")
       feature = feature.copy(rootPath = "/new-path")
-      featureClient(FeatureApi.Update(feature.guid, update))
+      featureClient(FeatureApi.Update(feature.id, update))
         .shouldBe(feature)
-      featureClient(FeatureApi.Get(feature.guid))
+      featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
   }

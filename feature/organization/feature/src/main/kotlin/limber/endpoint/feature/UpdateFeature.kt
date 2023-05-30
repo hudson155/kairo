@@ -20,13 +20,13 @@ public class UpdateFeature @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(
       auth = OrganizationAuth(OrganizationPermission.FeatureUpdate) {
-        featureService.get(endpoint.featureGuid)?.organizationGuid
+        featureService.get(endpoint.featureId)?.organizationGuid
       },
       onFail = { throw FeatureDoesNotExist() },
     )
 
     val update = getBody(endpoint)
-    val feature = featureService.update(endpoint.featureGuid) { existing ->
+    val feature = featureService.update(endpoint.featureId) { existing ->
       FeatureModel.Update(
         isDefault = update(existing.isDefault, update.isDefault),
         name = update(existing.name, update.name),

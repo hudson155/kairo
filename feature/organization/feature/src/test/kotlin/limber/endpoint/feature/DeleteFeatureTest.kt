@@ -12,16 +12,15 @@ import limber.testing.should.shouldNotBeFound
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class DeleteFeatureTest : IntegrationTest() {
   @Test
   fun `feature does not exist`() {
-    val featureGuid = UUID.randomUUID()
+    val featureId = "feat_0"
 
     test {
       shouldBeUnprocessable("Feature does not exist.") {
-        featureClient(FeatureApi.Delete(featureGuid))
+        featureClient(FeatureApi.Delete(featureId))
       }
     }
   }
@@ -37,10 +36,10 @@ internal class DeleteFeatureTest : IntegrationTest() {
     }
 
     test {
-      featureClient(FeatureApi.Delete(feature.guid))
-        .shouldBe(FeatureFixture.home(organization.guid, guidGenerator[1], isDefault = true))
+      featureClient(FeatureApi.Delete(feature.id))
+        .shouldBe(FeatureFixture.home(organization.guid, "feat_0", isDefault = true))
       shouldNotBeFound {
-        featureClient(FeatureApi.Get(feature.guid))
+        featureClient(FeatureApi.Get(feature.id))
       }
     }
   }

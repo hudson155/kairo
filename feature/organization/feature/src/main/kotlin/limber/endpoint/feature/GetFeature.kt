@@ -17,12 +17,12 @@ public class GetFeature @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(
       auth = OrganizationAuth(OrganizationPermission.FeatureRead) {
-        featureService.get(endpoint.featureGuid)?.organizationGuid
+        featureService.get(endpoint.featureId)?.organizationGuid
       },
       onFail = { return@handler null },
     )
 
-    val feature = featureService.get(endpoint.featureGuid)
+    val feature = featureService.get(endpoint.featureId)
 
     return feature?.let { featureMapper(it) }
   }

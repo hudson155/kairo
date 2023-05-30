@@ -10,8 +10,8 @@ import java.util.UUID
 internal class FeatureService @Inject constructor(
   private val featureStore: FeatureStore,
 ) {
-  fun get(guid: UUID): FeatureModel? =
-    featureStore.getByGuid(guid)
+  fun get(id: String): FeatureModel? =
+    featureStore.get(id)
 
   fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
     featureStore.listByOrganization(organizationGuid)
@@ -19,14 +19,14 @@ internal class FeatureService @Inject constructor(
   fun create(creator: FeatureModel.Creator): FeatureModel =
     featureStore.create(creator)
 
-  fun update(guid: UUID, updater: Updater<FeatureModel.Update>): FeatureModel =
+  fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel =
     featureStore.update(
-      guid = guid,
+      id = id,
       updater = updater { update ->
-        if (update.isDefault) featureStore.setDefault(guid)
+        if (update.isDefault) featureStore.setDefault(id)
       },
     )
 
-  fun delete(guid: UUID): FeatureModel =
-    featureStore.delete(guid)
+  fun delete(id: String): FeatureModel =
+    featureStore.delete(id)
 }

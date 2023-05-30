@@ -3,15 +3,17 @@ package limber.mapper.feature
 import com.google.inject.Inject
 import limber.model.feature.FeatureModel
 import limber.rep.feature.FeatureRep
-import limber.util.id.GuidGenerator
+import limber.util.id.IdGenerator
 import java.util.UUID
 
 internal class FeatureMapper @Inject constructor(
-  private val guidGenerator: GuidGenerator,
+  idGenerator: IdGenerator.Factory,
 ) {
+  private val idGenerator: IdGenerator = idGenerator("feat")
+
   operator fun invoke(feature: FeatureModel): FeatureRep =
     FeatureRep(
-      guid = feature.guid,
+      id = feature.id,
       organizationGuid = feature.organizationGuid,
       isDefault = feature.isDefault,
       type = feature.type,
@@ -25,7 +27,7 @@ internal class FeatureMapper @Inject constructor(
     creator: FeatureRep.Creator,
   ): FeatureModel.Creator =
     FeatureModel.Creator(
-      guid = guidGenerator.generate(),
+      id = idGenerator.generate(),
       organizationGuid = organizationGuid,
       isDefault = false,
       type = creator.type,

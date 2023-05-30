@@ -1,4 +1,4 @@
 delete
 from organization.feature
-where guid = :guid
+where id = :id
 returning *

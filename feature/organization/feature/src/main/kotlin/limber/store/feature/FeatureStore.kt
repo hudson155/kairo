@@ -41,29 +41,29 @@ internal class FeatureStore : SqlStore<FeatureModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun setDefault(guid: UUID): List<FeatureModel> =
+  fun setDefault(id: String): List<FeatureModel> =
     transaction { handle ->
       val query = handle.createQuery(rs("store/feature/setDefaultByOrganization.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       return@transaction query.mapToType().toList()
     }
 
-  fun update(guid: UUID, updater: Updater<FeatureModel.Update>): FeatureModel =
+  fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel =
     transaction { handle ->
-      val feature = getByGuid(guid, forUpdate = true) ?: throw FeatureDoesNotExist()
+      val feature = get(id, forUpdate = true) ?: throw FeatureDoesNotExist()
       val update = updater(FeatureModel.Update(feature))
       logger.info { "Updating feature: $update." }
       val query = handle.createQuery(rs("store/feature/update.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       query.bindKotlin(update)
       return@transaction query.mapToType().single()
     }
 
-  fun delete(guid: UUID): FeatureModel =
+  fun delete(id: String): FeatureModel =
     transaction { handle ->
       logger.info { "Deleting feature." }
       val query = handle.createQuery(rs("store/feature/delete.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       return@transaction query.mapToType().singleNullOrThrow() ?: throw FeatureDoesNotExist()
     }
 

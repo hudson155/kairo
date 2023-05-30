@@ -9,7 +9,7 @@ import java.util.Optional
 import java.util.UUID
 
 public data class FeatureRep(
-  val guid: UUID,
+  val id: String,
   val organizationGuid: UUID,
   val isDefault: Boolean,
   val type: Type,

@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 import java.util.UUID
 
 public data class FeatureModel(
-  val guid: UUID,
+  val id: String,
   val version: Long,
   val createdAt: ZonedDateTime,
   val updatedAt: ZonedDateTime,
@@ -17,7 +17,7 @@ public data class FeatureModel(
   val rootPath: String,
 ) {
   public data class Creator(
-    val guid: UUID,
+    val id: String,
     val organizationGuid: UUID,
     val isDefault: Boolean,
     val type: FeatureRep.Type,

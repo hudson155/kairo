@@ -9,11 +9,11 @@ values ('auth_vIWEcQk2a8M4eyou', '9d45d538-8131-44cc-aeba-9bef4e045d21', 'org_yD
 insert into organization.organization_hostname (guid, organization_guid, hostname)
 values (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', 'localhost:3000');
 
-insert into organization.feature (guid, organization_guid, is_default,
+insert into organization.feature (id, organization_guid, is_default,
                                   type, name, icon_name, root_path)
-values (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', true,
+values ('feat_bFZLLIs7WXmhLGqD', '9d45d538-8131-44cc-aeba-9bef4e045d21', true,
         'Placeholder', 'Home', 'home', '/placeholder'),
-       (gen_random_uuid(), '9d45d538-8131-44cc-aeba-9bef4e045d21', false,
+       ('feat_MwIGd1VjxifchuKp', '9d45d538-8131-44cc-aeba-9bef4e045d21', false,
         'Form', 'My forms', 'assignment', '/forms');
 
 -- Universal Exports.
@@ -27,7 +27,7 @@ values ('auth_ECBppaQgMOSmBdhL', '15cf1689-6322-40a3-92cb-058834d1c8df', 'org_Ro
 insert into organization.organization_hostname (guid, organization_guid, hostname)
 values (gen_random_uuid(), '15cf1689-6322-40a3-92cb-058834d1c8df', 'localhost:3001');
 
-insert into organization.feature (guid, organization_guid, is_default,
+insert into organization.feature (id, organization_guid, is_default,
                                   type, name, icon_name, root_path)
-values (gen_random_uuid(), '15cf1689-6322-40a3-92cb-058834d1c8df', true,
+values ('feat_OSPYVpqEVwGfK3Fz', '15cf1689-6322-40a3-92cb-058834d1c8df', true,
         'Form', 'Exports', 'assignment', '/exports');

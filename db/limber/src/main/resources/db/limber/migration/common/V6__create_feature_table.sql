@@ -1,6 +1,6 @@
 create table organization.feature
 (
-  guid       uuid
+  id         text
     constraint pkey__feature primary key,
   version    bigint      not null default 0,
   created_at timestamptz not null default now(),

@@ -11,16 +11,15 @@ import limber.testing.should.shouldNotBeFound
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class GetFeatureTest : IntegrationTest() {
   @Test
   fun `feature does not exist`() {
-    val featureGuid = UUID.randomUUID()
+    val featureId = "feat_0"
 
     test {
       shouldNotBeFound {
-        featureClient(FeatureApi.Get(featureGuid))
+        featureClient(FeatureApi.Get(featureId))
       }
     }
   }
@@ -36,7 +35,7 @@ internal class GetFeatureTest : IntegrationTest() {
     }
 
     test {
-      featureClient(FeatureApi.Get(feature.guid))
+      featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
   }

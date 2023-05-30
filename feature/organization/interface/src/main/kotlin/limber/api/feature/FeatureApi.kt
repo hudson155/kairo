@@ -8,10 +8,10 @@ import java.util.UUID
 
 public object FeatureApi {
   public data class Get(
-    val featureGuid: UUID,
+    val featureId: String,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/features/$featureGuid"
+    override val path: String = "/features/$featureId"
   }
 
   public data class ListByOrganization(
@@ -30,17 +30,17 @@ public object FeatureApi {
   }
 
   public data class Update(
-    val featureGuid: UUID,
+    val featureId: String,
     @Valid override val body: FeatureRep.Update?,
   ) : RestEndpoint<FeatureRep.Update>() {
     override val method: HttpMethod = HttpMethod.Patch
-    override val path: String = "/features/$featureGuid"
+    override val path: String = "/features/$featureId"
   }
 
   public data class Delete(
-    val featureGuid: UUID,
+    val featureId: String,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Delete
-    override val path: String = "/features/$featureGuid"
+    override val path: String = "/features/$featureId"
   }
 }
