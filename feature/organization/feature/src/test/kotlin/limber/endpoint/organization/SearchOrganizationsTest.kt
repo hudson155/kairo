@@ -51,7 +51,7 @@ internal class SearchOrganizationsTest : IntegrationTest() {
     val organization = createFixtures()
 
     test {
-      organizationClient(OrganizationApi.Search(guidGenerator[1].toString().takeLast(4)))
+      organizationClient(OrganizationApi.Search(guidGenerator[0].toString().takeLast(4)))
         .shouldContainExactlyInAnyOrder(organization)
     }
   }
@@ -62,11 +62,11 @@ internal class SearchOrganizationsTest : IntegrationTest() {
     }
 
     testSetup("Create hostname") {
-      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
+      create(organization.id, OrganizationHostnameFixture.fooBarBaz)
     }
 
     testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     return organization

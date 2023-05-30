@@ -12,17 +12,16 @@ import limber.testing.should.shouldBeUnprocessable
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class CreateFeatureTest : IntegrationTest() {
   @Test
   fun `organization does not exist`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
         val creator = FeatureFixture.home.creator
-        featureClient(FeatureApi.Create(organizationGuid, creator))
+        featureClient(FeatureApi.Create(organizationId, creator))
       }
     }
   }
@@ -34,13 +33,13 @@ internal class CreateFeatureTest : IntegrationTest() {
     }
 
     val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
       shouldBeConflict("Root path already taken.") {
         val creator = FeatureFixture.myForms.creator.copy(rootPath = feature.rootPath)
-        featureClient(FeatureApi.Create(organization.guid, creator))
+        featureClient(FeatureApi.Create(organization.id, creator))
       }
     }
   }
@@ -53,8 +52,8 @@ internal class CreateFeatureTest : IntegrationTest() {
 
     test {
       val creator = FeatureFixture.home.creator
-      val feature = featureClient(FeatureApi.Create(organization.guid, creator))
-      feature.shouldBe(FeatureFixture.home(organization.guid, "feat_0", isDefault = true))
+      val feature = featureClient(FeatureApi.Create(organization.id, creator))
+      feature.shouldBe(FeatureFixture.home(organization.id, "feat_0", isDefault = true))
       featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }
@@ -67,13 +66,13 @@ internal class CreateFeatureTest : IntegrationTest() {
     }
 
     testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
       val creator = FeatureFixture.myForms.creator
-      val feature = featureClient(FeatureApi.Create(organization.guid, creator))
-      feature.shouldBe(FeatureFixture.myForms(organization.guid, "feat_1"))
+      val feature = featureClient(FeatureApi.Create(organization.id, creator))
+      feature.shouldBe(FeatureFixture.myForms(organization.id, "feat_1"))
       featureClient(FeatureApi.Get(feature.id))
         .shouldBe(feature)
     }

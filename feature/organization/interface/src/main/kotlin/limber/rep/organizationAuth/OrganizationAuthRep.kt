@@ -2,11 +2,10 @@ package limber.rep.organizationAuth
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import limber.validation.Auth0OrganizationNameValidator
-import java.util.UUID
 
 public data class OrganizationAuthRep(
   val id: String,
-  val organizationGuid: UUID,
+  val organizationId: String,
   val auth0OrganizationId: String,
   val auth0OrganizationName: String,
 ) {

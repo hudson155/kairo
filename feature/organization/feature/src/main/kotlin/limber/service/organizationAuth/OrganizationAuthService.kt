@@ -11,7 +11,6 @@ import limber.service.organization.OrganizationService
 import limber.store.organizationAuth.OrganizationAuthStore
 import limber.util.updater.Updater
 import org.jdbi.v3.core.Jdbi
-import java.util.UUID
 
 internal class OrganizationAuthService @Inject constructor(
   private val authStore: OrganizationAuthStore,
@@ -22,14 +21,14 @@ internal class OrganizationAuthService @Inject constructor(
   fun get(authId: String): OrganizationAuthModel? =
     authStore.get(authId)
 
-  fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
-    authStore.getByOrganization(organizationGuid)
+  fun getByOrganization(organizationId: String): OrganizationAuthModel? =
+    authStore.getByOrganization(organizationId)
 
   fun getByHostname(hostname: String): OrganizationAuthModel? =
     authStore.getByHostname(hostname)
 
   fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel {
-    val organization = organizationService.get(creator.organizationGuid) ?: throw OrganizationDoesNotExist()
+    val organization = organizationService.get(creator.organizationId) ?: throw OrganizationDoesNotExist()
 
     return jdbi.transaction {
       val auth = authStore.create(creator)

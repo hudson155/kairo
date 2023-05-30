@@ -33,7 +33,7 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
     }
 
     val auth = testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {
@@ -52,7 +52,7 @@ internal class UpdateOrganizationAuthTest : IntegrationTest() {
     }
 
     var auth = testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {

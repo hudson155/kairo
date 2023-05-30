@@ -3,11 +3,10 @@ package limber.fixture.feature
 import limber.api.feature.FeatureApi
 import limber.rep.feature.FeatureRep
 import limber.testing.IntegrationTest
-import java.util.UUID
 
 internal abstract class FeatureFixture {
   abstract val creator: FeatureRep.Creator
-  abstract operator fun invoke(organizationGuid: UUID, id: String, isDefault: Boolean = false): FeatureRep
+  abstract operator fun invoke(organizationId: String, id: String, isDefault: Boolean = false): FeatureRep
 
   internal companion object {
     val home: FeatureFixture = object : FeatureFixture() {
@@ -19,10 +18,10 @@ internal abstract class FeatureFixture {
           rootPath = " /Home ",
         )
 
-      override fun invoke(organizationGuid: UUID, id: String, isDefault: Boolean): FeatureRep =
+      override fun invoke(organizationId: String, id: String, isDefault: Boolean): FeatureRep =
         FeatureRep(
           id = id,
-          organizationGuid = organizationGuid,
+          organizationId = organizationId,
           isDefault = isDefault,
           type = FeatureRep.Type.Placeholder,
           name = "Home",
@@ -40,10 +39,10 @@ internal abstract class FeatureFixture {
           rootPath = " /Forms ",
         )
 
-      override fun invoke(organizationGuid: UUID, id: String, isDefault: Boolean): FeatureRep =
+      override fun invoke(organizationId: String, id: String, isDefault: Boolean): FeatureRep =
         FeatureRep(
           id = id,
-          organizationGuid = organizationGuid,
+          organizationId = organizationId,
           isDefault = isDefault,
           type = FeatureRep.Type.Form,
           name = "My forms",
@@ -55,7 +54,7 @@ internal abstract class FeatureFixture {
 }
 
 internal suspend fun IntegrationTest.create(
-  organizationGuid: UUID,
+  organizationId: String,
   fixture: FeatureFixture,
 ): FeatureRep =
-  featureClient(FeatureApi.Create(organizationGuid, fixture.creator))
+  featureClient(FeatureApi.Create(organizationId, fixture.creator))

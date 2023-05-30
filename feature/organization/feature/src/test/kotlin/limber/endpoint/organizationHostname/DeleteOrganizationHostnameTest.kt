@@ -32,7 +32,7 @@ internal class DeleteOrganizationHostnameTest : IntegrationTest() {
     }
 
     val hostname = testSetup("Create hostname") {
-      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
+      create(organization.id, OrganizationHostnameFixture.fooBarBaz)
     }
 
     test {

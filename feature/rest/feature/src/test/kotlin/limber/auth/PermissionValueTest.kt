@@ -5,7 +5,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class PermissionValueTest {
   private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
@@ -27,9 +26,9 @@ internal class PermissionValueTest {
     objectMapper.writeValueAsString(PermissionValue.Some(emptySet()))
       .shouldBe("[]")
 
-    val guids = setOf(UUID.randomUUID(), UUID.randomUUID())
-    objectMapper.writeValueAsString(PermissionValue.Some(guids))
-      .shouldBe("[${guids.joinToString(",") { "\"$it\"" }}]")
+    val ids = setOf("id_0", "id_1")
+    objectMapper.writeValueAsString(PermissionValue.Some(ids))
+      .shouldBe("[${ids.joinToString(",") { "\"$it\"" }}]")
   }
 
   @Test
@@ -37,8 +36,8 @@ internal class PermissionValueTest {
     objectMapper.readValue<PermissionValue>("[]")
       .shouldBe(PermissionValue.Some(emptySet()))
 
-    val guids = setOf(UUID.randomUUID(), UUID.randomUUID())
-    objectMapper.readValue<PermissionValue>("[${guids.joinToString(",") { "\"$it\"" }}]")
-      .shouldBe(PermissionValue.Some(guids))
+    val ids = setOf("id_0", "id_1")
+    objectMapper.readValue<PermissionValue>("[${ids.joinToString(",") { "\"$it\"" }}]")
+      .shouldBe(PermissionValue.Some(ids))
   }
 }

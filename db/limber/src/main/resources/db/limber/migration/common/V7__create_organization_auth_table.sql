@@ -14,15 +14,15 @@ create trigger on_update__organization_auth
 execute procedure updated();
 
 alter table organization.organization_auth
-  add column organization_guid uuid not null;
+  add column organization_id text not null;
 alter table organization.organization_auth
-  add constraint fk__organization_auth__organization_guid
-    foreign key (organization_guid)
-      references organization.organization (guid)
+  add constraint fk__organization_auth__organization_id
+    foreign key (organization_id)
+      references organization.organization (id)
       on delete cascade;
 alter table organization.organization_auth
-  add constraint uq__organization_auth__organization_guid
-    unique (organization_guid);
+  add constraint uq__organization_auth__organization_id
+    unique (organization_id);
 
 alter table organization.organization_auth
   add column auth0_organization_id text;

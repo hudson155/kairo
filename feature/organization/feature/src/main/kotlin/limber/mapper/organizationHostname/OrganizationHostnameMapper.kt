@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import limber.model.organizationHostname.OrganizationHostnameModel
 import limber.rep.organizationHostname.OrganizationHostnameRep
 import limber.util.id.IdGenerator
-import java.util.UUID
 
 internal class OrganizationHostnameMapper @Inject constructor(
   idGenerator: IdGenerator.Factory,
@@ -14,17 +13,17 @@ internal class OrganizationHostnameMapper @Inject constructor(
   operator fun invoke(hostname: OrganizationHostnameModel): OrganizationHostnameRep =
     OrganizationHostnameRep(
       id = hostname.id,
-      organizationGuid = hostname.organizationGuid,
+      organizationId = hostname.organizationId,
       hostname = hostname.hostname,
     )
 
   operator fun invoke(
-    organizationGuid: UUID,
+    organizationId: String,
     creator: OrganizationHostnameRep.Creator,
   ): OrganizationHostnameModel.Creator =
     OrganizationHostnameModel.Creator(
       id = idGenerator.generate(),
-      organizationGuid = organizationGuid,
+      organizationId = organizationId,
       hostname = creator.hostname,
     )
 }

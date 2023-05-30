@@ -19,12 +19,12 @@ public class UpdateOrganization @Inject internal constructor(
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(
-      auth = OrganizationAuth(OrganizationPermission.OrganizationUpdate, endpoint.organizationGuid),
+      auth = OrganizationAuth(OrganizationPermission.OrganizationUpdate, endpoint.organizationId),
       onFail = { throw OrganizationDoesNotExist() },
     )
 
     val update = getBody(endpoint)
-    val organization = organizationService.update(endpoint.organizationGuid) { existing ->
+    val organization = organizationService.update(endpoint.organizationId) { existing ->
       OrganizationModel.Update(
         name = update(existing.name, update.name),
       )

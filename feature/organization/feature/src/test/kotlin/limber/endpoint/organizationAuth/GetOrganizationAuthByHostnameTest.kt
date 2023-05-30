@@ -33,11 +33,11 @@ internal class GetOrganizationAuthByHostnameTest : IntegrationTest() {
     }
 
     testSetup("Create hostname") {
-      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
+      create(organization.id, OrganizationHostnameFixture.fooBarBaz)
     }
 
     val auth = testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {

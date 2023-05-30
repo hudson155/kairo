@@ -1,4 +1,4 @@
 update organization.organization
 set name = :name
-where guid = :guid
+where id = :id
 returning *

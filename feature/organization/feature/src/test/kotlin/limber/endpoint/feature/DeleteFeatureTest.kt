@@ -32,12 +32,12 @@ internal class DeleteFeatureTest : IntegrationTest() {
     }
 
     val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
       featureClient(FeatureApi.Delete(feature.id))
-        .shouldBe(FeatureFixture.home(organization.guid, "feat_0", isDefault = true))
+        .shouldBe(FeatureFixture.home(organization.id, "feat_0", isDefault = true))
       shouldNotBeFound {
         featureClient(FeatureApi.Get(feature.id))
       }

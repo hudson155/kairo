@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 import limber.exception.AuthException
 import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class PlatformPermissionAuthTest {
   private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
@@ -66,7 +65,7 @@ internal class PlatformPermissionAuthTest {
   fun `non-star`() {
     val permissions = mapOf(
       PlatformPermission.OrganizationCreate.value to PermissionValue.All,
-      PlatformPermission.OrganizationDelete.value to PermissionValue.Some(setOf(UUID.randomUUID())),
+      PlatformPermission.OrganizationDelete.value to PermissionValue.Some(setOf("org_0")),
     )
     val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {

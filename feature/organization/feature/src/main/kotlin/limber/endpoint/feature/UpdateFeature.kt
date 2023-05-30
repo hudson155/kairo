@@ -20,7 +20,7 @@ public class UpdateFeature @Inject internal constructor(
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(
       auth = OrganizationAuth(OrganizationPermission.FeatureUpdate) {
-        featureService.get(endpoint.featureId)?.organizationGuid
+        featureService.get(endpoint.featureId)?.organizationId
       },
       onFail = { throw FeatureDoesNotExist() },
     )

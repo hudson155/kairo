@@ -2,14 +2,13 @@ package limber.model.feature
 
 import limber.rep.feature.FeatureRep
 import java.time.ZonedDateTime
-import java.util.UUID
 
 public data class FeatureModel(
   val id: String,
   val version: Long,
   val createdAt: ZonedDateTime,
   val updatedAt: ZonedDateTime,
-  val organizationGuid: UUID,
+  val organizationId: String,
   val isDefault: Boolean,
   val type: FeatureRep.Type,
   val name: String,
@@ -18,7 +17,7 @@ public data class FeatureModel(
 ) {
   public data class Creator(
     val id: String,
-    val organizationGuid: UUID,
+    val organizationId: String,
     val isDefault: Boolean,
     val type: FeatureRep.Type,
     val name: String,

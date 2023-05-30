@@ -14,19 +14,19 @@ create trigger on_update__feature
 execute procedure updated();
 
 alter table organization.feature
-  add column organization_guid uuid not null;
+  add column organization_id text not null;
 alter table organization.feature
-  add constraint fk__feature__organization_guid
-    foreign key (organization_guid)
-      references organization.organization (guid)
+  add constraint fk__feature__organization_id
+    foreign key (organization_id)
+      references organization.organization (id)
       on delete cascade;
-create index ix__feature__organization_guid
-  on organization.feature (organization_guid);
+create index ix__feature__organization_id
+  on organization.feature (organization_id);
 
 alter table organization.feature
   add column is_default boolean not null;
 create unique index uq__feature__is_default
-  on organization.feature (organization_guid)
+  on organization.feature (organization_id)
   where is_default is true;
 
 alter table organization.feature
@@ -45,4 +45,4 @@ alter table organization.feature
     check (lower(root_path) = root_path);
 alter table organization.feature
   add constraint uq__feature__root_path
-    unique (organization_guid, root_path);
+    unique (organization_id, root_path);

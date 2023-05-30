@@ -32,14 +32,14 @@ internal class DeleteOrganizationAuthTest : IntegrationTest() {
     }
 
     val auth = testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {
       authClient(OrganizationAuthApi.Delete(auth.id))
         .shouldBe(auth)
       shouldNotBeFound {
-        authClient(OrganizationAuthApi.GetByOrganization(organization.guid))
+        authClient(OrganizationAuthApi.GetByOrganization(organization.id))
       }
     }
   }

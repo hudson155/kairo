@@ -36,7 +36,7 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
-      isForeignKeyViolation("fk__organization_hostname__organization_guid") ->
+      isForeignKeyViolation("fk__organization_hostname__organization_id") ->
         throw OrganizationDoesNotExist()
       isUniqueViolation("uq__organization_hostname__hostname") ->
         throw OrganizationHostnameAlreadyTaken()

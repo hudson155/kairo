@@ -14,14 +14,14 @@ create trigger on_update__organization_hostname
 execute procedure updated();
 
 alter table organization.organization_hostname
-  add column organization_guid uuid not null;
+  add column organization_id text not null;
 alter table organization.organization_hostname
-  add constraint fk__organization_hostname__organization_guid
-    foreign key (organization_guid)
-      references organization.organization (guid)
+  add constraint fk__organization_hostname__organization_id
+    foreign key (organization_id)
+      references organization.organization (id)
       on delete cascade;
-create index ix__organization_hostname__organization_guid
-  on organization.organization_hostname (organization_guid);
+create index ix__organization_hostname__organization_id
+  on organization.organization_hostname (organization_id);
 
 alter table organization.organization_hostname
   add column hostname text not null;

@@ -7,7 +7,6 @@ import limber.util.updater.Updater
 import mu.KLogger
 import mu.KotlinLogging
 import org.jdbi.v3.core.kotlin.bindKotlin
-import java.util.UUID
 
 internal class OrganizationStore : SqlStore<OrganizationModel>(
   tableName = "organization.organization",
@@ -36,13 +35,13 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(guid: UUID, updater: Updater<OrganizationModel.Update>): OrganizationModel =
+  fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel =
     transaction { handle ->
-      val organization = getByGuid(guid, forUpdate = true) ?: throw OrganizationDoesNotExist()
+      val organization = get(id, forUpdate = true) ?: throw OrganizationDoesNotExist()
       val update = updater(OrganizationModel.Update(organization))
       logger.info { "Updating organization: $update." }
       val query = handle.createQuery(rs("store/organization/update.sql"))
-      query.bind("guid", guid)
+      query.bind("id", id)
       query.bindKotlin(update)
       return@transaction query.mapToType().single()
     }

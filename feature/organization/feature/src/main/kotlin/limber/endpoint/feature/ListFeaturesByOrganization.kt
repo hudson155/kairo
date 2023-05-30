@@ -16,11 +16,11 @@ public class ListFeaturesByOrganization @Inject internal constructor(
 ) : RestEndpointHandler<Api.ListByOrganization, List<Rep>>(Api.ListByOrganization::class) {
   override suspend fun handler(endpoint: Api.ListByOrganization): List<Rep> {
     auth(
-      auth = OrganizationAuth(OrganizationPermission.FeatureRead, endpoint.organizationGuid),
+      auth = OrganizationAuth(OrganizationPermission.FeatureRead, endpoint.organizationId),
       onFail = { return@handler emptyList() },
     )
 
-    val features = featureService.listByOrganization(endpoint.organizationGuid)
+    val features = featureService.listByOrganization(endpoint.organizationId)
 
     return features.map { featureMapper(it) }
   }

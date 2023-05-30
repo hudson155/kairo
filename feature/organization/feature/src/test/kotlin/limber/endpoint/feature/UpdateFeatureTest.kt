@@ -36,7 +36,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
@@ -55,11 +55,11 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     var homeFeature = testSetup("Create feature (Home)") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     var myFormsFeature = testSetup("Create feature (My forms)") {
-      create(organization.guid, FeatureFixture.myForms)
+      create(organization.id, FeatureFixture.myForms)
     }
 
     test {
@@ -68,7 +68,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
       myFormsFeature = myFormsFeature.copy(isDefault = true)
       featureClient(FeatureApi.Update(myFormsFeature.id, update))
         .shouldBe(myFormsFeature)
-      featureClient(FeatureApi.ListByOrganization(organization.guid))
+      featureClient(FeatureApi.ListByOrganization(organization.id))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }
@@ -80,18 +80,18 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     val homeFeature = testSetup("Create feature (Home)") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     val myFormsFeature = testSetup("Create feature (My forms)") {
-      create(organization.guid, FeatureFixture.myForms)
+      create(organization.id, FeatureFixture.myForms)
     }
 
     test {
       val update = FeatureRep.Update(isDefault = true)
       featureClient(FeatureApi.Update(homeFeature.id, update))
         .shouldBe(homeFeature)
-      featureClient(FeatureApi.ListByOrganization(organization.guid))
+      featureClient(FeatureApi.ListByOrganization(organization.id))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }
@@ -103,7 +103,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     var feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
@@ -123,7 +123,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     var feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
@@ -143,7 +143,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     var feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {
@@ -163,11 +163,11 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     val homeFeature = testSetup("Create feature (Home)") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     val myFormsFeature = testSetup("Create feature (My forms)") {
-      create(organization.guid, FeatureFixture.myForms)
+      create(organization.id, FeatureFixture.myForms)
     }
 
     test {
@@ -185,7 +185,7 @@ internal class UpdateFeatureTest : IntegrationTest() {
     }
 
     var feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {

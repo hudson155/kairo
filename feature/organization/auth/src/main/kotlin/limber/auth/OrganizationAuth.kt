@@ -1,18 +1,16 @@
 package limber.auth
 
-import java.util.UUID
-
 /**
  * Protects an endpoint to only members of the organization.
  */
 public class OrganizationAuth(
   private val permission: OrganizationPermission,
-  private val organizationGuid: UUID?,
+  private val organizationId: String?,
 ) : Auth() {
   public constructor(
     permission: OrganizationPermission,
-    organizationGuid: () -> UUID?,
-  ) : this(permission, organizationGuid())
+    organizationId: () -> String?,
+  ) : this(permission, organizationId())
 
   override fun authorize(context: RestContext): AuthResult {
     val principal = context.principal
@@ -23,7 +21,7 @@ public class OrganizationAuth(
     val permissionValue = permissions[permission.value]
       ?: return AuthResult.Forbidden("Missing required permission ${permission.value}.")
 
-    if (organizationGuid == null || organizationGuid !in permissionValue) return AuthResult.Failed
+    if (organizationId == null || organizationId !in permissionValue) return AuthResult.Failed
     return AuthResult.Authorized
   }
 }

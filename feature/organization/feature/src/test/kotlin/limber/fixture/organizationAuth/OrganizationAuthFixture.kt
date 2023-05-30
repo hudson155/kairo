@@ -3,22 +3,21 @@ package limber.fixture.organizationAuth
 import limber.api.organizationAuth.OrganizationAuthApi
 import limber.rep.organizationAuth.OrganizationAuthRep
 import limber.testing.IntegrationTest
-import java.util.UUID
 
 internal abstract class OrganizationAuthFixture {
   abstract val creator: OrganizationAuthRep.Creator
-  abstract operator fun invoke(organizationGuid: UUID, id: String, auth0OrganizationId: UUID): OrganizationAuthRep
+  abstract operator fun invoke(organizationId: String, id: String, auth0OrganizationId: String): OrganizationAuthRep
 
   internal companion object {
     val acmeCo: OrganizationAuthFixture = object : OrganizationAuthFixture() {
       override val creator: OrganizationAuthRep.Creator =
         OrganizationAuthRep.Creator(auth0OrganizationName = " ACME-CO ")
 
-      override fun invoke(organizationGuid: UUID, id: String, auth0OrganizationId: UUID): OrganizationAuthRep =
+      override fun invoke(organizationId: String, id: String, auth0OrganizationId: String): OrganizationAuthRep =
         OrganizationAuthRep(
           id = id,
-          organizationGuid = organizationGuid,
-          auth0OrganizationId = auth0OrganizationId.toString(),
+          organizationId = organizationId,
+          auth0OrganizationId = auth0OrganizationId,
           auth0OrganizationName = "acme-co",
         )
     }
@@ -27,11 +26,11 @@ internal abstract class OrganizationAuthFixture {
       override val creator: OrganizationAuthRep.Creator =
         OrganizationAuthRep.Creator(auth0OrganizationName = " UNIVERSAL-EXPORTS ")
 
-      override fun invoke(organizationGuid: UUID, id: String, auth0OrganizationId: UUID): OrganizationAuthRep =
+      override fun invoke(organizationId: String, id: String, auth0OrganizationId: String): OrganizationAuthRep =
         OrganizationAuthRep(
           id = id,
-          organizationGuid = organizationGuid,
-          auth0OrganizationId = auth0OrganizationId.toString(),
+          organizationId = organizationId,
+          auth0OrganizationId = auth0OrganizationId,
           auth0OrganizationName = "universal-exports",
         )
     }
@@ -39,7 +38,7 @@ internal abstract class OrganizationAuthFixture {
 }
 
 internal suspend fun IntegrationTest.create(
-  organizationGuid: UUID,
+  organizationId: String,
   fixture: OrganizationAuthFixture,
 ): OrganizationAuthRep =
-  authClient(OrganizationAuthApi.Create(organizationGuid, fixture.creator))
+  authClient(OrganizationAuthApi.Create(organizationId, fixture.creator))

@@ -5,7 +5,6 @@ import limber.model.feature.FeatureModel
 import limber.store.feature.FeatureStore
 import limber.util.updater.Updater
 import limber.util.updater.invoke
-import java.util.UUID
 
 internal class FeatureService @Inject constructor(
   private val featureStore: FeatureStore,
@@ -13,8 +12,8 @@ internal class FeatureService @Inject constructor(
   fun get(id: String): FeatureModel? =
     featureStore.get(id)
 
-  fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
-    featureStore.listByOrganization(organizationGuid)
+  fun listByOrganization(organizationId: String): List<FeatureModel> =
+    featureStore.listByOrganization(organizationId)
 
   fun create(creator: FeatureModel.Creator): FeatureModel =
     featureStore.create(creator)

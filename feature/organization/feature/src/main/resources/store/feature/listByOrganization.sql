@@ -1,3 +1,3 @@
 select *
 from organization.feature
-where organization_guid = :organizationGuid
+where organization_id = :organizationId

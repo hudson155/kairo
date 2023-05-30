@@ -9,16 +9,15 @@ import limber.testing.should.shouldNotBeFound
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class GetOrganizationTest : IntegrationTest() {
   @Test
   fun `organization does not exist`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
 
     test {
       shouldNotBeFound {
-        organizationClient(OrganizationApi.Get(organizationGuid))
+        organizationClient(OrganizationApi.Get(organizationId))
       }
     }
   }
@@ -30,7 +29,7 @@ internal class GetOrganizationTest : IntegrationTest() {
     }
 
     test {
-      organizationClient(OrganizationApi.Get(organization.guid))
+      organizationClient(OrganizationApi.Get(organization.id))
         .shouldBe(organization)
     }
   }

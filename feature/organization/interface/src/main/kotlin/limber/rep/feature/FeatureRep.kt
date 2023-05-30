@@ -6,11 +6,10 @@ import limber.validation.FeaturePathValidator
 import limber.validation.IconNameValidator
 import limber.validation.TrueValidator
 import java.util.Optional
-import java.util.UUID
 
 public data class FeatureRep(
   val id: String,
-  val organizationGuid: UUID,
+  val organizationId: String,
   val isDefault: Boolean,
   val type: Type,
   val name: String,

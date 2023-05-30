@@ -12,17 +12,16 @@ import limber.testing.should.shouldBeUnprocessable
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class CreateOrganizationHostnameTest : IntegrationTest() {
   @Test
   fun `organization does not exist`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
         val creator = OrganizationHostnameFixture.fooBarBaz.creator
-        hostnameClient(OrganizationHostnameApi.Create(organizationGuid, creator))
+        hostnameClient(OrganizationHostnameApi.Create(organizationId, creator))
       }
     }
   }
@@ -34,13 +33,13 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
     }
 
     val hostname = testSetup("Create hostname") {
-      create(organization.guid, OrganizationHostnameFixture.fooBarBaz)
+      create(organization.id, OrganizationHostnameFixture.fooBarBaz)
     }
 
     test {
       shouldBeConflict("Organization hostname already taken.") {
         val creator = OrganizationHostnameFixture.barBazQux.creator.copy(hostname = hostname.hostname)
-        hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
+        hostnameClient(OrganizationHostnameApi.Create(organization.id, creator))
       }
     }
   }
@@ -53,8 +52,8 @@ internal class CreateOrganizationHostnameTest : IntegrationTest() {
 
     test {
       val creator = OrganizationHostnameFixture.fooBarBaz.creator
-      val hostname = hostnameClient(OrganizationHostnameApi.Create(organization.guid, creator))
-      hostname.shouldBe(OrganizationHostnameFixture.fooBarBaz(organization.guid, "host_0"))
+      val hostname = hostnameClient(OrganizationHostnameApi.Create(organization.id, creator))
+      hostname.shouldBe(OrganizationHostnameFixture.fooBarBaz(organization.id, "host_0"))
       hostnameClient(OrganizationHostnameApi.Get(hostname.id))
         .shouldBe(hostname)
     }

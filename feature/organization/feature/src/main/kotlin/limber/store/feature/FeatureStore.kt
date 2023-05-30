@@ -13,7 +13,6 @@ import mu.KotlinLogging
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
-import java.util.UUID
 
 internal class FeatureStore : SqlStore<FeatureModel>(
   tableName = "organization.feature",
@@ -21,17 +20,17 @@ internal class FeatureStore : SqlStore<FeatureModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun listByOrganization(organizationGuid: UUID): List<FeatureModel> =
+  fun listByOrganization(organizationId: String): List<FeatureModel> =
     handle { handle ->
       val query = handle.createQuery(rs("store/feature/listByOrganization.sql"))
-      query.bind("organizationGuid", organizationGuid)
+      query.bind("organizationId", organizationId)
       return@handle query.mapToType().toList()
     }
 
   fun create(creator: FeatureModel.Creator): FeatureModel =
     transaction { handle ->
       var updated = creator
-      if (listByOrganization(updated.organizationGuid).none { it.isDefault }) {
+      if (listByOrganization(updated.organizationId).none { it.isDefault }) {
         // If the organization doesn't have a default feature, this one should be it!
         updated = updated.copy(isDefault = true)
       }
@@ -69,7 +68,7 @@ internal class FeatureStore : SqlStore<FeatureModel>(
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
-      isForeignKeyViolation("fk__feature__organization_guid") ->
+      isForeignKeyViolation("fk__feature__organization_id") ->
         throw OrganizationDoesNotExist()
       isUniqueViolation("uq__feature__root_path") ->
         throw RootPathAlreadyTaken()

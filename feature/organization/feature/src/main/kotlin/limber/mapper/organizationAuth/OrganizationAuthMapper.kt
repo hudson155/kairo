@@ -5,7 +5,6 @@ import limber.exception.organizationAuth.OrganizationAuthIdIsNull
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.rep.organizationAuth.OrganizationAuthRep
 import limber.util.id.IdGenerator
-import java.util.UUID
 
 internal class OrganizationAuthMapper @Inject constructor(
   idGenerator: IdGenerator.Factory,
@@ -15,18 +14,18 @@ internal class OrganizationAuthMapper @Inject constructor(
   operator fun invoke(auth: OrganizationAuthModel): OrganizationAuthRep =
     OrganizationAuthRep(
       id = auth.id,
-      organizationGuid = auth.organizationGuid,
+      organizationId = auth.organizationId,
       auth0OrganizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
       auth0OrganizationName = auth.auth0OrganizationName,
     )
 
   operator fun invoke(
-    organizationGuid: UUID,
+    organizationId: String,
     creator: OrganizationAuthRep.Creator,
   ): OrganizationAuthModel.Creator =
     OrganizationAuthModel.Creator(
       id = idGenerator.generate(),
-      organizationGuid = organizationGuid,
+      organizationId = organizationId,
       auth0OrganizationName = creator.auth0OrganizationName,
     )
 }

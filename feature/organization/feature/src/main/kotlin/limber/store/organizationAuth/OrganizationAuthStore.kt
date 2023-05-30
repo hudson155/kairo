@@ -15,7 +15,6 @@ import mu.KotlinLogging
 import org.jdbi.v3.core.kotlin.bindKotlin
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
 import org.postgresql.util.ServerErrorMessage
-import java.util.UUID
 
 internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
   tableName = "organization.organization_auth",
@@ -23,10 +22,10 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun getByOrganization(organizationGuid: UUID): OrganizationAuthModel? =
+  fun getByOrganization(organizationId: String): OrganizationAuthModel? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))
-      query.bind("organizationGuid", organizationGuid)
+      query.bind("organizationId", organizationId)
       return@handle query.mapToType().singleNullOrThrow()
     }
 
@@ -66,9 +65,9 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
-      isForeignKeyViolation("fk__organization_auth__organization_guid") ->
+      isForeignKeyViolation("fk__organization_auth__organization_id") ->
         throw OrganizationDoesNotExist()
-      isUniqueViolation("uq__organization_auth__organization_guid") ->
+      isUniqueViolation("uq__organization_auth__organization_id") ->
         throw OrganizationAlreadyHasOrganizationAuth()
       isUniqueViolation("uq__organization_auth__auth0_organization_id") ->
         throw Auth0OrganizationIdAlreadyTaken()

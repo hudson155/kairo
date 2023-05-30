@@ -1,3 +1,3 @@
-insert into organization.organization_hostname (id, organization_guid, hostname)
-values (:id, :organizationGuid, lower(:hostname))
+insert into organization.organization_hostname (id, organization_id, hostname)
+values (:id, :organizationId, lower(:hostname))
 returning *

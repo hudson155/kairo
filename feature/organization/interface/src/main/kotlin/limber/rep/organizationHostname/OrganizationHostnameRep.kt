@@ -1,11 +1,10 @@
 package limber.rep.organizationHostname
 
 import limber.validation.HostnameValidator
-import java.util.UUID
 
 public data class OrganizationHostnameRep(
   val id: String,
-  val organizationGuid: UUID,
+  val organizationId: String,
   val hostname: String,
 ) {
   public data class Creator(

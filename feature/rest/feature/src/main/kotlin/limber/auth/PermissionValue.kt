@@ -10,23 +10,22 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.NullNode
 import com.fasterxml.jackson.databind.node.TextNode
 import io.ktor.server.auth.jwt.JWTPrincipal
-import java.util.UUID
 
 public const val PERMISSIONS_CLAIM_NAME: String = "permissions"
 
 @JsonDeserialize(using = PermissionValue.Deserializer::class)
 public sealed class PermissionValue {
-  public abstract operator fun contains(guid: UUID): Boolean
+  public abstract operator fun contains(id: String): Boolean
 
   public object All : PermissionValue() {
-    override fun contains(guid: UUID): Boolean = true
+    override fun contains(id: String): Boolean = true
 
     @JsonValue
     override fun toString(): String = "*"
   }
 
-  public data class Some(@JsonValue val guids: Set<UUID>) : PermissionValue() {
-    override fun contains(guid: UUID): Boolean = guid in guids
+  public data class Some(@JsonValue val ids: Set<String>) : PermissionValue() {
+    override fun contains(id: String): Boolean = id in ids
   }
 
   internal class Deserializer : StdDeserializer<PermissionValue>(PermissionValue::class.java) {
@@ -37,7 +36,7 @@ public sealed class PermissionValue {
           require(json.textValue() == "*") // The only supported string is "*".
           return All
         }
-        is ArrayNode -> return Some(json.map { UUID.fromString(it.textValue()) }.toSet())
+        is ArrayNode -> return Some(json.map { it.textValue() }.toSet())
         else -> error("Unsupported JsonNode type: ${json::class.simpleName}.")
       }
     }

@@ -6,14 +6,13 @@ import limber.feature.rest.QueryParam
 import limber.feature.rest.RestEndpoint
 import limber.rep.organization.OrganizationRep
 import limber.validation.SearchValidator
-import java.util.UUID
 
 public object OrganizationApi {
   public data class Get(
-    val organizationGuid: UUID,
+    val organizationId: String,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/organizations/$organizationGuid"
+    override val path: String = "/organizations/$organizationId"
   }
 
   public object ListAll : RestEndpoint<Nothing>() {
@@ -37,10 +36,10 @@ public object OrganizationApi {
   }
 
   public data class Update(
-    val organizationGuid: UUID,
+    val organizationId: String,
     @Valid override val body: OrganizationRep.Update?,
   ) : RestEndpoint<OrganizationRep.Update>() {
     override val method: HttpMethod = HttpMethod.Patch
-    override val path: String = "/organizations/$organizationGuid"
+    override val path: String = "/organizations/$organizationId"
   }
 }

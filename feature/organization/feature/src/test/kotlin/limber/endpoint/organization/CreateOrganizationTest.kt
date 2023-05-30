@@ -12,8 +12,8 @@ internal class CreateOrganizationTest : IntegrationTest() {
   fun happy() {
     test {
       val organization = organizationClient(OrganizationApi.Create(OrganizationFixture.acmeCo.creator))
-      organization.shouldBe(OrganizationFixture.acmeCo(guid = guidGenerator[0]))
-      organizationClient(OrganizationApi.Get(organization.guid))
+      organization.shouldBe(OrganizationFixture.acmeCo(id = "org_0"))
+      organizationClient(OrganizationApi.Get(organization.id))
         .shouldBe(organization)
     }
   }

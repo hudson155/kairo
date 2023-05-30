@@ -12,34 +12,33 @@ import limber.testing.should.shouldBeUnprocessable
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class CreateOrganizationAuthTest : IntegrationTest() {
   @Test
   fun `organization does not exist`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
 
     test {
       shouldBeUnprocessable("Organization does not exist.") {
         val creator = OrganizationAuthFixture.acmeCo.creator
-        authClient(OrganizationAuthApi.Create(organizationGuid, creator))
+        authClient(OrganizationAuthApi.Create(organizationId, creator))
       }
     }
   }
 
   @Test
-  fun `organization guid, duplicate`() {
+  fun `organization id, duplicate`() {
     val organization = testSetup("Create organization") {
       create(OrganizationFixture.acmeCo)
     }
 
     testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {
       shouldBeConflict("Organization already has auth.") {
-        authClient(OrganizationAuthApi.Create(organization.guid, OrganizationAuthFixture.universalExports.creator))
+        authClient(OrganizationAuthApi.Create(organization.id, OrganizationAuthFixture.universalExports.creator))
       }
     }
   }
@@ -51,12 +50,12 @@ internal class CreateOrganizationAuthTest : IntegrationTest() {
     }
 
     testSetup("Create auth") {
-      create(acmeCo.guid, OrganizationAuthFixture.acmeCo)
+      create(acmeCo.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {
       shouldBeConflict("Auth0 organization name already taken.") {
-        authClient(OrganizationAuthApi.Create(universalExports.guid, OrganizationAuthFixture.acmeCo.creator))
+        authClient(OrganizationAuthApi.Create(universalExports.id, OrganizationAuthFixture.acmeCo.creator))
       }
     }
   }
@@ -69,8 +68,8 @@ internal class CreateOrganizationAuthTest : IntegrationTest() {
 
     test {
       val creator = OrganizationAuthFixture.acmeCo.creator
-      authClient(OrganizationAuthApi.Create(organization.guid, creator))
-        .shouldBe(OrganizationAuthFixture.acmeCo(organization.guid, "auth_0", guidGenerator[1]))
+      authClient(OrganizationAuthApi.Create(organization.id, creator))
+        .shouldBe(OrganizationAuthFixture.acmeCo(organization.id, "auth_0", guidGenerator[0].toString()))
     }
   }
 }

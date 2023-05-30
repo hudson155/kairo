@@ -13,17 +13,16 @@ import kotlinx.coroutines.withContext
 import limber.exception.AuthException
 import limber.serialization.ObjectMapperFactory
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class OrganizationAuthTest {
   private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).build()
 
   @Test
   fun `no token`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
     val context = context(null)
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
+      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No token provided.")
@@ -31,10 +30,10 @@ internal class OrganizationAuthTest {
 
   @Test
   fun `null permissions`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
     val context = context(principal(null))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
+      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No permissions claim on the provided token.")
@@ -42,51 +41,51 @@ internal class OrganizationAuthTest {
 
   @Test
   fun `non-overlapping permissions`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
+      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
     }
     e.status.shouldBe(AuthException.Status.Forbidden)
     e.userMessage.shouldBe("Missing required permission feature:delete.")
   }
 
   @Test
-  fun `different organization guid`() {
-    val organizationGuid = UUID.randomUUID()
+  fun `different organization id`() {
+    val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
-      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, UUID.randomUUID()))
+    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, "org_1"))
       .shouldBeFalse()
   }
 
   @Test
-  fun `same organization guid`() {
-    val organizationGuid = UUID.randomUUID()
+  fun `same organization id`() {
+    val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
-      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
+    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
       .shouldBeTrue()
   }
 
   @Test
   fun star() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationGuid)),
+      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
       OrganizationPermission.FeatureDelete.value to PermissionValue.All,
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationGuid))
+    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
       .shouldBeTrue()
   }
 

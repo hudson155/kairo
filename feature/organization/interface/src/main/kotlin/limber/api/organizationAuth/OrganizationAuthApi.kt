@@ -5,7 +5,6 @@ import jakarta.validation.Valid
 import limber.feature.rest.QueryParam
 import limber.feature.rest.RestEndpoint
 import limber.rep.organizationAuth.OrganizationAuthRep
-import java.util.UUID
 
 public object OrganizationAuthApi {
   public data class Get(
@@ -16,10 +15,10 @@ public object OrganizationAuthApi {
   }
 
   public data class GetByOrganization(
-    val organizationGuid: UUID,
+    val organizationId: String,
   ) : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
-    override val path: String = "/organizations/$organizationGuid/auths"
+    override val path: String = "/organizations/$organizationId/auths"
   }
 
   public data class GetByHostname(
@@ -31,11 +30,11 @@ public object OrganizationAuthApi {
   }
 
   public data class Create(
-    val organizationGuid: UUID,
+    val organizationId: String,
     @Valid override val body: OrganizationAuthRep.Creator?,
   ) : RestEndpoint<OrganizationAuthRep.Creator>() {
     override val method: HttpMethod = HttpMethod.Post
-    override val path: String = "/organizations/$organizationGuid/auths"
+    override val path: String = "/organizations/$organizationId/auths"
   }
 
   public data class Update(

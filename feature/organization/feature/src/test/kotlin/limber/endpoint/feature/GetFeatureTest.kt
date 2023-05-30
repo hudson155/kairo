@@ -31,7 +31,7 @@ internal class GetFeatureTest : IntegrationTest() {
     }
 
     val feature = testSetup("Create feature") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     test {

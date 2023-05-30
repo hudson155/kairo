@@ -31,7 +31,7 @@ internal class GetOrganizationAuthTest : IntegrationTest() {
     }
 
     val auth = testSetup("Create auth") {
-      create(organization.guid, OrganizationAuthFixture.acmeCo)
+      create(organization.id, OrganizationAuthFixture.acmeCo)
     }
 
     test {

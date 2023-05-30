@@ -4,7 +4,6 @@ import io.ktor.http.HttpMethod
 import jakarta.validation.Valid
 import limber.feature.rest.RestEndpoint
 import limber.rep.organizationHostname.OrganizationHostnameRep
-import java.util.UUID
 
 public object OrganizationHostnameApi {
   public data class Get(
@@ -15,11 +14,11 @@ public object OrganizationHostnameApi {
   }
 
   public data class Create(
-    val organizationGuid: UUID,
+    val organizationId: String,
     @Valid override val body: OrganizationHostnameRep.Creator?,
   ) : RestEndpoint<OrganizationHostnameRep.Creator>() {
     override val method: HttpMethod = HttpMethod.Post
-    override val path: String = "/organizations/$organizationGuid/hostnames"
+    override val path: String = "/organizations/$organizationId/hostnames"
   }
 
   public data class Delete(

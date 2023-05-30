@@ -11,15 +11,14 @@ import limber.testing.IntegrationTest
 import limber.testing.test
 import limber.testing.testSetup
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 internal class ListFeaturesByOrganizationTest : IntegrationTest() {
   @Test
   fun `no features`() {
-    val organizationGuid = UUID.randomUUID()
+    val organizationId = "org_0"
 
     test {
-      featureClient(FeatureApi.ListByOrganization(organizationGuid))
+      featureClient(FeatureApi.ListByOrganization(organizationId))
         .shouldBeEmpty()
     }
   }
@@ -31,15 +30,15 @@ internal class ListFeaturesByOrganizationTest : IntegrationTest() {
     }
 
     val homeFeature = testSetup("Create feature (Home)") {
-      create(organization.guid, FeatureFixture.home)
+      create(organization.id, FeatureFixture.home)
     }
 
     val myFormsFeature = testSetup("Create feature (My forms)") {
-      create(organization.guid, FeatureFixture.myForms)
+      create(organization.id, FeatureFixture.myForms)
     }
 
     test {
-      featureClient(FeatureApi.ListByOrganization(organization.guid))
+      featureClient(FeatureApi.ListByOrganization(organization.id))
         .shouldContainExactlyInAnyOrder(homeFeature, myFormsFeature)
     }
   }
