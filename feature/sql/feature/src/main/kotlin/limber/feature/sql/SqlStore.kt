@@ -11,7 +11,6 @@ import org.jdbi.v3.core.transaction.TransactionIsolationLevel
 import org.postgresql.util.PSQLException
 import org.postgresql.util.ServerErrorMessage
 import java.sql.BatchUpdateException
-import java.util.UUID
 import kotlin.reflect.KClass
 
 public abstract class SqlStore<T : Any>(private val tableName: String, private val type: KClass<T>) {
@@ -27,18 +26,6 @@ public abstract class SqlStore<T : Any>(private val tableName: String, private v
       query.define("tableName", tableName)
       query.define("lockingClause", if (forUpdate) "for no key update" else "")
       query.bind("id", id)
-      return@handle query.mapToType().singleNullOrThrow()
-    }
-
-  public fun getByGuid(guid: UUID): T? =
-    getByGuid(guid, forUpdate = false)
-
-  protected fun getByGuid(guid: UUID, forUpdate: Boolean): T? =
-    handle { handle ->
-      val query = handle.createQuery(rs("store/common/getByGuid.sql"))
-      query.define("tableName", tableName)
-      query.define("lockingClause", if (forUpdate) "for no key update" else "")
-      query.bind("guid", guid)
       return@handle query.mapToType().singleNullOrThrow()
     }
 
