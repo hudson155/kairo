@@ -4,6 +4,10 @@ interface OrganizationRep {
 }
 
 namespace OrganizationRep {
+  export interface Creator {
+    name: string;
+  }
+
   export interface Updater {
     name?: string;
   }

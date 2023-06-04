@@ -23,6 +23,14 @@ class OrganizationApi {
     });
   }
 
+  async create(creator: OrganizationRep.Creator): Promise<OrganizationRep> {
+    return await this.api.request<OrganizationRep, OrganizationRep.Creator>({
+      method: 'POST',
+      path: '/organizations',
+      body: creator,
+    });
+  }
+
   async update(organizationId: string, updater: OrganizationRep.Updater): Promise<OrganizationRep> {
     return await this.api.request<OrganizationRep, OrganizationRep.Updater>({
       method: 'PATCH',
