@@ -5,7 +5,7 @@ interface OrganizationRep {
 
 namespace OrganizationRep {
   export interface Updater {
-    name?: string | null;
+    name?: string;
   }
 }
 
