@@ -4,7 +4,7 @@ insert into organization.organization (id, name)
 values ('org_r7J81kjsgWsfjgQ1', 'Acme Co.');
 
 insert into organization.organization_auth (id, organization_id, auth0_organization_id, auth0_organization_name)
-values ('auth_vIWEcQk2a8M4eyou', 'org_r7J81kjsgWsfjgQ1', 'org_yDiVK18hoeddya8J', 'acme-co');
+values ('auth_vIWEcQk2a8M4eyou', 'org_r7J81kjsgWsfjgQ1', 'org_wlRvzffiHiKXdB3P', 'acme-co');
 
 insert into organization.organization_hostname (id, organization_id, hostname)
 values ('host_4Ny72pP64DTkfJJ6', 'org_r7J81kjsgWsfjgQ1', 'localhost:3000');
