@@ -20,7 +20,7 @@ const Menu: React.FC<Props> = ({ button, side = 'left', children }) => {
   return (
     <Delegate as="div" className={styles.menu}>
       <Delegate.Button as={Fragment}>{button}</Delegate.Button>
-      <Transition as={Fragment} {...transitions('fadeIn', 'moveDownIn', 'fadeOut', 'moveUpOut')}>
+      <Transition as={Fragment} {...transitions('fade', 'moveTop')}>
         <Delegate.Items as="div" className={classNames(styles.container, sideClassName(side))}>
           {children}
         </Delegate.Items>

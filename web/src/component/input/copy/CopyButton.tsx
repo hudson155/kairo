@@ -73,7 +73,7 @@ const CopyButton: React.FC<Props> = ({ onCopy }) => {
       <Transition
         as={Fragment}
         show={Boolean(isFocused || isHovered)}
-        {...transitions('fadeIn', 'moveUpIn', 'fadeOut', 'moveDownOut')}
+        {...transitions('fade', 'moveTop')}
       >
         <div className={classNames(styles.tooltipContainer, messageClassName)}>
           <Text className={styles.tooltip} size="small">

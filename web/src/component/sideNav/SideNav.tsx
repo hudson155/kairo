@@ -43,10 +43,10 @@ const SideNav: React.FC<Props> = ({ isOpen, setIsOpen, children }) => {
   return (
     <Transition as={Fragment} show={isOpen}>
       <Dialog className={styles.dialog} onClose={() => setIsOpen(false)}>
-        <Transition.Child as={Fragment} {...transitions('fadeIn', 'fadeOut')}>
+        <Transition.Child as={Fragment} {...transitions('fade')}>
           <div aria-hidden={true} className={styles.backdrop} />
         </Transition.Child>
-        <Transition.Child as={Fragment} {...transitions('slideIn', 'slideOut')}>
+        <Transition.Child as={Fragment} {...transitions('slideLeft')}>
           <Dialog.Panel as={Fragment}>
             <div className={classNames(styles.container, { [styles.collapsible]: isCollapsible })}>
               <SideNavHeader onClose={() => setIsOpen(false)} />
