@@ -9,8 +9,8 @@ private const val ID_LENGTH: Int = 16
  */
 public class RandomIdGenerator(prefix: String) : IdGenerator(prefix) {
   public class Factory : IdGenerator.Factory {
-    override fun invoke(prefix: String): DeterministicIdGenerator =
-      DeterministicIdGenerator(prefix)
+    override fun invoke(prefix: String): RandomIdGenerator =
+      RandomIdGenerator(prefix)
   }
 
   override fun generate(): String {
