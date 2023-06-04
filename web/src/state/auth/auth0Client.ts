@@ -55,8 +55,10 @@ const handleRedirectCallback = async (auth0Client: Auth0Client): Promise<void> =
     ({ appState: state } = await auth0Client.handleRedirectCallback<AppState>());
   } catch (e) {
     console.error('Auth0 redirect callback failed.', e);
+    throw e;
+  } finally {
+    replaceState(state?.returnTo);
   }
-  replaceState(state?.returnTo);
 };
 
 const replaceState = (url?: string): void => {
