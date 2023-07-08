@@ -19,7 +19,7 @@ internal class CelebrityStore : SqlStore<CelebrityModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(id: UUID, updater: Updater<CelebrityModel.Update>): CelebrityModel =
+  fun update(id: String, updater: Updater<CelebrityModel.Update>): CelebrityModel =
     transaction { handle ->
       val celebrity = get(id, forUpdate = true) ?: throw CelebrityDoesNotExist()
       val query = handle.createQuery(rs("store/celebrity/update.sql"))
@@ -28,7 +28,7 @@ internal class CelebrityStore : SqlStore<CelebrityModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(id: UUID): CelebrityModel =
+  fun delete(id: String): CelebrityModel =
     transaction { handle ->
       val query = handle.createQuery(rs("store/celebrity/delete.sql"))
       query.bind("id", id)
