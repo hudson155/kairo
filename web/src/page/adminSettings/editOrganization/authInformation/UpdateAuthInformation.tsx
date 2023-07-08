@@ -63,17 +63,12 @@ const UpdateAuthInformation: React.FC<Props> = ({ auth, organizationName }) => {
           </Container>
         </Container>
       </Form>
-      {
-        isDeleting
-          ? (
-            <DeleteConfirmation
-              organizationName={organizationName}
-              onCancel={() => setIsDeleting(false)}
-              onDelete={handleDelete}
-            />
-          )
-          : null
-      }
+      <DeleteConfirmation
+        isOpen={isDeleting}
+        organizationName={organizationName}
+        onCancel={() => setIsDeleting(false)}
+        onDelete={handleDelete}
+      />
     </>
   );
 };

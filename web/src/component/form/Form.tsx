@@ -15,7 +15,7 @@ const context = React.createContext<FormContext>(
 
 interface Props {
   fields?: FormFields;
-  onSubmit: () => Promise<void>;
+  onSubmit: () => void | Promise<void>;
   children: ReactNode;
 }
 

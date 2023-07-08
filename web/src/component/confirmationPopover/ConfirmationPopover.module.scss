@@ -1,10 +1,12 @@
-.backdrop, .container {
+.popover, .backdrop, .container {
   inset: 0;
   position: absolute;
 }
 
 .backdrop {
-  background-color: var(--color-overlay-danger);
+  &.danger {
+    background-color: var(--color-overlay-danger);
+  }
 }
 
 .container {
