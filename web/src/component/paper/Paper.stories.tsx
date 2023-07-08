@@ -7,13 +7,20 @@ import { ComponentProps } from 'react';
 
 type StoryProps = ComponentProps<typeof Paper>;
 
-const story: Meta<StoryProps> = {};
+const story: Meta<StoryProps> = {
+  argTypes: {
+    variant: {
+      options: ['default', 'danger'],
+      control: { type: 'select' },
+    },
+  },
+};
 
 export default story;
 
-const Template: Story<StoryProps> = () => {
+const Template: Story<StoryProps> = ({ variant }) => {
   return (
-    <Paper>
+    <Paper variant={variant === 'default' ? undefined : variant}>
       <Container direction="vertical">
         <Heading2>Some heading</Heading2>
         <Paragraph>Some content</Paragraph>
@@ -23,3 +30,6 @@ const Template: Story<StoryProps> = () => {
 };
 
 export const Default = Template.bind({});
+Default.args = {
+  variant: 'default',
+};

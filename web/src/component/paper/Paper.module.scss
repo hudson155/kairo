@@ -1,7 +1,15 @@
 .paper {
-  border: var(--borderSize-border-normal) solid var(--color-border);
+  border: var(--borderSize-border-normal) solid;
   border-radius: var(--borderRadius-large);
   overflow: hidden;
   padding: var(--gap-normal) var(--gap-normalPlus);
   position: relative;
+
+  &.default {
+    border-color: var(--color-border);
+  }
+
+  &.danger {
+    border-color: var(--color-status-danger-border);
+  }
 }
