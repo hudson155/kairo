@@ -18,7 +18,11 @@ const useUpdateOrganization = (organizationId: string): UpdateOrganization => {
 
   return async (updater): Promise<OrganizationRep> => {
     const organization = await organizationApi.update(organizationId, updater);
-    setOrganizations((currVal) => new Map(currVal).set(organization.id, organization));
+    setOrganizations((currVal) => {
+      const newVal = new Map(currVal);
+      newVal.set(organization.id, organization);
+      return newVal;
+    });
     if (organizationId === currentOrganizationId) {
       setCurrentOrganization(organization);
     }
