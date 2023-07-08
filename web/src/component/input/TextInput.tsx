@@ -7,6 +7,7 @@ import React, { ChangeEvent, useState } from 'react';
 
 export interface Props {
   copyButton?: boolean;
+  disabled?: boolean;
   errorMessage?: string;
   label: string;
   placeholder?: string;
@@ -17,6 +18,7 @@ export interface Props {
 const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
   ({
     copyButton = false,
+    disabled = false,
     errorMessage = undefined,
     label,
     placeholder = undefined,
@@ -39,6 +41,7 @@ const TextInput: React.ForwardRefRenderFunction<HTMLInputElement, Props> =
           <input
             ref={ref}
             className={classNames(styles.input, { [styles.copyable]: copyButton })}
+            disabled={disabled}
             placeholder={placeholder}
             value={value}
             onBlur={handleBlur}

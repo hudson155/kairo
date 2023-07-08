@@ -19,15 +19,19 @@
   height: var(--size-input-height);
   padding: var(--gap-small) var(--gap-smallPlus);
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: var(--color-font-faded);
+  }
+
   /**
    * Inputs with a copy button are a bit smaller,
    * so we sacrifice a bit of the padding to compensate.
    */
   &.copyable {
     padding-right: var(--gap-small);
-  }
-
-  &::placeholder {
-    color: var(--color-font-faded);
   }
 }
