@@ -8,8 +8,8 @@ plugins {
 main {
   dependencies {
     implementation(project(":feature:form:auth"))
-    api(project(":feature:form:interface"))
-    implementation(project(":feature:form:client"))
+    api(project(":feature:form:rest-interface"))
+    implementation(project(":feature:form:rest-client"))
 
     api(project(":common:feature"))
     implementation(project(":feature:rest:feature"))

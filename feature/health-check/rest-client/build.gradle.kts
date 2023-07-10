@@ -6,7 +6,7 @@ plugins {
 
 main {
   dependencies {
-    api(project(":feature:health-check:interface"))
+    api(project(":feature:health-check:rest-interface"))
     api(project(":feature:rest:client"))
   }
 }

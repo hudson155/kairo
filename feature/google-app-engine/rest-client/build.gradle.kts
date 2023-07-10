@@ -6,7 +6,7 @@ plugins {
 
 main {
   dependencies {
-    api(project(":feature:google-app-engine:interface"))
+    api(project(":feature:google-app-engine:rest-interface"))
     api(project(":feature:rest:client"))
   }
 }

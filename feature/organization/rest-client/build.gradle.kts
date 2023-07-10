@@ -1,3 +1,4 @@
+import limber.gradle.Dependencies.Testing.Junit.api
 import limber.gradle.plugin.main
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
 
 main {
   dependencies {
-    api(project(":feature:form:interface"))
+    api(project(":feature:organization:rest-interface"))
     api(project(":feature:rest:client"))
   }
 }
