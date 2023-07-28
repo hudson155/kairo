@@ -52,7 +52,9 @@ public abstract class RestEndpointHandler<E : RestEndpoint<*>, R : Any?>(endpoin
           return@withContext result
         }
         result ?: throw NotFoundException()
-        call.respond<Any>(status(result), result)
+        val statusCode = status(result)
+        if (result == Unit) call.respond(statusCode)
+        call.respond<Any>(statusCode, result)
       }
       logger.info {
         "${call.response.status() ?: "Unhandled"}: ${call.request.httpMethod.value} - ${call.request.path()}"
