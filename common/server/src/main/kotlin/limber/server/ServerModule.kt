@@ -13,6 +13,7 @@ import limber.util.id.RandomIdGenerator
 import java.time.Clock
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import kotlin.reflect.KClass
 
 internal class ServerModule(private val config: Config) : PrivateModule() {
   override fun configure() {
@@ -21,10 +22,10 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
     bind(Clock::class.java).toInstance(createClock())
     expose(Clock::class.java)
 
-    bind(GuidGenerator::class.java).toInstance(createGuidGenerator())
+    bind(GuidGenerator::class.java).to(guidGenerator().java).asEagerSingleton()
     expose(GuidGenerator::class.java)
 
-    bind(IdGenerator.Factory::class.java).toInstance(createIdGenerator())
+    bind(IdGenerator.Factory::class.java).to(idGenerator().java).asEagerSingleton()
     expose(IdGenerator.Factory::class.java)
   }
 
@@ -40,15 +41,15 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
       ClockConfig.Type.Real -> Clock.systemUTC() // Always use UTC if the clock is to be real.
     }
 
-  private fun createGuidGenerator(): GuidGenerator =
+  private fun guidGenerator(): KClass<out GuidGenerator> =
     when (config.ids.generation) {
-      IdsConfig.Generation.Deterministic -> DeterministicGuidGenerator()
-      IdsConfig.Generation.Random -> RandomGuidGenerator()
+      IdsConfig.Generation.Deterministic -> DeterministicGuidGenerator::class
+      IdsConfig.Generation.Random -> RandomGuidGenerator::class
     }
 
-  private fun createIdGenerator(): IdGenerator.Factory =
+  private fun idGenerator(): KClass<out IdGenerator.Factory> =
     when (config.ids.generation) {
-      IdsConfig.Generation.Deterministic -> DeterministicIdGenerator.Factory()
-      IdsConfig.Generation.Random -> RandomIdGenerator.Factory()
+      IdsConfig.Generation.Deterministic -> DeterministicIdGenerator.Factory::class
+      IdsConfig.Generation.Random -> RandomIdGenerator.Factory::class
     }
 }
