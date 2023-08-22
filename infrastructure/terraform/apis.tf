@@ -17,6 +17,7 @@ resource "google_project_service" "gcp_services" {
 locals {
   gcp_services = toset([
     "appengine.googleapis.com",
+    "appenginereporting.googleapis.com",
     "artifactregistry.googleapis.com",
     "autoscaling.googleapis.com",
     "bigquery.googleapis.com",
@@ -24,7 +25,6 @@ locals {
     "bigquerystorage.googleapis.com",
     "cloudapis.googleapis.com",
     "cloudbuild.googleapis.com",
-    "clouddebugger.googleapis.com",
     "cloudtrace.googleapis.com",
     "compute.googleapis.com",
     "container.googleapis.com",
@@ -35,6 +35,7 @@ locals {
     "iamcredentials.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
+    "networkconnectivity.googleapis.com",
     "oslogin.googleapis.com",
     "pubsub.googleapis.com",
     "secretmanager.googleapis.com",
