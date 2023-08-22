@@ -44,6 +44,12 @@ data "google_iam_policy" "limberapp_io" {
     ]
   }
   binding {
+    role = "roles/cloudfunctions.serviceAgent"
+    members = [
+      "serviceAccount:service-${google_project.limberapp_io.number}@gcf-admin-robot.iam.gserviceaccount.com",
+    ]
+  }
+  binding {
     role = "roles/compute.serviceAgent"
     members = [
       "serviceAccount:service-${google_project.limberapp_io.number}@compute-system.iam.gserviceaccount.com",
