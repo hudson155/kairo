@@ -8,6 +8,7 @@ plugins {
 main {
   dependencies {
     implementation(project(":feature:organization:auth"))
+    implementation(project(":feature:organization:internal-interface"))
     api(project(":feature:organization:rest-interface"))
     implementation(project(":feature:organization:rest-client"))
 

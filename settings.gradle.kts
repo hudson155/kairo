@@ -52,6 +52,7 @@ include(":feature:health-check:rest-interface")
 
 include(":feature:organization:auth")
 include(":feature:organization:feature")
+include(":feature:organization:internal-interface")
 include(":feature:organization:rest-client")
 include(":feature:organization:rest-interface")
 

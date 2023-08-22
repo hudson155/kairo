@@ -21,7 +21,7 @@ public data class OrganizationAuthModel(
     val auth0OrganizationId: String?,
     val auth0OrganizationName: String,
   ) {
-    internal constructor(auth: OrganizationAuthModel) : this(
+    public constructor(auth: OrganizationAuthModel) : this(
       auth0OrganizationId = auth.auth0OrganizationId,
       auth0OrganizationName = auth.auth0OrganizationName,
     )

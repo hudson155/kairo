@@ -31,7 +31,7 @@ public data class FeatureModel(
     val iconName: String?,
     val rootPath: String,
   ) {
-    internal constructor(feature: FeatureModel) : this(
+    public constructor(feature: FeatureModel) : this(
       isDefault = feature.isDefault,
       name = feature.name,
       iconName = feature.iconName,
