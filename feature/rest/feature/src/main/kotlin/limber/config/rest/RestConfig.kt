@@ -41,11 +41,11 @@ public data class RestConfig(
     /**
      * The "quiet period" as described in the documentation.
      */
-    val gracePeriodMillis: Long,
+    val gracePeriodMs: Long,
     /**
      * The maximum amount of time to wait until the executor is shut down,
      * regardless if a task was submitted during the "quiet period"
      */
-    val timeoutMillis: Long,
+    val timeoutMs: Long,
   )
 }

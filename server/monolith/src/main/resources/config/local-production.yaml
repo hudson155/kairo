@@ -17,8 +17,8 @@ rest:
     shutDown:
       type: Replace
       value:
-        gracePeriodMillis: 400
-        timeoutMillis: 5000 # 5 seconds.
+        gracePeriodMs: 400
+        timeoutMs: 5000 # 5 seconds.
 
 server:
   type: Merge

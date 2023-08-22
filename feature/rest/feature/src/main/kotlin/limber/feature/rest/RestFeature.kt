@@ -65,8 +65,8 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
     ktor?.let { engine ->
       logger.info { "Stopping Ktor application engine..." }
       engine.stop(
-        gracePeriodMillis = config.shutDown.gracePeriodMillis,
-        timeoutMillis = config.shutDown.timeoutMillis,
+        gracePeriodMillis = config.shutDown.gracePeriodMs,
+        timeoutMillis = config.shutDown.timeoutMs,
       )
     }
   }

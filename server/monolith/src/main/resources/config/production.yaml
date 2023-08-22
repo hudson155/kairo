@@ -32,8 +32,8 @@ rest:
     name: PORT
   serverName: Limber
   shutDown:
-    gracePeriodMillis: 5000 # 5 seconds.
-    timeoutMillis: 12000 # 12 seconds.
+    gracePeriodMs: 5000 # 5 seconds.
+    timeoutMs: 12000 # 12 seconds.
 
 restClient:
   baseUrls:
