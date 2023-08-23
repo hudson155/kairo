@@ -12,7 +12,9 @@ public typealias Updater<T> = (existing: T) -> T
  * The [update] passed to [block] is the transformed rep (after the [Updater] has run).
  */
 public operator fun <T : Any> Updater<T>.invoke(block: (update: T) -> Unit): Updater<T> =
-  { existing -> this(existing).also(block) }
+  { existing ->
+    this(existing).also(block)
+  }
 
 /**
  * Returns the [new] value, defaulting to the [existing] one.

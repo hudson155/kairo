@@ -12,7 +12,7 @@ dependencies {
   api(kotlin("gradle-plugin", "1.9.0"))
 
   // https://plugins.gradle.org/plugin/io.gitlab.arturbosch.detekt.
-  api("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0") // Bump in Versions.kt too.
+  api("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1") // Bump in Versions.kt too.
 
   // https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
   api("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")

@@ -11,11 +11,12 @@ internal class HealthCheckServiceImpl @Inject constructor(
   healthCheckClient: HealthCheckClient,
   private val jdbi: Jdbi,
 ) : HealthCheckService(healthCheckClient) {
-  override val healthChecks: Map<String, HealthCheck> = mapOf(
-    "http" to HealthCheck(::httpHealthCheck),
-    "server" to HealthCheck(::serverHealthCheck),
-    "sql" to HealthCheck(::sqlHealthCheck),
-  )
+  override val healthChecks: Map<String, HealthCheck> =
+    mapOf(
+      "http" to HealthCheck(::httpHealthCheck),
+      "server" to HealthCheck(::serverHealthCheck),
+      "sql" to HealthCheck(::sqlHealthCheck),
+    )
 
   private suspend fun sqlHealthCheck(): HealthCheckRep.State =
     healthyIfNoException {

@@ -17,6 +17,7 @@ import kotlin.concurrent.withLock
  *
  * See the root README for more detail.
  */
+@Suppress("SleepInsteadOfDelay")
 public abstract class Server<C : Config>(private val config: C) {
   private val logger: KLogger = KotlinLogging.logger {}
 

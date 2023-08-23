@@ -3,7 +3,9 @@ package limber.config.deserializer
 private typealias CommandGetter = (command: String) -> String
 
 private val defaultGetter: CommandGetter = { command ->
-  Runtime.getRuntime().exec(arrayOf("sh", "-c", command)).inputReader().readLines().single()
+  val runtime = Runtime.getRuntime()
+  val result = runtime.exec(arrayOf("sh", "-c", command))
+  result.inputReader().readLines().single()
 }
 
 /**

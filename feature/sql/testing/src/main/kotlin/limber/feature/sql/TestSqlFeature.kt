@@ -18,11 +18,12 @@ public class TestSqlFeature(
 
   @Suppress("SqlNoDataSourceInspection", "SqlResolve")
   private fun Connection.truncateAllTables() {
-    val select = """
+    val select =
+      """
       select schemaname, tablename
       from pg_tables
       where schemaname in (${schemaNames.joinToString { "'$it'" }})
-    """.trimIndent()
+      """.trimIndent()
     val resultSet = createStatement().executeQuery(select)
     val tables = buildList<Pair<String, String>> {
       while (resultSet.next()) {

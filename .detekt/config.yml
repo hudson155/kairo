@@ -42,11 +42,6 @@ complexity:
     active: true
     excludes:
       - '**/test/**'
-      - '**/androidTest/**'
-      - '**/commonTest/**'
-      - '**/jvmTest/**'
-      - '**/jsTest/**'
-      - '**/iosTest/**'
     threshold: 30
   NamedArguments:
     active: true
@@ -60,16 +55,13 @@ complexity:
       - '**/kotlin/limber/api/**/*Api.kt' # Paths necessitate string duplication.
       - '**/kotlin/limber/store/**/*Store.kt' # Binding arguments necessitates string duplication.
       - '**/test/**'
-      - '**/androidTest/**'
-      - '**/commonTest/**'
-      - '**/jvmTest/**'
-      - '**/jsTest/**'
-      - '**/iosTest/**'
   TooManyFunctions:
     active: false
 
 coroutines:
   GlobalCoroutineUsage:
+    active: true
+  SuspendFunSwallowedCancellation:
     active: true
   SuspendFunWithCoroutineScopeReceiver:
     active: true
@@ -85,69 +77,43 @@ exceptions:
 formatting:
   AnnotationOnSeparateLine:
     active: false
-  AnnotationSpacing:
+  ClassName:
     active: true
-  ArgumentListWrapping:
+  ContextReceiverMapping:
     active: true
-    indentSize: 2
-  BlockCommentInitialStarAlignment:
-    active: true
-  CommentWrapping:
-    active: true
-    indentSize: 2
   DiscouragedCommentLocation:
     active: true
-  EnumEntryNameCase:
-    active: true
+  EnumWrapping:
+    active: false # TODO: Disabled due to false positives. Enable this later.
   Filename:
     active: false # Overlaps with naming>MatchingDeclarationName.
-  FunKeywordSpacing:
+  IfElseBracing:
     active: true
-  FunctionReturnTypeSpacing:
-    active: true
-  FunctionStartOfBodySpacing:
-    active: true
-  FunctionTypeReferenceSpacing:
+  IfElseWrapping:
     active: true
   Indentation:
     active: true
     indentSize: 2
-  KdocWrapping:
+  NoConsecutiveComments:
     active: true
-    indentSize: 2
-  ModifierListSpacing:
+  NoEmptyFirstLineInClassBody:
     active: true
-  MultiLineIfElse:
-    active: true
-  NoEmptyFirstLineInMethodBlock:
-    active: true
-  NullableTypeSpacing:
-    active: true
-  PackageName:
+  NoSingleLineBlockComment:
     active: true
   ParameterListSpacing:
     active: true
-  SpacingAroundAngleBrackets:
+  StringTemplateIndent:
     active: true
-  SpacingAroundDoubleColon:
-    active: true
-  SpacingAroundUnaryOperator:
-    active: true
-  SpacingBetweenDeclarationsWithAnnotations:
-    active: true
-  SpacingBetweenDeclarationsWithComments:
-    active: true
-  SpacingBetweenFunctionNameAndOpeningParenthesis:
-    active: true
+    indentSize: 2
   TrailingCommaOnCallSite:
     active: true
   TrailingCommaOnDeclarationSite:
     active: true
+  TryCatchFinallySpacing:
+    active: true
   TypeArgumentListSpacing:
     active: true
   TypeParameterListSpacing:
-    active: true
-  UnnecessaryParenthesesBeforeTrailingLambda:
     active: true
 
 naming:
@@ -210,6 +176,8 @@ potential-bugs:
     active: true
   NullCheckOnMutableProperty:
     active: true
+  PropertyUsedBeforeDeclaration:
+    active: true
   UnconditionalJumpStatementInLoop:
     active: true
   UnnecessaryNotNullCheck:
@@ -217,6 +185,10 @@ potential-bugs:
 
 style:
   AlsoCouldBeApply:
+    active: true
+  BracesOnIfStatements:
+    active: true
+  BracesOnWhenStatements:
     active: true
   CanBeNonNullable:
     active: true
@@ -228,9 +200,13 @@ style:
     active: true
   DataClassShouldBeImmutable:
     active: true
+  DoubleNegativeLambda:
+    active: true
   EqualsOnSignatureLine:
     active: true
   ExplicitCollectionElementAccessMethod:
+    active: true
+  ForbiddenAnnotation:
     active: true
   ForbiddenComment:
     active: false
@@ -264,16 +240,11 @@ style:
     active: false # Overlaps with formatting>ModifierOrdering.
   MultilineLambdaItParameter:
     active: true
-  MultilineRawStringIndentation:
-    active: true
-    indentSize: 2
   NewLineAtEndOfFile:
     active: false # Overlaps with formatting>FinalNewline.
   NoTabs:
     active: true
   NullableBooleanCheck:
-    active: true
-  OptionalWhenBraces:
     active: true
   RedundantExplicitType:
     active: true
@@ -293,6 +264,8 @@ style:
     active: true
   UnnecessaryBackticks:
     active: true
+  UnnecessaryBracesAroundTrailingLambda:
+    active: true
   UnnecessaryInnerClass:
     active: true
   UnnecessaryParentheses:
@@ -306,6 +279,8 @@ style:
   UseEmptyCounterpart:
     active: true
   UseIfEmptyOrIfBlank:
+    active: true
+  UseLet:
     active: true
   UseSumOfInsteadOfFlatMapSize:
     active: true

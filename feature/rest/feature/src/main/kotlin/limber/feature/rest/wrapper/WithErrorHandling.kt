@@ -38,14 +38,18 @@ internal suspend fun withErrorHandling(call: ApplicationCall, block: suspend () 
 private suspend fun ApplicationCall.handleAuth(e: AuthException) {
   logger.debug(e) { "${e.status}." }
   when (e.status) {
-    AuthException.Status.Unauthorized -> respond(
-      status = HttpStatusCode.Unauthorized,
-      message = UnauthorizedErrorRep(e.userMessage),
-    )
-    AuthException.Status.Forbidden -> respond(
-      status = HttpStatusCode.Forbidden,
-      message = ForbiddenErrorRep(e.userMessage),
-    )
+    AuthException.Status.Unauthorized -> {
+      respond(
+        status = HttpStatusCode.Unauthorized,
+        message = UnauthorizedErrorRep(e.userMessage),
+      )
+    }
+    AuthException.Status.Forbidden -> {
+      respond(
+        status = HttpStatusCode.Forbidden,
+        message = ForbiddenErrorRep(e.userMessage),
+      )
+    }
   }
 }
 

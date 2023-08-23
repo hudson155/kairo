@@ -31,13 +31,19 @@ public sealed class PermissionValue {
   internal class Deserializer : StdDeserializer<PermissionValue>(PermissionValue::class.java) {
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): PermissionValue? {
       when (val json = p.readValueAsTree<JsonNode>()) {
-        is NullNode -> return null
+        is NullNode -> {
+          return null
+        }
         is TextNode -> {
           require(json.textValue() == "*") // The only supported string is "*".
           return All
         }
-        is ArrayNode -> return Some(json.map { it.textValue() }.toSet())
-        else -> error("Unsupported JsonNode type: ${json::class.simpleName}.")
+        is ArrayNode -> {
+          return Some(json.map { it.textValue() }.toSet())
+        }
+        else -> {
+          error("Unsupported JsonNode type: ${json::class.simpleName}.")
+        }
       }
     }
   }

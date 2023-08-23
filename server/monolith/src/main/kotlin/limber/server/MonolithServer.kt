@@ -13,14 +13,15 @@ import limber.feature.sql.SqlFeature
 import limber.service.healthCheck.HealthCheckServiceImpl
 
 internal class MonolithServer(config: MonolithServerConfig) : Server<MonolithServerConfig>(config) {
-  override val features = setOf(
-    Auth0Feature(config.auth0),
-    EventFeature(config.event),
-    FormFeature(RestImplementation.Local),
-    GoogleAppEngineFeature(config.restClient.baseUrls.self),
-    HealthCheckFeature(HealthCheckServiceImpl::class, config.restClient.baseUrls.self),
-    OrganizationFeature(RestImplementation.Local),
-    RestFeature(config.rest),
-    SqlFeature(config.sql),
-  )
+  override val features =
+    setOf(
+      Auth0Feature(config.auth0),
+      EventFeature(config.event),
+      FormFeature(RestImplementation.Local),
+      GoogleAppEngineFeature(config.restClient.baseUrls.self),
+      HealthCheckFeature(HealthCheckServiceImpl::class, config.restClient.baseUrls.self),
+      OrganizationFeature(RestImplementation.Local),
+      RestFeature(config.rest),
+      SqlFeature(config.sql),
+    )
 }

@@ -55,10 +55,14 @@ public object ObjectMapperFactory {
 
 private fun factory(format: ObjectMapperFactory.Format): JsonFactory =
   when (format) {
-    ObjectMapperFactory.Format.Json -> JsonFactory()
-    ObjectMapperFactory.Format.Yaml -> YAMLFactory()
-      .configure(YAMLGenerator.Feature.WRITE_DOC_START_MARKER, false)
-      .configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true)
-      .configure(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR, true)
-      .configure(YAMLParser.Feature.EMPTY_STRING_AS_NULL, false)
+    ObjectMapperFactory.Format.Json -> {
+      JsonFactory()
+    }
+    ObjectMapperFactory.Format.Yaml -> {
+      YAMLFactory()
+        .configure(YAMLGenerator.Feature.WRITE_DOC_START_MARKER, false)
+        .configure(YAMLGenerator.Feature.MINIMIZE_QUOTES, true)
+        .configure(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR, true)
+        .configure(YAMLParser.Feature.EMPTY_STRING_AS_NULL, false)
+    }
   }

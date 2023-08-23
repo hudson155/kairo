@@ -38,7 +38,10 @@ internal class ServerModule(private val config: Config) : PrivateModule() {
         Clock.fixed(instant, zoneId)
       }
 
-      ClockConfig.Type.Real -> Clock.systemUTC() // Always use UTC if the clock is to be real.
+      ClockConfig.Type.Real -> {
+        // Always use UTC if the clock is to be real.
+        Clock.systemUTC()
+      }
     }
 
   private fun guidGenerator(): KClass<out GuidGenerator> =

@@ -20,9 +20,10 @@ import kotlin.reflect.KClass
  * Loads configs from YAML files.
  */
 public object ConfigLoader {
-  private val objectMapper: ObjectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Yaml) {
-    module.addConfigDeserializers()
-  }.build()
+  private val objectMapper: ObjectMapper =
+    ObjectMapperFactory.builder(ObjectMapperFactory.Format.Yaml) {
+      module.addConfigDeserializers()
+    }.build()
 
   public inline fun <reified C : Config> load(configName: String): C =
     load(configName, C::class)
@@ -46,16 +47,26 @@ public object ConfigLoader {
   private fun merge(extends: ObjectNode, config: ObjectNode): ObjectNode {
     config.fields().forEach { (fieldName, fieldValue) ->
       when (fieldValue) {
-        is ArrayNode, is ValueNode -> extends.set(fieldName, fieldValue)
-        is ObjectNode -> when (objectMapper.convertValue<CascadeType>(fieldValue["type"])) {
-          CascadeType.Merge -> {
-            val merged = merge(extends[fieldName] as ObjectNode, objectMapper.convertValue(fieldValue["value"]))
-            extends.set(fieldName, merged)
-          }
-          CascadeType.Remove -> extends.remove(fieldName)
-          CascadeType.Replace -> extends.set(fieldName, objectMapper.convertValue<JsonNode>(fieldValue["value"]))
+        is ArrayNode, is ValueNode -> {
+          extends.set(fieldName, fieldValue)
         }
-        else -> error("Unsupported JsonNode type: ${fieldValue::class.simpleName}.")
+        is ObjectNode -> {
+          when (objectMapper.convertValue<CascadeType>(fieldValue["type"])) {
+            CascadeType.Merge -> {
+              val merged = merge(extends[fieldName] as ObjectNode, objectMapper.convertValue(fieldValue["value"]))
+              extends.set(fieldName, merged)
+            }
+            CascadeType.Remove -> {
+              extends.remove(fieldName)
+            }
+            CascadeType.Replace -> {
+              extends.set(fieldName, objectMapper.convertValue<JsonNode>(fieldValue["value"]))
+            }
+          }
+        }
+        else -> {
+          error("Unsupported JsonNode type: ${fieldValue::class.simpleName}.")
+        }
       }
     }
     return extends

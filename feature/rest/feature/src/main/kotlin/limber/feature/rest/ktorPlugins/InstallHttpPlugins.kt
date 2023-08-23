@@ -41,9 +41,10 @@ internal fun Application.installHttpPlugins() {
    * We use Jackson for serialization. See the serialization library.
    */
   install(ContentNegotiation) {
-    val objectMapper = ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).apply {
-      addModule(StringTrimModule)
-    }.build()
+    val objectMapper =
+      ObjectMapperFactory.builder(ObjectMapperFactory.Format.Json).apply {
+        addModule(StringTrimModule)
+      }.build()
     register(contentType = ContentType.Application.Json, converter = JacksonConverter(objectMapper))
   }
 

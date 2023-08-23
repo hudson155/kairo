@@ -28,7 +28,7 @@ object DetektFeature : PluginFeature {
 
     target.extensions.configure<DetektExtension> {
       toolVersion = Versions.detekt
-      config = target.files("${target.rootDir}/.detekt/config.yml")
+      config.from(target.files("${target.rootDir}/.detekt/config.yml"))
       parallel = true
       buildUponDefaultConfig = true
     }

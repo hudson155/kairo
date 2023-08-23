@@ -4,7 +4,7 @@ import limber.config.rest.RestConfig
 import limber.feature.rest.RestFeature
 
 public class TestRestFeature(port: Int) : RestFeature(
-  RestConfig(
+  config = RestConfig(
     allowedHosts = emptyList(),
     auth = null,
     parallelization = RestConfig.Parallelization(

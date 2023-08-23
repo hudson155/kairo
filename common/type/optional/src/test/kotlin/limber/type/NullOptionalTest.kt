@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import java.util.Optional
 
 internal class NullOptionalTest : OptionalTest() {
-
   @Test
   override fun `equals method`() {
     OptionalWrapper.Nullable(null).shouldBe(OptionalWrapper.Nullable(null))

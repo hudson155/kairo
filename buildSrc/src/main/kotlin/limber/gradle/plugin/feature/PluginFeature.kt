@@ -1,8 +1,7 @@
 package limber.gradle.plugin.feature
 
-import org.gradle.api.NamedDomainObjectProvider
+import limber.gradle.plugin.SourceSet
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 /**
  * Plugins are separated into [PluginFeature]s
@@ -14,11 +13,11 @@ interface PluginFeature {
    * Provides an interface for installing both multiplatform and JVM-specific dependencies.
    */
   interface Context {
-    abstract fun commonMain(target: Project): NamedDomainObjectProvider<KotlinSourceSet>
-    abstract fun commonTest(target: Project): NamedDomainObjectProvider<KotlinSourceSet>
-    abstract fun jvmMain(target: Project): NamedDomainObjectProvider<KotlinSourceSet>
-    abstract fun jvmTest(target: Project): NamedDomainObjectProvider<KotlinSourceSet>
+    fun commonMain(target: Project): SourceSet
+    fun commonTest(target: Project): SourceSet
+    fun jvmMain(target: Project): SourceSet
+    fun jvmTest(target: Project): SourceSet
   }
 
-  abstract fun configure(target: Project, context: Context)
+  fun configure(target: Project, context: Context)
 }

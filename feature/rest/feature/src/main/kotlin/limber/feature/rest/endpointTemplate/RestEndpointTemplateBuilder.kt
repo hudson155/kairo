@@ -84,9 +84,10 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint<*>> {
 
       return parameters.associate { parameter ->
         val value = when (parameter) {
-          is Parameter.Body ->
+          is Parameter.Body -> {
             call.receive(parameter.delegate.type.jvmErasure)
-          is Parameter.Path ->
+          }
+          is Parameter.Path -> {
             call.parameters.getAll(parameter.name)?.let { parameters ->
               val typeInfo = TypeInfo(
                 type = parameter.delegate.type.classifier as KClass<*>,
@@ -95,6 +96,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint<*>> {
               )
               return@let conversionService.fromValues(parameters, typeInfo)
             }
+          }
         }
         return@associate Pair(parameter, value)
       }

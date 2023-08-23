@@ -11,7 +11,7 @@ object Versions {
   const val auth0JwksRsa = "0.22.0"
 
   // https://github.com/detekt/detekt/releases.
-  const val detekt = "1.22.0"
+  const val detekt = "1.23.1"
 
   // https://github.com/eclipse-ee4j/expressly/releases.
   const val expressly = "5.0.0"
