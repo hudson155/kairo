@@ -19,6 +19,13 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
+  fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
+    handle { handle ->
+      val query = handle.createQuery(rs("store/organizationHostname/listByOrganization.sql"))
+      query.bind("organizationId", organizationId)
+      return@handle query.mapToType().toList()
+    }
+
   fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
     transaction { handle ->
       logger.info { "Creating organization hostname: $creator." }

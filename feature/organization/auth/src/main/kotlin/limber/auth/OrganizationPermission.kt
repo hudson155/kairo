@@ -21,6 +21,7 @@ public enum class OrganizationPermission {
   Organization_Read,
   Organization_Update,
   OrganizationHostname_Read,
+  OrganizationHostname_List,
   ;
 
   @JsonValue

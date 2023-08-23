@@ -15,6 +15,9 @@ internal class OrganizationHostnameService @Inject constructor(
   fun get(id: String): OrganizationHostnameModel? =
     hostnameStore.get(id)
 
+  fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
+    hostnameStore.listByOrganization(organizationId)
+
   fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel {
     val hostname = hostnameStore.create(creator)
     publisher.publish(EventType.Created, hostname)

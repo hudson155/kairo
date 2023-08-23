@@ -15,6 +15,11 @@ public class HttpOrganizationHostnameClient @Inject constructor(
     client.request(endpoint)
 
   override suspend operator fun invoke(
+    endpoint: OrganizationHostnameApi.ListByOrganization,
+  ): List<OrganizationHostnameRep> =
+    client.request(endpoint)
+
+  override suspend operator fun invoke(
     endpoint: OrganizationHostnameApi.Create,
   ): OrganizationHostnameRep =
     client.request(endpoint)

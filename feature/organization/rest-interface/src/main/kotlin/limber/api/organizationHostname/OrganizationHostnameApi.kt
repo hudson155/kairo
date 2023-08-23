@@ -13,6 +13,13 @@ public object OrganizationHostnameApi {
     override val path: String = "/hostnames/$hostnameId"
   }
 
+  public data class ListByOrganization(
+    val organizationId: String,
+  ) : RestEndpoint<Nothing>() {
+    override val method: HttpMethod = HttpMethod.Get
+    override val path: String = "/organizations/$organizationId/hostnames"
+  }
+
   public data class Create(
     val organizationId: String,
     @Valid override val body: OrganizationHostnameRep.Creator?,

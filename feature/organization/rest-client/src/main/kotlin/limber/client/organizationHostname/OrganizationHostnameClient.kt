@@ -9,6 +9,10 @@ public interface OrganizationHostnameClient {
   ): OrganizationHostnameRep?
 
   public suspend operator fun invoke(
+    endpoint: OrganizationHostnameApi.ListByOrganization,
+  ): List<OrganizationHostnameRep>
+
+  public suspend operator fun invoke(
     endpoint: OrganizationHostnameApi.Create,
   ): OrganizationHostnameRep
 
