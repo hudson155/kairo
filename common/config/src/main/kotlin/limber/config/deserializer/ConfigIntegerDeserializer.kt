@@ -11,7 +11,6 @@ import mu.KotlinLogging
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-@Suppress("UseIfInsteadOfWhen")
 public class ConfigIntegerDeserializer : StdNodeBasedDeserializer<Int>(
   Int::class.java,
 ) {

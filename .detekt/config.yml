@@ -307,8 +307,6 @@ style:
     active: true
   UseIfEmptyOrIfBlank:
     active: true
-  UseIfInsteadOfWhen:
-    active: true
   UseSumOfInsteadOfFlatMapSize:
     active: true
   VarCouldBeVal:

@@ -10,7 +10,6 @@ import mu.KotlinLogging
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-@Suppress("UseIfInsteadOfWhen")
 public class ProtectedConfigStringDeserializer : StdNodeBasedDeserializer<ProtectedString>(
   ProtectedString::class.java,
 ) {
