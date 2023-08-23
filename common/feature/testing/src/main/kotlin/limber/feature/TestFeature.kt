@@ -4,5 +4,5 @@ public interface TestFeature {
   /**
    * Called after each test.
    */
-  public fun afterEach()
+  public fun afterEach(): Unit = Unit
 }
