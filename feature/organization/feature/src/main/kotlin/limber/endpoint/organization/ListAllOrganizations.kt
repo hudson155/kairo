@@ -15,7 +15,7 @@ public class ListAllOrganizations @Inject internal constructor(
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.ListAll, List<Rep>>(Api.ListAll::class) {
   override suspend fun handler(endpoint: Api.ListAll): List<Rep> {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationList))
+    auth(PlatformPermissionAuth(PlatformPermission.Organization_List))
 
     val organizations = organizationService.listAll()
 

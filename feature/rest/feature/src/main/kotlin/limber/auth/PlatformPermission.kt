@@ -10,17 +10,21 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
  * Represents permissions that apply across the platform
  * (rather than to a particular Organization or Feature).
  */
+@Suppress("EnumEntryName", "EnumEntryNameCase", "EnumNaming")
 @JsonDeserialize(using = PlatformPermission.Deserializer::class)
-public enum class PlatformPermission(@JsonValue internal val value: String) {
-  OrganizationList("organization:list"),
-  OrganizationCreate("organization:create"),
-  OrganizationDelete("organization:delete"),
-  OrganizationAuthCreate("organizationAuth:create"),
-  OrganizationAuthUpdate("organizationAuth:update"),
-  OrganizationAuthDelete("organizationAuth:delete"),
-  OrganizationHostnameCreate("organizationHostname:create"),
-  OrganizationHostnameDelete("organizationHostname:delete"),
+public enum class PlatformPermission {
+  Organization_List,
+  Organization_Create,
+  Organization_Delete,
+  OrganizationAuth_Create,
+  OrganizationAuth_Update,
+  OrganizationAuth_Delete,
+  OrganizationHostname_Create,
+  OrganizationHostname_Delete,
   ;
+
+  @JsonValue
+  internal val value: String = permissionKey(this)
 
   /**
    * Uses [PlatformPermission]'s [value] field to deserialize.
@@ -34,5 +38,18 @@ public enum class PlatformPermission(@JsonValue internal val value: String) {
       val string = p.readValueAs(String::class.java) ?: return null
       return byValue[string]
     }
+  }
+}
+
+public fun permissionKey(permission: Enum<*>): String {
+  val name = permission.name
+  val match = Regex("(([A-Z][a-z]+)+)_(([A-Z][a-z]+)+)").matchEntire(name)
+  requireNotNull(match) { "$name doesn't match the required permission format." }
+  return buildString {
+    append(match.groupValues[1][0].lowercase())
+    append(match.groupValues[1].substring(1))
+    append(":")
+    append(match.groupValues[3][0].lowercase())
+    append(match.groupValues[3].substring(1))
   }
 }

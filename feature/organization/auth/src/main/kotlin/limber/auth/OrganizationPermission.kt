@@ -10,16 +10,20 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
  * Represents permissions that apply within an Organization,
  * but not to a particular Feature.
  */
+@Suppress("EnumEntryName", "EnumEntryNameCase", "EnumNaming")
 @JsonDeserialize(using = OrganizationPermission.Deserializer::class)
-public enum class OrganizationPermission(@JsonValue internal val value: String) {
-  FeatureRead("feature:read"),
-  FeatureCreate("feature:create"),
-  FeatureUpdate("feature:update"),
-  FeatureDelete("feature:delete"),
-  OrganizationRead("organization:read"),
-  OrganizationUpdate("organization:update"),
-  OrganizationHostnameRead("organizationHostname:read"),
+public enum class OrganizationPermission {
+  Feature_Read,
+  Feature_Create,
+  Feature_Update,
+  Feature_Delete,
+  Organization_Read,
+  Organization_Update,
+  OrganizationHostname_Read,
   ;
+
+  @JsonValue
+  internal val value: String = permissionKey(this)
 
   /**
    * Uses [OrganizationPermission]'s [value] field to deserialize.

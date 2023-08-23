@@ -17,7 +17,7 @@ public class UpdateOrganizationAuth @Inject internal constructor(
   private val authService: OrganizationAuthService,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthUpdate))
+    auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuth_Update))
 
     val update = getBody(endpoint)
     val auth = authService.update(endpoint.authId) { existing ->

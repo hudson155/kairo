@@ -15,7 +15,7 @@ public class DeleteOrganizationHostname @Inject internal constructor(
   private val hostnameService: OrganizationHostnameService,
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostnameDelete))
+    auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostname_Delete))
 
     val hostname = hostnameService.delete(endpoint.hostnameId)
 

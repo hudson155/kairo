@@ -15,7 +15,7 @@ public class DeleteOrganizationAuth @Inject internal constructor(
   private val authService: OrganizationAuthService,
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuthDelete))
+    auth(PlatformPermissionAuth(PlatformPermission.OrganizationAuth_Delete))
 
     val auth = authService.delete(endpoint.authId)
 

@@ -15,7 +15,7 @@ public class SearchOrganizations @Inject internal constructor(
   private val organizationService: OrganizationService,
 ) : RestEndpointHandler<Api.Search, List<Rep>>(Api.Search::class) {
   override suspend fun handler(endpoint: Api.Search): List<Rep> {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationList))
+    auth(PlatformPermissionAuth(PlatformPermission.Organization_List))
 
     val organizations = organizationService.search(endpoint.search)
 

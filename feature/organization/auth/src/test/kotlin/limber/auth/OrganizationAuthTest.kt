@@ -22,7 +22,7 @@ internal class OrganizationAuthTest {
     val organizationId = "org_0"
     val context = context(null)
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
+      test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No token provided.")
@@ -33,7 +33,7 @@ internal class OrganizationAuthTest {
     val organizationId = "org_0"
     val context = context(principal(null))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
+      test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No permissions claim on the provided token.")
@@ -43,11 +43,11 @@ internal class OrganizationAuthTest {
   fun `non-overlapping permissions`() {
     val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.Feature_Create.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
-      test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
+      test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
     }
     e.status.shouldBe(AuthException.Status.Forbidden)
     e.userMessage.shouldBe("Missing required permission feature:delete.")
@@ -57,11 +57,11 @@ internal class OrganizationAuthTest {
   fun `different organization id`() {
     val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
-      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.Feature_Create.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.Feature_Delete.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, "org_1"))
+    test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, "org_1"))
       .shouldBeFalse()
   }
 
@@ -69,11 +69,11 @@ internal class OrganizationAuthTest {
   fun `same organization id`() {
     val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
-      OrganizationPermission.FeatureDelete.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.Feature_Create.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.Feature_Delete.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
+    test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
       .shouldBeTrue()
   }
 
@@ -81,11 +81,11 @@ internal class OrganizationAuthTest {
   fun star() {
     val organizationId = "org_0"
     val permissions = mapOf(
-      OrganizationPermission.FeatureCreate.value to PermissionValue.Some(setOf(organizationId)),
-      OrganizationPermission.FeatureDelete.value to PermissionValue.All,
+      OrganizationPermission.Feature_Create.value to PermissionValue.Some(setOf(organizationId)),
+      OrganizationPermission.Feature_Delete.value to PermissionValue.All,
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.FeatureDelete, organizationId))
+    test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
       .shouldBeTrue()
   }
 
