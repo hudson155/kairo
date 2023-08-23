@@ -1,3 +1,6 @@
+event:
+  projectName: test
+
 sql:
   jdbcUrl: jdbc:postgresql://localhost/limber_test
   username:

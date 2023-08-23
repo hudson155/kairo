@@ -8,6 +8,7 @@ import limber.config.ConfigImpl
 import limber.config.ConfigLoader
 import limber.feature.TestRestFeature
 import limber.feature.auth0.TestAuth0Feature
+import limber.feature.event.TestEventFeature
 import limber.feature.organization.OrganizationFeature
 import limber.feature.rest.RestImplementation
 import limber.feature.sql.TestSqlFeature
@@ -23,6 +24,7 @@ internal abstract class IntegrationTest : FeatureIntegrationTest(
   ),
   supportingFeatures = setOf(
     TestAuth0Feature,
+    TestEventFeature(config.event),
     TestRestFeature(port = PORT),
     TestSqlFeature(config.sql, schemaName = "organization"),
   ),

@@ -5,6 +5,8 @@ import limber.exception.organization.OrganizationDoesNotExist
 import limber.exception.organizationAuth.OrganizationAuthIdIsNull
 import limber.feature.auth0.Auth0ManagementApi
 import limber.feature.auth0.rep.Auth0OrganizationRep
+import limber.feature.event.EventPublisher
+import limber.feature.event.EventType
 import limber.feature.sql.transaction
 import limber.model.organizationAuth.OrganizationAuthModel
 import limber.service.organization.OrganizationService
@@ -17,7 +19,10 @@ internal class OrganizationAuthService @Inject constructor(
   private val auth0ManagementApi: Auth0ManagementApi,
   private val jdbi: Jdbi,
   private val organizationService: OrganizationService,
+  publisher: EventPublisher.Factory,
 ) {
+  private val publisher: EventPublisher<OrganizationAuthModel> = publisher("organization-auth")
+
   fun get(authId: String): OrganizationAuthModel? =
     authStore.get(authId)
 
@@ -30,7 +35,7 @@ internal class OrganizationAuthService @Inject constructor(
   fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel {
     val organization = organizationService.get(creator.organizationId) ?: throw OrganizationDoesNotExist()
 
-    return jdbi.transaction {
+    val auth = jdbi.transaction {
       val auth = authStore.create(creator)
       val auth0Organization = auth0ManagementApi.createOrganization(
         creator = Auth0OrganizationRep.Creator(
@@ -45,10 +50,12 @@ internal class OrganizationAuthService @Inject constructor(
         )
       }
     }
+    publisher.publish(EventType.Created, auth)
+    return auth
   }
 
-  fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
-    jdbi.transaction {
+  fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel {
+    val auth = jdbi.transaction {
       val auth = authStore.update(id, updater)
       auth0ManagementApi.updateOrganization(
         organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
@@ -58,13 +65,19 @@ internal class OrganizationAuthService @Inject constructor(
       )
       return@transaction auth
     }
+    publisher.publish(EventType.Updated, auth)
+    return auth
+  }
 
-  fun delete(authId: String): OrganizationAuthModel =
-    jdbi.transaction {
+  fun delete(authId: String): OrganizationAuthModel {
+    val auth = jdbi.transaction {
       val auth = authStore.delete(authId)
       auth0ManagementApi.deleteOrganization(
         organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
       )
       return@transaction auth
     }
+    publisher.publish(EventType.Deleted, auth)
+    return auth
+  }
 }
