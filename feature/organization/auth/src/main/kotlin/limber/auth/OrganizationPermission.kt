@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 @JsonDeserialize(using = OrganizationPermission.Deserializer::class)
 public enum class OrganizationPermission {
   Feature_Read,
+  Feature_List,
   Feature_Create,
   Feature_Update,
   Feature_Delete,
