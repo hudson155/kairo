@@ -37,6 +37,9 @@ include(":db:limber")
 include(":feature:auth0:feature")
 include(":feature:auth0:testing")
 
+include(":feature:event:feature")
+include(":feature:event:testing")
+
 include(":feature:form:auth")
 include(":feature:form:feature")
 include(":feature:form:rest-client")

@@ -21,6 +21,8 @@ object Dependencies {
   object Gcp {
     val postgresSocketFactory: String = "com.google.cloud.sql:postgres-socket-factory"
       .version(Versions.gcpPostgresSocketFactory)
+    val pubSub: String = "com.google.cloud:google-cloud-pubsub"
+      .version(Versions.gcpPubSub)
     val secretManager: String = "com.google.cloud:google-cloud-secretmanager"
       .version(Versions.gcpSecretManager)
   }

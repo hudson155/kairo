@@ -22,6 +22,9 @@ object Versions {
   // https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory/releases.
   const val gcpPostgresSocketFactory = "1.11.2"
 
+  // https://github.com/googleapis/java-pubsub/releases
+  const val gcpPubSub = "1.123.17"
+
   // https://github.com/googleapis/java-secretmanager/releases.
   const val gcpSecretManager = "2.3.10"
 
