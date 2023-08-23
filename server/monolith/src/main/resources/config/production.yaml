@@ -10,6 +10,11 @@ auth0:
 clock:
   type: Real
 
+event:
+  projectName: limberapp-io
+  publish:
+    shutdownMs: 5000
+
 ids:
   generation: Random
 

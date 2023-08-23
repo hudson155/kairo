@@ -6,6 +6,12 @@ auth0:
     managementApi:
       type: Fake
 
+event:
+  type: Merge
+  value:
+    publish:
+      type: Remove
+
 sql:
   type: Merge
   value:

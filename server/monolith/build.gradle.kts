@@ -11,6 +11,7 @@ main {
     implementation(project(":common:server"))
 
     implementation(project(":feature:auth0:feature"))
+    implementation(project(":feature:event:feature"))
     implementation(project(":feature:form:feature"))
     implementation(project(":feature:google-app-engine:feature"))
     implementation(project(":feature:health-check:feature"))
