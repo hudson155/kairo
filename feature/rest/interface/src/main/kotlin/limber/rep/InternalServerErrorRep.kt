@@ -1,5 +1,5 @@
 package limber.rep
 
-public object InternalServerErrorRep : ErrorRep() {
+public data object InternalServerErrorRep : ErrorRep() {
   override val message: String = "Internal server error."
 }

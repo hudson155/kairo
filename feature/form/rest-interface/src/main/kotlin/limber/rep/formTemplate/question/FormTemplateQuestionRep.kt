@@ -21,13 +21,13 @@ public sealed class FormTemplateQuestionRep {
     JsonSubTypes.Type(value = Required.Never::class, name = "Never"),
   )
   public sealed class Required {
-    public object Always : Required()
+    public data object Always : Required()
 
     public data class BooleanQuestion(
       val questionId: String,
       val condition: Boolean,
     ) : Required()
 
-    public object Never : Required()
+    public data object Never : Required()
   }
 }

@@ -23,6 +23,6 @@ public data class DateTimeQuestionRep(
       val value: ZonedDateTime,
     ) : Option()
 
-    public object Now : Option()
+    public data object Now : Option()
   }
 }

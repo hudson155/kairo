@@ -29,7 +29,7 @@ public sealed class AuthResult {
   /**
    * Should be used when authorization succeeds.
    */
-  public object Authorized : AuthResult()
+  public data object Authorized : AuthResult()
 
   /**
    * Should be used when the user tries to perform an action on an entity they do not have access to.
@@ -39,5 +39,5 @@ public sealed class AuthResult {
    * If the user does not have permission to perform the action,
    * use [Forbidden] instead.
    */
-  public object Failed : AuthResult()
+  public data object Failed : AuthResult()
 }

@@ -15,7 +15,7 @@ public object OrganizationApi {
     override val path: String = "/organizations/$organizationId"
   }
 
-  public object ListAll : RestEndpoint<Nothing>() {
+  public data object ListAll : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/organizations"
   }

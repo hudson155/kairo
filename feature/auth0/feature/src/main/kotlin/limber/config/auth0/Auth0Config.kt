@@ -13,7 +13,7 @@ public data class Auth0Config(
     JsonSubTypes.Type(value = ManagementApi.Real::class, name = "Real"),
   )
   public sealed class ManagementApi {
-    public object Fake : ManagementApi()
+    public data object Fake : ManagementApi()
 
     public data class Real(
       val domain: String,

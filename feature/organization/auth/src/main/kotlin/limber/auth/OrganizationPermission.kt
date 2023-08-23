@@ -27,7 +27,7 @@ public enum class OrganizationPermission(@JsonValue internal val value: String) 
    * Gracefully fails by returning null if the permission is unknown.
    */
   internal class Deserializer : StdDeserializer<OrganizationPermission>(OrganizationPermission::class.java) {
-    private val byValue = OrganizationPermission.values().associateBy { it.value }
+    private val byValue = entries.associateBy { it.value }
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): OrganizationPermission? {
       val string = p.readValueAs(String::class.java) ?: return null

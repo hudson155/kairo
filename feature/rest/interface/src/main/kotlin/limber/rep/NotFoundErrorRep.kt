@@ -1,5 +1,5 @@
 package limber.rep
 
-public object NotFoundErrorRep : ErrorRep() {
+public data object NotFoundErrorRep : ErrorRep() {
   override val message: String = "Not found."
 }

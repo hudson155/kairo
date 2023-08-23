@@ -28,7 +28,7 @@ public enum class PlatformPermission(@JsonValue internal val value: String) {
    * Gracefully fails by returning null if the permission is unknown.
    */
   internal class Deserializer : StdDeserializer<PlatformPermission>(PlatformPermission::class.java) {
-    private val byValue = PlatformPermission.values().associateBy { it.value }
+    private val byValue = entries.associateBy { it.value }
 
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): PlatformPermission? {
       val string = p.readValueAs(String::class.java) ?: return null

@@ -48,7 +48,7 @@ internal abstract class ObjectMapperFactoryTest(dataFormat: ObjectMapperFactory.
 
   abstract fun map()
 
-  protected object SingletonData {
+  protected data object SingletonData {
     const val constInt: Int = 42
 
     @Suppress("MayBeConst")

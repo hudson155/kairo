@@ -17,7 +17,7 @@ public const val PERMISSIONS_CLAIM_NAME: String = "permissions"
 public sealed class PermissionValue {
   public abstract operator fun contains(id: String): Boolean
 
-  public object All : PermissionValue() {
+  public data object All : PermissionValue() {
     override fun contains(id: String): Boolean = true
 
     @JsonValue

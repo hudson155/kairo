@@ -20,7 +20,7 @@ public data class FormTemplateVersionRep(
     JsonSubTypes.Type(value = Status.Archived::class, name = "Archived"),
   )
   public sealed class Status {
-    public object Draft : Status()
+    public data object Draft : Status()
 
     public data class Live(
       val liveAt: Instant,

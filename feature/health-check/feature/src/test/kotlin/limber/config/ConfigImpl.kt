@@ -1,3 +1,3 @@
 package limber.config
 
-internal object ConfigImpl : TestConfig()
+internal data object ConfigImpl : TestConfig()

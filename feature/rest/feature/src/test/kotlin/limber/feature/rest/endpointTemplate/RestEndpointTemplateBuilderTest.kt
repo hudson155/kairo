@@ -19,7 +19,7 @@ internal class RestEndpointTemplateBuilderTest {
     override val qp: List<QueryParam> = listOf(::eventId)
   }
 
-  internal object GetAll : RestEndpoint<Nothing>() {
+  internal data object GetAll : RestEndpoint<Nothing>() {
     override val method: HttpMethod = HttpMethod.Get
     override val path: String = "/celebrities"
   }
