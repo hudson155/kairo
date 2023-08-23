@@ -20,11 +20,11 @@ public open class Auth0Feature(private val config: Auth0Config) : Feature() {
   }
 
   private fun bindManagementApi() {
-    val managementApiKclass = when (config.managementApi) {
+    val api = when (config.managementApi) {
       is Auth0Config.ManagementApi.Fake -> FakeAuth0ManagementApi::class
       is Auth0Config.ManagementApi.Real -> RealAuth0ManagementApi::class
     }
-    bind(Auth0ManagementApi::class.java).to(managementApiKclass.java).asEagerSingleton()
+    bind(Auth0ManagementApi::class.java).to(api.java).asEagerSingleton()
     expose(Auth0ManagementApi::class.java)
   }
 }

@@ -72,7 +72,7 @@ public open class SqlFeature(private val config: SqlConfig) : Feature() {
     flyway.migrate()
   }
 
-  final override fun stop() {
+  final override fun stop(injector: Injector?) {
     logger.info { "Closing SQL data source..." }
     dataSource?.close()
   }

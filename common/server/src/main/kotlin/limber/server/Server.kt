@@ -90,7 +90,7 @@ public abstract class Server<C : Config>(private val config: C) {
       Thread.sleep(config.server.lifecycle.shutdownDelayMs)
       forEach { feature ->
         logger.info { "Server stop Feature: ${feature.name}." }
-        feature.stop()
+        feature.stop(injector)
       }
     }
   }

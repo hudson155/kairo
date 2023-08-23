@@ -46,6 +46,7 @@ public abstract class Feature : PrivateModule() {
 
   /**
    * Clean up resources.
+   * [injector] may be null if the Server did not start correctly.
    */
-  public open fun stop(): Unit = Unit
+  public open fun stop(injector: Injector?): Unit = Unit
 }

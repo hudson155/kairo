@@ -61,7 +61,7 @@ public open class RestFeature(private val config: RestConfig) : Feature() {
     ).start()
   }
 
-  override fun stop() {
+  override fun stop(injector: Injector?) {
     ktor?.let { engine ->
       logger.info { "Stopping Ktor application engine..." }
       engine.stop(
