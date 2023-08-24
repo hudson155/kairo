@@ -28,6 +28,10 @@ public open class EventFeature(
     expose(EventPublisher.Factory::class.java)
   }
 
+  override fun afterStart(injector: Injector) {
+    injector.getInstance(EventPublisher.Factory::class.java).start()
+  }
+
   final override fun stop(injector: Injector?) {
     injector?.let { it.getInstance(EventPublisher.Factory::class.java).stop() }
   }

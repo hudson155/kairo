@@ -3,6 +3,7 @@ package limber.feature.event
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.api.gax.batching.BatchingSettings
 import com.google.cloud.pubsub.v1.Publisher
+import com.google.cloud.pubsub.v1.TopicAdminClient
 import com.google.inject.Inject
 import com.google.protobuf.ByteString
 import com.google.pubsub.v1.PubsubMessage
@@ -52,6 +53,14 @@ public class RealEventPublisher<in T : Any>(
         .setIsEnabled(false)
         .build()
 
+    override fun start() {
+      TopicAdminClient.create().use { topicAdminClient ->
+        publishers.values.forEach { publisher ->
+          publisher.start(topicAdminClient)
+        }
+      }
+    }
+
     override fun stop() {
       publishers.values.forEach { publisher ->
         publisher.beginStop()
@@ -60,6 +69,14 @@ public class RealEventPublisher<in T : Any>(
         publisher.awaitStop()
       }
     }
+  }
+
+  /**
+   * Topics aren't created automatically.
+   * On start, getting the topic causes an exception to be thrown if the topic does not exist.
+   */
+  internal fun start(topicAdminClient: TopicAdminClient) {
+    topicAdminClient.getTopic(publisher.topicName)
   }
 
   override fun publish(type: EventType, body: T) {
@@ -71,11 +88,11 @@ public class RealEventPublisher<in T : Any>(
     publisher.publish(message).get()
   }
 
-  override fun beginStop() {
+  internal fun beginStop() {
     publisher.shutdown()
   }
 
-  override fun awaitStop() {
+  internal fun awaitStop() {
     publisher.awaitTermination(config.shutdownMs, TimeUnit.MILLISECONDS)
   }
 }

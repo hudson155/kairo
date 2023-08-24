@@ -9,6 +9,8 @@ public class FakeEventPublisher<in T : Any>(private val topicName: String) : Eve
     override fun <T : Any> invoke(topicName: String): EventPublisher<T> =
       FakeEventPublisher(topicName)
 
+    override fun start(): Unit = Unit
+
     override fun stop(): Unit = Unit
   }
 
@@ -17,8 +19,4 @@ public class FakeEventPublisher<in T : Any>(private val topicName: String) : Eve
   override fun publish(type: EventType, body: T) {
     logger.info { "Publishing (no-op) event to topic $topicName. Type is $type. $body." }
   }
-
-  override fun beginStop(): Unit = Unit
-
-  override fun awaitStop(): Unit = Unit
 }

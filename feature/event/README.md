@@ -1,10 +1,17 @@
 # Event Feature
 
 Adding `EventFeature` to a Server enables GCP Pub/Sub.
+Topics must be created manually, but subscriptions are created automatically.
 
 LIMITATIONS: This feature currently only supports publishing events, not consuming them.
 
 ## Usage
+
+### Topic creation
+
+Create topics using Terraform before referencing them in code.
+Every topic should have a debug subscription created alongside it (also using Terraform).
+Application subscriptions will be created automatically.
 
 ### Publishing
 
