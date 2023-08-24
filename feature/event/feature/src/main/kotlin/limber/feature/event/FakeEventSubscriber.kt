@@ -6,6 +6,7 @@ import kotlin.reflect.KClass
 public object FakeEventSubscriber : EventSubscriber() {
   public class Factory @Inject constructor() : EventSubscriber.Factory() {
     override fun <T : Any> invoke(
+      topicName: String,
       subscriptionName: String,
       kClass: KClass<T>,
       handler: EventHandlerFunction<T>,

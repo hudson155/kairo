@@ -10,9 +10,11 @@ public data class EventConfig(
   )
 
   public data class Subscribe(
+    val startupMs: Long,
+    val shutdownMs: Long,
     val maxOutstandingElements: Long,
     val maxOutstandingBytes: Long,
-    val shutdownMs: Long,
-    val startupMs: Long,
+    val minimumBackoffMs: Long,
+    val maximumBackoffMs: Long,
   )
 }

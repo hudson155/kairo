@@ -7,6 +7,7 @@ public typealias EventHandlerFunction<T> = (type: EventType, body: T) -> Unit
 public abstract class EventSubscriber {
   public abstract class Factory {
     public abstract operator fun <T : Any> invoke(
+      topicName: String,
       subscriptionName: String,
       kClass: KClass<T>,
       handler: EventHandlerFunction<T>,

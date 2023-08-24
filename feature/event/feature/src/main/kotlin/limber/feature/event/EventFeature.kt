@@ -44,7 +44,7 @@ public open class EventFeature(
   override fun start(injector: Injector, features: Set<Feature>) {
     val eventHandlers: List<EventHandler<*>> = injector.filterBindings()
     eventHandlers.forEach { eventHandler ->
-      logger.info { "Initializing event handler: ${eventHandler.subscriptionName}." }
+      logger.info { "Initializing event handler: ${eventHandler.description}." }
       eventHandler.init()
     }
 

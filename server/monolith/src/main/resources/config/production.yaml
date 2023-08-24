@@ -15,10 +15,12 @@ event:
   publish:
     shutdownMs: 5000
   subscribe:
+    startupMs: 5000
+    shutdownMs: 5000
     maxOutstandingElements: 100
     maxOutstandingBytes: 104857600 # 100 MB.
-    shutdownMs: 5000
-    startupMs: 5000
+    minimumBackoffMs: 10000 # 10 seconds.
+    maximumBackoffMs: 600000 # 10 minutes.
 
 ids:
   generation: Random

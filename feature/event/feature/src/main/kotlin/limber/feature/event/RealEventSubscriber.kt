@@ -2,11 +2,16 @@ package limber.feature.event
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.api.gax.batching.FlowControlSettings
+import com.google.api.gax.rpc.NotFoundException
 import com.google.cloud.pubsub.v1.AckReplyConsumer
 import com.google.cloud.pubsub.v1.Subscriber
+import com.google.cloud.pubsub.v1.SubscriptionAdminClient
 import com.google.inject.Inject
 import com.google.pubsub.v1.PubsubMessage
+import com.google.pubsub.v1.RetryPolicy
+import com.google.pubsub.v1.Subscription
 import com.google.pubsub.v1.SubscriptionName
+import com.google.pubsub.v1.TopicName
 import limber.config.event.EventConfig
 import mu.KLogger
 import mu.KotlinLogging
@@ -14,8 +19,10 @@ import org.threeten.bp.Duration
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
+import com.google.protobuf.Duration as ProtobufDuration
 
 public class RealEventSubscriber<in T : Any>(
+  private val gcpTopicName: TopicName,
   private val gcpSubscriptionName: SubscriptionName,
   private val kClass: KClass<T>,
   private val config: EventConfig.Subscribe,
@@ -29,14 +36,23 @@ public class RealEventSubscriber<in T : Any>(
     private val subscribers: MutableMap<SubscriptionName, RealEventSubscriber<*>> = ConcurrentHashMap()
 
     override fun <T : Any> invoke(
+      topicName: String,
       subscriptionName: String,
       kClass: KClass<T>,
       handler: EventHandlerFunction<T>,
     ) {
-      val gcpSubscriptionName = SubscriptionName.of(config.projectName, subscriptionName)
+      val gcpTopicName = TopicName.of(
+        config.projectName,
+        topicName,
+      )
+      val gcpSubscriptionName = SubscriptionName.of(
+        config.projectName,
+        subscriptionDescription(subscriptionName, topicName),
+      )
       subscribers.compute(gcpSubscriptionName) { _, value ->
         if (value != null) error("Duplicate subscriber with name $gcpSubscriptionName.")
         return@compute RealEventSubscriber<T>(
+          gcpTopicName = gcpTopicName,
           gcpSubscriptionName = gcpSubscriptionName,
           kClass = kClass,
           config = checkNotNull(config.subscribe),
@@ -46,7 +62,13 @@ public class RealEventSubscriber<in T : Any>(
       }
     }
 
-    override fun start(): Unit = Unit
+    override fun start() {
+      SubscriptionAdminClient.create().use { subscriptionAdminClient ->
+        subscribers.values.forEach { subscriber ->
+          subscriber.start(subscriptionAdminClient)
+        }
+      }
+    }
 
     override fun stop() {
       subscribers.values.forEach { subscriber ->
@@ -84,6 +106,38 @@ public class RealEventSubscriber<in T : Any>(
       consumer.nack()
     }
   }
+
+  /**
+   * Subscriptions are created automatically.
+   */
+  internal fun start(subscriptionAdminClient: SubscriptionAdminClient) {
+    val expected = Subscription.newBuilder()
+      .setName(gcpSubscriptionName.toString())
+      .setTopic(gcpTopicName.toString())
+      .setRetryPolicy(
+        RetryPolicy.newBuilder()
+          .setMinimumBackoff(protobufDuration(ms = config.minimumBackoffMs))
+          .setMaximumBackoff(protobufDuration(ms = config.maximumBackoffMs))
+          .build(),
+      )
+      .build()
+
+    val existing = try {
+      subscriptionAdminClient.getSubscription(subscriber.subscriptionNameString)
+    } catch (_: NotFoundException) {
+      null
+    }
+
+    if (existing == null) {
+      subscriptionAdminClient.createSubscription(expected)
+    }
+  }
+
+  private fun protobufDuration(ms: Long): com.google.protobuf.Duration =
+    ProtobufDuration.newBuilder()
+      .setSeconds(ms / 1000)
+      .setNanos((ms % 1000).toInt() * 1000 * 1000)
+      .build()
 
   internal fun beginStop() {
     subscriber.stopAsync()
