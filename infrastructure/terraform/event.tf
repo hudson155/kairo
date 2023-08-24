@@ -23,7 +23,7 @@ resource "google_pubsub_subscription" "organization_debug" {
 }
 
 resource "google_pubsub_topic" "organization_auth" {
-  name = "organization_auth"
+  name = "organization-auth"
 }
 
 resource "google_pubsub_subscription" "organization_auth_debug" {
@@ -35,7 +35,7 @@ resource "google_pubsub_subscription" "organization_auth_debug" {
 }
 
 resource "google_pubsub_topic" "organization_hostname" {
-  name = "organization_hostname"
+  name = "organization-hostname"
 }
 
 resource "google_pubsub_subscription" "organization_hostname_debug" {
