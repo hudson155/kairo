@@ -16,7 +16,7 @@ public open class EventFeature(
   public constructor(config: EventConfig) : this(
     config = config,
     publisher = when (config.publish) {
-      null -> NoopEventPublisher.Factory::class
+      null -> FakeEventPublisher.Factory::class
       else -> RealEventPublisher.Factory::class
     },
   )
@@ -29,6 +29,6 @@ public open class EventFeature(
   }
 
   final override fun stop(injector: Injector?) {
-    injector?.let { it.getInstance(EventPublisher.Factory::class.java).close() }
+    injector?.let { it.getInstance(EventPublisher.Factory::class.java).stop() }
   }
 }
