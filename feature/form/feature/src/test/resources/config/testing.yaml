@@ -19,6 +19,6 @@ sql:
       - db/limber/migration/common
     defaultSchema: public
     schemas: [form]
-  connectionTimeoutMs: 1000
+  connectionTimeoutMs: 1000 # 1 second.
   minimumIdle: 0
   maximumPoolSize: 32

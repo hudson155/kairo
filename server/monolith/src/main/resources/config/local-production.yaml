@@ -45,6 +45,6 @@ sql:
         run: true # TODO: Disable once migrations are stable.
         cleanOnValidationError: true # TODO: Disable once migrations are stable.
         cleanDisabled: false # TODO: Enable once migrations are stable.
-    connectionTimeoutMs: 1000
+    connectionTimeoutMs: 1000 # 1 second.
     minimumIdle: 2
     maximumPoolSize: 8

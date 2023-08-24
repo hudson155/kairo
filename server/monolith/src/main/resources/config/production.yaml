@@ -13,10 +13,10 @@ clock:
 event:
   projectName: limberapp-io
   publish:
-    shutdownMs: 5000
+    shutdownMs: 5000 # 5 seconds.
   subscribe:
-    startupMs: 5000
-    shutdownMs: 5000
+    startupMs: 5000 # 5 seconds.
+    shutdownMs: 5000 # 5 seconds.
     maxOutstandingElements: 100
     maxOutstandingBytes: 104857600 # 100 MB.
     minimumBackoffMs: 10000 # 10 seconds.
@@ -84,6 +84,6 @@ sql:
     schemas:
       - form
       - organization
-  connectionTimeoutMs: 2000
+  connectionTimeoutMs: 2000 # 2 seconds.
   minimumIdle: 8
   maximumPoolSize: 32
