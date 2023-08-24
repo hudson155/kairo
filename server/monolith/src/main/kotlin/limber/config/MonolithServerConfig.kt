@@ -1,9 +1,9 @@
 package limber.config
 
 import limber.config.auth0.Auth0Config
+import limber.config.event.EventConfig
 import limber.config.rest.RestClientConfig
 import limber.config.rest.RestConfig
-import limber.config.sql.EventConfig
 import limber.config.sql.SqlConfig
 
 internal data class MonolithServerConfig(

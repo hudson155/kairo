@@ -1,6 +1,6 @@
 package limber.config
 
-import limber.config.sql.EventConfig
+import limber.config.event.EventConfig
 import limber.config.sql.SqlConfig
 
 internal data class ConfigImpl(

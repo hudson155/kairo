@@ -3,8 +3,6 @@
 Adding `EventFeature` to a Server enables GCP Pub/Sub.
 Topics must be created manually, but subscriptions are created automatically.
 
-LIMITATIONS: This feature currently only supports publishing events, not consuming them.
-
 ## Usage
 
 ### Topic creation
@@ -47,4 +45,25 @@ internal class CelebrityService @Inject constructor(
     return celebrity
   }
 }
+```
+
+### Subscribing
+
+1. Create a new event handler.
+2. Bind the event handler.
+
+```kotlin
+internal class CelebrityHandler @Inject constructor() : EventHandler<CelebrityModel>(
+  subscriptionName = "default",
+  topicName = "celebrity",
+  kClass = CelebrityModel::class,
+) {
+  override fun handle(type: EventType, body: CelebrityModel) {
+    ...
+  }
+}
+```
+
+```kotlin
+binder.bindEventHandler(limber.event.default.CelebrityHandler::class)
 ```

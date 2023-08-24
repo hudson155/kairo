@@ -14,6 +14,11 @@ event:
   projectName: limberapp-io
   publish:
     shutdownMs: 5000
+  subscribe:
+    maxOutstandingElements: 100
+    maxOutstandingBytes: 104857600 # 100 MB.
+    shutdownMs: 5000
+    startupMs: 5000
 
 ids:
   generation: Random

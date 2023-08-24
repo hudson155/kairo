@@ -11,6 +11,8 @@ event:
   value:
     publish:
       type: Remove
+    subscribe:
+      type: Remove
 
 sql:
   type: Merge

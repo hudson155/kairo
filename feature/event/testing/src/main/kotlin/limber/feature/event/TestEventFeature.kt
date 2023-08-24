@@ -1,6 +1,6 @@
 package limber.feature.event
 
-import limber.config.sql.EventConfig
+import limber.config.event.EventConfig
 import limber.feature.TestFeature
 
 public class TestEventFeature(

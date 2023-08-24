@@ -8,12 +8,14 @@ import com.google.inject.Inject
 import com.google.protobuf.ByteString
 import com.google.pubsub.v1.PubsubMessage
 import com.google.pubsub.v1.TopicName
-import limber.config.sql.EventConfig
+import limber.config.event.EventConfig
+import mu.KLogger
+import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
 public class RealEventPublisher<in T : Any>(
-  gcpTopicName: TopicName,
+  private val gcpTopicName: TopicName,
   private val config: EventConfig.Publish,
   private val objectMapper: ObjectMapper,
 ) : EventPublisher<T>() {
@@ -54,6 +56,8 @@ public class RealEventPublisher<in T : Any>(
     }
   }
 
+  private val logger: KLogger = KotlinLogging.logger {}
+
   private val publisher: Publisher =
     Publisher.newBuilder(gcpTopicName)
       .setBatchingSettings(
@@ -82,6 +86,7 @@ public class RealEventPublisher<in T : Any>(
       .putAllAttributes(mapOf("type" to type.name))
       .setData(data)
       .build()
+    logger.info { "Publishing (no-op) event to topic $gcpTopicName. Type is $type. $body." }
     publisher.publish(message).get()
   }
 
