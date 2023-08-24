@@ -43,13 +43,13 @@ public enum class PlatformPermission {
 
 public fun permissionKey(permission: Enum<*>): String {
   val name = permission.name
-  val match = Regex("(([A-Z][a-z]+)+)_(([A-Z][a-z]+)+)").matchEntire(name)
+  val match = Regex("(?<entity>([A-Z][a-z]+)+)_(?<operation>([A-Z][a-z]+)+)").matchEntire(name)
   requireNotNull(match) { "$name doesn't match the required permission format." }
+  val entity = checkNotNull(match.groups["entity"]).value
+  val operation = checkNotNull(match.groups["operation"]).value
   return buildString {
-    append(match.groupValues[1][0].lowercase())
-    append(match.groupValues[1].substring(1))
+    append(entity[0].lowercase() + entity.substring(1))
     append(":")
-    append(match.groupValues[3][0].lowercase())
-    append(match.groupValues[3].substring(1))
+    append(operation[0].lowercase() + operation.substring(1))
   }
 }
