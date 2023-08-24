@@ -4,6 +4,7 @@ import com.google.inject.Injector
 import io.ktor.server.application.Application
 import io.ktor.util.AttributeKey
 import limber.config.rest.RestConfig
+import limber.feature.filterBindings
 
 private val applicationContextKey =
   AttributeKey<ApplicationContext>(
@@ -18,9 +19,3 @@ internal data class ApplicationContext(val config: RestConfig, private val injec
   val endpointHandlers: List<RestEndpointHandler<*, *>> =
     injector.filterBindings()
 }
-
-private inline fun <reified T : Any> Injector.filterBindings(): List<T> =
-  bindings.mapNotNull { (key, binding) ->
-    if (!T::class.java.isAssignableFrom(key.typeLiteral.rawType)) return@mapNotNull null
-    return@mapNotNull binding.provider.get() as T
-  }
