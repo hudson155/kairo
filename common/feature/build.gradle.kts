@@ -7,6 +7,8 @@ plugins {
 
 main {
   dependencies {
+    api(project(":common:serialization")) // Make serialization available in all features.
+
     api(Dependencies.Google.guice) // Make Guice available in all features.
   }
 }
