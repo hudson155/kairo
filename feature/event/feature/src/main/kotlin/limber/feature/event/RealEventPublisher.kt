@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
 public class RealEventPublisher<in T : Any>(
+  gcpTopicName: TopicName,
   private val config: EventConfig.Publish,
   private val objectMapper: ObjectMapper,
-  private val publisher: Publisher,
 ) : EventPublisher<T>() {
   public class Factory @Inject constructor(
     private val config: EventConfig,
@@ -28,30 +28,13 @@ public class RealEventPublisher<in T : Any>(
       val gcpTopicName = TopicName.of(config.projectName, topicName)
       return publishers.compute(gcpTopicName) { _, value ->
         if (value != null) return@compute value
-        return@compute createPublisher<T>(gcpTopicName)
+        return@compute RealEventPublisher<T>(
+          gcpTopicName = gcpTopicName,
+          config = checkNotNull<EventConfig.Publish>(config.publish),
+          objectMapper = objectMapper,
+        )
       } as RealEventPublisher<T>
     }
-
-    private fun <T : Any> createPublisher(gcpTopicName: TopicName): RealEventPublisher<T> {
-      val publisher = Publisher.newBuilder(gcpTopicName)
-        .setBatchingSettings(batchingSettings())
-        .build()
-      return RealEventPublisher(
-        config = checkNotNull(config.publish),
-        objectMapper = objectMapper,
-        publisher = publisher,
-      )
-    }
-
-    /**
-     * Batching is disabled so that messages are published immediately.
-     * This could cause performance concerns down the road once we have high traffic,
-     * but should be fine for now.
-     */
-    private fun batchingSettings(): BatchingSettings =
-      BatchingSettings.newBuilder()
-        .setIsEnabled(false)
-        .build()
 
     override fun start() {
       TopicAdminClient.create().use { topicAdminClient ->
@@ -70,6 +53,20 @@ public class RealEventPublisher<in T : Any>(
       }
     }
   }
+
+  private val publisher: Publisher =
+    Publisher.newBuilder(gcpTopicName)
+      .setBatchingSettings(
+        /**
+         * Batching is disabled so that messages are published immediately.
+         * This could cause performance concerns down the road once we have high traffic,
+         * but should be fine for now.
+         */
+        BatchingSettings.newBuilder()
+          .setIsEnabled(false)
+          .build(),
+      )
+      .build()
 
   /**
    * Topics aren't created automatically.
