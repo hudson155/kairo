@@ -21,25 +21,25 @@ Application subscriptions will be created automatically.
 internal class CelebrityService @Inject constructor(
   private val celebrity: CelebrityStore,
   publisher: EventPublisher.Factory,
-) {
+) : CelebrityInterface {
   private val publisher: EventPublisher<CelebrityModel> = publisher("celebrity")
 
-  fun get(id: String): CelebrityModel? =
+  override fun get(id: String): CelebrityModel? =
     celebrityStore.get(id)
 
-  fun create(creator: CelebrityModel.Creator): CelebrityModel {
+  override fun create(creator: CelebrityModel.Creator): CelebrityModel {
     val celebrity = celebrityStore.create(creator)
     publisher.publish(EventType.Created, celebrity)
     return celebrity
   }
 
-  fun update(id: String, updater: Updater<CelebrityModel.Update>): CelebrityModel {
+  override fun update(id: String, updater: Updater<CelebrityModel.Update>): CelebrityModel {
     val celebrity = celebrityStore.update(id, updater)
     publisher.publish(EventType.Updated, celebrity)
     return celebrity
   }
 
-  fun delete(id: String): CelebrityModel {
+  override fun delete(id: String): CelebrityModel {
     val celebrity = celebrityStore.delete(id)
     publisher.publish(EventType.Deleted, celebrity)
     return celebrity

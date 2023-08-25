@@ -10,25 +10,25 @@ import limber.util.updater.Updater
 internal class OrganizationService @Inject constructor(
   private val organizationStore: OrganizationStore,
   publisher: EventPublisher.Factory,
-) {
+) : OrganizationInterface {
   private val publisher: EventPublisher<OrganizationModel> = publisher("organization")
 
-  fun get(id: String): OrganizationModel? =
+  override fun get(id: String): OrganizationModel? =
     organizationStore.get(id)
 
-  fun listAll(): List<OrganizationModel> =
+  override fun listAll(): List<OrganizationModel> =
     organizationStore.listAll()
 
-  fun search(search: String): List<OrganizationModel> =
+  override fun search(search: String): List<OrganizationModel> =
     organizationStore.search(search)
 
-  fun create(creator: OrganizationModel.Creator): OrganizationModel {
+  override fun create(creator: OrganizationModel.Creator): OrganizationModel {
     val organization = organizationStore.create(creator)
     publisher.publish(EventType.Created, organization)
     return organization
   }
 
-  fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel {
+  override fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel {
     val organization = organizationStore.update(id, updater)
     publisher.publish(EventType.Updated, organization)
     return organization

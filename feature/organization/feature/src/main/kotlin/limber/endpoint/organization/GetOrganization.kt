@@ -6,13 +6,13 @@ import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organization.OrganizationMapper
-import limber.service.organization.OrganizationService
+import limber.service.organization.OrganizationInterface
 import limber.api.organization.OrganizationApi as Api
 import limber.rep.organization.OrganizationRep as Rep
 
 public class GetOrganization @Inject internal constructor(
   private val organizationMapper: OrganizationMapper,
-  private val organizationService: OrganizationService,
+  private val organizationService: OrganizationInterface,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(

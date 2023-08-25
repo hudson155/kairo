@@ -6,13 +6,13 @@ import limber.auth.PlatformPermissionAuth
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organization.OrganizationMapper
-import limber.service.organization.OrganizationService
+import limber.service.organization.OrganizationInterface
 import limber.api.organization.OrganizationApi as Api
 import limber.rep.organization.OrganizationRep as Rep
 
 public class CreateOrganization @Inject internal constructor(
   private val organizationMapper: OrganizationMapper,
-  private val organizationService: OrganizationService,
+  private val organizationService: OrganizationInterface,
 ) : RestEndpointHandler<Api.Create, Rep>(Api.Create::class) {
   override suspend fun handler(endpoint: Api.Create): Rep {
     auth(PlatformPermissionAuth(PlatformPermission.Organization_Create))

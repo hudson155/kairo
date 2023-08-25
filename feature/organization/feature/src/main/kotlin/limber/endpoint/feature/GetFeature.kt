@@ -6,13 +6,13 @@ import limber.auth.OrganizationPermission
 import limber.auth.auth
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.feature.FeatureMapper
-import limber.service.feature.FeatureService
+import limber.service.feature.FeatureInterface
 import limber.api.feature.FeatureApi as Api
 import limber.rep.feature.FeatureRep as Rep
 
 public class GetFeature @Inject internal constructor(
   private val featureMapper: FeatureMapper,
-  private val featureService: FeatureService,
+  private val featureService: FeatureInterface,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
     auth(
