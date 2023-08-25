@@ -19,7 +19,7 @@ alter table organization.organization_hostname
   add constraint fk__organization_hostname__organization_id
     foreign key (organization_id)
       references organization.organization (id)
-      on delete cascade;
+      on delete restrict;
 create index ix__organization_hostname__organization_id
   on organization.organization_hostname (organization_id);
 

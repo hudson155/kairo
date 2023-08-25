@@ -19,7 +19,7 @@ alter table organization.feature
   add constraint fk__feature__organization_id
     foreign key (organization_id)
       references organization.organization (id)
-      on delete cascade;
+      on delete restrict;
 create index ix__feature__organization_id
   on organization.feature (organization_id);
 

@@ -3,6 +3,7 @@ package limber.client.organization
 import com.google.inject.Inject
 import limber.api.organization.OrganizationApi
 import limber.endpoint.organization.CreateOrganization
+import limber.endpoint.organization.DeleteOrganization
 import limber.endpoint.organization.GetOrganization
 import limber.endpoint.organization.ListAllOrganizations
 import limber.endpoint.organization.SearchOrganizations
@@ -15,6 +16,7 @@ public class LocalOrganizationClient @Inject constructor(
   private val search: SearchOrganizations,
   private val create: CreateOrganization,
   private val update: UpdateOrganization,
+  private val delete: DeleteOrganization,
 ) : OrganizationClient {
   override suspend operator fun invoke(
     endpoint: OrganizationApi.Get,
@@ -40,4 +42,9 @@ public class LocalOrganizationClient @Inject constructor(
     endpoint: OrganizationApi.Update,
   ): OrganizationRep =
     update.handle(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: OrganizationApi.Delete,
+  ): OrganizationRep =
+    delete.handle(endpoint)
 }

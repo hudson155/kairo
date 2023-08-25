@@ -45,4 +45,12 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       query.bindKotlin(update)
       return@transaction query.mapToType().single()
     }
+
+  fun delete(id: String): OrganizationModel =
+    transaction { handle ->
+      logger.info { "Deleting organization." }
+      val query = handle.createQuery(rs("store/organization/delete.sql"))
+      query.bind("id", id)
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationDoesNotExist()
+    }
 }

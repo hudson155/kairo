@@ -33,4 +33,9 @@ public class HttpOrganizationClient @Inject constructor(
     endpoint: OrganizationApi.Update,
   ): OrganizationRep =
     client.request(endpoint)
+
+  override suspend operator fun invoke(
+    endpoint: OrganizationApi.Delete,
+  ): OrganizationRep =
+    client.request(endpoint)
 }

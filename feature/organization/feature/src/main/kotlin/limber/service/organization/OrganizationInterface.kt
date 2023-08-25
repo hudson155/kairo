@@ -15,4 +15,6 @@ internal interface OrganizationInterface {
   fun create(creator: OrganizationModel.Creator): OrganizationModel
 
   fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel
+
+  fun delete(id: String): OrganizationModel
 }

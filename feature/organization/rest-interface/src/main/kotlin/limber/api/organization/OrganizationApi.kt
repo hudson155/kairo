@@ -42,4 +42,11 @@ public object OrganizationApi {
     override val method: HttpMethod = HttpMethod.Patch
     override val path: String = "/organizations/$organizationId"
   }
+
+  public data class Delete(
+    val organizationId: String,
+  ) : RestEndpoint<Nothing>() {
+    override val method: HttpMethod = HttpMethod.Delete
+    override val path: String = "/organizations/$organizationId"
+  }
 }

@@ -19,7 +19,7 @@ alter table organization.organization_auth
   add constraint fk__organization_auth__organization_id
     foreign key (organization_id)
       references organization.organization (id)
-      on delete cascade;
+      on delete restrict;
 alter table organization.organization_auth
   add constraint uq__organization_auth__organization_id
     unique (organization_id);
