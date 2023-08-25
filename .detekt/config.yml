@@ -129,6 +129,8 @@ naming:
     requireRootInDeclaration: true
   LambdaParameterNaming:
     active: true
+  NoNameShadowing:
+    active: false
   NonBooleanPropertyPrefixedWithIs:
     active: true
   ObjectPropertyNaming:
