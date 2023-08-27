@@ -24,9 +24,8 @@ main {
 test {
   dependencies {
     implementation(project(":feature:auth0:testing"))
-    implementation(project(":feature:rest:testing"))
-
     implementation(project(":feature:event:testing"))
+    implementation(project(":feature:rest:testing"))
     implementation(project(":feature:sql:testing"))
     implementation(project(":db:limber"))
   }
