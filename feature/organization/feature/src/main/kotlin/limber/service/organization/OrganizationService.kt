@@ -22,28 +22,28 @@ internal class OrganizationService @Inject constructor(
 ) : OrganizationInterface {
   private val publisher: EventPublisher<OrganizationModel> = publisher("organization")
 
-  override fun get(id: String): OrganizationModel? =
+  override suspend fun get(id: String): OrganizationModel? =
     organizationStore.get(id)
 
-  override fun listAll(): List<OrganizationModel> =
+  override suspend fun listAll(): List<OrganizationModel> =
     organizationStore.listAll()
 
-  override fun search(search: String): List<OrganizationModel> =
+  override suspend fun search(search: String): List<OrganizationModel> =
     organizationStore.search(search)
 
-  override fun create(creator: OrganizationModel.Creator): OrganizationModel {
+  override suspend fun create(creator: OrganizationModel.Creator): OrganizationModel {
     val organization = organizationStore.create(creator)
     publisher.publish(EventType.Created, organization)
     return organization
   }
 
-  override fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel {
+  override suspend fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel {
     val organization = organizationStore.update(id, updater)
     publisher.publish(EventType.Updated, organization)
     return organization
   }
 
-  override fun delete(id: String): OrganizationModel =
+  override suspend fun delete(id: String): OrganizationModel =
     jdbi.transaction {
       featureService.listByOrganization(id).forEach { featureService.delete(it.id) }
       hostnameService.listByOrganization(id).forEach { hostnameService.delete(it.id) }

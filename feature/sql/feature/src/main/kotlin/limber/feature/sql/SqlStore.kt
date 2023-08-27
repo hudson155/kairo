@@ -18,10 +18,10 @@ public abstract class SqlStore<T : Any>(private val tableName: String, private v
   @Inject
   private lateinit var jdbi: Jdbi
 
-  public fun get(id: String): T? =
+  public suspend fun get(id: String): T? =
     get(id, forUpdate = false)
 
-  protected fun get(id: String, forUpdate: Boolean): T? =
+  protected suspend fun get(id: String, forUpdate: Boolean): T? =
     handle { handle ->
       val query = handle.createQuery(rs("store/common/get.sql"))
       query.define("tableName", tableName)
@@ -33,17 +33,17 @@ public abstract class SqlStore<T : Any>(private val tableName: String, private v
   protected fun rs(resourceName: String): String =
     Resources.getResource(resourceName).readText()
 
-  protected fun <R> transaction(callback: (Handle) -> R): R =
+  protected suspend fun <R> transaction(callback: suspend (Handle) -> R): R =
     jdbi.transaction(callback.withErrorHandling())
 
-  protected fun <R> handle(callback: (Handle) -> R): R =
+  protected suspend fun <R> handle(callback: suspend (Handle) -> R): R =
     jdbi.handle(callback)
 
   protected open fun ServerErrorMessage.onError(e: UnableToExecuteStatementException): Unit = Unit
 
   protected fun Query.mapToType(): ResultIterable<T> = mapTo(type.java)
 
-  private fun <R> ((Handle) -> R).withErrorHandling(): ((Handle) -> R) = { handle ->
+  private fun <R> (suspend (Handle) -> R).withErrorHandling(): (suspend (Handle) -> R) = { handle ->
     try {
       this(handle)
     } catch (e: UnableToExecuteStatementException) {

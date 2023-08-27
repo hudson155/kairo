@@ -5,15 +5,15 @@ import java.util.Optional
 /**
  * An [Updater] is a function that transforms a rep.
  */
-public typealias Updater<T> = (existing: T) -> T
+public typealias Updater<T> = suspend (existing: T) -> T
 
 /**
  * This utility wraps an existing [Updater], performing the [block] action after running the [Updater].
  * The [update] passed to [block] is the transformed rep (after the [Updater] has run).
  */
-public operator fun <T : Any> Updater<T>.invoke(block: (update: T) -> Unit): Updater<T> =
+public operator fun <T : Any> Updater<T>.invoke(block: suspend (update: T) -> Unit): Updater<T> =
   { existing ->
-    this(existing).also(block)
+    this(existing).also { block(it) }
   }
 
 /**

@@ -14,19 +14,19 @@ internal class FeatureService @Inject constructor(
 ) : FeatureInterface {
   private val publisher: EventPublisher<FeatureModel> = publisher("feature")
 
-  override fun get(id: String): FeatureModel? =
+  override suspend fun get(id: String): FeatureModel? =
     featureStore.get(id)
 
-  override fun listByOrganization(organizationId: String): List<FeatureModel> =
+  override suspend fun listByOrganization(organizationId: String): List<FeatureModel> =
     featureStore.listByOrganization(organizationId)
 
-  override fun create(creator: FeatureModel.Creator): FeatureModel {
+  override suspend fun create(creator: FeatureModel.Creator): FeatureModel {
     val feature = featureStore.create(creator)
     publisher.publish(EventType.Created, feature)
     return feature
   }
 
-  override fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel {
+  override suspend fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel {
     val feature = featureStore.update(
       id = id,
       updater = updater { update ->
@@ -37,7 +37,7 @@ internal class FeatureService @Inject constructor(
     return feature
   }
 
-  override fun delete(id: String): FeatureModel {
+  override suspend fun delete(id: String): FeatureModel {
     val feature = featureStore.delete(id)
     publisher.publish(EventType.Deleted, feature)
     return feature

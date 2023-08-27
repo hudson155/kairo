@@ -6,15 +6,15 @@ import limber.util.updater.Updater
 
 @ImplementedBy(OrganizationService::class)
 internal interface OrganizationInterface {
-  fun get(id: String): OrganizationModel?
+  suspend fun get(id: String): OrganizationModel?
 
-  fun listAll(): List<OrganizationModel>
+  suspend fun listAll(): List<OrganizationModel>
 
-  fun search(search: String): List<OrganizationModel>
+  suspend fun search(search: String): List<OrganizationModel>
 
-  fun create(creator: OrganizationModel.Creator): OrganizationModel
+  suspend fun create(creator: OrganizationModel.Creator): OrganizationModel
 
-  fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel
+  suspend fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel
 
-  fun delete(id: String): OrganizationModel
+  suspend fun delete(id: String): OrganizationModel
 }

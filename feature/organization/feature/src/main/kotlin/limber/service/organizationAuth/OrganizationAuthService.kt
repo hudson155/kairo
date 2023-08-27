@@ -23,16 +23,16 @@ internal class OrganizationAuthService @Inject constructor(
 ) : OrganizationAuthInterface {
   private val publisher: EventPublisher<OrganizationAuthModel> = publisher("organization-auth")
 
-  override fun get(authId: String): OrganizationAuthModel? =
+  override suspend fun get(authId: String): OrganizationAuthModel? =
     authStore.get(authId)
 
-  override fun getByOrganization(organizationId: String): OrganizationAuthModel? =
+  override suspend fun getByOrganization(organizationId: String): OrganizationAuthModel? =
     authStore.getByOrganization(organizationId)
 
-  override fun getByHostname(hostname: String): OrganizationAuthModel? =
+  override suspend fun getByHostname(hostname: String): OrganizationAuthModel? =
     authStore.getByHostname(hostname)
 
-  override fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel {
+  override suspend fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel {
     val organization = organizationService.get(creator.organizationId) ?: throw OrganizationDoesNotExist()
 
     val auth = jdbi.transaction {
@@ -54,7 +54,7 @@ internal class OrganizationAuthService @Inject constructor(
     return auth
   }
 
-  override fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel {
+  override suspend fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel {
     val auth = jdbi.transaction {
       val auth = authStore.update(id, updater)
       auth0ManagementApi.updateOrganization(
@@ -69,7 +69,7 @@ internal class OrganizationAuthService @Inject constructor(
     return auth
   }
 
-  override fun delete(authId: String): OrganizationAuthModel {
+  override suspend fun delete(authId: String): OrganizationAuthModel {
     val auth = jdbi.transaction {
       val auth = authStore.delete(authId)
       auth0ManagementApi.deleteOrganization(

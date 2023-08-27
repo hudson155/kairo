@@ -22,21 +22,21 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun getByOrganization(organizationId: String): OrganizationAuthModel? =
+  suspend fun getByOrganization(organizationId: String): OrganizationAuthModel? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))
       query.bind("organizationId", organizationId)
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun getByHostname(hostname: String): OrganizationAuthModel? =
+  suspend fun getByHostname(hostname: String): OrganizationAuthModel? =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByHostname.sql"))
       query.bind("hostname", hostname)
       return@handle query.mapToType().singleNullOrThrow()
     }
 
-  fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel =
+  suspend fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel =
     transaction { handle ->
       logger.info { "Creating organization auth: $creator." }
       val query = handle.createQuery(rs("store/organizationAuth/create.sql"))
@@ -44,7 +44,7 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
+  suspend fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
     transaction { handle ->
       val auth = get(id, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
       val update = updater(OrganizationAuthModel.Update(auth))
@@ -55,7 +55,7 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(id: String): OrganizationAuthModel =
+  suspend fun delete(id: String): OrganizationAuthModel =
     transaction { handle ->
       logger.info { "Deleting organization auth." }
       val query = handle.createQuery(rs("store/organizationAuth/delete.sql"))

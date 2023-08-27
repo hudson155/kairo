@@ -12,19 +12,19 @@ internal class OrganizationHostnameService @Inject constructor(
 ) : OrganizationHostnameInterface {
   private val publisher: EventPublisher<OrganizationHostnameModel> = publisher("organization-hostname")
 
-  override fun get(id: String): OrganizationHostnameModel? =
+  override suspend fun get(id: String): OrganizationHostnameModel? =
     hostnameStore.get(id)
 
-  override fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
+  override suspend fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
     hostnameStore.listByOrganization(organizationId)
 
-  override fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel {
+  override suspend fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel {
     val hostname = hostnameStore.create(creator)
     publisher.publish(EventType.Created, hostname)
     return hostname
   }
 
-  override fun delete(id: String): OrganizationHostnameModel {
+  override suspend fun delete(id: String): OrganizationHostnameModel {
     val hostname = hostnameStore.delete(id)
     publisher.publish(EventType.Deleted, hostname)
     return hostname

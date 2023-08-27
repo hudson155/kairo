@@ -6,13 +6,13 @@ import limber.util.updater.Updater
 
 @ImplementedBy(FeatureService::class)
 internal interface FeatureInterface {
-  fun get(id: String): FeatureModel?
+  suspend fun get(id: String): FeatureModel?
 
-  fun listByOrganization(organizationId: String): List<FeatureModel>
+  suspend fun listByOrganization(organizationId: String): List<FeatureModel>
 
-  fun create(creator: FeatureModel.Creator): FeatureModel
+  suspend fun create(creator: FeatureModel.Creator): FeatureModel
 
-  fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel
+  suspend fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel
 
-  fun delete(id: String): FeatureModel
+  suspend fun delete(id: String): FeatureModel
 }

@@ -19,14 +19,14 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
+  suspend fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
     handle { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/listByOrganization.sql"))
       query.bind("organizationId", organizationId)
       return@handle query.mapToType().toList()
     }
 
-  fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
+  suspend fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
     transaction { handle ->
       logger.info { "Creating organization hostname: $creator." }
       val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
@@ -34,7 +34,7 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(id: String): OrganizationHostnameModel = transaction { handle ->
+  suspend fun delete(id: String): OrganizationHostnameModel = transaction { handle ->
     logger.info { "Deleting organization hostname." }
     val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
     query.bind("id", id)

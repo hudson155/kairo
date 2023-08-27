@@ -6,15 +6,15 @@ import limber.util.updater.Updater
 
 @ImplementedBy(OrganizationAuthService::class)
 internal interface OrganizationAuthInterface {
-  fun get(authId: String): OrganizationAuthModel?
+  suspend fun get(authId: String): OrganizationAuthModel?
 
-  fun getByOrganization(organizationId: String): OrganizationAuthModel?
+  suspend fun getByOrganization(organizationId: String): OrganizationAuthModel?
 
-  fun getByHostname(hostname: String): OrganizationAuthModel?
+  suspend fun getByHostname(hostname: String): OrganizationAuthModel?
 
-  fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel
+  suspend fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel
 
-  fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel
+  suspend fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel
 
-  fun delete(authId: String): OrganizationAuthModel
+  suspend fun delete(authId: String): OrganizationAuthModel
 }

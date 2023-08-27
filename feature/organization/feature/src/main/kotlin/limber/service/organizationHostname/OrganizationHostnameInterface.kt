@@ -5,11 +5,11 @@ import limber.model.organizationHostname.OrganizationHostnameModel
 
 @ImplementedBy(OrganizationHostnameService::class)
 internal interface OrganizationHostnameInterface {
-  fun get(id: String): OrganizationHostnameModel?
+  suspend fun get(id: String): OrganizationHostnameModel?
 
-  fun listByOrganization(organizationId: String): List<OrganizationHostnameModel>
+  suspend fun listByOrganization(organizationId: String): List<OrganizationHostnameModel>
 
-  fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel
+  suspend fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel
 
-  fun delete(id: String): OrganizationHostnameModel
+  suspend fun delete(id: String): OrganizationHostnameModel
 }

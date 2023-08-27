@@ -14,20 +14,20 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun listAll(): List<OrganizationModel> =
+  suspend fun listAll(): List<OrganizationModel> =
     handle { handle ->
       val query = handle.createQuery(rs("store/organization/listAll.sql"))
       return@handle query.mapToType().toList()
     }
 
-  fun search(search: String): List<OrganizationModel> =
+  suspend fun search(search: String): List<OrganizationModel> =
     handle { handle ->
       val query = handle.createQuery(rs("store/organization/search.sql"))
       query.bind("search", search)
       return@handle query.mapToType().toList()
     }
 
-  fun create(creator: OrganizationModel.Creator): OrganizationModel =
+  suspend fun create(creator: OrganizationModel.Creator): OrganizationModel =
     transaction { handle ->
       logger.info { "Creating organization: $creator." }
       val query = handle.createQuery(rs("store/organization/create.sql"))
@@ -35,7 +35,7 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel =
+  suspend fun update(id: String, updater: Updater<OrganizationModel.Update>): OrganizationModel =
     transaction { handle ->
       val organization = get(id, forUpdate = true) ?: throw OrganizationDoesNotExist()
       val update = updater(OrganizationModel.Update(organization))
@@ -46,7 +46,7 @@ internal class OrganizationStore : SqlStore<OrganizationModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(id: String): OrganizationModel =
+  suspend fun delete(id: String): OrganizationModel =
     transaction { handle ->
       logger.info { "Deleting organization." }
       val query = handle.createQuery(rs("store/organization/delete.sql"))

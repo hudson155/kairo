@@ -20,14 +20,14 @@ internal class FeatureStore : SqlStore<FeatureModel>(
 ) {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  fun listByOrganization(organizationId: String): List<FeatureModel> =
+  suspend fun listByOrganization(organizationId: String): List<FeatureModel> =
     handle { handle ->
       val query = handle.createQuery(rs("store/feature/listByOrganization.sql"))
       query.bind("organizationId", organizationId)
       return@handle query.mapToType().toList()
     }
 
-  fun create(creator: FeatureModel.Creator): FeatureModel =
+  suspend fun create(creator: FeatureModel.Creator): FeatureModel =
     transaction { handle ->
       var updated = creator
       if (listByOrganization(updated.organizationId).none { it.isDefault }) {
@@ -40,14 +40,14 @@ internal class FeatureStore : SqlStore<FeatureModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun setDefault(id: String): List<FeatureModel> =
+  suspend fun setDefault(id: String): List<FeatureModel> =
     transaction { handle ->
       val query = handle.createQuery(rs("store/feature/setDefaultByOrganization.sql"))
       query.bind("id", id)
       return@transaction query.mapToType().toList()
     }
 
-  fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel =
+  suspend fun update(id: String, updater: Updater<FeatureModel.Update>): FeatureModel =
     transaction { handle ->
       val feature = get(id, forUpdate = true) ?: throw FeatureDoesNotExist()
       val update = updater(FeatureModel.Update(feature))
@@ -58,7 +58,7 @@ internal class FeatureStore : SqlStore<FeatureModel>(
       return@transaction query.mapToType().single()
     }
 
-  fun delete(id: String): FeatureModel =
+  suspend fun delete(id: String): FeatureModel =
     transaction { handle ->
       logger.info { "Deleting feature." }
       val query = handle.createQuery(rs("store/feature/delete.sql"))
