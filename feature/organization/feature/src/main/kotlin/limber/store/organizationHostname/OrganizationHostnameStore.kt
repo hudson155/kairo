@@ -34,12 +34,13 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
       return@transaction query.mapToType().single()
     }
 
-  suspend fun delete(id: String): OrganizationHostnameModel = transaction { handle ->
-    logger.info { "Deleting organization hostname." }
-    val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
-    query.bind("id", id)
-    return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
-  }
+  suspend fun delete(id: String): OrganizationHostnameModel =
+    transaction { handle ->
+      logger.info { "Deleting organization hostname." }
+      val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
+      query.bind("id", id)
+      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
+    }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {
     when {
