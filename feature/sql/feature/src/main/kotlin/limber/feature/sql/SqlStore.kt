@@ -2,6 +2,7 @@ package limber.feature.sql
 
 import com.google.common.io.Resources
 import com.google.inject.Inject
+import kotlinx.coroutines.runBlocking
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.result.ResultIterable
@@ -60,8 +61,17 @@ public abstract class SqlStore<T : Any>(private val tableName: String, private v
     }?.serverErrorMessage
 }
 
-public fun <R> Jdbi.transaction(callback: (Handle) -> R): R =
-  inTransaction<R, Exception>(TransactionIsolationLevel.REPEATABLE_READ, callback)
+public fun <R> Jdbi.transaction(callback: suspend (Handle) -> R): R =
+  inTransaction<R, Exception>(TransactionIsolationLevel.REPEATABLE_READ) { handle ->
+    runBlocking {
+      callback(handle)
+    }
+  }
 
-public fun <R> Jdbi.handle(callback: (Handle) -> R): R =
-  withHandle<R, Exception>(callback)
+public fun <R> Jdbi.handle(callback: suspend (Handle) -> R): R {
+  return withHandle<R, Exception> { handle ->
+    runBlocking {
+      callback(handle)
+    }
+  }
+}
