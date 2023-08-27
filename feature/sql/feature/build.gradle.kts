@@ -1,5 +1,6 @@
 import limber.gradle.Dependencies
 import limber.gradle.plugin.main
+import limber.gradle.plugin.test
 
 plugins {
   id("limber-jvm")
@@ -16,5 +17,11 @@ main {
     api(Dependencies.Sql.Jdbi3.kotlin)
     implementation(Dependencies.Sql.Jdbi3.postgres)
     api(Dependencies.Sql.postgres)
+  }
+}
+
+test {
+  dependencies {
+    implementation(project(":feature:sql:testing"))
   }
 }

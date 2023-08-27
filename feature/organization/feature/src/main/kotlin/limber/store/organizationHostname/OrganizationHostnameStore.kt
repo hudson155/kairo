@@ -20,26 +20,26 @@ internal class OrganizationHostnameStore : SqlStore<OrganizationHostnameModel>(
   private val logger: KLogger = KotlinLogging.logger {}
 
   suspend fun listByOrganization(organizationId: String): List<OrganizationHostnameModel> =
-    handle { handle ->
+    sql { handle ->
       val query = handle.createQuery(rs("store/organizationHostname/listByOrganization.sql"))
       query.bind("organizationId", organizationId)
-      return@handle query.mapToType().toList()
+      return@sql query.mapToType().toList()
     }
 
   suspend fun create(creator: OrganizationHostnameModel.Creator): OrganizationHostnameModel =
-    transaction { handle ->
+    sql { handle ->
       logger.info { "Creating organization hostname: $creator." }
       val query = handle.createQuery(rs("store/organizationHostname/create.sql"))
       query.bindKotlin(creator)
-      return@transaction query.mapToType().single()
+      return@sql query.mapToType().single()
     }
 
   suspend fun delete(id: String): OrganizationHostnameModel =
-    transaction { handle ->
+    sql { handle ->
       logger.info { "Deleting organization hostname." }
       val query = handle.createQuery(rs("store/organizationHostname/delete.sql"))
       query.bind("id", id)
-      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
+      return@sql query.mapToType().singleNullOrThrow() ?: throw OrganizationHostnameDoesNotExist()
     }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {

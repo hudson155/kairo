@@ -23,44 +23,44 @@ internal class OrganizationAuthStore : SqlStore<OrganizationAuthModel>(
   private val logger: KLogger = KotlinLogging.logger {}
 
   suspend fun getByOrganization(organizationId: String): OrganizationAuthModel? =
-    handle { handle ->
+    sql { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByOrganization.sql"))
       query.bind("organizationId", organizationId)
-      return@handle query.mapToType().singleNullOrThrow()
+      return@sql query.mapToType().singleNullOrThrow()
     }
 
   suspend fun getByHostname(hostname: String): OrganizationAuthModel? =
-    handle { handle ->
+    sql { handle ->
       val query = handle.createQuery(rs("store/organizationAuth/getByHostname.sql"))
       query.bind("hostname", hostname)
-      return@handle query.mapToType().singleNullOrThrow()
+      return@sql query.mapToType().singleNullOrThrow()
     }
 
   suspend fun create(creator: OrganizationAuthModel.Creator): OrganizationAuthModel =
-    transaction { handle ->
+    sql { handle ->
       logger.info { "Creating organization auth: $creator." }
       val query = handle.createQuery(rs("store/organizationAuth/create.sql"))
       query.bindKotlin(creator)
-      return@transaction query.mapToType().single()
+      return@sql query.mapToType().single()
     }
 
   suspend fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel =
-    transaction { handle ->
+    sql { handle ->
       val auth = get(id, forUpdate = true) ?: throw OrganizationAuthDoesNotExist()
       val update = updater(OrganizationAuthModel.Update(auth))
       logger.info { "Updating organization auth: $update." }
       val query = handle.createQuery(rs("store/organizationAuth/update.sql"))
       query.bind("id", id)
       query.bindKotlin(update)
-      return@transaction query.mapToType().single()
+      return@sql query.mapToType().single()
     }
 
   suspend fun delete(id: String): OrganizationAuthModel =
-    transaction { handle ->
+    sql { handle ->
       logger.info { "Deleting organization auth." }
       val query = handle.createQuery(rs("store/organizationAuth/delete.sql"))
       query.bind("id", id)
-      return@transaction query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
+      return@sql query.mapToType().singleNullOrThrow() ?: throw OrganizationAuthDoesNotExist()
     }
 
   override fun ServerErrorMessage.onError(e: UnableToExecuteStatementException) {

@@ -1,0 +1,24 @@
+sql:
+  jdbcUrl: jdbc:postgresql://localhost/limber_test
+  username:
+    type: EnvironmentVariable
+    name: LIMBER_TEST_SQL_USERNAME
+  password:
+    type: EnvironmentVariable
+    name: LIMBER_TEST_SQL_PASSWORD
+  migrations:
+    # Turning this on for tests means that migrations get run before every test.
+    # It would be more efficient to only run migrations once, before any test runs.
+    # At the time of writing, a new Server is used before every test.
+    # Once the Server is shared across multiple tests (also for performance reasons),
+    # it would be a good idea to turn this off and have it managed by the test runner instead.
+    run: true
+    cleanOnValidationError: true
+    cleanDisabled: false
+    locations:
+      - db/testing/migration
+    defaultSchema: public
+    schemas: [testing]
+  connectionTimeoutMs: 1000 # 1 second.
+  minimumIdle: 0
+  maximumPoolSize: 32
