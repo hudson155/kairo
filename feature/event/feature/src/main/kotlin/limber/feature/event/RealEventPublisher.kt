@@ -80,7 +80,7 @@ public class RealEventPublisher<in T : Any>(
     topicAdminClient.getTopic(publisher.topicName)
   }
 
-  override fun publish(type: EventType, body: T) {
+  override suspend fun publish(type: EventType, body: T) {
     val data = ByteString.copyFrom(objectMapper.writeValueAsBytes(body))
     val message = PubsubMessage.newBuilder()
       .putAllAttributes(mapOf("type" to type.name))

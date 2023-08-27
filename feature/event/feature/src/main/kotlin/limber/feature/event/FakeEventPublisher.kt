@@ -16,7 +16,7 @@ public class FakeEventPublisher<in T : Any>(private val topicName: String) : Eve
 
   private val logger: KLogger = KotlinLogging.logger {}
 
-  override fun publish(type: EventType, body: T) {
+  override suspend fun publish(type: EventType, body: T) {
     logger.info { "Publishing (no-op) event to topic $topicName. Type is $type. $body." }
   }
 }

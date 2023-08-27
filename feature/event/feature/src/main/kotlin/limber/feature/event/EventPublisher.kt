@@ -9,5 +9,5 @@ public abstract class EventPublisher<in T : Any> {
     internal abstract fun stop()
   }
 
-  public abstract fun publish(type: EventType, body: T)
+  public abstract suspend fun publish(type: EventType, body: T)
 }
