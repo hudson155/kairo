@@ -19,9 +19,10 @@ public class UpdateFeature @Inject internal constructor(
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
     auth(
-      auth = OrganizationAuth(OrganizationPermission.Feature_Update) {
-        featureService.get(endpoint.featureId)?.organizationId
-      },
+      auth = OrganizationAuth(
+        permission = OrganizationPermission.Feature_Update,
+        organizationId = featureService.get(endpoint.featureId)?.organizationId,
+      ),
       onFail = { throw FeatureDoesNotExist() },
     )
 

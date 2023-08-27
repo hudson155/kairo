@@ -7,11 +7,6 @@ public class OrganizationAuth(
   private val permission: OrganizationPermission,
   private val organizationId: String?,
 ) : Auth() {
-  public constructor(
-    permission: OrganizationPermission,
-    organizationId: () -> String?,
-  ) : this(permission, organizationId())
-
   override fun authorize(context: RestContext): AuthResult {
     val principal = context.principal
       ?: return AuthResult.Unauthorized.noPrincipal()
