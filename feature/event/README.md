@@ -67,3 +67,9 @@ internal class CelebrityHandler @Inject constructor() : EventHandler<CelebrityMo
 ```kotlin
 binder.bindEventHandler(limber.event.default.CelebrityHandler::class)
 ```
+
+### Transactions
+
+The event publisher supports transactions.
+When transactions are enabled, events won't be published until the commit stage of the transaction.
+If the transaction is rolled back, they won't be published.

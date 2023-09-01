@@ -5,4 +5,9 @@ import limber.feature.TestFeature
 
 public class TestEventFeature(
   config: EventConfig,
-) : EventFeature(config), TestFeature
+) : EventFeature(config), TestFeature {
+  init {
+    check(config.publish == null)
+    check(config.subscribe == null)
+  }
+}
