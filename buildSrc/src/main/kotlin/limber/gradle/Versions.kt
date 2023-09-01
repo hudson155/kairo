@@ -28,6 +28,9 @@ object Versions {
   // https://github.com/googleapis/java-secretmanager/releases.
   const val gcpSecretManager = "2.3.10"
 
+  // https://mvnrepository.com/artifact/com.google.api/api-common.
+  const val googleApiCommon = "2.15.0"
+
   // https://github.com/google/guice/releases.
   const val guice = "5.1.0"
 

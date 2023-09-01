@@ -8,6 +8,7 @@ import com.google.inject.Inject
 import com.google.protobuf.ByteString
 import com.google.pubsub.v1.PubsubMessage
 import com.google.pubsub.v1.TopicName
+import limber.async.await
 import limber.config.event.EventConfig
 import mu.KLogger
 import mu.KotlinLogging
@@ -87,7 +88,7 @@ public class RealEventPublisher<in T : Any>(
       .setData(data)
       .build()
     logger.info { "Publishing (no-op) event to topic $gcpTopicName. Type is $type. $body." }
-    publisher.publish(message).get()
+    publisher.publish(message).await()
   }
 
   internal fun beginStop() {

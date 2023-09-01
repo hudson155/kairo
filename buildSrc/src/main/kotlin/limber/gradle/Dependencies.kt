@@ -28,6 +28,8 @@ object Dependencies {
   }
 
   object Google {
+    val apiCommon: String = "com.google.api:api-common"
+      .version(Versions.googleApiCommon)
     val guice: String = "com.google.inject:guice"
       .version(Versions.guice)
   }
