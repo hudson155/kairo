@@ -11,3 +11,7 @@ See the [REST feature README](/feature/rest/README.md).
 ## Creating a new Feature
 
 TODO: This guide is coming soon.
+
+## Transactions
+
+TODO: This guide is coming soon.
