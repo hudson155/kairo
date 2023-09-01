@@ -38,6 +38,8 @@ complexity:
   LargeClass:
     active: true
     threshold: 300
+    excludes:
+      - '**/test/**'
   LongMethod:
     active: true
     excludes:
