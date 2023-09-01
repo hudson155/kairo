@@ -1,6 +1,5 @@
 package limber.feature.event
 
-import com.google.inject.Inject
 import limber.transaction.TransactionManager
 import kotlin.coroutines.coroutineContext
 
@@ -12,7 +11,7 @@ import kotlin.coroutines.coroutineContext
 public class TransactionAwareEventPublisher<in T : Any>(
   private val delegate: EventPublisher<T>,
 ) : EventPublisher<T>() {
-  public class Factory @Inject constructor(
+  public class Factory(
     private val delegate: EventPublisher.Factory,
   ) : EventPublisher.Factory() {
     override fun <T : Any> invoke(topicName: String): EventPublisher<T> =

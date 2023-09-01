@@ -6,7 +6,6 @@ import com.google.api.gax.rpc.NotFoundException
 import com.google.cloud.pubsub.v1.AckReplyConsumer
 import com.google.cloud.pubsub.v1.Subscriber
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient
-import com.google.inject.Inject
 import com.google.pubsub.v1.PubsubMessage
 import com.google.pubsub.v1.RetryPolicy
 import com.google.pubsub.v1.Subscription
@@ -29,7 +28,7 @@ public class RealEventSubscriber<in T : Any>(
   private val objectMapper: ObjectMapper,
   private val handler: EventHandlerFunction<T>,
 ) : EventSubscriber() {
-  public class Factory @Inject constructor(
+  public class Factory(
     private val config: EventConfig,
     private val objectMapper: ObjectMapper,
   ) : EventSubscriber.Factory() {

@@ -8,6 +8,7 @@ import limber.service.feature.FeatureInterface
 import limber.service.organizationAuth.OrganizationAuthInterface
 import limber.service.organizationHostname.OrganizationHostnameInterface
 import limber.store.organization.OrganizationStore
+import limber.transaction.EventTransaction
 import limber.transaction.SqlTransaction
 import limber.transaction.TransactionManager
 import limber.util.updater.Updater
@@ -44,7 +45,7 @@ internal class OrganizationService @Inject constructor(
   }
 
   override suspend fun delete(id: String): OrganizationModel =
-    transactionManager.transaction(SqlTransaction::class) {
+    transactionManager.transaction(EventTransaction::class, SqlTransaction::class) {
       featureService.listByOrganization(id).forEach { featureService.delete(it.id) }
       hostnameService.listByOrganization(id).forEach { hostnameService.delete(it.id) }
       authService.getByOrganization(id)?.let { authService.delete(it.id) }

@@ -71,5 +71,6 @@ binder.bindEventHandler(limber.event.default.CelebrityHandler::class)
 ### Transactions
 
 The event publisher supports transactions.
+To enable them, set `transactionAware` to `true` in the event config.
 When transactions are enabled, events won't be published until the commit stage of the transaction.
 If the transaction is rolled back, they won't be published.

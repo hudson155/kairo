@@ -4,6 +4,7 @@ public data class EventConfig(
   val projectName: String,
   val publish: Publish? = null,
   val subscribe: Subscribe? = null,
+  val transactionAware: Boolean,
 ) {
   public data class Publish(
     val shutdownMs: Long,

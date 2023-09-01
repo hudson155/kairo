@@ -1,10 +1,9 @@
 package limber.feature.event
 
-import com.google.inject.Inject
 import kotlin.reflect.KClass
 
 public object FakeEventSubscriber : EventSubscriber() {
-  public class Factory @Inject constructor() : EventSubscriber.Factory() {
+  public class Factory : EventSubscriber.Factory() {
     override fun <T : Any> invoke(
       topicName: String,
       subscriptionName: String,

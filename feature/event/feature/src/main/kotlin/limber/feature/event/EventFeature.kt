@@ -8,36 +8,21 @@ import limber.feature.FeaturePriority
 import limber.feature.filterBindings
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.reflect.KClass
 
 public open class EventFeature(
   private val config: EventConfig,
-  private val publisher: KClass<out EventPublisher.Factory>,
-  private val subscriber: KClass<out EventSubscriber.Factory>,
 ) : Feature() {
   private val logger: KLogger = KotlinLogging.logger {}
 
   final override val priority: FeaturePriority = FeaturePriority.Framework
 
-  public constructor(config: EventConfig) : this(
-    config = config,
-    publisher = when (config.publish) {
-      null -> FakeEventPublisher.Factory::class
-      else -> RealEventPublisher.Factory::class
-    },
-    subscriber = when (config.subscribe) {
-      null -> FakeEventSubscriber.Factory::class
-      else -> RealEventSubscriber.Factory::class
-    },
-  )
-
   final override fun bind(binder: PrivateBinder) {
     bind(EventConfig::class.java).toInstance(config)
 
-    bind(EventPublisher.Factory::class.java).to(publisher.java).asEagerSingleton()
+    bind(EventPublisher.Factory::class.java).toProvider(EventPublisherProvider::class.java).asEagerSingleton()
     expose(EventPublisher.Factory::class.java)
 
-    bind(EventSubscriber.Factory::class.java).to(subscriber.java).asEagerSingleton()
+    bind(EventSubscriber.Factory::class.java).toProvider(EventSubscriberProvider::class.java).asEagerSingleton()
     expose(EventSubscriber.Factory::class.java)
   }
 

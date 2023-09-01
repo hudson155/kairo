@@ -1,5 +1,6 @@
 event:
   projectName: testing
+  transactionAware: false
 
 sql:
   jdbcUrl: jdbc:postgresql://localhost/limber_test

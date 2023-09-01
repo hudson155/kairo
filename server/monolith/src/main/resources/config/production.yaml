@@ -21,6 +21,7 @@ event:
     maxOutstandingBytes: 104857600 # 100 MB.
     minimumBackoffMs: 10000 # 10 seconds.
     maximumBackoffMs: 600000 # 10 minutes.
+  transactionAware: true
 
 ids:
   generation: Random

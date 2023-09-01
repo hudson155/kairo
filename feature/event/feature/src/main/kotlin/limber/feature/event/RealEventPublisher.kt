@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.api.gax.batching.BatchingSettings
 import com.google.cloud.pubsub.v1.Publisher
 import com.google.cloud.pubsub.v1.TopicAdminClient
-import com.google.inject.Inject
 import com.google.protobuf.ByteString
 import com.google.pubsub.v1.PubsubMessage
 import com.google.pubsub.v1.TopicName
@@ -20,7 +19,7 @@ public class RealEventPublisher<in T : Any>(
   private val config: EventConfig.Publish,
   private val objectMapper: ObjectMapper,
 ) : EventPublisher<T>() {
-  public class Factory @Inject constructor(
+  public class Factory(
     private val config: EventConfig,
     private val objectMapper: ObjectMapper,
   ) : EventPublisher.Factory() {

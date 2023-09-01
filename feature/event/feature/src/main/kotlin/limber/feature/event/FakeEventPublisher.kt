@@ -1,11 +1,10 @@
 package limber.feature.event
 
-import com.google.inject.Inject
 import mu.KLogger
 import mu.KotlinLogging
 
 public class FakeEventPublisher<in T : Any>(private val topicName: String) : EventPublisher<T>() {
-  public class Factory @Inject constructor() : EventPublisher.Factory() {
+  public class Factory : EventPublisher.Factory() {
     override fun <T : Any> invoke(topicName: String): EventPublisher<T> =
       FakeEventPublisher(topicName)
 
