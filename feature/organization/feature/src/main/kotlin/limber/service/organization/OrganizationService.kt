@@ -3,12 +3,13 @@ package limber.service.organization
 import com.google.inject.Inject
 import limber.feature.event.EventPublisher
 import limber.feature.event.EventType
-import limber.feature.sql.Sql
 import limber.model.organization.OrganizationModel
 import limber.service.feature.FeatureInterface
 import limber.service.organizationAuth.OrganizationAuthInterface
 import limber.service.organizationHostname.OrganizationHostnameInterface
 import limber.store.organization.OrganizationStore
+import limber.transaction.SqlTransaction
+import limber.transaction.TransactionManager
 import limber.util.updater.Updater
 
 internal class OrganizationService @Inject constructor(
@@ -17,7 +18,7 @@ internal class OrganizationService @Inject constructor(
   private val hostnameService: OrganizationHostnameInterface,
   private val organizationStore: OrganizationStore,
   publisher: EventPublisher.Factory,
-  private val sql: Sql,
+  private val transactionManager: TransactionManager,
 ) : OrganizationInterface {
   private val publisher: EventPublisher<OrganizationModel> = publisher("organization")
 
@@ -43,10 +44,10 @@ internal class OrganizationService @Inject constructor(
   }
 
   override suspend fun delete(id: String): OrganizationModel =
-    sql.sql {
+    transactionManager.transaction(SqlTransaction::class) {
       featureService.listByOrganization(id).forEach { featureService.delete(it.id) }
       hostnameService.listByOrganization(id).forEach { hostnameService.delete(it.id) }
       authService.getByOrganization(id)?.let { authService.delete(it.id) }
-      return@sql organizationStore.delete(id)
+      return@transaction organizationStore.delete(id)
     }
 }

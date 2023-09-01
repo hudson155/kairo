@@ -130,5 +130,5 @@ internal class SqlTest : IntegrationTest() {
   }
 
   private suspend fun getHandle(): Handle? =
-    coroutineContext[Sql.Context]?.handle
+    coroutineContext[SqlContext]?.handle
 }
