@@ -11,17 +11,28 @@ import kotlin.reflect.KClass
  * It also allows for proper cleanup of transaction resources.
  */
 internal class TransactionContext : AbstractCoroutineContextElement(Key) {
-  private val types: MutableSet<KClass<out TransactionType>> = mutableSetOf()
+  private class Content {
+    val notes: MutableList<String> = mutableListOf()
+  }
+
+  private val types: MutableMap<KClass<out TransactionType>, Content> = mutableMapOf()
 
   operator fun contains(type: KClass<out TransactionType>): Boolean = type in types
 
   operator fun plusAssign(type: KClass<out TransactionType>) {
-    types += type
+    types += type to Content()
   }
 
   operator fun minusAssign(type: KClass<out TransactionType>) {
     types -= type
   }
+
+  fun addNote(note: String) {
+    types.values.forEach { it.notes += note }
+  }
+
+  fun getNotes(type: KClass<out TransactionType>): List<String> =
+    checkNotNull(types[type]).notes
 
   internal companion object Key : CoroutineContext.Key<TransactionContext>
 }

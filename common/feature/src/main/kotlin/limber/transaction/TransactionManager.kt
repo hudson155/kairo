@@ -38,6 +38,10 @@ import kotlin.reflect.KClass
 public class TransactionManager @Inject constructor(
   private val injector: Injector,
 ) {
+  /**
+   * Creates new transactions of type [types] (if they aren't already ongoing),
+   * and runs the given [block].
+   */
   public suspend fun <T> transaction(
     vararg types: KClass<out TransactionType>,
     block: suspend () -> T,
@@ -58,5 +62,23 @@ public class TransactionManager @Inject constructor(
           .map { injector.getInstance(it.java) },
       )
     return transaction.transaction(block)
+  }
+
+  /**
+   * Not all operations work properly inside of transactions.
+   * For example, external API calls generally cannot be rolled back.
+   *
+   * Runs the [block].
+   * If it succeeds, adds a note that if any of the ongoing transactions are rolled back,
+   * an error should be logged.
+   */
+  public suspend fun <T> rollbackNote(
+    note: String,
+    block: suspend () -> T,
+  ): T {
+    val context = getTransactionContext() ?: return block()
+    val result = block()
+    context.addNote(note)
+    return result
   }
 }

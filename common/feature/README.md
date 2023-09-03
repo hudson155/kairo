@@ -14,4 +14,4 @@ TODO: This guide is coming soon.
 
 ## Transactions
 
-TODO: This guide is coming soon.
+TODO: This guide is coming soon, including content on transaction notes.

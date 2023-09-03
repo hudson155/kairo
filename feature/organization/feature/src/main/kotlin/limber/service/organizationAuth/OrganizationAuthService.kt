@@ -37,12 +37,15 @@ internal class OrganizationAuthService @Inject constructor(
 
     val auth = transactionManager.transaction(SqlTransaction::class) {
       val auth = authStore.create(creator)
-      val auth0Organization = auth0ManagementApi.createOrganization(
-        creator = Auth0OrganizationRep.Creator(
-          name = auth.auth0OrganizationName,
-          displayName = organization.name,
-        ),
-      )
+      val auth0Organization =
+        transactionManager.rollbackNote("the organization has already been created in Auth0") {
+          auth0ManagementApi.createOrganization(
+            creator = Auth0OrganizationRep.Creator(
+              name = auth.auth0OrganizationName,
+              displayName = organization.name,
+            ),
+          )
+        }
       return@transaction authStore.update(auth.id) { existing ->
         OrganizationAuthModel.Update(
           auth0OrganizationId = auth0Organization.id,
@@ -57,12 +60,14 @@ internal class OrganizationAuthService @Inject constructor(
   override suspend fun update(id: String, updater: Updater<OrganizationAuthModel.Update>): OrganizationAuthModel {
     val auth = transactionManager.transaction(SqlTransaction::class) {
       val auth = authStore.update(id, updater)
-      auth0ManagementApi.updateOrganization(
-        organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
-        update = Auth0OrganizationRep.Update(
-          name = auth.auth0OrganizationName,
-        ),
-      )
+      transactionManager.rollbackNote("the organization has already been updated in Auth0") {
+        auth0ManagementApi.updateOrganization(
+          organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
+          update = Auth0OrganizationRep.Update(
+            name = auth.auth0OrganizationName,
+          ),
+        )
+      }
       return@transaction auth
     }
     publisher.publish(EventType.Updated, auth)
@@ -72,9 +77,11 @@ internal class OrganizationAuthService @Inject constructor(
   override suspend fun delete(authId: String): OrganizationAuthModel {
     val auth = transactionManager.transaction(SqlTransaction::class) {
       val auth = authStore.delete(authId)
-      auth0ManagementApi.deleteOrganization(
-        organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
-      )
+      transactionManager.rollbackNote("the organization has already been deleted in Auth0") {
+        auth0ManagementApi.deleteOrganization(
+          organizationId = auth.auth0OrganizationId ?: throw OrganizationAuthIdIsNull(),
+        )
+      }
       return@transaction auth
     }
     publisher.publish(EventType.Deleted, auth)
