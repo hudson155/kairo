@@ -14,7 +14,7 @@ public class GetOrganizationAuthByHostname @Inject internal constructor(
   private val authService: OrganizationAuthService,
 ) : RestEndpointHandler<Api.GetByHostname, Rep?>(Api.GetByHostname::class) {
   override suspend fun handler(endpoint: Api.GetByHostname): Rep? {
-    auth(Auth.Public)
+    auth { Auth.Public }
 
     val auth = authService.getByHostname(endpoint.hostname)
 

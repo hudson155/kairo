@@ -15,7 +15,7 @@ public class CreateOrganization @Inject internal constructor(
   private val organizationService: OrganizationInterface,
 ) : RestEndpointHandler<Api.Create, Rep>(Api.Create::class) {
   override suspend fun handler(endpoint: Api.Create): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.Organization_Create))
+    auth { PlatformPermissionAuth(PlatformPermission.Organization_Create) }
 
     val organization = organizationService.create(
       creator = organizationMapper(getBody(endpoint)),

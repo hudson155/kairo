@@ -109,7 +109,7 @@ internal sealed class RestEndpointTemplateBuilder<out E : RestEndpoint<*>> {
   internal companion object {
     fun <E : RestEndpoint<*>> from(kClass: KClass<E>): RestEndpointTemplateBuilder<E> =
       when {
-        kClass.objectInstance !== null -> ObjectInstance(kClass)
+        kClass.objectInstance != null -> ObjectInstance(kClass)
         kClass.isData -> DataClass(kClass)
         else -> error("Unsupported REST endpoint class: ${kClass.simpleName}.")
       }

@@ -1,9 +1,10 @@
 package limber.endpoint.organizationHostname
 
 import com.google.inject.Inject
-import limber.auth.PlatformPermission
-import limber.auth.PlatformPermissionAuth
+import limber.auth.OrganizationAuth
+import limber.auth.OrganizationPermission
 import limber.auth.auth
+import limber.exception.organizationHostname.OrganizationHostnameDoesNotExist
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organizationHostname.OrganizationHostnameMapper
 import limber.service.organizationHostname.OrganizationHostnameInterface
@@ -15,7 +16,10 @@ public class DeleteOrganizationHostname @Inject internal constructor(
   private val hostnameService: OrganizationHostnameInterface,
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
-    auth(PlatformPermissionAuth(PlatformPermission.OrganizationHostname_Delete))
+    auth {
+      val hostname = hostnameService.get(endpoint.hostnameId) ?: throw OrganizationHostnameDoesNotExist()
+      return@auth OrganizationAuth(OrganizationPermission.OrganizationHostname_Delete, hostname.organizationId)
+    }
 
     val hostname = hostnameService.delete(endpoint.hostnameId)
 

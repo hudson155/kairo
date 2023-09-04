@@ -1,9 +1,8 @@
 package limber.auth
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import io.ktor.server.auth.jwt.JWTPrincipal
 import io.mockk.every
@@ -61,8 +60,11 @@ internal class OrganizationAuthTest {
       OrganizationPermission.Feature_Delete.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, "org_1"))
-      .shouldBeFalse()
+    val e = shouldThrow<AuthException> {
+      test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, "org_1"))
+    }
+    e.status.shouldBe(AuthException.Status.Forbidden)
+    e.userMessage.shouldBe("Missing required permission feature:delete.")
   }
 
   @Test
@@ -73,8 +75,9 @@ internal class OrganizationAuthTest {
       OrganizationPermission.Feature_Delete.value to PermissionValue.Some(setOf(organizationId)),
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
-      .shouldBeTrue()
+    shouldNotThrowAny {
+      test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
+    }
   }
 
   @Test
@@ -85,8 +88,9 @@ internal class OrganizationAuthTest {
       OrganizationPermission.Feature_Delete.value to PermissionValue.All,
     )
     val context = context(principal(permissions))
-    test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
-      .shouldBeTrue()
+    shouldNotThrowAny {
+      test(context, OrganizationAuth(OrganizationPermission.Feature_Delete, organizationId))
+    }
   }
 
   private fun context(principal: JWTPrincipal?): RestContext =
@@ -103,11 +107,11 @@ internal class OrganizationAuthTest {
       }
     }
 
-  private fun test(context: RestContext, auth: OrganizationAuth): Boolean =
+  private fun test(context: RestContext, auth: OrganizationAuth) {
     runBlocking {
       withContext(context) {
-        auth(auth) { return@withContext false }
-        return@withContext true
+        auth { auth }
       }
     }
+  }
 }

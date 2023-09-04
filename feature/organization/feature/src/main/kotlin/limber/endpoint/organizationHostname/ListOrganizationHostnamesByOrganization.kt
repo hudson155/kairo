@@ -15,10 +15,7 @@ public class ListOrganizationHostnamesByOrganization @Inject internal constructo
   private val hostnameService: OrganizationHostnameInterface,
 ) : RestEndpointHandler<Api.ListByOrganization, List<Rep>>(Api.ListByOrganization::class) {
   override suspend fun handler(endpoint: Api.ListByOrganization): List<Rep> {
-    auth(
-      auth = OrganizationAuth(OrganizationPermission.OrganizationHostname_List, endpoint.organizationId),
-      onFail = { return@handler emptyList() },
-    )
+    auth { OrganizationAuth(OrganizationPermission.OrganizationHostname_List, endpoint.organizationId) }
 
     val hostnames = hostnameService.listByOrganization(endpoint.organizationId)
 

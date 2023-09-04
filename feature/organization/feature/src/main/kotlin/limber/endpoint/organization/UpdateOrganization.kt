@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import limber.auth.OrganizationAuth
 import limber.auth.OrganizationPermission
 import limber.auth.auth
-import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organization.OrganizationMapper
 import limber.model.organization.OrganizationModel
@@ -18,10 +17,7 @@ public class UpdateOrganization @Inject internal constructor(
   private val organizationService: OrganizationInterface,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
-    auth(
-      auth = OrganizationAuth(OrganizationPermission.Organization_Update, endpoint.organizationId),
-      onFail = { throw OrganizationDoesNotExist() },
-    )
+    auth { OrganizationAuth(OrganizationPermission.Organization_Update, endpoint.organizationId) }
 
     val update = getBody(endpoint)
     val organization = organizationService.update(endpoint.organizationId) { existing ->

@@ -4,8 +4,8 @@ package limber.auth
  * Protects an endpoint to only members of the organization.
  */
 public class OrganizationAuth(
-  private val permission: OrganizationPermission,
-  private val organizationId: String?,
+  internal val permission: OrganizationPermission,
+  private val organizationId: String,
 ) : Auth() {
   override fun authorize(context: RestContext): AuthResult {
     val principal = context.principal
@@ -14,9 +14,10 @@ public class OrganizationAuth(
     val permissions = context.getPermissions(principal)
       ?: return AuthResult.Unauthorized.noClaim(PERMISSIONS_CLAIM_NAME)
     val permissionValue = permissions[permission.value]
-      ?: return AuthResult.Forbidden("Missing required permission ${permission.value}.")
+    if (permissionValue == null || organizationId !in permissionValue) {
+      return AuthResult.Forbidden.missingRequiredPermission(permission.value)
+    }
 
-    if (organizationId == null || organizationId !in permissionValue) return AuthResult.Failed
     return AuthResult.Authorized
   }
 }

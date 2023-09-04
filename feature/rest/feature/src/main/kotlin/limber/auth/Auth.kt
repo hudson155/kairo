@@ -12,7 +12,3 @@ public abstract class Auth {
 
   public abstract fun authorize(context: RestContext): AuthResult
 }
-
-public suspend fun auth(auth: Auth.Public) {
-  auth(auth) { error("Auth failed for public endpoint.") }
-}

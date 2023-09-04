@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import io.ktor.server.auth.jwt.JWTPrincipal
-import limber.exception.AuthException
 import limber.serialization.ObjectMapperFactory
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
@@ -37,13 +36,11 @@ public class RestContext(
    * NOT whether it has succeeded.
    */
   public var hasAttemptedAuthorization: Boolean = false
-    private set
 
   /**
    * Returns the result of authorization.
    */
   public fun auth(auth: Auth): AuthResult {
-    hasAttemptedAuthorization = true
     if (!authorize) return AuthResult.Authorized
     return auth.authorize(this)
   }
@@ -68,13 +65,16 @@ public suspend fun getRestContext(): RestContext = checkNotNull(coroutineContext
 /**
  * Call this from within a REST endpoint handler to check authorization.
  */
-public suspend inline fun auth(auth: Auth, onFail: () -> Nothing) {
+public suspend inline fun auth(auth: () -> Auth) {
   getRestContext().let { restContext ->
-    when (val result = restContext.auth(auth)) {
-      is AuthResult.Unauthorized -> throw AuthException(AuthException.Status.Unauthorized, result.message)
-      is AuthResult.Forbidden -> throw AuthException(AuthException.Status.Forbidden, result.message)
-      is AuthResult.Authorized -> Unit
-      is AuthResult.Failed -> onFail()
+    try {
+      when (val result = restContext.auth(auth())) {
+        is AuthResult.Unauthorized -> throw result.toException()
+        is AuthResult.Forbidden -> throw result.toException()
+        is AuthResult.Authorized -> Unit
+      }
+    } finally {
+      restContext.hasAttemptedAuthorization = true
     }
   }
 }

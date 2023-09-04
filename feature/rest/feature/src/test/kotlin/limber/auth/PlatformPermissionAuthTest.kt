@@ -20,7 +20,7 @@ internal class PlatformPermissionAuthTest {
   fun `no token`() {
     val context = context(null)
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.Organization_Delete))
+      test(context, PlatformPermissionAuth(PlatformPermission.Organization_List))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No token provided.")
@@ -30,7 +30,7 @@ internal class PlatformPermissionAuthTest {
   fun `null permissions`() {
     val context = context(principal(null))
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.Organization_Delete))
+      test(context, PlatformPermissionAuth(PlatformPermission.Organization_List))
     }
     e.status.shouldBe(AuthException.Status.Unauthorized)
     e.userMessage.shouldBe("No permissions claim on the provided token.")
@@ -43,36 +43,36 @@ internal class PlatformPermissionAuthTest {
     )
     val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.Organization_Delete))
+      test(context, PlatformPermissionAuth(PlatformPermission.Organization_List))
     }
     e.status.shouldBe(AuthException.Status.Forbidden)
-    e.userMessage.shouldBe("Missing required permission organization:delete.")
+    e.userMessage.shouldBe("Missing required permission organization:list.")
   }
 
   @Test
   fun `overlapping permissions`() {
     val permissions = mapOf(
+      PlatformPermission.Organization_List.value to PermissionValue.All,
       PlatformPermission.Organization_Create.value to PermissionValue.All,
-      PlatformPermission.Organization_Delete.value to PermissionValue.All,
     )
     val context = context(principal(permissions))
     shouldNotThrowAny {
-      test(context, PlatformPermissionAuth(PlatformPermission.Organization_Delete))
+      test(context, PlatformPermissionAuth(PlatformPermission.Organization_List))
     }
   }
 
   @Test
   fun `non-star`() {
     val permissions = mapOf(
+      PlatformPermission.Organization_List.value to PermissionValue.Some(setOf("org_0")),
       PlatformPermission.Organization_Create.value to PermissionValue.All,
-      PlatformPermission.Organization_Delete.value to PermissionValue.Some(setOf("org_0")),
     )
     val context = context(principal(permissions))
     val e = shouldThrow<AuthException> {
-      test(context, PlatformPermissionAuth(PlatformPermission.Organization_Delete))
+      test(context, PlatformPermissionAuth(PlatformPermission.Organization_List))
     }
     e.status.shouldBe(AuthException.Status.Forbidden)
-    e.userMessage.shouldBe("Missing required permission organization:delete.")
+    e.userMessage.shouldBe("Missing required permission organization:list.")
   }
 
   private fun context(principal: JWTPrincipal?): RestContext =
@@ -92,7 +92,7 @@ internal class PlatformPermissionAuthTest {
   private fun test(context: RestContext, auth: PlatformPermissionAuth) {
     runBlocking {
       withContext(context) {
-        auth(auth)
+        auth { auth }
       }
     }
   }

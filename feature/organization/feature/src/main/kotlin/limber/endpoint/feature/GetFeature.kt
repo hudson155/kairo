@@ -15,13 +15,13 @@ public class GetFeature @Inject internal constructor(
   private val featureService: FeatureInterface,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
-    auth(
-      auth = OrganizationAuth(
+    auth {
+      val feature = featureService.get(endpoint.featureId) ?: return@handler null
+      return@auth OrganizationAuth(
         permission = OrganizationPermission.Feature_Read,
-        organizationId = featureService.get(endpoint.featureId)?.organizationId,
-      ),
-      onFail = { return@handler null },
-    )
+        organizationId = feature.organizationId,
+      )
+    }
 
     val feature = featureService.get(endpoint.featureId)
 

@@ -18,10 +18,19 @@ public enum class OrganizationPermission {
   Feature_Create,
   Feature_Update,
   Feature_Delete,
+
   Organization_Read,
   Organization_Update,
+  Organization_Delete,
+
+  OrganizationAuth_Create,
+  OrganizationAuth_Update,
+  OrganizationAuth_Delete,
+
   OrganizationHostname_Read,
   OrganizationHostname_List,
+  OrganizationHostname_Create,
+  OrganizationHostname_Delete,
   ;
 
   @JsonValue

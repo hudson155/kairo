@@ -18,13 +18,10 @@ public class UpdateFeature @Inject internal constructor(
   private val featureService: FeatureInterface,
 ) : RestEndpointHandler<Api.Update, Rep>(Api.Update::class) {
   override suspend fun handler(endpoint: Api.Update): Rep {
-    auth(
-      auth = OrganizationAuth(
-        permission = OrganizationPermission.Feature_Update,
-        organizationId = featureService.get(endpoint.featureId)?.organizationId,
-      ),
-      onFail = { throw FeatureDoesNotExist() },
-    )
+    auth {
+      val feature = featureService.get(endpoint.featureId) ?: throw FeatureDoesNotExist()
+      return@auth OrganizationAuth(OrganizationPermission.Feature_Update, feature.organizationId)
+    }
 
     val update = getBody(endpoint)
     val feature = featureService.update(endpoint.featureId) { existing ->

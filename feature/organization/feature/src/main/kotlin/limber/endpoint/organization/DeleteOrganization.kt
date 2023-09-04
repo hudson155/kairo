@@ -1,10 +1,9 @@
 package limber.endpoint.organization
 
 import com.google.inject.Inject
-import limber.auth.PlatformPermission
-import limber.auth.PlatformPermissionAuth
+import limber.auth.OrganizationAuth
+import limber.auth.OrganizationPermission
 import limber.auth.auth
-import limber.exception.organization.OrganizationDoesNotExist
 import limber.feature.rest.RestEndpointHandler
 import limber.mapper.organization.OrganizationMapper
 import limber.service.organization.OrganizationInterface
@@ -16,10 +15,7 @@ public class DeleteOrganization @Inject internal constructor(
   private val organizationService: OrganizationInterface,
 ) : RestEndpointHandler<Api.Delete, Rep>(Api.Delete::class) {
   override suspend fun handler(endpoint: Api.Delete): Rep {
-    auth(
-      auth = PlatformPermissionAuth(PlatformPermission.Organization_Delete),
-      onFail = { throw OrganizationDoesNotExist() },
-    )
+    auth { OrganizationAuth(OrganizationPermission.Organization_Delete, endpoint.organizationId) }
 
     val organization = organizationService.delete(endpoint.organizationId)
 

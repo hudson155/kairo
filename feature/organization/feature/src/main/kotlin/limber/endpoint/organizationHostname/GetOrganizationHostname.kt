@@ -15,13 +15,10 @@ public class GetOrganizationHostname @Inject internal constructor(
   private val hostnameService: OrganizationHostnameInterface,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
-    auth(
-      auth = OrganizationAuth(
-        permission = OrganizationPermission.OrganizationHostname_Read,
-        organizationId = hostnameService.get(endpoint.hostnameId)?.organizationId,
-      ),
-      onFail = { return@handler null },
-    )
+    auth {
+      val hostname = hostnameService.get(endpoint.hostnameId) ?: return@handler null
+      return@auth OrganizationAuth(OrganizationPermission.OrganizationHostname_Read, hostname.organizationId)
+    }
 
     val hostname = hostnameService.get(endpoint.hostnameId)
 

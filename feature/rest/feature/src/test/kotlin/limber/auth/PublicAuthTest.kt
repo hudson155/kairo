@@ -21,7 +21,7 @@ internal class PublicAuthTest {
   private fun test(context: RestContext, auth: Auth.Public) {
     runBlocking {
       withContext(context) {
-        auth(auth)
+        auth { auth }
       }
     }
   }

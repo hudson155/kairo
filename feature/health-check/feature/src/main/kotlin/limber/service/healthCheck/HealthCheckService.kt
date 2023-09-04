@@ -21,7 +21,7 @@ public abstract class HealthCheckService(private val healthCheckClient: HealthCh
     healthChecks.mapValues { check ->
       HealthCheckRep.Check(name = check.key, state = check.value.check())
     }.let { checks ->
-      val areAllHealthy = checks.all { it.value.state === HealthCheckRep.State.Healthy }
+      val areAllHealthy = checks.all { it.value.state == HealthCheckRep.State.Healthy }
       return@let HealthCheckRep(
         state = if (areAllHealthy) HealthCheckRep.State.Healthy else HealthCheckRep.State.Unhealthy,
         checks = checks,

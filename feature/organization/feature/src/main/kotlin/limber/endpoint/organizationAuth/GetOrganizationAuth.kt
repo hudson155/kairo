@@ -14,7 +14,7 @@ public class GetOrganizationAuth @Inject internal constructor(
   private val authService: OrganizationAuthService,
 ) : RestEndpointHandler<Api.Get, Rep?>(Api.Get::class) {
   override suspend fun handler(endpoint: Api.Get): Rep? {
-    auth(Auth.Public)
+    auth { Auth.Public }
 
     val auth = authService.get(endpoint.authId)
 

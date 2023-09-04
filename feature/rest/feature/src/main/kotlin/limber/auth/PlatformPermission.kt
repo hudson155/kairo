@@ -15,12 +15,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 public enum class PlatformPermission {
   Organization_List,
   Organization_Create,
-  Organization_Delete,
-  OrganizationAuth_Create,
-  OrganizationAuth_Update,
-  OrganizationAuth_Delete,
-  OrganizationHostname_Create,
-  OrganizationHostname_Delete,
   ;
 
   @JsonValue
