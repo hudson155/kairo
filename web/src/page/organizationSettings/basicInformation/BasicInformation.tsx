@@ -7,6 +7,7 @@ import FormSubmitButton from 'component/form/submitButton/SubmitButton';
 import Paper from 'component/paper/Paper';
 import Section from 'component/section/Section';
 import Heading2 from 'component/text/Heading2';
+import OrganizationIdInput from 'page/organizationSettings/basicInformation/OrganizationIdInput';
 import OrganizationNameInput from 'page/organizationSettings/basicInformation/OrganizationNameInput';
 import React from 'react';
 import OrganizationRep from 'rep/OrganizationRep';
@@ -35,6 +36,7 @@ const BasicInformation: React.FC<Props> = ({ organization }) => {
           <Heading2>{'Basic information'}</Heading2>
           <Form fields={fields} onSubmit={handleSubmit}>
             <Container direction="vertical">
+              <OrganizationIdInput value={organization.id} />
               <OrganizationNameInput />
               <FormSubmitButton>{'Update'}</FormSubmitButton>
             </Container>
