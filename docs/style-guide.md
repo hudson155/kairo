@@ -29,6 +29,10 @@ Other than the rules defined here, please follow the
   should be capitalized when they refer to the Limber-specific definitions of those terms.
   _Feature_ should not be capitalized when it refers to [organization features](/feature/organization/README.md).
 
+- **Abbreviations:**
+  In general, abbreviations should be avoided.
+  Specifically, _i.e._ and _e.g._ should be avoided.
+
 - **Non-null:**
   Prefer the term "not-null" to "not null".
 
