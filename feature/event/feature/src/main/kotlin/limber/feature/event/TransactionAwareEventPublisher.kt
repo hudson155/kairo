@@ -27,9 +27,16 @@ public class TransactionAwareEventPublisher<in T : Any>(
   }
 
   override suspend fun publish(type: EventType, body: T) {
-    val context = checkNotNull(coroutineContext[EventContext])
-    context.add {
+    /**
+     * If we're in a transaction, use it.
+     */
+    coroutineContext[EventContext]?.add {
       delegate.publish(type, body)
     }
+
+    /**
+     * Otherwise, we can call the delegate directly.
+     */
+    delegate.publish(type, body)
   }
 }
