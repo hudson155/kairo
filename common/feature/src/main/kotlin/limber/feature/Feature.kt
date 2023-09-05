@@ -1,5 +1,6 @@
 package limber.feature
 
+import com.google.inject.Binder
 import com.google.inject.Injector
 import com.google.inject.PrivateBinder
 import com.google.inject.PrivateModule
@@ -17,7 +18,7 @@ public abstract class Feature : PrivateModule() {
 
   final override fun configure() {
     val binder = binder()
-    binder.requireAtInjectOnConstructors()
+    binder.configureHighbeamBinder()
     bind(binder)
   }
 
@@ -49,4 +50,9 @@ public abstract class Feature : PrivateModule() {
    * [injector] may be null if the Server did not start correctly.
    */
   public open fun stop(injector: Injector?): Unit = Unit
+}
+
+public fun Binder.configureHighbeamBinder() {
+  requireAtInjectOnConstructors()
+  requireExactBindingAnnotations()
 }

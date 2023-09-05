@@ -4,6 +4,7 @@ import com.google.inject.PrivateModule
 import limber.config.ClockConfig
 import limber.config.Config
 import limber.config.IdsConfig
+import limber.feature.configureHighbeamBinder
 import limber.util.id.DeterministicGuidGenerator
 import limber.util.id.DeterministicIdGenerator
 import limber.util.id.GuidGenerator
@@ -17,7 +18,7 @@ import kotlin.reflect.KClass
 
 internal class ServerModule(private val config: Config) : PrivateModule() {
   override fun configure() {
-    binder().requireAtInjectOnConstructors()
+    binder().configureHighbeamBinder()
 
     bind(Clock::class.java).toInstance(createClock())
     expose(Clock::class.java)
