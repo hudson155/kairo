@@ -7,7 +7,6 @@ import java.util.Stack
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-@Suppress("TooGenericExceptionCaught")
 internal class Transaction(
   private val types: List<TransactionType>,
 ) {

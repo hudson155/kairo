@@ -38,7 +38,6 @@ public abstract class Server<C : Config>(private val config: C) {
       check(injector == null)
       logger.info { "Starting Server: ${config.name}." }
 
-      @Suppress("TooGenericExceptionCaught") // During startup we're okay catching a generic exception.
       try {
         logger.info { "Server Features: ${features.joinToString { it.name }}." }
         val modules: Set<Module> = features + ServerModule(config)

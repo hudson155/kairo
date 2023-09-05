@@ -36,7 +36,6 @@ public abstract class HealthCheckService(private val healthCheckClient: HealthCh
     }
 
   protected suspend fun healthyIfNoException(block: suspend () -> Unit): HealthCheckRep.State {
-    @Suppress("TooGenericExceptionCaught")
     try {
       block()
       return HealthCheckRep.State.Healthy

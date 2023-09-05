@@ -92,7 +92,6 @@ public class RealEventSubscriber<in T : Any>(
       .setMaxAckExtensionPeriod(Duration.ZERO)
       .build()
 
-  @Suppress("TooGenericExceptionCaught")
   private fun receiver(message: PubsubMessage, consumer: AckReplyConsumer) {
     try {
       val type = EventType.valueOf(message.getAttributesOrThrow("type"))

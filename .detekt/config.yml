@@ -69,6 +69,8 @@ exceptions:
     active: true
   ThrowingExceptionInMain:
     active: true
+  TooGenericExceptionCaught:
+    active: false
 
 formatting:
   AnnotationOnSeparateLine:
