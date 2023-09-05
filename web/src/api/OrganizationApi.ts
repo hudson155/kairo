@@ -38,6 +38,13 @@ class OrganizationApi {
       body: updater,
     });
   }
+
+  async delete(organizationId: string): Promise<OrganizationRep> {
+    return await this.api.request<OrganizationRep>({
+      method: 'DELETE',
+      path: `/organizations/${organizationId}`,
+    });
+  }
 }
 
 export const organizationApiState = selector<OrganizationApi>({

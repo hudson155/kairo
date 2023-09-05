@@ -6,6 +6,7 @@ import LoadingBlock from 'component/spinner/LoadingBlock';
 import Paragraph from 'component/text/Paragraph';
 import Text from 'component/text/Text';
 import AuthInformation from 'page/adminSettings/editOrganization/authInformation/AuthInformation';
+import DeleteOrganization from 'page/adminSettings/editOrganization/deleteOrganization/DeleteOrganization';
 import BasicInformation from 'page/organizationSettings/basicInformation/BasicInformation';
 import React, { ReactNode } from 'react';
 import { Loadable, useRecoilValueLoadable } from 'recoil';
@@ -58,6 +59,7 @@ const getContent = (organization: Loadable<OrganizationRep | undefined>): ReactN
       <>
         <BasicInformation organization={organization.contents} />
         <AuthInformation organization={organization.contents} />
+        <DeleteOrganization organization={organization.contents} />
       </>
     );
   }
