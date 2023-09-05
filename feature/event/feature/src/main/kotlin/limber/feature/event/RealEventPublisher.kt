@@ -81,13 +81,17 @@ public class RealEventPublisher<in T : Any>(
   }
 
   override suspend fun publish(type: EventType, body: T) {
-    val data = ByteString.copyFrom(objectMapper.writeValueAsBytes(body))
-    val message = PubsubMessage.newBuilder()
-      .putAllAttributes(mapOf("type" to type.name))
-      .setData(data)
-      .build()
-    logger.info { "Publishing (no-op) event to topic $gcpTopicName. Type is $type. $body." }
-    publisher.publish(message).await()
+    try {
+      val data = ByteString.copyFrom(objectMapper.writeValueAsBytes(body))
+      val message = PubsubMessage.newBuilder()
+        .putAllAttributes(mapOf("type" to type.name))
+        .setData(data)
+        .build()
+      logger.info { "Publishing event to topic $gcpTopicName. Type is $type. $body." }
+      publisher.publish(message).await()
+    } catch (e: Exception) {
+      logger.error(e) { "Publishing event to topic $gcpTopicName failed. Type is $type. $body." }
+    }
   }
 
   internal fun beginStop() {
