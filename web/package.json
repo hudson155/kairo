@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=16.0.0 <17.0.0"
+    "node": "16"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^2.0.2",
