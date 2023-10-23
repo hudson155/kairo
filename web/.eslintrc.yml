@@ -202,7 +202,7 @@ rules:
   func-names: warn
   func-style: warn
   guard-for-in: warn
-  id-length: [warn, { exceptions: [e] }]
+  id-length: [warn, { exceptions: [a, b, e] }]
   logical-assignment-operators: warn
   max-depth: warn
   max-lines: warn
@@ -215,7 +215,6 @@ rules:
   no-array-constructor: warn
   no-bitwise: error
   no-caller: error
-  no-confusing-arrow: error
   no-console: [warn, { allow: [warn, error] }]
   no-div-regex: error
   no-else-return: [warn, { allowElseIf: false }]
