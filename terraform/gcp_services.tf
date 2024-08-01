@@ -1,6 +1,7 @@
 resource "google_project_service" "gcp_services" {
   for_each = toset([
     "analyticshub.googleapis.com",
+    "artifactregistry.googleapis.com",
     "bigquery.googleapis.com",
     "bigqueryconnection.googleapis.com",
     "bigquerydatapolicy.googleapis.com",
