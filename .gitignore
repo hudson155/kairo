@@ -1,0 +1,14 @@
+# File types
+*.bak
+*.bat
+*.dump
+*.log
+*.swp
+
+# Gradle
+.gradle/
+build/
+out/
+
+# Misc
+.DS_Store
