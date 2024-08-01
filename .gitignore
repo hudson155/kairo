@@ -10,5 +10,8 @@
 build/
 out/
 
+# Kotlin
+/.kotlin
+
 # Misc
 .DS_Store
