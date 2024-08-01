@@ -1,6 +1,9 @@
 package kairo.buildSrc
 
 internal object Versions {
+  // https://github.com/google/guice/releases
+  const val guice: String = "7.0.0"
+
   // https://github.com/kotest/kotest/releases
   const val kotest: String = "5.9.1"
 
