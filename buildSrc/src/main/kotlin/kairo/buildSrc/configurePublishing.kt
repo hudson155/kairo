@@ -19,7 +19,7 @@ internal fun Project.configurePublishing() {
         create<MavenPublication>("maven") {
           groupId = "kairo"
           artifactId = this@configurePublishing.name
-          version = "0.0.1"
+          version = "0.1.0"
 
           from(components["java"])
         }

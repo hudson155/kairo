@@ -7,7 +7,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun Project.configureKotlin() {
@@ -20,10 +20,8 @@ internal fun Project.configureKotlin() {
       languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_21.toString()))
     }
   }
-  extensions.configure<KotlinProjectExtension> {
+  extensions.configure<KotlinJvmProjectExtension> {
     explicitApi()
-  }
-  tasks.withType<KotlinCompile> {
     compilerOptions {
       allWarningsAsErrors.set(true)
     }

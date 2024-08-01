@@ -10,6 +10,7 @@ internal typealias SourceSet = NamedDomainObjectProvider<KotlinSourceSet>
 
 public val Project.main: SourceSet
   get() = sourceSet("main")
+
 public val Project.test: SourceSet
   get() = sourceSet("test")
 
