@@ -1,6 +1,9 @@
 package kairo.buildSrc
 
 public object Dependencies {
+  public val guice: String =
+    dependency("com.google.inject", "guice", Versions.guice)
+
   public val kotestRunner: String =
     dependency("io.kotest", "kotest-runner-junit5", Versions.kotest)
 
