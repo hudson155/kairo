@@ -1,3 +1,3 @@
-# _kairo_
+# Kairo
 
-_kairo_ is an application framework built for Kotlin.
+Kairo is an application framework built for Kotlin.
