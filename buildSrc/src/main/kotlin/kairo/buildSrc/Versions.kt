@@ -15,4 +15,7 @@ internal object Versions {
 
   // https://github.com/apache/logging-log4j2/releases
   const val log4j: String = "3.0.0-beta2"
+
+  // https://github.com/mockk/mockk/releases
+  const val mockk: String = "1.13.12"
 }
