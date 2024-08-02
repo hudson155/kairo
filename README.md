@@ -22,7 +22,7 @@ Kairo is an application framework built for Kotlin.
   Features are the primary building block of Kairo applications.
 - [kairo-logging](kairo-logging/):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
-  which should be configured to use Apache Log4j 2 under the hood.
+  which should be configured to use Apache Log4j2 under the hood.
 - [kairo-server](kairo-server/):
   A Server is an application that runs a set of Features.
 

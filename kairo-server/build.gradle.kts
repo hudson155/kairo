@@ -1,13 +1,12 @@
-import kairo.buildSrc.main
-
 plugins {
   id("kairo")
-  id("kairo-logging")
   id("kairo-publish")
 }
 
-main {
-  dependencies {
-    api(project(":kairo-feature"))
-  }
+dependencies {
+  api(project(":kairo-feature"))
+  implementation(project(":kairo-logging"))
+
+  testImplementation(project(":testing"))
+  testImplementation(project(":kairo-logging:testing"))
 }
