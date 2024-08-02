@@ -7,4 +7,4 @@ to application-specific implementations
 to third-party integrations
 is represented by a Kairo Feature.
 
-Note: Treat Kairo _Features_ as a proper noun (the first letter should be capitalized).
+Note: Treat Kairo _Features_ as proper nouns (the first letter should be capitalized).
