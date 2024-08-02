@@ -4,6 +4,14 @@ import com.google.inject.Injector
 import com.google.inject.PrivateBinder
 import com.google.inject.PrivateModule
 
+/**
+ * Features are the primary building block of Kairo applications.
+ * Every piece of functionality,
+ * from framework-level REST or SQL behaviour
+ * to application-specific implementations
+ * to third-party integrations
+ * is represented by a Kairo Feature.
+ */
 public abstract class Feature : PrivateModule() {
   public abstract val name: String
 
