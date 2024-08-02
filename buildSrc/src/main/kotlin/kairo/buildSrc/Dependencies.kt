@@ -24,6 +24,9 @@ public object Dependencies {
 
   public val log4jSlf4j2Impl: String =
     dependency("org.apache.logging.log4j", "log4j-slf4j2-impl", Versions.log4j)
+
+  public val mockk: String =
+    dependency("io.mockk", "mockk", Versions.mockk)
 }
 
 private fun dependency(group: String, name: String, version: String): String =

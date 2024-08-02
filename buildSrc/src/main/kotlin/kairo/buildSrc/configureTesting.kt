@@ -18,6 +18,7 @@ internal fun Project.configureTesting() {
   test.configure {
     dependencies {
       implementation(Dependencies.kotestRunner)
+      implementation(Dependencies.mockk)
     }
   }
 }
