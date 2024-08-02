@@ -59,7 +59,6 @@ public object DarbEncoder {
     // Take the size into account to return a list of the correct length.
     // This will omit between 0 and 3 booleans from the end.
     val result = booleanList.subList(0, size)
-    val bitString = BooleanListEncoder.encode(result)
     return result
   }
 
