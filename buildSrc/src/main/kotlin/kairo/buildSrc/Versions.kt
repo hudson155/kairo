@@ -12,4 +12,7 @@ internal object Versions {
 
   // https://github.com/Kotlin/kotlinx.coroutines/releases
   const val kotlinxCoroutines: String = "1.9.0-RC" // Using the RC version because it is built for Kotlin 2.0.
+
+  // https://github.com/apache/logging-log4j2/releases
+  const val log4j: String = "3.0.0-beta2"
 }
