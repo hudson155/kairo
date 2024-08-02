@@ -28,4 +28,4 @@ Kairo is an application framework built for Kotlin.
 
 ## Brand guidelines
 
-- Treat Kairo _Features_ and _Servers_ as proper noun (the first letter should be capitalized).
+- Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
