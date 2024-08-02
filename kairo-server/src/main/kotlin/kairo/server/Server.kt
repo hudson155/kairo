@@ -1,24 +1,19 @@
 package kairo.server
 
-import com.google.inject.Guice
 import com.google.inject.Injector
-import com.google.inject.Stage
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
-import kairo.feature.Feature
 import kotlin.concurrent.withLock
 
 /**
  * A Server is an application that runs a set of Features.
  */
-public abstract class Server(
-  private val config: ServerConfig
-) {
+public abstract class Server {
   private val logger: KLogger = KotlinLogging.logger {}
 
-  public abstract val features: Set<Feature>
+  protected abstract val featureManager: FeatureManager
 
   private val lock: Lock = ReentrantLock()
 
@@ -38,10 +33,10 @@ public abstract class Server(
       logger.info { "Starting Server." }
 
       try {
-        logger.info { "Server Features: ${features.joinToString { it.name }}." }
-        val injector = Guice.createInjector(Stage.PRODUCTION, features)
-        startFeatures(injector)
-        this.injector = injector
+        logger.info { "Server Features: $featureManager." }
+        val injector = featureManager.createInjector()
+        featureManager.start(injector)
+        this.injector = injector // Only set the injector property if start() doesn't throw.
       } catch (startException: Exception) {
         logger.error(startException) { "Server startup failed. Shutting down." }
         try {
@@ -68,36 +63,8 @@ public abstract class Server(
   public fun shutDown() {
     lock.withLock {
       logger.info { "Shutting down Server." }
-      stopFeatures(injector)
+      featureManager.stop(injector)
       injector = null
-    }
-  }
-
-  private fun startFeatures(injector: Injector) {
-    with(features.sortedBy { it.priority.ordinal }) {
-      forEach { feature ->
-        logger.info { "Server start Feature: ${feature.name}." }
-        feature.start(injector, features)
-      }
-      Thread.sleep(config.lifecycle.startupDelayMs)
-      forEach { feature ->
-        logger.info { "Server afterStart Feature: ${feature.name}." }
-        feature.afterStart(injector)
-      }
-    }
-  }
-
-  private fun stopFeatures(injector: Injector?) {
-    with(features.sortedByDescending { it.priority.ordinal }) {
-      forEach { feature ->
-        logger.info { "Server beforeStop Feature: ${feature.name}." }
-        feature.beforeStop(injector)
-      }
-      Thread.sleep(config.lifecycle.shutdownDelayMs)
-      forEach { feature ->
-        logger.info { "Server stop Feature: ${feature.name}." }
-        feature.stop(injector)
-      }
     }
   }
 
