@@ -1,5 +1,6 @@
 [versions]
 guice = "7.0.0" # https://github.com/google/guice/releases
+jackson = "2.17.2" # https://github.com/FasterXML/jackson-core/tags
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
 kotlinLogging = "7.0.0" # https://github.com/oshai/kotlin-logging/releases
 ktor = "3.0.0-beta-2" # https://ktor.io/docs/releases.html#release-details
@@ -8,6 +9,8 @@ mockK = "1.13.12" # https://github.com/mockk/mockk/releases
 
 [libraries]
 guice = { module = "com.google.inject:guice", version.ref = "guice" }
+jacksonCore = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 kotestRunner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlinLogging" }
 ktorServerCio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
