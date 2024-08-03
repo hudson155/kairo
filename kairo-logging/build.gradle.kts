@@ -1,17 +1,11 @@
-import kairo.buildSrc.Dependencies
-import kairo.buildSrc.main
-
 plugins {
   id("kairo")
   id("kairo-publish")
 }
 
-main {
-  dependencies {
-    api(Dependencies.kotlinLoggingJvm)
-    implementation(Dependencies.kotlinxCoroutinesSlf4j)
-    implementation(Dependencies.log4jConfigYaml)
-    implementation(Dependencies.log4jCore)
-    implementation(Dependencies.log4jSlf4j2Impl)
-  }
+dependencies {
+  api(libs.kotlinLoggingJvm)
+  implementation(libs.log4j2ConfigYaml)
+  implementation(libs.log4j2Core)
+  implementation(libs.log4j2Slf4j2Impl)
 }
