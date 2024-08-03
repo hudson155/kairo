@@ -13,7 +13,7 @@ publishing {
     publications {
       create<MavenPublication>("maven") {
         groupId = "kairo"
-//        artifactId = this@configurePublishing.name
+        artifactId = project.name
         version = "0.1.0"
 
         from(components["java"])
