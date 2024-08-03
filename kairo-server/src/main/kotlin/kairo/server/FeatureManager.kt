@@ -25,7 +25,7 @@ public class FeatureManager(
         logger.info { "Start Feature: ${feature.name}." }
         feature.start(injector, features)
       }
-      Thread.sleep(config.startupDelayMs)
+      Thread.sleep(config.lifecycle.startupDelayMs)
       forEach { feature ->
         logger.info { "AfterStart Feature: ${feature.name}." }
         feature.afterStart(injector)
@@ -39,7 +39,7 @@ public class FeatureManager(
         logger.info { "BeforeStop Feature: ${feature.name}." }
         feature.beforeStop(injector)
       }
-      Thread.sleep(config.shutdownDelayMs)
+      Thread.sleep(config.lifecycle.shutdownDelayMs)
       forEach { feature ->
         logger.info { "Stop Feature: ${feature.name}." }
         feature.stop(injector)
