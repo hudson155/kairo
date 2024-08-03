@@ -1,8 +1,8 @@
 plugins {
   id("kairo")
-  id("kairo-publish")
 }
 
 dependencies {
-  api(libs.guice)
+  api(libs.kotestRunner)
+  api(libs.mockk)
 }
