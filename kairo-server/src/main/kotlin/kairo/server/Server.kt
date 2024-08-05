@@ -63,8 +63,9 @@ public abstract class Server {
   public fun shutDown() {
     lock.withLock {
       logger.info { "Shutting down Server." }
+      val injector = this.injector
+      this.injector = null
       featureManager.stop(injector)
-      injector = null
     }
   }
 
