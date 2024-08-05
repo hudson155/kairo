@@ -9,6 +9,7 @@ Kairo is an application framework built for Kotlin.
 - Gradle 8.9
 - Kotlin 2.0.0
 - Java 21
+- Ktor 3.0.0-beta-2
 - Guice 7.0.0
 
 ## Modules
@@ -23,6 +24,9 @@ Kairo is an application framework built for Kotlin.
 - [kairo-logging](kairo-logging/):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
   which should be configured to use Apache Log4j2 under the hood.
+- [kairo-rest-feature](kairo-rest-feature/):
+  The REST Feature adds support for REST endpoints.
+  Under the hood, this Feature uses [Ktor](https://ktor.io/).
 - [kairo-server](kairo-server/):
   A Server is an application that runs a set of Features.
 

@@ -21,7 +21,12 @@ internal class ServerTest : FunSpec({
       override val priority: FeaturePriority = FeaturePriority.Normal
     }
 
-    val featureManagerConfig = FeatureManagerConfig(startupDelayMs = 0, shutdownDelayMs = 0)
+    val featureManagerConfig = FeatureManagerConfig(
+      lifecycle = FeatureManagerConfig.Lifecycle(
+        startupDelayMs = 0,
+        shutdownDelayMs = 0,
+      ),
+    )
     val testFeature = spyk(TestFeature())
     val server = object : Server() {
       override val featureManager: FeatureManager =
