@@ -23,33 +23,27 @@ public class RestFeature(
 
   override val priority: FeaturePriority = FeaturePriority.Framework
 
-  private val lock: Lock = ReentrantLock()
-
   private var ktor: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
 
   override fun start(injector: Injector, features: Set<Feature>) {
-    lock.withLock {
-      if (ktor != null) {
-        logger.warn { "Ktor already started." }
-        return@start
-      }
-      logger.info { "Starting Ktor." }
-
-      val ktor = embeddedServer(
-        factory = CIO,
-        environment = applicationEnvironment(),
-        configure = configureEmbeddedServer(config),
-        module = {}
-      )
-      this.ktor = ktor
-      ktor.start()
+    if (ktor != null) {
+      logger.warn { "Ktor already started." }
+      return
     }
+    logger.info { "Starting Ktor." }
+
+    val ktor = embeddedServer(
+      factory = CIO,
+      environment = applicationEnvironment(),
+      configure = configureEmbeddedServer(config),
+      module = {}
+    )
+    this.ktor = ktor
+    ktor.start()
   }
 
   override fun stop(injector: Injector?) {
-    lock.withLock {
-      ktor?.stop()
-      ktor = null
-    }
+    ktor?.stop()
+    ktor = null
   }
 }

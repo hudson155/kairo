@@ -6,8 +6,8 @@ plugins {
 dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
-
-  testImplementation(project(":kairo-logging:testing"))
   implementation(libs.ktorServerCio)
   implementation(libs.ktorServerCore)
+
+  testImplementation(project(":kairo-logging:testing"))
 }
