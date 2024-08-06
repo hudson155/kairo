@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
   api(libs.kotestRunner)
-  api(libs.mockk)
+  api(libs.mockK)
 }
