@@ -12,9 +12,33 @@ Kairo is an application framework built for Kotlin.
 - Ktor 3.0.0-beta-2
 - Guice 7.0.0
 
-### Getting started
+### Brand guidelines
 
-#### Step 1: Add required dependencies
+- Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
+
+## Modules
+
+- [kairo-darb](kairo-darb/):
+  Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
+- [kairo-dependency-injection](kairo-dependency-injection/):
+  Makes Guice available,
+  along with some utilities to make its use more idiomatic.
+- [kairo-feature](kairo-feature/):
+  Features are the primary building block of Kairo applications.
+- [kairo-logging](kairo-logging/):
+  Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
+  which should be configured to use Apache Log4j2 under the hood.
+- [kairo-rest-feature](kairo-rest-feature/):
+  The REST Feature adds support for REST endpoints.
+  Under the hood, this Feature uses [Ktor](https://ktor.io/).
+- [kairo-server](kairo-server/):
+  A Server is an application that runs a set of Features.
+- [kairo-testing](kairo-testing/):
+  A convenient testing library which includes some helpful test dependencies.
+
+## Getting started
+
+### Step 1: Add required dependencies
 
 ```kotlin
 // build.gradle.kts
@@ -32,7 +56,7 @@ dependencies {
 }
 ```
 
-#### Step 2: Configure logging.
+### Step 2: Configure logging.
 
 YAML is a bit nicer than XML.
 Notice that both of the configs include `%mdc` in the pattern, which Kairo uses extensively.
@@ -80,7 +104,7 @@ Configuration:
         ref: Plaintext
 ```
 
-#### Step 3: Create your first Feature.
+### Step 3: Create your first Feature.
 
 This is an example `TaskFeature` for managing a to-do list.
 `yourPackage` represents whatever top-level package you're using for your project.
@@ -96,7 +120,7 @@ class TaskFeature : Feature() {
 }
 ```
 
-#### Step 4: Create your first Server.
+### Step 4: Create your first Server.
 
 You can either run all of your Features on a single Server (monolithic architecture),
 or spread them out across several Servers (microservices architecture).
@@ -133,27 +157,3 @@ class MonolithServer(
    )
 }
 ```
-
-## Modules
-
-- [kairo-darb](kairo-darb/):
-  Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
-- [kairo-dependency-injection](kairo-dependency-injection/):
-  Makes Guice available,
-  along with some utilities to make its use more idiomatic.
-- [kairo-feature](kairo-feature/):
-  Features are the primary building block of Kairo applications.
-- [kairo-logging](kairo-logging/):
-  Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
-  which should be configured to use Apache Log4j2 under the hood.
-- [kairo-rest-feature](kairo-rest-feature/):
-  The REST Feature adds support for REST endpoints.
-  Under the hood, this Feature uses [Ktor](https://ktor.io/).
-- [kairo-server](kairo-server/):
-  A Server is an application that runs a set of Features.
-- [kairo-testing](kairo-testing/):
-  A convenient testing library which includes some helpful test dependencies.
-
-## Brand guidelines
-
-- Treat Kairo _Features_ and _Servers_ as proper nouns (the first letter should be capitalized).
