@@ -11,6 +11,7 @@ Kairo is an application framework built for Kotlin.
 - Java 21
 - Ktor 3.0.0-beta-2
 - Guice 7.0.0
+- Jackson 2.17.2
 
 ### Brand guidelines
 
@@ -31,6 +32,9 @@ Kairo is an application framework built for Kotlin.
 - [kairo-rest-feature](kairo-rest-feature/):
   The REST Feature adds support for REST endpoints.
   Under the hood, this Feature uses [Ktor](https://ktor.io/).
+- [kairo-serialization](kairo-serialization/):
+  Uses [Jackson](https://github.com/FasterXML/jackson)
+  to handle JSON and YAML serialization
 - [kairo-server](kairo-server/):
   A Server is an application that runs a set of Features.
 - [kairo-testing](kairo-testing/):
