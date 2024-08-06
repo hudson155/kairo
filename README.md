@@ -56,7 +56,7 @@ dependencies {
 }
 ```
 
-### Step 2: Configure logging.
+### Step 2: Configure logging
 
 YAML is a bit nicer than XML.
 Notice that both of the configs include `%mdc` in the pattern, which Kairo uses extensively.
@@ -104,7 +104,7 @@ Configuration:
         ref: Plaintext
 ```
 
-### Step 3: Create your first Feature.
+### Step 3: Create your first Feature
 
 This is an example `TaskFeature` for managing a to-do list.
 `yourPackage` represents whatever top-level package you're using for your project.
@@ -120,7 +120,7 @@ class TaskFeature : Feature() {
 }
 ```
 
-### Step 4: Create your first Server.
+### Step 4: Create your first Server
 
 You can either run all of your Features on a single Server (monolithic architecture),
 or spread them out across several Servers (microservices architecture).

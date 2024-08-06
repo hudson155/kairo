@@ -13,3 +13,7 @@ Within the body, each character represents 4 booleans
 In the example above, the first character "C" maps to 1100 in binary, which represents `true, true, false, false`.
 The second character "8" maps to 1000 in binary, which represents `true, false, false, false`.
 However, since there are only 5 booleans in the list (indicated by the prefix), we ignore the trailing booleans.
+
+## Usage
+
+This feature is not currently intended to be a direct dependency.
