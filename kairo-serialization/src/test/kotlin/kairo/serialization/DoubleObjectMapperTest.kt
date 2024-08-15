@@ -86,11 +86,11 @@ internal class DoubleObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: Double,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: Double?,
   )
 }

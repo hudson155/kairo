@@ -88,11 +88,11 @@ internal class StringObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: String,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: String?,
   )
 }

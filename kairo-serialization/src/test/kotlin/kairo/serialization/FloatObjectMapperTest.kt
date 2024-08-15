@@ -86,11 +86,11 @@ internal class FloatObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: Float,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: Float?,
   )
 }

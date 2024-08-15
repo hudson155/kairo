@@ -89,11 +89,11 @@ internal class LongObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: Long,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: Long?,
   )
 }

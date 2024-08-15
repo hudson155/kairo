@@ -24,7 +24,7 @@ internal class UnknownPropertyObjectMapperTest : FunSpec({
     mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }").shouldBe(MyClass("bar"))
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val foo: String,
   )
 }

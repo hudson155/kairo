@@ -116,11 +116,11 @@ internal class LocalDateObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: LocalDate,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: LocalDate?,
   )
 }
