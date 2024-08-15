@@ -67,8 +67,8 @@ internal class PolymorphismObjectMapperTest : FunSpec({
     JsonSubTypes.Type(Vehicle.Motorcycle::class, name = "Motorcycle"),
     JsonSubTypes.Type(Vehicle.Bicycle::class, name = "Bicycle"),
   )
-  private sealed class Vehicle {
-    data class Car(
+  internal sealed class Vehicle {
+    internal data class Car(
       override val model: String,
       val plate: String,
       val capacity: Int,
@@ -76,7 +76,7 @@ internal class PolymorphismObjectMapperTest : FunSpec({
       override val wheels: Int = 4
     }
 
-    data class Motorcycle(
+    internal data class Motorcycle(
       val plate: String,
     ) : Vehicle() {
       override val model: Nothing? = null
@@ -84,7 +84,7 @@ internal class PolymorphismObjectMapperTest : FunSpec({
       override val wheels: Int = 2
     }
 
-    data object Bicycle : Vehicle() {
+    internal data object Bicycle : Vehicle() {
       override val model: Nothing? = null
 
       override val wheels: Int = 2
