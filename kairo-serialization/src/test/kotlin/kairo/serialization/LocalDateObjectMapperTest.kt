@@ -108,7 +108,7 @@ internal class LocalDateObjectMapperTest : FunSpec({
       }
     }
     context("wrong type") {
-      test("int") {
+      test("number") {
         shouldThrow<MismatchedInputException> {
           mapper.readValue<MyClass>("{ \"value\": 20231113 }")
         }

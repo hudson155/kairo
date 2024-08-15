@@ -115,7 +115,7 @@ internal class InstantObjectMapperTest : FunSpec({
       }
     }
     context("wrong type") {
-      test("long") {
+      test("number") {
         shouldThrow<MismatchedInputException> {
           mapper.readValue<MyClass>("{ \"value\": 1699904672123 }")
         }
