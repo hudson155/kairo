@@ -14,14 +14,11 @@ public class ObjectMapperFactoryBuilder internal constructor(
   init {
     block()
 
+    configureKotlin()
+    configureStrings()
     increaseStrictness()
     configurePrettyPrinting()
     setUnknownPropertyHandling()
-
-    addModules(
-      createKotlinModule(),
-      createStringModule(),
-    )
 
     addModules(modules)
   }
