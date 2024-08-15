@@ -36,7 +36,6 @@ internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
   configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
   configure(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY, true)
   configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, true)
-  configure(DeserializationFeature.FAIL_ON_TRAILING_TOKENS, true)
   configure(DeserializationFeature.ACCEPT_FLOAT_AS_INT, false)
 
   configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, false)
