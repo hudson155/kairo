@@ -16,6 +16,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
 
     configureKotlin()
     configureStrings()
+    configureTime()
     increaseStrictness()
     configurePrettyPrinting()
     setUnknownPropertyHandling()
