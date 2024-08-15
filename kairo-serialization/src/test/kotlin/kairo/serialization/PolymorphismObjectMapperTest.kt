@@ -90,8 +90,8 @@ internal class PolymorphismObjectMapperTest : FunSpec({
       override val wheels: Int = 2
     }
 
-    internal abstract val model: String?
+    abstract val model: String?
 
-    internal abstract val wheels: Int
+    abstract val wheels: Int
   }
 }
