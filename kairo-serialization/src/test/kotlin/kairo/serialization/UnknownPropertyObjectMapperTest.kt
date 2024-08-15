@@ -14,14 +14,14 @@ internal class UnknownPropertyObjectMapperTest : FunSpec({
   test("disallowed (default)") {
     val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
     shouldThrow<UnrecognizedPropertyException> {
-      mapper.readValue<MyClass>("{\"foo\": \"bar\", \"baz\": \"qux\"}")
+      mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }")
     }
   }
   test("allowed") {
     val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
       allowUnknownProperties = true
     }.build()
-    mapper.readValue<MyClass>("{\"foo\": \"bar\", \"baz\": \"qux\"}").shouldBe(MyClass("bar"))
+    mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }").shouldBe(MyClass("bar"))
   }
 }) {
   private data class MyClass(

@@ -68,7 +68,7 @@ internal class LocalDateObjectMapperTest : FunSpec({
     }
     context("nullable") {
       test("recent") {
-        mapper.readValue<MyClassNullable>("{ \"value\":\"2023-11-13\" }")
+        mapper.readValue<MyClassNullable>("{ \"value\": \"2023-11-13\" }")
           .shouldBe(MyClassNullable(LocalDate.parse("2023-11-13")))
       }
       test("old") {
