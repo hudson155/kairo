@@ -115,15 +115,15 @@ internal class BooleanObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: Boolean,
   )
 
-  private data class MyClassIs(
+  internal data class MyClassIs(
     val isValue: Boolean,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: Boolean?,
   )
 }

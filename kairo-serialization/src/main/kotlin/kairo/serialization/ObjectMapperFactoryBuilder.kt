@@ -10,6 +10,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
   block: ObjectMapperFactoryBuilder.() -> Unit,
 ) : JsonMapper.Builder(JsonMapper(factory)) {
   public var allowUnknownProperties: Boolean = false
+  public var prettyPrint: Boolean = false
 
   init {
     block()
@@ -18,7 +19,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
     configureStrings()
     configureTime()
     increaseStrictness()
-    configurePrettyPrinting()
+    configurePrettyPrinting(prettyPrint = prettyPrint)
     setUnknownPropertyHandling()
 
     addModules(modules)

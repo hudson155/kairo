@@ -94,11 +94,11 @@ internal class UuidObjectMapperTest : FunSpec({
     }
   }
 }) {
-  private data class MyClass(
+  internal data class MyClass(
     val value: UUID,
   )
 
-  private data class MyClassNullable(
+  internal data class MyClassNullable(
     val value: UUID?,
   )
 }
