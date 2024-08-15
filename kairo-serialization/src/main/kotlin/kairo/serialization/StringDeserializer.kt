@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
 
 /**
  * By default, Jackson casts other types (such as booleans and numbers) to strings.
@@ -15,9 +14,7 @@ import com.fasterxml.jackson.databind.exc.MismatchedInputException
  */
 internal class StringDeserializer : DelegateStringDeserializer() {
   override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String {
-    if (p.currentToken != JsonToken.VALUE_STRING) {
-      throw MismatchedInputException.from(p, getValueType(ctxt), null)
-    }
+    expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
     return super.deserialize(p, ctxt)
   }
 }
