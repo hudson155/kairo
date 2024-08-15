@@ -97,7 +97,7 @@ internal class BooleanObjectMapperTest : FunSpec({
       }
     }
     context("wrong type") {
-      test("int") {
+      test("number") {
         shouldThrow<InvalidFormatException> {
           mapper.readValue<MyClass>("{ \"value\": 0 }")
         }
