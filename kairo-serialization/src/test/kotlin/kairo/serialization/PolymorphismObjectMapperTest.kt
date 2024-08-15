@@ -55,7 +55,7 @@ internal class PolymorphismObjectMapperTest : FunSpec({
      */
     xtest("bicycle") {
       val vehicle = Vehicle.Bicycle
-      val string = "{\"type\": \"Bicycle\", \"model\": \"Trek\", \"wheels\": 2}"
+      val string = "{\"type\": \"Bicycle\", \"model\": null, \"wheels\": 2}"
       mapper.readValue<Vehicle.Bicycle>(string).shouldBe(vehicle)
       mapper.readValue<Vehicle>(string).shouldBe(vehicle)
     }
