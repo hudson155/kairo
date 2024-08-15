@@ -1,6 +1,5 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.databind.deser.Deserializers
 import com.fasterxml.jackson.databind.module.SimpleDeserializers
 import com.fasterxml.jackson.databind.module.SimpleModule
@@ -17,5 +16,6 @@ internal class StringModule : SimpleModule() {
     }
 }
 
-internal fun createStringModule(): Module =
-  StringModule()
+internal fun ObjectMapperFactoryBuilder.configureStrings() {
+  addModule(StringModule())
+}
