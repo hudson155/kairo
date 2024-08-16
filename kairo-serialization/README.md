@@ -23,7 +23,7 @@ dependencies {
 ```kotlin
 // src/main/kotlin/yourPackage/YourFile.kt
 
-val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
+val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 // Change ObjectMapperFormat.Json to use other formats, such as YAML.
 
 // Serialize.
