@@ -6,12 +6,16 @@ Library for the `ProtectedString` type.
 Note that this is a simplistic implementation; it does not clean up memory after itself.
 See the class itself for KDoc.
 
-Although `toString()` calls will not expose the value,
+Although `toString()` calls will not expose the underlying value,
 serialization (and deserialization) will treat this class as if it were just a `String`,
-thereby exposing the value.
+thereby exposing the underlying value.
 This is intentional.
 
-Other than for serialization, you will need to 
+Other than for serialization,
+you will need to explicitly opt-in in order to access the underlying value.
+You can do this using `@OptIn(ProtectedString.Access::class)`.
+The intention of this additional step is to avoid unintended access
+by making callers think twice.
 
 ## Usage
 

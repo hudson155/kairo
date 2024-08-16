@@ -29,6 +29,8 @@ Kairo is an application framework built for Kotlin.
 - [kairo-logging](kairo-logging/):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
   which should be configured to use Apache Log4j2 under the hood.
+- [kairo-protected-string](kairo-protected-string/):
+  `ProtectedString` represents a string value that should not be logged or otherwise exposed.
 - [kairo-rest-feature](kairo-rest-feature/):
   The REST Feature adds support for REST endpoints.
   Under the hood, this Feature uses [Ktor](https://ktor.io/).
