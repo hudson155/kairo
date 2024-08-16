@@ -19,7 +19,6 @@ internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
   configure(MapperFeature.AUTO_DETECT_SETTERS, false)
   configure(MapperFeature.INFER_CREATOR_FROM_CONSTRUCTOR_PROPERTIES, false)
   configure(MapperFeature.ALLOW_VOID_VALUED_PROPERTIES, true)
-  configure(MapperFeature.USE_STATIC_TYPING, true)
   configure(MapperFeature.INFER_BUILDER_TYPE_BINDINGS, false)
   configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
   configure(MapperFeature.USE_STD_BEAN_NAMING, true)

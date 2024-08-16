@@ -38,6 +38,7 @@ val apiKey = ProtectedString("YOUR_API_KEY")
 apiKey.toString() // REDACTED.
 
 // Serialization and deserialization.
+val mapper: JsonMapper = TODO()
 mapper.writeValueAsString(apiKey) // YOUR_API_KEY (not redacted).
 mapper.readValue<ProtectedString>("YOUR_API_KEY")
 
