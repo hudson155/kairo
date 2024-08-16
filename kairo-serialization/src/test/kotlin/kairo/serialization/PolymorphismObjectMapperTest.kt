@@ -2,11 +2,9 @@ package kairo.serialization
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import kairo.serialization.PolymorphismObjectMapperTest.Vehicle
 
 /**
  * This test is intended to test behaviour strictly related to polymorphic serialization/deserialization.

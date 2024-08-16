@@ -16,6 +16,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
     block()
 
     configureKotlin()
+    configureJava()
     configureStrings()
     configureTime()
     increaseStrictness()
