@@ -70,7 +70,7 @@ internal class FloatObjectMapperTest : FunSpec({
       }
     }
     context("wrong type") {
-      test("number") {
+      test("int") {
         mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(42.0F))
       }
       test("string") {

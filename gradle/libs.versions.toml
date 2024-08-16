@@ -10,6 +10,7 @@ mockK = "1.13.12" # https://github.com/mockk/mockk/releases
 [libraries]
 guice = { module = "com.google.inject:guice", version.ref = "guice" }
 jacksonCore = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jacksonDatatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8", version.ref = "jackson" }
 jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 kotestRunner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlinLogging" }
