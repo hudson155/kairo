@@ -25,8 +25,7 @@ internal class PrettyPrintObjectMapperTest : FunSpec({
         string = "string value",
         map = mapOf("second key" to "second value", "first key" to "first value"),
       )
-      val string =
-        """
+      val string = """
         {
           "map": {
             "first key": "first value",
@@ -35,7 +34,7 @@ internal class PrettyPrintObjectMapperTest : FunSpec({
           "property": 42,
           "string": "string value"
         }
-        """.trimIndent()
+      """.trimIndent()
       mapper.writeValueAsString(myClass).shouldBe(string)
     }
   }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonValue
  * Accessing [value] is allowed by opting into [ProtectedString.Access], but please use it with care.
  * Note that this is a simplistic implementation; it does not clean up memory after itself.
  */
+@Suppress("UseDataClass")
 @OptIn(ProtectedString.Access::class)
 public class ProtectedString @JsonCreator constructor(
   @Access @JsonValue public val value: String,
