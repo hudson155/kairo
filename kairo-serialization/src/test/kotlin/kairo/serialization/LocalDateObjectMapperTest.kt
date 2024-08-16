@@ -1,14 +1,12 @@
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import java.time.LocalDate
-import java.time.Month
 
 /**
  * This test is intended to test behaviour strictly related to local date serialization/deserialization.
