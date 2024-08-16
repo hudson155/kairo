@@ -14,7 +14,9 @@ import java.util.Optional
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
  * since they are not strictly related to optionals.
  *
- * The behaviour here might seem a bit odd
+ * The behaviour here might seem a bit odd at first,
+ * since null is serialized to missing and Optional.empty() is serialized to null.
+ * However, this approach is in fact necessary to provide consistency between nullable and non-nullable Optionals.
  */
 internal class OptionalObjectMapperTest : FunSpec({
   val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
