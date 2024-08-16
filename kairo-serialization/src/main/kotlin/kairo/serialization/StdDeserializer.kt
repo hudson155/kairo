@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
 
+/**
+ * Util function to help with custom serializers and deserializers.
+ */
 internal fun StdDeserializer<*>.expectCurrentToken(
   p: JsonParser,
   ctxt: DeserializationContext,

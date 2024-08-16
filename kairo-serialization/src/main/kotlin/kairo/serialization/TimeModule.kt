@@ -12,6 +12,10 @@ import java.time.LocalDate
 /**
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
  * and instead roll our own time module.
+ *
+ * The implementations in com.fasterxml.jackson.datatype:jackson-datatype-jsr310
+ * are very generous in what formats they accept,
+ * and we want to be stricter.
  */
 internal class TimeModule : SimpleModule() {
   override fun setupModule(context: SetupContext) {
