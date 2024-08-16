@@ -8,11 +8,8 @@ import io.ktor.server.cio.CIOApplicationEngine
 import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.engine.embeddedServer
-import java.util.concurrent.locks.Lock
-import java.util.concurrent.locks.ReentrantLock
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
-import kotlin.concurrent.withLock
 
 public class RestFeature(
   private val config: RestConfig,

@@ -2,7 +2,6 @@ package kairo.serialization
 
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.kotlinModule
-import java.util.Optional
 
 /**
  * Besides just installing the Kotlin module,
