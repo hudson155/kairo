@@ -28,8 +28,8 @@ you'll need to configure some basic properties like `featureManager` and `restFe
 // src/main/kotlin/yourPackage/server/monolith/MonolithServerConfig.kt
 
 data class MonolithServerConfig(
- val featureManager: FeatureManagerConfig,
- val restFeature: RestConfig,
+  val featureManager: FeatureManagerConfig,
+  val restFeature: RestConfig,
 )
 ```
 
@@ -39,15 +39,15 @@ Finally, create the Server class itself.
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
 class MonolithServer(
- config: MonolithServerConfig,
+  config: MonolithServerConfig,
 ) : Server() {
- override val featureManager: FeatureManager =
-   FeatureManager(
-     features = setOf(
-       RestFeature(config.restFeature),
-       TaskFeature(),
-     ),
-     config = config.featureManager,
-   )
+  override val featureManager: FeatureManager =
+    FeatureManager(
+      features = setOf(
+        RestFeature(config.restFeature),
+        TaskFeature(),
+      ),
+      config = config.featureManager,
+    )
 }
 ```
