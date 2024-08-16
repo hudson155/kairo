@@ -6,7 +6,11 @@ import com.fasterxml.jackson.core.util.Separators
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
+import java.util.Optional
 
+/**
+ * See the corresponding test for more spec.
+ */
 internal fun ObjectMapperFactoryBuilder.configurePrettyPrinting(prettyPrint: Boolean) {
   configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, prettyPrint)
   configure(MapperFeature.SORT_CREATOR_PROPERTIES_FIRST, false)
