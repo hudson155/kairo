@@ -1,5 +1,8 @@
 package kairo.darb
 
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
+
 /**
  * Encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
  * A DARB string contains 2 components, a prefix and a body, separated by a dot.
@@ -21,6 +24,8 @@ package kairo.darb
 public object DarbEncoder {
   private const val CHUNK_SIZE: Int = 4 // Warning, changing this alone will break the code.
 
+  private val logger: KLogger = KotlinLogging.logger {}
+
   private val regex: Regex = Regex("[A-Fa-f0-9]*")
 
   public fun encode(booleanList: List<Boolean>): String {
@@ -32,7 +37,9 @@ public object DarbEncoder {
 
     // DARB prefixes the hex characters with the length of the data.
     val prefix = booleanList.size
-    return "$prefix.$body"
+    val result = "$prefix.$body"
+    logger.debug { "Encoded boolean list $booleanList to DARB $result." }
+    return result
   }
 
   private fun encodeChunk(chunk: List<Boolean>): String {
@@ -59,6 +66,7 @@ public object DarbEncoder {
     // Take the size into account to return a list of the correct length.
     // This will omit between 0 and 3 booleans from the end.
     val result = booleanList.subList(0, size)
+    logger.debug { "Decoded DARB $darb to boolean list $result." }
     return result
   }
 
