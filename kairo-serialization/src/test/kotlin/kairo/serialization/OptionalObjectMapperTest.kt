@@ -48,7 +48,7 @@ internal class OptionalObjectMapperTest : FunSpec({
       test("present") {
         mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(Optional.of(42)))
       }
-      test("empty") {
+      test("null") {
         mapper.readValue<MyClass>("{ \"value\": null }").shouldBe(MyClass(Optional.empty()))
       }
       test("missing") {
@@ -61,7 +61,7 @@ internal class OptionalObjectMapperTest : FunSpec({
       test("present") {
         mapper.readValue<MyClassNullable>("{ \"value\": 42 }").shouldBe(MyClassNullable(Optional.of(42)))
       }
-      test("empty") {
+      test("null") {
         mapper.readValue<MyClassNullable>("{ \"value\": null }").shouldBe(MyClassNullable(Optional.empty()))
       }
       test("missing") {
