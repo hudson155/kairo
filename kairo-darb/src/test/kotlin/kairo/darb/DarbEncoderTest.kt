@@ -5,11 +5,9 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import org.junit.jupiter.api.Test
 
-internal class DarbEncoderTest {
-  @Test
-  fun encode() {
+internal class DarbEncoderTest : FunSpec({
+  test("encode") {
     DarbEncoder.encode(emptyList()).shouldBe("0.")
     DarbEncoder.encode(listOf(false)).shouldBe("1.0")
     DarbEncoder.encode(listOf(true)).shouldBe("1.8")
@@ -24,8 +22,7 @@ internal class DarbEncoderTest {
     DarbEncoder.encode(listOf(true, true, true, true, true)).shouldBe("5.F8")
   }
 
-  @Test
-  fun decode() {
+  test("decode") {
     DarbEncoder.decode("0.").shouldBeEmpty()
     DarbEncoder.decode("1.0").shouldBe(listOf(false))
     DarbEncoder.decode("1.8").shouldBe(listOf(true))
@@ -56,4 +53,4 @@ internal class DarbEncoderTest {
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("5.G8") }
       .shouldHaveMessage("Invalid DARB hex.")
   }
-}
+})
