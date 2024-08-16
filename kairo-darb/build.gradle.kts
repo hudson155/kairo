@@ -4,5 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-logging"))
+
   testImplementation(project(":testing"))
 }
