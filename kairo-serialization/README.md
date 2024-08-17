@@ -13,6 +13,8 @@ because of its limited support for polymorphism.
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   testImplementation("kairo:kairo-serialization:0.3.0")
 }

@@ -14,6 +14,8 @@ Note: Treat Kairo _Features_ as proper nouns (the first letter should be capital
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   api("kairo:kairo-feature:0.3.0")
 }
@@ -32,5 +34,9 @@ class TaskFeature : Feature() {
 
   // Use "Normal" for most Features.
   override val priority: FeaturePriority = FeaturePriority.Normal
+  
+  override fun bind(binder: PrivateBinder) {
+    // Do your Guice binding here!
+  }
 }
 ```
