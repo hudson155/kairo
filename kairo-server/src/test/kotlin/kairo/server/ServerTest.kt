@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
  * Specifically, it doesn't test shutdown hooks, the wait flag
  */
 internal class ServerTest {
+  @Suppress("LongMethod")
   @Test
   fun server() {
     class TestFeature : Feature() {

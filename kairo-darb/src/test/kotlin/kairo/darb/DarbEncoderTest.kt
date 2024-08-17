@@ -24,7 +24,7 @@ internal class DarbEncoderTest {
   }
 
   @Test
-  fun decode() {
+  fun `decode, happy path`() {
     DarbEncoder.decode("0.").shouldBeEmpty()
     DarbEncoder.decode("1.0").shouldBe(listOf(false))
     DarbEncoder.decode("1.8").shouldBe(listOf(true))
@@ -39,7 +39,10 @@ internal class DarbEncoderTest {
     DarbEncoder.decode("5.C8").shouldBe(listOf(true, true, false, false, true))
     DarbEncoder.decode("5.F8").shouldBe(listOf(true, true, true, true, true))
     DarbEncoder.decode("5.f8").shouldBe(listOf(true, true, true, true, true))
+  }
 
+  @Test
+  fun `decode, error cases`() {
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("") }
       .shouldHaveMessage("DARB must have 2 components.")
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("1.1.1") }

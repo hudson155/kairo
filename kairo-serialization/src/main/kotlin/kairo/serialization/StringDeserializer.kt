@@ -1,10 +1,10 @@
 package kairo.serialization
 
+import com.fasterxml.jackson.databind.deser.std.StringDeserializer as DelegateStringDeserializer
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.deser.std.StringDeserializer as DelegateStringDeserializer
 
 /**
  * By default, Jackson casts other types (such as booleans and numbers) to strings.

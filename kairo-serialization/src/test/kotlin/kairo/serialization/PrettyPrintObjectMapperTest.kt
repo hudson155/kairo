@@ -35,15 +35,15 @@ internal class PrettyPrintObjectMapperTest {
       map = mapOf("second key" to "second value", "first key" to "first value"),
     )
     val string = """
-        {
-          "map": {
-            "first key": "first value",
-            "second key": "second value"
-          },
-          "property": 42,
-          "string": "string value"
-        }
-      """.trimIndent()
+      {
+        "map": {
+          "first key": "first value",
+          "second key": "second value"
+        },
+        "property": 42,
+        "string": "string value"
+      }
+    """.trimIndent()
     mapper.writeValueAsString(myClass).shouldBe(string)
   }
 }

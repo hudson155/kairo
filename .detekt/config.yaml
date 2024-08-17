@@ -66,8 +66,7 @@ complexity:
   LabeledExpression:
     active: false
   LargeClass:
-    active: true
-    threshold: 120
+    active: false # Good practice, but leave this up to the developer.
   LongMethod:
     active: true
     threshold: 20
@@ -95,15 +94,7 @@ complexity:
   StringLiteralDuplication:
     active: false # Could consider enabling this.
   TooManyFunctions:
-    active: true
-    thresholdInFiles: 11
-    thresholdInClasses: 11
-    thresholdInInterfaces: 11
-    thresholdInObjects: 11
-    thresholdInEnums: 11
-    ignoreDeprecated: false
-    ignorePrivate: false
-    ignoreOverridden: false
+    active: false # Good practice, but leave this up to the developer.
 
 coroutines:
   GlobalCoroutineUsage:
@@ -243,7 +234,7 @@ formatting:
     active: true
     indentSize: 2
   ImportOrdering:
-    active: true
+    active: false
   Indentation:
     active: true
     indentSize: 2
@@ -394,8 +385,7 @@ naming:
     active: true
     minimumFunctionNameLength: 3
   FunctionNaming:
-    active: true
-    functionPattern: '[a-z][A-Za-z0-9]*'
+    active: false # Overlaps with formatting>FunctionName.
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'

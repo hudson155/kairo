@@ -3,7 +3,6 @@ package kairo.serialization
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import kairo.serialization.BooleanNullableObjectMapperTest.MyClass
 import org.junit.jupiter.api.Test
 
 /**

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.util.Optional
-import kairo.serialization.BooleanNullableObjectMapperTest.MyClass
 import org.junit.jupiter.api.Test
 
 /**
@@ -22,7 +21,6 @@ internal class OptionalNullableObjectMapperTest {
    * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
     val value: Optional<Int>?,
   )
