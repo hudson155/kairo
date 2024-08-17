@@ -60,3 +60,14 @@ Configuration:
       AppenderRef:
         ref: Plaintext
 ```
+
+### Step 3: Use logging
+
+```kotlin
+private val logger: KLogger = KotlinLogging.logger {} // Best to specify the type [KLogger] explicitly.
+
+logger.debug { "Some debug message." }
+logger.info { "The value of foo is $foo." }
+logger.warn(e) { "Something went wrong but it's recoverable." }
+logger.error(e) { "Something went very wrong." }
+```
