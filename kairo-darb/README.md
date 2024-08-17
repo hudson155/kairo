@@ -43,12 +43,9 @@ dependencies {
 
 ### Step 2: Encode and decode
 
-This is an example `TaskFeature` for managing a to-do list.
-`yourPackage` represents whatever top-level package you're using for your project.
-
 ```kotlin
 // src/main/kotlin/yourPackage/feature/task/TaskFeature.kt
 
-DarbEncoder.encode(listOf(true, true, false, false, true))
-DarbEncoder.decode("5.C8")
+DarbEncoder.encode(listOf(true, true, false, false, true)) // "5.C8"
+DarbEncoder.decode("5.C8") // listOf(true, true, false, false, true)
 ```
