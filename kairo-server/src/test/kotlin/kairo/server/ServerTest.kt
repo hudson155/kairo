@@ -1,10 +1,10 @@
 package kairo.server
 
-import io.kotest.core.spec.style.FunSpec
 import io.mockk.spyk
 import io.mockk.verifyOrder
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
+import org.junit.jupiter.api.Test
 
 /**
  * This is a fairly basic test for [Server].
@@ -13,8 +13,10 @@ import kairo.feature.FeaturePriority
  *
  * Specifically, it doesn't test shutdown hooks, the wait flag
  */
-internal class ServerTest : FunSpec({
-  test("server") {
+internal class ServerTest {
+  @Suppress("LongMethod")
+  @Test
+  fun server() {
     class TestFeature : Feature() {
       override val name: String = "TestFeature"
 
@@ -43,4 +45,4 @@ internal class ServerTest : FunSpec({
       testFeature.stop(any())
     }
   }
-})
+}
