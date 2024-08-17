@@ -9,6 +9,8 @@ Note: Treat Kairo _Servers_ as proper nouns (the first letter should be capitali
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   api("kairo:kairo-server:0.3.0")
 }
