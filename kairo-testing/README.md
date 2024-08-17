@@ -14,7 +14,7 @@ In the future, the intention is for this library to also include test framework 
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-testing:0.3.0")
+  testImplementation("kairo:kairo-testing:0.4.0")
 }
 ```
 
