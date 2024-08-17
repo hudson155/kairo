@@ -19,6 +19,9 @@ Kairo is an application framework built for Kotlin.
 
 ## Modules
 
+- [kairo-config](kairo-config/):
+  Home of `ConfigLoader`, which loads configs from YAML files,
+  with support for config extension and application.
 - [kairo-darb](kairo-darb/):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
 - [kairo-dependency-injection](kairo-dependency-injection/):

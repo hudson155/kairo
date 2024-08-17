@@ -3,6 +3,8 @@ package kairo.darb
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 
+private val logger: KLogger = KotlinLogging.logger {}
+
 /**
  * Encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
  * A DARB string contains 2 components, a prefix and a body, separated by a dot.
@@ -23,8 +25,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
  */
 public object DarbEncoder {
   private const val chunkSize: Int = 4 // Warning, changing this alone will break the code.
-
-  private val logger: KLogger = KotlinLogging.logger {}
 
   private val regex: Regex = Regex("[A-Fa-f0-9]*")
 
@@ -73,21 +73,17 @@ public object DarbEncoder {
   private fun getComponents(darb: String): Pair<Int, String> {
     // DARB always has 2 components separated by a dot, and no dots elsewhere in the syntax.
     val components = darb.split('.')
-    if (components.size != 2) throw IllegalArgumentException("DARB must have 2 components.")
+    require(components.size == 2) { "DARB must have 2 components." }
 
     // The first component is the size (positive).
     val size = components[0].toInt()
-    if (size < 0) throw IllegalArgumentException("DARB size cannot be negative.")
+    require(size >= 0) { "DARB size cannot be negative." }
 
     // The second component is the hex, the length of which must correlate with the size.
     val hex = components[1]
     // This math works due to integer rounding.
-    if (hex.length != (size + chunkSize - 1) / chunkSize) {
-      throw IllegalArgumentException("DARB hex length doesn't match size component.")
-    }
-    if (!this.regex.matches(hex)) {
-      throw IllegalArgumentException("Invalid DARB hex.")
-    }
+    require(hex.length == (size + chunkSize - 1) / chunkSize) { "DARB hex length doesn't match size component." }
+    require(regex.matches(hex)) { "Invalid DARB hex." }
     return Pair(size, hex)
   }
 

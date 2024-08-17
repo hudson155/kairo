@@ -8,6 +8,4 @@ dependencies {
   implementation(project(":kairo-logging"))
   implementation(libs.ktorServerCio)
   implementation(libs.ktorServerCore)
-
-  testImplementation(project(":kairo-logging:testing"))
 }

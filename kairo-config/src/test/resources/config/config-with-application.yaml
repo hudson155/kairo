@@ -1,0 +1,5 @@
+extends: base-config
+
+apply:
+  - applied-config-0
+  - applied-config-1
