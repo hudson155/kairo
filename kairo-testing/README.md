@@ -31,9 +31,7 @@ internal class YourTest {
 
   @Test
   fun `test case 2`() {
-    shouldThrow<IllegalArgumentException> {
-      doSomething("2")
-    }
+    doSomething("2").shouldBe("wonderful result!")
   }
 }
 ```
