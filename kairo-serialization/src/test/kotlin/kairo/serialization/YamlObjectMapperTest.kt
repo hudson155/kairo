@@ -68,29 +68,30 @@ internal class YamlObjectMapperTest {
       prettyPrint = true
     }.build()
 
-  private val myClass: MyClass = MyClass(
-    booleans = MyClass.Booleans(
-      booleanTrue = true,
-      booleanFalse = false,
-      booleanNull = null,
-    ),
-    float = 1.23F,
-    int = 42,
-    strings = MyClass.Strings(
-      stringTrue = "true",
-      stringFloat = "1.23",
-      stringInt = "42",
-    ),
-    uuid = UUID.fromString("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"),
-    nested = MyClass.Nested.NestB(b = "bravo"),
-    optionals = MyClass.Optionals(
-      optionalPresent = Optional.of(42),
-      optionalEmpty = Optional.empty(),
-      optionalNull = null,
-    ),
-    instant = Instant.parse("2023-11-13T19:44:32.123456789Z"),
-    localDate = LocalDate.parse("2023-11-13"),
-  )
+  private val myClass: MyClass =
+    MyClass(
+      booleans = MyClass.Booleans(
+        booleanTrue = true,
+        booleanFalse = false,
+        booleanNull = null,
+      ),
+      float = 1.23F,
+      int = 42,
+      strings = MyClass.Strings(
+        stringTrue = "true",
+        stringFloat = "1.23",
+        stringInt = "42",
+      ),
+      uuid = UUID.fromString("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"),
+      nested = MyClass.Nested.NestB(b = "bravo"),
+      optionals = MyClass.Optionals(
+        optionalPresent = Optional.of(42),
+        optionalEmpty = Optional.empty(),
+        optionalNull = null,
+      ),
+      instant = Instant.parse("2023-11-13T19:44:32.123456789Z"),
+      localDate = LocalDate.parse("2023-11-13"),
+    )
 
   val string = """
     booleans:
