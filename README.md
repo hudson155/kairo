@@ -54,14 +54,14 @@ Kairo is an application framework built for Kotlin.
 
 dependencies {
   // Basic dependencies.
-  api("kairo:kairo-server:0.3.0")
-  implementation("kairo:kairo-logging:0.3.0")
+  api("kairo:kairo-server:0.4.0")
+  implementation("kairo:kairo-logging:0.4.0")
 
   // Enable REST endpoints.
-  api("kairo:kairo-rest-feature:0.3.0")
+  api("kairo:kairo-rest-feature:0.4.0")
 
   // Test-related dependencies.
-  testImplementation("kairo:kairo-testing:0.3.0")
+  testImplementation("kairo:kairo-testing:0.4.0")
 }
 ```
 

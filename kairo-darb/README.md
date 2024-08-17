@@ -39,7 +39,7 @@ However, since there are only 5 booleans in the list (indicated by the prefix), 
 // build.gradle.kts
 
 dependencies {
-  api("kairo:kairo-darb:0.3.0")
+  api("kairo:kairo-darb:0.4.0")
 }
 ```
 

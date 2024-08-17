@@ -25,7 +25,7 @@ by making callers think twice.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-protected-string:0.3.0")
+  testImplementation("kairo:kairo-protected-string:0.4.0")
 }
 ```
 

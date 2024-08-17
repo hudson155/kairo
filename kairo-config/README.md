@@ -16,7 +16,7 @@ with support for config extension and application.
 // build.gradle.kts
 
 dependencies {
-  api("kairo:kairo-config:0.3.0")
+  api("kairo:kairo-config:0.4.0")
 }
 ```
 

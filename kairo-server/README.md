@@ -12,7 +12,7 @@ Note: Treat Kairo _Servers_ as proper nouns (the first letter should be capitali
 // build.gradle.kts
 
 dependencies {
-  api("kairo:kairo-server:0.3.0")
+  api("kairo:kairo-server:0.4.0")
 }
 ```
 
