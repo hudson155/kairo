@@ -7,9 +7,13 @@ import com.fasterxml.jackson.databind.node.ValueNode
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 import kotlin.reflect.KClass
+
+private val logger: KLogger = KotlinLogging.logger {}
 
 /**
  * Loads configs from YAML files, with support for config extension and application.
@@ -19,6 +23,10 @@ import kotlin.reflect.KClass
  *
  * Config application: Configs can apply other configs
  * by specifying "apply: [other-config-name-0, other-config-name-1]" as a top-level YAML property
+ *
+ * Implementation note: This class uses [ObjectNode.remove] and [ObjectNode.set],
+ * which mutate the underlying object.
+ * Understanding this makes the code easier to follow.
  */
 public object ConfigLoader {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Yaml).build()
@@ -27,10 +35,14 @@ public object ConfigLoader {
     load(configName, C::class)
 
   public fun <C : Any> load(configName: String, configKClass: KClass<C>): C {
+    logger.info { "Loading config: $configName." }
     val config = loadAsJson(configName)
     return mapper.convertValue(config, configKClass.java)
   }
 
+  /**
+   * Loads the config as [ObjectNode] (JSON), processing extension and applications.
+   */
   private fun loadAsJson(configName: String): ObjectNode {
     val config = simpleLoadAsJson(configName)
     val extends = extractExtends(config)
@@ -56,6 +68,9 @@ public object ConfigLoader {
     return (jsonNode as ArrayNode).map { mapper.convertValue<String>(it) }
   }
 
+  /**
+   * Loads the config as [ObjectNode] (JSON) WITHOUT processing extension and applications.
+   */
   private fun simpleLoadAsJson(configName: String): ObjectNode {
     val stream = Resources.getResource("config/$configName.yaml")
     return mapper.readValue<ObjectNode>(stream)
