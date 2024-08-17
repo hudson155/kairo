@@ -21,20 +21,19 @@ dependencies {
 ```kotlin
 // src/main/kotlin/yourPackage/YourTest.kt
 
-internal class YourTest : FunSpec({
-  test("test case 1") {
+internal class YourTest {
+  @Test
+  fun `test case 1`() {
     shouldThrow<IllegalArgumentException> {
       doSomething("1")
     }
   }
 
-  context("a grouping of related tests") {
-    test("test case 2a") {
-      doSomething("2a").shouldBe("wonderful result!")
-    }
-    test("test case 2b") {
-      doSomething("2b").shouldBe("a different result :)")
+  @Test
+  fun `test case 2`() {
+    shouldThrow<IllegalArgumentException> {
+      doSomething("2")
     }
   }
-})
+}
 ```
