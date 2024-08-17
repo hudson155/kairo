@@ -1,6 +1,8 @@
 ### Summary
 
-TODO
+Part of #0.
+
+Placeholder.
 
 ### Checklist
 
