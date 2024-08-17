@@ -4,9 +4,9 @@ Home of `ConfigLoader`, which loads configs from YAML files,
 with support for config extension and application.
 
 - **Config extension:** Configs can extend other configs
-  by specifying "extends: other-config-name" as a top-level YAML property.
+  by specifying `extends: other-config-name` as a top-level YAML property.
 - **Config application:** Configs can apply other configs
-  by specifying "apply: [other-config-name-0, other-config-name-1] as a top-level YAML property
+  by specifying `apply: [other-config-name-0, other-config-name-1]` as a top-level YAML property
 
 ## Usage
 

@@ -18,7 +18,7 @@ import kotlin.reflect.KClass
  * by specifying "extends: other-config-name" as a top-level YAML property.
  *
  * Config application: Configs can apply other configs
- * by specifying "apply: [other-config-name-0, other-config-name-1] as a top-level YAML property
+ * by specifying "apply: [other-config-name-0, other-config-name-1]" as a top-level YAML property
  */
 public object ConfigLoader {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Yaml).build()
