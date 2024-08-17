@@ -3,6 +3,8 @@ package kairo.feature
 import com.google.inject.Injector
 import com.google.inject.PrivateBinder
 import com.google.inject.PrivateModule
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
 
 /**
  * Features are the primary building block of Kairo applications.
@@ -13,6 +15,8 @@ import com.google.inject.PrivateModule
  * is represented by a Kairo Feature.
  */
 public abstract class Feature : PrivateModule() {
+  private val logger: KLogger = KotlinLogging.logger {}
+
   public abstract val name: String
 
   public abstract val priority: FeaturePriority
@@ -20,6 +24,7 @@ public abstract class Feature : PrivateModule() {
   final override fun configure() {
     val binder = binder()
     binder.configureKairoBinder()
+    logger.info { "Binding Feature: $name." }
     bind(binder)
   }
 

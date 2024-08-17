@@ -5,4 +5,5 @@ plugins {
 
 dependencies {
   api(project(":kairo-dependency-injection"))
+  implementation(project(":kairo-logging"))
 }
