@@ -26,7 +26,7 @@ internal class StringNullableObjectMapperTest {
   }
 
   @Test
-  fun `serialize, negative`() {
+  fun `serialize, empty`() {
     mapper.writeValueAsString(MyClass("")).shouldBe("{\"value\":\"\"}")
   }
 
