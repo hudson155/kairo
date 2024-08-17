@@ -78,7 +78,7 @@ complexity:
     ignoreDataClasses: true
   MethodOverloading:
     active: true
-    threshold: 2
+    threshold: 3
   NamedArguments:
     active: true
     threshold: 3
@@ -448,7 +448,7 @@ potential-bugs:
   AvoidReferentialEquality:
     active: true
   CastNullableToNonNullableType:
-    active: true
+    active: false # This rule has poor support for platform types.
   CastToNullableType:
     active: true
   Deprecation:
@@ -666,7 +666,7 @@ style:
     active: true
   UnderscoresInNumericLiterals:
     active: true
-    acceptableLength: 3
+    acceptableLength: 4
     allowNonStandardGrouping: false
   UnnecessaryAbstractClass:
     active: false
