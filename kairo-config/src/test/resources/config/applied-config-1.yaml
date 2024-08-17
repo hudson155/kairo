@@ -1,0 +1,5 @@
+message: "Hello, World!"
+name: "My config"
+port: 8080
+width:
+  replace: { min: 4, max: 20, average: 16 }

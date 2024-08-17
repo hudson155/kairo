@@ -6,6 +6,8 @@ import com.google.inject.PrivateModule
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 
+private val logger: KLogger = KotlinLogging.logger {}
+
 /**
  * Features are the primary building block of Kairo applications.
  * Every piece of functionality,
@@ -15,8 +17,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
  * is represented by a Kairo Feature.
  */
 public abstract class Feature : PrivateModule() {
-  private val logger: KLogger = KotlinLogging.logger {}
-
   public abstract val name: String
 
   public abstract val priority: FeaturePriority

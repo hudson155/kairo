@@ -1,4 +1,5 @@
 [versions]
+guava = "33.2.1-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
 jackson = "2.17.2" # https://github.com/FasterXML/jackson-core/tags
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
@@ -8,6 +9,7 @@ log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
 mockK = "1.13.12" # https://github.com/mockk/mockk/releases
 
 [libraries]
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
 guice = { module = "com.google.inject:guice", version.ref = "guice" }
 jacksonCore = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }

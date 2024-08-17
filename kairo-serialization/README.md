@@ -23,7 +23,7 @@ dependencies {
 ### Step 2: Create and use the object mapper
 
 ```kotlin
-// src/main/kotlin/yourPackage/YourFile.kt
+// src/main/kotlin/yourPackage/.../YourFile.kt
 
 val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 // Change ObjectMapperFormat.Json to use other formats, such as YAML.

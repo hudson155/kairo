@@ -21,7 +21,7 @@ dependencies {
 ### Step 2: Write a test
 
 ```kotlin
-// src/main/kotlin/yourPackage/YourTest.kt
+// src/main/kotlin/yourPackage/.../YourTest.kt
 
 internal class YourTest {
   @Test
