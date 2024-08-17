@@ -8,6 +8,8 @@ which should be configured to use Apache Log4j2 under the hood.
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   implementation("kairo:kairo-logging:0.3.0")
 }

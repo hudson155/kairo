@@ -11,6 +11,8 @@ In the future, the intention is for this library to also include test framework 
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   testImplementation("kairo:kairo-testing:0.3.0")
 }

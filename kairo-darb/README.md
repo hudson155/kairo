@@ -36,6 +36,8 @@ However, since there are only 5 booleans in the list (indicated by the prefix), 
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   api("kairo:kairo-darb:0.3.0")
 }

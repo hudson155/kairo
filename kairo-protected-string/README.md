@@ -22,6 +22,8 @@ by making callers think twice.
 ### Step 1: Include the dependency
 
 ```kotlin
+// build.gradle.kts
+
 dependencies {
   testImplementation("kairo:kairo-protected-string:0.3.0")
 }
