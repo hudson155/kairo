@@ -29,6 +29,29 @@ Your YAML file **must** be in `config/*`.
 
 public data class MonolithServerConfig(
   val message: String,
+)
+```
+
+```yaml
+# src/main/resources/config/basic-config.yaml
+
+message: "Hello, World!"
+```
+
+```kotlin
+// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
+
+ConfigLoader.load<MonolithServerConfig>("basic-config")
+```
+
+### Step 3: Try reading a complex config
+
+This is a "complex" config in the sense that it utilizes both _config extension_ and _config application_.
+The large number of config properties is needed to demonstrate by example how these features work.
+
+```kotlin
+public data class MonolithServerConfig(
+  val message: String,
   val name: String,
   val port: Int,
   val height: Sizes,
@@ -42,25 +65,6 @@ public data class MonolithServerConfig(
   )
 }
 ```
-
-```yaml
-# src/main/resources/config/basic-config.yaml
-
-message: "Hello, World!"
-name: "My config"
-port: 8080
-height: { min: 2, max: 10, average: 8 }
-width: { min: 4, max: 20, average: 16 }
-depth: { min: 6, max: 30, average: 24 }
-```
-
-```kotlin
-// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
-
-ConfigLoader.load<MonolithServerConfig>("basic-config")
-```
-
-### Step 3: Try reading a complex config
 
 ```yaml
 # src/main/resources/config/base-config.yaml
