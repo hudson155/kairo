@@ -11,7 +11,7 @@ which should be configured to use Apache Log4j2 under the hood.
 // build.gradle.kts
 
 dependencies {
-  implementation("kairo:kairo-logging:0.3.0")
+  implementation("kairo:kairo-logging:0.4.0")
 }
 ```
 
