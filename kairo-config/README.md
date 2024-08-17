@@ -60,7 +60,7 @@ depth: { min: 6, max: 30, average: 24 }
 ConfigLoader.load<MonolithServerConfig>("basic-config")
 ```
 
-### Step 2: Try reading a complex config
+### Step 3: Try reading a complex config
 
 ```yaml
 # src/main/resources/config/base-config.yaml
