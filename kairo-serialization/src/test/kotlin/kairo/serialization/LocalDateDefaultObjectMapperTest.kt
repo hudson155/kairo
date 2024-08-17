@@ -49,70 +49,70 @@ internal class LocalDateDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from year`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"1-02-03\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from month`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-2-03\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from day`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-3\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low month)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-00-03\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high month)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-13-03\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low day)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-00\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high day)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-29\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, number`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 20231113 }")
     }
   }

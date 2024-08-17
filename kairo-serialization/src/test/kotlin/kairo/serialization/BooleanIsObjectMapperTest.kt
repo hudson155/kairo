@@ -44,14 +44,14 @@ internal class BooleanIsObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"isValue\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }

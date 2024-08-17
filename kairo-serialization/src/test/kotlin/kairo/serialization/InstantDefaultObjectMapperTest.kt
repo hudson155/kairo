@@ -49,133 +49,133 @@ internal class InstantDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from year`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"1-02-03T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from month`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-2-03T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from day`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-3T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from hour`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T9:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from minute`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:4:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from second`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:44:2.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low month)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-00-03T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high month)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-13-03T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low day)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-00T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high day)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-29T19:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high hour)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T24:44:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high minute)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:60:32.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high second)`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:44:60.123456789Z\" }")
     }
   }
 
   @Test
   fun `deserialize, too much precision`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:44:32.1234567890Z\" }")
     }
   }
 
   @Test
   fun `deserialize, no time zone`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:44:32.123456789\" }")
     }
   }
 
   @Test
   fun `deserialize, non-UTC`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\":\"2023-02-03T19:44:32.123456789-07:00[America/Edmonton]\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, number`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 1699904672123 }")
     }
   }

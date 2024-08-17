@@ -44,35 +44,35 @@ internal class StringDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, wrong type, int`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 1 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, float`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 0.0 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, boolean`() {
-    shouldThrow<JsonMappingException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": true }")
     }
   }

@@ -1,6 +1,6 @@
 package kairo.serialization
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -18,7 +18,7 @@ internal class UnknownPropertyObjectMapperTest {
   @Test
   fun `unknown properties disallowed (default)`() {
     val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
-    shouldThrow<UnrecognizedPropertyException> {
+    deserializationShouldFail {
       mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }")
     }
   }
