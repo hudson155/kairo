@@ -234,7 +234,8 @@ formatting:
     active: true
     indentSize: 2
   ImportOrdering:
-    active: false
+    active: true
+    layout: '*'
   Indentation:
     active: true
     indentSize: 2
