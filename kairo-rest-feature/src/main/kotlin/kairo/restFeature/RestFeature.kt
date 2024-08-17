@@ -40,6 +40,7 @@ public class RestFeature(
   }
 
   override fun stop(injector: Injector?) {
+    logger.info { "Stopping Ktor." }
     ktor?.stop()
     ktor = null
   }

@@ -10,6 +10,6 @@ dependencies {
   implementation(libs.jacksonDatatypeJdk8)
   api(libs.jacksonModuleKotlin)
 
-  testImplementation(project(":testing"))
   testImplementation(project(":kairo-logging:testing"))
+  testImplementation(project(":testing"))
 }

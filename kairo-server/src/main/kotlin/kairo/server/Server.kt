@@ -74,6 +74,7 @@ public abstract class Server {
    * [shutDown] will be automatically called when the JVM shuts down.
    */
   private fun addShutdownHook() {
+    logger.info { "Adding a shutdown hook." }
     Runtime.getRuntime().addShutdownHook(Thread { shutDown() })
   }
 
