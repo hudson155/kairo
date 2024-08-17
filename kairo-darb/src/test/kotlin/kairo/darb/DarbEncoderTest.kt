@@ -1,13 +1,14 @@
 package kairo.darb
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import org.junit.jupiter.api.Test
 
-internal class DarbEncoderTest : FunSpec({
-  test("encode") {
+internal class DarbEncoderTest {
+  @Test
+  fun encode() {
     DarbEncoder.encode(emptyList()).shouldBe("0.")
     DarbEncoder.encode(listOf(false)).shouldBe("1.0")
     DarbEncoder.encode(listOf(true)).shouldBe("1.8")
@@ -22,7 +23,8 @@ internal class DarbEncoderTest : FunSpec({
     DarbEncoder.encode(listOf(true, true, true, true, true)).shouldBe("5.F8")
   }
 
-  test("decode") {
+  @Test
+  fun `decode, happy path`() {
     DarbEncoder.decode("0.").shouldBeEmpty()
     DarbEncoder.decode("1.0").shouldBe(listOf(false))
     DarbEncoder.decode("1.8").shouldBe(listOf(true))
@@ -37,7 +39,10 @@ internal class DarbEncoderTest : FunSpec({
     DarbEncoder.decode("5.C8").shouldBe(listOf(true, true, false, false, true))
     DarbEncoder.decode("5.F8").shouldBe(listOf(true, true, true, true, true))
     DarbEncoder.decode("5.f8").shouldBe(listOf(true, true, true, true, true))
+  }
 
+  @Test
+  fun `decode, error cases`() {
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("") }
       .shouldHaveMessage("DARB must have 2 components.")
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("1.1.1") }
@@ -53,4 +58,4 @@ internal class DarbEncoderTest : FunSpec({
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("5.G8") }
       .shouldHaveMessage("Invalid DARB hex.")
   }
-})
+}
