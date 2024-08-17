@@ -14,6 +14,41 @@ In the example above, the first character "C" maps to 1100 in binary, which repr
 The second character "8" maps to 1000 in binary, which represents `true, false, false, false`.
 However, since there are only 5 booleans in the list (indicated by the prefix), we ignore the trailing booleans.
 
+**Examples**
+
+| DARB   | Boolean list                        |
+|--------|-------------------------------------|
+| `0.`   |                                     |
+| `1.0`  | `false`                             |
+| `1.8`  | `true`                              |
+| `4.0`  | `false, false, false, false`        |
+| `4.1`  | `false, false, false, true`         |
+| `4.8`  | `true, false, false, false`         |
+| `4.F`  | `true, true, true, true`            |
+| `5.00` | `false, false, false, false, false` |
+| `5.08` | `false, false, false, false, true`  |
+| `5.80` | `true, false, false, false, false`  |
+| `5.C8` | `true, true, false, false, true`    |
+| `5.F8` | `true, true, true, true, true`      |
+
 ## Usage
 
-This feature is not currently intended to be a direct dependency.
+### Step 1: Include the dependency
+
+```kotlin
+dependencies {
+  api("kairo:kairo-darb:0.3.0")
+}
+```
+
+### Step 2: Encode and decode
+
+This is an example `TaskFeature` for managing a to-do list.
+`yourPackage` represents whatever top-level package you're using for your project.
+
+```kotlin
+// src/main/kotlin/yourPackage/feature/task/TaskFeature.kt
+
+DarbEncoder.encode(listOf(true, true, false, false, true))
+DarbEncoder.decode("5.C8")
+```
