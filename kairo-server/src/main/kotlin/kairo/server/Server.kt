@@ -24,6 +24,7 @@ public abstract class Server {
    * If [shutdownHook] is passed, [shutDown] will be automatically called when the JVM shuts down.
    * If [wait] is passed, this call won't return until the JVM is terminated.
    */
+  @Suppress("CognitiveComplexMethod", "LongMethod")
   public fun start(shutdownHook: Boolean = true, wait: Boolean = true) {
     lock.withLock {
       if (injector != null) {
@@ -70,7 +71,7 @@ public abstract class Server {
   }
 
   /**
-   * [shutDown] will be automatically called when the JVM shuts down
+   * [shutDown] will be automatically called when the JVM shuts down.
    */
   private fun addShutdownHook() {
     Runtime.getRuntime().addShutdownHook(Thread { shutDown() })

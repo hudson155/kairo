@@ -12,6 +12,13 @@ import com.fasterxml.jackson.databind.cfg.JsonNodeFeature
  * Here we try to make Jackson reasonably strict instead.
  */
 internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
+  configureMapperFeatures()
+  configureSerializationFeatures()
+  configureDeserializationFeatures()
+  configureJsonNodeFeatures()
+}
+
+private fun ObjectMapperFactoryBuilder.configureMapperFeatures() {
   configure(MapperFeature.USE_GETTERS_AS_SETTERS, false)
   configure(MapperFeature.AUTO_DETECT_CREATORS, false)
   configure(MapperFeature.AUTO_DETECT_FIELDS, false)
@@ -26,9 +33,13 @@ internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
   configure(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS, false)
   configure(MapperFeature.IGNORE_MERGE_FOR_UNMERGEABLE, false)
   configure(MapperFeature.BLOCK_UNSAFE_POLYMORPHIC_BASE_TYPES, true)
+}
 
+private fun ObjectMapperFactoryBuilder.configureSerializationFeatures() {
   configure(SerializationFeature.USE_EQUALITY_FOR_OBJECT_ID, true)
+}
 
+private fun ObjectMapperFactoryBuilder.configureDeserializationFeatures() {
   configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true)
   configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true)
   configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true)
@@ -36,7 +47,9 @@ internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
   configure(DeserializationFeature.FAIL_ON_READING_DUP_TREE_KEY, true)
   configure(DeserializationFeature.FAIL_ON_MISSING_CREATOR_PROPERTIES, true)
   configure(DeserializationFeature.ACCEPT_FLOAT_AS_INT, false)
+}
 
+private fun ObjectMapperFactoryBuilder.configureJsonNodeFeatures() {
   configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, false)
   configure(JsonNodeFeature.FAIL_ON_NAN_TO_BIG_DECIMAL_COERCION, true)
 }
