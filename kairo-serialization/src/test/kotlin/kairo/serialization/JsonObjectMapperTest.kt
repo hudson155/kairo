@@ -44,8 +44,7 @@ internal class JsonObjectMapperTest : FunSpec({
     localDate = LocalDate.parse("2023-11-13"),
   )
 
-  val string =
-    """
+  val string = """
     {
       "booleans": {
         "booleanFalse": false,
@@ -71,7 +70,7 @@ internal class JsonObjectMapperTest : FunSpec({
       },
       "uuid": "3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"
     }
-    """.trimIndent()
+  """.trimIndent()
 
   test("serialize") {
     mapper.writeValueAsString(myClass).shouldBe(string)

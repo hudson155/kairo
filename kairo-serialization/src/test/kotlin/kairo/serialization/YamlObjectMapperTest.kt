@@ -44,8 +44,7 @@ internal class YamlObjectMapperTest : FunSpec({
     localDate = LocalDate.parse("2023-11-13"),
   )
 
-  val string =
-    """
+  val string = """
     booleans:
       booleanFalse: false
       booleanNull: null
@@ -65,7 +64,7 @@ internal class YamlObjectMapperTest : FunSpec({
       stringInt: "42"
       stringTrue: "true"
     uuid: "3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"
-    """.trimIndent() + '\n'
+  """.trimIndent() + '\n'
 
   test("serialize") {
     mapper.writeValueAsString(myClass).shouldBe(string)

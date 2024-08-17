@@ -22,7 +22,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
  * See the corresponding test for more spec.
  */
 public object DarbEncoder {
-  private const val CHUNK_SIZE: Int = 4 // Warning, changing this alone will break the code.
+  private const val chunkSize: Int = 4 // Warning, changing this alone will break the code.
 
   private val logger: KLogger = KotlinLogging.logger {}
 
@@ -30,7 +30,7 @@ public object DarbEncoder {
 
   public fun encode(booleanList: List<Boolean>): String {
     // Chunk by 4 because each hex represents 4 bits.
-    val chunkedBooleanList = booleanList.chunked(CHUNK_SIZE)
+    val chunkedBooleanList = booleanList.chunked(chunkSize)
 
     // Map each chunk of 4 bits to a hex character, then join the characters together.
     val body = chunkedBooleanList.joinToString("") { chunk -> encodeChunk(chunk) }
@@ -53,7 +53,7 @@ public object DarbEncoder {
     return when (intValue) {
       in 0..9 -> '0' + intValue
       in 10..15 -> 'A' + (intValue - 10)
-      else -> IllegalStateException("Internal error in DARB encoder.") // This should never happen.
+      else -> throw IllegalStateException("Internal error in DARB encoder.") // This should never happen.
     }.toString()
   }
 
@@ -82,7 +82,7 @@ public object DarbEncoder {
     // The second component is the hex, the length of which must correlate with the size.
     val hex = components[1]
     // This math works due to integer rounding.
-    if (hex.length != (size + CHUNK_SIZE - 1) / CHUNK_SIZE) {
+    if (hex.length != (size + chunkSize - 1) / chunkSize) {
       throw IllegalArgumentException("DARB hex length doesn't match size component.")
     }
     if (!this.regex.matches(hex)) {

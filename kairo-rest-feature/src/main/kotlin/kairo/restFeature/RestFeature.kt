@@ -33,7 +33,7 @@ public class RestFeature(
       factory = CIO,
       environment = applicationEnvironment(),
       configure = configureEmbeddedServer(config),
-      module = {}
+      module = {},
     )
     this.ktor = ktor
     ktor.start()
