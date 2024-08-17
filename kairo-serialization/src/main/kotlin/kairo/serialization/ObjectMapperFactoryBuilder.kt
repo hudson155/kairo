@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 
+private val logger: KLogger = KotlinLogging.logger {}
+
 public class ObjectMapperFactoryBuilder internal constructor(
   factory: JsonFactory,
   modules: List<Module>,
   block: ObjectMapperFactoryBuilder.() -> Unit,
 ) : JsonMapper.Builder(JsonMapper(factory)) {
-  private val logger: KLogger = KotlinLogging.logger {}
-
   /**
    * Unknown properties are prohibited by default by Jackson, and we respect that default here.
    * This is an appropriate choice for internal use.

@@ -11,11 +11,11 @@ import io.ktor.server.engine.embeddedServer
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 
+private val logger: KLogger = KotlinLogging.logger {}
+
 public class RestFeature(
   private val config: RestConfig,
 ) : Feature() {
-  private val logger: KLogger = KotlinLogging.logger {}
-
   override val name: String = "REST"
 
   override val priority: FeaturePriority = FeaturePriority.Framework

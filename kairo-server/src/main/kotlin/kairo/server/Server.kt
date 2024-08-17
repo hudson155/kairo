@@ -7,12 +7,12 @@ import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
+private val logger: KLogger = KotlinLogging.logger {}
+
 /**
  * A Server is an application that runs a set of Features.
  */
 public abstract class Server {
-  private val logger: KLogger = KotlinLogging.logger {}
-
   protected abstract val featureManager: FeatureManager
 
   private val lock: Lock = ReentrantLock()

@@ -32,7 +32,7 @@ dependencies {
 ### Step 2: Use protected strings
 
 ```kotlin
-// src/main/kotlin/yourPackage/YourFile.kt
+// src/main/kotlin/yourPackage/.../YourFile.kt
 
 val apiKey = ProtectedString("YOUR_API_KEY")
 
