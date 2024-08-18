@@ -31,13 +31,23 @@ private val logger: KLogger = KotlinLogging.logger {}
 public object ConfigLoader {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Yaml).build()
 
-  public inline fun <reified C : Any> load(configName: String): C =
+  public inline fun <reified C : Any> load(configName: String? = null): C =
     load(configName, C::class)
 
-  public fun <C : Any> load(configName: String, configKClass: KClass<C>): C {
-    logger.info { "Loading config: $configName." }
-    val config = loadAsJson(configName)
+  public fun <C : Any> load(configName: String?, configKClass: KClass<C>): C {
+    val actualConfigName = getActualConfigName(configName)
+    logger.info { "Loading config: $actualConfigName." }
+    val config = loadAsJson(actualConfigName)
     return mapper.convertValue(config, configKClass.java)
+  }
+
+  private fun getActualConfigName(configName: String?): String {
+    if (configName != null) return configName
+
+    val environmentVariableName = "KAIRO_CONFIG"
+    logger.info { "Getting config name from $environmentVariableName environment variable." }
+    return System.getenv(environmentVariableName)
+      ?: error("Config name was not provided and $environmentVariableName is not set.")
   }
 
   /**
