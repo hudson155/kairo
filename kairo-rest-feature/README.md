@@ -46,7 +46,7 @@ object LibraryBookApi {
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   data class Create(
-    override val body: OrganizationRep.Creator,
-  ) : RestEndpoint<Nothing, List<BookRep>>()
+    override val body: BookRep.Creator,
+  ) : RestEndpoint<BookRep.Creator, BookRep>()
 }
 ```
