@@ -35,63 +35,63 @@ internal class UuidDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, too short`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f\" }")
     }
   }
 
   @Test
   fun `deserialize, too long`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f88\" }")
     }
   }
 
   @Test
   fun `deserialize, missing dashes`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853dae34ee1abe20b9c7dee45f8\" }")
     }
   }
 
   @Test
   fun `deserialize, invalid character`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45fg\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, int`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 42 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, float`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 1.23 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, boolean`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": true }")
     }
   }

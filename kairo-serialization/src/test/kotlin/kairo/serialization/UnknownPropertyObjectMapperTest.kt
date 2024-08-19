@@ -16,7 +16,7 @@ internal class UnknownPropertyObjectMapperTest {
   @Test
   fun `unknown properties disallowed (default)`() {
     val mapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"foo\": \"bar\", \"baz\": \"qux\" }")
     }
   }

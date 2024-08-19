@@ -1,0 +1,32 @@
+package kairo.serialization
+
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.core.JsonToken
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import java.time.ZoneId
+import java.time.ZoneOffset
+
+/**
+ * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
+ * and instead roll our own time module. See [TimeModule].
+ */
+internal class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ZoneId {
+    expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
+    val string = p.readValueAs<String>()
+    return convert(string)
+  }
+
+  private fun convert(string: String): ZoneId {
+    val timeZone = ZoneId.of(string)
+    if (timeZone is ZoneOffset) {
+      if (timeZone == ZoneOffset.UTC) return timeZone
+      throw IllegalArgumentException("The only supported ZoneOffset is UTC.")
+    }
+    if (timeZone == ZoneId.of("UTC")) {
+      return ZoneOffset.UTC
+    }
+    return timeZone
+  }
+}

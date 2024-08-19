@@ -7,5 +7,5 @@ import io.kotest.assertions.throwables.shouldThrow
  * For simplicity, we only check for [JsonMappingException] to ensure deserialization failed.
  * It's possible but unnecessary to check for more specific exception types.
  */
-internal inline fun deserializationShouldFail(block: () -> Any?): JsonMappingException =
+internal inline fun serializationShouldFail(block: () -> Any?): JsonMappingException =
   shouldThrow<JsonMappingException>(block)
