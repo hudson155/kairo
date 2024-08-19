@@ -23,14 +23,14 @@ dependencies {
 
 ### Step 2: Create your first Feature
 
-This is an example `TaskFeature` for managing a to-do list.
+This is an example `LibraryFeature` for managing a public library.
 `yourPackage` represents whatever top-level package you're using for your project.
 
 ```kotlin
-// src/main/kotlin/yourPackage/feature/task/TaskFeature.kt
+// src/main/kotlin/yourPackage/feature/library/LibraryFeature.kt
 
-class TaskFeature : Feature() {
-  override val name: String = "Task"
+class LibraryFeature : Feature() {
+  override val name: String = "Library"
 
   // Use "Normal" for most Features.
   override val priority: FeaturePriority = FeaturePriority.Normal
