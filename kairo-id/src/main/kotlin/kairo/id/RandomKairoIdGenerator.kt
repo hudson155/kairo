@@ -7,8 +7,8 @@ import kotlin.random.Random
  */
 public class RandomKairoIdGenerator(
   prefix: String,
-  private val length: Int,
-) : KairoIdGenerator(prefix) {
+  length: Int,
+) : KairoIdGenerator(prefix, length) {
   public class Factory(
     private val length: Int,
   ) : KairoIdGenerator.Factory() {

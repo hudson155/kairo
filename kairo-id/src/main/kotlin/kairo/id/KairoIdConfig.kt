@@ -13,11 +13,13 @@ public data class KairoIdConfig(
   )
   public sealed class Generator {
     public data class Deterministic(
-      val length: Int,
+      override val length: Int,
     ) : Generator()
 
     public data class Random(
-      val length: Int,
+      override val length: Int,
     ) : Generator()
+
+    public abstract val length: Int
   }
 }

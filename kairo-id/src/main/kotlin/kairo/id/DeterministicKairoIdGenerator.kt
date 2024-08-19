@@ -7,8 +7,8 @@ import java.util.concurrent.ConcurrentHashMap
  */
 public class DeterministicKairoIdGenerator(
   prefix: String,
-  private val length: Int,
-) : KairoIdGenerator(prefix) {
+  length: Int,
+) : KairoIdGenerator(prefix, length) {
   public class Factory(
     private val length: Int,
   ) : KairoIdGenerator.Factory() {
