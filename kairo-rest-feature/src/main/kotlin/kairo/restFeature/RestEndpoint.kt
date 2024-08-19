@@ -2,7 +2,7 @@ package kairo.restFeature
 
 /**
  * A [RestEndpoint] implementation defines the API contract for a single REST API endpoint.
- * See this Feature's README for some examples.
+ * See this Feature's README or tests for some examples.
  *
  * [Request] represents the type of the request body. If none, use [Nothing].
  * [Response] represents the type of the response body. If none, use [Nothing].
