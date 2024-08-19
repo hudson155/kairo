@@ -38,15 +38,15 @@ object LibraryBookApi {
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/books")
-  @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   data object ListAll : RestEndpoint<Nothing, List<BookRep>>()
 
-  @RestEndpoint.Method("GET")
+  @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library/books")
+  @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
-  data class ListByOrganization(
-    @PathParam val organizationId: String,
+  data class Create(
+    override val body: OrganizationRep.Creator,
   ) : RestEndpoint<Nothing, List<BookRep>>()
 }
 ```
