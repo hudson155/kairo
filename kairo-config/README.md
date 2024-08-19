@@ -30,7 +30,7 @@ Your YAML file **must** be in `config/*`.
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServerConfig.kt
 
-public data class MonolithServerConfig(
+data class MonolithServerConfig(
   val message: String,
 )
 ```
@@ -53,7 +53,7 @@ This is a "complex" config in the sense that it utilizes both _config extension_
 The large number of config properties is needed to demonstrate by example how these features work.
 
 ```kotlin
-public data class MonolithServerConfig(
+data class MonolithServerConfig(
   val message: String,
   val name: String,
   val port: Int,
@@ -61,7 +61,7 @@ public data class MonolithServerConfig(
   val width: Sizes,
   val depth: Sizes,
 ) {
-  public data class Sizes(
+  data class Sizes(
     val min: Int,
     val max: Int,
     val average: Int,
