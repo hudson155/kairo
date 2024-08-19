@@ -29,7 +29,7 @@ Kairo is an application framework built for Kotlin.
   along with some utilities to make its use more idiomatic.
 - [kairo-feature](kairo-feature/):
   Features are the primary building block of Kairo applications.
-- [kairo-id](kairo-protected-string/):
+- [kairo-id](kairo-id/):
   Kairo IDs are an optional way to uniquely identify entities.
   Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
 - [kairo-logging](kairo-logging/):
