@@ -8,6 +8,9 @@ with support for config extension and application.
 - **Config application:** Configs can apply other configs
   by specifying `apply: [other-config-name-0, other-config-name-1]` as a top-level YAML property
 
+If no config name is provided to `ConfigLoader`,
+it will use the `KAIRO_CONFIG` envirnoment variable to identify the config name.
+
 ## Usage
 
 ### Step 1: Include the dependency

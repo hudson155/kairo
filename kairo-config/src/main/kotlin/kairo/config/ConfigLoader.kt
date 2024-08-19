@@ -41,6 +41,10 @@ public object ConfigLoader {
     return mapper.convertValue(config, configKClass.java)
   }
 
+  /**
+   * If a config name is provided, use it.
+   * Otherwise, fall back to the KAIRO_CONFIG environment variable.
+   */
   private fun getActualConfigName(configName: String?): String {
     if (configName != null) return configName
 
