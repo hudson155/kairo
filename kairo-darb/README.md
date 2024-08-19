@@ -46,7 +46,7 @@ dependencies {
 ### Step 2: Encode and decode
 
 ```kotlin
-// src/main/kotlin/yourPackage/feature/task/TaskFeature.kt
+// src/main/kotlin/yourPackage/.../YourFile.kt
 
 DarbEncoder.encode(listOf(true, true, false, false, true)) // "5.C8"
 DarbEncoder.decode("5.C8") // listOf(true, true, false, false, true)
