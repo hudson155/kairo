@@ -566,6 +566,7 @@ style:
     active: true
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
+      - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
       - 'jakarta.validation.constraints.*'
       - 'javax.inject.*'
       - 'kotlin.time.Duration'
@@ -576,11 +577,12 @@ style:
     active: true
     methods:
       - 'com.fasterxml.jackson.core.JsonParser.readValueAs' # Use the Kotlin overload.
-      - 'com.google.inject.Binder.bind'
-      - 'com.google.inject.Key.get'
-      - 'com.google.inject.PrivateBinder.expose'
-      - 'com.google.inject.binder.LinkedBindingBuilder.to'
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)'
+      - 'com.google.inject.Binder.bind' # Use the Kotlin overload.
+      - 'com.google.inject.Injector.getInstance' # Use the Kotlin overload.
+      - 'com.google.inject.PrivateBinder.expose' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.to' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider' # Use the Kotlin overload.
       - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.
@@ -692,7 +694,7 @@ style:
   UntilInsteadOfRangeTo:
     active: true
   UnusedImports:
-    active: true
+    active: false # Overlaps with formatting>NoUnusedImports.
   UnusedParameter:
     active: true
   UnusedPrivateClass:
