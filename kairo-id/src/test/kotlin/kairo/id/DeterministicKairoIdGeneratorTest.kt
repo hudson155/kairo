@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 internal class DeterministicKairoIdGeneratorTest {
   private val idGenerator: DeterministicKairoIdGenerator =
-    DeterministicKairoIdGenerator(prefix = "library_book", length = 2)
+    DeterministicKairoIdGenerator(prefix = "library_book", length = 8)
 
   @Test
   fun test() {

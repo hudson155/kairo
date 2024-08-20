@@ -7,7 +7,7 @@ internal val kairoIdLength: IntRange = 8..32
 
 private val prefixRegex: Regex = Regex("[a-z]+(?:_[a-z]+)*")
 
-private val idRegex: Regex = Regex("[A-Za-z0-9]{${kairoIdLength.first},${kairoIdLength.last}")
+private val idRegex: Regex = Regex("[A-Za-z0-9]{${kairoIdLength.first},${kairoIdLength.last}}")
 
 private val fullRegex: Regex = Regex("($prefixRegex)_($idRegex)")
 
