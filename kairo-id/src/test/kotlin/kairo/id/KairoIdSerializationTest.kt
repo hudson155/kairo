@@ -12,11 +12,13 @@ internal class KairoIdSerializationTest {
 
   @Test
   fun serialize() {
-    mapper.writeValueAsString(KairoId("library_book", "0")).shouldBe("\"library_book_0\"")
+    mapper.writeValueAsString(KairoId("library_book", "2eDS1sMt"))
+      .shouldBe("\"library_book_2eDS1sMt\"")
   }
 
   @Test
   fun deserialize() {
-    mapper.readValue<KairoId>("\"library_book_0\"").shouldBe(KairoId("library_book", "0"))
+    mapper.readValue<KairoId>("\"library_book_2eDS1sMt\"")
+      .shouldBe(KairoId("library_book", "2eDS1sMt"))
   }
 }

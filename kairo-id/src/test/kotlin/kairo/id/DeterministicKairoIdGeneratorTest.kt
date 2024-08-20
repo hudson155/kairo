@@ -9,22 +9,22 @@ internal class DeterministicKairoIdGeneratorTest {
 
   @Test
   fun test() {
-    idGenerator.generate().shouldBe(KairoId("library_book", "00"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "01"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "02"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "03"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "04"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000000"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000001"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000002"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000003"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000004"))
     idGenerator.reset()
-    idGenerator.generate().shouldBe(KairoId("library_book", "00"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "01"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "02"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "03"))
-    idGenerator.generate().shouldBe(KairoId("library_book", "04"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000000"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000001"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000002"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000003"))
+    idGenerator.generate().shouldBe(KairoId("library_book", "00000004"))
 
-    idGenerator[0].shouldBe(KairoId("library_book", "00"))
-    idGenerator[1].shouldBe(KairoId("library_book", "01"))
-    idGenerator[2].shouldBe(KairoId("library_book", "02"))
-    idGenerator[3].shouldBe(KairoId("library_book", "03"))
-    idGenerator[4].shouldBe(KairoId("library_book", "04"))
+    idGenerator[4].shouldBe(KairoId("library_book", "00000004"))
+    idGenerator[3].shouldBe(KairoId("library_book", "00000003"))
+    idGenerator[2].shouldBe(KairoId("library_book", "00000002"))
+    idGenerator[1].shouldBe(KairoId("library_book", "00000001"))
+    idGenerator[0].shouldBe(KairoId("library_book", "00000000"))
   }
 }

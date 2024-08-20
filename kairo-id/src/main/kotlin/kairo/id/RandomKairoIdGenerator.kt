@@ -32,3 +32,7 @@ public class RandomKairoIdGenerator(
       }
     }
 }
+
+internal fun main() {
+  println(RandomKairoIdGenerator(prefix = "library_book", length = 8).generate())
+}
