@@ -24,6 +24,7 @@ Kairo IDs can vary in entropy depending on how you configure them.
 
 - **Kairo IDs are contextual**,
   since they specify what entity they're for using their prefix.
+  This is quite nice for humans passing around IDs out-of-band.
 - As mentioned above, entropy can be high or low depending on the length configuration.
   Using a length of 22 provides just slightly more entropy than that of UUIDs.
 - Underscores are used so that an ID can be **double-clicked and easily copied**.
