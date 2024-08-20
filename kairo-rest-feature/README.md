@@ -33,7 +33,7 @@ object LibraryBookApi {
   @RestEndpoint.Path("/library/books/:bookId")
   @RestEndpoint.Accept("application/json")
   data class Get(
-    @PathParam val bookId: String,
+    @PathParam val bookId: KairoId,
   ) : RestEndpoint<Nothing, BookRep?>()
 
   @RestEndpoint.Method("GET")

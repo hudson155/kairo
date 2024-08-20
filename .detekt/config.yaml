@@ -384,7 +384,7 @@ naming:
     maximumFunctionNameLength: 60
   FunctionMinLength:
     active: true
-    minimumFunctionNameLength: 3
+    minimumFunctionNameLength: 2
   FunctionNaming:
     active: false # Overlaps with formatting>FunctionName.
   FunctionParameterNaming:

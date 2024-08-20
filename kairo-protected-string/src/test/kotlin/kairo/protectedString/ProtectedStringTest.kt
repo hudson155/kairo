@@ -25,7 +25,6 @@ internal class ProtectedStringTest {
 
   @Test
   fun `toString method`() {
-    ProtectedString("1").hashCode().shouldBe("1".hashCode())
-    ProtectedString("1").hashCode().shouldNotBe("2".hashCode())
+    ProtectedString("1").toString().shouldBe("REDACTED")
   }
 }
