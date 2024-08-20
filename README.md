@@ -29,6 +29,9 @@ Kairo is an application framework built for Kotlin.
   along with some utilities to make its use more idiomatic.
 - [kairo-feature](kairo-feature/):
   Features are the primary building block of Kairo applications.
+- [kairo-id](kairo-id/):
+  Kairo IDs are an optional way to uniquely identify entities.
+  Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
 - [kairo-logging](kairo-logging/):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
   which should be configured to use Apache Log4j2 under the hood.
@@ -153,6 +156,8 @@ data class MonolithServerConfig(
 ```
 
 ```yaml
+# src/main/resources/config/config.yaml
+
 featureManager:
   lifecycle:
     startupDelayMs: 2000 # 2 seconds.
