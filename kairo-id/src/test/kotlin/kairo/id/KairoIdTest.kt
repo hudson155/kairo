@@ -74,14 +74,14 @@ internal class KairoIdTest {
   @Test
   fun `fromString method, invalid (capital letter)`() {
     shouldThrow<IllegalArgumentException> {
-      KairoId.fromString("Library_book_0")
-    }.shouldHaveMessage("Invalid Kairo ID: Library_book_0.")
+      KairoId.fromString("Library_book_2eDS1sMt")
+    }.shouldHaveMessage("Invalid Kairo ID: Library_book_2eDS1sMt.")
   }
 
   @Test
   fun `fromString method, invalid (invalid character)`() {
     shouldThrow<IllegalArgumentException> {
-      KairoId.fromString("library_böok_0")
-    }.shouldHaveMessage("Invalid Kairo ID: library_böok_0.")
+      KairoId.fromString("library_böok_2eDS1sMt")
+    }.shouldHaveMessage("Invalid Kairo ID: library_böok_2eDS1sMt.")
   }
 }

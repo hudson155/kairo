@@ -9,7 +9,9 @@ public abstract class KairoIdGenerator(
   }
 
   init {
-    require(length in kairoIdLength) { "Kairo ID lengths must be between 8 and 127 (inclusive)." }
+    require(length in kairoIdLength) {
+      "Kairo ID lengths must be between ${kairoIdLength.first} and ${kairoIdLength.last} (inclusive)."
+    }
   }
 
   public abstract fun generate(): KairoId

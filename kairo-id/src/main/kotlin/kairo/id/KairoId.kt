@@ -11,6 +11,13 @@ private val idRegex: Regex = Regex("[A-Za-z0-9]{${kairoIdLength.first},${kairoId
 
 private val fullRegex: Regex = Regex("($prefixRegex)_($idRegex)")
 
+/**
+ * Kairo IDs are an optional way to uniquely identify entities.
+ * Think of them as an alternative to `UUID`s or serial IDs.
+ * Kairo IDs consist of a [prefix] portion and an [id] portion.
+ * The [prefix] portion is context-specific,
+ * and the [id] portion is a base-62 string.
+ */
 @Suppress("UseDataClass")
 public class KairoId(
   public val prefix: String,

@@ -19,6 +19,9 @@ public class RandomKairoIdGenerator(
   override fun generate(): KairoId =
     KairoId(prefix, randomId())
 
+  /**
+   * Sequentially calls [Random.nextInt] to form a base-62 string.
+   */
   private fun randomId(): String =
     buildString {
       repeat(this@RandomKairoIdGenerator.length) {
@@ -31,8 +34,4 @@ public class RandomKairoIdGenerator(
         append(char)
       }
     }
-}
-
-internal fun main() {
-  println(RandomKairoIdGenerator(prefix = "library_book", length = 8).generate())
 }

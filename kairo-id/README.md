@@ -2,10 +2,15 @@
 
 Kairo IDs (`KairoId`s) are an optional way to uniquely identify entities.
 Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
+Kairo IDs consist of a prefix portion and an ID portion.
+The prefix portion is context-specific,
+and the ID portion is a base-62 string.
 
 **An example:**
 
 An example Kairo ID for a library book would look like `library_book_ccU4Rn4DKVjCMqt3d0oAw3`.
+The prefix portion here is `library_book`,
+and the ID portion is `ccU4Rn4DKVjCMqt3d0oAw3`.
 
 **Entropy:**
 
