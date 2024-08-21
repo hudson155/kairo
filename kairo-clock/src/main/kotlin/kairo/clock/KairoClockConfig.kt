@@ -7,8 +7,8 @@ import java.time.ZoneId
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes(
-  JsonSubTypes.Type(KairoClockConfig.Fixed::class, name = "Deterministic"),
-  JsonSubTypes.Type(KairoClockConfig.System::class, name = "Random"),
+  JsonSubTypes.Type(KairoClockConfig.Fixed::class, name = "Fixed"),
+  JsonSubTypes.Type(KairoClockConfig.System::class, name = "System"),
 )
 public sealed class KairoClockConfig {
   public data class Fixed(
@@ -17,6 +17,6 @@ public sealed class KairoClockConfig {
   ) : KairoClockConfig()
 
   public data class System(
-    val timeZone: ZoneId, // TODO: Serialization!
+    val timeZone: ZoneId,
   ) : KairoClockConfig()
 }
