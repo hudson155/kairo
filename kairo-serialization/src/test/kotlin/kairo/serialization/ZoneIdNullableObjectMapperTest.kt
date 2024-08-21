@@ -23,9 +23,17 @@ internal class ZoneIdNullableObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, UTC`() {
+  fun `serialize, UTC offset`() {
     mapper.writeValueAsString(MyClass(ZoneOffset.UTC))
       .shouldBe("{\"value\":\"UTC\"}")
+  }
+
+  @Test
+  fun `serialize, UTC region`() {
+    serializationShouldFail {
+      mapper.writeValueAsString(MyClass(ZoneId.of("UTC")))
+        .shouldBe("{\"value\":\"UTC\"}")
+    }
   }
 
   @Test
@@ -41,7 +49,13 @@ internal class ZoneIdNullableObjectMapperTest {
   }
 
   @Test
-  fun `deserialize, UTC`() {
+  fun `deserialize, UTC offset`() {
+    mapper.readValue<MyClass>("{ \"value\": \"Z\" }")
+      .shouldBe(MyClass(ZoneOffset.UTC))
+  }
+
+  @Test
+  fun `deserialize, UTC region`() {
     mapper.readValue<MyClass>("{ \"value\": \"UTC\" }")
       .shouldBe(MyClass(ZoneOffset.UTC))
   }
