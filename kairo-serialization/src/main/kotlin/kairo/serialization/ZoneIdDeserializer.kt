@@ -11,7 +11,7 @@ import java.time.ZoneOffset
  * We don't use com.fasterxml.jackson.datatype:jackson-datatype-jsr310,
  * and instead roll our own time module. See [TimeModule].
  *
- * This serializer intentionally only supports [ZoneRegion] and [ZoneOffset.UTC].
+ * This deserializer intentionally only supports [ZoneRegion] and [ZoneOffset.UTC].
  * Non-UTC [ZoneOffset]s are not supported.
  */
 internal class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
