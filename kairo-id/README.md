@@ -54,7 +54,7 @@ dependencies {
 
 id:
   generator:
-    type: Random
+    type: "Random"
     length: 22
 ```
 

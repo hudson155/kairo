@@ -22,8 +22,8 @@ dependencies {
 # src/main/resources/config/config.yaml
 
 clock:
-  type: System
-  timeZone: UTC
+  type: "System"
+  timeZone: "UTC"
 ```
 
 ```kotlin
