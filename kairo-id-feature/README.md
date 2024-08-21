@@ -1,4 +1,4 @@
-# `kairo-id`
+# `kairo-id-feature`
 
 Kairo IDs (`KairoId`s) are an optional way to uniquely identify entities.
 Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
@@ -43,7 +43,7 @@ Kairo IDs can vary in entropy depending on how you configure them.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-id:0.4.0")
+  testImplementation("kairo:kairo-id-feature:0.4.0")
 }
 ```
 
