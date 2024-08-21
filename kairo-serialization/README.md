@@ -8,6 +8,23 @@ We don't use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serializa
 (although it is an excellent library)
 because of its limited support for polymorphism.
 
+**Type support:**
+
+- Primitive-like
+  - `Boolean`
+  - `Double`
+  - `Float`
+  - `Int`
+  - `Long`
+  - `String`
+- Java
+  - `Optional`
+  - `UUID`
+- Date/time
+  - `Instant`
+  - `LocalDate`
+  - `ZoneId`
+
 ## Usage
 
 ### Step 1: Include the dependency

@@ -42,35 +42,35 @@ internal class BooleanDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, wrong type, int`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 0 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, float`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 1.0 }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, string`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"false\" }")
     }
   }
