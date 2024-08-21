@@ -47,70 +47,70 @@ internal class LocalDateDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from year`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"1-02-03\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"1-02-03\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from month`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"2023-2-03\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-2-03\" }")
     }
   }
 
   @Test
   fun `deserialize, missing leading zero from day`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"2023-02-3\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-02-3\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low month)`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"2023-00-03\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-00-03\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high month)`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"2023-13-03\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-13-03\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (low day)`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"2023-02-00\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-02-00\" }")
     }
   }
 
   @Test
   fun `deserialize, nonexistent date (high day)`() {
-    deserializationShouldFail {
-      mapper.readValue<MyClass>("{ \"value\":\"2023-02-29\" }")
+    serializationShouldFail {
+      mapper.readValue<MyClass>("{ \"value\": \"2023-02-29\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, number`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 20231113 }")
     }
   }

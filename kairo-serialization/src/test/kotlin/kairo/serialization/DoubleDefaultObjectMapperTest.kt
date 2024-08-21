@@ -42,14 +42,14 @@ internal class DoubleDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, null`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
   fun `deserialize, missing`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
@@ -61,14 +61,14 @@ internal class DoubleDefaultObjectMapperTest {
 
   @Test
   fun `deserialize, wrong type, string`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"1.23\" }")
     }
   }
 
   @Test
   fun `deserialize, wrong type, boolean`() {
-    deserializationShouldFail {
+    serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": true }")
     }
   }
