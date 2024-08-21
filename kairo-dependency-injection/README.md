@@ -11,4 +11,4 @@ along with some utilities to make its use more idiomatic.
 
 ## Usage
 
-This feature is not currently intended to be a direct dependency.
+This Feature is not currently intended to be a direct dependency.

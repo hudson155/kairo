@@ -19,6 +19,8 @@ Kairo is an application framework built for Kotlin.
 
 ## Modules
 
+- [kairo-clock](kairo-clock/):
+  The Clock Feature allows for configuration and injection of a Java `Clock`.
 - [kairo-config](kairo-config/):
   Home of `ConfigLoader`, which loads configs from YAML files,
   with support for config extension and application.
