@@ -1,4 +1,4 @@
-# `kairo-clock`
+# `kairo-clock-feature`
 
 The Clock Feature allows for configuration and injection of a Java `Clock`.
 In production this will more than likely be a real UTC-based clock,
@@ -12,7 +12,7 @@ but for tests it may be a fixed clock instead.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-clock:0.4.0")
+  testImplementation("kairo:kairo-clock-feature:0.4.0")
 }
 ```
 
