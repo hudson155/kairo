@@ -8,9 +8,9 @@ import java.time.ZoneOffset
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to zone ID serialization/deserialization.
+ * This test is intended to test behaviour strictly related to time zone serialization/deserialization.
  * Therefore, some test cases (such as unknown properties, pretty printing) are not included
- * since they are not strictly related to zone IDs.
+ * since they are not strictly related to time zones.
  */
 internal class ZoneIdDefaultObjectMapperTest {
   /**
