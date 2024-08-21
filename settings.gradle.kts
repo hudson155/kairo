@@ -1,5 +1,6 @@
 rootProject.name = "kairo"
 
+include(":kairo-clock")
 include(":kairo-config")
 include(":kairo-darb")
 include(":kairo-dependency-injection")
