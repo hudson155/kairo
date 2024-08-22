@@ -19,7 +19,8 @@ because of its limited support for polymorphism.
   - `String`
 - Java
   - `Optional`
-  - `UUID`
+- Kotlin
+  - `Uuid`
 - Date/time
   - `Instant`
   - `LocalDate`

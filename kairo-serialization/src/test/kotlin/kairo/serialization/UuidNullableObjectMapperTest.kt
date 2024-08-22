@@ -3,7 +3,7 @@ package kairo.serialization
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import java.util.UUID
+import kotlin.uuid.Uuid
 import org.junit.jupiter.api.Test
 
 /**
@@ -16,14 +16,14 @@ internal class UuidNullableObjectMapperTest {
    * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val value: UUID?,
+    val value: Uuid?,
   )
 
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
   fun `serialize, default`() {
-    mapper.writeValueAsString(MyClass(UUID.fromString("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
+    mapper.writeValueAsString(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
       .shouldBe("{\"value\":\"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\"}")
   }
 
@@ -36,7 +36,7 @@ internal class UuidNullableObjectMapperTest {
   @Test
   fun `deserialize, default`() {
     mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\" }")
-      .shouldBe(MyClass(UUID.fromString("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
+      .shouldBe(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
   }
 
   @Test
