@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
   // https://kotlinlang.org/docs/releases.html#release-details
-  implementation(kotlin("gradle-plugin", "2.0.0"))
+  implementation(kotlin("gradle-plugin", "2.0.20"))
 
   // https://plugins.gradle.org/plugin/com.google.cloud.artifactregistry.gradle-plugin
   implementation("gradle.plugin.com.google.cloud.artifactregistry", "artifactregistry-gradle-plugin", "2.2.2")
