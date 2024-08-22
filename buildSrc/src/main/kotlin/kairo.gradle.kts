@@ -20,6 +20,7 @@ kotlin {
   explicitApi()
   compilerOptions {
     allWarningsAsErrors.set(true)
+    freeCompilerArgs.add("-opt-in=kotlin.uuid.ExperimentalUuidApi")
   }
 }
 

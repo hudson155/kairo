@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
-import java.util.UUID
+import kotlin.uuid.Uuid
 import org.junit.jupiter.api.Test
 
 /**
@@ -22,7 +22,7 @@ internal class YamlObjectMapperTest {
     val float: Float,
     val int: Int,
     val strings: Strings,
-    val uuid: UUID,
+    val uuid: Uuid,
     val nested: Nested,
     val optionals: Optionals,
     val instant: Instant,
@@ -82,7 +82,7 @@ internal class YamlObjectMapperTest {
         stringFloat = "1.23",
         stringInt = "42",
       ),
-      uuid = UUID.fromString("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"),
+      uuid = Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8"),
       nested = MyClass.Nested.NestB(b = "bravo"),
       optionals = MyClass.Optionals(
         optionalPresent = Optional.of(42),
