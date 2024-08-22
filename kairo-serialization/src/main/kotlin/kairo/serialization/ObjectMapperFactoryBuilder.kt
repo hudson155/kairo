@@ -33,7 +33,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
     configureJava()
     configureStrings()
     configureTime()
-    configureUuid()
+    configureUuids()
 
     increaseStrictness()
     configurePrettyPrinting(prettyPrint = prettyPrint)
