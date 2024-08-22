@@ -28,6 +28,6 @@ internal class UuidModule : SimpleModule() {
     }
 }
 
-internal fun ObjectMapperFactoryBuilder.configureUuid() {
+internal fun ObjectMapperFactoryBuilder.configureUuids() {
   addModule(UuidModule())
 }
