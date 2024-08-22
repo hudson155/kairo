@@ -568,6 +568,7 @@ style:
     imports:
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
       - 'jakarta.validation.constraints.*'
+      - 'java.util.UUID' # Use Kotlin.uuid.Uuid instead.
       - 'javax.inject.*'
       - 'kotlin.time.Duration'
       - 'org.junit.jupiter.api.Assertions.*'
