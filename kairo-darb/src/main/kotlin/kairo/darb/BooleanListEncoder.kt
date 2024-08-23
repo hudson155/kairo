@@ -19,7 +19,7 @@ internal object BooleanListEncoder {
 
   fun decode(bitString: String): List<Boolean> {
     val result = bitString.map { character ->
-      return@map when (character) {
+      when (character) {
         '0' -> false
         '1' -> true
         else -> throw IllegalArgumentException("Bit strings must only consist of 0s and 1s.")
