@@ -63,9 +63,6 @@ internal data class RestEndpointTemplate(
         "REST endpoint ${endpoint.qualifiedName!!} is missing @${RestEndpoint.Method::class.simpleName!!}."
       }
       val result = HttpMethod.parse(annotation.method) // This does not fail, even for arbitrary strings.
-      require(result in HttpMethod.DefaultMethods) {
-        "REST endpoint ${endpoint.qualifiedName!!} has invalid method: ${annotation.method}."
-      }
       result.validate(endpoint)
       return result
     }
@@ -77,18 +74,18 @@ internal data class RestEndpointTemplate(
       when (this) {
         HttpMethod.Get, HttpMethod.Delete, HttpMethod.Head, HttpMethod.Options -> {
           require(!endpoint.hasBody) {
-            "REST endpoint ${endpoint.qualifiedName!!} has method $this but specifies a body."
+            "REST endpoint ${endpoint.qualifiedName!!} has method $value but specifies a body."
           }
         }
 
         HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch -> {
           require(endpoint.hasBody) {
-            "REST endpoint ${endpoint.qualifiedName!!} has method $this but specifies a body."
+            "REST endpoint ${endpoint.qualifiedName!!} has method $value but specifies a body."
           }
         }
 
         else -> {
-          error("Unexpected HTTP method $this.")
+          throw IllegalArgumentException("REST endpoint ${endpoint.qualifiedName!!} has invalid method: ${value}.")
         }
       }
     }

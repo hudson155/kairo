@@ -15,7 +15,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.GetWithBodyNotProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.GetWithBodyNotProvided" +
-        " has method HttpMethod(value=GET) but specifies a body.",
+        " has method GET but specifies a body.",
     )
   }
 
@@ -25,7 +25,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.GetWithBodyProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.GetWithBodyProvided" +
-        " has method HttpMethod(value=GET) but specifies a body.",
+        " has method GET but specifies a body.",
     )
   }
 
@@ -35,7 +35,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.PostWithoutBodyProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.PostWithoutBodyProvided" +
-        " has method HttpMethod(value=POST) but specifies a body.",
+        " has method POST but specifies a body.",
     )
   }
 
@@ -45,7 +45,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided" +
-        " has method HttpMethod(value=POST) but specifies a body.",
+        " has method POST but specifies a body.",
     )
   }
 }
