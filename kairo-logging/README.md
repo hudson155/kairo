@@ -3,6 +3,9 @@
 Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
 which should be configured to use Apache Log4j2 under the hood.
 
+Please also install [kairo-logging-feature](/kairo-logging-feature/)
+if you're using this within the context of a Kairo Server.
+
 ## Usage
 
 ### Step 1: Include the dependency
