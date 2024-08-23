@@ -40,7 +40,9 @@ internal fun Routing.route(template: RestEndpointTemplate): Routing {
     val value = param.value
     route = if (param.required) route.param(value) {} else route.optionalParam(value) {}
   }
-  template.contentType?.let { route = route.contentType(template.contentType) {} }
+  if (template.contentType != null) {
+    route = route.contentType(template.contentType) {}
+  }
   route = route.accept(template.accept) {}
   return route
 }

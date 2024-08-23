@@ -28,7 +28,7 @@ public class RestFeature(
 
   override fun stop(injector: Injector?) {
     if (injector != null) {
-      injector.let { injector.getInstance<RestServer>().stop() }
+      injector.getInstance<RestServer>().stop()
     }
   }
 }
