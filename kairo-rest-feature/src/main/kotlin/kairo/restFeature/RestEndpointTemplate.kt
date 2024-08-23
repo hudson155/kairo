@@ -25,6 +25,9 @@ internal data class RestEndpointTemplate(
   val contentType: ContentType?,
   val accept: ContentType,
 ) {
+  override fun toString(): String =
+    PrettyRestEndpointWriter.write(this)
+
   internal companion object {
     fun parse(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
       logger.debug { "Building REST endpoint template for endpoint $endpoint." }
@@ -112,10 +115,10 @@ internal data class RestEndpointTemplate(
         result.validate(endpoint)
         return result
       } catch (e: IllegalArgumentException) {
-        val error = listOfNotNull(
-          "REST endpoint ${endpoint.qualifiedName!!} path is invalid.",
-          e.message,
-        ).joinToString(" ")
+        val error = buildString {
+          append("REST endpoint ${endpoint.qualifiedName!!} path is invalid.")
+          e.message?.let { append(" $it") }
+        }
         throw IllegalArgumentException(error, e)
       }
     }

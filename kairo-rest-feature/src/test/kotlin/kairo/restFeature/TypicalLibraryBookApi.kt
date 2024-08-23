@@ -3,7 +3,9 @@ package kairo.restFeature
 import kairo.id.KairoId
 
 /**
- * This API is for [TypicalRestEndpointTemplateTest] which tests typical (happy path) cases.
+ * This API is used by [TypicalRestEndpointTemplateTest] which tests typical (happy path) cases.
+ *
+ * It's also used by [PrettyRestEndpointWriterTest].
  */
 internal object TypicalLibraryBookApi {
   @RestEndpoint.Method("GET")
