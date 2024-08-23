@@ -66,7 +66,31 @@ internal data class RestEndpointTemplate(
       require(result in HttpMethod.DefaultMethods) {
         "REST endpoint ${endpoint.qualifiedName!!} has invalid method: ${annotation.method}."
       }
+      result.validate(endpoint)
       return result
+    }
+
+    /**
+     * Ensures that the types match the method.
+     */
+    private fun HttpMethod.validate(endpoint: KClass<out RestEndpoint<*, *>>) {
+      when (this) {
+        HttpMethod.Get, HttpMethod.Delete, HttpMethod.Head, HttpMethod.Options -> {
+          require(!endpoint.hasBody) {
+            "REST endpoint ${endpoint.qualifiedName!!} has method $this but specifies a body."
+          }
+        }
+
+        HttpMethod.Post, HttpMethod.Put, HttpMethod.Patch -> {
+          require(endpoint.hasBody) {
+            "REST endpoint ${endpoint.qualifiedName!!} has method $this but specifies a body."
+          }
+        }
+
+        else -> {
+          error("Unexpected HTTP method $this.")
+        }
+      }
     }
 
     private fun parsePath(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointPath {
@@ -136,10 +160,10 @@ internal data class RestEndpointTemplate(
         try {
           return ContentType.parse(annotation.contentType)
         } catch (e: BadContentTypeFormatException) {
-          val error = listOfNotNull(
-            "REST endpoint ${endpoint.qualifiedName!!} content type is invalid.",
-            "${e.message}.",
-          ).joinToString(" ")
+          val error = buildString {
+            append("REST endpoint ${endpoint.qualifiedName!!} content type is invalid.")
+            e.message?.let { append(" $it.") }
+          }
           throw IllegalArgumentException(error, e)
         }
       } else {
@@ -159,10 +183,10 @@ internal data class RestEndpointTemplate(
       try {
         return ContentType.parse(annotation.accept)
       } catch (e: BadContentTypeFormatException) {
-        val error = listOfNotNull(
-          "REST endpoint ${endpoint.qualifiedName!!} accept is invalid.",
-          "${e.message}.",
-        ).joinToString(" ")
+        val error = buildString {
+          append("REST endpoint ${endpoint.qualifiedName!!} accept is invalid.")
+          e.message?.let { append(" $it.") }
+        }
         throw IllegalArgumentException(error, e)
       }
     }

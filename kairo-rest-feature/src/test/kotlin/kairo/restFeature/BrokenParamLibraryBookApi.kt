@@ -13,7 +13,7 @@ internal object BrokenParamLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class NonParamConstructorParameter(
     val shouldNotBeHere: String,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library/library-books/:body")
@@ -28,7 +28,7 @@ internal object BrokenParamLibraryBookApi {
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   internal data class BodyAsQueryParam(
-    @PathParam override val body: LibraryBookRep.Creator,
+    @QueryParam override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
@@ -36,19 +36,19 @@ internal object BrokenParamLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class PathParamMarkedAsQueryParam(
     @QueryParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.Accept("application/json")
   internal data class QueryParamMarkedAsPathParam(
     @PathParam val isbn: String,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class ParamIsPathAndQuery(
     @PathParam @QueryParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 }

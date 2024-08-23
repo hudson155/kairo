@@ -10,62 +10,62 @@ import kairo.id.KairoId
 internal object BrokenPathLibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Accept("application/json")
-  internal data object MissingPath : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data object MissingPath : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("")
   @RestEndpoint.Accept("application/json")
-  internal data object EmptyPath : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data object EmptyPath : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("library/library-books")
   @RestEndpoint.Accept("application/json")
-  internal data object PathMissingLeadingSlash : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data object PathMissingLeadingSlash : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/libraryBooks/:libraryBookId")
   @RestEndpoint.Accept("application/json")
-  internal data class InvalidConstantPathComponent(
+  internal data class MalformedConstantPathComponent(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:library-book-id")
   @RestEndpoint.Accept("application/json")
-  internal data class InvalidParamPathComponent(
+  internal data class MalformedParamPathComponent(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class NullablePathParam(
     @PathParam val libraryBookId: KairoId?,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class OptionalPathParam(
     @PathParam val libraryBookId: KairoId = KairoId("library_book", "2eDS1sMt"),
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class DuplicatePathParamInPath(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
-  internal data object PathParamInPathButNotInConstructor : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data object PathParamInPathButNotInConstructor : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.Accept("application/json")
   internal data class PathParamInConstructorButNotInPath(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 }

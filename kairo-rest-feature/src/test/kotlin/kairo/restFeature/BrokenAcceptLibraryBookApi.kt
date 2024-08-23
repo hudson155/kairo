@@ -29,12 +29,12 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Accept("")
   internal data class EmptyAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application")
   internal data class MalformedAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 }

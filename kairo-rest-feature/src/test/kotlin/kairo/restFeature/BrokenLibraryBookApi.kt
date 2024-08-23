@@ -17,5 +17,5 @@ internal object BrokenLibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.Accept("application/json")
-  internal object NotDataObject : RestEndpoint<Nothing, LibraryBookRep?>()
+  internal object NotDataObject : RestEndpoint<Nothing, List<LibraryBookRep>>()
 }
