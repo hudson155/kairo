@@ -4,7 +4,7 @@ package kairo.restFeature
  * This writer is used by Ktor Server when binding endpoints.
  * Only the path is included; other aspects are routed separately.
  */
-internal object KtorTemplateRestEndpointWriter : RestEndpointWriter() {
+internal object KtorPathTemplateRestEndpointWriter : RestEndpointWriter() {
   override fun write(template: RestEndpointTemplate): String =
     buildString {
       path(template)
