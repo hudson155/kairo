@@ -41,13 +41,14 @@ internal class BrokenAcceptRestEndpointTemplateTest {
     RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.EmptyAccept::class)
       .shouldBe(
         RestEndpointTemplate(
-          method = HttpMethod.Post,
+          method = HttpMethod.Get,
           path = RestEndpointPath.of(
             RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
+            RestEndpointPath.Component.Param("libraryBookId"),
           ),
           query = RestEndpointQuery.of(),
-          contentType = ContentType.Application.Json,
+          contentType = null,
           accept = ContentType.Any,
         ),
       )

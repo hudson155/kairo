@@ -24,19 +24,17 @@ internal object BrokenAcceptLibraryBookApi {
   /**
    * This is actually valid; an empty string means "Any" content type.
    */
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/library-books")
-  @RestEndpoint.ContentType("application/json")
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("")
   internal data class EmptyAccept(
-    override val body: LibraryBookRep.Creator,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
-  @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/library-books")
-  @RestEndpoint.ContentType("application/json")
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application")
   internal data class MalformedAccept(
-    override val body: LibraryBookRep.Creator,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 }
