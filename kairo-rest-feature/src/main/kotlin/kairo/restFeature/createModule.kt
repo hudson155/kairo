@@ -2,7 +2,6 @@ package kairo.restFeature
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Routing
@@ -44,12 +43,4 @@ internal fun Routing.route(template: RestEndpointTemplate): Routing {
   template.contentType?.let { route = route.contentType(template.contentType) {} }
   route = route.accept(template.accept) {}
   return route
-}
-
-public sealed class HttpResult {
-  public data class Result<T : Any>(val value: T, val httpStatus: HttpStatusCode) : HttpResult()
-
-  public data object NotFound
-
-  public data object Unhandled
 }
