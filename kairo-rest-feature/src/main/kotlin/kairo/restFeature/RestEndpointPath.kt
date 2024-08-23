@@ -1,5 +1,9 @@
 package kairo.restFeature
 
+/**
+ * Part of [RestEndpointTemplate] that represents the path, including path params.
+ * See the KDoc there.
+ */
 internal data class RestEndpointPath(
   val components: List<Component>,
 ) {

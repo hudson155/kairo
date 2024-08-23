@@ -2,6 +2,10 @@ package kairo.restFeature
 
 import kairo.restFeature.RestEndpointPath.Component
 
+/**
+ * Part of [RestEndpointTemplate] that represents query params.
+ * See the KDoc there.
+ */
 internal data class RestEndpointQuery(
   val params: List<Param>,
 ) {
