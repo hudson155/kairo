@@ -33,9 +33,9 @@ internal class BrokenMethodRestEndpointTemplateTest {
   @Test
   fun sync() {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.Sync::class)
+      RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.UnsupportedMethod::class)
     }.shouldHaveMessage(
-      "REST endpoint kairo.restFeature.BrokenMethodLibraryBookApi.Sync" +
+      "REST endpoint kairo.restFeature.BrokenMethodLibraryBookApi.UnsupportedMethod" +
         " has invalid method: SYNC.",
     )
   }

@@ -1,25 +1,30 @@
 package kairo.restFeature
 
+import kairo.id.KairoId
+
 /**
  * This API is for [BrokenMethodRestEndpointTemplateTest]
  * which tests cases where the [RestEndpoint.Method] annotation
  * is used in unexpected or unsupported ways.
  */
 internal object BrokenMethodLibraryBookApi {
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
-  internal data object MissingMethod : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data class MissingMethod(
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
-  internal data object EmptyMethod : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data class EmptyMethod(
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("SYNC")
-  @RestEndpoint.Path("/library/library-books")
-  @RestEndpoint.ContentType("application/json")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
-  internal data class Sync(
-    override val body: LibraryBookRep.Creator,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+  internal data class UnsupportedMethod(
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 }
