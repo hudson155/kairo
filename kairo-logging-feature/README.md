@@ -19,7 +19,23 @@ dependencies {
 }
 ```
 
-### Step 2: Create and configure the Feature
+### Step 2: Disable the default shutdown hook
+
+Set `shutdownHook` to `disable` to turn off Log4j2's default shutdown behaviour.
+
+```yaml
+# src/main/resources/log4j2.yaml
+
+Configuration:
+  status: info # For internal Log4j2 logs.
+  shutdownHook: disable
+  Appenders:
+    ...
+  Loggers:
+    ...
+```
+
+### Step 3: Create and configure the Feature
 
 ```yaml
 # src/main/resources/config/config.yaml
