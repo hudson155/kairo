@@ -12,14 +12,10 @@ public data class KairoIdConfig(
     JsonSubTypes.Type(Generator.Random::class, name = "Random"),
   )
   public sealed class Generator {
-    public data class Deterministic(
-      override val length: Int,
-    ) : Generator()
+    public data object Deterministic : Generator()
 
     public data class Random(
-      override val length: Int,
+      val length: Int,
     ) : Generator()
-
-    public abstract val length: Int
   }
 }

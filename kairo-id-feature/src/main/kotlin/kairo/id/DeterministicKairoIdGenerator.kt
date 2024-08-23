@@ -10,15 +10,12 @@ import java.util.concurrent.ConcurrentHashMap
  */
 public class DeterministicKairoIdGenerator(
   prefix: String,
-  length: Int,
 ) : KairoIdGenerator(prefix, length) {
-  public class Factory(
-    private val length: Int,
-  ) : KairoIdGenerator.Factory() {
+  public object Factory : KairoIdGenerator.Factory() {
     private val generators: MutableMap<String, DeterministicKairoIdGenerator> = ConcurrentHashMap()
 
     override fun withPrefix(prefix: String): DeterministicKairoIdGenerator =
-      generators.getOrPut(prefix) { DeterministicKairoIdGenerator(prefix, length) }
+      generators.getOrPut(prefix) { DeterministicKairoIdGenerator(prefix) }
 
     public fun reset() {
       generators.values.forEach { it.reset() }
@@ -31,9 +28,19 @@ public class DeterministicKairoIdGenerator(
     seed = 0
   }
 
-  override fun generate(): KairoId =
-    get(seed).also { seed++ }
+  override fun generate(): KairoId {
+    val result = get(seed)
+    seed++
+    return result
+  }
 
-  public operator fun get(i: Int): KairoId =
-    KairoId(prefix, i.toString().padStart(length, '0'))
+  public operator fun get(id: Int): KairoId =
+    generate(prefix, id)
+
+  public companion object {
+    private const val length: Int = 8
+
+    public fun generate(prefix: String, id: Int): KairoId =
+      KairoId(prefix, id.toString().padStart(length, '0'))
+  }
 }
