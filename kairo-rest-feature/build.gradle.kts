@@ -9,4 +9,9 @@ dependencies {
 
   implementation(libs.ktorServerCio)
   implementation(libs.ktorServerCore)
+
+  testImplementation(project(":kairo-id-feature"))
+  testImplementation(project(":kairo-logging:testing"))
+  testImplementation(project(":kairo-serialization"))
+  testImplementation(project(":testing"))
 }

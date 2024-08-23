@@ -1,7 +1,11 @@
 package kairo.restFeature
 
+import kotlin.reflect.KClass
+import kotlin.reflect.full.memberProperties
+
 /**
  * A [RestEndpoint] implementation defines the API contract for a single REST API endpoint.
+ * Implementations must be Kotlin data classes or data objects.
  * See this Feature's README or tests for some examples.
  *
  * [Request] represents the type of the request body. If none, use [Nothing].
@@ -15,7 +19,7 @@ public abstract class RestEndpoint<Request : Any, Response : Any?> {
   public annotation class Method(val method: String)
 
   /**
-   * Mandatory: the path should be something like "/library/book/:bookId".
+   * Mandatory: the path should be something like "/library/library-books/:libraryBookId".
    */
   @Target(AnnotationTarget.CLASS)
   public annotation class Path(val path: String)
@@ -51,3 +55,9 @@ public abstract class RestEndpoint<Request : Any, Response : Any?> {
    */
   public open val body: Request? = null
 }
+
+internal val KClass<out RestEndpoint<*, *>>.hasBody: Boolean
+  get() {
+    val body = memberProperties.single { it.name == RestEndpoint<*, *>::body.name }
+    return body.returnType.classifier != Nothing::class
+  }
