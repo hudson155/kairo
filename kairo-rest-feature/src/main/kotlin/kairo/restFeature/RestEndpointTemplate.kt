@@ -85,7 +85,7 @@ internal data class RestEndpointTemplate(
         }
 
         else -> {
-          throw IllegalArgumentException("REST endpoint ${endpoint.qualifiedName!!} has invalid method: ${value}.")
+          throw IllegalArgumentException("REST endpoint ${endpoint.qualifiedName!!} has invalid method: $value.")
         }
       }
     }
