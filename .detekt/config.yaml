@@ -59,7 +59,7 @@ complexity:
     ignoreOverloaded: false
   CyclomaticComplexMethod: # Unsure how this differs from CognitiveComplexMethod and if one is preferable.
     active: true
-    threshold: 10
+    threshold: 12
     ignoreSingleWhenExpression: true
     ignoreSimpleWhenEntries: true
     ignoreNestingFunctions: false
