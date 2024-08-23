@@ -1,5 +1,7 @@
 package kairo.restFeature
 
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.BadContentTypeFormatException
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
@@ -9,6 +11,8 @@ import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.hasAnnotation
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.valueParameters
+
+private val logger: KLogger = KotlinLogging.logger {}
 
 /**
  * A REST endpoint template instance represents a specific subclass of [RestEndpoint].
@@ -23,15 +27,18 @@ internal data class RestEndpointTemplate(
 ) {
   internal companion object {
     fun parse(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
+      logger.debug { "Building REST endpoint template for endpoint $endpoint." }
       require(endpoint.isData) { "REST endpoint ${endpoint.qualifiedName!!} must be a data class or data object." }
       validateParams(endpoint)
-      return RestEndpointTemplate(
+      val result = RestEndpointTemplate(
         method = parseMethod(endpoint),
         path = parsePath(endpoint),
         query = parseQuery(endpoint),
         contentType = parseContentType(endpoint),
         accept = parseAccept(endpoint),
       )
+      logger.debug { "Built REST endpoint template $result for endpoint $endpoint." }
+      return result
     }
 
     /**
