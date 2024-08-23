@@ -1,5 +1,6 @@
 Configuration:
   status: info # For internal Log4j2 logs.
+  shutdownHook: disable
   Appenders:
     Console:
       type: Console

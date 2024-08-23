@@ -26,6 +26,7 @@ You may wish to change from a console appender to a different appender depending
 
 Configuration:
   status: info # For internal Log4j2 logs.
+  shutdownHook: disable # Note: Disable this if and only if shutDownManually is true.
   Appenders:
     Console:
       type: Console
@@ -48,6 +49,7 @@ The test config is almost identical except for `Configuration.Loggers.Root.level
 
 Configuration:
   status: info # For internal Log4j2 logs.
+  shutdownHook: disable # Note: Disable this if and only if shutDownManually is true.
   Appenders:
     Console:
       type: Console
@@ -61,6 +63,17 @@ Configuration:
       level: debug # You may wish to change this line.
       AppenderRef:
         ref: Plaintext
+```
+
+### Step 3: Use logging
+
+```kotlin
+private val logger: KLogger = KotlinLogging.logger {} // Best to specify the type [KLogger] explicitly.
+
+logger.debug { "Some debug message." }
+logger.info { "The value of foo is $foo." }
+logger.warn(e) { "Something went wrong but it's recoverable." }
+logger.error(e) { "Something went very wrong." }
 ```
 
 ### Step 3: Use logging
