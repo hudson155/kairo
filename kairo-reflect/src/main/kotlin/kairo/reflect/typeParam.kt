@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
  * but given that this should be used quite sparingly, it's okay.
  */
 @Suppress("UNCHECKED_CAST")
-public fun <T : Any> typeParam(i: Int, baseClass: KClass<*>, thisClass: KClass<*>): KClass<T> {
+public fun <T : Any> typeParam(baseClass: KClass<*>, i: Int, thisClass: KClass<*>): KClass<T> {
   val param = baseClass.java.typeParameters[i]
   val typeParameter = GenericTypeReflector.getTypeParameter(thisClass.java, param)
   return (typeParameter as Class<T>).kotlin

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 internal class TypeParamTest {
   internal abstract class AbstractExampleClass<T : Any> {
-    val typeParam: KClass<T> = typeParam(0, AbstractExampleClass::class, this::class)
+    val typeParam: KClass<T> = typeParam(AbstractExampleClass::class, 0, this::class)
   }
 
   internal class AbstractExampleIntSubclass : AbstractExampleClass<Int>()
@@ -15,7 +15,7 @@ internal class TypeParamTest {
   internal class AbstractExampleStringSubclass : AbstractExampleClass<String>()
 
   internal class ConcreteExampleClass<T : Any> {
-    val typeParam: KClass<T> = typeParam(0, ConcreteExampleClass::class, this::class)
+    val typeParam: KClass<T> = typeParam(ConcreteExampleClass::class, 0, this::class)
   }
 
   @Test
