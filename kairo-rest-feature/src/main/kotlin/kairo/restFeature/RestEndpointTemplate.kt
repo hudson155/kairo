@@ -34,6 +34,11 @@ internal data class RestEndpointTemplate(
       )
     }
 
+    /**
+     * This method only ensures that params have the right annotations.
+     * Param specifics and how their annotations relate to class-level annotations such as [RestEndpoint.Path]
+     * are validated within the appropriate parse methods in this class.
+     */
     private fun validateParams(endpoint: KClass<out RestEndpoint<*, *>>) {
       val params = getAllParams(endpoint)
       params.forEach { param ->
@@ -87,6 +92,10 @@ internal data class RestEndpointTemplate(
       }
     }
 
+    /**
+     * Ensures that the path params specified in the constructor
+     * are consistent with the param path components from the [RestEndpoint.Path] annotation.
+     */
     private fun RestEndpointPath.validate(endpoint: KClass<out RestEndpoint<*, *>>) {
       val componentNames = components.filterIsInstance<RestEndpointPath.Component.Param>().map { it.value }
       val params = getParams<RestEndpoint.PathParam>(endpoint)
