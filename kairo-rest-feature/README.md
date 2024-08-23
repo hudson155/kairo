@@ -21,6 +21,8 @@ dependencies {
 REST endpoint implementations define the API contract for REST API endpoints.
 They are intended to be grouped together using Kotlin singleton objects.
 
+Implementations must be Kotlin data classes or data objects.
+
 It's perfectly acceptable for two endpoints to have the same method and path,
 as long as they differ by query params, accept headers, or content types.
 Routing takes all of these into account.
@@ -30,19 +32,19 @@ Routing takes all of these into account.
 
 object LibraryBookApi {
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/books/:bookId")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   data class Get(
-    @PathParam val bookId: KairoId,
+    @PathParam val libraryBookId: KairoId,
   ) : RestEndpoint<Nothing, BookRep?>()
 
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/books")
+  @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.Accept("application/json")
   data object ListAll : RestEndpoint<Nothing, List<BookRep>>()
 
   @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/books")
+  @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   data class Create(

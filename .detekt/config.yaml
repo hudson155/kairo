@@ -47,7 +47,7 @@ comments:
 complexity:
   CognitiveComplexMethod:
     active: true # Unsure how this differs from CyclomaticComplexMethod and if one is preferable.
-    threshold: 10
+    threshold: 12
   ComplexCondition:
     active: true
     threshold: 2
@@ -59,7 +59,7 @@ complexity:
     ignoreOverloaded: false
   CyclomaticComplexMethod: # Unsure how this differs from CognitiveComplexMethod and if one is preferable.
     active: true
-    threshold: 10
+    threshold: 12
     ignoreSingleWhenExpression: true
     ignoreSimpleWhenEntries: true
     ignoreNestingFunctions: false
@@ -69,7 +69,7 @@ complexity:
     active: false # Good practice, but leave this up to the developer.
   LongMethod:
     active: true
-    threshold: 20
+    threshold: 30
   LongParameterList:
     active: true
     functionThreshold: 4
@@ -509,7 +509,7 @@ potential-bugs:
   UnreachableCode:
     active: true
   UnsafeCallOnNullableType:
-    active: true
+    active: false # checkNotNull and requireNotNull are often preferable, but leaving this open.
   UnsafeCast:
     active: true
   UnusedUnaryOperator:

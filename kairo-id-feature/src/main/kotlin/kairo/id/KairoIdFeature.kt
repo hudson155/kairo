@@ -18,7 +18,7 @@ public class KairoIdFeature(
 
   private fun createGenerator(config: KairoIdConfig.Generator): KairoIdGenerator.Factory =
     when (config) {
-      is KairoIdConfig.Generator.Deterministic -> DeterministicKairoIdGenerator.Factory(length = config.length)
+      is KairoIdConfig.Generator.Deterministic -> DeterministicKairoIdGenerator.Factory
       is KairoIdConfig.Generator.Random -> RandomKairoIdGenerator.Factory(length = config.length)
     }
 }
