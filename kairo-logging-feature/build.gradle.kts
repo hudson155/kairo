@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   api(project(":kairo-feature"))
-  implementation(project(":kairo-logging"))
+  api(project(":kairo-logging"))
 
   implementation(libs.log4j2Core)
 }
