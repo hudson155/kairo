@@ -205,9 +205,3 @@ fun main() {
   server.start()
 }
 ```
-
-## Releasing
-
-1. Familiarize yourself with [semantic versioning](https://semver.org/).
-2. Create a new branch called `release/x.y.z`.
-3. 
