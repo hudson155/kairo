@@ -117,7 +117,7 @@ They are intended to be grouped together using Kotlin singleton objects.
 ```kotlin
 // src/main/kotlin/yourPackage/feature/library/book/LibraryBookHandler.kt
 
-object OrganizationHandler {
+object LibraryBookHandler {
   class Get @Inject constructor() : RestHandler<LibraryBookApi.Get>()
 
   class ListAll @Inject constructor() : RestHandler<LibraryBookApi.ListAll>()
