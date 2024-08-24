@@ -21,7 +21,6 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal class DataClassRestEndpointReader<out Endpoint : RestEndpoint<*, *>>(
   endpoint: KClass<Endpoint>,
 ) : RestEndpointReader<Endpoint>() {
-
   private val constructor: KFunction<Endpoint> =
     checkNotNull(endpoint.primaryConstructor)
 
