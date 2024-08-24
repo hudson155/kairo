@@ -1,0 +1,14 @@
+*
+
+!/.gitignore
+
+!/codeStyles/
+!/codeStyles/**
+!/runConfigurations/
+!/runConfigurations/**
+
+!/compiler.xml
+!/gradle.xml
+!/kotlinc.xml
+!/misc.xml
+!/vcs.xml

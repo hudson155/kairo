@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/kairo-clock-feature" />
+            <option value="$PROJECT_DIR$/kairo-config" />
+            <option value="$PROJECT_DIR$/kairo-darb" />
+            <option value="$PROJECT_DIR$/kairo-dependency-injection" />
+            <option value="$PROJECT_DIR$/kairo-feature" />
+            <option value="$PROJECT_DIR$/kairo-id-feature" />
+            <option value="$PROJECT_DIR$/kairo-logging" />
+            <option value="$PROJECT_DIR$/kairo-logging-feature" />
+            <option value="$PROJECT_DIR$/kairo-logging/testing" />
+            <option value="$PROJECT_DIR$/kairo-protected-string" />
+            <option value="$PROJECT_DIR$/kairo-reflect" />
+            <option value="$PROJECT_DIR$/kairo-rest-feature" />
+            <option value="$PROJECT_DIR$/kairo-serialization" />
+            <option value="$PROJECT_DIR$/kairo-server" />
+            <option value="$PROJECT_DIR$/kairo-testing" />
+            <option value="$PROJECT_DIR$/testing" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
