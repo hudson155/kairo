@@ -217,3 +217,4 @@ fun main() {
    Create a new tag `vX.Y.Z`.
    Title "Kairo X.Y.Z".
    Generate and prefix release notes.
+7. Manually run `./gradlew publish` on `main` after merging.
