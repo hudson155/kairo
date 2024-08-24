@@ -18,6 +18,7 @@ UUIDs are the gold standard for high-entropy IDs.
 There are `16^32 = 3.4E+38` distinct UUIDs.
 
 Kairo IDs can vary in entropy depending on how you configure them.
+
 - Using the minimum length of 8 provides `62^8 = 2.2E+14` distinct IDs.
   This is fairly low, but could be reasonable for use cases where readability is preferred.
 - **Using a length of 22** provides `62^22 = 2.7E+39` distinct IDs,

@@ -34,8 +34,7 @@ Configuration:
       type: Console
       name: Plaintext
       target: SYSTEM_OUT
-      PatternLayout:
-        # This is a pretty decent pattern, but change it if you wish.
+      PatternLayout: # This is a pretty decent pattern, but change it if you wish.
         pattern: "%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %c - %message %mdc%n"
   Loggers:
     Root:
