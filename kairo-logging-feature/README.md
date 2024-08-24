@@ -15,7 +15,7 @@ Doing this ensures that logging is not flushed and disabled until the other Feat
 // build.gradle.kts
 
 dependencies {
-  implementation("kairo:kairo-logging-feature:0.4.0")
+  implementation("kairo:kairo-logging-feature:0.5.0")
 }
 ```
 

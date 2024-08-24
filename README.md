@@ -62,14 +62,14 @@ Kairo is an application framework built for Kotlin.
 
 dependencies {
   // Basic dependencies.
-  api("kairo:kairo-server:0.4.0")
-  implementation("kairo:kairo-logging:0.4.0")
+  api("kairo:kairo-server:0.5.0")
+  implementation("kairo:kairo-logging:0.5.0")
 
   // Enable REST endpoints.
-  api("kairo:kairo-rest-feature:0.4.0")
+  api("kairo:kairo-rest-feature:0.5.0")
 
   // Test-related dependencies.
-  testImplementation("kairo:kairo-testing:0.4.0")
+  testImplementation("kairo:kairo-testing:0.5.0")
 }
 ```
 
@@ -205,3 +205,9 @@ fun main() {
   server.start()
 }
 ```
+
+## Releasing
+
+1. Familiarize yourself with [semantic versioning](https://semver.org/).
+2. Create a new branch called `release/x.y.z`.
+3. 

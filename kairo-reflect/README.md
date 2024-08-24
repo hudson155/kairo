@@ -11,7 +11,7 @@ that also includes some reflection-related utilities.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-reflect:0.4.0")
+  testImplementation("kairo:kairo-reflect:0.5.0")
 }
 ```
 
