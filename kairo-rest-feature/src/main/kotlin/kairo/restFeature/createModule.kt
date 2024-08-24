@@ -27,7 +27,7 @@ internal fun createModule(handlers: Set<RestHandler<*>>): Application.() -> Unit
       val template = handler.template
       logger.info { "Registering REST handler: $template." }
       routing {
-        route(template).handle { handler.handle() }
+        route(template).handle { handler.handle(call) }
       }
     }
   }

@@ -17,7 +17,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
   @Test
   fun contentTypePresentOnGet(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.ContentTypePresentOnGet::class)
+      RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.ContentTypePresentOnGet::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenContentTypeLibraryBookApi.ContentTypePresentOnGet" +
         " may not have @ContentType since it does not have a body.",
@@ -27,7 +27,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
   @Test
   fun contentTypeNotPresentOnPost(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.ContentTypeNotPresentOnPost::class)
+      RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.ContentTypeNotPresentOnPost::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenContentTypeLibraryBookApi.ContentTypeNotPresentOnPost" +
         " requires @ContentType since it has a body.",
@@ -39,7 +39,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
    */
   @Test
   fun emptyContentType(): Unit = runTest {
-    RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.EmptyContentType::class)
+    RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.EmptyContentType::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Post,
@@ -57,7 +57,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
   @Test
   fun malformedContentType(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.MalformedContentType::class)
+      RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.MalformedContentType::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenContentTypeLibraryBookApi.MalformedContentType" +
         " content type is invalid. Bad Content-Type format: application.",

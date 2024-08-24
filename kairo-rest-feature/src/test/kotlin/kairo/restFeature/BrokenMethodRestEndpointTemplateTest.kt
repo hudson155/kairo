@@ -14,7 +14,7 @@ internal class BrokenMethodRestEndpointTemplateTest {
   @Test
   fun missingMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.MissingMethod::class)
+      RestEndpointTemplate.from(BrokenMethodLibraryBookApi.MissingMethod::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenMethodLibraryBookApi.MissingMethod" +
         " is missing @Method.",
@@ -24,7 +24,7 @@ internal class BrokenMethodRestEndpointTemplateTest {
   @Test
   fun emptyMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.EmptyMethod::class)
+      RestEndpointTemplate.from(BrokenMethodLibraryBookApi.EmptyMethod::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenMethodLibraryBookApi.EmptyMethod" +
         " has invalid method: .",
@@ -34,7 +34,7 @@ internal class BrokenMethodRestEndpointTemplateTest {
   @Test
   fun sync(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.UnsupportedMethod::class)
+      RestEndpointTemplate.from(BrokenMethodLibraryBookApi.UnsupportedMethod::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenMethodLibraryBookApi.UnsupportedMethod" +
         " has invalid method: SYNC.",
