@@ -1,0 +1,13 @@
+*
+
+!/.gitignore
+
+!/codeStyles/
+!/codeStyles/**
+!/runConfigurations/
+!/runConfigurations/**
+
+!/compiler.xml
+!/kotlinc.xml
+!/misc.xml
+!/vcs.xml
