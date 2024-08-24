@@ -17,7 +17,7 @@ Note: Treat Kairo _Features_ as proper nouns (the first letter should be capital
 // build.gradle.kts
 
 dependencies {
-  api("kairo:kairo-feature:0.4.0")
+  api("kairo:kairo-feature:0.5.0")
 }
 ```
 
