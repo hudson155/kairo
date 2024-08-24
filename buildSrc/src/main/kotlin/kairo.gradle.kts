@@ -9,17 +9,17 @@ repositories {
 
 java {
   toolchain {
-    languageVersion.set(JavaLanguageVersion.of(21))
+    languageVersion = JavaLanguageVersion.of(21)
   }
 }
 
 kotlin {
   jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of(21))
+    languageVersion = JavaLanguageVersion.of(21)
   }
   explicitApi()
   compilerOptions {
-    allWarningsAsErrors.set(true)
+    allWarningsAsErrors = true
     freeCompilerArgs.add("-opt-in=kotlin.uuid.ExperimentalUuidApi")
   }
 }
