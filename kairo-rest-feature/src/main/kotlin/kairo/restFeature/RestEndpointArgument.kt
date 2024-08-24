@@ -18,7 +18,7 @@ internal sealed class RestEndpointArgument(
     param: KParameter,
   ) : RestEndpointArgument(call, param) {
     override suspend fun read(call: ApplicationCall): Any {
-      return ktorObjectMapper.readValue(call.receiveStream(), ktorObjectMapper.constructType(param.type.javaType))
+      return ktorMapper.readValue(call.receiveStream(), ktorMapper.constructType(param.type.javaType))
     }
   }
 
@@ -31,7 +31,7 @@ internal sealed class RestEndpointArgument(
     override suspend fun read(call: ApplicationCall): Any? {
       val parameters = call.parameters.getAll(name) ?: return null
       val parameter = parameters.single() // Lists are not supported yet.
-      return ktorObjectMapper.convertValue(parameter, ktorObjectMapper.constructType(param.type.javaType))
+      return ktorMapper.convertValue(parameter, ktorMapper.constructType(param.type.javaType))
     }
   }
 }
