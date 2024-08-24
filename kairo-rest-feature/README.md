@@ -16,7 +16,32 @@ dependencies {
 }
 ```
 
-### Step 2: Define your REST endpoints
+### Step 2: Define your rep
+
+Reps are just data classes that represent request and response bodies
+
+```kotlin
+internal data class LibraryBookRep(
+  val id: KairoId,
+  val title: String,
+) {
+  internal data class Creator(
+    val title: String,
+  )
+
+  @JsonInclude(value = JsonInclude.Include.NON_NULL)
+  internal data class Update(
+    val title: String? = null,
+  )
+}
+```
+
+Updates must be marked with `@JsonInclude(value = JsonInclude.Include.NON_NULL)`
+so that Kairo can differentiate between `null` and `undefined` from the frontend
+using Java's `Optional` class.
+See [kairo-serialization](/kairo-serialization/) fore more detail.
+
+### Step 3: Define your REST endpoints
 
 REST endpoint implementations define the API contract for REST API endpoints.
 They are intended to be grouped together using Kotlin singleton objects.
@@ -30,25 +55,81 @@ Routing takes all of these into account.
 ```kotlin
 // src/main/kotlin/yourPackage/feature/library/book/LibraryBookApi.kt
 
-object LibraryBookApi {
+object TypicalLibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   data class Get(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, BookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.Accept("application/json")
-  data object ListAll : RestEndpoint<Nothing, List<BookRep>>()
+  data object ListAll : RestEndpoint<Nothing, List<LibraryBookRep>>()
+
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Accept("application/json")
+  data class SearchByIsbn(
+    @QueryParam val isbn: String,
+  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
+
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Accept("application/json")
+  data class SearchByText(
+    @QueryParam val title: String?,
+    @QueryParam val author: String?,
+  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library/library-books")
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   data class Create(
-    override val body: BookRep.Creator,
-  ) : RestEndpoint<BookRep.Creator, BookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+
+  @RestEndpoint.Method("PATCH")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.ContentType("application/json")
+  @RestEndpoint.Accept("application/json")
+  data class Update(
+    @PathParam val libraryBookId: KairoId,
+    override val body: LibraryBookRep.Update,
+  ) : RestEndpoint<LibraryBookRep.Update, LibraryBookRep>()
+
+  @RestEndpoint.Method("DELETE")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Accept("application/json")
+  data class Delete(
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
+}
+```
+
+### Step 4: Create your handlers
+
+REST handler implementations are the entrypoints for a specific REST endpoints.
+They are intended to be grouped together using Kotlin singleton objects.
+
+```kotlin
+// src/main/kotlin/yourPackage/feature/library/book/LibraryBookHandler.kt
+
+object OrganizationHandler {
+  class Get @Inject constructor() : RestHandler<LibraryBookApi.Get>()
+
+  class ListAll @Inject constructor() : RestHandler<LibraryBookApi.ListAll>()
+
+  class SearchByIsbn @Inject constructor() : RestHandler<LibraryBookApi.SearchByIsbn>()
+
+  class SearchByText @Inject constructor() : RestHandler<LibraryBookApi.SearchByText>()
+
+  class Create @Inject constructor() : RestHandler<LibraryBookApi.Create>()
+
+  class Update @Inject constructor() : RestHandler<LibraryBookApi.Update>()
+
+  class Delete @Inject constructor() : RestHandler<LibraryBookApi.Delete>()
 }
 ```
