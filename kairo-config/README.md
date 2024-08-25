@@ -19,7 +19,7 @@ it will use the `KAIRO_CONFIG` envirnoment variable to identify the config name.
 // build.gradle.kts
 
 dependencies {
-  api("kairo:kairo-config:0.5.0")
+  api("kairo:kairo-config:$kairoVersion")
 }
 ```
 
