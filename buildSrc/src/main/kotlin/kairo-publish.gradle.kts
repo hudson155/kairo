@@ -21,8 +21,10 @@ publishing {
 
 gradle.taskGraph.whenReady {
   if (allTasks.any { it.name == "publishToMavenLocal" }) {
-    publishing.publications.getByName<MavenPublication>("maven") {
-      version += "-SNAPSHOT"
+    publishing {
+      publications.getByName<MavenPublication>("maven") {
+        version += "-SNAPSHOT"
+      }
     }
   }
 }
