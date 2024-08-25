@@ -147,7 +147,10 @@ internal data class RestEndpointTemplate(
     private fun parseQuery(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointQuery {
       val params = getParams<RestEndpoint.QueryParam>(endpoint)
       params.forEach { param ->
-        "REST endpoint ${endpoint.qualifiedName!!} query is invalid. Query param must not be optional: ${param.name!!}."
+        require(!param.isOptional) {
+          "REST endpoint ${endpoint.qualifiedName!!} query is invalid." +
+            " Query param must not be optional: ${param.name!!}."
+        }
       }
       return RestEndpointQuery(
         params = params.map { param ->
