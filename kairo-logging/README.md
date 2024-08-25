@@ -14,7 +14,7 @@ if you're using this within the context of a Kairo Server.
 // build.gradle.kts
 
 dependencies {
-  implementation("kairo:kairo-logging:0.5.0")
+  implementation("kairo:kairo-logging:$kairoVersion")
 }
 ```
 

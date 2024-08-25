@@ -44,7 +44,7 @@ Kairo IDs can vary in entropy depending on how you configure them.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-id-feature:0.5.0")
+  testImplementation("kairo:kairo-id-feature:$kairoVersion")
 }
 ```
 
