@@ -34,7 +34,7 @@ because of its limited support for polymorphism.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-serialization:0.5.0")
+  testImplementation("kairo:kairo-serialization:$kairoVersion")
 }
 ```
 
