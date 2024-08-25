@@ -70,4 +70,34 @@ internal class BrokenParamRestEndpointTemplateTest {
         " param cannot be both path and query: libraryBookId.",
     )
   }
+
+  @Test
+  fun nullablePathParam(): Unit = runTest {
+    shouldThrow<IllegalArgumentException> {
+      RestEndpointTemplate.from(BrokenParamLibraryBookApi.NullablePathParam::class)
+    }.shouldHaveMessage(
+      "REST endpoint kairo.restFeature.BrokenParamLibraryBookApi.NullablePathParam" +
+        " path is invalid. Path param must not be nullable: libraryBookId.",
+    )
+  }
+
+  @Test
+  fun optionalPathParam(): Unit = runTest {
+    shouldThrow<IllegalArgumentException> {
+      RestEndpointTemplate.from(BrokenParamLibraryBookApi.OptionalPathParam::class)
+    }.shouldHaveMessage(
+      "REST endpoint kairo.restFeature.BrokenParamLibraryBookApi.OptionalPathParam" +
+        " path is invalid. Path param must not be optional: libraryBookId.",
+    )
+  }
+
+  @Test
+  fun optionalQueryParam(): Unit = runTest {
+    shouldThrow<IllegalArgumentException> {
+      RestEndpointTemplate.from(BrokenParamLibraryBookApi.OptionalQueryParam::class)
+    }.shouldHaveMessage(
+      "REST endpoint kairo.restFeature.BrokenParamLibraryBookApi.OptionalQueryParam" +
+        " query is invalid. Query param must not be optional: title.",
+    )
+  }
 }
