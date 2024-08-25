@@ -3,6 +3,7 @@ package kairo.restFeature
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test
  */
 internal class TypicalRestEndpointTemplateTest {
   @Test
-  fun get() {
+  fun get(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Get::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -28,7 +29,7 @@ internal class TypicalRestEndpointTemplateTest {
   }
 
   @Test
-  fun listAll() {
+  fun listAll(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.ListAll::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -45,7 +46,7 @@ internal class TypicalRestEndpointTemplateTest {
   }
 
   @Test
-  fun searchByIsbn() {
+  fun searchByIsbn(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.SearchByIsbn::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -64,7 +65,7 @@ internal class TypicalRestEndpointTemplateTest {
   }
 
   @Test
-  fun searchByTitle() {
+  fun searchByTitle(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.SearchByText::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -84,7 +85,7 @@ internal class TypicalRestEndpointTemplateTest {
   }
 
   @Test
-  fun create() {
+  fun create(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Create::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -101,7 +102,7 @@ internal class TypicalRestEndpointTemplateTest {
   }
 
   @Test
-  fun update() {
+  fun update(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Update::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -119,7 +120,7 @@ internal class TypicalRestEndpointTemplateTest {
   }
 
   @Test
-  fun delete() {
+  fun delete(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Delete::class)
       .shouldBe(
         RestEndpointTemplate(

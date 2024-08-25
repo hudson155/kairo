@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import java.util.Optional
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -28,32 +29,32 @@ internal class OptionalNullableObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, present`() {
+  fun `serialize, present`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(Optional.of(42))).shouldBe("{\"value\":42}")
   }
 
   @Test
-  fun `serialize, empty`() {
+  fun `serialize, empty`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(Optional.empty())).shouldBe("{\"value\":null}")
   }
 
   @Test
-  fun `serialize, null`() {
+  fun `serialize, null`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(null)).shouldBe("{}")
   }
 
   @Test
-  fun `deserialize, present`() {
+  fun `deserialize, present`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": 42 }").shouldBe(MyClass(Optional.of(42)))
   }
 
   @Test
-  fun `deserialize, null`() {
+  fun `deserialize, null`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": null }").shouldBe(MyClass(Optional.empty()))
   }
 
   @Test
-  fun `deserialize, missing`() {
+  fun `deserialize, missing`(): Unit = runTest {
     mapper.readValue<MyClass>("{}").shouldBe(MyClass(null))
   }
 }

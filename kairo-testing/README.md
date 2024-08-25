@@ -25,14 +25,14 @@ dependencies {
 
 internal class YourTest {
   @Test
-  fun `test case 1`() {
+  fun `test case 1`(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       doSomething("1")
     }
   }
 
   @Test
-  fun `test case 2`() {
+  fun `test case 2`(): Unit = runTest {
     doSomething("2").shouldBe("wonderful result!")
   }
 }

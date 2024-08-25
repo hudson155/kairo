@@ -2,29 +2,30 @@ package kairo.protectedString
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class ProtectedStringTest {
   @Test
-  fun value() {
+  fun value(): Unit = runTest {
     @OptIn(ProtectedString.Access::class)
     ProtectedString("1").value.shouldBe("1")
   }
 
   @Test
-  fun `equals method`() {
+  fun `equals method`(): Unit = runTest {
     ProtectedString("1").shouldBe(ProtectedString("1"))
     ProtectedString("1").shouldNotBe(ProtectedString("2"))
   }
 
   @Test
-  fun `hashCode method`() {
+  fun `hashCode method`(): Unit = runTest {
     ProtectedString("1").hashCode().shouldBe("1".hashCode())
     ProtectedString("1").hashCode().shouldNotBe("2".hashCode())
   }
 
   @Test
-  fun `toString method`() {
+  fun `toString method`(): Unit = runTest {
     ProtectedString("1").toString().shouldBe("REDACTED")
   }
 }

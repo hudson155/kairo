@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kotlin.uuid.Uuid
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -22,31 +23,31 @@ internal class UuidNullableObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, default`() {
+  fun `serialize, default`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
       .shouldBe("{\"value\":\"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\"}")
   }
 
   @Test
-  fun `serialize, null`() {
+  fun `serialize, null`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(null))
       .shouldBe("{\"value\":null}")
   }
 
   @Test
-  fun `deserialize, default`() {
+  fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\" }")
       .shouldBe(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
   }
 
   @Test
-  fun `deserialize, null`() {
+  fun `deserialize, null`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": null }")
       .shouldBe(MyClass(null))
   }
 
   @Test
-  fun `deserialize, missing`() {
+  fun `deserialize, missing`(): Unit = runTest {
     mapper.readValue<MyClass>("{}").shouldBe(MyClass(null))
   }
 }

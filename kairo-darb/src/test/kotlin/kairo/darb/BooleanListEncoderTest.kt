@@ -4,11 +4,12 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class BooleanListEncoderTest {
   @Test
-  fun encode() {
+  fun encode(): Unit = runTest {
     BooleanListEncoder.encode(emptyList()).shouldBe("")
     BooleanListEncoder.encode(listOf(false)).shouldBe("0")
     BooleanListEncoder.encode(listOf(true)).shouldBe("1")
@@ -23,7 +24,7 @@ internal class BooleanListEncoderTest {
   }
 
   @Test
-  fun decode() {
+  fun decode(): Unit = runTest {
     BooleanListEncoder.decode("").shouldBeEmpty()
     BooleanListEncoder.decode("0").shouldBe(listOf(false))
     BooleanListEncoder.decode("1").shouldBe(listOf(true))

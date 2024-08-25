@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kotlin.uuid.Uuid
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -22,75 +23,75 @@ internal class UuidDefaultObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, default`() {
+  fun `serialize, default`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
       .shouldBe("{\"value\":\"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\"}")
   }
 
   @Test
-  fun `deserialize, default`() {
+  fun `deserialize, default`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8\" }")
       .shouldBe(MyClass(Uuid.parse("3ec0a853-dae3-4ee1-abe2-0b9c7dee45f8")))
   }
 
   @Test
-  fun `deserialize, null`() {
+  fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
-  fun `deserialize, missing`() {
+  fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
-  fun `deserialize, too short`() {
+  fun `deserialize, too short`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f\" }")
     }
   }
 
   @Test
-  fun `deserialize, too long`() {
+  fun `deserialize, too long`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45f88\" }")
     }
   }
 
   @Test
-  fun `deserialize, missing dashes`() {
+  fun `deserialize, missing dashes`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853dae34ee1abe20b9c7dee45f8\" }")
     }
   }
 
   @Test
-  fun `deserialize, invalid character`() {
+  fun `deserialize, invalid character`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": \"3ec0a853-dae3-4ee1-abe2-0b9c7dee45fg\" }")
     }
   }
 
   @Test
-  fun `deserialize, wrong type, int`() {
+  fun `deserialize, wrong type, int`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 42 }")
     }
   }
 
   @Test
-  fun `deserialize, wrong type, float`() {
+  fun `deserialize, wrong type, float`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 1.23 }")
     }
   }
 
   @Test
-  fun `deserialize, wrong type, boolean`() {
+  fun `deserialize, wrong type, boolean`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": true }")
     }

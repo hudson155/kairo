@@ -2,6 +2,7 @@ package kairo.restFeature
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenPathRestEndpointTemplateTest {
   @Test
-  fun missingMethod() {
+  fun missingMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.MissingPath::class)
     }.shouldHaveMessage(
@@ -21,7 +22,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun emptyMethod() {
+  fun emptyMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.EmptyPath::class)
     }.shouldHaveMessage(
@@ -31,7 +32,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun pathMissingLeadingSlash() {
+  fun pathMissingLeadingSlash(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.PathMissingLeadingSlash::class)
     }.shouldHaveMessage(
@@ -41,7 +42,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun malformedConstantPathComponent() {
+  fun malformedConstantPathComponent(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.MalformedConstantPathComponent::class)
     }.shouldHaveMessage(
@@ -51,7 +52,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun malformedPathConstantComponent() {
+  fun malformedPathConstantComponent(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.MalformedConstantPathComponent::class)
     }.shouldHaveMessage(
@@ -61,7 +62,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun malformedParamPathComponent() {
+  fun malformedParamPathComponent(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.MalformedParamPathComponent::class)
     }.shouldHaveMessage(
@@ -71,7 +72,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun nullablePathParam() {
+  fun nullablePathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.NullablePathParam::class)
     }.shouldHaveMessage(
@@ -81,7 +82,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun optionalPathParam() {
+  fun optionalPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.OptionalPathParam::class)
     }.shouldHaveMessage(
@@ -91,7 +92,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun duplicatePathParamInPath() {
+  fun duplicatePathParamInPath(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.DuplicatePathParamInPath::class)
     }.shouldHaveMessage(
@@ -101,7 +102,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun pathParamInPathButNotInConstructor() {
+  fun pathParamInPathButNotInConstructor(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.PathParamInPathButNotInConstructor::class)
     }.shouldHaveMessage(
@@ -111,7 +112,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   }
 
   @Test
-  fun pathParamInConstructorButNotInPath() {
+  fun pathParamInConstructorButNotInPath(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenPathLibraryBookApi.PathParamInConstructorButNotInPath::class)
     }.shouldHaveMessage(

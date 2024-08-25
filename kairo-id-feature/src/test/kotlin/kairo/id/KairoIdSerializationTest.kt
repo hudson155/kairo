@@ -5,19 +5,20 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
 import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class KairoIdSerializationTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun serialize() {
+  fun serialize(): Unit = runTest {
     mapper.writeValueAsString(KairoId("library_book", "2eDS1sMt"))
       .shouldBe("\"library_book_2eDS1sMt\"")
   }
 
   @Test
-  fun deserialize() {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<KairoId>("\"library_book_2eDS1sMt\"")
       .shouldBe(KairoId("library_book", "2eDS1sMt"))
   }

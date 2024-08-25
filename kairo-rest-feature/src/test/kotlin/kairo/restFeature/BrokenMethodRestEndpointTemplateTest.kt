@@ -2,6 +2,7 @@ package kairo.restFeature
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenMethodRestEndpointTemplateTest {
   @Test
-  fun missingMethod() {
+  fun missingMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.MissingMethod::class)
     }.shouldHaveMessage(
@@ -21,7 +22,7 @@ internal class BrokenMethodRestEndpointTemplateTest {
   }
 
   @Test
-  fun emptyMethod() {
+  fun emptyMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.EmptyMethod::class)
     }.shouldHaveMessage(
@@ -31,7 +32,7 @@ internal class BrokenMethodRestEndpointTemplateTest {
   }
 
   @Test
-  fun sync() {
+  fun sync(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenMethodLibraryBookApi.UnsupportedMethod::class)
     }.shouldHaveMessage(

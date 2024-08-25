@@ -10,6 +10,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.Optional
 import kotlin.uuid.Uuid
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -116,12 +117,12 @@ internal class YamlObjectMapperTest {
   """.trimIndent() + '\n'
 
   @Test
-  fun serialize() {
+  fun serialize(): Unit = runTest {
     mapper.writeValueAsString(myClass).shouldBe(string)
   }
 
   @Test
-  fun deserialize() {
+  fun deserialize(): Unit = runTest {
     mapper.readValue<MyClass>(string).shouldBe(myClass)
   }
 }

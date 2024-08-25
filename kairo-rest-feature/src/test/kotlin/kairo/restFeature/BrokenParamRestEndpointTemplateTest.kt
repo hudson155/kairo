@@ -2,6 +2,7 @@ package kairo.restFeature
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenParamRestEndpointTemplateTest {
   @Test
-  fun nonParamConstructorParameter() {
+  fun nonParamConstructorParameter(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenParamLibraryBookApi.NonParamConstructorParameter::class)
     }.shouldHaveMessage(
@@ -21,7 +22,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   }
 
   @Test
-  fun bodyAsPathParam() {
+  fun bodyAsPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenParamLibraryBookApi.BodyAsPathParam::class)
     }.shouldHaveMessage(
@@ -31,7 +32,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   }
 
   @Test
-  fun bodyAsQueryParam() {
+  fun bodyAsQueryParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenParamLibraryBookApi.BodyAsQueryParam::class)
     }.shouldHaveMessage(
@@ -41,7 +42,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   }
 
   @Test
-  fun pathParamMarkedAsQueryParam() {
+  fun pathParamMarkedAsQueryParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenParamLibraryBookApi.PathParamMarkedAsQueryParam::class)
     }.shouldHaveMessage(
@@ -51,7 +52,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   }
 
   @Test
-  fun queryParamMarkedAsPathParam() {
+  fun queryParamMarkedAsPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenParamLibraryBookApi.QueryParamMarkedAsPathParam::class)
     }.shouldHaveMessage(
@@ -61,7 +62,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   }
 
   @Test
-  fun paramIsPathAndQuery() {
+  fun paramIsPathAndQuery(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenParamLibraryBookApi.ParamIsPathAndQuery::class)
     }.shouldHaveMessage(

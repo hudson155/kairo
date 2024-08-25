@@ -3,6 +3,7 @@ package kairo.reflect
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class TypeParamTest {
@@ -19,24 +20,24 @@ internal class TypeParamTest {
   }
 
   @Test
-  fun `abstract int subclass`() {
+  fun `abstract int subclass`(): Unit = runTest {
     AbstractExampleIntSubclass().typeParam.shouldBe(Int::class)
   }
 
   @Test
-  fun `abstract string subclass`() {
+  fun `abstract string subclass`(): Unit = runTest {
     AbstractExampleStringSubclass().typeParam.shouldBe(String::class)
   }
 
   @Test
-  fun `concrete int class`() {
+  fun `concrete int class`(): Unit = runTest {
     shouldThrow<NullPointerException> {
       ConcreteExampleClass<Int>()
     }
   }
 
   @Test
-  fun `concrete string class`() {
+  fun `concrete string class`(): Unit = runTest {
     shouldThrow<NullPointerException> {
       ConcreteExampleClass<String>()
     }

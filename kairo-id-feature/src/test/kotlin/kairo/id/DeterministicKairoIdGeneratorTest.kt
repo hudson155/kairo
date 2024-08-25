@@ -1,6 +1,7 @@
 package kairo.id
 
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class DeterministicKairoIdGeneratorTest {
@@ -8,7 +9,7 @@ internal class DeterministicKairoIdGeneratorTest {
     DeterministicKairoIdGenerator(prefix = "library_book")
 
   @Test
-  fun test() {
+  fun test(): Unit = runTest {
     idGenerator.generate().shouldBe(KairoId("library_book", "00000000"))
     idGenerator.generate().shouldBe(KairoId("library_book", "00000001"))
     idGenerator.generate().shouldBe(KairoId("library_book", "00000002"))
