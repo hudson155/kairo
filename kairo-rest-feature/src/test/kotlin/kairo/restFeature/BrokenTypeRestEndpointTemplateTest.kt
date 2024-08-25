@@ -2,6 +2,7 @@ package kairo.restFeature
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenTypeRestEndpointTemplateTest {
   @Test
-  fun getWithBodyNotProvided() {
+  fun getWithBodyNotProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.GetWithBodyNotProvided::class)
     }.shouldHaveMessage(
@@ -20,7 +21,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   }
 
   @Test
-  fun getWithBodyProvided() {
+  fun getWithBodyProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.GetWithBodyProvided::class)
     }.shouldHaveMessage(
@@ -30,7 +31,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   }
 
   @Test
-  fun postWithoutBodyNotProvided() {
+  fun postWithoutBodyNotProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.PostWithoutBodyProvided::class)
     }.shouldHaveMessage(
@@ -40,7 +41,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   }
 
   @Test
-  fun postWithoutBodyProvided() {
+  fun postWithoutBodyProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided::class)
     }.shouldHaveMessage(

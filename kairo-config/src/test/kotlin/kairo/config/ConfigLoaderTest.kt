@@ -3,6 +3,7 @@
 package kairo.config
 
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class ConfigLoaderTest {
@@ -32,55 +33,55 @@ internal class ConfigLoaderTest {
     )
 
   @Test
-  fun `basic config`() {
+  fun `basic config`(): Unit = runTest {
     ConfigLoader.load<TestConfig>("basic-config").shouldBe(testConfig)
   }
 
   @Test
-  fun `config with extra root property`() {
+  fun `config with extra root property`(): Unit = runTest {
     configLoadingShouldFail {
       ConfigLoader.load<TestConfig>("config-with-extra-root-property")
     }
   }
 
   @Test
-  fun `config with extra nested property`() {
+  fun `config with extra nested property`(): Unit = runTest {
     configLoadingShouldFail {
       ConfigLoader.load<TestConfig>("config-with-extra-nested-property")
     }
   }
 
   @Test
-  fun `config with missing root property`() {
+  fun `config with missing root property`(): Unit = runTest {
     configLoadingShouldFail {
       ConfigLoader.load<TestConfig>("config-with-missing-root-property")
     }
   }
 
   @Test
-  fun `config with missing nested property`() {
+  fun `config with missing nested property`(): Unit = runTest {
     configLoadingShouldFail {
       ConfigLoader.load<TestConfig>("config-with-missing-nested-property")
     }
   }
 
   @Test
-  fun `config with trivial extension`() {
+  fun `config with trivial extension`(): Unit = runTest {
     ConfigLoader.load<TestConfig>("config-with-trivial-extension").shouldBe(testConfig)
   }
 
   @Test
-  fun `config with extension`() {
+  fun `config with extension`(): Unit = runTest {
     ConfigLoader.load<TestConfig>("config-with-extension").shouldBe(testConfig)
   }
 
   @Test
-  fun `config with application`() {
+  fun `config with application`(): Unit = runTest {
     ConfigLoader.load<TestConfig>("config-with-application").shouldBe(testConfig)
   }
 
   @Test
-  fun `config with extension and application`() {
+  fun `config with extension and application`(): Unit = runTest {
     ConfigLoader.load<TestConfig>("config-with-application").shouldBe(testConfig)
   }
 }

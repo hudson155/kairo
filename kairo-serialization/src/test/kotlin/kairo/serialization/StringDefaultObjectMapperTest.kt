@@ -3,6 +3,7 @@ package kairo.serialization
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -21,55 +22,55 @@ internal class StringDefaultObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, non-empty`() {
+  fun `serialize, non-empty`(): Unit = runTest {
     mapper.writeValueAsString(MyClass("true")).shouldBe("{\"value\":\"true\"}")
   }
 
   @Test
-  fun `serialize, empty`() {
+  fun `serialize, empty`(): Unit = runTest {
     mapper.writeValueAsString(MyClass("")).shouldBe("{\"value\":\"\"}")
   }
 
   @Test
-  fun `deserialize, non-empty`() {
+  fun `deserialize, non-empty`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"true\" }").shouldBe(MyClass("true"))
   }
 
   @Test
-  fun `deserialize, empty`() {
+  fun `deserialize, empty`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": \"\" }").shouldBe(MyClass(""))
   }
 
   @Test
-  fun `deserialize, null`() {
+  fun `deserialize, null`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": null }")
     }
   }
 
   @Test
-  fun `deserialize, missing`() {
+  fun `deserialize, missing`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{}")
     }
   }
 
   @Test
-  fun `deserialize, wrong type, int`() {
+  fun `deserialize, wrong type, int`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 1 }")
     }
   }
 
   @Test
-  fun `deserialize, wrong type, float`() {
+  fun `deserialize, wrong type, float`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": 0.0 }")
     }
   }
 
   @Test
-  fun `deserialize, wrong type, boolean`() {
+  fun `deserialize, wrong type, boolean`(): Unit = runTest {
     serializationShouldFail {
       mapper.readValue<MyClass>("{ \"value\": true }")
     }

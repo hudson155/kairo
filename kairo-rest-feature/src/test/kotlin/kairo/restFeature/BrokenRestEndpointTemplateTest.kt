@@ -2,6 +2,7 @@ package kairo.restFeature
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenRestEndpointTemplateTest {
   @Test
-  fun notDataClass() {
+  fun notDataClass(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenLibraryBookApi.NotDataClass::class)
     }.shouldHaveMessage(
@@ -20,7 +21,7 @@ internal class BrokenRestEndpointTemplateTest {
   }
 
   @Test
-  fun notDataObject() {
+  fun notDataObject(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenLibraryBookApi.NotDataObject::class)
     }.shouldHaveMessage(

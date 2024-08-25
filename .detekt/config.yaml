@@ -475,7 +475,7 @@ potential-bugs:
     active: true
   ImplicitUnitReturnType:
     active: true
-    allowExplicitReturnType: false
+    allowExplicitReturnType: true
   InvalidRange:
     active: true
   IteratorHasNextCallsNextMethod:
