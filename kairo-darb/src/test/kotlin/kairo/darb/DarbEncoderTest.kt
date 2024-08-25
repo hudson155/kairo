@@ -4,11 +4,12 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class DarbEncoderTest {
   @Test
-  fun encode() {
+  fun encode(): Unit = runTest {
     DarbEncoder.encode(emptyList()).shouldBe("0.")
     DarbEncoder.encode(listOf(false)).shouldBe("1.0")
     DarbEncoder.encode(listOf(true)).shouldBe("1.8")
@@ -24,7 +25,7 @@ internal class DarbEncoderTest {
   }
 
   @Test
-  fun `decode, happy path`() {
+  fun `decode, happy path`(): Unit = runTest {
     DarbEncoder.decode("0.").shouldBeEmpty()
     DarbEncoder.decode("1.0").shouldBe(listOf(false))
     DarbEncoder.decode("1.8").shouldBe(listOf(true))
@@ -42,7 +43,7 @@ internal class DarbEncoderTest {
   }
 
   @Test
-  fun `decode, error cases`() {
+  fun `decode, error cases`(): Unit = runTest {
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("") }
       .shouldHaveMessage("DARB must have 2 components.")
     shouldThrow<IllegalArgumentException> { DarbEncoder.decode("1.1.1") }

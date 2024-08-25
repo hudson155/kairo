@@ -1,6 +1,7 @@
 package kairo.id
 
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 internal class RandomKairoIdGeneratorTest {
@@ -11,7 +12,7 @@ internal class RandomKairoIdGeneratorTest {
    * There's no great way to test randomness, so we just ensure there are no duplicates over 100,000 generations.
    */
   @Test
-  fun test() {
+  fun test(): Unit = runTest {
     List(100_000) { idGenerator.generate() }.distinct().size.shouldBe(100_000)
   }
 }

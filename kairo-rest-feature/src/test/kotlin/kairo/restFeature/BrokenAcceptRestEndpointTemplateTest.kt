@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenAcceptRestEndpointTemplateTest {
   @Test
-  fun acceptPresentOnGet() {
+  fun acceptPresentOnGet(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.AcceptNotPresentOnGet::class)
     }.shouldHaveMessage(
@@ -24,7 +25,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
   }
 
   @Test
-  fun acceptNotPresentOnPost() {
+  fun acceptNotPresentOnPost(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.AcceptNotPresentOnPost::class)
     }.shouldHaveMessage(
@@ -37,7 +38,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
    * This is actually valid; an empty string means "Any" content type.
    */
   @Test
-  fun emptyAccept() {
+  fun emptyAccept(): Unit = runTest {
     RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.EmptyAccept::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -55,7 +56,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
   }
 
   @Test
-  fun malformedAccept() {
+  fun malformedAccept(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.MalformedAccept::class)
     }.shouldHaveMessage(

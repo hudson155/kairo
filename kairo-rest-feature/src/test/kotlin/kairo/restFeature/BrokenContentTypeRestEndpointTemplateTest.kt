@@ -5,6 +5,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test
  */
 internal class BrokenContentTypeRestEndpointTemplateTest {
   @Test
-  fun contentTypePresentOnGet() {
+  fun contentTypePresentOnGet(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.ContentTypePresentOnGet::class)
     }.shouldHaveMessage(
@@ -24,7 +25,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
   }
 
   @Test
-  fun contentTypeNotPresentOnPost() {
+  fun contentTypeNotPresentOnPost(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.ContentTypeNotPresentOnPost::class)
     }.shouldHaveMessage(
@@ -37,7 +38,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
    * This is actually valid; an empty string means "Any" content type.
    */
   @Test
-  fun emptyContentType() {
+  fun emptyContentType(): Unit = runTest {
     RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.EmptyContentType::class)
       .shouldBe(
         RestEndpointTemplate(
@@ -54,7 +55,7 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
   }
 
   @Test
-  fun malformedContentType() {
+  fun malformedContentType(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
       RestEndpointTemplate.parse(BrokenContentTypeLibraryBookApi.MalformedContentType::class)
     }.shouldHaveMessage(

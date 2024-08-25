@@ -3,6 +3,7 @@ package kairo.serialization
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -21,37 +22,37 @@ internal class BooleanNullableObjectMapperTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
   @Test
-  fun `serialize, false`() {
+  fun `serialize, false`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(false)).shouldBe("{\"value\":false}")
   }
 
   @Test
-  fun `serialize, true`() {
+  fun `serialize, true`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(true)).shouldBe("{\"value\":true}")
   }
 
   @Test
-  fun `serialize, null`() {
+  fun `serialize, null`(): Unit = runTest {
     mapper.writeValueAsString(MyClass(null)).shouldBe("{\"value\":null}")
   }
 
   @Test
-  fun `deserialize, false`() {
+  fun `deserialize, false`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": false }").shouldBe(MyClass(false))
   }
 
   @Test
-  fun `deserialize, true`() {
+  fun `deserialize, true`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": true }").shouldBe(MyClass(true))
   }
 
   @Test
-  fun `deserialize, null`() {
+  fun `deserialize, null`(): Unit = runTest {
     mapper.readValue<MyClass>("{ \"value\": null }").shouldBe(MyClass(null))
   }
 
   @Test
-  fun `deserialize, missing`() {
+  fun `deserialize, missing`(): Unit = runTest {
     mapper.readValue<MyClass>("{}").shouldBe(MyClass(null))
   }
 }

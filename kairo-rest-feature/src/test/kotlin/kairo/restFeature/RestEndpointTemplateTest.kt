@@ -1,6 +1,7 @@
 package kairo.restFeature
 
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test
 @Suppress("NullableToStringCall") // False positive.
 internal class RestEndpointTemplateTest {
   @Test
-  fun `get, toString method`() {
+  fun `get, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Get::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
@@ -19,7 +20,7 @@ internal class RestEndpointTemplateTest {
   }
 
   @Test
-  fun `listAll, toString method`() {
+  fun `listAll, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.ListAll::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
@@ -28,7 +29,7 @@ internal class RestEndpointTemplateTest {
   }
 
   @Test
-  fun `searchByIsbn, toString method`() {
+  fun `searchByIsbn, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.SearchByIsbn::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
@@ -37,7 +38,7 @@ internal class RestEndpointTemplateTest {
   }
 
   @Test
-  fun `searchByTitle, toString method`() {
+  fun `searchByTitle, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.SearchByText::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
@@ -46,7 +47,7 @@ internal class RestEndpointTemplateTest {
   }
 
   @Test
-  fun `create, toString method`() {
+  fun `create, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Create::class).toString()
       .shouldBe(
         "RestEndpointTemplate([application/json -> application/json]" +
@@ -55,7 +56,7 @@ internal class RestEndpointTemplateTest {
   }
 
   @Test
-  fun `update, toString method`() {
+  fun `update, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Update::class).toString()
       .shouldBe(
         "RestEndpointTemplate([application/json -> application/json]" +
@@ -64,7 +65,7 @@ internal class RestEndpointTemplateTest {
   }
 
   @Test
-  fun `delete, toString method`() {
+  fun `delete, toString method`(): Unit = runTest {
     RestEndpointTemplate.parse(TypicalLibraryBookApi.Delete::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +

@@ -4,6 +4,7 @@ import io.mockk.spyk
 import io.mockk.verifyOrder
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test
  */
 internal class ServerTest {
   @Test
-  fun server() {
+  fun server(): Unit = runTest {
     class TestFeature : Feature() {
       override val name: String = "TestFeature"
 
