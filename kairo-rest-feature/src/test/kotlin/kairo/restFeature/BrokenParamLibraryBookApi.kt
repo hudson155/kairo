@@ -51,4 +51,26 @@ internal object BrokenParamLibraryBookApi {
   internal data class ParamIsPathAndQuery(
     @PathParam @QueryParam val libraryBookId: KairoId,
   ) : RestEndpoint<Nothing, LibraryBookRep?>()
+
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Accept("application/json")
+  internal data class NullablePathParam(
+    @PathParam val libraryBookId: KairoId?,
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Accept("application/json")
+  internal data class OptionalPathParam(
+    @PathParam val libraryBookId: KairoId = KairoId("library_book", "2eDS1sMt"),
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Accept("application/json")
+  internal data class OptionalQueryParam(
+    @QueryParam val title: String? = null,
+    @QueryParam val author: String? = null,
+  ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 }
