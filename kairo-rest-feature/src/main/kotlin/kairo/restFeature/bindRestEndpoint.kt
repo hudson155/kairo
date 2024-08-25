@@ -2,6 +2,8 @@ package kairo.restFeature
 
 import com.google.inject.PrivateBinder
 import com.google.inject.multibindings.Multibinder
+import kairo.dependencyInjection.expose
+import kairo.dependencyInjection.toClass
 import kairo.dependencyInjection.type
 
 /**
@@ -10,6 +12,6 @@ import kairo.dependencyInjection.type
  */
 public inline fun <reified Handler : RestHandler<*>> PrivateBinder.bindRestEndpoint() {
   val multibinder = Multibinder.newSetBinder(this, type<RestHandler<*>>())
-  multibinder.addBinding().to(Handler::class.java)
-  expose(type<Set<RestHandler<*>>>())
+  multibinder.addBinding().toClass(Handler::class)
+  expose<Set<RestHandler<*>>>()
 }
