@@ -37,6 +37,8 @@ Kairo is an application framework built for Kotlin.
 - [kairo-logging](kairo-logging/):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
   which should be configured to use Apache Log4j2 under the hood.
+- [kairo-logging-feature](kairo-logging-feature/):
+  This Feature supports logging within Kairo Servers.
 - [kairo-protected-string](kairo-protected-string/):
   `ProtectedString` represents a string value that should not be logged or otherwise exposed.
 - [kairo-reflect](kairo-reflect/):
@@ -156,7 +158,7 @@ you'll need to configure some basic properties like `featureManager` and `restFe
 
 data class MonolithServerConfig(
   val featureManager: FeatureManagerConfig,
-  val restFeature: RestConfig,
+  val rest: KairoRestConfig,
 )
 ```
 
@@ -168,7 +170,7 @@ featureManager:
     startupDelayMs: 2000 # 2 seconds.
     shutdownDelayMs: 4000 # 4 seconds.
 
-restFeature:
+rest:
   connector:
     host: "0.0.0.0"
     port: 8080
@@ -192,8 +194,9 @@ class MonolithServer(
   override val featureManager: FeatureManager =
     FeatureManager(
       features = setOf(
+        KairoRestFeature(config.rest),
+
         LibraryFeature(),
-        RestFeature(config.restFeature),
       ),
       config = config.featureManager,
     )

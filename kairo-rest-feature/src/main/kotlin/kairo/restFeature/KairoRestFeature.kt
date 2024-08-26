@@ -8,15 +8,15 @@ import kairo.dependencyInjection.getInstance
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 
-public class RestFeature(
-  private val config: RestConfig,
+public class KairoRestFeature(
+  private val config: KairoRestConfig,
 ) : Feature() {
   override val name: String = "REST"
 
   override val priority: FeaturePriority = FeaturePriority.Framework
 
   override fun bind(binder: PrivateBinder) {
-    binder.bind<RestConfig>().toInstance(config)
+    binder.bind<KairoRestConfig>().toInstance(config)
 
     binder.bind<RestServer>().asEagerSingleton()
     binder.expose<RestServer>()
