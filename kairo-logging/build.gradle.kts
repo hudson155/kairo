@@ -4,6 +4,8 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-util"))
+
   api(libs.kotlinLoggingJvm)
   implementation(libs.log4j2ConfigYaml)
   implementation(libs.log4j2Core)

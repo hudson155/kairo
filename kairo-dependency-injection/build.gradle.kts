@@ -4,5 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-util"))
+
   api(libs.guice)
 }

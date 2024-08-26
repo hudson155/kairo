@@ -6,6 +6,7 @@ plugins {
 dependencies {
   implementation(project(":kairo-dependency-injection"))
   implementation(project(":kairo-logging"))
+  implementation(project(":kairo-util"))
 
   implementation(libs.kotlinxCoroutinesCore)
 
