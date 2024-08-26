@@ -16,7 +16,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * This is the typical case for [RestEndpointReader].
  * We use JVM reflection to inspect the [RestEndpoint] class
  * in order to determine how to get the arguments from the [RoutingCall]
- * call the primary constructor of the data class.
+ * to call the primary constructor of the data class.
  */
 internal class DataClassRestEndpointReader<out Endpoint : RestEndpoint<*, *>>(
   endpoint: KClass<Endpoint>,
