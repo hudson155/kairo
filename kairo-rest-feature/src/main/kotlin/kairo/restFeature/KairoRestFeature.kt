@@ -27,6 +27,7 @@ public class KairoRestFeature(
   }
 
   override fun stop(injector: Injector?) {
-    injector?.getInstance<RestServer>()?.stop()
+    injector ?: return
+    injector.getInstance<RestServer>().stop()
   }
 }
