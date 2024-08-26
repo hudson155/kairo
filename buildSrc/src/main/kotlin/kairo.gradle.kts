@@ -1,4 +1,5 @@
 plugins {
+  java
   kotlin("jvm")
   id("io.gitlab.arturbosch.detekt")
 }
