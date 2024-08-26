@@ -5,6 +5,7 @@ guice = "7.0.0" # https://github.com/google/guice/releases
 jackson = "2.17.2" # https://github.com/FasterXML/jackson-core/tags
 kotest = "5.9.1" # https://github.com/kotest/kotest/releases
 kotlinLogging = "7.0.0" # https://github.com/oshai/kotlin-logging/releases
+kotlinxCoroutines = "1.9.0-RC.2" # https://github.com/Kotlin/kotlinx.coroutines/releases
 ktor = "3.0.0-beta-2" # https://ktor.io/docs/releases.html#release-details
 log4j2 = "3.0.0-beta2" # https://github.com/apache/logging-log4j2/releases
 mockK = "1.13.12" # https://github.com/mockk/mockk/releases
@@ -19,6 +20,7 @@ jacksonDatatypeJdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatyp
 jacksonModuleKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 kotestRunner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlinLoggingJvm = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlinLogging" }
+kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 ktorServerCio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
 ktorServerCore = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 log4j2ConfigYaml = { module = "org.apache.logging.log4j:log4j-config-yaml", version.ref = "log4j2" }
