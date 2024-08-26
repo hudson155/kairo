@@ -28,7 +28,7 @@ internal class DataClassRestEndpointReader<out Endpoint : RestEndpoint<*, *>>(
     logger.debug { "Creating data class." }
     val arguments = arguments(call)
     logger.debug { "Arguments: $arguments." }
-    return constructor.callBy(arguments.mapValues { (_, argument) -> argument.read() }.filterValues { it != null })
+    return constructor.callBy(arguments.mapValues { (_, argument) -> argument.read() })
   }
 
   private fun arguments(call: ApplicationCall): Map<KParameter, RestEndpointArgument> {
