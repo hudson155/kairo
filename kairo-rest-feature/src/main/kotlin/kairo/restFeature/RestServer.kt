@@ -17,7 +17,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal class RestServer @Inject constructor(
   private val config: RestConfig,
-  private val handlers: Set<RestHandler<*>>,
+  private val handlers: Set<RestHandler<*, *>>,
 ) {
   private var ktor: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null
 
