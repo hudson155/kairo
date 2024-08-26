@@ -16,7 +16,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * adding support for easy [start] and [stop].
  */
 internal class RestServer @Inject constructor(
-  private val config: RestConfig,
+  private val config: KairoRestConfig,
   private val handlers: Set<RestHandler<*, *>>,
 ) {
   private var ktor: EmbeddedServer<CIOApplicationEngine, CIOApplicationEngine.Configuration>? = null

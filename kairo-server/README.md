@@ -31,7 +31,7 @@ you'll need to configure some basic properties like `featureManager` and `restFe
 
 data class MonolithServerConfig(
   val featureManager: FeatureManagerConfig,
-  val restFeature: RestConfig,
+  val restFeature: KairoRestConfig,
 )
 ```
 
@@ -65,8 +65,9 @@ class MonolithServer(
   override val featureManager: FeatureManager =
     FeatureManager(
       features = setOf(
+        KairoRestFeature(config.restFeature),
+
         LibraryFeature(),
-        RestFeature(config.restFeature),
       ),
       config = config.featureManager,
     )

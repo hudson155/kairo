@@ -2,7 +2,7 @@ package kairo.restFeature
 
 import io.ktor.server.engine.ApplicationEngine
 
-public data class RestConfig(
+public data class KairoRestConfig(
   val connector: Connector,
   val lifecycle: Lifecycle,
   val parallelism: Parallelism,
