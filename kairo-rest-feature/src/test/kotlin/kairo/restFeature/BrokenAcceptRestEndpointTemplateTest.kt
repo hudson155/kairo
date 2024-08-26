@@ -17,7 +17,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
   @Test
   fun acceptPresentOnGet(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.AcceptNotPresentOnGet::class)
+      RestEndpointTemplate.from(BrokenAcceptLibraryBookApi.AcceptNotPresentOnGet::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenAcceptLibraryBookApi.AcceptNotPresentOnGet" +
         " requires @Accept.",
@@ -27,7 +27,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
   @Test
   fun acceptNotPresentOnPost(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.AcceptNotPresentOnPost::class)
+      RestEndpointTemplate.from(BrokenAcceptLibraryBookApi.AcceptNotPresentOnPost::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenAcceptLibraryBookApi.AcceptNotPresentOnPost" +
         " requires @Accept.",
@@ -39,7 +39,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
    */
   @Test
   fun emptyAccept(): Unit = runTest {
-    RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.EmptyAccept::class)
+    RestEndpointTemplate.from(BrokenAcceptLibraryBookApi.EmptyAccept::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Get,
@@ -58,7 +58,7 @@ internal class BrokenAcceptRestEndpointTemplateTest {
   @Test
   fun malformedAccept(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenAcceptLibraryBookApi.MalformedAccept::class)
+      RestEndpointTemplate.from(BrokenAcceptLibraryBookApi.MalformedAccept::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenAcceptLibraryBookApi.MalformedAccept" +
         " accept is invalid. Bad Content-Type format: application.",
