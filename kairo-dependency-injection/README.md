@@ -11,4 +11,12 @@ along with some utilities to make its use more idiomatic.
 
 ## Usage
 
-This Feature is not currently intended to be a direct dependency.
+### Step 1: Include the dependency
+
+```kotlin
+// build.gradle.kts
+
+dependencies {
+  testImplementation("kairo:kairo-dependency-injection:$kairoVersion")
+}
+```
