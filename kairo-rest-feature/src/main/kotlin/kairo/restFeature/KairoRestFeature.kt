@@ -18,7 +18,7 @@ public class KairoRestFeature(
   override fun bind(binder: PrivateBinder) {
     binder.bind<KairoRestConfig>().toInstance(config)
 
-    binder.bind<RestServer>().asEagerSingleton()
+    binder.bind<RestServer>()
     binder.expose<RestServer>()
   }
 
@@ -27,8 +27,7 @@ public class KairoRestFeature(
   }
 
   override fun stop(injector: Injector?) {
-    if (injector != null) {
-      injector.getInstance<RestServer>().stop()
-    }
+    injector ?: return
+    injector.getInstance<RestServer>().stop()
   }
 }
