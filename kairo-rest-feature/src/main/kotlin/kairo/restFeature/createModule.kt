@@ -20,7 +20,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Kairo does not use Ktor's module system.
  * [createModule] returns a function that sets up a single module.
  */
-internal fun createModule(handlers: Set<RestHandler<*>>): Application.() -> Unit {
+internal fun createModule(handlers: Set<RestHandler<*, *>>): Application.() -> Unit {
   return {
     logger.info { "Registering ${handlers.size} REST handlers." }
     handlers.forEach { handler ->

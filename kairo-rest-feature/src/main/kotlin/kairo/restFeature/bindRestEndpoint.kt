@@ -10,8 +10,8 @@ import kairo.dependencyInjection.type
  * Binding REST endpoints uses a [Multibinder],
  * which allows multiple instances to be bound separately but injected together as a set.
  */
-public inline fun <reified Handler : RestHandler<*>> PrivateBinder.bindRestEndpoint() {
-  val multibinder = Multibinder.newSetBinder(this, type<RestHandler<*>>())
+public inline fun <reified Handler : RestHandler<*, *>> PrivateBinder.bindRestEndpoint() {
+  val multibinder = Multibinder.newSetBinder(this, type<RestHandler<*, *>>())
   multibinder.addBinding().toClass(Handler::class)
-  expose<Set<RestHandler<*>>>()
+  expose<Set<RestHandler<*, *>>>()
 }
