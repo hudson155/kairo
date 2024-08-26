@@ -24,14 +24,14 @@ This example is a monolith.
 
 First, create the config class and YAML.
 Regardless of whether you're building a monolith or microservices,
-you'll need to configure some basic properties like `featureManager` and `restFeature`.
+you'll need to configure some basic properties like `featureManager` and `rest`.
 
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServerConfig.kt
 
 data class MonolithServerConfig(
   val featureManager: FeatureManagerConfig,
-  val restFeature: RestConfig,
+  val rest: KairoRestConfig,
 )
 ```
 
@@ -41,7 +41,7 @@ featureManager:
     startupDelayMs: 2000 # 2 seconds.
     shutdownDelayMs: 4000 # 4 seconds.
 
-restFeature:
+rest:
   connector:
     host: "0.0.0.0"
     port: 8080
@@ -65,8 +65,9 @@ class MonolithServer(
   override val featureManager: FeatureManager =
     FeatureManager(
       features = setOf(
+        KairoRestFeature(config.rest),
+
         LibraryFeature(),
-        RestFeature(config.restFeature),
       ),
       config = config.featureManager,
     )

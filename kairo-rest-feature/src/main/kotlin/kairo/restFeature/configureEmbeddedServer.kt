@@ -4,7 +4,7 @@ import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.connector
 
 internal fun <TConfiguration : ApplicationEngine.Configuration> configureEmbeddedServer(
-  config: RestConfig,
+  config: KairoRestConfig,
 ): TConfiguration.() -> Unit {
   return {
     applyConnector(config.connector)
@@ -14,7 +14,7 @@ internal fun <TConfiguration : ApplicationEngine.Configuration> configureEmbedde
 }
 
 private fun ApplicationEngine.Configuration.applyConnector(
-  config: RestConfig.Connector,
+  config: KairoRestConfig.Connector,
 ) {
   connector {
     host = config.host
@@ -23,14 +23,14 @@ private fun ApplicationEngine.Configuration.applyConnector(
 }
 
 private fun ApplicationEngine.Configuration.applyLifecycle(
-  config: RestConfig.Lifecycle,
+  config: KairoRestConfig.Lifecycle,
 ) {
   shutdownGracePeriod = config.shutdownGracePeriodMs
   shutdownTimeout = config.shutdownTimeoutMs
 }
 
 private fun ApplicationEngine.Configuration.applyParallelism(
-  config: RestConfig.Parallelism,
+  config: KairoRestConfig.Parallelism,
 ) {
   connectionGroupSize = config.connectionGroupSize
   workerGroupSize = config.workerGroupSize

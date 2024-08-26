@@ -1,5 +1,5 @@
 package kairo.logging
 
-public data class LoggingConfig(
+public data class KairoLoggingConfig(
   val shutDownManually: Boolean,
 )

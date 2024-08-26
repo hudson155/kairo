@@ -5,8 +5,8 @@ import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 import org.apache.logging.log4j.LogManager
 
-public class LoggingFeature(
-  private val config: LoggingConfig,
+public class KairoLoggingFeature(
+  private val config: KairoLoggingConfig,
 ) : Feature() {
   override val name: String = "Logging"
 
