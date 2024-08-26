@@ -33,7 +33,7 @@ public abstract class RestHandler<Endpoint : RestEndpoint<*, Response>, Response
     call.respond<Any>(result)
   }
 
-  protected abstract fun handle(endpoint: Endpoint): Response
+  protected abstract suspend fun handle(endpoint: Endpoint): Response
 
   protected open fun statusCode(response: Response): HttpStatusCode =
     HttpStatusCode.OK

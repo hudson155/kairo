@@ -2,6 +2,7 @@ package kairo.restFeature
 
 import com.google.inject.Inject
 import com.google.inject.ProvidedBy
+import com.google.inject.Singleton
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.cio.CIO
@@ -18,6 +19,7 @@ private typealias Server = EmbeddedServer<CIOApplicationEngine, CIOApplicationEn
  * A simple wrapper around Ktor's [embeddedServer] function,
  * adding support for easy [start] and [stop].
  */
+@Singleton
 @ProvidedBy(RestServer.Provider::class)
 internal class RestServer(private val ktor: Server) {
   internal class Provider @Inject constructor(
@@ -39,12 +41,12 @@ internal class RestServer(private val ktor: Server) {
   }
 
   fun start() {
-    logger.info { "Starting server." }
+    logger.info { "Starting REST server." }
     ktor.start()
   }
 
   fun stop() {
-    logger.info { "Stopping server." }
+    logger.info { "Stopping REST server." }
     ktor.stop()
   }
 }
