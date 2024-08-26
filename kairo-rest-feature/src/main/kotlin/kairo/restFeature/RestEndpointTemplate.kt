@@ -16,7 +16,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 
 /**
  * A REST endpoint template instance represents a specific subclass of [RestEndpoint].
- * In fact, it can be created from a [RestEndpoint] class reference using [RestEndpointTemplate.parse].
+ * In fact, it can be created from a [RestEndpoint] class reference using [RestEndpointTemplate.from].
  */
 internal data class RestEndpointTemplate(
   val method: HttpMethod,
@@ -29,7 +29,7 @@ internal data class RestEndpointTemplate(
     "RestEndpointTemplate(${PrettyRestEndpointWriter.write(this)})"
 
   internal companion object {
-    fun parse(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
+    fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
       logger.debug { "Building REST endpoint template for endpoint $endpoint." }
       require(endpoint.isData) { "REST endpoint ${endpoint.qualifiedName!!} must be a data class or data object." }
       validateParams(endpoint)

@@ -13,7 +13,7 @@ internal class BrokenRestEndpointTemplateTest {
   @Test
   fun notDataClass(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenLibraryBookApi.NotDataClass::class)
+      RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataClass::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenLibraryBookApi.NotDataClass" +
         " must be a data class or data object.",
@@ -23,7 +23,7 @@ internal class BrokenRestEndpointTemplateTest {
   @Test
   fun notDataObject(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenLibraryBookApi.NotDataObject::class)
+      RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataObject::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenLibraryBookApi.NotDataObject" +
         " must be a data class or data object.",

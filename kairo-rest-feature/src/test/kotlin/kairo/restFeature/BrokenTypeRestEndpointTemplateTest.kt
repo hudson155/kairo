@@ -13,7 +13,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   @Test
   fun getWithBodyNotProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.GetWithBodyNotProvided::class)
+      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.GetWithBodyNotProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.GetWithBodyNotProvided" +
         " has method GET but specifies a body.",
@@ -23,7 +23,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   @Test
   fun getWithBodyProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.GetWithBodyProvided::class)
+      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.GetWithBodyProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.GetWithBodyProvided" +
         " has method GET but specifies a body.",
@@ -33,7 +33,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   @Test
   fun postWithoutBodyNotProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.PostWithoutBodyProvided::class)
+      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PostWithoutBodyProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.PostWithoutBodyProvided" +
         " has method POST but specifies a body.",
@@ -43,7 +43,7 @@ internal class BrokenTypeRestEndpointTemplateTest {
   @Test
   fun postWithoutBodyProvided(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.parse(BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided::class)
+      RestEndpointTemplate.from(BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.restFeature.BrokenTypeLibraryBookApi.PostWithoutBodyNotProvided" +
         " has method POST but specifies a body.",
