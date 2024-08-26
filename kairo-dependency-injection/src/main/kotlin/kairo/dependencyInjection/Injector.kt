@@ -3,6 +3,7 @@
 package kairo.dependencyInjection
 
 import com.google.inject.Injector
+import com.google.inject.Key
 
 public inline fun <reified T : Any> Injector.getInstance(): T =
-  getInstance(T::class.java)
+  getInstance(Key.get(type<T>()))
