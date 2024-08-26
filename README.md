@@ -54,6 +54,8 @@ Kairo is an application framework built for Kotlin.
   A Server is an application that runs a set of Features.
 - [kairo-testing](kairo-testing/):
   A convenient testing library which includes some helpful test dependencies.
+- [kairo-transaction-manager](kairo-transaction-manager/):
+  TODO.
 
 ## Getting started
 
