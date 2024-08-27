@@ -1,6 +1,11 @@
 plugins {
+  java
   `maven-publish`
   id("com.google.cloud.artifactregistry.gradle-plugin")
+}
+
+java {
+  withSourcesJar()
 }
 
 publishing {
