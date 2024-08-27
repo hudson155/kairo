@@ -54,6 +54,8 @@ Kairo is an application framework built for Kotlin.
   A Server is an application that runs a set of Features.
 - [kairo-testing](kairo-testing/):
   A convenient testing library which includes some helpful test dependencies.
+- [kairo-transaction-manager](kairo-transaction-manager/):
+  The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
 
 ## Getting started
 
@@ -136,7 +138,7 @@ class LibraryFeature : Feature() {
 
   // Use "Normal" for most Features.
   override val priority: FeaturePriority = FeaturePriority.Normal
-  
+
   override fun bind(binder: PrivateBinder) {
     // Do your Guice binding here!
   }
