@@ -46,6 +46,9 @@ dependencies {
 
 ### Step 2: Use the transaction manager
 
+`SqlTransaction` is used as an example transaction type here,
+but it could be any transaction type.
+
 ```kotlin
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
