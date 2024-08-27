@@ -31,12 +31,11 @@ internal class DataClassRestEndpointReader<out Endpoint : RestEndpoint<*, *>>(
     return constructor.callBy(arguments.mapValues { (_, argument) -> argument.read() })
   }
 
-  private fun arguments(call: ApplicationCall): Map<KParameter, RestEndpointArgument> {
-    return constructor.valueParameters.associateWith { param ->
+  private fun arguments(call: ApplicationCall): Map<KParameter, RestEndpointArgument> =
+    constructor.valueParameters.associateWith { param ->
       if (param.name == RestEndpoint<*, *>::body.name) {
         return@associateWith RestEndpointArgument.Body(call, param)
       }
       return@associateWith RestEndpointArgument.Param(call, param)
     }
-  }
 }

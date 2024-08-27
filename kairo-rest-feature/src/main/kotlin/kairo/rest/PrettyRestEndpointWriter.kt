@@ -33,7 +33,7 @@ internal object PrettyRestEndpointWriter : RestEndpointWriter() {
 
   private fun StringBuilder.query(template: RestEndpointTemplate) {
     if (template.query.params.isEmpty()) return
-    val query = template.query.params.joinToString(", ") { param ->
+    val query = template.query.params.joinToString { param ->
       buildString {
         append(param.value)
         if (!param.required) append('?')

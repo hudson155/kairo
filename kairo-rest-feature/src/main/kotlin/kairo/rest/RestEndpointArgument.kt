@@ -17,9 +17,8 @@ internal sealed class RestEndpointArgument(
     call: ApplicationCall,
     param: KParameter,
   ) : RestEndpointArgument(call, param) {
-    override suspend fun read(call: ApplicationCall): Any {
-      return ktorMapper.readValue(call.receiveStream(), ktorMapper.constructType(param.type.javaType))
-    }
+    override suspend fun read(call: ApplicationCall): Any =
+      ktorMapper.readValue(call.receiveStream(), ktorMapper.constructType(param.type.javaType))
   }
 
   internal class Param(
