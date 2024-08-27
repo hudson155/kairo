@@ -17,6 +17,6 @@ along with some utilities to make its use more idiomatic.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-dependency-injection:$kairoVersion")
+  implementation("kairo:kairo-dependency-injection:$kairoVersion")
 }
 ```

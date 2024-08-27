@@ -12,7 +12,7 @@ but for tests it may be a fixed clock instead.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-clock-feature:$kairoVersion")
+  implementation("kairo:kairo-clock-feature:$kairoVersion")
 }
 ```
 
