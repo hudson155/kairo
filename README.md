@@ -55,7 +55,7 @@ Kairo is an application framework built for Kotlin.
 - [kairo-testing](kairo-testing/):
   A convenient testing library which includes some helpful test dependencies.
 - [kairo-transaction-manager](kairo-transaction-manager/):
-  The Kairo `TransactionManager` offers explciit automatic handling of transactions that span multiple systems.
+  The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
 
 ## Getting started
 

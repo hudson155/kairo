@@ -3,7 +3,7 @@
 A transaction is a wrapper for some code that should be either committed or rolled back
 depending on whether it completes successfully or throws an exception.
 
-The Kairo `TransactionManager` offers explciit automatic handling of transactions that span multiple systems.
+The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
 It supports arbitrary transaction types;
 some examples are `SqlTransaction` and `MessageTransaction`.
 
