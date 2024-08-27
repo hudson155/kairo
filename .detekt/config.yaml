@@ -614,6 +614,7 @@ style:
       - 'java.time.OffsetDateTime.now' # Class should never be used.
       - 'java.time.OffsetTime.now' # Class should never be used.
       - 'java.time.ZonedDateTime.now' # Class should never be used.
+      - 'kotlin.collections.singleOrNull' # singleNullOrThrow is less surprising.
       - 'kotlin.io.print'
       - 'kotlin.io.println'
   ForbiddenSuppress:

@@ -12,7 +12,7 @@ Even if you're not building a REST API, you might need to include this to suppor
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-rest-feature:$kairoVersion")
+  implementation("kairo:kairo-rest-feature:$kairoVersion")
 }
 ```
 

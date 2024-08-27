@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-logging"))
+  implementation(project(":kairo-util"))
 
   api(libs.jacksonCore)
   implementation(libs.jacksonDataformatYaml)
