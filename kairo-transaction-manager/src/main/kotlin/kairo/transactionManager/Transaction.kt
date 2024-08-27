@@ -9,13 +9,15 @@ import kotlinx.coroutines.withContext
 
 private val logger: KLogger = KotlinLogging.logger {}
 
+/**
+ * See [TransactionManager].
+ */
 internal class Transaction(
   private val types: List<TransactionType>,
 ) {
   private val contexts: Stack<Pair<TransactionType.WithContext, CoroutineContext>> = Stack()
   private val openTransactions: Stack<TransactionType> = Stack()
 
-  @Suppress("MemberNameEqualsClassName")
   suspend fun <T> transaction(block: suspend () -> T): T {
     try {
       val context = createContext()
@@ -62,19 +64,19 @@ internal class Transaction(
     /**
      * Add relevant contexts from any types.
      */
-    for (type in types) {
+    types.forEach { type ->
       if (type !is TransactionType.WithContext) {
-        logger.debug { "Transaction type ${type::class} has no context." }
-        continue
+        logger.debug { "Transaction type ${type::class.simpleName!!} has no context." }
+        return@forEach
       }
-      logger.debug { "Creating context for transaction type ${type::class}." }
+      logger.debug { "Creating context for transaction type ${type::class.simpleName!!}." }
       try {
         val context = type.createContext()
         combinedContext += context
         contexts.push(Pair(type, context))
       } catch (e: Exception) {
         logger.warn(e) {
-          "An error occurred while creating the context for a ${type::class} transaction." +
+          "An error occurred while creating the context for a ${type::class.simpleName!!} transaction." +
             " Please make every effort to avoid this."
         }
         throw TransactionContextCreationFailedException(e)
@@ -85,14 +87,14 @@ internal class Transaction(
   }
 
   private suspend fun beginAll(context: TransactionContext) {
-    for (type in types) {
-      logger.debug { "Beginning transaction type ${type::class}." }
+    types.forEach { type ->
+      logger.debug { "Beginning transaction type ${type::class.simpleName!!}." }
       try {
         type.begin()
         openTransactions.push(type)
       } catch (e: Exception) {
         logger.warn(e) {
-          "An error occurred while beginning a ${type::class} transaction." +
+          "An error occurred while beginning a ${type::class.simpleName!!} transaction." +
             " Please make every effort to avoid this."
         }
         throw TransactionBeginFailedException(e)
@@ -113,13 +115,13 @@ internal class Transaction(
   private suspend fun commitAll(context: TransactionContext) {
     while (openTransactions.isNotEmpty()) {
       val type = openTransactions.pop()
-      logger.debug { "Committing transaction type ${type::class}." }
+      logger.debug { "Committing transaction type ${type::class.simpleName!!}." }
       try {
         type.commit()
       } catch (e: Exception) {
         openTransactions.push(type)
         logger.error {
-          "An error occurred while committing a ${type::class} transaction." +
+          "An error occurred while committing a ${type::class.simpleName!!} transaction." +
             " Please make every effort to avoid this." +
             " Data corruption is likely. Please investigate."
         }
@@ -132,12 +134,12 @@ internal class Transaction(
   private suspend fun rollbackAll(context: TransactionContext) {
     while (openTransactions.isNotEmpty()) {
       val type = openTransactions.pop()
-      logger.debug { "Rolling back transaction type ${type::class}." }
+      logger.debug { "Rolling back transaction type ${type::class.simpleName!!}." }
       try {
         type.rollback()
       } catch (e: Exception) {
         logger.error(e) {
-          "An error occurred while rolling back a ${type::class} transaction." +
+          "An error occurred while rolling back a ${type::class.simpleName!!} transaction." +
             " Please make every effort to avoid this." +
             " Data corruption is possible. Please investigate."
         }
@@ -156,12 +158,12 @@ internal class Transaction(
   private suspend fun closeContexts() {
     while (contexts.isNotEmpty()) {
       val (type, context) = contexts.pop()
-      logger.debug { "Closing context for transaction type ${type::class}." }
+      logger.debug { "Closing context for transaction type ${type::class.simpleName!!}." }
       try {
         type.closeContext(context)
       } catch (e: Exception) {
         logger.error(e) {
-          "An error occurred while rolling back a ${type::class} transaction." +
+          "An error occurred while rolling back a ${type::class.simpleName!!} transaction." +
             " Please make every effort to avoid this."
         }
       }
