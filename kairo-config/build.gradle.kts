@@ -11,6 +11,6 @@ dependencies {
 
   implementation(libs.guava) // For [Resources.getResource].
 
-  testImplementation(project(":kairo-logging"))
+  testImplementation(project(":kairo-logging:testing"))
   testImplementation(project(":testing"))
 }
