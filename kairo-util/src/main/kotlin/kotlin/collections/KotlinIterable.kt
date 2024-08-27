@@ -6,6 +6,9 @@ package kotlin.collections
  * Adapted from [single] and [singleOrNull].
  * Returns single element, or null if the collection is empty.
  * If the collection has more than one element, throws [IllegalArgumentException].
+ *
+ * This is less surprising than [singleOrNull]
+ * because it doesn't return null when there are multiple items in the collection.
  */
 public fun <T> Iterable<T>.singleNullOrThrow(): T? {
   if (this is List) {
@@ -24,6 +27,9 @@ public fun <T> Iterable<T>.singleNullOrThrow(): T? {
  * Adapted from [single] and [singleOrNull].
  * Returns the single element matching the given [predicate], or null if element was not found.
  * If more than one element was found, throws [IllegalArgumentException].
+ *
+ * This is less surprising than [singleOrNull]
+ * because it doesn't return null when there are multiple items in the collection.
  */
 public inline fun <T> Iterable<T>.singleNullOrThrow(predicate: (T) -> Boolean): T? {
   var single: T? = null

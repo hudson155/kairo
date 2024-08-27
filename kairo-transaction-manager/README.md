@@ -40,7 +40,7 @@ data corruption is possible if the commit or rollback phases fail.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-transaction-manager:$kairoVersion")
+  implementation("kairo:kairo-transaction-manager:$kairoVersion")
 }
 ```
 
