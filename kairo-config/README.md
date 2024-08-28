@@ -53,6 +53,8 @@ This is a "complex" config in the sense that it utilizes both _config extension_
 The large number of config properties is needed to demonstrate by example how these features work.
 
 ```kotlin
+// src/main/kotlin/yourPackage/server/monolith/MonolithServerConfig.kt
+
 data class MonolithServerConfig(
   val message: String,
   val name: String,
