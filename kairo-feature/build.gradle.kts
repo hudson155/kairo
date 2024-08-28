@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-dependency-injection"))
+  api(project(":kairo-dependency-injection")) // Exposed for clients.
   implementation(project(":kairo-logging"))
-  api(project(":kairo-util"))
+  api(project(":kairo-util")) // Exposed for clients.
 }

@@ -6,7 +6,7 @@ plugins {
 dependencies {
   implementation(project(":kairo-logging"))
 
-  api(libs.jacksonCore)
+  api(libs.jacksonCore) // Exposed for clients.
   implementation(libs.jacksonDataformatYaml)
   implementation(libs.jacksonDatatypeJdk8)
   api(libs.jacksonModuleKotlin) // There are some extension functions to expose.

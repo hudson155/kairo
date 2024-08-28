@@ -2,7 +2,7 @@
 
 Uses [Jackson](https://github.com/FasterXML/jackson)
 to handle JSON and YAML serialization in many contexts,
-including Kairo server configs, REST request and response bodies, and more.
+including Kairo Server configs, REST request and response bodies, and more.
 
 We don't use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serialization)
 (although it is an excellent library)
