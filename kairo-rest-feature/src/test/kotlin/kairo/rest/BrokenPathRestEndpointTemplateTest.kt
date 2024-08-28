@@ -37,7 +37,7 @@ internal class BrokenPathRestEndpointTemplateTest {
       RestEndpointTemplate.from(BrokenPathLibraryBookApi.PathMissingLeadingSlash::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.BrokenPathLibraryBookApi.PathMissingLeadingSlash" +
-        " path must start with a slash: library/library-books.",
+        " path must start with a slash: library-books.",
     )
   }
 

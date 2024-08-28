@@ -44,7 +44,6 @@ internal class BrokenAcceptRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Get,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
             RestEndpointPath.Component.Param("libraryBookId"),
           ),

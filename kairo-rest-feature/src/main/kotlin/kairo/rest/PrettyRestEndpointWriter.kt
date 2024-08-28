@@ -28,7 +28,7 @@ internal object PrettyRestEndpointWriter : RestEndpointWriter() {
         is RestEndpointPath.Component.Param -> ":${component.value}"
       }
     }
-    append(path)
+    append("/$path")
   }
 
   private fun StringBuilder.query(template: RestEndpointTemplate) {

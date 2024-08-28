@@ -17,6 +17,6 @@ internal object KtorPathTemplateRestEndpointWriter : RestEndpointWriter() {
         is RestEndpointPath.Component.Param -> "{${component.value}}"
       }
     }
-    append(path)
+    append("/$path")
   }
 }
