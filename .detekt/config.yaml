@@ -578,7 +578,8 @@ style:
   ExplicitItLambdaParameter:
     active: true
   ExpressionBodySyntax:
-    active: false # Preferring to leave this open.
+    active: true
+    includeLineWrapping: true
   ForbiddenAnnotation:
     active: true
   ForbiddenComment:
