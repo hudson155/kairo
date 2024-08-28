@@ -5,13 +5,12 @@ import io.ktor.server.engine.connector
 
 internal fun <TConfiguration : ApplicationEngine.Configuration> configureEmbeddedServer(
   config: KairoRestConfig,
-): TConfiguration.() -> Unit {
-  return {
+): TConfiguration.() -> Unit =
+  {
     applyConnector(config.connector)
     applyLifecycle(config.lifecycle)
     applyParallelism(config.parallelism)
   }
-}
 
 private fun ApplicationEngine.Configuration.applyConnector(
   config: KairoRestConfig.Connector,
