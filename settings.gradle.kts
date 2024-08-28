@@ -16,6 +16,7 @@ include(":kairo-serialization")
 include(":kairo-server")
 include(":kairo-testing")
 include(":kairo-transaction-manager")
+include(":kairo-updater")
 include(":kairo-util")
 
 include(":testing")
