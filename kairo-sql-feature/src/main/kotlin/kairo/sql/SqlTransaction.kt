@@ -7,7 +7,7 @@ import kotlin.coroutines.CoroutineContext
 import org.jdbi.v3.core.Jdbi
 
 /**
- * Implementing SQL transactions manually allows this Feature to play nicely with [TransactionManager]
+ * Implementing SQL transactions manually allows this Feature to play nicely with [TransactionManager].
  */
 public class SqlTransaction @Inject constructor(
   private val jdbi: Jdbi,

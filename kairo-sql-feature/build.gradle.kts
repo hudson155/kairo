@@ -10,6 +10,7 @@ dependencies {
   api(project(":kairo-protected-string")) // Used in the config.
   api(project(":kairo-reflect")) // SqlContext is public.
   api(project(":kairo-transaction-manager")) // SqlTransaction is public.
+  api(project(":kairo-updater"))  // Exposed for clients.
 
   implementation(libs.guava) // For [Resources.getResource].
   api(libs.hikari) // HikariDataSource is exposed.

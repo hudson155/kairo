@@ -14,7 +14,7 @@ However, it would not be a huge lift to support other SQL databases.
 // build.gradle.kts
 
 dependencies {
-  testImplementation("kairo:kairo-sql-feature:$kairoVersion")
+  implementation("kairo:kairo-sql-feature:$kairoVersion")
 }
 ```
 
@@ -93,8 +93,8 @@ class LibraryBookStore : SqlStore.ForTable<LibraryBookModel>(
     updater: Updater<LibraryBookModel.Update>,
   ): LibraryBookModel =
     sql { handle ->
-      val model = get(id, forUpdate = true) ?: throw LibraryBookDoesNotExist()
-      val update = updater(LibraryBookModel.Update(model))
+      val update = update(id) { updater.update(LibraryBookModel.Update(it)) }
+        ?: throw LibraryBookDoesNotExist()
       logger.info { "Updating library book: $update." }
       val query = handle.createQuery(rs("store/libraryBook/update.sql"))
       query.bind("id", id)
@@ -109,4 +109,55 @@ class LibraryBookStore : SqlStore.ForTable<LibraryBookModel>(
       return@sql query.mapToType().singleNullOrThrow() ?: throw LibraryBookDoesNotExist()
     }
 }
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/listAll.sql
+
+select *
+from library_book
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/searchByIsbn.sql
+
+select *
+from library_book
+where isbn = :isbn
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/searchByText.sql
+
+select *
+from library_book
+where title = :title
+  and author = :author
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/create.sql
+
+insert into library_book (id, title, author, isbn)
+values (:id, :title, :author, :isbn)
+returning *
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/update.sql
+
+update library_book
+set title  = :title,
+    author = :author
+where id = :id
+returning *
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/listAll.sql
+
+delete
+from library_book
+where id = :id
+returning *
 ```
