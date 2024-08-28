@@ -1,12 +1,11 @@
 package kairo.sql
 
+import com.google.inject.Binder
 import com.google.inject.Injector
-import com.google.inject.PrivateBinder
 import com.zaxxer.hikari.HikariDataSource
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.dependencyInjection.bind
-import kairo.dependencyInjection.expose
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
@@ -21,11 +20,9 @@ public class KairoSqlFeature(
 
   override val priority: FeaturePriority = FeaturePriority.Framework
 
-  override fun bind(binder: PrivateBinder) {
+  override fun bind(binder: Binder) {
     binder.bind<KairoSqlConfig>().toInstance(config)
-
     binder.bind<HikariDataSource>().toProvider(HikariDataSourceProvider::class)
-    binder.expose<HikariDataSource>()
   }
 
   override fun start(injector: Injector, features: Set<Feature>) {
