@@ -605,7 +605,10 @@ style:
       - 'com.google.inject.binder.ScopedBindingBuilder.in' # Use the Kotlin overload.
       - 'com.google.inject.binder.LinkedBindingBuilder.to' # Use the Kotlin overload.
       - 'com.google.inject.binder.LinkedBindingBuilder.toConstructor' # Use the Kotlin overload.
-      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(jakarta.inject.Provider)' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)' # Use the Kotlin overload.
+      - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)' # Use the Kotlin overload.
       - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.

@@ -117,19 +117,19 @@ They are intended to be grouped together using Kotlin singleton objects.
 ```kotlin
 // src/main/kotlin/yourPackage/feature/library/book/LibraryBookHandler.kt
 
-object LibraryBookHandler {
-  class Get @Inject constructor() : RestHandler<LibraryBookApi.Get>()
+class LibraryBookHandler @Inject constructor() {
+  class Get : RestHandler<LibraryBookApi.Get>()
 
-  class ListAll @Inject constructor() : RestHandler<LibraryBookApi.ListAll>()
+  class ListAll : RestHandler<LibraryBookApi.ListAll>()
 
-  class SearchByIsbn @Inject constructor() : RestHandler<LibraryBookApi.SearchByIsbn>()
+  class SearchByIsbn : RestHandler<LibraryBookApi.SearchByIsbn>()
 
-  class SearchByText @Inject constructor() : RestHandler<LibraryBookApi.SearchByText>()
+  class SearchByText : RestHandler<LibraryBookApi.SearchByText>()
 
-  class Create @Inject constructor() : RestHandler<LibraryBookApi.Create>()
+  class Create : RestHandler<LibraryBookApi.Create>()
 
-  class Update @Inject constructor() : RestHandler<LibraryBookApi.Update>()
+  class Update : RestHandler<LibraryBookApi.Update>()
 
-  class Delete @Inject constructor() : RestHandler<LibraryBookApi.Delete>()
+  class Delete : RestHandler<LibraryBookApi.Delete>()
 }
 ```
