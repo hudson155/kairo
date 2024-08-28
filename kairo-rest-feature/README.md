@@ -124,19 +124,47 @@ They are intended to be grouped together using Kotlin singleton objects.
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookHandler.kt
 
-class LibraryBookHandler @Inject constructor() {
-  class Get : RestHandler<LibraryBookApi.Get>()
+internal class OrganizationHandler @Inject constructor() {
+  internal inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep? {
+      TODO()
+    }
+  }
 
-  class ListAll : RestHandler<LibraryBookApi.ListAll>()
+  internal inner class ListAll : RestHandler<LibraryBookApi.ListAll, List<LibraryBookRep>>() {
+    override suspend fun handle(endpoint: LibraryBookApi.ListAll): List<LibraryBookRep> {
+      TODO()
+    }
+  }
 
-  class SearchByIsbn : RestHandler<LibraryBookApi.SearchByIsbn>()
+  internal inner class SearchByIsbn : RestHandler<LibraryBookApi.SearchByIsbn, List<LibraryBookRep>>() {
+    override suspend fun handle(endpoint: LibraryBookApi.SearchByIsbn): List<LibraryBookRep> {
+      TODO()
+    }
+  }
 
-  class SearchByText : RestHandler<LibraryBookApi.SearchByText>()
+  internal inner class SearchByText : RestHandler<LibraryBookApi.SearchByText, List<LibraryBookRep>>() {
+    override suspend fun handle(endpoint: LibraryBookApi.SearchByText): List<LibraryBookRep> {
+      TODO()
+    }
+  }
 
-  class Create : RestHandler<LibraryBookApi.Create>()
+  internal inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Create): LibraryBookRep {
+      TODO()
+    }
+  }
 
-  class Update : RestHandler<LibraryBookApi.Update>()
+  internal inner class Update : RestHandler<LibraryBookApi.Update, LibraryBookRep>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Update): LibraryBookRep {
+      TODO()
+    }
+  }
 
-  class Delete : RestHandler<LibraryBookApi.Delete>()
+  internal inner class Delete : RestHandler<LibraryBookApi.Delete, LibraryBookRep>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Delete): LibraryBookRep {
+      TODO()
+    }
+  }
 }
 ```
