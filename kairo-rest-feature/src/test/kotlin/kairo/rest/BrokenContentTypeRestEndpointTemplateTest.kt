@@ -44,7 +44,6 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Post,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
           ),
           query = RestEndpointQuery.of(),

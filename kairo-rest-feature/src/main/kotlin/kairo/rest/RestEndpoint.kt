@@ -19,7 +19,7 @@ public abstract class RestEndpoint<Request : Any, Response : Any?> {
   public annotation class Method(val method: String)
 
   /**
-   * Mandatory: the path should be something like "/library/library-books/:libraryBookId".
+   * Mandatory: the path should be something like "/library-books/:libraryBookId".
    */
   @Target(AnnotationTarget.CLASS)
   public annotation class Path(val path: String)

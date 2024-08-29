@@ -15,7 +15,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.Get::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
-          " GET library/library-books/:libraryBookId)",
+          " GET /library-books/:libraryBookId)",
       )
   }
 
@@ -24,7 +24,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.ListAll::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
-          " GET library/library-books)",
+          " GET /library-books)",
       )
   }
 
@@ -33,7 +33,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByIsbn::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
-          " GET library/library-books (isbn))",
+          " GET /library-books (isbn))",
       )
   }
 
@@ -42,7 +42,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByText::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
-          " GET library/library-books (title?, author?))",
+          " GET /library-books (title?, author?))",
       )
   }
 
@@ -51,7 +51,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.Create::class).toString()
       .shouldBe(
         "RestEndpointTemplate([application/json -> application/json]" +
-          " POST library/library-books)",
+          " POST /library-books)",
       )
   }
 
@@ -60,7 +60,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.Update::class).toString()
       .shouldBe(
         "RestEndpointTemplate([application/json -> application/json]" +
-          " PATCH library/library-books/:libraryBookId)",
+          " PATCH /library-books/:libraryBookId)",
       )
   }
 
@@ -69,7 +69,7 @@ internal class RestEndpointTemplateTest {
     RestEndpointTemplate.from(TypicalLibraryBookApi.Delete::class).toString()
       .shouldBe(
         "RestEndpointTemplate([ -> application/json]" +
-          " DELETE library/library-books/:libraryBookId)",
+          " DELETE /library-books/:libraryBookId)",
       )
   }
 }

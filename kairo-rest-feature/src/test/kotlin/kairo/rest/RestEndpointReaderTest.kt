@@ -128,7 +128,10 @@ internal class RestEndpointReaderTest {
     val reader = RestEndpointReader.from(TypicalLibraryBookApi.Create::class)
     val call = mockk<RoutingCall> {
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("author" to "Patrick Rothfuss"),
+        mapOf(
+          "author" to "Patrick Rothfuss",
+          "isbn" to "978-0756405892",
+        ),
       ).inputStream()
     }
     shouldThrow<MismatchedInputException> {
@@ -141,7 +144,12 @@ internal class RestEndpointReaderTest {
     val reader = RestEndpointReader.from(TypicalLibraryBookApi.Create::class)
     val call = mockk<RoutingCall> {
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("title" to "The Name of the Wind", "author" to "Patrick Rothfuss", "isbn" to "978-0756405892"),
+        mapOf(
+          "title" to "The Name of the Wind",
+          "author" to "Patrick Rothfuss",
+          "isbn" to "978-0756405892",
+          "series" to "The Kingkiller Chronicle",
+        ),
       ).inputStream()
     }
     shouldThrow<UnrecognizedPropertyException> {
@@ -154,7 +162,11 @@ internal class RestEndpointReaderTest {
     val reader = RestEndpointReader.from(TypicalLibraryBookApi.Create::class)
     val call = mockk<RoutingCall> {
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("title" to "The Name of the Wind", "author" to 7),
+        mapOf(
+          "title" to "The Name of the Wind",
+          "author" to 7,
+          "isbn" to "978-0756405892",
+        ),
       ).inputStream()
     }
     shouldThrow<MismatchedInputException> {
@@ -167,7 +179,11 @@ internal class RestEndpointReaderTest {
     val reader = RestEndpointReader.from(TypicalLibraryBookApi.Create::class)
     val call = mockk<RoutingCall> {
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("title" to "The Name of the Wind", "author" to "Patrick Rothfuss"),
+        mapOf(
+          "title" to "The Name of the Wind",
+          "author" to "Patrick Rothfuss",
+          "isbn" to "978-0756405892",
+        ),
       ).inputStream()
     }
     reader.endpoint(call)
@@ -176,6 +192,7 @@ internal class RestEndpointReaderTest {
           body = LibraryBookRep.Creator(
             title = "The Name of the Wind",
             author = "Patrick Rothfuss",
+            isbn = "978-0756405892",
           ),
         ),
       )
@@ -189,7 +206,10 @@ internal class RestEndpointReaderTest {
         append("libraryBookId", "2eDS1sMt")
       }
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("title" to "The Name of the Wind", "author" to "Patrick Rothfuss"),
+        mapOf(
+          "title" to "The Name of the Wind",
+          "author" to "Patrick Rothfuss",
+        ),
       ).inputStream()
     }
     shouldThrow<IllegalArgumentException> {
@@ -205,7 +225,9 @@ internal class RestEndpointReaderTest {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("isbn" to "978-0756405892"),
+        mapOf(
+          "isbn" to "978-0756405892",
+        ),
       ).inputStream()
     }
     shouldThrow<UnrecognizedPropertyException> {
@@ -214,14 +236,16 @@ internal class RestEndpointReaderTest {
   }
 
   @Test
-  fun `property is wrong type`(): Unit = runTest {
+  fun `update, property is wrong type`(): Unit = runTest {
     val reader = RestEndpointReader.from(TypicalLibraryBookApi.Update::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("author" to 7),
+        mapOf(
+          "author" to 7,
+        ),
       ).inputStream()
     }
     shouldThrow<MismatchedInputException> {
@@ -260,7 +284,9 @@ internal class RestEndpointReaderTest {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("author" to null),
+        mapOf(
+          "author" to null,
+        ),
       ).inputStream()
     }
     reader.endpoint(call)
@@ -283,7 +309,10 @@ internal class RestEndpointReaderTest {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery { receiveStream() } returns ktorMapper.writeValueAsBytes(
-        mapOf("title" to "The Name of the Wind", "author" to "Patrick Rothfuss"),
+        mapOf(
+          "title" to "The Name of the Wind",
+          "author" to "Patrick Rothfuss",
+        ),
       ).inputStream()
     }
     reader.endpoint(call)
