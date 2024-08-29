@@ -68,6 +68,8 @@ Configuration:
 ### Step 3: Use logging
 
 ```kotlin
+// src/main/kotlin/yourPackage/.../YourFile.kt
+
 private val logger: KLogger = KotlinLogging.logger {} // Best to specify the type [KLogger] explicitly.
 
 logger.debug { "Some debug message." }

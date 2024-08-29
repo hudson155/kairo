@@ -21,6 +21,8 @@ dependencies {
 Reps are just data classes that represent request and response bodies
 
 ```kotlin
+// src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookRep.kt
+
 internal data class LibraryBookRep(
   val id: KairoId,
   val title: String,
@@ -53,7 +55,7 @@ as long as they differ by query params, accept headers, or content types.
 Routing takes all of these into account.
 
 ```kotlin
-// src/main/kotlin/yourPackage/feature/library/book/LibraryBookApi.kt
+// src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookApi.kt
 
 object TypicalLibraryBookApi {
   @RestEndpoint.Method("GET")
@@ -115,7 +117,7 @@ REST handler implementations are the entrypoints for a specific REST endpoints.
 They are intended to be grouped together using Kotlin singleton objects.
 
 ```kotlin
-// src/main/kotlin/yourPackage/feature/library/book/LibraryBookHandler.kt
+// src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookHandler.kt
 
 class LibraryBookHandler @Inject constructor() {
   class Get : RestHandler<LibraryBookApi.Get>()
