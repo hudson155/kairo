@@ -18,7 +18,7 @@ publishing {
     create<MavenPublication>("maven") {
       groupId = "kairo"
       artifactId = project.name
-      version = "0.5.0"
+      version = "0.6.0"
       from(components["java"])
     }
   }
