@@ -79,6 +79,9 @@ Each modules falls into one of 3 categories:
   that also includes some reflection-related utilities.
 - [kairo-transaction-manager](kairo-transaction-manager/):
   The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
+- [kairo-updater](kairo-updater/):
+  A utility library for updating existing entities
+  that supports `Optional`s to differentiate between `null` and `undefined` from the frontend.
 
 ### Internal modules
 
