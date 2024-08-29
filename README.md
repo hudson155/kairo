@@ -19,62 +19,89 @@ Kairo is an application framework built for Kotlin.
 
 ## Modules
 
-- [kairo-clock-feature](kairo-clock-feature/):
-  The Clock Feature allows for configuration and injection of a Java `Clock`.
-- [kairo-config](kairo-config/):
-  Home of `ConfigLoader`, which loads configs from YAML files,
-  with support for config extension and application.
-- [kairo-darb](kairo-darb/):
-  Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
-- [kairo-dependency-injection](kairo-dependency-injection/):
-  Makes Guice available,
-  along with some utilities to make its use more idiomatic.
+Kairo is split up into several separate modules.
+You will need a number of these.
+Each modules falls into one of 3 categories:
+1. **Common modules:**
+   These are intended for your use.
+   You will use some or all of these.
+   API stability is guaranteed.
+2. **Optional modules:**
+   You may use these modules, but they won't always be necessary.
+   API stability is guaranteed.
+3. **Internal modules:**
+   These are only intended for internal use.
+   Use them at your own risk; API stability is not guaranteed.
+
+### Common modules
+
+**Core modules:**
+
+- [kairo-server](kairo-server/):
+  A Server is an application that runs a set of Features.
 - [kairo-feature](kairo-feature/):
-  Features are the primary building block of Kairo applications.
-- [kairo-id-feature](kairo-id-feature/):
-  Kairo IDs are an optional way to uniquely identify entities.
-  Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
+  Features are Kairo's main building block.
 - [kairo-logging](kairo-logging/):
   Logging uses the [kotlin-logging](https://github.com/oshai/kotlin-logging) interface,
   which should be configured to use Apache Log4j2 under the hood.
+- [kairo-config](kairo-config/):
+  Home of `ConfigLoader`, which loads configs for Kairo Servers from YAML files.
+  Includes support for config extension and application.
+- [kairo-serialization](kairo-serialization/):
+  Uses [Jackson](https://github.com/FasterXML/jackson)
+  to handle JSON and YAML serialization.
+- [kairo-testing](kairo-testing/):
+  A convenient testing library which includes some helpful test dependencies.
+- [kairo-util](kairo-util/):
+  Some useful utilities.
+
+**Feature modules:**
+
+- [kairo-clock-feature](kairo-clock-feature/):
+  The Clock Feature allows for configuration and injection of a Java `Clock`.
+- [kairo-id-feature](kairo-id-feature/):
+  Kairo IDs are an optional way to uniquely identify entities.
+  Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
 - [kairo-logging-feature](kairo-logging-feature/):
   This Feature supports logging within Kairo Servers.
+- [kairo-rest-feature](kairo-rest-feature/):
+  The REST Feature adds support for REST endpoints.
+  Under the hood, this Feature uses [Ktor](https://ktor.io/).
+
+### Optional modules
+
+- [kairo-darb](kairo-darb/):
+  Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
 - [kairo-protected-string](kairo-protected-string/):
   `ProtectedString` represents a string value that should not be logged or otherwise exposed.
 - [kairo-reflect](kairo-reflect/):
   This is a wrapper for Kotlin's reflection library
   that also includes some reflection-related utilities.
-- [kairo-rest-feature](kairo-rest-feature/):
-  The REST Feature adds support for REST endpoints.
-  Under the hood, this Feature uses [Ktor](https://ktor.io/).
-- [kairo-serialization](kairo-serialization/):
-  Uses [Jackson](https://github.com/FasterXML/jackson)
-  to handle JSON and YAML serialization
-- [kairo-server](kairo-server/):
-  A Server is an application that runs a set of Features.
-- [kairo-testing](kairo-testing/):
-  A convenient testing library which includes some helpful test dependencies.
 - [kairo-transaction-manager](kairo-transaction-manager/):
   The Kairo `TransactionManager` offers explicit automatic handling of transactions that span multiple systems.
-- [kairo-util](kairo-util/):
-  Some useful utilities.
+
+### Internal modules
+
+- [kairo-dependency-injection](kairo-dependency-injection/):
+  Makes Guice available,
+  along with some utilities to make its use more idiomatic.
 
 ## Getting started
 
-### Step 1: Add required dependencies
+### Step 1: Add dependencies
 
 ```kotlin
 // build.gradle.kts
 
 dependencies {
-  // Basic dependencies.
-  api("kairo:kairo-server:$kairoVersion")
-  implementation("kairo:kairo-logging:$kairoVersion")
-
-  // Enable REST endpoints.
+  api("kairo:kairo-clock-feature:$kairoVersion")
+  api("kairo:kairo-config:$kairoVersion")
+  api("kairo:kairo-id-feature:$kairoVersion")
+  api("kairo:kairo-logging-feature:$kairoVersion")
   api("kairo:kairo-rest-feature:$kairoVersion")
+  api("kairo:kairo-serialization:$kairoVersion")
+  api("kairo:kairo-server:$kairoVersion")
 
-  // Test-related dependencies.
   testImplementation("kairo:kairo-testing:$kairoVersion")
 }
 ```
@@ -90,6 +117,7 @@ You may wish to change from a console appender to a different appender depending
 
 Configuration:
   status: info # For internal Log4j2 logs.
+  shutdownHook: disable # Only include this line for Kairo Servers.
   Appenders:
     Console:
       type: Console
@@ -112,6 +140,7 @@ The test config is almost identical except for `Configuration.Loggers.Root.level
 
 Configuration:
   status: info # For internal Log4j2 logs.
+  shutdownHook: disable # Only include this line for Kairo Servers.
   Appenders:
     Console:
       type: Console
@@ -133,6 +162,60 @@ This is an example `LibraryFeature` for managing a public library.
 `yourPackage` represents whatever top-level package you're using for your project.
 
 ```kotlin
+// src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookRep.kt
+
+internal data class LibraryBookRep(
+  val id: KairoId,
+  val title: String,
+  val author: String?,
+) {
+  internal data class Creator(
+    val title: String,
+    val author: String?,
+  )
+}
+```
+
+```kotlin
+// src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookApi.kt
+
+object TypicalLibraryBookApi {
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
+  @RestEndpoint.Accept("application/json")
+  data class Get(
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+
+  @RestEndpoint.Method("POST")
+  @RestEndpoint.Path("/library-books")
+  @RestEndpoint.ContentType("application/json")
+  @RestEndpoint.Accept("application/json")
+  data class Create(
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+}
+```
+
+```kotlin
+// src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookHandler.kt
+
+internal class LibraryBookHandler @Inject constructor() {
+  internal inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep? {
+      TODO()
+    }
+  }
+
+  internal inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
+    override suspend fun handle(endpoint: LibraryBookApi.Create): LibraryBookRep {
+      TODO()
+    }
+  }
+}
+```
+
+```kotlin
 // src/main/kotlin/yourPackage/feature/library/LibraryFeature.kt
 
 class LibraryFeature : Feature() {
@@ -142,7 +225,7 @@ class LibraryFeature : Feature() {
   override val priority: FeaturePriority = FeaturePriority.Normal
 
   override fun bind(binder: PrivateBinder) {
-    // Do your Guice binding here!
+    binder.bindRestHandlers<LibraryBookHandler>()
   }
 }
 ```
@@ -161,26 +244,40 @@ you'll need to configure some basic properties like `featureManager` and `restFe
 // src/main/kotlin/yourPackage/server/monolith/MonolithServerConfig.kt
 
 data class MonolithServerConfig(
+  val clock: KairoClockConfig,
   val featureManager: FeatureManagerConfig,
+  val id: KairoIdConfig,
+  val logging: KairoLoggingConfig,
   val rest: KairoRestConfig,
 )
 ```
 
 ```yaml
 # src/main/resources/config/config.yaml
+clock:
+  type: "System"
+  timeZone: "UTC"
 
 featureManager:
   lifecycle:
     startupDelayMs: 2000 # 2 seconds.
     shutdownDelayMs: 4000 # 4 seconds.
 
+id:
+  generator:
+    type: "Random"
+    length: 22
+
+logging:
+  shutDownManually: true
+
 rest:
   connector:
     host: "0.0.0.0"
     port: 8080
   lifecycle:
-    shutdownGracePeriodMs: 15_000 # 15 seconds.
-    shutdownTimeoutMs: 25_000 # 25 seconds.
+    shutdownGracePeriodMs: 5000 # 5 seconds.
+    shutdownTimeoutMs: 15_000 # 15 seconds.
   parallelism:
     connectionGroupSize: 16
     workerGroupSize: 32
@@ -198,6 +295,9 @@ class MonolithServer(
   override val featureManager: FeatureManager =
     FeatureManager(
       features = setOf(
+        KairoClockFeature(config.clock),
+        KairoIdFeature(config.id),
+        KairoLoggingFeature(config.logging),
         KairoRestFeature(config.rest),
 
         LibraryFeature(),
@@ -207,7 +307,7 @@ class MonolithServer(
 }
 
 fun main() {
-  val config = ConfigLoader.load<MonolithServerConfig>()
+  val config = ConfigLoader.load<MonolithServerConfig>("config")
   val server = MonolithServer(config)
   server.start()
 }

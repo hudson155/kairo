@@ -9,7 +9,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * Features are the primary building block of Kairo applications.
+ * Features are Kairo's main building block.
  * Every piece of functionality,
  * from framework-level REST or SQL behaviour
  * to application-specific implementations
