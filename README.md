@@ -167,12 +167,12 @@ This is an example `LibraryFeature` for managing a public library.
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookRep.kt
 
-internal data class LibraryBookRep(
+data class LibraryBookRep(
   val id: KairoId,
   val title: String,
   val author: String?,
 ) {
-  internal data class Creator(
+  data class Creator(
     val title: String,
     val author: String?,
   )
@@ -203,14 +203,14 @@ object TypicalLibraryBookApi {
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookHandler.kt
 
-internal class LibraryBookHandler @Inject constructor() {
-  internal inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
+class LibraryBookHandler @Inject constructor() {
+  inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
     override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep? {
       TODO()
     }
   }
 
-  internal inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
+  inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
     override suspend fun handle(endpoint: LibraryBookApi.Create): LibraryBookRep {
       TODO()
     }

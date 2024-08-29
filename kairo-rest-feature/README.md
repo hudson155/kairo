@@ -23,20 +23,20 @@ Reps are just data classes that represent request and response bodies
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookRep.kt
 
-internal data class LibraryBookRep(
+data class LibraryBookRep(
   val id: KairoId,
   val title: String,
   val author: String?,
   val isbn: String,
 ) {
-  internal data class Creator(
+  data class Creator(
     val title: String,
     val author: String?,
     val isbn: String,
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
-  internal data class Update(
+  data class Update(
     val title: String? = null,
     val author: Optional<String>? = null,
   )
@@ -124,44 +124,44 @@ They are intended to be grouped together using Kotlin singleton objects.
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookHandler.kt
 
-internal class OrganizationHandler @Inject constructor() {
-  internal inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
+class OrganizationHandler @Inject constructor() {
+  inner class Get : RestHandler<LibraryBookApi.Get, LibraryBookRep?>() {
     override suspend fun handle(endpoint: LibraryBookApi.Get): LibraryBookRep? {
       TODO()
     }
   }
 
-  internal inner class ListAll : RestHandler<LibraryBookApi.ListAll, List<LibraryBookRep>>() {
+  inner class ListAll : RestHandler<LibraryBookApi.ListAll, List<LibraryBookRep>>() {
     override suspend fun handle(endpoint: LibraryBookApi.ListAll): List<LibraryBookRep> {
       TODO()
     }
   }
 
-  internal inner class SearchByIsbn : RestHandler<LibraryBookApi.SearchByIsbn, List<LibraryBookRep>>() {
+  inner class SearchByIsbn : RestHandler<LibraryBookApi.SearchByIsbn, List<LibraryBookRep>>() {
     override suspend fun handle(endpoint: LibraryBookApi.SearchByIsbn): List<LibraryBookRep> {
       TODO()
     }
   }
 
-  internal inner class SearchByText : RestHandler<LibraryBookApi.SearchByText, List<LibraryBookRep>>() {
+  inner class SearchByText : RestHandler<LibraryBookApi.SearchByText, List<LibraryBookRep>>() {
     override suspend fun handle(endpoint: LibraryBookApi.SearchByText): List<LibraryBookRep> {
       TODO()
     }
   }
 
-  internal inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
+  inner class Create : RestHandler<LibraryBookApi.Create, LibraryBookRep>() {
     override suspend fun handle(endpoint: LibraryBookApi.Create): LibraryBookRep {
       TODO()
     }
   }
 
-  internal inner class Update : RestHandler<LibraryBookApi.Update, LibraryBookRep>() {
+  inner class Update : RestHandler<LibraryBookApi.Update, LibraryBookRep>() {
     override suspend fun handle(endpoint: LibraryBookApi.Update): LibraryBookRep {
       TODO()
     }
   }
 
-  internal inner class Delete : RestHandler<LibraryBookApi.Delete, LibraryBookRep>() {
+  inner class Delete : RestHandler<LibraryBookApi.Delete, LibraryBookRep>() {
     override suspend fun handle(endpoint: LibraryBookApi.Delete): LibraryBookRep {
       TODO()
     }
