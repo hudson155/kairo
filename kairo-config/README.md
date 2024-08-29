@@ -1,7 +1,7 @@
 # `kairo-config`
 
-Home of `ConfigLoader`, which loads configs from YAML files,
-with support for config extension and application.
+Home of `ConfigLoader`, which loads configs for Kairo Servers from YAML files.
+Includes support for config extension and application.
 
 - **Config extension:** Configs can extend other configs
   by specifying `extends: other-config-name` as a top-level YAML property.
