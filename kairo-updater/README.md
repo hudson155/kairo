@@ -16,3 +16,16 @@ dependencies {
   implementation("kairo:kairo-updater:$kairoVersion")
 }
 ```
+
+### Step 2: Use it
+
+```kotlin
+// src/main/kotlin/yourPackage/.../YourFile.kt
+
+Updater { existing ->
+  LibraryBookModel.Update(
+    title = update(existing.title, update.title),
+    author = update(existing.author, update.author),
+  )
+}
+```
