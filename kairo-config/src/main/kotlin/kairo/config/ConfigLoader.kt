@@ -63,7 +63,7 @@ public object ConfigLoader {
     val apply = extractApply(config)
     var result = config
     if (extends != null) {
-      result = simpleLoadAsJson(extends)
+      result = loadAsJson(extends)
     }
     apply?.forEach { merge(result, loadAsJson(it)) }
     if (extends != null) {
