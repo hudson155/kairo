@@ -8,14 +8,14 @@ import kairo.id.KairoId
  */
 internal object BrokenLibraryBookApi {
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal class NotDataClass(
     @PathParam val libraryBookId: KairoId,
   ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   internal object NotDataObject : RestEndpoint<Nothing, List<LibraryBookRep>>()
 }

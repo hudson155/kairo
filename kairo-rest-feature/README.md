@@ -26,14 +26,19 @@ Reps are just data classes that represent request and response bodies
 internal data class LibraryBookRep(
   val id: KairoId,
   val title: String,
+  val author: String?,
+  val isbn: String,
 ) {
   internal data class Creator(
     val title: String,
+    val author: String?,
+    val isbn: String,
   )
 
   @JsonInclude(value = JsonInclude.Include.NON_NULL)
   internal data class Update(
     val title: String? = null,
+    val author: Optional<String>? = null,
   )
 }
 ```
@@ -59,26 +64,26 @@ Routing takes all of these into account.
 
 object TypicalLibraryBookApi {
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   data class Get(
     @PathParam val libraryBookId: KairoId,
   ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   data object ListAll : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   data class SearchByIsbn(
     @QueryParam val isbn: String,
   ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   data class SearchByText(
     @QueryParam val title: String?,
@@ -86,7 +91,7 @@ object TypicalLibraryBookApi {
   ) : RestEndpoint<Nothing, List<LibraryBookRep>>()
 
   @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   data class Create(
@@ -94,7 +99,7 @@ object TypicalLibraryBookApi {
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("PATCH")
-  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   data class Update(
@@ -103,7 +108,7 @@ object TypicalLibraryBookApi {
   ) : RestEndpoint<LibraryBookRep.Update, LibraryBookRep>()
 
   @RestEndpoint.Method("DELETE")
-  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   data class Delete(
     @PathParam val libraryBookId: KairoId,

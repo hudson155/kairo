@@ -9,7 +9,7 @@ import kairo.id.KairoId
  */
 internal object BrokenContentTypeLibraryBookApi {
   @RestEndpoint.Method("GET")
-  @RestEndpoint.Path("/library/library-books/:libraryBookId")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.ContentType("application/json")
   @RestEndpoint.Accept("application/json")
   internal data class ContentTypePresentOnGet(
@@ -17,7 +17,7 @@ internal object BrokenContentTypeLibraryBookApi {
   ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   internal data class ContentTypeNotPresentOnPost(
     override val body: LibraryBookRep.Creator,
@@ -27,7 +27,7 @@ internal object BrokenContentTypeLibraryBookApi {
    * This is actually valid; an empty string means "Any" content type.
    */
   @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.ContentType("")
   @RestEndpoint.Accept("application/json")
   internal data class EmptyContentType(
@@ -35,7 +35,7 @@ internal object BrokenContentTypeLibraryBookApi {
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
-  @RestEndpoint.Path("/library/library-books")
+  @RestEndpoint.Path("/library-books")
   @RestEndpoint.ContentType("application")
   @RestEndpoint.Accept("application/json")
   internal data class MalformedContentType(

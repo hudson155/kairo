@@ -17,7 +17,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Get,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
             RestEndpointPath.Component.Param("libraryBookId"),
           ),
@@ -35,7 +34,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Get,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
           ),
           query = RestEndpointQuery.of(),
@@ -52,7 +50,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Get,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
           ),
           query = RestEndpointQuery.of(
@@ -71,7 +68,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Get,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
           ),
           query = RestEndpointQuery.of(
@@ -91,7 +87,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Post,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
           ),
           query = RestEndpointQuery.of(),
@@ -108,7 +103,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Patch,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
             RestEndpointPath.Component.Param("libraryBookId"),
           ),
@@ -126,7 +120,6 @@ internal class TypicalRestEndpointTemplateTest {
         RestEndpointTemplate(
           method = HttpMethod.Delete,
           path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library"),
             RestEndpointPath.Component.Constant("library-books"),
             RestEndpointPath.Component.Param("libraryBookId"),
           ),
