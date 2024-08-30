@@ -5,6 +5,6 @@ import kairo.rest.RestEndpoint
 public object HealthCheckApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/health/liveness")
-  @RestEndpoint.Accept("application/json") // TODO: Use */*.
+  @RestEndpoint.Accept("*/*")
   public data object Liveness : RestEndpoint<Nothing, HealthCheckRep.Liveness>()
 }
