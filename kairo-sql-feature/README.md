@@ -40,8 +40,8 @@ data class LibraryBookModel(
   )
 
   data class Update(
-    val title: String? = null,
-    val author: Optional<String>? = null,
+    val title: String,
+    val author: String?,
   ) {
     constructor(model: LibraryBookModel) : this(
       title = model.title,
