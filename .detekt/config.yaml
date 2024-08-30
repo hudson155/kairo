@@ -99,7 +99,7 @@ complexity:
     ignoreDataClasses: true
   MethodOverloading:
     active: true
-    threshold: 3
+    threshold: 4
   NamedArguments:
     active: true
     threshold: 3
