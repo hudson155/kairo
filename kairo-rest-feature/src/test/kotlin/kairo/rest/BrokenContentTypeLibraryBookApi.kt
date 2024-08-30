@@ -24,13 +24,24 @@ internal object BrokenContentTypeLibraryBookApi {
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   /**
-   * This is actually valid; an empty string means "Any" content type.
+   * An empty string means "Any" content type, which is invalid.
    */
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.ContentType("")
   @RestEndpoint.Accept("application/json")
   internal data class EmptyContentType(
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
+
+  /**
+   * Means "Any" content type, which is invalid.
+   */
+  @RestEndpoint.Method("POST")
+  @RestEndpoint.Path("/library-books")
+  @RestEndpoint.ContentType("")
+  @RestEndpoint.Accept("application/json")
+  internal data class StarContentType(
     override val body: LibraryBookRep.Creator,
   ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 

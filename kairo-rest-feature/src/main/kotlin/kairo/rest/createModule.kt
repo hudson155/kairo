@@ -22,15 +22,19 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal fun createModule(handlers: Set<RestHandler<*, *>>): Application.() -> Unit =
   {
-    logger.info { "Registering ${handlers.size} REST handlers." }
-    handlers.forEach { handler ->
-      val template = handler.template
-      logger.info { "Registering REST handler: $template." }
-      routing {
-        route(template).handle { handler.handle(call) }
-      }
+    registerRestHandlers(handlers)
+  }
+
+private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
+  logger.info { "Registering ${handlers.size} REST handlers." }
+  handlers.forEach { handler ->
+    val template = handler.template
+    logger.info { "Registering REST handler: $template." }
+    routing {
+      route(template).handle { handler.handle(call) }
     }
   }
+}
 
 internal fun Routing.route(template: RestEndpointTemplate): Routing {
   var route = createRouteFromPath(KtorPathTemplateRestEndpointWriter.write(template))
@@ -42,6 +46,8 @@ internal fun Routing.route(template: RestEndpointTemplate): Routing {
   if (template.contentType != null) {
     route = route.contentType(template.contentType) {}
   }
-  route = route.accept(template.accept) {}
+  if (template.accept != null) {
+    route = route.accept(template.accept) {}
+  }
   return route
 }
