@@ -6,6 +6,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
+import io.ktor.util.reflect.typeInfo
 import kairo.reflect.typeParam
 import kotlin.reflect.KClass
 
@@ -25,18 +26,15 @@ public abstract class RestHandler<Endpoint : RestEndpoint<*, Response>, Response
     val endpoint = reader.endpoint(call)
     logger.debug { "Read endpoint: $endpoint." }
     val response = handle(endpoint)
-    logger.debug { "Result: $response." }
+    logger.debug { "Result: ${response?.toString() ?: "null"}." }
     val statusCode = statusCode(response)
     logger.debug { "Status code: $statusCode." }
     response ?: throw NotFoundException()
-    call.response.status(statusCode)
-    call.respond<Any>(response)
+    call.respond(statusCode, response, typeInfo<Any>())
   }
 
   protected abstract suspend fun handle(endpoint: Endpoint): Response
 
   protected open fun statusCode(response: Response): HttpStatusCode =
     HttpStatusCode.OK
-
-  protected abstract suspend fun foo(call: RoutingCall, statusCode: HttpStatusCode, response: Response)
 }
