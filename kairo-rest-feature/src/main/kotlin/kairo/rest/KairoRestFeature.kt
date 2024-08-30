@@ -22,10 +22,8 @@ public class KairoRestFeature(
 
   override fun bind(binder: PrivateBinder) {
     binder.bind<KairoRestConfig>().toInstance(config)
-
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
     binder.expose<KtorServer>()
-
     binder.bindRestHandlers { } // Supports Servers with no REST handlers.
   }
 

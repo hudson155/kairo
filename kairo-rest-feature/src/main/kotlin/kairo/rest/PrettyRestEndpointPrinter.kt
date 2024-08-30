@@ -1,10 +1,10 @@
 package kairo.rest
 
 /**
- * This writer is used to create human-readable versions of [RestEndpointTemplate].
+ * This printer is used to create human-readable versions of [RestEndpointTemplate].
  * It's used by [RestEndpointTemplate.toString].
  */
-internal object PrettyRestEndpointWriter : RestEndpointWriter() {
+internal object PrettyRestEndpointPrinter : RestEndpointPrinter() {
   override fun write(template: RestEndpointTemplate): String =
     buildString {
       contentType(template)
