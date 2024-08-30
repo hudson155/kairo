@@ -26,7 +26,7 @@ internal data class RestEndpointTemplate(
   val accept: ContentType?,
 ) {
   override fun toString(): String =
-    "RestEndpointTemplate(${PrettyRestEndpointWriter.write(this)})"
+    "RestEndpointTemplate(${PrettyRestEndpointPrinter.write(this)})"
 
   internal companion object {
     fun from(endpoint: KClass<out RestEndpoint<*, *>>): RestEndpointTemplate {
