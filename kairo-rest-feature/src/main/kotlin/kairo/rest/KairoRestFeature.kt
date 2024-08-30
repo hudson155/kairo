@@ -25,6 +25,8 @@ public class KairoRestFeature(
 
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
     binder.expose<KtorServer>()
+
+    binder.bindRestHandlers { } // Supports Servers with no REST handlers.
   }
 
   override fun start(injector: Injector, features: Set<Feature>) {
