@@ -7,7 +7,7 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-reflect"))
-  implementation(project(":kairo-serialization"))
+  api(project(":kairo-serialization")) // Exposed for clients.
 
   implementation(libs.ktorServerCio)
   implementation(libs.ktorServerCore)
