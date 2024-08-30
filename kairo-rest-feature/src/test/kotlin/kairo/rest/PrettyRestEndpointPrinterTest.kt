@@ -4,7 +4,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-internal class PrettyRestEndpointPrinterPrinterTest {
+internal class PrettyRestEndpointPrinterTest {
   @Test
   fun get(): Unit = runTest {
     val template = RestEndpointTemplate.from(TypicalLibraryBookApi.Get::class)
