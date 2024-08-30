@@ -1,11 +1,10 @@
 package kairo.rest
 
+import com.google.inject.Binder
 import com.google.inject.Injector
-import com.google.inject.PrivateBinder
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.dependencyInjection.bind
-import kairo.dependencyInjection.expose
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
@@ -20,10 +19,9 @@ public class KairoRestFeature(
 
   override val priority: FeaturePriority = FeaturePriority.Framework
 
-  override fun bind(binder: PrivateBinder) {
+  override fun bind(binder: Binder) {
     binder.bind<KairoRestConfig>().toInstance(config)
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
-    binder.expose<KtorServer>()
     binder.bindRestHandlers { } // Supports Servers with no REST handlers.
   }
 
