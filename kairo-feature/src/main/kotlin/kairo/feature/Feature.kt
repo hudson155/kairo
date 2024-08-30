@@ -1,8 +1,8 @@
 package kairo.feature
 
+import com.google.inject.AbstractModule
+import com.google.inject.Binder
 import com.google.inject.Injector
-import com.google.inject.PrivateBinder
-import com.google.inject.PrivateModule
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 
@@ -16,7 +16,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * to third-party integrations
  * is represented by a Kairo Feature.
  */
-public abstract class Feature : PrivateModule() {
+public abstract class Feature : AbstractModule() {
   public abstract val name: String
 
   public abstract val priority: FeaturePriority
@@ -33,7 +33,7 @@ public abstract class Feature : PrivateModule() {
    * the implementation should bind everything for the Feature.
    * It should not initialize anything stateful (e.g. connection pools).
    */
-  public open fun bind(binder: PrivateBinder): Unit = Unit
+  public open fun bind(binder: Binder): Unit = Unit
 
   /**
    * Startup work; initializing state (such as connection pools).

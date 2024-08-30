@@ -1,6 +1,6 @@
 package kairo.id
 
-import com.google.inject.PrivateBinder
+import com.google.inject.Binder
 import kairo.dependencyInjection.bind
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
@@ -12,7 +12,7 @@ public class KairoIdFeature(
 
   override val priority: FeaturePriority = FeaturePriority.Normal
 
-  override fun bind(binder: PrivateBinder) {
+  override fun bind(binder: Binder) {
     binder.bind<KairoIdGenerator.Factory>().toInstance(createGenerator(config.generator))
   }
 
