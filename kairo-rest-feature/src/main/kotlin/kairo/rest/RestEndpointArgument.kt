@@ -1,7 +1,7 @@
 package kairo.rest
 
 import io.ktor.server.application.ApplicationCall
-import io.ktor.server.request.receiveStream
+import io.ktor.server.request.receive
 import kotlin.reflect.KParameter
 import kotlin.reflect.jvm.javaType
 
@@ -18,7 +18,7 @@ internal sealed class RestEndpointArgument(
     param: KParameter,
   ) : RestEndpointArgument(call, param) {
     override suspend fun read(call: ApplicationCall): Any =
-      ktorMapper.readValue(call.receiveStream(), ktorMapper.constructType(param.type.javaType))
+      call.receive(typeInfo(param.type))
   }
 
   internal class Param(
