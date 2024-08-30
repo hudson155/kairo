@@ -9,9 +9,9 @@ dependencies {
   implementation(project(":kairo-reflect"))
   api(project(":kairo-serialization")) // Exposed for clients.
 
+  implementation(libs.ktorSerializationJackson)
   implementation(libs.ktorServerCio)
   implementation(libs.ktorServerContentNegotiation)
-  implementation(libs.ktorSerializationJackson)
   implementation(libs.ktorServerCore)
 
   testImplementation(project(":kairo-id-feature"))
