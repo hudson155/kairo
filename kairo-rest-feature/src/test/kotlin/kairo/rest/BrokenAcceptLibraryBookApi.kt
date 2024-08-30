@@ -31,6 +31,16 @@ internal object BrokenAcceptLibraryBookApi {
     @PathParam val libraryBookId: KairoId,
   ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
+  /**
+   * This is actually valid; means "Any" content type.
+   */
+  @RestEndpoint.Method("GET")
+  @RestEndpoint.Path("/library-books/:libraryBookId")
+  @RestEndpoint.Accept("*/*")
+  internal data class StarAccept(
+    @PathParam val libraryBookId: KairoId,
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application")

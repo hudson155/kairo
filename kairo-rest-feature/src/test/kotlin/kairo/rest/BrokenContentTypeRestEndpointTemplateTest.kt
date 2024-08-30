@@ -1,10 +1,7 @@
 package kairo.rest
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import io.ktor.http.ContentType
-import io.ktor.http.HttpMethod
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -35,22 +32,29 @@ internal class BrokenContentTypeRestEndpointTemplateTest {
   }
 
   /**
-   * This is actually valid; an empty string means "Any" content type.
+   * An empty string means "Any" content type, which is invalid.
    */
   @Test
   fun emptyContentType(): Unit = runTest {
-    RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.EmptyContentType::class)
-      .shouldBe(
-        RestEndpointTemplate(
-          method = HttpMethod.Post,
-          path = RestEndpointPath.of(
-            RestEndpointPath.Component.Constant("library-books"),
-          ),
-          query = RestEndpointQuery.of(),
-          contentType = ContentType.Any,
-          accept = ContentType.Application.Json,
-        ),
-      )
+    shouldThrow<IllegalArgumentException> {
+      RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.EmptyContentType::class)
+    }.shouldHaveMessage(
+      "REST endpoint kairo.rest.BrokenContentTypeLibraryBookApi.EmptyContentType" +
+        " content type cannot be */*.",
+    )
+  }
+
+  /**
+   * Means "Any" content type, which is invalid.
+   */
+  @Test
+  fun starContentType(): Unit = runTest {
+    shouldThrow<IllegalArgumentException> {
+      RestEndpointTemplate.from(BrokenContentTypeLibraryBookApi.StarContentType::class)
+    }.shouldHaveMessage(
+      "REST endpoint kairo.rest.BrokenContentTypeLibraryBookApi.StarContentType" +
+        " content type cannot be */*.",
+    )
   }
 
   @Test

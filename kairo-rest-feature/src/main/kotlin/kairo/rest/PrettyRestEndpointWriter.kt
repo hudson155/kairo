@@ -14,7 +14,7 @@ internal object PrettyRestEndpointWriter : RestEndpointWriter() {
     }
 
   private fun StringBuilder.contentType(template: RestEndpointTemplate) {
-    append("[${template.contentType?.toString().orEmpty()} -> ${template.accept}] ")
+    append("[${template.contentType?.toString().orEmpty()} -> ${template.accept?.toString().orEmpty()}] ")
   }
 
   private fun StringBuilder.method(template: RestEndpointTemplate) {

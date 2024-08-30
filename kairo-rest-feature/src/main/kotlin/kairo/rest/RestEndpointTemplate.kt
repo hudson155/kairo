@@ -23,7 +23,7 @@ internal data class RestEndpointTemplate(
   val path: RestEndpointPath,
   val query: RestEndpointQuery,
   val contentType: ContentType?,
-  val accept: ContentType,
+  val accept: ContentType?,
 ) {
   override fun toString(): String =
     "RestEndpointTemplate(${PrettyRestEndpointWriter.write(this)})"
@@ -168,7 +168,11 @@ internal data class RestEndpointTemplate(
             " since it has a body."
         }
         try {
-          return ContentType.parse(annotation.contentType)
+          val result = ContentType.parse(annotation.contentType)
+          require(result != ContentType.Any) {
+            "REST endpoint ${endpoint.qualifiedName!!} content type cannot be */*."
+          }
+          return result
         } catch (e: BadContentTypeFormatException) {
           val error = buildString {
             append("REST endpoint ${endpoint.qualifiedName!!} content type is invalid.")
@@ -185,13 +189,15 @@ internal data class RestEndpointTemplate(
       }
     }
 
-    private fun parseAccept(endpoint: KClass<out RestEndpoint<*, *>>): ContentType {
+    private fun parseAccept(endpoint: KClass<out RestEndpoint<*, *>>): ContentType? {
       val annotation = endpoint.findAnnotation<RestEndpoint.Accept>()
       requireNotNull(annotation) {
         "REST endpoint ${endpoint.qualifiedName!!} requires @${RestEndpoint.Accept::class.simpleName!!}."
       }
       try {
-        return ContentType.parse(annotation.accept)
+        val result = ContentType.parse(annotation.accept)
+        if (result == ContentType.Any) return null
+        return result
       } catch (e: BadContentTypeFormatException) {
         val error = buildString {
           append("REST endpoint ${endpoint.qualifiedName!!} accept is invalid.")

@@ -3,7 +3,6 @@ package kairo.rest
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
-import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -49,7 +48,27 @@ internal class BrokenAcceptRestEndpointTemplateTest {
           ),
           query = RestEndpointQuery.of(),
           contentType = null,
-          accept = ContentType.Any,
+          accept = null,
+        ),
+      )
+  }
+
+  /**
+   * This is actually valid; means "Any" content type.
+   */
+  @Test
+  fun starAccept(): Unit = runTest {
+    RestEndpointTemplate.from(BrokenAcceptLibraryBookApi.StarAccept::class)
+      .shouldBe(
+        RestEndpointTemplate(
+          method = HttpMethod.Get,
+          path = RestEndpointPath.of(
+            RestEndpointPath.Component.Constant("library-books"),
+            RestEndpointPath.Component.Param("libraryBookId"),
+          ),
+          query = RestEndpointQuery.of(),
+          contentType = null,
+          accept = null,
         ),
       )
   }
