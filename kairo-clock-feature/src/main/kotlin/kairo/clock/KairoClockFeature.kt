@@ -1,6 +1,6 @@
 package kairo.clock
 
-import com.google.inject.PrivateBinder
+import com.google.inject.Binder
 import java.time.Clock
 import kairo.dependencyInjection.bind
 import kairo.feature.Feature
@@ -13,7 +13,7 @@ public class KairoClockFeature(
 
   override val priority: FeaturePriority = FeaturePriority.Normal
 
-  override fun bind(binder: PrivateBinder) {
+  override fun bind(binder: Binder) {
     binder.bind<Clock>().toInstance(createClock(config))
   }
 
