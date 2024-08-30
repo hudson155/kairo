@@ -24,17 +24,19 @@ public abstract class RestHandler<Endpoint : RestEndpoint<*, Response>, Response
   internal suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)
     logger.debug { "Read endpoint: $endpoint." }
-    val result = handle(endpoint)
-    logger.debug { "Result: $endpoint." }
-    val statusCode = statusCode(result)
-    logger.debug { "Status code: $endpoint." }
-    result ?: throw NotFoundException()
+    val response = handle(endpoint)
+    logger.debug { "Result: $response." }
+    val statusCode = statusCode(response)
+    logger.debug { "Status code: $statusCode." }
+    response ?: throw NotFoundException()
     call.response.status(statusCode)
-    call.respond<Any>(result)
+    call.respond<Any>(response)
   }
 
   protected abstract suspend fun handle(endpoint: Endpoint): Response
 
   protected open fun statusCode(response: Response): HttpStatusCode =
     HttpStatusCode.OK
+
+  protected abstract suspend fun foo(call: RoutingCall, statusCode: HttpStatusCode, response: Response)
 }

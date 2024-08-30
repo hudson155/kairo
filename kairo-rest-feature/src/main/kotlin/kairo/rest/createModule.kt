@@ -2,7 +2,11 @@ package kairo.rest
 
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.ktor.http.ContentType
+import io.ktor.serialization.jackson.JacksonConverter
 import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.accept
@@ -22,8 +26,15 @@ private val logger: KLogger = KotlinLogging.logger {}
  */
 internal fun createModule(handlers: Set<RestHandler<*, *>>): Application.() -> Unit =
   {
+    installPlugins()
     registerRestHandlers(handlers)
   }
+
+private fun Application.installPlugins() {
+  install(ContentNegotiation) {
+    register(ContentType.Application.Json, JacksonConverter(ktorMapper))
+  }
+}
 
 private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
   logger.info { "Registering ${handlers.size} REST handlers." }
@@ -37,7 +48,7 @@ private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
 }
 
 internal fun Routing.route(template: RestEndpointTemplate): Routing {
-  var route = createRouteFromPath(KtorPathTemplateRestEndpointWriter.write(template))
+  var route = createRouteFromPath(KtorPathTemplateRestEndpointPrinter.write(template))
   route = route.createChild(HttpMethodRouteSelector(template.method))
   template.query.params.forEach { param ->
     val value = param.value

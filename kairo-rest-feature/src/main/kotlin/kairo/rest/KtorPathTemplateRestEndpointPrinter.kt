@@ -1,10 +1,10 @@
 package kairo.rest
 
 /**
- * This writer is used by Ktor when routing REST endpoints.
+ * This printer is used by Ktor when routing REST endpoints.
  * Only the path is included; other aspects are routed separately.
  */
-internal object KtorPathTemplateRestEndpointWriter : RestEndpointWriter() {
+internal object KtorPathTemplateRestEndpointPrinter : RestEndpointPrinter() {
   override fun write(template: RestEndpointTemplate): String =
     buildString {
       path(template)
