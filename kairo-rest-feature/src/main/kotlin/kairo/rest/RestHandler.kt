@@ -4,6 +4,7 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.plugins.NotFoundException
+import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import kairo.reflect.typeParam
 import kotlin.reflect.KClass
@@ -28,7 +29,8 @@ public abstract class RestHandler<Endpoint : RestEndpoint<*, Response>, Response
     val statusCode = statusCode(response)
     logger.debug { "Status code: $statusCode." }
     response ?: throw NotFoundException()
-    foo(call, statusCode, response)
+    call.response.status(statusCode)
+    call.respond<Any>(response)
   }
 
   protected abstract suspend fun handle(endpoint: Endpoint): Response
