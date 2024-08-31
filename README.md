@@ -59,6 +59,8 @@ Each modules falls into one of 3 categories:
 
 - [kairo-clock-feature](kairo-clock-feature/):
   The Clock Feature allows for configuration and injection of a Java `Clock`.
+- [kairo-health-check-feature](kairo-health-check-feature/):
+  Kairo's health check Feature configures liveness and readiness health check REST endpoints.
 - [kairo-id-feature](kairo-id-feature/):
   Kairo IDs are an optional way to uniquely identify entities.
   Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
@@ -99,6 +101,7 @@ Each modules falls into one of 3 categories:
 dependencies {
   api("kairo:kairo-clock-feature:$kairoVersion")
   api("kairo:kairo-config:$kairoVersion")
+  api("kairo:kairo-health-check-feature:$kairoVersion")
   api("kairo:kairo-id-feature:$kairoVersion")
   api("kairo:kairo-logging-feature:$kairoVersion")
   api("kairo:kairo-rest-feature:$kairoVersion")
@@ -299,6 +302,7 @@ class MonolithServer(
     FeatureManager(
       features = setOf(
         KairoClockFeature(config.clock),
+        KairoHealthCheckFeature(MonolithHealthCheckService::class),
         KairoIdFeature(config.id),
         KairoLoggingFeature(config.logging),
         KairoRestFeature(config.rest),

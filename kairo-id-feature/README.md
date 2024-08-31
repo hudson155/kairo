@@ -60,7 +60,7 @@ id:
 ```
 
 ```kotlin
-// src/main/kotlin/yourPackage/.../YourFile.kt
+// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
 KairoIdFeature(config.id)
 ```

@@ -1,6 +1,7 @@
 package kairo.healthCheck
 
 import com.google.inject.Inject
+import io.ktor.http.HttpStatusCode
 import kairo.rest.RestHandler
 
 internal class HealthCheckHandler @Inject constructor(
@@ -15,5 +16,12 @@ internal class HealthCheckHandler @Inject constructor(
   internal inner class Readiness : RestHandler<HealthCheckApi.Readiness, HealthCheckRep>() {
     override suspend fun handle(endpoint: HealthCheckApi.Readiness): HealthCheckRep =
       healthCheckService.readiness()
+
+    override fun statusCode(response: HealthCheckRep): HttpStatusCode {
+      if (response.status != HealthCheckRep.Status.Healthy) {
+        return HttpStatusCode.InternalServerError
+      }
+      return super.statusCode(response)
+    }
   }
 }
