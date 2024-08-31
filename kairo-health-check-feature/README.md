@@ -41,14 +41,6 @@ internal class MonolithHealthCheckService @Inject constructor() : HealthCheckSer
 
 ### Step 3: Create the Feature
 
-```yaml
-# src/main/resources/config/config.yaml
-
-clock:
-  type: "System"
-  timeZone: "UTC"
-```
-
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
