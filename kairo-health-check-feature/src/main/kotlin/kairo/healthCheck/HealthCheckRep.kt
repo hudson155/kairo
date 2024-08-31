@@ -1,9 +1,12 @@
 package kairo.healthCheck
 
-public object HealthCheckRep {
-  public data class Liveness(
+public data class HealthCheckRep(
+  val status: Status,
+  val checks: Map<String, Check>,
+) {
+  public enum class Status { Healthy, Unhealthy }
+
+  public data class Check(
     val status: Status,
-  ) {
-    public enum class Status { Healthy, Unhealthy }
-  }
+  )
 }
