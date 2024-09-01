@@ -8,5 +8,5 @@ dependencies {
   implementation(project(":kairo-logging"))
 
   testImplementation(project(":kairo-logging:testing"))
-  testImplementation(project(":testing"))
+  testImplementation(project(":kairo-testing"))
 }

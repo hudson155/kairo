@@ -17,7 +17,16 @@ publishing {
     }
     create<MavenPublication>("maven") {
       groupId = "kairo"
-      artifactId = project.name
+      /**
+       * Derives the artifact ID from the project path.
+       * The only valid nested project path is ":testing" (for example, ":kairo-feature:testing").
+       */
+      artifactId = run {
+        val regex = Regex(":([a-z]+(-[a-z]+)*(:testing)?)")
+        val path = project.path
+        val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
+        return@run match.groupValues[1].replace(':', '-')
+      }
       version = "0.6.0"
       from(components["java"])
     }

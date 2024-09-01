@@ -18,13 +18,13 @@ private val logger: KLogger = KotlinLogging.logger {}
  * in order to determine how to get the arguments from the [RoutingCall]
  * to call the primary constructor of the data class.
  */
-internal class DataClassRestEndpointReader<out Endpoint : RestEndpoint<*, *>>(
-  endpoint: KClass<Endpoint>,
-) : RestEndpointReader<Endpoint>() {
-  private val constructor: KFunction<Endpoint> =
+internal class DataClassRestEndpointReader<out E : RestEndpoint<*, *>>(
+  endpoint: KClass<E>,
+) : RestEndpointReader<E>() {
+  private val constructor: KFunction<E> =
     checkNotNull(endpoint.primaryConstructor)
 
-  override suspend fun endpoint(call: RoutingCall): Endpoint {
+  override suspend fun endpoint(call: RoutingCall): E {
     logger.debug { "Creating data class." }
     val arguments = arguments(call)
     logger.debug { "Arguments: $arguments." }

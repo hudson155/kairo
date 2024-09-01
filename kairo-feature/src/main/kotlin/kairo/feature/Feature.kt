@@ -31,7 +31,7 @@ public abstract class Feature : AbstractModule() {
   /**
    * Primarily for dependency injection,
    * the implementation should bind everything for the Feature.
-   * It should not initialize anything stateful (e.g. connection pools).
+   * It should not initialize anything stateful (for example, connection pools).
    */
   public open fun bind(binder: Binder): Unit = Unit
 

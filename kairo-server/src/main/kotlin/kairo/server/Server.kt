@@ -17,7 +17,7 @@ public abstract class Server {
 
   private val lock: Lock = ReentrantLock()
 
-  private var injector: Injector? = null
+  public var injector: Injector? = null
 
   /**
    * Start the Server, binding and starting all Features.

@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
   implementation(project(":kairo-logging"))
-  implementation(project(":kairo-util"))
 
   api(libs.jacksonCore)
   implementation(libs.jacksonDataformatYaml)
@@ -13,5 +12,5 @@ dependencies {
   api(libs.jacksonModuleKotlin) // There are some extension functions to expose.
 
   testImplementation(project(":kairo-logging:testing"))
-  testImplementation(project(":testing"))
+  testImplementation(project(":kairo-testing"))
 }

@@ -6,9 +6,7 @@ plugins {
 dependencies {
   api(kotlin("reflect"))
 
-  implementation(project(":kairo-util"))
-
   implementation(libs.geantyref)
 
-  testImplementation(project(":testing"))
+  testImplementation(project(":kairo-testing"))
 }

@@ -8,10 +8,10 @@ import kotlin.reflect.full.memberProperties
  * Implementations must be Kotlin data classes or data objects.
  * See this Feature's README or tests for some examples.
  *
- * [Request] represents the type of the request body. If none, use [Nothing].
- * [Response] represents the type of the response body. If none, use [Nothing].
+ * [I] represents the type of the request body. If none, use [Nothing].
+ * [O] represents the type of the response body. If none, use [Unit].
  */
-public abstract class RestEndpoint<Request : Any, Response : Any?> {
+public abstract class RestEndpoint<I : Any, O : Any?> {
   /**
    * Mandatory: the [Method] must be one of [io.ktor.http.HttpMethod]; it must be all-caps.
    */
@@ -51,9 +51,9 @@ public abstract class RestEndpoint<Request : Any, Response : Any?> {
 
   /**
    * Although [body] is marked as nullable,
-   * it must not be null unless [Request] is [Nothing].
+   * it must not be null unless [I] is [Nothing].
    */
-  public open val body: Request? = null
+  public open val body: I? = null
 }
 
 internal val KClass<out RestEndpoint<*, *>>.hasBody: Boolean
