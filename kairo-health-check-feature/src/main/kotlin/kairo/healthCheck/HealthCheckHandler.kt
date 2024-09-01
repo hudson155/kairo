@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import io.ktor.http.HttpStatusCode
 import kairo.rest.RestHandler
 
+@Suppress("UseDataClass") // Handlers shouldn't be data classes.
 internal class HealthCheckHandler @Inject constructor(
   private val healthCheckService: HealthCheckService,
 ) {

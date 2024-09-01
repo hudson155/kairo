@@ -10,8 +10,8 @@ public abstract class HealthCheckService {
 
   protected abstract val healthChecks: Map<String, HealthCheck>
 
-  internal fun liveness() {
-  }
+  internal fun liveness(): Unit =
+    Unit
 
   internal suspend fun readiness(): HealthCheckRep {
     val checks = healthChecks.mapValues { (_, healthCheck) -> HealthCheckRep.Check(status = healthCheck.check()) }
