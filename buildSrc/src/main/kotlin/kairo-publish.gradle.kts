@@ -17,7 +17,12 @@ publishing {
     }
     create<MavenPublication>("maven") {
       groupId = "kairo"
-      artifactId = project.name
+      artifactId = run {
+        val regex = Regex(":([a-z]+(-[a-z]+)*(:testing)?)")
+        val path = project.path
+        val match = requireNotNull(regex.matchEntire(path)) { "Invalid project name: $path." }
+        return@run match.groupValues[1].replace(':', '-')
+      }
       version = "0.6.0"
       from(components["java"])
     }

@@ -8,21 +8,16 @@ import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
-import kairo.feature.FeaturePriority
 
 private val logger: KLogger = KotlinLogging.logger {}
 
 public class KairoRestFeature(
   private val config: KairoRestConfig,
-) : Feature() {
-  override val name: String = "REST"
-
-  override val priority: FeaturePriority = FeaturePriority.Framework
-
+) : BaseKairoRestFeature() {
   override fun bind(binder: Binder) {
     binder.bind<KairoRestConfig>().toInstance(config)
     binder.bind<KtorServer>().toProvider(KtorServerProvider::class)
-    binder.bindRestHandlers { } // Supports Servers with no REST handlers.
+    super.bind(binder)
   }
 
   override fun start(injector: Injector, features: Set<Feature>) {

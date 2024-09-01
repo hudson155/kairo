@@ -7,5 +7,5 @@ dependencies {
   api(project(":kairo-feature"))
   implementation(project(":kairo-serialization"))
 
-  testImplementation(project(":testing"))
+  testImplementation(project(":kairo-testing"))
 }

@@ -10,5 +10,5 @@ kotlin {
 }
 
 dependencies {
-  testImplementation(project(":testing"))
+  testImplementation(project(":kairo-testing"))
 }

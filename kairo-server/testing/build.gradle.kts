@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-  testImplementation(project(":kairo-testing"))
+  api(project(":kairo-server"))
 }
