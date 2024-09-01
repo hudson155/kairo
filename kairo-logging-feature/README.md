@@ -45,7 +45,7 @@ logging:
 ```
 
 ```kotlin
-// src/main/kotlin/yourPackage/.../YourFile.kt
+// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
 KairoLoggingFeature(config.logging)
 ```

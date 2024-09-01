@@ -30,7 +30,15 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any?
     val statusCode = statusCode(response)
     logger.debug { "Status code: $statusCode." }
     response ?: throw NotFoundException()
-    call.respond(statusCode, response, typeInfo<Any>())
+    call.respond(statusCode, response)
+  }
+
+  private suspend fun RoutingCall.respond(statusCode: HttpStatusCode, response: Response) {
+    if (response is Unit) {
+      respond(statusCode)
+      return
+    }
+    respond(statusCode, response, typeInfo<Any>())
   }
 
   public abstract suspend fun handle(endpoint: E): Response
