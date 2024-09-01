@@ -17,6 +17,10 @@ publishing {
     }
     create<MavenPublication>("maven") {
       groupId = "kairo"
+      /**
+       * Derives the artifact ID from the project path.
+       * The only valid nested project path is ":testing" (for example, ":kairo-feature:testing").
+       */
       artifactId = run {
         val regex = Regex(":([a-z]+(-[a-z]+)*(:testing)?)")
         val path = project.path
