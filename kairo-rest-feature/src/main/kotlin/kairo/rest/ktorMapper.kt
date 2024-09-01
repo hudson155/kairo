@@ -5,6 +5,6 @@ import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 
 internal val ktorMapper: JsonMapper =
-  ObjectMapperFactory.builder(ObjectMapperFormat.Json).apply {
+  ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
     prettyPrint = true
   }.build()

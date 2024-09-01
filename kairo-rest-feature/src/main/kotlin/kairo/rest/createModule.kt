@@ -32,7 +32,10 @@ internal fun createModule(handlers: Set<RestHandler<*, *>>): Application.() -> U
 
 private fun Application.installPlugins() {
   install(ContentNegotiation) {
-    register(ContentType.Application.Json, JacksonConverter(ktorMapper))
+    register(
+      contentType = ContentType.Application.Json,
+      converter = JacksonConverter(objectMapper = ktorMapper, streamRequestBody = false),
+    )
   }
 }
 

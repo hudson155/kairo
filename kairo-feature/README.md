@@ -36,7 +36,7 @@ class LibraryFeature : Feature() {
   override val priority: FeaturePriority = FeaturePriority.Normal
 
   override fun bind(binder: Binder) {
-    // Do your Guice binding here!
+    TODO("Do your Guice binding here!")
   }
 }
 ```
