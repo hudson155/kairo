@@ -9,7 +9,7 @@ import kairo.feature.FeaturePriority
 public class KairoClockFeature(
   private val config: KairoClockConfig,
 ) : Feature() {
-  override val name: String = "KairoClock"
+  override val name: String = "Kairo Clock"
 
   override val priority: FeaturePriority = FeaturePriority.Normal
 
