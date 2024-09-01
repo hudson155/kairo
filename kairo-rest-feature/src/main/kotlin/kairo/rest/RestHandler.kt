@@ -16,11 +16,11 @@ private val logger: KLogger = KotlinLogging.logger {}
  * A [RestHandler] implementation is the entrypoint for a specific [RestEndpoint].
  * See this Feature's README or tests for some examples.
  */
-public abstract class RestHandler<Endpoint : RestEndpoint<*, Response>, Response> {
-  private val endpoint: KClass<Endpoint> = typeParam(RestHandler::class, 0, this::class)
+public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any?> {
+  internal val endpoint: KClass<E> = typeParam(RestHandler::class, 0, this::class)
 
   internal val template: RestEndpointTemplate = RestEndpointTemplate.from(endpoint)
-  private val reader: RestEndpointReader<Endpoint> = RestEndpointReader.from(endpoint)
+  internal val reader: RestEndpointReader<E> = RestEndpointReader.from(endpoint)
 
   internal suspend fun handle(call: RoutingCall) {
     val endpoint = reader.endpoint(call)
@@ -33,7 +33,7 @@ public abstract class RestHandler<Endpoint : RestEndpoint<*, Response>, Response
     call.respond(statusCode, response, typeInfo<Any>())
   }
 
-  protected abstract suspend fun handle(endpoint: Endpoint): Response
+  public abstract suspend fun handle(endpoint: E): Response
 
   protected open fun statusCode(response: Response): HttpStatusCode =
     HttpStatusCode.OK
