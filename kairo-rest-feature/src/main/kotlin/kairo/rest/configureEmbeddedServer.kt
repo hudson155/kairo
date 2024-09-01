@@ -3,9 +3,7 @@ package kairo.rest
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.connector
 
-internal fun <TConfiguration : ApplicationEngine.Configuration> configureEmbeddedServer(
-  config: KairoRestConfig,
-): TConfiguration.() -> Unit =
+internal fun <T : ApplicationEngine.Configuration> configureEmbeddedServer(config: KairoRestConfig): T.() -> Unit =
   {
     applyConnector(config.connector)
     applyLifecycle(config.lifecycle)
