@@ -1,11 +1,13 @@
 package kairo.sql
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.LazySingletonProvider
 import kairo.protectedString.ProtectedString
 
+@Singleton
 public class HikariDataSourceProvider @Inject constructor(
   private val config: KairoSqlConfig,
 ) : LazySingletonProvider<HikariDataSource>() {

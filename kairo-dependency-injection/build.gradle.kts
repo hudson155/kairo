@@ -4,5 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation(project(":kairo-reflect"))
+
   api(libs.guice)
 }
