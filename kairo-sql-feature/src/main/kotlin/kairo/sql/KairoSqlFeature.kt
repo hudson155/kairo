@@ -10,6 +10,7 @@ import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
+import org.jdbi.v3.core.Jdbi
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -23,6 +24,7 @@ public class KairoSqlFeature(
   override fun bind(binder: Binder) {
     binder.bind<KairoSqlConfig>().toInstance(config)
     binder.bind<HikariDataSource>().toProvider(HikariDataSourceProvider::class)
+    binder.bind<Jdbi>().toProvider(JdbiProvider::class)
   }
 
   override fun start(injector: Injector, features: Set<Feature>) {
