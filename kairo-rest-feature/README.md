@@ -4,6 +4,18 @@ The REST Feature adds support for REST endpoints.
 Under the hood, this Feature uses [Ktor](https://ktor.io/).
 Even if you're not building a REST API, you might need to include this to support health checks.
 
+**Implementation notes:**
+
+CIO is Ktor's custom coroutine-based I/O application engine factory.
+This is an alternative to Netty; CIO uses coroutines instead of threads for handling HTTP requests.
+There are some potential footguns with CIO when interacting with other libraries,
+especially those that use Thread-local variables.
+MDC is an example of one such library.
+More specifically, Java libraries that assume that an HTTP request will always be executed on the same thread,
+or assume that an HTTP request fill finish before another one is executed on the same thread
+are wrong when using CIO.
+`CoroutineContext`s must be used to manage thread contexts when switching coroutines in these cases.
+
 ## Usage
 
 ### Step 1: Include the dependency

@@ -7,6 +7,9 @@ import com.zaxxer.hikari.HikariDataSource
 import kairo.dependencyInjection.LazySingletonProvider
 import kairo.protectedString.ProtectedString
 
+/**
+ * There is a single global [HikariDataSource] instance in Kairo.
+ */
 @Singleton
 public class HikariDataSourceProvider @Inject constructor(
   private val config: KairoSqlConfig,
