@@ -8,7 +8,7 @@ public class RestClient @Inject constructor(
   public suspend fun <H : RestHandler<E, O>, E : RestEndpoint<I, O>, I : Any, O : Any?> request(endpoint: E): O {
     @Suppress("UNCHECKED_CAST")
     val handler = checkNotNull(registry[endpoint::class]) {
-      "REST handler registry had no entry for ${endpoint::class.simpleName!!}."
+      "REST handler registry had no entry for ${endpoint::class.qualifiedName!!}."
     } as H
     return handler.handle(endpoint)
   }
