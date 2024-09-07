@@ -56,7 +56,7 @@ data class LibraryBookModel(
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookStore.kt
 
-class LibraryBookStore : SqlStore.ForTable<LibraryBookModel>(
+class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookModel>(
   tableName = "library_book",
 ) {
   suspend fun listAll(): List<LibraryBookModel> =
