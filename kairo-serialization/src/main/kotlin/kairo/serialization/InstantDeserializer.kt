@@ -13,11 +13,14 @@ import java.time.format.DateTimeFormatter
  *
  * This implementation for [Instant] only accepts strings formatted as [DateTimeFormatter.ISO_INSTANT].
  */
-internal class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Instant {
+public open class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
+  /**
+   * Return type is nullable to support subclasses.
+   */
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Instant? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
     val formatter = DateTimeFormatter.ISO_INSTANT
-    val string = p.readValueAs<String>()
+    val string = p.readValue<String>()
     return Instant.from(formatter.parse(string))
   }
 }

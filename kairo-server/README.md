@@ -66,7 +66,6 @@ class MonolithServer(
     FeatureManager(
       features = setOf(
         KairoRestFeature(config.rest),
-
         LibraryFeature(),
       ),
       config = config.featureManager,
