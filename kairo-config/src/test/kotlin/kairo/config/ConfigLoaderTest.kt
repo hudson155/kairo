@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package kairo.config
 
 import io.kotest.matchers.shouldBe
@@ -22,6 +20,8 @@ internal class ConfigLoaderTest {
     )
   }
 
+  private val configLoader: ConfigLoader = ConfigLoader()
+
   private val testConfig: TestConfig =
     TestConfig(
       message = "Hello, World!",
@@ -34,54 +34,54 @@ internal class ConfigLoaderTest {
 
   @Test
   fun `basic config`(): Unit = runTest {
-    ConfigLoader.load<TestConfig>("basic-config").shouldBe(testConfig)
+    configLoader.load<TestConfig>("basic-config").shouldBe(testConfig)
   }
 
   @Test
   fun `config with extra root property`(): Unit = runTest {
     configLoadingShouldFail {
-      ConfigLoader.load<TestConfig>("config-with-extra-root-property")
+      configLoader.load<TestConfig>("config-with-extra-root-property")
     }
   }
 
   @Test
   fun `config with extra nested property`(): Unit = runTest {
     configLoadingShouldFail {
-      ConfigLoader.load<TestConfig>("config-with-extra-nested-property")
+      configLoader.load<TestConfig>("config-with-extra-nested-property")
     }
   }
 
   @Test
   fun `config with missing root property`(): Unit = runTest {
     configLoadingShouldFail {
-      ConfigLoader.load<TestConfig>("config-with-missing-root-property")
+      configLoader.load<TestConfig>("config-with-missing-root-property")
     }
   }
 
   @Test
   fun `config with missing nested property`(): Unit = runTest {
     configLoadingShouldFail {
-      ConfigLoader.load<TestConfig>("config-with-missing-nested-property")
+      configLoader.load<TestConfig>("config-with-missing-nested-property")
     }
   }
 
   @Test
   fun `config with trivial extension`(): Unit = runTest {
-    ConfigLoader.load<TestConfig>("config-with-trivial-extension").shouldBe(testConfig)
+    configLoader.load<TestConfig>("config-with-trivial-extension").shouldBe(testConfig)
   }
 
   @Test
   fun `config with extension`(): Unit = runTest {
-    ConfigLoader.load<TestConfig>("config-with-extension").shouldBe(testConfig)
+    configLoader.load<TestConfig>("config-with-extension").shouldBe(testConfig)
   }
 
   @Test
   fun `config with application`(): Unit = runTest {
-    ConfigLoader.load<TestConfig>("config-with-application").shouldBe(testConfig)
+    configLoader.load<TestConfig>("config-with-application").shouldBe(testConfig)
   }
 
   @Test
   fun `config with extension and application`(): Unit = runTest {
-    ConfigLoader.load<TestConfig>("config-with-application").shouldBe(testConfig)
+    configLoader.load<TestConfig>("config-with-application").shouldBe(testConfig)
   }
 }

@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  api(project(":kairo-environment-variable-supplier"))
   implementation(project(":kairo-logging"))
   api(project(":kairo-protected-string")) // Exposed for clients.
   implementation(project(":kairo-serialization"))
