@@ -43,6 +43,7 @@ internal class ConfigLoaderStringDeserializer(
   private fun fromEnvironmentVariable(source: ConfigLoaderStringSource.EnvironmentVariable): String? {
     val (name, default) = source
     logger.info { "Config string is from environment variable: $name." }
+    // Secure.
     return config.environmentVariableSupplier.get(name, default)
   }
 }
