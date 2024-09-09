@@ -14,10 +14,13 @@ import java.time.ZoneOffset
  * This deserializer intentionally only supports [ZoneRegion] and [ZoneOffset.UTC].
  * Non-UTC [ZoneOffset]s are not supported.
  */
-internal class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ZoneId {
+public open class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
+  /**
+   * Return type is nullable to support subclasses.
+   */
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ZoneId? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
-    val string = p.readValueAs<String>()
+    val string = p.readValue<String>()
     return convert(string)
   }
 

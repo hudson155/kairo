@@ -13,11 +13,14 @@ import java.time.format.DateTimeFormatter
  *
  * This implementation for [LocalDate] only accepts strings formatted as [DateTimeFormatter.ISO_DATE].
  */
-internal class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDate {
+public open class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
+  /**
+   * Return type is nullable to support subclasses.
+   */
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): LocalDate? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
     val formatter = DateTimeFormatter.ISO_DATE
-    val string = p.readValueAs<String>()
+    val string = p.readValue<String>()
     return LocalDate.from(formatter.parse(string))
   }
 }

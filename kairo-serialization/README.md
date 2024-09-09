@@ -8,7 +8,7 @@ We don't use [kotlinx-serialization](https://github.com/Kotlin/kotlinx.serializa
 (although it is an excellent library)
 because of its limited support for polymorphism.
 
-**Type support:**
+### Type support
 
 - Primitive-like
   - `Boolean`

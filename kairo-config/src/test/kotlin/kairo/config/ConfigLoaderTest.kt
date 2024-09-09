@@ -5,7 +5,10 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.throwable.shouldHaveMessage
 import io.mockk.every
 import io.mockk.mockk
+import kairo.commandRunner.CommandRunner
+import kairo.commandRunner.DefaultCommandRunner
 import kairo.environmentVariableSupplier.EnvironmentVariableSupplier
+import kairo.gcpSecretSupplier.GcpSecretSupplier
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,12 +28,19 @@ internal class ConfigLoaderTest {
     )
   }
 
-  private val environmentVariableSupplier: EnvironmentVariableSupplier = mockk()
+  private val commandRunner: CommandRunner = DefaultCommandRunner
+  private val environmentVariableSupplier: EnvironmentVariableSupplier =
+    mockk {
+      every { get("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES", any()) } returns null
+    }
+  private val gcpSecretSupplier: GcpSecretSupplier = mockk()
 
   private val configLoader: ConfigLoader =
     ConfigLoader(
       ConfigLoaderConfig(
+        commandRunner = commandRunner,
         environmentVariableSupplier = environmentVariableSupplier,
+        gcpSecretSupplier = gcpSecretSupplier,
       ),
     )
 
