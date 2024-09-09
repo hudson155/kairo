@@ -1,5 +1,6 @@
 [versions]
-geantyref = "1.3.13" # // https://github.com/leangen/geantyref/releases
+gcpSecretManager = "2.48.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
+geantyref = "1.3.13" # https://github.com/leangen/geantyref/releases
 guava = "33.2.1-jre" # https://github.com/google/guava/releases
 guice = "7.0.0" # https://github.com/google/guice/releases
 hikari = "5.1.0" # https://github.com/brettwooldridge/HikariCP/tags
@@ -14,6 +15,7 @@ mockK = "1.13.12" # https://github.com/mockk/mockk/releases
 postgres = "42.7.4" # https://github.com/pgjdbc/pgjdbc/releases
 
 [libraries]
+gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager", version.ref = "gcpSecretManager" }
 geantyref = { module = "io.leangen.geantyref:geantyref", version.ref = "geantyref" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 guice = { module = "com.google.inject:guice", version.ref = "guice" }
