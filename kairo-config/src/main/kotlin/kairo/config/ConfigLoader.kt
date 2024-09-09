@@ -35,7 +35,7 @@ public class ConfigLoader(
   private val mapper: JsonMapper =
     ObjectMapperFactory.builder(
       format = ObjectMapperFormat.Yaml,
-      modules = listOf(ConfigLoaderModule(config))
+      modules = listOf(ConfigLoaderModule(config)),
     ).build()
 
   public inline fun <reified C : Any> load(configName: String? = null): C =

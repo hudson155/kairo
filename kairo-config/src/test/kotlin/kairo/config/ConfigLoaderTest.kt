@@ -28,19 +28,19 @@ internal class ConfigLoaderTest {
     )
   }
 
-  protected val commandRunner: CommandRunner = DefaultCommandRunner
-  protected val environmentVariableSupplier: EnvironmentVariableSupplier =
+  private val commandRunner: CommandRunner = DefaultCommandRunner
+  private val environmentVariableSupplier: EnvironmentVariableSupplier =
     mockk {
       every { get("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES", any()) } returns null
     }
-  protected val gcpSecretSupplier: GcpSecretSupplier = mockk()
+  private val gcpSecretSupplier: GcpSecretSupplier = mockk()
 
   private val configLoader: ConfigLoader =
     ConfigLoader(
       ConfigLoaderConfig(
         commandRunner = commandRunner,
         environmentVariableSupplier = environmentVariableSupplier,
-        gcpSecretSupplier = gcpSecretSupplier
+        gcpSecretSupplier = gcpSecretSupplier,
       ),
     )
 
