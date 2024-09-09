@@ -66,8 +66,6 @@ internal class DefaultGcpSecretConfigLoaderProtectedStringDeserializerTest : Con
   }
 
   private fun gcpSecret(value: ProtectedString?) {
-    every { gcpSecretSupplier.get("projects/012345678900/secrets/example/versions/1") } answers {
-      return@answers value
-    }
+    every { gcpSecretSupplier.get("projects/012345678900/secrets/example/versions/1") } returns value
   }
 }

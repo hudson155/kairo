@@ -32,7 +32,7 @@ internal abstract class ConfigLoaderDeserializerTest {
       gcpSecretSupplier = gcpSecretSupplier,
     )
     return ObjectMapperFactory.builder(
-      format = ObjectMapperFormat.Yaml,
+      format = ObjectMapperFormat.Json,
       modules = listOf(ConfigLoaderModule(config)),
     ).build()
   }
