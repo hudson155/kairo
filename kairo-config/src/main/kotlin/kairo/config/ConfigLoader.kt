@@ -12,7 +12,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.commandRunner.DefaultCommandRunner
 import kairo.commandRunner.NoopCommandRunner
 import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
-import kairo.environmentVariableSupplier.NoopEnvironmentVariableSupplier
+import kairo.environmentVariableSupplier.StaticEnvironmentVariableSupplier
 import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
 import kairo.gcpSecretSupplier.NoopGcpSecretSupplier
 import kairo.serialization.ObjectMapperFactory
@@ -139,7 +139,9 @@ public class ConfigLoader(
       ConfigLoader(
         ConfigLoaderConfig(
           commandRunner = NoopCommandRunner,
-          environmentVariableSupplier = NoopEnvironmentVariableSupplier,
+          environmentVariableSupplier = StaticEnvironmentVariableSupplier(
+            mapOf("KAIRO_ALLOW_INSECURE_CONFIG_SOURCES" to false.toString()),
+          ),
           gcpSecretSupplier = NoopGcpSecretSupplier,
         ),
       )
