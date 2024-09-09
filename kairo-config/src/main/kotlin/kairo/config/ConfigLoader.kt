@@ -9,6 +9,12 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.google.common.io.Resources
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kairo.commandRunner.DefaultCommandRunner
+import kairo.commandRunner.NoopCommandRunner
+import kairo.environmentVariableSupplier.DefaultEnvironmentVariableSupplier
+import kairo.environmentVariableSupplier.NoopEnvironmentVariableSupplier
+import kairo.gcpSecretSupplier.DefaultGcpSecretSupplier
+import kairo.gcpSecretSupplier.NoopGcpSecretSupplier
 import kairo.serialization.ObjectMapperFactory
 import kairo.serialization.ObjectMapperFormat
 import kotlin.reflect.KClass
@@ -30,7 +36,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * Understanding this makes the code easier to follow.
  */
 public class ConfigLoader(
-  private val config: ConfigLoaderConfig = ConfigLoaderConfig(),
+  private val config: ConfigLoaderConfig,
 ) {
   private val mapper: JsonMapper =
     ObjectMapperFactory.builder(
@@ -117,5 +123,25 @@ public class ConfigLoader(
       is MergeType.Remove -> extends.remove(name)
       is MergeType.Replace -> extends.set<ObjectNode>(name, mergeType.value)
     }
+  }
+
+  public companion object {
+    public fun create(): ConfigLoader =
+      ConfigLoader(
+        ConfigLoaderConfig(
+          commandRunner = DefaultCommandRunner,
+          environmentVariableSupplier = DefaultEnvironmentVariableSupplier,
+          gcpSecretSupplier = DefaultGcpSecretSupplier,
+        ),
+      )
+
+    public fun noop(): ConfigLoader =
+      ConfigLoader(
+        ConfigLoaderConfig(
+          commandRunner = NoopCommandRunner,
+          environmentVariableSupplier = NoopEnvironmentVariableSupplier,
+          gcpSecretSupplier = NoopGcpSecretSupplier,
+        ),
+      )
   }
 }

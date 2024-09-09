@@ -9,10 +9,10 @@ import kairo.protectedString.ProtectedString
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-/**
- * Note: This approach is blocking; it does not leverage Kotlin coroutines.
- */
 public object DefaultGcpSecretSupplier : GcpSecretSupplier() {
+  /**
+   * Note: This approach is blocking; it does not leverage Kotlin coroutines.
+   */
   public override fun get(id: String): ProtectedString? {
     logger.debug { "Getting GCP secret: $id." }
     return SecretManagerServiceClient.create().use { client ->
