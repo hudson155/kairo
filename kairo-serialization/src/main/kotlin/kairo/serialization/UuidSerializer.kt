@@ -8,7 +8,7 @@ import kotlin.uuid.Uuid
 /**
  * Jackson supports [java.util.UUID] by default, but not [kotlin.uuid.Uuid] which we use.
  */
-internal class UuidSerializer : StdSerializer<Uuid>(Uuid::class.java) {
+public open class UuidSerializer : StdSerializer<Uuid>(Uuid::class.java) {
   override fun serialize(value: Uuid, gen: JsonGenerator, provider: SerializerProvider) {
     val string = value.toString()
     gen.writeString(string)

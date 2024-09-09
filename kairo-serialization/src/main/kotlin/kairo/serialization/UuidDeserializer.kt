@@ -9,10 +9,13 @@ import kotlin.uuid.Uuid
 /**
  * Jackson supports [java.util.UUID] by default, but not [kotlin.uuid.Uuid] which we use.
  */
-internal class UuidDeserializer : StdDeserializer<Uuid>(Uuid::class.java) {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Uuid {
+public open class UuidDeserializer : StdDeserializer<Uuid>(Uuid::class.java) {
+  /**
+   * Return type is nullable to support subclasses.
+   */
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): Uuid? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
-    val string = p.readValueAs<String>()
+    val string = p.readValue<String>()
     return Uuid.parse(string)
   }
 }

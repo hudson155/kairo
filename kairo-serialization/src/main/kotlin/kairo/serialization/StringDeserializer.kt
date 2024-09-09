@@ -12,8 +12,11 @@ import com.fasterxml.jackson.databind.deser.std.StringDeserializer as DelegateSt
  * Jackson provides no option to disable this for strings.
  * Instead, this custom string deserializer checks the type before continuing.
  */
-internal class StringDeserializer : DelegateStringDeserializer() {
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String {
+public open class StringDeserializer : DelegateStringDeserializer() {
+  /**
+   * Return type is nullable to support subclasses.
+   */
+  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
     expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
     return super.deserialize(p, ctxt)
   }
