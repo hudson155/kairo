@@ -331,7 +331,7 @@ class MonolithServer(
 }
 
 fun main() {
-  val config = ConfigLoader().load<MonolithServerConfig>("config")
+  val config = ConfigLoader.createDefault().load<MonolithServerConfig>("config")
   val server = MonolithServer(config)
   server.start()
 }
