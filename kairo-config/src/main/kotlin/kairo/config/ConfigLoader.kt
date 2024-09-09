@@ -28,7 +28,9 @@ private val logger: KLogger = KotlinLogging.logger {}
  * which mutate the underlying object.
  * Understanding this makes the code easier to follow.
  */
-public object ConfigLoader {
+public class ConfigLoader(
+  private val config: ConfigLoaderConfig = ConfigLoaderConfig(),
+) {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Yaml).build()
 
   public inline fun <reified C : Any> load(configName: String? = null): C =
@@ -50,7 +52,7 @@ public object ConfigLoader {
 
     val environmentVariableName = "KAIRO_CONFIG"
     logger.info { "Getting config name from $environmentVariableName environment variable." }
-    return System.getenv(environmentVariableName)
+    return config.environmentVariableSupplier.get(environmentVariableName)
       ?: error("Config name was not provided and $environmentVariableName is not set.")
   }
 

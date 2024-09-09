@@ -609,6 +609,9 @@ style:
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(java.lang.Class)' # Use the Kotlin overload.
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.TypeLiteral)' # Use the Kotlin overload.
       - 'com.google.inject.binder.LinkedBindingBuilder.toProvider(com.google.inject.Key)' # Use the Kotlin overload.
+      - 'java.lang.Runtime.getRuntime'
+      - 'java.lang.System.getenv'
+      - 'java.lang.Thread.currentThread'
       - 'java.time.format.DateTimeFormatter.ofPattern(java.lang.String)' # Use the overload that takes a Locale.
       - 'java.time.Instant.now()' # Use the overload that takes a Clock.
       - 'java.time.LocalDate.now()' # Use the overload that takes a Clock.

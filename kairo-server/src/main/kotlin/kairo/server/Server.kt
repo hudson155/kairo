@@ -74,6 +74,7 @@ public abstract class Server {
    */
   private fun addShutdownHook() {
     logger.info { "Adding a shutdown hook." }
+    @Suppress("ForbiddenMethodCall")
     Runtime.getRuntime().addShutdownHook(Thread { shutDown() })
   }
 
@@ -82,6 +83,7 @@ public abstract class Server {
    */
   private fun waitForJvmTermination() {
     logger.info { "Server will wait for JVM to terminate." }
+    @Suppress("ForbiddenMethodCall")
     Thread.currentThread().join()
   }
 }
