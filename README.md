@@ -90,6 +90,10 @@ Each modules falls into one of 3 categories:
 
 ### Internal modules
 
+- [kairo-command-runner](kairo-command-runner/):
+  `CommandRunner` runs shell commands.
+  It delegates to Java's built-in way of doing this,
+  but uses an abstract class for testability.
 - [kairo-dependency-injection](kairo-dependency-injection/):
   Makes Guice available,
   along with some utilities to make its use more idiomatic.
