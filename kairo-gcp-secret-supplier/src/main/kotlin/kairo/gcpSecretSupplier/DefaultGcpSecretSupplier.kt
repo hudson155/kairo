@@ -19,7 +19,7 @@ public object DefaultGcpSecretSupplier : GcpSecretSupplier() {
       val secretVersionName = SecretVersionName.parse(id)
       val accessResponse = try {
         client.accessSecretVersion(secretVersionName)
-      } catch (e: NotFoundException) {
+      } catch (_: NotFoundException) {
         return@use null
       }
       return@use ProtectedString(accessResponse.payload.data.toStringUtf8())
