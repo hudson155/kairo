@@ -1,6 +1,6 @@
 # `kairo-environment-variable-supplier`
 
-`EnvironmentVariableRunner` supplies environment variables.
+`EnvironmentVariableSupplier` supplies environment variables.
 It delegates to Java's built-in way of doing this,
 but uses an abstract class for testability.
 
