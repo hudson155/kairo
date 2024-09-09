@@ -14,6 +14,7 @@ it will use the `KAIRO_CONFIG` envirnoment variable to identify the config name.
 
 ### Source support
 
+Config files won't typically contain _all_ the config data.
 When deserializing the `String` and `ProtectedString` types,
 a few different sources can be used.
 
