@@ -92,7 +92,7 @@ message: "Hello, World!"
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
-ConfigLoader().load<MonolithServerConfig>("basic-config")
+ConfigLoader.createDefault().load<MonolithServerConfig>("basic-config")
 ```
 
 ### Step 3: Try reading a complex config
@@ -160,5 +160,5 @@ width:
 ```kotlin
 // src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
 
-ConfigLoader().load<MonolithServerConfig>("config-with-extension-and-application")
+ConfigLoader.createDefault().load<MonolithServerConfig>("config-with-extension-and-application")
 ```
