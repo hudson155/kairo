@@ -22,6 +22,7 @@ Kairo is an application framework built for Kotlin.
 Kairo is split up into several separate modules.
 You will need a number of these.
 Each modules falls into one of 3 categories:
+
 1. **Common modules:**
    These are intended for your use.
    You will use some or all of these.
@@ -100,6 +101,10 @@ Each modules falls into one of 3 categories:
 - [kairo-environment-variable-supplier](kairo-environment-variable-supplier/):
   `EnvironmentVariableSupplier` supplies environment variables.
   It delegates to Java's built-in way of doing this,
+  but uses an abstract class for testability.
+- [kairo-gcp-secret-supplier](kairo-gcp-secret-supplier/):
+  `GcpSecretSupplier` supplies GCP secrets.
+  It delegates to the GCP Secret Manager SDK,
   but uses an abstract class for testability.
 
 ## Getting started
