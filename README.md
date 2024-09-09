@@ -47,7 +47,8 @@ Each modules falls into one of 3 categories:
   which should be configured to use Apache Log4j2 under the hood.
 - [kairo-config](kairo-config/):
   Home of `ConfigLoader`, which loads configs for Kairo Servers from YAML files.
-  Includes support for config extension and application.
+  Includes support for config extension and application,
+  as well as various sources.
 - [kairo-serialization](kairo-serialization/):
   Uses [Jackson](https://github.com/FasterXML/jackson)
   to handle JSON and YAML serialization.

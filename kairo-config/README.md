@@ -1,7 +1,8 @@
 # `kairo-config`
 
 Home of `ConfigLoader`, which loads configs for Kairo Servers from YAML files.
-Includes support for config extension and application.
+Includes support for config extension and application,
+as well as various sources.
 
 - **Config extension:** Configs can extend other configs
   by specifying `extends: other-config-name` as a top-level YAML property.
@@ -10,6 +11,51 @@ Includes support for config extension and application.
 
 If no config name is provided to `ConfigLoader`,
 it will use the `KAIRO_CONFIG` envirnoment variable to identify the config name.
+
+### Source support
+
+When deserializing the `String` and `ProtectedString` types,
+a few different sources can be used.
+
+- **Plain string:**
+  The most obvious source is just using a plain string.
+  ```yaml
+  message: "Hello, World!"
+  ```
+  - `String` support: Yes.
+  - `ProtectedString` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
+    Considered insecure because sensitive data should never appear directly in config files.
+- **`Command`:**
+  This will run a shell command to get the value.
+  ```yaml
+  message:
+    source: "Command"
+    command: "echo \"Hello, World!\""
+  ```
+  - `String` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
+    Considered insecure because running shell commands is unsafe.
+  - `ProtectedString` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
+    Considered insecure because running shell commands is unsafe.
+- **`EnvironmentVariable`:**
+  This will retrieve the value from the referenced environment variable.
+  ```yaml
+  message:
+    name: "MESSAGE"
+    default: "Default value." # This is optional.
+  ```
+  - `String` support: Yes.
+  - `ProtectedString` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
+    Considered insecure because sensitive data should never come from environment variables.
+- **`GcpSecret`:**
+  This will retrieve the value from the referenced GCP secret.
+  ```yaml
+  message:
+    id: "projects/012345678900/secrets/example/versions/1"
+  ```
+  - `String` support: No.
+    Considered insecure because GCP secrets are assumed to hold sensitive data;
+    `ProtectedString` should be used to contain sensitive data.
+  - `ProtectedString` support: Yes.
 
 ## Usage
 

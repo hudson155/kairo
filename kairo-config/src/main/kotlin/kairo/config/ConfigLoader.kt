@@ -16,7 +16,8 @@ import kotlin.reflect.KClass
 private val logger: KLogger = KotlinLogging.logger {}
 
 /**
- * Loads configs from YAML files, with support for config extension and application.
+ * Loads configs from YAML files, with support for config extension and application,
+ * as well as various sources.
  *
  * Config extension: Configs can extend other configs
  * by specifying "extends: other-config-name" as a top-level YAML property.
