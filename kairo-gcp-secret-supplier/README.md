@@ -22,5 +22,5 @@ dependencies {
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
 val gcpSecretSupplier: GcpSecretSupplier = DefaultGcpSecretSupplier
-gcpSecretSupplier.get("MESSAGE", "Default value.")
+gcpSecretSupplier.get("projects/012345678900/secrets/example/versions/1")
 ```
