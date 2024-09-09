@@ -1,6 +1,11 @@
 package kairo.config
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.throwable.shouldHaveMessage
+import io.mockk.every
+import io.mockk.mockk
+import kairo.environmentVariableSupplier.EnvironmentVariableSupplier
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -20,7 +25,14 @@ internal class ConfigLoaderTest {
     )
   }
 
-  private val configLoader: ConfigLoader = ConfigLoader()
+  private val environmentVariableSupplier: EnvironmentVariableSupplier = mockk()
+
+  private val configLoader: ConfigLoader =
+    ConfigLoader(
+      ConfigLoaderConfig(
+        environmentVariableSupplier = environmentVariableSupplier,
+      ),
+    )
 
   private val testConfig: TestConfig =
     TestConfig(
@@ -31,6 +43,20 @@ internal class ConfigLoaderTest {
       width = TestConfig.Sizes(min = 4, max = 20, average = 16),
       depth = TestConfig.Sizes(min = 6, max = 30, average = 24),
     )
+
+  @Test
+  fun `environment variable not set`(): Unit = runTest {
+    every { environmentVariableSupplier.get("KAIRO_CONFIG", any()) } returns null
+    shouldThrow<IllegalStateException> {
+      configLoader.load<TestConfig>()
+    }.shouldHaveMessage("Config name was not provided and KAIRO_CONFIG is not set.")
+  }
+
+  @Test
+  fun `basic config from environment variable`(): Unit = runTest {
+    every { environmentVariableSupplier.get("KAIRO_CONFIG", any()) } returns "basic-config"
+    configLoader.load<TestConfig>().shouldBe(testConfig)
+  }
 
   @Test
   fun `basic config`(): Unit = runTest {
