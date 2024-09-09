@@ -97,6 +97,10 @@ Each modules falls into one of 3 categories:
 - [kairo-dependency-injection](kairo-dependency-injection/):
   Makes Guice available,
   along with some utilities to make its use more idiomatic.
+- [kairo-environment-variable-supplier](kairo-environment-variable-supplier/):
+  `EnvironmentVariableSupplier` supplies environment variables.
+  It delegates to Java's built-in way of doing this,
+  but uses an abstract class for testability.
 
 ## Getting started
 
@@ -321,7 +325,7 @@ class MonolithServer(
 }
 
 fun main() {
-  val config = ConfigLoader.load<MonolithServerConfig>("config")
+  val config = ConfigLoader().load<MonolithServerConfig>("config")
   val server = MonolithServer(config)
   server.start()
 }
