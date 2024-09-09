@@ -126,7 +126,7 @@ public class ConfigLoader(
   }
 
   public companion object {
-    public fun create(): ConfigLoader =
+    public fun createDefault(): ConfigLoader =
       ConfigLoader(
         ConfigLoaderConfig(
           commandRunner = DefaultCommandRunner,
