@@ -2,19 +2,18 @@ package kairo.config
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import kairo.protectedString.ProtectedString
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderProtectedStringSource.Command].
+ * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.Command].
  */
-internal class NullableCommandConfigLoaderProtectedStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class CommandConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val message: ProtectedString?,
+    val message: String?,
   )
 
   val nonNullString = """
@@ -48,7 +47,7 @@ internal class NullableCommandConfigLoaderProtectedStringDeserializerTest : Conf
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test

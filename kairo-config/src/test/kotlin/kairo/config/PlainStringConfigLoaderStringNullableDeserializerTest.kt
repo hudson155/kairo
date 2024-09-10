@@ -1,38 +1,30 @@
 package kairo.config
 
-import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.Command].
+ * This test is intended to test behaviour strictly related to [String] plaintext values.
  */
-internal class DefaultCommandConfigLoaderStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class PlainStringConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val message: String,
+    val message: String?,
   )
 
-  val nonNullString = """
+  private val nonNullString: String = """
     {
-      "message": {
-        "source": "Command",
-        "command": "echo \"Hello, World!\""
-      }
+      "message": "Hello, World!"
     }
   """.trimIndent()
 
-  val nullString = """
+  private val nullString = """
     {
-      "message": {
-        "source": "Command",
-        "command": ";"
-      }
+      "message": null
     }
   """.trimIndent()
 
@@ -40,9 +32,7 @@ internal class DefaultCommandConfigLoaderStringDeserializerTest : ConfigLoaderDe
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldBeInsecure("Command source is considered insecure.") {
-      mapper.readValue<MyClass>(nonNullString)
-    }
+    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -56,17 +46,13 @@ internal class DefaultCommandConfigLoaderStringDeserializerTest : ConfigLoaderDe
   fun `null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldBeInsecure("Command source is considered insecure.") {
-      mapper.readValue<MyClass>(nullString)
-    }
+    mapper.readValue<MyClass>(nullString).shouldBe(MyClass(null))
   }
 
   @Test
   fun `null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nullString)
-    }
+    mapper.readValue<MyClass>(nullString).shouldBe(MyClass(null))
   }
 }

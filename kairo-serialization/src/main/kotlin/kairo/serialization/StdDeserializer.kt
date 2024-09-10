@@ -14,7 +14,18 @@ internal fun StdDeserializer<*>.expectCurrentToken(
   ctxt: DeserializationContext,
   jsonToken: JsonToken,
 ) {
-  if (p.currentToken != jsonToken) {
+  expectCurrentToken(p, ctxt, setOf(jsonToken))
+}
+
+/**
+ * Util function to help with custom serializers and deserializers.
+ */
+internal fun StdDeserializer<*>.expectCurrentToken(
+  p: JsonParser,
+  ctxt: DeserializationContext,
+  jsonTokens: Set<JsonToken>,
+) {
+  if (p.currentToken !in jsonTokens) {
     throw MismatchedInputException.from(p, getValueType(ctxt), null)
   }
 }

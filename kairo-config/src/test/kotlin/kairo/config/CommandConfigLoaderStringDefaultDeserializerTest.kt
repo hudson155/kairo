@@ -1,6 +1,8 @@
 package kairo.config
 
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -8,12 +10,12 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.Command].
  */
-internal class NullableCommandConfigLoaderStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class CommandConfigLoaderStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for nullable properties.
+   * This test is specifically for non-nullable properties.
    */
   internal data class MyClass(
-    val message: String?,
+    val message: String,
   )
 
   val nonNullString = """
@@ -63,6 +65,8 @@ internal class NullableCommandConfigLoaderStringDeserializerTest : ConfigLoaderD
   fun `null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nullString).shouldBe(MyClass(null))
+    shouldThrow<JsonMappingException> {
+      mapper.readValue<MyClass>(nullString)
+    }
   }
 }
