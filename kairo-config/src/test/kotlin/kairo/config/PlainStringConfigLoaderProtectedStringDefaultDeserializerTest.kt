@@ -3,7 +3,6 @@ package kairo.config
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.shouldBe
 import kairo.protectedString.ProtectedString
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ProtectedString] plaintext values.
  */
+@OptIn(ProtectedString.Access::class)
 internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for non-nullable properties.
@@ -35,7 +35,7 @@ internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : C
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldBeInsecure("Protected strings cannot appear directly in configs.") {
+    shouldThrow<JsonMappingException> {
       mapper.readValue<MyClass>(nonNullString)
     }
   }
@@ -44,7 +44,9 @@ internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : C
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    shouldThrow<JsonMappingException> {
+      mapper.readValue<MyClass>(nonNullString)
+    }
   }
 
   @Test

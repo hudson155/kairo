@@ -8,8 +8,9 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderProtectedStringSource.EnvironmentVariable].
+ * This test is intended to test behaviour strictly related to [ConfigLoaderSource.EnvironmentVariable].
  */
+@OptIn(ProtectedString.Access::class)
 internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable properties.
@@ -42,7 +43,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    shouldBeInsecure("Environment variable source is considered insecure.") {
+    shouldBeInsecure("Config loader source EnvironmentVariable is considered insecure.") {
       mapper.readValue<MyClass>(stringWithDefault)
     }
   }
@@ -60,7 +61,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    shouldBeInsecure("Environment variable source is considered insecure.") {
+    shouldBeInsecure("Config loader source EnvironmentVariable is considered insecure.") {
       mapper.readValue<MyClass>(stringWithDefault)
     }
   }
@@ -78,7 +79,7 @@ internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserialize
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    shouldBeInsecure("Environment variable source is considered insecure.") {
+    shouldBeInsecure("Config loader source EnvironmentVariable is considered insecure.") {
       mapper.readValue<MyClass>(stringWithoutDefault)
     }
   }

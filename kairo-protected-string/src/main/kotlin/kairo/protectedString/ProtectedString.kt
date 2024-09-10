@@ -11,11 +11,14 @@ import com.fasterxml.jackson.annotation.JsonValue
  */
 @Suppress("UseDataClass")
 @OptIn(ProtectedString.Access::class)
-public class ProtectedString @JsonCreator constructor(
+public class ProtectedString
+@Access
+@JsonCreator
+constructor(
   @Access @JsonValue public val value: String,
 ) {
   @RequiresOptIn
-  @Target(AnnotationTarget.PROPERTY)
+  @Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.PROPERTY)
   public annotation class Access
 
   override fun equals(other: Any?): Boolean {

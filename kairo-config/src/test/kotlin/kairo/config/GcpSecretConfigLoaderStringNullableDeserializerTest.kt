@@ -1,8 +1,6 @@
 package kairo.config
 
-import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import kairo.protectedString.ProtectedString
@@ -13,12 +11,12 @@ import org.junit.jupiter.api.Test
  * This test is intended to test behaviour strictly related to [ConfigLoaderSource.GcpSecret].
  */
 @OptIn(ProtectedString.Access::class)
-internal class GcpSecretConfigLoaderProtectedStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class GcpSecretConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val message: ProtectedString,
+    val message: String?,
   )
 
   val string = """
@@ -35,7 +33,9 @@ internal class GcpSecretConfigLoaderProtectedStringDefaultDeserializerTest : Con
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     gcpSecret(ProtectedString("Hello, World!"))
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    shouldBeInsecure("Config loader source GcpSecret is considered insecure.") {
+      mapper.readValue<MyClass>(string).shouldBe(MyClass("Hello, World!"))
+    }
   }
 
   @Test
@@ -43,7 +43,7 @@ internal class GcpSecretConfigLoaderProtectedStringDefaultDeserializerTest : Con
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     gcpSecret(ProtectedString("Hello, World!"))
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    mapper.readValue<MyClass>(string).shouldBe(MyClass("Hello, World!"))
   }
 
   @Test
@@ -51,8 +51,8 @@ internal class GcpSecretConfigLoaderProtectedStringDefaultDeserializerTest : Con
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     gcpSecret(null)
-    shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
+    shouldBeInsecure("Config loader source GcpSecret is considered insecure.") {
+      mapper.readValue<MyClass>(string).shouldBe(MyClass("Hello, World!"))
     }
   }
 
@@ -61,9 +61,7 @@ internal class GcpSecretConfigLoaderProtectedStringDefaultDeserializerTest : Con
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     gcpSecret(null)
-    shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(string)
-    }
+    mapper.readValue<MyClass>(string).shouldBe(MyClass(null))
   }
 
   private fun gcpSecret(value: ProtectedString?) {

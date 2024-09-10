@@ -34,30 +34,32 @@ a few different sources can be used.
     source: "Command"
     command: "echo \"Hello, World!\""
   ```
-  - `String` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
-    Considered insecure because running shell commands is unsafe.
-  - `ProtectedString` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
-    Considered insecure because running shell commands is unsafe.
 - **`EnvironmentVariable`:**
   This will retrieve the value from the referenced environment variable.
   ```yaml
   message:
+    source: "EnvironmentVariable"
     name: "MESSAGE"
-    default: "Default value." # This is optional.
+    default: "Default value." # The default value is optional.
   ```
-  - `String` support: Yes.
-  - `ProtectedString` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
-    Considered insecure because sensitive data should never come from environment variables.
 - **`GcpSecret`:**
   This will retrieve the value from the referenced GCP secret.
   ```yaml
   message:
+    source: "GcpSecret"
     id: "projects/012345678900/secrets/example/versions/1"
   ```
-  - `String` support: No.
-    Considered insecure because GCP secrets are assumed to hold sensitive data;
-    `ProtectedString` should be used to contain sensitive data.
-  - `ProtectedString` support: Yes.
+
+### Source compatibility
+
+TODO
+
+|                   | `Command` | `EnvironmentVariable` | `GcpSecret` | `Inline` | 
+|-------------------|-----------|-----------------------|-------------|----------|
+| Plain string      | Insecure  | Secure                | Insecure    | Secure |
+| `Int`             | Insecure  | Secure                | Insecure    | Secure |
+| `ProtectedString` | Insecure  | Insecure              | Secure      | Insecure |
+| `String`          | Insecure  | Secure                | Insecure    | Secure |
 
 ## Usage
 
@@ -132,11 +134,11 @@ width: { min: 3, max: 19, average: 15 }
 ```yaml
 # src/main/resources/config/applied-config-0.yaml
 
-extraRootProperty: { remove: {} }
+extraRootProperty: { remove: { } }
 message: "Applied config 0"
-name: { remove: {} }
+name: { remove: { } }
 height:
-  merge: { max: 10, average: 8, other: { remove: {} } }
+  merge: { max: 10, average: 8, other: { remove: { } } }
 depth:
   replace: { min: 6, max: 30, average: 24 }
 ```

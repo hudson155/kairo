@@ -22,6 +22,7 @@ public object DefaultGcpSecretSupplier : GcpSecretSupplier() {
       } catch (_: NotFoundException) {
         return@use null
       }
+      @OptIn(ProtectedString.Access::class)
       return@use ProtectedString(accessResponse.payload.data.toStringUtf8())
     }
   }

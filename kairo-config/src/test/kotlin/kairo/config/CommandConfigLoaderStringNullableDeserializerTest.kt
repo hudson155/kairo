@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.Command].
+ * This test is intended to test behaviour strictly related to [ConfigLoaderSource.Command].
  */
 internal class CommandConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
@@ -38,7 +38,7 @@ internal class CommandConfigLoaderStringNullableDeserializerTest : ConfigLoaderD
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldBeInsecure("Command source is considered insecure.") {
+    shouldBeInsecure("Config loader source Command is considered insecure.") {
       mapper.readValue<MyClass>(nonNullString)
     }
   }
@@ -54,7 +54,7 @@ internal class CommandConfigLoaderStringNullableDeserializerTest : ConfigLoaderD
   fun `null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldBeInsecure("Command source is considered insecure.") {
+    shouldBeInsecure("Config loader source Command is considered insecure.") {
       mapper.readValue<MyClass>(nullString)
     }
   }
