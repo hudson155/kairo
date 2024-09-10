@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter
  *
  * This implementation for [Instant] only accepts strings formatted as [DateTimeFormatter.ISO_INSTANT].
  */
-public open class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
+public class InstantDeserializer : StdDeserializer<Instant>(Instant::class.java) {
   /**
    * Return type is nullable to support subclasses.
    */
