@@ -16,7 +16,7 @@ it will use the `KAIRO_CONFIG` envirnoment variable to identify the config name.
 
 Config files won't typically contain _all_ the config data,
 because some has to come from the environment or from sensitive sources.
-When deserializing the `String` and `ProtectedString` types,
+When deserializing some types,
 a few different sources can be used.
 
 - `Command`:
@@ -48,6 +48,7 @@ Each type is compatible with certain sources according to the table below.
 
 |                   | `Command` | `EnvironmentVariable` | `GcpSecret` | `Inline` | 
 |-------------------|-----------|-----------------------|-------------|----------|
+| `Int`             | Insecure  | Secure                | Insecure    | Secure   |
 | `ProtectedString` | Insecure  | Insecure              | Secure      | Insecure |
 | `String`          | Insecure  | Secure                | Insecure    | Secure   |
 

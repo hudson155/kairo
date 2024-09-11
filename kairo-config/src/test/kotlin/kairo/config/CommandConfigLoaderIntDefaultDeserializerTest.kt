@@ -3,30 +3,45 @@ package kairo.config
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
-import kairo.protectedString.ProtectedString
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ProtectedString] plaintext values.
+ * This test is intended to test behaviour strictly related to [ConfigLoaderSource.Command].
  */
-internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class CommandConfigLoaderIntDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for non-nullable [ProtectedString] properties.
+   * This test is specifically for non-nullable [Int] properties.
    */
   internal data class MyClass(
-    val message: ProtectedString,
+    val message: Int,
   )
 
-  private val nonNullString: String = """
+  val nonNullString = """
     {
-      "message": "Hello, World!"
+      "message": {
+        "source": "Command",
+        "command": "echo \"8080\""
+      }
     }
   """.trimIndent()
 
-  private val nullString = """
+  val nullString = """
     {
-      "message": null
+      "message": {
+        "source": "Command",
+        "command": ";"
+      }
+    }
+  """.trimIndent()
+
+  val incorrectTypeString = """
+    {
+      "message": {
+        "source": "Command",
+        "command": "echo \"Hello, World!\""
+      }
     }
   """.trimIndent()
 
@@ -34,7 +49,7 @@ internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : C
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldThrow<JsonMappingException> {
+    shouldBeInsecure("Config loader source Command is considered insecure.") {
       mapper.readValue<MyClass>(nonNullString)
     }
   }
@@ -43,16 +58,14 @@ internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : C
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(nonNullString)
-    }
+    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(8080))
   }
 
   @Test
   fun `null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    shouldThrow<JsonMappingException> {
+    shouldBeInsecure("Config loader source Command is considered insecure.") {
       mapper.readValue<MyClass>(nullString)
     }
   }
@@ -63,6 +76,15 @@ internal class PlainStringConfigLoaderProtectedStringDefaultDeserializerTest : C
     val mapper = createMapper()
     shouldThrow<JsonMappingException> {
       mapper.readValue<MyClass>(nullString)
+    }
+  }
+
+  @Test
+  fun `incorrect type`(): Unit = runTest {
+    allowInsecureConfigSources(true)
+    val mapper = createMapper()
+    shouldThrow<JsonMappingException> {
+      mapper.readValue<MyClass>(incorrectTypeString)
     }
   }
 }
