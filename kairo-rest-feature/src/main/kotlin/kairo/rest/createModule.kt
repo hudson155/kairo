@@ -8,7 +8,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.HttpMethodRouteSelector
-import io.ktor.server.routing.Routing
+import io.ktor.server.routing.Route
 import io.ktor.server.routing.accept
 import io.ktor.server.routing.contentType
 import io.ktor.server.routing.createRouteFromPath
@@ -50,7 +50,7 @@ private fun Application.registerRestHandlers(handlers: Set<RestHandler<*, *>>) {
   }
 }
 
-internal fun Routing.route(template: RestEndpointTemplate): Routing {
+internal fun Route.route(template: RestEndpointTemplate): Route {
   var route = createRouteFromPath(KtorPathTemplateRestEndpointPrinter.write(template))
   route = route.createChild(HttpMethodRouteSelector(template.method))
   template.query.params.forEach { param ->

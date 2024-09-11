@@ -33,6 +33,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any?
     call.respond(statusCode, response)
   }
 
+  @Suppress("SuspendFunWithCoroutineScopeReceiver")
   private suspend fun RoutingCall.respond(statusCode: HttpStatusCode, response: Response) {
     if (response is Unit) {
       respond(statusCode)
