@@ -1,8 +1,6 @@
 package kairo.config
 
-import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import kairo.protectedString.ProtectedString
@@ -12,12 +10,12 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ConfigLoaderProtectedStringSource.EnvironmentVariable].
  */
-internal class DefaultEnvironmentVariableConfigLoaderProtectedStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class EnvironmentVariableConfigLoaderProtectedStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for nullable properties.
    */
   internal data class MyClass(
-    val message: ProtectedString,
+    val message: ProtectedString?,
   )
 
   val stringWithDefault = """
@@ -90,9 +88,7 @@ internal class DefaultEnvironmentVariableConfigLoaderProtectedStringDeserializer
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    shouldThrow<JsonMappingException> {
-      mapper.readValue<MyClass>(stringWithoutDefault)
-    }
+    mapper.readValue<MyClass>(stringWithoutDefault).shouldBe(MyClass(null))
   }
 
   private fun environmentVariable(value: String?) {

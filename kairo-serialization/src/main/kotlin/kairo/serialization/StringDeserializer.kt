@@ -2,22 +2,11 @@ package kairo.serialization
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
-import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.deser.std.StringDeserializer as DelegateStringDeserializer
 
-/**
- * By default, Jackson casts other types (such as booleans and numbers) to strings.
- * Although type coersion can be disabled for scalars using [MapperFeature.ALLOW_COERCION_OF_SCALARS],
- * Jackson provides no option to disable this for strings.
- * Instead, this custom string deserializer checks the type before continuing.
- */
-public open class StringDeserializer : DelegateStringDeserializer() {
-  /**
-   * Return type is nullable to support subclasses.
-   */
-  override fun deserialize(p: JsonParser, ctxt: DeserializationContext): String? {
-    expectCurrentToken(p, ctxt, JsonToken.VALUE_STRING)
-    return super.deserialize(p, ctxt)
-  }
+public open class StringDeserializer : PrimitiveDeserializer<String>(String::class) {
+  override val tokens: Set<JsonToken> =
+    setOf(JsonToken.VALUE_STRING)
+
+  override fun extract(p: JsonParser): String =
+    p.text
 }

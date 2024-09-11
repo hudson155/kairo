@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter
  *
  * This implementation for [LocalDate] only accepts strings formatted as [DateTimeFormatter.ISO_DATE].
  */
-public open class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
+public class LocalDateDeserializer : StdDeserializer<LocalDate>(LocalDate::class.java) {
   /**
    * Return type is nullable to support subclasses.
    */
