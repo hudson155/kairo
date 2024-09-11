@@ -14,8 +14,7 @@ internal class UnsupportedSourceConfigLoaderStringDeserializerTest : ConfigLoade
   private val string: String = """
     {
       "message": {
-        "source": "GcpSecret",
-        "id": "projects/012345678900/secrets/example/versions/1"
+        "source": "Other"
       }
     }
   """.trimIndent()

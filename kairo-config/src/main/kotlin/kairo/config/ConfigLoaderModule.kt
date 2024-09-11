@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import kairo.protectedString.ProtectedString
 
 /**
- * A Jackson module that adds support for [ConfigLoaderStringSource] and [ConfigLoaderProtectedStringSource].
+ * A Jackson module that adds support for [ConfigLoaderSource].
  * See the Feature README for more information.
  */
 internal class ConfigLoaderModule(
@@ -19,7 +19,7 @@ internal class ConfigLoaderModule(
 
   private fun buildDeserializers(): Deserializers =
     SimpleDeserializers().apply {
-      addDeserializer(ProtectedString::class.javaObjectType, ConfigLoaderProtectedStringDeserializer(config))
-      addDeserializer(String::class.javaObjectType, ConfigLoaderStringDeserializer(config))
+      addDeserializer(ProtectedString::class.javaObjectType, ConfigProtectedStringDeserializer(config))
+      addDeserializer(String::class.javaObjectType, ConfigStringDeserializer(config))
     }
 }

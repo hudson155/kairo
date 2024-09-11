@@ -7,11 +7,11 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.EnvironmentVariable].
+ * This test is intended to test behaviour strictly related to [ConfigLoaderSource.EnvironmentVariable].
  */
 internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for nullable properties.
+   * This test is specifically for nullable [String] properties.
    */
   internal data class MyClass(
     val message: String?,
