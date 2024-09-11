@@ -46,11 +46,11 @@ a few different sources can be used.
 
 Each type is compatible with certain sources according to the table below.
 
-|                   | `Command` | `EnvironmentVariable` | `GcpSecret` | `Inline` | 
-|-------------------|-----------|-----------------------|-------------|----------|
-| `Int`             | Insecure  | Secure                | Insecure    | Secure   |
-| `ProtectedString` | Insecure  | Insecure              | Secure      | Insecure |
-| `String`          | Insecure  | Secure                | Insecure    | Secure   |
+|                   | `Command` | `EnvironmentVariable` | `GcpSecret` |
+|-------------------|-----------|-----------------------|-------------|
+| `Int`             | Insecure  | Secure                | Insecure    |
+| `ProtectedString` | Insecure  | Insecure              | Secure      |
+| `String`          | Insecure  | Secure                | Insecure    |
 
 ## Usage
 
