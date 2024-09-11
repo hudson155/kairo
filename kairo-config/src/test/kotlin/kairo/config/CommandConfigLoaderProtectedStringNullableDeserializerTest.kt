@@ -2,15 +2,14 @@ package kairo.config
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.matchers.shouldBe
-import io.mockk.every
 import kairo.protectedString.ProtectedString
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderProtectedStringSource.GcpSecret].
+ * This test is intended to test behaviour strictly related to [ConfigLoaderProtectedStringSource.Command].
  */
-internal class NullableGcpSecretConfigLoaderProtectedStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class CommandConfigLoaderProtectedStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable properties.
    */
@@ -18,11 +17,20 @@ internal class NullableGcpSecretConfigLoaderProtectedStringDeserializerTest : Co
     val message: ProtectedString?,
   )
 
-  val string = """
+  val nonNullString = """
     {
       "message": {
-        "source": "GcpSecret",
-        "id": "projects/012345678900/secrets/example/versions/1"
+        "source": "Command",
+        "command": "echo \"Hello, World!\""
+      }
+    }
+  """.trimIndent()
+
+  val nullString = """
+    {
+      "message": {
+        "source": "Command",
+        "command": ";"
       }
     }
   """.trimIndent()
@@ -31,35 +39,31 @@ internal class NullableGcpSecretConfigLoaderProtectedStringDeserializerTest : Co
   fun `non-null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    gcpSecret(ProtectedString("Hello, World!"))
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    shouldBeInsecure("Command source is considered insecure.") {
+      mapper.readValue<MyClass>(nonNullString)
+    }
   }
 
   @Test
   fun `non-null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    gcpSecret(ProtectedString("Hello, World!"))
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(ProtectedString("Hello, World!")))
+    mapper.readValue<MyClass>(nonNullString).shouldBe(MyClass(ProtectedString("Hello, World!")))
   }
 
   @Test
   fun `null (allowInsecureConfigSources = false)`(): Unit = runTest {
     allowInsecureConfigSources(false)
     val mapper = createMapper()
-    gcpSecret(null)
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(null))
+    shouldBeInsecure("Command source is considered insecure.") {
+      mapper.readValue<MyClass>(nullString)
+    }
   }
 
   @Test
   fun `null (allowInsecureConfigSources = true)`(): Unit = runTest {
     allowInsecureConfigSources(true)
     val mapper = createMapper()
-    gcpSecret(null)
-    mapper.readValue<MyClass>(string).shouldBe(MyClass(null))
-  }
-
-  private fun gcpSecret(value: ProtectedString?) {
-    every { gcpSecretSupplier.get("projects/012345678900/secrets/example/versions/1") } returns value
+    mapper.readValue<MyClass>(nullString).shouldBe(MyClass(null))
   }
 }

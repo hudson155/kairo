@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 /**
  * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.EnvironmentVariable].
  */
-internal class NullableEnvironmentVariableConfigLoaderStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for nullable properties.
    */

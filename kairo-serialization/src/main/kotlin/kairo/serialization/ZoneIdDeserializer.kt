@@ -14,7 +14,7 @@ import java.time.ZoneOffset
  * This deserializer intentionally only supports [ZoneRegion] and [ZoneOffset.UTC].
  * Non-UTC [ZoneOffset]s are not supported.
  */
-public open class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
+public class ZoneIdDeserializer : StdDeserializer<ZoneId>(ZoneId::class.java) {
   /**
    * Return type is nullable to support subclasses.
    */

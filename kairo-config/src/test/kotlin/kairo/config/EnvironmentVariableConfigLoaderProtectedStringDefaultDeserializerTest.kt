@@ -5,18 +5,19 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.mockk.every
+import kairo.protectedString.ProtectedString
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to [ConfigLoaderStringSource.EnvironmentVariable].
+ * This test is intended to test behaviour strictly related to [ConfigLoaderProtectedStringSource.EnvironmentVariable].
  */
-internal class DefaultEnvironmentVariableConfigLoaderStringDeserializerTest : ConfigLoaderDeserializerTest() {
+internal class EnvironmentVariableConfigLoaderProtectedStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
    * This test is specifically for non-nullable properties.
    */
   internal data class MyClass(
-    val message: String,
+    val message: ProtectedString,
   )
 
   val stringWithDefault = """
@@ -43,7 +44,9 @@ internal class DefaultEnvironmentVariableConfigLoaderStringDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
+    shouldBeInsecure("Environment variable source is considered insecure.") {
+      mapper.readValue<MyClass>(stringWithDefault)
+    }
   }
 
   @Test
@@ -51,7 +54,7 @@ internal class DefaultEnvironmentVariableConfigLoaderStringDeserializerTest : Co
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable("Hello, World!")
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Hello, World!"))
+    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass(ProtectedString("Hello, World!")))
   }
 
   @Test
@@ -59,7 +62,9 @@ internal class DefaultEnvironmentVariableConfigLoaderStringDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
+    shouldBeInsecure("Environment variable source is considered insecure.") {
+      mapper.readValue<MyClass>(stringWithDefault)
+    }
   }
 
   @Test
@@ -67,7 +72,7 @@ internal class DefaultEnvironmentVariableConfigLoaderStringDeserializerTest : Co
     allowInsecureConfigSources(true)
     val mapper = createMapper()
     environmentVariable(null)
-    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass("Default value."))
+    mapper.readValue<MyClass>(stringWithDefault).shouldBe(MyClass(ProtectedString("Default value.")))
   }
 
   @Test
@@ -75,7 +80,7 @@ internal class DefaultEnvironmentVariableConfigLoaderStringDeserializerTest : Co
     allowInsecureConfigSources(false)
     val mapper = createMapper()
     environmentVariable(null)
-    shouldThrow<JsonMappingException> {
+    shouldBeInsecure("Environment variable source is considered insecure.") {
       mapper.readValue<MyClass>(stringWithoutDefault)
     }
   }
