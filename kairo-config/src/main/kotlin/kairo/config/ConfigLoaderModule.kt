@@ -17,9 +17,18 @@ internal class ConfigLoaderModule(
     context.addDeserializers(buildDeserializers())
   }
 
+  @Suppress("ComplexRedundantLet", "UnnecessaryLet")
   private fun buildDeserializers(): Deserializers =
     SimpleDeserializers().apply {
-      addDeserializer(ProtectedString::class.javaObjectType, ConfigProtectedStringDeserializer(config))
-      addDeserializer(String::class.javaObjectType, ConfigStringDeserializer(config))
+      ConfigIntDeserializer(config).let { deserializer ->
+        addDeserializer(Int::class.javaPrimitiveType, deserializer)
+        addDeserializer(Int::class.javaObjectType, deserializer)
+      }
+      ConfigProtectedStringDeserializer(config).let { deserializer ->
+        addDeserializer(ProtectedString::class.javaObjectType, deserializer)
+      }
+      ConfigStringDeserializer(config).let { deserializer ->
+        addDeserializer(String::class.javaObjectType, deserializer)
+      }
     }
 }
