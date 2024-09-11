@@ -110,7 +110,11 @@ internal data class RestEndpointTemplate(
       }
       try {
         val result = RestEndpointPath(
-          components = annotation.path.drop(1).split('/').map { RestEndpointPath.Component.from(it) },
+          components = annotation.path.drop(1).split('/').map { string ->
+            val component = RestEndpointPath.Component.from(string)
+            if (annotation.validate) component.validate()
+            return@map component
+          },
         )
         result.validate(endpoint)
         return result

@@ -61,6 +61,9 @@ Each modules falls into one of 3 categories:
 
 - [kairo-clock-feature](kairo-clock-feature/):
   The Clock Feature allows for configuration and injection of a Java `Clock`.
+- [kairo-google-app-engine-feature](kairo-google-app-engine-feature/):
+  Kairo's Google App Engine Feature uses the health check readiness endpoint
+  to configure a GAE warmup endpoint.
 - [kairo-health-check-feature](kairo-health-check-feature/):
   Kairo's health check Feature configures liveness and readiness health check REST endpoints.
 - [kairo-id-feature](kairo-id-feature/):

@@ -22,7 +22,7 @@ public abstract class RestEndpoint<I : Any, O : Any?> {
    * Mandatory: the path should be something like "/library-books/:libraryBookId".
    */
   @Target(AnnotationTarget.CLASS)
-  public annotation class Path(val path: String)
+  public annotation class Path(val path: String, val validate: Boolean = true)
 
   /**
    * Use this to indicate path params.

@@ -11,7 +11,7 @@ internal data class RestEndpointPath(
     internal data class Constant(val value: String) : Component() {
       private val regex: Regex = Regex("[a-z][a-z0-9]*(-[a-z][a-z0-9]*)*")
 
-      init {
+      override fun validate() {
         require(regex.matches(value)) { "Path constants must be kebab case: $value." }
       }
     }
@@ -19,17 +19,19 @@ internal data class RestEndpointPath(
     internal data class Param(val value: String) : Component() {
       private val regex: Regex = Regex("[a-z][A-Za-z0-9]*")
 
-      init {
+      override fun validate() {
         require(regex.matches(value)) { "Path params must be camel case: $value." }
       }
     }
 
+    abstract fun validate()
+
     internal companion object {
-      fun from(value: String): Component =
-        if (value.startsWith(':')) {
-          Param(value.substring(1))
+      fun from(string: String): Component =
+        if (string.startsWith(':')) {
+          Param(string.substring(1))
         } else {
-          Constant(value)
+          Constant(string)
         }
     }
   }
