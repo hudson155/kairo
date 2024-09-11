@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonToken
 
 public class BooleanDeserializer : PrimitiveDeserializer<Boolean>(Boolean::class) {
-  override val tokens: Set<JsonToken> = setOf(JsonToken.VALUE_TRUE, JsonToken.VALUE_FALSE)
+  override val tokens: Set<JsonToken> =
+    setOf(JsonToken.VALUE_TRUE, JsonToken.VALUE_FALSE)
 
-  override fun extract(p: JsonParser): Boolean = p.booleanValue
+  override fun extract(p: JsonParser): Boolean =
+    p.booleanValue
 }
