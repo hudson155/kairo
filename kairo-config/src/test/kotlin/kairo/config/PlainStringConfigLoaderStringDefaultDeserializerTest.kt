@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
  */
 internal class PlainStringConfigLoaderStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for non-nullable [String] properties.
    */
   internal data class MyClass(
     val message: String,

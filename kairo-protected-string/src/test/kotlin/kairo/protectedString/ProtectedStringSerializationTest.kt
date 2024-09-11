@@ -8,6 +8,7 @@ import kairo.serialization.ObjectMapperFormat
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
+@OptIn(ProtectedString.Access::class)
 internal class ProtectedStringSerializationTest {
   private val mapper: JsonMapper = ObjectMapperFactory.builder(ObjectMapperFormat.Json).build()
 
