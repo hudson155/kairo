@@ -19,22 +19,14 @@ because some has to come from the environment or from sensitive sources.
 When deserializing the `String` and `ProtectedString` types,
 a few different sources can be used.
 
-- **Plain string:**
-  The most obvious source is just using a plain string.
-  ```yaml
-  message: "Hello, World!"
-  ```
-  - `String` support: Yes.
-  - `ProtectedString` support: No, unless `KAIRO_ALLOW_INSECURE_CONFIG_SOURCES` is set.
-    Considered insecure because sensitive data should never appear directly in config files.
-- **`Command`:**
+- `Command`:
   This will run a shell command to get the value.
   ```yaml
   message:
     source: "Command"
     command: "echo \"Hello, World!\""
   ```
-- **`EnvironmentVariable`:**
+- `EnvironmentVariable`:
   This will retrieve the value from the referenced environment variable.
   ```yaml
   message:
@@ -42,7 +34,7 @@ a few different sources can be used.
     name: "MESSAGE"
     default: "Default value." # The default value is optional.
   ```
-- **`GcpSecret`:**
+- `GcpSecret`:
   This will retrieve the value from the referenced GCP secret.
   ```yaml
   message:
@@ -52,14 +44,12 @@ a few different sources can be used.
 
 ### Source compatibility
 
-TODO
+Each type is compatible with certain sources according to the table below.
 
 |                   | `Command` | `EnvironmentVariable` | `GcpSecret` | `Inline` | 
 |-------------------|-----------|-----------------------|-------------|----------|
-| Plain string      | Insecure  | Secure                | Insecure    | Secure |
-| `Int`             | Insecure  | Secure                | Insecure    | Secure |
 | `ProtectedString` | Insecure  | Insecure              | Secure      | Insecure |
-| `String`          | Insecure  | Secure                | Insecure    | Secure |
+| `String`          | Insecure  | Secure                | Insecure    | Secure   |
 
 ## Usage
 

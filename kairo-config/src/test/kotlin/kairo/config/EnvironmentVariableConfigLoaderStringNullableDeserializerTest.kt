@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
  */
 internal class EnvironmentVariableConfigLoaderStringNullableDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for nullable properties.
+   * This test is specifically for nullable [String] properties.
    */
   internal data class MyClass(
     val message: String?,

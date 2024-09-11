@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 @OptIn(ProtectedString.Access::class)
 internal class GcpSecretConfigLoaderProtectedStringDefaultDeserializerTest : ConfigLoaderDeserializerTest() {
   /**
-   * This test is specifically for non-nullable properties.
+   * This test is specifically for non-nullable [ProtectedString] properties.
    */
   internal data class MyClass(
     val message: ProtectedString,

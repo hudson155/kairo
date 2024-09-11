@@ -12,6 +12,13 @@ import kotlin.reflect.KClass
 
 private val logger: KLogger = KotlinLogging.logger {}
 
+/**
+ * Config files won't typically contain all the config data,
+ * because some has to come from the environment or from sensitive sources.
+ * These sources are defined in [ConfigLoaderSource]
+ * and enabled by this class.
+ * See the Feature README for more information.
+ */
 @OptIn(ProtectedString.Access::class)
 internal abstract class ConfigDeserializer<T : Any>(
   kClass: KClass<T>,
@@ -36,6 +43,9 @@ internal abstract class ConfigDeserializer<T : Any>(
     return string?.let { convert(it) }
   }
 
+  /**
+   * Depending on the type [T], different sources may be secure or insecure.
+   */
   protected abstract fun isSecure(source: ConfigLoaderSource): Boolean
 
   private fun fromCommand(source: ConfigLoaderSource.Command): ProtectedString? {
@@ -47,7 +57,7 @@ internal abstract class ConfigDeserializer<T : Any>(
 
   private fun fromEnvironmentVariable(source: ConfigLoaderSource.EnvironmentVariable): ProtectedString? {
     val (name, default) = source
-    logger.debug { "Config value is from (INSECURE) environment variable: $name." }
+    logger.debug { "Config value is from environment variable: $name." }
     return config.environmentVariableSupplier.get(name, default)?.let { ProtectedString(it) }
   }
 
@@ -57,5 +67,9 @@ internal abstract class ConfigDeserializer<T : Any>(
     return config.gcpSecretSupplier.get(id)
   }
 
+  /**
+   * Converts a [ProtectedString] to the appropriate type.
+   * [ProtectedString.Access] may be used - ensure [isSecure] is accurate.
+   */
   protected abstract fun convert(string: ProtectedString): T
 }
