@@ -36,11 +36,8 @@ KairoUuidFeature(config.uuid)
 // src/main/kotlin/yourPackage/.../YourFile.kt
 
 class MyClass @Inject constructor(
-  uuidGenerator: UuidGenerator.Factory,
+  private val uuidGenerator: UuidGenerator.Factory,
 ) {
-  private val uuidGenerator: UuidGenerator =
-    uuidGenerator.withPrefix("library_book")
-
   fun myMethod() {
     uuidGenerator.generate()
   }
