@@ -12,5 +12,4 @@ terraform {
 
 provider "google" {
   project = "kairo-13"
-  region = "us-central1"
 }
