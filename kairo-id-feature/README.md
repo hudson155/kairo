@@ -6,6 +6,8 @@ Kairo IDs consist of a prefix portion and an ID portion.
 The prefix portion is context-specific,
 and the ID portion is a base-62 string.
 
+Includes testable ID generation code.
+
 **An example:**
 
 An example Kairo ID for a library book would look like `library_book_ccU4Rn4DKVjCMqt3d0oAw3`.
