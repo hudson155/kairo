@@ -69,6 +69,7 @@ Each modules falls into one of 3 categories:
 - [kairo-id-feature](kairo-id-feature/):
   Kairo IDs are an optional way to uniquely identify entities.
   Think of them as an alternative to `UUID`s or serial IDs, but with a few perks.
+  Includes testable ID generation code.
 - [kairo-logging-feature](kairo-logging-feature/):
   This Feature supports logging within Kairo Servers.
 - [kairo-rest-feature](kairo-rest-feature/):
@@ -77,6 +78,8 @@ Each modules falls into one of 3 categories:
 - [kairo-sql-feature](kairo-sql-feature/):
   The SQL Feature adds support for SQL databases.
   Under the hood, this Feature uses [JDBI](https://jdbi.org/).
+- [kairo-uuid-feature](kairo-uuid-feature/):
+  Includes testable UUID generation code.
 
 ### Optional modules
 
