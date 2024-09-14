@@ -11,7 +11,7 @@ import kairo.feature.Feature
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public class KairoRestFeature(
+public open class KairoRestFeature(
   private val config: KairoRestConfig,
 ) : BaseKairoRestFeature() {
   override fun bind(binder: Binder) {

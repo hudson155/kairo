@@ -5,7 +5,7 @@ import kairo.dependencyInjection.bind
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 
-public class KairoIdFeature(
+public open class KairoIdFeature(
   private val config: KairoIdConfig,
 ) : Feature() {
   override val name: String = "KairoId"

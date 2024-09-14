@@ -10,7 +10,7 @@ import kairo.feature.FeaturePriority
 import kairo.rest.bindRestHandlers
 import kotlin.reflect.KClass
 
-public class KairoHealthCheckFeature(
+public open class KairoHealthCheckFeature(
   private val healthCheckServiceClass: KClass<out HealthCheckService>,
 ) : Feature() {
   override val name: String = "Health Check"
