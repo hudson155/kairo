@@ -6,7 +6,7 @@ import kairo.dependencyInjection.bind
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 
-public class KairoClockFeature(
+public open class KairoClockFeature(
   private val config: KairoClockConfig,
 ) : Feature() {
   override val name: String = "Kairo Clock"
