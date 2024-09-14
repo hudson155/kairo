@@ -14,7 +14,7 @@ import org.jdbi.v3.core.Jdbi
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public class KairoSqlFeature(
+public open class KairoSqlFeature(
   private val config: KairoSqlConfig,
 ) : Feature() {
   override val name: String = "SQL"

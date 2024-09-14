@@ -2,4 +2,4 @@ package kairo.restTesting
 
 import kairo.rest.BaseKairoRestFeature
 
-public class TestKairoRestFeature : BaseKairoRestFeature()
+public open class TestKairoRestFeature : BaseKairoRestFeature()

@@ -5,7 +5,7 @@ import kairo.feature.Feature
 import kairo.feature.FeaturePriority
 import kairo.rest.bindRestHandlers
 
-public class KairoGoogleAppEngineFeature : Feature() {
+public open class KairoGoogleAppEngineFeature : Feature() {
   override val name: String = "Google App Engine"
 
   override val priority: FeaturePriority = FeaturePriority.Normal
