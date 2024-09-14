@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaProjectCodeInsightSettings">
+    <excluded-names>
+      <name>com.google.inject.TypeLiteral</name>
+      <name>jakarta.validation.constraints.*</name>
+      <name>java.util.UUID</name>
+      <name>javax.inject.*</name>
+      <name>kotlin.time.Duration</name>
+      <name>org.junit.jupiter.api.Assertions.*</name>
+      <name>org.slf4j.Logger</name>
+      <name>org.slf4j.LoggerFactory</name>
+    </excluded-names>
+  </component>
+</project>
