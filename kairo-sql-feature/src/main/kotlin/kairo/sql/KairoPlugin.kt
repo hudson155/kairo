@@ -7,10 +7,11 @@ import org.jdbi.v3.core.spi.JdbiPlugin
 
 /**
  * Intended to extend JDBI with Kairo-specific functionality.
- * This currently only means
+ * This currently means adding support for various types.
  */
 internal class KairoPlugin : JdbiPlugin {
   override fun customizeJdbi(jdbi: Jdbi) {
+    jdbi.register(KairoIdColumnMapper(), KairoIdArgumentFactory())
     jdbi.register(UuidColumnMapper(), UuidArgumentFactory())
   }
 
