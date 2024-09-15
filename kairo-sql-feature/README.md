@@ -161,3 +161,22 @@ from library_book
 where id = :id
 returning *
 ```
+
+### Step 4: Create and configure the Feature
+
+```yaml
+# src/main/resources/config/config.yaml
+
+sql:
+  jdbcUrl: "jdbc:postgresql://localhost/monolith"
+  properties: { }
+  connectionTimeoutMs: 5000 # 5 seconds.
+  minimumIdle: 16
+  maximumPoolSize: 64 # Matches rest.parallelism.callGroupSize.
+```
+
+```kotlin
+// src/main/kotlin/yourPackage/server/monolith/MonolithServer.kt
+
+KairoSqlFeature(config.sql)
+```

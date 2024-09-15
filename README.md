@@ -305,12 +305,19 @@ rest:
     host: "0.0.0.0"
     port: 8080
   lifecycle:
-    shutdownGracePeriodMs: 5000 # 5 seconds.
-    shutdownTimeoutMs: 15_000 # 15 seconds.
+    shutdownGracePeriodMs: 15_000 # 15 seconds.
+    shutdownTimeoutMs: 25_000 # 25 seconds.
   parallelism:
     connectionGroupSize: 16
     workerGroupSize: 32
     callGroupSize: 64
+
+sql:
+  jdbcUrl: "jdbc:postgresql://localhost/monolith"
+  properties: { }
+  connectionTimeoutMs: 5000 # 5 seconds.
+  minimumIdle: 16
+  maximumPoolSize: 64 # Matches rest.parallelism.callGroupSize.
 ```
 
 Finally, create the Server class itself.
