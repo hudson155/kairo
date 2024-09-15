@@ -56,8 +56,9 @@ data class LibraryBookModel(
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookStore.kt
 
+// TODO: ForTable no longer exists.
 class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookModel>(
-  tableName = "library_book",
+  tableName = "library.library_book",
 ) {
   suspend fun listAll(): List<LibraryBookModel> =
     sql { handle ->
@@ -115,14 +116,14 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookMode
 -- src/main/resources/store/libraryBook/listAll.sql
 
 select *
-from library_book
+from library.library_book
 ```
 
 ```postgresql
 -- src/main/resources/store/libraryBook/searchByIsbn.sql
 
 select *
-from library_book
+from library.library_book
 where isbn = :isbn
 ```
 
@@ -130,15 +131,15 @@ where isbn = :isbn
 -- src/main/resources/store/libraryBook/searchByText.sql
 
 select *
-from library_book
-where title = :title
+from library.library_book
+where title = :title -- TODO: Fix this query for nulls.
   and author = :author
 ```
 
 ```postgresql
 -- src/main/resources/store/libraryBook/create.sql
 
-insert into library_book (id, title, author, isbn)
+insert into library.library_book (id, title, author, isbn)
 values (:id, :title, :author, :isbn)
 returning *
 ```
@@ -146,7 +147,7 @@ returning *
 ```postgresql
 -- src/main/resources/store/libraryBook/update.sql
 
-update library_book
+update library.library_book
 set title  = :title,
     author = :author
 where id = :id
@@ -157,7 +158,7 @@ returning *
 -- src/main/resources/store/libraryBook/listAll.sql
 
 delete
-from library_book
+from library.library_book
 where id = :id
 returning *
 ```
