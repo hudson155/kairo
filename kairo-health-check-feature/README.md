@@ -1,6 +1,6 @@
 # `kairo-health-check-feature`
 
-Kairo's health check Feature configures liveness and readiness health check REST endpoints:
+Kairo's Health Check Feature configures liveness and readiness health check REST endpoints:
 
 - `GET /health/liveness` is designed to always respond with `200 OK` and no response body.
   This can be used to check if the Server is running.
