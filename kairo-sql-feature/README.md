@@ -56,9 +56,10 @@ data class LibraryBookModel(
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookStore.kt
 
-class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookModel>(
-  tableName = "library_book",
-) {
+class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel>() {
+  suspend fun get(id: KairoId): LibraryBookModel? =
+    get(id, forUpdate = false)
+
   suspend fun listAll(): List<LibraryBookModel> =
     sql { handle ->
       val query = handle.createQuery(rs("store/libraryBook/listAll.sql"))
@@ -93,8 +94,8 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookMode
     updater: Updater<LibraryBookModel.Update>,
   ): LibraryBookModel =
     sql { handle ->
-      val update = update(id) { updater.update(LibraryBookModel.Update(it)) }
-        ?: throw LibraryBookDoesNotExist()
+      val libraryBook = get(id, forUpdate = true) ?: throw LibraryBookDoesNotExist()
+      val update = updater.update(LibraryBookModel.Update(libraryBook))
       logger.info { "Updating library book: $update." }
       val query = handle.createQuery(rs("store/libraryBook/update.sql"))
       query.bind("id", id)
@@ -108,21 +109,38 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookMode
       query.bind("id", id)
       return@sql query.mapToType().singleNullOrThrow() ?: throw LibraryBookDoesNotExist()
     }
+
+  private suspend fun get(id: KairoId, forUpdate: Boolean): LibraryBookModel? =
+    sql { handle ->
+      val query = handle.createQuery(rs("store/libraryBook/get.sql"))
+      query.define("lockingClause", if (forUpdate) "for no key update" else "")
+      query.bind("id", id)
+      return@sql query.mapToType().singleNullOrThrow()
+    }
 }
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/get.sql
+
+select *
+from library.library_book
+where id = :id
+<lockingClause>
 ```
 
 ```postgresql
 -- src/main/resources/store/libraryBook/listAll.sql
 
 select *
-from library_book
+from library.library_book
 ```
 
 ```postgresql
 -- src/main/resources/store/libraryBook/searchByIsbn.sql
 
 select *
-from library_book
+from library.library_book
 where isbn = :isbn
 ```
 
@@ -130,15 +148,15 @@ where isbn = :isbn
 -- src/main/resources/store/libraryBook/searchByText.sql
 
 select *
-from library_book
-where title = :title
-  and author = :author
+from library.library_book
+where (:title is null or title = :title)
+  and (:author is null or author = :author)
 ```
 
 ```postgresql
 -- src/main/resources/store/libraryBook/create.sql
 
-insert into library_book (id, title, author, isbn)
+insert into library.library_book (id, title, author, isbn)
 values (:id, :title, :author, :isbn)
 returning *
 ```
@@ -146,7 +164,7 @@ returning *
 ```postgresql
 -- src/main/resources/store/libraryBook/update.sql
 
-update library_book
+update library.library_book
 set title  = :title,
     author = :author
 where id = :id
@@ -157,7 +175,7 @@ returning *
 -- src/main/resources/store/libraryBook/listAll.sql
 
 delete
-from library_book
+from library.library_book
 where id = :id
 returning *
 ```
