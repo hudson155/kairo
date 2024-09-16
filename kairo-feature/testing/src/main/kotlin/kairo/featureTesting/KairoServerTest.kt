@@ -15,11 +15,9 @@ public abstract class KairoServerTest {
   @BeforeEach
   public open fun beforeEach(): Unit = runTest {
     server.start(wait = false)
-    server.featureManager.features.forEach { feature ->
-      if (feature is TestFeature.BeforeEach) {
-        feature.beforeEachTest(injector)
-      }
-    }
+    server.featureManager.features
+      .filterIsInstance<TestFeature.BeforeEach>()
+      .forEach { it.beforeEach(injector) }
   }
 
   @AfterEach
