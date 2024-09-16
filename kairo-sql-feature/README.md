@@ -56,10 +56,14 @@ data class LibraryBookModel(
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookStore.kt
 
-// TODO: ForTable no longer exists.
-class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookModel>(
-  tableName = "library.library_book",
-) {
+class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel>() {
+  suspend fun get(id: KairoId): LibraryBookModel? =
+    sql { handle ->
+      val query = handle.createQuery(rs("store/libraryBook/get.sql"))
+      query.bind("id", id)
+      return@sql query.mapToType().singleNullOrThrow()
+    }
+
   suspend fun listAll(): List<LibraryBookModel> =
     sql { handle ->
       val query = handle.createQuery(rs("store/libraryBook/listAll.sql"))
@@ -110,6 +114,14 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForTable<LibraryBookMode
       return@sql query.mapToType().singleNullOrThrow() ?: throw LibraryBookDoesNotExist()
     }
 }
+```
+
+```postgresql
+-- src/main/resources/store/libraryBook/get.sql
+
+select *
+from library.library_book
+where id = :id
 ```
 
 ```postgresql
