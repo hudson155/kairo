@@ -7,6 +7,9 @@ import kairo.sql.KairoSqlConfig
 import kairo.sql.KairoSqlFeature
 import kairo.sql.Sql
 
+/**
+ * Extends [KairoSqlFeature] for testing by automatically truncating all tables before each test.
+ */
 public open class TestKairoSqlFeature(
   config: KairoSqlConfig,
   private val schemaNames: List<String>,
