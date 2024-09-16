@@ -9,7 +9,7 @@ import kairo.uuid.KairoUuidFeature
 import kairo.uuid.KairoUuidGenerator
 
 /**
- * Extends [KairoUuidFeature] for testing by automatically resetting.
+ * Extends [KairoUuidFeature] for testing by automatically resetting the [KairoUuidGenerator].
  */
 public open class TestKairoUuidFeature(
   config: KairoUuidConfig,

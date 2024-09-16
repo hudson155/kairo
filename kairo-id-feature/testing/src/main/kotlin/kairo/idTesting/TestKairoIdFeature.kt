@@ -9,7 +9,7 @@ import kairo.id.KairoIdFeature
 import kairo.id.KairoIdGenerator
 
 /**
- * Extends [KairoIdFeature] for testing by automatically resetting.
+ * Extends [KairoIdFeature] for testing by automatically resetting the [KairoIdGenerator].
  */
 public open class TestKairoIdFeature(
   config: KairoIdConfig,
