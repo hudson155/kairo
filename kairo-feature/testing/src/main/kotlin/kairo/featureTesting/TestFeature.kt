@@ -2,11 +2,11 @@ package kairo.featureTesting
 
 import com.google.inject.Injector
 
+/**
+ * Test Feature interfaces allow Features to be
+ */
 public interface TestFeature {
-  /**
-   * [beforeEachTest] will be called before each test.
-   */
   public interface BeforeEach {
-    public suspend fun beforeEachTest(injector: Injector)
+    public suspend fun beforeEach(injector: Injector)
   }
 }

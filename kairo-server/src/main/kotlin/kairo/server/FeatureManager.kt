@@ -13,7 +13,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * A wrapper around a set of [Feature]s that helps [Server] manage their lifecycle.
  */
 public class FeatureManager(
-  private val features: Set<Feature>,
+  public val features: Set<Feature>,
   private val config: FeatureManagerConfig,
 ) {
   internal fun createInjector(): Injector =
