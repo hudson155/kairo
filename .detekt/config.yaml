@@ -52,7 +52,7 @@ comments:
   EndOfSentenceFormat:
     active: true
   KDocReferencesNonPublicProperty:
-    active: true # Unsure about this rule; could consider disabling.
+    active: false
   OutdatedDocumentation:
     active: true
     matchTypeParameters: true

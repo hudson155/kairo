@@ -16,7 +16,6 @@ private val logger: KLogger = KotlinLogging.logger {}
 /**
  * Extends [KairoSqlFeature] for testing by automatically truncating all tables before each test.
  * Tables in [schemas] will be truncated.
- * If [schemas] is null, [KairoSqlMigrationConfig.schemas] will be used instead.
  */
 public open class TestKairoSqlFeature(
   config: KairoSqlConfig,
