@@ -3,10 +3,7 @@ package kairo.sql
 import com.google.common.io.Resources
 import com.google.inject.Inject
 import java.sql.BatchUpdateException
-import kairo.id.KairoId
 import kairo.reflect.typeParam
-import kairo.sql.SqlStore.ForTable
-import kairo.sql.SqlStore.ForType
 import kotlin.reflect.KClass
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.result.ResultIterable
@@ -17,7 +14,7 @@ import org.postgresql.util.ServerErrorMessage
 
 /**
  * A SQL store provides access to the database.
- * This will typically be [ForTable], or at least [ForType].
+ * This will typically be [SqlStore.ForType].
  *
  * Queries are done using [sql].
  * Error handling is done using [onError].
@@ -63,24 +60,5 @@ public abstract class SqlStore {
 
     protected fun Query.mapToType(): ResultIterable<T> =
       mapTo(type)
-  }
-
-  public abstract class ForTable<T : Any>(private val tableName: String) : ForType<T>() {
-    public suspend fun get(id: KairoId): T? =
-      get(id, forUpdate = false)
-
-    protected suspend fun get(id: KairoId, forUpdate: Boolean): T? =
-      sql { handle ->
-        val query = handle.createQuery(rs("store/sql/get.sql"))
-        query.define("tableName", tableName)
-        query.define("lockingClause", if (forUpdate) "for no key update" else "")
-        query.bind("id", id)
-        return@sql query.mapToType().singleNullOrThrow()
-      }
-
-    protected suspend fun <U : Any> update(id: KairoId, updater: (model: T) -> U): U? {
-      val model = get(id, forUpdate = true) ?: return null
-      return updater(model)
-    }
   }
 }
