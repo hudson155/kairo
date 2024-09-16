@@ -9,7 +9,8 @@ internal sealed class RestEndpointArgument(
   private val call: ApplicationCall,
   protected val param: KParameter,
 ) {
-  suspend fun read(): Any? = read(call)
+  suspend fun read(): Any? =
+    read(call)
 
   protected abstract suspend fun read(call: ApplicationCall): Any?
 

@@ -17,7 +17,8 @@ internal class TransactionContext : AbstractCoroutineContextElement(Key) {
 
   private val types: MutableMap<KClass<out TransactionType>, Content> = mutableMapOf()
 
-  operator fun contains(type: KClass<out TransactionType>): Boolean = type in types
+  operator fun contains(type: KClass<out TransactionType>): Boolean =
+    type in types
 
   operator fun plusAssign(type: KClass<out TransactionType>) {
     types += type to Content()

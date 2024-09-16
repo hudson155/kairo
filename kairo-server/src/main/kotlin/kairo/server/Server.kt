@@ -13,7 +13,7 @@ private val logger: KLogger = KotlinLogging.logger {}
  * A Server is an application that runs a set of Features.
  */
 public abstract class Server {
-  protected abstract val featureManager: FeatureManager
+  public abstract val featureManager: FeatureManager
 
   private val lock: Lock = ReentrantLock()
 

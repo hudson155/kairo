@@ -61,7 +61,8 @@ public abstract class SqlStore {
   public abstract class ForType<T : Any> : SqlStore() {
     private val type: KClass<T> = typeParam(ForType::class, 0, this::class)
 
-    protected fun Query.mapToType(): ResultIterable<T> = mapTo(type.java)
+    protected fun Query.mapToType(): ResultIterable<T> =
+      mapTo(type)
   }
 
   public abstract class ForTable<T : Any>(private val tableName: String) : ForType<T>() {
