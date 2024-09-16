@@ -149,8 +149,8 @@ where isbn = :isbn
 
 select *
 from library.library_book
-where title = :title -- TODO: Fix this query for nulls.
-  and author = :author
+where (:title is null or title = :title)
+  and (:author is null or author = :author)
 ```
 
 ```postgresql
