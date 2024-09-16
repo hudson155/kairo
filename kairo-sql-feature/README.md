@@ -58,11 +58,7 @@ data class LibraryBookModel(
 
 class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel>() {
   suspend fun get(id: KairoId): LibraryBookModel? =
-    sql { handle ->
-      val query = handle.createQuery(rs("store/libraryBook/get.sql"))
-      query.bind("id", id)
-      return@sql query.mapToType().singleNullOrThrow()
-    }
+    get(id, forUpdate = false)
 
   suspend fun listAll(): List<LibraryBookModel> =
     sql { handle ->
@@ -98,8 +94,8 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
     updater: Updater<LibraryBookModel.Update>,
   ): LibraryBookModel =
     sql { handle ->
-      val update = update(id) { updater.update(LibraryBookModel.Update(it)) }
-        ?: throw LibraryBookDoesNotExist()
+      val libraryBook = get(id, forUpdate = true) ?: throw LibraryBookDoesNotExist()
+      val update = updater.update(LibraryBookModel.Update(libraryBook))
       logger.info { "Updating library book: $update." }
       val query = handle.createQuery(rs("store/libraryBook/update.sql"))
       query.bind("id", id)
@@ -113,6 +109,14 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
       query.bind("id", id)
       return@sql query.mapToType().singleNullOrThrow() ?: throw LibraryBookDoesNotExist()
     }
+
+  private suspend fun get(id: KairoId, forUpdate: Boolean): LibraryBookModel? =
+    sql { handle ->
+      val query = handle.createQuery(rs("store/libraryBook/get.sql"))
+      query.define("lockingClause", if (forUpdate) "for no key update" else "")
+      query.bind("id", id)
+      return@sql query.mapToType().singleNullOrThrow()
+    }
 }
 ```
 
@@ -122,6 +126,7 @@ class LibraryBookStore @Inject constructor() : SqlStore.ForType<LibraryBookModel
 select *
 from library.library_book
 where id = :id
+<lockingClause>
 ```
 
 ```postgresql
