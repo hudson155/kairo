@@ -623,6 +623,7 @@ style:
       - 'kotlin.collections.singleOrNull' # singleNullOrThrow is less surprising.
       - 'kotlin.io.print'
       - 'kotlin.io.println'
+      - 'org.jdbi.v3.core.result.ResultBearing.mapTo' # Use the Kotlin overload.
   ForbiddenSuppress:
     active: false
   ForbiddenVoid:
