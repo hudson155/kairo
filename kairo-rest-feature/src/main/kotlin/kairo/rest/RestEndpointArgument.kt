@@ -31,6 +31,7 @@ internal sealed class RestEndpointArgument(
     override suspend fun read(call: ApplicationCall): Any? {
       val parameters = call.parameters.getAll(name) ?: return null
       val parameter = parameters.single() // Lists are not supported yet.
+      @Suppress("ForbiddenMethodCall")
       return ktorMapper.convertValue(parameter, ktorMapper.constructType(param.type.javaType))
     }
   }

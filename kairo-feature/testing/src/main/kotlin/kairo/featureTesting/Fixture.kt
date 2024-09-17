@@ -17,6 +17,7 @@ public abstract class Fixture<T : Any>(private val name: String) {
 
   protected operator fun get(key: Any): T {
     val resource = Resources.getResource("fixture/$name/$key.json")
-    return mapper.readValue(resource, typeParam.java) // TODO: Think about use of this overload.
+    @Suppress("ForbiddenMethodCall")
+    return mapper.readValue(resource, typeParam.java)
   }
 }
