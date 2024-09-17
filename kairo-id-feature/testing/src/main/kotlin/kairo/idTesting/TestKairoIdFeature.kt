@@ -15,7 +15,7 @@ public open class TestKairoIdFeature(
   config: KairoIdConfig,
 ) : KairoIdFeature(config), TestFeature.BeforeEach {
   override suspend fun beforeEach(injector: Injector) {
-    val idGenerator = injector.getInstance<KairoIdGenerator>() as DeterministicKairoIdGenerator
+    val idGenerator = injector.getInstance<KairoIdGenerator.Factory>() as DeterministicKairoIdGenerator.Factory
     idGenerator.reset()
   }
 }
