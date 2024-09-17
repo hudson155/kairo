@@ -10,4 +10,10 @@ public inline fun <reified T : Any> Injector.getInstance(): T =
   getInstance(Key.get(type<T>()))
 
 public fun <T : Any> Injector.getInstanceByClass(kClass: KClass<T>): T =
-  getInstance(kClass.java)
+  getInstance(Key.get(kClass.java))
+
+public inline fun <reified T : Any> Injector.getInstanceOptional(): T? =
+  getExistingBinding(Key.get(type<T>()))?.let { it.provider.get() }
+
+public fun <T : Any> Injector.getInstanceOptionalByClass(kClass: KClass<T>): T? =
+  getExistingBinding(Key.get(kClass.java))?.let { it.provider.get() }
