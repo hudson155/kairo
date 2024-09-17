@@ -9,9 +9,9 @@ import kairo.featureTesting.TestFeature
 import kairo.sql.KairoSqlConfig
 import kairo.sql.KairoSqlFeature
 import kairo.sql.Sql
-import kairo.sql.mapTo
 import kairo.sqlMigration.KairoSqlMigrationConfig
 import org.jdbi.v3.core.Handle
+import org.jdbi.v3.core.kotlin.mapTo
 
 private val logger: KLogger = KotlinLogging.logger {}
 
