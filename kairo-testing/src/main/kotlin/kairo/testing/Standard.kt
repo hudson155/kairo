@@ -1,4 +1,3 @@
-
 package kairo.testing
 
 import kotlin.contracts.ExperimentalContracts
