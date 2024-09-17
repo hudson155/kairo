@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.module.SimpleDeserializers
 import com.fasterxml.jackson.databind.module.SimpleModule
 
 internal class PrimitivesModule(
-  private val trimWhitespace: TrimWhitespace.Type,
+  private val builder: ObjectMapperFactoryBuilder,
 ) : SimpleModule() {
   override fun setupModule(context: SetupContext) {
     super.setupModule(context)
@@ -31,7 +31,9 @@ internal class PrimitivesModule(
         addDeserializer(Int::class.javaPrimitiveType, deserializer)
         addDeserializer(Int::class.javaObjectType, deserializer)
       }
-      StringDeserializer(trimWhitespace).let { deserializer ->
+      StringDeserializer(
+        trimWhitespace = builder.trimWhitespace,
+      ).let { deserializer ->
         addDeserializer(String::class.javaObjectType, deserializer)
       }
       LongDeserializer().let { deserializer ->
@@ -41,12 +43,6 @@ internal class PrimitivesModule(
     }
 }
 
-internal fun ObjectMapperFactoryBuilder.configurePrimitives(
-  trimWhitespace: TrimWhitespace.Type,
-) {
-  addModule(
-    PrimitivesModule(
-      trimWhitespace = trimWhitespace,
-    ),
-  )
+internal fun ObjectMapperFactoryBuilder.configurePrimitives(builder: ObjectMapperFactoryBuilder) {
+  addModule(PrimitivesModule(builder))
 }

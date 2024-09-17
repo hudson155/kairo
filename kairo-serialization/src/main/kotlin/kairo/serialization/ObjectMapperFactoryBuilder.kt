@@ -36,9 +36,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
 
     configureKotlin()
     configureJava()
-    configurePrimitives(
-      trimWhitespace = trimWhitespace,
-    )
+    configurePrimitives(this)
     configureTime()
     configureUuids()
 
