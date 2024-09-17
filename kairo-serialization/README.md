@@ -26,6 +26,12 @@ because of its limited support for polymorphism.
   - `LocalDate`
   - `ZoneId`
 
+### Additional functionality
+
+Some additional functionality is supported for string deserialization.
+
+- The [TrimWhitespace] annotation removes whitespace from the start and/or end of strings during deserialization.
+
 ## Usage
 
 ### Step 1: Include the dependency
