@@ -1,4 +1,5 @@
 [versions]
+flyway = "10.17.2" # // https://github.com/flyway/flyway/releases
 gcpSecretManager = "2.48.0" # https://mvnrepository.com/artifact/com.google.cloud/google-cloud-secretmanager
 geantyref = "1.3.13" # https://github.com/leangen/geantyref/releases
 guava = "33.2.1-jre" # https://github.com/google/guava/releases
@@ -15,6 +16,8 @@ mockK = "1.13.12" # https://github.com/mockk/mockk/releases
 postgres = "42.7.4" # https://github.com/pgjdbc/pgjdbc/releases
 
 [libraries]
+flywayCore = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flywayDatabasePostgres = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 gcpSecretManager = { module = "com.google.cloud:google-cloud-secretmanager", version.ref = "gcpSecretManager" }
 geantyref = { module = "io.leangen.geantyref:geantyref", version.ref = "geantyref" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }

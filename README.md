@@ -78,6 +78,10 @@ Each modules falls into one of 3 categories:
 - [kairo-sql-feature](kairo-sql-feature/):
   The SQL Feature adds support for SQL databases.
   Under the hood, this Feature uses [JDBI](https://jdbi.org/).
+- [kairo-sql-migration-feature](kairo-sql-migration-feature/):
+  The SQL Migration Feature complements [kairo-sql-feature](kairo-sql-feature/)
+  by adding support for database migrations.
+  Under the hood, this Feature uses [Flyway Community](https://www.red-gate.com/products/flyway/community/).
 - [kairo-uuid-feature](kairo-uuid-feature/):
   Includes testable UUID generation code.
 
