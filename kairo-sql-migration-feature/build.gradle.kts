@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":kairo-environment-variable-supplier"))
   api(project(":kairo-feature"))
   api(project(":kairo-sql-feature"))
   implementation(project(":kairo-logging"))
