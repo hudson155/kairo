@@ -51,6 +51,7 @@ public class ConfigLoader(
     val actualConfigName = getActualConfigName(configName)
     logger.info { "Loading config: $actualConfigName." }
     val config = loadAsJson(actualConfigName)
+    @Suppress("ForbiddenMethodCall")
     return mapper.convertValue(config, configKClass.java)
   }
 

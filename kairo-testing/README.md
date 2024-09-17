@@ -1,7 +1,6 @@
 # `kairo-testing`
 
-This is a convenient testing library which includes some helpful test dependencies.
-In the future, the intention is for this library to also include test framework and utility code.
+This is a convenient testing library which includes some helpful test dependencies and utility code.
 
 - [Kotest](https://kotest.io/) is provided as both the test runner and for assertions.
 - [MockK](https://mockk.io/) is provided for mocking.
@@ -25,15 +24,25 @@ dependencies {
 
 internal class YourTest {
   @Test
-  fun `test case 1`(): Unit = runTest {
-    shouldThrow<IllegalArgumentException> {
-      doSomething("1")
+  fun `your test`(): Unit = runTest {
+    setup("Your setup") {
+      // ...
     }
-  }
 
-  @Test
-  fun `test case 2`(): Unit = runTest {
-    doSomething("2").shouldBe("wonderful result!")
+    precondition("Your precondition") {
+      // ...
+    }
+
+    test("Your test") {
+      shouldThrow<IllegalArgumentException> {
+        doSomething("0")
+      }
+      doSomething("1").shouldBe("wonderful result!")
+    }
+
+    postcondition("Your postcondition") {
+      // ...
+    }
   }
 }
 ```
