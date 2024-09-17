@@ -6,6 +6,7 @@ import java.sql.BatchUpdateException
 import kairo.reflect.typeParam
 import kotlin.reflect.KClass
 import org.jdbi.v3.core.Handle
+import org.jdbi.v3.core.kotlin.mapTo
 import org.jdbi.v3.core.result.ResultIterable
 import org.jdbi.v3.core.statement.Query
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException
