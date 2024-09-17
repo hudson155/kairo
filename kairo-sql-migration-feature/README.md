@@ -26,18 +26,16 @@ dependencies {
 
 create table library.library_book
 (
-    id         text
-        constraint pkey__library_book primary key,
+    id text -- KairoIds are stored as text.
+        constraint pkey__library_book
+            primary key,
 
-    created_at timestamptz not null default now(),
-    updated_at timestamptz not null default now(),
-    deleted_at timestamptz not null default null,
-    version    bigint      not null default 0,
-
-    title      text        not null,
-    author     text,
-    isbn       text        not null
+    title text not null,
+    author text,
+    isbn text not null
 );
+
+-- Note: This table is missing indexes.
 ```
 
 ```kotlin
