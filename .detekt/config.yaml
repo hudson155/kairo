@@ -601,6 +601,7 @@ style:
     methods:
       - 'com.fasterxml.jackson.core.JsonParser.readValueAs' # Use the Kotlin overload.
       - 'com.google.inject.Binder.bind' # Use the Kotlin overload.
+      - 'com.google.inject.Injector.getExistingBinding' # Use the Kotlin overload.
       - 'com.google.inject.Injector.getInstance' # Use the Kotlin overload.
       - 'com.google.inject.binder.ScopedBindingBuilder.in' # Use the Kotlin overload.
       - 'com.google.inject.binder.LinkedBindingBuilder.to' # Use the Kotlin overload.
