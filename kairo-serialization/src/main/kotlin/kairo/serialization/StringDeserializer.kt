@@ -10,15 +10,15 @@ public class StringDeserializer private constructor(
   private val trimWhitespace: TrimWhitespace.Type,
   private val transformCase: TransformCase.Type,
 ) : PrimitiveDeserializer<String>(String::class), ContextualDeserializer {
+  override val tokens: Set<JsonToken> =
+    setOf(JsonToken.VALUE_STRING)
+
   public constructor(
     trimWhitespace: TrimWhitespace.Type,
   ) : this(
     trimWhitespace = trimWhitespace,
     transformCase = TransformCase.Type.None,
   )
-
-  override val tokens: Set<JsonToken> =
-    setOf(JsonToken.VALUE_STRING)
 
   override fun createContextual(ctxt: DeserializationContext, property: BeanProperty?): StringDeserializer =
     StringDeserializer(

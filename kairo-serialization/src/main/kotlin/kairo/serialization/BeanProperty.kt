@@ -1,3 +1,5 @@
+@file:Suppress("ForbiddenMethodCall")
+
 package kairo.serialization
 
 import com.fasterxml.jackson.databind.BeanProperty
