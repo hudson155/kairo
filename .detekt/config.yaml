@@ -600,6 +600,8 @@ style:
     active: true
     methods:
       - 'com.fasterxml.jackson.core.JsonParser.readValueAs' # Use the Kotlin overload.
+      - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue' # Use the Kotlin overload.
+      - 'com.fasterxml.jackson.databind.ObjectMapper.readValue' # Use the Kotlin overload.
       - 'com.google.inject.Binder.bind' # Use the Kotlin overload.
       - 'com.google.inject.Injector.getExistingBinding' # Use the Kotlin overload.
       - 'com.google.inject.Injector.getInstance' # Use the Kotlin overload.
