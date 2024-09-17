@@ -17,5 +17,5 @@ dependencies {
   api(libs.jdbiCore)  // Exposed for clients.
   api(libs.jdbiKotlin) // There are some extension functions to expose.
   implementation(libs.jdbiPostgres)
-  implementation(libs.postgres)
+  api(libs.postgres) // Expose [ServerErrorMessage].
 }

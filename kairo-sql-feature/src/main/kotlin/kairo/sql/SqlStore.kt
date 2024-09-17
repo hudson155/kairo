@@ -32,7 +32,7 @@ public abstract class SqlStore {
         return@inner block(handle)
       } catch (e: UnableToExecuteStatementException) {
         val message = e.serverErrorMessage() ?: throw e
-        message.onError(e)
+        message.onError()
         throw e
       }
     }
@@ -40,7 +40,7 @@ public abstract class SqlStore {
   /**
    * Implement this to handle SQL errors. One implementation is shared across all methods.
    */
-  protected open fun ServerErrorMessage.onError(e: UnableToExecuteStatementException): Unit = Unit
+  protected open fun ServerErrorMessage.onError(): Unit = Unit
 
   private fun UnableToExecuteStatementException.serverErrorMessage(): ServerErrorMessage? =
     when (val cause = cause) {
