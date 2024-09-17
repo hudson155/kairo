@@ -6,23 +6,30 @@ import com.fasterxml.jackson.databind.BeanProperty
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer
 
-public class StringDeserializer(
+public class StringDeserializer private constructor(
   private val trimWhitespace: TrimWhitespace.Type,
+  private val transformCase: TransformCase.Type,
 ) : PrimitiveDeserializer<String>(String::class), ContextualDeserializer {
   override val tokens: Set<JsonToken> =
     setOf(JsonToken.VALUE_STRING)
 
-  override fun createContextual(ctxt: DeserializationContext, property: BeanProperty?): StringDeserializer {
-    val trim = property?.let { it.getAnnotation(TrimWhitespace::class.java)?.type } ?: return this
-    return StringDeserializer(trim)
-  }
+  public constructor(
+    trimWhitespace: TrimWhitespace.Type,
+  ) : this(
+    trimWhitespace = trimWhitespace,
+    transformCase = TransformCase.Type.None,
+  )
+
+  override fun createContextual(ctxt: DeserializationContext, property: BeanProperty?): StringDeserializer =
+    StringDeserializer(
+      trimWhitespace = property?.getAnnotation<TrimWhitespace>()?.type ?: trimWhitespace,
+      transformCase = property?.getAnnotation<TransformCase>()?.type ?: transformCase,
+    )
 
   override fun extract(p: JsonParser): String {
     var result = p.text
-    with(trimWhitespace) {
-      if (trimStart) result = result.trimStart()
-      if (trimEnd) result = result.trimEnd()
-    }
+    result = trimWhitespace.transform(result)
+    result = transformCase.transform(result)
     return result
   }
 }
