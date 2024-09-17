@@ -26,12 +26,19 @@ public class ObjectMapperFactoryBuilder internal constructor(
    */
   public var prettyPrint: Boolean = false
 
+  /**
+   * String properties have their starting and ending whitespace trimmed.
+   */
+  public var trimWhitespace: TrimWhitespace.Type = TrimWhitespace.Type.TrimNone
+
   init {
     block()
 
     configureKotlin()
     configureJava()
-    configurePrimitives()
+    configurePrimitives(
+      trimWhitespace = trimWhitespace,
+    )
     configureTime()
     configureUuids()
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import kairo.protectedString.ProtectedString
 import kairo.serialization.StringDeserializer
+import kairo.serialization.TrimWhitespace
 
 /**
  * Adds support for [String] from various [ConfigLoaderSource]s.
@@ -11,7 +12,7 @@ import kairo.serialization.StringDeserializer
 internal class ConfigStringDeserializer(
   config: ConfigLoaderConfig,
 ) : ConfigDeserializer<String>(String::class, config) {
-  private val stringDeserializer: StringDeserializer = StringDeserializer()
+  private val stringDeserializer: StringDeserializer = StringDeserializer(TrimWhitespace.Type.TrimNone)
 
   /**
    * In addition to the [ConfigLoaderSource]s, strings can be plaintext.
