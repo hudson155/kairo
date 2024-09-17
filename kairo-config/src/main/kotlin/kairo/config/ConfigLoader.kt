@@ -1,5 +1,6 @@
 package kairo.config
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
@@ -107,14 +108,14 @@ public class ConfigLoader(
   private fun merge(extends: ObjectNode, config: ObjectNode) {
     config.fields().forEach { (name, jsonNode) ->
       when (jsonNode) {
-        is ValueNode -> mergeValueNode(extends, name, jsonNode)
+        is ArrayNode, is ValueNode -> mergeValueNode(extends, name, jsonNode)
         is ObjectNode -> mergeObjectNode(extends, name, jsonNode)
         else -> throw IllegalArgumentException("Unsupported JsonNode: $jsonNode.")
       }
     }
   }
 
-  private fun mergeValueNode(extends: ObjectNode, name: String, jsonNode: ValueNode) {
+  private fun mergeValueNode(extends: ObjectNode, name: String, jsonNode: JsonNode) {
     extends.set<ObjectNode>(name, jsonNode)
   }
 
