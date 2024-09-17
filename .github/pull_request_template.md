@@ -1,7 +1,5 @@
 ### Summary
 
-Part of #0.
-
 Placeholder.
 
 ### Checklist
