@@ -51,6 +51,7 @@ KairoSqlMigrationFeature(config.sqlMigration)
 
 sqlMigration:
   run: true
+  cleanOnValidationError: false # Never enable this in production.
   locations:
     - "db/monolith/migration/common"
   defaultSchema: "public"
