@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
   api(project(":kairo-feature"))
-  api(project(":kairo-sql-feature"))
+  implementation(project(":kairo-sql-feature"))
   implementation(project(":kairo-logging"))
 
   implementation(libs.flywayCore)
