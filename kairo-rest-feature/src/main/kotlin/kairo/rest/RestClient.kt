@@ -1,6 +1,8 @@
 package kairo.rest
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.inject.Inject
+import kairo.serialization.TrimWhitespace
 
 public class RestClient @Inject constructor(
   private val registry: RestHandlerRegistry,
@@ -10,6 +12,11 @@ public class RestClient @Inject constructor(
     val handler = checkNotNull(registry[endpoint::class]) {
       "REST handler registry had no entry for ${endpoint::class.qualifiedName!!}."
     } as H
-    return handler.handle(endpoint)
+    /**
+     * We call [ObjectMapper.convertValue] to put the [E] instance through (de)serialization.
+     * Without doing this, Jackson transformations such as [TrimWhitespace] wouldn't get called.
+     */
+    @Suppress("ForbiddenMethodCall")
+    return handler.handle(ktorMapper.convertValue(endpoint, handler.endpoint.java))
   }
 }
