@@ -34,19 +34,28 @@ public open class TestKairoSqlFeature(
   private fun Handle.getTables(injector: Injector): List<String> {
     val schemas = getSchemas(injector)
     if (schemas.isEmpty()) return emptyList()
-    return createQuery(
+    val tables = createQuery(
       """
         select concat_ws('.', schemaname, tablename)
         from pg_tables
         where schemaname in (${schemas.joinToString { "'$it'" }})
       """.trimIndent(),
     ).mapTo<String>().toList()
+    return filterTables(injector, tables)
   }
 
   private fun getSchemas(injector: Injector): List<String> {
     if (schemas != null) return schemas
     val migrationConfig = injector.getInstanceOptional<KairoSqlMigrationConfig>() ?: return emptyList()
-    return migrationConfig.schemas
+    return buildList {
+      add(migrationConfig.defaultSchema)
+      addAll(migrationConfig.schemas)
+    }
+  }
+
+  private fun filterTables(injector: Injector, tables: List<String>): List<String> {
+    val migrationConfig = injector.getInstanceOptional<KairoSqlMigrationConfig>() ?: return tables
+    return tables.filter { it != "${migrationConfig.defaultSchema}.${migrationConfig.tableName}" }
   }
 
   private fun Handle.truncateTables(tables: List<String>) {
