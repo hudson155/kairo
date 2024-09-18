@@ -600,7 +600,6 @@ style:
     active: true
     methods:
       - 'com.fasterxml.jackson.core.JsonParser.readValueAs' # Use the Kotlin overload.
-      - 'com.fasterxml.jackson.databind.BeanProperty.getAnnotation' # Use the Kotlin overload.
       - 'com.fasterxml.jackson.databind.ObjectMapper.convertValue' # Use the Kotlin overload.
       - 'com.fasterxml.jackson.databind.ObjectMapper.readValue' # Use the Kotlin overload.
       - 'com.google.inject.Binder.bind' # Use the Kotlin overload.

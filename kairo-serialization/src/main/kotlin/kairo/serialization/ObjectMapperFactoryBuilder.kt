@@ -27,7 +27,7 @@ public class ObjectMapperFactoryBuilder internal constructor(
   public var prettyPrint: Boolean = false
 
   /**
-   * See [TrimWhitespace] and [StringDeserializer].
+   * String properties have their starting and ending whitespace trimmed.
    */
   public var trimWhitespace: TrimWhitespace.Type = TrimWhitespace.Type.TrimNone
 

@@ -7,10 +7,10 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test is intended to test behaviour strictly related to string "trim whitespace" during deserialization.
- * Therefore, some test cases are not included since they are not strictly related to string "trim whitespace".
+ * This test is intended to test behaviour strictly related to string trim during deserialization.
+ * Therefore, some test cases are not included since they are not strictly related to string trim.
  */
-internal class StringTrimWhitespaceObjectMapperTest {
+internal class StringTrimObjectMapperTest {
   internal data class MyClass(
     val value: String,
   )
@@ -34,7 +34,7 @@ internal class StringTrimWhitespaceObjectMapperTest {
 
   @Test
   fun `deserialize, trim none`(): Unit = runTest {
-    val mapper = createMapper()
+    val mapper = createMapper(TrimWhitespace.Type.TrimNone)
     mapper.readValue<MyClass>(string).shouldBe(MyClass("  foo\t"))
   }
 
@@ -74,10 +74,8 @@ internal class StringTrimWhitespaceObjectMapperTest {
     mapper.readValue<MyClassTrimBoth>(string).shouldBe(MyClassTrimBoth("foo"))
   }
 
-  private fun createMapper(trimWhitespace: TrimWhitespace.Type? = null): JsonMapper =
+  private fun createMapper(trimWhitespace: TrimWhitespace.Type): JsonMapper =
     ObjectMapperFactory.builder(ObjectMapperFormat.Json) {
-      if (trimWhitespace != null) {
-        this.trimWhitespace = trimWhitespace
-      }
+      this.trimWhitespace = trimWhitespace
     }.build()
 }
