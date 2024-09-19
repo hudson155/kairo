@@ -1,4 +1,4 @@
-package kairo.sql
+package kairo.sql.plugin.kairo
 
 import java.sql.ResultSet
 import kotlin.uuid.Uuid
