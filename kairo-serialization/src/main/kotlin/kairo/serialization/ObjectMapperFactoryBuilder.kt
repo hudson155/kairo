@@ -5,6 +5,14 @@ import com.fasterxml.jackson.databind.Module
 import com.fasterxml.jackson.databind.json.JsonMapper
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kairo.serialization.module.configurePrettyPrinting
+import kairo.serialization.module.increaseStrictness
+import kairo.serialization.module.java.configureJava
+import kairo.serialization.module.kotlin.configureKotlin
+import kairo.serialization.module.primitives.TrimWhitespace
+import kairo.serialization.module.primitives.configurePrimitives
+import kairo.serialization.module.setUnknownPropertyHandling
+import kairo.serialization.module.time.configureTime
 
 private val logger: KLogger = KotlinLogging.logger {}
 
@@ -38,7 +46,6 @@ public class ObjectMapperFactoryBuilder internal constructor(
     configureJava()
     configurePrimitives(this)
     configureTime()
-    configureUuids()
 
     increaseStrictness()
     configurePrettyPrinting(prettyPrint = prettyPrint)

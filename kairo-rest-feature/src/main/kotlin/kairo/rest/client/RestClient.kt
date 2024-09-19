@@ -6,7 +6,7 @@ import kairo.rest.endpoint.RestEndpoint
 import kairo.rest.handler.RestHandler
 import kairo.rest.handler.RestHandlerRegistry
 import kairo.rest.ktorMapper
-import kairo.serialization.TrimWhitespace
+import kairo.serialization.module.primitives.TrimWhitespace
 
 public class RestClient @Inject constructor(
   private val registry: RestHandlerRegistry,

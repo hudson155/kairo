@@ -7,7 +7,7 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kairo.commandRunner.CommandRunner
 import kairo.protectedString.ProtectedString
-import kairo.serialization.readValue
+import kairo.serialization.util.readValue
 import kotlin.reflect.KClass
 
 private val logger: KLogger = KotlinLogging.logger {}
