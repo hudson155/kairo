@@ -3,7 +3,7 @@ package kairo.config
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import kairo.protectedString.ProtectedString
-import kairo.serialization.IntDeserializer
+import kairo.serialization.module.primitives.IntDeserializer
 
 /**
  * Adds support for [Int] from various [ConfigLoaderSource]s.
