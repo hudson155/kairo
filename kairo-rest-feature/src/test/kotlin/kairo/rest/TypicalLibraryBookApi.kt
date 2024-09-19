@@ -1,6 +1,7 @@
 package kairo.rest
 
 import kairo.id.KairoId
+import kairo.rest.endpoint.RestEndpoint
 
 /**
  * This API is used by many tests within the REST Feature.

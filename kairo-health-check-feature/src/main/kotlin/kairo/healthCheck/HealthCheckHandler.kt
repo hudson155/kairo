@@ -2,7 +2,7 @@ package kairo.healthCheck
 
 import com.google.inject.Inject
 import io.ktor.http.HttpStatusCode
-import kairo.rest.RestHandler
+import kairo.rest.handler.RestHandler
 
 @Suppress("UseDataClass") // Handlers shouldn't be data classes.
 internal class HealthCheckHandler @Inject constructor(

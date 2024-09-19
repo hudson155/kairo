@@ -7,7 +7,7 @@ import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toClass
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
-import kairo.rest.bindRestHandlers
+import kairo.rest.server.bindRestHandlers
 import kotlin.reflect.KClass
 
 public open class KairoHealthCheckFeature(

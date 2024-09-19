@@ -1,6 +1,6 @@
 package kairo.healthCheck
 
-import kairo.rest.RestEndpoint
+import kairo.rest.endpoint.RestEndpoint
 
 public object HealthCheckApi {
   @RestEndpoint.Method("GET")
