@@ -1,7 +1,7 @@
 package kairo.googleAppEngine
 
 import kairo.healthCheck.HealthCheckRep
-import kairo.rest.RestEndpoint
+import kairo.rest.endpoint.RestEndpoint
 
 public object GoogleAppEngineApi {
   @RestEndpoint.Method("GET")

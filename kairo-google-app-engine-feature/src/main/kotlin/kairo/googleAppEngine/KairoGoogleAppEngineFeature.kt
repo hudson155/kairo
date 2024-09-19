@@ -3,7 +3,7 @@ package kairo.googleAppEngine
 import com.google.inject.Binder
 import kairo.feature.Feature
 import kairo.feature.FeaturePriority
-import kairo.rest.bindRestHandlers
+import kairo.rest.server.bindRestHandlers
 
 public open class KairoGoogleAppEngineFeature : Feature() {
   override val name: String = "Google App Engine"
