@@ -8,6 +8,8 @@ import kairo.dependencyInjection.bind
 import kairo.dependencyInjection.getInstance
 import kairo.dependencyInjection.toProvider
 import kairo.feature.Feature
+import kairo.rest.server.KtorServer
+import kairo.rest.server.KtorServerProvider
 
 private val logger: KLogger = KotlinLogging.logger {}
 
