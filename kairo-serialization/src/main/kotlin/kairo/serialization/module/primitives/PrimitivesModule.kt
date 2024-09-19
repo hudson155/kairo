@@ -10,7 +10,9 @@ import kotlin.uuid.Uuid
 
 /**
  * Although this is named "primitives", it doesn't just handle primitives.
- * For example, [String] and [Uuid] are not primitives
+ * For example, [String] and [Uuid] are not primitives.
+ *
+ * Regarding UUIDs, Jackson supports [java.util.UUID] by default, but not [kotlin.uuid.Uuid] which we use.
  */
 internal class PrimitivesModule(
   private val builder: ObjectMapperFactoryBuilder,
