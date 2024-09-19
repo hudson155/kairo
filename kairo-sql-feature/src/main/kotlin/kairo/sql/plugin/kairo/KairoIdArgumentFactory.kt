@@ -1,4 +1,4 @@
-package kairo.sql
+package kairo.sql.plugin.kairo
 
 import java.sql.Types
 import kairo.id.KairoId

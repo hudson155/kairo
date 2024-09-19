@@ -1,4 +1,4 @@
-package kairo.sql
+package kairo.sql.plugin.kairo
 
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.argument.ArgumentFactory

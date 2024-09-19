@@ -1,4 +1,4 @@
-package kairo.sql
+package kairo.sql.store
 
 import org.postgresql.util.ServerErrorMessage
 
