@@ -3,8 +3,8 @@ package kairo.config
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import kairo.protectedString.ProtectedString
-import kairo.serialization.StringDeserializer
-import kairo.serialization.TrimWhitespace
+import kairo.serialization.module.primitives.StringDeserializer
+import kairo.serialization.module.primitives.TrimWhitespace
 
 /**
  * Adds support for [String] from various [ConfigLoaderSource]s.
