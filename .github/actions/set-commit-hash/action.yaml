@@ -1,7 +1,0 @@
-name: Set commit hash
-description: Sets GITHUB_SHA_SHORT.
-runs:
-  using: composite
-  steps:
-    - run: echo "GITHUB_SHA_SHORT=$(git rev-parse --short=8 HEAD)" >> $GITHUB_ENV
-      shell: bash

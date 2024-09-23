@@ -1,7 +1,0 @@
-.expandIcon {
-  transition-duration: var(--duration-transition);
-}
-
-[data-headlessui-state=open] > .expandIcon {
-  transform: scaleY(-1);
-}

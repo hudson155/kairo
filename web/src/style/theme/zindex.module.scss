@@ -1,9 +1,0 @@
-/**
- * All z-indices in the app are coordinated using CSS variables here.
- * This helps prevent incorrect overlap.
- */
-:root {
-  --zIndex-menu: 1;
-  --zIndex-sideNav: 2;
-  --zIndex-toast: 3;
-}

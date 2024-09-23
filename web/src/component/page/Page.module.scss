@@ -1,7 +1,0 @@
-@use "src/style/breakpoints";
-
-.page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-layout);
-}
