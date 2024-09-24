@@ -2,11 +2,13 @@ package kairo.rest.template
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kairo.rest.endpoint.RestEndpoint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import kairo.rest.template.BrokenParamLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [BrokenParamLibraryBookApi]
+ * This test uses [LibraryBookApi]
  * to test cases where the [RestEndpoint.PathParam] and [RestEndpoint.QueryParam] annotations
  * are used in unexpected or unsupported ways.
  */
@@ -14,7 +16,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun nonParamConstructorParameter(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.NonParamConstructorParameter::class)
+      RestEndpointTemplate.from(LibraryBookApi.NonParamConstructorParameter::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.NonParamConstructorParameter" +
         " param must be path or query: shouldNotBeHere.",
@@ -24,7 +26,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun bodyAsPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.BodyAsPathParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.BodyAsPathParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.BodyAsPathParam" +
         " body cannot be param.",
@@ -34,7 +36,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun bodyAsQueryParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.BodyAsQueryParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.BodyAsQueryParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.BodyAsQueryParam" +
         " body cannot be param.",
@@ -44,7 +46,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun pathParamMarkedAsQueryParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.PathParamMarkedAsQueryParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.PathParamMarkedAsQueryParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.PathParamMarkedAsQueryParam" +
         " path is invalid. Path param in path but not in constructor: libraryBookId.",
@@ -54,7 +56,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun queryParamMarkedAsPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.QueryParamMarkedAsPathParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.QueryParamMarkedAsPathParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.QueryParamMarkedAsPathParam" +
         " path is invalid. Path param in constructor but not in path: isbn.",
@@ -64,7 +66,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun paramIsPathAndQuery(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.ParamIsPathAndQuery::class)
+      RestEndpointTemplate.from(LibraryBookApi.ParamIsPathAndQuery::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.ParamIsPathAndQuery" +
         " param cannot be both path and query: libraryBookId.",
@@ -74,7 +76,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun nullablePathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.NullablePathParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.NullablePathParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.NullablePathParam" +
         " path is invalid. Path param must not be nullable: libraryBookId.",
@@ -84,7 +86,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun optionalPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.OptionalPathParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.OptionalPathParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.OptionalPathParam" +
         " path is invalid. Path param must not be optional: libraryBookId.",
@@ -94,7 +96,7 @@ internal class BrokenParamRestEndpointTemplateTest {
   @Test
   fun optionalQueryParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenParamLibraryBookApi.OptionalQueryParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.OptionalQueryParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenParamLibraryBookApi.OptionalQueryParam" +
         " query is invalid. Query param must not be optional: title.",

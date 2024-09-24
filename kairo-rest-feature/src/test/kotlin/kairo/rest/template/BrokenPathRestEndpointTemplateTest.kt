@@ -2,11 +2,13 @@ package kairo.rest.template
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kairo.rest.endpoint.RestEndpoint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import kairo.rest.template.BrokenPathLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [BrokenPathLibraryBookApi]
+ * This test uses [LibraryBookApi]
  * to test cases where the [RestEndpoint.Path] annotation
  * is used in unexpected or unsupported ways.
  */
@@ -14,7 +16,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun missingMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.MissingPath::class)
+      RestEndpointTemplate.from(LibraryBookApi.MissingPath::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.MissingPath" +
         " is missing @Path.",
@@ -24,7 +26,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun emptyMethod(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.EmptyPath::class)
+      RestEndpointTemplate.from(LibraryBookApi.EmptyPath::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.EmptyPath" +
         " path must start with a slash: .",
@@ -34,7 +36,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun pathMissingLeadingSlash(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.PathMissingLeadingSlash::class)
+      RestEndpointTemplate.from(LibraryBookApi.PathMissingLeadingSlash::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.PathMissingLeadingSlash" +
         " path must start with a slash: library-books.",
@@ -44,7 +46,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun malformedConstantPathComponent(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.MalformedConstantPathComponent::class)
+      RestEndpointTemplate.from(LibraryBookApi.MalformedConstantPathComponent::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.MalformedConstantPathComponent" +
         " path is invalid. Path constants must be kebab case: libraryBooks.",
@@ -54,7 +56,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun malformedPathConstantComponent(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.MalformedConstantPathComponent::class)
+      RestEndpointTemplate.from(LibraryBookApi.MalformedConstantPathComponent::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.MalformedConstantPathComponent" +
         " path is invalid. Path constants must be kebab case: libraryBooks.",
@@ -64,7 +66,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun malformedParamPathComponent(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.MalformedParamPathComponent::class)
+      RestEndpointTemplate.from(LibraryBookApi.MalformedParamPathComponent::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.MalformedParamPathComponent" +
         " path is invalid. Path params must be camel case: library-book-id.",
@@ -74,7 +76,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun nullablePathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.NullablePathParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.NullablePathParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.NullablePathParam" +
         " path is invalid. Path param must not be nullable: libraryBookId.",
@@ -84,7 +86,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun optionalPathParam(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.OptionalPathParam::class)
+      RestEndpointTemplate.from(LibraryBookApi.OptionalPathParam::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.OptionalPathParam" +
         " path is invalid. Path param must not be optional: libraryBookId.",
@@ -94,7 +96,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun duplicatePathParamInPath(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.DuplicatePathParamInPath::class)
+      RestEndpointTemplate.from(LibraryBookApi.DuplicatePathParamInPath::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.DuplicatePathParamInPath" +
         " path is invalid. Duplicate path param in path: libraryBookId.",
@@ -104,7 +106,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun pathParamInPathButNotInConstructor(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.PathParamInPathButNotInConstructor::class)
+      RestEndpointTemplate.from(LibraryBookApi.PathParamInPathButNotInConstructor::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.PathParamInPathButNotInConstructor" +
         " path is invalid. Path param in path but not in constructor: libraryBookId.",
@@ -114,7 +116,7 @@ internal class BrokenPathRestEndpointTemplateTest {
   @Test
   fun pathParamInConstructorButNotInPath(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenPathLibraryBookApi.PathParamInConstructorButNotInPath::class)
+      RestEndpointTemplate.from(LibraryBookApi.PathParamInConstructorButNotInPath::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenPathLibraryBookApi.PathParamInConstructorButNotInPath" +
         " path is invalid. Path param in constructor but not in path: libraryBookId.",

@@ -2,18 +2,20 @@ package kairo.rest.template
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.throwable.shouldHaveMessage
+import kairo.rest.endpoint.RestEndpoint
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import kairo.rest.template.BrokenLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [BrokenLibraryBookApi]
+ * This test uses [LibraryBookApi]
  * to test simple invalid cases not related to a particular [RestEndpoint] annotation.
  */
 internal class BrokenRestEndpointTemplateTest {
   @Test
   fun notDataClass(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataClass::class)
+      RestEndpointTemplate.from(LibraryBookApi.NotDataClass::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenLibraryBookApi.NotDataClass" +
         " must be a data class or data object.",
@@ -23,7 +25,7 @@ internal class BrokenRestEndpointTemplateTest {
   @Test
   fun notDataObject(): Unit = runTest {
     shouldThrow<IllegalArgumentException> {
-      RestEndpointTemplate.from(BrokenLibraryBookApi.NotDataObject::class)
+      RestEndpointTemplate.from(LibraryBookApi.NotDataObject::class)
     }.shouldHaveMessage(
       "REST endpoint kairo.rest.template.BrokenLibraryBookApi.NotDataObject" +
         " must be a data class or data object.",
