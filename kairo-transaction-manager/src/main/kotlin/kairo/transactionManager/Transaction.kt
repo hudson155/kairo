@@ -3,6 +3,7 @@ package kairo.transactionManager
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.util.Stack
+import kairo.logging.ifDebugEnabled
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.withContext
@@ -107,7 +108,7 @@ internal class Transaction(
     try {
       return block()
     } catch (e: Exception) {
-      logger.warn(e) { "An exception was thrown during a transaction. Rolling back." }
+      logger.warn(logger.ifDebugEnabled(e)) { "An exception was thrown during a transaction. Rolling back." }
       throw e
     }
   }
