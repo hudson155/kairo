@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test
 import kairo.rest.template.BrokenTypeLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [BrokenLibraryBookApi]
- * to test invalid cases related to types within [RestEndpoint].
+ * Tests invalid cases related to types within [RestEndpoint].
  */
 internal class BrokenTypeRestEndpointTemplateTest {
   @Test

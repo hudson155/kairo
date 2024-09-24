@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import kairo.rest.TypicalLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [LibraryBookApi] to test typical (happy path) cases.
+ * Tests typical (happy path) cases.
  */
 internal class TypicalRestEndpointTemplateTest {
   @Test

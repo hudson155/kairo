@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test
 import kairo.rest.template.BrokenContentTypeLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [LibraryBookApi]
- * to test cases where the [RestEndpoint.ContentType] annotation
+ * Tests cases where the [RestEndpoint.ContentType] annotation
  * is used in unexpected or unsupported ways.
  */
 internal class BrokenContentTypeRestEndpointTemplateTest {

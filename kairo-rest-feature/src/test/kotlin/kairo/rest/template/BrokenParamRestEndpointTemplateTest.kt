@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test
 import kairo.rest.template.BrokenParamLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [LibraryBookApi]
- * to test cases where the [RestEndpoint.PathParam] and [RestEndpoint.QueryParam] annotations
+ * Tests cases where the [RestEndpoint.PathParam] and [RestEndpoint.QueryParam] annotations
  * are used in unexpected or unsupported ways.
  */
 internal class BrokenParamRestEndpointTemplateTest {

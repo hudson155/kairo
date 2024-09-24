@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test
 import kairo.rest.template.BrokenAcceptLibraryBookApi as LibraryBookApi
 
 /**
- * This test uses [LibraryBookApi]
- * to test cases where the [RestEndpoint.Accept] annotation
+ * Tests cases where the [RestEndpoint.Accept] annotation
  * is used in unexpected or unsupported ways.
  */
 internal class BrokenAcceptRestEndpointTemplateTest {

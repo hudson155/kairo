@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import java.util.Optional
 import kairo.id.KairoId
 
+/**
+ * This rep is used by many tests within the REST Feature.
+ * Verify all usages if making changes.
+ */
 internal data class TypicalLibraryBookRep(
   val id: KairoId,
   val title: String,
