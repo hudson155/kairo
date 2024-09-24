@@ -3,17 +3,17 @@ package kairo.rest.template
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
-import kairo.rest.LibraryBookApi
+import kairo.rest.TypicalLibraryBookApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 /**
- * This test uses [LibraryBookApi] to test typical (happy path) cases.
+ * This test uses [TypicalLibraryBookApi] to test typical (happy path) cases.
  */
 internal class TypicalRestEndpointTemplateTest {
   @Test
   fun get(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.Get::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.Get::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Get,
@@ -30,7 +30,7 @@ internal class TypicalRestEndpointTemplateTest {
 
   @Test
   fun listAll(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.ListAll::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.ListAll::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Get,
@@ -46,7 +46,7 @@ internal class TypicalRestEndpointTemplateTest {
 
   @Test
   fun searchByIsbn(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.SearchByIsbn::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByIsbn::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Get,
@@ -64,7 +64,7 @@ internal class TypicalRestEndpointTemplateTest {
 
   @Test
   fun searchByTitle(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.SearchByText::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByText::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Get,
@@ -83,7 +83,7 @@ internal class TypicalRestEndpointTemplateTest {
 
   @Test
   fun create(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.Create::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.Create::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Post,
@@ -99,7 +99,7 @@ internal class TypicalRestEndpointTemplateTest {
 
   @Test
   fun update(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.Update::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.Update::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Patch,
@@ -116,7 +116,7 @@ internal class TypicalRestEndpointTemplateTest {
 
   @Test
   fun delete(): Unit = runTest {
-    RestEndpointTemplate.from(LibraryBookApi.Delete::class)
+    RestEndpointTemplate.from(TypicalLibraryBookApi.Delete::class)
       .shouldBe(
         RestEndpointTemplate(
           method = HttpMethod.Delete,

@@ -10,8 +10,8 @@ import io.mockk.mockk
 import java.lang.reflect.InvocationTargetException
 import java.util.Optional
 import kairo.id.KairoId
-import kairo.rest.LibraryBookRep
-import kairo.rest.LibraryBookApi
+import kairo.rest.TypicalLibraryBookApi
+import kairo.rest.TypicalLibraryBookRep
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test
 internal class RestEndpointReaderTest {
   @Test
   fun `get, invalid path param`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Get::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Get::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "2eDS1sMt")
@@ -38,7 +38,7 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `get, happy path`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Get::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Get::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "library_book_2eDS1sMt")
@@ -46,7 +46,7 @@ internal class RestEndpointReaderTest {
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.Get(
+        TypicalLibraryBookApi.Get(
           libraryBookId = KairoId("library_book", "2eDS1sMt"),
         ),
       )
@@ -54,17 +54,17 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `listAll, happy path`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.ListAll::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.ListAll::class)
     val call = mockk<RoutingCall>()
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.ListAll,
+        TypicalLibraryBookApi.ListAll,
       )
   }
 
   @Test
   fun `searchByIsbn, missing isbn`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.SearchByIsbn::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.SearchByIsbn::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.Empty
     }
@@ -75,7 +75,7 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `searchByIsbn, happy path`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.SearchByIsbn::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.SearchByIsbn::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("isbn", "978-0756405892")
@@ -83,7 +83,7 @@ internal class RestEndpointReaderTest {
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.SearchByIsbn(
+        TypicalLibraryBookApi.SearchByIsbn(
           isbn = "978-0756405892",
         ),
       )
@@ -91,13 +91,13 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `searchByText, happy path (neither provided)`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.SearchByText::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.SearchByText::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.Empty
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.SearchByText(
+        TypicalLibraryBookApi.SearchByText(
           title = null,
           author = null,
         ),
@@ -106,7 +106,7 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `searchByText, happy path (both provided)`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.SearchByText::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.SearchByText::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("title", "The Name of the Wind")
@@ -115,7 +115,7 @@ internal class RestEndpointReaderTest {
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.SearchByText(
+        TypicalLibraryBookApi.SearchByText(
           title = "The Name of the Wind",
           author = "Patrick Rothfuss",
         ),
@@ -124,11 +124,11 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `create, happy path`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Create::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Create::class)
     val call = mockk<RoutingCall> {
       coEvery {
-        receiveNullable<LibraryBookRep.Creator>(any())
-      } returns LibraryBookRep.Creator(
+        receiveNullable<TypicalLibraryBookRep.Creator>(any())
+      } returns TypicalLibraryBookRep.Creator(
         title = "The Name of the Wind",
         author = "Patrick Rothfuss",
         isbn = "978-0756405892",
@@ -136,8 +136,8 @@ internal class RestEndpointReaderTest {
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.Create(
-          body = LibraryBookRep.Creator(
+        TypicalLibraryBookApi.Create(
+          body = TypicalLibraryBookRep.Creator(
             title = "The Name of the Wind",
             author = "Patrick Rothfuss",
             isbn = "978-0756405892",
@@ -148,23 +148,23 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `update, happy path (neither provided)`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Update::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Update::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery {
-        receiveNullable<LibraryBookRep.Update>(any())
-      } returns LibraryBookRep.Update(
+        receiveNullable<TypicalLibraryBookRep.Update>(any())
+      } returns TypicalLibraryBookRep.Update(
         title = null,
         author = null,
       )
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.Update(
+        TypicalLibraryBookApi.Update(
           libraryBookId = KairoId("library_book", "2eDS1sMt"),
-          body = LibraryBookRep.Update(
+          body = TypicalLibraryBookRep.Update(
             title = null,
             author = null,
           ),
@@ -174,23 +174,23 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `update, happy path (author null)`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Update::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Update::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery {
-        receiveNullable<LibraryBookRep.Update>(any())
-      } returns LibraryBookRep.Update(
+        receiveNullable<TypicalLibraryBookRep.Update>(any())
+      } returns TypicalLibraryBookRep.Update(
         title = null,
         author = Optional.empty(),
       )
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.Update(
+        TypicalLibraryBookApi.Update(
           libraryBookId = KairoId("library_book", "2eDS1sMt"),
-          body = LibraryBookRep.Update(
+          body = TypicalLibraryBookRep.Update(
             title = null,
             author = Optional.empty(),
           ),
@@ -200,23 +200,23 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `update, happy path (both provided)`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Update::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Update::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "library_book_2eDS1sMt")
       }
       coEvery {
-        receiveNullable<LibraryBookRep.Update>(any())
-      } returns LibraryBookRep.Update(
+        receiveNullable<TypicalLibraryBookRep.Update>(any())
+      } returns TypicalLibraryBookRep.Update(
         title = "The Name of the Wind",
         author = Optional.of("Patrick Rothfuss"),
       )
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.Update(
+        TypicalLibraryBookApi.Update(
           libraryBookId = KairoId("library_book", "2eDS1sMt"),
-          body = LibraryBookRep.Update(
+          body = TypicalLibraryBookRep.Update(
             title = "The Name of the Wind",
             author = Optional.of("Patrick Rothfuss"),
           ),
@@ -226,7 +226,7 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `delete, invalid path param`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Delete::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Delete::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "2eDS1sMt")
@@ -239,7 +239,7 @@ internal class RestEndpointReaderTest {
 
   @Test
   fun `delete, happy path`(): Unit = runTest {
-    val reader = RestEndpointReader.from(LibraryBookApi.Delete::class)
+    val reader = RestEndpointReader.from(TypicalLibraryBookApi.Delete::class)
     val call = mockk<RoutingCall> {
       every { parameters } returns Parameters.build {
         append("libraryBookId", "library_book_2eDS1sMt")
@@ -247,7 +247,7 @@ internal class RestEndpointReaderTest {
     }
     reader.endpoint(call)
       .shouldBe(
-        LibraryBookApi.Delete(
+        TypicalLibraryBookApi.Delete(
           libraryBookId = KairoId("library_book", "2eDS1sMt"),
         ),
       )

@@ -2,12 +2,13 @@ package kairo.rest
 
 import kairo.id.KairoId
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.TypicalLibraryBookRep as LibraryBookRep
 
 /**
  * This API is used by many tests within the REST Feature.
  * Verify all usages if making changes.
  */
-internal object LibraryBookApi {
+internal object TypicalLibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")

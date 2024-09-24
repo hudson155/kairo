@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import java.util.Optional
 import kairo.id.KairoId
 
-internal data class LibraryBookRep(
+internal data class TypicalLibraryBookRep(
   val id: KairoId,
   val title: String,
   val author: String?,
