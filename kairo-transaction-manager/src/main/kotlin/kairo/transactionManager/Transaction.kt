@@ -107,7 +107,11 @@ internal class Transaction(
     try {
       return block()
     } catch (e: Exception) {
-      logger.warn(e) { "An exception was thrown during a transaction. Rolling back." }
+      if (logger.isDebugEnabled()) {
+        logger.debug(e) { "An exception was thrown during a transaction. Rolling back." }
+      } else {
+        logger.warn { "An exception was thrown during a transaction. Rolling back." }
+      }
       throw e
     }
   }
