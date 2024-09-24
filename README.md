@@ -50,7 +50,7 @@ Each modules falls into one of 3 categories:
   Includes support for config extension and application,
   as well as various sources.
 - [kairo-serialization](kairo-serialization/):
-  Uses [Jackson](https://github.com/FasterXML/jackson)
+  Uses [Jackson](https://github.com/FasterXML/jackson).
   to handle JSON and YAML serialization.
 - [kairo-testing](kairo-testing/):
   A convenient testing library which includes some helpful test dependencies.
@@ -79,7 +79,7 @@ Each modules falls into one of 3 categories:
   The SQL Feature adds support for SQL databases.
   Under the hood, this Feature uses [JDBI](https://jdbi.org/).
 - [kairo-sql-migration-feature](kairo-sql-migration-feature/):
-  The SQL Migration Feature complements [kairo-sql-feature](kairo-sql-feature/)
+  The SQL Migration Feature complements [kairo-sql-feature](kairo-sql-feature/).
   by adding support for database migrations.
   Under the hood, this Feature uses [Flyway Community](https://www.red-gate.com/products/flyway/community/).
 - [kairo-uuid-feature](kairo-uuid-feature/):
@@ -113,6 +113,9 @@ Each modules falls into one of 3 categories:
   `EnvironmentVariableSupplier` supplies environment variables.
   It delegates to Java's built-in way of doing this,
   but uses an abstract class for testability.
+- [kairo-exception](kairo-exception/):
+  Base classes representing exceptions that Kairo knows how to handle.
+  This is primarily used by [kairo-rest-feature](kairo-rest-feature/).
 - [kairo-gcp-secret-supplier](kairo-gcp-secret-supplier/):
   `GcpSecretSupplier` supplies GCP secrets.
   It delegates to the GCP Secret Manager SDK,
