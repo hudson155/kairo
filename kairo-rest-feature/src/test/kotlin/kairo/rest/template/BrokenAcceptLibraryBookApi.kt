@@ -1,8 +1,8 @@
 package kairo.rest.template
 
 import kairo.id.KairoId
-import kairo.rest.TypicalLibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.TypicalLibraryBookRep as LibraryBookRep
 
 /**
  * This API is for [BrokenAcceptRestEndpointTemplateTest]
@@ -14,14 +14,14 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Path("/library-books/:libraryBookId")
   internal data class AcceptNotPresentOnGet(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.ContentType("application/json")
   internal data class AcceptNotPresentOnPost(
-    override val body: TypicalLibraryBookRep.Creator,
-  ) : RestEndpoint<TypicalLibraryBookRep.Creator, TypicalLibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   /**
    * This is actually valid; an empty string means "Any" content type.
@@ -31,7 +31,7 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Accept("")
   internal data class EmptyAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   /**
    * This is actually valid; means "Any" content type.
@@ -41,12 +41,12 @@ internal object BrokenAcceptLibraryBookApi {
   @RestEndpoint.Accept("*/*")
   internal data class StarAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application")
   internal data class MalformedAccept(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 }

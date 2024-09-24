@@ -1,57 +1,57 @@
 package kairo.rest.printer
 
 import io.kotest.matchers.shouldBe
-import kairo.rest.TypicalLibraryBookApi
 import kairo.rest.template.RestEndpointTemplate
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import kairo.rest.TypicalLibraryBookApi as LibraryBookApi
 
 internal class KtorPathTemplateRestEndpointPrinterTest {
   @Test
   fun get(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.Get::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.Get::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books/{libraryBookId}")
   }
 
   @Test
   fun listAll(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.ListAll::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.ListAll::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books")
   }
 
   @Test
   fun searchByIsbn(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByIsbn::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.SearchByIsbn::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books")
   }
 
   @Test
   fun searchByTitle(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.SearchByText::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.SearchByText::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books")
   }
 
   @Test
   fun create(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.Create::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.Create::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books")
   }
 
   @Test
   fun update(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.Update::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.Update::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books/{libraryBookId}")
   }
 
   @Test
   fun delete(): Unit = runTest {
-    val template = RestEndpointTemplate.from(TypicalLibraryBookApi.Delete::class)
+    val template = RestEndpointTemplate.from(LibraryBookApi.Delete::class)
     KtorPathTemplateRestEndpointPrinter.write(template)
       .shouldBe("/library-books/{libraryBookId}")
   }

@@ -1,8 +1,8 @@
 package kairo.rest.template
 
 import kairo.id.KairoId
-import kairo.rest.TypicalLibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.TypicalLibraryBookRep as LibraryBookRep
 
 /**
  * This API is for [BrokenRestEndpointTemplateTest]
@@ -14,10 +14,10 @@ internal object BrokenLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal class NotDataClass(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
-  internal object NotDataObject : RestEndpoint<Nothing, List<TypicalLibraryBookRep>>()
+  internal object NotDataObject : RestEndpoint<Nothing, List<LibraryBookRep>>()
 }

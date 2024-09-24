@@ -1,8 +1,8 @@
 package kairo.rest.template
 
 import kairo.id.KairoId
-import kairo.rest.TypicalLibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.TypicalLibraryBookRep as LibraryBookRep
 
 /**
  * This API is for [BrokenContentTypeRestEndpointTemplateTest]
@@ -16,14 +16,14 @@ internal object BrokenContentTypeLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class ContentTypePresentOnGet(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.Accept("application/json")
   internal data class ContentTypeNotPresentOnPost(
-    override val body: TypicalLibraryBookRep.Creator,
-  ) : RestEndpoint<TypicalLibraryBookRep.Creator, TypicalLibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   /**
    * An empty string means "Any" content type, which is invalid.
@@ -33,8 +33,8 @@ internal object BrokenContentTypeLibraryBookApi {
   @RestEndpoint.ContentType("")
   @RestEndpoint.Accept("application/json")
   internal data class EmptyContentType(
-    override val body: TypicalLibraryBookRep.Creator,
-  ) : RestEndpoint<TypicalLibraryBookRep.Creator, TypicalLibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   /**
    * Means "Any" content type, which is invalid.
@@ -44,14 +44,14 @@ internal object BrokenContentTypeLibraryBookApi {
   @RestEndpoint.ContentType("")
   @RestEndpoint.Accept("application/json")
   internal data class StarContentType(
-    override val body: TypicalLibraryBookRep.Creator,
-  ) : RestEndpoint<TypicalLibraryBookRep.Creator, TypicalLibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books")
   @RestEndpoint.ContentType("application")
   @RestEndpoint.Accept("application/json")
   internal data class MalformedContentType(
-    override val body: TypicalLibraryBookRep.Creator,
-  ) : RestEndpoint<TypicalLibraryBookRep.Creator, TypicalLibraryBookRep>()
+    override val body: LibraryBookRep.Creator,
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 }

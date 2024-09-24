@@ -1,8 +1,8 @@
 package kairo.rest.template
 
 import kairo.id.KairoId
-import kairo.rest.TypicalLibraryBookRep
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.TypicalLibraryBookRep as LibraryBookRep
 
 /**
  * This API is for [BrokenMethodRestEndpointTemplateTest]
@@ -14,19 +14,19 @@ internal object BrokenMethodLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class MissingMethod(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class EmptyMethod(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 
   @RestEndpoint.Method("SYNC")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class UnsupportedMethod(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, TypicalLibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep?>()
 }
