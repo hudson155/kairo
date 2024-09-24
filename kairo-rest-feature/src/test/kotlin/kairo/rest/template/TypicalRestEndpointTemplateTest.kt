@@ -3,9 +3,9 @@ package kairo.rest.template
 import io.kotest.matchers.shouldBe
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
+import kairo.rest.LibraryBookApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import kairo.rest.LibraryBookApi as LibraryBookApi
 
 /**
  * This test uses [LibraryBookApi] to test typical (happy path) cases.

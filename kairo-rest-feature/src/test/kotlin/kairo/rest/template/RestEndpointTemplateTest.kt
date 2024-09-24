@@ -1,9 +1,9 @@
 package kairo.rest.template
 
 import io.kotest.matchers.shouldBe
+import kairo.rest.LibraryBookApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
-import kairo.rest.LibraryBookApi as LibraryBookApi
 
 /**
  * This test is only concerned with testing existing instances of [RestEndpointTemplate].

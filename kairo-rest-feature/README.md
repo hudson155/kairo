@@ -75,7 +75,7 @@ Routing takes all of these into account.
 ```kotlin
 // src/main/kotlin/yourPackage/entity/libraryBook/LibraryBookApi.kt
 
-object TypicalLibraryBookApi {
+object LibraryBookApi {
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
