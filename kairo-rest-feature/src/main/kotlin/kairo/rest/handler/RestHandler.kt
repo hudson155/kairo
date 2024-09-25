@@ -3,12 +3,12 @@ package kairo.rest.handler
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.response.respond
 import io.ktor.server.routing.RoutingCall
 import io.ktor.util.reflect.typeInfo
 import kairo.reflect.typeParam
 import kairo.rest.endpoint.RestEndpoint
+import kairo.rest.exception.EntityNotFound
 import kairo.rest.reader.RestEndpointReader
 import kairo.rest.template.RestEndpointTemplate
 import kotlin.reflect.KClass
@@ -32,7 +32,7 @@ public abstract class RestHandler<E : RestEndpoint<*, Response>, Response : Any?
     logger.debug { "Result: ${response?.toString() ?: "null"}." }
     val statusCode = statusCode(response)
     logger.debug { "Status code: $statusCode." }
-    response ?: throw NotFoundException()
+    response ?: throw EntityNotFound()
     call.respond(statusCode, response)
   }
 

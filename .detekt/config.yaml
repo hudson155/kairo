@@ -590,6 +590,13 @@ style:
     imports:
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
       - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient instead.
+      - 'io.ktor.server.plugins.BadRequestException' # Use kairo.exception.BadRequestException instead.
+      - 'io.ktor.server.plugins.CannotTransformContentToTypeException'
+      - 'io.ktor.server.plugins.MissingRequestParameterException'
+      - 'io.ktor.server.plugins.NotFoundException' # Use kairo.exception.NotFoundException instead.
+      - 'io.ktor.server.plugins.ParameterConversionException'
+      - 'io.ktor.server.plugins.PayloadTooLargeException'
+      - 'io.ktor.server.plugins.UnsupportedMediaTypeException'
       - 'jakarta.validation.constraints.*'
       - 'java.util.UUID' # Use kotlin.uuid.Uuid instead.
       - 'javax.inject.*'
@@ -647,12 +654,7 @@ style:
   MaxChainedCallsOnSameLine:
     active: false
   MaxLineLength:
-    active: true
-    maxLineLength: 120
-    excludePackageStatements: true
-    excludeImportStatements: true
-    excludeCommentStatements: false
-    excludeRawStrings: true
+    active: false # Overlaps with formatting>ModifierOrdering.
   MayBeConst:
     active: true
   ModifierOrder:
