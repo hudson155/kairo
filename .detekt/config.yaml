@@ -589,8 +589,9 @@ style:
     # Keep these in sync with IntelliJ auto-import exclusions (codeInsightSettings.xml).
     imports:
       - 'com.google.inject.TypeLiteral' # Use the Kotlin overload.
+      - 'io.ktor.client.HttpClient' # Use kairo.client.KairoClient instead.
       - 'jakarta.validation.constraints.*'
-      - 'java.util.UUID' # Use Kotlin.uuid.Uuid instead.
+      - 'java.util.UUID' # Use kotlin.uuid.Uuid instead.
       - 'javax.inject.*'
       - 'kotlin.time.Duration'
       - 'org.junit.jupiter.api.Assertions.*'
