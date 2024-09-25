@@ -117,7 +117,7 @@ data class MonolithServerConfig(
 
 extraRootProperty: "This breaks the config."
 name: "Base config"
-port: 3000
+port: 8080
 height: { min: 2, max: 9, other: 9 }
 width: { min: 3, max: 19, average: 15 }
 ```
