@@ -89,6 +89,12 @@ Each modules falls into one of 3 categories:
 
 - [kairo-darb](kairo-darb/):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
+- [kairo-dependency-injection](kairo-dependency-injection/):
+  Makes Guice available,
+  along with some utilities to make its use more idiomatic.
+- [kairo-exception](kairo-exception/):
+  Base classes representing exceptions that Kairo knows how to handle.
+  This is primarily used by [kairo-rest-feature](kairo-rest-feature/).
 - [kairo-protected-string](kairo-protected-string/):
   `ProtectedString` represents a string value that should not be logged or otherwise exposed.
 - [kairo-reflect](kairo-reflect/):
@@ -106,16 +112,10 @@ Each modules falls into one of 3 categories:
   `CommandRunner` runs shell commands.
   It delegates to Java's built-in way of doing this,
   but uses an abstract class for testability.
-- [kairo-dependency-injection](kairo-dependency-injection/):
-  Makes Guice available,
-  along with some utilities to make its use more idiomatic.
 - [kairo-environment-variable-supplier](kairo-environment-variable-supplier/):
   `EnvironmentVariableSupplier` supplies environment variables.
   It delegates to Java's built-in way of doing this,
   but uses an abstract class for testability.
-- [kairo-exception](kairo-exception/):
-  Base classes representing exceptions that Kairo knows how to handle.
-  This is primarily used by [kairo-rest-feature](kairo-rest-feature/).
 - [kairo-gcp-secret-supplier](kairo-gcp-secret-supplier/):
   `GcpSecretSupplier` supplies GCP secrets.
   It delegates to the GCP Secret Manager SDK,
