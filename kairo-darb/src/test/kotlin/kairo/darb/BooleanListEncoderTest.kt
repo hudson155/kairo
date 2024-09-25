@@ -3,7 +3,6 @@ package kairo.darb
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldBeEmpty
 import io.kotest.matchers.throwable.shouldHaveMessage
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class BooleanListEncoderTest {
   @Test
   fun encode(): Unit = runTest {
-    BooleanListEncoder.encode(emptyList()).shouldBeEmpty()
+    BooleanListEncoder.encode(emptyList()).shouldBe("")
     BooleanListEncoder.encode(listOf(false)).shouldBe("0")
     BooleanListEncoder.encode(listOf(true)).shouldBe("1")
     BooleanListEncoder.encode(listOf(false, false, false, false)).shouldBe("0000")

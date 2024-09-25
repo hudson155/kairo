@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":kairo-exception")) // Exposed for clients.
   api(project(":kairo-feature"))
   implementation(project(":kairo-logging"))
   implementation(project(":kairo-reflect"))
@@ -15,12 +14,8 @@ dependencies {
   implementation(libs.ktorServerCio)
   implementation(libs.ktorServerContentNegotiation)
   implementation(libs.ktorServerCore)
-  implementation(libs.ktorServerStatusPages)
 
-  testImplementation(project(":kairo-client"))
-  testImplementation(project(":kairo-feature:testing"))
   testImplementation(project(":kairo-id-feature"))
   testImplementation(project(":kairo-logging:testing"))
-  testImplementation(project(":kairo-rest-feature:testing"))
   testImplementation(project(":kairo-testing"))
 }
