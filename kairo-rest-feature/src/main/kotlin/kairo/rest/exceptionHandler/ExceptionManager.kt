@@ -24,6 +24,7 @@ private val logger: KLogger = KotlinLogging.logger {}
 internal class ExceptionManager {
   private val handlers: List<ExceptionHandler> =
     listOf(
+      JacksonHandler(),
       KairoHandler(),
     )
 
