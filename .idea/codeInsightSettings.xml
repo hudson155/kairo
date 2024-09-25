@@ -4,6 +4,13 @@
     <excluded-names>
       <name>com.google.inject.TypeLiteral</name>
       <name>io.ktor.client.HttpClient</name>
+      <name>io.ktor.server.plugins.BadRequestException</name>
+      <name>io.ktor.server.plugins.CannotTransformContentToTypeException</name>
+      <name>io.ktor.server.plugins.MissingRequestParameterException</name>
+      <name>io.ktor.server.plugins.NotFoundException</name>
+      <name>io.ktor.server.plugins.ParameterConversionException</name>
+      <name>io.ktor.server.plugins.PayloadTooLargeException</name>
+      <name>io.ktor.server.plugins.UnsupportedMediaTypeException</name>
       <name>jakarta.validation.constraints.*</name>
       <name>java.util.UUID</name>
       <name>javax.inject.*</name>
