@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <excluded-names>
       <name>com.google.inject.TypeLiteral</name>
+      <name>io.ktor.client.HttpClient</name>
       <name>jakarta.validation.constraints.*</name>
       <name>java.util.UUID</name>
       <name>javax.inject.*</name>

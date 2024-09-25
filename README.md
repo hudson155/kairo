@@ -87,6 +87,8 @@ Each modules falls into one of 3 categories:
 
 ### Optional modules
 
+- [kairo-client](kairo-client/):
+  A thin wrapper around [Ktor](https://ktor.io/)'s `HttpClient`.
 - [kairo-darb](kairo-darb/):
   Home of `DarbEncoder`, which encodes a list of booleans into a Dense-ish Albeit Readable Binary (DARB) string.
 - [kairo-dependency-injection](kairo-dependency-injection/):
