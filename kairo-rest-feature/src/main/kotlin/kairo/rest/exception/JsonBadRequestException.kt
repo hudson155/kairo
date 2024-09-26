@@ -8,8 +8,8 @@ import kairo.exception.BadRequestException
 
 private val logger: KLogger = KotlinLogging.logger {}
 
-public abstract class JacksonBadRequestException(message: String) : BadRequestException(message) {
-  public abstract class WithPathAndLocation(message: String) : JacksonBadRequestException(message) {
+public abstract class JsonBadRequestException(message: String) : BadRequestException(message) {
+  public abstract class WithPathAndLocation(message: String) : JsonBadRequestException(message) {
     public data class Location(
       val line: Int,
       val column: Int,
