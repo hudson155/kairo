@@ -18,5 +18,5 @@ internal object ExceptionHandlerLibraryBookApi {
   internal data class Create(
     @QueryParam val title: String,
     override val body: ExceptionHandlerLibraryBookRep.Creator,
-  ) : RestEndpoint<ExceptionHandlerLibraryBookRep.Creator, ExceptionHandlerLibraryBookRep?>()
+  ) : RestEndpoint<ExceptionHandlerLibraryBookRep.Creator, ExceptionHandlerLibraryBookRep>()
 }

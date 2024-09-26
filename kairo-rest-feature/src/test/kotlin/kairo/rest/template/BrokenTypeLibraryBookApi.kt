@@ -15,7 +15,7 @@ internal object BrokenTypeLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class GetWithBodyNotProvided(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep?>()
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books/:libraryBookId")
@@ -24,14 +24,14 @@ internal object BrokenTypeLibraryBookApi {
   internal data class GetWithBodyProvided(
     @PathParam val libraryBookId: KairoId,
     override val body: LibraryBookRep.Creator,
-  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep?>()
+  ) : RestEndpoint<LibraryBookRep.Creator, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books/:libraryBookId")
   @RestEndpoint.Accept("application/json")
   internal data class PostWithoutBodyNotProvided(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("POST")
   @RestEndpoint.Path("/library-books/:libraryBookId")
@@ -39,5 +39,5 @@ internal object BrokenTypeLibraryBookApi {
   internal data class PostWithoutBodyProvided(
     @PathParam val libraryBookId: KairoId,
     override val body: Nothing,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 }

@@ -13,7 +13,7 @@ internal object TypicalLibraryBookApi {
   @RestEndpoint.Accept("application/json")
   internal data class Get(
     @PathParam val libraryBookId: KairoId,
-  ) : RestEndpoint<Nothing, LibraryBookRep?>()
+  ) : RestEndpoint<Nothing, LibraryBookRep>()
 
   @RestEndpoint.Method("GET")
   @RestEndpoint.Path("/library-books")

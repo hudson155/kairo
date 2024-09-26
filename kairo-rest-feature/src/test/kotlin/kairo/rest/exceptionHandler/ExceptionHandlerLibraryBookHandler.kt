@@ -7,8 +7,8 @@ import kairo.rest.handler.RestHandler
 internal class ExceptionHandlerLibraryBookHandler @Inject constructor(
   private val libraryBookService: LibraryBookService,
 ) {
-  internal inner class Create : RestHandler<ExceptionHandlerLibraryBookApi.Create, ExceptionHandlerLibraryBookRep?>() {
-    override suspend fun handle(endpoint: ExceptionHandlerLibraryBookApi.Create): ExceptionHandlerLibraryBookRep? =
+  internal inner class Create : RestHandler<ExceptionHandlerLibraryBookApi.Create, ExceptionHandlerLibraryBookRep>() {
+    override suspend fun handle(endpoint: ExceptionHandlerLibraryBookApi.Create): ExceptionHandlerLibraryBookRep =
       libraryBookService.create(endpoint)
   }
 }

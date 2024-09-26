@@ -60,7 +60,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
     }
   }
 
-  protected fun mock(answer: () -> ExceptionHandlerLibraryBookRep?) {
+  protected fun mock(answer: () -> ExceptionHandlerLibraryBookRep) {
     every { libraryBookService.create(any()) } answers { answer() }
   }
 
