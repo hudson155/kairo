@@ -359,6 +359,25 @@ fun main() {
 }
 ```
 
+## Upgrading dependencies
+
+### Detekt
+
+When upgrading Detekt versions, review `default-detekt-config.yaml` as well as the changelog.
+Make corresponding changes as necessary in [the config file](.detekt/config.yaml).
+
+### Jackson
+
+Kairo's integration with Jackson is very tight. Be careful when upgrading versions.
+Search for any new or modified usages of `JsonMappingException`s
+and ensure these are handled by [ExceptionManager].
+
+### Ktor
+
+Kairo's integration with Ktor is very tight. Be careful when upgrading versions.
+Search for any new or modified usages of exceptions from `io.ktor.server.plugins.ErrorsKt`
+and ensure these are handled by [ExceptionManager].
+
 ## Releasing
 
 1. Familiarize yourself with [semantic versioning](https://semver.org/).
