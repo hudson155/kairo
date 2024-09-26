@@ -24,7 +24,8 @@ internal class UnrecognizedPolymorphicTypeTest : ExceptionHandlerTest() {
     response.shouldBe(
       mapOf(
         "type" to "UnrecognizedPolymorphicType",
-        "message" to "Unrecognized polymorphic type. This property could be one of several types, but the given type was not recognized.",
+        "message" to "Unrecognized polymorphic type." +
+          " This property could be one of several types, but the given type was not recognized.",
         "path" to "authors[0]",
         "location" to mapOf("column" to 15, "line" to 5),
       ),

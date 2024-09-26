@@ -35,10 +35,11 @@ internal class InvalidPropertyTest : ExceptionHandlerTest() {
   @Test
   fun `number in place of array`(): Unit = runTest {
     val (statusCode, response) = request {
-      setBody(mapOf(
-        "authors" to 42,
-        "type" to "Print",
-      ),
+      setBody(
+        mapOf(
+          "authors" to 42,
+          "type" to "Print",
+        ),
       )
     }
 
@@ -56,13 +57,14 @@ internal class InvalidPropertyTest : ExceptionHandlerTest() {
   @Test
   fun `unsupported enum`(): Unit = runTest {
     val (statusCode, response) = request {
-      setBody(mapOf(
-        "authors" to listOf(
-          mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
-          mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+      setBody(
+        mapOf(
+          "authors" to listOf(
+            mapOf("type" to "Named", "firstName" to "Patrick", "lastName" to "Rothfuss"),
+            mapOf("type" to "Named", "firstName" to "Betsy", "lastName" to "Wollheim"),
+          ),
+          "type" to "Digital",
         ),
-        "type" to "Digital",
-      ),
       )
     }
 
