@@ -1,5 +1,6 @@
 package kairo.serialization.module
 
+import com.fasterxml.jackson.core.StreamReadFeature
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -17,6 +18,7 @@ internal fun ObjectMapperFactoryBuilder.increaseStrictness() {
   configureSerializationFeatures()
   configureDeserializationFeatures()
   configureJsonNodeFeatures()
+  configureStreamReadFeatures()
 }
 
 private fun ObjectMapperFactoryBuilder.configureMapperFeatures() {
@@ -53,4 +55,8 @@ private fun ObjectMapperFactoryBuilder.configureDeserializationFeatures() {
 private fun ObjectMapperFactoryBuilder.configureJsonNodeFeatures() {
   configure(JsonNodeFeature.STRIP_TRAILING_BIGDECIMAL_ZEROES, false)
   configure(JsonNodeFeature.FAIL_ON_NAN_TO_BIG_DECIMAL_COERCION, true)
+}
+
+private fun ObjectMapperFactoryBuilder.configureStreamReadFeatures() {
+  configure(StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION, true)
 }
