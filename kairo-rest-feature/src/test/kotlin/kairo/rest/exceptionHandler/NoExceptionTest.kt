@@ -16,15 +16,18 @@ internal class NoExceptionTest : ExceptionHandlerTest() {
         {
           "authors": [
             {
+              "type": "Named",
               "firstName": "Patrick",
               "lastName": "Rothfuss"
             },
             {
+              "type": "Named",
               "firstName": "Betsy",
               "lastName": "Wollheim"
             }
           ],
-          "title": "The Name of the Wind"
+          "title": "The Name of the Wind",
+          "type": "Print"
         }
       """.trimIndent(),
     )

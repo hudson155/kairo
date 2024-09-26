@@ -53,6 +53,7 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
       return@answers ExceptionHandlerLibraryBookRep(
         title = endpoint.title,
         authors = creator.authors,
+        type = creator.type,
       )
     }
   }
@@ -74,9 +75,10 @@ internal abstract class ExceptionHandlerTest : KairoServerTest() {
         """
           {
             "authors": [
-              { "firstName": "Patrick", "lastName": "Rothfuss" },
-              { "firstName": "Betsy", "lastName": "Wollheim" }
-            ]
+              { "type": "Named", "firstName": "Patrick", "lastName": "Rothfuss" },
+              { "type": "Named", "firstName": "Betsy", "lastName": "Wollheim" }
+            ],
+            "type": "Print"
           }
         """.trimIndent(),
       )
